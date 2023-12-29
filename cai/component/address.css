@@ -1,0 +1,38 @@
+/*
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/address
+*/
+
+address {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(300px - var(--core-space)), auto));
+    grid-column-gap: var(--core-space);
+    padding: var(--core-space);
+    box-shadow: var(--core-boxShadow);
+
+    [itemprop=name],
+    [itemprop=address] {
+        grid-column: 1;
+    }
+
+    [itemprop=address] {
+        font-style: italic;
+        font-size: 1.25em;
+
+        [itemprop]:after {
+            content: ',';
+        }
+
+        [itemprop]:last-of-type:after {
+            content: '.';
+        }
+    }
+
+    [data-cai-type=contact] {
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+}

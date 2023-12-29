@@ -1,0 +1,98 @@
+/*INPUT FILE */
+[type=file] {
+    --core-textColor: var(--core-color-muted);
+    padding: calc(var(--core-space-three-quarters) * 0.5) 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+}
+
+[type=file]::file-selector-button {
+    --core-backgroundColor: var(--core-color-secondary);
+    --borderColor: var(--core-color-secondary);
+    --core-textColor: var(--core-color-secondary-inverse);
+    margin-right: calc(var(--core-space) / 2);
+    margin-left: 0;
+    -webkit-margin-start: 0;
+    margin-inline-start: 0;
+    -webkit-margin-end: calc(var(--core-space) / 2);
+    margin-inline-end: calc(var(--core-space) / 2);
+    padding: calc(var(--core-space-three-quarters) * 0.5) calc(var(--core-space) * 0.5);
+    border: var(--core-borderWidth) solid var(--borderColor);
+    border-radius: var(--core-borderRadius);
+    outline: none;
+    background-color: var(--core-backgroundColor);
+    box-shadow: var(--box-shadow);
+    color: var(--core-textColor);
+    font-weight: var(--core-fontWeight);
+    font-size: 1rem;
+    line-height: var(--core-lineHeight);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--core-transition), border-color var(--core-transition), color var(--core-transition), box-shadow var(--core-transition);
+}
+
+[type=file]::file-selector-button:is(:hover, :active, :focus) {
+    --core-backgroundColor: var(--core-color-secondary-hover);
+    --borderColor: var(--core-color-secondary-hover);
+}
+
+[type=file]::-webkit-file-upload-button {
+    --core-backgroundColor: var(--core-color-secondary);
+    --borderColor: var(--core-color-secondary);
+    --core-textColor: var(--core-color-secondary-inverse);
+    margin-right: calc(var(--core-space) / 2);
+    margin-left: 0;
+    -webkit-margin-start: 0;
+    margin-inline-start: 0;
+    -webkit-margin-end: calc(var(--core-space) / 2);
+    margin-inline-end: calc(var(--core-space) / 2);
+    padding: calc(var(--core-space-three-quarters) * 0.5) calc(var(--core-space) * 0.5);
+    border: var(--core-borderWidth) solid var(--borderColor);
+    border-radius: var(--core-borderRadius);
+    outline: none;
+    background-color: var(--core-backgroundColor);
+    box-shadow: var(--box-shadow);
+    color: var(--core-textColor);
+    font-weight: var(--core-fontWeight);
+    font-size: 1rem;
+    line-height: var(--core-lineHeight);
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition: background-color var(--core-transition), border-color var(--core-transition), color var(--core-transition), box-shadow var(--core-transition);
+    transition: background-color var(--core-transition), border-color var(--core-transition), color var(--core-transition), box-shadow var(--core-transition);
+}
+
+[type=file]::-webkit-file-upload-button:is(:hover, :active, :focus) {
+    --core-backgroundColor: var(--core-color-secondary-hover);
+    --borderColor: var(--core-color-secondary-hover);
+}
+
+[type=file]::-ms-browse {
+    --core-backgroundColor: var(--core-color-secondary);
+    --borderColor: var(--core-color-secondary);
+    --core-textColor: var(--core-color-secondary-inverse);
+    margin-right: calc(var(--core-space) / 2);
+    margin-left: 0;
+    margin-inline-start: 0;
+    margin-inline-end: calc(var(--core-space) / 2);
+    padding: calc(var(--core-space-three-quarters) * 0.5) calc(var(--core-space) * 0.5);
+    border: var(--core-borderWidth) solid var(--borderColor);
+    border-radius: var(--core-borderRadius);
+    outline: none;
+    background-color: var(--core-backgroundColor);
+    box-shadow: var(--box-shadow);
+    color: var(--core-textColor);
+    font-weight: var(--core-fontWeight);
+    font-size: 1rem;
+    line-height: var(--core-lineHeight);
+    text-align: center;
+    cursor: pointer;
+    -ms-transition: background-color var(--core-transition), border-color var(--core-transition), color var(--core-transition), box-shadow var(--core-transition);
+    transition: background-color var(--core-transition), border-color var(--core-transition), color var(--core-transition), box-shadow var(--core-transition);
+}
+
+[type=file]::-ms-browse:is(:hover, :active, :focus) {
+    --core-backgroundColor: var(--core-color-secondary-hover);
+    --borderColor: var(--core-color-secondary-hover);
+}

@@ -1,0 +1,103 @@
+/**
+ * Button
+ */
+button {
+    margin: 0;
+    overflow: visible;
+    font-family: inherit;
+    text-transform: none;
+}
+
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+    -webkit-appearance: button;
+}
+
+button {
+    display: block;
+    width: 100%;
+    margin-bottom: var(--core-space);
+}
+
+[role=button] {
+    display: inline-block;
+    text-decoration: none;
+}
+
+button,
+input[type=submit],
+input[type=button],
+input[type=reset],
+[role=button] {
+    --core-backgroundColor: var(--core-color-primary);
+    --borderColor: var(--core-color-primary);
+    --core-textColor: var(--core-color-primary-inverse);
+    --box-shadow: var(--button-boxShadow, 0 0 0 rgba(0, 0, 0, 0));
+    padding: var(--core-space-three-quarters) var(--core-space);
+    border: var(--core-borderWidth) solid var(--borderColor);
+    border-radius: var(--core-borderRadius);
+    outline: none;
+    background-color: var(--core-backgroundColor);
+    box-shadow: var(--box-shadow);
+    color: var(--core-textColor);
+    font-weight: var(--core-fontWeight);
+    font-size: var(--core-fontSize);
+    line-height: var(--core-lineHeight);
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--core-transition), border-color var(--core-transition), color var(--core-transition), box-shadow var(--core-transition);
+}
+
+button:is([aria-current], :hover, :active, :focus),
+input[type=submit]:is([aria-current], :hover, :active, :focus),
+input[type=button]:is([aria-current], :hover, :active, :focus),
+input[type=reset]:is([aria-current], :hover, :active, :focus),
+[role=button]:is([aria-current], :hover, :active, :focus) {
+    --core-backgroundColor: var(--core-color-primary-hover);
+    --borderColor: var(--core-color-primary-hover);
+    --box-shadow: var(--button-hover-boxShadow, 0 0 0 rgba(0, 0, 0, 0));
+    --core-textColor: var(--core-color-primary-inverse);
+}
+
+button:focus,
+input[type=submit]:focus,
+input[type=button]:focus,
+input[type=reset]:focus,
+[role=button]:focus {
+    --box-shadow: var(--button-hover-boxShadow, 0 0 0 rgba(0, 0, 0, 0)),
+        0 0 0 var(--core-outlineWidth) var(--core-color-primary-focus);
+}
+
+input[type=reset] {
+    --core-backgroundColor: var(--core-color-secondary);
+    --borderColor: var(--core-color-secondary);
+    --core-textColor: var(--core-color-secondary-inverse);
+    cursor: pointer;
+}
+
+input[type=reset]:is([aria-current], :hover, :active, :focus) {
+    --core-backgroundColor: var(--core-color-secondary-hover);
+    --borderColor: var(--core-color-secondary-hover);
+}
+
+input[type=reset]:focus {
+    --box-shadow: var(--button-hover-boxShadow, 0 0 0 rgba(0, 0, 0, 0)),
+        0 0 0 var(--core-outlineWidth) var(--core-color-secondary-focus);
+}
+
+:where(button, [type=submit], [type=button], [type=reset], [role=button])[disabled],
+:where(fieldset[disabled]) :is(button, [type=submit], [type=button], [type=reset], [role=button]),
+a[role=button]:not([href]) {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+/* button inside of a role button */
+nav [role=button] {
+    margin-right: inherit;
+    margin-left: inherit;
+    padding: calc(var(--core-space) / 4) var(--core-space-half);
+  }
+  

@@ -1,0 +1,20 @@
+article#link [data-cai-tag=demo],
+article#icon [data-cai-tag=demo] {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+body>main>section:not([role=banner]) {
+    max-width: var(--core-maxWidth);
+    margin: 0 auto;
+}
+
+body>main>section:not([role=banner])>details>summary {
+    position: sticky;
+    top: 0;
+background-color: var(--core-backgroundColor);
+z-index: 2;
+
+}

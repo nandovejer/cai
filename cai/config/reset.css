@@ -1,0 +1,229 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  background-repeat: no-repeat;
+}
+
+::before,
+::after {
+  text-decoration: inherit;
+  vertical-align: inherit;
+}
+
+:where(:root) {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background-color: var(--core-backgroundColor);
+  color: var(--core-textColor);
+  font-weight: var(--core-fontWeight);
+  font-size: var(--core-fontSize);
+  line-height: var(--core-lineHeight);
+  font-family: var(--fontFamily-default);
+  text-rendering: optimizeLegibility;
+  overflow-wrap: break-word;
+  cursor: default;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+}
+
+
+[type=checkbox],
+[type=radio] {
+  --core-borderWidth: 2px;
+}
+
+[type=checkbox][role=switch] {
+  --core-borderWidth: 3px;
+}
+
+
+thead th,
+thead td,
+tfoot th,
+tfoot td {
+  --core-borderWidth: 3px;
+}
+
+:not(thead, tfoot)>*>td {
+  --core-fontSize: 0.875em;
+}
+
+
+
+pre,
+code,
+kbd,
+samp {
+  --font-family: "Menlo", "Consolas", "Roboto Mono", "Ubuntu Monospace",
+    "Noto Mono", "Oxygen Mono", "Liberation Mono", monospace,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+
+
+
+progress,
+[type=checkbox],
+[type=radio],
+[type=range] {
+  accent-color: var(--core-color-primary);
+}
+
+address,
+blockquote,
+dl,
+figure,
+form,
+ol,
+p,
+pre,
+table,
+ul {
+  margin-top: 0;
+  margin-bottom: var(--core-space-vertical);
+  font-style: normal;
+  font-weight: var(--core-fontWeight);
+  font-size: var(--core-fontSize);
+}
+
+
+b,
+strong {
+  font-weight: bolder;
+}
+
+
+
+:where(address, blockquote, dl, figure, form, ol, p, pre, table, ul)~ :is(h1, h2, h3, h4, h5, h6) {
+  margin-top: var(--core-space-vertical);
+}
+
+[hidden],
+template {
+  display: none;
+}
+
+
+:where(audio, canvas, iframe, img, svg, video) {
+  vertical-align: middle;
+}
+
+audio,
+video {
+  display: inline-block;
+}
+
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+:where(iframe) {
+  border-style: none;
+}
+
+
+:where(svg:not([fill])) {
+  fill: currentColor;
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+::-moz-selection {
+  background-color: var(--selection-backgroundColor);
+}
+
+::selection {
+  background-color: var(--selection-backgroundColor);
+}
+
+
+:where(dl, ol, ul) {
+  padding-right: 0;
+  padding-left: var(--core-space);
+  -webkit-padding-start: var(--core-space);
+  padding-inline-start: var(--core-space);
+  -webkit-padding-end: 0;
+  padding-inline-end: 0;
+}
+
+:where(dl, ol, ul) li {
+  margin-bottom: calc(var(--core-space-vertical) * 0.25);
+}
+
+:where(dl, ol, ul) :is(dl, ol, ul) {
+  margin: 0;
+  margin-top: calc(var(--core-space-vertical) * 0.25);
+}
+
+menu li {
+  list-style-type: none;
+}
+
+
+
+/**
+ * Accessibility & User interaction
+ */
+[aria-controls] {
+  cursor: pointer;
+}
+
+[aria-disabled=true],
+[disabled] {
+  cursor: not-allowed;
+}
+
+[aria-hidden=false][hidden] {
+  display: initial;
+}
+
+[aria-hidden=false][hidden]:not(:focus) {
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+}
+
+a,
+area,
+button,
+input,
+label,
+select,
+summary,
+textarea,
+[tabindex] {
+  -ms-touch-action: manipulation;
+}
+
+[dir=rtl] {
+  direction: rtl;
+}
+
+[dir="rtl"] pre,
+[dir="rtl"] pre>code {
+  text-align: left;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* reduce Motion Features */
+@media (prefers-reduced-motion: reduce) {
+
+  *:not([aria-busy=true]),
+  :not([aria-busy=true])::before,
+  :not([aria-busy=true])::after {
+    background-attachment: initial !important;
+    animation-duration: 1ms !important;
+    animation-delay: -1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-delay: 0s !important;
+    transition-duration: 0s !important;
+  }
+}

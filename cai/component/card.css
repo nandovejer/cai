@@ -1,0 +1,31 @@
+ article[data-cai-tag=card] {
+   margin: var(--core-box-space-vertical) 0;
+   padding: var(--core-box-space-vertical) var(--core-box-space-horizontal);
+   border-radius: var(--core-borderRadius);
+   background: var(--card-backgroundColor);
+   box-shadow: var(--core-boxShadow);
+ }
+
+ article[data-cai-tag=card]>header,
+ article[data-cai-tag=card]>footer {
+   margin-right: calc(var(--core-box-space-horizontal) * -1);
+   margin-left: calc(var(--core-box-space-horizontal) * -1);
+   padding: calc(var(--core-box-space-vertical) * 0.66) var(--core-box-space-horizontal);
+   background-color: var(--card-sectionning-backgroundColor);
+ }
+
+ article[data-cai-tag=card]>header {
+   margin-top: calc(var(--core-box-space-vertical) * -1);
+   margin-bottom: var(--core-box-space-vertical);
+   border-bottom: var(--core-borderWidth) solid var(--card-borderColor);
+   border-top-right-radius: var(--core-borderRadius);
+   border-top-left-radius: var(--core-borderRadius);
+ }
+
+ article[data-cai-tag=card]>footer {
+   margin-top: var(--core-box-space-vertical);
+   margin-bottom: calc(var(--core-box-space-vertical) * -1);
+   border-top: var(--core-borderWidth) solid var(--card-borderColor);
+   border-bottom-right-radius: var(--core-borderRadius);
+   border-bottom-left-radius: var(--core-borderRadius);
+ }

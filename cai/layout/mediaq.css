@@ -1,0 +1,83 @@
+/*
+https://caniuse.com/css-media-range-syntax
+*/
+
+@media (width > 575px) and (width <= 767px) {
+  :root {
+    --core-fontSize: 17px;
+  }
+
+  body > header,
+  body > main,
+  body > footer,
+  section,
+  dialog > article {
+    --core-box-space-vertical: calc(var(--core-space) * 2.5);
+  }
+
+  article,
+  dialog > article {
+    --core-box-space-horizontal: calc(var(--core-space) * 1.25);
+  }
+}
+
+
+@media (width > 767px) and (width <= 991px) {
+  :root {
+    --core-fontSize: 18px;
+  }
+
+  body > header,
+  body > main,
+  body > footer,
+  section,
+  dialog > article {
+    --core-box-space-vertical: calc(var(--core-space) * 3);
+  }
+
+  article,
+  dialog > article {
+    --core-box-space-horizontal: calc(var(--core-space) * 1.5);
+  }
+}
+
+
+@media (width > 991px) and (width <= 1199px) {
+  :root {
+    --core-fontSize: 19px;
+  }
+
+  body > header,
+  body > main,
+  body > footer,
+  section {
+    --core-box-space-vertical: calc(var(--core-space) * 3.5);
+  }
+
+  article {
+    --core-box-space-horizontal: calc(var(--core-space) * 1.75);
+  }
+}
+
+
+@media (width > 1199px) {
+  :root {
+    --core-fontSize: 20px;
+  }
+
+  body > header,
+  body > main,
+  body > footer,
+  section {
+    --core-box-space-vertical: calc(var(--core-space) * 4);
+  }
+
+  article {
+    --core-box-space-horizontal: calc(var(--core-space) * 2);
+  }
+
+  dialog > article {
+    --core-box-space-vertical: calc(var(--core-space) * 2);
+    --core-box-space-horizontal: var(--core-space);
+  }
+}

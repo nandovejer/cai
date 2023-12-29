@@ -1,0 +1,53 @@
+/* Dialog open/close with js */
+dialog:not([open]),
+dialog[open=false] {
+  display: none;
+}
+
+dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--core-space);
+  border: 0;
+  box-shadow: var(--core-boxShadow);
+  width: calc(100% - calc(var(--core-space)*2));
+  max-width: var(--core-maxWidth);
+
+  >header {
+    display: flex;
+    justify-content: space-between;
+
+    >h2,
+    >h3 {
+      margin: 0;
+    }
+
+    >button,
+    >[type=button] {
+      background-color: transparent;
+      border-color: transparent;
+      padding: 0;
+      margin: 0;
+      max-width: 32px;
+      max-height: 32px;
+      order: 2;
+
+      &:hover {
+        transform: scale(1.1);
+      }
+
+    }
+  }
+
+  >main {
+    >p:last-of-type {
+      margin: 0;
+    }
+  }
+
+  >footer {
+    menu {
+      justify-content: flex-end;
+    }
+  }
+}

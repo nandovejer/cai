@@ -1,0 +1,30 @@
+[data-cai-tag="formGroup"] {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  /*FormGroup - Text info under inputfield */
+  input:not(
+      [type="checkbox"],
+      [type="radio"],
+      [type="submit"],
+      [type="reset"]
+    ) {
+    + small {
+      margin: 0;
+      padding: 0;
+      font-size: var(--core-fontSize-S);
+    }
+  }
+}
+
+[data-cai-tag="formGroup"]
+  input:not(
+    [type="checkbox"],
+    [type="radio"],
+    [type="submit"],
+    [type="reset"]
+  )[aria-invalid="true"]
+  ~ span[role="alert"] {
+  display: flex;
+  color: var(--core-color-invalid);
+}

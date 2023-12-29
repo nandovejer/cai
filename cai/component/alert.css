@@ -1,0 +1,65 @@
+
+aside[role=alert] {
+    display: flex;
+    align-items: center;
+    padding: var(--core-space) calc(var(--core-space) + 24px) var(--core-space) var(--core-space);
+    min-height: calc(var(--core-space)*4);
+    border: 0;
+    position: relative;
+    text-wrap: pretty;
+    color: var(--core-color-neutral);
+    background-color: var(--core-color-neutral-hover);
+
+
+    button {
+        color: currentColor;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border: 0;
+        position: absolute;
+        top: calc(var(--core-space) + 0.25em);
+        right: var(--core-space);
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        opacity: 0.75;
+
+        &:hover {
+            opacity: 1;
+        }
+        >i {
+            width: 100%;
+
+        }
+    }
+
+    &[hidden] {
+        animation: var(--core-animation-close);
+    }
+}
+
+
+aside[role="alert"][data-cai-type=info] {
+    color: var(--core-color-info);
+    background-color: var(--core-color-info-hover);
+}
+
+
+aside[role="alert"][data-cai-type=error] {
+    color: var(--core-color-invalid);
+    background-color: var(--core-color-invalid-hover);
+}
+
+aside[role="alert"][data-cai-type=warning] {
+    color: var(--core-color-warning);
+    background-color: var(--core-color-warning-hover);
+}
+
+aside[role="alert"][data-cai-type=success] {
+    color: var(--core-color-valid);
+    background-color: var(--core-color-valid-hover);
+
+}

@@ -1,0 +1,29 @@
+/*
+The <menu> and <ul> elements both represent an unordered list of items. The key difference is that <ul> primarily contains items for display, while <menu> was intended for interactive items. The related <menuitem> element has been deprecated.
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/menu
+*/
+
+menu {
+    padding: var(--core-space);
+    display: flex;
+    flex-direction: row;
+    gap: var(--core-space);
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-color: var(--menu-backgroundColor);
+}
+menu li {
+    height: auto;  
+    padding: 0;
+}
+
+menu li button {
+    width: inherit;
+    margin: 0;
+}
+
+menu[aria-orientation=vertical] {
+    flex-direction: column;
+    align-items: flex-start;
+}

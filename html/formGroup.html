@@ -1,0 +1,69 @@
+<form>
+  <!-- Js error ==> span[role="alert"] + ADD [hidden] + REMOVE {tabindex="0" aria-invalid="true"} -->
+
+  <div data-cai-tag="formGroup">
+    <label for="inputField1">Label of inputField1</label>
+    <input
+      type="text"
+      id="inputField1"
+      name="inputFieldTest"
+      placeholder="Input text is inside required-valid"
+      title="This text is alternative describe something about the input"
+      required
+      aria-invalid="false"
+      aria-describedby="inputField1ErroMsg"
+    />
+    <small aria-multiline="false" tabindex="0">This text is alternative describe something about the input</small>
+    <span role="alert" id="inputField1ErroMsg" hidden> Dynamic Error Text here </span>
+  </div>
+  <div data-cai-tag="formGroup">
+    <!-- Js error ==> label span[role="alert"] + ADD tabindex="0" aria-invalid="true" + REMOVE [hidden] -->
+    <label for="inputField2">Label of inputField2</label>
+    <input
+      type="text"
+      id="inputField2"
+      name="inputFieldTest"
+      placeholder="Input text required-invalid"
+      title="This text is alternative describe something about the input"
+      required
+      aria-invalid="true"
+      aria-describedby="inputField2ErroMsg"
+    />
+    <small aria-multiline="false" tabindex="0">This text is alternative describe something about the input</small>
+    <span role="alert" id="inputField2ErroMsg"> Dynamic Error Text here </span>
+  </div>
+
+  <div data-cai-tag="formGroup">
+    <label for="inputField3">Label of inputField3</label>
+    <input
+      type="text"
+      id="inputField3"
+      name="inputFieldTest"
+      placeholder="Input text disabled"
+      title="This text is alternative describe something about the input"
+      disabled
+      required="false"
+      aria-invalid="false"
+      aria-describedby="inputField3ErroMsg"
+    />
+    <small aria-multiline="false" tabindex="0">This text is alternative describe something about the input</small>
+    <span role="alert" id="inputField3ErroMsg" hidden> Dynamic Error Text here </span>
+  </div>
+
+  <div data-cai-tag="formGroup">
+    <label for="inputField4">Label of inputField4</label>
+    <input
+      type="text"
+      id="inputField4"
+      name="inputFieldTest"
+      placeholder="Input text readonly"
+      title="This text is alternative describe something about the input"
+      readonly
+      required="false"
+      aria-invalid="false"
+      aria-describedby="inputField4ErroMsg"
+    />
+    <small aria-multiline="false" tabindex="0">This text is alternative describe something about the input</small>
+    <span role="alert" id="inputField4ErroMsg" hidden> Dynamic Error Text here </span>
+  </div>
+</form>

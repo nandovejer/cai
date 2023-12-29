@@ -1,0 +1,74 @@
+
+/**
+ * Code
+ */
+ pre,
+ code,
+ kbd,
+ samp {
+   font-size: 0.875em;
+   font-family: var(--fontFamily-code);
+ }
+ 
+ pre {
+   -ms-overflow-style: scrollbar;
+   overflow: auto;
+ }
+ 
+ pre,
+ code,
+ kbd {
+   border-radius: var(--core-borderRadius);
+   background: var(--code-backgroundColor);
+   color: var(--code-color);
+   font-weight: var(--core-fontWeight);
+   line-height: initial;
+ }
+ 
+ code,
+ kbd {
+   display: inline-block;
+   padding: 0.375rem 0.5rem;
+ }
+ 
+ pre {
+   display: block;
+   margin-bottom: var(--core-space);
+   overflow-x: auto;
+ }
+ 
+ pre>code {
+   display: block;
+   padding: var(--core-space);
+   background: none;
+   font-size: 14px;
+   line-height: var(--core-lineHeight);
+ }
+ 
+ code b {
+   color: var(--code-tag-color);
+   font-weight: var(--core-fontWeight);
+ }
+ 
+ code i {
+   color: var(--code-property-color);
+   font-style: normal;
+ }
+ 
+ code u {
+   color: var(--code-value-color);
+   text-decoration: none;
+ }
+ 
+ code em {
+   color: var(--code-comment-color);
+   font-style: normal;
+ }
+ 
+ kbd {
+  --core-fontWeight: bolder;
+   background-color: var(--code-kbd-backgroundColor);
+   color: var(--code-kbd-color);
+   vertical-align: baseline;
+ }
+ 

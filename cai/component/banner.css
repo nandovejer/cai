@@ -1,0 +1,39 @@
+[role=banner] {
+    background-color: var(--banner-backgroundColor);
+    color: var(--banner-color);
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--core-space);
+
+    width: 100%;
+    padding: calc(var(--core-space)*2) var(--core-space);
+
+    > * {
+        max-width: var(--core-maxWidth);
+    }
+
+    >hgroup {
+        text-align: center;
+        margin: 0;
+
+        h2 {
+            font-size: var(--core-fontSize-XXL);
+        }
+
+        p {
+            font-size: var(--core-fontSize-L);
+        }
+    }
+
+    >menu {
+        margin: 0;
+        padding: 0;
+    }
+
+    > pre {
+        width: 100%;
+    }
+}

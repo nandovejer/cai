@@ -1,0 +1,39 @@
+[role="note"] {
+    display: flex;
+    align-items: center;
+    padding: var(--core-space) calc(var(--core-space) + 24px) var(--core-space) var(--core-space);
+    min-height: calc(var(--core-space)*4);
+    color: var(--core-color-neutral);
+    background-color: var(--core-color-neutral-focus);
+    box-shadow: inset calc(var(--core-space)/4) 0 0  currentColor;
+
+    > p:last-of-type {
+        margin-bottom: 0;
+    }
+}
+
+
+
+
+
+[role="note"][data-cai-type=info] {
+    color: var(--core-color-info);
+    background-color: var(--core-color-info-focus);
+}
+
+
+[role="note"][data-cai-type=error] {
+    color: var(--core-color-invalid);
+    background-color: var(--core-color-invalid-focus);
+}
+
+[role="note"][data-cai-type=warning] {
+    color: var(--core-color-warning);
+    background-color: var(--core-color-warning-focus);
+}
+
+[role="note"][data-cai-type=success] {
+    color: var(--core-color-valid);
+    background-color: var(--core-color-valid-focus);
+
+}

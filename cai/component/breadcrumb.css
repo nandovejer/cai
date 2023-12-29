@@ -1,0 +1,35 @@
+/* I use [data-cai-tag] because aria-label can be changed in other languages */
+nav[data-cai-tag=breadcrumb] {
+  padding: 0;
+}
+
+nav[data-cai-tag=breadcrumb] ul,
+nav[data-cai-tag=breadcrumb] ul > li {
+  display: flex;
+  padding: 0;
+  margin: 0;
+
+}
+
+nav[data-cai-tag=breadcrumb] ul {
+  align-items: center;
+  justify-content: start;
+  list-style: none;
+
+}
+
+nav[data-cai-tag=breadcrumb] ul > li {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  color: currentColor;
+}
+
+nav[data-cai-tag=breadcrumb] ul > li:after {
+  content: "\\";
+  padding: 0 0.25em;
+}
+
+nav[data-cai-tag=breadcrumb] ul > li:last-of-type:after {
+  display: none;
+}

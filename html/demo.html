@@ -1,0 +1,2190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" id="themeLink" href="./cai/cai.css">
+  <title>cai</title>
+</head>
+
+<body>
+  <!-- demo out of framework -->
+
+  <!-- /demo out of framework -->
+
+  <header>
+    <a data-cai-tag-hgroup title="Go to home page" href="/">
+      <hgroup>
+        <h1>CAI</h1>
+        <p aria-multiline="true">
+          Minimal css framework <strong> Classless</strong>, <strong>Accessible</strong> and
+          <strong>Intuitive</strong>
+        </p>
+      </hgroup>
+    </a>
+    <details>
+      <summary role="button" aria-label="menu"><i data-icon="--icon-menu" aria-hidden="true"></i> </summary>
+      <nav role="navigation" aria-orientation="vertical">
+        <ul>
+          <li><a href="#sitebasic">Basic Elements</a></li>
+          <li><a href="#siteform">Form Elements</a></li>
+          <li><a href="#sitecomponent">Components</a></li>
+          <li><a href="#sitelayout">Layout</a></li>
+          <li><a href="#siteaddon">Addons</a></li>
+        </ul>
+      </nav>
+    </details>
+  </header>
+
+
+
+  <main>
+
+
+    <div role="banner">
+      <h2>CSS framework focused on small projects that prioritize accessibility</h2>
+      <a href="#showMeTheCode" role="button">Documentation</a>
+      <button type="button">Download</button>
+      <code
+        aria-label="CDN Link tag of cai.min.css">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@XXXX/cai.min.css&quot;&gt;</code>
+    </div>
+
+    <section id="showMeTheCode">
+      <header>
+        <h2>Show me the code</h2>
+        <p>The CAI framework documentation provides a clear and straightforward guide to fully leverage this accessible
+          and minimalist CSS framework. Featuring practical examples and detailed instructions for implementing basic
+          elements, forms, components, and layouts, along with a dedicated section for addons, the documentation is
+          designed to be intuitive and easy to follow. Whether you're a beginner or an experienced developer, you'll
+          find the necessary resources to create accessible and visually appealing websites with efficiency and ease.
+        </p>
+      </header>
+
+    </section>
+
+    <section id="sitebasic">
+
+      <details>
+        <summary>
+          <h3>Basic Elements</h3>
+          <p>Solid foundations with stylized basic HTML elements for a clean and efficient web structure.</p>
+        </summary>
+        <!-- Basic Elements -->
+        <article id="icons">
+          <header>
+            <hgroup>
+              <h3>icons</h3>
+            </hgroup>
+          </header>
+          <main>
+            <i data-icon="--icon-check" aria-hidden="true"></i>
+            <i data-icon="--icon-chevron-down" aria-hidden="true"></i>
+            <i data-icon="--icon-chevron-up" aria-hidden="true"></i>
+            <i data-icon="--icon-quote" aria-hidden="true"></i>
+            <i data-icon="--icon-menu" aria-hidden="true"></i>
+            <i data-icon="--icon-close" aria-hidden="true"></i>
+            <i data-icon="--icon-puzzle" aria-hidden="true"></i>
+            <i data-icon="--icon-moon" aria-hidden="true"></i>
+            <i data-icon="--icon-sun" aria-hidden="true"></i>
+            <i data-icon="--icon-setting" aria-hidden="true"></i>
+            <i data-icon="--icon-cabinet" aria-hidden="true"></i>
+            <i data-icon="--icon-building" aria-hidden="true"></i>
+            <i data-icon="--icon-building-house" aria-hidden="true"></i>
+            <i data-icon="--icon-square" aria-hidden="true"></i>
+            <i data-icon="--icon-square-info" aria-hidden="true"></i>
+            <i data-icon="--icon-add-plus" aria-hidden="true"></i>
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+
+        <article id="button">
+          <header>
+            <hgroup>
+              <h3>Buttons</h3>
+            </hgroup>
+          </header>
+          <main class="">
+
+            <button>Button</button>
+            <button type="button">Button</button>
+            <button type="submit">Button submit</button>
+            <button type="reset">Button reset</button>
+            <input type="submit" value="Input Button submit" />
+            <input type="button" value="Input Button button" />
+            <input type="reset" value="Input Button reset" />
+            <a href="#" role="button">Link role button</a>
+            <span role="button">Span role button</span>
+            <button disabled aria-disabled="true">Button disabled</button>
+            <button type="button" disabled aria-disabled="true">Button disabled</button>
+            <button type="submit" disabled aria-disabled="true">Button submit disabled</button>
+            <button type="reset" disabled aria-disabled="true">Button reset disabled</button>
+            <input type="submit" value="Input Button submit disabled" disabled aria-disabled="true" />
+            <input type="submit" value="Input Button submit disabled" disabled aria-disabled="true" />
+            <input type="button" value="Input Button button " disabled aria-disabled="true" />
+            <input type="submit" value="Input Button submit disabled" disabled aria-disabled="true" />
+            <input type="reset" value="Input Button reset " disabled aria-disabled="true" />
+            <input type="submit" value="Input Button submit disabled" disabled aria-disabled="true" />
+            <a href="#" role="button" disabled aria-disabled="true">Link role button </a>
+            <input type="submit" value="Input Button submit disabled" disabled aria-disabled="true" />
+            <span role="button" disabled aria-disabled="true">Span role button </span>
+
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+        <article id="inlineElements">
+          <header>
+            <hgroup>
+              <h3>Inline Elements</h3>
+            </hgroup>
+          </header>
+          <main class="">
+            <p><small>small tag with text</small></p>
+            <p><del>Deleted</del></p>
+            <p><ins>Inserted</ins></p>
+            <p><kbd>Ctrl + S</kbd></p>
+            <p><mark>Highlighted</mark></p>
+            <p><s>Strikethrough</s></p>
+            <p><span>This is Text with<sub>Sub</sub></span></p>
+            <p><u>Underline</u></p>
+            <p><span>This is Text with<sup>Sup</sup></span></p>
+            <p><abbr title="Abbreviation">Abbr.</abbr></p>
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+
+        <article id="heading">
+          <header>
+            <hgroup>
+              <h3>Heading</h3>
+            </hgroup>
+          </header>
+          <main>
+            <h1>Heading 1</h1>
+            <h2>Heading 2</h2>
+            <h3>Heading 3</h3>
+            <h4>Heading 4</h4>
+            <h5>Heading 5</h5>
+            <h6>Heading 6</h6>
+          </main>
+          <footer>
+  <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+        <article id="horizontalBar">
+          <header>
+            <hgroup>
+              <h3>Horizontal Bar</h3>
+            </hgroup>
+          </header>
+          <main>
+            <hr>
+          </main>
+          <footer>
+            <pre><code></code></pre>
+          </footer>
+        </article>
+        <article id="picture">
+          <header>
+            <hgroup>
+              <h3>Picture</h3>
+              <p>Use picture like default image view</p>
+            </hgroup>
+          </header>
+          <main>
+            <picture>
+              <source media="(min-width: 1400px)" srcset="../asset/moon-xxl.webp" type="image/webp" />
+              <source media="(min-width: 1400px)" srcset="../asset/moon-xxl.jpg" type="image/jpeg" />
+
+              <source media="(min-width: 1200px)" srcset="../asset/moon-xl.webp" type="image/webp" />
+              <source media="(min-width: 1200px)" srcset="../asset/moon-xl.jpg" type="image/jpeg" />
+
+              <source media="(min-width: 980px)" srcset="../asset/moon-lg.webp" type="image/webp" />
+              <source media="(min-width: 980px)" srcset="../asset/moon-lg.jpg" type="image/jpeg" />
+
+              <source media="(min-width: 720px)" srcset="../asset/moon-md.webp" type="image/webp" />
+              <source media="(min-width: 720px)" srcset="../asset/moon-md.jpg" type="image/jpeg" />
+
+              <source media="(min-width: 480px)" srcset="../asset/moon-sm.webp" type="image/webp" />
+              <source media="(min-width: 480px)" srcset="../asset/moon-sm.jpg" type="image/jpeg" />
+
+              <img src="../asset/moon-xs.jpg" alt="photo" />
+            </picture>
+          </main>
+          <footer>
+            <pre><code>
+</code></pre>
+          </footer>
+        </article>
+        <article id="link">
+          <header>
+            <hgroup>
+              <h3>Link</h3>
+            </hgroup>
+          </header>
+          <main>
+            <p><a title="Title of the link" href="#">Link</a></p>
+            <p><span title="Title of the link" role="link">Span with role of link</span></p>
+          </main>
+          <footer>
+            <pre><code>
+</code></pre>
+          </footer>
+        </article>
+        <article id="paragraph">
+          <header>
+            <hgroup>
+              <h3>Paragraph</h3>
+            </hgroup>
+          </header>
+          <main>
+            <p>
+              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Qui
+              exercitationem, recusandae quisquam nostrum voluptatem quibusdam
+              error facere ex sit illo laborum.
+            </p>
+            <p>
+              Exercitationem possimus atque similique, corporis excepturi minima
+              nihil neque.
+            </p>
+          </main>
+          <footer>
+            <pre><code>
+</code></pre>
+          </footer>
+        </article>
+        <article id="ulList">
+          <header>
+            <hgroup>
+              <h3>List</h3>
+            </hgroup>
+          </header>
+          <main>
+            <ul>
+              <li><strong>Classless</strong>, less mess</li>
+              <li>99% <strong>without js</strong>, <em>dialog</em> is guilty of this</li>
+              <li><strong>Scalable</strong> is available</li>
+              <li><strong>Modular</strong>, this is spectacular!</li>
+              <li><strong>RTL friendly</strong>, seamlessly dreamly</li>
+              <li>Create a <strong>Theme</strong> like a king</li>
+            </ul>
+          </main>
+          <footer>
+            <pre><code>
+</code></pre>
+          </footer>
+        </article>
+        <article id="video">
+          <header>
+            <hgroup>
+              <h3>Video</h3>
+            </hgroup>
+          </header>
+          <main>
+            <video controls aria-describe="Description of the video">
+              <source src="./asset/video.mp4" type="video/mp4">
+              <source src="./asset/video.ogg" type="video/ogg">
+              <track src="./asset/subtitles_es.vtt" kind="subtitles" srclang="es" label="Español">
+              <track src="./asset/subtitle_en.vtt" kind="subtitles" srclang="en" label="English">
+              Tu navegador no soporta el elemento <code>video</code>.
+            </video>
+          </main>
+          <footer>
+            <pre><code>
+</code></pre>
+          </footer>
+        </article>
+        <article id="progress">
+          <header>
+            <hgroup>
+              <h3>Progress Bar</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <progress></progress>
+            <progress value="25" max="100"></progress>
+          </main>
+          <footer>
+            <pre><code>
+</code></pre>
+          </footer>
+        </article>
+        <article id="table">
+          <header>
+            <hgroup>
+              <h3>Table</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <table>
+              <thead>
+                <tr>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                  <th>head</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                </tr>
+                <tr>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                </tr>
+                <tr>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                  <td>bodyCell</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>footer</td>
+                  <td>footer</td>
+                  <td>footer</td>
+                  <td>footer</td>
+                  <td>footer</td>
+                </tr>
+              </tfoot>
+            </table>
+          </main>
+          <footer>
+            <pre><code>
+</code></pre>
+          </footer>
+        </article>
+        <!-- /Basic Elements -->
+      </details>
+    </section>
+    <section id="siteform">
+      <details>
+        <summary>
+          <h3>Form Elements</h3>
+          <p>Enhanced form elements designed for usability and accessibility, ensuring smooth and understandable user
+            interaction.</p>
+        </summary>
+
+        <article id="formTag">
+          <header>
+            <hgroup>
+              <h3>Form Tag</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              here the form elements
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+
+        <article id="inputField">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type Text</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="text" placeholder="" aria-invalid="">
+              <input type="text" placeholder="Valid" aria-invalid="false">
+              <input type="text" placeholder="Invalid" aria-invalid="true">
+              <input type="text" placeholder="Disabled" disabled>
+              <input type="text" value="Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputEmail">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type email</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="email" placeholder="Email" aria-invalid="">
+              <input type="email" placeholder="Email Valid" aria-invalid="false">
+              <input type="email" placeholder="Email Invalid" aria-invalid="true">
+              <input type="email" placeholder="Email Disabled" disabled>
+              <input type="email" value="Email Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputPassword">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type Password</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="password" placeholder="password" aria-invalid="">
+              <input type="password" placeholder="password Valid" aria-invalid="false">
+              <input type="password" placeholder="password Invalid" aria-invalid="true">
+              <input type="password" placeholder="password Disabled" disabled>
+              <input type="password" value="password Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputSearch">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type Search</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="search" placeholder="search" aria-invalid="">
+              <input type="search" placeholder="search Valid" aria-invalid="false">
+              <input type="search" placeholder="search Invalid" aria-invalid="true">
+              <input type="search" placeholder="search Disabled" disabled>
+              <input type="search" value="search Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputTel">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type tel</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="tel" placeholder="tel" aria-invalid="">
+              <input type="tel" placeholder="tel Valid" aria-invalid="false">
+              <input type="tel" placeholder="tel Invalid" aria-invalid="true">
+              <input type="tel" placeholder="tel Disabled" disabled>
+              <input type="tel" value="tel Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+        <article id="inputTime">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type time</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="time" placeholder="time" aria-invalid="">
+              <input type="time" placeholder="time Valid" aria-invalid="false">
+              <input type="time" placeholder="time Invalid" aria-invalid="true">
+              <input type="time" placeholder="time Disabled" disabled>
+              <input type="time" value="time Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+        <article id="inputWeek">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type week</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="week" placeholder="week" aria-invalid="">
+              <input type="week" placeholder="week Valid" aria-invalid="false">
+              <input type="week" placeholder="week Invalid" aria-invalid="true">
+              <input type="week" placeholder="week Disabled" disabled>
+              <input type="week" value="week Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+        <article id="inputMonth">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type month</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="month" placeholder="month" aria-invalid="">
+              <input type="month" placeholder="month Valid" aria-invalid="false">
+              <input type="month" placeholder="month Invalid" aria-invalid="true">
+              <input type="month" placeholder="month Disabled" disabled>
+              <input type="month" value="month Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputDate">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type date</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="date" placeholder="date" aria-invalid="">
+              <input type="date" placeholder="date Valid" aria-invalid="false">
+              <input type="date" placeholder="date Invalid" aria-invalid="true">
+              <input type="date" placeholder="date Disabled" disabled>
+              <input type="date" value="date Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputDatetimeLocal">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type datetime-local</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="datetime-local" placeholder="datetime-local" aria-invalid="">
+              <input type="datetime-local" placeholder="datetime-local Valid" aria-invalid="false">
+              <input type="datetime-local" placeholder="datetime-local Invalid" aria-invalid="true">
+              <input type="datetime-local" placeholder="datetime-local Disabled" disabled>
+              <input type="datetime-local" value="datetime-local Readonly" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputUrl">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type url</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="url" placeholder="https://example.com" pattern="https://.*" size="30" aria-invalid="" />
+              <input type="url" placeholder="https://example.com" pattern="https://.*" size="30" aria-invalid="false" />
+              <input type="url" placeholder="https://example.com" pattern="https://.*" size="30" aria-invalid="true" />
+              <input type="url" placeholder="https://example.com" pattern="https://.*" size="30" disabled />
+              <input type="url" placeholder="https://example.com" pattern="https://.*" size="30" readonly />
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputNumber">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type number</h3>
+
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="number" placeholder="number" aria-invalid="">
+              <input type="number" placeholder="number Valid" aria-invalid="false">
+              <input type="number" placeholder="number Invalid" aria-invalid="true">
+              <input type="number" placeholder="number Disabled" disabled>
+              <input type="number" value="8888" readonly>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputCheckbox">
+          <header>
+            <hgroup>
+              <h3>Form element: Input Checkbox</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <label for="inputCheckboxUnchecked">
+                <input type="checkbox" role="checkbox" id="inputCheckboxUnchecked" name="">
+                This Checkbox unchecked
+              </label>
+              <label for="inputCheckboxChecked">
+                <input type="checkbox" role="checkbox" id="inputCheckboxChecked" name="" checked>
+                This Checkbox checked
+              </label>
+              <label for="inputCheckboxDisabled">
+                <input type="checkbox" role="checkbox" id="inputCheckboxDisabled" name="" disabled checked>
+                This Checkbox is disabled and checked
+              </label>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+        <article id="inputSwitch">
+          <header>
+            <hgroup>
+              <h3>Form element: Input or element with role="switch"</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <label for="inputswitchUnchecked">
+                <input type="checkbox" role="switch" id="inputswitchUnchecked" name="">
+                This switch unchecked
+              </label>
+              <label for="inputswitchChecked">
+                <input type="checkbox" role="switch" id="inputswitchChecked" name="" checked>
+                This switch checked
+              </label>
+              <label for="inputswitchDisabled">
+                <input type="checkbox" role="switch" id="inputswitchDisabled" name="" disabled checked>
+                This switch is disabled and checked
+              </label>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputRadio">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type Radio</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <label for="bad">
+                <input type="radio" id="bad" name="size" value="bad" checked>
+                Bad
+              </label>
+              <label for="standar">
+                <input type="radio" id="standar" name="size" value="standar">
+                Standar
+              </label>
+              <label for="good">
+                <input type="radio" id="good" name="size" value="good">
+                Good
+              </label>
+              <label for="awesome">
+                <input type="radio" id="awesome" name="size" value="awesome" disabled>
+                Awesome
+              </label>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="colorPicker">
+          <header>
+            <hgroup>
+              <h3>Form Element: Color Picker</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="color" id="inputColor" name="inputColor" value="#00FF00" />
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputRage">
+          <header>
+            <hgroup>
+              <h3>Form Element: Range</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <strong>Default Behavior</strong>
+              <input type="range" value="3" min="0" max="10" />
+              <input type="range" value="3" min="0" max="10" disabled />
+              <input type="range" value="50" min="0" max="100" step="10" />
+              <input type="range" value="85" min="50" max="100" step="any" />
+
+              <strong>With datalist</strong>
+              <input type="range" list="inputRangeDatalist" role="range" />
+              <datalist id="inputRangeDatalist">
+                <option value="0"></option>
+                <option value="25"></option>
+                <option value="50"></option>
+                <option value="75"></option>
+                <option value="100"></option>
+              </datalist>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="inputFile">
+          <header>
+            <hgroup>
+              <h3>Form element: Input type File</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <input type="file" id="inputTypeFile" name="file">
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="textarea">
+          <header>
+            <hgroup>
+              <h3>Form Element: Textarea</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <textarea type="text" placeholder="" aria-invalid="" rows="10" cols="50"></textarea>
+              <textarea type="text" placeholder="Valid" aria-invalid="false" rows="10" cols="50"></textarea>
+              <textarea type="text" placeholder="Invalid" aria-invalid="true" rows="10" cols="50"></textarea>
+              <textarea type="text" placeholder="Disabled" disabled rows="10" cols="50">Disabled</textarea>
+              <textarea type="text" value="Readonly" readonly rows="10" cols="50">Readonly</textarea>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+        <article id="select">
+          <header>
+            <hgroup>
+              <h3>Form Element: Select</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <select placeholder="" aria-invalid="">
+                <option value="" selected>Select a Person…</option>
+                <option>Vera Luque</option>
+                <option>Antonio Martín</option>
+                <option>Paco Alba</option>
+              </select>
+
+              <select placeholder="" aria-invalid="false">
+                <option value="" selected>Select a Person…</option>
+                <option>Vera Luque</option>
+                <option>Antonio Martín</option>
+                <option selected>Paco Alba</option>
+              </select>
+
+              <select placeholder="" aria-invalid="true">
+                <option value="" selected>Select a Person…</option>
+                <option selected>Vera Luque</option>
+                <option>Antonio Martín</option>
+                <option>Paco Alba</option>
+              </select>
+
+              <select placeholder="" aria-invalid="" disabled>
+                <option value="" selected>Select a Person…</option>
+                <option selected>Vera Luque</option>
+                <option>Antonio Martín</option>
+                <option>Paco Alba</option>
+              </select>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+        <article id="inputFieldset">
+          <header>
+            <hgroup>
+              <h3>Form Element: Fieldset</h3>
+            </hgroup>
+          </header>
+          <main>
+            <form action="">
+              <fieldset></fieldset>
+            </form>
+          </main>
+          <footer>
+            <pre><code>
+  </code></pre>
+          </footer>
+        </article>
+
+
+
+      </details>
+    </section>
+
+
+    <section id="siteaddon">
+
+      <details>
+        <summary>
+          <h3>Addons</h3>
+          <p>Additional addons that enrich your site with advanced functionalities, from animations to interactive
+            utilities</p>
+        </summary>
+
+
+
+        <article id="ellipsis">
+          <header>
+            <hgroup>
+              <h3>ellipsis</h3>
+              <p>Only a element with one line of text only</p>
+            </hgroup>
+          </header>
+
+          <main>
+            <div aria-multiline="false">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolore, fugit saepe quia eius autem odit
+              nesciunt
+              dicta id vitae tempora totam. Alias soluta officia id facilis commodi enim necessitatibus nihil.
+            </div>
+          </main>
+          <footer>
+            <pre><code>
+                  </code></pre>
+          </footer>
+        </article>
+
+
+        <article id="loading">
+          <header>
+            <hgroup>
+              <h3>Loading Attribute</h3>
+
+            </hgroup>
+          </header>
+          <main class="">
+            <button aria-busy="true">This button is loading…</button>
+            <a href="#" aria-busy="true">This link is loading…</a>
+            <article aria-busy="true">This article is loading...</article>
+          </main>
+          <footer>
+            <pre><code>
+        </code></pre>
+          </footer>
+        </article>
+
+      </details>
+    </section>
+
+    <section id="sitelayout">
+      <details>
+        <summary>
+          <h3>Layout</h3>
+          <p>Flexible, responsive layout options that adapt to any device, ensuring flawless presentation across all
+            screens.</p>
+        </summary>
+        xxxx
+      </details>
+    </section>
+
+    <section id="sitetheme">
+      <details>
+        <summary>
+          <h3>Theme</h3>
+          <p>xxxx</p>
+        </summary>
+      </details>
+    </section>
+
+
+
+    <section id="whyCai">
+      <header>
+        <h2>Why?</h2>
+      </header>
+      <main>
+
+        <aside>
+          <h3>Classless, less mess</h3>
+          <p> CAI breaks away from traditional CSS frameworks with its classless design. This approach
+            simplifies your HTML, reducing clutter and enhancing readability, while still offering a sleek, modern
+            aesthetic.</p>
+        </aside>
+        <aside>
+          <h3>Accessible is inevitable</h3>
+          <p> Built with the WAI-ARIA guidelines at its core, CAI ensures that every user,
+            regardless of their abilities, enjoys a seamless web experience. Our framework is a testament to inclusivity
+            in the digital realm.</p>
+        </aside>
+
+        <aside>
+          <h3>Modular, this is spectacular!</h3>
+          <p> Each module is crafted to work independently or in harmony with other. This minimal, classless framework
+            is the perfect ally for small to medium-sized projects where accessibility isn’t just a feature, but a
+            necessity.</p>
+        </aside>
+
+        <aside>
+          <h3>99% without js, dialog and polifills are guilty about this</h3>
+          <p>CAI stands proud with a 99% JavaScript-free environment.This approach ensures a smoother, faster, and more
+            secure experience for both developers and end-users. By minimizing reliance on JavaScript, CAI guarantees
+            al4
+        </aside>
+
+        <aside>
+          <h3> RTL Friendly, Seamlessly Dreamly</h3>
+          <p>Embracing global diversity, CAI is thoughtfully designed to be RTL (Right-to-Left) friendly, ensuring
+            seamless integration for languages that flow from right to left. This feature makes CAI a dream come true
+            for multilingual websites, providing a hassle-free experience in creating layouts that cater to a wider
+            audience.</p>
+        </aside>
+
+        <aside>
+          <h3> Create a Theme Like a King</h3>
+          <p>The framework’s theming capabilities are robust yet simple, allowing you to craft custom themes with ease.
+            Whether it’s adjusting color schemes, typography, or layout, CAI gives you the royal tools to dictate every
+            aspect of your website’s appearance. Unleash your creativity and rule your digital kingdom, making your
+            website not just a space but an extension of your unique brand and style.</p>
+        </aside>
+
+      </main>
+    </section>
+
+    ------------
+    OLD PICO
+    -------------
+
+
+
+
+
+    <section id="buttons">
+      <hgroup>
+        <h1>Buttons</h1>
+        <h2>The essential button in pure HTML, without <code>.classes</code> for the default style.</h2>
+      </hgroup>
+
+      <article aria-label="Button example">
+        <button aria-label="Button">Button</button>
+        <input type="submit">
+        <footer>
+          <pre><code>&lt;<b>button</b>&gt;Button&lt;/<b>button</b>&gt;
+        &lt;<b>input</b> <i>type</i>=<u>"submit"</u>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>Buttons are <code><i>width</i>: <u>100%</u>;</code> by default. Use <code><i>role</i>=<u>"button"</u></code>
+        on an inline element if you need an inline button.</p>
+      <article aria-label="Inline buttons examples"><a href="#" onclick="event.preventDefault()" role="button">Link</a>
+        <a href="#" onclick="event.preventDefault()" role="button">Link</a>
+        <footer>
+          <pre><code>&lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>role</i>=<u>"button"</u>&gt;Link&lt;/<b>a</b>&gt;
+        &lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>role</i>=<u>"button"</u>&gt;Link&lt;/<b>a</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>Buttons come with <code>.secondary</code> and <code>.contrast</code> styles.</p>
+      <p>ℹ️&nbsp;These classes are not available in the <a href="classless.html">class-less version</a>.</p>
+      <article aria-label="Buttons styles examples"><a href="#" onclick="event.preventDefault()" role="button"
+          class="secondary">Secondary</a> <a href="#" onclick="event.preventDefault()" role="button"
+          class="contrast">Contrast</a>
+        <footer>
+          <pre><code>&lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"secondary"</u>&gt;Secondary&lt;/<b>a</b>&gt;
+        &lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"contrast"</u>&gt;Contrast&lt;/<b>a</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>And a classic <code>.outline</code> variant.</p>
+      <article aria-label="Outline style examples"><a href="#" onclick="event.preventDefault()" role="button"
+          class="outline">Primary</a> <a href="#" onclick="event.preventDefault()" role="button"
+          class="secondary outline">Secondary</a> <a href="#" onclick="event.preventDefault()" role="button"
+          class="contrast outline">Contrast</a>
+        <footer>
+          <pre><code>&lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"outline"</u>&gt;Primary&lt;/<b>a</b>&gt;
+        &lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"secondary outline"</u>&gt;Secondary&lt;/<b>a</b>&gt;
+        &lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"contrast outline"</u>&gt;Contrast&lt;/<b>a</b>&gt;</code></pre>
+        </footer>
+      </article>
+    </section>
+
+
+    <section id="forms">
+      <hgroup>
+        <h1>Forms</h1>
+        <h2>All form elements are fully responsive in pure semantic HTML, allowing forms to scale gracefully across
+          devices and viewports.</h2>
+      </hgroup>
+      <p>Inputs are <code><i>width</i>: <u>100%</u>;</code> by default. You can use <code>.grid</code> inside a form.
+      </p>
+      <p>All native form elements are fully customizable and themeable with CSS variables.</p>
+      <article aria-label="Form example">
+        <form>
+          <div class="grid"><label for="firstname">First name <input type="text" id="firstname" name="firstname"
+                placeholder="First name" required=""></label> <label for="lastname">Last name <input type="text"
+                id="lastname" name="lastname" placeholder="Last name" required=""></label></div>
+          <label for="email">Email address</label> <input type="email" id="email" name="email"
+            placeholder="Email address" required=""> <small>We'll never share your email with anyone
+            else.</small> <button type="submit" aria-label="Example button"
+            onclick="event.preventDefault()">Submit</button>
+        </form>
+        <footer>
+          <pre><code>&lt;<b>form</b>&gt;
+
+        <em>&lt;!-- Grid --&gt;</em>
+        &lt;<b>div</b> <i>class</i>=<u>"grid"</u>&gt;
+      
+          <em>&lt;!-- Markup example 1: input is inside label --&gt;</em>
+          &lt;<b>label</b> <i>for</i>=<u>"firstname"</u>&gt;
+            First name
+            &lt;<b>input</b> <i>type</i>=<u>"text"</u> <i>id</i>=<u>"firstname"</u> <i>name</i>=<u>"firstname"</u> <i>placeholder</i>=<u>"First name"</u> <i>required</i>&gt;
+          &lt;/<b>label</b>&gt;
+      
+          &lt;<b>label</b> <i>for</i>=<u>"lastname"</u>&gt;
+            Last name
+            &lt;<b>input</b> <i>type</i>=<u>"text"</u> <i>id</i>=<u>"lastname"</u> <i>name</i>=<u>"lastname"</u> <i>placeholder</i>=<u>"Last name"</u> <i>required</i>&gt;
+          &lt;/<b>label</b>&gt;
+      
+        &lt;/<b>div</b>&gt;
+      
+        <em>&lt;!-- Markup example 2: input is after label --&gt;</em>
+        &lt;<b>label</b> <i>for</i>=<u>"email"</u>&gt;Email address&lt;/<b>label</b>&gt;
+        &lt;<b>input</b> <i>type</i>=<u>"email"</u> <i>id</i>=<u>"email"</u> <i>name</i>=<u>"email"</u> <i>placeholder</i>=<u>"Email address"</u> <i>required</i>&gt;
+        &lt;<b>small</b>&gt;We'll never share your email with anyone else.&lt;/<b>small</b>&gt;
+      
+        <em>&lt;!-- Button --&gt;</em>
+        &lt;<b>button</b> <i>type</i>=<u>"submit"</u>&gt;Submit&lt;/<b>button</b>&gt;
+      
+      &lt;/<b>form</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>Disabled and validation states:</p>
+      <article aria-label="Validation states examples">
+        <form class="grid"><input type="text" placeholder="Valid" aria-label="Valid" aria-invalid="false"> <input
+            type="text" placeholder="Invalid" aria-label="Invalid" aria-invalid="true"> <input type="text"
+            placeholder="Disabled" aria-label="Disabled" disabled="disabled"> <input type="text" value="Readonly"
+            aria-label="Readonly" readonly="readonly"></form>
+        <footer>
+          <pre><code>&lt;<b>input</b> <i>type</i>=<u>"text"</u> <i>placeholder</i>=<u>"Valid"</u> <i>aria-invalid</i>=<u>"false"</u>&gt;
+      &lt;<b>input</b> <i>type</i>=<u>"text"</u> <i>placeholder</i>=<u>"Invalid"</u> <i>aria-invalid</i>=<u>"true"</u>&gt;
+      &lt;<b>input</b> <i>type</i>=<u>"text"</u> <i>placeholder</i>=<u>"Disabled"</u> <i>disabled</i>&gt;
+      &lt;<b>input</b> <i>type</i>=<u>"text"</u> <i>value</i>=<u>"Readonly"</u> <i>readonly</i>&gt;</code></pre>
+        </footer>
+      </article>
+      <p><code>&lt;<b>fieldset</b>&gt;</code> is unstyled and acts as a container for radios and checkboxes, providing
+        a consistent <code><i>margin-bottom</i></code> for the set.</p>
+      <p><code><i>role</i>=<u>"switch"</u></code> on a <code><i>type</i>=<u>"checkbox"</u></code> enable a custom
+        switch.</p>
+      <article aria-label="Select, radios, checkboxes, switch examples"><label for="fruit">Fruit</label> <select
+          id="fruit" required="">
+          <option value="" selected="selected">Select a fruit…</option>
+          <option>Banana</option>
+          <option>Watermelon</option>
+          <option>Apple</option>
+          <option>Orange</option>
+          <option>Mango</option>
+        </select>
+        <fieldset>
+          <legend>Size</legend><label for="small"><input type="radio" id="small" name="size" value="small"
+              checked="checked"> Small</label> <label for="medium"><input type="radio" id="medium" name="size"
+              value="medium"> Medium</label> <label for="large"><input type="radio" id="large" name="size"
+              value="large">
+            Large</label> <label for="extralarge"><input type="radio" id="extralarge" name="size" value="extralarge"
+              disabled="disabled"> Extra Large</label>
+        </fieldset>
+        <fieldset><label for="terms"><input type="checkbox" id="terms" name="terms"> I agree to the Terms and
+            Conditions</label> <label for="terms_sharing"><input type="checkbox" id="terms_sharing" name="terms_sharing"
+              disabled="disabled" checked="checked"> I agree to share my information with
+            partners</label></fieldset>
+        <fieldset><label for="switch"><input type="checkbox" id="switch" name="switch" role="switch"> Publish on my
+            profile</label> <label for="switch_disabled"><input type="checkbox" id="switch_disabled"
+              name="switch_disabled" role="switch" disabled="disabled" checked="checked"> User must change
+            password at next logon</label></fieldset>
+        <footer>
+          <pre><code><em>&lt;!-- Select --&gt;</em>
+      &lt;<b>label</b> <i>for</i>=<u>"fruit"</u>&gt;Fruit&lt;/<b>label</b>&gt;
+      &lt;<b>select</b> <i>id</i>=<u>"fruit"</u> <i>required</i>&gt;
+        &lt;<b>option</b> <i>value</i>=<u>""</u> <i>selected</i>&gt;Select a fruit…&lt;/<b>option</b>&gt;
+        &lt;<b>option</b>&gt;…&lt;/<b>option</b>&gt;
+      &lt;/<b>select</b>&gt;
+      
+      <em>&lt;!-- Radios --&gt;</em>
+      &lt;<b>fieldset</b>&gt;
+        &lt;<b>legend</b>&gt;Size&lt;/<b>legend</b>&gt;
+        &lt;<b>label</b> <i>for</i>=<u>"small"</u>&gt;
+          &lt;<b>input</b> <i>type</i>=<u>"radio"</u> <i>id</i>=<u>"small"</u> <i>name</i>=<u>"size"</u> <i>value</i>=<u>"small"</u> <i>checked</i>&gt;
+          Small
+        &lt;/<b>label</b>&gt;
+        &lt;<b>label</b> <i>for</i>=<u>"medium"</u>&gt;
+          &lt;<b>input</b> <i>type</i>=<u>"radio"</u> <i>id</i>=<u>"medium"</u> <i>name</i>=<u>"size"</u> <i>value</i>=<u>"medium"</u>&gt;
+          Medium
+        &lt;/<b>label</b>&gt;
+        &lt;<b>label</b> <i>for</i>=<u>"large"</u>&gt;
+          &lt;<b>input</b> <i>type</i>=<u>"radio"</u> <i>id</i>=<u>"large"</u> <i>name</i>=<u>"size"</u> <i>value</i>=<u>"large"</u>&gt;
+          Large
+        &lt;/<b>label</b>&gt;
+        &lt;<b>label</b> <i>for</i>=<u>"extralarge"</u>&gt;
+          &lt;<b>input</b> <i>type</i>=<u>"radio"</u> <i>id</i>=<u>"extralarge"</u> <i>name</i>=<u>"size"</u> <i>value</i>=<u>"extralarge"</u> <i>disabled</i>&gt;
+          Extra Large
+        &lt;/<b>label</b>&gt;
+      &lt;/<b>fieldset</b>&gt;
+      
+      <em>&lt;!-- Checkboxes --&gt;</em>
+      &lt;<b>fieldset</b>&gt;
+        &lt;<b>label</b> <i>for</i>=<u>"terms"</u>&gt;
+          &lt;<b>input</b> <i>type</i>=<u>"checkbox"</u> <i>id</i>=<u>"terms"</u> <i>name</i>=<u>"terms"</u>&gt;
+          I agree to the Terms and Conditions
+        &lt;/<b>label</b>&gt;
+        &lt;<b>label</b> <i>for</i>=<u>"terms_sharing"</u>&gt;
+          &lt;<b>input</b> <i>type</i>=<u>"checkbox"</u> <i>id</i>=<u>"terms_sharing"</u> <i>name</i>=<u>"terms_sharing"</u> <i>disabled checked</i>&gt;
+          I agree to share my information with partners
+        &lt;/<b>label</b>&gt;
+      &lt;/<b>fieldset</b>&gt;
+      
+      <em>&lt;!-- Switches --&gt;</em>
+      &lt;<b>fieldset</b>&gt;
+        &lt;<b>label</b> <i>for</i>=<u>"switch"</u>&gt;
+          &lt;<b>input</b> <i>type</i>=<u>"checkbox"</u> <i>id</i>=<u>"switch"</u> <i>name</i>=<u>"switch"</u> <i>role</i>=<u>"switch"</u>&gt;
+          Publish on my profile
+        &lt;/<b>label</b>&gt;
+        &lt;<b>label</b> <i>for</i>=<u>"switch_disabled"</u>&gt;
+          &lt;<b>input</b> <i>type</i>=<u>"checkbox"</u> <i>id</i>=<u>"switch_disabled"</u> <i>name</i>=<u>"switch_disabled"</u> <i>role</i>=<u>"switch_disabled"</u> <i>disabled checked</i>&gt;
+          User must change password at next logon
+        &lt;/<b>label</b>&gt;
+      &lt;/<b>fieldset</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>You can change a checkbox to an indeterminate state by setting the <code><i>indeterminate</i></code> property
+        to <code><u>true</u></code></p>
+      <article aria-label="Indeterminate checkbox example"><label for="indeterminate-checkbox"><input type="checkbox"
+            id="indeterminate-checkbox" name="indeterminate-checkbox"> Select all</label>
+        <script>document.getElementById("indeterminate-checkbox").indeterminate = !0</script>
+        <footer>
+          <pre><code>&lt;<b>script</b>&gt;
+        <i>document</i>.<b>getElementById</b>(<u>'indeterminate-checkbox'</u>).<i>indeterminate</i> = <u>true</u>;
+      &lt;/<b>script</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>Others input types:</p>
+      <article aria-label="Search, file browser, range slider, date, time, color examples"><input type="search"
+          id="search" name="search" placeholder="Search"> <label for="file">File browser <input type="file" id="file"
+            name="file"></label> <label for="range">Range slider <input type="range" min="0" max="100" value="50"
+            id="range" name="range"></label> <label for="date">Date <input type="date" id="date" name="date"></label>
+        <label for="time">Time <input type="time" id="time" name="time"></label> <label for="color">Color <input
+            type="color" id="color" name="color" value="#0eaaaa"></label>
+        <footer>
+          <pre><code><em>&lt;!-- Search --&gt;</em>
+      &lt;<b>input</b> <i>type</i>=<u>"search"</u> <i>id</i>=<u>"search"</u> <i>name</i>=<u>"search"</u> <i>placeholder</i>=<u>"Search"</u>&gt;
+      
+      &lt;!-- File browser --&gt;
+      &lt;<b>label</b> <i>for</i>=<u>"file"</u>&gt;File browser
+        &lt;<b>input</b> <i>type</i>=<u>"file"</u> <i>id</i>=<u>"file"</u> <i>name</i>=<u>"file"</u>&gt;
+      &lt;/<b>label</b>&gt;
+      
+      <em>&lt;!-- Range slider --&gt;</em>
+      &lt;<b>label</b> <i>for</i>=<u>"range"</u>&gt;Range slider
+        &lt;<b>input</b> <i>type</i>=<u>"range"</u> <i>min</i>=<u>"0"</u> <i>max</i>=<u>"100"</u> <i>value</i>=<u>"50"</u> <i>id</i>=<u>"range"</u> <i>name</i>=<u>"range"</u>&gt;
+      &lt;/<b>label</b>&gt;
+      
+      <em>&lt;!-- Date --&gt;</em>
+      &lt;<b>label</b> <i>for</i>=<u>"date"</u>&gt;Date
+        &lt;<b>input</b> <i>type</i>=<u>"date"</u> <i>id</i>=<u>"date"</u> <i>name</i>=<u>"date"</u>&gt;
+      &lt;/<b>label</b>&gt;
+      
+      <em>&lt;!-- Time --&gt;</em>
+      &lt;<b>label</b> <i>for</i>=<u>"time"</u>&gt;Time
+        &lt;<b>input</b> <i>type</i>=<u>"time"</u> <i>id</i>=<u>"time"</u> <i>name</i>=<u>"time"</u>&gt;
+      &lt;/<b>label</b>&gt;
+      
+      <em>&lt;!-- Color --&gt;</em>
+      &lt;<b>label</b> <i>for</i>=<u>"color"</u>&gt;Color
+        &lt;<b>input</b> <i>type</i>=<u>"color"</u> <i>id</i>=<u>"color"</u> <i>name</i>=<u>"color"</u> <i>value</i>=<u>"#0eaaaa"</u>&gt;
+      &lt;/<b>label</b>&gt;</code></pre>
+        </footer>
+      </article>
+    </section>
+
+    <section id="tables">
+      <hgroup>
+        <h1>Tables</h1>
+        <h2>Default styles for tables without <code>.classes</code></h2>
+      </hgroup>
+      <figure>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Heading</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th scope="row">#</th>
+              <td>Total</td>
+              <td>Total</td>
+              <td>Total</td>
+              <td>Total</td>
+              <td>Total</td>
+            </tr>
+          </tfoot>
+        </table>
+      </figure>
+      <pre><code>&lt;<b>table</b>&gt;
+        &lt;<b>thead</b>&gt;
+          &lt;<b>tr</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"col"</u>&gt;#&lt;/<b>th</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"col"</u>&gt;Heading&lt;/<b>th</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"col"</u>&gt;Heading&lt;/<b>th</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"col"</u>&gt;Heading&lt;/<b>th</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"col"</u>&gt;Heading&lt;/<b>th</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"col"</u>&gt;Heading&lt;/<b>th</b>&gt;
+          &lt;/<b>tr</b>&gt;
+        &lt;/<b>thead</b>&gt;
+        &lt;<b>tbody</b>&gt;
+          &lt;<b>tr</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"row"</u>&gt;1&lt;/<b>th</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+          &lt;/<b>tr</b>&gt;
+          &lt;<b>tr</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"row"</u>&gt;1&lt;/<b>th</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+          &lt;/<b>tr</b>&gt;
+          &lt;<b>tr</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"row"</u>&gt;1&lt;/<b>th</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+            &lt;<b>td</b>&gt;Cell&lt;/<b>td</b>&gt;
+          &lt;/<b>tr</b>&gt;
+        &lt;/<b>tbody</b>&gt;
+        &lt;<b>tfoot</b>&gt;
+          &lt;<b>tr</b>&gt;
+            &lt;<b>th</b> <i>scope</i>=<u>"col"</u>&gt;#&lt;/<b>th</b>&gt;
+            &lt;<b>td</b> <i>scope</i>=<u>"col"</u>&gt;Total&lt;/<b>td</b>&gt;
+            &lt;<b>td</b> <i>scope</i>=<u>"col"</u>&gt;Total&lt;/<b>td</b>&gt;
+            &lt;<b>td</b> <i>scope</i>=<u>"col"</u>&gt;Total&lt;/<b>td</b>&gt;
+            &lt;<b>td</b> <i>scope</i>=<u>"col"</u>&gt;Total&lt;/<b>td</b>&gt;
+            &lt;<b>td</b> <i>scope</i>=<u>"col"</u>&gt;Total&lt;/<b>td</b>&gt;
+          &lt;/<b>tr</b>&gt;
+        &lt;/<b>tfoot</b>&gt;
+      &lt;/<b>table</b>&gt;</code></pre>
+      <p><code><i>role</i>=<u>"grid"</u></code> enable striped rows.</p>
+      <figure>
+        <table role="grid">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Heading</th>
+              <th scope="col">Heading</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+              <td>Cell</td>
+            </tr>
+          </tbody>
+        </table>
+      </figure>
+      <pre><code>&lt;<b>table</b> <i>role</i>=<u>"grid"</u>&gt;
+        <em>…</em>
+      &lt;/<b>table</b>&gt;</code></pre>
+    </section>
+
+
+    <section id="accordions">
+      <hgroup>
+        <h1>Accordions</h1>
+        <h2>Toggle sections of content in pure HTML, without JavaScript.</h2>
+      </hgroup>
+      <article aria-label="Accordions examples">
+        <details>
+          <summary>Accordion 1</summary>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque urna diam, tincidunt nec porta
+            sed, auctor id velit. Etiam venenatis nisl ut orci consequat, vitae tempus quam commodo. Nulla non
+            mauris ipsum. Aliquam eu posuere orci. Nulla convallis lectus rutrum quam hendrerit, in facilisis
+            elit sollicitudin. Mauris pulvinar pulvinar mi, dictum tristique elit auctor quis. Maecenas ac ipsum
+            ultrices, porta turpis sit amet, congue turpis.</p>
+        </details>
+        <details open="">
+          <summary>Accordion 2</summary>
+          <ul>
+            <li>Vestibulum id elit quis massa interdum sodales.</li>
+            <li>Nunc quis eros vel odio pretium tincidunt nec quis neque.</li>
+            <li>Quisque sed eros non eros ornare elementum.</li>
+            <li>Cras sed libero aliquet, porta dolor quis, dapibus ipsum.</li>
+          </ul>
+        </details>
+        <footer>
+          <pre><code>&lt;<b>details</b>&gt;
+        &lt;<b>summary</b>&gt;Accordion 1&lt;/<b>summary</b>&gt;
+        &lt;<b>p</b>&gt;…&lt;/<b>p</b>&gt;
+      &lt;/<b>details</b>&gt;
+      
+      &lt;<b>details</b> <i>open</i>&gt;
+        &lt;<b>summary</b>&gt;Accordion 2&lt;/<b>summary</b>&gt;
+        &lt;<b>ul</b>&gt;
+          &lt;<b>li</b>&gt;…&lt;/<b>li</b>&gt;
+          &lt;<b>li</b>&gt;…&lt;/<b>li</b>&gt;
+        &lt;/<b>ul</b>&gt;
+      &lt;/<b>details</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p><code><i>role</i>=<u>"button"</u></code> can be used to turn <code>&lt;<b>summary</b>&gt;</code> into a
+        button.</p>
+      <article aria-label="Accordions buttons examples">
+        <details>
+          <summary role="button">Accordion 1</summary>
+          <p>Aenean vestibulum nunc at libero congue, eu pretium nulla viverra. Fusce sed ex at est egestas
+            vehicula. Integer sit amet lectus mi. Duis ut viverra mauris, at laoreet enim.</p>
+        </details>
+        <details>
+          <summary role="button" class="secondary">Accordion 2</summary>
+          <p>Quisque porta dictum ipsum nec vestibulum. Suspendisse non mi ac tellus scelerisque egestas. Sed vel
+            nisi laoreet, rhoncus urna quis, luctus risus. Donec vitae molestie felis.</p>
+        </details>
+        <details>
+          <summary role="button" class="contrast">Accordion 3</summary>
+          <p>Praesent quam ipsum, condimentum non augue at, porttitor interdum tellus. Curabitur ultrices
+            consectetur leo, a placerat mauris malesuada et. In quis varius risus.</p>
+        </details>
+        <footer>
+          <pre><code><em>&lt;!-- Primary --&gt;</em>
+      &lt;<b>details</b>&gt;
+        &lt;<b>summary</b> <i>role</i>=<u>"button"</u>&gt;Accordion 1&lt;/<b>summary</b>&gt;
+        &lt;<b>p</b>&gt;…&lt;/<b>p</b>&gt;
+      &lt;/<b>details</b>&gt;
+      
+      <em>&lt;!-- Secondary --&gt;</em>
+      &lt;<b>details</b>&gt;
+        &lt;<b>summary</b> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"secondary"</u>&gt;Accordion 2&lt;/<b>summary</b>&gt;
+        &lt;<b>p</b>&gt;…&lt;/<b>p</b>&gt;
+      &lt;/<b>details</b>&gt;
+      
+      <em>&lt;!-- Contrast --&gt;</em>
+      &lt;<b>details</b>&gt;
+        &lt;<b>summary</b> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"contrast"</u>&gt;Accordion 3&lt;/<b>summary</b>&gt;
+        &lt;<b>p</b>&gt;…&lt;/<b>p</b>&gt;
+      &lt;/<b>details</b>&gt;
+      
+                  </code></pre>
+        </footer>
+      </article>
+    </section>
+
+    <section id="cards">
+      <hgroup>
+        <h1>Cards</h1>
+        <h2>A flexible container with graceful spacings across devices and viewports.</h2>
+      </hgroup>
+      <article aria-label="Card example">I'm a card!</article>
+      <pre><code>&lt;<b>article</b>&gt;I'm a card!&lt;/<b>article</b>&gt;</code></pre>
+      <p>You can use <code>&lt;<b>header</b>&gt;</code> and footer <code>&lt;<b>footer</b>&gt;</code> inside
+        <code>&lt;<b>article</b>&gt;</code>
+      </p>
+      <article aria-label="Card sectioning example">
+        <header>Header</header>Body<footer>Footer</footer>
+      </article>
+      <pre><code>&lt;<b>article</b>&gt;
+        &lt;<b>header</b>&gt;Header&lt;/<b>header</b>&gt;
+        Body
+        &lt;<b>footer</b>&gt;Footer&lt;/<b>footer</b>&gt;
+      &lt;/<b>article</b>&gt;</code></pre>
+    </section>
+
+
+    <section id="dropdown">
+      <hgroup>
+        <h1>Dropdowns</h1>
+        <h2>Dropdown menus and custom selects without JavaScript.</h2>
+      </hgroup>
+      <p>Dropdowns are built with <code>&lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;</code> as a wrapper and
+        <code>&lt;<b>summary</b>&gt;</code> and <code>&lt;<b>ul</b>&gt;</code> as direct children.
+      </p>
+      <p>For style consistency with the form elements, dropdowns are styled like a <a
+          href="forms.html">&lt;select&gt;</a>
+        by default.</p>
+      <article aria-label="Dropdowns as Selects">
+        <details role="list">
+          <summary aria-haspopup="listbox">Dropdown</summary>
+          <ul role="listbox">
+            <li><a href="#" onclick="event.preventDefault()">Action</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Another action</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Something else here</a></li>
+          </ul>
+        </details><select required="">
+          <option value="" disabled="disabled" selected="selected">Select</option>
+          <option>Option</option>
+          <option>Another option</option>
+          <option>Something else here</option>
+        </select>
+        <footer>
+          <pre><code><em>&lt;!-- Dropdown --&gt;</em>
+        &lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;
+          &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u>&gt;Dropdown&lt;/<b>summary</b>&gt;
+          &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Another action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Something else here&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>details</b>&gt;
+        
+        <em>&lt;!-- Select --&gt;</em>
+        &lt;<b>select</b>&gt;
+          &lt;<b>option</b> <i>value</i>=<u>""</u> <i>disabled selected</i>&gt;Select&lt;/<b>option</b>&gt;
+          &lt;<b>option</b>&gt;…&lt;/<b>option</b>&gt;
+        &lt;/<b>select</b>&gt;
+        </code></pre>
+        </footer>
+      </article>
+      <p><code>&lt;<b>summary</b> <i>role</i>=<u>"button"</u>&gt;</code> transforms the dropdown into a button.</p>
+      <article aria-label="Dropdowns as Buttons">
+        <details role="list">
+          <summary aria-haspopup="listbox" role="button">Dropdown as a button 1</summary>
+          <ul role="listbox">
+            <li><a href="#" onclick="event.preventDefault()">Action</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Another action</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Something else here</a></li>
+          </ul>
+        </details>
+        <details role="list">
+          <summary aria-haspopup="listbox" role="button" class="secondary">Dropdown as a button 2</summary>
+          <ul role="listbox">
+            <li><a href="#" onclick="event.preventDefault()">Action</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Another action</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Something else here</a></li>
+          </ul>
+        </details>
+        <details role="list">
+          <summary aria-haspopup="listbox" role="button" class="contrast">Dropdown as a button 3</summary>
+          <ul role="listbox">
+            <li><a href="#" onclick="event.preventDefault()">Action</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Another action</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Something else here</a></li>
+          </ul>
+        </details>
+        <footer>
+          <pre><code><em>&lt;!-- Primary --&gt;</em>
+        &lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;
+          &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u> <i>role</i>=<u>"button"</u>&gt;
+            Dropdown as a button 1
+          &lt;/<b>summary</b>&gt;
+          &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Another action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Something else here&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>details</b>&gt;
+        
+        <em>&lt;!-- Secondary --&gt;</em>
+        &lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;
+          &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"secondary"</u>&gt;
+            Dropdown as a button 2
+          &lt;/<b>summary</b>&gt;
+          &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Another action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Something else here&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>details</b>&gt;
+        
+        <em>&lt;!-- Contrast --&gt;</em>
+        &lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;
+          &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"contrast"</u>&gt;
+            Dropdown as a button 3
+          &lt;/<b>summary</b>&gt;
+          &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Another action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Something else here&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>details</b>&gt;
+        </code></pre>
+        </footer>
+      </article>
+      <p>Dropdowns can be used as custom selects with <code>&lt;<b>input</b> <i>type</i>=<u>"radio"</u>&gt;</code> or
+        <code>&lt;<b>input</b> <i>type</i>=<u>"checkbox"</u>&gt;</code>
+      </p>
+      <article aria-label="Dropdowns with radio buttons or checkboxes">
+        <details role="list">
+          <summary aria-haspopup="listbox">Select single element</summary>
+          <ul role="listbox">
+            <li><label for="small"><input type="radio" id="small" name="size" value="small"> Small</label></li>
+            <li><label for="medium"><input type="radio" id="medium" name="size" value="medium"> Medium</label>
+            </li>
+            <li><label for="large"><input type="radio" id="large" name="size" value="large"> Large</label></li>
+          </ul>
+        </details>
+        <details role="list">
+          <summary aria-haspopup="listbox">Select multiple elements</summary>
+          <ul role="listbox">
+            <li><label><input type="checkbox"> Banana</label></li>
+            <li><label><input type="checkbox"> Watermelon</label></li>
+            <li><label><input type="checkbox"> Apple</label></li>
+          </ul>
+        </details>
+        <footer>
+          <pre><code><em>&lt;!-- With radio buttons --&gt;</em>
+        &lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;
+          &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u>&gt;Dropdown&lt;/<b>summary</b>&gt;
+          &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>label</b> <i>for</i>=<u>"small"</u>&gt;
+                &lt;<b>input</b> <i>type</i>=<u>"radio"</u> <i>id</i>=<u>"small"</u> <i>name</i>=<u>"size"</u> <i>value</i>=<u>"small"</u>&gt;
+                Small
+              &lt;/<b>label</b>&gt;
+            &lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>label</b> <i>for</i>=<u>"medium"</u>&gt;
+                &lt;<b>input</b> <i>type</i>=<u>"radio"</u> <i>id</i>=<u>"medium"</u> <i>name</i>=<u>"size"</u> <i>value</i>=<u>"medium"</u>&gt;
+                Medium
+              &lt;/<b>label</b>&gt;
+            &lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>label</b> <i>for</i>=<u>"large"</u>&gt;
+                &lt;<b>input</b> <i>type</i>=<u>"radio"</u> <i>id</i>=<u>"large"</u> <i>name</i>=<u>"size"</u> <i>value</i>=<u>"large"</u>&gt;
+                Large
+              &lt;/<b>label</b>&gt;
+            &lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>details</b>&gt;
+        
+        <em>&lt;!-- With checkboxes --&gt;</em>
+        &lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;
+          &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u>&gt;Dropdown&lt;/<b>summary</b>&gt;
+          &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>label</b>&gt;
+                &lt;<b>input</b> <i>type</i>=<u>"checkbox"</u>&gt;
+                Banana
+              &lt;/<b>label</b>&gt;
+            &lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>label</b>&gt;
+                &lt;<b>input</b> <i>type</i>=<u>"checkbox"</u>&gt;
+                Watermelon
+              &lt;/<b>label</b>&gt;
+            &lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>label</b>&gt;
+                &lt;<b>input</b> <i>type</i>=<u>"checkbox"</u>&gt;
+                Apple
+              &lt;/<b>label</b>&gt;
+            &lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>details</b>&gt;
+                      
+                    </code></pre>
+        </footer>
+      </article>
+      <p>Dropdowns can be used inside a <a href="navs.html">&lt;nav&gt;</a> with a nested
+        <code>&lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;</code>
+      </p>
+      <p>Example with a dropdown as a link:</p>
+      <article aria-label="Dropdowns inside a nav">
+        <nav>
+          <ul>
+            <li><strong>Brand</strong></li>
+          </ul>
+          <ul>
+            <li><a href="#" onclick="event.preventDefault()">Link</a></li>
+            <li>
+              <details role="list" dir="rtl">
+                <summary aria-haspopup="listbox" role="link">Dropdown</summary>
+                <ul role="listbox">
+                  <li><a href="#" onclick="event.preventDefault()">Action</a></li>
+                  <li><a href="#" onclick="event.preventDefault()">Another action</a></li>
+                  <li><a href="#" onclick="event.preventDefault()">Something else here</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </nav>
+        <footer>
+          <pre><code>&lt;<b>nav</b>&gt;
+          &lt;<b>ul</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>strong</b>&gt;Brand&lt;/<b>strong</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+          &lt;<b>ul</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Link&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>details</b> <i>role</i>=<u>"list"</u> <i>dir</i>=<u>"rtl"</u>&gt;
+                &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u> <i>role</i>=<u>"link"</u>&gt;Dropdown&lt;/<b>summary</b>&gt;
+                &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Another action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Something else here&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                &lt;/<b>ul</b>&gt;
+              &lt;/<b>details</b>&gt;
+            &lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>nav</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>Example with a default dropdown and a dropdown as a button:</p>
+      <article aria-label="Dropdowns inside a nav">
+        <nav>
+          <ul>
+            <li>
+              <details role="list">
+                <summary aria-haspopup="listbox">Dropdown</summary>
+                <ul role="listbox">
+                  <li><a href="#" onclick="event.preventDefault()">Action</a></li>
+                  <li><a href="#" onclick="event.preventDefault()">Another action</a></li>
+                  <li><a href="#" onclick="event.preventDefault()">Something else here</a></li>
+                </ul>
+              </details>
+            </li>
+            <li>
+              <details role="list">
+                <summary aria-haspopup="listbox" role="button">Dropdown</summary>
+                <ul role="listbox">
+                  <li><a href="#" onclick="event.preventDefault()">Action</a></li>
+                  <li><a href="#" onclick="event.preventDefault()">Another action</a></li>
+                  <li><a href="#" onclick="event.preventDefault()">Something else here</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </nav>
+        <footer>
+          <pre><code>&lt;<b>nav</b>&gt;
+          &lt;<b>ul</b>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;
+                &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u>&gt;Dropdown&lt;/<b>summary</b>&gt;
+                &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Another action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Something else here&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                &lt;/<b>ul</b>&gt;
+              &lt;/<b>details</b>&gt;
+            &lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;
+              &lt;<b>details</b> <i>role</i>=<u>"list"</u>&gt;
+                &lt;<b>summary</b> <i>aria-haspopup</i>=<u>"listbox"</u> <i>role</i>=<u>"button"</u>&gt;Dropdown&lt;/<b>summary</b>&gt;
+                &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Another action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                  &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Something else here&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                &lt;/<b>ul</b>&gt;
+              &lt;/<b>details</b>&gt;
+            &lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>nav</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>You can also use <code>&lt;<b>li</b> <i>role</i>=<u>"list"</u>&gt;</code> as a nested wrapper to render a
+        list as a dropdown.</p>
+      <p>ℹ️&nbsp;This syntax is experimental. In this version, the dropdown menu is triggered on hover.</p>
+      <article aria-label="Dropdowns inside a nav">
+        <nav>
+          <ul>
+            <li><strong>Brand</strong></li>
+          </ul>
+          <ul>
+            <li><a href="#" onclick="event.preventDefault()">Link</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Link</a></li>
+            <li role="list" dir="rtl"><a href="#" onclick="event.preventDefault()" aria-haspopup="listbox">Dropdown</a>
+              <ul role="listbox">
+                <li><a href="#" onclick="event.preventDefault()">Action</a></li>
+                <li><a href="#" onclick="event.preventDefault()">Another action</a></li>
+                <li><a href="#" onclick="event.preventDefault()">Something else here</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+        <footer>
+          <pre><code>&lt;<b>nav</b>&gt;
+          &lt;<b>ul</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>strong</b>&gt;Brand&lt;/<b>strong</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+          &lt;<b>ul</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Link&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Link&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b> <i>role</i>=<u>"list"</u> <i>dir</i>=<u>"rtl"</u>&gt;
+              &lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>aria-haspopup</i>=<u>"listbox"</u>&gt;Dropdown&lt;/<b>a</b>&gt;
+              &lt;<b>ul</b> <i>role</i>=<u>"listbox"</u>&gt;
+                &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Another action&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+                &lt;<b>li</b>&gt;&lt;<b>a</b>&gt;Something else here&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+              &lt;/<b>ul</b>&gt;
+            &lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>nav</b>&gt;</code></pre>
+        </footer>
+      </article>
+    </section>
+
+    <section id="modal">
+      <hgroup>
+        <h1>Modal</h1>
+        <h2>The classic modal element with graceful spacings across devices and viewports.</h2>
+      </hgroup>
+      <p>Modals are built with <code>&lt;<b>dialog</b>&gt;</code> as a wrapper and <code>&lt;<b>article</b>&gt;</code>
+        as a content container.</p>
+      <p>Inside <code>&lt;<b>header</b>&gt;</code>, <code>&lt;<b>a</b> <i>class</i>=<u>"close"</u>&gt;</code> is
+        defined to <code><i>float</i>: <u>right</u>;</code> allowing a close icon to be top aligned with a title.
+      </p>
+      <dialog class="example">
+        <article>
+          <header><a href="#close" aria-label="Close" class="close" onclick="event.preventDefault()"></a>
+            <p>Modal title</p>
+          </header>
+          <p>Nunc nec ligula a tortor sollicitudin dictum in vel enim. Quisque facilisis turpis vel eros dictum
+            aliquam et nec turpis. Sed eleifend a dui nec ullamcorper. Praesent vehicula lacus ac justo accumsan
+            ullamcorper.</p>
+        </article>
+      </dialog>
+      <pre><code>&lt;<b>dialog</b> <i>open</i>&gt;
+        &lt;<b>article</b>&gt;
+          &lt;<b>header</b>&gt;
+            &lt;<b>a</b> <i>href</i>=<u>"#close"</u> <i>aria-label</i>=<u>"Close"</u> <i>class</i>=<u>"close"</u>&gt;&lt;/<b>a</b>&gt;
+            Modal title
+          &lt;/<b>header</b>&gt;
+          &lt;<b>p</b>&gt;
+            Nunc nec ligula a tortor sollicitudin dictum in vel enim. 
+            Quisque facilisis turpis vel eros dictum aliquam et nec turpis. 
+            Sed eleifend a dui nec ullamcorper. 
+            Praesent vehicula lacus ac justo accumsan ullamcorper.
+          &lt;/<b>p</b>&gt;
+        &lt;/<b>article</b>&gt;
+      &lt;/<b>dialog</b>&gt;</code></pre>
+      <p>Inside <code>&lt;<b>footer</b>&gt;</code>, the content is right aligned by default.</p>
+      <dialog class="example">
+        <article>
+          <h3>Confirm your action!</h3>
+          <p>Mauris non nibh vel nisi sollicitudin malesuada. Donec ut sagittis erat. Praesent eu eros felis. Ut
+            consectetur placerat pulvinar.</p>
+          <footer><a href="#cancel" role="button" class="secondary" onclick="event.preventDefault()">Cancel</a><a
+              href="#confirm" role="button" onclick="event.preventDefault()">Confirm</a></footer>
+        </article>
+      </dialog>
+      <pre><code>&lt;<b>dialog</b> <i>open</i>&gt;
+        &lt;<b>article</b>&gt;
+          &lt;<b>h3</b>&gt;Confirm your action!&lt;/<b>h3</b>&gt;
+          &lt;<b>p</b>&gt;
+            Mauris non nibh vel nisi sollicitudin malesuada. 
+            Donec ut sagittis erat. Praesent eu eros felis. 
+            Ut consectetur placerat pulvinar.
+          &lt;/<b>p</b>&gt;
+          &lt;<b>footer</b>&gt;
+            &lt;<b>a</b> <i>href</i>=<u>"#cancel"</u> <i>role</i>=<u>"button"</u> <i>class</i>=<u>"secondary"</u>&gt;Cancel&lt;/<b>a</b>&gt;
+            &lt;<b>a</b> <i>href</i>=<u>"#confirm"</u> <i>role</i>=<u>"button"</u>&gt;Confirm&lt;/<b>a</b>&gt;
+          &lt;/<b>footer</b>&gt;
+        &lt;/<b>article</b>&gt;
+      &lt;/<b>dialog</b>&gt;</code></pre>
+      <hgroup>
+        <h2>Live demo</h2>
+        <h3>Toggle a modal by clicking the button below.</h3>
+      </hgroup>
+      <article><button class="contrast" data-target="modal-example" onclick="toggleModal(event)">Launch demo
+          modal</button>
+        <footer>
+          <pre><code><em>&lt;!-- Button to trigger the modal --&gt;</em>
+      &lt;<b>button</b> <i>class</i>=<u>"contrast"</u>
+        <i>data-target</i>=<u>"modal-example"</u>
+        <i>onClick</i>=<u>"toggleModal(event)"</u>&gt;
+        Launch demo modal
+      &lt;/<b>button</b>&gt;
+      
+      <em>&lt;!-- Modal --&gt;</em>
+      &lt;<b>dialog</b> <i>id</i>=<u>"modal-example"</u>&gt;
+        &lt;<b>article</b>&gt;
+          &lt;<b>a</b> <i>href</i>=<u>"#close"</u>
+            <i>aria-label</i>=<u>"Close"</u>
+            <i>class</i>=<u>"close"</u>
+            <i>data-target</i>=<u>"modal-example"</u>
+            <i>onClick</i>=<u>"toggleModal(event)"</u>&gt;
+          &lt;/<b>a</b>&gt;
+          &lt;<b>h3</b>&gt;Confirm your action!&lt;/<b>h3</b>&gt;
+          &lt;<b>p</b>&gt;
+            Cras sit amet maximus risus. 
+            Pellentesque sodales odio sit amet augue finibus pellentesque. 
+            Nullam finibus risus non semper euismod.
+          &lt;/<b>p</b>&gt;
+          &lt;<b>footer</b>&gt;
+            &lt;<b>a</b> <i>href</i>=<u>"#cancel"</u>
+              <i>role</i>=<u>"button"</u>
+              <i>class</i>=<u>"secondary"</u>
+              <i>data-target</i>=<u>"modal-example"</u>
+              <i>onClick</i>=<u>"toggleModal(event)"</u>&gt;
+              Cancel
+            &lt;/<b>a</b>&gt;
+            &lt;<b>a</b> <i>href</i>=<u>"#confirm"</u>
+              <i>role</i>=<u>"button"</u>
+              <i>data-target</i>=<u>"modal-example"</u>
+              <i>onClick</i>=<u>"toggleModal(event)"</u>&gt;
+              Confirm
+            &lt;/<b>a</b>&gt;
+          &lt;/<b>footer</b>&gt;
+        &lt;/<b>article</b>&gt;
+      &lt;/<b>dialog</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>Pico does not include JavaScript code. You will need to implement your JS to interact with modals.</p>
+      <p>As a starting point, you can look at this example: <a
+          href="https://github.com/picocss/examples/blob/master/v1-preview/js/modal.js">modal.js</a>.</p>
+      <p>To make a modal appear, add the <code><i>open</i></code> attribute to the <code>&lt;<b>dialog</b>&gt;</code>
+        container.</p>
+      <pre><code><em>&lt;!-- Open modal--&gt;</em>
+      &lt;<b>dialog</b> <i>open</i>&gt;
+        &lt;<b>article</b>&gt;
+        <em>…</em>
+        &lt;/<b>article</b>&gt;
+      &lt;/<b>dialog</b>&gt;
+      
+      <em>&lt;!-- Modal closed --&gt;</em>
+      &lt;<b>dialog</b>&gt;
+        &lt;<b>article</b>&gt;
+          <em>…</em>
+        &lt;/<b>article</b>&gt;
+      &lt;/<b>dialog</b>&gt;
+      </code></pre>
+      <h2>Utilities</h2>
+      <p>Modals come with 3 utility classes.</p>
+      <p>ℹ️&nbsp;These classes are not available in the <a href="classless.html">class-less version</a>.</p>
+      <p><code>.modal-is-open</code> prevents any scrolling and interactions below the modal.</p>
+      <pre><code><em>&lt;!doctype html&gt;</em>
+      &lt;<b>html</b> <i>class</i>=<u>"modal-is-open"</u>&gt;
+        <em>…</em>
+      &lt;/<b>html</b>&gt;</code></pre>
+      <p><code>.modal-is-opening</code> brings an opening animation.</p>
+      <pre><code><em>&lt;!doctype html&gt;</em>
+      &lt;<b>html</b> <i>class</i>=<u>"modal-is-open modal-is-opening"</u>&gt;
+        <em>…</em>
+      &lt;/<b>html</b>&gt;</code></pre>
+      <p><code>.modal-is-closing</code> brings a closing animation.</p>
+      <pre><code><em>&lt;!doctype html&gt;</em>
+      &lt;<b>html</b> <i>class</i>=<u>"modal-is-open modal-is-closing"</u>&gt;
+        <em>…</em>
+      &lt;/<b>html</b>&gt;</code></pre>
+    </section>
+
+
+    <section id="navs">
+      <hgroup>
+        <h1>Navs</h1>
+        <h2>The essential navbar component in pure semantic HTML.</h2>
+      </hgroup>
+      <article aria-label="Nav example">
+        <nav>
+          <ul>
+            <li><strong>Brand</strong></li>
+          </ul>
+          <ul>
+            <li><a href="#" onclick="event.preventDefault()">Link</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Link</a></li>
+            <li><a href="#" onclick="event.preventDefault()" role="button">Button</a></li>
+          </ul>
+        </nav>
+        <footer>
+          <pre><code>&lt;<b>nav</b>&gt;
+        &lt;<b>ul</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>strong</b>&gt;Brand&lt;/<b>strong</b>&gt;&lt;/<b>li</b>&gt;
+        &lt;/<b>ul</b>&gt;
+        &lt;<b>ul</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Link&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Link&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>role</i>=<u>"button"</u>&gt;Button&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+        &lt;/<b>ul</b>&gt;
+      &lt;/<b>nav</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p><code>&lt;<b>ul</b>&gt;</code> are automatically distributed horizontally.</p>
+      <p><code>&lt;<b>li</b>&gt;</code> are unstyled and inlined.</p>
+      <article aria-label="Nav example">
+        <nav>
+          <ul>
+            <li><a href="#" onclick="event.preventDefault()" class="secondary" aria-label="Menu"><svg aria-hidden="true"
+                  focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" height="16px"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg></a></li>
+          </ul>
+          <ul>
+            <li><strong>Brand</strong></li>
+          </ul>
+          <ul>
+            <li><a href="#" onclick="event.preventDefault()" class="secondary" aria-label="Twitter"><svg
+                  aria-hidden="true" focusable="false" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                  height="16px" fill="currentColor" stroke="none" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path
+                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                  </path>
+                </svg></a></li>
+          </ul>
+        </nav>
+        <footer>
+          <pre><code>&lt;<b>nav</b>&gt;
+        &lt;<b>ul</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>class</i>=<u>"secondary"</u>&gt;…&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+        &lt;/<b>ul</b>&gt;
+        &lt;<b>ul</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>strong</b>&gt;Brand&lt;/<b>strong</b>&gt;&lt;/<b>li</b>&gt;
+        &lt;/<b>ul</b>&gt;
+        &lt;<b>ul</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>class</i>=<u>"secondary"</u>&gt;…&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+        &lt;/<b>ul</b>&gt;
+      &lt;/<b>nav</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>Inside <code>&lt;<b>aside</b>&gt;</code>, navs are stacked vertically.</p>
+      <article aria-label="Vertical nav example">
+        <aside>
+          <nav>
+            <ul>
+              <li><a href="#" onclick="event.preventDefault()">Link</a></li>
+              <li><a href="#" onclick="event.preventDefault()">Link</a></li>
+              <li><a href="#" onclick="event.preventDefault()">Link</a></li>
+            </ul>
+          </nav>
+        </aside>
+        <footer>
+          <pre><code>&lt;<b>aside</b>&gt;
+        &lt;<b>nav</b>&gt;
+          &lt;<b>ul</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Link&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Link&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+            &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Link&lt;/<b>a</b>&gt;&lt;/<b>li</b>&gt;
+          &lt;/<b>ul</b>&gt;
+        &lt;/<b>nav</b>&gt;
+      &lt;/<b>aside</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>With <code><i>aria-label</i>=<u>"breadcrumb"</u></code>, you can turn a nav into a breadcrumb.</p>
+      <article aria-label="Breadcrumb example">
+        <nav aria-label="breadcrumb">
+          <ul>
+            <li><a href="#" onclick="event.preventDefault()">Home</a></li>
+            <li><a href="#" onclick="event.preventDefault()">Category</a></li>
+            <li>Page</li>
+          </ul>
+        </nav>
+        <footer>
+          <pre><code>&lt;<b>nav</b> <i>aria-label</i>=<u>"breadcrumb"</u>&gt;
+        &lt;<b>ul</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Home&lt;<b>/a</b>&gt;&lt;<b>/li</b>&gt;
+          &lt;<b>li</b>&gt;&lt;<b>a</b> <i>href</i>=<u>"#"</u>&gt;Category&lt;<b>/a</b>&gt;&lt;<b>/li</b>&gt;
+          &lt;<b>li</b>&gt;Page&lt;<b>/li</b>&gt;
+        &lt;<b>/ul</b>&gt;
+      &lt;/<b>nav</b>&gt;</code></pre>
+        </footer>
+      </article>
+    </section>
+
+
+    <section id="progress">
+      <hgroup>
+        <h1>Progress</h1>
+        <h2>Progress bar element in pure HTML, without JavaScript.</h2>
+      </hgroup>
+      <article aria-label="Progress bar example"><progress value="25" max="100"></progress>
+        <footer>
+          <pre><code>&lt;<b>progress</b> <i>value</i>=<u>"25</u>" <i>max</i>=<u>"100"</u>&gt;&lt;/<b>progress</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>A progress bar without a <code><b>value</b></code> attribute is indeterminate.</p>
+      <article aria-label="Indeterminate progress bar example"><progress></progress>
+        <footer>
+          <pre><code>&lt;<b>progress</b>&gt;&lt;/<b>progress</b>&gt;</code></pre>
+        </footer>
+      </article>
+    </section>
+
+
+    <section id="loading">
+      <hgroup>
+        <h1>Loading</h1>
+        <h2><code><i>aria-busy</i>=<u>"true"</u></code> enable a loading indicator.</h2>
+      </hgroup>
+      <article aria-label="Loading buttons example"><button aria-busy="true">Please wait…</button> <button
+          aria-busy="true" class="secondary"></button>
+        <footer>
+          <pre><code>&lt;<b>button</b> <i>aria-busy</i>=<u>"true"</u>&gt;Please wait…&lt;/<b>button</b>&gt;
+        &lt;<b>button</b> <i>aria-busy</i>=<u>"true"</u> <i>class</i>=<u>"secondary"</u>&gt;&lt;/<b>button</b>&gt;</code></pre>
+        </footer>
+      </article>
+      <p>It can be applied to any block:</p>
+      <article aria-busy="true"></article>
+      <pre><code>&lt;<b>article</b> <i>aria-busy</i>=<u>"true"</u>&gt;&lt;/<b>article</b>&gt;</code></pre>
+      <p>Or any text element:</p>
+      <article aria-label="Loading paragraph example"><a href="#" aria-busy="true"
+          onclick="event.preventDefault()">Generating link, please wait…</a>
+        <footer>
+          <pre><code>&lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>aria-busy</i>=<u>"true"</u>&gt;Generating link, please wait…&lt;/<b>a</b>&gt;</code></pre>
+        </footer>
+      </article>
+    </section>
+
+    <section id="tooltips">
+      <hgroup>
+        <h1>Tooltips</h1>
+        <h2>Enable tooltips everywhere in pure HTML, without JavaScript.</h2>
+      </hgroup>
+      <article aria-label="Tooltips examples">
+        <p>Tooltip on a <a href="#" onclick="event.preventDefault()" data-tooltip="Tooltip">link</a></p>
+        <p>Tooltip on <em data-tooltip="Tooltip">inline element</em></p>
+        <p><button data-tooltip="Tooltip" aria-label="Example button">Tooltip on a button</button></p>
+        <footer>
+          <pre><code>&lt;<b>p</b>&gt;Tooltip on a &lt;<b>a</b> <i>href</i>=<u>"#"</u> <i>data-tooltip</i>=<u>"Tooltip"</u>&gt;link&lt;/<b>a</b>&gt;&lt;/<b>p</b>&gt;
+        &lt;<b>p</b>&gt;Tooltip on &lt;<b>em</b> <i>data-tooltip</i>=<u>"Tooltip"</u>&gt;inline element&lt;/<b>em</b>&gt;&lt;/<b>p</b>&gt;
+        &lt;<b>p</b>&gt;&lt;<b>button</b> <i>data-tooltip</i>=<u>"Tooltip"</u>&gt;Tooltip on a button&lt;/<b>button</b>&gt;&lt;/<b>p</b>&gt;
+        </code></pre>
+        </footer>
+      </article>
+      <p><code><i>data-placement</i></code> with the values <code><u>top</u></code>, <code><u>right</u></code>,
+        <code><u>bottom</u></code> or <code><u>left</u></code> is used to control the position of the tooltip.
+      </p>
+      <article aria-label="Tooltips examples">
+        <div class="grid">
+          <div class="top"><button data-tooltip="Top" data-placement="top">Top</button></div>
+          <div class="right"><button data-tooltip="Right" data-placement="right">Right</button></div>
+          <div class="bottom"><button data-tooltip="Bottom" data-placement="bottom">Bottom</button></div>
+          <div class="left"><button data-tooltip="Left" data-placement="left">Left</button></div>
+        </div>
+        <footer>
+          <pre><code>&lt;<b>button</b> <i>data-tooltip</i>=<u>"Top"</u> <i>data-placement</i>=<u>"top"</u>&gt;Top&lt;/<b>button</b>&gt;
+        &lt;<b>button</b> <i>data-tooltip</i>=<u>"Right"</u> <i>data-placement</i>=<u>"right"</u>&gt;Right&lt;/<b>button</b>&gt;
+        &lt;<b>button</b> <i>data-tooltip</i>=<u>"Bottom"</u> <i>data-placement</i>=<u>"bottom"</u>&gt;Bottom&lt;/<b>button</b>&gt;
+        &lt;<b>button</b> <i>data-tooltip</i>=<u>"Left"</u> <i>data-placement</i>=<u>"left"</u>&gt;Left&lt;/<b>button</b>&gt;
+        </code></pre>
+        </footer>
+      </article>
+    </section>
+
+  </main>
+
+  <footer>
+    <small> Created by <a href="https://twitter.com/nandovejer">Nando Muñoz</a> under <a
+        href="https://en.wikipedia.org/wiki/MIT_License">MIT License</a></small>
+  </footer>
+
+</body>
+
+</html>

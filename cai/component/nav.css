@@ -1,0 +1,91 @@
+nav[role="navigation"] {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+
+
+nav[role="navigation"] a,
+nav[role="navigation"] strong:not(:has(a)) {
+  padding: var(--core-space-half) var(--core-space);
+  background-color: var(--core-backgroundColor);
+  color: var(--core-color-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: var(--core-color-primary);
+    color: var(--core-color-primary-inverse);
+  }
+
+  &:focus {
+    outline: 1px solid var(--core-color-primary);
+  }
+}
+
+nav[role="navigation"] ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--core-backgroundColor);
+}
+
+nav[role="navigation"] > ul a {
+  display: block;
+  text-decoration: none;
+  position: relative;
+}
+
+nav[role="navigation"] > ul {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+nav[role="navigation"] > ul li {
+  position: relative;
+  width: 100%;
+}
+
+nav[role="navigation"] > ul > li > a {
+  margin-bottom: 1px;
+}
+
+nav[role="navigation"] > ul > li:last-child {
+  margin-right: 0;
+}
+
+
+/* submenu positioning*/
+nav[role="navigation"] > ul ul {
+  position: absolute;
+  white-space: nowrap;
+  z-index: 1;
+  left: -99999em;
+  padding: 0;
+  border: 1px solid var(--core-color-primary);
+}
+
+nav[role="navigation"] > ul > li:hover > ul {
+  left: 0;
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(160px , 1fr));
+}
+
+nav[role="navigation"] > ul > li li:hover > ul {
+  left: 100%;
+  top: -1px;
+}
+
+/*Others */
+nav[role="navigation"][aria-orientation="vertical"] ul {
+  display: flex;
+  flex-direction: column;
+}

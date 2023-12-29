@@ -1,0 +1,36 @@
+@counter-style list-unordered-0 {
+    system: cyclic;
+    symbols: "\276F";
+    suffix: "\00a0";
+}
+
+@counter-style list-unordered-1 {
+    system: cyclic;
+    symbols: "\276D";
+    suffix: "\276D\00a0";
+}
+
+@counter-style list-unordered-2 {
+    system: cyclic;
+    symbols: "\276D";
+    suffix: "\276D\276D\00a0";
+}
+
+
+ul {
+    list-style: list-unordered-0;
+}
+
+ul ul {
+    list-style: list-unordered-1;
+}
+
+ul ul ul {
+    list-style: list-unordered-2;
+}
+
+
+ol>li:has(ol),
+ul>li:has(ul) {
+    list-style: none;
+}

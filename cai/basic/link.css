@@ -1,0 +1,23 @@
+a,
+[role=link] {
+  --text-decoration: none;
+  --core-textColor: var(--core-color-primary);
+  --core-backgroundColor: transparent;
+  outline: none;
+  background-color: var(--core-backgroundColor);
+  color: var(--core-textColor);
+  -webkit-text-decoration: var(--text-decoration);
+  text-decoration: var(--text-decoration);
+  transition: background-color var(--core-transition), color var(--core-transition), box-shadow var(--core-transition), -webkit-text-decoration var(--core-transition);
+  transition: background-color var(--core-transition), color var(--core-transition), text-decoration var(--core-transition), box-shadow var(--core-transition);
+  transition: background-color var(--core-transition), color var(--core-transition), text-decoration var(--core-transition), box-shadow var(--core-transition), -webkit-text-decoration var(--core-transition);
+}
+a:is([aria-current], :hover, :active, :focus),
+[role=link]:is([aria-current], :hover, :active, :focus) {
+  --core-textColor: var(--core-color-primary-hover);
+  --text-decoration: underline;
+}
+a:focus,
+[role=link]:focus {
+  --core-backgroundColor: var(--core-color-primary-focus);
+}

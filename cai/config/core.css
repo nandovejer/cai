@@ -1,0 +1,55 @@
+:root {
+  --fontFamily-default: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --fontFamily-heading: "Segoe UI", Ubuntu, "Helvetica Neue", Helvetica, Roboto,
+    "Open Sans", sans-serif;
+  --fontFamily-code: "Menlo", "Consolas", "Roboto Mono", "Ubuntu Monospace",
+    "Noto Mono", "Oxygen Mono", "Liberation Mono", monospace,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --fontFamily-ascii: sans-serif;
+
+
+  --core-lineHeight: 1.5;
+  --core-fontWeight: 400;
+
+  --core-borderRadius: 0.25rem;
+  --core-borderWidth: 1px;
+  --core-outlineWidth: 3px;
+  --core-space: 1rem;
+  --core-space-half: 0.5rem;
+  --core-space-vertical: 1.5rem;
+  --core-space-three-quarters: 0.75rem;
+  --core-box-space-vertical: calc(var(--core-space) * 2);
+  --core-box-space-horizontal: var(--core-space);
+  --core-transition: 0.2s ease-in-out;
+  --core-animation-close: animaClose 0.5s ease forwards;
+  --core-backdrop-filter: blur(0.25rem);
+  --core-maxWidth: 980px;
+
+  --core-fontSize: 16px;
+  --core-fontSize-XS: calc(var(--core-fontSize)/2);
+  --core-fontSize-S: calc(var(--core-fontSize)/1.25);
+  --core-fontSize-M: calc(var(--core-fontSize)*1.25);
+  --core-fontSize-L: calc(var(--core-fontSize)*1.5);
+  --core-fontSize-XL: calc(var(--core-fontSize)*2);
+  --core-fontSize-XXL: calc(var(--core-fontSize)*3);
+
+  --core-body-overflow-status: auto; 
+  
+  --gallery-width: 300px;
+}
+
+@keyframes animaClose {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-100%);
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    display: none;
+  }
+}

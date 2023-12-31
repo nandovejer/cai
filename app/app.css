@@ -1,3 +1,11 @@
+@charset "UTF-8";
+
+/* Site Layout */
+@import "../cai/layout/section-default.css";
+@import "../cai/layout/header-default.css";
+@import "../cai//layout/footer-default.css";
+
+
 article#link [data-cai-tag=demo],
 article#icon [data-cai-tag=demo] {
     display: flex;
@@ -14,7 +22,7 @@ body>main>section:not([role=banner]) {
 body>main>section:not([role=banner])>details>summary {
     position: sticky;
     top: 0;
-background-color: var(--core-backgroundColor);
-z-index: 2;
+    background-color: var(--core-backgroundColor);
+    z-index: 2;
 
 }

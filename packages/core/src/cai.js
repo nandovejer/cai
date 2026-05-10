@@ -3,7 +3,6 @@
  * Showcase management: sidebar, themes, copy-to-clipboard, responsive.
  */
 
-import { MidiPlayer } from "./midi.js";
 import { formatTime } from "./utils.js";
 
 /* ============================================================
@@ -1142,6 +1141,8 @@ async function mountMidiPlayer(root) {
     statusEl.setAttribute("aria-live", "polite"); // Bug 1.11: screen reader support
   }
   if (playPauseBtn) playPauseBtn.disabled = true;
+
+  const { MidiPlayer } = await import("./midi.js");
 
   let player;
   try {

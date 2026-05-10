@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@9.0.0",
   "scripts": {
-    "predev": "pnpm build",
+    "predev": "node scripts/check-dist.js",
     "dev": "vite",
     "build": "pnpm tokens:build && pnpm core:build && pnpm platform:build",
     "core:build": "node scripts/build-core.js",

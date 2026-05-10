@@ -56,8 +56,10 @@ async function buildJS() {
     });
 
     await bundle.write({
-      file: resolve(distRoot, "cai.js"),
+      dir: distRoot,
       format: "es",
+      entryFileNames: "cai.js",
+      chunkFileNames: "[name].js",
       inlineDynamicImports: false,
     });
 

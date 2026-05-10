@@ -62,10 +62,13 @@ cai-design-system/
 
 ```bash
 pnpm install
+pnpm build   # REQUIRED: generates all dist/ assets before dev server
 pnpm dev
 ```
 
 This opens `apps/docs/index.html` through Vite at `localhost:5173`.
+
+**Note:** `pnpm dev` runs `pnpm build` automatically via the `predev` hook. If you make source changes during dev, you'll need to re-run `pnpm build` or a specific build command (`pnpm core:build`, `pnpm tokens:build`, etc.) to regenerate the assets.
 
 ## Build Commands
 
@@ -132,11 +135,13 @@ This regenerates `dist/cai.css`, `dist/cai.js`, `dist/midi.js`, and all `dist/th
 `@cai-ds/platform` is the app-level layer on top of CAI. It is where shells, layout patterns, and higher-level primitives that are too opinionated for `core` should live.
 
 **Use Platform when:**
+
 - Building a web app with a sidebar, header, main content area, and consistent footer
 - You need high-level layout primitives that belong in an app shell, not a component library
 - You want design system–aware app patterns without duplicating markup in every app
 
 **Use Core when:**
+
 - Building a component library or design tokens only
 - You need individual reusable components (buttons, forms, cards, etc.)
 - You're embedding CAI into a single-page app or framework
@@ -204,15 +209,15 @@ Today, `@cai-ds/platform` is effectively CSS-first. The JS entrypoint is reserve
 
 CAI has a two-dimensional theme system:
 
-| Dimension | Attribute | Controls |
-|---|---|---|
+| Dimension       | Attribute    | Controls                         |
+| --------------- | ------------ | -------------------------------- |
 | Visual identity | `data-theme` | Fonts, brand colors, personality |
-| Color mode | `data-mode` | light / dark / high-contrast |
+| Color mode      | `data-mode`  | light / dark / high-contrast     |
 
 Set both on `<html>`:
 
 ```html
-<html data-theme="minimalist" data-mode="light">
+<html data-theme="minimalist" data-mode="light"></html>
 ```
 
 ### Built-in themes
@@ -223,9 +228,9 @@ The base system (no `data-theme`) provides the default IBM Plex typography and a
 
 Custom themes live in `packages/core/src/themes/` and are distributed as standalone CSS files under `dist/themes/`. Each theme ships its own `light`, `dark`, and `high-contrast` color variants via `[data-theme="X"][data-mode="Y"]` selectors.
 
-| Theme | `data-theme` value | File |
-|---|---|---|
-| Minimalist | `minimalist` | `dist/themes/cai-theme-minimalist.css` |
+| Theme              | `data-theme` value | File                                         |
+| ------------------ | ------------------ | -------------------------------------------- |
+| Minimalist         | `minimalist`       | `dist/themes/cai-theme-minimalist.css`       |
 | Ricardo & Mortimer | `ricardoymortimer` | `dist/themes/cai-theme-ricardoymortimer.css` |
 
 **Minimalist** is the default theme. It uses DM Sans and warm off-whites with a muted slate brand color.
@@ -235,7 +240,10 @@ Custom themes live in `packages/core/src/themes/` and are distributed as standal
 Load a custom theme after core styles:
 
 ```html
-<link rel="stylesheet" href="/packages/core/dist/themes/cai-theme-minimalist.css" />
+<link
+  rel="stylesheet"
+  href="/packages/core/dist/themes/cai-theme-minimalist.css"
+/>
 ```
 
 Theme preferences are persisted to `localStorage` and restored before first paint via an inline script in `apps/docs/index.html`.
@@ -288,27 +296,27 @@ Primitive tokens (`--cai-blue-*`, `--cai-gray-*`, etc.) are only used inside `ca
 
 CAI uses a four-agent model for development, planning, QA, and architectural alignment. See **[agents.md](./agents.md)** for full definitions.
 
-| Agent | Role |
-|---|---|
-| `agent-alba` | Orchestrator and alignment checker (human-invoked only) |
-| `agent-ares` | Frontend engineer and vanilla-first enforcer (implements, reviews, vetoes) |
-| `agent-chapa` | Creative planner — specs, RFCs, execution plans for `agent-ares` |
-| `agent-martin` | QA engineer — tests, regression detection, quality reports |
+| Agent          | Role                                                                       |
+| -------------- | -------------------------------------------------------------------------- |
+| `agent-alba`   | Orchestrator and alignment checker (human-invoked only)                    |
+| `agent-ares`   | Frontend engineer and vanilla-first enforcer (implements, reviews, vetoes) |
+| `agent-chapa`  | Creative planner — specs, RFCs, execution plans for `agent-ares`           |
+| `agent-martin` | QA engineer — tests, regression detection, quality reports                 |
 
 ## Documentation Index
 
-| File | Purpose |
-|---|---|
-| **[VANILLA-FIRST.md](./VANILLA-FIRST.md)** | Architectural philosophy — why vanilla, decision framework |
-| **[STRUCTURE.md](./STRUCTURE.md)** | Annotated monorepo directory layout |
-| **[DIST-RULES.md](./DIST-RULES.md)** | Build workflow — `src/` → `dist/` regeneration steps |
-| **[QUICK-REFERENCE.md](./QUICK-REFERENCE.md)** | Commands, naming conventions, token structure, component inventory |
-| **[agents.md](./agents.md)** | Agent definitions and collaboration model |
-| **[ROADMAP.md](./ROADMAP.md)** | Strategic direction, version milestones, and backlog |
-| **[CONTRIBUTING.md](./CONTRIBUTING.md)** | PR guidelines, checklist, and contribution workflow |
-| **[ACCESSIBILITY_AUDIT.md](./ACCESSIBILITY_AUDIT.md)** | WCAG 2.1 AA audit status and known gaps |
-| **[TESTING.md](./TESTING.md)** | Test infrastructure and coverage strategy |
-| **[CHANGELOG.md](./CHANGELOG.md)** | Version history and migration notes |
+| File                                                   | Purpose                                                            |
+| ------------------------------------------------------ | ------------------------------------------------------------------ |
+| **[VANILLA-FIRST.md](./VANILLA-FIRST.md)**             | Architectural philosophy — why vanilla, decision framework         |
+| **[STRUCTURE.md](./STRUCTURE.md)**                     | Annotated monorepo directory layout                                |
+| **[DIST-RULES.md](./DIST-RULES.md)**                   | Build workflow — `src/` → `dist/` regeneration steps               |
+| **[QUICK-REFERENCE.md](./QUICK-REFERENCE.md)**         | Commands, naming conventions, token structure, component inventory |
+| **[agents.md](./agents.md)**                           | Agent definitions and collaboration model                          |
+| **[ROADMAP.md](./ROADMAP.md)**                         | Strategic direction, version milestones, and backlog               |
+| **[CONTRIBUTING.md](./CONTRIBUTING.md)**               | PR guidelines, checklist, and contribution workflow                |
+| **[ACCESSIBILITY_AUDIT.md](./ACCESSIBILITY_AUDIT.md)** | WCAG 2.1 AA audit status and known gaps                            |
+| **[TESTING.md](./TESTING.md)**                         | Test infrastructure and coverage strategy                          |
+| **[CHANGELOG.md](./CHANGELOG.md)**                     | Version history and migration notes                                |
 
 ## License
 

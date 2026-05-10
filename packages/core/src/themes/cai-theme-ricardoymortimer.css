@@ -1,4 +1,61 @@
-@import url('https://fonts.googleapis.com/css2?family=Freckle+Face&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Freckle+Face&family=Space+Grotesk:wght@300;400;500;600;700&display=swap'); */
+
+/* MIGRATION NOTE (W-01):
+   Google Fonts replaced with local hosting via @font-face below.
+   To complete: download Freckle Face + Space Grotesk woff2 files
+   and place in packages/tokens/fonts/{custom-faces,decorative}/
+   Then uncomment @font-face entries and remove this note.
+   See DIST-RULES.md for fonts integration guide.
+*/
+
+@font-face {
+  font-family: "Freckle Face";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/FreckeFace-Regular.woff2") format("woff2"); */
+  /* For now, fallback to system fonts — see migration note above */
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Light.woff2") format("woff2"); */
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Regular.woff2") format("woff2"); */
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Medium.woff2") format("woff2"); */
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-SemiBold.woff2") format("woff2"); */
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Bold.woff2") format("woff2"); */
+}
 
 /* ==========================================================================
    CAI Design System — Theme: Ricardo & Mortimer
@@ -66,7 +123,8 @@
   /* Shadows — with portal-green tint for R&M aesthetic */
   --cai-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 0 1px rgba(8, 201, 82, 0.15);
   --cai-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(8, 201, 82, 0.1);
-  --cai-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6), 0 6px 12px rgba(8, 201, 82, 0.12);
+  --cai-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6),
+    0 6px 12px rgba(8, 201, 82, 0.12);
 }
 
 /* -------------------------------------------------------------------------
@@ -80,30 +138,30 @@
 
 :root {
   /* Multiverso / Portal (main brand) */
-  --rm-portal: #08c952;           /* Battletoad — portal green */
-  --rm-portal-hover: #0ae55b;     /* brighter portal on hover */
-  --rm-portal-active: #0fff6f;    /* brightest portal on press */
-  --rm-portal-border: #fce46d;    /* Yellow Tan — portal energy border */
+  --rm-portal: #08c952; /* Battletoad — portal green */
+  --rm-portal-hover: #0ae55b; /* brighter portal on hover */
+  --rm-portal-active: #0fff6f; /* brightest portal on press */
+  --rm-portal-border: #fce46d; /* Yellow Tan — portal energy border */
 
   /* Space backgrounds */
-  --rm-space-deep: #0d0221;       /* deeper than Floppy Disk — sidebar */
-  --rm-space: #160440;            /* Floppy Disk — main page background */
-  --rm-surface: #1a0f3c;          /* elevated surface */
-  --rm-elevated: #22145a;         /* hover lift */
-  --rm-active: #2a1870;           /* active press */
+  --rm-space-deep: #0d0221; /* deeper than Floppy Disk — sidebar */
+  --rm-space: #160440; /* Floppy Disk — main page background */
+  --rm-surface: #1a0f3c; /* elevated surface */
+  --rm-elevated: #22145a; /* hover lift */
+  --rm-active: #2a1870; /* active press */
   --rm-overlay: rgba(13, 2, 33, 0.85);
 
   /* Rick Sanchez palette — cool / clinical */
-  --rm-rick-hair: #aee6e3;        /* Cool Crayon — turquoise pale */
-  --rm-rick-coat: #fcfafb;        /* Dr. White — clinical white */
-  --rm-rick-shirt: #bbe0f2;       /* Fountains of Budapest — light blue */
+  --rm-rick-hair: #aee6e3; /* Cool Crayon — turquoise pale */
+  --rm-rick-coat: #fcfafb; /* Dr. White — clinical white */
+  --rm-rick-shirt: #bbe0f2; /* Fountains of Budapest — light blue */
 
   /* Morty Smith palette — warm / primary */
-  --rm-morty-shirt: #f7f07b;      /* Morty yellow */
+  --rm-morty-shirt: #f7f07b; /* Morty yellow */
 
   /* Text */
-  --rm-text: #e8f4f8;             /* pale blue-white — readable on dark space */
-  --rm-text-secondary: #aee6e3;   /* Cool Crayon — secondary text */
+  --rm-text: #e8f4f8; /* pale blue-white — readable on dark space */
+  --rm-text-secondary: #aee6e3; /* Cool Crayon — secondary text */
 
   /* Semantic accents */
   --rm-danger: #ff4757;

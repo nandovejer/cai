@@ -5,12 +5,14 @@
 **CAI is a vanilla-first design system for teams that value simplicity, portability, and standards over framework abstraction.** We target designers and developers who want zero build steps, semantic HTML, and CSS custom properties they can understand and extend.
 
 Target users:
+
 - **Indie makers & small teams** building web products
 - **Design system maintainers** needing a lightweight foundation
 - **Educators** teaching HTML/CSS/a11y without framework overhead
 - **Embedded use cases** (docs sites, component libraries, design tokens)
 
 **We will NOT compete with Carbon/Foundation on features.** We compete on:
+
 - ✓ Simplicity (2 files, 0 build step)
 - ✓ Portability (works in any stack)
 - ✓ Standards compliance (semantic HTML, WCAG 2.1 AA)
@@ -21,6 +23,7 @@ Target users:
 ## Version Roadmap
 
 ### **v2.0.0** (Current — May 2026)
+
 - ✓ Core token system (primitives + semantic)
 - ✓ Base components (buttons, forms, cards, tables, alerts, etc.)
 - ✓ Media players (video, audio, MIDI)
@@ -30,37 +33,38 @@ Target users:
 - ✓ Landing page + GitHub Pages ready
 - ✓ Semantic headings (h2, h3 throughout)
 - ✓ Full English documentation
+- ✓ Platform package for app-level shells
+- ✓ Modal component with full a11y
+- ✓ Video player captions (WebVTT)
+- ⚠️ Planned for v2.0.0 (ongoing):
+  - [ ] WCAG 2.1 AA audit + fixes
+  - [ ] Screen reader testing (VoiceOver, NVDA, JAWS)
+  - [ ] Documentation: a11y testing guide
 
-### **v1.3.0** (Q3 2026) — Accessibility, Platform, & Polish
-- [x] **Extract app-shell patterns into `@cai-ds/platform`** (accelerated from v1.4)
-  - [x] Define boundary between `core` and `platform`
-  - [x] Move shared app-shell primitives (skip-link, page header, content shell, footer, feature grid, command block)
-  - [x] Establish dependency hierarchy: `tokens` → `core` → `platform`
-  - [x] Build script integration (`pnpm platform:build`)
+### **v2.1.0** (Q3 2026) — Accessibility & Refinement
+
 - [ ] WCAG 2.1 AA audit + fixes
 - [ ] Screen reader testing (VoiceOver, NVDA, JAWS)
 - [ ] Keyboard navigation matrix for all components
 - [ ] Color contrast audit (ensure ≥4.5:1 for text)
-- [ ] Focus management in modals (trap + restore)
+- [ ] Focus management in modals (trap + restore) — **enhance existing**
 - [ ] Improved sidebar drawer on mobile (<768px)
 - [ ] Documentation: a11y checklist for components
 - [ ] Minimum unit testing baseline for core JS behaviors
 - [ ] Minimum UI smoke suite for critical keyboard/a11y flows
-- [ ] Changelog + migration guide
+- [ ] Test coverage report + Lighthouse audit
 
-### **v1.4.0** (Q4 2026) — Theming, Editor & Platform Expansion
-- [ ] Platform JS orchestration layer (reserved in v1.3, ready for first helpers)
-  - [ ] Design the orchestration API (app-state, shell initialization)
-  - [ ] First real Platform JS helper (e.g., shared app initialization)
-  - [ ] Examples: workspace orchestration, shared navigation patterns
+### **v2.2.0** (Q4 2026) — Theming & Editor Tools
+
 - [ ] Token editor tool (visual UI for custom tokens)
 - [ ] CSS variable override guide
 - [ ] Dark mode refinement (perceptual color matching)
-- [ ] High contrast mode audit
-- [ ] Performance audit (Lighthouse)
+- [ ] High contrast mode audit & improvements
+- [ ] Performance audit (Lighthouse optimization)
 - [ ] Extended platform primitives (if justified by user demand)
 
-### **v2.0.0** (2027) — Ecosystem Expansion
+### **v3.0.0** (2027) — Ecosystem Expansion
+
 - [ ] `@cai-ds/react` — thin React wrapper (if demanded)
 - [ ] `@cai-ds/vue` — thin Vue wrapper (if demanded)
 - [ ] CLI: `npx create-cai-project` scaffolding
@@ -74,6 +78,7 @@ Target users:
 ## Backlog (Not Committed)
 
 ### Nice-to-have Components
+
 - [ ] Dialog (native `<dialog>` wrapper)
 - [ ] Dropdown/Context menu
 - [ ] Pagination
@@ -84,12 +89,14 @@ Target users:
 - [ ] Skeleton loader patterns
 
 ### Tooling
+
 - [ ] Design tokens CLI
 - [ ] VSCode extension (autocomplete)
 - [ ] Storybook integration
 - [ ] Component browser in docs
 
 ### Documentation
+
 - [ ] "Build a theme in 30 minutes" tutorial
 - [ ] "Extend CAI for your brand" guide
 - [ ] Pattern library (common layouts)
@@ -109,6 +116,7 @@ Target users:
 ## Non-Goals
 
 ❌ **We will NOT:**
+
 - Build a 1000-component library
 - Add runtime dependencies (stay vanilla)
 - Create framework-specific implementations first
@@ -134,6 +142,7 @@ Target users:
 ## Contributing
 
 We welcome contributions for:
+
 - Bug fixes & a11y improvements
 - Documentation & typo fixes
 - Component refinements

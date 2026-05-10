@@ -3,7 +3,7 @@
  * Showcase management: sidebar, themes, copy-to-clipboard, responsive.
  */
 
-import { MidiPlayer } from "/packages/core/dist/midi.js";
+import { MidiPlayer } from "./midi.js";
 import { formatTime } from "./utils.js";
 
 /* ============================================================
@@ -15,7 +15,10 @@ const MODES = ["light", "dark", "high-contrast"];
 // Custom themes: complete visual identities
 const CUSTOM_THEMES = ["ricardoymortimer", "minimalist"];
 // Default color mode for each custom theme (used when no mode is stored)
-const CUSTOM_THEME_DEFAULT_MODE = { ricardoymortimer: "dark", minimalist: "light" };
+const CUSTOM_THEME_DEFAULT_MODE = {
+  ricardoymortimer: "dark",
+  minimalist: "light",
+};
 const ALL_THEMES = [...MODES, ...CUSTOM_THEMES];
 const STORAGE_KEY = "cai-theme";
 const STORAGE_KEY_MODE = "cai-mode";
@@ -95,7 +98,10 @@ function applyMode(mode, parentTheme, { persist = true } = {}) {
   if (document.documentElement.dataset.theme !== parentTheme) {
     if (persist) {
       if (MODES.includes(document.documentElement.dataset.theme)) {
-        localStorage.setItem("cai-last-mode", document.documentElement.dataset.theme);
+        localStorage.setItem(
+          "cai-last-mode",
+          document.documentElement.dataset.theme,
+        );
       }
     }
     document.documentElement.dataset.theme = parentTheme;
@@ -195,10 +201,9 @@ function getSidebarFocusableElements() {
 function focusSidebarTarget(targetEl) {
   if (!targetEl) return;
 
-  const focusTarget =
-    targetEl.matches("h1, h2, h3, h4, h5, h6, section, main")
-      ? targetEl
-      : targetEl.querySelector("h1, h2, h3, h4, h5, h6") || targetEl;
+  const focusTarget = targetEl.matches("h1, h2, h3, h4, h5, h6, section, main")
+    ? targetEl
+    : targetEl.querySelector("h1, h2, h3, h4, h5, h6") || targetEl;
 
   if (!focusTarget.hasAttribute("tabindex")) {
     focusTarget.setAttribute("tabindex", "-1");
@@ -278,8 +283,8 @@ function moveTabFocus(currentTab, direction) {
     direction === "start"
       ? 0
       : direction === "end"
-        ? tabs.length - 1
-        : (currentIndex + direction + tabs.length) % tabs.length;
+      ? tabs.length - 1
+      : (currentIndex + direction + tabs.length) % tabs.length;
 
   activateTab(tabs[nextIndex], { moveFocus: true });
 }
@@ -434,14 +439,18 @@ document.body.addEventListener("click", async (e) => {
     return;
   }
 
-  const swatch = e.target.closest(".docs-swatch[data-copy], .swatch[data-copy]");
+  const swatch = e.target.closest(
+    ".docs-swatch[data-copy], .swatch[data-copy]",
+  );
   if (swatch) {
     await copyToClipboard(swatch.dataset.copy, swatch, "swatch");
     return;
   }
 
   // --- Copy token label (spacing, elevation) ---
-  const tokenLabel = e.target.closest(".docs-token[data-copy], .token[data-copy]");
+  const tokenLabel = e.target.closest(
+    ".docs-token[data-copy], .token[data-copy]",
+  );
   if (tokenLabel) {
     const text = tokenLabel.dataset.copy;
     if (!text) return;

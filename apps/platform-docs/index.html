@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="minimalist">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAI Platform — Reference</title>
+  <meta name="description" content="@cai-ds/platform reference: app-shell patterns, layout primitives, and installation guide.">
+  <link rel="stylesheet" href="/packages/tokens/fonts/fonts.css">
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
+  <link rel="stylesheet" href="/packages/core/dist/themes/cai-theme-minimalist.css">
+  <link rel="stylesheet" href="/apps/platform-docs/platform-docs.css">
+</head>
+<body class="o-shell">
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <button class="cai-nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar-platform">
+    <span class="cai-nav-toggle__bar"></span>
+    <span class="cai-nav-toggle__bar"></span>
+    <span class="cai-nav-toggle__bar"></span>
+  </button>
+  <div class="cai-nav-overlay" aria-hidden="true"></div>
+
+  <nav class="cai-sidebar" id="sidebar-platform" aria-label="Platform documentation navigation">
+    <div class="cai-sidebar__brand">
+      <div class="cai-sidebar__brand-name">
+        <span class="cai-sidebar__logo">C</span>
+        CAI
+      </div>
+      <div class="cai-sidebar__version">Platform docs</div>
+    </div>
+
+    <div class="cai-sidebar__section" data-group="start">
+      <div class="cai-sidebar__section-label">Start</div>
+      <a class="cai-sidebar__link is-active" href="#installation">Installation</a>
+      <a class="cai-sidebar__link" href="#when-to-use">When to use</a>
+      <a class="cai-sidebar__link" href="#architecture">Architecture</a>
+    </div>
+
+    <div class="cai-sidebar__section" data-group="building-blocks">
+      <div class="cai-sidebar__section-label">Building Blocks</div>
+      <a class="cai-sidebar__link" href="#tokens">Tokens</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#colors">Colors</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#colors-palette">Palette</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#colors-semantic">Semantic</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#tokens-spacing">Spacing</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#tokens-elevation">Elevation</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#tokens-motion">Motion</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#tokens-typography-scales">Typography scales</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#tokens-usage">Usage</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#tokens-theme">Theme override</a>
+      <a class="cai-sidebar__link" href="#primitives">Primitives</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#prim-box">Box</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#prim-stack">Stack</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#prim-grid">Grid</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#prim-text">Text</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#prim-buttons">Buttons</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#prim-form">Form</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#prim-tags">Tags &amp; badges</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#prim-html">Semantic HTML</a>
+      <a class="cai-sidebar__link" href="#components">Components</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#comp-alerts">Alerts &amp; toast</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#comp-modal">Modal</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#comp-cards">Cards &amp; table</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#comp-nav">Navigation</a>
+      <a class="cai-sidebar__link cai-sidebar__link--sub" href="#comp-players">Media players</a>
+      <a class="cai-sidebar__link" href="#themes">Themes</a>
+    </div>
+
+    <div class="cai-sidebar__section" data-group="reference">
+      <div class="cai-sidebar__section-label">Reference</div>
+      <a class="cai-sidebar__link" href="#reference">Class reference</a>
+      <a class="cai-sidebar__link" href="#examples">Examples</a>
+      <a class="cai-sidebar__link" href="#templates">Templates</a>
+      <a class="cai-sidebar__link" href="#live-demo">Live demo</a>
+      <a class="cai-sidebar__link" href="#source">Source &amp; build</a>
+    </div>
+
+    <div class="cai-sidebar__footer">
+      <span class="cai-theme-switcher__label">Color mode</span>
+      <div class="cai-theme-switcher" role="group" aria-label="Select color mode">
+        <button class="cai-theme-btn" data-theme="light" aria-pressed="false">Light</button>
+        <button class="cai-theme-btn" data-theme="dark" aria-pressed="false">Dark</button>
+        <button class="cai-theme-btn" data-theme="high-contrast" aria-pressed="false">HC</button>
+      </div>
+      <div class="cai-platform-actions" style="margin-top: var(--cai-space-04);">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/">Core + Tokens</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main-content" class="o-main cai-platform-content">
+
+    <!-- ====================== OVERVIEW ====================== -->
+    <div class="cai-platform-page-header">
+      <h1 class="cai-platform-page-header__title">@cai-ds/platform</h1>
+      <p class="cai-platform-page-header__lead">App-shell patterns and higher-level layout primitives built on top of CAI core. Use Platform when you are building a web application with a consistent page structure — not when you only need individual components.</p>
+      <nav class="pdocs-site-header__nav" aria-label="Cross-site navigation">
+        <a href="/">Home</a>
+        <a href="/docs/">Core &amp; Tokens</a>
+        <a href="/platform/" aria-current="page">Platform</a>
+      </nav>
+    </div>
+
+    <!-- ====================== INSTALLATION ====================== -->
+    <section class="pdocs-section" id="installation" aria-labelledby="h-installation">
+      <div class="pdocs-section__title" id="h-installation">Installation</div>
+      <div class="pdocs-section__subtitle">Platform depends on <code class="cai-code-inline">@cai-ds/tokens</code> and <code class="cai-code-inline">@cai-ds/core</code>. Load all three in order.</div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">HTML (CDN)</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;!-- 1. Tokens (always first) --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens/dist/cai-tokens.css&quot;&gt;
+
+&lt;!-- 2. Core components --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/cai.css&quot;&gt;
+
+&lt;!-- 3. Platform app-shell patterns --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform/dist/platform.css&quot;&gt;
+
+&lt;!-- Optional: Core JS behaviors --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/cai.js&quot;&gt;&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Minimum page skeleton</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;html lang=&quot;en&quot; data-theme=&quot;minimalist&quot;&gt;
+&lt;body class=&quot;cai-platform-page&quot;&gt;
+  &lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+
+  &lt;header&gt;...&lt;/header&gt;
+
+  &lt;main id=&quot;main&quot; class=&quot;cai-platform-main o-container&quot;&gt;
+    &lt;section class=&quot;cai-platform-section&quot;&gt;
+      ...
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;cai-platform-footer o-container&quot;&gt;...&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- ====================== WHEN TO USE ====================== -->
+    <section class="pdocs-section" id="when-to-use" aria-labelledby="h-when">
+      <div class="pdocs-section__title" id="h-when">When to use Platform</div>
+      <div class="pdocs-section__subtitle">Platform primitives are opinionated by design. If the pattern doesn't map to your use case, compose with core components directly instead.</div>
+
+      <div class="pdocs-decision-grid">
+        <div class="pdocs-decision-card pdocs-decision-card--use">
+          <div class="pdocs-decision-card__label">Use Platform when</div>
+          <ul>
+            <li>Building a web app with a persistent header, main content area, and footer</li>
+            <li>You need consistent spacing and layout across multiple app pages</li>
+            <li>You want skip-links, feature grids, and action containers without writing the scaffolding yourself</li>
+            <li>Both <code class="cai-code-inline">@cai-ds/tokens</code> and <code class="cai-code-inline">@cai-ds/core</code> are already in your project</li>
+          </ul>
+        </div>
+        <div class="pdocs-decision-card pdocs-decision-card--dont">
+          <div class="pdocs-decision-card__label">Skip Platform when</div>
+          <ul>
+            <li>You only need individual UI components (buttons, forms, cards) — use <code class="cai-code-inline">@cai-ds/core</code> alone</li>
+            <li>You have your own layout system and only need tokens</li>
+            <li>You are embedding CAI into an existing framework layout (Next.js App Shell, etc.)</li>
+            <li>You are building a standalone widget, not a full-page app</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== DEPENDENCY CHAIN ====================== -->
+    <section class="pdocs-section" id="architecture" aria-labelledby="h-arch">
+      <div class="pdocs-section__title" id="h-arch">Architecture</div>
+      <div class="pdocs-section__subtitle">Three layers with unidirectional dependencies. A lower layer never imports from a higher one.</div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Dependency chain</div>
+        <pre class="cai-code-block" data-lang="text"><code>@cai-ds/tokens   ←  primitives + semantic theme variables
+      ↓
+@cai-ds/core     ←  generic reusable components (buttons, forms, cards…)
+      ↓
+@cai-ds/platform ←  app shells, layout patterns, higher-level primitives</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Rule</div>
+        <p style="color: var(--cai-text-secondary); font-size: var(--cai-text-sm); max-width: 62ch;">Platform can import from core and tokens. Core can import from tokens. Nothing in core or tokens may import from platform. This rule is enforced by convention — there is no bundler that enforces it at build time.</p>
+      </div>
+    </section>
+
+    <!-- ====================== COLORS ====================== -->
+    <section class="pdocs-section" id="colors" aria-labelledby="h-colors">
+      <div class="pdocs-section__title" id="h-colors">Colors</div>
+      <div class="pdocs-section__subtitle">Platform uses semantic colors from CAI tokens. The swatches below reflect live theme values.</div>
+
+      <div class="pdocs-subsection" id="colors-palette">
+        <div class="pdocs-subsection__title">Palette</div>
+        <div class="pdocs-palette-grid">
+          <article class="pdocs-palette-card">
+            <div class="pdocs-palette-card__title">Brand</div>
+            <div class="pdocs-palette-row">
+              <span class="pdocs-palette-swatch" style="background: var(--cai-brand-primary);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-brand-hover);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-brand-active);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-brand-subtle);"></span>
+            </div>
+          </article>
+          <article class="pdocs-palette-card">
+            <div class="pdocs-palette-card__title">Layer</div>
+            <div class="pdocs-palette-row">
+              <span class="pdocs-palette-swatch" style="background: var(--cai-bg-page);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-layer-01);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-layer-02);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-layer-03);"></span>
+            </div>
+          </article>
+          <article class="pdocs-palette-card">
+            <div class="pdocs-palette-card__title">Feedback</div>
+            <div class="pdocs-palette-row">
+              <span class="pdocs-palette-swatch" style="background: var(--cai-color-success);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-color-warning);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-color-danger);"></span>
+              <span class="pdocs-palette-swatch" style="background: var(--cai-color-info);"></span>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="colors-semantic">
+        <div class="pdocs-subsection__title">Semantic color palette</div>
+        <div class="pdocs-semantic-grid">
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-bg-page);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-bg-page</div>
+              <div class="pdocs-semantic-desc">Page background</div>
+            </div>
+          </div>
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-bg-ui);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-bg-ui</div>
+              <div class="pdocs-semantic-desc">UI block background</div>
+            </div>
+          </div>
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-brand-primary);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-brand-primary</div>
+              <div class="pdocs-semantic-desc">Primary brand accent</div>
+            </div>
+          </div>
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-text-primary);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-text-primary</div>
+              <div class="pdocs-semantic-desc">Primary text color</div>
+            </div>
+          </div>
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-text-secondary);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-text-secondary</div>
+              <div class="pdocs-semantic-desc">Secondary/muted text</div>
+            </div>
+          </div>
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-border-subtle);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-border-subtle</div>
+              <div class="pdocs-semantic-desc">Borders and separators</div>
+            </div>
+          </div>
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-color-success);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-color-success</div>
+              <div class="pdocs-semantic-desc">Status success</div>
+            </div>
+          </div>
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-color-danger);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-color-danger</div>
+              <div class="pdocs-semantic-desc">Status danger</div>
+            </div>
+          </div>
+          <div class="pdocs-semantic-row">
+            <div class="pdocs-semantic-swatch" style="background: var(--cai-color-warning);"></div>
+            <div>
+              <div class="pdocs-semantic-name">--cai-color-warning</div>
+              <div class="pdocs-semantic-desc">Status warning</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== TOKENS ====================== -->
+    <section class="pdocs-section" id="tokens" aria-labelledby="h-tokens">
+      <div class="pdocs-section__title" id="h-tokens">Tokens</div>
+      <div class="pdocs-section__subtitle">Platform components consume semantic tokens only. You can theme platform layouts by overriding semantic variables, not primitive scales.</div>
+
+      <div class="pdocs-subsection" id="tokens-spacing">
+        <div class="pdocs-subsection__title">Spacing</div>
+        <div class="pdocs-preview pdocs-token-preview">
+          <div class="pdocs-space-row"><span class="pdocs-space-label">--cai-space-02</span><span class="pdocs-space-bar" style="width: var(--cai-space-02);"></span></div>
+          <div class="pdocs-space-row"><span class="pdocs-space-label">--cai-space-04</span><span class="pdocs-space-bar" style="width: var(--cai-space-04);"></span></div>
+          <div class="pdocs-space-row"><span class="pdocs-space-label">--cai-space-06</span><span class="pdocs-space-bar" style="width: var(--cai-space-06);"></span></div>
+          <div class="pdocs-space-row"><span class="pdocs-space-label">--cai-space-08</span><span class="pdocs-space-bar" style="width: var(--cai-space-08);"></span></div>
+          <div class="pdocs-space-row"><span class="pdocs-space-label">--cai-space-10</span><span class="pdocs-space-bar" style="width: var(--cai-space-10);"></span></div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="tokens-elevation">
+        <div class="pdocs-subsection__title">Elevation</div>
+        <div class="pdocs-preview pdocs-elevation-grid">
+          <article class="pdocs-elevation-card pdocs-elevation-card--sm">Shadow sm</article>
+          <article class="pdocs-elevation-card pdocs-elevation-card--md">Shadow md</article>
+          <article class="pdocs-elevation-card pdocs-elevation-card--lg">Shadow lg</article>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="tokens-motion">
+        <div class="pdocs-subsection__title">Motion</div>
+        <div class="pdocs-preview pdocs-motion-preview">
+          <p class="pdocs-motion-note">Uses CAI duration and easing tokens. Replay to test stagger and timing.</p>
+          <div class="pdocs-motion-grid" data-pdocs-motion-grid>
+            <article class="pdocs-motion-card" data-pdocs-motion-card>Fade in</article>
+            <article class="pdocs-motion-card" data-pdocs-motion-card>Slide up</article>
+            <article class="pdocs-motion-card" data-pdocs-motion-card>Pulse</article>
+          </div>
+          <button class="cai-btn cai-btn--outline cai-btn--sm" type="button" data-pdocs-motion-replay>Replay motion</button>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="tokens-typography-scales">
+        <div class="pdocs-subsection__title">Typography scales</div>
+        <div class="pdocs-preview pdocs-type-scale">
+          <div class="pdocs-type-row"><span class="pdocs-type-token">--cai-text-xs</span><span class="pdocs-type-sample pdocs-type-sample--xs">The quick brown fox jumps over the lazy dog.</span></div>
+          <div class="pdocs-type-row"><span class="pdocs-type-token">--cai-text-sm</span><span class="pdocs-type-sample pdocs-type-sample--sm">The quick brown fox jumps over the lazy dog.</span></div>
+          <div class="pdocs-type-row"><span class="pdocs-type-token">--cai-text-base</span><span class="pdocs-type-sample pdocs-type-sample--base">The quick brown fox jumps over the lazy dog.</span></div>
+          <div class="pdocs-type-row"><span class="pdocs-type-token">--cai-text-lg</span><span class="pdocs-type-sample pdocs-type-sample--lg">The quick brown fox jumps over the lazy dog.</span></div>
+          <div class="pdocs-type-row"><span class="pdocs-type-token">--cai-text-2xl</span><span class="pdocs-type-sample pdocs-type-sample--2xl">The quick brown fox jumps over the lazy dog.</span></div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="tokens-usage">
+        <div class="pdocs-subsection__title">Typical token usage in Platform</div>
+        <pre class="cai-code-block" data-lang="css"><code>.my-platform-shell {
+  background: var(--cai-bg-page);
+  color: var(--cai-text-primary);
+  border-color: var(--cai-border-subtle);
+}
+
+/* Avoid primitive scales in app-level components */
+/* bad: color: var(--cai-gray-100); */</code></pre>
+      </div>
+
+      <div class="pdocs-subsection" id="tokens-theme">
+        <div class="pdocs-subsection__title">Theme override template</div>
+        <pre class="cai-code-block" data-lang="css"><code>[data-theme="my-brand"] {
+  --cai-brand-primary: #0057ff;
+  --cai-brand-hover: #0043c2;
+  --cai-bg-page: #f8faff;
+  --cai-text-primary: #0d1320;
+  --cai-border-subtle: #dbe3f2;
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ====================== PRIMITIVES ====================== -->
+    <section class="pdocs-section" id="primitives" aria-labelledby="h-primitives">
+      <div class="pdocs-section__title" id="h-primitives">Primitives</div>
+      <div class="pdocs-section__subtitle">Core primitive elements rendered inside Platform docs: buttons, form controls, tags, avatars, progress, tooltip and semantic HTML elements.</div>
+
+      <div class="pdocs-subsection" id="prim-box">
+        <div class="pdocs-subsection__title">Box</div>
+        <div class="pdocs-preview pdocs-primitive-grid pdocs-primitive-grid--3">
+          <div class="pdocs-primitive-box">Default box</div>
+          <div class="pdocs-primitive-box pdocs-primitive-box--accent">Accent box</div>
+          <div class="pdocs-primitive-box pdocs-primitive-box--outline">Outline box</div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="prim-stack">
+        <div class="pdocs-subsection__title">Stack</div>
+        <div class="pdocs-preview">
+          <div class="o-stack pdocs-stack-demo">
+            <div class="pdocs-primitive-box">Stack item 1</div>
+            <div class="pdocs-primitive-box">Stack item 2</div>
+            <div class="pdocs-primitive-box">Stack item 3</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="prim-grid">
+        <div class="pdocs-subsection__title">Grid</div>
+        <div class="pdocs-preview pdocs-primitive-grid pdocs-primitive-grid--4">
+          <div class="pdocs-primitive-box">A</div>
+          <div class="pdocs-primitive-box">B</div>
+          <div class="pdocs-primitive-box">C</div>
+          <div class="pdocs-primitive-box">D</div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="prim-text">
+        <div class="pdocs-subsection__title">Text</div>
+        <div class="pdocs-preview pdocs-text-preview">
+          <h3 class="pdocs-text-title">Readable text hierarchy for app content</h3>
+          <p class="pdocs-text-body">Platform pages should prioritize clear hierarchy, short line lengths and semantic HTML for accessibility.</p>
+          <p class="pdocs-text-muted">Muted helper text using secondary semantic color.</p>
+          <p class="pdocs-text-links">
+            <a href="#installation">Inline link</a>
+            <a href="#reference">Reference link</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="prim-buttons">
+        <div class="pdocs-subsection__title">Buttons</div>
+        <div class="pdocs-preview" style="display:flex;flex-wrap:wrap;gap:var(--cai-space-03)">
+          <button class="cai-btn cai-btn--primary">Primary</button>
+          <button class="cai-btn cai-btn--secondary">Secondary</button>
+          <button class="cai-btn cai-btn--outline">Outline</button>
+          <button class="cai-btn cai-btn--ghost">Ghost</button>
+          <button class="cai-btn cai-btn--danger">Danger</button>
+          <button class="cai-btn cai-btn--primary cai-btn--sm">Small</button>
+          <button class="cai-btn cai-btn--primary cai-btn--lg">Large</button>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="prim-form">
+        <div class="pdocs-subsection__title">Form</div>
+        <div class="pdocs-section__subtitle">All native HTML form elements with CAI styling. Inputs, selects, checkboxes, date pickers, sliders, progress, meters, file uploads and more.</div>
+
+        <div class="pdocs-preview pdocs-form-preview">
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Text inputs</h4>
+            <div class="pdocs-form-grid-2">
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-text">text</label>
+                <input class="cai-input" id="pf-text" type="text" placeholder="Single line text">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-password">password</label>
+                <input class="cai-input" id="pf-password" type="password" placeholder="••••••••">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label cai-field__label--required" for="pf-email">email</label>
+                <input class="cai-input" id="pf-email" type="email" placeholder="user@company.com" required>
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-number">number</label>
+                <input class="cai-input" id="pf-number" type="number" placeholder="0" min="0" max="999">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-tel">tel</label>
+                <input class="cai-input" id="pf-tel" type="tel" placeholder="+1 555 000 0000">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-url">url</label>
+                <input class="cai-input" id="pf-url" type="url" placeholder="https://example.com">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-search">search</label>
+                <input class="cai-input" id="pf-search" type="search" placeholder="Search..." list="pf-search-suggestions">
+                <datalist id="pf-search-suggestions">
+                  <option value="Buttons"></option>
+                  <option value="Form"></option>
+                  <option value="Tokens"></option>
+                  <option value="Motion"></option>
+                </datalist>
+                <div class="cai-field__helper">Uses datalist for autocomplete suggestions.</div>
+              </div>
+              <div class="cai-field pdocs-field-span-full">
+                <label class="cai-field__label" for="pf-textarea">textarea</label>
+                <textarea class="cai-input cai-input--textarea" id="pf-textarea" rows="3" placeholder="Multiline text..." maxlength="500"></textarea>
+                <div class="cai-field__helper">Resizable vertically. maxlength="500".</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">States</h4>
+            <div class="pdocs-form-grid-3">
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-state-default">Default</label>
+                <input class="cai-input" id="pf-state-default" type="text" placeholder="Placeholder">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-state-focus">Focus</label>
+                <input class="cai-input" id="pf-state-focus" type="text" value="Focused value" autofocus>
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-state-error">Error</label>
+                <input class="cai-input cai-input--error" id="pf-state-error" type="text" value="invalid" aria-invalid="true" aria-describedby="pf-state-error-msg">
+                <div class="cai-field__error" id="pf-state-error-msg">This field is required.</div>
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-state-disabled">Disabled</label>
+                <input class="cai-input" id="pf-state-disabled" type="text" value="Not editable" disabled>
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-state-readonly">Read-only</label>
+                <input class="cai-input" id="pf-state-readonly" type="text" value="Read-only value" readonly aria-readonly="true">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label cai-field__label--required" for="pf-state-required">Required</label>
+                <input class="cai-input" id="pf-state-required" type="text" placeholder="Required" required>
+                <div class="cai-field__helper">The asterisk (*) indicates a required field.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Select</h4>
+            <div class="pdocs-form-grid-2">
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-select">Dropdown</label>
+                <div class="cai-select-wrap">
+                  <select class="cai-input" id="pf-select">
+                    <option value="">Choose a country...</option>
+                    <optgroup label="North America">
+                      <option value="mx">Mexico</option>
+                      <option value="us">United States</option>
+                    </optgroup>
+                    <optgroup label="South America">
+                      <option value="ar">Argentina</option>
+                      <option value="co">Colombia</option>
+                    </optgroup>
+                    <optgroup label="Europe">
+                      <option value="es">Spain</option>
+                    </optgroup>
+                  </select>
+                </div>
+                <div class="cai-field__helper">Uses optgroup to group options.</div>
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-select-multi">Multiple select</label>
+                <select class="cai-input pdocs-select-multi" id="pf-select-multi" multiple size="4">
+                  <option value="css">CSS</option>
+                  <option value="js">JavaScript</option>
+                  <option value="ts">TypeScript</option>
+                  <option value="html">HTML</option>
+                  <option value="rust">Rust</option>
+                </select>
+                <div class="cai-field__helper">Hold Cmd/Ctrl to select multiple.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Date and time</h4>
+            <div class="pdocs-form-grid-3">
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-date">date</label>
+                <input class="cai-input" id="pf-date" type="date">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-time">time</label>
+                <input class="cai-input" id="pf-time" type="time">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-datetime">datetime-local</label>
+                <input class="cai-input" id="pf-datetime" type="datetime-local">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-month">month</label>
+                <input class="cai-input" id="pf-month" type="month">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-week">week</label>
+                <input class="cai-input" id="pf-week" type="week">
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Range</h4>
+            <div class="pdocs-form-grid-2 pdocs-form-grid-gap-lg">
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-range-a">Volume <output class="cai-output" id="pf-range-a-out" aria-live="polite">50</output></label>
+                <input class="cai-input" id="pf-range-a" type="range" min="0" max="100" value="50" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-range-b">Step 10 <output class="cai-output" id="pf-range-b-out" aria-live="polite">0</output></label>
+                <input class="cai-input" id="pf-range-b" type="range" min="0" max="100" value="0" step="10">
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Progress and meter</h4>
+            <div class="pdocs-form-stack-md">
+              <div>
+                <label class="cai-field__label pdocs-label-split" for="pf-progress"><span>Upload progress</span><span>67%</span></label>
+                <progress id="pf-progress" class="pdocs-native-progress" max="100" value="67">67%</progress>
+                <div class="cai-field__helper">Native progress element.</div>
+              </div>
+              <div>
+                <label class="cai-field__label pdocs-label-split" for="pf-meter-ok"><span>Storage used</span><span>6 GB / 10 GB</span></label>
+                <meter class="cai-meter" id="pf-meter-ok" min="0" max="10" low="3" high="8" optimum="5" value="6"></meter>
+                <div class="cai-field__helper">Suboptimal, between high and max.</div>
+              </div>
+              <div>
+                <label class="cai-field__label pdocs-label-split" for="pf-meter-good"><span>Password strength</span><span>Good</span></label>
+                <meter class="cai-meter" id="pf-meter-good" min="0" max="4" low="1" high="3" optimum="4" value="3"></meter>
+                <div class="cai-field__helper">Optimum range.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Color picker and file upload</h4>
+            <div class="pdocs-form-grid-2">
+              <div class="cai-field pdocs-field-mb-0">
+                <label class="cai-field__label" for="pf-color">Accent color</label>
+                <input class="cai-input" id="pf-color" type="color" value="#0f62fe">
+                <div class="cai-field__helper pdocs-helper-mt-0">Native OS color picker.</div>
+              </div>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-file-multi">Multiple (images)</label>
+                <input class="cai-input" id="pf-file-multi" type="file" multiple accept="image/*">
+                <div class="cai-field__helper">Restricted to image types.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Checkbox, radio and toggle</h4>
+            <div class="pdocs-form-grid-3 pdocs-form-grid-gap-lg">
+              <div>
+                <div class="pdocs-form-group-label">Checkbox</div>
+                <div class="cai-check-group">
+                  <div class="cai-check-item"><input type="checkbox" id="pf-check-1" checked><label for="pf-check-1">Email notifications</label></div>
+                  <div class="cai-check-item"><input type="checkbox" id="pf-check-2"><label for="pf-check-2">Push notifications</label></div>
+                  <div class="cai-check-item"><input type="checkbox" id="pf-check-3" disabled><label for="pf-check-3">Disabled</label></div>
+                </div>
+              </div>
+              <div>
+                <div class="pdocs-form-group-label" id="pf-radio-label">Radio</div>
+                <div class="cai-check-group" role="radiogroup" aria-labelledby="pf-radio-label">
+                  <div class="cai-check-item"><input type="radio" name="pf-mode" id="pf-radio-1" checked><label for="pf-radio-1">Free mode</label></div>
+                  <div class="cai-check-item"><input type="radio" name="pf-mode" id="pf-radio-2"><label for="pf-radio-2">Strict mode</label></div>
+                  <div class="cai-check-item"><input type="radio" name="pf-mode" id="pf-radio-3"><label for="pf-radio-3">No restrictions</label></div>
+                </div>
+              </div>
+              <div>
+                <div class="pdocs-form-group-label">Toggle</div>
+                <div class="pdocs-form-stack">
+                  <div class="cai-toggle">
+                    <div class="cai-toggle__track is-on" role="switch" tabindex="0" aria-checked="true" aria-label="Enabled" data-pdocs-switch>
+                      <div class="cai-toggle__thumb"></div>
+                    </div>
+                    <span class="cai-toggle__label">Enabled</span>
+                  </div>
+                  <div class="cai-toggle">
+                    <div class="cai-toggle__track" role="switch" tabindex="0" aria-checked="false" aria-label="Disabled" data-pdocs-switch>
+                      <div class="cai-toggle__thumb"></div>
+                    </div>
+                    <span class="cai-toggle__label">Disabled</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Fieldset and datalist</h4>
+            <div class="pdocs-form-grid-2">
+              <fieldset class="cai-fieldset pdocs-form-stack-md">
+                <legend class="cai-legend">Notification preferences</legend>
+                <div class="pdocs-form-stack pdocs-form-stack-gap-md pdocs-form-stack-mt-md">
+                  <div class="cai-check-item"><input type="checkbox" id="pf-fs-email" checked><label for="pf-fs-email">Email</label></div>
+                  <div class="cai-check-item"><input type="checkbox" id="pf-fs-sms"><label for="pf-fs-sms">SMS</label></div>
+                  <div class="cai-check-item"><input type="checkbox" id="pf-fs-push"><label for="pf-fs-push">Push</label></div>
+                </div>
+              </fieldset>
+              <div class="cai-field">
+                <label class="cai-field__label" for="pf-datalist">Framework</label>
+                <input class="cai-input" id="pf-datalist" list="pf-fw-list" placeholder="Start typing...">
+                <datalist id="pf-fw-list">
+                  <option value="React"></option>
+                  <option value="Vue"></option>
+                  <option value="Svelte"></option>
+                  <option value="Angular"></option>
+                  <option value="Solid"></option>
+                  <option value="Qwik"></option>
+                </datalist>
+                <div class="cai-field__helper">Native browser autocomplete, no JS needed.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Complete form example</h4>
+            <form class="pdocs-form-example" id="pf-demo-form" novalidate>
+              <div class="pdocs-form-grid-2">
+                <div class="cai-field">
+                  <label class="cai-field__label cai-field__label--required" for="pf-ex-name">Full name</label>
+                  <input class="cai-input" id="pf-ex-name" type="text" name="name" required minlength="2" placeholder="Jane Smith" autocomplete="name">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label cai-field__label--required" for="pf-ex-email">Email</label>
+                  <input class="cai-input" id="pf-ex-email" type="email" name="email" required placeholder="jane@example.com" autocomplete="email">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="pf-ex-role">Role</label>
+                  <div class="cai-select-wrap">
+                    <select class="cai-input" id="pf-ex-role" name="role">
+                      <option value="">Select a role...</option>
+                      <option value="dev">Developer</option>
+                      <option value="design">Designer</option>
+                      <option value="pm">Product Manager</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="pf-ex-experience">Experience (years) <output class="cai-output" id="pf-ex-experience-out" aria-live="polite">3</output></label>
+                  <input class="cai-input" id="pf-ex-experience" type="range" name="experience" min="0" max="20" value="3">
+                </div>
+                <div class="cai-field pdocs-field-span-full">
+                  <label class="cai-field__label" for="pf-ex-bio">Bio</label>
+                  <textarea class="cai-input cai-input--textarea" id="pf-ex-bio" name="bio" rows="3" placeholder="Brief description..." maxlength="300"></textarea>
+                  <div class="cai-field__helper">Max 300 characters.</div>
+                </div>
+              </div>
+              <fieldset class="cai-fieldset pdocs-form-example-fieldset">
+                <legend class="cai-legend">Availability</legend>
+                <div class="pdocs-form-inline pdocs-form-inline-gap-lg pdocs-form-inline-mt-md">
+                  <div class="cai-check-item"><input type="checkbox" id="pf-ex-ft"><label for="pf-ex-ft">Full-time</label></div>
+                  <div class="cai-check-item"><input type="checkbox" id="pf-ex-pt"><label for="pf-ex-pt">Part-time</label></div>
+                  <div class="cai-check-item"><input type="checkbox" id="pf-ex-contract"><label for="pf-ex-contract">Contract</label></div>
+                </div>
+              </fieldset>
+              <div class="pdocs-form-actions">
+                <button class="cai-btn cai-btn--primary" type="submit">Submit</button>
+                <button class="cai-btn cai-btn--ghost" type="reset">Reset</button>
+              </div>
+              <div class="cai-field__helper pdocs-form-result" id="pf-form-result" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <div class="pdocs-form-block">
+            <h4 class="pdocs-form-block__title">Keyboard and ARIA</h4>
+            <div class="cai-table-wrap" role="region" aria-label="Form keyboard and aria reference" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th>Element / Attribute</th><th>Value</th><th>When</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>aria-required</td><td><code class="cai-code-inline">"true"</code></td><td>Use alongside the native <code class="cai-code-inline">required</code> attribute.</td></tr>
+                  <tr><td>aria-invalid</td><td><code class="cai-code-inline">"true"</code></td><td>Input in error state. Pair with <code class="cai-code-inline">aria-describedby</code> to point to the error message.</td></tr>
+                  <tr><td>aria-describedby</td><td>id of helper/error</td><td>Links helper text or error message to the input for screen readers.</td></tr>
+                  <tr><td>aria-readonly</td><td><code class="cai-code-inline">"true"</code></td><td>Use alongside the native <code class="cai-code-inline">readonly</code> attribute.</td></tr>
+                  <tr><td>aria-valuemin / aria-valuemax / aria-valuenow</td><td>numeric</td><td>Use on <code class="cai-code-inline">input[type="range"]</code> for richer announcements.</td></tr>
+                  <tr><td>role="radiogroup"</td><td>-</td><td>Wrap a set of radio buttons. Add <code class="cai-code-inline">aria-labelledby</code> to the group heading.</td></tr>
+                  <tr><td>role="switch"</td><td>-</td><td>Toggle track. Keep it focusable with <code class="cai-code-inline">tabindex="0"</code> and support Space/Enter.</td></tr>
+                  <tr><td>for / id pair</td><td>-</td><td>Every label should point to an input id. Avoid placeholder-only labeling.</td></tr>
+                  <tr><td>fieldset + legend</td><td>-</td><td>Group related controls so assistive tech reads context before controls.</td></tr>
+                  <tr><td><kbd>Tab</kbd></td><td>-</td><td>Navigate between focusable fields. Disabled inputs are skipped.</td></tr>
+                  <tr><td><kbd>Shift+Tab</kbd></td><td>-</td><td>Navigate backward.</td></tr>
+                  <tr><td><kbd>Space</kbd></td><td>-</td><td>Toggle checkbox, radio and switch controls.</td></tr>
+                  <tr><td><kbd>Escape</kbd></td><td>-</td><td>Closes the dropdown in select and datalist inputs.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="prim-tags">
+        <div class="pdocs-subsection__title">Tags, avatar, progress and tooltip</div>
+        <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-04)">
+          <div style="display:flex;flex-wrap:wrap;gap:var(--cai-space-03)">
+            <span class="cai-tag cai-tag--blue">Blue</span>
+            <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
+            <span class="cai-tag cai-tag--yellow cai-tag--dot">Warning</span>
+            <span class="cai-badge cai-badge--primary">3</span>
+            <span class="cai-badge cai-badge--danger">99+</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--cai-space-04)">
+            <span class="cai-avatar cai-avatar--sm">AB</span>
+            <span class="cai-avatar cai-avatar--md">CD</span>
+            <span class="cai-avatar cai-avatar--lg">EF</span>
+            <div class="cai-tooltip" style="margin-left:var(--cai-space-03)">
+              <button class="cai-btn cai-btn--outline cai-btn--sm">Hover</button>
+              <div class="cai-tooltip__text" role="tooltip">Tooltip content</div>
+            </div>
+          </div>
+          <div>
+            <div class="cai-progress">
+              <div class="cai-progress__fill" style="width:67%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="prim-html">
+        <div class="pdocs-subsection__title">Semantic HTML elements</div>
+        <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-04)">
+          <details>
+            <summary>What is CAI Platform?</summary>
+            <p style="margin-top:var(--cai-space-03);color:var(--cai-text-secondary)">A layout layer built on top of tokens and core components.</p>
+          </details>
+          <p>Use <mark>mark</mark> for contextual highlight and <kbd>Cmd</kbd><kbd>K</kbd> for command palette shortcuts.</p>
+          <p>Published on <time datetime="2026-05-09">9 May 2026</time>.</p>
+          <div>
+            <label class="cai-field__label" for="pf-meter">System load</label>
+            <meter id="pf-meter" value="6" min="0" max="10" low="3" high="8" style="width:100%"></meter>
+            <output style="display:block;margin-top:var(--cai-space-02);color:var(--cai-text-secondary)">60%</output>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== COMPONENTS ====================== -->
+    <section class="pdocs-section" id="components" aria-labelledby="h-components">
+      <div class="pdocs-section__title" id="h-components">Components</div>
+      <div class="pdocs-section__subtitle">Composed component elements requested for Platform landing: alerts, modal, cards, table, navigation, media player, code block and icons.</div>
+
+      <div class="pdocs-subsection" id="comp-alerts">
+        <div class="pdocs-subsection__title">Alerts and toast</div>
+        <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-03)">
+          <div class="cai-alert cai-alert--info">
+            <div class="cai-alert__icon">i</div>
+            <div>
+              <div class="cai-alert__title">Information</div>
+              <div class="cai-alert__body">Platform section is up to date.</div>
+            </div>
+          </div>
+          <div class="cai-alert cai-alert--success">
+            <div class="cai-alert__icon">OK</div>
+            <div>
+              <div class="cai-alert__title">Success</div>
+              <div class="cai-alert__body">Deployment completed.</div>
+            </div>
+          </div>
+          <div class="cai-toast" role="status" aria-live="polite">
+            <div class="cai-toast__content">
+              <div class="cai-toast__kind" style="color:var(--cai-color-success)">SUCCESS</div>
+              <div class="cai-toast__msg">File exported successfully.</div>
+            </div>
+            <button class="cai-toast__close" aria-label="Dismiss notification" type="button">X</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="comp-modal">
+        <div class="pdocs-subsection__title">Modal</div>
+        <div class="pdocs-preview" style="display:flex;gap:var(--cai-space-03);align-items:center;flex-wrap:wrap">
+          <button class="cai-btn cai-btn--primary" data-modal-trigger="platform-demo-modal">Open Modal</button>
+          <dialog class="cai-modal" id="platform-demo-modal">
+            <div class="cai-modal__header">
+              <h2 class="cai-modal__title">Confirm action</h2>
+              <button class="cai-modal__close" data-modal-close="platform-demo-modal" aria-label="Close modal" type="button">X</button>
+            </div>
+            <div class="cai-modal__body">
+              <p>This action cannot be undone. Continue?</p>
+            </div>
+            <div class="cai-modal__footer">
+              <button class="cai-btn cai-btn--ghost" data-modal-close="platform-demo-modal" type="button">Cancel</button>
+              <button class="cai-btn cai-btn--primary" data-modal-close="platform-demo-modal" type="button">Confirm</button>
+            </div>
+          </dialog>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="comp-cards">
+        <div class="pdocs-subsection__title">Cards and table</div>
+        <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-04)">
+          <div class="cai-platform-feature-grid">
+            <article class="cai-card">
+              <h3 class="cai-card__title">API Gateway</h3>
+              <p class="cai-card__body">1,204 req/min - p95: 142ms</p>
+            </article>
+            <article class="cai-card">
+              <h3 class="cai-card__title">Database</h3>
+              <p class="cai-card__body">48 active connections - 82% capacity.</p>
+            </article>
+          </div>
+          <div class="cai-table-wrap" role="region" aria-label="Service status table" tabindex="0">
+            <table class="cai-table">
+              <thead>
+                <tr><th>Service</th><th>Status</th><th>CPU</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>api-gateway</td><td><span class="cai-tag cai-tag--green cai-tag--dot">Running</span></td><td>12%</td></tr>
+                <tr><td>data-pipeline</td><td><span class="cai-tag cai-tag--yellow cai-tag--dot">Degraded</span></td><td>78%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="comp-nav">
+        <div class="pdocs-subsection__title">Navigation, code and icons</div>
+        <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-04)">
+          <div class="cai-tabs" role="tablist" aria-label="Platform tabs">
+            <div class="cai-tab is-active" role="tab" aria-selected="true" tabindex="0">Summary</div>
+            <div class="cai-tab" role="tab" aria-selected="false" tabindex="-1">Settings</div>
+            <div class="cai-tab" role="tab" aria-selected="false" tabindex="-1">Logs</div>
+          </div>
+          <nav aria-label="Breadcrumb">
+            <div class="cai-breadcrumb">
+              <a class="cai-breadcrumb__item" href="/" style="color:var(--cai-brand-primary)">Home</a>
+              <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
+              <a class="cai-breadcrumb__item" href="/platform/" style="color:var(--cai-brand-primary)">Platform</a>
+              <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
+              <span class="cai-breadcrumb__item is-active" aria-current="page">Components</span>
+            </div>
+          </nav>
+          <pre class="cai-code-block" data-lang="css"><code>.cai-platform-section {
+  display: grid;
+  gap: var(--cai-space-06);
+}</code></pre>
+          <div class="cai-icon-grid">
+            <div class="cai-card cai-icon-item"><div class="cai-icon-display">+</div><div class="cai-icon-name">Plus</div></div>
+            <div class="cai-card cai-icon-item"><div class="cai-icon-display">V</div><div class="cai-icon-name">Check</div></div>
+            <div class="cai-card cai-icon-item"><div class="cai-icon-display">!</div><div class="cai-icon-name">Warning</div></div>
+            <div class="cai-card cai-icon-item"><div class="cai-icon-display">&gt;</div><div class="cai-icon-name">Arrow</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection" id="comp-players">
+        <div class="pdocs-subsection__title">Media players</div>
+        <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-04)">
+          <div class="cai-player" data-type="audio">
+            <audio class="cai-player-audio" preload="metadata">
+              <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+            </audio>
+            <div class="cai-player-controls cai-player-controls--audio">
+              <button class="cai-player-btn cai-player-playpause" aria-label="Play">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+              </button>
+              <div class="cai-player-progress-row cai-player-progress-row--audio">
+                <span class="cai-player-time cai-player-current">0:00</span>
+                <div class="cai-player-seekbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                  <div class="cai-player-seekbar-buf"></div>
+                  <div class="cai-player-seekbar-fill"></div>
+                  <div class="cai-player-seekbar-thumb"></div>
+                </div>
+                <span class="cai-player-time cai-player-duration">0:00</span>
+              </div>
+            </div>
+          </div>
+          <div class="cai-player" data-type="video">
+            <div class="cai-player-media-wrap is-paused">
+              <video class="cai-player-video" preload="metadata">
+                <source src="/apps/platform-docs/assets/video.mp4" type="video/mp4">
+              </video>
+              <div class="cai-player-overlay">
+                <svg class="cai-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+              </div>
+            </div>
+            <div class="cai-player-controls">
+              <div class="cai-player-progress-row">
+                <button class="cai-player-btn cai-player-playpause" aria-label="Play">
+                  <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+                  <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                </button>
+                <div class="cai-player-seekbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                  <div class="cai-player-seekbar-buf"></div>
+                  <div class="cai-player-seekbar-fill"></div>
+                  <div class="cai-player-seekbar-thumb"></div>
+                </div>
+              </div>
+              <div class="cai-player-btns">
+                <span class="cai-player-time cai-player-current">0:00</span>
+                <span class="cai-player-spacer"></span>
+                <span class="cai-player-time cai-player-duration">0:00</span>
+                <div class="cai-player-vol-wrap">
+                  <button class="cai-player-btn cai-player-vol-toggle" aria-label="Mute">
+                    <svg class="icon-unmute" viewBox="0 0 24 24" fill="currentColor"><path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z M17,7 Q20,10 20,12 Q20,14 17,17"/></svg>
+                    <svg class="icon-mute" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z M17,7 L23,13 M23,7 L17,13"/></svg>
+                  </button>
+                  <div class="cai-player-seekbar cai-player-volbar" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
+                    <div class="cai-player-seekbar-fill" style="width:100%"></div>
+                    <div class="cai-player-seekbar-thumb" style="left:100%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="cai-player" data-type="midi" data-src="/apps/platform-docs/assets/sample.mid">
+            <div class="cai-player-controls cai-player-controls--audio">
+              <button class="cai-player-btn cai-player-playpause" aria-label="Play" disabled>
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+              </button>
+              <div class="cai-player-progress-row cai-player-progress-row--audio">
+                <span class="cai-player-time cai-player-current">0:00</span>
+                <div class="cai-player-seekbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                  <div class="cai-player-seekbar-buf"></div>
+                  <div class="cai-player-seekbar-fill"></div>
+                  <div class="cai-player-seekbar-thumb"></div>
+                </div>
+                <span class="cai-player-time cai-player-duration">0:00</span>
+              </div>
+              <span class="cai-player-midi-status"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== THEMES ====================== -->
+    <section class="pdocs-section" id="themes" aria-labelledby="h-themes">
+      <div class="pdocs-section__title" id="h-themes">Themes</div>
+      <div class="pdocs-section__subtitle">Theme identity and color mode are independent dimensions. Platform sections react to both.</div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Theme + mode examples</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;light&quot;&gt;
+&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;dark&quot;&gt;
+&lt;html data-theme=&quot;ricardoymortimer&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Theme-aware platform card</div>
+        <pre class="cai-code-block" data-lang="css"><code>.my-platform-card {
+  background: var(--cai-layer-01);
+  border: 1px solid var(--cai-border-subtle);
+  color: var(--cai-text-primary);
+}
+
+.my-platform-card:hover {
+  background: var(--cai-layer-02);
+  border-color: var(--cai-border-strong);
+}</code></pre>
+      </div>
+    </section>
+
+    <!-- ====================== CLASS REFERENCE ====================== -->
+    <section class="pdocs-section" id="reference" aria-labelledby="h-ref">
+      <div class="pdocs-section__title" id="h-ref">Class reference</div>
+      <div class="pdocs-section__subtitle">All Platform classes are prefixed <code class="cai-code-inline">.cai-platform-</code>. They consume semantic tokens only — never primitive color scales.</div>
+
+      <!-- PAGE STRUCTURE -->
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Page structure</div>
+        <div class="cai-table-wrap">
+          <table class="cai-table pdocs-ref-table">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Element</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>.cai-platform-page</td>
+                <td>&lt;body&gt;</td>
+                <td>Root grid (header / 1fr / footer). Sets <code class="cai-code-inline">min-height: 100vh</code>.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-page--gradient</td>
+                <td>&lt;body&gt;</td>
+                <td>Modifier. Adds a radial brand-subtle gradient at the top-left corner. Use on marketing or landing pages.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-skip-link</td>
+                <td>&lt;a&gt;</td>
+                <td>Visually hidden until focused. Jumps to <code class="cai-code-inline">#main-content</code>. Required for keyboard accessibility.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-main</td>
+                <td>&lt;main&gt;</td>
+                <td>Main content area. Grid with <code class="cai-code-inline">gap: --cai-space-10</code> between sections. Combine with <code class="cai-code-inline">.o-container</code> for horizontal centering.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-content</td>
+                <td>&lt;div&gt; / &lt;main&gt;</td>
+                <td>Padded content wrapper with max-width cap. For app-shell layouts where the sidebar handles its own width.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-section</td>
+                <td>&lt;section&gt;</td>
+                <td>Grid container with vertical gap between child elements. Use as the direct child of <code class="cai-code-inline">.cai-platform-main</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- HEADER + FOOTER -->
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Header &amp; footer</div>
+        <div class="cai-table-wrap">
+          <table class="cai-table pdocs-ref-table">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Element</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>.cai-platform-page-header</td>
+                <td>&lt;div&gt; / &lt;header&gt;</td>
+                <td>Hero-style page header block with bottom margin. Contains a title and optional lead.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-page-header__title</td>
+                <td>&lt;h1&gt;</td>
+                <td>Heading: heading font, size 3xl, weight 300, tight letter-spacing.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-page-header__lead</td>
+                <td>&lt;p&gt;</td>
+                <td>Subtitle: secondary text color, max-width 600px.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-footer</td>
+                <td>&lt;footer&gt;</td>
+                <td>Flex row (space-between). Includes a top border and vertical padding. Collapses to column on mobile. Combine with <code class="cai-code-inline">.o-container</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CONTENT PATTERNS -->
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Content patterns</div>
+        <div class="cai-table-wrap">
+          <table class="cai-table pdocs-ref-table">
+            <thead>
+              <tr>
+                <th>Class</th>
+                <th>Element</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>.cai-platform-actions</td>
+                <td>&lt;div&gt;</td>
+                <td>Flex row with wrapping and gap for CTA button groups. Collapses to column on mobile &lt;480px.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-feature-grid</td>
+                <td>&lt;div&gt;</td>
+                <td>2-column grid for feature cards. Collapses to 1 column on mobile. Place <code class="cai-code-inline">.cai-card</code> elements as direct children.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-command-block</td>
+                <td>&lt;div&gt;</td>
+                <td>Installation/CLI command display. Dark background, mono font. Flex row: command on left, copy button on right.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-command-block__cmd</td>
+                <td>&lt;code&gt;</td>
+                <td>The command text. Mono font, wraps on overflow.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-command-block__prefix</td>
+                <td>&lt;span&gt;</td>
+                <td>Shell prefix character (<code class="cai-code-inline">$</code>, <code class="cai-code-inline">pnpm</code>, etc.). Secondary color, non-selectable.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== USAGE EXAMPLES ====================== -->
+    <section class="pdocs-section" id="examples" aria-labelledby="h-examples">
+      <div class="pdocs-section__title" id="h-examples">Examples</div>
+      <div class="pdocs-section__subtitle">Copy-ready HTML snippets. All classes resolve through the Platform CSS file — no additional JS required.</div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Skip link (required for a11y)</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Page header</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;div class=&quot;cai-platform-page-header&quot;&gt;
+  &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Page title&lt;/h1&gt;
+  &lt;p class=&quot;cai-platform-page-header__lead&quot;&gt;A short description of the page.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Feature grid</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;div class=&quot;cai-platform-feature-grid&quot;&gt;
+  &lt;article class=&quot;cai-card&quot;&gt;
+    &lt;h3&gt;Feature one&lt;/h3&gt;
+    &lt;p&gt;Description.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;cai-card&quot;&gt;
+    &lt;h3&gt;Feature two&lt;/h3&gt;
+    &lt;p&gt;Description.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Form block (native controls)</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;form class=&quot;pdocs-form-example&quot; novalidate&gt;
+  &lt;div class=&quot;pdocs-form-grid-2&quot;&gt;
+    &lt;div class=&quot;cai-field&quot;&gt;
+      &lt;label class=&quot;cai-field__label cai-field__label--required&quot; for=&quot;demo-name&quot;&gt;Full name&lt;/label&gt;
+      &lt;input class=&quot;cai-input&quot; id=&quot;demo-name&quot; type=&quot;text&quot; required placeholder=&quot;Jane Smith&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;cai-field&quot;&gt;
+      &lt;label class=&quot;cai-field__label cai-field__label--required&quot; for=&quot;demo-email&quot;&gt;Email&lt;/label&gt;
+      &lt;input class=&quot;cai-input&quot; id=&quot;demo-email&quot; type=&quot;email&quot; required placeholder=&quot;jane@example.com&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;cai-field&quot;&gt;
+      &lt;label class=&quot;cai-field__label&quot; for=&quot;demo-date&quot;&gt;Start date&lt;/label&gt;
+      &lt;input class=&quot;cai-input&quot; id=&quot;demo-date&quot; type=&quot;date&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;cai-field&quot;&gt;
+      &lt;label class=&quot;cai-field__label pdocs-label-split&quot; for=&quot;demo-progress&quot;&gt;
+        &lt;span&gt;Upload&lt;/span&gt;&lt;span&gt;67%&lt;/span&gt;
+      &lt;/label&gt;
+      &lt;progress id=&quot;demo-progress&quot; class=&quot;pdocs-native-progress&quot; max=&quot;100&quot; value=&quot;67&quot;&gt;67%&lt;/progress&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;cai-field pdocs-field-span-full&quot;&gt;
+      &lt;label class=&quot;cai-field__label&quot; for=&quot;demo-bio&quot;&gt;Bio&lt;/label&gt;
+      &lt;textarea class=&quot;cai-input cai-input--textarea&quot; id=&quot;demo-bio&quot; rows=&quot;3&quot; maxlength=&quot;300&quot;&gt;&lt;/textarea&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;pdocs-form-actions&quot;&gt;
+    &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+    &lt;button class=&quot;cai-btn cai-btn--ghost&quot; type=&quot;reset&quot;&gt;Reset&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/form&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Form behavior (range + output)</div>
+        <pre class="cai-code-block" data-lang="js"><code>const range = document.getElementById("experience");
+const out = document.getElementById("experience-out");
+
+if (range &amp;&amp; out) {
+  const sync = () =&gt; {
+    out.value = range.value;
+    range.setAttribute("aria-valuenow", range.value);
+  };
+
+  range.addEventListener("input", sync);
+  sync();
+}</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Command block with copy button</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;div class=&quot;cai-platform-command-block&quot;&gt;
+  &lt;code class=&quot;cai-platform-command-block__cmd&quot;&gt;
+    &lt;span class=&quot;cai-platform-command-block__prefix&quot;&gt;$&lt;/span&gt;
+    pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform
+  &lt;/code&gt;
+  &lt;button class=&quot;cai-copy-btn&quot; data-copy=&quot;pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform&quot; aria-label=&quot;Copy command&quot;&gt;Copy&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Action group</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;div class=&quot;cai-platform-actions&quot;&gt;
+  &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;/docs/&quot;&gt;Get started&lt;/a&gt;
+  &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#reference&quot;&gt;View reference&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Footer</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;footer class=&quot;cai-platform-footer o-container&quot;&gt;
+  &lt;p&gt;Built with CAI Design System.&lt;/p&gt;
+  &lt;div class=&quot;cai-platform-actions&quot;&gt;
+    &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;
+    &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/docs/&quot;&gt;Docs&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- ====================== FULL TEMPLATES ====================== -->
+    <section class="pdocs-section" id="templates" aria-labelledby="h-templates">
+      <div class="pdocs-section__title" id="h-templates">Copy/Paste Templates</div>
+      <div class="pdocs-section__subtitle">Complete blocks you can paste directly into a page and adapt.</div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Template A - Marketing landing shell</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;body class=&quot;cai-platform-page cai-platform-page--gradient&quot;&gt;
+  &lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+
+  &lt;main id=&quot;main-content&quot; class=&quot;cai-platform-main o-container&quot;&gt;
+    &lt;section class=&quot;cai-platform-section&quot;&gt;
+      &lt;div class=&quot;cai-platform-page-header&quot;&gt;
+        &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Your product headline&lt;/h1&gt;
+        &lt;p class=&quot;cai-platform-page-header__lead&quot;&gt;One sentence value proposition.&lt;/p&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;cai-platform-actions&quot;&gt;
+        &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#get-started&quot;&gt;Get started&lt;/a&gt;
+        &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#learn-more&quot;&gt;Learn more&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;cai-platform-footer o-container&quot;&gt;
+    &lt;p&gt;Footer text&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Template B - Feature grid block</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;section class=&quot;cai-platform-section&quot;&gt;
+  &lt;h2&gt;Key capabilities&lt;/h2&gt;
+  &lt;div class=&quot;cai-platform-feature-grid&quot;&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability one&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability two&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability three&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability four&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Template C - Install command + actions</div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;div class=&quot;cai-platform-command-block&quot;&gt;
+  &lt;code class=&quot;cai-platform-command-block__cmd&quot;&gt;
+    &lt;span class=&quot;cai-platform-command-block__prefix&quot;&gt;$&lt;/span&gt;
+    pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform
+  &lt;/code&gt;
+  &lt;button class=&quot;cai-copy-btn&quot;
+    data-copy=&quot;pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform&quot;
+    aria-label=&quot;Copy install command&quot;&gt;
+    Copy
+  &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;cai-platform-actions&quot;&gt;
+  &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#quickstart&quot;&gt;Quickstart&lt;/a&gt;
+  &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#reference&quot;&gt;Reference&lt;/a&gt;
+  &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/docs/&quot;&gt;Core docs&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+    </section>
+
+    <!-- ====================== LIVE DEMO ====================== -->
+    <section class="pdocs-section" id="live-demo" aria-labelledby="h-demo">
+      <div class="pdocs-section__title" id="h-demo">Live examples</div>
+      <div class="pdocs-section__subtitle">Platform primitives rendered in this very page.</div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Command block</div>
+        <div class="pdocs-preview">
+          <div class="cai-platform-command-block">
+            <code class="cai-platform-command-block__cmd">
+              <span class="cai-platform-command-block__prefix">$</span>
+              pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform
+            </code>
+            <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform" aria-label="Copy install command">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Feature grid</div>
+        <div class="pdocs-preview">
+          <div class="cai-platform-feature-grid">
+            <article class="cai-card">
+              <h3 style="font-size: var(--cai-text-md); margin: 0 0 var(--cai-space-02);">App shells</h3>
+              <p style="margin: 0; color: var(--cai-text-secondary); font-size: var(--cai-text-sm);">Page, main, section, and content wrappers for consistent vertical rhythm.</p>
+            </article>
+            <article class="cai-card">
+              <h3 style="font-size: var(--cai-text-md); margin: 0 0 var(--cai-space-02);">Accessibility built-in</h3>
+              <p style="margin: 0; color: var(--cai-text-secondary); font-size: var(--cai-text-sm);">Skip-links, landmark roles, and keyboard-reachable patterns included.</p>
+            </article>
+            <article class="cai-card">
+              <h3 style="font-size: var(--cai-text-md); margin: 0 0 var(--cai-space-02);">Token-driven</h3>
+              <p style="margin: 0; color: var(--cai-text-secondary); font-size: var(--cai-text-sm);">All spacing, color, and type values resolve through semantic tokens.</p>
+            </article>
+            <article class="cai-card">
+              <h3 style="font-size: var(--cai-text-md); margin: 0 0 var(--cai-space-02);">No JS runtime</h3>
+              <p style="margin: 0; color: var(--cai-text-secondary); font-size: var(--cai-text-sm);">Pure CSS. The JS entrypoint is reserved for future orchestration helpers.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Action group</div>
+        <div class="pdocs-preview">
+          <div class="cai-platform-actions">
+            <a class="cai-btn cai-btn--primary" href="/docs/">Core &amp; Tokens docs</a>
+            <a class="cai-btn cai-btn--outline" href="#reference">Class reference</a>
+            <a class="cai-btn cai-btn--ghost" href="/">Home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== SOURCE ====================== -->
+    <section class="pdocs-section" id="source" aria-labelledby="h-source">
+      <div class="pdocs-section__title" id="h-source">Source &amp; build</div>
+      <div class="pdocs-section__subtitle">Platform source lives in <code class="cai-code-inline">packages/platform/src/</code>. Never edit <code class="cai-code-inline">dist/</code> directly.</div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">File layout</div>
+        <pre class="cai-code-block" data-lang="text"><code>packages/platform/
+├── src/
+│   ├── components/
+│   │   └── _components.css   ← all .cai-platform-* classes
+│   ├── index.css             ← @import entry
+│   └── platform.js           ← reserved entrypoint (no-op)
+└── dist/
+    ├── platform.css          ← generated, do not edit
+    └── platform.js           ← generated, do not edit</code></pre>
+      </div>
+
+      <div class="pdocs-subsection">
+        <div class="pdocs-subsection__title">Regenerate dist after editing src</div>
+        <div class="cai-platform-command-block">
+          <code class="cai-platform-command-block__cmd">
+            <span class="cai-platform-command-block__prefix">$</span>
+            pnpm platform:build
+          </code>
+          <button class="cai-copy-btn" data-copy="pnpm platform:build" aria-label="Copy build command">Copy</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="cai-platform-footer o-container">
+    <p style="color: var(--cai-text-secondary); font-size: var(--cai-text-sm);">@cai-ds/platform &mdash; part of the CAI Design System</p>
+    <div class="cai-platform-actions">
+      <a class="cai-btn cai-btn--ghost" href="/">Home</a>
+      <a class="cai-btn cai-btn--ghost" href="/docs/">Core &amp; Tokens docs</a>
+    </div>
+  </footer>
+
+  <script type="module" src="/packages/core/dist/cai.js"></script>
+  <script type="module">
+    function bindRangeOutput(inputId, outputId) {
+      const input = document.getElementById(inputId);
+      const output = document.getElementById(outputId);
+      if (!input || !output) return;
+
+      const sync = () => {
+        output.value = input.value;
+        input.setAttribute("aria-valuenow", input.value);
+      };
+
+      input.addEventListener("input", sync);
+      sync();
+    }
+
+    bindRangeOutput("pf-range-a", "pf-range-a-out");
+    bindRangeOutput("pf-range-b", "pf-range-b-out");
+    bindRangeOutput("pf-ex-experience", "pf-ex-experience-out");
+
+    const demoForm = document.getElementById("pf-demo-form");
+    const formResult = document.getElementById("pf-form-result");
+
+    if (demoForm && formResult) {
+      demoForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        if (!demoForm.checkValidity()) {
+          formResult.textContent = "Please complete required fields before submitting.";
+          return;
+        }
+        formResult.textContent = "Form submitted successfully (demo only).";
+      });
+
+      demoForm.addEventListener("reset", () => {
+        formResult.textContent = "";
+      });
+    }
+
+    const switches = document.querySelectorAll("[data-pdocs-switch]");
+    const toggleSwitch = (track) => {
+      const checked = track.getAttribute("aria-checked") === "true";
+      track.setAttribute("aria-checked", checked ? "false" : "true");
+      track.classList.toggle("is-on", !checked);
+    };
+
+    switches.forEach((track) => {
+      track.addEventListener("click", () => toggleSwitch(track));
+      track.addEventListener("keydown", (event) => {
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          toggleSwitch(track);
+        }
+      });
+    });
+
+    const motionReplayBtn = document.querySelector("[data-pdocs-motion-replay]");
+    const motionCards = Array.from(document.querySelectorAll("[data-pdocs-motion-card]"));
+
+    if (motionReplayBtn && motionCards.length) {
+      const replayMotion = () => {
+        motionCards.forEach((card, index) => {
+          card.classList.remove("is-revealing");
+          window.setTimeout(() => {
+            card.classList.add("is-revealing");
+          }, index * 90);
+        });
+      };
+
+      motionReplayBtn.addEventListener("click", replayMotion);
+      replayMotion();
+    }
+  </script>
+</body>
+</html>

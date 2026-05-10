@@ -1,0 +1,116 @@
+/* ==========================================================================
+   CAI — 4. OBJECTS
+   Layout abstractions. No colors, no decorative typography.
+   Prefix: .o-
+   ========================================================================== */
+
+/* Shell: root app layout (sidebar + main + footer) */
+.o-shell {
+  display: grid;
+  grid-template-columns: var(--cai-sidebar-width) 1fr;
+  grid-template-rows: 1fr auto;
+  min-height: 100vh;
+}
+
+/* Sidebar positioned in first column, spans all rows */
+.o-shell > .cai-sidebar {
+  grid-column: 1;
+  grid-row: 1 / -1;
+}
+
+/* Main content area fills second column */
+.o-main {
+  grid-column: 2;
+  grid-row: 1;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* Footer spans full width at bottom */
+.o-shell > footer,
+.o-shell > .cai-platform-footer {
+  grid-column: 1 / -1;
+  grid-row: 2;
+}
+
+/* Mobile: stack everything vertically, sidebar becomes overlay */
+@media (max-width: 768px) {
+  .o-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .o-shell > .cai-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: var(--cai-sidebar-width);
+    transform: translateX(-100%);
+    z-index: var(--cai-z-sidebar);
+  }
+
+  .o-shell > .cai-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .o-main {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .o-shell > footer,
+  .o-shell > .cai-platform-footer {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}
+
+/* Centered max-width container */
+.o-container {
+  max-width: var(--cai-content-max);
+  padding: var(--cai-space-07);
+  padding-bottom: var(--cai-space-11);
+}
+
+@media (max-width: 480px) {
+  .o-container {
+    padding: var(--cai-space-05);
+    padding-bottom: var(--cai-space-09);
+  }
+}
+
+/* Generic auto-fill grid */
+.o-grid {
+  display: grid;
+  gap: var(--cai-space-05);
+}
+
+/* Horizontal row with wrap */
+.o-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cai-space-04);
+}
+
+/* Stack vertical */
+.o-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cai-space-04);
+}
+
+/* Media object (icon + content) */
+.o-media {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cai-space-04);
+}
+
+.o-media__body {
+  flex: 1;
+  min-width: 0;
+}

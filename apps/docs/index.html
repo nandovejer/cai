@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="minimalist">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAI Core + Tokens - Technical Docs</title>
+  <meta name="description" content="Technical documentation for @cai-ds/tokens and @cai-ds/core: architecture, commands, and integration patterns.">
+  <link rel="stylesheet" href="/packages/tokens/fonts/fonts.css">
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
+  <link rel="stylesheet" href="/packages/core/dist/themes/cai-theme-minimalist.css">
+  <link rel="stylesheet" href="/apps/docs/showcase.css">
+</head>
+<body class="o-shell">
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <button class="cai-nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar-docs">
+    <span class="cai-nav-toggle__bar"></span>
+    <span class="cai-nav-toggle__bar"></span>
+    <span class="cai-nav-toggle__bar"></span>
+  </button>
+  <div class="cai-nav-overlay" aria-hidden="true"></div>
+
+  <nav class="cai-sidebar" id="sidebar-docs" aria-label="Docs navigation">
+    <div class="cai-sidebar__brand">
+      <div class="cai-sidebar__brand-name">
+        <span class="cai-sidebar__logo">C</span>
+        CAI
+      </div>
+      <div class="cai-sidebar__version">Core + Tokens</div>
+    </div>
+
+    <div class="cai-sidebar__section" data-group="start">
+      <div class="cai-sidebar__section-label">Overview</div>
+      <a class="cai-sidebar__link is-active" href="#installation">Installation</a>
+      <a class="cai-sidebar__link" href="#packages">Package boundaries</a>
+      <a class="cai-sidebar__link" href="#build">Build commands</a>
+    </div>
+
+    <div class="cai-sidebar__section" data-group="tokens">
+      <div class="cai-sidebar__section-label">Tokens</div>
+      <a class="cai-sidebar__link" href="#tokens">Token model</a>
+      <a class="cai-sidebar__link" href="#themes">Themes &amp; modes</a>
+    </div>
+
+    <div class="cai-sidebar__section" data-group="core">
+      <div class="cai-sidebar__section-label">Core</div>
+      <a class="cai-sidebar__link" href="#core">Core architecture</a>
+      <a class="cai-sidebar__link" href="#platform-link">Platform docs</a>
+    </div>
+
+    <div class="cai-sidebar__footer">
+      <div class="cai-platform-actions">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/platform/">Platform</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="o-main cai-platform-content" id="main-content">
+    <nav class="docs-sitenav" aria-label="Site navigation">
+      <a href="/">Home</a>
+      <a href="/docs/" aria-current="page">Core &amp; Tokens</a>
+      <a href="/platform/">Platform</a>
+    </nav>
+
+    <header class="cai-platform-page-header">
+      <h1 class="cai-platform-page-header__title">Core + Tokens Technical Documentation</h1>
+      <p class="cai-platform-page-header__lead">Technical reference for architecture, package boundaries, build flow, and copy/paste integration snippets for @cai-ds/tokens and @cai-ds/core.</p>
+    </header>
+
+    <section class="docs-section" id="installation" aria-labelledby="h-installation">
+      <h2 class="docs-section__title" id="h-installation">Installation</h2>
+      <div class="docs-section__subtitle">Load tokens first, then core. Add platform only when you need app-shell patterns.</div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">CDN</h3>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens/dist/cai-tokens.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/cai.css&quot;&gt;
+
+&lt;!-- Optional JS behaviors --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/cai.js&quot;&gt;&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">pnpm</h3>
+        <div class="cai-platform-command-block">
+          <code class="cai-platform-command-block__cmd">
+            <span class="cai-platform-command-block__prefix">$</span>
+            pnpm add @cai-ds/tokens @cai-ds/core
+          </code>
+          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core" aria-label="Copy install command">Copy</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="docs-section" id="packages" aria-labelledby="h-packages">
+      <h2 class="docs-section__title" id="h-packages">Package Boundaries</h2>
+      <div class="docs-section__subtitle">Unidirectional dependency chain.</div>
+      <pre class="cai-code-block" data-lang="text"><code>@cai-ds/tokens  -> primitives + semantic token contracts
+      ↓
+@cai-ds/core    -> reusable CSS components + optional JS behaviors
+      ↓
+@cai-ds/platform -> app-shell patterns (documented at /platform/)</code></pre>
+    </section>
+
+    <section class="docs-section" id="tokens" aria-labelledby="h-tokens">
+      <h2 class="docs-section__title" id="h-tokens">Tokens (Technical)</h2>
+      <div class="docs-section__subtitle">Two-layer token model. Components consume semantic tokens only.</div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">Layer model</h3>
+        <pre class="cai-code-block" data-lang="text"><code>packages/tokens/tokens.json
+  -> source of primitives (blue-10..100, gray-10..100, spacing, radius...)
+
+packages/tokens/dist/cai-tokens.css
+  Layer 1: generated primitives
+  Layer 2: handwritten semantics per theme (light/dark/high-contrast)</code></pre>
+      </div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">Component token rule</h3>
+        <pre class="cai-code-block" data-lang="css"><code>/* Correct: semantic tokens */
+color: var(--cai-text-primary);
+background: var(--cai-brand-primary);
+border-color: var(--cai-border-subtle);
+
+/* Incorrect: primitive scales */
+color: var(--cai-gray-100);
+background: var(--cai-blue-60);</code></pre>
+      </div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">Add primitive token</h3>
+        <ol>
+          <li>Edit <code class="cai-code-inline">packages/tokens/tokens.json</code>.</li>
+          <li>Run <code class="cai-code-inline">pnpm tokens:build</code>.</li>
+          <li>Map to semantics only if needed.</li>
+        </ol>
+      </div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">Add semantic token</h3>
+        <ol>
+          <li>Edit <code class="cai-code-inline">packages/tokens/dist/cai-tokens.css</code> in all 3 theme blocks.</li>
+          <li>Keep names stable across light, dark, and high-contrast.</li>
+          <li>Use the semantic token in components.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="docs-section" id="core" aria-labelledby="h-core">
+      <h2 class="docs-section__title" id="h-core">Core (Technical)</h2>
+      <div class="docs-section__subtitle">Core ships ITCSS layers + optional vanilla JS behavior helpers.</div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">CSS architecture (ITCSS)</h3>
+        <pre class="cai-code-block" data-lang="text"><code>packages/core/src/
+  settings/_settings.css
+  generic/_reset.css
+  elements/_elements.css
+  objects/_objects.css
+  components/_components.css
+  utilities/_utilities.css</code></pre>
+      </div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">JS behavior entrypoint</h3>
+        <pre class="cai-code-block" data-lang="js"><code>import "/packages/core/dist/cai.js";
+
+// Includes helpers for:
+// - theme persistence
+// - copy buttons
+// - tabs and media player bindings
+// - syntax-highlight utility for code blocks</code></pre>
+      </div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">Minimal page skeleton</h3>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;html lang=&quot;en&quot; data-theme=&quot;minimalist&quot;&gt;
+&lt;head&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/tokens/dist/cai-tokens.css&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/core/dist/cai.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Run action&lt;/button&gt;
+  &lt;div class=&quot;cai-field&quot;&gt;
+    &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
+    &lt;input id=&quot;email&quot; class=&quot;cai-input&quot; type=&quot;email&quot;&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+    </section>
+
+    <section class="docs-section" id="themes" aria-labelledby="h-themes">
+      <h2 class="docs-section__title" id="h-themes">Themes &amp; Modes</h2>
+      <div class="docs-section__subtitle">Identity and color mode are independent.</div>
+      <pre class="cai-code-block" data-lang="html"><code>&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;light&quot;&gt;
+
+&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;dark&quot;&gt;
+
+&lt;!-- Custom identity --&gt;
+&lt;html data-theme=&quot;ricardoymortimer&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
+    </section>
+
+    <section class="docs-section" id="build" aria-labelledby="h-build">
+      <h2 class="docs-section__title" id="h-build">Build Commands</h2>
+      <div class="docs-section__subtitle">Commands used in this monorepo workflow.</div>
+      <pre class="cai-code-block" data-lang="bash"><code>pnpm dev
+pnpm tokens:build
+pnpm core:build
+pnpm build
+
+# Optional checks
+pnpm lint:css
+pnpm lint:js
+pnpm test:unit</code></pre>
+    </section>
+
+    <section class="docs-section" id="platform-link" aria-labelledby="h-platform-link">
+      <h2 class="docs-section__title" id="h-platform-link">Platform Documentation</h2>
+      <div class="docs-section__subtitle">For app-shell components and copy/paste templates, use the dedicated Platform docs page.</div>
+      <div class="cai-platform-actions">
+        <a class="cai-btn cai-btn--primary" href="/platform/">Open Platform Docs</a>
+        <a class="cai-btn cai-btn--outline" href="/">Back to Home</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="cai-platform-footer o-container">
+    <p style="color: var(--cai-text-secondary); font-size: var(--cai-text-sm);">Technical docs for @cai-ds/tokens and @cai-ds/core</p>
+    <div class="cai-platform-actions">
+      <a class="cai-btn cai-btn--ghost" href="/">Home</a>
+      <a class="cai-btn cai-btn--ghost" href="/platform/">Platform Docs</a>
+    </div>
+  </footer>
+
+  <script type="module" src="/packages/core/dist/cai.js"></script>
+</body>
+</html>

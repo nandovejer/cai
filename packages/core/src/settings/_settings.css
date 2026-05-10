@@ -1,0 +1,58 @@
+/* ==========================================================================
+   CAI — 1. SETTINGS
+   No CSS output. Defines configuration custom properties
+   that do not live in tokens (layout, z-index scale, motion, etc.)
+   Requires: cai-tokens.css loaded first.
+   ========================================================================== */
+
+:root {
+  /* Typography — serif for headings, sans for UI, mono for code */
+  --cai-font-heading: var(--cai-font-serif);
+  /* Z-index scale */
+  --cai-z-base: 0;
+  --cai-z-raised: 10;
+  --cai-z-overlay: 90;
+  --cai-z-sidebar: 100;
+  --cai-z-modal: 200;
+  --cai-z-toast: 300;
+
+  /* Layout */
+  --cai-sidebar-width: 256px;
+  --cai-content-max: 1100px;
+
+  /* Breakpoints — using @media (max-width: var()) does not work in native CSS,
+     but they are documented here as a canonical reference for JS and preprocessors */
+  --cai-bp-sm: 480px; /* small mobile */
+  --cai-bp-md: 768px; /* tablet / sidebar collapse */
+  --cai-bp-lg: 1024px; /* narrow desktop */
+  --cai-bp-xl: 1280px; /* standard desktop */
+  --cai-bp-2xl: 1440px; /* wide screen */
+
+  /* Motion — durations */
+  --cai-duration-instant: 0.05s;
+  --cai-duration-fast: 0.1s;
+  --cai-duration-base: 0.2s;
+  --cai-duration-slow: 0.3s;
+  --cai-duration-slower: 0.5s;
+  --cai-duration-lazy: 0.8s;
+
+  /* Motion — easing */
+  --cai-easing-standard: cubic-bezier(0.4, 0, 0.2, 1); /* material standard */
+  --cai-easing-enter: cubic-bezier(
+    0,
+    0,
+    0.2,
+    1
+  ); /* decelerate — cosas que entran */
+  --cai-easing-exit: cubic-bezier(
+    0.4,
+    0,
+    1,
+    1
+  ); /* accelerate — cosas que salen */
+  --cai-easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* overshoot suave */
+  --cai-easing-linear: linear;
+
+  /* Scrollbar */
+  --cai-scrollbar-size: 4px;
+}

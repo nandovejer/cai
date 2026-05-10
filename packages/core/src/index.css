@@ -1,0 +1,18 @@
+/* ==========================================================================
+   CAI Design System — Core
+   ITCSS layer order (increasing specificity):
+     1. Settings   — configuration custom properties
+     2. Generic    — reset / normalize
+     3. Elements   — bare HTML elements
+     4. Objects    — layout abstractions (.o-)
+     5. Components — UI components (.cai-)
+     6. Utilities  — single-purpose helpers (.u-)
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   ========================================================================== */
+
+@import "./settings/_settings.css";
+@import "./generic/_reset.css";
+@import "./elements/_elements.css";
+@import "./objects/_objects.css";
+@import "./components/_components.css";
+@import "./utilities/_utilities.css";

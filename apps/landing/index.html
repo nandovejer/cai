@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="minimalist">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAI Design System</title>
+  <meta name="description" content="CAI is a vanilla-first design system for precise, theme-ready technical interfaces.">
+  <link rel="stylesheet" href="/packages/tokens/fonts/fonts.css">
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
+  <link rel="stylesheet" href="/packages/core/dist/themes/cai-theme-minimalist.css">
+  <link rel="stylesheet" href="/apps/landing/landing.css">
+</head>
+<body class="cai-platform-page cai-platform-page--gradient">
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="landing-hero">
+    <div class="landing-sitenav o-container" role="navigation" aria-label="Site navigation">
+      <span class="landing-sitenav__brand">CAI Platform</span>
+      <div class="landing-sitenav__links">
+        <a href="#capabilities">Capabilities</a>
+        <a href="#building-blocks">Building blocks</a>
+        <a href="#ship-fast">Ship fast</a>
+        <a href="#media-assets">Media assets</a>
+        <a href="/docs/">Core &amp; Tokens</a>
+        <a href="/platform/">Platform</a>
+      </div>
+    </div>
+    <div class="landing-hero__inner o-container">
+      <div class="landing-hero__content">
+        <p class="landing-eyebrow">Vanilla first design system</p>
+        <h1 class="landing-title">Platform-grade UI patterns with product-level clarity.</h1>
+        <p class="landing-lead">Build technical apps with semantic tokens, reusable components, and accessible interactions that scale from first prototype to production shell.</p>
+        <div class="cai-platform-actions">
+          <a class="cai-btn cai-btn--primary" href="/platform/">Explore platform docs</a>
+          <a class="cai-btn cai-btn--outline" href="#ship-fast">Quick start</a>
+        </div>
+      </div>
+
+      <aside class="landing-hero-panel" aria-label="Platform release highlights">
+        <p class="landing-hero-panel__label">Current release</p>
+        <h2 class="landing-hero-panel__title">CAI 2.0</h2>
+        <ul class="landing-hero-panel__list">
+          <li>Token system with multi-theme semantics</li>
+          <li>Core primitives and interactive patterns</li>
+          <li>Platform shells for technical products</li>
+        </ul>
+        <div class="landing-chip-row" aria-label="Platform qualities">
+          <span class="landing-chip">A11y baseline</span>
+          <span class="landing-chip">Vanilla JS</span>
+          <span class="landing-chip">Theme-ready</span>
+        </div>
+      </aside>
+    </div>
+
+    <div class="landing-stats o-container" aria-label="System metrics">
+      <article class="landing-stat-card">
+        <p class="landing-stat-card__label">Publishable packages</p>
+        <p class="landing-stat-card__value">3</p>
+        <p class="landing-stat-card__desc">Tokens, core, and platform ready for install.</p>
+      </article>
+      <article class="landing-stat-card">
+        <p class="landing-stat-card__label">Theme modes</p>
+        <p class="landing-stat-card__value">3+</p>
+        <p class="landing-stat-card__desc">Light, dark, and high-contrast semantics built in.</p>
+      </article>
+      <article class="landing-stat-card">
+        <p class="landing-stat-card__label">Runtime dependencies</p>
+        <p class="landing-stat-card__value">0</p>
+        <p class="landing-stat-card__desc">Native browser APIs and plain CSS/JS only.</p>
+      </article>
+    </div>
+  </header>
+
+  <main id="main-content" class="cai-platform-main o-container">
+    <section class="cai-platform-section" id="capabilities" aria-labelledby="landing-capabilities">
+      <div class="landing-section-head">
+        <h2 class="landing-section__title" id="landing-capabilities">Designed for dense product surfaces</h2>
+        <p class="landing-section__body">The visual language follows the same rhythm as technical dashboards: strong hierarchy, modular spacing, and intentional contrast for scanning speed.</p>
+      </div>
+
+      <div class="landing-pillars">
+        <article class="cai-card landing-pillar-card">
+          <p class="landing-pillar-card__eyebrow">Architecture</p>
+          <h3 class="landing-pillar-card__title">System-first components</h3>
+          <p class="landing-pillar-card__body">Composable blocks that work across docs, tools, and internal product workflows without visual drift.</p>
+        </article>
+        <article class="cai-card landing-pillar-card">
+          <p class="landing-pillar-card__eyebrow">Experience</p>
+          <h3 class="landing-pillar-card__title">High-signal interface patterns</h3>
+          <p class="landing-pillar-card__body">Clear states, readable density, and predictable interaction behavior across every component category.</p>
+        </article>
+        <article class="cai-card landing-pillar-card">
+          <p class="landing-pillar-card__eyebrow">Delivery</p>
+          <h3 class="landing-pillar-card__title">Fast onboarding for teams</h3>
+          <p class="landing-pillar-card__body">Install styles, mount behavior, apply theme tokens, and ship without introducing framework lock-in.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="cai-platform-section" id="building-blocks" aria-labelledby="landing-building-blocks">
+      <div class="landing-section-head">
+        <h2 class="landing-section__title" id="landing-building-blocks">Core building blocks</h2>
+        <p class="landing-section__body">A curated stack for product UIs: semantic tokens, component primitives, and app-shell patterns for large surfaces.</p>
+      </div>
+
+      <div class="landing-block-grid">
+        <article class="landing-block-card">
+          <h3 class="landing-block-card__title">Tokens</h3>
+          <p class="landing-block-card__body">Color, spacing, motion, and typography primitives mapped into semantic aliases per theme.</p>
+          <a class="landing-block-card__link" href="/docs/#tokens">Open token reference</a>
+        </article>
+        <article class="landing-block-card">
+          <h3 class="landing-block-card__title">Core</h3>
+          <p class="landing-block-card__body">Reusable primitives and interaction patterns for forms, feedback, content, and media surfaces.</p>
+          <a class="landing-block-card__link" href="/docs/#components">Open core components</a>
+        </article>
+        <article class="landing-block-card">
+          <h3 class="landing-block-card__title">Platform</h3>
+          <p class="landing-block-card__body">Higher-level shells, layouts, and app orchestration patterns for complex product contexts.</p>
+          <a class="landing-block-card__link" href="/platform/">Open platform docs</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="cai-platform-section" id="ship-fast" aria-labelledby="landing-ship-fast">
+      <div class="landing-section-head">
+        <h2 class="landing-section__title" id="landing-ship-fast">Ship in minutes</h2>
+        <p class="landing-section__body">Use the package trio and start with semantic defaults. No framework runtime, no style compiler, no lock-in.</p>
+      </div>
+
+      <div class="landing-quickstart-grid">
+        <article class="landing-command-card">
+          <p class="landing-command-card__label">Install packages</p>
+          <pre class="cai-code-block" data-lang="bash" aria-label="Install CAI packages"><code>pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform</code></pre>
+        </article>
+        <article class="landing-command-card">
+          <p class="landing-command-card__label">Load styles</p>
+          <pre class="cai-code-block" data-lang="html" aria-label="Load CAI styles"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens/dist/cai-tokens.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/cai.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform/dist/platform.css&quot;&gt;</code></pre>
+        </article>
+        <article class="landing-command-card">
+          <p class="landing-command-card__label">Choose theme</p>
+          <pre class="cai-code-block" data-lang="html" aria-label="Choose a theme"><code>&lt;html data-theme=&quot;light&quot;&gt;
+&lt;!-- dark | high-contrast | custom-theme --&gt;</code></pre>
+        </article>
+      </div>
+    </section>
+
+    <section class="cai-platform-section" id="media-assets" aria-labelledby="landing-media-assets">
+      <div class="landing-section-head">
+        <h2 class="landing-section__title" id="landing-media-assets">Media assets in action</h2>
+        <p class="landing-section__body">This landing consumes the provided platform assets directly: two MIDI tracks (<code class="cai-code-inline">sample.mid</code> and <code class="cai-code-inline">audio.mid</code>) and one caption track (<code class="cai-code-inline">captions.vtt</code>) ready for native media integration.</p>
+      </div>
+
+      <div class="landing-assets-grid">
+        <article class="landing-asset-card">
+          <h3 class="landing-asset-card__title">MIDI demo: sample.mid</h3>
+          <p class="landing-asset-card__body">Mounted with the shared CAI player UI and loaded through the internal `MidiPlayer` engine.</p>
+          <div class="cai-player" data-type="midi" data-src="/apps/platform-docs/assets/sample.mid" aria-label="Sample MIDI player">
+            <div class="cai-player-controls cai-player-controls--audio">
+              <div class="cai-player-btns">
+                <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                  <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z" fill="currentColor"></path></svg>
+                  <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true" style="display: none;"><path d="M4 3h3v10H4zm5 0h3v10H9z" fill="currentColor"></path></svg>
+                </button>
+                <button class="cai-player-btn cai-player-mute" type="button" aria-label="Mute">
+                  <svg class="icon-vol-on" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6h3l3-3v10l-3-3H3zM11 6a2 2 0 0 1 0 4z" fill="currentColor"></path></svg>
+                  <svg class="icon-vol-off" viewBox="0 0 16 16" aria-hidden="true" style="display: none;"><path d="M3 6h3l3-3v10l-3-3H3zM11 6l2 2m0-2-2 2" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg>
+                </button>
+              </div>
+
+              <div class="cai-player-progress-row cai-player-progress-row--audio">
+                <span class="cai-player-time cai-player-current">0:00</span>
+                <div class="cai-player-seekbar" role="slider" tabindex="0" aria-label="Seek position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span class="cai-player-seekbar-buf"></span>
+                  <span class="cai-player-seekbar-fill"></span>
+                  <span class="cai-player-seekbar-thumb"></span>
+                </div>
+                <span class="cai-player-time cai-player-duration">0:00</span>
+              </div>
+
+              <div class="cai-player-vol-wrap">
+                <div class="cai-player-seekbar cai-player-volbar" role="slider" tabindex="0" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+                  <span class="cai-player-seekbar-fill" style="width: 100%;"></span>
+                  <span class="cai-player-seekbar-thumb" style="left: 100%;"></span>
+                </div>
+              </div>
+
+              <span class="cai-player-midi-status"></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="landing-asset-card">
+          <h3 class="landing-asset-card__title">MIDI demo: audio.mid</h3>
+          <p class="landing-asset-card__body">Second track wired to the same component API to validate reusable controls across MIDI files.</p>
+          <div class="cai-player" data-type="midi" data-src="/apps/platform-docs/assets/audio.mid" aria-label="Audio MIDI player">
+            <div class="cai-player-controls cai-player-controls--audio">
+              <div class="cai-player-btns">
+                <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                  <svg class="icon-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M5 3.5v9l7-4.5z" fill="currentColor"></path></svg>
+                  <svg class="icon-pause" viewBox="0 0 16 16" aria-hidden="true" style="display: none;"><path d="M4 3h3v10H4zm5 0h3v10H9z" fill="currentColor"></path></svg>
+                </button>
+                <button class="cai-player-btn cai-player-mute" type="button" aria-label="Mute">
+                  <svg class="icon-vol-on" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 6h3l3-3v10l-3-3H3zM11 6a2 2 0 0 1 0 4z" fill="currentColor"></path></svg>
+                  <svg class="icon-vol-off" viewBox="0 0 16 16" aria-hidden="true" style="display: none;"><path d="M3 6h3l3-3v10l-3-3H3zM11 6l2 2m0-2-2 2" stroke="currentColor" stroke-width="1.5" fill="none"></path></svg>
+                </button>
+              </div>
+
+              <div class="cai-player-progress-row cai-player-progress-row--audio">
+                <span class="cai-player-time cai-player-current">0:00</span>
+                <div class="cai-player-seekbar" role="slider" tabindex="0" aria-label="Seek position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                  <span class="cai-player-seekbar-buf"></span>
+                  <span class="cai-player-seekbar-fill"></span>
+                  <span class="cai-player-seekbar-thumb"></span>
+                </div>
+                <span class="cai-player-time cai-player-duration">0:00</span>
+              </div>
+
+              <div class="cai-player-vol-wrap">
+                <div class="cai-player-seekbar cai-player-volbar" role="slider" tabindex="0" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+                  <span class="cai-player-seekbar-fill" style="width: 100%;"></span>
+                  <span class="cai-player-seekbar-thumb" style="left: 100%;"></span>
+                </div>
+              </div>
+
+              <span class="cai-player-midi-status"></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="landing-asset-card landing-asset-card--caption">
+          <h3 class="landing-asset-card__title">Caption track: captions.vtt</h3>
+          <p class="landing-asset-card__body">Ready for native <code class="cai-code-inline">&lt;track kind="captions"&gt;</code> integration. This block loads and previews the VTT file directly from platform assets.</p>
+          <object class="landing-caption-preview" data="/apps/platform-docs/assets/captions.vtt" type="text/vtt" aria-label="Captions VTT preview">
+            <a href="/apps/platform-docs/assets/captions.vtt">Open captions.vtt</a>
+          </object>
+          <div class="landing-asset-links" aria-label="Asset links">
+            <a href="/apps/platform-docs/assets/sample.mid">sample.mid</a>
+            <a href="/apps/platform-docs/assets/audio.mid">audio.mid</a>
+            <a href="/apps/platform-docs/assets/captions.vtt">captions.vtt</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="cai-platform-section" aria-labelledby="landing-cta">
+      <div class="landing-cta" id="landing-cta">
+        <div>
+          <h2 class="landing-cta__title">Build products with a consistent visual system.</h2>
+          <p class="landing-cta__body">Browse the full token catalog, inspect component behavior, and copy production-ready shell patterns.</p>
+        </div>
+        <div class="cai-platform-actions">
+          <a class="cai-btn cai-btn--primary" href="/docs/">Open core &amp; tokens docs</a>
+          <a class="cai-btn cai-btn--outline" href="/platform/">Open platform reference</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-footer cai-platform-footer o-container">
+    <p>CAI is vanilla-first by architecture, not by trend. Native browser APIs, semantic tokens, and system-level clarity from day one.</p>
+    <div class="cai-platform-actions">
+      <a class="cai-btn cai-btn--primary" href="/docs/">Core &amp; Tokens docs</a>
+      <a class="cai-btn cai-btn--outline" href="/platform/">Platform reference</a>
+      <a class="cai-btn cai-btn--ghost" href="/">Back to landing top</a>
+    </div>
+  </footer>
+
+  <script type="module" src="/packages/core/dist/cai.js"></script>
+</body>
+</html>

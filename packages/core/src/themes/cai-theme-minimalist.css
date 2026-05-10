@@ -1,0 +1,419 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&display=swap');
+
+/* ==========================================================================
+   CAI Design System — Theme: Minimalist
+   Flat, tranquil identity. Ultra-light typography, warm neutrals, zero noise.
+
+   Usage (CDN):
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/cai.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/themes/cai-theme-minimalist.css">
+     <html data-theme="minimalist">
+
+   This file is SELF-CONTAINED — it does NOT require cai-tokens.css to be loaded.
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   NON-COLOR PRIMITIVES + TYPOGRAPHY OVERRIDE
+   DM Sans replaces IBM Plex for a lighter, calmer feel.
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Spacing (base 4px) */
+  --cai-space-01: 2px;
+  --cai-space-02: 4px;
+  --cai-space-03: 8px;
+  --cai-space-04: 12px;
+  --cai-space-05: 16px;
+  --cai-space-06: 24px;
+  --cai-space-07: 32px;
+  --cai-space-08: 40px;
+  --cai-space-09: 48px;
+  --cai-space-10: 64px;
+  --cai-space-11: 80px;
+  --cai-space-12: 96px;
+
+  /* Sizing */
+  --cai-size-height-sm: 24px;
+  --cai-size-height-md: 32px;
+  --cai-size-height-lg: 40px;
+  --cai-size-height-xl: 48px;
+
+  /* Typography — DM Sans: clean, geometric, ultra-light */
+  --cai-text-xs: 11px;
+  --cai-text-sm: 12px;
+  --cai-text-md: 14px;
+  --cai-text-base: 16px;
+  --cai-text-lg: 20px;
+  --cai-text-xl: 24px;
+  --cai-text-2xl: 32px;
+  --cai-text-3xl: 42px;
+  --cai-text-4xl: 54px;
+
+  /* Radius — slightly softer than default for calm feeling */
+  --cai-radius-none: 0px;
+  --cai-radius-sm: 3px;
+  --cai-radius-md: 6px;
+  --cai-radius-lg: 10px;
+  --cai-radius-xl: 14px;
+  --cai-radius-full: 9999px;
+
+  /* Shadows — extremely subtle, almost imperceptible */
+  --cai-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04), 0 0 1px rgba(0, 0, 0, 0.03);
+  --cai-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --cai-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* -------------------------------------------------------------------------
+   MINIMALIST PRIVATE PALETTE
+   Warm off-whites, muted slate, zero saturation except for the single brand accent.
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Surfaces — warm off-white family */
+  --min-bg: #fafaf8;
+  --min-surface: #ffffff;
+  --min-elevated: #f5f5f2;
+  --min-active: #eeeeeb;
+  --min-overlay: rgba(30, 30, 30, 0.35);
+
+  /* Text */
+  --min-text: #1e1e1e;
+  --min-muted: #64748b;
+  --min-placeholder: #94a3b8;
+  --min-disabled: #cbd5e1;
+
+  /* Brand — muted slate, calm and authoritative */
+  --min-brand: #334155;
+  --min-brand-hover: #1e293b;
+  --min-brand-active: #0f172a;
+  --min-brand-subtle: rgba(51, 65, 85, 0.07);
+
+  /* Borders — barely visible warm gray */
+  --min-border-subtle: #e8e8e4;
+  --min-border-strong: #c8c8c4;
+  --min-border-focus: #334155;
+
+  /* Sidebar — light, not dark */
+  --min-sidebar-bg: #f4f4f1;
+  --min-sidebar-text: #64748b;
+  --min-sidebar-text-hover: #1e1e1e;
+  --min-sidebar-hover: #eaeae7;
+  --min-sidebar-active-bg: #334155;
+  --min-sidebar-active-text: #ffffff;
+  --min-sidebar-border: #e4e4e0;
+  --min-sidebar-label: #94a3b8;
+  --min-sidebar-logo-bg: #334155;
+
+  /* Status — very desaturated, just enough to be recognizable */
+  --min-success: #3d7a5b;
+  --min-success-bg: rgba(61, 122, 91, 0.08);
+  --min-danger: #9b3535;
+  --min-danger-bg: rgba(155, 53, 53, 0.08);
+  --min-warning: #8a6200;
+  --min-warning-accent: #c89000;
+  --min-warning-bg: rgba(138, 98, 0, 0.08);
+  --min-info: #334155;
+  --min-info-bg: rgba(51, 65, 85, 0.07);
+}
+
+/* -------------------------------------------------------------------------
+   THEME: MINIMALIST
+   Flat, calm, ultra-light. Activate via: <html data-theme="minimalist">
+   -------------------------------------------------------------------------- */
+
+[data-theme="minimalist"] {
+  /* Typography — DM Sans replaces IBM Plex for a lighter, calmer feel */
+  --cai-font-sans: "DM Sans", system-ui, sans-serif;
+  --cai-font-serif: "DM Sans", system-ui, sans-serif;
+  --cai-font-heading: "DM Sans", system-ui, sans-serif;
+
+  /* Backgrounds */
+  --cai-bg-page: var(--min-bg);
+  --cai-bg-ui: var(--min-surface);
+  --cai-bg-ui-hover: var(--min-elevated);
+  --cai-bg-ui-active: var(--min-active);
+  --cai-bg-overlay: var(--min-overlay);
+
+  /* Text */
+  --cai-text-primary: var(--min-text);
+  --cai-text-secondary: var(--min-muted);
+  --cai-text-placeholder: var(--min-placeholder);
+  --cai-text-disabled: var(--min-disabled);
+  --cai-text-on-color: #ffffff;
+  --cai-text-inverse: #ffffff;
+
+  /* Borders */
+  --cai-border-subtle: var(--min-border-subtle);
+  --cai-border-strong: var(--min-border-strong);
+  --cai-border-interactive: var(--min-border-focus);
+
+  /* Brand — muted slate */
+  --cai-brand-primary: var(--min-brand);
+  --cai-brand-hover: var(--min-brand-hover);
+  --cai-brand-active: var(--min-brand-active);
+  --cai-brand-subtle: var(--min-brand-subtle);
+
+  /* Icons */
+  --cai-icon-primary: var(--min-text);
+  --cai-icon-secondary: var(--min-muted);
+  --cai-icon-inverse: #ffffff;
+
+  /* Layers */
+  --cai-layer-01: var(--min-surface);
+  --cai-layer-02: var(--min-bg);
+  --cai-layer-03: var(--min-elevated);
+
+  /* Sidebar — light, minimal */
+  --cai-sidebar-bg: var(--min-sidebar-bg);
+  --cai-sidebar-text: var(--min-sidebar-text);
+  --cai-sidebar-text-hover: var(--min-sidebar-text-hover);
+  --cai-sidebar-hover: var(--min-sidebar-hover);
+  --cai-sidebar-active-bg: var(--min-sidebar-active-bg);
+  --cai-sidebar-active-text: var(--min-sidebar-active-text);
+  --cai-sidebar-border: var(--min-sidebar-border);
+  --cai-sidebar-label: var(--min-sidebar-label);
+  --cai-sidebar-logo-bg: var(--min-sidebar-logo-bg);
+
+  /* Semantic status — desaturated */
+  --cai-color-success: var(--min-success);
+  --cai-color-success-bg: var(--min-success-bg);
+  --cai-color-danger: var(--min-danger);
+  --cai-color-danger-bg: var(--min-danger-bg);
+  --cai-color-warning: var(--min-warning);
+  --cai-color-warning-accent: var(--min-warning-accent);
+  --cai-color-warning-bg: var(--min-warning-bg);
+  --cai-color-info: var(--min-info);
+  --cai-color-info-bg: var(--min-info-bg);
+
+  /* Input */
+  --cai-input-bg: var(--min-surface);
+  --cai-input-border: var(--min-border-strong);
+
+  /* Extended */
+  --cai-color-teal: #3d7a7a;
+  --cai-color-teal-bg: rgba(61, 122, 122, 0.07);
+  --cai-color-purple: #5b4f7a;
+  --cai-color-purple-bg: rgba(91, 79, 122, 0.07);
+  --cai-color-code: var(--min-brand);
+}
+
+/* -------------------------------------------------------------------------
+   MINIMALIST — FONT WEIGHT OVERRIDES
+   Section titles and headings use weight 200 for maximum lightness.
+   Body stays at 300 for readability.
+   -------------------------------------------------------------------------- */
+
+[data-theme="minimalist"] body,
+[data-theme="minimalist"] .cai-sidebar,
+[data-theme="minimalist"] .cai-sidebar__link {
+  font-weight: 300;
+}
+
+[data-theme="minimalist"] .docs-section__title,
+[data-theme="minimalist"] .docs-group-header__label,
+[data-theme="minimalist"] h1,
+[data-theme="minimalist"] h2,
+[data-theme="minimalist"] h3 {
+  font-weight: 200;
+  letter-spacing: -0.5px;
+}
+
+[data-theme="minimalist"] .cai-btn {
+  font-weight: 300;
+  letter-spacing: 0.02em;
+}
+
+[data-theme="minimalist"] .cai-sidebar__brand-name {
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* -------------------------------------------------------------------------
+   COLOR MODE: LIGHT  (explicit — same as the default, for button state)
+   -------------------------------------------------------------------------- */
+
+[data-theme="minimalist"][data-mode="light"] {
+  --cai-bg-page: var(--min-bg);
+  --cai-bg-ui: var(--min-surface);
+  --cai-bg-ui-hover: var(--min-elevated);
+  --cai-bg-ui-active: var(--min-active);
+  --cai-bg-overlay: var(--min-overlay);
+  --cai-text-primary: var(--min-text);
+  --cai-text-secondary: var(--min-muted);
+  --cai-text-placeholder: var(--min-placeholder);
+  --cai-text-disabled: var(--min-disabled);
+  --cai-text-on-color: #ffffff;
+  --cai-text-inverse: #ffffff;
+  --cai-border-subtle: var(--min-border-subtle);
+  --cai-border-strong: var(--min-border-strong);
+  --cai-border-interactive: var(--min-border-focus);
+  --cai-brand-primary: var(--min-brand);
+  --cai-brand-hover: var(--min-brand-hover);
+  --cai-brand-active: var(--min-brand-active);
+  --cai-brand-subtle: var(--min-brand-subtle);
+  --cai-icon-primary: var(--min-text);
+  --cai-icon-secondary: var(--min-muted);
+  --cai-icon-inverse: #ffffff;
+  --cai-layer-01: var(--min-surface);
+  --cai-layer-02: var(--min-bg);
+  --cai-layer-03: var(--min-elevated);
+  --cai-sidebar-bg: var(--min-sidebar-bg);
+  --cai-sidebar-text: var(--min-sidebar-text);
+  --cai-sidebar-text-hover: var(--min-sidebar-text-hover);
+  --cai-sidebar-hover: var(--min-sidebar-hover);
+  --cai-sidebar-active-bg: var(--min-sidebar-active-bg);
+  --cai-sidebar-active-text: var(--min-sidebar-active-text);
+  --cai-sidebar-border: var(--min-sidebar-border);
+  --cai-sidebar-label: var(--min-sidebar-label);
+  --cai-sidebar-logo-bg: var(--min-sidebar-logo-bg);
+  --cai-color-success: var(--min-success);
+  --cai-color-success-bg: var(--min-success-bg);
+  --cai-color-danger: var(--min-danger);
+  --cai-color-danger-bg: var(--min-danger-bg);
+  --cai-color-warning: var(--min-warning);
+  --cai-color-warning-accent: var(--min-warning-accent);
+  --cai-color-warning-bg: var(--min-warning-bg);
+  --cai-color-info: var(--min-info);
+  --cai-color-info-bg: var(--min-info-bg);
+  --cai-input-bg: var(--min-surface);
+  --cai-input-border: var(--min-border-strong);
+  --cai-color-teal: #3d7a7a;
+  --cai-color-teal-bg: rgba(61, 122, 122, 0.07);
+  --cai-color-purple: #5b4f7a;
+  --cai-color-purple-bg: rgba(91, 79, 122, 0.07);
+  --cai-color-code: var(--min-brand);
+}
+
+/* -------------------------------------------------------------------------
+   COLOR MODE: DARK
+   Dark warm slate. Same tranquil identity, inverted luminosity.
+   Activate: <html data-theme="minimalist" data-mode="dark">
+   -------------------------------------------------------------------------- */
+
+[data-theme="minimalist"][data-mode="dark"] {
+  --cai-bg-page: #1a1a18;
+  --cai-bg-ui: #222220;
+  --cai-bg-ui-hover: #2a2a28;
+  --cai-bg-ui-active: #323230;
+  --cai-bg-overlay: rgba(10, 10, 8, 0.7);
+
+  --cai-text-primary: #f0f0ee;
+  --cai-text-secondary: #94a3b8;
+  --cai-text-placeholder: #64748b;
+  --cai-text-disabled: #475569;
+  --cai-text-on-color: #ffffff;
+  --cai-text-inverse: #1e1e1e;
+
+  --cai-border-subtle: #2e2e2c;
+  --cai-border-strong: #424240;
+  --cai-border-interactive: #94a3b8;
+
+  --cai-brand-primary: #94a3b8;
+  --cai-brand-hover: #b8c4d4;
+  --cai-brand-active: #e2e8f0;
+  --cai-brand-subtle: rgba(148, 163, 184, 0.1);
+
+  --cai-icon-primary: #f0f0ee;
+  --cai-icon-secondary: #94a3b8;
+  --cai-icon-inverse: #1e1e1e;
+
+  --cai-layer-01: #222220;
+  --cai-layer-02: #1a1a18;
+  --cai-layer-03: #111110;
+
+  --cai-sidebar-bg: #111110;
+  --cai-sidebar-text: #64748b;
+  --cai-sidebar-text-hover: #f0f0ee;
+  --cai-sidebar-hover: #1a1a18;
+  --cai-sidebar-active-bg: #94a3b8;
+  --cai-sidebar-active-text: #111110;
+  --cai-sidebar-border: #222220;
+  --cai-sidebar-label: #475569;
+  --cai-sidebar-logo-bg: #94a3b8;
+
+  --cai-color-success: #5a9a78;
+  --cai-color-success-bg: rgba(90, 154, 120, 0.1);
+  --cai-color-danger: #b05a5a;
+  --cai-color-danger-bg: rgba(176, 90, 90, 0.1);
+  --cai-color-warning: #b08a40;
+  --cai-color-warning-accent: #c8a060;
+  --cai-color-warning-bg: rgba(176, 138, 64, 0.1);
+  --cai-color-info: #8090a8;
+  --cai-color-info-bg: rgba(128, 144, 168, 0.1);
+
+  --cai-input-bg: #222220;
+  --cai-input-border: #424240;
+
+  --cai-color-teal: #568080;
+  --cai-color-teal-bg: rgba(86, 128, 128, 0.1);
+  --cai-color-purple: #7a6890;
+  --cai-color-purple-bg: rgba(122, 104, 144, 0.1);
+  --cai-color-code: #94a3b8;
+}
+
+/* -------------------------------------------------------------------------
+   COLOR MODE: HIGH CONTRAST
+   Pure white page, pure black text, zero noise. Maximum WCAG contrast.
+   Activate: <html data-theme="minimalist" data-mode="high-contrast">
+   -------------------------------------------------------------------------- */
+
+[data-theme="minimalist"][data-mode="high-contrast"] {
+  --cai-bg-page: #ffffff;
+  --cai-bg-ui: #ffffff;
+  --cai-bg-ui-hover: #f0f0ee;
+  --cai-bg-ui-active: #e0e0de;
+  --cai-bg-overlay: rgba(0, 0, 0, 0.5);
+
+  --cai-text-primary: #000000;
+  --cai-text-secondary: #1e1e1e;
+  --cai-text-placeholder: #424242;
+  --cai-text-disabled: #757575;
+  --cai-text-on-color: #ffffff;
+  --cai-text-inverse: #ffffff;
+
+  --cai-border-subtle: #424242;
+  --cai-border-strong: #000000;
+  --cai-border-interactive: #000000;
+
+  --cai-brand-primary: #000000;
+  --cai-brand-hover: #1a1a1a;
+  --cai-brand-active: #333333;
+  --cai-brand-subtle: rgba(0, 0, 0, 0.08);
+
+  --cai-icon-primary: #000000;
+  --cai-icon-secondary: #1e1e1e;
+  --cai-icon-inverse: #ffffff;
+
+  --cai-layer-01: #ffffff;
+  --cai-layer-02: #f8f8f6;
+  --cai-layer-03: #f0f0ee;
+
+  --cai-sidebar-bg: #000000;
+  --cai-sidebar-text: #bdbdbd;
+  --cai-sidebar-text-hover: #ffffff;
+  --cai-sidebar-hover: #1a1a1a;
+  --cai-sidebar-active-bg: #ffffff;
+  --cai-sidebar-active-text: #000000;
+  --cai-sidebar-border: #333333;
+  --cai-sidebar-label: #757575;
+  --cai-sidebar-logo-bg: #ffffff;
+
+  --cai-color-success: #1a5c38;
+  --cai-color-success-bg: rgba(26, 92, 56, 0.1);
+  --cai-color-danger: #7a1515;
+  --cai-color-danger-bg: rgba(122, 21, 21, 0.1);
+  --cai-color-warning: #5c3d00;
+  --cai-color-warning-accent: #7a5200;
+  --cai-color-warning-bg: rgba(92, 61, 0, 0.1);
+  --cai-color-info: #000000;
+  --cai-color-info-bg: rgba(0, 0, 0, 0.06);
+
+  --cai-input-bg: #ffffff;
+  --cai-input-border: #000000;
+
+  --cai-color-teal: #1a5c5c;
+  --cai-color-teal-bg: rgba(26, 92, 92, 0.1);
+  --cai-color-purple: #3d2d5c;
+  --cai-color-purple-bg: rgba(61, 45, 92, 0.1);
+  --cai-color-code: #000000;
+}

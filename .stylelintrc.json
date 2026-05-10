@@ -1,0 +1,44 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "color-no-invalid-hex": true,
+
+    "declaration-property-value-disallowed-list": {
+      "color": [
+        "/^#/",
+        "/^rgb/",
+        "/^hsl/",
+        "black",
+        "white",
+        "grey",
+        "gray"
+      ],
+      "background": [
+        "/^#(?!{)/",
+        "/^rgb/"
+      ],
+      "border": ["/solid #/"],
+      "border-color": ["/^#/", "/^rgb/"]
+    },
+
+    "selector-class-pattern": [
+      "^(([a-z][a-z0-9]*)((-{1,2}|_{2})([a-z0-9][a-z0-9-]*))*|is-[a-z][a-z0-9-]*)$",
+      {
+        "message": "Expected class selector to follow BEM (cai-block, cai-block__element, cai-block--modifier, is-state)"
+      }
+    ],
+
+    "alpha-value-notation": null,
+    "color-function-notation": null,
+    "media-feature-range-notation": null,
+
+    "no-descending-specificity": null,
+
+    "comment-empty-line-before": null,
+    "no-empty-source": null,
+    "rule-empty-line-before": null
+  },
+  "ignoreFiles": [
+    "packages/tokens/dist/cai-tokens.css"
+  ]
+}

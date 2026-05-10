@@ -1,0 +1,164 @@
+/* ==========================================================================
+	 CAI Platform components and app-shell patterns.
+	 ========================================================================== */
+
+.cai-platform-page {
+	display: grid;
+	min-height: 100vh;
+	grid-template-rows: auto 1fr auto;
+}
+
+.cai-platform-skip-link {
+	position: fixed;
+	top: var(--cai-space-04);
+	left: var(--cai-space-04);
+	z-index: var(--cai-z-toast);
+	background: var(--cai-brand-primary);
+	color: var(--cai-text-on-color);
+	padding: var(--cai-space-03) var(--cai-space-04);
+	text-decoration: none;
+	transform: translateY(-200%);
+	transition: transform var(--cai-duration-fast) var(--cai-easing-enter);
+}
+
+.cai-platform-skip-link:focus {
+	transform: translateY(0);
+}
+
+.cai-platform-page--gradient {
+	background:
+		radial-gradient(circle at top left, var(--cai-brand-subtle), transparent 28%),
+		linear-gradient(180deg, var(--cai-bg-page) 0%, var(--cai-layer-02) 100%);
+}
+
+.cai-platform-main {
+	display: grid;
+	gap: var(--cai-space-10);
+	padding-bottom: var(--cai-space-10);
+}
+
+.cai-platform-content {
+	padding: var(--cai-space-07);
+	padding-bottom: var(--cai-space-11);
+	max-width: var(--cai-content-max);
+	width: 100%;
+}
+
+.cai-platform-section {
+	display: grid;
+	gap: var(--cai-space-05);
+}
+
+.cai-platform-page-header {
+	margin-bottom: var(--cai-space-07);
+}
+
+.cai-platform-page-header__title {
+	font-family: var(--cai-font-heading);
+	font-size: var(--cai-text-3xl);
+	font-weight: 300;
+	letter-spacing: -1px;
+	margin-bottom: var(--cai-space-02);
+	color: var(--cai-text-primary);
+}
+
+.cai-platform-page-header__lead {
+	font-size: var(--cai-text-base);
+	color: var(--cai-text-secondary);
+	max-width: 600px;
+}
+
+.cai-platform-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--cai-space-03);
+}
+
+.cai-platform-feature-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--cai-space-04);
+}
+
+.cai-platform-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cai-space-05);
+	flex-wrap: wrap;
+	border-top: 1px solid var(--cai-border-subtle);
+	padding-top: var(--cai-space-06);
+	padding-bottom: var(--cai-space-08);
+}
+
+.cai-platform-command-block {
+	background: var(--cai-layer-03);
+	border: 1px solid var(--cai-border-subtle);
+	padding: var(--cai-space-05) var(--cai-space-06);
+	margin-bottom: var(--cai-space-06);
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cai-space-05);
+	flex-wrap: wrap;
+}
+
+.cai-platform-command-block__cmd {
+	font-family: var(--cai-font-mono);
+	font-size: var(--cai-text-md);
+	color: var(--cai-text-primary);
+	min-width: 0;
+	overflow-wrap: anywhere;
+}
+
+.cai-platform-command-block__prefix {
+	color: var(--cai-text-secondary);
+	user-select: none;
+}
+
+@media (max-width: 768px) {
+	.cai-platform-content {
+		padding-top: calc(var(--cai-space-07) + var(--cai-space-06));
+	}
+
+	.cai-platform-feature-grid {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.cai-platform-footer {
+		align-items: flex-start;
+		flex-direction: column;
+	}
+}
+
+@media (max-width: 480px) {
+	.cai-platform-content {
+		padding: var(--cai-space-05);
+		padding-top: calc(var(--cai-space-07) + var(--cai-space-05));
+		padding-bottom: var(--cai-space-09);
+	}
+
+	.cai-platform-actions {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.cai-platform-actions > * {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.cai-platform-command-block {
+		align-items: stretch;
+	}
+
+	.cai-platform-command-block .cai-copy-btn {
+		width: 100%;
+		justify-content: center;
+	}
+
+	.cai-platform-page-header__title {
+		font-size: var(--cai-text-2xl);
+		letter-spacing: -0.5px;
+	}
+}

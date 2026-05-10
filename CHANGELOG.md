@@ -9,6 +9,9 @@ All notable changes to this project are documented here.
 - Screen reader testing (VoiceOver, NVDA, JAWS)
 - Documentation: a11y testing guide
 
+### Changed (v2.0.0)
+- **`dist/utils.js` is not a standalone build artifact.** `packages/core/src/utils.js` is an internal module bundled into `dist/cai.js` and is not exposed as a separate file. It has never appeared in the `exports` map of `@cai-ds/core` and is not part of the public API. Importing `@cai-ds/core/utils` is unsupported.
+
 ### Added (v2.0.0)
 - **CAI Platform package:** Added `@cai-ds/platform` as the app-level layer above core for shells, content wrappers, page headers, skip links, command blocks, and layout patterns.
 - **Platform build pipeline:** Added `pnpm platform:build` and included platform in the root `pnpm build` flow.

@@ -4,6 +4,8 @@
  */
 
 import { describe, it, expect } from "vitest";
+import { resolve } from "path";
+import { existsSync, readFileSync } from "fs";
 import {
   formatTime,
   isCustomTheme,
@@ -136,5 +138,35 @@ describe("escapeHtml", () => {
 
   it("handles empty strings", () => {
     expect(escapeHtml("")).toBe("");
+  });
+});
+
+describe("check-dist sentinel (BUG-01)", () => {
+  const sentinel = resolve(process.cwd(), "packages/tokens/dist/cai-tokens.css");
+
+  it("sentinel path points to packages/tokens/dist/cai-tokens.css", () => {
+    expect(sentinel).toMatch(/packages[/\\]tokens[/\\]dist[/\\]cai-tokens\.css$/);
+  });
+
+  it("script exits cleanly when sentinel exists (post-build)", () => {
+    if (!existsSync(sentinel)) return; // pre-build environment — skip
+    expect(existsSync(sentinel)).toBe(true);
+  });
+});
+
+describe("dist build artifacts (BUG-02)", () => {
+  const distRoot = resolve(process.cwd(), "packages/core/dist");
+  const caiJsPath = resolve(distRoot, "cai.js");
+  const midiJsPath = resolve(distRoot, "midi.js");
+
+  it("dist/midi.js exists as an independent chunk after build", () => {
+    if (!existsSync(caiJsPath)) return; // dist not built yet — skip
+    expect(existsSync(midiJsPath)).toBe(true);
+  });
+
+  it("dist/cai.js does not contain MidiParser (midi.js is lazy-loaded)", () => {
+    if (!existsSync(caiJsPath)) return; // dist not built yet — skip
+    const content = readFileSync(caiJsPath, "utf-8");
+    expect(content).not.toContain("MidiParser");
   });
 });

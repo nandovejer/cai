@@ -1,20 +1,10 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Freckle+Face&family=Space+Grotesk:wght@300;400;500;600;700&display=swap'); */
-
-/* MIGRATION NOTE (W-01):
-   Google Fonts replaced with local hosting via @font-face below.
-   To complete: download Freckle Face + Space Grotesk woff2 files
-   and place in packages/tokens/fonts/{custom-faces,decorative}/
-   Then uncomment @font-face entries and remove this note.
-   See DIST-RULES.md for fonts integration guide.
-*/
-
 @font-face {
   font-family: "Freckle Face";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  /* src: url("../../tokens/dist/fonts/custom-faces/FreckeFace-Regular.woff2") format("woff2"); */
-  /* For now, fallback to system fonts — see migration note above */
+  src: url("../../tokens/dist/fonts/custom-faces/FreckeFace-Regular.woff2")
+    format("woff2");
 }
 
 @font-face {
@@ -22,7 +12,8 @@
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Light.woff2") format("woff2"); */
+  src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Light.woff2")
+    format("woff2");
 }
 
 @font-face {
@@ -30,7 +21,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Regular.woff2") format("woff2"); */
+  src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Regular.woff2")
+    format("woff2");
 }
 
 @font-face {
@@ -38,7 +30,8 @@
   font-style: normal;
   font-weight: 500;
   font-display: swap;
-  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Medium.woff2") format("woff2"); */
+  src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Medium.woff2")
+    format("woff2");
 }
 
 @font-face {
@@ -46,7 +39,8 @@
   font-style: normal;
   font-weight: 600;
   font-display: swap;
-  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-SemiBold.woff2") format("woff2"); */
+  src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-SemiBold.woff2")
+    format("woff2");
 }
 
 @font-face {
@@ -54,7 +48,8 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  /* src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Bold.woff2") format("woff2"); */
+  src: url("../../tokens/dist/fonts/custom-faces/SpaceGrotesk-Bold.woff2")
+    format("woff2");
 }
 
 /* ==========================================================================

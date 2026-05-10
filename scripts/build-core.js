@@ -55,13 +55,6 @@ async function buildJS() {
       external: [], // Nothing is external — all modules must be resolved
     });
 
-    await bundle.generate({
-      file: resolve(distRoot, "cai.js"),
-      format: "es", // ES module, not transpiled
-      inlineDynamicImports: false, // Keep dynamic imports as separate chunks
-    });
-
-    // Write the bundle — rollup.generate() returns { output: [...] }
     await bundle.write({
       file: resolve(distRoot, "cai.js"),
       format: "es",

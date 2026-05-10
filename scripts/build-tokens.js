@@ -10,7 +10,15 @@
  * migrate to Style Dictionary (see audit 2.2).
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from "fs";
+import {
+  readFileSync,
+  writeFileSync,
+  mkdirSync,
+  copyFileSync,
+  readdirSync,
+  statSync,
+  existsSync,
+} from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -49,7 +57,9 @@ function generatePrimitives(tokens) {
   }
 
   lines.push("  /* Spacing (base 4px) */");
-  const spacingKeys = Object.keys(tokens.spacing).sort((a, b) => a.localeCompare(b));
+  const spacingKeys = Object.keys(tokens.spacing).sort((a, b) =>
+    a.localeCompare(b),
+  );
   for (const key of spacingKeys) {
     lines.push(`  --cai-space-${key}: ${tokens.spacing[key].value};`);
   }
@@ -95,6 +105,31 @@ const css = `${header}\n${generatePrimitives(tokens)}${semanticLayer}`;
 writeFileSync(outputPath, css, "utf-8");
 console.log(`✓ Primitives regenerated → ${outputPath}`);
 console.log("  Semantic layer preserved.");
+
+const customFacesSrc = resolve(
+  __dirname,
+  "../packages/tokens/fonts/custom-faces",
+);
+const customFacesDest = resolve(
+  __dirname,
+  "../packages/tokens/dist/fonts/custom-faces",
+);
+if (existsSync(customFacesSrc)) {
+  mkdirSync(customFacesDest, { recursive: true });
+  for (const file of readdirSync(customFacesSrc)) {
+    const srcPath = resolve(customFacesSrc, file);
+    const destPath = resolve(customFacesDest, file);
+    if (statSync(srcPath).isFile()) {
+      copyFileSync(srcPath, destPath);
+      console.log(`✓ Copied custom face ${file}`);
+    }
+  }
+  console.log(`✓ Custom faces copied → ${customFacesDest}`);
+} else {
+  console.log(
+    `ℹ️ Custom faces source not found, skipping copy: ${customFacesSrc}`,
+  );
+}
 
 let tokenCount = 0;
 for (const [key, group] of Object.entries(tokens)) {

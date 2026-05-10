@@ -1,4 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,200;9..40,300;9..40,400;9..40,500&display=swap'); */
+
+/* MIGRATION NOTE (W-01):
+   Google Fonts replaced with local hosting via @font-face below.
+   To complete: download DM Sans woff2 files (weights 200–500, opsz 9–40)
+   and place in packages/tokens/fonts/{custom-faces}/
+   Then uncomment @font-face entries and remove this note.
+   See DIST-RULES.md for fonts integration guide.
+*/
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/DMSans-ExtraLight.woff2") format("woff2"); */
+  /* For now, fallback to system fonts — see migration note above */
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/DMSans-Light.woff2") format("woff2"); */
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/DMSans-Regular.woff2") format("woff2"); */
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  /* src: url("../../tokens/dist/fonts/custom-faces/DMSans-Medium.woff2") format("woff2"); */
+}
 
 /* ==========================================================================
    CAI Design System — Theme: Minimalist

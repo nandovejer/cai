@@ -21,6 +21,7 @@ import {
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { rollup } from "rollup";
+import * as esbuild from "esbuild";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -47,6 +48,10 @@ const css = cssLayers
 writeFileSync(resolve(distRoot, "cai.css"), css, "utf-8");
 console.log(`✓ Core CSS built → ${resolve(distRoot, "cai.css")}`);
 
+const { code: minCss } = await esbuild.transform(css, { loader: "css", minify: true });
+writeFileSync(resolve(distRoot, "cai.min.css"), minCss, "utf-8");
+console.log(`✓ Core CSS minified → ${resolve(distRoot, "cai.min.css")}`);
+
 // --- JS: bundle with Rollup ---
 async function buildJS() {
   try {
@@ -66,9 +71,14 @@ async function buildJS() {
     await bundle.close();
     console.log(`✓ Core JS bundled → ${resolve(distRoot, "cai.js")}`);
 
-    // Also check if midi.js was generated as a chunk
-    if (existsSync(resolve(distRoot, "midi.js"))) {
-      console.log(`✓ MIDI JS chunk → ${resolve(distRoot, "midi.js")}`);
+    // Minify JS outputs with esbuild
+    for (const jsFile of ["cai.js", "midi.js"]) {
+      const jsPath = resolve(distRoot, jsFile);
+      if (!existsSync(jsPath)) continue;
+      const src = readFileSync(jsPath, "utf-8");
+      const { code: minJs } = await esbuild.transform(src, { loader: "js", minify: true });
+      writeFileSync(resolve(distRoot, jsFile.replace(".js", ".min.js")), minJs, "utf-8");
+      console.log(`✓ ${jsFile} minified → ${jsFile.replace(".js", ".min.js")}`);
     }
   } catch (error) {
     console.error("❌ JS bundling failed:", error.message);
@@ -97,10 +107,12 @@ const themesSrcDir = resolve(srcRoot, "themes");
 const themesDistDir = resolve(distRoot, "themes");
 if (existsSync(themesSrcDir)) {
   mkdirSync(themesDistDir, { recursive: true });
-  readdirSync(themesSrcDir)
-    .filter((f) => f.endsWith(".css"))
-    .forEach((f) => {
-      copyFileSync(resolve(themesSrcDir, f), resolve(themesDistDir, f));
-      console.log(`✓ Theme synced → ${resolve(themesDistDir, f)}`);
-    });
+  for (const f of readdirSync(themesSrcDir).filter((f) => f.endsWith(".css"))) {
+    copyFileSync(resolve(themesSrcDir, f), resolve(themesDistDir, f));
+    console.log(`✓ Theme synced → ${resolve(themesDistDir, f)}`);
+    const src = readFileSync(resolve(themesSrcDir, f), "utf-8");
+    const { code: minCss } = await esbuild.transform(src, { loader: "css", minify: true });
+    writeFileSync(resolve(themesDistDir, f.replace(".css", ".min.css")), minCss, "utf-8");
+    console.log(`✓ Theme minified → ${f.replace(".css", ".min.css")}`);
+  }
 }

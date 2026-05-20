@@ -1,0 +1,148 @@
+═══════════════════════════════════════════════════════════════════════════════
+                    NPM PUBLISH - QUICK REFERENCE
+═══════════════════════════════════════════════════════════════════════════════
+
+PRE-REQUISITOS (PRIMERA VEZ)
+────────────────────────────────────────────────────────────────────────────────
+
+1. Crear organización en npm
+   URL: https://www.npmjs.com/org/create
+   Nombre: cai-ds
+   Tipo: Free
+
+2. Verificar instalaciones
+   node --version     (necesita >= 18.0.0)
+   pnpm --version     (necesita >= 9.0.0)
+
+
+PASOS RÁPIDOS PARA PUBLICAR
+────────────────────────────────────────────────────────────────────────────────
+
+PASO 1: AUTENTICARSE
+  npm login
+  npm whoami
+
+PASO 2: NAVEGAR AL PROYECTO
+  cd c:\Users\mago\Documents\LeadFront\repos-github\cai
+
+PASO 3: PREPARAR
+  pnpm install
+  pnpm build
+
+PASO 4: PUBLICAR (EN ESTE ORDEN)
+
+  ➊ TOKENS (BETA):
+     cd packages/tokens
+     npm publish --tag beta --access public
+     cd ../..
+
+  ➋ CORE:
+     cd packages/core
+     npm publish --access public
+     cd ../..
+
+  ➌ PLATFORM:
+     cd packages/platform
+     npm publish --access public
+     cd ../..
+
+PASO 5: ESPERAR
+  Esperar 1-10 minutos para que jsDelivr indexe
+
+PASO 6: VERIFICAR
+  En navegador:
+  • https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2.0.0-beta.1/dist/cai-tokens.css
+  • https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.css
+  • https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.js
+  • https://cdn.jsdelivr.net/npm/@cai-ds/platform@2.0.0/dist/platform.css
+
+
+ALTERNATIVA: SCRIPT AUTOMATIZADO
+────────────────────────────────────────────────────────────────────────────────
+
+Después de npm login, puedes ejecutar:
+  .\publish.ps1
+
+El script automatizará todos los pasos.
+
+
+VERIFICACIONES
+────────────────────────────────────────────────────────────────────────────────
+
+Verificar publicación:
+  npm view @cai-ds/tokens@2.0.0-beta.1
+  npm view @cai-ds/core@2.0.0
+  npm view @cai-ds/platform@2.0.0
+
+Ver en web:
+  https://www.npmjs.com/package/@cai-ds/tokens
+  https://www.npmjs.com/package/@cai-ds/core
+  https://www.npmjs.com/package/@cai-ds/platform
+
+Probar en proyecto:
+  mkdir test-cai && cd test-cai
+  npm init -y
+  npm install @cai-ds/tokens@2.0.0-beta.1 @cai-ds/core@2.0.0 @cai-ds/platform@2.0.0
+
+
+SOLUCIÓN DE PROBLEMAS
+────────────────────────────────────────────────────────────────────────────────
+
+¿"404 - Package not found"?
+  • Verificar que organización cai-ds existe
+  • Verificar que eres miembro
+  • Verificar nombre correcto (@cai-ds/...)
+
+¿"You must be logged in to publish"?
+  npm logout
+  npm login
+  npm whoami
+
+¿CDN devuelve 404 después de publicar?
+  • Esperar más tiempo (hasta 10 minutos)
+  • Limpiar caché navegador (Ctrl+Shift+Delete)
+  • Probar en modo incógnito
+
+¿"No permission to publish scoped package"?
+  • Crear org en https://www.npmjs.com/org/create
+  • Agregar usuario a org
+
+
+DOCUMENTACIÓN COMPLETA
+────────────────────────────────────────────────────────────────────────────────
+
+Archivos en el proyecto:
+  • PUBLISH_GUIDE.md          - Guía detallada (60+ pasos)
+  • URL_STATUS_REPORT.md      - Estado actual de URLs
+  • publish.ps1               - Script automatizado
+  • PUBLISH_QUICK_REFERENCE.txt - Este archivo
+
+
+INFORMACIÓN DE PAQUETES
+────────────────────────────────────────────────────────────────────────────────
+
+@cai-ds/tokens@2.0.0-beta.1
+  • Descripción: Design tokens y fuentes web IBM Plex
+  • Tag: beta
+  • Archivos: dist/cai-tokens.css + fonts/
+
+@cai-ds/core@2.0.0
+  • Descripción: Componentes CSS y comportamientos vanilla JS
+  • Tag: latest
+  • Archivos: dist/cai.css, dist/cai.js, dist/themes/
+
+@cai-ds/platform@2.0.0
+  • Descripción: Patrones shell de aplicación
+  • Tag: latest
+  • Archivos: dist/platform.css
+  • Depende de: @cai-ds/core, @cai-ds/tokens
+
+
+CONTACTO Y SOPORTE
+────────────────────────────────────────────────────────────────────────────────
+
+npm Support: https://support.npmjs.com/
+GitHub: https://github.com/nandovejer/cai/issues
+jsDelivr: https://www.jsdelivr.com/
+
+═══════════════════════════════════════════════════════════════════════════════

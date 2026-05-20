@@ -1,6 +1,8 @@
 {
   "name": "@cai-ds/platform",
   "version": "2.0.0",
+  "description": "CAI Design System — app-level shell patterns built on @cai-ds/core",
+  "license": "MIT",
   "type": "module",
   "main": "dist/platform.js",
   "exports": {
@@ -10,8 +12,30 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "@cai-ds/core": "workspace:*",
-    "@cai-ds/tokens": "workspace:*"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthropics/cai.git",
+    "directory": "packages/platform"
+  },
+  "homepage": "https://github.com/anthropics/cai#readme",
+  "bugs": {
+    "url": "https://github.com/anthropics/cai/issues"
+  },
+  "keywords": ["design-system", "css", "platform", "shell", "layout", "vanilla"],
+  "sideEffects": ["dist/platform.css"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepack": "node ../../scripts/build-platform.js"
+  },
+  "peerDependencies": {
+    "@cai-ds/core": ">=2.0.0",
+    "@cai-ds/tokens": ">=2.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@cai-ds/tokens": {
+      "optional": true
+    }
   }
 }

@@ -250,14 +250,69 @@ Example CSS comment:
 
 ---
 
-## Release Process
+## Publishing & Versioning
 
-1. Ensure all tests pass
-2. Update version in `package.json` files (all 4: root, core, tokens, docs)
-3. Update `CHANGELOG.md` (if created) with changes
-4. Commit: `git commit -m "chore: version v1.x.x"`
-5. Create Git tag: `git tag v1.x.x`
-6. Push: `git push origin main --tags`
+### Automated npm Publishing
+
+CAI Design System uses GitHub Actions to automatically publish packages to npm when version changes are merged to `main`. No manual npm publishing is needed.
+
+**Workflow:**
+
+1. Make your changes (features, fixes, etc.)
+2. When ready to release, run:
+   ```bash
+   pnpm changeset
+   ```
+   This creates a changelog entry describing what changed (follows semver).
+
+3. Verify the changeset looks correct, then run:
+   ```bash
+   pnpm changeset version
+   ```
+   This auto-bumps all affected package versions (tokens, core, platform).
+
+4. Commit and push to `main`:
+   ```bash
+   git add .changeset packages/*/package.json
+   git commit -m "chore: release packages"
+   git push origin main
+   ```
+
+5. **GitHub Actions automatically handles the rest:**
+   - Workflow `.github/workflows/publish.yml` detects version changes
+   - Installs dependencies, builds all packages
+   - Publishes to npm registry as `@cai-ds/tokens`, `@cai-ds/core`, `@cai-ds/platform`
+
+**Note:** You need npm account access as a member of the `@cai-ds` organization.
+
+### Testing Before Release
+
+To verify your changes build and publish correctly locally:
+
+```bash
+pnpm build
+# Verify the new version doesn't already exist on npm:
+npm view @cai-ds/tokens versions | grep "X.Y.Z"
+```
+
+### Troubleshooting Publishes
+
+| Error | Cause | Solution |
+|-------|-------|----------|
+| "Package already published" | Version exists on npm | It's already live; no action needed |
+| "E403 permission denied" | Not an org member or invalid token | Check npm org membership: `npm org ls cai-ds` |
+| "Not found" | npm can't find your package | Run `pnpm build` first; check package.json |
+
+---
+
+## Release Process (Legacy)
+
+*Note: This is now automated via GitHub Actions. Keep for reference if manual release is needed.*
+
+1. Ensure all tests pass: `pnpm test:unit && pnpm test:ui`
+2. Use `pnpm changeset` to describe changes
+3. Run `pnpm changeset version` to bump versions
+4. Push to `main` — GitHub Actions publishes automatically
 
 ---
 

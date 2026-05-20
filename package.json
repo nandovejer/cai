@@ -20,13 +20,15 @@
     "test:unit": "vitest run",
     "test:ui": "playwright test",
     "test:ui:install": "playwright install chromium",
-    "verify:security": "node scripts/verify-security.js"
+    "verify:security": "node scripts/verify-security.js",
+    "setup:husky": "node scripts/setup-husky.js"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0",
     "@playwright/test": "^1.40.0",
     "@vitest/ui": "^1.0.0",
     "eslint": "^9.0.0",
+    "husky": "^9.1.7",
     "rollup": "^4.60.3",
     "stylelint": "^16.0.0",
     "stylelint-config-standard": "^36.0.0",

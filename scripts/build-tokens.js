@@ -89,47 +89,53 @@ function generatePrimitives(tokens) {
 
 mkdirSync(resolve(__dirname, "../packages/tokens/dist"), { recursive: true });
 
+// ---- Include IBM Plex fonts (@font-face) ----
+let fontFaces = "";
+const fontsCssPath = resolve(__dirname, "../packages/tokens/fonts/fonts.css");
+try {
+  fontFaces = readFileSync(fontsCssPath, "utf-8");
+} catch (_) {
+  console.log(`ℹ️ fonts.css not found at ${fontsCssPath}, skipping font-faces`);
+}
+
 const header = `/* ==========================================================================
    CAI Design System — Tokens
    Generated from tokens.json · Do not edit manually
    ========================================================================== */
 
 /* -------------------------------------------------------------------------
+   WEB FONTS (self-hosted)
+   -------------------------------------------------------------------------- */`;
+
+const css = `${header}\n${fontFaces}\n\n/* -------------------------------------------------------------------------
    LAYER 1: PRIMITIVOS
    Los valores base. Nunca cambian entre temas.
    Regla: los componentes NUNCA usan estas variables directamente.
-   -------------------------------------------------------------------------- */`;
-
-const css = `${header}\n${generatePrimitives(tokens)}${semanticLayer}`;
+   -------------------------------------------------------------------------- */\n${generatePrimitives(tokens)}${semanticLayer}`;
 
 writeFileSync(outputPath, css, "utf-8");
 console.log(`✓ Primitives regenerated → ${outputPath}`);
 console.log("  Semantic layer preserved.");
 
-const customFacesSrc = resolve(
-  __dirname,
-  "../packages/tokens/fonts/custom-faces",
-);
-const customFacesDest = resolve(
-  __dirname,
-  "../packages/tokens/dist/fonts/custom-faces",
-);
-if (existsSync(customFacesSrc)) {
-  mkdirSync(customFacesDest, { recursive: true });
-  for (const file of readdirSync(customFacesSrc)) {
-    const srcPath = resolve(customFacesSrc, file);
-    const destPath = resolve(customFacesDest, file);
-    if (statSync(srcPath).isFile()) {
-      copyFileSync(srcPath, destPath);
-      console.log(`✓ Copied custom face ${file}`);
+// Copy font files (IBM Plex + custom faces)
+function copyFontDir(fontName) {
+  const fontSrc = resolve(__dirname, `../packages/tokens/fonts/${fontName}`);
+  const fontDest = resolve(__dirname, `../packages/tokens/dist/fonts/${fontName}`);
+  if (existsSync(fontSrc)) {
+    mkdirSync(fontDest, { recursive: true });
+    for (const file of readdirSync(fontSrc)) {
+      const srcPath = resolve(fontSrc, file);
+      const destPath = resolve(fontDest, file);
+      if (statSync(srcPath).isFile()) {
+        copyFileSync(srcPath, destPath);
+      }
     }
+    console.log(`✓ ${fontName} fonts copied → ${fontDest}`);
   }
-  console.log(`✓ Custom faces copied → ${customFacesDest}`);
-} else {
-  console.log(
-    `ℹ️ Custom faces source not found, skipping copy: ${customFacesSrc}`,
-  );
 }
+
+// Copy IBM Plex (serif, sans, mono)
+["serif", "sans", "mono", "custom-faces"].forEach(copyFontDir);
 
 let tokenCount = 0;
 for (const [key, group] of Object.entries(tokens)) {
@@ -142,4 +148,4 @@ for (const [key, group] of Object.entries(tokens)) {
     }
   }
 }
-console.log(`  ${tokenCount} tokens primitivos procesados`);
+console.log(`✓ ${tokenCount} primitive tokens generated`);

@@ -1,17 +1,37 @@
 {
   "name": "@cai-ds/core",
   "version": "2.0.0",
+  "description": "CAI Design System — CSS components and vanilla JS behaviors",
+  "license": "MIT",
   "type": "module",
   "main": "dist/cai.js",
   "exports": {
     ".": "./dist/cai.js",
     "./css": "./dist/cai.css",
     "./midi": "./dist/midi.js",
-    "./themes/*": "./dist/themes/*"
+    "./themes/*": "./dist/themes/*",
+    "./utils": "./dist/utils.js"
   },
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anthropics/cai.git",
+    "directory": "packages/core"
+  },
+  "homepage": "https://github.com/anthropics/cai#readme",
+  "bugs": {
+    "url": "https://github.com/anthropics/cai/issues"
+  },
+  "keywords": ["design-system", "css", "components", "vanilla-js", "itcss", "accessibility", "a11y"],
+  "sideEffects": ["dist/cai.css", "dist/themes/*.css"],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prepack": "node ../../scripts/build-core.js"
+  },
   "devDependencies": {
     "@cai-ds/tokens": "workspace:*"
   }

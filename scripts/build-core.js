@@ -78,6 +78,20 @@ async function buildJS() {
 
 await buildJS();
 
+// --- Copy custom-faces fonts from tokens for theme usage ---
+const tokensFontsSrc = resolve(repoRoot, "packages/tokens/fonts/custom-faces");
+const tokensFontsDest = resolve(distRoot, "fonts/custom-faces");
+if (existsSync(tokensFontsSrc)) {
+  mkdirSync(tokensFontsDest, { recursive: true });
+  readdirSync(tokensFontsSrc).forEach((f) => {
+    copyFileSync(
+      resolve(tokensFontsSrc, f),
+      resolve(tokensFontsDest, f)
+    );
+  });
+  console.log(`✓ Custom-faces fonts copied → ${tokensFontsDest}`);
+}
+
 // --- Themes: copy src/themes/*.css → dist/themes/ ---
 const themesSrcDir = resolve(srcRoot, "themes");
 const themesDistDir = resolve(distRoot, "themes");

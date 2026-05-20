@@ -1,0 +1,38 @@
+# CAI Design System — Code Owners
+
+# Default owner for all files in the repository
+* @nandovejer
+
+# CI/CD and GitHub configuration
+.github/workflows/      @nandovejer
+.github/                @nandovejer
+
+# Design tokens (base layer)
+packages/tokens/        @nandovejer
+scripts/build-tokens.js @nandovejer
+
+# Core design system (builds on tokens)
+packages/core/          @nandovejer
+scripts/build-core.js   @nandovejer
+
+# Platform layer (builds on core)
+packages/platform/      @nandovejer
+scripts/build-platform.js @nandovejer
+
+# Build and configuration
+scripts/                @nandovejer
+package.json            @nandovejer
+pnpm-workspace.yaml     @nandovejer
+
+# Documentation
+*.md                    @nandovejer
+docs/                   @nandovejer
+apps/docs/              @nandovejer
+apps/landing/           @nandovejer
+apps/platform-docs/     @nandovejer
+
+# Linting and testing configuration
+.eslintrc.json          @nandovejer
+.stylelintrc.json       @nandovejer
+vitest.config.js        @nandovejer
+playwright.config.js    @nandovejer

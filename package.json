@@ -19,7 +19,8 @@
     "tokens:build": "node scripts/build-tokens.js",
     "test:unit": "vitest run",
     "test:ui": "playwright test",
-    "test:ui:install": "playwright install chromium"
+    "test:ui:install": "playwright install chromium",
+    "verify:security": "node scripts/verify-security.js"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0",

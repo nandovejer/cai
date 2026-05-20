@@ -21,6 +21,7 @@ import {
 } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
+import * as esbuild from "esbuild";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const tokensPath = resolve(__dirname, "../packages/tokens/tokens.json");
@@ -116,6 +117,11 @@ const css = `${header}\n${fontFaces}\n\n/* -------------------------------------
 writeFileSync(outputPath, css, "utf-8");
 console.log(`✓ Primitives regenerated → ${outputPath}`);
 console.log("  Semantic layer preserved.");
+
+const { code: minCss } = await esbuild.transform(css, { loader: "css", minify: true });
+const minOutputPath = outputPath.replace(".css", ".min.css");
+writeFileSync(minOutputPath, minCss, "utf-8");
+console.log(`✓ Tokens CSS minified → ${minOutputPath}`);
 
 // Copy font files (IBM Plex + custom faces)
 function copyFontDir(fontName) {

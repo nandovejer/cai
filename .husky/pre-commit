@@ -1,0 +1,13 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Pre-commit security checks
+echo "🔒 Running security checks..."
+node scripts/verify-security.js
+
+if [ $? -ne 0 ]; then
+  echo "❌ Security verification failed. Commit aborted."
+  exit 1
+fi
+
+echo "✅ Security checks passed"

@@ -19,8 +19,8 @@ to the series' canonical color palette, typography references, and design morpho
 
 **CDN usage (self-contained — does NOT require cai-tokens.css):**
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/cai.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core/dist/themes/cai-theme-ricardoymortimer.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/themes/cai-theme-ricardoymortimer.css">
 ```
 
 ---

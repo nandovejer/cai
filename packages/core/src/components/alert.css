@@ -1,0 +1,67 @@
+/* --------------------------------------------------------------------------
+   CAI Component: alert
+   Alert (info, success, warning, error)
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-alert {
+  display: flex;
+  gap: var(--cai-space-04);
+  padding: var(--cai-space-04) var(--cai-space-05);
+  border-left: 3px solid;
+  margin-bottom: var(--cai-space-04);
+  transition: background var(--cai-duration-base);
+}
+
+.cai-alert__icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+  font-size: 16px;
+}
+
+.cai-alert__title {
+  font-size: var(--cai-text-md);
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.cai-alert__body {
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-secondary);
+}
+
+.cai-alert--info {
+  background: var(--cai-color-info-bg);
+  border-color: var(--cai-color-info);
+}
+.cai-alert--success {
+  background: var(--cai-color-success-bg);
+  border-color: var(--cai-color-success);
+}
+.cai-alert--warning {
+  background: var(--cai-color-warning-bg);
+  border-color: var(--cai-color-warning-accent);
+}
+.cai-alert--error {
+  background: var(--cai-color-danger-bg);
+  border-color: var(--cai-color-danger);
+}
+
+.cai-alert--info .cai-alert__icon,
+.cai-alert--info .cai-alert__title {
+  color: var(--cai-color-info);
+}
+.cai-alert--success .cai-alert__icon,
+.cai-alert--success .cai-alert__title {
+  color: var(--cai-color-success);
+}
+.cai-alert--warning .cai-alert__icon,
+.cai-alert--warning .cai-alert__title {
+  color: var(--cai-color-warning);
+}
+.cai-alert--error .cai-alert__icon,
+.cai-alert--error .cai-alert__title {
+  color: var(--cai-color-danger);
+}

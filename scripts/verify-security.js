@@ -204,7 +204,7 @@ class SecurityVerifier {
 
   checkLinting() {
     console.log(`\n${BOLD}🔍 Checking linting configuration${RESET}`);
-    this.checkFileExists('.eslintrc.json', 'ESLint configuration');
+    this.checkFileExists('eslint.config.js', 'ESLint configuration');
     this.checkFileExists('.stylelintrc.json', 'Stylelint configuration');
   }
 

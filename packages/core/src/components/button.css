@@ -1,0 +1,105 @@
+/* --------------------------------------------------------------------------
+   CAI Component: button
+   Button and its variants (primary, secondary, danger, ghost, outline, sm, lg)
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cai-space-03);
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-md);
+  font-weight: 400;
+  border: 1px solid transparent;
+  cursor: pointer;
+  height: var(--cai-size-height-lg);
+  padding: 0 var(--cai-space-06);
+  text-decoration: none;
+  transition: background var(--cai-duration-fast),
+    border-color var(--cai-duration-fast), color var(--cai-duration-fast);
+  outline: none;
+  white-space: nowrap;
+}
+
+.cai-btn:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
+/* (0,2,0) beats every variant class; pointer-events blocks hover/active */
+.cai-btn:disabled {
+  background: var(--cai-border-subtle);
+  color: var(--cai-text-disabled);
+  border-color: transparent;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.cai-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* Variants */
+.cai-btn--primary {
+  background: var(--cai-brand-primary);
+  color: var(--cai-text-on-color);
+}
+.cai-btn--primary:hover {
+  background: var(--cai-brand-hover);
+}
+.cai-btn--primary:active {
+  background: var(--cai-brand-active);
+}
+
+.cai-btn--secondary {
+  background: var(--cai-layer-03);
+  color: var(--cai-text-primary);
+}
+.cai-btn--secondary:hover {
+  background: var(--cai-border-strong);
+  color: var(--cai-text-inverse);
+}
+
+.cai-btn--ghost {
+  background: transparent;
+  color: var(--cai-brand-primary);
+}
+.cai-btn--ghost:hover {
+  background: var(--cai-brand-subtle);
+}
+
+.cai-btn--outline {
+  background: transparent;
+  color: var(--cai-brand-primary);
+  border-color: var(--cai-brand-primary);
+}
+.cai-btn--outline:hover {
+  background: var(--cai-brand-subtle);
+}
+
+.cai-btn--danger {
+  background: var(--cai-color-danger);
+  color: var(--cai-text-on-color);
+}
+.cai-btn--danger:hover {
+  filter: brightness(0.88);
+}
+
+/* Sizes */
+.cai-btn--sm {
+  height: var(--cai-size-height-md);
+  font-size: var(--cai-text-sm);
+  padding: 0 var(--cai-space-04);
+}
+
+.cai-btn--lg {
+  height: var(--cai-size-height-xl);
+  font-size: var(--cai-text-base);
+  padding: 0 var(--cai-space-07);
+}

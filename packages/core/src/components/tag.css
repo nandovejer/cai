@@ -1,0 +1,83 @@
+/* --------------------------------------------------------------------------
+   CAI Component: tag
+   Tag / badge with color modifiers
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 var(--cai-space-03);
+  font-size: var(--cai-text-xs);
+  font-weight: 400;
+  border-radius: var(--cai-radius-sm);
+  gap: var(--cai-space-02);
+  white-space: nowrap;
+}
+
+.cai-tag--gray {
+  background: var(--cai-layer-03);
+  color: var(--cai-text-secondary);
+}
+.cai-tag--blue {
+  background: var(--cai-brand-subtle);
+  color: var(--cai-brand-primary);
+}
+.cai-tag--green {
+  background: var(--cai-color-success-bg);
+  color: var(--cai-color-success);
+}
+.cai-tag--red {
+  background: var(--cai-color-danger-bg);
+  color: var(--cai-color-danger);
+}
+.cai-tag--yellow {
+  background: var(--cai-color-warning-bg);
+  color: var(--cai-color-warning);
+}
+.cai-tag--teal {
+  background: var(--cai-color-teal-bg);
+  color: var(--cai-color-teal);
+}
+.cai-tag--purple {
+  background: var(--cai-color-purple-bg);
+  color: var(--cai-color-purple);
+}
+
+.cai-tag--dot::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentcolor;
+}
+
+.cai-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--cai-space-02);
+  font-size: var(--cai-text-xs);
+  font-weight: 500;
+  border-radius: 10px;
+  font-family: var(--cai-font-mono);
+}
+
+.cai-badge--primary {
+  background: var(--cai-brand-primary);
+  color: var(--cai-text-on-color);
+}
+.cai-badge--gray {
+  background: var(--cai-border-strong);
+  color: var(--cai-text-on-color);
+}
+.cai-badge--danger {
+  background: var(--cai-color-danger);
+  color: var(--cai-text-on-color);
+}

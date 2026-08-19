@@ -76,16 +76,31 @@ pnpm lint:js        # ESLint
 
 ✓ **No runtime dependencies** — See [VANILLA-FIRST.md](./VANILLA-FIRST.md)
 
-## JS Functions (`packages/core/src/cai.js`)
+## JS Modules (`packages/core/src/`)
 
-| Function                       | Purpose                                  |
-| ------------------------------ | ---------------------------------------- |
-| `applyTheme(theme)`            | Switch theme + persist in localStorage  |
-| `openSidebar()` / `closeSidebar()` | Toggle mobile sidebar                 |
-| `copyToClipboard(text, el)`    | Copy with visual feedback                |
-| `initSeekbar(bar, onSeek)`     | Drag/click/keyboard support for seekbar  |
-| `highlightBlock(pre)`          | Syntax highlight (no dependencies)       |
-| `bindPlayerUI(root, controls, mediaLike)` | Shared player abstraction         |
+`cai.js` is the entry: it re-exports everything below and auto-initializes on load. Each module is also published individually (`@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/utils`, `/midi`) and importing it has no side effects until you call its `init*()`.
+
+| Module         | Exports                                                        |
+| -------------- | -------------------------------------------------------------- |
+| `theme.js`     | `applyTheme`, `applyMode`, `getInitialTheme`, `getStoredTheme`, `getStoredMode`, `initThemeSystem`, `MODES`, `CUSTOM_THEMES` |
+| `sidebar.js`   | `openSidebar`, `closeSidebar`, `initSidebar`                   |
+| `clipboard.js` | `copyToClipboard`, `initCopyButtons`                           |
+| `modal.js`     | `createFocusTrap`, `initModals`                                |
+| `highlight.js` | `highlightBlock`, `initHighlight`                              |
+| `player.js`    | `initSeekbar`, `wrapHTMLMedia`, `bindPlayerUI`, `mountPlayer`, `mountMidiPlayer`, `initPlayers` |
+| `utils.js`     | `formatTime`, `isCustomTheme`, `isValidMode`, `calculateProgress`, `escapeHtml` |
+| `midi.js`      | `MidiPlayer` (Format 0/1 parser + Web Audio scheduler; lazy-loaded) |
+
+## Standalone CSS Components
+
+Each component ships as its own file in `@cai-ds/core/dist/components/`:
+
+```html
+<link rel="stylesheet" href=".../@cai-ds/tokens@2/dist/cai-tokens.css">
+<link rel="stylesheet" href=".../@cai-ds/core@2/dist/components/button.css">
+```
+
+Requires only the tokens layer loaded first.
 
 ## File Organization
 

@@ -12,24 +12,20 @@ See [DIST-RULES.md](./DIST-RULES.md) for full regeneration steps.
 
 ---
 
-## JS in `packages/core/src/cai.js`
+## JS in `packages/core/src/`
 
-Main functions (all vanilla JS, ES modules):
+Vanilla JS, ES modules — one module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/utils`, `/midi`.
 
-| Function                                  | Purpose                                                        |
-| ----------------------------------------- | -------------------------------------------------------------- |
-| `applyTheme(theme)`                       | Changes `data-theme` on `<html>`, persists in localStorage     |
-| `openSidebar()` / `closeSidebar()`        | Toggles mobile sidebar + overlay                               |
-| `copyToClipboard(text, el, type)`         | Copies text, visual feedback on the element                    |
-| `formatTime(seconds)`                     | `mm:ss` for players                                            |
-| `initSeekbar(bar, onSeek)`                | Drag/click/keyboard support for seekbar                        |
-| `wrapHTMLMedia(el)`                       | Wraps an HTMLMediaElement with a MidiPlayer-compatible API     |
-| `bindPlayerUI(root, controls, mediaLike)` | Shared binding for video/audio/MIDI                            |
-| `mountPlayer(root)`                       | Mounts video/audio player                                      |
-| `mountMidiPlayer(root)`                   | Mounts MIDI player (async)                                     |
-| `highlightBlock(pre)`                     | Syntax highlight with no dependencies for `pre.cai-code-block` |
-
-`midi.js` exposes `MidiPlayer` — MIDI Format 0/1 parser + Web Audio scheduler.
+| Module         | Key exports                                                    |
+| -------------- | -------------------------------------------------------------- |
+| `theme.js`     | `applyTheme(theme)` (sets `data-theme` on `<html>`, persists), `applyMode`, `getInitialTheme`, `initThemeSystem()` |
+| `sidebar.js`   | `openSidebar()` / `closeSidebar()` (mobile drawer + overlay), `initSidebar()` |
+| `clipboard.js` | `copyToClipboard(text, el, type)` (visual feedback), `initCopyButtons()` |
+| `modal.js`     | `createFocusTrap(el)`, `initModals()`                          |
+| `highlight.js` | `highlightBlock(pre)` — dependency-free highlight for `pre.cai-code-block`, `initHighlight()` |
+| `player.js`    | `initSeekbar(bar, onSeek)`, `wrapHTMLMedia(el)`, `bindPlayerUI(root, controls, mediaLike)`, `mountPlayer(root)`, `mountMidiPlayer(root)` (async), `initPlayers()` |
+| `utils.js`     | `formatTime(seconds)` (`mm:ss`), `escapeHtml`, `calculateProgress`, … (pure, unit-tested) |
+| `midi.js`      | `MidiPlayer` — MIDI Format 0/1 parser + Web Audio scheduler (lazy-loaded chunk) |
 
 ---
 
@@ -44,8 +40,8 @@ Main functions (all vanilla JS, ES modules):
 ### Adding a new component
 
 1. **Check first:** is there a native HTML element or browser API that solves this? (`dialog`, `details`, `popover`, `<input type="...">`, CSS `:has()`, etc.). If so, use it as the base.
-2. Add styles in `packages/core/src/components/_components.css`
-3. Regenerate `dist/cai.css` (see [DIST-RULES.md](./DIST-RULES.md))
+2. Create `packages/core/src/components/<name>.css` (use the standard header of the sibling files) and add its `@import` to `packages/core/src/components/index.css` in cascade order
+3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./DIST-RULES.md))
 4. Document in `apps/docs/index.html`: add a section with an id, sidebar link, demo, and a Keyboard & ARIA subsection
 5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/showcase.css`
 
@@ -58,9 +54,10 @@ Main functions (all vanilla JS, ES modules):
 
 ### Adding a new semantic token
 
-1. Add it to `packages/tokens/dist/cai-tokens.css` in all three theme blocks (`light`, `dark`, `high-contrast`)
-2. If it is a new primitive, also add it to `tokens.json` and run `pnpm tokens:build`
-3. Document it in the Tokens section of `apps/docs/index.html`
+1. Add it to `packages/tokens/src/semantic.css` in all three theme blocks (`:root, [data-theme="light"]`, `[data-theme="dark"]`, `[data-theme="high-contrast"]`)
+2. If it references a new primitive, also add that to `tokens.json`
+3. Run `pnpm tokens:build`
+4. Document it in the Tokens section of `apps/docs/index.html`
 
 ### Adding a new primitive color
 

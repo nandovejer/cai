@@ -14,7 +14,7 @@
     "build": "pnpm tokens:build && pnpm core:build && pnpm platform:build",
     "core:build": "node scripts/build-core.js",
     "platform:build": "node scripts/build-platform.js",
-    "lint:css": "stylelint \"packages/**/*.css\"",
+    "lint:css": "stylelint \"packages/**/*.css\" \"!packages/**/dist/**\"",
     "lint:js": "eslint \"packages/**/*.js\" \"scripts/**/*.js\"",
     "tokens:build": "node scripts/build-tokens.js",
     "test:unit": "vitest run",

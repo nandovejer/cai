@@ -1,0 +1,92 @@
+/* --------------------------------------------------------------------------
+   CAI Component: theme-switcher
+   Theme switcher buttons (footer + apply buttons)
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-theme-switcher {
+  display: flex;
+  gap: var(--cai-space-02);
+}
+
+.cai-theme-switcher__label {
+  font-size: var(--cai-text-xs);
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--cai-sidebar-label);
+  margin-bottom: var(--cai-space-03);
+  display: block;
+}
+
+.cai-theme-btn {
+  flex: 1;
+  height: 28px;
+  border: 1px solid var(--cai-sidebar-border);
+  background: transparent;
+  color: var(--cai-sidebar-text);
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-xs);
+  cursor: pointer;
+  transition: background var(--cai-duration-fast),
+    color var(--cai-duration-fast), border-color var(--cai-duration-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cai-space-02);
+}
+
+.cai-theme-btn:hover {
+  background: var(--cai-sidebar-hover);
+  color: var(--cai-sidebar-text-hover);
+}
+
+.cai-theme-btn:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
+.cai-theme-btn.is-active {
+  background: var(--cai-sidebar-active-bg);
+  color: var(--cai-sidebar-active-text);
+  border-color: var(--cai-sidebar-active-bg);
+}
+
+/* When a custom theme is active, mode buttons step back visually */
+.cai-theme-btn.is-dimmed {
+  opacity: 0.45;
+}
+
+/* Apply button for custom themes (sidebar themes section) */
+.cai-theme-apply-btn {
+  width: 100%;
+  height: 26px;
+  border: 1px solid var(--cai-border-interactive);
+  background: transparent;
+  color: var(--cai-brand-primary);
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  border-radius: var(--cai-radius-md);
+  transition: background var(--cai-duration-fast), color var(--cai-duration-fast);
+  margin-top: var(--cai-space-03);
+}
+
+.cai-theme-apply-btn:hover {
+  background: var(--cai-brand-subtle);
+}
+
+.cai-theme-apply-btn:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
+.cai-theme-apply-btn.is-active {
+  background: var(--cai-brand-primary);
+  color: var(--cai-text-on-color);
+  border-color: var(--cai-brand-primary);
+}

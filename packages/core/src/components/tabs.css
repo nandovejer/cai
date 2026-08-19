@@ -1,0 +1,48 @@
+/* --------------------------------------------------------------------------
+   CAI Component: tabs
+   Tabs
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--cai-border-subtle);
+  margin-bottom: var(--cai-space-05);
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+}
+
+.cai-tabs::-webkit-scrollbar {
+  display: none; /* Chrome / Safari / Edge */
+}
+
+.cai-tab {
+  padding: var(--cai-space-04) var(--cai-space-05);
+  font-size: var(--cai-text-md);
+  color: var(--cai-text-secondary);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color var(--cai-duration-fast),
+    border-color var(--cai-duration-fast);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.cai-tab:hover {
+  color: var(--cai-text-primary);
+}
+
+.cai-tab:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: -2px;
+}
+
+.cai-tab.is-active {
+  color: var(--cai-brand-primary);
+  border-bottom-color: var(--cai-brand-primary);
+  font-weight: 500;
+}

@@ -1,0 +1,234 @@
+/* -------------------------------------------------------------------------
+   LAYER 2: SEMANTIC
+   Theme-aware tokens. Components ONLY consume these (never Layer 1 primitives).
+   Base color modes are activated via data-theme on <html>:
+     <html>                            → default (light)
+     <html data-theme="light">         → light (explicit)
+     <html data-theme="dark">          → dark
+     <html data-theme="high-contrast"> → high contrast
+   Custom themes (packages/core/src/themes/*.css) override these under their
+   own [data-theme="<name>"] scope and use data-mode for luminosity variants.
+   -------------------------------------------------------------------------- */
+
+:root,
+[data-theme="light"] {
+  /* Backgrounds */
+  --cai-bg-page: var(--cai-gray-10);
+  --cai-bg-ui: #fff;
+  --cai-bg-ui-hover: var(--cai-gray-10);
+  --cai-bg-ui-active: var(--cai-gray-20);
+  --cai-bg-overlay: rgba(22, 22, 22, 0.5);
+
+  /* Text */
+  --cai-text-primary: var(--cai-gray-100);
+  --cai-text-secondary: var(--cai-gray-70);
+  --cai-text-placeholder: var(--cai-gray-40);
+  --cai-text-disabled: var(--cai-gray-30);
+  --cai-text-on-color: #fff;
+  --cai-text-inverse: #fff;
+
+  /* Borders */
+  --cai-border-subtle: var(--cai-gray-20);
+  --cai-border-strong: var(--cai-gray-50);
+  --cai-border-interactive: var(--cai-blue-60);
+
+  /* Brand */
+  --cai-brand-primary: var(--cai-blue-60);
+  --cai-brand-hover: var(--cai-blue-70);
+  --cai-brand-active: var(--cai-blue-80);
+  --cai-brand-subtle: var(--cai-blue-10);
+
+  /* Icons */
+  --cai-icon-primary: var(--cai-gray-100);
+  --cai-icon-secondary: var(--cai-gray-70);
+  --cai-icon-inverse: #fff;
+
+  /* Layers (stacked surfaces) */
+  --cai-layer-01: #fff;
+  --cai-layer-02: var(--cai-gray-10);
+  --cai-layer-03: var(--cai-gray-20);
+
+  /* Sidebar */
+  --cai-sidebar-bg: var(--cai-gray-100);
+  --cai-sidebar-text: var(--cai-gray-40);
+  --cai-sidebar-text-hover: #fff;
+  --cai-sidebar-hover: var(--cai-gray-90);
+  --cai-sidebar-active-bg: var(--cai-blue-60);
+  --cai-sidebar-active-text: #fff;
+  --cai-sidebar-border: var(--cai-gray-90);
+  --cai-sidebar-label: var(--cai-gray-50);
+  --cai-sidebar-logo-bg: var(--cai-blue-60);
+
+  /* Status */
+  --cai-color-success: var(--cai-green-60);
+  --cai-color-success-bg: var(--cai-green-10);
+  --cai-color-danger: var(--cai-red-60);
+  --cai-color-danger-bg: var(--cai-red-10);
+  --cai-color-warning: var(--cai-yellow-60);
+  --cai-color-warning-accent: var(--cai-yellow-30);
+  --cai-color-warning-bg: var(--cai-yellow-10);
+  --cai-color-info: var(--cai-blue-70);
+  --cai-color-info-bg: var(--cai-blue-10);
+
+  /* Inputs */
+  --cai-input-bg: #fff;
+  --cai-input-border: var(--cai-gray-50);
+
+  /* Extended */
+  --cai-color-teal: var(--cai-teal-60);
+  --cai-color-teal-bg: var(--cai-teal-10);
+  --cai-color-purple: var(--cai-purple-60);
+  --cai-color-purple-bg: var(--cai-purple-10);
+  --cai-color-code: var(--cai-purple-60);
+}
+
+/* -------------------------------------------------------------------------
+   COLOR MODE: DARK — <html data-theme="dark">
+   -------------------------------------------------------------------------- */
+
+[data-theme="dark"] {
+  /* Backgrounds */
+  --cai-bg-page: var(--cai-gray-100);
+  --cai-bg-ui: var(--cai-gray-90);
+  --cai-bg-ui-hover: var(--cai-gray-80);
+  --cai-bg-ui-active: var(--cai-gray-70);
+  --cai-bg-overlay: rgba(0, 0, 0, 0.65);
+
+  /* Text */
+  --cai-text-primary: var(--cai-gray-10);
+  --cai-text-secondary: var(--cai-gray-30);
+  --cai-text-placeholder: var(--cai-gray-60);
+  --cai-text-disabled: var(--cai-gray-70);
+  --cai-text-on-color: #fff;
+  --cai-text-inverse: var(--cai-gray-100);
+
+  /* Borders */
+  --cai-border-subtle: var(--cai-gray-80);
+  --cai-border-strong: var(--cai-gray-60);
+  --cai-border-interactive: var(--cai-blue-50);
+
+  /* Brand */
+  --cai-brand-primary: var(--cai-blue-50);
+  --cai-brand-hover: var(--cai-blue-40);
+  --cai-brand-active: var(--cai-blue-30);
+  --cai-brand-subtle: rgba(69, 137, 255, 0.12);
+
+  /* Icons */
+  --cai-icon-primary: var(--cai-gray-10);
+  --cai-icon-secondary: var(--cai-gray-30);
+  --cai-icon-inverse: var(--cai-gray-100);
+
+  /* Layers */
+  --cai-layer-01: var(--cai-gray-90);
+  --cai-layer-02: var(--cai-gray-80);
+  --cai-layer-03: var(--cai-gray-70);
+
+  /* Sidebar */
+  --cai-sidebar-bg: #0d0d0d;
+  --cai-sidebar-text: var(--cai-gray-40);
+  --cai-sidebar-text-hover: #fff;
+  --cai-sidebar-hover: var(--cai-gray-90);
+  --cai-sidebar-active-bg: var(--cai-blue-60);
+  --cai-sidebar-active-text: #fff;
+  --cai-sidebar-border: var(--cai-gray-90);
+  --cai-sidebar-label: var(--cai-gray-60);
+  --cai-sidebar-logo-bg: var(--cai-blue-60);
+
+  /* Status */
+  --cai-color-success: var(--cai-green-40);
+  --cai-color-success-bg: rgba(66, 190, 101, 0.12);
+  --cai-color-danger: var(--cai-red-50);
+  --cai-color-danger-bg: rgba(250, 77, 86, 0.12);
+  --cai-color-warning: var(--cai-yellow-30);
+  --cai-color-warning-accent: var(--cai-yellow-20);
+  --cai-color-warning-bg: rgba(241, 194, 27, 0.12);
+  --cai-color-info: var(--cai-blue-40);
+  --cai-color-info-bg: rgba(120, 169, 255, 0.12);
+
+  /* Inputs */
+  --cai-input-bg: var(--cai-gray-90);
+  --cai-input-border: var(--cai-gray-60);
+
+  /* Extended */
+  --cai-color-teal: var(--cai-teal-40);
+  --cai-color-teal-bg: rgba(61, 219, 217, 0.12);
+  --cai-color-purple: var(--cai-purple-40);
+  --cai-color-purple-bg: rgba(190, 149, 255, 0.12);
+  --cai-color-code: var(--cai-purple-40);
+}
+
+/* -------------------------------------------------------------------------
+   COLOR MODE: HIGH CONTRAST — <html data-theme="high-contrast">
+   Pure white page, pure black text, strong borders. Maximum WCAG contrast.
+   -------------------------------------------------------------------------- */
+
+[data-theme="high-contrast"] {
+  /* Backgrounds */
+  --cai-bg-page: #fff;
+  --cai-bg-ui: #fff;
+  --cai-bg-ui-hover: var(--cai-gray-10);
+  --cai-bg-ui-active: var(--cai-gray-20);
+  --cai-bg-overlay: rgba(0, 0, 0, 0.5);
+
+  /* Text */
+  --cai-text-primary: #000;
+  --cai-text-secondary: var(--cai-gray-100);
+  --cai-text-placeholder: var(--cai-gray-70);
+  --cai-text-disabled: var(--cai-gray-60);
+  --cai-text-on-color: #fff;
+  --cai-text-inverse: #fff;
+
+  /* Borders */
+  --cai-border-subtle: var(--cai-gray-70);
+  --cai-border-strong: #000;
+  --cai-border-interactive: #000;
+
+  /* Brand */
+  --cai-brand-primary: var(--cai-blue-80);
+  --cai-brand-hover: var(--cai-blue-90);
+  --cai-brand-active: var(--cai-blue-100);
+  --cai-brand-subtle: var(--cai-blue-10);
+
+  /* Icons */
+  --cai-icon-primary: #000;
+  --cai-icon-secondary: var(--cai-gray-100);
+  --cai-icon-inverse: #fff;
+
+  /* Layers */
+  --cai-layer-01: #fff;
+  --cai-layer-02: var(--cai-gray-10);
+  --cai-layer-03: var(--cai-gray-20);
+
+  /* Sidebar */
+  --cai-sidebar-bg: #000;
+  --cai-sidebar-text: var(--cai-gray-30);
+  --cai-sidebar-text-hover: #fff;
+  --cai-sidebar-hover: var(--cai-gray-90);
+  --cai-sidebar-active-bg: #fff;
+  --cai-sidebar-active-text: #000;
+  --cai-sidebar-border: var(--cai-gray-80);
+  --cai-sidebar-label: var(--cai-gray-50);
+  --cai-sidebar-logo-bg: #fff;
+
+  /* Status */
+  --cai-color-success: var(--cai-green-60);
+  --cai-color-success-bg: var(--cai-green-10);
+  --cai-color-danger: var(--cai-red-60);
+  --cai-color-danger-bg: var(--cai-red-10);
+  --cai-color-warning: var(--cai-yellow-60);
+  --cai-color-warning-accent: var(--cai-yellow-40);
+  --cai-color-warning-bg: var(--cai-yellow-10);
+  --cai-color-info: var(--cai-blue-80);
+  --cai-color-info-bg: var(--cai-blue-10);
+
+  /* Inputs */
+  --cai-input-bg: #fff;
+  --cai-input-border: #000;
+
+  /* Extended */
+  --cai-color-teal: var(--cai-teal-60);
+  --cai-color-teal-bg: var(--cai-teal-10);
+  --cai-color-purple: var(--cai-purple-60);
+  --cai-color-purple-bg: var(--cai-purple-10);
+  --cai-color-code: var(--cai-blue-80);
+}

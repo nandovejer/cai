@@ -68,7 +68,7 @@ function main() {
   if (checkFileExists('scripts/verify-security.js', 'Security verification script')) passes++; else issues++;
   if (checkFileExists('scripts/setup-husky.js', 'Husky setup script')) passes++; else issues++;
   if (checkFileExists('.husky/pre-commit', 'Pre-commit hook')) passes++; else issues++;
-  if (checkFileExists('.eslintrc.json', 'ESLint config')) passes++; else issues++;
+  if (checkFileExists('eslint.config.js', 'ESLint config')) passes++; else issues++;
   if (checkFileExists('.stylelintrc.json', 'Stylelint config')) passes++; else issues++;
 
   console.log(`\n${BOLD}📚 Documentation${RESET}`);
@@ -109,7 +109,7 @@ function main() {
   console.log(`${BOLD}${'='.repeat(60)}${RESET}`);
 
   if (issues === 0) {
-    console.log(`\n${GREEN}${BOLD}✓ All security files are in place!${RESET}`);
+    console.log(`\n${GREEN}${BOLD}✓ All security files are in place! (${passes} checks passed)${RESET}`);
     console.log(`\n${BOLD}Remaining manual steps (GitHub UI):${RESET}`);
     console.log(`  1. Enable branch protection on 'main'`);
     console.log(`     → Settings → Branches → Add rule`);

@@ -1,0 +1,37 @@
+/* --------------------------------------------------------------------------
+   CAI Component: breadcrumb
+   Breadcrumb navigation
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--cai-space-03);
+  font-size: var(--cai-text-sm);
+}
+
+.cai-breadcrumb__item {
+  color: var(--cai-text-secondary);
+  text-decoration: none;
+}
+
+.cai-breadcrumb__item:hover {
+  text-decoration: none;
+}
+
+.cai-breadcrumb__item.is-active,
+.cai-breadcrumb__item[aria-current="page"] {
+  color: var(--cai-text-primary);
+  font-weight: 500;
+}
+.cai-breadcrumb__sep {
+  color: var(--cai-text-placeholder);
+}
+
+[role="tabpanel"][hidden] {
+  display: none;
+}

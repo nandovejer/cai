@@ -15,8 +15,8 @@ body {
   background: var(--cai-bg-page);
   color: var(--cai-text-primary);
   line-height: 1.5;
-  display: flex;        /* shell: sidebar + main en horizontal */
-  min-height: 100vh;
+  /* App-shell layout (sidebar + main) is opt-in via class="o-shell" —
+     see objects/_objects.css. The bare <body> stays layout-neutral. */
   transition:
     background var(--cai-duration-base),
     color      var(--cai-duration-base);
@@ -29,6 +29,12 @@ a {
 
 a:hover {
   text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+  border-radius: var(--cai-radius-sm);
 }
 
 hr {

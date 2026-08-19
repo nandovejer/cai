@@ -1,0 +1,62 @@
+/* --------------------------------------------------------------------------
+   CAI Component: icon-grid
+   Icon grid (showcase helper)
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: var(--cai-space-03);
+}
+
+.cai-icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--cai-space-03);
+  padding: var(--cai-space-05);
+  cursor: pointer;
+  transition: background var(--cai-duration-fast) var(--cai-easing-enter);
+  border: 1px solid transparent;
+  border-radius: var(--cai-radius-md);
+}
+
+.cai-icon-item:hover {
+  background: var(--cai-brand-subtle);
+  border-color: var(--cai-border-subtle);
+}
+
+.cai-icon-item:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
+.cai-icon-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--cai-radius-md);
+  color: var(--cai-icon-secondary);
+  background: transparent;
+  transition: color var(--cai-duration-fast);
+}
+
+.cai-icon-item:hover .cai-icon-display {
+  color: var(--cai-brand-primary);
+}
+
+.cai-icon-name {
+  font-size: var(--cai-text-xs);
+  font-weight: 500;
+  color: var(--cai-text-secondary);
+  text-align: center;
+}
+
+.cai-icon-item.is-copied .cai-icon-name {
+  color: var(--cai-color-success);
+}

@@ -141,32 +141,65 @@ describe("escapeHtml", () => {
   });
 });
 
-describe("check-dist sentinel (BUG-01)", () => {
-  const sentinel = resolve(process.cwd(), "packages/tokens/dist/cai-tokens.css");
+const tokensDist = resolve(process.cwd(), "packages/tokens/dist/cai-tokens.css");
+const coreDist = resolve(process.cwd(), "packages/core/dist");
+const distBuilt = existsSync(tokensDist) && existsSync(resolve(coreDist, "cai.js"));
 
+if (!distBuilt) {
+  console.warn(
+    "[unit.test] dist/ not built — dist-dependent suites will be SKIPPED. Run `pnpm build` first.",
+  );
+}
+
+describe("check-dist sentinel (BUG-01)", () => {
   it("sentinel path points to packages/tokens/dist/cai-tokens.css", () => {
-    expect(sentinel).toMatch(/packages[/\\]tokens[/\\]dist[/\\]cai-tokens\.css$/);
+    expect(tokensDist).toMatch(/packages[/\\]tokens[/\\]dist[/\\]cai-tokens\.css$/);
   });
 
-  it("script exits cleanly when sentinel exists (post-build)", () => {
-    if (!existsSync(sentinel)) return; // pre-build environment — skip
-    expect(existsSync(sentinel)).toBe(true);
+  it.skipIf(!distBuilt)("script exits cleanly when sentinel exists (post-build)", () => {
+    expect(existsSync(tokensDist)).toBe(true);
   });
 });
 
-describe("dist build artifacts (BUG-02)", () => {
-  const distRoot = resolve(process.cwd(), "packages/core/dist");
-  const caiJsPath = resolve(distRoot, "cai.js");
-  const midiJsPath = resolve(distRoot, "midi.js");
+describe.skipIf(!distBuilt)("tokens semantic layer (regression: lost Layer 2)", () => {
+  it("dist/cai-tokens.css contains the semantic layer for all base modes", () => {
+    const content = readFileSync(tokensDist, "utf-8");
+    expect(content).toContain("--cai-bg-page");
+    expect(content).toContain("--cai-text-primary");
+    expect(content).toContain('[data-theme="light"]');
+    expect(content).toContain('[data-theme="dark"]');
+    expect(content).toContain('[data-theme="high-contrast"]');
+    expect(content).not.toContain("Semantic layer not found");
+  });
+});
 
+describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
   it("dist/midi.js exists as an independent chunk after build", () => {
-    if (!existsSync(caiJsPath)) return; // dist not built yet — skip
-    expect(existsSync(midiJsPath)).toBe(true);
+    expect(existsSync(resolve(coreDist, "midi.js"))).toBe(true);
   });
 
   it("dist/cai.js does not contain MidiParser (midi.js is lazy-loaded)", () => {
-    if (!existsSync(caiJsPath)) return; // dist not built yet — skip
-    const content = readFileSync(caiJsPath, "utf-8");
+    const content = readFileSync(resolve(coreDist, "cai.js"), "utf-8");
     expect(content).not.toContain("MidiParser");
+  });
+
+  it("per-component CSS files are emitted for standalone use", () => {
+    for (const f of ["button.css", "form.css", "modal.css", "player.css"]) {
+      expect(existsSync(resolve(coreDist, "components", f))).toBe(true);
+    }
+  });
+
+  it("individual JS modules are emitted (granular exports)", () => {
+    for (const f of [
+      "utils.js",
+      "theme.js",
+      "sidebar.js",
+      "clipboard.js",
+      "modal.js",
+      "highlight.js",
+      "player.js",
+    ]) {
+      expect(existsSync(resolve(coreDist, f))).toBe(true);
+    }
   });
 });

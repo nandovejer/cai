@@ -62,65 +62,10 @@
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/themes/cai-theme-ricardoymortimer.css">
      <html data-theme="ricardoymortimer">
 
-   This file is SELF-CONTAINED — it does NOT require cai-tokens.css to be loaded.
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first — primitive scales
+   (spacing, sizing, type, radius) come from there. Shadows are overridden
+   below, scoped to [data-theme="ricardoymortimer"].
    ========================================================================== */
-
-/* -------------------------------------------------------------------------
-   NON-COLOR PRIMITIVES
-   Copied from cai-tokens.css Layer 1. Required for self-contained usage.
-   Color primitives (--cai-blue-*, --cai-gray-*, etc.) are NOT included —
-   this theme defines its own private --rm-* palette.
-   -------------------------------------------------------------------------- */
-
-:root {
-  /* Spacing (base 4px) */
-  --cai-space-01: 2px;
-  --cai-space-02: 4px;
-  --cai-space-03: 8px;
-  --cai-space-04: 12px;
-  --cai-space-05: 16px;
-  --cai-space-06: 24px;
-  --cai-space-07: 32px;
-  --cai-space-08: 40px;
-  --cai-space-09: 48px;
-  --cai-space-10: 64px;
-  --cai-space-11: 80px;
-  --cai-space-12: 96px;
-
-  /* Sizing */
-  --cai-size-height-sm: 24px;
-  --cai-size-height-md: 32px;
-  --cai-size-height-lg: 40px;
-  --cai-size-height-xl: 48px;
-
-  /* Typography */
-  --cai-font-sans: "IBM Plex Sans", system-ui, sans-serif;
-  --cai-font-serif: "IBM Plex Serif", Georgia, serif;
-  --cai-font-mono: "IBM Plex Mono", "Courier New", monospace;
-  --cai-text-xs: 11px;
-  --cai-text-sm: 12px;
-  --cai-text-md: 14px;
-  --cai-text-base: 16px;
-  --cai-text-lg: 20px;
-  --cai-text-xl: 24px;
-  --cai-text-2xl: 32px;
-  --cai-text-3xl: 42px;
-  --cai-text-4xl: 54px;
-
-  /* Radius */
-  --cai-radius-none: 0px;
-  --cai-radius-sm: 2px;
-  --cai-radius-md: 4px;
-  --cai-radius-lg: 8px;
-  --cai-radius-xl: 12px;
-  --cai-radius-full: 9999px;
-
-  /* Shadows — with portal-green tint for R&M aesthetic */
-  --cai-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 0 1px rgba(8, 201, 82, 0.15);
-  --cai-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(8, 201, 82, 0.1);
-  --cai-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6),
-    0 6px 12px rgba(8, 201, 82, 0.12);
-}
 
 /* -------------------------------------------------------------------------
    RICARDO & MORTIMER PRIVATE PALETTE
@@ -129,9 +74,10 @@
 
    Rule: --rm-* variables are PRIVATE to this theme.
    Never reference them from outside this file.
+   Scoped to the theme so nothing leaks into other themes.
    -------------------------------------------------------------------------- */
 
-:root {
+[data-theme="ricardoymortimer"] {
   /* Multiverso / Portal (main brand) */
   --rm-portal: #08c952; /* Battletoad — portal green */
   --rm-portal-hover: #0ae55b; /* brighter portal on hover */
@@ -162,15 +108,19 @@
   --rm-danger: #ff4757;
   --rm-muted: rgba(174, 230, 227, 0.45);
   --rm-disabled: rgba(174, 230, 227, 0.25);
-}
 
-/* -------------------------------------------------------------------------
-   THEME: RICARDO & MORTIMER
-   All CAI semantic tokens mapped to the R&M palette.
-   Activate via: <html data-theme="ricardoymortimer">
-   -------------------------------------------------------------------------- */
+  /* -----------------------------------------------------------------------
+     THEME: RICARDO & MORTIMER
+     All CAI semantic tokens mapped to the R&M palette.
+     Activate via: <html data-theme="ricardoymortimer">
+     ----------------------------------------------------------------------- */
 
-[data-theme="ricardoymortimer"] {
+  /* Shadows — with portal-green tint for R&M aesthetic */
+  --cai-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 0 1px rgba(8, 201, 82, 0.15);
+  --cai-shadow-md: 0 4px 8px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(8, 201, 82, 0.1);
+  --cai-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6),
+    0 6px 12px rgba(8, 201, 82, 0.12);
+
   /* Typography — Space Grotesk for UI, Freckle Face for headings */
   --cai-font-sans: "Space Grotesk", system-ui, sans-serif;
   --cai-font-heading: "Freckle Face", "Space Grotesk", system-ui, sans-serif;
@@ -274,14 +224,12 @@
   --cai-bg-ui-hover: #ddf5ec;
   --cai-bg-ui-active: #c7efe0;
   --cai-bg-overlay: rgba(13, 2, 33, 0.4);
-
   --cai-text-primary: #0d0221;
   --cai-text-secondary: #22145a;
   --cai-text-placeholder: rgba(13, 2, 33, 0.45);
   --cai-text-disabled: rgba(13, 2, 33, 0.25);
-  --cai-text-on-color: #ffffff;
+  --cai-text-on-color: #fff;
   --cai-text-inverse: #e8f4f8;
-
   --cai-border-subtle: rgba(8, 201, 82, 0.18);
   --cai-border-strong: rgba(8, 201, 82, 0.4);
   --cai-border-interactive: #057a35;
@@ -291,11 +239,9 @@
   --cai-brand-hover: #056830;
   --cai-brand-active: #045023;
   --cai-brand-subtle: rgba(8, 201, 82, 0.1);
-
   --cai-icon-primary: #0d0221;
   --cai-icon-secondary: #22145a;
   --cai-icon-inverse: #e8f4f8;
-
   --cai-layer-01: #f7fffe;
   --cai-layer-02: #edfaf6;
   --cai-layer-03: #ddf5ec;
@@ -310,7 +256,6 @@
   --cai-sidebar-border: rgba(174, 230, 227, 0.1);
   --cai-sidebar-label: rgba(174, 230, 227, 0.5);
   --cai-sidebar-logo-bg: #08c952;
-
   --cai-color-success: #068840;
   --cai-color-success-bg: rgba(8, 201, 82, 0.1);
   --cai-color-danger: #b03030;
@@ -320,10 +265,8 @@
   --cai-color-warning-bg: rgba(252, 228, 109, 0.15);
   --cai-color-info: #1565c0;
   --cai-color-info-bg: rgba(21, 101, 192, 0.1);
-
   --cai-input-bg: #f7fffe;
   --cai-input-border: rgba(8, 201, 82, 0.3);
-
   --cai-color-teal: #0a7070;
   --cai-color-teal-bg: rgba(10, 112, 112, 0.1);
   --cai-color-purple: #5c3d88;
@@ -394,46 +337,39 @@
    -------------------------------------------------------------------------- */
 
 [data-theme="ricardoymortimer"][data-mode="high-contrast"] {
-  --cai-bg-page: #000000;
+  --cai-bg-page: #000;
   --cai-bg-ui: #020202;
   --cai-bg-ui-hover: #0a0a0a;
   --cai-bg-ui-active: #141414;
   --cai-bg-overlay: rgba(0, 0, 0, 0.95);
-
-  --cai-text-primary: #ffffff;
+  --cai-text-primary: #fff;
   --cai-text-secondary: #aee6e3;
   --cai-text-placeholder: rgba(174, 230, 227, 0.55);
   --cai-text-disabled: rgba(174, 230, 227, 0.3);
-  --cai-text-on-color: #000000;
-  --cai-text-inverse: #000000;
-
+  --cai-text-on-color: #000;
+  --cai-text-inverse: #000;
   --cai-border-subtle: rgba(8, 201, 82, 0.3);
   --cai-border-strong: rgba(8, 201, 82, 0.7);
   --cai-border-interactive: #08c952;
-
   --cai-brand-primary: #0fff6f;
   --cai-brand-hover: #3fffaa;
-  --cai-brand-active: #ffffff;
+  --cai-brand-active: #fff;
   --cai-brand-subtle: rgba(15, 255, 111, 0.15);
-
-  --cai-icon-primary: #ffffff;
+  --cai-icon-primary: #fff;
   --cai-icon-secondary: #aee6e3;
-  --cai-icon-inverse: #000000;
-
+  --cai-icon-inverse: #000;
   --cai-layer-01: #020202;
-  --cai-layer-02: #000000;
+  --cai-layer-02: #000;
   --cai-layer-03: #0a0a0a;
-
-  --cai-sidebar-bg: #000000;
+  --cai-sidebar-bg: #000;
   --cai-sidebar-text: #aee6e3;
-  --cai-sidebar-text-hover: #ffffff;
+  --cai-sidebar-text-hover: #fff;
   --cai-sidebar-hover: #0a0a0a;
   --cai-sidebar-active-bg: #0fff6f;
-  --cai-sidebar-active-text: #000000;
+  --cai-sidebar-active-text: #000;
   --cai-sidebar-border: rgba(8, 201, 82, 0.25);
   --cai-sidebar-label: rgba(174, 230, 227, 0.4);
   --cai-sidebar-logo-bg: #0fff6f;
-
   --cai-color-success: #0fff6f;
   --cai-color-success-bg: rgba(15, 255, 111, 0.12);
   --cai-color-danger: #ff4757;
@@ -443,10 +379,8 @@
   --cai-color-warning-bg: rgba(252, 228, 109, 0.12);
   --cai-color-info: #aee6e3;
   --cai-color-info-bg: rgba(174, 230, 227, 0.12);
-
   --cai-input-bg: #020202;
   --cai-input-border: rgba(8, 201, 82, 0.5);
-
   --cai-color-teal: #aee6e3;
   --cai-color-teal-bg: rgba(174, 230, 227, 0.12);
   --cai-color-purple: #f7f07b;

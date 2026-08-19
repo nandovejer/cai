@@ -1,0 +1,40 @@
+/* --------------------------------------------------------------------------
+   CAI Component: copy-btn
+   Copy-to-clipboard button
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cai-space-02);
+  height: 24px;
+  padding: 0 var(--cai-space-03);
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-xs);
+  background: transparent;
+  border: 1px solid var(--cai-border-subtle);
+  color: var(--cai-text-secondary);
+  cursor: pointer;
+  transition: background var(--cai-duration-fast),
+    color var(--cai-duration-fast), border-color var(--cai-duration-fast);
+  border-radius: var(--cai-radius-sm);
+}
+
+.cai-copy-btn:hover {
+  background: var(--cai-brand-subtle);
+  color: var(--cai-brand-primary);
+  border-color: var(--cai-brand-primary);
+}
+
+.cai-copy-btn:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
+.cai-copy-btn.is-copied {
+  color: var(--cai-color-success);
+  border-color: var(--cai-color-success);
+}

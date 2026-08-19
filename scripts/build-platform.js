@@ -16,24 +16,23 @@ const platformRoot = resolve(repoRoot, "packages/platform");
 const srcRoot = resolve(platformRoot, "src");
 const distRoot = resolve(platformRoot, "dist");
 
-const cssLayers = [
-  "components/_components.css",
-];
-
 mkdirSync(distRoot, { recursive: true });
 
-const header = readFileSync(resolve(srcRoot, "index.css"), "utf-8")
-  .split("\n")
-  .filter((line) => !line.trim().startsWith("@import "))
-  .join("\n")
-  .trimEnd();
+/**
+ * Recursively inline the local @import graph of a CSS file.
+ * src/index.css is the single source of truth for layer order.
+ */
+function inlineCssImports(filePath, seen = new Set()) {
+  if (seen.has(filePath)) return "";
+  seen.add(filePath);
+  const dir = dirname(filePath);
+  return readFileSync(filePath, "utf-8").replace(
+    /@import\s+url\(\s*["']?(\.[^"')]+)["']?\s*\)\s*;/g,
+    (_, relPath) => inlineCssImports(resolve(dir, relPath), seen),
+  );
+}
 
-const css = [
-  header,
-  ...cssLayers.map((relativePath) => readFileSync(resolve(srcRoot, relativePath), "utf-8")),
-].join("\n\n");
-
-const platformCss = `${css}\n`;
+const platformCss = inlineCssImports(resolve(srcRoot, "index.css"));
 const platformJs = readFileSync(resolve(srcRoot, "platform.js"), "utf-8");
 
 writeFileSync(resolve(distRoot, "platform.css"), platformCss, "utf-8");

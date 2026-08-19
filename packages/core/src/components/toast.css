@@ -1,0 +1,48 @@
+/* --------------------------------------------------------------------------
+   CAI Component: toast
+   Toast notifications
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--cai-space-03);
+  background: var(--cai-layer-03);
+  color: var(--cai-text-primary);
+  padding: var(--cai-space-04) var(--cai-space-05);
+  width: 320px;
+  box-shadow: var(--cai-shadow-md);
+  border: 1px solid var(--cai-border-subtle);
+  transition: background var(--cai-duration-base);
+}
+
+.cai-toast__content {
+  flex: 1;
+}
+
+.cai-toast__kind {
+  font-size: var(--cai-text-xs);
+  font-family: var(--cai-font-mono);
+  margin-bottom: 2px;
+  color: var(--cai-text-secondary);
+}
+
+.cai-toast__msg {
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-primary);
+}
+
+.cai-toast__close {
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--cai-icon-secondary);
+  line-height: 1;
+}
+
+.cai-toast__close:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}

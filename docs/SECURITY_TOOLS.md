@@ -32,7 +32,7 @@ node scripts/verify-security.js
 - `.github/workflows/publish.yml` has explicit `permissions` block
 
 ✅ **Linting & Code Quality**
-- `.eslintrc.json` configuration exists
+- `eslint.config.js` configuration exists
 - `.stylelintrc.json` configuration exists
 
 ✅ **Package Configuration**

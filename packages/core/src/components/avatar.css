@@ -1,0 +1,35 @@
+/* --------------------------------------------------------------------------
+   CAI Component: avatar
+   Avatar
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  background: var(--cai-brand-subtle);
+  color: var(--cai-brand-primary);
+  font-family: var(--cai-font-mono);
+}
+
+.cai-avatar--sm {
+  width: 24px;
+  height: 24px;
+  font-size: var(--cai-text-xs);
+}
+.cai-avatar--md {
+  width: 36px;
+  height: 36px;
+  font-size: var(--cai-text-sm);
+}
+.cai-avatar--lg {
+  width: 48px;
+  height: 48px;
+  font-size: var(--cai-text-base);
+}

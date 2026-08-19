@@ -209,10 +209,11 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     test('should have skip to main content link', async ({ page }) => {
-      const skipLink = await page.$('a[href="#main"], a[href="#content"]');
       // Skip link may exist but is often hidden until Tab
-      // Just verify page has a main element
-      const main = await page.$('main, [role="main"]');
+      const skipLink = await page.$('a[href="#main-content"]');
+      expect(skipLink).not.toBeNull();
+
+      const main = await page.$('main#main-content, main, [role="main"]');
       expect(main).not.toBeNull();
     });
 

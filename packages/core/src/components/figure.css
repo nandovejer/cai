@@ -1,0 +1,28 @@
+/* --------------------------------------------------------------------------
+   CAI Component: figure
+   Figure — semantic media container
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-figure {
+  margin: var(--cai-space-06) 0;
+  padding: var(--cai-space-04);
+  background: var(--cai-bg-ui);
+  border-radius: var(--cai-radius-md);
+  border-left: 4px solid var(--cai-brand-primary);
+}
+
+.cai-figure__media {
+  margin-block: var(--cai-space-04);
+  border-radius: var(--cai-radius-md);
+  overflow: hidden;
+}
+
+.cai-figure__caption {
+  font-size: 0.875em;
+  color: var(--cai-text-secondary);
+  margin-top: var(--cai-space-03);
+  font-style: italic;
+}

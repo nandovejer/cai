@@ -1,0 +1,88 @@
+/* --------------------------------------------------------------------------
+   CAI Component: code
+   Code block / inline code + syntax highlight styles
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-code-block {
+  background: var(--cai-layer-03);
+  color: var(--cai-text-primary);
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-sm);
+  padding: var(--cai-space-04) var(--cai-space-05);
+  overflow-x: auto;
+  border-radius: var(--cai-radius-sm);
+  line-height: 1.6;
+  border: 1px solid var(--cai-border-subtle);
+  transition: background var(--cai-duration-base);
+  position: relative;
+  /* pre reset: content is displayed exactly as written */
+  white-space: pre;
+  tab-size: 2;
+}
+
+.cai-code-block code {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  white-space: inherit;
+}
+
+/* Syntax highlight tokens */
+.cai-code-block .tok-keyword {
+  color: var(--cai-color-info);
+}
+.cai-code-block .tok-string {
+  color: var(--cai-color-success);
+}
+.cai-code-block .tok-comment {
+  color: var(--cai-text-secondary);
+  font-style: italic;
+}
+.cai-code-block .tok-property {
+  color: var(--cai-color-code);
+}
+.cai-code-block .tok-tag {
+  color: var(--cai-color-info);
+}
+.cai-code-block .tok-attr {
+  color: var(--cai-color-code);
+}
+.cai-code-block .tok-value {
+  color: var(--cai-color-success);
+}
+.cai-code-block .tok-name {
+  color: var(--cai-color-warning-accent);
+}
+.cai-code-block .tok-error {
+  color: var(--cai-color-danger);
+}
+
+/* lang badge */
+.cai-code-block::before {
+  content: attr(data-lang);
+  position: absolute;
+  top: var(--cai-space-03);
+  right: var(--cai-space-04);
+  font-size: var(--cai-text-xs);
+  font-family: var(--cai-font-mono);
+  color: var(--cai-text-secondary);
+  opacity: 0.6;
+  pointer-events: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.cai-code-inline {
+  background: var(--cai-layer-02);
+  color: var(--cai-color-code);
+  font-family: var(--cai-font-mono);
+  font-size: 0.9em;
+  padding: 2px 6px;
+  border-radius: var(--cai-radius-sm);
+  border: 1px solid var(--cai-border-subtle);
+}

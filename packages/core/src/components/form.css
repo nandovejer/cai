@@ -1,0 +1,390 @@
+/* --------------------------------------------------------------------------
+   CAI Component: form
+   Form controls: field, input, select, textarea, range, color, file, date, fieldset, meter, output, checkbox, radio, toggle
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-field {
+  margin-bottom: var(--cai-space-05);
+}
+
+.cai-field__label {
+  display: block;
+  font-size: var(--cai-text-md);
+  font-weight: 400;
+  color: var(--cai-text-secondary);
+  margin-bottom: var(--cai-space-02);
+}
+
+.cai-field__label--required::after {
+  content: " *";
+  color: var(--cai-color-danger);
+}
+
+.cai-field__helper {
+  font-size: var(--cai-text-xs);
+  color: var(--cai-text-secondary);
+  margin-top: var(--cai-space-02);
+}
+
+.cai-field__error {
+  font-size: var(--cai-text-xs);
+  color: var(--cai-color-danger);
+  margin-top: var(--cai-space-02);
+}
+
+.cai-input {
+  display: block;
+  width: 100%;
+  height: var(--cai-size-height-lg);
+  background: var(--cai-input-bg);
+  border: none;
+  border-bottom: 1px solid var(--cai-input-border);
+  color: var(--cai-text-primary);
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-md);
+  padding: 0 var(--cai-space-04);
+  outline: none;
+  transition: border-color var(--cai-duration-fast),
+    background var(--cai-duration-base);
+}
+
+.cai-input::placeholder {
+  color: var(--cai-text-placeholder);
+}
+
+.cai-input:focus {
+  border-bottom: 2px solid var(--cai-border-interactive);
+}
+
+.cai-input--error {
+  border-bottom: 2px solid var(--cai-color-danger);
+}
+
+.cai-input--textarea {
+  height: auto;
+  padding: var(--cai-space-03) var(--cai-space-04);
+  min-height: 80px;
+  resize: vertical;
+}
+
+.cai-input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cai-input[readonly] {
+  opacity: 0.7;
+  border-bottom-style: dashed;
+}
+
+.cai-select-wrap {
+  position: relative;
+}
+
+.cai-select-wrap::after {
+  content: "▾";
+  position: absolute;
+  right: var(--cai-space-04);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--cai-icon-secondary);
+  font-size: 12px;
+}
+
+.cai-select-wrap .cai-input {
+  appearance: none;
+  cursor: pointer;
+  padding-right: 32px;
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Range slider
+   -------------------------------------------------------------------------- */
+
+.cai-input[type="range"] {
+  height: auto;
+  padding: var(--cai-space-02) 0;
+  border-bottom: none;
+  background: transparent;
+  accent-color: var(--cai-brand-primary);
+  cursor: pointer;
+}
+
+.cai-input[type="range"]:focus {
+  border-bottom: none;
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 4px;
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Color picker
+   -------------------------------------------------------------------------- */
+
+.cai-input[type="color"] {
+  height: var(--cai-size-height-md);
+  padding: 2px var(--cai-space-02);
+  cursor: pointer;
+  width: 64px;
+  border-bottom: 1px solid var(--cai-input-border);
+  background: var(--cai-input-bg);
+}
+
+/* --------------------------------------------------------------------------
+   FORM — File input
+   -------------------------------------------------------------------------- */
+
+.cai-input[type="file"] {
+  height: auto;
+  padding: var(--cai-space-03) var(--cai-space-04);
+  cursor: pointer;
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-secondary);
+}
+
+.cai-input[type="file"]::file-selector-button {
+  background: var(--cai-layer-03);
+  color: var(--cai-text-primary);
+  border: none;
+  padding: var(--cai-space-02) var(--cai-space-04);
+  font-size: var(--cai-text-sm);
+  font-family: var(--cai-font-sans);
+  cursor: pointer;
+  margin-right: var(--cai-space-04);
+  transition: background var(--cai-duration-fast);
+}
+
+.cai-input[type="file"]::file-selector-button:hover {
+  background: var(--cai-bg-ui-hover);
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Date / time inputs
+   -------------------------------------------------------------------------- */
+
+.cai-input[type="date"],
+.cai-input[type="time"],
+.cai-input[type="datetime-local"],
+.cai-input[type="month"],
+.cai-input[type="week"] {
+  color-scheme: dark;
+}
+
+[data-theme="light"] .cai-input[type="date"],
+[data-theme="light"] .cai-input[type="time"],
+[data-theme="light"] .cai-input[type="datetime-local"],
+[data-theme="light"] .cai-input[type="month"],
+[data-theme="light"] .cai-input[type="week"],
+[data-theme="minimalist"] .cai-input[type="date"],
+[data-theme="minimalist"] .cai-input[type="time"],
+[data-theme="minimalist"] .cai-input[type="datetime-local"],
+[data-theme="minimalist"] .cai-input[type="month"],
+[data-theme="minimalist"] .cai-input[type="week"] {
+  color-scheme: light;
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Fieldset / Legend
+   -------------------------------------------------------------------------- */
+
+.cai-fieldset {
+  border: 1px solid var(--cai-border-subtle);
+  padding: var(--cai-space-05) var(--cai-space-06);
+  margin: 0;
+  background: var(--cai-input-bg);
+}
+
+.cai-fieldset legend,
+.cai-legend {
+  font-size: var(--cai-text-sm);
+  font-weight: 500;
+  color: var(--cai-text-secondary);
+  padding: 0 var(--cai-space-03);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Meter
+   -------------------------------------------------------------------------- */
+
+.cai-meter {
+  display: block;
+  width: 100%;
+  height: 8px;
+  border: none;
+  background: var(--cai-layer-03);
+  appearance: none;
+  border-radius: var(--cai-radius-sm);
+  overflow: hidden;
+}
+
+.cai-meter::-webkit-meter-bar {
+  background: var(--cai-layer-03);
+  border: none;
+  border-radius: var(--cai-radius-sm);
+}
+
+.cai-meter::-webkit-meter-optimum-value {
+  background: var(--cai-color-success);
+}
+
+.cai-meter::-webkit-meter-suboptimum-value {
+  background: var(--cai-color-warning);
+}
+
+.cai-meter::-webkit-meter-even-less-good-value {
+  background: var(--cai-color-danger);
+}
+
+.cai-meter::-moz-meter-bar {
+  background: var(--cai-color-success);
+  border-radius: var(--cai-radius-sm);
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Output element
+   -------------------------------------------------------------------------- */
+
+.cai-output {
+  display: inline-block;
+  font-size: var(--cai-text-md);
+  font-weight: 500;
+  color: var(--cai-brand-primary);
+  font-variant-numeric: tabular-nums;
+  min-width: 2.5em;
+  text-align: right;
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Checkbox / Radio
+   -------------------------------------------------------------------------- */
+
+.cai-check-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cai-space-03);
+}
+
+.cai-check-item {
+  display: flex;
+  align-items: center;
+  gap: var(--cai-space-03);
+  cursor: pointer;
+  user-select: none;
+}
+
+.cai-check-item input[type="checkbox"],
+.cai-check-item input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--cai-border-strong);
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  transition: border-color var(--cai-duration-fast),
+    background var(--cai-duration-fast);
+}
+
+.cai-check-item input[type="radio"] {
+  border-radius: 50%;
+}
+
+.cai-check-item input[type="checkbox"]:checked {
+  background: var(--cai-brand-primary);
+  border-color: var(--cai-brand-primary);
+}
+
+.cai-check-item input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 1px;
+  width: 6px;
+  height: 10px;
+  border-right: 2px solid var(--cai-text-on-color);
+  border-bottom: 2px solid var(--cai-text-on-color);
+  transform: rotate(40deg);
+}
+
+.cai-check-item input[type="radio"]:checked {
+  border-color: var(--cai-brand-primary);
+}
+
+.cai-check-item input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--cai-brand-primary);
+}
+
+.cai-check-item input:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
+.cai-check-item label {
+  font-size: var(--cai-text-md);
+  cursor: pointer;
+  color: var(--cai-text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Toggle
+   -------------------------------------------------------------------------- */
+
+.cai-toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--cai-space-04);
+  cursor: pointer;
+  user-select: none;
+}
+
+.cai-toggle__track {
+  width: 48px;
+  height: 24px;
+  background: var(--cai-border-strong);
+  border-radius: 12px;
+  position: relative;
+  transition: background var(--cai-duration-fast);
+  cursor: pointer;
+}
+
+.cai-toggle__track:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
+.cai-toggle__track.is-on {
+  background: var(--cai-brand-primary);
+}
+
+.cai-toggle__thumb {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: var(--cai-text-on-color);
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: transform var(--cai-duration-fast);
+}
+
+.cai-toggle__track.is-on .cai-toggle__thumb {
+  transform: translateX(24px);
+}
+
+.cai-toggle__label {
+  font-size: var(--cai-text-md);
+  color: var(--cai-text-primary);
+}

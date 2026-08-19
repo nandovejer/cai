@@ -202,7 +202,6 @@ const midiToFreq = note => 440 * Math.pow(2, (note - 69) / 12);
    ============================================================ */
 
 const LOOKAHEAD_SEC  = 0.25;  // schedule notes this far ahead of AudioContext time
-const SCHEDULE_MS    = 80;    // how often the scheduler runs (via rAF)
 
 export class MidiPlayer {
   constructor() {

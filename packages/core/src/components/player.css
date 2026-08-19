@@ -1,0 +1,219 @@
+/* --------------------------------------------------------------------------
+   CAI Component: player
+   Media player (video, audio, MIDI)
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-player {
+  background: var(--cai-layer-03);
+  border: 1px solid var(--cai-border-subtle);
+  overflow: hidden;
+}
+
+.cai-player-media-wrap {
+  position: relative;
+  width: 100%;
+  background: black;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.cai-player-video {
+  width: 100%;
+  max-height: 360px;
+  display: block;
+  object-fit: contain;
+}
+
+.cai-player-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--cai-duration-fast);
+  pointer-events: none;
+}
+
+.cai-player-media-wrap.is-paused .cai-player-overlay {
+  opacity: 1;
+}
+
+.cai-play-icon {
+  width: 56px;
+  height: 56px;
+  color: var(--cai-text-on-color);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  opacity: 0.9;
+}
+
+.cai-player-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cai-space-02);
+  padding: var(--cai-space-03) var(--cai-space-04);
+  background: var(--cai-layer-03);
+  border-top: 1px solid var(--cai-border-subtle);
+}
+
+.cai-player-controls--audio {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--cai-space-04);
+  padding: var(--cai-space-04) var(--cai-space-05);
+}
+
+.cai-player-progress-row {
+  display: flex;
+  align-items: center;
+  gap: var(--cai-space-03);
+}
+
+.cai-player-progress-row--audio {
+  flex: 1;
+  min-width: 0;
+}
+
+.cai-player-time {
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-xs);
+  color: var(--cai-text-secondary);
+  white-space: nowrap;
+  min-width: 32px;
+}
+
+.cai-player-btns {
+  display: flex;
+  align-items: center;
+  gap: var(--cai-space-02);
+}
+
+.cai-player-spacer {
+  flex: 1;
+}
+
+.cai-player-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: var(--cai-icon-primary);
+  cursor: pointer;
+  border-radius: var(--cai-radius-sm);
+  transition: background var(--cai-duration-fast),
+    color var(--cai-duration-fast);
+  flex-shrink: 0;
+}
+
+.cai-player-btn:hover {
+  background: var(--cai-bg-ui-hover);
+  color: var(--cai-brand-primary);
+}
+
+.cai-player-btn:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 1px;
+}
+
+.cai-player-btn svg {
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+}
+
+.cai-player-vol-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--cai-space-01);
+}
+
+.cai-player-seekbar {
+  position: relative;
+  flex: 1;
+  height: 4px;
+  background: var(--cai-border-subtle);
+  border-radius: var(--cai-radius-sm);
+  cursor: pointer;
+  min-width: 40px;
+}
+
+.cai-player-seekbar:hover .cai-player-seekbar-thumb,
+.cai-player-seekbar:focus-visible .cai-player-seekbar-thumb {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.cai-player-seekbar:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
+.cai-player-seekbar-buf,
+.cai-player-seekbar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: var(--cai-radius-sm);
+  pointer-events: none;
+}
+
+.cai-player-seekbar-buf {
+  background: var(--cai-bg-ui-active);
+}
+.cai-player-seekbar-fill {
+  background: var(--cai-brand-primary);
+  width: 0%;
+}
+
+.cai-player-seekbar-thumb {
+  position: absolute;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--cai-brand-primary);
+  border-radius: 50%;
+  transform: translateY(-50%) scale(0);
+  transition: transform var(--cai-duration-fast),
+    opacity var(--cai-duration-fast);
+  opacity: 0;
+  pointer-events: none;
+  margin-left: -6px;
+}
+
+.cai-player-volbar {
+  flex: none;
+  width: 72px;
+}
+
+.cai-player-midi-status {
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-xs);
+  color: var(--cai-text-secondary);
+  margin-left: var(--cai-space-03);
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .cai-player:not([data-type="video"]) .cai-player-volbar {
+    display: none;
+  }
+
+  /* Audio player — stack controls vertically on very small screens */
+  .cai-player-controls--audio {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--cai-space-03);
+  }
+
+  .cai-player-progress-row--audio {
+    flex: unset;
+  }
+}

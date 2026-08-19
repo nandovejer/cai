@@ -4,13 +4,31 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
-### Planned for v2.0.0
+### Fixed — Modularization release
+- **CRITICAL — semantic token layer restored to source control.** The Layer 2 semantic tokens (default light/dark/high-contrast themes) previously lived only inside the generated, gitignored `dist/cai-tokens.css`; a clean clone built a system with undefined CSS variables. They now live in `packages/tokens/src/semantic.css` and `pnpm tokens:build` composes fonts + primitives + semantic deterministically (the fragile "preserve from previous dist" logic is gone).
+- `@cai-ds/core/utils` export now works: `dist/utils.js` (and every behavior module) is emitted by the build.
+- Deleted `scripts/midi.js` — an orphaned, outdated duplicate of `packages/core/src/midi.js`.
+- Custom themes no longer leak global primitives: their duplicated `:root` scale re-declarations were removed (spacing/sizing/type now come from `@cai-ds/tokens`) and their intentional radius/shadow overrides are scoped to `[data-theme="…"]`. **Themes now require `cai-tokens.css` to be loaded first.**
+- `scripts/check-dist.js` now checks all three packages' dist (not just tokens) before skipping the build.
+- ESLint migrated to flat config (`eslint.config.js`) — `pnpm lint:js` was broken under ESLint 9. `pnpm lint:css` no longer lints generated `dist/` files.
+- Tokens README documented the wrong attribute for base modes (`data-mode` → `data-theme`).
+- Modal overlays use `var(--cai-bg-overlay)` instead of hardcoded `rgba(0,0,0,.5)`.
+- Version alignment: `@cai-ds/tokens` bumped to `2.0.0`; all CDN snippets pin `@2`.
+
+### Changed — BREAKING (migration note)
+- **`body` no longer forces `display: flex; min-height: 100vh`.** The app-shell layout is opt-in: add `class="o-shell"` to `<body>` (grid shell with sidebar), as the bundled apps already do. Bare-body consumers relying on the implicit flex shell must add the class.
+
+### Added — Modularization release
+- **Per-component CSS distribution:** `packages/core/src/components/` now holds one file per component (21 files + `index.css` barrel); the build emits both the full `dist/cai.css` bundle and `dist/components/<name>.css` (+ `.min`) for standalone consumption via `@cai-ds/core/components/*`.
+- **Modular JS API:** `cai.js` split into side-effect-free ESM modules — `theme.js`, `sidebar.js`, `clipboard.js`, `modal.js`, `highlight.js`, `player.js` — each published as `@cai-ds/core/<module>`. The `cai.js` entry re-exports the full API (it previously exported nothing) and keeps the auto-init behavior.
+- Single source of truth for CSS layer order: build scripts inline the `@import` graph of `src/index.css` instead of maintaining duplicate file lists.
+- Focus-visible rings for theme switcher buttons, copy buttons, and links; removed `!important` from the button disabled state.
+- `apps/platform-docs/package.json` (proper workspace membership) and regression tests for the semantic layer + modular artifacts.
+
+### Planned
 - WCAG 2.1 AA audit + fixes
 - Screen reader testing (VoiceOver, NVDA, JAWS)
 - Documentation: a11y testing guide
-
-### Changed (v2.0.0)
-- **`dist/utils.js` is not a standalone build artifact.** `packages/core/src/utils.js` is an internal module bundled into `dist/cai.js` and is not exposed as a separate file. It has never appeared in the `exports` map of `@cai-ds/core` and is not part of the public API. Importing `@cai-ds/core/utils` is unsupported.
 
 ### Added (v2.0.0)
 - **CAI Platform package:** Added `@cai-ds/platform` as the app-level layer above core for shells, content wrappers, page headers, skip links, command blocks, and layout patterns.

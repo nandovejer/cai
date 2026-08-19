@@ -19,13 +19,13 @@ import '@cai-ds/tokens'
 ### Via CDN (jsDelivr)
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2.0.0-beta.1/dist/cai-tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2/dist/cai-tokens.css">
 ```
 
 ## What's included
 
-- **Primitives**: Color scales, spacing, typography, shadows, radius tokens
-- **Semantic themes**: Light, dark, and high-contrast color modes
+- **Primitives** (Layer 1): Color scales, spacing, typography, shadows, radius tokens — generated from `tokens.json`
+- **Semantic themes** (Layer 2): Light, dark, and high-contrast color modes — source in `src/semantic.css`
 - **Self-hosted fonts**: IBM Plex Serif, Sans, and Mono families (included in `cai-tokens.css`)
 - **Custom faces**: DM Sans, Space Grotesk, and Freckle Face for custom themes
 
@@ -45,11 +45,18 @@ All tokens are available as CSS custom properties (CSS variables) scoped to `:ro
 --cai-brand-primary
 ```
 
-Theme variants are available via `data-mode`:
+Base color modes are activated via `data-theme` on `<html>`:
 
 ```html
-<html data-mode="dark">
-<html data-mode="high-contrast">
+<html data-theme="light">
+<html data-theme="dark">
+<html data-theme="high-contrast">
+```
+
+Custom themes (shipped with `@cai-ds/core`) set `data-theme="<theme-name>"` and use `data-mode` for their luminosity variants:
+
+```html
+<html data-theme="minimalist" data-mode="dark">
 ```
 
 ## Fonts

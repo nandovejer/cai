@@ -1,0 +1,41 @@
+/* --------------------------------------------------------------------------
+   CAI Component: _animations
+   Shared system keyframes (spin, shimmer, pulse, slide-up)
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+@keyframes cai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cai-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes cai-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+@keyframes cai-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

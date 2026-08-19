@@ -5,8 +5,10 @@
  * Usage: node scripts/build-core.js (from the repo root)
  *
  * Strategy:
- * - CSS: concatenate all ITCSS layers
- * - JS: bundle with Rollup — utils.js inlined, midi.js as lazy chunk
+ * - CSS: inline the @import graph of src/index.css (single source of truth)
+ *   into dist/cai.css, plus one dist/components/<name>.css per component
+ * - JS: bundle with Rollup — utils.js inlined, midi.js as lazy chunk;
+ *   individual modules copied verbatim (browser-native ESM)
  * - Themes: copy src/themes/*.css → dist/themes/
  */
 
@@ -29,28 +31,47 @@ const coreRoot = resolve(repoRoot, "packages/core");
 const srcRoot = resolve(coreRoot, "src");
 const distRoot = resolve(coreRoot, "dist");
 
-const cssLayers = [
-  "settings/_settings.css",
-  "generic/_reset.css",
-  "elements/_elements.css",
-  "objects/_objects.css",
-  "components/_components.css",
-  "utilities/_utilities.css",
-];
-
 mkdirSync(distRoot, { recursive: true });
 
-// --- CSS: concatenate all ITCSS layers ---
-const css = cssLayers
-  .map((relativePath) => readFileSync(resolve(srcRoot, relativePath), "utf-8"))
-  .join("\n\n");
+/**
+ * Recursively inline the local @import graph of a CSS file.
+ * src/index.css is the single source of truth for layer order.
+ */
+function inlineCssImports(filePath, seen = new Set()) {
+  if (seen.has(filePath)) return "";
+  seen.add(filePath);
+  const dir = dirname(filePath);
+  return readFileSync(filePath, "utf-8").replace(
+    /@import\s+url\(\s*["']?(\.[^"')]+)["']?\s*\)\s*;/g,
+    (_, relPath) => inlineCssImports(resolve(dir, relPath), seen),
+  );
+}
 
-writeFileSync(resolve(distRoot, "cai.css"), css, "utf-8");
-console.log(`✓ Core CSS built → ${resolve(distRoot, "cai.css")}`);
+async function writeCssWithMin(outPath, css) {
+  writeFileSync(outPath, css, "utf-8");
+  const { code } = await esbuild.transform(css, { loader: "css", minify: true });
+  writeFileSync(outPath.replace(/\.css$/, ".min.css"), code, "utf-8");
+}
 
-const { code: minCss } = await esbuild.transform(css, { loader: "css", minify: true });
-writeFileSync(resolve(distRoot, "cai.min.css"), minCss, "utf-8");
-console.log(`✓ Core CSS minified → ${resolve(distRoot, "cai.min.css")}`);
+// --- CSS: full bundle from the src/index.css import graph ---
+const css = inlineCssImports(resolve(srcRoot, "index.css"));
+await writeCssWithMin(resolve(distRoot, "cai.css"), css);
+console.log(`✓ Core CSS built → ${resolve(distRoot, "cai.css")} (+ min)`);
+
+// --- CSS: per-component files for standalone consumption ---
+const componentsSrcDir = resolve(srcRoot, "components");
+const componentsDistDir = resolve(distRoot, "components");
+mkdirSync(componentsDistDir, { recursive: true });
+const componentFiles = readdirSync(componentsSrcDir).filter(
+  (f) => f.endsWith(".css") && f !== "index.css",
+);
+for (const f of componentFiles) {
+  await writeCssWithMin(
+    resolve(componentsDistDir, f),
+    readFileSync(resolve(componentsSrcDir, f), "utf-8"),
+  );
+}
+console.log(`✓ ${componentFiles.length} component CSS files → ${componentsDistDir} (+ min)`);
 
 // --- JS: bundle with Rollup ---
 async function buildJS() {
@@ -71,15 +92,32 @@ async function buildJS() {
     await bundle.close();
     console.log(`✓ Core JS bundled → ${resolve(distRoot, "cai.js")}`);
 
+    // Individual modules: the source IS the artifact (browser-native ESM
+    // with relative imports only) — copy verbatim next to the bundle.
+    // midi.js is NOT copied: rollup already emits it as the lazy chunk.
+    const jsModules = [
+      "utils.js",
+      "theme.js",
+      "sidebar.js",
+      "clipboard.js",
+      "modal.js",
+      "highlight.js",
+      "player.js",
+    ];
+    for (const f of jsModules) {
+      copyFileSync(resolve(srcRoot, f), resolve(distRoot, f));
+    }
+    console.log(`✓ ${jsModules.length} JS modules copied → dist/`);
+
     // Minify JS outputs with esbuild
-    for (const jsFile of ["cai.js", "midi.js"]) {
+    for (const jsFile of ["cai.js", "midi.js", ...jsModules]) {
       const jsPath = resolve(distRoot, jsFile);
       if (!existsSync(jsPath)) continue;
       const src = readFileSync(jsPath, "utf-8");
       const { code: minJs } = await esbuild.transform(src, { loader: "js", minify: true });
       writeFileSync(resolve(distRoot, jsFile.replace(".js", ".min.js")), minJs, "utf-8");
-      console.log(`✓ ${jsFile} minified → ${jsFile.replace(".js", ".min.js")}`);
     }
+    console.log("✓ JS outputs minified (*.min.js)");
   } catch (error) {
     console.error("❌ JS bundling failed:", error.message);
     process.exit(1);

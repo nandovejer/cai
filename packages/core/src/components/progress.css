@@ -1,0 +1,21 @@
+/* --------------------------------------------------------------------------
+   CAI Component: progress
+   Progress bar
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-progress {
+  height: 8px;
+  background: var(--cai-border-subtle);
+  overflow: hidden;
+  border-radius: var(--cai-radius-sm);
+}
+
+.cai-progress__fill {
+  height: 100%;
+  background: var(--cai-brand-primary);
+  transition: width 0.3s var(--cai-easing-enter);
+  border-radius: var(--cai-radius-sm);
+}

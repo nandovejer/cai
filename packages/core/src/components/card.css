@@ -1,0 +1,33 @@
+/* --------------------------------------------------------------------------
+   CAI Component: card
+   Card surface
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   -------------------------------------------------------------------------- */
+
+
+.cai-card {
+  background: var(--cai-layer-01);
+  border: 1px solid var(--cai-border-subtle);
+  padding: var(--cai-space-05);
+  transition: box-shadow var(--cai-duration-fast) var(--cai-easing-enter),
+    border-color var(--cai-duration-fast), background var(--cai-duration-base);
+}
+
+.cai-card:hover {
+  box-shadow: var(--cai-shadow-sm);
+  border-color: var(--cai-border-strong);
+}
+
+.cai-card__title {
+  font-size: var(--cai-text-base);
+  font-weight: 600;
+  margin-bottom: var(--cai-space-02);
+  color: var(--cai-text-primary);
+}
+
+.cai-card__body {
+  font-size: var(--cai-text-md);
+  color: var(--cai-text-secondary);
+  margin-bottom: var(--cai-space-04);
+}

@@ -71,6 +71,18 @@ importers:
         specifier: workspace:*
         version: link:../../packages/tokens
 
+  apps/platform-docs:
+    dependencies:
+      '@cai-ds/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@cai-ds/platform':
+        specifier: workspace:*
+        version: link:../../packages/platform
+      '@cai-ds/tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
+
   packages/core:
     devDependencies:
       '@cai-ds/tokens':
@@ -78,13 +90,13 @@ importers:
         version: link:../tokens
 
   packages/platform:
-    dependencies:
+    devDependencies:
       '@cai-ds/core':
-        specifier: ^2.0.0
-        version: 2.0.0
+        specifier: workspace:*
+        version: link:../core
       '@cai-ds/tokens':
-        specifier: ^2.0.0-beta
-        version: 2.0.0-beta.1
+        specifier: workspace:*
+        version: link:../tokens
 
   packages/tokens: {}
 
@@ -107,12 +119,6 @@ packages:
 
   '@cacheable/utils@2.4.1':
     resolution: {integrity: sha512-eiFgzCbIneyMlLOmNG4g9xzF7Hv3Mga4LjxjcSC/ues6VYq2+gUbQI8JqNuw/ZM8tJIeIaBGpswAsqV2V7ApgA==}
-
-  '@cai-ds/core@2.0.0':
-    resolution: {integrity: sha512-uSw5L0lEJBq1xO074wPwa8mwdAhmooKO3mYMvanIAF76RgGFvxYs920xtdTrBPmpHXEwfp5ku+KxibQ7s4fYFg==}
-
-  '@cai-ds/tokens@2.0.0-beta.1':
-    resolution: {integrity: sha512-VeGmWZNOPYG6GlMqa0+gy+MhQ15LVdVIlD9N9/SZFs5CQzbJdCBdaIcjGUbX+CTn4srspKulIxIz+WCONCiffg==}
 
   '@changesets/apply-release-plan@7.1.1':
     resolution: {integrity: sha512-9qPCm/rLx/xoOFXIHGB229+4GOL76S4MC+7tyOuTsR6+1jYlfFDQORdvwR5hDA6y4FL2BPt3qpbcQIS+dW85LA==}
@@ -1749,10 +1755,6 @@ snapshots:
     dependencies:
       hashery: 1.5.1
       keyv: 5.6.0
-
-  '@cai-ds/core@2.0.0': {}
-
-  '@cai-ds/tokens@2.0.0-beta.1': {}
 
   '@changesets/apply-release-plan@7.1.1':
     dependencies:

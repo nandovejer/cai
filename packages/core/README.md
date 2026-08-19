@@ -25,7 +25,7 @@ import '@cai-ds/core'
 
 ```html
 <!-- Tokens first -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2.0.0-beta.1/dist/cai-tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2/dist/cai-tokens.css">
 
 <!-- Then core -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.css">
@@ -36,15 +36,39 @@ import '@cai-ds/core'
 <html data-theme="minimalist">
 ```
 
+### Using a single component (standalone CSS)
+
+Every component also ships as its own file in `dist/components/` — load only what you need (tokens must come first):
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2/dist/cai-tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@2/dist/components/button.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@2/dist/components/card.css">
+```
+
+Available: `alert`, `avatar`, `breadcrumb`, `button`, `card`, `code`, `copy-btn`, `figure`, `form`, `icon-grid`, `modal`, `player`, `progress`, `sidebar`, `table`, `tabs`, `tag`, `theme-switcher`, `toast`, `tooltip` (+ `_animations` for the shared keyframes). Each has a `.min.css` twin.
+
+### Using a single JS behavior
+
+The behavior modules are dependency-free browser ESM — import them individually; nothing runs until you call the module's `init*()`:
+
+```js
+import { applyTheme, initThemeSystem } from "@cai-ds/core/theme";
+import { copyToClipboard } from "@cai-ds/core/clipboard";
+import { mountPlayer } from "@cai-ds/core/player";
+```
+
 ## Package exports
 
-- **`.`** → `cai.js` — Main entrypoint with JS behaviors
-- **`./css`** → `cai.css` — CSS components only
+- **`.`** → `cai.js` — Entry: re-exports the full API + auto-initializes everything
+- **`./css`** → `cai.css` — Full CSS bundle (`./css/min` for the minified twin)
+- **`./components/*`** → Per-component CSS files (standalone use)
+- **`./theme`**, **`./sidebar`**, **`./clipboard`**, **`./modal`**, **`./highlight`**, **`./player`** → Individual JS behavior modules (no side effects on import)
 - **`./midi`** → `midi.js` — MIDI player (lazy-loaded)
+- **`./utils`** → Pure helper functions (`formatTime`, `escapeHtml`, …)
 - **`./themes/*`** → Custom theme stylesheets
   - `cai-theme-minimalist.css`
   - `cai-theme-ricardoymortimer.css`
-- **`./utils`** → Utility functions (internal/testing)
 
 ## Components included
 

@@ -25,7 +25,7 @@ import '@cai-ds/platform'
 ### Via CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2.0.0-beta.1/dist/cai-tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2/dist/cai-tokens.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/platform@2.0.0/dist/platform.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.js"></script>

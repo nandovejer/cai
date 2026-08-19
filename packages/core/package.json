@@ -8,8 +8,16 @@
   "exports": {
     ".": "./dist/cai.js",
     "./css": "./dist/cai.css",
-    "./midi": "./dist/midi.js",
+    "./css/min": "./dist/cai.min.css",
+    "./components/*": "./dist/components/*",
     "./themes/*": "./dist/themes/*",
+    "./theme": "./dist/theme.js",
+    "./sidebar": "./dist/sidebar.js",
+    "./clipboard": "./dist/clipboard.js",
+    "./modal": "./dist/modal.js",
+    "./highlight": "./dist/highlight.js",
+    "./player": "./dist/player.js",
+    "./midi": "./dist/midi.js",
     "./utils": "./dist/utils.js"
   },
   "files": [
@@ -25,7 +33,7 @@
     "url": "https://github.com/nandovejer/cai/issues"
   },
   "keywords": ["design-system", "css", "components", "vanilla-js", "itcss", "accessibility", "a11y"],
-  "sideEffects": ["dist/cai.css", "dist/themes/*.css"],
+  "sideEffects": ["dist/cai.css", "dist/themes/*.css", "dist/components/*.css"],
   "publishConfig": {
     "access": "public"
   },

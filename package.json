@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@9.0.0",
   "engines": {
-    "node": ">=18.0.0",
+    "node": ">=20.0.0",
     "pnpm": ">=9.0.0"
   },
   "scripts": {
@@ -20,30 +20,24 @@
     "test:unit": "vitest run",
     "test:ui": "playwright test",
     "test:ui:install": "playwright install chromium",
-    "verify:security": "node scripts/verify-security.js",
-    "setup:husky": "node scripts/setup-husky.js",
-    "check:github": "node scripts/check-github-setup.js"
+    "check:pack": "node scripts/check-pack.js",
+    "audit:prod": "pnpm audit --prod --audit-level=high"
   },
   "pnpm": {
-    "overrides": {
-      "fast-uri": ">=3.1.2",
-      "vite": ">=6.4.2",
-      "esbuild": ">=0.25.0"
-    }
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0",
     "@playwright/test": "^1.40.0",
     "@types/node": "^22.0.0",
-    "@vitest/ui": "^2.1.9",
     "esbuild": "^0.25.0",
     "eslint": "^9.0.0",
-    "husky": "^9.1.7",
     "rollup": "^4.60.3",
-    "source-map-explorer": "^2.5.3",
     "stylelint": "^16.0.0",
     "stylelint-config-standard": "^36.0.0",
-    "vite": "^6.4.2",
-    "vitest": "^2.1.9"
+    "vite": "^6.4.3",
+    "vitest": "^4.1.11"
   }
 }

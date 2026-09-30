@@ -252,67 +252,38 @@ Example CSS comment:
 
 ## Publishing & Versioning
 
-### Automated npm Publishing
-
-CAI Design System uses GitHub Actions to automatically publish packages to npm when version changes are merged to `main`. No manual npm publishing is needed.
+The three packages are versioned together (same version number) with [changesets](https://github.com/changesets/changesets) and published by GitHub Actions. Nobody publishes from a local machine.
 
 **Workflow:**
 
-1. Make your changes (features, fixes, etc.)
-2. When ready to release, run:
+1. Make your changes on a branch and describe them:
    ```bash
    pnpm changeset
    ```
-   This creates a changelog entry describing what changed (follows semver).
+   Pick the bump (patch / minor / major) and write the changelog entry. Commit the generated `.changeset/*.md` file with your PR.
 
-3. Verify the changeset looks correct, then run:
-   ```bash
-   pnpm changeset version
-   ```
-   This auto-bumps all affected package versions (tokens, core, platform).
+2. Merge the PR into `main`. The Release workflow (`.github/workflows/publish.yml`) opens or updates a **"chore(release): version packages"** PR that bumps the versions and writes the changelogs.
 
-4. Commit and push to `main`:
-   ```bash
-   git add .changeset packages/*/package.json
-   git commit -m "chore: release packages"
-   git push origin main
-   ```
+3. Merge that PR when you want to release. The workflow then:
+   - runs lint, audit, build, unit tests and the tarball contract check
+   - waits for approval in the `release` environment
+   - publishes every version that is not on npm yet, tokens first, with provenance
 
-5. **GitHub Actions automatically handles the rest:**
-   - Workflow `.github/workflows/publish.yml` detects version changes
-   - Installs dependencies, builds all packages
-   - Publishes to npm registry as `@cai-ds/tokens`, `@cai-ds/core`, `@cai-ds/platform`
+Publishing uses npm trusted publishing (OIDC), so there is no npm token to manage.
 
-**Note:** You need npm account access as a member of the `@cai-ds` organization.
-
-### Testing Before Release
-
-To verify your changes build and publish correctly locally:
+### Before opening a PR
 
 ```bash
 pnpm build
-# Verify the new version doesn't already exist on npm:
-npm view @cai-ds/tokens versions | grep "X.Y.Z"
+pnpm test:unit
+pnpm check:pack
 ```
 
-### Troubleshooting Publishes
+`pnpm check:pack` compares what each package would publish against `packages/<name>/pack-files.txt`. If you add or remove a published file on purpose, update the snapshots with `node scripts/check-pack.js --update` and commit them.
 
-| Error | Cause | Solution |
-|-------|-------|----------|
-| "Package already published" | Version exists on npm | It's already live; no action needed |
-| "E403 permission denied" | Not an org member or invalid token | Check npm org membership: `npm org ls cai-ds` |
-| "Not found" | npm can't find your package | Run `pnpm build` first; check package.json |
+### Dependency ranges between packages
 
----
-
-## Release Process (Legacy)
-
-*Note: This is now automated via GitHub Actions. Keep for reference if manual release is needed.*
-
-1. Ensure all tests pass: `pnpm test:unit && pnpm test:ui`
-2. Use `pnpm changeset` to describe changes
-3. Run `pnpm changeset version` to bump versions
-4. Push to `main` — GitHub Actions publishes automatically
+`@cai-ds/core` and `@cai-ds/platform` declare the layers below them as `peerDependencies` with literal ranges (`^3.0.0`). Do not use the `workspace:` protocol there; changesets updates the ranges on a major release.
 
 ---
 
@@ -320,7 +291,6 @@ npm view @cai-ds/tokens versions | grep "X.Y.Z"
 
 - Open a discussion in [Issues](../../issues)
 - Check [CLAUDE.md](./CLAUDE.md) for architecture
-- Review [ACCESSIBILITY_AUDIT.md](./ACCESSIBILITY_AUDIT.md) for a11y standards
 
 ## Thank You
 

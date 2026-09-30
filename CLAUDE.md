@@ -14,7 +14,7 @@ See [DIST-RULES.md](./DIST-RULES.md) for full regeneration steps.
 
 ## JS in `packages/core/src/`
 
-Vanilla JS, ES modules — one module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/utils`, `/midi`.
+Vanilla JS, ES modules — one module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/toggle`, `/utils`, `/midi`.
 
 | Module         | Key exports                                                    |
 | -------------- | -------------------------------------------------------------- |
@@ -24,6 +24,8 @@ Vanilla JS, ES modules — one module per concern, all re-exported (and auto-ini
 | `modal.js`     | `createFocusTrap(el)`, `initModals()`                          |
 | `highlight.js` | `highlightBlock(pre)` — dependency-free highlight for `pre.cai-code-block`, `initHighlight()` |
 | `player.js`    | `initSeekbar(bar, onSeek)`, `wrapHTMLMedia(el)`, `bindPlayerUI(root, controls, mediaLike)`, `mountPlayer(root)`, `mountMidiPlayer(root)` (async), `initPlayers()` |
+| `tabs.js`      | `activateTab(tab)`, `initTabs()`                               |
+| `toggle.js`    | `setToggleState(track, checked)`, `initToggles()`              |
 | `utils.js`     | `formatTime(seconds)` (`mm:ss`), `escapeHtml`, `calculateProgress`, … (pure, unit-tested) |
 | `midi.js`      | `MidiPlayer` — MIDI Format 0/1 parser + Web Audio scheduler (lazy-loaded chunk) |
 
@@ -31,7 +33,17 @@ Vanilla JS, ES modules — one module per concern, all re-exported (and auto-ini
 
 ## Vite config
 
-`root: apps/docs` + `publicDir: <repo-root>` → absolute paths like `/packages/...` in HTML resolve correctly in dev. In build, `outDir: apps/docs/dist`.
+`root: <repo-root>` + `publicDir: false` → absolute paths like `/packages/...` and `/apps/...` in HTML resolve correctly in dev. In build, `outDir: dist/` with the three apps as entries (`/`, `/docs/`, `/platform/`).
+
+---
+
+## Package layering
+
+`tokens` is standalone; `core` requires `tokens`; `platform` requires `core` and `tokens`. The contract is expressed as required `peerDependencies` with literal ranges (never `workspace:`), and the three packages share one version (changesets `fixed`).
+
+- Nothing in `packages/*/src` may reference docs-app hooks (`.docs-*`, `#demo-form`, …). Docs-only behavior lives in `apps/docs/docs.js`.
+- `pnpm check:pack` verifies what each tarball ships against `packages/<name>/pack-files.txt`; after intentionally adding or removing a published file run `node scripts/check-pack.js --update`.
+- Releases: add a changeset (`pnpm changeset`); never run `npm publish` by hand.
 
 ---
 
@@ -41,7 +53,7 @@ Vanilla JS, ES modules — one module per concern, all re-exported (and auto-ini
 
 1. **Check first:** is there a native HTML element or browser API that solves this? (`dialog`, `details`, `popover`, `<input type="...">`, CSS `:has()`, etc.). If so, use it as the base.
 2. Create `packages/core/src/components/<name>.css` (use the standard header of the sibling files) and add its `@import` to `packages/core/src/components/index.css` in cascade order
-3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./DIST-RULES.md))
+3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./DIST-RULES.md)), then `node scripts/check-pack.js --update`
 4. Document in `apps/docs/index.html`: add a section with an id, sidebar link, demo, and a Keyboard & ARIA subsection
 5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/showcase.css`
 

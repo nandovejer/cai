@@ -21,13 +21,35 @@ const STORAGE_KEY = "cai-theme";
 const STORAGE_KEY_MODE = "cai-mode";
 const STORAGE_KEY_LAST_MODE = "cai-last-mode";
 
+// localStorage throws in sandboxed iframes and storage-blocked contexts;
+// theming must keep working there, just without persistence.
+const storage = {
+  get(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch (_) {
+      return null;
+    }
+  },
+  set(key, value) {
+    try {
+      storage.set(key, value);
+    } catch (_) {}
+  },
+  remove(key) {
+    try {
+      storage.remove(key);
+    } catch (_) {}
+  },
+};
+
 export function getStoredTheme() {
-  const saved = localStorage.getItem(STORAGE_KEY);
+  const saved = storage.get(STORAGE_KEY);
   return saved && ALL_THEMES.includes(saved) ? saved : null;
 }
 
 export function getStoredMode() {
-  const saved = localStorage.getItem(STORAGE_KEY_MODE);
+  const saved = storage.get(STORAGE_KEY_MODE);
   return saved && MODES.includes(saved) ? saved : null;
 }
 
@@ -57,10 +79,9 @@ function syncButtons(theme) {
     btn.setAttribute("aria-pressed", String(active));
   });
 
-  // Inline mode buttons inside theme cards
-  document.querySelectorAll(".docs-theme-card__mode-btn").forEach((btn) => {
-    const card = btn.closest(".docs-theme-card");
-    const cardTheme = card?.dataset.theme;
+  // Mode buttons scoped to a custom theme (nearest [data-theme] ancestor)
+  document.querySelectorAll(".cai-theme-mode-btn").forEach((btn) => {
+    const cardTheme = btn.closest("[data-theme]")?.dataset.theme;
     const isCardActive = theme === cardTheme;
     const modeActive = isCardActive && currentMode === btn.dataset.mode;
     btn.classList.toggle("is-active", modeActive);
@@ -71,7 +92,7 @@ function syncButtons(theme) {
 export function applyTheme(theme, { persist = true } = {}) {
   const isCustom = CUSTOM_THEMES.includes(theme);
   document.documentElement.dataset.theme = theme;
-  if (persist) localStorage.setItem(STORAGE_KEY, theme);
+  if (persist) storage.set(STORAGE_KEY, theme);
 
   if (isCustom) {
     // Restore saved mode, or fall back to the theme's default mode
@@ -79,11 +100,11 @@ export function applyTheme(theme, { persist = true } = {}) {
     const mode = savedMode || CUSTOM_THEME_DEFAULT_MODE[theme] || "light";
     document.documentElement.dataset.mode = mode;
     // Persist the resolved mode so it survives page reload
-    if (persist) localStorage.setItem(STORAGE_KEY_MODE, mode);
+    if (persist) storage.set(STORAGE_KEY_MODE, mode);
   } else {
     // Base color mode: clear data-mode
     delete document.documentElement.dataset.mode;
-    if (persist) localStorage.removeItem(STORAGE_KEY_MODE);
+    if (persist) storage.remove(STORAGE_KEY_MODE);
   }
 
   syncButtons(theme);
@@ -95,17 +116,17 @@ export function applyMode(mode, parentTheme, { persist = true } = {}) {
   if (document.documentElement.dataset.theme !== parentTheme) {
     if (persist) {
       if (MODES.includes(document.documentElement.dataset.theme)) {
-        localStorage.setItem(
+        storage.set(
           STORAGE_KEY_LAST_MODE,
           document.documentElement.dataset.theme,
         );
       }
     }
     document.documentElement.dataset.theme = parentTheme;
-    if (persist) localStorage.setItem(STORAGE_KEY, parentTheme);
+    if (persist) storage.set(STORAGE_KEY, parentTheme);
   }
   document.documentElement.dataset.mode = mode;
-  if (persist) localStorage.setItem(STORAGE_KEY_MODE, mode);
+  if (persist) storage.set(STORAGE_KEY_MODE, mode);
   syncButtons(parentTheme);
 }
 
@@ -133,12 +154,13 @@ export function initThemeSystem() {
       return;
     }
 
-    // --- Inline mode buttons inside theme cards ---
-    const cardModeBtn = e.target.closest(".docs-theme-card__mode-btn");
-    if (cardModeBtn?.dataset.mode) {
-      const card = cardModeBtn.closest(".docs-theme-card");
-      const parentTheme = card?.dataset.theme;
-      if (parentTheme) applyMode(cardModeBtn.dataset.mode, parentTheme);
+    // --- Mode buttons scoped to a custom theme ---
+    const cardModeBtn = e.target.closest(".cai-theme-mode-btn");
+    if (MODES.includes(cardModeBtn?.dataset.mode)) {
+      const parentTheme = cardModeBtn.closest("[data-theme]")?.dataset.theme;
+      if (CUSTOM_THEMES.includes(parentTheme)) {
+        applyMode(cardModeBtn.dataset.mode, parentTheme);
+      }
       return;
     }
 
@@ -148,13 +170,14 @@ export function initThemeSystem() {
       const current = document.documentElement.dataset.theme;
       // Toggle: clicking again removes the custom theme → restore last mode
       if (current === themeApplyBtn.dataset.theme) {
-        const fallback = localStorage.getItem(STORAGE_KEY_LAST_MODE) || "light";
-        localStorage.removeItem(STORAGE_KEY_MODE);
+        const lastMode = storage.get(STORAGE_KEY_LAST_MODE);
+        const fallback = MODES.includes(lastMode) ? lastMode : "light";
+        storage.remove(STORAGE_KEY_MODE);
         applyTheme(fallback);
       } else {
         // Store current base mode before switching to a custom theme
         if (MODES.includes(current)) {
-          localStorage.setItem(STORAGE_KEY_LAST_MODE, current);
+          storage.set(STORAGE_KEY_LAST_MODE, current);
         }
         applyTheme(themeApplyBtn.dataset.theme);
       }

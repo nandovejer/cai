@@ -70,7 +70,7 @@ This inlines the `@import` graph of `src/index.css` →
 
 Theme files (`cai-theme-ricardoymortimer.css`, `cai-theme-minimalist.css`)
 use self-hosted fonts via `@font-face` — no Google Fonts request at runtime.
-The woff2 files live in `packages/tokens/fonts/custom-faces/` and are copied
+The woff2 files live in `packages/core/fonts/custom-faces/` and are copied
 into `packages/core/dist/fonts/custom-faces/` by `pnpm core:build` so the
 relative `../fonts/custom-faces/…` URLs resolve from `dist/themes/`.
 

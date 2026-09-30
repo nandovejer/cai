@@ -20,39 +20,63 @@
    1. MIDI BINARY PARSER
    ============================================================ */
 
-class MidiParser {
+// Hard limits: MIDI files are untrusted input (any URL, user uploads).
+// A malformed or hostile file must fail fast, never hang the main thread.
+const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const MAX_EVENTS     = 500_000;
+
+export class MidiParser {
   static parse(buffer) {
+    if (buffer.byteLength > MAX_FILE_BYTES) throw new Error('MIDI file too large');
+
     const view  = new DataView(buffer);
     const bytes = new Uint8Array(buffer);
     let   pos   = 0;
 
+    // DataView throws RangeError past the end; u8 must do the same.
     const u32 = () => { const v = view.getUint32(pos); pos += 4; return v; };
     const u16 = () => { const v = view.getUint16(pos); pos += 2; return v; };
-    const u8  = () => bytes[pos++];
+    const u8  = () => {
+      if (pos >= bytes.length) throw new Error('Unexpected end of MIDI data');
+      return bytes[pos++];
+    };
 
+    // Variable-length quantity: at most 4 bytes (28 bits) per the spec.
     const varlen = () => {
-      let v = 0, b;
-      do { b = u8(); v = (v << 7) | (b & 0x7f); } while (b & 0x80);
-      return v;
+      let v = 0;
+      for (let i = 0; i < 4; i++) {
+        const b = u8();
+        v = v * 128 + (b & 0x7f);
+        if (!(b & 0x80)) return v;
+      }
+      throw new Error('Invalid variable-length quantity');
     };
 
     // Header
     if (u32() !== 0x4d546864) throw new Error('Not a MIDI file (missing MThd)');
-    u32(); // chunk length (always 6)
+    const headerLen   = u32(); // 6 in every known file
+    const headerEnd   = pos + headerLen;
     const format      = u16();
     const numTracks   = u16();
     const timeDivision = u16();
+    if (headerEnd < pos || headerEnd > bytes.length) throw new Error('Invalid MIDI header');
+    pos = headerEnd;
 
     if (timeDivision & 0x8000) throw new Error('SMPTE time division not supported');
     const ticksPerBeat = timeDivision;
+    if (ticksPerBeat === 0) throw new Error('Invalid MIDI time division');
 
     // Tracks
     const tracks = [];
+    let eventCount = 0;
 
     for (let t = 0; t < numTracks; t++) {
+      if (pos + 8 > bytes.length) break; // header promised more tracks than exist
+
       const tag = u32();
       const len = u32();
-      const end = pos + len;
+      // A declared length past the end of the file is clamped, not trusted
+      const end = Math.min(pos + len, bytes.length);
 
       if (tag !== 0x4d54726b) { pos = end; continue; } // skip non-MTrk
 
@@ -64,16 +88,15 @@ class MidiParser {
         const delta = varlen();
         tick += delta;
 
-        let status = bytes[pos];
+        let status = u8();
 
         // Running status: byte < 0x80 means reuse last status
         if (status < 0x80) {
           status = runningStatus;
-          // do NOT advance pos — the byte IS the first data byte
-        } else {
-          pos++;
+          pos--; // the byte IS the first data byte
+        } else if (status < 0xf0) {
           // Only update running status for voice messages (not sysex/meta)
-          if (status < 0xf0) runningStatus = status;
+          runningStatus = status;
         }
 
         const type    = status & 0xf0;
@@ -84,6 +107,7 @@ class MidiParser {
           const metaType = u8();
           const metaLen  = varlen();
           const metaEnd  = pos + metaLen;
+          if (metaEnd > end) throw new Error('Meta event overruns its track');
 
           if (metaType === 0x51 && metaLen === 3) {
             // Tempo change: microseconds per beat
@@ -97,6 +121,7 @@ class MidiParser {
         } else if (status === 0xf0 || status === 0xf7) {
           // SysEx — skip
           const slen = varlen();
+          if (pos + slen > end) throw new Error('SysEx event overruns its track');
           pos += slen;
 
         } else if (type === 0x90) {
@@ -118,9 +143,12 @@ class MidiParser {
         else if (type === 0xd0) { pos += 1; }   // channel pressure
         else if (type === 0xe0) { pos += 2; }   // pitch bend
         else { pos++; }                          // unknown, skip 1
+
+        if (events.length + eventCount > MAX_EVENTS) throw new Error('MIDI file has too many events');
       }
 
       pos = end;
+      eventCount += events.length;
       tracks.push(events);
     }
 
@@ -135,37 +163,41 @@ class MidiParser {
    Applies tempo map correctly across multiple tempo changes.
    ============================================================ */
 
-function buildTimeline(midi) {
+export function buildTimeline(midi) {
   const { ticksPerBeat, tracks } = midi;
 
   // 1. Collect all tempo events from all tracks, sorted by tick
+  //    (stable sort: same-tick changes keep file order, the last one wins)
   const tempoChanges = [{ tick: 0, usPerBeat: 500_000 }]; // default: 120 BPM
 
   for (const track of tracks) {
     for (const ev of track) {
-      if (ev.type === 'tempo') {
-        const idx = tempoChanges.findIndex(t => t.tick > ev.tick);
-        if (idx === -1) tempoChanges.push({ tick: ev.tick, usPerBeat: ev.usPerBeat });
-        else tempoChanges.splice(idx, 0, { tick: ev.tick, usPerBeat: ev.usPerBeat });
-      }
+      if (ev.type === 'tempo') tempoChanges.push({ tick: ev.tick, usPerBeat: ev.usPerBeat });
     }
   }
+  tempoChanges.sort((a, b) => a.tick - b.tick);
 
-  // 2. Build tick→seconds lookup
+  // 2. Build tick→seconds lookup: elapsed seconds at each tempo change,
+  //    computed once so each lookup is a binary search, not a full scan
+  const secondsAt = [0];
+  for (let i = 1; i < tempoChanges.length; i++) {
+    const prev = tempoChanges[i - 1];
+    secondsAt.push(
+      secondsAt[i - 1] +
+        ((tempoChanges[i].tick - prev.tick) / ticksPerBeat) * (prev.usPerBeat / 1_000_000),
+    );
+  }
+
   function ticksToSeconds(targetTick) {
-    let seconds = 0;
-    let prevTick = 0;
-    let prevUs   = tempoChanges[0].usPerBeat;
-
-    for (let i = 1; i < tempoChanges.length; i++) {
-      const { tick, usPerBeat } = tempoChanges[i];
-      if (tick >= targetTick) break;
-      seconds  += ((tick - prevTick) / ticksPerBeat) * (prevUs / 1_000_000);
-      prevTick  = tick;
-      prevUs    = usPerBeat;
+    // Last tempo change at or before targetTick
+    let lo = 0, hi = tempoChanges.length - 1;
+    while (lo < hi) {
+      const mid = (lo + hi + 1) >> 1;
+      if (tempoChanges[mid].tick <= targetTick) lo = mid;
+      else hi = mid - 1;
     }
-    seconds += ((targetTick - prevTick) / ticksPerBeat) * (prevUs / 1_000_000);
-    return seconds;
+    const { tick, usPerBeat } = tempoChanges[lo];
+    return secondsAt[lo] + ((targetTick - tick) / ticksPerBeat) * (usPerBeat / 1_000_000);
   }
 
   // 3. Flatten all note events
@@ -260,6 +292,10 @@ export class MidiPlayer {
     try {
       const res    = await fetch(url);
       if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
+      // Refuse oversized responses before buffering them
+      if (Number(res.headers.get('content-length')) > MAX_FILE_BYTES) {
+        throw new Error('MIDI file too large');
+      }
       const buffer = await res.arrayBuffer();
       const midi   = MidiParser.parse(buffer);
       const { timeline, duration } = buildTimeline(midi);

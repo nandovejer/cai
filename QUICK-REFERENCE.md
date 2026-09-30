@@ -78,7 +78,7 @@ pnpm lint:js        # ESLint
 
 ## JS Modules (`packages/core/src/`)
 
-`cai.js` is the entry: it re-exports everything below and auto-initializes on load. Each module is also published individually (`@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/utils`, `/midi`) and importing it has no side effects until you call its `init*()`.
+`cai.js` is the entry: it re-exports everything below and auto-initializes on load. Each module is also published individually (`@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/toggle`, `/utils`, `/midi`) and importing it has no side effects until you call its `init*()`.
 
 | Module         | Exports                                                        |
 | -------------- | -------------------------------------------------------------- |
@@ -88,19 +88,22 @@ pnpm lint:js        # ESLint
 | `modal.js`     | `createFocusTrap`, `initModals`                                |
 | `highlight.js` | `highlightBlock`, `initHighlight`                              |
 | `player.js`    | `initSeekbar`, `wrapHTMLMedia`, `bindPlayerUI`, `mountPlayer`, `mountMidiPlayer`, `initPlayers` |
+| `tabs.js`      | `activateTab`, `initTabs`                                      |
+| `toggle.js`    | `setToggleState`, `initToggles`                                |
 | `utils.js`     | `formatTime`, `isCustomTheme`, `isValidMode`, `calculateProgress`, `escapeHtml` |
-| `midi.js`      | `MidiPlayer` (Format 0/1 parser + Web Audio scheduler; lazy-loaded) |
+| `midi.js`      | `MidiPlayer`, `MidiParser`, `buildTimeline` (Format 0/1 parser + Web Audio scheduler; lazy-loaded) |
 
 ## Standalone CSS Components
 
 Each component ships as its own file in `@cai-ds/core/dist/components/`:
 
 ```html
-<link rel="stylesheet" href=".../@cai-ds/tokens@2/dist/cai-tokens.css">
-<link rel="stylesheet" href=".../@cai-ds/core@2/dist/components/button.css">
+<link rel="stylesheet" href=".../@cai-ds/tokens@3.0.0/dist/cai-tokens.css">
+<link rel="stylesheet" href=".../@cai-ds/core@3.0.0/dist/base.css">
+<link rel="stylesheet" href=".../@cai-ds/core@3.0.0/dist/components/button.css">
 ```
 
-Requires only the tokens layer loaded first.
+Requires the tokens layer, then `base.css` (core settings such as z-index and motion, reset, bare elements), loaded first.
 
 ## File Organization
 

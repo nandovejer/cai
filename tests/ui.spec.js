@@ -47,6 +47,10 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     test('theme switcher button should have aria-pressed', async ({ page }) => {
+      // The theme switcher lives in the platform docs footer
+      await page.goto('/apps/platform-docs/index.html');
+      await page.waitForLoadState('networkidle');
+
       const themeBtn = await page.$('[data-theme][aria-pressed]');
       expect(themeBtn).not.toBeNull();
       

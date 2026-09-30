@@ -16,8 +16,12 @@ cai-design-system/
 │   ├── tokens/                        ← @cai-ds/tokens (publishable)
 │   │   ├── tokens.json                ← source of truth for Layer 1 primitives
 │   │   ├── src/semantic.css           ← Layer 2 semantic themes (light/dark/high-contrast)
-│   │   ├── fonts/                     ← self-hosted web fonts (+ fonts.css)
-│   │   └── dist/cai-tokens.css        ← GENERATED (fonts + primitives + semantic)
+│   │   ├── fonts/                     ← IBM Plex woff2 + fonts.css + OFL.txt
+│   │   └── dist/                      ← GENERATED (do not edit)
+│   │       ├── cai-tokens.css (+ .min) ← fonts + primitives + semantic
+│   │       ├── tokens.css, fonts.css  ← the same, split (bring your own fonts)
+│   │       ├── tokens.json            ← primitives source, for tooling
+│   │       └── fonts/                 ← woff2 files + OFL.txt
 │   │
 │   ├── core/                          ← @cai-ds/core (publishable)
 │   │   ├── src/                       ← EDIT HERE
@@ -39,14 +43,19 @@ cai-design-system/
 │   │   │   ├── modal.js               ← modals + focus trap
 │   │   │   ├── highlight.js           ← dependency-free syntax highlight
 │   │   │   ├── player.js              ← video/audio/MIDI player UI
+│   │   │   ├── tabs.js                ← tabs activation + keyboard
+│   │   │   ├── toggle.js              ← switch toggle click + keyboard
 │   │   │   ├── midi.js                ← MIDI parser + Web Audio scheduler (lazy chunk)
 │   │   │   └── utils.js               ← pure helpers (unit-tested)
+│   │   ├── fonts/custom-faces/        ← theme fonts (DM Sans, Space Grotesk, Freckle Face) + OFL texts
 │   │   └── dist/                      ← GENERATED (do not edit)
 │   │       ├── cai.css (+ .min)       ← full bundle
+│   │       ├── base.css (+ .min)      ← settings + reset + elements (needed by per-component files)
 │   │       ├── components/*.css       ← per-component files (standalone use)
 │   │       ├── cai.js                 ← bundled entry (rollup)
 │   │       ├── theme.js, sidebar.js, … ← individual ESM modules
 │   │       ├── midi.js                ← lazy chunk
+│   │       ├── fonts/custom-faces/    ← copied for the themes
 │   │       └── themes/*.css
 │   │
 │   └── platform/                      ← @cai-ds/platform (publishable)
@@ -62,7 +71,9 @@ cai-design-system/
     ├── build-tokens.js                ← fonts + primitives (tokens.json) + semantic (src/semantic.css)
     ├── build-core.js                  ← inlines src/index.css @imports + per-component dist + JS
     ├── build-platform.js              ← inlines src/index.css @imports
-    └── check-dist.js                  ← predev guard (rebuilds if any dist missing)
+    ├── check-dist.js                  ← predev guard (rebuilds if any dist missing)
+    ├── check-pack.js                  ← tarball contract: file snapshot, licences, exports, no workspace: ranges
+    └── publish.js                     ← CI-only: publishes versions missing from npm (OIDC + provenance)
 ```
 
 ## Dependency Chain

@@ -120,9 +120,11 @@ export function initSidebar() {
     },
   );
 
-  document
-    .querySelectorAll(".docs-section[id]")
-    .forEach((s) => observer.observe(s));
+  // Observe the sections the sidebar links point at (in-page #fragments)
+  for (const href of linkMap.keys()) {
+    const section = href?.startsWith("#") && document.getElementById(href.slice(1));
+    if (section) observer.observe(section);
+  }
 
   // --- Drawer controls ---
   getToggle()?.addEventListener("click", () => {
@@ -142,8 +144,11 @@ export function initSidebar() {
     const link = e.target.closest(".cai-sidebar__link");
     if (!link) return;
 
+    // Only in-page #fragment links scroll; real URLs navigate normally
     const targetId = link.getAttribute("href");
-    const targetEl = document.querySelector(targetId);
+    const targetEl = targetId?.startsWith("#")
+      ? document.getElementById(targetId.slice(1))
+      : null;
     if (targetEl) {
       updateActiveState(link);
       targetEl.scrollIntoView({ behavior: "smooth", block: "start" });

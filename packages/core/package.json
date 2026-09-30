@@ -9,6 +9,7 @@
     ".": "./dist/cai.js",
     "./css": "./dist/cai.css",
     "./css/min": "./dist/cai.min.css",
+    "./base.css": "./dist/base.css",
     "./components/*": "./dist/components/*",
     "./themes/*": "./dist/themes/*",
     "./theme": "./dist/theme.js",
@@ -17,11 +18,15 @@
     "./modal": "./dist/modal.js",
     "./highlight": "./dist/highlight.js",
     "./player": "./dist/player.js",
+    "./tabs": "./dist/tabs.js",
+    "./toggle": "./dist/toggle.js",
     "./midi": "./dist/midi.js",
-    "./utils": "./dist/utils.js"
+    "./utils": "./dist/utils.js",
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE"
   ],
   "repository": {
     "type": "git",
@@ -32,13 +37,25 @@
   "bugs": {
     "url": "https://github.com/nandovejer/cai/issues"
   },
-  "keywords": ["design-system", "css", "components", "vanilla-js", "itcss", "accessibility", "a11y"],
-  "sideEffects": ["dist/cai.css", "dist/themes/*.css", "dist/components/*.css"],
+  "keywords": [
+    "design-system",
+    "css",
+    "components",
+    "vanilla-js",
+    "itcss",
+    "accessibility",
+    "a11y"
+  ],
+  "sideEffects": [
+    "*.css",
+    "./dist/cai.js",
+    "./dist/cai.min.js"
+  ],
   "publishConfig": {
     "access": "public"
   },
-  "scripts": {
-    "prepack": "node ../../scripts/build-core.js"
+  "peerDependencies": {
+    "@cai-ds/tokens": "^2.0.0"
   },
   "devDependencies": {
     "@cai-ds/tokens": "workspace:*"

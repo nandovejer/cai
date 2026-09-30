@@ -7,10 +7,13 @@
   "main": "dist/platform.js",
   "exports": {
     ".": "./dist/platform.js",
-    "./css": "./dist/platform.css"
+    "./css": "./dist/platform.css",
+    "./css/min": "./dist/platform.min.css",
+    "./package.json": "./package.json"
   },
   "files": [
-    "dist"
+    "dist",
+    "LICENSE"
   ],
   "repository": {
     "type": "git",
@@ -21,22 +24,25 @@
   "bugs": {
     "url": "https://github.com/nandovejer/cai/issues"
   },
-  "keywords": ["design-system", "css", "platform", "shell", "layout", "vanilla"],
-  "sideEffects": ["dist/platform.css"],
+  "keywords": [
+    "design-system",
+    "css",
+    "platform",
+    "shell",
+    "layout",
+    "vanilla"
+  ],
+  "sideEffects": [
+    "*.css",
+    "./dist/platform.js",
+    "./dist/platform.min.js"
+  ],
   "publishConfig": {
     "access": "public"
-  },
-  "scripts": {
-    "prepack": "node ../../scripts/build-platform.js"
   },
   "peerDependencies": {
     "@cai-ds/core": "^2.0.0",
     "@cai-ds/tokens": "^2.0.0"
-  },
-  "peerDependenciesMeta": {
-    "@cai-ds/tokens": {
-      "optional": true
-    }
   },
   "devDependencies": {
     "@cai-ds/core": "workspace:*",

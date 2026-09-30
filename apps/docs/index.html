@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI Core + Tokens - Technical Docs</title>
   <meta name="description" content="Technical documentation for @cai-ds/tokens and @cai-ds/core: architecture, commands, and integration patterns.">
-  <link rel="stylesheet" href="/packages/tokens/fonts/fonts.css">
   <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
   <link rel="stylesheet" href="/packages/core/dist/cai.css">
   <link rel="stylesheet" href="/packages/platform/dist/platform.css">
@@ -72,36 +71,74 @@
 
     <section class="docs-section" id="installation" aria-labelledby="h-installation">
       <h2 class="docs-section__title" id="h-installation">Installation</h2>
-      <div class="docs-section__subtitle">Load tokens first, then core. Add platform only when you need app-shell patterns.</div>
+      <div class="docs-section__subtitle">Three layers, adopted in order. Stop at the level you need: each layer requires the ones below it and nothing above it.</div>
 
       <div class="docs-subsection">
-        <h3 class="docs-subsection__title">CDN</h3>
-        <pre class="cai-code-block" data-lang="html"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2/dist/cai-tokens.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.css&quot;&gt;
-
-&lt;!-- Optional JS behaviors --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.js&quot;&gt;&lt;/script&gt;</code></pre>
+        <h3 class="docs-subsection__title">Level 1 — Tokens only</h3>
+        <p>CSS custom properties (primitives + light, dark and high-contrast semantics) and the IBM Plex fonts. No other CAI package needed.</p>
+        <div class="cai-platform-command-block">
+          <code class="cai-platform-command-block__cmd">
+            <span class="cai-platform-command-block__prefix">$</span>
+            pnpm add @cai-ds/tokens
+          </code>
+          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens" aria-label="Copy tokens install command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;</code></pre>
+        <p>Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens without any <code class="cai-code-inline">@font-face</code>.</p>
       </div>
 
       <div class="docs-subsection">
-        <h3 class="docs-subsection__title">pnpm</h3>
+        <h3 class="docs-subsection__title">Level 2 — Tokens + Core</h3>
+        <p>Components and optional JS behaviors. Core requires tokens, loaded first.</p>
         <div class="cai-platform-command-block">
           <code class="cai-platform-command-block__cmd">
             <span class="cai-platform-command-block__prefix">$</span>
             pnpm add @cai-ds/tokens @cai-ds/core
           </code>
-          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core" aria-label="Copy install command">Copy</button>
+          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core" aria-label="Copy tokens and core install command">Copy</button>
         </div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+
+&lt;!-- Optional JS behaviors --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">Level 3 — Tokens + Core + Platform</h3>
+        <p>App-shell patterns. Platform requires both core and tokens.</p>
+        <div class="cai-platform-command-block">
+          <code class="cai-platform-command-block__cmd">
+            <span class="cai-platform-command-block__prefix">$</span>
+            pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform
+          </code>
+          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform" aria-label="Copy full stack install command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.css&quot;&gt;
+
+&lt;!-- Optional JS behaviors --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="docs-subsection">
+        <h3 class="docs-subsection__title">Notes</h3>
+        <ul>
+          <li>npm and pnpm install the required lower layers automatically; Yarn only warns, so list every package as above.</li>
+          <li>Pin exact versions on a CDN and add an <code class="cai-code-inline">integrity</code> hash in production.</li>
+          <li>A console warning tells you when a layer is loaded without the one below it.</li>
+        </ul>
       </div>
     </section>
 
     <section class="docs-section" id="packages" aria-labelledby="h-packages">
       <h2 class="docs-section__title" id="h-packages">Package Boundaries</h2>
       <div class="docs-section__subtitle">Unidirectional dependency chain.</div>
-      <pre class="cai-code-block" data-lang="text"><code>@cai-ds/tokens  -> primitives + semantic token contracts
-      ↓
-@cai-ds/core    -> reusable CSS components + optional JS behaviors
-      ↓
+      <pre class="cai-code-block" data-lang="text"><code>@cai-ds/tokens   -> primitives + semantic token contracts (standalone)
+      ↓ required by
+@cai-ds/core     -> reusable CSS components + optional JS behaviors
+      ↓ required by
 @cai-ds/platform -> app-shell patterns (documented at /platform/)</code></pre>
     </section>
 
@@ -143,7 +180,7 @@ background: var(--cai-blue-60);</code></pre>
       <div class="docs-subsection">
         <h3 class="docs-subsection__title">Add semantic token</h3>
         <ol>
-          <li>Edit <code class="cai-code-inline">packages/tokens/dist/cai-tokens.css</code> in all 3 theme blocks.</li>
+          <li>Edit <code class="cai-code-inline">packages/tokens/src/semantic.css</code> in all 3 theme blocks, then run <code class="cai-code-inline">pnpm tokens:build</code>.</li>
           <li>Keep names stable across light, dark, and high-contrast.</li>
           <li>Use the semantic token in components.</li>
         </ol>
@@ -238,5 +275,6 @@ pnpm test:unit</code></pre>
   </footer>
 
   <script type="module" src="/packages/core/dist/cai.js"></script>
+  <script type="module" src="/apps/docs/docs.js"></script>
 </body>
 </html>

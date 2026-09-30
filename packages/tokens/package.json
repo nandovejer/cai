@@ -4,15 +4,24 @@
   "description": "CAI Design System — design tokens (CSS custom properties) and self-hosted IBM Plex web fonts",
   "license": "MIT",
   "type": "module",
-  "main": "dist/cai-tokens.css",
+  "style": "./dist/cai-tokens.css",
   "exports": {
     ".": {
       "style": "./dist/cai-tokens.css",
       "default": "./dist/cai-tokens.css"
     },
-    "./css": "./dist/cai-tokens.css"
+    "./css": "./dist/cai-tokens.css",
+    "./css/min": "./dist/cai-tokens.min.css",
+    "./tokens.css": "./dist/tokens.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./fonts/*": "./dist/fonts/*",
+    "./package.json": "./package.json"
   },
-  "files": ["dist"],
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/nandovejer/cai.git",
@@ -22,12 +31,19 @@
   "bugs": {
     "url": "https://github.com/nandovejer/cai/issues"
   },
-  "keywords": ["design-system", "css", "design-tokens", "web-fonts", "ibm-plex", "vanilla", "css-custom-properties"],
-  "sideEffects": ["dist/cai-tokens.css"],
+  "keywords": [
+    "design-system",
+    "css",
+    "design-tokens",
+    "web-fonts",
+    "ibm-plex",
+    "vanilla",
+    "css-custom-properties"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "publishConfig": {
     "access": "public"
-  },
-  "scripts": {
-    "prepack": "node ../../scripts/build-tokens.js"
   }
 }

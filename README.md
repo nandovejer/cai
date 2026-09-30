@@ -10,6 +10,27 @@ The repository is a small monorepo with three package layers:
 
 The docs app in `apps/docs/` and the landing app in `apps/landing/` consume those packages during development.
 
+## Adoption levels
+
+The three packages are optional but layered: each one requires the layers below it and nothing above it.
+
+| You want | Install | Load, in order |
+| --- | --- | --- |
+| Tokens only | `@cai-ds/tokens` | `cai-tokens.css` |
+| Tokens + components | `@cai-ds/tokens` `@cai-ds/core` | `cai-tokens.css`, `cai.css`, optionally `cai.js` |
+| Tokens + components + app shell | `@cai-ds/tokens` `@cai-ds/core` `@cai-ds/platform` | `cai-tokens.css`, `cai.css`, `platform.css`, optionally `cai.js` |
+
+`@cai-ds/core` declares `@cai-ds/tokens` as a required peer dependency; `@cai-ds/platform` declares both. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
+
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js"></script>
+```
+
+Drop the lines for the layers you do not use. See [SECURITY.md](./SECURITY.md) for pinning with SRI.
+
 ## Principles
 
 - **Vanilla first.** No runtime frameworks and no browser-side dependencies. Native browser APIs are always preferred.

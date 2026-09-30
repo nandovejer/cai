@@ -5,7 +5,7 @@
  * Usage: node scripts/build-platform.js (from the repo root)
  */
 
-import { mkdirSync, readFileSync, writeFileSync } from "fs";
+import { mkdirSync, rmSync, readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import * as esbuild from "esbuild";
@@ -16,6 +16,8 @@ const platformRoot = resolve(repoRoot, "packages/platform");
 const srcRoot = resolve(platformRoot, "src");
 const distRoot = resolve(platformRoot, "dist");
 
+// Start from a clean dist so removed sources never linger in the tarball
+rmSync(distRoot, { recursive: true, force: true });
 mkdirSync(distRoot, { recursive: true });
 
 /**

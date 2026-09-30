@@ -1,8 +1,13 @@
 /**
  * CAI Design System — Token Builder
- * Composes dist/cai-tokens.css from tracked sources:
- *   fonts/fonts.css (@font-face) + Layer 1 primitives (generated from
- *   tokens.json) + Layer 2 semantic (packages/tokens/src/semantic.css).
+ * Composes dist/ from tracked sources:
+ *   cai-tokens.css → fonts/fonts.css (@font-face) + Layer 1 primitives
+ *                    (generated from tokens.json) + Layer 2 semantic
+ *                    (packages/tokens/src/semantic.css)
+ *   tokens.css     → primitives + semantic, no @font-face (bring your own fonts)
+ *   fonts.css      → @font-face only
+ *   tokens.json    → primitives source, for tooling
+ *   fonts/         → IBM Plex woff2 files + OFL.txt
  *
  * Usage: node scripts/build-tokens.js (from the repo root)
  */
@@ -11,6 +16,7 @@ import {
   readFileSync,
   writeFileSync,
   mkdirSync,
+  rmSync,
   copyFileSync,
   readdirSync,
   statSync,
@@ -22,7 +28,8 @@ import * as esbuild from "esbuild";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const tokensPath = resolve(__dirname, "../packages/tokens/tokens.json");
-const outputPath = resolve(__dirname, "../packages/tokens/dist/cai-tokens.css");
+const distRoot = resolve(__dirname, "../packages/tokens/dist");
+const outputPath = resolve(distRoot, "cai-tokens.css");
 
 const semanticPath = resolve(__dirname, "../packages/tokens/src/semantic.css");
 
@@ -72,13 +79,20 @@ function generatePrimitives(tokens) {
   return `:root {\n${lines.join("\n")}\n}`;
 }
 
-mkdirSync(resolve(__dirname, "../packages/tokens/dist"), { recursive: true });
+// Start from a clean dist so removed sources never linger in the tarball
+rmSync(distRoot, { recursive: true, force: true });
+mkdirSync(distRoot, { recursive: true });
 
 // ---- Include IBM Plex fonts (@font-face) ----
 let fontFaces = "";
 const fontsCssPath = resolve(__dirname, "../packages/tokens/fonts/fonts.css");
 try {
-  fontFaces = readFileSync(fontsCssPath, "utf-8");
+  // fonts.css references ./serif/… next to itself; in dist the files live
+  // under ./fonts/, so the URLs are rewritten to stay resolvable.
+  fontFaces = readFileSync(fontsCssPath, "utf-8").replace(
+    /url\((["']?)\.\//g,
+    "url($1./fonts/",
+  );
 } catch (_) {
   console.log(`ℹ️ fonts.css not found at ${fontsCssPath}, skipping font-faces`);
 }
@@ -92,24 +106,37 @@ const header = `/* =============================================================
    WEB FONTS (self-hosted)
    -------------------------------------------------------------------------- */`;
 
-const css = `${header}\n${fontFaces}\n\n/* -------------------------------------------------------------------------
+const tokensHeader = `/* ==========================================================================
+   CAI Design System — Tokens (no web fonts)
+   Generated from tokens.json · Do not edit manually
+   ========================================================================== */`;
+
+const layers = `/* -------------------------------------------------------------------------
    LAYER 1: PRIMITIVOS
    Los valores base. Nunca cambian entre temas.
    Regla: los componentes NUNCA usan estas variables directamente.
    -------------------------------------------------------------------------- */\n${generatePrimitives(tokens)}${semanticLayer}`;
 
-writeFileSync(outputPath, css, "utf-8");
-console.log(`✓ Tokens built (primitives + semantic) → ${outputPath}`);
+async function writeCssWithMin(outPath, css) {
+  writeFileSync(outPath, css, "utf-8");
+  const { code } = await esbuild.transform(css, { loader: "css", minify: true });
+  writeFileSync(outPath.replace(/\.css$/, ".min.css"), code, "utf-8");
+}
 
-const { code: minCss } = await esbuild.transform(css, { loader: "css", minify: true });
-const minOutputPath = outputPath.replace(".css", ".min.css");
-writeFileSync(minOutputPath, minCss, "utf-8");
-console.log(`✓ Tokens CSS minified → ${minOutputPath}`);
+await writeCssWithMin(outputPath, `${header}\n${fontFaces}\n\n${layers}`);
+console.log(`✓ Tokens built (fonts + primitives + semantic) → ${outputPath} (+ min)`);
 
-// Copy font files (IBM Plex + custom faces)
+await writeCssWithMin(resolve(distRoot, "tokens.css"), `${tokensHeader}\n\n${layers}`);
+await writeCssWithMin(resolve(distRoot, "fonts.css"), fontFaces);
+console.log("✓ Split entries built → tokens.css, fonts.css (+ min)");
+
+copyFileSync(tokensPath, resolve(distRoot, "tokens.json"));
+console.log("✓ tokens.json copied → dist/");
+
+// Copy font files (IBM Plex) and their licence
 function copyFontDir(fontName) {
   const fontSrc = resolve(__dirname, `../packages/tokens/fonts/${fontName}`);
-  const fontDest = resolve(__dirname, `../packages/tokens/dist/fonts/${fontName}`);
+  const fontDest = resolve(distRoot, `fonts/${fontName}`);
   if (existsSync(fontSrc)) {
     mkdirSync(fontDest, { recursive: true });
     for (const file of readdirSync(fontSrc)) {
@@ -123,8 +150,11 @@ function copyFontDir(fontName) {
   }
 }
 
-// Copy IBM Plex (serif, sans, mono)
-["serif", "sans", "mono", "custom-faces"].forEach(copyFontDir);
+["serif", "sans", "mono"].forEach(copyFontDir);
+copyFileSync(
+  resolve(__dirname, "../packages/tokens/fonts/OFL.txt"),
+  resolve(distRoot, "fonts/OFL.txt"),
+);
 
 let tokenCount = 0;
 for (const [key, group] of Object.entries(tokens)) {

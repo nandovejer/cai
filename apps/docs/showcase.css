@@ -1061,3 +1061,23 @@
     bottom: var(--cai-space-04);
   }
 }
+
+/* -------------------------------------------------------------------------
+   CUSTOM THEME OVERRIDES — docs-only titles
+   Themes style h1–h3; these docs titles are not headings, so they are
+   aligned here instead of inside the published theme files.
+   -------------------------------------------------------------------------- */
+
+[data-theme="minimalist"] .docs-section__title,
+[data-theme="minimalist"] .docs-group-header__label {
+  font-weight: 200;
+  letter-spacing: -0.5px;
+}
+
+[data-theme="ricardoymortimer"] .docs-section__title,
+[data-theme="ricardoymortimer"] .docs-group-header__label {
+  font-family: "Freckle Face", "Space Grotesk", system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}

@@ -1,7 +1,7 @@
 /**
  * CAI Design System — Copy to clipboard
- * Visual-feedback copy helper + delegated bindings for copy buttons,
- * color swatches, token labels, and icon-grid items.
+ * Visual-feedback copy helper + delegated bindings for copy buttons and
+ * icon-grid items.
  *
  * Importing this module has no side effects; call initCopyButtons() to
  * wire up delegation, or use copyToClipboard() directly.
@@ -38,17 +38,6 @@ function activateCopyTarget(target) {
   if (target.matches(".cai-copy-btn, .copy-btn")) {
     const text = target.dataset.copy;
     if (text) copyToClipboard(text, target);
-    return;
-  }
-
-  if (target.matches(".docs-swatch[data-copy], .swatch[data-copy]")) {
-    copyToClipboard(target.dataset.copy, target, "swatch");
-    return;
-  }
-
-  if (target.matches(".docs-token[data-copy], .token[data-copy]")) {
-    const text = target.dataset.copy;
-    if (text) copyToClipboard(text, target, "token");
   }
 }
 
@@ -75,15 +64,6 @@ async function copyIconItem(iconItem) {
  * Make non-button copy targets keyboard-accessible.
  */
 function initCopyA11y() {
-  document
-    .querySelectorAll(".docs-swatch[data-copy], .docs-token[data-copy]")
-    .forEach((target) => {
-      target.setAttribute("role", "button");
-      target.setAttribute("tabindex", "0");
-      const label = target.textContent.replace(/\s+/g, " ").trim();
-      target.setAttribute("aria-label", `Copy ${label}`);
-    });
-
   document.querySelectorAll(".cai-icon-item").forEach((item) => {
     item.setAttribute("role", "button");
     item.setAttribute("tabindex", "0");
@@ -116,33 +96,11 @@ export function initCopyButtons() {
       const text = copyBtn.dataset.copy;
       if (!text) return;
       await copyToClipboard(text, copyBtn);
-      return;
-    }
-
-    // --- Copy color swatch ---
-    const swatch = e.target.closest(
-      ".docs-swatch[data-copy], .swatch[data-copy]",
-    );
-    if (swatch) {
-      await copyToClipboard(swatch.dataset.copy, swatch, "swatch");
-      return;
-    }
-
-    // --- Copy token label (spacing, elevation) ---
-    const tokenLabel = e.target.closest(
-      ".docs-token[data-copy], .token[data-copy]",
-    );
-    if (tokenLabel) {
-      const text = tokenLabel.dataset.copy;
-      if (!text) return;
-      await copyToClipboard(text, tokenLabel, "token");
     }
   });
 
   document.addEventListener("keydown", (e) => {
-    const copyTarget = e.target.closest?.(
-      ".docs-swatch[data-copy], .docs-token[data-copy], .cai-copy-btn, .copy-btn",
-    );
+    const copyTarget = e.target.closest?.(".cai-copy-btn, .copy-btn");
     if (!copyTarget) return;
 
     if (e.key === "Enter" || e.key === " ") {

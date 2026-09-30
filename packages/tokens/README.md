@@ -2,6 +2,8 @@
 
 Design tokens and self-hosted web fonts for the CAI Design System.
 
+This is the base layer and works on its own: it has no dependencies. `@cai-ds/core` and `@cai-ds/platform` build on it.
+
 ## Installation
 
 ```bash
@@ -19,15 +21,22 @@ import '@cai-ds/tokens'
 ### Via CDN (jsDelivr)
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2/dist/cai-tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css">
 ```
+
+## Package exports
+
+- **`.`**, **`./css`** → `cai-tokens.css` — fonts + primitives + semantic themes (`./css/min` for the minified twin)
+- **`./tokens.css`** → primitives + semantic themes, without any `@font-face` (bring your own fonts)
+- **`./fonts.css`** → the IBM Plex `@font-face` declarations only
+- **`./tokens.json`** → the primitives source, for tooling
+- **`./fonts/*`** → the woff2 files
 
 ## What's included
 
 - **Primitives** (Layer 1): Color scales, spacing, typography, shadows, radius tokens — generated from `tokens.json`
 - **Semantic themes** (Layer 2): Light, dark, and high-contrast color modes — source in `src/semantic.css`
 - **Self-hosted fonts**: IBM Plex Serif, Sans, and Mono families (included in `cai-tokens.css`)
-- **Custom faces**: DM Sans, Space Grotesk, and Freckle Face for custom themes
 
 ## CSS Custom Properties
 
@@ -61,10 +70,12 @@ Custom themes (shipped with `@cai-ds/core`) set `data-theme="<theme-name>"` and 
 
 ## Fonts
 
-The base tokens file includes `@font-face` declarations for IBM Plex Serif, Sans, and Mono. These are served from the same CDN and will load automatically when you import the tokens.
+`cai-tokens.css` includes `@font-face` declarations for IBM Plex Serif, Sans, and Mono. The files ship in `dist/fonts/` next to the stylesheet, so they load with no extra setup from npm and from a CDN.
 
-For custom themes using Space Grotesk or DM Sans, those fonts are in `dist/fonts/custom-faces/`.
+To use your own fonts, load `tokens.css` instead and set `--cai-font-sans`, `--cai-font-serif` and `--cai-font-mono`.
+
+The fonts used by the custom themes (DM Sans, Space Grotesk, Freckle Face) ship with `@cai-ds/core`.
 
 ## License
 
-MIT
+MIT. IBM Plex is licensed under the SIL Open Font License 1.1 (`dist/fonts/OFL.txt`).

@@ -7,6 +7,7 @@
  * Strategy:
  * - CSS: inline the @import graph of src/index.css (single source of truth)
  *   into dist/cai.css, plus one dist/components/<name>.css per component
+ *   and dist/base.css (settings + reset + elements) as their prerequisite
  * - JS: bundle with Rollup — utils.js inlined, midi.js as lazy chunk;
  *   individual modules copied verbatim (browser-native ESM)
  * - Themes: copy src/themes/*.css → dist/themes/
@@ -14,6 +15,7 @@
 
 import {
   mkdirSync,
+  rmSync,
   readFileSync,
   writeFileSync,
   readdirSync,
@@ -31,6 +33,8 @@ const coreRoot = resolve(repoRoot, "packages/core");
 const srcRoot = resolve(coreRoot, "src");
 const distRoot = resolve(coreRoot, "dist");
 
+// Start from a clean dist so removed sources never linger in the tarball
+rmSync(distRoot, { recursive: true, force: true });
 mkdirSync(distRoot, { recursive: true });
 
 /**
@@ -57,6 +61,13 @@ async function writeCssWithMin(outPath, css) {
 const css = inlineCssImports(resolve(srcRoot, "index.css"));
 await writeCssWithMin(resolve(distRoot, "cai.css"), css);
 console.log(`✓ Core CSS built → ${resolve(distRoot, "cai.css")} (+ min)`);
+
+// --- CSS: base layer required by per-component files ---
+const baseCss = ["settings/_settings.css", "generic/_reset.css", "elements/_elements.css"]
+  .map((f) => readFileSync(resolve(srcRoot, f), "utf-8"))
+  .join("\n");
+await writeCssWithMin(resolve(distRoot, "base.css"), baseCss);
+console.log(`✓ Base CSS built → ${resolve(distRoot, "base.css")} (+ min)`);
 
 // --- CSS: per-component files for standalone consumption ---
 const componentsSrcDir = resolve(srcRoot, "components");
@@ -103,6 +114,8 @@ async function buildJS() {
       "modal.js",
       "highlight.js",
       "player.js",
+      "tabs.js",
+      "toggle.js",
     ];
     for (const f of jsModules) {
       copyFileSync(resolve(srcRoot, f), resolve(distRoot, f));
@@ -126,18 +139,18 @@ async function buildJS() {
 
 await buildJS();
 
-// --- Copy custom-faces fonts from tokens for theme usage ---
-const tokensFontsSrc = resolve(repoRoot, "packages/tokens/fonts/custom-faces");
-const tokensFontsDest = resolve(distRoot, "fonts/custom-faces");
-if (existsSync(tokensFontsSrc)) {
-  mkdirSync(tokensFontsDest, { recursive: true });
-  readdirSync(tokensFontsSrc).forEach((f) => {
+// --- Copy custom-faces fonts (+ their OFL licences) for theme usage ---
+const themeFontsSrc = resolve(coreRoot, "fonts/custom-faces");
+const themeFontsDest = resolve(distRoot, "fonts/custom-faces");
+if (existsSync(themeFontsSrc)) {
+  mkdirSync(themeFontsDest, { recursive: true });
+  readdirSync(themeFontsSrc).forEach((f) => {
     copyFileSync(
-      resolve(tokensFontsSrc, f),
-      resolve(tokensFontsDest, f)
+      resolve(themeFontsSrc, f),
+      resolve(themeFontsDest, f)
     );
   });
-  console.log(`✓ Custom-faces fonts copied → ${tokensFontsDest}`);
+  console.log(`✓ Custom-faces fonts copied → ${themeFontsDest}`);
 }
 
 // --- Themes: copy src/themes/*.css → dist/themes/ ---

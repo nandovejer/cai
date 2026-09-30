@@ -4,7 +4,7 @@ App-level shell patterns and layout components for the CAI Design System.
 
 ## Prerequisites
 
-Requires `@cai-ds/tokens` and `@cai-ds/core`.
+Requires `@cai-ds/tokens` and `@cai-ds/core` (both declared as peer dependencies), loaded in that order before platform.
 
 ## Installation
 
@@ -25,16 +25,16 @@ import '@cai-ds/platform'
 ### Via CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@2/dist/cai-tokens.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/platform@2.0.0/dist/platform.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@2.0.0/dist/cai.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.js"></script>
 ```
 
 ## Package exports
 
-- **`.`** → `platform.js` — Platform-level JS orchestration (currently a no-op, reserved for v1.4.0+)
-- **`./css`** → `platform.css` — App shell and layout primitives
+- **`.`** → `platform.js` — Reserved for platform-level behavior; today it only warns when core is not loaded
+- **`./css`** → `platform.css` — App shell and layout primitives (`./css/min` for the minified twin)
 
 ## Classes included
 

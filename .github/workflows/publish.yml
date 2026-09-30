@@ -1,28 +1,83 @@
-name: Publish to npm
+name: Release
+
+# Flow (changesets):
+#   1. PRs add a changeset (`pnpm changeset`).
+#   2. On push to main this workflow opens/updates the "Version Packages" PR.
+#   3. Merging that PR leaves no pending changesets → the publish job runs.
+#
+# Publishing uses npm trusted publishing (OIDC): no npm token is stored
+# anywhere. The `release` environment must exist with a required reviewer,
+# and each package must list this workflow as its trusted publisher.
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'packages/*/package.json'
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
 
 jobs:
-  publish:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
+  version:
+    name: Version PR
+    needs: ci
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
+      pull-requests: write
+    outputs:
+      hasChangesets: ${{ steps.changesets.outputs.hasChangesets }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 9
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
-          node-version: 20
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # No `publish` input: this job can only open the version PR
+      - name: Create or update the version PR
+        id: changesets
+        uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
+        with:
+          version: pnpm changeset version
+          title: "chore(release): version packages"
+          commit: "chore(release): version packages"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    name: Publish to npm
+    needs: version
+    if: needs.version.outputs.hasChangesets == 'false'
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: read
+      id-token: write # npm trusted publishing + provenance
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      # Trusted publishing needs npm >= 11.5.1, which ships with Node 24
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -30,23 +85,9 @@ jobs:
       - name: Build all packages
         run: pnpm build
 
-      - name: Publish @cai-ds/tokens
-        run: |
-          cd packages/tokens
-          npm publish --access public || true
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Check tarball contents
+        run: pnpm check:pack
 
-      - name: Publish @cai-ds/core
-        run: |
-          cd packages/core
-          npm publish --access public || true
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish @cai-ds/platform
-        run: |
-          cd packages/platform
-          npm publish --access public || true
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # Skips versions already on the registry; any other failure stops the job
+      - name: Publish unpublished versions
+        run: node scripts/publish.js

@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { resolve } from "path";
+import { resolve, dirname } from "path";
 import { existsSync, readFileSync } from "fs";
 import {
   formatTime,
@@ -198,8 +198,41 @@ describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
       "modal.js",
       "highlight.js",
       "player.js",
+      "tabs.js",
+      "toggle.js",
     ]) {
       expect(existsSync(resolve(coreDist, f))).toBe(true);
+    }
+  });
+
+  it("dist/base.css carries the settings the components depend on", () => {
+    const content = readFileSync(resolve(coreDist, "base.css"), "utf-8");
+    expect(content).toContain("--cai-z-modal");
+    expect(content).toContain("--cai-duration-base");
+  });
+
+  it("core ships no docs-app selectors", () => {
+    for (const f of ["cai.js", "cai.css", "themes/cai-theme-minimalist.css"]) {
+      expect(readFileSync(resolve(coreDist, f), "utf-8")).not.toMatch(/\.docs-|#demo-form/);
+    }
+  });
+});
+
+describe.skipIf(!distBuilt)("published CSS only references files that ship", () => {
+  const cssFiles = [
+    tokensDist,
+    resolve(process.cwd(), "packages/tokens/dist/fonts.css"),
+    resolve(coreDist, "themes/cai-theme-minimalist.css"),
+    resolve(coreDist, "themes/cai-theme-ricardoymortimer.css"),
+  ];
+
+  it.each(cssFiles)("every url() in %s resolves inside dist", (cssFile) => {
+    const urls = [...readFileSync(cssFile, "utf-8").matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/g)]
+      .map((m) => m[1])
+      .filter((u) => !/^(data:|https?:)/.test(u));
+    expect(urls.length).toBeGreaterThan(0);
+    for (const u of urls) {
+      expect(existsSync(resolve(dirname(cssFile), u)), `${u} (from ${cssFile})`).toBe(true);
     }
   });
 });

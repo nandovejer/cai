@@ -46,6 +46,15 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       expect(theme).toBe('dark');
     });
 
+    test('should persist a theme chosen with the switcher', async ({ page }) => {
+      await page.goto('/apps/platform-docs/index.html');
+      await page.waitForLoadState('networkidle');
+
+      await page.click('.cai-theme-btn[data-theme="dark"]');
+
+      expect(await page.evaluate(() => localStorage.getItem('cai-theme'))).toBe('dark');
+    });
+
     test('theme switcher button should have aria-pressed', async ({ page }) => {
       // The theme switcher lives in the platform docs footer
       await page.goto('/apps/platform-docs/index.html');

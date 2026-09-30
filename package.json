@@ -12,6 +12,7 @@
     "predev": "node scripts/check-dist.js",
     "dev": "vite",
     "build": "pnpm tokens:build && pnpm core:build && pnpm platform:build",
+    "pages:build": "pnpm build && vite build --mode pages",
     "core:build": "node scripts/build-core.js",
     "platform:build": "node scripts/build-platform.js",
     "lint:css": "stylelint \"packages/**/*.css\" \"!packages/**/dist/**\"",

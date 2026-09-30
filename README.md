@@ -1,18 +1,61 @@
+<div align="center">
+
 # CAI Design System
 
-CAI stands for Consistent Adaptive Identity. It is a vanilla design system built with plain CSS, ES modules, and native browser APIs — no runtime frameworks, no build-time dependencies for consumers.
+**Consistent Adaptive Identity**
+
+A vanilla design system in plain CSS and ES modules.<br>
+No framework. No build step for consumers.
+
+[![CI](https://github.com/nandovejer/cai/actions/workflows/ci.yml/badge.svg)](https://github.com/nandovejer/cai/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
+![Node](https://img.shields.io/badge/node-%3E%3D20-339933)
+![pnpm](https://img.shields.io/badge/pnpm-9-f69220)
+
+[Adoption levels](#adoption-levels) ·
+[Development](#development) ·
+[Components](#components-included) ·
+[Releases](#releases) ·
+[Contributing](./CONTRIBUTING.md)
+
+</div>
+
+---
+
+CAI is built with plain CSS, ES modules and native browser APIs. Adopt only the tokens, add the components, or take the whole app shell: the three layers are independent packages that stack in one direction.
+
+```text
+@cai-ds/tokens  ->  @cai-ds/core  ->  @cai-ds/platform
+   standalone        needs tokens      needs core + tokens
+```
+
+## Contents
+
+- [Adoption levels](#adoption-levels)
+- [Principles](#principles)
+- [Workspace](#workspace)
+- [Development](#development) and [Commands](#commands)
+- [Testing](#testing) and [Build Flow](#build-flow)
+- [Using the packages](#using-the-packages-in-this-repo)
+- [Color modes and themes](#color-modes-and-themes)
+- [Components included](#components-included) and [Accessibility](#accessibility)
+- [Releases](#releases)
+- [Working with AI agents](#working-with-ai-agents) and [Documentation index](#documentation-index)
+
+## Packages
 
 The repository is a small monorepo with three package layers:
 
-- `@cai-ds/tokens` — design token primitives and semantic themes
-- `@cai-ds/core` — reusable CSS components and JS behaviors
-- `@cai-ds/platform` — app-level shells and patterns built on top of CAI core
+- [`@cai-ds/tokens`](./packages/tokens) — design tokens (CSS custom properties) and self-hosted IBM Plex fonts
+- [`@cai-ds/core`](./packages/core) — reusable CSS components and vanilla JS behaviors
+- [`@cai-ds/platform`](./packages/platform) — app-shell patterns built on top of core
 
-The docs app in `apps/docs/` and the landing app in `apps/landing/` consume those packages during development.
+The landing (`apps/landing/`), the core + tokens docs (`apps/docs/`) and the platform docs (`apps/platform-docs/`) consume those packages during development.
 
 ## Adoption levels
 
-The three packages are optional but layered: each one requires the layers below it and nothing above it.
+The three packages are optional but layered: each one requires the layers below it and nothing above it. Adopt one level and stop there, or keep going.
 
 | You want | Install | Load, in order |
 | --- | --- | --- |
@@ -22,6 +65,14 @@ The three packages are optional but layered: each one requires the layers below 
 
 `@cai-ds/core` declares `@cai-ds/tokens` as a required peer dependency; `@cai-ds/platform` declares both. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
 
+```bash
+npm install @cai-ds/tokens                                   # level 1
+npm install @cai-ds/tokens @cai-ds/core                      # level 2
+npm install @cai-ds/tokens @cai-ds/core @cai-ds/platform     # level 3
+```
+
+Or from a CDN — drop the lines for the layers you do not use:
+
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css">
@@ -29,7 +80,9 @@ The three packages are optional but layered: each one requires the layers below 
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js"></script>
 ```
 
-Drop the lines for the layers you do not use. See [SECURITY.md](./SECURITY.md) for pinning with SRI.
+Pin an exact version and add an `integrity` hash in production; see [SECURITY.md](./SECURITY.md). A console warning tells you when a layer is loaded without the one below it.
+
+> **Release status:** the `3.0.0` snippets above work once the release is published. Until then the packages in this repository are versioned `2.0.0` with a pending major changeset.
 
 ## Principles
 
@@ -44,102 +97,89 @@ See [STRUCTURE.md](./.claude/STRUCTURE.md) for the full annotated directory layo
 
 ```text
 cai-design-system/
-├── apps/
-│   ├── docs/                  # Showcase app (not publishable)
-│   │   ├── index.html         # Full documentation
-│   │   └── showcase.css       # Docs-only styles
-│   ├── landing/               # Marketing site
-│   │   ├── index.html
-│   │   └── landing.css
-│   └── platform-docs/         # Platform showcase
+├── apps/                      # Internal apps (not publishable)
+│   ├── landing/               # Landing: what CAI is, the three levels, everything live
+│   ├── docs/                  # Core + tokens technical docs
+│   └── platform-docs/         # Platform docs and live demos
 ├── packages/
 │   ├── tokens/                # @cai-ds/tokens
 │   │   ├── tokens.json        # Source of truth for primitives
-│   │   ├── dist/cai-tokens.css
-│   │   └── fonts/             # Self-hosted web fonts
+│   │   ├── src/semantic.css   # Semantic tokens (light / dark / high-contrast)
+│   │   ├── fonts/             # IBM Plex woff2 + licence
+│   │   └── dist/              # Generated — do not edit directly
 │   ├── core/                  # @cai-ds/core
 │   │   ├── src/               # Edit here, never dist/
-│   │   │   ├── themes/        # Custom visual identity themes
-│   │   │   ├── components/
-│   │   │   ├── settings/
-│   │   │   └── ...
+│   │   │   ├── settings/  generic/  elements/  objects/
+│   │   │   ├── components/    # One file per component
+│   │   │   ├── themes/        # Custom visual identities (under review)
+│   │   │   └── *.js           # One module per behavior
 │   │   └── dist/              # Generated — do not edit directly
-│   │       ├── cai.css
-│   │       ├── cai.js
-│   │       ├── midi.js
-│   │       └── themes/
 │   └── platform/              # @cai-ds/platform
 │       ├── src/
 │       └── dist/
-└── scripts/                   # Build helpers
+├── scripts/                   # Build, tarball check and publish helpers
+└── tests/                     # Vitest unit tests and Playwright UI tests
 ```
 
 ## Requirements
 
-- Node.js 18+ with ES module support
-- `pnpm` as the package manager
+- Node.js 20+ with ES module support
+- `pnpm` as the package manager (`packageManager` is pinned in `package.json`)
 
 ## Development
 
 ```bash
 pnpm install
-pnpm build   # REQUIRED: generates all dist/ assets before dev server
 pnpm dev
 ```
 
-This opens `apps/docs/index.html` through Vite at `localhost:5173`.
+`pnpm dev` starts Vite at `localhost:5173` (landing at `/`, core docs at `/docs/`, platform docs at `/platform/`). Its `predev` hook builds `dist/` first if any package is missing one.
 
-**Note:** `pnpm dev` runs `pnpm build` automatically via the `predev` hook. If you make source changes during dev, you'll need to re-run `pnpm build` or a specific build command (`pnpm core:build`, `pnpm tokens:build`, etc.) to regenerate the assets.
+If you change sources during dev, re-run `pnpm build` or a specific build command to regenerate the assets — the apps load the built `dist/` files.
 
-## Build Commands
+## Commands
 
 ```bash
-pnpm dev           # Start Vite dev server
-pnpm tokens:build  # Regenerate token primitives (preserves semantic themes)
-pnpm core:build    # Regenerate packages/core/dist from packages/core/src
-pnpm platform:build # Regenerate packages/platform/dist from packages/platform/src
-pnpm build         # Run tokens:build + core:build + platform:build
-pnpm lint:css      # Stylelint over packages/**/*.css
-pnpm lint:js       # ESLint over packages/**/*.js and scripts/**/*.js
-pnpm test:unit     # Unit tests (recommended baseline)
-pnpm test:ui       # UI smoke + a11y smoke (recommended baseline)
+pnpm dev             # Vite dev server
+pnpm build           # tokens:build + core:build + platform:build
+pnpm tokens:build    # Regenerate packages/tokens/dist
+pnpm core:build      # Regenerate packages/core/dist
+pnpm platform:build  # Regenerate packages/platform/dist
+pnpm lint:css        # Stylelint over packages/**/*.css
+pnpm lint:js         # ESLint over packages/**/*.js and scripts/**/*.js
+pnpm test:unit       # Vitest (run `pnpm build` first: some suites read dist/)
+pnpm test:ui         # Playwright; first time: pnpm test:ui:install
+pnpm check:pack      # What each package would publish vs. the committed snapshot
+pnpm audit:prod      # Production dependency audit
+pnpm changeset       # Describe a change for the next release
 ```
 
-## Testing Strategy
+## Testing
 
-Use a lightweight hybrid strategy:
+- **Unit (Vitest):** utilities, the MIDI parser (including malformed and hostile input), and dist contract checks — every `url()` in published CSS resolves, no docs-only selectors ship, `base.css` carries the settings components need.
+- **UI (Playwright):** theme and mode switching, sidebar, modal focus trap, tabs keyboard behavior, the three adoption levels loaded as a consumer would load them, and the landing (inventory counts checked against the package sources, no horizontal overflow, works without JavaScript, contrast of landing text).
+- **Tarball contract (`pnpm check:pack`):** file list per package, `LICENSE` and font licences present, no sources or dotfiles, exports targets exist, no `workspace:` ranges.
 
-- Unit tests for core JS behavior
-- UI smoke tests for critical flows in the docs app
-- Manual exploratory checks for visual polish
-
-Recommended minimum coverage:
-
-- Unit: `formatTime`, seekbar behavior, theme persistence, player UI binding
-- UI: theme switch, sidebar mobile behavior, modal keyboard/focus behavior, tabs keyboard behavior
-- A11y smoke: no obvious keyboard traps, focus visible, key ARIA contracts present
-
-Development dependencies for testing are recommended.
-These do not violate the vanilla-first runtime principle because they are not shipped to consumers.
-
-**For detailed testing guide, see [TESTING.md](./.claude/TESTING.md)**
+See [TESTING.md](./.claude/TESTING.md) for the detailed guide. Test tooling is dev-only and does not conflict with the vanilla-first runtime principle.
 
 ## Build Flow
 
-For the complete build workflow (regeneration scripts, step-by-step instructions), see **[DIST-RULES.md](./.claude/DIST-RULES.md)**.
+For the complete workflow see [DIST-RULES.md](./.claude/DIST-RULES.md). The short version: edit `src/`, run the package's build, never edit `dist/`. Every build starts from a clean `dist/`.
 
 ### Tokens
 
-`packages/tokens/dist/cai-tokens.css` has two layers:
+`packages/tokens/dist/` is composed from tracked sources:
 
-- **Layer 1 — Primitives:** generated from `packages/tokens/tokens.json` via `pnpm tokens:build`
-- **Layer 2 — Semantics:** handwritten `light`, `dark`, and `high-contrast` theme blocks — never overwritten by the build
+- **Layer 1 — Primitives:** generated from `packages/tokens/tokens.json`
+- **Layer 2 — Semantics:** handwritten `light`, `dark` and `high-contrast` blocks in `packages/tokens/src/semantic.css`
+
+Outputs: `cai-tokens.css` (fonts + tokens), `tokens.css` (no `@font-face`, bring your own fonts), `fonts.css`, `tokens.json`, and `fonts/`.
+
+To add a primitive, edit `tokens.json`; to add a semantic token, edit all three blocks of `semantic.css`. Then:
 
 ```bash
 pnpm tokens:build
 ```
-
-To add a semantic token, edit `cai-tokens.css` directly in the three theme blocks. To add a primitive, edit `tokens.json` and run `pnpm tokens:build`.
 
 ### Core
 
@@ -149,25 +189,17 @@ All source edits belong in `packages/core/src/`. After any change:
 pnpm core:build
 ```
 
-This regenerates `dist/cai.css`, `dist/cai.js`, `dist/midi.js`, and all `dist/themes/*.css`. Never edit `dist/` manually.
+This regenerates `dist/cai.css`, `dist/base.css` (settings + reset + elements, the prerequisite for per-component CSS), `dist/components/*.css`, the JS modules, the lazy `midi.js` chunk and `dist/themes/*.css`.
+
+Core settings — z-index scale, motion, breakpoints, `--cai-font-heading` — ship with core, not with tokens.
 
 ### Platform
 
-`@cai-ds/platform` is the app-level layer on top of CAI. It is where shells, layout patterns, and higher-level primitives that are too opinionated for `core` should live.
+`@cai-ds/platform` is the app-level layer: shells and layout patterns that are too opinionated for core.
 
-**Use Platform when:**
+**Use platform when** you build a web app with a page shell, header, sections and footer and want design-system-aware patterns instead of repeating markup.
 
-- Building a web app with a sidebar, header, main content area, and consistent footer
-- You need high-level layout primitives that belong in an app shell, not a component library
-- You want design system–aware app patterns without duplicating markup in every app
-
-**Use Core when:**
-
-- Building a component library or design tokens only
-- You need individual reusable components (buttons, forms, cards, etc.)
-- You're embedding CAI into a single-page app or framework
-
-Current Platform rule of thumb:
+**Use core alone when** you build your own layout, a component library or embed CAI in a framework.
 
 - `tokens` = primitive and semantic variables
 - `core` = generic reusable components and behaviors
@@ -176,98 +208,49 @@ Current Platform rule of thumb:
 Current platform primitives:
 
 - `.cai-platform-page` and `.cai-platform-page--gradient`
-- `.cai-platform-content`
-- `.cai-platform-main`
-- `.cai-platform-section`
+- `.cai-platform-content`, `.cai-platform-main`, `.cai-platform-section`
 - `.cai-platform-page-header`, `__title`, `__lead`
-- `.cai-platform-actions`
-- `.cai-platform-feature-grid`
-- `.cai-platform-footer`
-- `.cai-platform-skip-link`
+- `.cai-platform-actions`, `.cai-platform-feature-grid`
+- `.cai-platform-footer`, `.cai-platform-skip-link`
 - `.cai-platform-command-block`, `__cmd`, `__prefix`
 
-**Platform.js Status:**  
-`@cai-ds/platform` is currently CSS-first. The JS entrypoint (`dist/platform.js`) is reserved for future platform-level orchestration helpers (e.g., shared app initialization, workspace state). First JS helpers are planned for v1.4.0.
-
-After changing any file in `packages/platform/src/`:
+Platform is CSS-first. `dist/platform.js` is reserved for future platform-level helpers; today it only warns when core is not loaded.
 
 ```bash
 pnpm platform:build
 ```
 
-This regenerates `packages/platform/dist/platform.css` and `packages/platform/dist/platform.js`. Never edit `dist/` manually.
+## Using The Packages In This Repo
 
-## Using The Packages
-
-Load tokens before core styles:
+Load the layers in order — tokens, then core, then platform:
 
 ```html
 <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css" />
 <link rel="stylesheet" href="/packages/core/dist/cai.css" />
-```
-
-If you want CAI app-shell patterns as well:
-
-```html
 <link rel="stylesheet" href="/packages/platform/dist/platform.css" />
-```
-
-For optional JS behaviors:
-
-```html
 <script type="module" src="/packages/core/dist/cai.js"></script>
 ```
 
-For platform-level orchestration hooks:
+To load a single behavior instead of the auto-initializing entry:
 
-```html
-<script type="module" src="/packages/platform/dist/platform.js"></script>
+```js
+import { initTabs } from "@cai-ds/core/tabs";
+import { copyToClipboard } from "@cai-ds/core/clipboard";
 ```
 
-Today, `@cai-ds/platform` is effectively CSS-first. The JS entrypoint is reserved for future platform-level orchestration and currently ships as a no-op module.
+Published JS modules: `theme`, `sidebar`, `clipboard`, `modal`, `highlight`, `player`, `tabs`, `toggle`, `utils`, `midi`. Importing one has no side effects until you call its `init*()`.
 
-## Theme System
+## Color Modes And Themes
 
-CAI has a two-dimensional theme system:
-
-| Dimension       | Attribute    | Controls                         |
-| --------------- | ------------ | -------------------------------- |
-| Visual identity | `data-theme` | Fonts, brand colors, personality |
-| Color mode      | `data-mode`  | light / dark / high-contrast     |
-
-Set both on `<html>`:
+**Color modes** belong to the tokens layer. The base system provides `light`, `dark` and `high-contrast`, selected with `data-theme` on `<html>` — or on any element, to scope a mode to it:
 
 ```html
-<html data-theme="minimalist" data-mode="light"></html>
+<html data-theme="dark"></html>
 ```
 
-### Built-in themes
+**Custom themes** (`minimalist`, `ricardoymortimer`) are complete visual identities shipped by `@cai-ds/core` under `dist/themes/`. They use `data-theme="<name>"` plus `data-mode` for their own light/dark/high-contrast variants.
 
-The base system (no `data-theme`) provides the default IBM Plex typography and a neutral palette with `light`, `dark`, and `high-contrast` modes.
-
-### Custom themes
-
-Custom themes live in `packages/core/src/themes/` and are distributed as standalone CSS files under `dist/themes/`. Each theme ships its own `light`, `dark`, and `high-contrast` color variants via `[data-theme="X"][data-mode="Y"]` selectors.
-
-| Theme              | `data-theme` value | File                                         |
-| ------------------ | ------------------ | -------------------------------------------- |
-| Minimalist         | `minimalist`       | `dist/themes/cai-theme-minimalist.css`       |
-| Ricardo & Mortimer | `ricardoymortimer` | `dist/themes/cai-theme-ricardoymortimer.css` |
-
-**Minimalist** is the default theme. It uses DM Sans and warm off-whites with a muted slate brand color.
-
-**Ricardo & Mortimer** is an expressive theme inspired by the animated series. It uses Freckle Face for headings and Space Grotesk for body text, with a portal-green brand color.
-
-Load a custom theme after core styles:
-
-```html
-<link
-  rel="stylesheet"
-  href="/packages/core/dist/themes/cai-theme-minimalist.css"
-/>
-```
-
-Theme preferences are persisted to `localStorage` and restored before first paint via an inline script in `apps/docs/index.html`.
+> **Under review.** Custom themes are being reconsidered and are deliberately left out of the landing and of the three-layer adoption story. They still ship in core. One consequence to know about: `cai.js` applies `minimalist` when the visitor has no stored choice, overriding a `data-theme` you set in markup. If you need a base mode as your default, import the individual modules (for example `@cai-ds/core/clipboard`) instead of `cai.js`, and set `data-theme` yourself.
 
 ## Token Rules
 
@@ -285,60 +268,66 @@ background: var(--cai-blue-60);
 color: #161616;
 ```
 
-Primitive tokens (`--cai-blue-*`, `--cai-gray-*`, etc.) are only used inside `cai-tokens.css` to define semantic tokens.
+Primitive tokens (`--cai-blue-*`, `--cai-gray-*`, etc.) are only used inside the tokens layer to define semantic tokens.
 
 ## Components Included
 
 - **Foundations:** shell, container, grid, stack, media objects
 - **Form:** text inputs, select, date/time pickers, range with output, meter, color picker, file upload, checkbox/radio groups, toggles, fieldset/legend, datalist
-- **Actions:** buttons (primary, secondary, ghost, outline, danger, sizes)
-- **Display:** tags, badges, avatars, progress bars, tooltips
-- **Feedback:** alerts, toasts
-- **Content:** cards, tables, tabs, breadcrumbs, code blocks, copy button
+- **Actions:** buttons (primary, secondary, ghost, outline, danger, sizes), copy button
+- **Display:** tags, badges, avatars, progress bars, tooltips, figures, icon grid
+- **Feedback:** alerts, toasts, modal
+- **Content:** cards, tables, tabs, breadcrumbs, code blocks
+- **Navigation:** sidebar, color mode switcher
 - **Media:** video player, audio player, MIDI player
 - **Utilities:** visibility, SR-only, text helpers, flex shortcuts
+
+Every one of them is rendered live on the landing (`apps/landing/`).
 
 ## Accessibility
 
 - Keyboard navigation for all interactive components
 - Visible focus states on every focusable element
-- ARIA state management (tabs, toggles, players, theme switcher)
-- `high-contrast` mode available for all themes
-- Form controls use native HTML validation where possible
+- ARIA state management (tabs, toggles, players, mode switcher)
+- `high-contrast` mode
+- Form controls use native HTML controls where possible
 
-## Monorepo Notes
+Known gaps are tracked in the security and design reviews; the main ones are contrast of the primary button in dark mode and of code syntax colors.
 
-- `apps/docs/` consumes the packages; it is not the package itself.
-- `packages/core/src/` is the source of truth for reusable styles and JS.
-- `packages/tokens/tokens.json` is the source of truth for token primitives.
-- Token builds run from `scripts/build-tokens.js` or `pnpm tokens:build`.
+## Releases
 
-## Agents
+The three packages share one version and are released together with [changesets](https://github.com/changesets/changesets):
 
-CAI uses a four-agent model for development, planning, QA, and architectural alignment. See **[AGENTS.md](./AGENTS.md)** for the project context and rules they work from.
+1. Add a changeset to your PR: `pnpm changeset`.
+2. Merging to `main` opens a "version packages" PR.
+3. Merging that PR runs CI, waits for approval in the `release` environment and publishes to npm with provenance (trusted publishing, no stored token).
 
-| Agent          | Role                                                                       |
-| -------------- | -------------------------------------------------------------------------- |
-| `agent-alba`   | Orchestrator and alignment checker (human-invoked only)                    |
-| `agent-ares`   | Frontend engineer and vanilla-first enforcer (implements, reviews, vetoes) |
-| `agent-chapa`  | Creative planner — specs, RFCs, execution plans for `agent-ares`           |
-| `agent-martin` | QA engineer — tests, regression detection, quality reports                 |
+Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) and [SECURITY.md](./SECURITY.md).
+
+## Working With AI Agents
+
+[AGENTS.md](./AGENTS.md) holds the project context and rules. Three specialist agents live in `.claude/agents/`:
+
+| Agent | Role |
+| --- | --- |
+| `design-system-architect` | Layering, package contracts, build and publish strategy, component APIs |
+| `npm-security-auditor` | Supply chain, published tarballs, CI/CD hardening, code review for security |
+| `ux-designer` | UX review and developer handoff specs: tokens, states, keyboard and ARIA, Figma mapping |
 
 ## Documentation Index
 
-| File                                                   | Purpose                                                            |
-| ------------------------------------------------------ | ------------------------------------------------------------------ |
-| **[VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md)**             | Architectural philosophy — why vanilla, decision framework         |
-| **[STRUCTURE.md](./.claude/STRUCTURE.md)**                     | Annotated monorepo directory layout                                |
-| **[DIST-RULES.md](./.claude/DIST-RULES.md)**                   | Build workflow — `src/` → `dist/` regeneration steps               |
-| **[QUICK-REFERENCE.md](./.claude/QUICK-REFERENCE.md)**         | Commands, naming conventions, token structure, component inventory |
-| **[AGENTS.md](./AGENTS.md)**                           | Project context and rules for AI agents                            |
-| **[ROADMAP.md](./ROADMAP.md)**                         | Strategic direction, version milestones, and backlog               |
-| **[CONTRIBUTING.md](./CONTRIBUTING.md)**               | PR guidelines, checklist, and contribution workflow                |
-| **[ACCESSIBILITY_AUDIT.md](./ACCESSIBILITY_AUDIT.md)** | WCAG 2.1 AA audit status and known gaps                            |
-| **[TESTING.md](./.claude/TESTING.md)**                         | Test infrastructure and coverage strategy                          |
-| **[CHANGELOG.md](./CHANGELOG.md)**                     | Version history and migration notes                                |
+| File | Purpose |
+| --- | --- |
+| **[VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md)** | Architectural philosophy — why vanilla, decision framework |
+| **[STRUCTURE.md](./.claude/STRUCTURE.md)** | Annotated monorepo directory layout |
+| **[DIST-RULES.md](./.claude/DIST-RULES.md)** | Build workflow — `src/` → `dist/` regeneration steps |
+| **[QUICK-REFERENCE.md](./.claude/QUICK-REFERENCE.md)** | Commands, naming conventions, token structure, component inventory |
+| **[TESTING.md](./.claude/TESTING.md)** | Test infrastructure and coverage strategy |
+| **[AGENTS.md](./AGENTS.md)** | Project context and rules for AI agents |
+| **[CONTRIBUTING.md](./CONTRIBUTING.md)** | PR guidelines, checklist, releases |
+| **[SECURITY.md](./SECURITY.md)** | Reporting, supply-chain practices, CDN/SRI guidance, audit history |
+| **[CHANGELOG.md](./CHANGELOG.md)** | Version history and migration notes |
 
 ## License
 
-MIT
+MIT. IBM Plex is licensed under the SIL Open Font License 1.1; the fonts used by the custom themes carry their own OFL texts (see each package).

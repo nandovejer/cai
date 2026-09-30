@@ -47,7 +47,7 @@ Thank you for your interest in contributing! CAI is a community-driven project, 
 
 1. Fork the repository
 2. Create a branch: `git checkout -b fix/button-focus` or `feat/details-keyboard`
-3. Make sure you've read [CLAUDE.md](./CLAUDE.md) (architecture & principles)
+3. Make sure you've read [AGENTS.md](./AGENTS.md) (architecture & principles)
 
 #### Development
 
@@ -141,7 +141,7 @@ Notes:
 
 - These tools are development-only dependencies (not runtime dependencies).
 - Keep UI tests small and high-value; do not enforce full pixel-perfect snapshots.
-- **For detailed instructions, see [TESTING.md](./TESTING.md)**
+- **For detailed instructions, see [TESTING.md](./.claude/TESTING.md)**
 
 ### Keyboard Testing
 - Tab through all interactive elements
@@ -290,7 +290,7 @@ pnpm check:pack
 ## Questions?
 
 - Open a discussion in [Issues](../../issues)
-- Check [CLAUDE.md](./CLAUDE.md) for architecture
+- Check [AGENTS.md](./AGENTS.md) for architecture
 
 ## Thank You
 

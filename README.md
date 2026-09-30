@@ -40,7 +40,7 @@ Drop the lines for the layers you do not use. See [SECURITY.md](./SECURITY.md) f
 
 ## Workspace
 
-See [STRUCTURE.md](./STRUCTURE.md) for the full annotated directory layout. Summary:
+See [STRUCTURE.md](./.claude/STRUCTURE.md) for the full annotated directory layout. Summary:
 
 ```text
 cai-design-system/
@@ -122,11 +122,11 @@ Recommended minimum coverage:
 Development dependencies for testing are recommended.
 These do not violate the vanilla-first runtime principle because they are not shipped to consumers.
 
-**For detailed testing guide, see [TESTING.md](./TESTING.md)**
+**For detailed testing guide, see [TESTING.md](./.claude/TESTING.md)**
 
 ## Build Flow
 
-For the complete build workflow (regeneration scripts, step-by-step instructions), see **[DIST-RULES.md](./DIST-RULES.md)**.
+For the complete build workflow (regeneration scripts, step-by-step instructions), see **[DIST-RULES.md](./.claude/DIST-RULES.md)**.
 
 ### Tokens
 
@@ -315,7 +315,7 @@ Primitive tokens (`--cai-blue-*`, `--cai-gray-*`, etc.) are only used inside `ca
 
 ## Agents
 
-CAI uses a four-agent model for development, planning, QA, and architectural alignment. See **[agents.md](./agents.md)** for full definitions.
+CAI uses a four-agent model for development, planning, QA, and architectural alignment. See **[AGENTS.md](./AGENTS.md)** for the project context and rules they work from.
 
 | Agent          | Role                                                                       |
 | -------------- | -------------------------------------------------------------------------- |
@@ -328,15 +328,15 @@ CAI uses a four-agent model for development, planning, QA, and architectural ali
 
 | File                                                   | Purpose                                                            |
 | ------------------------------------------------------ | ------------------------------------------------------------------ |
-| **[VANILLA-FIRST.md](./VANILLA-FIRST.md)**             | Architectural philosophy — why vanilla, decision framework         |
-| **[STRUCTURE.md](./STRUCTURE.md)**                     | Annotated monorepo directory layout                                |
-| **[DIST-RULES.md](./DIST-RULES.md)**                   | Build workflow — `src/` → `dist/` regeneration steps               |
-| **[QUICK-REFERENCE.md](./QUICK-REFERENCE.md)**         | Commands, naming conventions, token structure, component inventory |
-| **[agents.md](./agents.md)**                           | Agent definitions and collaboration model                          |
+| **[VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md)**             | Architectural philosophy — why vanilla, decision framework         |
+| **[STRUCTURE.md](./.claude/STRUCTURE.md)**                     | Annotated monorepo directory layout                                |
+| **[DIST-RULES.md](./.claude/DIST-RULES.md)**                   | Build workflow — `src/` → `dist/` regeneration steps               |
+| **[QUICK-REFERENCE.md](./.claude/QUICK-REFERENCE.md)**         | Commands, naming conventions, token structure, component inventory |
+| **[AGENTS.md](./AGENTS.md)**                           | Project context and rules for AI agents                            |
 | **[ROADMAP.md](./ROADMAP.md)**                         | Strategic direction, version milestones, and backlog               |
 | **[CONTRIBUTING.md](./CONTRIBUTING.md)**               | PR guidelines, checklist, and contribution workflow                |
 | **[ACCESSIBILITY_AUDIT.md](./ACCESSIBILITY_AUDIT.md)** | WCAG 2.1 AA audit status and known gaps                            |
-| **[TESTING.md](./TESTING.md)**                         | Test infrastructure and coverage strategy                          |
+| **[TESTING.md](./.claude/TESTING.md)**                         | Test infrastructure and coverage strategy                          |
 | **[CHANGELOG.md](./CHANGELOG.md)**                     | Version history and migration notes                                |
 
 ## License

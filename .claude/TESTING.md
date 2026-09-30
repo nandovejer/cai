@@ -267,6 +267,6 @@ Run `pnpm install` to install Playwright.
 
 - [Vitest Documentation](https://vitest.dev/)
 - [Playwright Documentation](https://playwright.dev/)
-- [CAI Design System Architecture](./CLAUDE.md)
-- [Contributing Guide](./CONTRIBUTING.md)
+- [CAI Design System Architecture](../AGENTS.md)
+- [Contributing Guide](../CONTRIBUTING.md)
 - [Accessibility Audit](./ACCESSIBILITY_AUDIT.md)

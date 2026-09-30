@@ -1,6 +1,6 @@
-# CAI Design System — Claude Code context
+# CAI Design System — agent context
 
-**See [VANILLA-FIRST.md](./VANILLA-FIRST.md) for architectural principles, [STRUCTURE.md](./STRUCTURE.md) for directory layout, and [QUICK-REFERENCE.md](./QUICK-REFERENCE.md) for naming, tokens, and commands.**
+**See [VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md) for architectural principles, [STRUCTURE.md](./.claude/STRUCTURE.md) for directory layout, and [QUICK-REFERENCE.md](./.claude/QUICK-REFERENCE.md) for naming, tokens, and commands.**
 
 ---
 
@@ -8,7 +8,7 @@
 
 ### 1. `dist/` is generated, never edited directly
 
-See [DIST-RULES.md](./DIST-RULES.md) for full regeneration steps.
+See [DIST-RULES.md](./.claude/DIST-RULES.md) for full regeneration steps.
 
 ---
 
@@ -53,7 +53,7 @@ Vanilla JS, ES modules — one module per concern, all re-exported (and auto-ini
 
 1. **Check first:** is there a native HTML element or browser API that solves this? (`dialog`, `details`, `popover`, `<input type="...">`, CSS `:has()`, etc.). If so, use it as the base.
 2. Create `packages/core/src/components/<name>.css` (use the standard header of the sibling files) and add its `@import` to `packages/core/src/components/index.css` in cascade order
-3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./DIST-RULES.md)), then `node scripts/check-pack.js --update`
+3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./.claude/DIST-RULES.md)), then `node scripts/check-pack.js --update`
 4. Document in `apps/docs/index.html`: add a section with an id, sidebar link, demo, and a Keyboard & ARIA subsection
 5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/showcase.css`
 

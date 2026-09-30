@@ -1,0 +1,2449 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAI: a vanilla design system in plain CSS</title>
+  <meta name="description" content="CAI (Consistent Adaptive Identity) is a vanilla design system: tokens, components and app patterns in plain CSS and ES modules. No framework, no build step.">
+  <script>
+    /* Color mode before first paint: stored choice, else the OS preference. */
+    (function(){var m=null;try{m=localStorage.getItem("cai-landing-mode")}catch(e){}
+    if(["light","dark","high-contrast"].indexOf(m)<0){m=matchMedia("(prefers-contrast: more)").matches?"high-contrast":matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
+    document.documentElement.dataset.theme=m})();
+  </script>
+  <script type="module" crossorigin src="./assets/index-C7ajj1m8.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/preload-helper-BFgxmrK7.js">
+  <link rel="stylesheet" crossorigin href="./assets/preload-helper-C_vM7Olx.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-DJ5il3-8.css">
+</head>
+<body class="cai-platform-page">
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="landing-header">
+    <div class="landing-wrap">
+      <a class="landing-header__brand" href="./" aria-label="CAI Design System, home">CAI <span class="cai-tag cai-tag--gray">v3.0.0</span></a>
+      <nav class="landing-header__nav" aria-label="Page">
+        <a href="#adopt">Adopt</a>
+        <a href="#tokens">Tokens</a>
+        <a href="#core">Core</a>
+        <a href="#platform">Platform</a>
+        <a href="./docs/">Docs</a>
+      </nav>
+      <div class="landing-modes" role="group" aria-label="Color mode">
+        <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button" data-landing-mode="light" aria-pressed="true">Light</button>
+        <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button" data-landing-mode="dark" aria-pressed="false">Dark</button>
+        <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button" data-landing-mode="high-contrast" aria-pressed="false">Contrast</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="cai-platform-main" tabindex="-1">
+
+    <!-- ====================== HERO ====================== -->
+    <section class="landing-hero landing-wrap" aria-labelledby="hero-title">
+      <div class="landing-hero__copy">
+        <p class="landing-eyebrow">Consistent Adaptive Identity</p>
+        <h1 class="landing-hero__title" id="hero-title">Plain CSS. Native APIs. No framework.</h1>
+        <p class="landing-hero__lead">CAI is a vanilla design system: design tokens, components and app patterns written in plain CSS and ES modules on top of native browser APIs. Add a <code class="cai-code-inline">&lt;link&gt;</code> tag and start. Nothing to compile, nothing to configure.</p>
+        <div class="cai-platform-actions">
+          <a class="cai-btn cai-btn--primary cai-btn--lg" href="#adopt">Get started</a>
+          <a class="cai-btn cai-btn--outline cai-btn--lg" href="#system">See everything in it</a>
+        </div>
+      </div>
+
+      <ol class="landing-stack" aria-label="The three layers">
+        <li class="landing-stack__item">
+          <span class="cai-badge cai-badge--primary">1</span>
+          <div class="landing-stack__body">
+            <div class="landing-stack__head">
+              <a class="landing-stack__name" href="#tokens">Tokens</a>
+              <span class="cai-tag cai-tag--green">Standalone</span>
+            </div>
+            <code class="landing-stack__pkg u-text-mono">@cai-ds/tokens</code>
+            <p class="landing-stack__desc">Color, spacing, type, radius and shadow as CSS custom properties.</p>
+          </div>
+        </li>
+        <li class="landing-stack__item">
+          <span class="cai-badge cai-badge--primary">2</span>
+          <div class="landing-stack__body">
+            <div class="landing-stack__head">
+              <a class="landing-stack__name" href="#core">Core</a>
+              <span class="cai-tag cai-tag--gray">Requires tokens</span>
+            </div>
+            <code class="landing-stack__pkg u-text-mono">@cai-ds/core</code>
+            <p class="landing-stack__desc">Components, layout objects and optional JavaScript behaviors.</p>
+          </div>
+        </li>
+        <li class="landing-stack__item">
+          <span class="cai-badge cai-badge--primary">3</span>
+          <div class="landing-stack__body">
+            <div class="landing-stack__head">
+              <a class="landing-stack__name" href="#platform">Platform</a>
+              <span class="cai-tag cai-tag--gray">Requires core + tokens</span>
+            </div>
+            <code class="landing-stack__pkg u-text-mono">@cai-ds/platform</code>
+            <p class="landing-stack__desc">App-shell patterns: page, header, sections, footer.</p>
+          </div>
+        </li>
+      </ol>
+
+      <dl class="landing-facts">
+        <div class="landing-facts__item">
+          <dt class="landing-facts__label">runtime dependencies</dt>
+          <dd class="landing-facts__value">0</dd>
+        </div>
+        <div class="landing-facts__item">
+          <dt class="landing-facts__label">build steps to use it</dt>
+          <dd class="landing-facts__value">0</dd>
+        </div>
+        <div class="landing-facts__item">
+          <dt class="landing-facts__label">layers, adopt one at a time</dt>
+          <dd class="landing-facts__value">3</dd>
+        </div>
+        <div class="landing-facts__item">
+          <dt class="landing-facts__label">color modes built in</dt>
+          <dd class="landing-facts__value">3</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ====================== WHAT ====================== -->
+    <section class="cai-platform-section landing-wrap" id="what" aria-labelledby="what-title">
+      <h2 class="landing-h2" id="what-title">What CAI is</h2>
+      <p class="landing-lead">A design system you can read. Every file is CSS or JavaScript that the browser runs exactly as written.</p>
+
+      <ul class="cai-platform-feature-grid landing-points">
+        <li class="o-media">
+          <span class="cai-avatar cai-avatar--md" aria-hidden="true">01</span>
+          <div class="o-media__body">
+            <h3 class="landing-point__title">Plain CSS</h3>
+            <p class="u-text-muted">Custom properties, media and container queries, keyframes. No preprocessor, no utility compiler, no CSS-in-JS.</p>
+          </div>
+        </li>
+        <li class="o-media">
+          <span class="cai-avatar cai-avatar--md" aria-hidden="true">02</span>
+          <div class="o-media__body">
+            <h3 class="landing-point__title">ES modules</h3>
+            <p class="u-text-muted">One small module per behavior: tabs, modal, copy, player. Load them all with one script tag or import one at a time. Zero dependencies.</p>
+          </div>
+        </li>
+        <li class="o-media">
+          <span class="cai-avatar cai-avatar--md" aria-hidden="true">03</span>
+          <div class="o-media__body">
+            <h3 class="landing-point__title">Native browser APIs</h3>
+            <p class="u-text-muted"><code class="cai-code-inline">&lt;dialog&gt;</code>, <code class="cai-code-inline">&lt;details&gt;</code>, native form controls, IntersectionObserver, Web Audio. If the platform already does it, CAI uses it.</p>
+          </div>
+        </li>
+        <li class="o-media">
+          <span class="cai-avatar cai-avatar--md" aria-hidden="true">04</span>
+          <div class="o-media__body">
+            <h3 class="landing-point__title">Accessible by default</h3>
+            <p class="u-text-muted">Keyboard support, visible focus, ARIA state and a high-contrast mode are part of every component, not an add-on.</p>
+          </div>
+        </li>
+      </ul>
+
+      <div class="landing-snippet">
+        <div class="landing-snippet__bar">
+          <span class="landing-eyebrow">The whole setup</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="snip-what" aria-label="Copy the whole setup snippet">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="The whole setup snippet"><code id="snip-what">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+
+&lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Save changes&lt;/button&gt;
+&lt;span class=&quot;cai-tag cai-tag--green cai-tag--dot&quot;&gt;Published&lt;/span&gt;</code></pre>
+      </div>
+
+      <div class="landing-render">
+        <p class="landing-eyebrow">Renders as</p>
+        <div class="o-row">
+          <button class="cai-btn cai-btn--primary" type="button">Save changes</button>
+          <span class="cai-tag cai-tag--green cai-tag--dot">Published</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== ADOPT ====================== -->
+    <section class="cai-platform-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
+      <h2 class="landing-h2" id="adopt-title">Adopt it one layer at a time</h2>
+      <p class="landing-lead">Three packages, one direction. Each layer needs the ones below it and nothing above it, so pick the level you need and stop there.</p>
+
+      <div class="landing-levels">
+
+        <article class="landing-level" aria-labelledby="level-1-title">
+          <div class="landing-level__head">
+            <div class="landing-level__intro">
+              <p class="landing-eyebrow">Level 1</p>
+              <h3 class="landing-level__title" id="level-1-title">Tokens only</h3>
+              <span class="cai-tag cai-tag--green">Standalone</span>
+              <p class="u-text-muted">Your CSS, your components, CAI's values. One stylesheet of custom properties plus three MIT-licensed fonts.</p>
+            </div>
+            <ol class="landing-stack landing-stack--mini" aria-label="Layers included in level 1">
+              <li class="is-included">tokens</li>
+              <li class="is-excluded">core<span class="u-sr-only"> (not included)</span></li>
+              <li class="is-excluded">platform<span class="u-sr-only"> (not included)</span></li>
+            </ol>
+          </div>
+          <div class="landing-level__body">
+            <div>
+              <p class="landing-eyebrow">You get</p>
+              <ul class="landing-level__get">
+                <li><span data-count="primitives">48</span> color primitives in <span data-count="families">7</span> families</li>
+                <li><span data-count="semantic">49</span> semantic tokens, each defined for light, dark and high contrast</li>
+                <li>Spacing (12), control heights (4), type sizes (9), radii (6) and shadows (3)</li>
+                <li>Gidole, ET Book and Monoid, self-hosted and MIT licensed</li>
+              </ul>
+            </div>
+            <div>
+              <p class="landing-eyebrow">Stop here if</p>
+              <p>you already have components or a framework and only want consistent values and color modes.</p>
+              <a href="#tokens">See the tokens</a>
+            </div>
+          </div>
+          <div class="landing-level__snippets">
+            <p class="landing-eyebrow">Install</p>
+            <div class="cai-platform-command-block">
+              <code class="cai-platform-command-block__cmd u-select-all"><span class="cai-platform-command-block__prefix" aria-hidden="true">$ </span><span id="cmd-l1">npm install @cai-ds/tokens</span></code>
+              <button class="cai-copy-btn" type="button" data-copy-from="cmd-l1" aria-label="Copy level 1 install command">Copy</button>
+            </div>
+            <div class="landing-snippet">
+              <div class="landing-snippet__bar">
+                <span class="landing-eyebrow">CDN</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="snip-l1" aria-label="Copy level 1 CDN snippet">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Level 1 CDN snippet"><code id="snip-l1">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;</code></pre>
+            </div>
+            <p class="landing-level__note u-text-muted">Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens with no <code class="cai-code-inline">@font-face</code>.</p>
+          </div>
+        </article>
+
+        <article class="landing-level" aria-labelledby="level-2-title">
+          <div class="landing-level__head">
+            <div class="landing-level__intro">
+              <p class="landing-eyebrow">Level 2</p>
+              <h3 class="landing-level__title" id="level-2-title">Tokens + Core</h3>
+              <span class="cai-tag cai-tag--gray">Requires tokens</span>
+              <p class="u-text-muted">Ready-made components and layout objects that consume the tokens, plus optional JavaScript for the interactive ones.</p>
+            </div>
+            <ol class="landing-stack landing-stack--mini" aria-label="Layers included in level 2">
+              <li class="is-included">tokens</li>
+              <li class="is-included">core</li>
+              <li class="is-excluded">platform<span class="u-sr-only"> (not included)</span></li>
+            </ol>
+          </div>
+          <div class="landing-level__body">
+            <div>
+              <p class="landing-eyebrow">You get</p>
+              <ul class="landing-level__get">
+                <li><span data-count="components">20</span> components: buttons, forms, tables, tabs, modal, media player and more</li>
+                <li><span data-count="objects">7</span> layout objects and a small set of utilities</li>
+                <li>Motion, z-index and breakpoint settings</li>
+                <li>Optional <code class="cai-code-inline">cai.min.js</code>: one ES module that wires tabs, modals, copy buttons, toggles and players</li>
+              </ul>
+            </div>
+            <div>
+              <p class="landing-eyebrow">Stop here if</p>
+              <p>you are building pages or an app and bring your own page layout.</p>
+              <a href="#core">See the components</a>
+            </div>
+          </div>
+          <div class="landing-level__snippets">
+            <p class="landing-eyebrow">Install</p>
+            <div class="cai-platform-command-block">
+              <code class="cai-platform-command-block__cmd u-select-all"><span class="cai-platform-command-block__prefix" aria-hidden="true">$ </span><span id="cmd-l2">npm install @cai-ds/tokens @cai-ds/core</span></code>
+              <button class="cai-copy-btn" type="button" data-copy-from="cmd-l2" aria-label="Copy level 2 install command">Copy</button>
+            </div>
+            <div class="landing-snippet">
+              <div class="landing-snippet__bar">
+                <span class="landing-eyebrow">CDN</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="snip-l2" aria-label="Copy level 2 CDN snippet">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Level 2 CDN snippet"><code id="snip-l2">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+
+&lt;!-- Optional: JavaScript behaviors --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+            </div>
+            <p class="landing-level__note u-text-muted">Need a single component? Load <code class="cai-code-inline">dist/base.min.css</code> plus the file you want, for example <code class="cai-code-inline">dist/components/button.min.css</code>.</p>
+          </div>
+        </article>
+
+        <article class="landing-level" aria-labelledby="level-3-title">
+          <div class="landing-level__head">
+            <div class="landing-level__intro">
+              <p class="landing-eyebrow">Level 3</p>
+              <h3 class="landing-level__title" id="level-3-title">Tokens + Core + Platform</h3>
+              <span class="cai-tag cai-tag--gray">Requires core + tokens</span>
+              <p class="u-text-muted">The full stack: app-shell patterns for whole pages. This landing is built at this level.</p>
+            </div>
+            <ol class="landing-stack landing-stack--mini" aria-label="Layers included in level 3">
+              <li class="is-included">tokens</li>
+              <li class="is-included">core</li>
+              <li class="is-included">platform</li>
+            </ol>
+          </div>
+          <div class="landing-level__body">
+            <div>
+              <p class="landing-eyebrow">You get</p>
+              <ul class="landing-level__get">
+                <li>Page, main, content and section wrappers with a consistent vertical rhythm</li>
+                <li>Page header, action group, feature grid and footer</li>
+                <li>Skip link and command block</li>
+                <li>CSS only: no extra JavaScript</li>
+              </ul>
+            </div>
+            <div>
+              <p class="landing-eyebrow">That is everything</p>
+              <p>There is no level 4.</p>
+              <a href="#platform">See the patterns</a>
+            </div>
+          </div>
+          <div class="landing-level__snippets">
+            <p class="landing-eyebrow">Install</p>
+            <div class="cai-platform-command-block">
+              <code class="cai-platform-command-block__cmd u-select-all"><span class="cai-platform-command-block__prefix" aria-hidden="true">$ </span><span id="cmd-l3">npm install @cai-ds/tokens @cai-ds/core @cai-ds/platform</span></code>
+              <button class="cai-copy-btn" type="button" data-copy-from="cmd-l3" aria-label="Copy level 3 install command">Copy</button>
+            </div>
+            <div class="landing-snippet">
+              <div class="landing-snippet__bar">
+                <span class="landing-eyebrow">CDN</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="snip-l3" aria-label="Copy level 3 CDN snippet">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Level 3 CDN snippet"><code id="snip-l3">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.css&quot;&gt;
+
+&lt;!-- Optional: JavaScript behaviors --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+            </div>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="cai-alert cai-alert--info" role="note">
+        <div class="cai-alert__icon" aria-hidden="true">i</div>
+        <div>
+          <div class="cai-alert__title">Installing with Yarn or pnpm?</div>
+          <div class="cai-alert__body"><code class="cai-code-inline">pnpm add</code> and <code class="cai-code-inline">yarn add</code> take the same package lists. npm and pnpm install the required lower layers for you; Yarn only warns, so always list every package as shown.</div>
+        </div>
+      </div>
+      <p class="u-text-muted">On a CDN, pin the exact version and add an integrity hash in production.</p>
+    </section>
+
+    <!-- ====================== SYSTEM ====================== -->
+    <div class="landing-system" id="system">
+
+      <section class="cai-platform-section landing-wrap" aria-labelledby="system-title">
+        <h2 class="landing-h2" id="system-title">Everything in the system</h2>
+        <p class="landing-lead">Every token, component and pattern below is rendered live with the same CSS you install. Change the color mode at the top of the page and all of it adapts.</p>
+      </section>
+
+      <nav class="landing-levelnav" aria-label="System sections">
+        <div class="landing-wrap">
+          <a class="landing-levelnav__link" href="#tokens">1 · Tokens</a>
+          <a class="landing-levelnav__link" href="#core">2 · Core</a>
+          <a class="landing-levelnav__link" href="#platform">3 · Platform</a>
+        </div>
+      </nav>
+
+      <!-- ====================== LEVEL 1: TOKENS ====================== -->
+      <section class="cai-platform-section landing-wrap" id="tokens" aria-labelledby="tokens-title">
+        <header class="cai-platform-page-header">
+          <p class="landing-eyebrow">Level 1 · @cai-ds/tokens</p>
+          <h2 class="cai-platform-page-header__title" id="tokens-title">Tokens</h2>
+          <p class="cai-platform-page-header__lead">Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.</p>
+          <p class="landing-ref"><a href="./docs/">Core and tokens reference</a></p>
+        </header>
+
+        <nav class="landing-toc landing-toc--inline" aria-label="Tokens contents">
+          <div>
+            <p class="landing-eyebrow">Tokens</p>
+            <ul>
+              <li><a href="#t-primitives">Color primitives</a></li>
+              <li><a href="#t-semantic">Semantic tokens</a></li>
+              <li><a href="#t-modes">Color modes</a></li>
+              <li><a href="#t-spacing">Spacing</a></li>
+              <li><a href="#t-sizing">Sizing</a></li>
+              <li><a href="#t-type">Typography</a></li>
+              <li><a href="#t-radius">Radius</a></li>
+              <li><a href="#t-shadow">Shadows</a></li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo landing-demo--wide" id="t-primitives" aria-labelledby="t-primitives-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="t-primitives-title">Color primitives</h3>
+              <code class="landing-demo__file">tokens.json → color</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="landing-ramp">
+                <span class="landing-ramp__label" id="ramp-blue">blue</span>
+                <ul aria-labelledby="ramp-blue">
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-10)" aria-hidden="true"></span>10</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-20)" aria-hidden="true"></span>20</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-30)" aria-hidden="true"></span>30</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-40)" aria-hidden="true"></span>40</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-50)" aria-hidden="true"></span>50</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-60)" aria-hidden="true"></span>60</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-70)" aria-hidden="true"></span>70</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-80)" aria-hidden="true"></span>80</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-90)" aria-hidden="true"></span>90</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-blue-100)" aria-hidden="true"></span>100</li>
+                </ul>
+              </div>
+              <div class="landing-ramp">
+                <span class="landing-ramp__label" id="ramp-gray">gray</span>
+                <ul aria-labelledby="ramp-gray">
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-10)" aria-hidden="true"></span>10</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-20)" aria-hidden="true"></span>20</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-30)" aria-hidden="true"></span>30</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-40)" aria-hidden="true"></span>40</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-50)" aria-hidden="true"></span>50</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-60)" aria-hidden="true"></span>60</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-70)" aria-hidden="true"></span>70</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-80)" aria-hidden="true"></span>80</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-90)" aria-hidden="true"></span>90</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-gray-100)" aria-hidden="true"></span>100</li>
+                </ul>
+              </div>
+              <div class="landing-ramp">
+                <span class="landing-ramp__label" id="ramp-green">green</span>
+                <ul aria-labelledby="ramp-green">
+                  <li><span class="landing-swatch" style="--v: var(--cai-green-10)" aria-hidden="true"></span>10</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-green-20)" aria-hidden="true"></span>20</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-green-30)" aria-hidden="true"></span>30</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-green-40)" aria-hidden="true"></span>40</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-green-50)" aria-hidden="true"></span>50</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-green-60)" aria-hidden="true"></span>60</li>
+                </ul>
+              </div>
+              <div class="landing-ramp">
+                <span class="landing-ramp__label" id="ramp-red">red</span>
+                <ul aria-labelledby="ramp-red">
+                  <li><span class="landing-swatch" style="--v: var(--cai-red-10)" aria-hidden="true"></span>10</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-red-20)" aria-hidden="true"></span>20</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-red-30)" aria-hidden="true"></span>30</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-red-40)" aria-hidden="true"></span>40</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-red-50)" aria-hidden="true"></span>50</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-red-60)" aria-hidden="true"></span>60</li>
+                </ul>
+              </div>
+              <div class="landing-ramp">
+                <span class="landing-ramp__label" id="ramp-yellow">yellow</span>
+                <ul aria-labelledby="ramp-yellow">
+                  <li><span class="landing-swatch" style="--v: var(--cai-yellow-10)" aria-hidden="true"></span>10</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-yellow-20)" aria-hidden="true"></span>20</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-yellow-30)" aria-hidden="true"></span>30</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-yellow-40)" aria-hidden="true"></span>40</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-yellow-50)" aria-hidden="true"></span>50</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-yellow-60)" aria-hidden="true"></span>60</li>
+                </ul>
+              </div>
+              <div class="landing-ramp">
+                <span class="landing-ramp__label" id="ramp-teal">teal</span>
+                <ul aria-labelledby="ramp-teal">
+                  <li><span class="landing-swatch" style="--v: var(--cai-teal-10)" aria-hidden="true"></span>10</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-teal-20)" aria-hidden="true"></span>20</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-teal-40)" aria-hidden="true"></span>40</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-teal-50)" aria-hidden="true"></span>50</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-teal-60)" aria-hidden="true"></span>60</li>
+                </ul>
+              </div>
+              <div class="landing-ramp">
+                <span class="landing-ramp__label" id="ramp-purple">purple</span>
+                <ul aria-labelledby="ramp-purple">
+                  <li><span class="landing-swatch" style="--v: var(--cai-purple-10)" aria-hidden="true"></span>10</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-purple-20)" aria-hidden="true"></span>20</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-purple-40)" aria-hidden="true"></span>40</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-purple-50)" aria-hidden="true"></span>50</li>
+                  <li><span class="landing-swatch" style="--v: var(--cai-purple-60)" aria-hidden="true"></span>60</li>
+                </ul>
+              </div>
+            </div>
+            <p class="landing-demo__note">Raw values. Never used directly in components.</p>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="t-semantic" aria-labelledby="t-semantic-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="t-semantic-title">Semantic tokens</h3>
+              <code class="landing-demo__file">src/semantic.css</code>
+            </div>
+            <p class="landing-demo__note">Each chip shows the token in light, dark and high contrast, left to right.</p>
+            <details class="landing-fold" open data-fold-narrow>
+              <summary>All <span data-count="semantic">49</span> semantic tokens, in 10 groups</summary>
+              <div class="landing-demo__stage">
+              <h4 class="landing-subhead">Backgrounds (5)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-bg-page)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-bg-page)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-page)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-bg-page</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-bg-ui)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-bg-ui)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-ui)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-bg-ui</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-bg-ui-hover)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-bg-ui-hover)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-ui-hover)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-bg-ui-hover</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-bg-ui-active)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-bg-ui-active)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-ui-active)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-bg-ui-active</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-bg-overlay)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-bg-overlay)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-overlay)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-bg-overlay</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Text (6)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-text-primary)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-text-primary)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-text-primary)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-text-primary</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-text-secondary)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-text-secondary)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-text-secondary)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-text-secondary</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-text-placeholder)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-text-placeholder)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-text-placeholder)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-text-placeholder</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-text-disabled)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-text-disabled)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-text-disabled)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-text-disabled</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-text-on-color)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-text-on-color)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-text-on-color)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-text-on-color</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-text-inverse)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-text-inverse)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-text-inverse)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-text-inverse</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Borders (3)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-border-subtle)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-border-subtle)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-border-subtle)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-border-subtle</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-border-strong)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-border-strong)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-border-strong)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-border-strong</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-border-interactive)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-border-interactive)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-border-interactive)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-border-interactive</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Brand (4)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-brand-primary)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-brand-primary)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-primary)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-brand-primary</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-brand-hover)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-brand-hover)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-hover)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-brand-hover</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-brand-active)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-brand-active)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-active)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-brand-active</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-brand-subtle)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-brand-subtle)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-subtle)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-brand-subtle</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Icons (3)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-icon-primary)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-icon-primary)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-icon-primary)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-icon-primary</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-icon-secondary)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-icon-secondary)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-icon-secondary)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-icon-secondary</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-icon-inverse)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-icon-inverse)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-icon-inverse)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-icon-inverse</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Layers (3)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-layer-01)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-layer-01)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-layer-01)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-layer-01</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-layer-02)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-layer-02)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-layer-02)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-layer-02</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-layer-03)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-layer-03)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-layer-03)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-layer-03</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Sidebar (9)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-bg</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-text)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-text)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-text)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-text</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-text-hover)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-text-hover)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-text-hover)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-text-hover</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-hover)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-hover)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-hover)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-hover</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-active-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-active-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-active-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-active-bg</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-active-text)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-active-text)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-active-text)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-active-text</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-border)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-border)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-border)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-border</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-label)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-label)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-label)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-label</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-sidebar-logo-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-sidebar-logo-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-logo-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-sidebar-logo-bg</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Status (9)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-success)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-success)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-success)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-success</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-success-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-success-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-success-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-success-bg</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-danger)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-danger)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-danger</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-danger-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-danger-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-danger-bg</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-warning)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-warning)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-warning</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-warning-accent)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-warning-accent)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning-accent)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-warning-accent</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-warning-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-warning-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-warning-bg</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-info)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-info)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-info)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-info</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-info-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-info-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-info-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-info-bg</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Inputs (2)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-input-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-input-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-input-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-input-bg</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-input-border)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-input-border)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-input-border)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-input-border</code>
+                </li>
+              </ul>
+              <h4 class="landing-subhead">Extended (5)</h4>
+              <ul class="landing-token-grid">
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-teal)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-teal)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-teal)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-teal</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-teal-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-teal-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-teal-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-teal-bg</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-purple)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-purple)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-purple)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-purple</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-purple-bg)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-purple-bg)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-purple-bg)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-purple-bg</code>
+                </li>
+                <li class="landing-token">
+                  <span class="landing-token__modes" aria-hidden="true">
+                    <span class="landing-swatch" data-theme="light" style="--v: var(--cai-color-code)"></span>
+                    <span class="landing-swatch" data-theme="dark" style="--v: var(--cai-color-code)"></span>
+                    <span class="landing-swatch" data-theme="high-contrast" style="--v: var(--cai-color-code)"></span>
+                  </span>
+                  <code class="u-select-all">--cai-color-code</code>
+                </li>
+              </ul>
+            </div>
+            </details>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="t-modes" aria-labelledby="t-modes-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="t-modes-title">Color modes</h3>
+              <code class="landing-demo__file">src/semantic.css</code>
+            </div>
+            <div class="landing-demo__stage landing-scopes">
+              <div class="landing-scope" data-theme="light">
+                <h4 class="landing-subhead">Light</h4>
+                <p><code class="cai-code-inline">data-theme="light"</code></p>
+                <p>Body text with <a href="#t-semantic">one link</a>.</p>
+                <div class="o-row">
+                  <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+                  <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
+                </div>
+                <div class="cai-progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Progress in light mode">
+                  <div class="cai-progress__fill" style="width:60%"></div>
+                </div>
+                <div class="cai-alert cai-alert--warning">
+                  <div class="cai-alert__icon" aria-hidden="true">!</div>
+                  <div>
+                    <div class="cai-alert__title">Warning</div>
+                    <div class="cai-alert__body">Same markup in every mode.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="landing-scope" data-theme="dark">
+                <h4 class="landing-subhead">Dark</h4>
+                <p><code class="cai-code-inline">data-theme="dark"</code></p>
+                <p>Body text with <a href="#t-semantic">one link</a>.</p>
+                <div class="o-row">
+                  <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+                  <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
+                </div>
+                <div class="cai-progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Progress in dark mode">
+                  <div class="cai-progress__fill" style="width:60%"></div>
+                </div>
+                <div class="cai-alert cai-alert--warning">
+                  <div class="cai-alert__icon" aria-hidden="true">!</div>
+                  <div>
+                    <div class="cai-alert__title">Warning</div>
+                    <div class="cai-alert__body">Same markup in every mode.</div>
+                  </div>
+                </div>
+              </div>
+              <div class="landing-scope" data-theme="high-contrast">
+                <h4 class="landing-subhead">High contrast</h4>
+                <p><code class="cai-code-inline">data-theme="high-contrast"</code></p>
+                <p>Body text with <a href="#t-semantic">one link</a>.</p>
+                <div class="o-row">
+                  <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+                  <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
+                </div>
+                <div class="cai-progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Progress in high-contrast mode">
+                  <div class="cai-progress__fill" style="width:60%"></div>
+                </div>
+                <div class="cai-alert cai-alert--warning">
+                  <div class="cai-alert__icon" aria-hidden="true">!</div>
+                  <div>
+                    <div class="cai-alert__title">Warning</div>
+                    <div class="cai-alert__body">Same markup in every mode.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="landing-demo__note">Same markup, one attribute. Set <code class="cai-code-inline">data-theme</code> on <code class="cai-code-inline">&lt;html&gt;</code>, or on any element to scope a mode to it.</p>
+          </article>
+
+          <article class="landing-demo" id="t-spacing" aria-labelledby="t-spacing-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="t-spacing-title">Spacing</h3>
+              <code class="landing-demo__file">tokens.json → spacing</code>
+            </div>
+            <div class="landing-demo__stage">
+              <ul class="landing-scale-list">
+                <li class="landing-scale">
+                  <code>--cai-space-01</code>
+                  <span>2px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-01)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-02</code>
+                  <span>4px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-02)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-03</code>
+                  <span>8px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-03)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-04</code>
+                  <span>12px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-04)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-05</code>
+                  <span>16px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-05)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-06</code>
+                  <span>24px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-06)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-07</code>
+                  <span>32px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-07)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-08</code>
+                  <span>40px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-08)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-09</code>
+                  <span>48px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-09)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-10</code>
+                  <span>64px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-10)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-11</code>
+                  <span>80px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-11)" aria-hidden="true"></span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-space-12</code>
+                  <span>96px</span>
+                  <span class="landing-scale__bar" style="--v: var(--cai-space-12)" aria-hidden="true"></span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="t-sizing" aria-labelledby="t-sizing-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="t-sizing-title">Sizing</h3>
+              <code class="landing-demo__file">tokens.json → sizing</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-stack">
+                <div class="landing-box landing-box--height" style="--v: var(--cai-size-height-sm)">--cai-size-height-sm · 24px</div>
+                <div class="landing-box landing-box--height" style="--v: var(--cai-size-height-md)">--cai-size-height-md · 32px</div>
+                <div class="landing-box landing-box--height" style="--v: var(--cai-size-height-lg)">--cai-size-height-lg · 40px</div>
+                <div class="landing-box landing-box--height" style="--v: var(--cai-size-height-xl)">--cai-size-height-xl · 48px</div>
+              </div>
+            </div>
+            <p class="landing-demo__note">Control heights: tags and copy buttons, small buttons, inputs and buttons, large buttons.</p>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="t-type" aria-labelledby="t-type-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="t-type-title">Typography</h3>
+              <code class="landing-demo__file">tokens.json → typography</code>
+            </div>
+            <div class="landing-demo__stage">
+              <ul class="o-grid landing-cols-3 landing-fonts">
+                <li class="landing-font" style="--v: var(--cai-font-sans)">
+                  <code>--cai-font-sans</code>
+                  <span class="landing-font__sample">Gidole</span>
+                  <span class="landing-font__weights"><span style="font-weight:400">400</span></span>
+                </li>
+                <li class="landing-font" style="--v: var(--cai-font-serif)">
+                  <code>--cai-font-serif</code>
+                  <span class="landing-font__sample">ET Book</span>
+                  <span class="landing-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:600">600</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
+                </li>
+                <li class="landing-font" style="--v: var(--cai-font-mono)">
+                  <code>--cai-font-mono</code>
+                  <span class="landing-font__sample">Monoid</span>
+                  <span class="landing-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
+                </li>
+              </ul>
+              <ul class="landing-scale-list">
+                <li class="landing-scale">
+                  <code>--cai-text-xs</code>
+                  <span>11px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-xs)">Consistent Adaptive Identity</span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-text-sm</code>
+                  <span>12px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-sm)">Consistent Adaptive Identity</span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-text-md</code>
+                  <span>14px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-md)">Consistent Adaptive Identity</span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-text-base</code>
+                  <span>16px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-base)">Consistent Adaptive Identity</span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-text-lg</code>
+                  <span>20px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-lg)">Consistent Adaptive Identity</span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-text-xl</code>
+                  <span>24px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-xl)">Consistent Adaptive Identity</span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-text-2xl</code>
+                  <span>32px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-2xl)">Consistent Adaptive Identity</span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-text-3xl</code>
+                  <span>42px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-3xl)">Consistent Adaptive Identity</span>
+                </li>
+                <li class="landing-scale">
+                  <code>--cai-text-4xl</code>
+                  <span>54px</span>
+                  <span class="landing-scale__type u-truncate" style="--v: var(--cai-text-4xl)">Consistent Adaptive Identity</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="t-radius" aria-labelledby="t-radius-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="t-radius-title">Radius</h3>
+              <code class="landing-demo__file">tokens.json → radius</code>
+            </div>
+            <div class="landing-demo__stage">
+              <ul class="landing-specimens">
+                <li>
+                  <span class="landing-box landing-box--radius" style="--v: var(--cai-radius-none)" aria-hidden="true"></span>
+                  <code>--cai-radius-none</code>
+                  <span>0px</span>
+                </li>
+                <li>
+                  <span class="landing-box landing-box--radius" style="--v: var(--cai-radius-sm)" aria-hidden="true"></span>
+                  <code>--cai-radius-sm</code>
+                  <span>2px</span>
+                </li>
+                <li>
+                  <span class="landing-box landing-box--radius" style="--v: var(--cai-radius-md)" aria-hidden="true"></span>
+                  <code>--cai-radius-md</code>
+                  <span>4px</span>
+                </li>
+                <li>
+                  <span class="landing-box landing-box--radius" style="--v: var(--cai-radius-lg)" aria-hidden="true"></span>
+                  <code>--cai-radius-lg</code>
+                  <span>8px</span>
+                </li>
+                <li>
+                  <span class="landing-box landing-box--radius" style="--v: var(--cai-radius-xl)" aria-hidden="true"></span>
+                  <code>--cai-radius-xl</code>
+                  <span>12px</span>
+                </li>
+                <li>
+                  <span class="landing-box landing-box--radius" style="--v: var(--cai-radius-full)" aria-hidden="true"></span>
+                  <code>--cai-radius-full</code>
+                  <span>9999px</span>
+                </li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="t-shadow" aria-labelledby="t-shadow-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="t-shadow-title">Shadows</h3>
+              <code class="landing-demo__file">tokens.json → shadow</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-grid landing-shadows">
+                <div class="landing-box landing-box--shadow" style="--v: var(--cai-shadow-sm)">--cai-shadow-sm</div>
+                <div class="landing-box landing-box--shadow" style="--v: var(--cai-shadow-md)">--cai-shadow-md</div>
+                <div class="landing-box landing-box--shadow" style="--v: var(--cai-shadow-lg)">--cai-shadow-lg</div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ====================== LEVEL 2: CORE ====================== -->
+      <section class="cai-platform-section landing-wrap" id="core" aria-labelledby="core-title">
+        <header class="cai-platform-page-header">
+          <p class="landing-eyebrow">Level 2 · @cai-ds/core</p>
+          <h2 class="cai-platform-page-header__title" id="core-title">Core</h2>
+          <p class="cai-platform-page-header__lead">Settings, base styles, layout objects, <span data-count="components">20</span> components and utilities, layered in ITCSS order. Interactive components name the optional JS module that drives them.</p>
+          <p class="landing-ref"><a href="./docs/">Core and tokens reference</a></p>
+        </header>
+
+        <nav class="landing-toc" aria-label="Core contents">
+          <div>
+            <p class="landing-eyebrow">Settings</p>
+            <ul>
+              <li><a href="#c-motion">Motion</a></li>
+              <li><a href="#c-settings">Stacking, layout and breakpoints</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="landing-eyebrow">Base and layout</p>
+            <ul>
+              <li><a href="#c-elements">Base elements</a></li>
+              <li><a href="#c-objects">Layout objects</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="landing-eyebrow">Actions and forms</p>
+            <ul>
+              <li><a href="#c-button">Button</a></li>
+              <li><a href="#c-copy">Copy button</a></li>
+              <li><a href="#c-form">Form</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="landing-eyebrow">Display</p>
+            <ul>
+              <li><a href="#c-tag">Tag and badge</a></li>
+              <li><a href="#c-avatar">Avatar</a></li>
+              <li><a href="#c-progress">Progress</a></li>
+              <li><a href="#c-tooltip">Tooltip</a></li>
+              <li><a href="#c-card">Card</a></li>
+              <li><a href="#c-figure">Figure</a></li>
+              <li><a href="#c-table">Table</a></li>
+              <li><a href="#c-code">Code</a></li>
+              <li><a href="#c-icons">Icon grid</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="landing-eyebrow">Feedback</p>
+            <ul>
+              <li><a href="#c-alert">Alert</a></li>
+              <li><a href="#c-toast">Toast</a></li>
+              <li><a href="#c-modal">Modal</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="landing-eyebrow">Navigation</p>
+            <ul>
+              <li><a href="#c-tabs">Tabs</a></li>
+              <li><a href="#c-breadcrumb">Breadcrumb</a></li>
+              <li><a href="#c-sidebar">Sidebar</a></li>
+              <li><a href="#c-theme-switcher">Color mode switcher</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="landing-eyebrow">Media and motion</p>
+            <ul>
+              <li><a href="#c-player">Player</a></li>
+              <li><a href="#c-animations">Keyframes</a></li>
+            </ul>
+          </div>
+          <div>
+            <p class="landing-eyebrow">Helpers</p>
+            <ul>
+              <li><a href="#c-utilities">Utilities</a></li>
+              <li><a href="#c-js">JavaScript modules</a></li>
+            </ul>
+          </div>
+        </nav>
+
+        <!-- ---------- Settings ---------- -->
+        <h3 class="landing-group" id="g-settings">Settings</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo landing-demo--wide" id="c-motion" aria-labelledby="c-motion-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-motion-title">Motion</h4>
+              <code class="landing-demo__file">settings/_settings.css</code>
+              <span class="cai-tag cai-tag--purple">JS: toggle.js</span>
+            </div>
+            <div class="landing-demo__stage landing-motion">
+              <div class="cai-toggle">
+                <div class="cai-toggle__track" role="switch" tabindex="0" aria-checked="false" aria-labelledby="motion-toggle-label">
+                  <div class="cai-toggle__thumb"></div>
+                </div>
+                <span class="cai-toggle__label" id="motion-toggle-label">Run transitions</span>
+              </div>
+              <p class="landing-motion__reduced landing-demo__note">Reduced motion is on, so the dots jump instead of travelling.</p>
+              <div class="o-grid landing-cols-2">
+                <div class="landing-demo__stage">
+                  <h5 class="landing-subhead">Durations</h5>
+                  <ul class="landing-scale-list">
+                    <li class="landing-scale">
+                      <code>--cai-duration-instant</code>
+                      <span>0.05s</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--duration" style="--v: var(--cai-duration-instant)"></span></span>
+                    </li>
+                    <li class="landing-scale">
+                      <code>--cai-duration-fast</code>
+                      <span>0.1s</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--duration" style="--v: var(--cai-duration-fast)"></span></span>
+                    </li>
+                    <li class="landing-scale">
+                      <code>--cai-duration-base</code>
+                      <span>0.2s</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--duration" style="--v: var(--cai-duration-base)"></span></span>
+                    </li>
+                    <li class="landing-scale">
+                      <code>--cai-duration-slow</code>
+                      <span>0.3s</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--duration" style="--v: var(--cai-duration-slow)"></span></span>
+                    </li>
+                    <li class="landing-scale">
+                      <code>--cai-duration-slower</code>
+                      <span>0.5s</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--duration" style="--v: var(--cai-duration-slower)"></span></span>
+                    </li>
+                    <li class="landing-scale">
+                      <code>--cai-duration-lazy</code>
+                      <span>0.8s</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--duration" style="--v: var(--cai-duration-lazy)"></span></span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="landing-demo__stage">
+                  <h5 class="landing-subhead">Easings</h5>
+                  <ul class="landing-scale-list">
+                    <li class="landing-scale landing-scale--easing">
+                      <code>--cai-easing-standard</code>
+                      <span>cubic-bezier(0.4, 0, 0.2, 1)</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--easing" style="--v: var(--cai-easing-standard)"></span></span>
+                    </li>
+                    <li class="landing-scale landing-scale--easing">
+                      <code>--cai-easing-enter</code>
+                      <span>cubic-bezier(0, 0, 0.2, 1)</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--easing" style="--v: var(--cai-easing-enter)"></span></span>
+                    </li>
+                    <li class="landing-scale landing-scale--easing">
+                      <code>--cai-easing-exit</code>
+                      <span>cubic-bezier(0.4, 0, 1, 1)</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--easing" style="--v: var(--cai-easing-exit)"></span></span>
+                    </li>
+                    <li class="landing-scale landing-scale--easing">
+                      <code>--cai-easing-spring</code>
+                      <span>cubic-bezier(0.34, 1.56, 0.64, 1)</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--easing" style="--v: var(--cai-easing-spring)"></span></span>
+                    </li>
+                    <li class="landing-scale landing-scale--easing">
+                      <code>--cai-easing-linear</code>
+                      <span>linear</span>
+                      <span class="landing-motion__track" aria-hidden="true"><span class="landing-motion__dot landing-motion__dot--easing" style="--v: var(--cai-easing-linear)"></span></span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <p class="landing-demo__note">Ships with core, not with tokens.</p>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="c-settings" aria-labelledby="c-settings-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-settings-title">Stacking, layout and breakpoints</h4>
+              <code class="landing-demo__file">settings/_settings.css</code>
+            </div>
+            <div class="landing-demo__stage o-grid landing-cols-2">
+              <div>
+                <h5 class="landing-subhead">Z-index scale</h5>
+                <ul class="landing-scale-list">
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-z-base</code><span>0</span><span class="landing-scale__note">Default layer</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-z-raised</code><span>10</span><span class="landing-scale__note">Tooltips, sticky bars</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-z-overlay</code><span>90</span><span class="landing-scale__note">Drawer backdrop</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-z-sidebar</code><span>100</span><span class="landing-scale__note">Sidebar</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-z-modal</code><span>200</span><span class="landing-scale__note">Modal, navigation toggle</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-z-toast</code><span>300</span><span class="landing-scale__note">Skip link, toasts</span></li>
+                </ul>
+              </div>
+              <div>
+                <h5 class="landing-subhead">Layout, breakpoints and type</h5>
+                <ul class="landing-scale-list">
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-sidebar-width</code><span>256px</span><span class="landing-scale__note">Sidebar and app-shell column</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-content-max</code><span>1100px</span><span class="landing-scale__note">Maximum content width</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-bp-sm</code><span>480px</span><span class="landing-scale__note">Small mobile</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-bp-md</code><span>768px</span><span class="landing-scale__note">Tablet, sidebar collapse</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-bp-lg</code><span>1024px</span><span class="landing-scale__note">Narrow desktop</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-bp-xl</code><span>1280px</span><span class="landing-scale__note">Standard desktop</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-bp-2xl</code><span>1440px</span><span class="landing-scale__note">Wide screen</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-font-heading</code><span>var(--cai-font-serif)</span><span class="landing-scale__note">Heading font family</span></li>
+                  <li class="landing-scale landing-scale--note"><code class="u-select-all">--cai-scrollbar-size</code><span>4px</span><span class="landing-scale__note">Scrollbar thickness</span></li>
+                </ul>
+              </div>
+            </div>
+            <p class="landing-demo__note">Ships with core, not with tokens. Breakpoints are reference values: CSS media queries cannot read custom properties.</p>
+          </article>
+
+        </div>
+
+        <!-- ---------- Base ---------- -->
+        <h3 class="landing-group" id="g-base">Base</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo landing-demo--wide" id="c-elements" aria-labelledby="c-elements-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-elements-title">Base elements</h4>
+              <code class="landing-demo__file">elements/_elements.css</code>
+              <code class="landing-demo__file">generic/_reset.css</code>
+            </div>
+            <div class="landing-demo__stage o-grid landing-cols-2">
+              <div class="landing-demo__stage">
+                <h5 class="landing-heading-sample">Headings use ET Book</h5>
+                <p>Paragraphs use Gidole, and <a href="#c-elements">links use the brand color</a>.</p>
+                <hr>
+                <details>
+                  <summary>A native disclosure</summary>
+                  <p>The <code class="cai-code-inline">details</code> element needs no JavaScript.</p>
+                </details>
+                <p>Use <mark>mark</mark> to highlight, and <kbd>Ctrl</kbd> <kbd>K</kbd> for keys.</p>
+                <p>Released on <time datetime="2026-09-30">30 September 2026</time>.</p>
+              </div>
+              <div class="landing-demo__stage">
+                <figure>
+                  <p>A bare <code class="cai-code-inline">figure</code> is a padded surface.</p>
+                  <figcaption>And this is its figcaption.</figcaption>
+                </figure>
+                <p><label for="el-output">Output</label> <output id="el-output">42 results</output></p>
+                <div>
+                  <label for="el-meter">Meter, 6 of 10</label>
+                  <meter id="el-meter" min="0" max="10" low="3" high="8" optimum="5" value="6">6 of 10</meter>
+                </div>
+              </div>
+            </div>
+            <p class="landing-demo__note">The reset sets border-box sizing, removes default margins, thins scrollbars and collapses motion when reduced motion is requested.</p>
+          </article>
+
+        </div>
+
+        <!-- ---------- Layout ---------- -->
+        <h3 class="landing-group" id="g-layout">Layout</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo landing-demo--wide" id="c-objects" aria-labelledby="c-objects-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-objects-title">Layout objects</h4>
+              <code class="landing-demo__file">objects/_objects.css</code>
+            </div>
+            <div class="landing-demo__stage o-grid landing-cols-2">
+              <div class="landing-demo__stage">
+                <code class="landing-demo__file">.o-stack</code>
+                <div class="o-stack">
+                  <div class="landing-box">1</div>
+                  <div class="landing-box">2</div>
+                  <div class="landing-box">3</div>
+                </div>
+              </div>
+              <div class="landing-demo__stage">
+                <code class="landing-demo__file">.o-row</code>
+                <div class="o-row">
+                  <div class="landing-box">1</div>
+                  <div class="landing-box">2</div>
+                  <div class="landing-box">3</div>
+                  <div class="landing-box">4</div>
+                  <div class="landing-box">5</div>
+                </div>
+              </div>
+              <div class="landing-demo__stage">
+                <code class="landing-demo__file">.o-grid</code>
+                <div class="o-grid landing-cols-4">
+                  <div class="landing-box">1</div>
+                  <div class="landing-box">2</div>
+                  <div class="landing-box">3</div>
+                  <div class="landing-box">4</div>
+                </div>
+              </div>
+              <div class="landing-demo__stage">
+                <code class="landing-demo__file">.o-media</code>
+                <div class="o-media">
+                  <span class="cai-avatar cai-avatar--md" aria-hidden="true">AB</span>
+                  <div class="o-media__body">
+                    <p>Media object</p>
+                    <p class="u-text-muted">A fixed item beside content that takes the remaining width.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="landing-demo__note"><code class="cai-code-inline">.o-shell</code>, <code class="cai-code-inline">.o-main</code> and <code class="cai-code-inline">.o-container</code> are page-level: <a href="./docs/">the docs pages use them</a>.</p>
+          </article>
+
+        </div>
+
+        <!-- ---------- Actions and forms ---------- -->
+        <h3 class="landing-group" id="g-forms">Actions and forms</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo" id="c-button" aria-labelledby="c-button-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-button-title">Button</h4>
+              <code class="landing-demo__file">components/button.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-row">
+                <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+                <button class="cai-btn cai-btn--secondary" type="button">Secondary</button>
+                <button class="cai-btn cai-btn--outline" type="button">Outline</button>
+                <button class="cai-btn cai-btn--ghost" type="button">Ghost</button>
+                <button class="cai-btn cai-btn--danger" type="button">Danger</button>
+              </div>
+              <div class="o-row">
+                <button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Small</button>
+                <button class="cai-btn cai-btn--primary" type="button">Default</button>
+                <button class="cai-btn cai-btn--primary cai-btn--lg" type="button">Large</button>
+              </div>
+              <div class="o-row">
+                <button class="cai-btn cai-btn--primary" type="button" disabled>Disabled</button>
+                <a class="cai-btn cai-btn--outline" href="#c-button">Link as button</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="c-copy" aria-labelledby="c-copy-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-copy-title">Copy button</h4>
+              <code class="landing-demo__file">components/copy-btn.css</code>
+              <span class="cai-tag cai-tag--purple">JS: clipboard.js</span>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-row">
+                <code class="cai-code-inline">var(--cai-brand-primary)</code>
+                <button class="cai-copy-btn" type="button" data-copy="var(--cai-brand-primary)" aria-label="Copy the brand token reference">Copy</button>
+              </div>
+            </div>
+            <p class="landing-demo__note">The button copies the text in its <code class="cai-code-inline">data-copy</code> attribute.</p>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="c-form" aria-labelledby="c-form-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-form-title">Form</h4>
+              <code class="landing-demo__file">components/form.css</code>
+              <span class="cai-tag cai-tag--purple">JS: toggle.js</span>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-grid landing-cols-3">
+                <div>
+                  <h5 class="landing-subhead">Text</h5>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-name">Project name</label>
+                    <input class="cai-input" id="f-name" type="text" placeholder="My project" aria-describedby="f-name-help">
+                    <div class="cai-field__helper" id="f-name-help">Shown on the dashboard.</div>
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label cai-field__label--required" for="f-email">Email</label>
+                    <input class="cai-input" id="f-email" type="email" placeholder="jane@example.com" required autocomplete="off">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-slug">Slug</label>
+                    <input class="cai-input cai-input--error" id="f-slug" type="text" value="my project" aria-invalid="true" aria-describedby="f-slug-error">
+                    <div class="cai-field__error" id="f-slug-error">Use letters, numbers and dashes only.</div>
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-disabled">Disabled</label>
+                    <input class="cai-input" id="f-disabled" type="text" value="Not editable" disabled>
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-readonly">Read-only</label>
+                    <input class="cai-input" id="f-readonly" type="text" value="cai-7f3a" readonly>
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-notes">Notes</label>
+                    <textarea class="cai-input cai-input--textarea" id="f-notes" rows="3" placeholder="Anything else?"></textarea>
+                  </div>
+                </div>
+
+                <div>
+                  <h5 class="landing-subhead">Choice</h5>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-role">Role</label>
+                    <div class="cai-select-wrap">
+                      <select class="cai-input" id="f-role">
+                        <option value="">Select a role</option>
+                        <option value="dev">Developer</option>
+                        <option value="design">Designer</option>
+                        <option value="pm">Product manager</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="cai-field">
+                    <div class="cai-field__label" id="f-notify-label">Notifications</div>
+                    <div class="cai-check-group" role="group" aria-labelledby="f-notify-label">
+                      <div class="cai-check-item"><input type="checkbox" id="f-check-1" checked><label for="f-check-1">Email</label></div>
+                      <div class="cai-check-item"><input type="checkbox" id="f-check-2"><label for="f-check-2">Push</label></div>
+                      <div class="cai-check-item"><input type="checkbox" id="f-check-3" disabled><label for="f-check-3">SMS (disabled)</label></div>
+                    </div>
+                  </div>
+                  <div class="cai-field">
+                    <fieldset class="cai-fieldset">
+                      <legend>Plan</legend>
+                      <div class="cai-check-group">
+                        <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-1" checked><label for="f-radio-1">Free</label></div>
+                        <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-2"><label for="f-radio-2">Team</label></div>
+                        <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-3"><label for="f-radio-3">Enterprise</label></div>
+                      </div>
+                    </fieldset>
+                  </div>
+                  <div class="o-stack">
+                    <div class="cai-toggle">
+                      <div class="cai-toggle__track is-on" role="switch" tabindex="0" aria-checked="true" aria-labelledby="f-toggle-1-label">
+                        <div class="cai-toggle__thumb"></div>
+                      </div>
+                      <span class="cai-toggle__label" id="f-toggle-1-label">Public profile</span>
+                    </div>
+                    <div class="cai-toggle">
+                      <div class="cai-toggle__track" role="switch" tabindex="0" aria-checked="false" aria-labelledby="f-toggle-2-label">
+                        <div class="cai-toggle__thumb"></div>
+                      </div>
+                      <span class="cai-toggle__label" id="f-toggle-2-label">Weekly digest</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h5 class="landing-subhead">Pickers and values</h5>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-date">Date</label>
+                    <input class="cai-input" id="f-date" type="date">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-time">Time</label>
+                    <input class="cai-input" id="f-time" type="time">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-color">Color</label>
+                    <input class="cai-input" id="f-color" type="color" value="#0f62fe">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-file">File</label>
+                    <input class="cai-input" id="f-file" type="file">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-range">Volume <output class="cai-output" id="f-range-out" for="f-range">50</output></label>
+                    <input class="cai-input" id="f-range" type="range" min="0" max="100" value="50" data-output="f-range-out">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-meter">Storage used, 6 of 10 GB</label>
+                    <meter class="cai-meter" id="f-meter" min="0" max="10" low="3" high="8" optimum="2" value="6">6 of 10 GB</meter>
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-list">Browser</label>
+                    <input class="cai-input" id="f-list" list="f-browsers" placeholder="Start typing">
+                    <datalist id="f-browsers">
+                      <option value="Chrome"></option>
+                      <option value="Edge"></option>
+                      <option value="Firefox"></option>
+                      <option value="Safari"></option>
+                    </datalist>
+                  </div>
+                </div>
+              </div>
+
+              <details>
+                <summary>More input types (8)</summary>
+                <div class="o-grid landing-cols-4">
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-number">number</label>
+                    <input class="cai-input" id="f-number" type="number" value="3" min="0" max="10">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-password">password</label>
+                    <input class="cai-input" id="f-password" type="password" value="secret" autocomplete="off">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-tel">tel</label>
+                    <input class="cai-input" id="f-tel" type="tel" placeholder="+34 600 000 000" autocomplete="off">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-url">url</label>
+                    <input class="cai-input" id="f-url" type="url" placeholder="https://example.com" autocomplete="off">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-search">search</label>
+                    <input class="cai-input" id="f-search" type="search" placeholder="Search">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-datetime">datetime-local</label>
+                    <input class="cai-input" id="f-datetime" type="datetime-local">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-month">month</label>
+                    <input class="cai-input" id="f-month" type="month">
+                  </div>
+                  <div class="cai-field">
+                    <label class="cai-field__label" for="f-week">week</label>
+                    <input class="cai-input" id="f-week" type="week">
+                  </div>
+                </div>
+              </details>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ---------- Display ---------- -->
+        <h3 class="landing-group" id="g-display">Display</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo" id="c-tag" aria-labelledby="c-tag-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-tag-title">Tag and badge</h4>
+              <code class="landing-demo__file">components/tag.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-row">
+                <span class="cai-tag cai-tag--gray">Gray</span>
+                <span class="cai-tag cai-tag--blue">Blue</span>
+                <span class="cai-tag cai-tag--green cai-tag--dot">Green</span>
+                <span class="cai-tag cai-tag--red cai-tag--dot">Red</span>
+                <span class="cai-tag cai-tag--yellow">Yellow</span>
+                <span class="cai-tag cai-tag--teal">Teal</span>
+                <span class="cai-tag cai-tag--purple">Purple</span>
+              </div>
+              <div class="o-row">
+                <span class="cai-badge cai-badge--primary">3</span>
+                <span class="cai-badge cai-badge--gray">12</span>
+                <span class="cai-badge cai-badge--danger">99+</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="c-avatar" aria-labelledby="c-avatar-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-avatar-title">Avatar</h4>
+              <code class="landing-demo__file">components/avatar.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-row">
+                <span class="cai-avatar cai-avatar--sm" role="img" aria-label="Ana Belén, small">AB</span>
+                <span class="cai-avatar cai-avatar--md" role="img" aria-label="Carlos Díaz, medium">CD</span>
+                <span class="cai-avatar cai-avatar--lg" role="img" aria-label="Eva Flores, large">EF</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="c-progress" aria-labelledby="c-progress-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-progress-title">Progress</h4>
+              <code class="landing-demo__file">components/progress.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="Upload, 25%">
+                <div class="cai-progress__fill" style="width:25%"></div>
+              </div>
+              <div class="cai-progress" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" aria-label="Build, 67%">
+                <div class="cai-progress__fill" style="width:67%"></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="c-tooltip" aria-labelledby="c-tooltip-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-tooltip-title">Tooltip</h4>
+              <code class="landing-demo__file">components/tooltip.css</code>
+            </div>
+            <div class="landing-demo__stage landing-demo__stage--tooltip">
+              <div class="cai-tooltip">
+                <button class="cai-btn cai-btn--outline cai-btn--sm" type="button" aria-describedby="tooltip-demo">Hover or focus me</button>
+                <div class="cai-tooltip__text" role="tooltip" id="tooltip-demo">Tooltip content</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="c-card" aria-labelledby="c-card-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-card-title">Card</h4>
+              <code class="landing-demo__file">components/card.css</code>
+            </div>
+            <div class="landing-demo__stage o-grid landing-cols-2">
+              <div class="cai-card">
+                <p class="cai-card__title">API gateway</p>
+                <p class="cai-card__body">1,204 requests per minute.</p>
+              </div>
+              <div class="cai-card">
+                <p class="cai-card__title">Database</p>
+                <p class="cai-card__body">48 active connections.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="c-figure" aria-labelledby="c-figure-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-figure-title">Figure</h4>
+              <code class="landing-demo__file">components/figure.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <figure class="cai-figure u-mb-0">
+                <div class="cai-figure__media">
+                  <svg viewBox="0 0 320 96" role="img" aria-label="Bar chart with six rising bars" fill="currentColor">
+                    <rect x="8" y="64" width="40" height="32"/>
+                    <rect x="60" y="52" width="40" height="44"/>
+                    <rect x="112" y="40" width="40" height="56"/>
+                    <rect x="164" y="30" width="40" height="66"/>
+                    <rect x="216" y="16" width="40" height="80"/>
+                    <rect x="268" y="4" width="40" height="92"/>
+                  </svg>
+                </div>
+                <figcaption class="cai-figure__caption">Requests per day, last six days.</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="c-table" aria-labelledby="c-table-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-table-title">Table</h4>
+              <code class="landing-demo__file">components/table.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-table-wrap" role="region" aria-label="Service status" tabindex="0">
+                <table class="cai-table cai-table--sticky-col">
+                  <caption>Service status</caption>
+                  <thead>
+                    <tr><th scope="col">Service</th><th scope="col">Status</th><th scope="col">CPU</th><th scope="col">Region</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Service">api-gateway</td><td data-label="Status"><span class="cai-tag cai-tag--green cai-tag--dot">Running</span></td><td data-label="CPU">12%</td><td data-label="Region">eu-west-1</td></tr>
+                    <tr><td data-label="Service">data-pipeline</td><td data-label="Status"><span class="cai-tag cai-tag--yellow cai-tag--dot">Degraded</span></td><td data-label="CPU">78%</td><td data-label="Region">us-east-1</td></tr>
+                    <tr><td data-label="Service">mailer</td><td data-label="Status"><span class="cai-tag cai-tag--red cai-tag--dot">Stopped</span></td><td data-label="CPU">0%</td><td data-label="Region">eu-west-1</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <p class="landing-demo__note">Below 480px of container width each row becomes a card.</p>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="c-code" aria-labelledby="c-code-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-code-title">Code</h4>
+              <code class="landing-demo__file">components/code.css</code>
+              <span class="cai-tag cai-tag--purple">JS: highlight.js</span>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-grid landing-cols-3">
+                <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="CSS example"><code>.panel {
+  padding: var(--cai-space-05);
+  color: var(--cai-text-primary);
+  background: var(--cai-layer-01);
+}</code></pre>
+                <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="HTML example"><code>&lt;button
+  class=&quot;cai-btn cai-btn--primary&quot;
+  type=&quot;button&quot;&gt;
+  Save changes
+&lt;/button&gt;</code></pre>
+                <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="JavaScript example"><code>import { MidiPlayer }
+  from &quot;@cai-ds/core/midi&quot;;
+
+const player = await MidiPlayer.load(url);
+player.play();</code></pre>
+              </div>
+              <p>Inline code looks like <code class="cai-code-inline">var(--cai-text-primary)</code> inside a sentence.</p>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="c-icons" aria-labelledby="c-icons-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-icons-title">Icon grid</h4>
+              <code class="landing-demo__file">components/icon-grid.css</code>
+              <span class="cai-tag cai-tag--purple">JS: clipboard.js</span>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-icon-grid">
+                <div class="cai-icon-item" data-svg="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;">
+                  <div class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></div>
+                  <div class="cai-icon-name">Plus</div>
+                </div>
+                <div class="cai-icon-item" data-svg="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12l5 5 9-10&quot;/&gt;&lt;/svg&gt;">
+                  <div class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></div>
+                  <div class="cai-icon-name">Check</div>
+                </div>
+                <div class="cai-icon-item" data-svg="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">
+                  <div class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+                  <div class="cai-icon-name">Arrow</div>
+                </div>
+                <div class="cai-icon-item" data-svg="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;">
+                  <div class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></div>
+                  <div class="cai-icon-name">Close</div>
+                </div>
+              </div>
+            </div>
+            <p class="landing-demo__note">Click an icon to copy its SVG. CAI ships the grid, not an icon set: these four are local to this page.</p>
+          </article>
+
+        </div>
+
+        <!-- ---------- Feedback ---------- -->
+        <h3 class="landing-group" id="g-feedback">Feedback</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo" id="c-alert" aria-labelledby="c-alert-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-alert-title">Alert</h4>
+              <code class="landing-demo__file">components/alert.css</code>
+            </div>
+            <div class="landing-demo__stage landing-demo__stage--flush">
+              <div class="cai-alert cai-alert--info">
+                <div class="cai-alert__icon" aria-hidden="true">i</div>
+                <div>
+                  <div class="cai-alert__title">Information</div>
+                  <div class="cai-alert__body">A new version is available.</div>
+                </div>
+              </div>
+              <div class="cai-alert cai-alert--success">
+                <div class="cai-alert__icon" aria-hidden="true">✓</div>
+                <div>
+                  <div class="cai-alert__title">Success</div>
+                  <div class="cai-alert__body">Deployment completed.</div>
+                </div>
+              </div>
+              <div class="cai-alert cai-alert--warning">
+                <div class="cai-alert__icon" aria-hidden="true">!</div>
+                <div>
+                  <div class="cai-alert__title">Warning</div>
+                  <div class="cai-alert__body">Storage is almost full.</div>
+                </div>
+              </div>
+              <div class="cai-alert cai-alert--error">
+                <div class="cai-alert__icon" aria-hidden="true">×</div>
+                <div>
+                  <div class="cai-alert__title">Error</div>
+                  <div class="cai-alert__body">The build failed.</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="c-toast" aria-labelledby="c-toast-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-toast-title">Toast</h4>
+              <code class="landing-demo__file">components/toast.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-toast" role="status">
+                <div class="cai-toast__content">
+                  <div class="cai-toast__kind">SUCCESS</div>
+                  <div class="cai-toast__msg">File exported successfully.</div>
+                </div>
+                <button class="cai-toast__close" type="button" aria-label="Dismiss notification">×</button>
+              </div>
+            </div>
+            <p class="landing-demo__note">A static specimen: CAI styles the toast and leaves placement and timing to you.</p>
+          </article>
+
+          <article class="landing-demo" id="c-modal" aria-labelledby="c-modal-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-modal-title">Modal</h4>
+              <code class="landing-demo__file">components/modal.css</code>
+              <span class="cai-tag cai-tag--purple">JS: modal.js</span>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="o-row">
+                <button class="cai-btn cai-btn--primary" type="button" data-modal-trigger="landing-modal">Open modal</button>
+              </div>
+              <dialog class="cai-modal" id="landing-modal" aria-labelledby="landing-modal-title">
+                <div class="cai-modal__header">
+                  <button class="cai-modal__close" data-modal-close="landing-modal" aria-label="Close modal" type="button">×</button>
+                  <h2 class="cai-modal__title" id="landing-modal-title">Confirm action</h2>
+                </div>
+                <div class="cai-modal__body">
+                  <p>This action cannot be undone. Continue?</p>
+                </div>
+                <div class="cai-modal__footer">
+                  <button class="cai-btn cai-btn--ghost" data-modal-close="landing-modal" type="button">Cancel</button>
+                  <button class="cai-btn cai-btn--primary" data-modal-close="landing-modal" type="button">Confirm</button>
+                </div>
+              </dialog>
+            </div>
+            <p class="landing-demo__note">A native <code class="cai-code-inline">&lt;dialog&gt;</code>: Esc closes it and focus returns to the button.</p>
+          </article>
+
+        </div>
+
+        <!-- ---------- Navigation ---------- -->
+        <h3 class="landing-group" id="g-navigation">Navigation</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo" id="c-tabs" aria-labelledby="c-tabs-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-tabs-title">Tabs</h4>
+              <code class="landing-demo__file">components/tabs.css</code>
+              <span class="cai-tag cai-tag--purple">JS: tabs.js</span>
+            </div>
+            <div class="landing-demo__stage landing-demo__stage--flush">
+              <div class="cai-tabs" role="tablist" aria-label="Tabs demo">
+                <div class="cai-tab is-active" role="tab" id="tab-summary" aria-selected="true" aria-controls="panel-summary" tabindex="0">Summary</div>
+                <div class="cai-tab" role="tab" id="tab-settings" aria-selected="false" aria-controls="panel-settings" tabindex="-1">Settings</div>
+                <div class="cai-tab" role="tab" id="tab-logs" aria-selected="false" aria-controls="panel-logs" tabindex="-1">Logs</div>
+              </div>
+              <div role="tabpanel" id="panel-summary" aria-labelledby="tab-summary" tabindex="0"><p>Three services are running.</p></div>
+              <div role="tabpanel" id="panel-settings" aria-labelledby="tab-settings" tabindex="-1"><p>Deploys run on every push.</p></div>
+              <div role="tabpanel" id="panel-logs" aria-labelledby="tab-logs" tabindex="-1"><p>No errors in the last hour.</p></div>
+            </div>
+            <p class="landing-demo__note">Arrow keys, Home and End move between tabs.</p>
+          </article>
+
+          <article class="landing-demo" id="c-breadcrumb" aria-labelledby="c-breadcrumb-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-breadcrumb-title">Breadcrumb</h4>
+              <code class="landing-demo__file">components/breadcrumb.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <nav aria-label="Breadcrumb demo">
+                <div class="cai-breadcrumb">
+                  <a class="cai-breadcrumb__item" href="#system">System</a>
+                  <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
+                  <a class="cai-breadcrumb__item" href="#core">Core</a>
+                  <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
+                  <span class="cai-breadcrumb__item" aria-current="page">Breadcrumb</span>
+                </div>
+              </nav>
+            </div>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="c-sidebar" aria-labelledby="c-sidebar-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-sidebar-title">Sidebar</h4>
+              <code class="landing-demo__file">components/sidebar.css</code>
+            </div>
+            <div class="landing-demo__stage landing-sidebar-demo">
+              <nav class="cai-sidebar" aria-label="Sidebar demo">
+                <div class="cai-sidebar__brand">
+                  <div class="cai-sidebar__brand-name">
+                    <span class="cai-sidebar__logo" aria-hidden="true">C</span>
+                    CAI
+                  </div>
+                  <div class="cai-sidebar__version">v3.0.0</div>
+                </div>
+                <div class="cai-sidebar__section">
+                  <div class="cai-sidebar__section-label">System</div>
+                  <a class="cai-sidebar__link is-active" href="#tokens" aria-current="true">Tokens</a>
+                  <a class="cai-sidebar__link" href="#core">Core</a>
+                  <a class="cai-sidebar__link" href="#platform">Platform</a>
+                </div>
+                <div class="cai-sidebar__footer" id="c-theme-switcher">
+                  <span class="cai-theme-switcher__label">Color mode</span>
+                  <div class="cai-theme-switcher" role="group" aria-label="Color mode (sidebar demo)">
+                    <button class="cai-theme-btn is-active" type="button" data-landing-mode="light" aria-pressed="true">Light</button>
+                    <button class="cai-theme-btn" type="button" data-landing-mode="dark" aria-pressed="false">Dark</button>
+                    <button class="cai-theme-btn" type="button" data-landing-mode="high-contrast" aria-pressed="false">HC</button>
+                  </div>
+                </div>
+              </nav>
+              <div class="landing-demo__stage">
+                <div class="o-row">
+                  <button class="cai-nav-toggle" type="button" aria-label="Navigation toggle (specimen)" disabled>
+                    <span class="cai-nav-toggle__bar"></span>
+                    <span class="cai-nav-toggle__bar"></span>
+                    <span class="cai-nav-toggle__bar"></span>
+                  </button>
+                  <code class="landing-demo__file">.cai-nav-toggle</code>
+                </div>
+                <p class="landing-demo__note">On small screens the sidebar becomes a drawer. <a href="./docs/">The docs pages use it live</a>.</p>
+                <h5 class="landing-demo__title">Color mode switcher</h5>
+                <code class="landing-demo__file">components/theme-switcher.css</code>
+                <p class="landing-demo__note">Color mode buttons for the sidebar. The three in this specimen work: they switch the mode of this page.</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ---------- Media ---------- -->
+        <h3 class="landing-group" id="g-media">Media</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo landing-demo--wide" id="c-player" aria-labelledby="c-player-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-player-title">Player</h4>
+              <code class="landing-demo__file">components/player.css</code>
+              <span class="cai-tag cai-tag--purple">JS: player.js</span>
+            </div>
+            <div class="landing-demo__stage o-grid landing-cols-2">
+              <div class="cai-player" data-type="video" role="group" aria-label="Video player">
+                <div class="cai-player-media-wrap is-paused">
+                  <video class="cai-player-video" preload="metadata" playsinline aria-label="The Earth at night, rotating. No sound.">
+                    <source src="./assets/video-CdxnVEqE.mp4" type="video/mp4">
+                  </video>
+                  <div class="cai-player-overlay" aria-hidden="true">
+                    <svg class="cai-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+                  </div>
+                </div>
+                <div class="cai-player-controls">
+                  <div class="cai-player-progress-row">
+                    <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                    </button>
+                    <div class="cai-player-seekbar" role="slider" aria-label="Seek video" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                      <div class="cai-player-seekbar-buf"></div>
+                      <div class="cai-player-seekbar-fill"></div>
+                      <div class="cai-player-seekbar-thumb"></div>
+                    </div>
+                  </div>
+                  <div class="cai-player-btns">
+                    <span class="cai-player-time cai-player-current">0:00</span>
+                    <span class="cai-player-spacer"></span>
+                    <span class="cai-player-time cai-player-duration">0:00</span>
+                    <div class="cai-player-vol-wrap">
+                      <button class="cai-player-btn cai-player-mute" type="button" aria-label="Mute">
+                        <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                        <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                      </button>
+                      <div class="cai-player-seekbar cai-player-volbar" role="slider" aria-label="Video volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
+                        <div class="cai-player-seekbar-fill" style="width:100%"></div>
+                        <div class="cai-player-seekbar-thumb" style="left:100%"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="landing-demo__stage">
+                <div class="cai-player" data-type="audio" role="group" aria-label="Audio player">
+                  <audio class="cai-player-audio" preload="none">
+                    <source src="./assets/audio-ChPxQzX6.mp3" type="audio/mpeg">
+                  </audio>
+                  <div class="cai-player-controls cai-player-controls--audio">
+                    <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                    </button>
+                    <div class="cai-player-progress-row cai-player-progress-row--audio">
+                      <span class="cai-player-time cai-player-current">0:00</span>
+                      <div class="cai-player-seekbar" role="slider" aria-label="Seek audio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                        <div class="cai-player-seekbar-buf"></div>
+                        <div class="cai-player-seekbar-fill"></div>
+                        <div class="cai-player-seekbar-thumb"></div>
+                      </div>
+                      <span class="cai-player-time cai-player-duration">0:00</span>
+                    </div>
+                  </div>
+                </div>
+                <p class="landing-demo__note">Audio, MP3. Nothing is downloaded until you press play.</p>
+
+                <!-- data-src is set by landing.js (the build does not rewrite data-* URLs) -->
+                <div class="cai-player" data-type="midi" role="group" aria-label="MIDI player">
+                  <div class="cai-player-controls cai-player-controls--audio">
+                    <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play" disabled>
+                      <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                      <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                    </button>
+                    <div class="cai-player-progress-row cai-player-progress-row--audio">
+                      <span class="cai-player-time cai-player-current">0:00</span>
+                      <div class="cai-player-seekbar" role="slider" aria-label="Seek MIDI" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
+                        <div class="cai-player-seekbar-buf"></div>
+                        <div class="cai-player-seekbar-fill"></div>
+                        <div class="cai-player-seekbar-thumb"></div>
+                      </div>
+                      <span class="cai-player-time cai-player-duration">0:00</span>
+                    </div>
+                    <span class="cai-player-midi-status"></span>
+                  </div>
+                </div>
+                <p class="landing-demo__note">MIDI, parsed and played with Web Audio by <code class="cai-code-inline">midi.js</code>, which loads only when a MIDI player is on the page.</p>
+              </div>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ---------- Motion ---------- -->
+        <h3 class="landing-group" id="g-motion">Motion</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo landing-demo--wide" id="c-animations" aria-labelledby="c-animations-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-animations-title">Keyframes</h4>
+              <code class="landing-demo__file">components/_animations.css</code>
+              <span class="cai-tag cai-tag--purple">JS: toggle.js</span>
+            </div>
+            <div class="landing-demo__stage landing-anim">
+              <div class="cai-toggle">
+                <div class="cai-toggle__track" role="switch" tabindex="0" aria-checked="false" aria-labelledby="anim-toggle-label">
+                  <div class="cai-toggle__thumb"></div>
+                </div>
+                <span class="cai-toggle__label" id="anim-toggle-label">Play animations</span>
+              </div>
+              <p class="landing-motion__reduced landing-demo__note">Reduced motion is on, so the animations do not run.</p>
+              <ul class="o-grid landing-cols-4 landing-anim__tiles">
+                <li class="landing-anim__tile"><span class="landing-anim__stage" aria-hidden="true"><span class="landing-anim__spin"></span></span><code>cai-spin</code></li>
+                <li class="landing-anim__tile"><span class="landing-anim__stage" aria-hidden="true"><span class="landing-anim__shimmer"></span></span><code>cai-shimmer</code></li>
+                <li class="landing-anim__tile"><span class="landing-anim__stage" aria-hidden="true"><span class="landing-anim__pulse"></span></span><code>cai-pulse</code></li>
+                <li class="landing-anim__tile"><span class="landing-anim__stage" aria-hidden="true"><span class="landing-anim__slide">Aa</span></span><code>cai-slide-up</code></li>
+              </ul>
+            </div>
+            <p class="landing-demo__note">A fifth keyframe, <code class="cai-code-inline">cai-fade-in</code>, opens the modal.</p>
+          </article>
+
+        </div>
+
+        <!-- ---------- Helpers ---------- -->
+        <h3 class="landing-group" id="g-helpers">Helpers</h3>
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo landing-demo--wide" id="c-utilities" aria-labelledby="c-utilities-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-utilities-title">Utilities</h4>
+              <code class="landing-demo__file">utilities/_utilities.css</code>
+            </div>
+            <details class="landing-fold" open data-fold-narrow>
+              <summary>All <span data-count="utilities">16</span> utility classes</summary>
+              <div class="landing-demo__stage">
+              <div class="cai-table-wrap" role="region" aria-label="Utility classes" tabindex="0">
+                <table class="cai-table">
+                  <thead>
+                    <tr><th scope="col">Class</th><th scope="col">Effect</th><th scope="col">Example</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Class"><div><code>.u-hidden</code></div></td><td data-label="Effect"><div>Removes the element from the page</div></td><td data-label="Example"><div><span class="u-hidden">Hidden</span><span class="u-text-muted">(nothing renders)</span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-sr-only</code></div></td><td data-label="Effect"><div>Visible to screen readers only</div></td><td data-label="Example"><div><span class="u-sr-only">Read by screen readers</span><span class="u-text-muted">(screen readers only)</span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-text-mono</code></div></td><td data-label="Effect"><div>Monospace font</div></td><td data-label="Example"><div><span class="u-text-mono">0123 abc</span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-text-primary</code></div></td><td data-label="Effect"><div>Primary text color</div></td><td data-label="Example"><div><span class="u-text-primary">Primary text</span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-text-muted</code></div></td><td data-label="Effect"><div>Secondary text color</div></td><td data-label="Example"><div><span class="u-text-muted">Muted text</span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-truncate</code></div></td><td data-label="Effect"><div>One line, ellipsis on overflow</div></td><td data-label="Example"><div><span class="u-truncate landing-util-narrow">A long line that gets cut</span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-flex</code></div></td><td data-label="Effect"><div>Flex container</div></td><td data-label="Example"><div><span class="u-flex"><span class="landing-box">a</span><span class="landing-box">b</span></span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-flex-center</code></div></td><td data-label="Effect"><div>Flex, centered on both axes</div></td><td data-label="Example"><div><span class="u-flex-center landing-util-frame"><span class="landing-box">a</span></span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-flex-between</code></div></td><td data-label="Effect"><div>Flex, items pushed to the ends</div></td><td data-label="Example"><div><span class="u-flex-between landing-util-frame"><span class="landing-box">a</span><span class="landing-box">b</span></span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-flex-1</code></div></td><td data-label="Effect"><div>Takes the remaining space</div></td><td data-label="Example"><div><span class="u-flex landing-util-frame"><span class="landing-box">a</span><span class="landing-box u-flex-1">flex 1</span></span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-mb-0</code> <code>.u-mb-sm</code> <code>.u-mb-md</code> <code>.u-mb-lg</code></div></td><td data-label="Effect"><div>Bottom margin: 0, 8px, 16px, 32px</div></td><td data-label="Example"><div><span class="landing-util-margins"><span class="landing-box u-mb-0">0</span><span class="landing-box u-mb-sm">sm</span><span class="landing-box u-mb-md">md</span><span class="landing-box u-mb-lg">lg</span></span></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-select-all</code></div></td><td data-label="Effect"><div>One click selects the whole text</div></td><td data-label="Example"><div><code class="u-select-all">click-selects-all</code></div></td></tr>
+                    <tr><td data-label="Class"><div><code>.u-no-events</code></div></td><td data-label="Effect"><div>Ignores pointer events</div></td><td data-label="Example"><div><a class="u-no-events" href="#c-utilities" tabindex="-1" aria-disabled="true">Link you cannot click</a></div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            </details>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="c-js" aria-labelledby="c-js-title">
+            <div class="landing-demo__head">
+              <h4 class="landing-demo__title" id="c-js-title">JavaScript modules</h4>
+              <code class="landing-demo__file">src/*.js</code>
+            </div>
+            <details class="landing-fold" open data-fold-narrow>
+              <summary>All <span data-count="modules">11</span> JavaScript modules</summary>
+              <div class="landing-demo__stage">
+              <div class="cai-table-wrap" role="region" aria-label="JavaScript modules" tabindex="0">
+                <table class="cai-table">
+                  <thead>
+                    <tr><th scope="col">Module</th><th scope="col">What it does</th><th scope="col">Key exports</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Module"><div><code>cai.js</code></div></td><td data-label="What it does"><div>Entry: re-exports every module and initializes them all on load</div></td><td data-label="Key exports"><div>Everything below</div></td></tr>
+                    <tr><td data-label="Module"><div><code>theme.js</code></div></td><td data-label="What it does"><div>Color mode switching</div></td><td data-label="Key exports"><div><code>applyTheme</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>sidebar.js</code></div></td><td data-label="What it does"><div>Mobile drawer, overlay and active link</div></td><td data-label="Key exports"><div><code>openSidebar</code>, <code>closeSidebar</code>, <code>initSidebar</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>clipboard.js</code></div></td><td data-label="What it does"><div>Copy with visual feedback</div></td><td data-label="Key exports"><div><code>copyToClipboard</code>, <code>initCopyButtons</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>modal.js</code></div></td><td data-label="What it does"><div>Dialog triggers and focus trap</div></td><td data-label="Key exports"><div><code>createFocusTrap</code>, <code>initModals</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>highlight.js</code></div></td><td data-label="What it does"><div>Dependency-free syntax highlight for code blocks</div></td><td data-label="Key exports"><div><code>highlightBlock</code>, <code>initHighlight</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>player.js</code></div></td><td data-label="What it does"><div>Video, audio and MIDI players with one UI</div></td><td data-label="Key exports"><div><code>mountPlayer</code>, <code>mountMidiPlayer</code>, <code>initPlayers</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>tabs.js</code></div></td><td data-label="What it does"><div>Tab activation and keyboard support</div></td><td data-label="Key exports"><div><code>activateTab</code>, <code>initTabs</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>toggle.js</code></div></td><td data-label="What it does"><div>Switch state, click and keyboard</div></td><td data-label="Key exports"><div><code>setToggleState</code>, <code>initToggles</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>utils.js</code></div></td><td data-label="What it does"><div>Pure helpers</div></td><td data-label="Key exports"><div><code>formatTime</code>, <code>escapeHtml</code>, <code>calculateProgress</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>midi.js</code></div></td><td data-label="What it does"><div>MIDI parser and Web Audio scheduler, loaded on demand</div></td><td data-label="Key exports"><div><code>MidiPlayer</code></div></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            </details>
+            <p class="landing-demo__note">Importing a single module has no side effects until you call its <code class="cai-code-inline">init</code> function.</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ====================== LEVEL 3: PLATFORM ====================== -->
+      <section class="cai-platform-section landing-wrap" id="platform" aria-labelledby="platform-title">
+        <header class="cai-platform-page-header">
+          <p class="landing-eyebrow">Level 3 · @cai-ds/platform</p>
+          <h2 class="cai-platform-page-header__title" id="platform-title">Platform</h2>
+          <p class="cai-platform-page-header__lead">Page-level patterns built on core. This page is the demo: its body, main, sections, action groups and footer are all platform classes.</p>
+          <p class="landing-ref"><a href="./platform/">Platform reference</a></p>
+        </header>
+
+        <nav class="landing-toc landing-toc--inline" aria-label="Platform contents">
+          <div>
+            <p class="landing-eyebrow">Platform</p>
+            <ul>
+              <li><a href="#p-anatomy">Page anatomy</a></li>
+              <li><a href="#p-header">Page header</a></li>
+              <li><a href="#p-section">Section</a></li>
+              <li><a href="#p-actions">Actions</a></li>
+              <li><a href="#p-command">Command block</a></li>
+              <li><a href="#p-features">Feature grid</a></li>
+              <li><a href="#p-footer">Footer</a></li>
+            </ul>
+          </div>
+        </nav>
+
+        <div class="landing-demo-grid">
+
+          <article class="landing-demo landing-demo--wide" id="p-anatomy" aria-labelledby="p-anatomy-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="p-anatomy-title">Page anatomy</h3>
+              <code class="landing-demo__file">components/_components.css</code>
+            </div>
+            <div class="landing-demo__stage">
+              <figure class="landing-figure">
+                <div class="landing-anatomy">
+                  <div class="landing-box">
+                    .cai-platform-page
+                    <div class="landing-box">.cai-platform-skip-link</div>
+                    <div class="landing-box">header</div>
+                    <div class="landing-box">
+                      .cai-platform-main
+                      <div class="landing-box">.cai-platform-section</div>
+                      <div class="landing-box">.cai-platform-section</div>
+                    </div>
+                    <div class="landing-box">.cai-platform-footer</div>
+                  </div>
+                </div>
+                <div class="cai-platform-page--gradient landing-gradient-sample">.cai-platform-page--gradient</div>
+                <figcaption>Press Tab at the top of this page to see the skip link. The gradient modifier, shown above, is meant for short pages. In an app shell, <code class="cai-code-inline">.cai-platform-content</code> pads the main column beside the sidebar.</figcaption>
+              </figure>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="p-header" aria-labelledby="p-header-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="p-header-title">Page header</h3>
+              <code class="landing-demo__file">.cai-platform-page-header</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-platform-page-header u-mb-0">
+                <p class="cai-platform-page-header__title">Billing</p>
+                <p class="cai-platform-page-header__lead">Invoices, payment methods and plan limits for your workspace.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo" id="p-section" aria-labelledby="p-section-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="p-section-title">Section</h3>
+              <code class="landing-demo__file">.cai-platform-section</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-platform-section">
+                <div class="landing-box">Heading</div>
+                <div class="landing-box">Lead</div>
+                <div class="landing-box">Content</div>
+              </div>
+            </div>
+            <p class="landing-demo__note">Children are spaced by <code class="cai-code-inline">--cai-space-05</code>.</p>
+          </article>
+
+          <article class="landing-demo" id="p-actions" aria-labelledby="p-actions-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="p-actions-title">Actions</h3>
+              <code class="landing-demo__file">.cai-platform-actions</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-platform-actions">
+                <button class="cai-btn cai-btn--primary" type="button">Save</button>
+                <button class="cai-btn cai-btn--outline" type="button">Preview</button>
+                <button class="cai-btn cai-btn--ghost" type="button">Cancel</button>
+              </div>
+            </div>
+            <p class="landing-demo__note">Stacks full-width at 480px and below.</p>
+          </article>
+
+          <article class="landing-demo" id="p-command" aria-labelledby="p-command-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="p-command-title">Command block</h3>
+              <code class="landing-demo__file">.cai-platform-command-block</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-platform-command-block u-mb-0">
+                <code class="cai-platform-command-block__cmd u-select-all"><span class="cai-platform-command-block__prefix" aria-hidden="true">$ </span>npm install @cai-ds/platform</code>
+                <button class="cai-copy-btn" type="button" data-copy="npm install @cai-ds/platform" aria-label="Copy the platform install command">Copy</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="p-features" aria-labelledby="p-features-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="p-features-title">Feature grid</h3>
+              <code class="landing-demo__file">.cai-platform-feature-grid</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-platform-feature-grid">
+                <div class="cai-card">
+                  <p class="cai-card__title">Usage</p>
+                  <p class="cai-card__body u-mb-0">1.2 million requests this month.</p>
+                </div>
+                <div class="cai-card">
+                  <p class="cai-card__title">Team</p>
+                  <p class="cai-card__body u-mb-0">Eight members, two pending invites.</p>
+                </div>
+                <div class="cai-card">
+                  <p class="cai-card__title">Billing</p>
+                  <p class="cai-card__body u-mb-0">Next invoice on the first of the month.</p>
+                </div>
+                <div class="cai-card">
+                  <p class="cai-card__title">Security</p>
+                  <p class="cai-card__body u-mb-0">Two-factor sign-in is on for everyone.</p>
+                </div>
+              </div>
+            </div>
+            <p class="landing-demo__note">Two columns, one at 768px and below.</p>
+          </article>
+
+          <article class="landing-demo landing-demo--wide" id="p-footer" aria-labelledby="p-footer-title">
+            <div class="landing-demo__head">
+              <h3 class="landing-demo__title" id="p-footer-title">Footer</h3>
+              <code class="landing-demo__file">.cai-platform-footer</code>
+            </div>
+            <div class="landing-demo__stage">
+              <div class="cai-platform-footer">
+                <p class="u-text-muted">Acme Inc. · All systems normal</p>
+                <div class="cai-platform-actions">
+                  <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Status</button>
+                  <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Support</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- ====================== CLOSING CTA ====================== -->
+    <section class="cai-platform-section landing-wrap" aria-labelledby="cta-title">
+      <h2 class="landing-h2" id="cta-title">Start with one link tag</h2>
+      <p class="landing-lead">Pick a level, copy the snippet, ship.</p>
+      <div class="cai-platform-actions">
+        <a class="cai-btn cai-btn--primary" href="#adopt">Get started</a>
+        <a class="cai-btn cai-btn--outline" href="./docs/">Core and tokens reference</a>
+        <a class="cai-btn cai-btn--outline" href="./platform/">Platform reference</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-wrap">
+    <div class="cai-platform-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · MIT License</p>
+      <nav class="cai-platform-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="./docs/">Docs</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="./platform/">Platform</a>
+      </nav>
+    </div>
+  </footer>
+
+  <div id="landing-status" class="u-sr-only" role="status"></div>
+
+</body>
+</html>

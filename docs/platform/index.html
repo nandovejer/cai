@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI Platform — Reference</title>
   <meta name="description" content="@cai-ds/platform reference: app-shell patterns, layout primitives, and installation guide.">
-  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
-  <link rel="stylesheet" href="/packages/core/dist/cai.css">
-  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
-  <link rel="stylesheet" href="/packages/core/dist/themes/cai-theme-minimalist.css">
-  <link rel="stylesheet" href="/apps/platform-docs/platform-docs.css">
+  <script type="module" crossorigin src="../assets/platform/index-CXXyLDe5.js"></script>
+  <link rel="modulepreload" crossorigin href="../assets/preload-helper-BFgxmrK7.js">
+  <link rel="modulepreload" crossorigin href="../assets/docs-9X_aidac.js">
+  <link rel="stylesheet" crossorigin href="../assets/preload-helper-C_vM7Olx.css">
+  <link rel="stylesheet" crossorigin href="../assets/docs-DvIX5jfr.css">
+  <link rel="stylesheet" crossorigin href="../assets/index-Bq-Rvnzq.css">
 </head>
 <body class="o-shell">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -84,8 +85,8 @@
         <button class="cai-theme-btn" data-theme="high-contrast" aria-pressed="false">HC</button>
       </div>
       <div class="cai-platform-actions" style="margin-top: var(--cai-space-04);">
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/">Home</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/">Core + Tokens</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../docs/">Core + Tokens</a>
       </div>
     </div>
   </nav>
@@ -97,9 +98,9 @@
       <h1 class="cai-platform-page-header__title">@cai-ds/platform</h1>
       <p class="cai-platform-page-header__lead">App-shell patterns and higher-level layout primitives built on top of CAI core. Use Platform when you are building a web application with a consistent page structure — not when you only need individual components.</p>
       <nav class="pdocs-site-header__nav" aria-label="Cross-site navigation">
-        <a href="/">Home</a>
-        <a href="/docs/">Core &amp; Tokens</a>
-        <a href="/platform/" aria-current="page">Platform</a>
+        <a href="../">Home</a>
+        <a href="../docs/">Core &amp; Tokens</a>
+        <a href="../platform/" aria-current="page">Platform</a>
       </nav>
     </div>
 
@@ -905,9 +906,9 @@
           </div>
           <nav aria-label="Breadcrumb">
             <div class="cai-breadcrumb">
-              <a class="cai-breadcrumb__item" href="/" style="color:var(--cai-brand-primary)">Home</a>
+              <a class="cai-breadcrumb__item" href="../" style="color:var(--cai-brand-primary)">Home</a>
               <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
-              <a class="cai-breadcrumb__item" href="/platform/" style="color:var(--cai-brand-primary)">Platform</a>
+              <a class="cai-breadcrumb__item" href="../platform/" style="color:var(--cai-brand-primary)">Platform</a>
               <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
               <span class="cai-breadcrumb__item is-active" aria-current="page">Components</span>
             </div>
@@ -951,7 +952,7 @@
           <div class="cai-player" data-type="video">
             <div class="cai-player-media-wrap is-paused">
               <video class="cai-player-video" preload="metadata">
-                <source src="/apps/platform-docs/assets/video.mp4" type="video/mp4">
+                <source src="../assets/video-CdxnVEqE.mp4" type="video/mp4">
               </video>
               <div class="cai-player-overlay">
                 <svg class="cai-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
@@ -1406,9 +1407,9 @@ if (range &amp;&amp; out) {
         <div class="pdocs-subsection__title">Action group</div>
         <div class="pdocs-preview">
           <div class="cai-platform-actions">
-            <a class="cai-btn cai-btn--primary" href="/docs/">Core &amp; Tokens docs</a>
+            <a class="cai-btn cai-btn--primary" href="../docs/">Core &amp; Tokens docs</a>
             <a class="cai-btn cai-btn--outline" href="#reference">Class reference</a>
-            <a class="cai-btn cai-btn--ghost" href="/">Home</a>
+            <a class="cai-btn cai-btn--ghost" href="../">Home</a>
           </div>
         </div>
       </div>
@@ -1449,83 +1450,10 @@ if (range &amp;&amp; out) {
   <footer class="cai-platform-footer o-container">
     <p style="color: var(--cai-text-secondary); font-size: var(--cai-text-sm);">@cai-ds/platform &mdash; part of the CAI Design System</p>
     <div class="cai-platform-actions">
-      <a class="cai-btn cai-btn--ghost" href="/">Home</a>
-      <a class="cai-btn cai-btn--ghost" href="/docs/">Core &amp; Tokens docs</a>
+      <a class="cai-btn cai-btn--ghost" href="../">Home</a>
+      <a class="cai-btn cai-btn--ghost" href="../docs/">Core &amp; Tokens docs</a>
     </div>
   </footer>
 
-  <script type="module" src="/apps/platform-docs/platform-docs.js"></script>
-  <script type="module" src="/apps/docs/docs.js"></script>
-  <script type="module">
-    function bindRangeOutput(inputId, outputId) {
-      const input = document.getElementById(inputId);
-      const output = document.getElementById(outputId);
-      if (!input || !output) return;
-
-      const sync = () => {
-        output.value = input.value;
-        input.setAttribute("aria-valuenow", input.value);
-      };
-
-      input.addEventListener("input", sync);
-      sync();
-    }
-
-    bindRangeOutput("pf-range-a", "pf-range-a-out");
-    bindRangeOutput("pf-range-b", "pf-range-b-out");
-    bindRangeOutput("pf-ex-experience", "pf-ex-experience-out");
-
-    const demoForm = document.getElementById("pf-demo-form");
-    const formResult = document.getElementById("pf-form-result");
-
-    if (demoForm && formResult) {
-      demoForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        if (!demoForm.checkValidity()) {
-          formResult.textContent = "Please complete required fields before submitting.";
-          return;
-        }
-        formResult.textContent = "Form submitted successfully (demo only).";
-      });
-
-      demoForm.addEventListener("reset", () => {
-        formResult.textContent = "";
-      });
-    }
-
-    const switches = document.querySelectorAll("[data-pdocs-switch]");
-    const toggleSwitch = (track) => {
-      const checked = track.getAttribute("aria-checked") === "true";
-      track.setAttribute("aria-checked", checked ? "false" : "true");
-      track.classList.toggle("is-on", !checked);
-    };
-
-    switches.forEach((track) => {
-      track.addEventListener("click", () => toggleSwitch(track));
-      track.addEventListener("keydown", (event) => {
-        if (event.key === " " || event.key === "Enter") {
-          event.preventDefault();
-          toggleSwitch(track);
-        }
-      });
-    });
-
-    const motionReplayBtn = document.querySelector("[data-pdocs-motion-replay]");
-    const motionCards = Array.from(document.querySelectorAll("[data-pdocs-motion-card]"));
-
-    if (motionReplayBtn && motionCards.length) {
-      const replayMotion = () => {
-        motionCards.forEach((card, index) => {
-          card.classList.remove("is-revealing");
-          window.setTimeout(() => {
-            card.classList.add("is-revealing");
-          }, index * 90);
-        });
-      };
-
-      motionReplayBtn.addEventListener("click", replayMotion);
-      replayMotion();
-    }
-  </script>
 </body>
 </html>

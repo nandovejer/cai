@@ -66,11 +66,11 @@ to the series' canonical color palette, typography references, and design morpho
 ### Corporate Identity (Adult Swim)
 - Font: **Neue Helvetica 77 Condensed Bold** / **Helvetica Neue Condensed Black**
 - Used in: credits, on-air promos, lower thirds
-- **CAI approximation:** keep `--cai-font-sans` as-is (IBM Plex Sans is a reasonable neutral)
+- **CAI approximation:** keep `--cai-font-sans` as-is (the base sans is a reasonable neutral)
 
 ### Token decisions
 The theme intentionally does **not** override `--cai-font-sans` or `--cai-font-mono`
-because IBM Plex is a valid neutral UI font. Typography character comes from color and
+because the base sans is a valid neutral UI font. Typography character comes from color and
 spacing, not from a custom font that would require an external dependency.
 
 ---

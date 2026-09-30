@@ -28,7 +28,7 @@ import '@cai-ds/tokens'
 
 - **`.`**, **`./css`** → `cai-tokens.css` — fonts + primitives + semantic themes (`./css/min` for the minified twin)
 - **`./tokens.css`** → primitives + semantic themes, without any `@font-face` (bring your own fonts)
-- **`./fonts.css`** → the IBM Plex `@font-face` declarations only
+- **`./fonts.css`** → the `@font-face` declarations only
 - **`./tokens.json`** → the primitives source, for tooling
 - **`./fonts/*`** → the woff2 files
 
@@ -36,7 +36,7 @@ import '@cai-ds/tokens'
 
 - **Primitives** (Layer 1): Color scales, spacing, typography, shadows, radius tokens — generated from `tokens.json`
 - **Semantic themes** (Layer 2): Light, dark, and high-contrast color modes — source in `src/semantic.css`
-- **Self-hosted fonts**: IBM Plex Serif, Sans, and Mono families (included in `cai-tokens.css`)
+- **Self-hosted fonts**, all MIT licensed: Gidole (sans), ET Book (serif) and Monoid (mono), included in `cai-tokens.css`
 
 ## CSS Custom Properties
 
@@ -70,12 +70,18 @@ Custom themes (shipped with `@cai-ds/core`) set `data-theme="<theme-name>"` and 
 
 ## Fonts
 
-`cai-tokens.css` includes `@font-face` declarations for IBM Plex Serif, Sans, and Mono. The files ship in `dist/fonts/` next to the stylesheet, so they load with no extra setup from npm and from a CDN.
+`cai-tokens.css` includes `@font-face` declarations for Gidole, ET Book and Monoid. The files ship in `dist/fonts/` next to the stylesheet, so they load with no extra setup from npm and from a CDN.
 
 To use your own fonts, load `tokens.css` instead and set `--cai-font-sans`, `--cai-font-serif` and `--cai-font-mono`.
 
-The fonts used by the custom themes (DM Sans, Space Grotesk, Freckle Face) ship with `@cai-ds/core`.
+Gidole has a single weight: it is used for 300–500, and bolder text is synthesized by the browser. ET Book ships roman, italic, semi-bold and bold; Monoid ships regular, italic and bold.
+
+The extra font used by one custom theme (Comic Shanns, MIT) ships with `@cai-ds/core`.
 
 ## License
 
-MIT. IBM Plex is licensed under the SIL Open Font License 1.1 (`dist/fonts/OFL.txt`).
+MIT, fonts included. Each font's own MIT notice ships in `dist/fonts/LICENSE-*.txt`:
+
+- Gidole — Copyright (c) 2015 Andreas Larsen (dual licensed MIT / OFL, used under MIT)
+- Monoid — Copyright (c) 2015 Andreas Larsen and contributors (dual licensed MIT / OFL, used under MIT)
+- ET Book — Copyright (c) 2015 Dmitry Krasny, Bonnie Scranton, Edward Tufte

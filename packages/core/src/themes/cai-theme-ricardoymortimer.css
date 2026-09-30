@@ -1,55 +1,10 @@
 @font-face {
-  font-family: "Freckle Face";
-  font-style: normal;
+  font-family: "Comic Shanns";
+  src: url("../fonts/custom-faces/ComicShanns-Regular.woff2")
+    format("woff2");
   font-weight: 400;
-  font-display: swap;
-  src: url("../fonts/custom-faces/FreckeFace-Regular.woff2")
-    format("woff2");
-}
-
-@font-face {
-  font-family: "Space Grotesk";
   font-style: normal;
-  font-weight: 300;
   font-display: swap;
-  src: url("../fonts/custom-faces/SpaceGrotesk-Light.woff2")
-    format("woff2");
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("../fonts/custom-faces/SpaceGrotesk-Regular.woff2")
-    format("woff2");
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("../fonts/custom-faces/SpaceGrotesk-Medium.woff2")
-    format("woff2");
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("../fonts/custom-faces/SpaceGrotesk-SemiBold.woff2")
-    format("woff2");
-}
-
-@font-face {
-  font-family: "Space Grotesk";
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("../fonts/custom-faces/SpaceGrotesk-Bold.woff2")
-    format("woff2");
 }
 
 /* ==========================================================================
@@ -121,9 +76,9 @@
   --cai-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6),
     0 6px 12px rgba(8, 201, 82, 0.12);
 
-  /* Typography — Space Grotesk for UI, Freckle Face for headings */
-  --cai-font-sans: "Space Grotesk", system-ui, sans-serif;
-  --cai-font-heading: "Freckle Face", "Space Grotesk", system-ui, sans-serif;
+  /* Typography — Gidole for UI, Comic Shanns for headings */
+  --cai-font-sans: "Gidole", system-ui, sans-serif;
+  --cai-font-heading: "Comic Shanns", "Gidole", system-ui, sans-serif;
 
   /* Backgrounds — deep space aesthetic */
   --cai-bg-page: var(--rm-space);
@@ -196,15 +151,15 @@
 }
 
 /* -------------------------------------------------------------------------
-   FRECKLE FACE — heading overrides
-   Freckle Face brings an irregular, hand-drawn cartoon feel to headings.
+   COMIC SHANNS — heading overrides
+   Comic Shanns brings an informal, hand-drawn cartoon feel to headings.
    -------------------------------------------------------------------------- */
 
 [data-theme="ricardoymortimer"] h1,
 [data-theme="ricardoymortimer"] h2,
 [data-theme="ricardoymortimer"] h3 {
-  font-family: "Freckle Face", "Space Grotesk", system-ui, sans-serif;
-  font-weight: 400; /* Freckle Face has no weight variants */
+  font-family: "Comic Shanns", Gidole, system-ui, sans-serif;
+  font-weight: 400; /* Comic Shanns has no weight variants */
   letter-spacing: 0.02em;
   line-height: 1.15;
 }

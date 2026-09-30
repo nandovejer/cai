@@ -7,7 +7,7 @@
  *   tokens.css     → primitives + semantic, no @font-face (bring your own fonts)
  *   fonts.css      → @font-face only
  *   tokens.json    → primitives source, for tooling
- *   fonts/         → IBM Plex woff2 files + OFL.txt
+ *   fonts/         → woff2 files + their MIT licence texts
  *
  * Usage: node scripts/build-tokens.js (from the repo root)
  */
@@ -83,7 +83,7 @@ function generatePrimitives(tokens) {
 rmSync(distRoot, { recursive: true, force: true });
 mkdirSync(distRoot, { recursive: true });
 
-// ---- Include IBM Plex fonts (@font-face) ----
+// ---- Include the self-hosted fonts (@font-face) ----
 let fontFaces = "";
 const fontsCssPath = resolve(__dirname, "../packages/tokens/fonts/fonts.css");
 try {
@@ -133,7 +133,7 @@ console.log("✓ Split entries built → tokens.css, fonts.css (+ min)");
 copyFileSync(tokensPath, resolve(distRoot, "tokens.json"));
 console.log("✓ tokens.json copied → dist/");
 
-// Copy font files (IBM Plex) and their licence
+// Copy font files and their licence texts
 function copyFontDir(fontName) {
   const fontSrc = resolve(__dirname, `../packages/tokens/fonts/${fontName}`);
   const fontDest = resolve(distRoot, `fonts/${fontName}`);
@@ -151,10 +151,10 @@ function copyFontDir(fontName) {
 }
 
 ["serif", "sans", "mono"].forEach(copyFontDir);
-copyFileSync(
-  resolve(__dirname, "../packages/tokens/fonts/OFL.txt"),
-  resolve(distRoot, "fonts/OFL.txt"),
-);
+const fontsSrc = resolve(__dirname, "../packages/tokens/fonts");
+for (const file of readdirSync(fontsSrc).filter((f) => f.startsWith("LICENSE"))) {
+  copyFileSync(resolve(fontsSrc, file), resolve(distRoot, "fonts", file));
+}
 
 let tokenCount = 0;
 for (const [key, group] of Object.entries(tokens)) {

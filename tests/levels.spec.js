@@ -38,7 +38,7 @@ test.describe('Adoption levels', () => {
     expect(await cssVar(page, '--cai-bg-page')).not.toBe('');
     // Core-only settings must not leak into the tokens layer
     expect(await cssVar(page, '--cai-z-modal')).toBe('');
-    expect(await page.evaluate(() => document.fonts.check('16px "IBM Plex Sans"'))).toBe(true);
+    expect(await page.evaluate(() => document.fonts.check('16px "Gidole"'))).toBe(true);
   });
 
   test('level 2: tokens + core', async ({ page }) => {

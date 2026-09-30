@@ -2,7 +2,7 @@
  * CAI Design System — Tarball contract check
  * Verifies what each publishable package would ship, without publishing:
  *   - the file list matches the committed snapshot (packages/<name>/pack-files.txt)
- *   - LICENSE is present, and every font folder carries its OFL text
+ *   - LICENSE is present, and every font folder carries a font licence text
  *   - no sources, source maps or dotfiles leak
  *   - no workspace: protocol in runtime dependency fields
  *   - every static exports target exists
@@ -66,9 +66,9 @@ for (const name of PACKAGES) {
   const fontDirs = new Set(paths.filter((p) => p.endsWith(".woff2")).map((p) => dirname(p)));
   for (const dir of fontDirs) {
     const covered = paths.some(
-      (p) => /\/OFL[^/]*\.txt$/.test(p) && (dir === dirname(p) || dir.startsWith(`${dirname(p)}/`)),
+      (p) => /\/LICENSE-[^/]+\.txt$/.test(p) && (dir === dirname(p) || dir.startsWith(`${dirname(p)}/`)),
     );
-    if (!covered) fail(name, `${dir} ships fonts without an OFL licence text`);
+    if (!covered) fail(name, `${dir} ships fonts without their licence text`);
   }
 
   // --- Leaks ---

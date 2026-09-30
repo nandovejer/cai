@@ -222,7 +222,6 @@ describe.skipIf(!distBuilt)("published CSS only references files that ship", () 
   const cssFiles = [
     tokensDist,
     resolve(process.cwd(), "packages/tokens/dist/fonts.css"),
-    resolve(coreDist, "themes/cai-theme-minimalist.css"),
     resolve(coreDist, "themes/cai-theme-ricardoymortimer.css"),
   ];
 

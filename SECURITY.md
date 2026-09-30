@@ -140,7 +140,7 @@ git diff pnpm-lock.yaml
 | 2026-09-30 | Publishing used a long-lived npm token, hid failures and skipped CI | ✅ Resolved | OIDC trusted publishing, changesets release PR, CI gate (requires the npm and GitHub settings above) |
 | 2026-09-30 | MIDI parser could hang the page on malformed files | ✅ Resolved | Bounds and length validation, size and event limits, regression tests |
 | 2026-09-30 | 40 advisories in dev dependencies | ✅ Resolved | vitest upgraded, unused dependencies and stale overrides removed |
-| 2026-09-30 | Tarballs shipped without licence texts | ✅ Resolved | LICENSE per package, OFL text next to every font |
+| 2026-09-30 | Tarballs shipped without licence texts | ✅ Resolved | LICENSE per package, licence text next to every font (all fonts MIT since 2026-09-30) |
 
 ---
 

@@ -10,6 +10,14 @@
 
 See [DIST-RULES.md](./.claude/DIST-RULES.md) for full regeneration steps.
 
+### 2. `docs/` is the generated GitHub Pages site
+
+`docs/` at the repo root is the output of `pnpm pages:build` (Vite, `--mode pages`, relative URLs) and is committed so GitHub Pages can serve it. Never edit it by hand: change `apps/` or `packages/`, rebuild, and commit the result.
+
+### 3. Bundled fonts must be MIT licensed
+
+Every font file shipped by a package must be under the MIT License, with its notice next to it as `LICENSE-<Font>.txt` (`pnpm check:pack` enforces the notice). Dual-licensed fonts are fine if MIT is one of the options. OFL-only fonts are not accepted.
+
 ---
 
 ## JS in `packages/core/src/`

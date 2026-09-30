@@ -139,7 +139,7 @@ async function buildJS() {
 
 await buildJS();
 
-// --- Copy custom-faces fonts (+ their OFL licences) for theme usage ---
+// --- Copy custom-faces fonts (+ their licence texts) for theme usage ---
 const themeFontsSrc = resolve(coreRoot, "fonts/custom-faces");
 const themeFontsDest = resolve(distRoot, "fonts/custom-faces");
 if (existsSync(themeFontsSrc)) {

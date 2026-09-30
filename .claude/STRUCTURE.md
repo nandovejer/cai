@@ -16,12 +16,12 @@ cai-design-system/
 │   ├── tokens/                        ← @cai-ds/tokens (publishable)
 │   │   ├── tokens.json                ← source of truth for Layer 1 primitives
 │   │   ├── src/semantic.css           ← Layer 2 semantic themes (light/dark/high-contrast)
-│   │   ├── fonts/                     ← IBM Plex woff2 + fonts.css + OFL.txt
+│   │   ├── fonts/                     ← Gidole, ET Book, Monoid woff2 + fonts.css + MIT licence texts
 │   │   └── dist/                      ← GENERATED (do not edit)
 │   │       ├── cai-tokens.css (+ .min) ← fonts + primitives + semantic
 │   │       ├── tokens.css, fonts.css  ← the same, split (bring your own fonts)
 │   │       ├── tokens.json            ← primitives source, for tooling
-│   │       └── fonts/                 ← woff2 files + OFL.txt
+│   │       └── fonts/                 ← woff2 files + licence texts
 │   │
 │   ├── core/                          ← @cai-ds/core (publishable)
 │   │   ├── src/                       ← EDIT HERE
@@ -47,7 +47,7 @@ cai-design-system/
 │   │   │   ├── toggle.js              ← switch toggle click + keyboard
 │   │   │   ├── midi.js                ← MIDI parser + Web Audio scheduler (lazy chunk)
 │   │   │   └── utils.js               ← pure helpers (unit-tested)
-│   │   ├── fonts/custom-faces/        ← theme fonts (DM Sans, Space Grotesk, Freckle Face) + OFL texts
+│   │   ├── fonts/custom-faces/        ← theme font (Comic Shanns) + MIT licence text
 │   │   └── dist/                      ← GENERATED (do not edit)
 │   │       ├── cai.css (+ .min)       ← full bundle
 │   │       ├── base.css (+ .min)      ← settings + reset + elements (needed by per-component files)
@@ -66,6 +66,8 @@ cai-design-system/
 │       └── dist/                      ← GENERATED (do not edit)
 │           ├── platform.css
 │           └── platform.js
+│
+├── docs/                              ← GENERATED GitHub Pages site (pnpm pages:build); do not edit
 │
 └── scripts/
     ├── build-tokens.js                ← fonts + primitives (tokens.json) + semantic (src/semantic.css)

@@ -40,14 +40,14 @@ CAI is built with plain CSS, ES modules and native browser APIs. Adopt only the 
 - [Using the packages](#using-the-packages-in-this-repo)
 - [Color modes and themes](#color-modes-and-themes)
 - [Components included](#components-included) and [Accessibility](#accessibility)
-- [Releases](#releases)
+- [GitHub Pages](#github-pages) and [Releases](#releases)
 - [Working with AI agents](#working-with-ai-agents) and [Documentation index](#documentation-index)
 
 ## Packages
 
 The repository is a small monorepo with three package layers:
 
-- [`@cai-ds/tokens`](./packages/tokens) — design tokens (CSS custom properties) and self-hosted IBM Plex fonts
+- [`@cai-ds/tokens`](./packages/tokens) — design tokens (CSS custom properties) and self-hosted MIT-licensed fonts
 - [`@cai-ds/core`](./packages/core) — reusable CSS components and vanilla JS behaviors
 - [`@cai-ds/platform`](./packages/platform) — app-shell patterns built on top of core
 
@@ -105,7 +105,7 @@ cai-design-system/
 │   ├── tokens/                # @cai-ds/tokens
 │   │   ├── tokens.json        # Source of truth for primitives
 │   │   ├── src/semantic.css   # Semantic tokens (light / dark / high-contrast)
-│   │   ├── fonts/             # IBM Plex woff2 + licence
+│   │   ├── fonts/             # Gidole, ET Book, Monoid woff2 + licences
 │   │   └── dist/              # Generated — do not edit directly
 │   ├── core/                  # @cai-ds/core
 │   │   ├── src/               # Edit here, never dist/
@@ -117,6 +117,7 @@ cai-design-system/
 │   └── platform/              # @cai-ds/platform
 │       ├── src/
 │       └── dist/
+├── docs/                      # Generated GitHub Pages site (pnpm pages:build) — do not edit
 ├── scripts/                   # Build, tarball check and publish helpers
 └── tests/                     # Vitest unit tests and Playwright UI tests
 ```
@@ -149,6 +150,7 @@ pnpm lint:css        # Stylelint over packages/**/*.css
 pnpm lint:js         # ESLint over packages/**/*.js and scripts/**/*.js
 pnpm test:unit       # Vitest (run `pnpm build` first: some suites read dist/)
 pnpm test:ui         # Playwright; first time: pnpm test:ui:install
+pnpm pages:build     # Build the GitHub Pages site into docs/
 pnpm check:pack      # What each package would publish vs. the committed snapshot
 pnpm audit:prod      # Production dependency audit
 pnpm changeset       # Describe a change for the next release
@@ -294,6 +296,16 @@ Every one of them is rendered live on the landing (`apps/landing/`).
 
 Known gaps are tracked in the security and design reviews; the main ones are contrast of the primary button in dark mode and of code syntax colors.
 
+## GitHub Pages
+
+The public site is the optimized build of the three apps, committed in `docs/` (landing at `/`, core docs at `/docs/`, platform docs at `/platform/`). Configure Pages to deploy from the `main` branch, `/docs` folder.
+
+```bash
+pnpm pages:build   # packages + Vite build with relative URLs, then commit docs/
+```
+
+`docs/` is generated: change the sources under `apps/` and `packages/`, then rebuild. URLs are relative, so the site works under `https://<user>.github.io/<repo>/` and on a custom domain.
+
 ## Releases
 
 The three packages share one version and are released together with [changesets](https://github.com/changesets/changesets):
@@ -330,4 +342,4 @@ Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 ## License
 
-MIT. IBM Plex is licensed under the SIL Open Font License 1.1; the fonts used by the custom themes carry their own OFL texts (see each package).
+MIT, including the fonts. Gidole, ET Book and Monoid (tokens) and Comic Shanns (core) are MIT licensed; their notices ship next to the font files (`LICENSE-*.txt`).

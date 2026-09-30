@@ -86,7 +86,7 @@ import { mountPlayer } from "@cai-ds/core/player";
 
 Two built-in custom themes are available:
 
-- **Minimalist** (`data-theme="minimalist"`) — Ultra-light DM Sans, warm neutrals
+- **Minimalist** (`data-theme="minimalist"`) — Gidole throughout, warm neutrals
 - **Ricardo & Mortimer** (`data-theme="ricardoymortimer"`) — Expressive, animated series–inspired
 
 All themes support light, dark, and high-contrast color modes via `data-mode`.
@@ -103,4 +103,4 @@ The core JS (`cai.js`) provides no-dependency implementations of:
 
 ## License
 
-MIT. DM Sans, Space Grotesk and Freckle Face are licensed under the SIL Open Font License 1.1 (`dist/fonts/custom-faces/OFL-*.txt`).
+MIT, fonts included: Comic Shanns, used by one custom theme, is MIT licensed (`dist/fonts/custom-faces/LICENSE-ComicShanns.txt`).

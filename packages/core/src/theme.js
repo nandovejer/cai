@@ -33,12 +33,12 @@ const storage = {
   },
   set(key, value) {
     try {
-      storage.set(key, value);
+      localStorage.setItem(key, value);
     } catch (_) {}
   },
   remove(key) {
     try {
-      storage.remove(key);
+      localStorage.removeItem(key);
     } catch (_) {}
   },
 };

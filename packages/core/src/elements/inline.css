@@ -1,18 +1,26 @@
 /* ==========================================================================
    CAI — 3. ELEMENTS · inline
-   Inline text: a, mark, kbd, time. Specificity: type (0,0,1).
+   Inline text: a, mark, kbd, time. Specificity: :where() (0,0,0) for a.
    ========================================================================== */
 
-a {
+:where(a) {
   color: var(--cai-brand-primary);
   text-decoration: none;
 }
 
-a:hover {
+/* A link inside running text is underlined: colour alone never marks a link
+   (WCAG 1.4.1). Navigation chrome (lists of links, buttons, tabs) keeps its
+   own component styling. */
+:where(p, dd, dt, td, th, figcaption, blockquote) :where(a) {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+:where(a:hover) {
   text-decoration: underline;
 }
 
-a:focus-visible {
+:where(a:focus-visible) {
   outline: 2px solid var(--cai-border-interactive);
   outline-offset: 2px;
   border-radius: var(--cai-radius-sm);

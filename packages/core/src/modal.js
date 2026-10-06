@@ -1,135 +1,52 @@
 /**
  * CAI Design System — Modal & dialog
- * Works with native <dialog class="cai-modal"> and div-based .cai-modal,
- * with focus trapping while open.
  *
- * Importing this module has no side effects; call initModals() to wire up
- * [data-modal-trigger] / [data-modal-close] buttons.
+ * A modal is a native <dialog class="cai-modal">. The browser already gives
+ * it focus trapping, Escape, an inert page behind it and focus restoration.
+ * Triggers are declarative, with no JavaScript:
+ *
+ *   <button commandfor="my-dialog" command="show-modal">Open</button>
+ *   <button commandfor="my-dialog" command="close">Close</button>
+ *
+ * Those attributes are not yet in every supported browser, so this module
+ * is only a fallback: initModals() does nothing where the browser handles
+ * them and binds the same two commands where it does not.
+ *
+ * Importing this module has no side effects; call initModals() to enable it.
  */
 
-/**
- * Constrains keyboard focus within a container, preventing focus from
- * escaping to the page behind. Returns { activate, deactivate }.
- */
-export function createFocusTrap(element) {
-  let previousActiveElement = null;
-  let focusableElements = [];
-  let firstFocusable = null;
-  let lastFocusable = null;
-
-  function getFocusableElements() {
-    // Elements that can receive focus
-    const selector =
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
-    return Array.from(element.querySelectorAll(selector)).filter(
-      (el) =>
-        !el.hasAttribute("disabled") &&
-        el.offsetHeight > 0 &&
-        el.offsetWidth > 0, // visible
-    );
-  }
-
-  function handleKeydown(e) {
-    if (e.key !== "Tab") return;
-    focusableElements = getFocusableElements();
-    firstFocusable = focusableElements[0];
-    lastFocusable = focusableElements[focusableElements.length - 1];
-
-    if (!firstFocusable || !lastFocusable) return; // no focusable elements
-
-    // Shift+Tab on first element: jump to last
-    if (e.shiftKey && document.activeElement === firstFocusable) {
-      e.preventDefault();
-      lastFocusable.focus();
-    }
-    // Tab on last element: jump to first
-    else if (!e.shiftKey && document.activeElement === lastFocusable) {
-      e.preventDefault();
-      firstFocusable.focus();
-    }
-  }
-
-  return {
-    activate() {
-      previousActiveElement = document.activeElement;
-      element.addEventListener("keydown", handleKeydown);
-      // Focus the first focusable element, or the element itself if none
-      focusableElements = getFocusableElements();
-      if (focusableElements.length > 0) {
-        focusableElements[0].focus();
-      } else {
-        element.focus();
-      }
-    },
-
-    deactivate() {
-      element.removeEventListener("keydown", handleKeydown);
-      // Restore focus to the element that opened the modal
-      if (previousActiveElement && previousActiveElement.focus) {
-        previousActiveElement.focus();
-      }
-    },
-  };
+/** True when the browser implements the command / commandfor attributes. */
+export function supportsCommands() {
+  return (
+    typeof HTMLButtonElement !== "undefined" &&
+    "commandForElement" in HTMLButtonElement.prototype
+  );
 }
 
+const bound = new WeakSet();
+
 /**
- * Wire up all modals on the page (both <dialog> and div-based .cai-modal).
+ * Fallback for button[commandfor][command="show-modal|close|request-close"]
+ * on <dialog> targets. Idempotent; scoped to `root`.
  */
-export function initModals() {
-  document.querySelectorAll(".cai-modal, dialog.cai-modal").forEach((modal) => {
-    const isDialogElement = modal.tagName === "DIALOG";
-    let trap = null;
+export function initModals(root = document) {
+  if (supportsCommands() || bound.has(root)) return;
+  bound.add(root);
 
-    // Handle trigger buttons (data-modal-trigger="modal-id")
-    document.querySelectorAll("[data-modal-trigger]").forEach((btn) => {
-      if (btn.dataset.modalTrigger === modal.id) {
-        btn.addEventListener("click", () => {
-          if (isDialogElement) {
-            modal.showModal();
-          } else {
-            modal.classList.remove("is-hidden");
-            modal.setAttribute("aria-hidden", "false");
-          }
-          // Activate focus trap
-          trap = createFocusTrap(modal);
-          trap.activate();
-        });
-      }
-    });
+  root.addEventListener("click", (event) => {
+    const button = event.target.closest?.("button[commandfor][command]");
+    if (!button || button.disabled) return;
+    const dialog = document.getElementById(button.getAttribute("commandfor"));
+    if (!(dialog instanceof HTMLDialogElement)) return;
 
-    // Handle close buttons (data-modal-close="modal-id")
-    document.querySelectorAll("[data-modal-close]").forEach((btn) => {
-      if (btn.dataset.modalClose === modal.id) {
-        btn.addEventListener("click", () => {
-          closeModal(modal, isDialogElement, trap);
-        });
-      }
-    });
-
-    // Escape key closes modal (for <dialog> this is automatic, but we need it for divs)
-    if (!isDialogElement) {
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && !modal.classList.contains("is-hidden")) {
-          closeModal(modal, isDialogElement, trap);
-        }
-      });
-    }
-
-    // For <dialog> elements, also deactivate trap on close
-    if (isDialogElement) {
-      modal.addEventListener("close", () => {
-        if (trap) trap.deactivate();
-      });
+    switch (button.getAttribute("command")) {
+      case "show-modal":
+        if (!dialog.open) dialog.showModal();
+        break;
+      case "close":
+      case "request-close":
+        dialog.close();
+        break;
     }
   });
-
-  function closeModal(modal, isDialogElement, trap) {
-    if (isDialogElement) {
-      modal.close();
-    } else {
-      modal.classList.add("is-hidden");
-      modal.setAttribute("aria-hidden", "true");
-    }
-    if (trap) trap.deactivate();
-  }
 }

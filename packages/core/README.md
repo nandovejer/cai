@@ -67,7 +67,7 @@ import { mountPlayer } from "@cai-ds/core/player";
 - **`./css`** → `cai.css` — Full CSS bundle (`./css/min` for the minified twin)
 - **`./base.css`** → Settings + reset + elements: the prerequisite for per-component CSS
 - **`./components/*`** → Per-component CSS files (standalone use)
-- **`./theme`**, **`./sidebar`**, **`./clipboard`**, **`./modal`**, **`./highlight`**, **`./player`**, **`./tabs`**, **`./toggle`** → Individual JS behavior modules (no side effects on import)
+- **`./theme`**, **`./sidebar`**, **`./clipboard`**, **`./modal`**, **`./highlight`**, **`./player`**, **`./tabs`** → Individual JS behavior modules (no side effects on import)
 - **`./midi`** → `midi.js` — MIDI player (lazy-loaded)
 - **`./utils`** → Pure helper functions (`formatTime`, `escapeHtml`, …)
 - **`./themes/*`** → Custom theme stylesheets

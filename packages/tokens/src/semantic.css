@@ -93,7 +93,13 @@
    COLOR MODE: DARK — <html data-theme="dark">
    -------------------------------------------------------------------------- */
 
-[data-theme="dark"] {
+/* The :root:has() selectors are the no-JavaScript path: a checked radio of the
+   color-mode switcher (.cai-theme-switcher) re-scopes the tokens for the
+   session. theme.js adds persistence and the OS preference on top. They are
+   wrapped in :is() so a browser without :has() drops them instead of
+   invalidating the whole rule. */
+[data-theme="dark"],
+:is(:root:has(input[name="cai-theme"][value="dark"]:checked)) {
   /* Backgrounds */
   --cai-bg-page: var(--cai-gray-100);
   --cai-bg-ui: var(--cai-gray-90);
@@ -175,7 +181,8 @@
    Pure white page, pure black text, strong borders. Maximum WCAG contrast.
    -------------------------------------------------------------------------- */
 
-[data-theme="high-contrast"] {
+[data-theme="high-contrast"],
+:is(:root:has(input[name="cai-theme"][value="high-contrast"]:checked)) {
   /* Backgrounds */
   --cai-bg-page: #fff;
   --cai-bg-ui: #fff;

@@ -41,13 +41,24 @@ Thank you for your interest in contributing! CAI is a community-driven project, 
 - ❌ 100+ new components
 - ❌ Runtime build steps
 
+### What a new component has to be
+
+A component is added to `core` only when it is all of these (the same criteria the GOV.UK Design System uses):
+
+- **Useful:** more than one team needs it, and a native element does not already solve it.
+- **Unique:** no existing component covers the same job. Say which component it makes obsolete, if any.
+- **Usable:** it works with a keyboard, with JavaScript off, with reduced motion and in forced-colors mode.
+- **Consistent:** semantic tokens only, the shared focus ring, the shared wording rules in [PRINCIPLES.md](./PRINCIPLES.md).
+
+Something you needed once belongs in your own app.
+
 ### Pull Requests
 
 #### Before You Code
 
 1. Fork the repository
 2. Create a branch: `git checkout -b fix/button-focus` or `feat/details-keyboard`
-3. Make sure you've read [AGENTS.md](./AGENTS.md) (architecture & principles)
+3. Make sure you've read [PRINCIPLES.md](./PRINCIPLES.md) (principles and red lines) and [AGENTS.md](./AGENTS.md) (architecture)
 
 #### Development
 
@@ -57,8 +68,10 @@ pnpm dev          # Start Vite dev server
 pnpm lint:css     # Check CSS
 pnpm lint:js      # Check JS
 pnpm test:unit    # Unit tests (when configured)
-pnpm test:ui      # UI smoke + a11y smoke (when configured)
+pnpm test:ui      # UI, axe, no-JS, reduced motion, forced colors (Chromium, Firefox, WebKit)
 pnpm build        # Full build
+pnpm check:size   # Size budgets (PRINCIPLES.md section 7)
+pnpm check:strings # Shipped strings (sentence case, no "OK" / "click here")
 ```
 
 #### What We Check
@@ -69,6 +82,25 @@ pnpm build        # Full build
 - **Accessibility:** Keyboard support, focus states, ARIA labels where needed
 - **Documentation:** Update README/docs if API changes
 - **Package boundaries:** `tokens → core → platform`, never the reverse
+
+#### Definition of done for a component
+
+Copy this into the PR description. An unticked line blocks the merge.
+
+```
+- [ ] Native element or API used where one exists; any ARIA is justified in the PR
+- [ ] Works with JS disabled (describe the no-JS state)
+- [ ] Keyboard: every action reachable; focus visible; keys documented
+- [ ] Screen reader: tested with NVDA, VoiceOver or TalkBack, or the statement says it was not
+- [ ] 320 px / 400 % zoom: no horizontal scroll, nothing clipped
+- [ ] forced-colors and prefers-reduced-motion checked
+- [ ] Contrast >= 4.5:1 text, >= 3:1 UI, in light, dark and high-contrast
+- [ ] Only semantic tokens; logical properties; no !important
+- [ ] Strings: sentence case, verb-first buttons, meaningful links, visible labels
+- [ ] Docs: When to use, When not to use, How it works, Content guidance, Keyboard and ARIA, Known issues
+- [ ] Tests added (axe and keyboard) and pnpm test:ui green
+- [ ] dist/ regenerated, check:pack updated, changeset added
+```
 
 #### Checklist Before PR
 
@@ -172,64 +204,24 @@ Before submitting a component:
 - [ ] Animations respect `prefers-reduced-motion`
 - [ ] No flashing >3/second
 
-### Focus Trap for Modals & Dialogs
+### Modals and dialogs
 
-For components that overlay the page (modals, dropdowns, popovers), use `createFocusTrap()` to prevent focus from escaping:
+Use a native `<dialog>` opened with `showModal()`. The browser traps focus, closes on Escape, makes the page behind inert and returns focus to the opener. Do not write a focus trap.
 
-```javascript
-// In your component's show/open handler:
-const modal = document.getElementById('my-modal');
-const trap = createFocusTrap(modal);
-trap.activate();  // Focus cycles within modal, Shift+Tab/Tab trap at boundaries
-
-// In your component's close/hide handler:
-trap.deactivate(); // Restore focus to the trigger element
-```
-
-**Behavior:**
-- On Tab in last focusable element → focus jumps to first
-- On Shift+Tab in first focusable element → focus jumps to last
-- Calls `.focus()` on previously active element when deactivated
-- Automatically skips hidden/disabled elements
-
-**Example: Modal trigger**
+Open and close it declaratively, with no JavaScript:
 
 ```html
-<button id="open-modal">Open Dialog</button>
-<dialog id="my-modal">
-  <h2>Confirm</h2>
-  <p>Are you sure?</p>
-  <button id="confirm">Confirm</button>
-  <button id="cancel">Cancel</button>
+<button type="button" commandfor="my-dialog" command="show-modal">Open dialog</button>
+
+<dialog class="cai-modal" id="my-dialog" aria-labelledby="my-dialog-title">
+  <h2 id="my-dialog-title">Delete this draft</h2>
+  <p>This cannot be undone.</p>
+  <button type="button" commandfor="my-dialog" command="close">Cancel</button>
+  <button type="button" commandfor="my-dialog" command="close">Delete draft</button>
 </dialog>
-
-<script>
-  const modal = document.getElementById('my-modal');
-  const trap = createFocusTrap(modal);
-
-  document.getElementById('open-modal').addEventListener('click', () => {
-    modal.showModal();
-    trap.activate();
-  });
-
-  document.getElementById('confirm').addEventListener('click', () => {
-    modal.close();
-    trap.deactivate();
-  });
-
-  document.getElementById('cancel').addEventListener('click', () => {
-    modal.close();
-    trap.deactivate();
-  });
-
-  // Also handle Escape key (browser does this for <dialog> by default)
-  modal.addEventListener('cancel', () => {
-    trap.deactivate();
-  });
-</script>
 ```
 
----
+`initModals()` (called by `cai.js`) only supplies the two commands in browsers that do not implement them yet.
 
 ## Documentation
 

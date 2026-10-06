@@ -46,7 +46,7 @@
   width: 56px;
   height: 56px;
   color: var(--cai-text-on-color);
-  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(var(--cai-shadow-icon));
   opacity: 0.9;
 }
 
@@ -134,28 +134,82 @@
   gap: var(--cai-space-01);
 }
 
+/* Seek and volume bars are native <input type="range">: pointer, touch,
+   keyboard (arrows, Home, End, PageUp/PageDown) and the slider semantics come
+   from the browser. JS only feeds --cai-seek (played share) and --cai-buf
+   (buffered share), both percentages. The element is 24px tall (WCAG 2.5.8);
+   the visible track is 4px. */
 .cai-player-seekbar {
-  position: relative;
+  --cai-seek: 0%;
+  --cai-buf: 0%;
+
+  appearance: none;
   flex: 1;
-  height: 4px;
-  background: var(--cai-border-subtle);
-  border-radius: var(--cai-radius-sm);
+  min-inline-size: 40px;
+  block-size: 24px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
   cursor: pointer;
-  min-width: 40px;
 }
 
-/* Invisible hit area: the 4px bar becomes a 24px-tall pointer target
-   (WCAG 2.5.8). Clicks on it land on the bar itself. */
-.cai-player-seekbar::before {
-  content: "";
-  position: absolute;
-  inset: -10px 0;
+.cai-player-seekbar::-webkit-slider-runnable-track {
+  block-size: 4px;
+  border-radius: var(--cai-radius-sm);
+  background: linear-gradient(
+    to right,
+    var(--cai-brand-primary) var(--cai-seek),
+    var(--cai-bg-ui-active) var(--cai-seek) var(--cai-buf),
+    var(--cai-border-subtle) var(--cai-buf)
+  );
 }
 
-.cai-player-seekbar:hover .cai-player-seekbar-thumb,
-.cai-player-seekbar:focus-visible .cai-player-seekbar-thumb {
-  opacity: 1;
-  transform: scale(1);
+.cai-player-seekbar::-moz-range-track {
+  block-size: 4px;
+  border-radius: var(--cai-radius-sm);
+  background: linear-gradient(
+    to right,
+    var(--cai-brand-primary) var(--cai-seek),
+    var(--cai-bg-ui-active) var(--cai-seek) var(--cai-buf),
+    var(--cai-border-subtle) var(--cai-buf)
+  );
+}
+
+/* A range input runs right to left in RTL: flip the gradient with it */
+.cai-player-seekbar:dir(rtl)::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to left,
+    var(--cai-brand-primary) var(--cai-seek),
+    var(--cai-bg-ui-active) var(--cai-seek) var(--cai-buf),
+    var(--cai-border-subtle) var(--cai-buf)
+  );
+}
+
+.cai-player-seekbar:dir(rtl)::-moz-range-track {
+  background: linear-gradient(
+    to left,
+    var(--cai-brand-primary) var(--cai-seek),
+    var(--cai-bg-ui-active) var(--cai-seek) var(--cai-buf),
+    var(--cai-border-subtle) var(--cai-buf)
+  );
+}
+
+.cai-player-seekbar::-webkit-slider-thumb {
+  appearance: none;
+  inline-size: 12px;
+  block-size: 12px;
+  margin-block-start: -4px; /* centre the thumb on the 4px track */
+  border: 0;
+  border-radius: 50%;
+  background: var(--cai-brand-primary);
+}
+
+.cai-player-seekbar::-moz-range-thumb {
+  inline-size: 12px;
+  block-size: 12px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--cai-brand-primary);
 }
 
 .cai-player-seekbar:focus-visible {
@@ -163,37 +217,23 @@
   outline-offset: 2px;
 }
 
-.cai-player-seekbar-buf,
-.cai-player-seekbar-fill {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  border-radius: var(--cai-radius-sm);
-  pointer-events: none;
+/* No JavaScript: the native controls of the media element are on screen and
+   the custom ones would do nothing, so they stay hidden. The MIDI player has
+   no native controls: it shows a download link instead. */
+:root:not([data-cai-js]) .cai-player-controls,
+:root:not([data-cai-js]) .cai-player-overlay {
+  display: none;
 }
 
-.cai-player-seekbar-buf {
-  background: var(--cai-bg-ui-active);
-}
-.cai-player-seekbar-fill {
-  background: var(--cai-brand-primary);
-  width: 0%;
+.cai-player-fallback {
+  margin: 0;
+  padding: var(--cai-space-04) var(--cai-space-05);
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-secondary);
 }
 
-.cai-player-seekbar-thumb {
-  position: absolute;
-  top: 50%;
-  width: 12px;
-  height: 12px;
-  background: var(--cai-brand-primary);
-  border-radius: 50%;
-  transform: translateY(-50%) scale(0);
-  transition: transform var(--cai-duration-fast),
-    opacity var(--cai-duration-fast);
-  opacity: 0;
-  pointer-events: none;
-  margin-left: -6px;
+[data-cai-js] .cai-player-fallback {
+  display: none;
 }
 
 .cai-player-volbar {
@@ -205,7 +245,7 @@
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
-  margin-left: var(--cai-space-03);
+  margin-inline-start: var(--cai-space-03);
   white-space: nowrap;
 }
 
@@ -226,15 +266,21 @@
   }
 }
 
-/* Forced colors flatten backgrounds to Canvas: keep the track, the fill and
-   the thumb of the seek and volume bars */
+/* Forced colors flatten backgrounds to Canvas: keep the track, the played
+   part and the thumb of the seek and volume bars */
 @media (forced-colors: active) {
-  .cai-player-seekbar {
-    border: 1px solid CanvasText;
+  .cai-player-seekbar::-webkit-slider-runnable-track,
+  .cai-player-seekbar::-moz-range-track {
+    forced-color-adjust: none;
+    background: linear-gradient(
+      to right,
+      Highlight var(--cai-seek),
+      CanvasText var(--cai-seek)
+    );
   }
 
-  .cai-player-seekbar-fill,
-  .cai-player-seekbar-thumb {
+  .cai-player-seekbar::-webkit-slider-thumb,
+  .cai-player-seekbar::-moz-range-thumb {
     forced-color-adjust: none;
     background: Highlight;
   }

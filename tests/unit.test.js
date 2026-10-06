@@ -199,7 +199,6 @@ describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
       "highlight.js",
       "player.js",
       "tabs.js",
-      "toggle.js",
     ]) {
       expect(existsSync(resolve(coreDist, f))).toBe(true);
     }

@@ -7,6 +7,8 @@
  * wire up delegation, or use copyToClipboard() directly.
  */
 
+import { enableJs } from "./utils.js";
+
 const LIVE_REGION_ID = "cai-live-region";
 let clearAnnouncement;
 
@@ -126,6 +128,7 @@ function initCopyA11y() {
  * Wire up delegated click + keyboard handling for all copy targets.
  */
 export function initCopyButtons() {
+  enableJs();
   initCopyA11y();
   // Create the live region up front: some screen readers ignore a region
   // that is inserted and filled at the same time.

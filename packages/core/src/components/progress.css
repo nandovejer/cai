@@ -1,22 +1,39 @@
 /* --------------------------------------------------------------------------
    CAI Component: progress
-   Progress bar
+   Progress bar — native <progress class="cai-progress" value max>.
+   The browser exposes the role, the value and the "indeterminate" state
+   (no value attribute); CSS only draws it. Name it with aria-label or a
+   <label>, and put the figure in the label ("Upload, 25%").
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
 .cai-progress {
-  height: 8px;
+  appearance: none;
+  display: block;
+  inline-size: 100%;
+  block-size: 8px;
+  border: 0;
+  border-radius: var(--cai-radius-sm);
   background: var(--cai-border-subtle);
   overflow: hidden;
+  accent-color: var(--cai-brand-primary);
+}
+
+.cai-progress::-webkit-progress-bar {
+  background: var(--cai-border-subtle);
   border-radius: var(--cai-radius-sm);
 }
 
-.cai-progress__fill {
-  height: 100%;
+.cai-progress::-webkit-progress-value {
   background: var(--cai-brand-primary);
-  transition: width 0.3s var(--cai-easing-enter);
+  border-radius: var(--cai-radius-sm);
+  transition: inline-size var(--cai-duration-slow) var(--cai-easing-enter);
+}
+
+.cai-progress::-moz-progress-bar {
+  background: var(--cai-brand-primary);
   border-radius: var(--cai-radius-sm);
 }
 
@@ -24,10 +41,11 @@
 @media (forced-colors: active) {
   .cai-progress {
     border: 1px solid CanvasText;
+    forced-color-adjust: none;
   }
 
-  .cai-progress__fill {
-    forced-color-adjust: none;
+  .cai-progress::-webkit-progress-value,
+  .cai-progress::-moz-progress-bar {
     background: Highlight;
   }
 }

@@ -1,27 +1,11 @@
 /**
  * CAI Design System — Sidebar
- * Navigation active state (IntersectionObserver) + mobile drawer.
+ * Navigation active state (scroll spy). The mobile drawer is a native
+ * popover (<nav class="cai-sidebar" popover> + <button popovertarget>) and
+ * needs no script; this module only enhances it.
  *
- * Importing this module has no side effects; call initSidebar() to wire
- * up navigation, or use openSidebar()/closeSidebar() directly.
+ * Importing this module has no side effects; call initSidebar() to enable it.
  */
-
-let sidebarReturnFocusTarget = null;
-
-const getSidebar = () => document.querySelector(".cai-sidebar");
-const getToggle = () => document.querySelector(".cai-nav-toggle");
-const getOverlay = () => document.querySelector(".cai-nav-overlay");
-
-function getSidebarFocusableElements() {
-  const sidebar = getSidebar();
-  return sidebar
-    ? Array.from(
-        sidebar.querySelectorAll(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
-        ),
-      )
-    : [];
-}
 
 function focusSidebarTarget(targetEl) {
   if (!targetEl) return;
@@ -37,32 +21,13 @@ function focusSidebarTarget(targetEl) {
   focusTarget.focus({ preventScroll: true });
 }
 
-export function openSidebar() {
-  sidebarReturnFocusTarget = document.activeElement;
-  getSidebar()?.classList.add("is-open");
-  getOverlay()?.classList.add("is-open");
-  getToggle()?.setAttribute("aria-expanded", "true");
-  document.body.style.overflow = "hidden";
-
-  requestAnimationFrame(() => {
-    getSidebarFocusableElements()[0]?.focus();
-  });
-}
-
-export function closeSidebar({ restoreFocus = true } = {}) {
-  getSidebar()?.classList.remove("is-open");
-  getOverlay()?.classList.remove("is-open");
-  getToggle()?.setAttribute("aria-expanded", "false");
-  document.body.style.overflow = "";
-
-  if (restoreFocus) {
-    const focusTarget = sidebarReturnFocusTarget || getToggle();
-    requestAnimationFrame(() => {
-      focusTarget?.focus();
-    });
+/** True when `el` is a popover that is currently showing. */
+function isOpenPopover(el) {
+  try {
+    return el.matches(":popover-open");
+  } catch {
+    return false; // browser without the popover API
   }
-
-  sidebarReturnFocusTarget = null;
 }
 
 /**
@@ -126,45 +91,24 @@ export function initSidebar() {
     if (section) observer.observe(section);
   }
 
-  // --- Drawer controls ---
-  getToggle()?.addEventListener("click", () => {
-    const isOpen = getSidebar()?.classList.contains("is-open");
-    isOpen ? closeSidebar() : openSidebar();
-  });
-
-  getOverlay()?.addEventListener("click", closeSidebar);
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && getSidebar()?.classList.contains("is-open"))
-      closeSidebar();
-  });
-
   // --- Sidebar link navigation ---
-  document.body.addEventListener("click", (e) => {
-    const link = e.target.closest(".cai-sidebar__link");
+  // The browser scrolls to the #fragment (smooth unless the user prefers
+  // reduced motion, see elements/document.css). This only keeps the active
+  // link in step and closes the drawer, which a popover does not do itself.
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest?.(".cai-sidebar__link");
     if (!link) return;
 
-    // Only in-page #fragment links scroll; real URLs navigate normally
     const targetId = link.getAttribute("href");
     const targetEl = targetId?.startsWith("#")
       ? document.getElementById(targetId.slice(1))
       : null;
-    if (targetEl) {
-      updateActiveState(link);
-      const reduceMotion = window.matchMedia?.(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
-      targetEl.scrollIntoView({
-        behavior: reduceMotion ? "auto" : "smooth",
-        block: "start",
-      });
-    }
-    // On mobile, close the drawer when navigating
-    if (window.innerWidth <= 768) {
-      closeSidebar({ restoreFocus: false });
-      requestAnimationFrame(() => {
-        focusSidebarTarget(targetEl);
-      });
+    if (targetEl) updateActiveState(link);
+
+    const drawer = link.closest(".cai-sidebar[popover]");
+    if (drawer && isOpenPopover(drawer)) {
+      drawer.hidePopover();
+      requestAnimationFrame(() => focusSidebarTarget(targetEl));
     }
   });
 }

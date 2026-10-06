@@ -1,12 +1,16 @@
 /* ==========================================================================
    CAI — 6. UTILITIES
-   Single-purpose helper classes. Deliberately high specificity.
+   Single-purpose helper classes. They win by layer order (@layer utilities
+   is declared last), never by !important.
    Prefix: .u-
    ========================================================================== */
 
 /* Display */
+[hidden]:not([hidden="until-found"]) {
+  display: none;
+}
 .u-hidden {
-  display: none !important;
+  display: none;
 }
 .u-sr-only {
   position: absolute;
@@ -22,13 +26,13 @@
 
 /* Text */
 .u-text-mono {
-  font-family: var(--cai-font-mono) !important;
+  font-family: var(--cai-font-mono);
 }
 .u-text-primary {
-  color: var(--cai-text-primary) !important;
+  color: var(--cai-text-primary);
 }
 .u-text-muted {
-  color: var(--cai-text-secondary) !important;
+  color: var(--cai-text-secondary);
 }
 .u-truncate {
   overflow: hidden;
@@ -57,16 +61,16 @@
 
 /* Spacing (margin-bottom) */
 .u-mb-0 {
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
 }
 .u-mb-sm {
-  margin-bottom: var(--cai-space-03) !important;
+  margin-bottom: var(--cai-space-03);
 }
 .u-mb-md {
-  margin-bottom: var(--cai-space-05) !important;
+  margin-bottom: var(--cai-space-05);
 }
 .u-mb-lg {
-  margin-bottom: var(--cai-space-07) !important;
+  margin-bottom: var(--cai-space-07);
 }
 
 /* State */

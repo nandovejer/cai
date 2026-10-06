@@ -30,6 +30,9 @@ export default [
         clearInterval: "readonly",
         console: "readonly",
         URL: "readonly",
+        location: "readonly",
+        HTMLButtonElement: "readonly",
+        HTMLDialogElement: "readonly",
         // Node (build scripts)
         process: "readonly",
         Buffer: "readonly",
@@ -45,6 +48,13 @@ export default [
       eqeqeq: ["error", "always"],
       "no-unused-expressions": ["error", { allowShortCircuit: true, allowTernary: true }],
       "no-empty": ["error", { allowEmptyCatch: true }],
+      // PRINCIPLES.md red line 20: feature detection only, never browser sniffing
+      "no-restricted-properties": [
+        "error",
+        { object: "navigator", property: "userAgent", message: "Feature-detect instead of sniffing the browser." },
+        { object: "navigator", property: "vendor", message: "Feature-detect instead of sniffing the browser." },
+        { object: "navigator", property: "platform", message: "Feature-detect instead of sniffing the browser." },
+      ],
     },
   },
   {

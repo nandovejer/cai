@@ -16,7 +16,6 @@ import { initModals } from "./modal.js";
 import { initHighlight } from "./highlight.js";
 import { initPlayers } from "./player.js";
 import { initTabs } from "./tabs.js";
-import { initToggles } from "./toggle.js";
 
 export {
   MODES,
@@ -28,9 +27,9 @@ export {
   applyMode,
   initThemeSystem,
 } from "./theme.js";
-export { openSidebar, closeSidebar, initSidebar } from "./sidebar.js";
+export { initSidebar } from "./sidebar.js";
 export { copyToClipboard, initCopyButtons } from "./clipboard.js";
-export { createFocusTrap, initModals } from "./modal.js";
+export { initModals, supportsCommands } from "./modal.js";
 export { highlightBlock, initHighlight } from "./highlight.js";
 export {
   initSeekbar,
@@ -41,7 +40,6 @@ export {
   initPlayers,
 } from "./player.js";
 export { activateTab, initTabs } from "./tabs.js";
-export { setToggleState, initToggles } from "./toggle.js";
 export {
   formatTime,
   isCustomTheme,
@@ -75,7 +73,6 @@ function boot() {
   initHighlight();
   initPlayers();
   initTabs();
-  initToggles();
 }
 
 if (typeof document !== "undefined") {

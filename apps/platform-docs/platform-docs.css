@@ -61,7 +61,9 @@
   opacity: 0.5;
 }
 
+/* This app rule is unlayered, so it beats core's layered .is-active: restate it */
 .cai-sidebar__link--sub.is-active {
+  color: var(--cai-sidebar-active-text);
   font-weight: 400;
 }
 

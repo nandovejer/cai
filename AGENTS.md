@@ -1,6 +1,6 @@
 # CAI Design System — agent context
 
-**See [VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md) for architectural principles, [STRUCTURE.md](./.claude/STRUCTURE.md) for directory layout, and [QUICK-REFERENCE.md](./.claude/QUICK-REFERENCE.md) for naming, tokens, and commands.**
+**See [PRINCIPLES.md](./PRINCIPLES.md) for the principles and red lines every change must respect, [VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md) for architectural principles, [STRUCTURE.md](./.claude/STRUCTURE.md) for directory layout, and [QUICK-REFERENCE.md](./.claude/QUICK-REFERENCE.md) for naming, tokens, and commands.**
 
 ---
 
@@ -22,19 +22,18 @@ Every font file shipped by a package must be under the MIT License, with its not
 
 ## JS in `packages/core/src/`
 
-Vanilla JS, ES modules — one module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/toggle`, `/utils`, `/midi`.
+Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/midi`.
 
 | Module         | Key exports                                                    |
 | -------------- | -------------------------------------------------------------- |
 | `theme.js`     | `applyTheme(theme)` (sets `data-theme` on `<html>`, persists), `applyMode`, `getInitialTheme`, `initThemeSystem()` |
-| `sidebar.js`   | `openSidebar()` / `closeSidebar()` (mobile drawer + overlay), `initSidebar()` |
+| `sidebar.js`   | `initSidebar()` — scroll-spy active link; closes the popover drawer on navigation |
 | `clipboard.js` | `copyToClipboard(text, el, type)` (visual feedback), `initCopyButtons()` |
-| `modal.js`     | `createFocusTrap(el)`, `initModals()`                          |
+| `modal.js`     | `initModals()` — fallback for `command`/`commandfor` on a native `<dialog>`; `supportsCommands()` |
 | `highlight.js` | `highlightBlock(pre)` — dependency-free highlight for `pre.cai-code-block`, `initHighlight()` |
 | `player.js`    | `initSeekbar(bar, onSeek)`, `wrapHTMLMedia(el)`, `bindPlayerUI(root, controls, mediaLike)`, `mountPlayer(root)`, `mountMidiPlayer(root)` (async), `initPlayers()` |
-| `tabs.js`      | `activateTab(tab)`, `initTabs()`                               |
-| `toggle.js`    | `setToggleState(track, checked)`, `initToggles()`              |
-| `utils.js`     | `formatTime(seconds)` (`mm:ss`), `escapeHtml`, `calculateProgress`, … (pure, unit-tested) |
+| `tabs.js`      | `activateTab(tab)`, `initTabs()` — upgrades linked panels to the ARIA tabs pattern |
+| `utils.js`     | `formatTime(seconds)` (`mm:ss`), `escapeHtml`, `calculateProgress`, `enableJs()` (sets `data-cai-js` on `<html>`), … |
 | `midi.js`      | `MidiPlayer` — MIDI Format 0/1 parser + Web Audio scheduler (lazy-loaded chunk) |
 
 ---
@@ -62,8 +61,10 @@ Vanilla JS, ES modules — one module per concern, all re-exported (and auto-ini
 1. **Check first:** is there a native HTML element or browser API that solves this? (`dialog`, `details`, `popover`, `<input type="...">`, CSS `:has()`, etc.). If so, use it as the base.
 2. Create `packages/core/src/components/<name>.css` (use the standard header of the sibling files) and add its `@import` to `packages/core/src/components/index.css` in cascade order
 3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./.claude/DIST-RULES.md)), then `node scripts/check-pack.js --update`
-4. Document in `apps/docs/index.html`: add a section with an id, sidebar link, demo, and a Keyboard & ARIA subsection
+4. Document it in `apps/landing/index.html` (the component showcase): a demo article with an id, and a `<details class="landing-guide">` with the six guidance headings (`h-<id>-when`, `-when-not`, `-how`, `-content`, `-keyboard`, `-issues`), then add it to the list in the "every component has the six guidance sections" test. State the no-JS behavior and any known issue in the statement in `apps/docs/index.html`
 5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/showcase.css`
+
+**Before delivering anything, read [PRINCIPLES.md](./PRINCIPLES.md): its red lines are enforced by stylelint, ESLint, `pnpm check:size`, `pnpm check:strings` and the Playwright suites (axe, no-JS, reduced motion, forced colors).**
 
 **Vanilla checklist before delivering any JS:**
 

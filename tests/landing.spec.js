@@ -24,7 +24,7 @@ const primitiveColors = Object.entries(tokens.color).flatMap(([family, steps]) =
 const semanticCss = readFileSync(fromRepo('packages/tokens/src/semantic.css'), 'utf-8');
 const lightBlock = semanticCss.slice(
   semanticCss.indexOf('[data-theme="light"] {'),
-  semanticCss.indexOf('[data-theme="dark"] {'),
+  semanticCss.indexOf('[data-theme="dark"],'),
 );
 const semanticTokens = [...lightBlock.matchAll(/^\s*(--cai-[\w-]+):/gm)].map((m) => m[1]);
 
@@ -105,14 +105,11 @@ test.describe('Landing page', () => {
           'data-landing-mode',
           mode,
         );
-        await expect(page.locator('.cai-theme-btn.is-active')).toHaveAttribute(
-          'data-landing-mode',
-          mode,
-        );
+        await expect(page.locator('input[name="cai-theme"]:checked')).toHaveValue(mode);
       }
 
       // The sidebar specimen's buttons drive the same mode
-      await page.click('.cai-theme-btn[data-landing-mode="dark"]');
+      await page.click('.cai-theme-btn:has(input[value="dark"])');
       expect(await theme(page)).toBe('dark');
       await expect(page.locator('.landing-modes [aria-pressed="true"]')).toHaveAttribute(
         'data-landing-mode',
@@ -408,6 +405,41 @@ test.describe('Landing page', () => {
       expectAll(await text('#c-settings'), [...settingNames('z'), ...settingNames('bp')]);
     });
 
+    test('tabs: arrow keys, Home and End move between tabs and show their panel', async ({ page }) => {
+      await open(page);
+
+      await page.focus('#tab-summary');
+      await expect(page.locator('#tab-summary')).toHaveAttribute('role', 'tab');
+      await page.keyboard.press('ArrowRight');
+      await expect(page.locator('#tab-settings')).toBeFocused();
+      await expect(page.locator('#tab-settings')).toHaveAttribute('aria-selected', 'true');
+      await expect(page.locator('#panel-settings')).toBeVisible();
+      await expect(page.locator('#panel-summary')).toBeHidden();
+
+      await page.keyboard.press('End');
+      await expect(page.locator('#tab-logs')).toBeFocused();
+      await page.keyboard.press('Home');
+      await expect(page.locator('#tab-summary')).toBeFocused();
+      await page.keyboard.press('ArrowLeft');
+      await expect(page.locator('#tab-logs')).toBeFocused();
+    });
+
+    test('every component has the six guidance sections', async ({ page }) => {
+      await open(page);
+
+      const ids = [
+        'c-button', 'c-copy', 'c-form', 'c-tag', 'c-avatar', 'c-progress', 'c-tooltip',
+        'c-card', 'c-figure', 'c-table', 'c-code', 'c-icons', 'c-alert', 'c-toast',
+        'c-modal', 'c-tabs', 'c-breadcrumb', 'c-sidebar', 'c-player',
+      ];
+      const sections = ['when', 'when-not', 'how', 'content', 'keyboard', 'issues'];
+      for (const id of ids) {
+        for (const section of sections) {
+          await expect(page.locator(`#h-${id}-${section}`), `${id} ${section}`).toHaveCount(1);
+        }
+      }
+    });
+
     test('every core component file has a demo', async ({ page }) => {
       await open(page);
 
@@ -448,14 +480,14 @@ test.describe('Landing page', () => {
       // Toggle drives the motion demo without extra JS
       const dot = page.locator('#c-motion .landing-motion__dot').first();
       const before = await dot.evaluate((el) => getComputedStyle(el).insetInlineStart);
-      await page.click('#c-motion .cai-toggle__track');
-      await expect(page.locator('#c-motion .cai-toggle__track')).toHaveAttribute('aria-checked', 'true');
+      await page.click('#c-motion .cai-toggle');
+      await expect(page.locator('#c-motion .cai-toggle__input')).toBeChecked();
       await expect
         .poll(() => dot.evaluate((el) => getComputedStyle(el).insetInlineStart))
         .not.toBe(before);
 
       // Modal
-      await page.click('[data-modal-trigger="landing-modal"]');
+      await page.click('[commandfor="landing-modal"][command="show-modal"]');
       await expect(page.locator('#landing-modal')).toBeVisible();
       await page.keyboard.press('Escape');
       await expect(page.locator('#landing-modal')).toBeHidden();
@@ -674,14 +706,20 @@ test.describe('Landing page', () => {
       await page.keyboard.press('Enter');
       await expect(page.locator('#main-content')).toBeFocused();
 
-      const trigger = page.locator('[data-modal-trigger="landing-modal"]');
+      const trigger = page.locator('[commandfor="landing-modal"][command="show-modal"]');
       await trigger.focus();
       await page.keyboard.press('Enter');
       await expect(page.locator('#landing-modal')).toBeVisible();
+      // The browser traps focus in a modal <dialog>: it may rest on the
+      // browser's own controls (body here), never on the page behind
       for (let i = 0; i < 5; i += 1) {
         await page.keyboard.press('Tab');
         expect(
-          await page.evaluate(() => Boolean(document.activeElement.closest('#landing-modal'))),
+          await page.evaluate(
+            () =>
+              document.activeElement === document.body ||
+              Boolean(document.activeElement.closest('#landing-modal')),
+          ),
         ).toBe(true);
       }
       await page.keyboard.press('Escape');

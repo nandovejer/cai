@@ -46,9 +46,21 @@ function inlineCssImports(filePath, seen = new Set()) {
   seen.add(filePath);
   const dir = dirname(filePath);
   return readFileSync(filePath, "utf-8").replace(
-    /@import\s+url\(\s*["']?(\.[^"')]+)["']?\s*\)\s*;/g,
-    (_, relPath) => inlineCssImports(resolve(dir, relPath), seen),
+    /@import\s+url\(\s*["']?(\.[^"')]+)["']?\s*\)(?:\s+layer\(\s*([\w.-]+)\s*\))?\s*;/g,
+    (_, relPath, layer) => {
+      const css = inlineCssImports(resolve(dir, relPath), seen);
+      return layer ? `@layer ${layer} {\n${css}\n}\n` : css;
+    },
   );
+}
+
+/** Same order as src/index.css: every standalone file declares it first. */
+const LAYER_ORDER =
+  "@layer settings, generic, elements, objects, components, utilities;\n";
+
+/** Wrap a standalone source file in its cascade layer. */
+function inLayer(layer, css) {
+  return `${LAYER_ORDER}@layer ${layer} {\n${css}\n}\n`;
 }
 
 async function writeCssWithMin(outPath, css) {
@@ -63,9 +75,15 @@ await writeCssWithMin(resolve(distRoot, "cai.css"), css);
 console.log(`✓ Core CSS built → ${resolve(distRoot, "cai.css")} (+ min)`);
 
 // --- CSS: base layer required by per-component files ---
-const baseCss = ["settings/_settings.css", "generic/_reset.css", "elements/index.css"]
-  .map((f) => inlineCssImports(resolve(srcRoot, f)))
-  .join("\n");
+const baseCss =
+  LAYER_ORDER +
+  [
+    ["settings/_settings.css", "settings"],
+    ["generic/_reset.css", "generic"],
+    ["elements/index.css", "elements"],
+  ]
+    .map(([f, layer]) => `@layer ${layer} {\n${inlineCssImports(resolve(srcRoot, f))}\n}\n`)
+    .join("\n");
 await writeCssWithMin(resolve(distRoot, "base.css"), baseCss);
 console.log(`✓ Base CSS built → ${resolve(distRoot, "base.css")} (+ min)`);
 
@@ -79,7 +97,7 @@ const componentFiles = readdirSync(componentsSrcDir).filter(
 for (const f of componentFiles) {
   await writeCssWithMin(
     resolve(componentsDistDir, f),
-    readFileSync(resolve(componentsSrcDir, f), "utf-8"),
+    inLayer("components", readFileSync(resolve(componentsSrcDir, f), "utf-8")),
   );
 }
 console.log(`✓ ${componentFiles.length} component CSS files → ${componentsDistDir} (+ min)`);
@@ -115,7 +133,6 @@ async function buildJS() {
       "highlight.js",
       "player.js",
       "tabs.js",
-      "toggle.js",
     ];
     for (const f of jsModules) {
       copyFileSync(resolve(srcRoot, f), resolve(distRoot, f));

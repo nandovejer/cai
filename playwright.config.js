@@ -18,6 +18,23 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: '**/nojs.spec.js',
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+      testIgnore: '**/nojs.spec.js',
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+      testIgnore: '**/nojs.spec.js',
+    },
+    // PRINCIPLES.md §3: every page must be usable with JavaScript off
+    {
+      name: 'chromium-nojs',
+      use: { ...devices['Desktop Chrome'], javaScriptEnabled: false },
+      testMatch: '**/nojs.spec.js',
     },
   ],
 

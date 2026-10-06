@@ -50,21 +50,20 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       await page.goto('/apps/platform-docs/index.html');
       await page.waitForLoadState('networkidle');
 
-      await page.click('.cai-theme-btn[data-theme="dark"]');
+      await page.click('.cai-theme-btn:has(input[value="dark"])');
 
       expect(await page.evaluate(() => localStorage.getItem('cai-theme'))).toBe('dark');
     });
 
-    test('theme switcher button should have aria-pressed', async ({ page }) => {
+    test('theme switcher is a native radio group that checks the active mode', async ({ page }) => {
       // The theme switcher lives in the platform docs footer
       await page.goto('/apps/platform-docs/index.html');
       await page.waitForLoadState('networkidle');
 
-      const themeBtn = await page.$('[data-theme][aria-pressed]');
-      expect(themeBtn).not.toBeNull();
-      
-      const ariaPressed = await themeBtn.getAttribute('aria-pressed');
-      expect(['true', 'false']).toContain(ariaPressed);
+      await expect(page.locator('fieldset.cai-theme-switcher legend')).toHaveText('Color mode');
+      await page.click('.cai-theme-btn:has(input[value="dark"])');
+      await expect(page.locator('input[name="cai-theme"][value="dark"]')).toBeChecked();
+      await expect(page.locator('input[name="cai-theme"][value="light"]')).not.toBeChecked();
     });
   });
 
@@ -78,31 +77,33 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       
       if (toggleBtn && sidebar) {
         // Initially closed
-        let isOpen = await sidebar.evaluate(el => el.classList.contains('is-open'));
+        let isOpen = await sidebar.evaluate(el => el.matches(':popover-open'));
         expect(isOpen).toBe(false);
         
         // Click to open
         await toggleBtn.click();
         await page.waitForTimeout(100);
         
-        isOpen = await sidebar.evaluate(el => el.classList.contains('is-open'));
+        isOpen = await sidebar.evaluate(el => el.matches(':popover-open'));
         expect(isOpen).toBe(true);
         
-        // Click to close
-        await toggleBtn.click();
+        // The open drawer sits in the top layer over the toggle: light dismiss
+        // (a click on the backdrop) closes it, as does Escape
+        await page.mouse.click(460, 400);
         await page.waitForTimeout(100);
         
-        isOpen = await sidebar.evaluate(el => el.classList.contains('is-open'));
+        isOpen = await sidebar.evaluate(el => el.matches(':popover-open'));
         expect(isOpen).toBe(false);
       }
     });
 
-    test('sidebar toggle should have aria-expanded', async ({ page }) => {
-      const toggleBtn = await page.$('.cai-nav-toggle[aria-expanded]');
+    test('sidebar toggle is a native popover trigger for the drawer', async ({ page }) => {
+      const toggleBtn = await page.$('.cai-nav-toggle[popovertarget]');
       expect(toggleBtn).not.toBeNull();
-      
-      const ariaExpanded = await toggleBtn.getAttribute('aria-expanded');
-      expect(['true', 'false']).toContain(ariaExpanded);
+
+      const target = await toggleBtn.getAttribute('popovertarget');
+      const drawer = await page.$(`#${target}[popover]`);
+      expect(drawer).not.toBeNull();
     });
 
     test('should close sidebar with Escape key on mobile', async ({ page }) => {
@@ -115,14 +116,14 @@ test.describe('CAI Design System UI Smoke Tests', () => {
         await toggleBtn.click();
         await page.waitForTimeout(100);
         
-        let isOpen = await sidebar.evaluate(el => el.classList.contains('is-open'));
+        let isOpen = await sidebar.evaluate(el => el.matches(':popover-open'));
         expect(isOpen).toBe(true);
         
         // Press Escape
         await page.keyboard.press('Escape');
         await page.waitForTimeout(100);
         
-        isOpen = await sidebar.evaluate(el => el.classList.contains('is-open'));
+        isOpen = await sidebar.evaluate(el => el.matches(':popover-open'));
         expect(isOpen).toBe(false);
       }
     });
@@ -131,10 +132,10 @@ test.describe('CAI Design System UI Smoke Tests', () => {
   test.describe('Modal Keyboard & Focus', () => {
     test('should open modal when trigger is clicked', async ({ page }) => {
       // Find a modal trigger button
-      const trigger = await page.$('[data-modal-trigger]');
+      const trigger = await page.$('[commandfor][command="show-modal"]');
       if (!trigger) return;
       
-      const modalId = await trigger.getAttribute('data-modal-trigger');
+      const modalId = await trigger.getAttribute('commandfor');
       const modal = await page.$(`#${modalId}`);
       
       if (modal) {
@@ -150,12 +151,12 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     test('should close modal with Escape key', async ({ page }) => {
-      const trigger = await page.$('[data-modal-trigger]');
+      const trigger = await page.$('[commandfor][command="show-modal"]');
       if (!trigger) return;
       
-      const modalId = await trigger.getAttribute('data-modal-trigger');
+      const modalId = await trigger.getAttribute('commandfor');
       const modal = await page.$(`#${modalId}`);
-      const closeBtn = await page.$(`[data-modal-close="${modalId}"]`);
+      const closeBtn = await page.$(`[commandfor="${modalId}"][command="close"]`);
       
       if (modal && closeBtn) {
         // Open modal
@@ -175,11 +176,11 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     test('should close modal when close button is clicked', async ({ page }) => {
-      const trigger = await page.$('[data-modal-trigger]');
+      const trigger = await page.$('[commandfor][command="show-modal"]');
       if (!trigger) return;
       
-      const modalId = await trigger.getAttribute('data-modal-trigger');
-      const closeBtn = await page.$(`[data-modal-close="${modalId}"]`);
+      const modalId = await trigger.getAttribute('commandfor');
+      const closeBtn = await page.$(`[commandfor="${modalId}"][command="close"]`);
       const modal = await page.$(`#${modalId}`);
       
       if (modal && closeBtn) {
@@ -200,10 +201,10 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     test('modal should have role="dialog" or be a dialog element', async ({ page }) => {
-      const trigger = await page.$('[data-modal-trigger]');
+      const trigger = await page.$('[commandfor][command="show-modal"]');
       if (!trigger) return;
       
-      const modalId = await trigger.getAttribute('data-modal-trigger');
+      const modalId = await trigger.getAttribute('commandfor');
       const modal = await page.$(`#${modalId}`);
       
       if (modal) {

@@ -46,6 +46,11 @@
   color: var(--cai-brand-primary);
 }
 
+/* Needs JavaScript: hidden until it runs */
+:root:not([data-cai-js]) .elements-modes {
+  display: none;
+}
+
 .elements-modes {
   display: flex;
   gap: var(--cai-space-02);

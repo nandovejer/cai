@@ -6,50 +6,29 @@
    -------------------------------------------------------------------------- */
 
 
+/* Native <dialog> opened with showModal(): the browser supplies the top
+   layer, the centering (margin: auto), the inert page behind it, the focus
+   trap, Escape and focus restoration. CSS only draws the surface. */
 .cai-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: var(--cai-z-modal);
   background: var(--cai-bg-ui);
+  color: var(--cai-text-primary);
   border: 1px solid var(--cai-border-subtle);
   border-radius: var(--cai-radius-lg);
   box-shadow: var(--cai-shadow-lg);
   padding: var(--cai-space-08);
-  max-width: min(90vw, 600px);
-  max-height: 90vh;
+  max-inline-size: min(90vw, 600px);
+  max-block-size: 90vh;
   overflow-y: auto;
-  animation: cai-fade-in var(--cai-duration-fast) ease-out;
-  display: none;
 }
 
 .cai-modal[open] {
-  display: block;
+  animation: cai-fade-in var(--cai-duration-fast) ease-out;
 }
 
 .cai-modal::backdrop {
-  /* Fallback for browsers where ::backdrop doesn't inherit custom properties */
-  background: var(--cai-bg-overlay, rgba(0, 0, 0, 0.5));
-  backdrop-filter: blur(2px);
-  animation: cai-fade-in var(--cai-duration-fast) ease-out;
-}
-
-/* For div-based modals (when not using <dialog> element) */
-.cai-modal-overlay {
-  position: fixed;
-  inset: 0;
   background: var(--cai-bg-overlay);
   backdrop-filter: blur(2px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: var(--cai-z-modal);
   animation: cai-fade-in var(--cai-duration-fast) ease-out;
-}
-
-.cai-modal-overlay.is-hidden {
-  display: none;
 }
 
 /* Modal content structure */
@@ -67,7 +46,7 @@
 }
 
 .cai-modal__close {
-  float: right;
+  float: inline-end;
   display: inline-flex;
   align-items: center;
   justify-content: center;

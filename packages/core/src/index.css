@@ -7,12 +7,17 @@
      4. Objects    — layout abstractions (.o-)
      5. Components — UI components (.cai-)
      6. Utilities  — single-purpose helpers (.u-)
+   Every layer is a native CSS cascade layer (@layer), so utilities win over
+   components by order, not by !important, and any unlayered consumer CSS
+   wins over all of core.
    Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
    ========================================================================== */
 
-@import url("./settings/_settings.css");
-@import url("./generic/_reset.css");
-@import url("./elements/index.css");
-@import url("./objects/_objects.css");
-@import url("./components/index.css");
-@import url("./utilities/_utilities.css");
+@layer settings, generic, elements, objects, components, utilities;
+
+@import url("./settings/_settings.css") layer(settings);
+@import url("./generic/_reset.css") layer(generic);
+@import url("./elements/index.css") layer(elements);
+@import url("./objects/_objects.css") layer(objects);
+@import url("./components/index.css") layer(components);
+@import url("./utilities/_utilities.css") layer(utilities);

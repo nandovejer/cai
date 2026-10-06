@@ -8,77 +8,33 @@
  * for a single one.
  */
 
-import { formatTime } from "./utils.js";
+import { enableJs, formatTime } from "./utils.js";
+
+/** Share (0-1) a range input currently stands at. */
+function rangeShare(bar) {
+  const max = Number(bar.max) || 1;
+  return Math.max(0, Math.min(1, Number(bar.value) / max));
+}
+
+/** Put a range input at `share` (0-1) and mirror it in --cai-seek. */
+function setRange(bar, share, valueText) {
+  const clamped = Math.max(0, Math.min(1, share));
+  bar.value = String(clamped * (Number(bar.max) || 1));
+  bar.style.setProperty("--cai-seek", clamped * 100 + "%");
+  if (valueText) bar.setAttribute("aria-valuetext", valueText);
+}
 
 /**
- * Seekbar drag logic — shared by seek and volume bars.
- * @param {HTMLElement} bar   - .cai-player-seekbar element
- * @param {Function}    onSeek - called with value 0-1 during drag and on click
+ * Seek and volume bars are native <input type="range" class="cai-player-seekbar">.
+ * Pointer, touch and keyboard handling belong to the browser; this only
+ * reports the new position as a share from 0 to 1.
+ * @param {HTMLInputElement} bar
+ * @param {Function}         onSeek - called with 0-1 whenever the user moves it
  */
 export function initSeekbar(bar, onSeek) {
-  let dragging = false;
-
-  function valueFromEvent(e) {
-    const rect = bar.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    return Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-  }
-
-  bar.addEventListener("mousedown", (e) => {
-    e.preventDefault();
-    dragging = true;
-    onSeek(valueFromEvent(e));
-  });
-
-  bar.addEventListener(
-    "touchstart",
-    (e) => {
-      dragging = true;
-      onSeek(valueFromEvent(e));
-    },
-    { passive: true },
-  );
-
-  document.addEventListener("mousemove", (e) => {
-    if (dragging) onSeek(valueFromEvent(e));
-  });
-
-  document.addEventListener(
-    "touchmove",
-    (e) => {
-      if (dragging) onSeek(valueFromEvent(e));
-    },
-    { passive: true },
-  );
-
-  document.addEventListener("mouseup", () => {
-    dragging = false;
-  });
-  document.addEventListener("touchend", () => {
-    dragging = false;
-  });
-
-  // Keyboard: left/right arrows ±5%, Home/End
-  bar.addEventListener("keydown", (e) => {
-    const fill = bar.querySelector(".cai-player-seekbar-fill");
-    const current = parseFloat(fill?.style.width || "0") / 100;
-    const step = 0.05;
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      onSeek(Math.min(1, current + step));
-    }
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      onSeek(Math.max(0, current - step));
-    }
-    if (e.key === "Home") {
-      e.preventDefault();
-      onSeek(0);
-    }
-    if (e.key === "End") {
-      e.preventDefault();
-      onSeek(1);
-    }
+  bar.addEventListener("input", () => {
+    bar.style.setProperty("--cai-seek", rangeShare(bar) * 100 + "%");
+    onSeek(rangeShare(bar));
   });
 }
 
@@ -146,11 +102,7 @@ export function bindPlayerUI(root, controls, mediaLike) {
   const seekbar = controls.querySelector(
     ".cai-player-progress-row .cai-player-seekbar",
   );
-  const seekFill = seekbar?.querySelector(".cai-player-seekbar-fill");
-  const seekThumb = seekbar?.querySelector(".cai-player-seekbar-thumb");
   const volbar = controls.querySelector(".cai-player-volbar");
-  const volFill = volbar?.querySelector(".cai-player-seekbar-fill");
-  const volThumb = volbar?.querySelector(".cai-player-seekbar-thumb");
   const currentEl = controls.querySelector(".cai-player-current");
   const durationEl = controls.querySelector(".cai-player-duration");
 
@@ -174,17 +126,19 @@ export function bindPlayerUI(root, controls, mediaLike) {
 
   function updateSeekUI() {
     if (!mediaLike.duration) return;
-    const pct = (mediaLike.currentTime / mediaLike.duration) * 100;
-    if (seekFill) seekFill.style.width = pct + "%";
-    if (seekThumb) seekThumb.style.left = pct + "%";
-    if (seekbar) seekbar.setAttribute("aria-valuenow", Math.round(pct));
+    const share = mediaLike.currentTime / mediaLike.duration;
+    if (seekbar) {
+      setRange(
+        seekbar,
+        share,
+        `${formatTime(mediaLike.currentTime)} of ${formatTime(mediaLike.duration)}`,
+      );
+    }
     if (currentEl) currentEl.textContent = formatTime(mediaLike.currentTime);
   }
 
   function updateVolumeUI(v) {
-    if (volFill) volFill.style.width = v * 100 + "%";
-    if (volThumb) volThumb.style.left = v * 100 + "%";
-    if (volbar) volbar.setAttribute("aria-valuenow", Math.round(v * 100));
+    if (volbar) setRange(volbar, v, `${Math.round(v * 100)}%`);
   }
 
   // ---- Wire media events to UI ----
@@ -198,8 +152,7 @@ export function bindPlayerUI(root, controls, mediaLike) {
   mediaLike.on("pause", () => setPlayState(false));
   mediaLike.on("ended", () => {
     setPlayState(false);
-    if (seekFill) seekFill.style.width = "0%";
-    if (seekThumb) seekThumb.style.left = "0%";
+    if (seekbar) setRange(seekbar, 0, "");
     if (currentEl) currentEl.textContent = "0:00";
   });
   mediaLike.on("volumechange", () => {
@@ -271,11 +224,16 @@ export function mountPlayer(root) {
 
   const controls = root.querySelector(".cai-player-controls");
   const mediaWrap = root.querySelector(".cai-player-media-wrap"); // video only
-  const seekBuf = controls?.querySelector(
-    ".cai-player-progress-row .cai-player-seekbar .cai-player-seekbar-buf",
+  const seekbar = controls?.querySelector(
+    ".cai-player-progress-row .cai-player-seekbar",
   );
   const pipBtn = root.querySelector(".cai-player-pip");
   const fsBtn = root.querySelector(".cai-player-fullscreen");
+
+  // The native controls were the no-JavaScript interface; the custom UI
+  // replaces them now that it is about to be bound.
+  media.controls = false;
+  media.removeAttribute("controls");
 
   const wrapped = wrapHTMLMedia(media);
 
@@ -293,12 +251,14 @@ export function mountPlayer(root) {
 
   // ---- Video-specific: buffer progress ----
   function updateBuffer() {
-    if (!media.duration || !seekBuf) return;
+    if (!media.duration || !seekbar) return;
     try {
       const buf = media.buffered;
       if (buf.length > 0) {
-        seekBuf.style.width =
-          (buf.end(buf.length - 1) / media.duration) * 100 + "%";
+        seekbar.style.setProperty(
+          "--cai-buf",
+          (buf.end(buf.length - 1) / media.duration) * 100 + "%",
+        );
       }
     } catch (_) {}
   }
@@ -429,6 +389,7 @@ export async function mountMidiPlayer(root) {
  * Mount every .cai-player on the page (video, audio, and MIDI).
  */
 export function initPlayers() {
+  enableJs();
   document.querySelectorAll(".cai-player").forEach((root) => {
     if (root.dataset.type === "midi") {
       mountMidiPlayer(root);

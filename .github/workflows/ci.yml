@@ -91,11 +91,17 @@ jobs:
       - name: Check tarball contents
         run: pnpm check:pack
 
+      - name: Check size budgets
+        run: pnpm check:size
+
+      - name: Check shipped strings
+        run: pnpm check:strings
+
   test-ui:
     name: UI Tests (Playwright)
     runs-on: ubuntu-latest
-    # Only run on push to main (not on every PR) to reduce costs
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # Runs on every PR and push: the accessibility rules in PRINCIPLES.md are
+    # enforced here (axe, no-JS, reduced motion, forced colors, 3 engines)
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -117,7 +123,7 @@ jobs:
         run: pnpm build
 
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium
+        run: pnpm exec playwright install --with-deps chromium firefox webkit
 
       - name: Run UI tests
         run: pnpm test:ui

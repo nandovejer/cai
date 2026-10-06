@@ -4,8 +4,14 @@
  * custom themes (data-theme="<name>") with per-theme data-mode variants.
  *
  * Importing this module has no side effects; call initThemeSystem() to
- * wire up buttons, OS preference syncing, and the initial theme.
+ * wire up persistence, OS preference syncing, and the initial theme.
+ *
+ * The color-mode switcher is a native radio group and works without this
+ * module (see components/theme-switcher.css); this module persists the
+ * choice and keeps the radios in step with it.
  */
+import { enableJs } from "./utils.js";
+
 
 // Color modes: luminosity variants (light/dark/high-contrast)
 export const MODES = ["light", "dark", "high-contrast"];
@@ -63,12 +69,11 @@ function syncButtons(theme) {
   const isCustom = CUSTOM_THEMES.includes(theme);
   const currentMode = document.documentElement.dataset.mode;
 
-  // Mode buttons (footer) — active only when a base color mode is selected
-  document.querySelectorAll(".cai-theme-btn").forEach((btn) => {
-    const active = !isCustom && btn.dataset.theme === theme;
-    btn.classList.toggle("is-active", active);
-    btn.setAttribute("aria-pressed", String(active));
-    btn.classList.toggle("is-dimmed", isCustom);
+  // Mode radios (footer) — checked only when a base color mode is selected
+  document.querySelectorAll('input[name="cai-theme"]').forEach((radio) => {
+    radio.checked = !isCustom && radio.value === theme;
+    const label = radio.closest(".cai-theme-btn");
+    label?.classList.toggle("is-dimmed", isCustom);
   });
 
   // Custom theme apply buttons
@@ -134,6 +139,7 @@ export function applyMode(mode, parentTheme, { persist = true } = {}) {
  * Wire up theme buttons, OS preference syncing, and the initial theme.
  */
 export function initThemeSystem() {
+  enableJs();
   // Apply initial theme without forcing persistence when it comes from the OS
   applyTheme(getInitialTheme(), { persist: !!getStoredTheme() });
 
@@ -146,14 +152,13 @@ export function initThemeSystem() {
       }
     });
 
-  document.body.addEventListener("click", (e) => {
-    // --- Color mode switcher (footer) ---
-    const themeBtn = e.target.closest(".cai-theme-btn");
-    if (themeBtn?.dataset.theme) {
-      applyTheme(themeBtn.dataset.theme);
-      return;
-    }
+  // --- Color mode switcher (footer): native radios ---
+  document.addEventListener("change", (e) => {
+    const radio = e.target.closest?.('input[name="cai-theme"]');
+    if (radio?.checked && ALL_THEMES.includes(radio.value)) applyTheme(radio.value);
+  });
 
+  document.body.addEventListener("click", (e) => {
     // --- Mode buttons scoped to a custom theme ---
     const cardModeBtn = e.target.closest(".cai-theme-mode-btn");
     if (MODES.includes(cardModeBtn?.dataset.mode)) {

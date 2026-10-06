@@ -118,6 +118,12 @@
   color: var(--cai-text-primary);
 }
 
+/* Needs JavaScript: hidden until it runs (the sidebar specimen below has a
+   native radio switcher that works on its own) */
+:root:not([data-cai-js]) .landing-modes {
+  display: none;
+}
+
 .landing-modes {
   display: flex;
   gap: var(--cai-space-02);
@@ -565,6 +571,39 @@
   color: var(--cai-text-secondary);
 }
 
+/* Guidance per component: when to use, when not to, how it works, content,
+   keyboard and ARIA, known issues (PRINCIPLES.md section 4) */
+.landing-guide {
+  border-top: 1px solid var(--cai-border-subtle);
+  padding-block: var(--cai-space-04) 0;
+  font-size: var(--cai-text-sm);
+}
+
+.landing-guide > summary {
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--cai-text-primary);
+}
+
+.landing-guide__body {
+  display: grid;
+  gap: var(--cai-space-02);
+  margin-block-start: var(--cai-space-04);
+}
+
+.landing-guide__title {
+  margin-block: var(--cai-space-03) 0;
+  font-size: var(--cai-text-sm);
+  font-weight: 600;
+  color: var(--cai-text-primary);
+}
+
+.landing-guide__body p {
+  margin: 0;
+  max-inline-size: 65ch;
+  color: var(--cai-text-secondary);
+}
+
 .landing-cols-2,
 .landing-cols-3,
 .landing-cols-4 {
@@ -857,7 +896,7 @@
   transition-timing-function: var(--v);
 }
 
-.landing-motion:has(.cai-toggle__track.is-on) .landing-motion__dot {
+.landing-motion:has(.cai-toggle__input:checked) .landing-motion__dot {
   inset-inline-start: calc(100% - var(--cai-space-05));
 }
 
@@ -911,19 +950,19 @@
   color: var(--cai-text-primary);
 }
 
-.landing-anim:has(.cai-toggle__track.is-on) .landing-anim__spin {
+.landing-anim:has(.cai-toggle__input:checked) .landing-anim__spin {
   animation: cai-spin var(--cai-duration-lazy) var(--cai-easing-linear) infinite;
 }
 
-.landing-anim:has(.cai-toggle__track.is-on) .landing-anim__shimmer {
+.landing-anim:has(.cai-toggle__input:checked) .landing-anim__shimmer {
   animation: cai-shimmer calc(var(--cai-duration-lazy) * 2) var(--cai-easing-linear) infinite;
 }
 
-.landing-anim:has(.cai-toggle__track.is-on) .landing-anim__pulse {
+.landing-anim:has(.cai-toggle__input:checked) .landing-anim__pulse {
   animation: cai-pulse calc(var(--cai-duration-lazy) * 2) var(--cai-easing-standard) infinite;
 }
 
-.landing-anim:has(.cai-toggle__track.is-on) .landing-anim__slide {
+.landing-anim:has(.cai-toggle__input:checked) .landing-anim__slide {
   animation: cai-slide-up var(--cai-duration-slower) var(--cai-easing-enter) both;
 }
 

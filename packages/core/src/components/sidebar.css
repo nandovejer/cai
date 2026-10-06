@@ -1,18 +1,21 @@
 /* --------------------------------------------------------------------------
    CAI Component: sidebar
-   Sidebar navigation + mobile drawer (nav-toggle, overlay)
+   Sidebar navigation + mobile drawer (nav-toggle, popover)
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
 .cai-sidebar {
+  /* The browser gives every [popover] a border: the sidebar has none */
+  border: 0;
   width: var(--cai-sidebar-width);
   min-width: var(--cai-sidebar-width);
   background: var(--cai-sidebar-bg);
   color: var(--cai-sidebar-text);
   position: sticky;
-  top: 0;
+  inset: auto;
+  inset-block-start: 0;
   height: 100vh;
   overflow-y: auto;
   display: flex;
@@ -130,14 +133,19 @@
 }
 
 /* --------------------------------------------------------------------------
-   HAMBURGER + OVERLAY (mobile)
+   HAMBURGER + DRAWER (mobile)
+   The drawer is a native popover: <nav class="cai-sidebar" popover> opened by
+   <button popovertarget>. The browser gives Escape, light dismiss (click on
+   the backdrop), the top layer, focus return and the expanded state for
+   assistive technology. Without JavaScript, or in a browser without the
+   popover API, the navigation simply stays visible above the content.
    -------------------------------------------------------------------------- */
 
 .cai-nav-toggle {
   display: none;
   position: fixed;
-  top: var(--cai-space-04);
-  left: var(--cai-space-04);
+  inset-block-start: var(--cai-space-04);
+  inset-inline-start: var(--cai-space-04);
   z-index: var(--cai-z-modal);
   width: 40px;
   height: 40px;
@@ -167,47 +175,30 @@
     opacity var(--cai-duration-base);
 }
 
-.cai-nav-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: var(--cai-bg-overlay);
-  z-index: var(--cai-z-overlay);
-  opacity: 0;
-  transition: opacity var(--cai-duration-slow);
-}
+@supports selector(:popover-open) {
+  @media (max-width: 768px) {
+    .cai-nav-toggle {
+      display: flex;
+    }
 
-@media (max-width: 768px) {
-  .cai-nav-toggle {
-    display: flex;
+    .cai-sidebar[popover] {
+      position: fixed;
+      inset: 0 auto;
+      inset-inline-start: 0;
+      margin: 0;
+      height: 100vh;
+    }
+
+    .cai-sidebar[popover]:not(:popover-open) {
+      display: none;
+    }
+
+    .cai-sidebar[popover]:popover-open {
+      box-shadow: var(--cai-shadow-lg);
+    }
+
+    .cai-sidebar[popover]::backdrop {
+      background: var(--cai-bg-overlay);
+    }
   }
-
-  /* Closed drawer: off screen AND hidden, so its links leave the tab order
-     and the accessibility tree instead of taking invisible focus (WCAG
-     2.4.7, 2.4.3). visibility waits for the slide-out to finish. */
-  .cai-sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    transform: translateX(-100%);
-    visibility: hidden;
-    transition: transform var(--cai-duration-slow) var(--cai-easing-standard),
-      visibility 0s linear var(--cai-duration-slow),
-      background var(--cai-duration-base);
-  }
-
-  .cai-sidebar.is-open {
-    transform: translateX(0);
-    box-shadow: var(--cai-shadow-lg);
-    visibility: visible;
-    transition-delay: 0s;
-  }
-
-  .cai-nav-overlay.is-open {
-    display: block;
-    opacity: 1;
-  }
-
-  /* padding-top mobile gestionado por la app (ej: docs-main en showcase.css) */
 }

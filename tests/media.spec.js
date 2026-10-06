@@ -1,0 +1,45 @@
+/**
+ * CAI — user preferences (PRINCIPLES.md §6): reduced motion and forced colors.
+ */
+import { test, expect } from '@playwright/test';
+
+test.describe('prefers-reduced-motion: reduce', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  for (const app of ['/', '/docs/', '/platform/', '/html/']) {
+    test(`${app}: no transition or animation runs`, async ({ page }) => {
+      await page.goto(app);
+      const moving = await page.evaluate(() => {
+        const seconds = (v) => v.split(',').map((x) => parseFloat(x) * (x.trim().endsWith('ms') ? 0.001 : 1));
+        const offenders = [];
+        for (const el of document.querySelectorAll('body *')) {
+          const s = getComputedStyle(el);
+          const t = Math.max(...seconds(s.transitionDuration));
+          const a = s.animationName !== 'none' ? Math.max(...seconds(s.animationDuration)) : 0;
+          if (t > 0.001 || a > 0.001) {
+            offenders.push(`${el.tagName.toLowerCase()}.${[...el.classList].join('.')} t=${t} a=${a}`);
+          }
+        }
+        return offenders.slice(0, 10);
+      });
+      expect(moving).toEqual([]);
+    });
+  }
+});
+
+test.describe('forced-colors: active', () => {
+  test.use({ forcedColors: 'active' });
+
+  test('/docs/: a focused button keeps a visible outline', async ({ page, browserName }) => {
+    test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
+    await page.goto('/docs/');
+    const btn = page.locator('button.cai-btn, .cai-copy-btn').first();
+    await btn.focus();
+    const outline = await btn.evaluate((el) => {
+      const s = getComputedStyle(el);
+      return { style: s.outlineStyle, width: parseFloat(s.outlineWidth) };
+    });
+    expect(outline.style).not.toBe('none');
+    expect(outline.width).toBeGreaterThanOrEqual(2);
+  });
+});

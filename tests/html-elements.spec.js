@@ -47,9 +47,6 @@ const selectorsByFile = new Map(
 const LEGACY_TYPE_SELECTORS = new Set([
   'html',
   'body',
-  'a',
-  'a:hover',
-  'a:focus-visible',
   'hr',
   'textarea',
   'h1, h2, h3, h4, h5, h6',

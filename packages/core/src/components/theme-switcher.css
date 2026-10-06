@@ -6,9 +6,16 @@
    -------------------------------------------------------------------------- */
 
 
+/* Native radio group: <fieldset class="cai-theme-switcher"> with a <legend>
+   and one <label class="cai-theme-btn"><input type="radio" name="cai-theme">
+   per mode. The browser owns the state and the arrow-key behavior, and
+   tokens/semantic.css re-scopes the page from the checked radio with
+   :root:has(), so it works without JavaScript. */
 .cai-theme-switcher {
   display: flex;
   gap: var(--cai-space-02);
+  border: 0;
+  min-inline-size: 0;
 }
 
 .cai-theme-switcher__label {
@@ -19,9 +26,11 @@
   color: var(--cai-sidebar-label);
   margin-bottom: var(--cai-space-03);
   display: block;
+  padding: 0;
 }
 
 .cai-theme-btn {
+  position: relative;
   flex: 1;
   min-height: 28px;
   border: 1px solid var(--cai-sidebar-border);
@@ -41,6 +50,17 @@
   gap: var(--cai-space-02);
 }
 
+/* The radio is visually hidden but stays focusable and clickable */
+.cai-theme-btn__input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  opacity: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
 .cai-theme-btn:hover {
   background: var(--cai-sidebar-hover);
   color: var(--cai-sidebar-text-hover);
@@ -48,12 +68,14 @@
 
 /* The switcher sits on the sidebar surface: --cai-border-interactive is
    black on a black sidebar in high contrast */
+.cai-theme-btn:has(.cai-theme-btn__input:focus-visible),
 .cai-theme-btn:focus-visible {
   outline: 2px solid var(--cai-sidebar-text-hover);
   outline-offset: 2px;
 }
 
-.cai-theme-btn.is-active {
+.cai-theme-btn.is-active,
+.cai-theme-btn:has(.cai-theme-btn__input:checked) {
   background: var(--cai-sidebar-active-bg);
   color: var(--cai-sidebar-active-text);
   border-color: var(--cai-sidebar-active-bg);
@@ -64,6 +86,12 @@
    text contrast (WCAG 1.4.3). */
 .cai-theme-btn.is-dimmed {
   border-style: dashed;
+}
+
+/* The custom-theme buttons need JavaScript (they persist a choice): hide
+   them until it runs */
+:root:not([data-cai-js]) :is(.cai-theme-apply-btn, .cai-theme-mode-btn) {
+  display: none;
 }
 
 /* Apply button for custom themes (sidebar themes section) */

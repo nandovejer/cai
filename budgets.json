@@ -1,0 +1,8 @@
+{
+  "$comment": "min+gzip budgets in bytes, from PRINCIPLES.md section 7. Raising one needs a reason in that file.",
+  "budgets": [
+    { "name": "tokens CSS", "file": "packages/tokens/dist/cai-tokens.min.css", "max": 3072 },
+    { "name": "core CSS", "file": "packages/core/dist/cai.min.css", "max": 15360 },
+    { "name": "core JS (entry, lazy chunks excluded)", "file": "packages/core/dist/cai.min.js", "max": 8192 }
+  ]
+}

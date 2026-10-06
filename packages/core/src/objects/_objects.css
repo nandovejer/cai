@@ -33,27 +33,22 @@
   grid-row: 2;
 }
 
-/* Mobile: stack everything vertically, sidebar becomes overlay */
+/* Mobile: stack everything vertically; a popover sidebar becomes a drawer */
 @media (max-width: 768px) {
   .o-shell {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr auto;
   }
 
-  .o-shell > .cai-sidebar {
+  /* A sidebar that is not a popover (or a browser without the popover API)
+     is just the first block of the page, not a full-height column */
+  .o-shell > .cai-sidebar:not([popover]) {
     grid-column: 1;
     grid-row: 1;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    width: var(--cai-sidebar-width);
-    transform: translateX(-100%);
-    z-index: var(--cai-z-sidebar);
-  }
-
-  .o-shell > .cai-sidebar.is-open {
-    transform: translateX(0);
+    position: static;
+    height: auto;
+    width: 100%;
+    min-width: 0;
   }
 
   .o-main {

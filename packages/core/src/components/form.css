@@ -46,7 +46,6 @@
   font-family: var(--cai-font-sans);
   font-size: var(--cai-text-control);
   padding: 0 var(--cai-space-04);
-  outline: none;
   transition: border-color var(--cai-duration-fast),
     background var(--cai-duration-base);
 }
@@ -57,6 +56,12 @@
 
 .cai-input:focus {
   border-bottom: 2px solid var(--cai-border-interactive);
+}
+
+/* Same ring as buttons and links: one focus appearance everywhere */
+.cai-input:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
 }
 
 .cai-input--error {
@@ -87,7 +92,7 @@
 .cai-select-wrap::after {
   content: "▾";
   position: absolute;
-  right: var(--cai-space-04);
+  inset-inline-end: var(--cai-space-04);
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
@@ -98,7 +103,7 @@
 .cai-select-wrap .cai-input {
   appearance: none;
   cursor: pointer;
-  padding-right: 32px;
+  padding-inline-end: 32px;
 }
 
 /* --------------------------------------------------------------------------
@@ -153,7 +158,7 @@
   font-size: var(--cai-text-sm);
   font-family: var(--cai-font-sans);
   cursor: pointer;
-  margin-right: var(--cai-space-04);
+  margin-inline-end: var(--cai-space-04);
   transition: background var(--cai-duration-fast);
 }
 
@@ -261,7 +266,7 @@
   color: var(--cai-brand-primary);
   font-variant-numeric: tabular-nums;
   min-width: 2.5em;
-  text-align: right;
+  text-align: end;
 }
 
 /* --------------------------------------------------------------------------
@@ -313,8 +318,9 @@
   top: 1px;
   width: 6px;
   height: 10px;
-  border-right: 2px solid var(--cai-text-on-color);
-  border-bottom: 2px solid var(--cai-text-on-color);
+  /* Check glyph drawn with two borders, then rotated: physical on purpose */
+  border: solid var(--cai-text-on-color);
+  border-width: 0 2px 2px 0;
   transform: rotate(40deg);
 }
 
@@ -345,7 +351,10 @@
 }
 
 /* --------------------------------------------------------------------------
-   FORM — Toggle
+   FORM — Toggle (switch)
+   Native <input type="checkbox" role="switch"> inside a <label>. The browser
+   owns state, keyboard (Space), form submission and the accessibility tree;
+   CSS only draws it. Works with JavaScript disabled.
    -------------------------------------------------------------------------- */
 
 .cai-toggle {
@@ -354,41 +363,65 @@
   gap: var(--cai-space-04);
   cursor: pointer;
   user-select: none;
+  position: relative;
+}
+
+/* Visually hidden but still focusable and clickable: never display:none */
+.cai-toggle__input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  opacity: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
 }
 
 .cai-toggle__track {
-  width: 48px;
-  height: 24px;
+  flex: none;
+  inline-size: 48px;
+  block-size: 24px;
   background: var(--cai-border-strong);
   border-radius: 12px;
   position: relative;
   transition: background var(--cai-duration-fast);
-  cursor: pointer;
 }
 
-.cai-toggle__track:focus-visible {
+.cai-toggle__input:focus-visible + .cai-toggle__track {
   outline: 2px solid var(--cai-border-interactive);
   outline-offset: 2px;
 }
 
 /* Solid surface under the --cai-text-on-color thumb */
-.cai-toggle__track.is-on {
+.cai-toggle__input:checked + .cai-toggle__track {
   background: var(--cai-brand-fill);
+}
+
+.cai-toggle__input:disabled + .cai-toggle__track {
+  opacity: 0.45;
+}
+
+.cai-toggle:has(.cai-toggle__input:disabled) {
+  cursor: not-allowed;
 }
 
 .cai-toggle__thumb {
   position: absolute;
-  width: 18px;
-  height: 18px;
+  inline-size: 18px;
+  block-size: 18px;
   background: var(--cai-text-on-color);
   border-radius: 50%;
-  top: 3px;
-  left: 3px;
+  inset-block-start: 3px;
+  inset-inline-start: 3px;
   transition: transform var(--cai-duration-fast);
 }
 
-.cai-toggle__track.is-on .cai-toggle__thumb {
+.cai-toggle__input:checked + .cai-toggle__track .cai-toggle__thumb {
   transform: translateX(24px);
+}
+
+[dir="rtl"] .cai-toggle__input:checked + .cai-toggle__track .cai-toggle__thumb {
+  transform: translateX(-24px);
 }
 
 .cai-toggle__label {
@@ -434,12 +467,12 @@
     background: CanvasText;
   }
 
-  .cai-toggle__track.is-on {
+  .cai-toggle__input:checked + .cai-toggle__track {
     background: Highlight;
     border-color: Highlight;
   }
 
-  .cai-toggle__track.is-on .cai-toggle__thumb {
+  .cai-toggle__input:checked + .cai-toggle__track .cai-toggle__thumb {
     background: HighlightText;
   }
 }

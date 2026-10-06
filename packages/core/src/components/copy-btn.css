@@ -23,6 +23,12 @@
   border-radius: var(--cai-radius-sm);
 }
 
+/* Without JavaScript the button would do nothing: hide it. The text it
+   copies is still on the page, selectable. */
+:root:not([data-cai-js]) .cai-copy-btn {
+  display: none;
+}
+
 .cai-copy-btn:hover {
   background: var(--cai-brand-subtle);
   color: var(--cai-brand-primary);

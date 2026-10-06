@@ -27,17 +27,23 @@
 }
 
 .cai-table caption {
-  text-align: left;
+  text-align: start;
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
   padding: var(--cai-space-03) var(--cai-space-05);
   caption-side: top;
 }
 
+.cai-table th a {
+  /* The brand blue is below 4.5:1 on the header surface */
+  color: var(--cai-text-primary);
+  text-decoration: underline;
+}
+
 .cai-table th {
   background: var(--cai-layer-03);
   color: var(--cai-text-primary);
-  text-align: left;
+  text-align: start;
   padding: var(--cai-space-03) var(--cai-space-05);
   font-weight: 500;
   font-size: var(--cai-text-sm);
@@ -70,7 +76,7 @@
 .cai-table--sticky-col th:first-child,
 .cai-table--sticky-col td:first-child {
   position: sticky;
-  left: 0;
+  inset-inline-start: 0;
 }
 
 .cai-table--sticky-col th:first-child {

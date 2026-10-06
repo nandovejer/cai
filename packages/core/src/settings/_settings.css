@@ -62,6 +62,20 @@
   --cai-scrollbar-size: 4px;
 }
 
+/* Reduced motion: one switch. Every transition and animation in core takes
+   its duration from these tokens, so zeroing them removes the motion
+   everywhere without !important. Never hard-code a duration in a component. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cai-duration-instant: 0s;
+    --cai-duration-fast: 0s;
+    --cai-duration-base: 0s;
+    --cai-duration-slow: 0s;
+    --cai-duration-slower: 0s;
+    --cai-duration-lazy: 0s;
+  }
+}
+
 @media (max-width: 768px), (pointer: coarse) {
   :root {
     --cai-text-control: var(--cai-text-base);

@@ -20,6 +20,8 @@
 }
 
 .cai-tab {
+  display: block;
+  text-decoration: none;
   padding: var(--cai-space-04) var(--cai-space-05);
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
@@ -41,9 +43,20 @@
   outline-offset: -2px;
 }
 
+.cai-tabpanel:focus-visible,
 [role="tabpanel"]:focus-visible {
   outline: 2px solid var(--cai-border-interactive);
   outline-offset: 2px;
+}
+
+/* No-JS state: the tab links jump to their panel, and every panel stays
+   visible, stacked below the links. */
+.cai-tabpanel {
+  margin-block-end: var(--cai-space-05);
+}
+
+.cai-tabpanel[hidden] {
+  display: none;
 }
 
 .cai-tab.is-active {

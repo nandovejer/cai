@@ -10,7 +10,6 @@
 import { initCopyButtons } from "/packages/core/dist/clipboard.js";
 import { highlightBlock } from "/packages/core/dist/highlight.js";
 import { initTabs } from "/packages/core/dist/tabs.js";
-import { initToggles } from "/packages/core/dist/toggle.js";
 import { initModals } from "/packages/core/dist/modal.js";
 import { initPlayers } from "/packages/core/dist/player.js";
 
@@ -46,9 +45,10 @@ function setMode(mode, persist) {
   document.querySelectorAll("[data-landing-mode]").forEach((button) => {
     const active = button.dataset.landingMode === mode;
     button.setAttribute("aria-pressed", String(active));
-    if (button.classList.contains("cai-theme-btn")) {
-      button.classList.toggle("is-active", active);
-    }
+  });
+  // The sidebar specimen's native radios follow the same mode
+  document.querySelectorAll('input[name="cai-theme"]').forEach((radio) => {
+    radio.checked = radio.value === mode;
   });
 }
 
@@ -58,6 +58,10 @@ function initModes() {
   document.addEventListener("click", (e) => {
     const button = e.target.closest("[data-landing-mode]");
     if (button) setMode(button.dataset.landingMode, true);
+  });
+  document.addEventListener("change", (e) => {
+    const radio = e.target.closest?.('input[name="cai-theme"]');
+    if (radio?.checked) setMode(radio.value, true);
   });
 
   // Follow the OS while the visitor has not chosen a mode here
@@ -157,7 +161,6 @@ initCopy();
 // block, and core ships no position for it.
 document.querySelectorAll("pre.cai-code-block").forEach(highlightBlock);
 initTabs();
-initToggles();
 initModals();
 initRangeOutputs();
 initLevelNav();

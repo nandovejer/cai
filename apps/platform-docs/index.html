@@ -14,14 +14,13 @@
 <body class="o-shell">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
-  <button class="cai-nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar-platform">
+  <button class="cai-nav-toggle" type="button" aria-label="Open navigation" popovertarget="sidebar-platform">
     <span class="cai-nav-toggle__bar"></span>
     <span class="cai-nav-toggle__bar"></span>
     <span class="cai-nav-toggle__bar"></span>
   </button>
-  <div class="cai-nav-overlay" aria-hidden="true"></div>
 
-  <nav class="cai-sidebar" id="sidebar-platform" aria-label="Platform documentation navigation">
+  <nav class="cai-sidebar" id="sidebar-platform" popover aria-label="Platform documentation navigation">
     <div class="cai-sidebar__brand">
       <div class="cai-sidebar__brand-name">
         <span class="cai-sidebar__logo">C</span>
@@ -77,12 +76,12 @@
     </div>
 
     <div class="cai-sidebar__footer">
-      <span class="cai-theme-switcher__label">Color mode</span>
-      <div class="cai-theme-switcher" role="group" aria-label="Select color mode">
-        <button class="cai-theme-btn" data-theme="light" aria-pressed="false">Light</button>
-        <button class="cai-theme-btn" data-theme="dark" aria-pressed="false">Dark</button>
-        <button class="cai-theme-btn" data-theme="high-contrast" aria-pressed="false">HC</button>
-      </div>
+      <fieldset class="cai-theme-switcher">
+        <legend class="cai-theme-switcher__label">Color mode</legend>
+        <label class="cai-theme-btn" data-theme="light"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="light">Light</label>
+        <label class="cai-theme-btn" data-theme="dark"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="dark">Dark</label>
+        <label class="cai-theme-btn" data-theme="high-contrast"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="high-contrast">High contrast</label>
+      </fieldset>
       <div class="cai-platform-actions" style="margin-top: var(--cai-space-04);">
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/">Home</a>
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/">Core + Tokens</a>
@@ -658,18 +657,16 @@
               <div>
                 <div class="pdocs-form-group-label">Toggle</div>
                 <div class="pdocs-form-stack">
-                  <div class="cai-toggle">
-                    <div class="cai-toggle__track is-on" role="switch" tabindex="0" aria-checked="true" aria-label="Enabled" data-pdocs-switch>
-                      <div class="cai-toggle__thumb"></div>
-                    </div>
+                  <label class="cai-toggle">
+                    <input class="cai-toggle__input" type="checkbox" role="switch" checked>
+                    <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
                     <span class="cai-toggle__label">Enabled</span>
-                  </div>
-                  <div class="cai-toggle">
-                    <div class="cai-toggle__track" role="switch" tabindex="0" aria-checked="false" aria-label="Disabled" data-pdocs-switch>
-                      <div class="cai-toggle__thumb"></div>
-                    </div>
+                  </label>
+                  <label class="cai-toggle">
+                    <input class="cai-toggle__input" type="checkbox" role="switch">
+                    <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
                     <span class="cai-toggle__label">Disabled</span>
-                  </div>
+                  </label>
                 </div>
               </div>
             </div>
@@ -744,7 +741,7 @@
                 </div>
               </fieldset>
               <div class="pdocs-form-actions">
-                <button class="cai-btn cai-btn--primary" type="submit">Submit</button>
+                <button class="cai-btn cai-btn--primary" type="submit">Save details</button>
                 <button class="cai-btn cai-btn--ghost" type="reset">Reset</button>
               </div>
               <div class="cai-field__helper pdocs-form-result" id="pf-form-result" aria-live="polite"></div>
@@ -765,7 +762,7 @@
                   <tr><td>aria-readonly</td><td><code class="cai-code-inline">"true"</code></td><td>Use alongside the native <code class="cai-code-inline">readonly</code> attribute.</td></tr>
                   <tr><td>aria-valuemin / aria-valuemax / aria-valuenow</td><td>numeric</td><td>Use on <code class="cai-code-inline">input[type="range"]</code> for richer announcements.</td></tr>
                   <tr><td>role="radiogroup"</td><td>-</td><td>Wrap a set of radio buttons. Add <code class="cai-code-inline">aria-labelledby</code> to the group heading.</td></tr>
-                  <tr><td>role="switch"</td><td>-</td><td>Toggle track. Keep it focusable with <code class="cai-code-inline">tabindex="0"</code> and support Space/Enter.</td></tr>
+                  <tr><td>role="switch"</td><td>-</td><td>Add it to a native <code class="cai-code-inline">input type="checkbox"</code> to announce a switch. The browser handles state and the Space key; no script is needed.</td></tr>
                   <tr><td>for / id pair</td><td>-</td><td>Every label should point to an input id. Avoid placeholder-only labeling.</td></tr>
                   <tr><td>fieldset + legend</td><td>-</td><td>Group related controls so assistive tech reads context before controls.</td></tr>
                   <tr><td><kbd>Tab</kbd></td><td>-</td><td>Navigate between focusable fields. Disabled inputs are skipped.</td></tr>
@@ -799,9 +796,7 @@
             </div>
           </div>
           <div>
-            <div class="cai-progress">
-              <div class="cai-progress__fill" style="width:67%"></div>
-            </div>
+            <progress class="cai-progress" value="67" max="100" aria-label="Build, 67%"></progress>
           </div>
         </div>
       </div>
@@ -833,14 +828,14 @@
         <div class="pdocs-subsection__title">Alerts and toast</div>
         <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-03)">
           <div class="cai-alert cai-alert--info">
-            <div class="cai-alert__icon">i</div>
+            <div class="cai-alert__icon" aria-hidden="true">i</div>
             <div>
               <div class="cai-alert__title">Information</div>
               <div class="cai-alert__body">Platform section is up to date.</div>
             </div>
           </div>
           <div class="cai-alert cai-alert--success">
-            <div class="cai-alert__icon">OK</div>
+            <div class="cai-alert__icon" aria-hidden="true">✓</div>
             <div>
               <div class="cai-alert__title">Success</div>
               <div class="cai-alert__body">Deployment completed.</div>
@@ -859,18 +854,18 @@
       <div class="pdocs-subsection" id="comp-modal">
         <div class="pdocs-subsection__title">Modal</div>
         <div class="pdocs-preview" style="display:flex;gap:var(--cai-space-03);align-items:center;flex-wrap:wrap">
-          <button class="cai-btn cai-btn--primary" data-modal-trigger="platform-demo-modal">Open Modal</button>
+          <button class="cai-btn cai-btn--primary" type="button" commandfor="platform-demo-modal" command="show-modal">Open dialog</button>
           <dialog class="cai-modal" id="platform-demo-modal" aria-labelledby="platform-demo-modal-title">
             <div class="cai-modal__header">
               <h2 class="cai-modal__title" id="platform-demo-modal-title">Confirm action</h2>
-              <button class="cai-modal__close" data-modal-close="platform-demo-modal" aria-label="Close modal" type="button">X</button>
+              <button class="cai-modal__close" commandfor="platform-demo-modal" command="close" aria-label="Close dialog" type="button">×</button>
             </div>
             <div class="cai-modal__body">
               <p>This action cannot be undone. Continue?</p>
             </div>
             <div class="cai-modal__footer">
-              <button class="cai-btn cai-btn--ghost" data-modal-close="platform-demo-modal" type="button">Cancel</button>
-              <button class="cai-btn cai-btn--primary" data-modal-close="platform-demo-modal" type="button">Confirm</button>
+              <button class="cai-btn cai-btn--ghost" commandfor="platform-demo-modal" command="close" type="button">Cancel</button>
+              <button class="cai-btn cai-btn--primary" commandfor="platform-demo-modal" command="close" type="button">Confirm</button>
             </div>
           </dialog>
         </div>
@@ -881,7 +876,7 @@
         <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-04)">
           <div class="cai-platform-feature-grid">
             <article class="cai-card">
-              <h3 class="cai-card__title">API Gateway</h3>
+              <h3 class="cai-card__title">API gateway</h3>
               <p class="cai-card__body">1,204 req/min - p95: 142ms</p>
             </article>
             <article class="cai-card">
@@ -906,10 +901,15 @@
       <div class="pdocs-subsection" id="comp-nav">
         <div class="pdocs-subsection__title">Navigation, code and icons</div>
         <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-04)">
-          <div class="cai-tabs" role="tablist" aria-label="Platform tabs">
-            <div class="cai-tab is-active" role="tab" aria-selected="true" tabindex="0">Summary</div>
-            <div class="cai-tab" role="tab" aria-selected="false" tabindex="-1">Settings</div>
-            <div class="cai-tab" role="tab" aria-selected="false" tabindex="-1">Logs</div>
+          <div>
+            <nav class="cai-tabs" aria-label="Platform tabs">
+              <a class="cai-tab is-active" id="pf-tab-summary" href="#pf-panel-summary">Summary</a>
+              <a class="cai-tab" id="pf-tab-settings" href="#pf-panel-settings">Settings</a>
+              <a class="cai-tab" id="pf-tab-logs" href="#pf-panel-logs">Logs</a>
+            </nav>
+            <div class="cai-tabpanel" id="pf-panel-summary"><p>Three services are running.</p></div>
+            <div class="cai-tabpanel" id="pf-panel-settings"><p>Deploys run on every push.</p></div>
+            <div class="cai-tabpanel" id="pf-panel-logs"><p>No errors in the last hour.</p></div>
           </div>
           <nav aria-label="Breadcrumb">
             <div class="cai-breadcrumb">
@@ -937,7 +937,7 @@
         <div class="pdocs-subsection__title">Media players</div>
         <div class="pdocs-preview" style="display:grid;gap:var(--cai-space-04)">
           <div class="cai-player" data-type="audio">
-            <audio class="cai-player-audio" preload="metadata">
+            <audio class="cai-player-audio" preload="metadata" controls>
               <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
             </audio>
             <div class="cai-player-controls cai-player-controls--audio">
@@ -947,18 +947,14 @@
               </button>
               <div class="cai-player-progress-row cai-player-progress-row--audio">
                 <span class="cai-player-time cai-player-current">0:00</span>
-                <div class="cai-player-seekbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-                  <div class="cai-player-seekbar-buf"></div>
-                  <div class="cai-player-seekbar-fill"></div>
-                  <div class="cai-player-seekbar-thumb"></div>
-                </div>
+                <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek">
                 <span class="cai-player-time cai-player-duration">0:00</span>
               </div>
             </div>
           </div>
           <div class="cai-player" data-type="video">
             <div class="cai-player-media-wrap is-paused">
-              <video class="cai-player-video" preload="metadata">
+              <video class="cai-player-video" preload="metadata" controls>
                 <source src="/apps/platform-docs/assets/video.mp4" type="video/mp4">
               </video>
               <div class="cai-player-overlay">
@@ -971,11 +967,7 @@
                   <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
                   <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
                 </button>
-                <div class="cai-player-seekbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-                  <div class="cai-player-seekbar-buf"></div>
-                  <div class="cai-player-seekbar-fill"></div>
-                  <div class="cai-player-seekbar-thumb"></div>
-                </div>
+                <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek">
               </div>
               <div class="cai-player-btns">
                 <span class="cai-player-time cai-player-current">0:00</span>
@@ -986,15 +978,13 @@
                     <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z M17,7 Q20,10 20,12 Q20,14 17,17"/></svg>
                     <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z M17,7 L23,13 M23,7 L17,13"/></svg>
                   </button>
-                  <div class="cai-player-seekbar cai-player-volbar" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
-                    <div class="cai-player-seekbar-fill" style="width:100%"></div>
-                    <div class="cai-player-seekbar-thumb" style="left:100%"></div>
-                  </div>
+                  <input class="cai-player-seekbar cai-player-volbar" type="range" min="0" max="1000" step="1" value="1000" style="--cai-seek: 100%" aria-label="Volume">
                 </div>
               </div>
             </div>
           </div>
           <div class="cai-player" data-type="midi" data-src="/apps/platform-docs/assets/sample.mid">
+            <p class="cai-player-fallback">MIDI playback needs JavaScript.</p>
             <div class="cai-player-controls cai-player-controls--audio">
               <button class="cai-player-btn cai-player-playpause" aria-label="Play" disabled>
                 <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
@@ -1002,11 +992,7 @@
               </button>
               <div class="cai-player-progress-row cai-player-progress-row--audio">
                 <span class="cai-player-time cai-player-current">0:00</span>
-                <div class="cai-player-seekbar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-                  <div class="cai-player-seekbar-buf"></div>
-                  <div class="cai-player-seekbar-fill"></div>
-                  <div class="cai-player-seekbar-thumb"></div>
-                </div>
+                <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek">
                 <span class="cai-player-time cai-player-duration">0:00</span>
               </div>
               <span class="cai-player-midi-status"></span>
@@ -1238,7 +1224,7 @@
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;pdocs-form-actions&quot;&gt;
-    &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+    &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Save details&lt;/button&gt;
     &lt;button class=&quot;cai-btn cai-btn--ghost&quot; type=&quot;reset&quot;&gt;Reset&lt;/button&gt;
   &lt;/div&gt;
 &lt;/form&gt;</code></pre>
@@ -1310,7 +1296,7 @@ if (range &amp;&amp; out) {
 
       &lt;div class=&quot;cai-platform-actions&quot;&gt;
         &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#get-started&quot;&gt;Get started&lt;/a&gt;
-        &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#learn-more&quot;&gt;Learn more&lt;/a&gt;
+        &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#learn-more&quot;&gt;Browse the components&lt;/a&gt;
       &lt;/div&gt;
     &lt;/section&gt;
   &lt;/main&gt;
@@ -1500,23 +1486,6 @@ if (range &amp;&amp; out) {
         formResult.textContent = "";
       });
     }
-
-    const switches = document.querySelectorAll("[data-pdocs-switch]");
-    const toggleSwitch = (track) => {
-      const checked = track.getAttribute("aria-checked") === "true";
-      track.setAttribute("aria-checked", checked ? "false" : "true");
-      track.classList.toggle("is-on", !checked);
-    };
-
-    switches.forEach((track) => {
-      track.addEventListener("click", () => toggleSwitch(track));
-      track.addEventListener("keydown", (event) => {
-        if (event.key === " " || event.key === "Enter") {
-          event.preventDefault();
-          toggleSwitch(track);
-        }
-      });
-    });
 
     const motionReplayBtn = document.querySelector("[data-pdocs-motion-replay]");
     const motionCards = Array.from(document.querySelectorAll("[data-pdocs-motion-card]"));

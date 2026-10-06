@@ -59,6 +59,11 @@ summary:focus-visible {
   overflow-y: auto;
 }
 
+/* The reset zeroes every margin: space the dialog's own blocks */
+:where(dialog > * + *) {
+  margin-block-start: var(--cai-space-04);
+}
+
 /* The reset zeroes every margin, including the auto margin the browser uses
    to center a dialog. .cai-modal centers itself with top / left / transform,
    so only dialogs without a class get it back. */

@@ -14,6 +14,12 @@
   container-type: inline-size;
 }
 
+/* The wrapper is a focusable scroll region (tabindex="0") */
+.cai-table-wrap:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+
 .cai-table {
   width: 100%;
   border-collapse: collapse;
@@ -132,7 +138,7 @@
   /* Inject the column label before the value */
   .cai-table td[data-label]::before {
     content: attr(data-label);
-    font-size: var(--cai-text-xs);
+    font-size: var(--cai-text-sm);
     font-weight: 500;
     color: var(--cai-text-secondary);
     letter-spacing: 0.3px;

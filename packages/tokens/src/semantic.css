@@ -22,14 +22,14 @@
   /* Text */
   --cai-text-primary: var(--cai-gray-100);
   --cai-text-secondary: var(--cai-gray-70);
-  --cai-text-placeholder: var(--cai-gray-40);
+  --cai-text-placeholder: var(--cai-gray-60); /* 5:1 on white (WCAG 1.4.3) */
   --cai-text-disabled: var(--cai-gray-30);
   --cai-text-on-color: #fff;
   --cai-text-inverse: #fff;
 
   /* Borders */
   --cai-border-subtle: var(--cai-gray-20);
-  --cai-border-strong: var(--cai-gray-50);
+  --cai-border-strong: var(--cai-gray-60);
   --cai-border-interactive: var(--cai-blue-60);
 
   /* Brand */
@@ -37,6 +37,12 @@
   --cai-brand-hover: var(--cai-blue-70);
   --cai-brand-active: var(--cai-blue-80);
   --cai-brand-subtle: var(--cai-blue-10);
+  /* Solid brand surfaces that carry --cai-text-on-color (primary button,
+     badge). Same as the brand in light; darker than it in dark mode, where
+     the brand is light enough to be read as text on dark surfaces. */
+  --cai-brand-fill: var(--cai-brand-primary);
+  --cai-brand-fill-hover: var(--cai-brand-hover);
+  --cai-brand-fill-active: var(--cai-brand-active);
 
   /* Icons */
   --cai-icon-primary: var(--cai-gray-100);
@@ -64,6 +70,7 @@
   --cai-color-success-bg: var(--cai-green-10);
   --cai-color-danger: var(--cai-red-60);
   --cai-color-danger-bg: var(--cai-red-10);
+  --cai-color-danger-fill: var(--cai-color-danger);
   --cai-color-warning: var(--cai-yellow-60);
   --cai-color-warning-accent: var(--cai-yellow-30);
   --cai-color-warning-bg: var(--cai-yellow-10);
@@ -97,7 +104,7 @@
   /* Text */
   --cai-text-primary: var(--cai-gray-10);
   --cai-text-secondary: var(--cai-gray-30);
-  --cai-text-placeholder: var(--cai-gray-60);
+  --cai-text-placeholder: var(--cai-gray-50); /* 4.6:1 on the input */
   --cai-text-disabled: var(--cai-gray-70);
   --cai-text-on-color: #fff;
   --cai-text-inverse: var(--cai-gray-100);
@@ -108,10 +115,15 @@
   --cai-border-interactive: var(--cai-blue-50);
 
   /* Brand */
-  --cai-brand-primary: var(--cai-blue-50);
-  --cai-brand-hover: var(--cai-blue-40);
-  --cai-brand-active: var(--cai-blue-30);
+  /* blue-40: 4.5:1 or more as text on every dark surface, brand-subtle
+     included (blue-50 fell to 3.9:1 on it) */
+  --cai-brand-primary: var(--cai-blue-40);
+  --cai-brand-hover: var(--cai-blue-30);
+  --cai-brand-active: var(--cai-blue-20);
   --cai-brand-subtle: rgba(69, 137, 255, 0.12);
+  --cai-brand-fill: var(--cai-blue-60); /* white text 5:1 */
+  --cai-brand-fill-hover: var(--cai-blue-70);
+  --cai-brand-fill-active: var(--cai-blue-80);
 
   /* Icons */
   --cai-icon-primary: var(--cai-gray-10);
@@ -131,14 +143,15 @@
   --cai-sidebar-active-bg: var(--cai-blue-60);
   --cai-sidebar-active-text: #fff;
   --cai-sidebar-border: var(--cai-gray-90);
-  --cai-sidebar-label: var(--cai-gray-60);
+  --cai-sidebar-label: var(--cai-gray-50); /* 5.8:1 (gray-60 gave 3.9:1) */
   --cai-sidebar-logo-bg: var(--cai-blue-60);
 
   /* Status */
   --cai-color-success: var(--cai-green-40);
   --cai-color-success-bg: rgba(66, 190, 101, 0.12);
-  --cai-color-danger: var(--cai-red-50);
+  --cai-color-danger: var(--cai-red-40); /* red-50 fell to 3.9:1 on danger-bg */
   --cai-color-danger-bg: rgba(250, 77, 86, 0.12);
+  --cai-color-danger-fill: var(--cai-red-60); /* white text 4.8:1 */
   --cai-color-warning: var(--cai-yellow-30);
   --cai-color-warning-accent: var(--cai-yellow-20);
   --cai-color-warning-bg: rgba(241, 194, 27, 0.12);
@@ -188,6 +201,9 @@
   --cai-brand-hover: var(--cai-blue-90);
   --cai-brand-active: var(--cai-blue-100);
   --cai-brand-subtle: var(--cai-blue-10);
+  --cai-brand-fill: var(--cai-brand-primary);
+  --cai-brand-fill-hover: var(--cai-brand-hover);
+  --cai-brand-fill-active: var(--cai-brand-active);
 
   /* Icons */
   --cai-icon-primary: #000;
@@ -215,6 +231,7 @@
   --cai-color-success-bg: var(--cai-green-10);
   --cai-color-danger: var(--cai-red-60);
   --cai-color-danger-bg: var(--cai-red-10);
+  --cai-color-danger-fill: var(--cai-color-danger);
   --cai-color-warning: var(--cai-yellow-60);
   --cai-color-warning-accent: var(--cai-yellow-40);
   --cai-color-warning-bg: var(--cai-yellow-10);

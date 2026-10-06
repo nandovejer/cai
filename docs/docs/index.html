@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI Core + Tokens - Technical Docs</title>
   <meta name="description" content="Technical documentation for @cai-ds/tokens and @cai-ds/core: architecture, commands, and integration patterns.">
-  <script type="module" crossorigin src="../assets/preload-helper-BFgxmrK7.js"></script>
-  <script type="module" crossorigin src="../assets/docs-9X_aidac.js"></script>
-  <script type="module" crossorigin src="../assets/cai-Cy_gxeZn.js"></script>
-  <link rel="stylesheet" crossorigin href="../assets/preload-helper-C_vM7Olx.css">
-  <link rel="stylesheet" crossorigin href="../assets/docs-DvIX5jfr.css">
+  <script type="module" crossorigin src="../assets/preload-helper-CmczP7LR.js"></script>
+  <script type="module" crossorigin src="../assets/docs-zlViuJJ2.js"></script>
+  <script type="module" crossorigin src="../assets/cai-tALaWq9m.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/preload-helper-kyxJPe1-.css">
+  <link rel="stylesheet" crossorigin href="../assets/docs-BEB_vUNZ.css">
   <link rel="stylesheet" crossorigin href="../assets/index-DLmj2GrM.css">
 </head>
 <body class="o-shell">
@@ -41,6 +41,7 @@
     <div class="cai-sidebar__section" data-group="tokens">
       <div class="cai-sidebar__section-label">Tokens</div>
       <a class="cai-sidebar__link" href="#tokens">Token model</a>
+      <a class="cai-sidebar__link" href="#tokens-typography">Type scale</a>
       <a class="cai-sidebar__link" href="#themes">Themes &amp; modes</a>
     </div>
 
@@ -167,6 +168,41 @@ border-color: var(--cai-border-subtle);
 /* Incorrect: primitive scales */
 color: var(--cai-gray-100);
 background: var(--cai-blue-60);</code></pre>
+      </div>
+
+      <div class="docs-subsection" id="tokens-typography">
+        <h3 class="docs-subsection__title">Type scale and minimum sizes</h3>
+        <p>Every size is in <code class="cai-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller.</p>
+        <div class="cai-table-wrap" role="region" aria-label="Type scale" tabindex="0">
+          <table class="cai-table">
+            <caption>Font-size tokens</caption>
+            <thead>
+              <tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">At 16px root</th><th scope="col">Use</th></tr>
+            </thead>
+            <tbody>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-xs</code></td><td data-label="Value">0.75rem</td><td data-label="At 16px root">12px</td><td data-label="Use">Absolute floor. Micro-copy only: badges, tags, counters, version labels. Never running text.</td></tr>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-sm</code></td><td data-label="Value">0.875rem</td><td data-label="At 16px root">14px</td><td data-label="Use">Floor for secondary and UI text: helper and error text, captions, table headers, breadcrumbs, tooltips.</td></tr>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-md</code></td><td data-label="Value">0.9375rem</td><td data-label="At 16px root">15px</td><td data-label="Use">Default UI text: buttons, labels, table cells, tabs, navigation.</td></tr>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-base</code></td><td data-label="Value">1rem</td><td data-label="At 16px root">16px</td><td data-label="Use">Body and running text. Form fields on touch screens.</td></tr>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-lg</code></td><td data-label="Value">1.25rem</td><td data-label="At 16px root">20px</td><td data-label="Use">Lead paragraphs, dialog titles.</td></tr>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-xl</code></td><td data-label="Value">1.5rem</td><td data-label="At 16px root">24px</td><td data-label="Use">Headings.</td></tr>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-2xl</code></td><td data-label="Value">2rem</td><td data-label="At 16px root">32px</td><td data-label="Use">Headings.</td></tr>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-3xl</code></td><td data-label="Value">2.625rem</td><td data-label="At 16px root">42px</td><td data-label="Use">Page titles.</td></tr>
+              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-4xl</code></td><td data-label="Value">3.375rem</td><td data-label="At 16px root">54px</td><td data-label="Use">Display.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul>
+          <li><strong>Body text</strong> is never below <code class="cai-code-inline">--cai-text-base</code> (16px), with a line height of 1.5.</li>
+          <li><strong>Secondary and UI text</strong> is never below <code class="cai-code-inline">--cai-text-sm</code> (14px).</li>
+          <li><strong>Nothing</strong> goes below <code class="cai-code-inline">--cai-text-xs</code> (12px). Sizes relative to their context (<code class="cai-code-inline">kbd</code>, <code class="cai-code-inline">time</code>, <code class="cai-code-inline">output</code>, inline code, captions) are clamped with <code class="cai-code-inline">max()</code> so they cannot fall below the floor inside small text.</li>
+          <li><strong>Form fields</strong> use <code class="cai-code-inline">--cai-text-control</code> (core setting): <code class="cai-code-inline">--cai-text-md</code> on desktop, <code class="cai-code-inline">--cai-text-base</code> (16px) at 768px and below and on touch screens, where iOS Safari zooms the page into any smaller field.</li>
+        </ul>
+      </div>
+
+      <div class="docs-subsection" id="tokens-fills">
+        <h3 class="docs-subsection__title">Solid fills</h3>
+        <p>Surfaces that carry <code class="cai-code-inline">--cai-text-on-color</code> use the fill tokens, not the brand or status color directly: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>. In light and high contrast they equal the brand and danger colors; in dark mode they are a step darker, because the dark brand is light enough to be read as text and white on it falls below 4.5:1.</p>
       </div>
 
       <div class="docs-subsection">

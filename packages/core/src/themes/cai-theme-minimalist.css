@@ -28,8 +28,11 @@
 
   /* Text */
   --min-text: #1e1e1e;
-  --min-muted: #64748b;
-  --min-placeholder: #94a3b8;
+  /* Text colors measured against the theme's own surfaces (WCAG 1.4.3):
+     #5b6b80 reaches 4.9:1 on the sidebar and on --min-elevated, where
+     #64748b gave 4.3:1; the placeholder 4.7:1 on white (was 2.6:1). */
+  --min-muted: #5b6b80;
+  --min-placeholder: #64748b;
   --min-disabled: #cbd5e1;
 
   /* Brand — muted slate, calm and authoritative */
@@ -45,13 +48,13 @@
 
   /* Sidebar — light, not dark */
   --min-sidebar-bg: #f4f4f1;
-  --min-sidebar-text: #64748b;
+  --min-sidebar-text: #5b6b80;
   --min-sidebar-text-hover: #1e1e1e;
   --min-sidebar-hover: #eaeae7;
   --min-sidebar-active-bg: #334155;
   --min-sidebar-active-text: #fff;
   --min-sidebar-border: #e4e4e0;
-  --min-sidebar-label: #94a3b8;
+  --min-sidebar-label: #5b6b80; /* #94a3b8 gave 2.3:1 */
   --min-sidebar-logo-bg: #334155;
 
   /* Status — very desaturated, just enough to be recognizable */
@@ -255,7 +258,7 @@
   --cai-bg-overlay: rgba(10, 10, 8, 0.7);
   --cai-text-primary: #f0f0ee;
   --cai-text-secondary: #94a3b8;
-  --cai-text-placeholder: #64748b;
+  --cai-text-placeholder: #7d8ba0; /* 4.6:1 on the input (was 3.4:1) */
   --cai-text-disabled: #475569;
   --cai-text-on-color: #fff;
   --cai-text-inverse: #1e1e1e;
@@ -266,6 +269,10 @@
   --cai-brand-hover: #b8c4d4;
   --cai-brand-active: #e2e8f0;
   --cai-brand-subtle: rgba(148, 163, 184, 0.1);
+  /* White button text needs a darker slate than the brand (2.6:1 on it) */
+  --cai-brand-fill: #475569;
+  --cai-brand-fill-hover: #334155;
+  --cai-brand-fill-active: #1e293b;
   --cai-icon-primary: #f0f0ee;
   --cai-icon-secondary: #94a3b8;
   --cai-icon-inverse: #1e1e1e;
@@ -273,13 +280,13 @@
   --cai-layer-02: #1a1a18;
   --cai-layer-03: #111110;
   --cai-sidebar-bg: #111110;
-  --cai-sidebar-text: #64748b;
+  --cai-sidebar-text: #8090a8; /* 5.7:1 (was 4.0:1) */
   --cai-sidebar-text-hover: #f0f0ee;
   --cai-sidebar-hover: #1a1a18;
   --cai-sidebar-active-bg: #94a3b8;
   --cai-sidebar-active-text: #111110;
   --cai-sidebar-border: #222220;
-  --cai-sidebar-label: #475569;
+  --cai-sidebar-label: #74849a; /* 4.9:1 (was 2.5:1) */
   --cai-sidebar-logo-bg: #94a3b8;
   --cai-color-success: #5a9a78;
   --cai-color-success-bg: rgba(90, 154, 120, 0.1);

@@ -23,10 +23,13 @@
 
 .cai-theme-btn {
   flex: 1;
-  height: 28px;
+  min-height: 28px;
   border: 1px solid var(--cai-sidebar-border);
   background: transparent;
-  color: var(--cai-sidebar-text);
+  /* inherit, not var(--cai-sidebar-text): each button carries its own
+     data-theme, which re-scopes the tokens to that mode. The label must
+     follow the sidebar it sits on (2.2:1 on the light minimalist sidebar). */
+  color: inherit;
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   cursor: pointer;
@@ -43,8 +46,10 @@
   color: var(--cai-sidebar-text-hover);
 }
 
+/* The switcher sits on the sidebar surface: --cai-border-interactive is
+   black on a black sidebar in high contrast */
 .cai-theme-btn:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-sidebar-text-hover);
   outline-offset: 2px;
 }
 
@@ -54,15 +59,17 @@
   border-color: var(--cai-sidebar-active-bg);
 }
 
-/* When a custom theme is active, mode buttons step back visually */
+/* When a custom theme is active, mode buttons step back visually. A dashed
+   border instead of opacity: they stay operable, so their label keeps its
+   text contrast (WCAG 1.4.3). */
 .cai-theme-btn.is-dimmed {
-  opacity: 0.45;
+  border-style: dashed;
 }
 
 /* Apply button for custom themes (sidebar themes section) */
 .cai-theme-apply-btn {
   width: 100%;
-  height: 26px;
+  min-height: 26px;
   border: 1px solid var(--cai-border-interactive);
   background: transparent;
   color: var(--cai-brand-primary);
@@ -81,12 +88,12 @@
 }
 
 .cai-theme-apply-btn:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-sidebar-text-hover);
   outline-offset: 2px;
 }
 
 .cai-theme-apply-btn.is-active {
-  background: var(--cai-brand-primary);
+  background: var(--cai-brand-fill);
   color: var(--cai-text-on-color);
-  border-color: var(--cai-brand-primary);
+  border-color: var(--cai-brand-fill);
 }

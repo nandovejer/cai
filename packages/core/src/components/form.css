@@ -24,13 +24,13 @@
 }
 
 .cai-field__helper {
-  font-size: var(--cai-text-xs);
+  font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
   margin-top: var(--cai-space-02);
 }
 
 .cai-field__error {
-  font-size: var(--cai-text-xs);
+  font-size: var(--cai-text-sm);
   color: var(--cai-color-danger);
   margin-top: var(--cai-space-02);
 }
@@ -44,7 +44,7 @@
   border-bottom: 1px solid var(--cai-input-border);
   color: var(--cai-text-primary);
   font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-md);
+  font-size: var(--cai-text-control);
   padding: 0 var(--cai-space-04);
   outline: none;
   transition: border-color var(--cai-duration-fast),
@@ -92,7 +92,7 @@
   transform: translateY(-50%);
   pointer-events: none;
   color: var(--cai-icon-secondary);
-  font-size: 12px;
+  font-size: var(--cai-text-xs);
 }
 
 .cai-select-wrap .cai-input {
@@ -178,6 +178,11 @@
 [data-theme="light"] .cai-input[type="datetime-local"],
 [data-theme="light"] .cai-input[type="month"],
 [data-theme="light"] .cai-input[type="week"],
+[data-theme="high-contrast"] .cai-input[type="date"],
+[data-theme="high-contrast"] .cai-input[type="time"],
+[data-theme="high-contrast"] .cai-input[type="datetime-local"],
+[data-theme="high-contrast"] .cai-input[type="month"],
+[data-theme="high-contrast"] .cai-input[type="week"],
 [data-theme="minimalist"] .cai-input[type="date"],
 [data-theme="minimalist"] .cai-input[type="time"],
 [data-theme="minimalist"] .cai-input[type="datetime-local"],
@@ -295,9 +300,10 @@
   border-radius: 50%;
 }
 
+/* Solid surface under the --cai-text-on-color check mark */
 .cai-check-item input[type="checkbox"]:checked {
-  background: var(--cai-brand-primary);
-  border-color: var(--cai-brand-primary);
+  background: var(--cai-brand-fill);
+  border-color: var(--cai-brand-fill);
 }
 
 .cai-check-item input[type="checkbox"]:checked::after {
@@ -365,8 +371,9 @@
   outline-offset: 2px;
 }
 
+/* Solid surface under the --cai-text-on-color thumb */
 .cai-toggle__track.is-on {
-  background: var(--cai-brand-primary);
+  background: var(--cai-brand-fill);
 }
 
 .cai-toggle__thumb {
@@ -387,4 +394,52 @@
 .cai-toggle__label {
   font-size: var(--cai-text-md);
   color: var(--cai-text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   FORM — Forced colors (Windows High Contrast)
+   The custom checkbox, radio and toggle draw their state with backgrounds,
+   which forced colors flattens to Canvas: the checked radio dot, the toggle
+   thumb and the on/off difference disappeared. Redraw them with system
+   colors (WCAG 1.4.11).
+   -------------------------------------------------------------------------- */
+
+@media (forced-colors: active) {
+  .cai-check-item input[type="checkbox"]:checked,
+  .cai-check-item input[type="radio"]:checked::after,
+  .cai-toggle__track,
+  .cai-toggle__thumb {
+    forced-color-adjust: none;
+  }
+
+  .cai-check-item input[type="checkbox"]:checked {
+    background: Highlight;
+    border-color: Highlight;
+  }
+
+  .cai-check-item input[type="checkbox"]:checked::after {
+    border-color: HighlightText;
+  }
+
+  .cai-check-item input[type="radio"]:checked::after {
+    background: Highlight;
+  }
+
+  .cai-toggle__track {
+    background: Canvas;
+    border: 1px solid CanvasText;
+  }
+
+  .cai-toggle__thumb {
+    background: CanvasText;
+  }
+
+  .cai-toggle__track.is-on {
+    background: Highlight;
+    border-color: Highlight;
+  }
+
+  .cai-toggle__track.is-on .cai-toggle__thumb {
+    background: HighlightText;
+  }
 }

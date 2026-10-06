@@ -16,7 +16,8 @@
   font-weight: 400;
   border: 1px solid transparent;
   cursor: pointer;
-  height: var(--cai-size-height-lg);
+  /* min-height: the label can grow with the user's font size */
+  min-height: var(--cai-size-height-lg);
   padding: 0 var(--cai-space-06);
   text-decoration: none;
   transition: background var(--cai-duration-fast),
@@ -47,23 +48,25 @@
 
 /* Variants */
 .cai-btn--primary {
-  background: var(--cai-brand-primary);
+  background: var(--cai-brand-fill);
   color: var(--cai-text-on-color);
 }
 .cai-btn--primary:hover {
-  background: var(--cai-brand-hover);
+  background: var(--cai-brand-fill-hover);
 }
 .cai-btn--primary:active {
-  background: var(--cai-brand-active);
+  background: var(--cai-brand-fill-active);
 }
 
 .cai-btn--secondary {
   background: var(--cai-layer-03);
   color: var(--cai-text-primary);
 }
+/* --cai-text-on-color, not --cai-text-inverse: the inverse text turns dark in
+   dark mode and fell to 3.6:1 on --cai-border-strong */
 .cai-btn--secondary:hover {
   background: var(--cai-border-strong);
-  color: var(--cai-text-inverse);
+  color: var(--cai-text-on-color);
 }
 
 .cai-btn--ghost {
@@ -84,7 +87,7 @@
 }
 
 .cai-btn--danger {
-  background: var(--cai-color-danger);
+  background: var(--cai-color-danger-fill);
   color: var(--cai-text-on-color);
 }
 .cai-btn--danger:hover {
@@ -93,13 +96,13 @@
 
 /* Sizes */
 .cai-btn--sm {
-  height: var(--cai-size-height-md);
+  min-height: var(--cai-size-height-md);
   font-size: var(--cai-text-sm);
   padding: 0 var(--cai-space-04);
 }
 
 .cai-btn--lg {
-  height: var(--cai-size-height-xl);
+  min-height: var(--cai-size-height-xl);
   font-size: var(--cai-text-base);
   padding: 0 var(--cai-space-07);
 }

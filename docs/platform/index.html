@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI Platform — Reference</title>
   <meta name="description" content="@cai-ds/platform reference: app-shell patterns, layout primitives, and installation guide.">
-  <script type="module" crossorigin src="../assets/platform/index-CXXyLDe5.js"></script>
-  <link rel="modulepreload" crossorigin href="../assets/preload-helper-BFgxmrK7.js">
-  <link rel="modulepreload" crossorigin href="../assets/docs-9X_aidac.js">
-  <link rel="stylesheet" crossorigin href="../assets/preload-helper-C_vM7Olx.css">
-  <link rel="stylesheet" crossorigin href="../assets/docs-DvIX5jfr.css">
-  <link rel="stylesheet" crossorigin href="../assets/index-Bq-Rvnzq.css">
+  <script type="module" crossorigin src="../assets/platform/index-CB4D6cDt.js"></script>
+  <link rel="modulepreload" crossorigin href="../assets/preload-helper-CmczP7LR.js">
+  <link rel="modulepreload" crossorigin href="../assets/docs-zlViuJJ2.js">
+  <link rel="stylesheet" crossorigin href="../assets/preload-helper-kyxJPe1-.css">
+  <link rel="stylesheet" crossorigin href="../assets/docs-BEB_vUNZ.css">
+  <link rel="stylesheet" crossorigin href="../assets/index-GF6S9AFL.css">
 </head>
 <body class="o-shell">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -841,7 +841,7 @@
           </div>
           <div class="cai-toast" role="status" aria-live="polite">
             <div class="cai-toast__content">
-              <div class="cai-toast__kind" style="color:var(--cai-color-success)">SUCCESS</div>
+              <div class="cai-toast__kind">SUCCESS</div>
               <div class="cai-toast__msg">File exported successfully.</div>
             </div>
             <button class="cai-toast__close" aria-label="Dismiss notification" type="button">X</button>
@@ -853,9 +853,9 @@
         <div class="pdocs-subsection__title">Modal</div>
         <div class="pdocs-preview" style="display:flex;gap:var(--cai-space-03);align-items:center;flex-wrap:wrap">
           <button class="cai-btn cai-btn--primary" data-modal-trigger="platform-demo-modal">Open Modal</button>
-          <dialog class="cai-modal" id="platform-demo-modal">
+          <dialog class="cai-modal" id="platform-demo-modal" aria-labelledby="platform-demo-modal-title">
             <div class="cai-modal__header">
-              <h2 class="cai-modal__title">Confirm action</h2>
+              <h2 class="cai-modal__title" id="platform-demo-modal-title">Confirm action</h2>
               <button class="cai-modal__close" data-modal-close="platform-demo-modal" aria-label="Close modal" type="button">X</button>
             </div>
             <div class="cai-modal__body">
@@ -975,9 +975,9 @@
                 <span class="cai-player-spacer"></span>
                 <span class="cai-player-time cai-player-duration">0:00</span>
                 <div class="cai-player-vol-wrap">
-                  <button class="cai-player-btn cai-player-vol-toggle" aria-label="Mute">
-                    <svg class="icon-unmute" viewBox="0 0 24 24" fill="currentColor"><path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z M17,7 Q20,10 20,12 Q20,14 17,17"/></svg>
-                    <svg class="icon-mute" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z M17,7 L23,13 M23,7 L17,13"/></svg>
+                  <button class="cai-player-btn cai-player-mute" type="button" aria-label="Mute">
+                    <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z M17,7 Q20,10 20,12 Q20,14 17,17"/></svg>
+                    <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M3,9 L7,9 L12,4 L12,20 L7,15 L3,15 Z M17,7 L23,13 M23,7 L17,13"/></svg>
                   </button>
                   <div class="cai-player-seekbar cai-player-volbar" role="slider" aria-label="Volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
                     <div class="cai-player-seekbar-fill" style="width:100%"></div>

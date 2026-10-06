@@ -19,3 +19,15 @@
   transition: width 0.3s var(--cai-easing-enter);
   border-radius: var(--cai-radius-sm);
 }
+
+/* Forced colors flatten backgrounds to Canvas: keep the bar and its fill */
+@media (forced-colors: active) {
+  .cai-progress {
+    border: 1px solid CanvasText;
+  }
+
+  .cai-progress__fill {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+}

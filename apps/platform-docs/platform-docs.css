@@ -53,7 +53,6 @@
   padding-left: calc(var(--cai-space-05) + var(--cai-space-04));
   font-size: var(--cai-text-sm);
   color: var(--cai-sidebar-text);
-  opacity: 0.72;
 }
 
 .cai-sidebar__link--sub::before {
@@ -62,12 +61,7 @@
   opacity: 0.5;
 }
 
-.cai-sidebar__link--sub:hover {
-  opacity: 1;
-}
-
 .cai-sidebar__link--sub.is-active {
-  opacity: 1;
   font-weight: 400;
 }
 
@@ -662,10 +656,6 @@
 
   .pdocs-decision-grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .pdocs-ref-table {
-    font-size: var(--cai-text-xs);
   }
 
   .pdocs-ref-table td:first-child {

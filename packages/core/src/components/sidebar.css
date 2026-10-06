@@ -31,7 +31,8 @@
   font-size: var(--cai-text-xl);
   font-weight: 600;
   letter-spacing: -0.5px;
-  color: var(--cai-text-inverse);
+  /* --cai-text-inverse turns dark in dark mode: 1.1:1 on the sidebar */
+  color: var(--cai-sidebar-text-hover);
   display: flex;
   align-items: center;
   gap: var(--cai-space-03);
@@ -47,7 +48,9 @@
   font-size: var(--cai-text-sm);
   font-family: var(--cai-font-mono);
   font-weight: 500;
-  color: var(--cai-text-on-color);
+  /* The logo shares its background with the active link in every theme;
+     --cai-text-on-color was white on white in high contrast */
+  color: var(--cai-sidebar-active-text);
   flex-shrink: 0;
 }
 
@@ -96,9 +99,28 @@
   font-weight: 500;
 }
 
-.cai-sidebar__link:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+/* Focus rings on the sidebar surface: --cai-border-interactive is black on
+   the black sidebar in high contrast. Links draw the ring inside themselves,
+   in their own text color, which contrasts with their background in every
+   state (default, hover, active). */
+.cai-sidebar :is(a, button, [tabindex]):focus-visible {
+  outline-color: var(--cai-sidebar-text-hover);
+}
+
+.cai-sidebar .cai-sidebar__link:focus-visible {
+  outline: 2px solid currentcolor;
   outline-offset: -2px;
+}
+
+/* Ghost buttons (e.g. footer links) take the sidebar text colors: the brand
+   color is below 4.5:1 on the sidebar surface */
+.cai-sidebar .cai-btn--ghost {
+  color: var(--cai-sidebar-text);
+}
+
+.cai-sidebar .cai-btn--ghost:hover {
+  background: var(--cai-sidebar-hover);
+  color: var(--cai-sidebar-text-hover);
 }
 
 .cai-sidebar__footer {
@@ -121,13 +143,19 @@
   height: 40px;
   background: var(--cai-sidebar-bg);
   border: 1px solid var(--cai-sidebar-border);
-  color: var(--cai-text-inverse);
+  /* --cai-text-inverse turns dark in dark mode: invisible bars */
+  color: var(--cai-sidebar-text-hover);
   cursor: pointer;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 5px;
   padding: 10px;
+}
+
+.cai-nav-toggle:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
 }
 
 .cai-nav-toggle__bar {
@@ -154,17 +182,26 @@
     display: flex;
   }
 
+  /* Closed drawer: off screen AND hidden, so its links leave the tab order
+     and the accessibility tree instead of taking invisible focus (WCAG
+     2.4.7, 2.4.3). visibility waits for the slide-out to finish. */
   .cai-sidebar {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
     transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform var(--cai-duration-slow) var(--cai-easing-standard),
+      visibility 0s linear var(--cai-duration-slow),
+      background var(--cai-duration-base);
   }
 
   .cai-sidebar.is-open {
     transform: translateX(0);
     box-shadow: var(--cai-shadow-lg);
+    visibility: visible;
+    transition-delay: 0s;
   }
 
   .cai-nav-overlay.is-open {

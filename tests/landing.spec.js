@@ -291,7 +291,7 @@ test.describe('Landing page', () => {
       await button.click();
 
       await expect(button).toHaveClass(/is-copied/);
-      await expect(page.locator('#landing-status')).toHaveText('Copied to clipboard');
+      await expect(page.locator('#cai-live-region')).toHaveText('Copied to clipboard');
       const expected = (await page.locator('#snip-l2').textContent()).trim();
       expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(expected);
     });

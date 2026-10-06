@@ -7,9 +7,52 @@
  * wire up delegation, or use copyToClipboard() directly.
  */
 
+const LIVE_REGION_ID = "cai-live-region";
+let clearAnnouncement;
+
+/**
+ * Polite live region shared by the copy helpers, so screen-reader users hear
+ * the result of a copy without losing focus (WCAG 4.1.3). Visually hidden
+ * with inline styles: it works without the utilities layer.
+ */
+function getLiveRegion() {
+  let region = document.getElementById(LIVE_REGION_ID);
+  if (!region) {
+    region = document.createElement("div");
+    region.id = LIVE_REGION_ID;
+    region.setAttribute("role", "status");
+    Object.assign(region.style, {
+      position: "absolute",
+      width: "1px",
+      height: "1px",
+      padding: "0",
+      margin: "-1px",
+      overflow: "hidden",
+      clip: "rect(0, 0, 0, 0)",
+      whiteSpace: "nowrap",
+      border: "0",
+    });
+    document.body.append(region);
+  }
+  return region;
+}
+
+function announce(message) {
+  const region = getLiveRegion();
+  region.textContent = message;
+  clearTimeout(clearAnnouncement);
+  clearAnnouncement = setTimeout(() => {
+    region.textContent = "";
+  }, 2000);
+}
+
+const COPIED = "Copied to clipboard";
+const COPY_FAILED = "Copy failed. Select the text and copy it manually.";
+
 export async function copyToClipboard(text, el, type = "btn") {
   try {
     await navigator.clipboard.writeText(text);
+    announce(COPIED);
 
     if (type === "swatch") {
       el.classList.add("is-copied");
@@ -28,6 +71,7 @@ export async function copyToClipboard(text, el, type = "btn") {
       }, 1200);
     }
   } catch (err) {
+    announce(COPY_FAILED);
     console.error("Failed to copy:", err);
   }
 }
@@ -49,6 +93,7 @@ async function copyIconItem(iconItem) {
   const originalText = label.textContent;
   try {
     await navigator.clipboard.writeText(svgCode);
+    announce(COPIED);
     label.textContent = "✓ Copied!";
     iconItem.classList.add("is-copied");
     setTimeout(() => {
@@ -56,6 +101,7 @@ async function copyIconItem(iconItem) {
       iconItem.classList.remove("is-copied");
     }, 1200);
   } catch (err) {
+    announce(COPY_FAILED);
     console.error("Failed to copy icon:", err);
   }
 }
@@ -81,6 +127,9 @@ function initCopyA11y() {
  */
 export function initCopyButtons() {
   initCopyA11y();
+  // Create the live region up front: some screen readers ignore a region
+  // that is inserted and filled at the same time.
+  getLiveRegion();
 
   document.body.addEventListener("click", async (e) => {
     // --- Copy icon SVG ---

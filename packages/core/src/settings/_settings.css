@@ -8,6 +8,9 @@
 :root {
   /* Typography — serif for headings, sans for UI, mono for code */
   --cai-font-heading: var(--cai-font-serif);
+  /* Text inside form fields. Never below 16px on touch screens: iOS Safari
+     zooms the page when a focused field is smaller. */
+  --cai-text-control: var(--cai-text-md);
   /* Z-index scale */
   --cai-z-base: 0;
   --cai-z-raised: 10;
@@ -57,4 +60,10 @@
 
   /* Scrollbar */
   --cai-scrollbar-size: 4px;
+}
+
+@media (max-width: 768px), (pointer: coarse) {
+  :root {
+    --cai-text-control: var(--cai-text-base);
+  }
 }

@@ -151,7 +151,13 @@ export function initSidebar() {
       : null;
     if (targetEl) {
       updateActiveState(link);
-      targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+      const reduceMotion = window.matchMedia?.(
+        "(prefers-reduced-motion: reduce)",
+      ).matches;
+      targetEl.scrollIntoView({
+        behavior: reduceMotion ? "auto" : "smooth",
+        block: "start",
+      });
     }
     // On mobile, close the drawer when navigating
     if (window.innerWidth <= 768) {

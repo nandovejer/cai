@@ -144,6 +144,14 @@
   min-width: 40px;
 }
 
+/* Invisible hit area: the 4px bar becomes a 24px-tall pointer target
+   (WCAG 2.5.8). Clicks on it land on the bar itself. */
+.cai-player-seekbar::before {
+  content: "";
+  position: absolute;
+  inset: -10px 0;
+}
+
 .cai-player-seekbar:hover .cai-player-seekbar-thumb,
 .cai-player-seekbar:focus-visible .cai-player-seekbar-thumb {
   opacity: 1;
@@ -215,5 +223,19 @@
 
   .cai-player-progress-row--audio {
     flex: unset;
+  }
+}
+
+/* Forced colors flatten backgrounds to Canvas: keep the track, the fill and
+   the thumb of the seek and volume bars */
+@media (forced-colors: active) {
+  .cai-player-seekbar {
+    border: 1px solid CanvasText;
+  }
+
+  .cai-player-seekbar-fill,
+  .cai-player-seekbar-thumb {
+    forced-color-adjust: none;
+    background: Highlight;
   }
 }

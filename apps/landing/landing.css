@@ -995,41 +995,6 @@
    Local patches for gaps in core. Remove each one when core fixes it.
    -------------------------------------------------------------------------- */
 
-/* .cai-toast is a fixed 320px wide */
-.landing-demo__stage .cai-toast {
-  max-width: 100%;
-}
-
-/* button.cai-toast__close keeps the browser's button background and border */
-.landing-demo__stage .cai-toast__close {
-  background: none;
-  border: 0;
-}
-
-/* The tooltip only opens on :hover */
-.landing-demo__stage .cai-tooltip:focus-within .cai-tooltip__text {
-  opacity: 1;
-}
-
-/* Date and time inputs default to a dark color scheme unless an ancestor is
-   data-theme="light"; high contrast is a light mode too. */
-[data-theme="high-contrast"] .cai-input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
-  color-scheme: light;
-}
-
-/* --cai-text-inverse flips to a dark value in dark mode, which hides the
-   brand name and the toggle bars on the always-dark sidebar surface. */
-.landing-demo__stage .cai-sidebar__brand-name,
-.landing-demo__stage .cai-nav-toggle {
-  color: var(--cai-sidebar-text-hover);
-}
-
-/* In high contrast --cai-sidebar-logo-bg and --cai-text-on-color are both
-   white: the logo letter disappears. */
-.landing-demo__stage .cai-sidebar__logo {
-  color: var(--cai-sidebar-active-text);
-}
-
 /* The toggle here is a specimen with nothing to open: it is disabled, and core
    has no disabled style for it. */
 .landing-demo__stage .cai-nav-toggle:disabled {
@@ -1046,26 +1011,6 @@
    under the label. */
 .landing-demo__stage details:not([open]) > summary {
   margin-bottom: calc(-1 * var(--cai-space-04));
-}
-
-/* Scrollable regions and tab panels are focusable and core gives them no
-   focus style: the browser default is invisible in dark mode. */
-.cai-table-wrap:focus-visible,
-[role="tabpanel"]:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
-  outline-offset: 2px;
-}
-
-/* On the command block (--cai-layer-03) the dark-mode focus ring,
-   --cai-border-interactive, has a contrast of 2.3:1. */
-.cai-platform-command-block .cai-copy-btn:focus-visible {
-  outline-color: var(--cai-text-primary);
-}
-
-/* --cai-border-interactive is black in high contrast: no visible focus ring
-   on the black sidebar. */
-.landing-demo__stage .cai-sidebar :focus-visible {
-  outline-color: var(--cai-sidebar-text-hover);
 }
 
 /* .cai-platform-footer (768px and below) and .cai-platform-actions (480px and
@@ -1092,12 +1037,7 @@
   }
 }
 
-/* Core sets scroll-behavior: smooth and the reset does not cancel it */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   .landing-motion__reduced {
     display: block;
   }

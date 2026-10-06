@@ -76,46 +76,8 @@ function initCopy() {
     const source = document.getElementById(button.dataset.copyFrom);
     if (source) button.dataset.copy = source.textContent.trim();
   });
+  // initCopyButtons() announces each copy in a polite live region
   initCopyButtons();
-
-  // copyToClipboard() reports success only by adding .is-copied, so announce
-  // that when it appears, and a failure when it has not appeared in time.
-  const status = document.getElementById("landing-status");
-  if (!status) return;
-  const targets = ".cai-copy-btn, .cai-icon-item";
-  let clearTimer;
-
-  function announce(message) {
-    status.textContent = message;
-    clearTimeout(clearTimer);
-    clearTimer = setTimeout(() => {
-      status.textContent = "";
-    }, 2000);
-  }
-
-  new window.MutationObserver((records) => {
-    const copied = records.some(
-      (record) =>
-        record.target.matches(targets) &&
-        record.target.classList.contains("is-copied") &&
-        !(record.oldValue || "").includes("is-copied"),
-    );
-    if (copied) announce("Copied to clipboard");
-  }).observe(document.body, {
-    subtree: true,
-    attributeFilter: ["class"],
-    attributeOldValue: true,
-  });
-
-  document.addEventListener("click", (e) => {
-    const target = e.target.closest(targets);
-    if (!target) return;
-    setTimeout(() => {
-      if (!target.classList.contains("is-copied")) {
-        announce("Copy failed. Select the text and copy it manually.");
-      }
-    }, 1000);
-  });
 }
 
 /* ---- Small enhancements ----------------------------------------------- */

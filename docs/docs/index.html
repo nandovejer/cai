@@ -5,25 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI Core + Tokens - Technical Docs</title>
   <meta name="description" content="Technical documentation for @cai-ds/tokens and @cai-ds/core: architecture, commands, and integration patterns.">
-  <script type="module" crossorigin src="../assets/platform-d0uOm2B1.js"></script>
+  <script type="module" crossorigin src="../assets/platform-sphjuVTa.js"></script>
   <script type="module" crossorigin src="../assets/docs-zlViuJJ2.js"></script>
   <script type="module" crossorigin src="../assets/preload-helper-Dp1pzeXC.js"></script>
-  <script type="module" crossorigin src="../assets/cai-9BEbO2nV.js"></script>
-  <link rel="stylesheet" crossorigin href="../assets/platform-J-uoJxRf.css">
+  <script type="module" crossorigin src="../assets/cai-CXxnkwqW.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/platform-beoYF_cP.css">
   <link rel="stylesheet" crossorigin href="../assets/docs-BEB_vUNZ.css">
   <link rel="stylesheet" crossorigin href="../assets/index-DLmj2GrM.css">
 </head>
 <body class="o-shell">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
-  <button class="cai-nav-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="sidebar-docs">
+  <button class="cai-nav-toggle" type="button" aria-label="Open navigation" popovertarget="sidebar-docs">
     <span class="cai-nav-toggle__bar"></span>
     <span class="cai-nav-toggle__bar"></span>
     <span class="cai-nav-toggle__bar"></span>
   </button>
-  <div class="cai-nav-overlay" aria-hidden="true"></div>
 
-  <nav class="cai-sidebar" id="sidebar-docs" aria-label="Docs navigation">
+  <nav class="cai-sidebar" id="sidebar-docs" popover aria-label="Docs navigation">
     <div class="cai-sidebar__brand">
       <div class="cai-sidebar__brand-name">
         <span class="cai-sidebar__logo">C</span>
@@ -52,6 +51,11 @@
       <a class="cai-sidebar__link" href="#platform-link">Platform docs</a>
     </div>
 
+    <div class="cai-sidebar__section" data-group="a11y">
+      <div class="cai-sidebar__section-label">Accessibility</div>
+      <a class="cai-sidebar__link" href="#accessibility">Accessibility statement</a>
+    </div>
+
     <div class="cai-sidebar__footer">
       <div class="cai-platform-actions">
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../">Home</a>
@@ -68,7 +72,7 @@
     </nav>
 
     <header class="cai-platform-page-header">
-      <h1 class="cai-platform-page-header__title">Core + Tokens Technical Documentation</h1>
+      <h1 class="cai-platform-page-header__title">Core + Tokens technical documentation</h1>
       <p class="cai-platform-page-header__lead">Technical reference for architecture, package boundaries, build flow, and copy/paste integration snippets for @cai-ds/tokens and @cai-ds/core.</p>
     </header>
 
@@ -144,7 +148,7 @@
     </section>
 
     <section class="docs-section" id="packages" aria-labelledby="h-packages">
-      <h2 class="docs-section__title" id="h-packages">Package Boundaries</h2>
+      <h2 class="docs-section__title" id="h-packages">Package boundaries</h2>
       <div class="docs-section__subtitle">Unidirectional dependency chain.</div>
       <pre class="cai-code-block" data-lang="text"><code>@cai-ds/tokens   -> primitives + semantic token contracts (standalone)
       ↓ required by
@@ -278,7 +282,7 @@ background: var(--cai-blue-60);</code></pre>
     </section>
 
     <section class="docs-section" id="themes" aria-labelledby="h-themes">
-      <h2 class="docs-section__title" id="h-themes">Themes &amp; Modes</h2>
+      <h2 class="docs-section__title" id="h-themes">Themes &amp; modes</h2>
       <div class="docs-section__subtitle">Identity and color mode are independent.</div>
       <pre class="cai-code-block" data-lang="html"><code>&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;light&quot;&gt;
 
@@ -289,7 +293,7 @@ background: var(--cai-blue-60);</code></pre>
     </section>
 
     <section class="docs-section" id="build" aria-labelledby="h-build">
-      <h2 class="docs-section__title" id="h-build">Build Commands</h2>
+      <h2 class="docs-section__title" id="h-build">Build commands</h2>
       <div class="docs-section__subtitle">Commands used in this monorepo workflow.</div>
       <pre class="cai-code-block" data-lang="bash"><code>pnpm dev
 pnpm tokens:build
@@ -302,12 +306,51 @@ pnpm lint:js
 pnpm test:unit</code></pre>
     </section>
 
+    <section class="docs-section" id="accessibility" aria-labelledby="h-accessibility">
+      <h2 class="docs-section__title" id="h-accessibility">Accessibility statement</h2>
+      <div class="docs-section__subtitle">What CAI aims for, what is checked on every change, and what has not been tested. Last reviewed on 6 October 2026.</div>
+
+      <h3 id="h-a11y-target">Target</h3>
+      <p>CAI aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to. A design system cannot make a service accessible by itself: how you use the components decides the result.</p>
+
+      <h3 id="h-a11y-checked">What is checked on every change</h3>
+      <ul>
+        <li>An automated scan with axe-core of the four apps, in the light, dark and high-contrast modes. A serious or critical finding fails the build.</li>
+        <li>Keyboard use of the sidebar drawer, the modal dialog and the tabs.</li>
+        <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, and no control that needs JavaScript is left on screen doing nothing.</li>
+        <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
+        <li>Forced colors: a focused button keeps a visible outline.</li>
+        <li>Contrast of the text written for the landing page, in all three modes.</li>
+      </ul>
+
+      <h3 id="h-a11y-not-tested">What has not been tested</h3>
+      <ul>
+        <li>Screen readers. NVDA, JAWS, VoiceOver and TalkBack have not been used to test CAI. Nothing here says a component works with them.</li>
+        <li>Speech recognition and screen magnifier software.</li>
+        <li>Zoom to 400 percent by hand. Only the 320 pixel width is measured.</li>
+        <li>Research with disabled people.</li>
+      </ul>
+      <p>Automated tools find only part of the problems. Treat this list as the gap, and test your own pages.</p>
+
+      <h3 id="h-a11y-known">Known issues</h3>
+      <ul>
+        <li>The tooltip cannot be dismissed with the Escape key. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
+        <li>The items of the icon grid are made focusable and given the button role by a script, on a div. A native button is planned.</li>
+        <li>The modal buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
+        <li>The MIDI player needs JavaScript and Web Audio. Without them it shows a message.</li>
+        <li>A stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
+      </ul>
+
+      <h3 id="h-a11y-report">Report a problem</h3>
+      <p>If something does not work for you, <a href="https://github.com/nandovejer/cai/issues">open an issue on GitHub</a> and say what you were trying to do, the browser and the assistive technology you use.</p>
+    </section>
+
     <section class="docs-section" id="platform-link" aria-labelledby="h-platform-link">
-      <h2 class="docs-section__title" id="h-platform-link">Platform Documentation</h2>
+      <h2 class="docs-section__title" id="h-platform-link">Platform documentation</h2>
       <div class="docs-section__subtitle">For app-shell components and copy/paste templates, use the dedicated Platform docs page.</div>
       <div class="cai-platform-actions">
-        <a class="cai-btn cai-btn--primary" href="../platform/">Open Platform Docs</a>
-        <a class="cai-btn cai-btn--outline" href="../">Back to Home</a>
+        <a class="cai-btn cai-btn--primary" href="../platform/">Open the Platform docs</a>
+        <a class="cai-btn cai-btn--outline" href="../">Back to the home page</a>
       </div>
     </section>
   </main>

@@ -11,12 +11,12 @@
     if(["light","dark","high-contrast"].indexOf(m)<0){m=matchMedia("(prefers-contrast: more)").matches?"high-contrast":matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
     document.documentElement.dataset.theme=m})();
   </script>
-  <script type="module" crossorigin src="./assets/index-BCR3vIso.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/platform-d0uOm2B1.js">
-  <link rel="modulepreload" crossorigin href="./assets/highlight-H5RH7X4Q.js">
+  <script type="module" crossorigin src="./assets/index-CrjBY7Ke.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/platform-sphjuVTa.js">
+  <link rel="modulepreload" crossorigin href="./assets/highlight-BK0BlmnV.js">
   <link rel="modulepreload" crossorigin href="./assets/preload-helper-Dp1pzeXC.js">
-  <link rel="stylesheet" crossorigin href="./assets/platform-J-uoJxRf.css">
-  <link rel="stylesheet" crossorigin href="./assets/index-DGanTm4s.css">
+  <link rel="stylesheet" crossorigin href="./assets/platform-beoYF_cP.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-CIm99rQ9.css">
 </head>
 <body class="cai-platform-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -249,7 +249,7 @@
                 <li><span data-count="components">20</span> components: buttons, forms, tables, tabs, modal, media player and more</li>
                 <li><span data-count="objects">7</span> layout objects and a small set of utilities</li>
                 <li>Motion, z-index and breakpoint settings</li>
-                <li>Optional <code class="cai-code-inline">cai.min.js</code>: one ES module that wires tabs, modals, copy buttons, toggles and players</li>
+                <li>Optional <code class="cai-code-inline">cai.min.js</code>: one ES module that wires tabs, modals, copy buttons and players</li>
               </ul>
             </div>
             <div>
@@ -959,9 +959,7 @@
                   <button class="cai-btn cai-btn--primary" type="button">Primary</button>
                   <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
                 </div>
-                <div class="cai-progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Progress in light mode">
-                  <div class="cai-progress__fill" style="width:60%"></div>
-                </div>
+                <progress class="cai-progress" value="60" max="100" aria-label="Progress in light mode"></progress>
                 <div class="cai-alert cai-alert--warning">
                   <div class="cai-alert__icon" aria-hidden="true">!</div>
                   <div>
@@ -978,9 +976,7 @@
                   <button class="cai-btn cai-btn--primary" type="button">Primary</button>
                   <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
                 </div>
-                <div class="cai-progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Progress in dark mode">
-                  <div class="cai-progress__fill" style="width:60%"></div>
-                </div>
+                <progress class="cai-progress" value="60" max="100" aria-label="Progress in dark mode"></progress>
                 <div class="cai-alert cai-alert--warning">
                   <div class="cai-alert__icon" aria-hidden="true">!</div>
                   <div>
@@ -997,9 +993,7 @@
                   <button class="cai-btn cai-btn--primary" type="button">Primary</button>
                   <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
                 </div>
-                <div class="cai-progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Progress in high-contrast mode">
-                  <div class="cai-progress__fill" style="width:60%"></div>
-                </div>
+                <progress class="cai-progress" value="60" max="100" aria-label="Progress in high-contrast mode"></progress>
                 <div class="cai-alert cai-alert--warning">
                   <div class="cai-alert__icon" aria-hidden="true">!</div>
                   <div>
@@ -1223,6 +1217,7 @@
                 <div class="landing-box landing-box--shadow" style="--v: var(--cai-shadow-sm)">--cai-shadow-sm</div>
                 <div class="landing-box landing-box--shadow" style="--v: var(--cai-shadow-md)">--cai-shadow-md</div>
                 <div class="landing-box landing-box--shadow" style="--v: var(--cai-shadow-lg)">--cai-shadow-lg</div>
+                <div class="landing-box landing-box--shadow" style="--v: var(--cai-shadow-icon)">--cai-shadow-icon</div>
               </div>
             </div>
           </article>
@@ -1317,15 +1312,13 @@
             <div class="landing-demo__head">
               <h4 class="landing-demo__title" id="c-motion-title">Motion</h4>
               <code class="landing-demo__file">settings/_settings.css</code>
-              <span class="cai-tag cai-tag--purple">JS: toggle.js</span>
             </div>
             <div class="landing-demo__stage landing-motion">
-              <div class="cai-toggle">
-                <div class="cai-toggle__track" role="switch" tabindex="0" aria-checked="false" aria-labelledby="motion-toggle-label">
-                  <div class="cai-toggle__thumb"></div>
-                </div>
-                <span class="cai-toggle__label" id="motion-toggle-label">Run transitions</span>
-              </div>
+              <label class="cai-toggle">
+                <input class="cai-toggle__input" type="checkbox" role="switch">
+                <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+                <span class="cai-toggle__label">Run transitions</span>
+              </label>
               <p class="landing-motion__reduced landing-demo__note">Reduced motion is on, so the dots jump instead of travelling.</p>
               <div class="o-grid landing-cols-2">
                 <div class="landing-demo__stage">
@@ -1556,6 +1549,23 @@
                 <a class="cai-btn cai-btn--outline" href="#c-button">Link as button</a>
               </div>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Button</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-button-when">When to use</h5>
+                <p>To start an action on the current page: save, send, open a dialog. Use the primary variant once per view.</p>
+                <h5 class="landing-guide__title" id="h-c-button-when-not">When not to use</h5>
+                <p>To go to another page. Use a link, or a link styled with the button class. Do not use a disabled button to hide an action.</p>
+                <h5 class="landing-guide__title" id="h-c-button-how">How it works</h5>
+                <p>A native button element with a variant and a size modifier. Without JavaScript it works as any button; inside a form, set the type.</p>
+                <h5 class="landing-guide__title" id="h-c-button-content">Content guidance</h5>
+                <p>Start with a verb and say the result: "Save changes", "Delete draft". Never "OK", "Submit" or "Click here". Sentence case.</p>
+                <h5 class="landing-guide__title" id="h-c-button-keyboard">Keyboard and ARIA</h5>
+                <p>Tab to reach it, Enter or Space to press it. The focus ring is the shared 2px ring. No ARIA is needed; add an aria-label only to an icon-only button.</p>
+                <h5 class="landing-guide__title" id="h-c-button-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-copy" aria-labelledby="c-copy-title">
@@ -1571,13 +1581,29 @@
               </div>
             </div>
             <p class="landing-demo__note">The button copies the text in its <code class="cai-code-inline">data-copy</code> attribute.</p>
+            <details class="landing-guide">
+              <summary>Guidance for Copy button</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-copy-when">When to use</h5>
+                <p>To copy a short string the reader will paste elsewhere, such as a command or a token name.</p>
+                <h5 class="landing-guide__title" id="h-c-copy-when-not">When not to use</h5>
+                <p>For long text, or where selecting the text is enough. Never as the only way to get the content.</p>
+                <h5 class="landing-guide__title" id="h-c-copy-how">How it works</h5>
+                <p>A button with data-copy. It needs JavaScript and the Clipboard API, so it is hidden until the script runs; the text it copies is always on the page, selectable.</p>
+                <h5 class="landing-guide__title" id="h-c-copy-content">Content guidance</h5>
+                <p>Name what is copied in the accessible name: "Copy the install command". The visible label is "Copy"; the result is announced in a polite live region.</p>
+                <h5 class="landing-guide__title" id="h-c-copy-keyboard">Keyboard and ARIA</h5>
+                <p>Tab, then Enter or Space. A polite status message announces "Copied to clipboard" or the failure.</p>
+                <h5 class="landing-guide__title" id="h-c-copy-issues">Known issues</h5>
+                <p>Needs a secure context (https or localhost) for the Clipboard API; the failure is announced and the text can still be selected.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo landing-demo--wide" id="c-form" aria-labelledby="c-form-title">
             <div class="landing-demo__head">
               <h4 class="landing-demo__title" id="c-form-title">Form</h4>
               <code class="landing-demo__file">components/form.css</code>
-              <span class="cai-tag cai-tag--purple">JS: toggle.js</span>
             </div>
             <div class="landing-demo__stage">
               <div class="o-grid landing-cols-3">
@@ -1643,18 +1669,16 @@
                     </fieldset>
                   </div>
                   <div class="o-stack">
-                    <div class="cai-toggle">
-                      <div class="cai-toggle__track is-on" role="switch" tabindex="0" aria-checked="true" aria-labelledby="f-toggle-1-label">
-                        <div class="cai-toggle__thumb"></div>
-                      </div>
-                      <span class="cai-toggle__label" id="f-toggle-1-label">Public profile</span>
-                    </div>
-                    <div class="cai-toggle">
-                      <div class="cai-toggle__track" role="switch" tabindex="0" aria-checked="false" aria-labelledby="f-toggle-2-label">
-                        <div class="cai-toggle__thumb"></div>
-                      </div>
-                      <span class="cai-toggle__label" id="f-toggle-2-label">Weekly digest</span>
-                    </div>
+                    <label class="cai-toggle">
+                      <input class="cai-toggle__input" type="checkbox" role="switch" checked>
+                      <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+                      <span class="cai-toggle__label">Public profile</span>
+                    </label>
+                    <label class="cai-toggle">
+                      <input class="cai-toggle__input" type="checkbox" role="switch">
+                      <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+                      <span class="cai-toggle__label">Weekly digest</span>
+                    </label>
                   </div>
                 </div>
 
@@ -1735,6 +1759,23 @@
                 </div>
               </details>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Form controls</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-form-when">When to use</h5>
+                <p>To collect input. Use the native control that fits the data: text, email, date, range, select, checkbox, radio, switch.</p>
+                <h5 class="landing-guide__title" id="h-c-form-when-not">When not to use</h5>
+                <p>Do not rebuild a native control from divs. Do not use a placeholder as the label.</p>
+                <h5 class="landing-guide__title" id="h-c-form-how">How it works</h5>
+                <p>Native inputs with the field, label, helper and error classes. The switch is a checkbox with role="switch"; all of it works without JavaScript and submits with the form.</p>
+                <h5 class="landing-guide__title" id="h-c-form-content">Content guidance</h5>
+                <p>Every control has a visible label. Hints go in a helper linked with aria-describedby. An error says what is wrong and how to fix it, next to the field, prefixed with "Error:".</p>
+                <h5 class="landing-guide__title" id="h-c-form-keyboard">Keyboard and ARIA</h5>
+                <p>Tab between fields, Space toggles checkboxes and switches, arrow keys move inside radio groups and sliders. Group related controls with fieldset and legend.</p>
+                <h5 class="landing-guide__title" id="h-c-form-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
         </div>
@@ -1764,6 +1805,23 @@
                 <span class="cai-badge cai-badge--danger">99+</span>
               </div>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Tag and badge</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-tag-when">When to use</h5>
+                <p>To label an item with a short status or category, or to show a count.</p>
+                <h5 class="landing-guide__title" id="h-c-tag-when-not">When not to use</h5>
+                <p>Not for actions: a tag is not clickable. Not for long text.</p>
+                <h5 class="landing-guide__title" id="h-c-tag-how">How it works</h5>
+                <p>Inline spans with a colour modifier. Colour carries no meaning on its own: the text says it, and the dot variant adds a shape.</p>
+                <h5 class="landing-guide__title" id="h-c-tag-content">Content guidance</h5>
+                <p>One or two words, sentence case. "Running", "Degraded", never only a colour name.</p>
+                <h5 class="landing-guide__title" id="h-c-tag-keyboard">Keyboard and ARIA</h5>
+                <p>Not interactive, so not focusable. A count badge needs context in the text next to it for screen readers.</p>
+                <h5 class="landing-guide__title" id="h-c-tag-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-avatar" aria-labelledby="c-avatar-title">
@@ -1778,6 +1836,23 @@
                 <span class="cai-avatar cai-avatar--lg" role="img" aria-label="Eva Flores, large">EF</span>
               </div>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Avatar</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-avatar-when">When to use</h5>
+                <p>To identify a person or account with initials where space is tight.</p>
+                <h5 class="landing-guide__title" id="h-c-avatar-when-not">When not to use</h5>
+                <p>When the name is already shown next to it and the avatar adds nothing: hide it from assistive technology instead.</p>
+                <h5 class="landing-guide__title" id="h-c-avatar-how">How it works</h5>
+                <p>A span with role="img" and an aria-label holding the full name, in three sizes.</p>
+                <h5 class="landing-guide__title" id="h-c-avatar-content">Content guidance</h5>
+                <p>Initials in capitals. The accessible name is the real name, not the initials.</p>
+                <h5 class="landing-guide__title" id="h-c-avatar-keyboard">Keyboard and ARIA</h5>
+                <p>Not interactive.</p>
+                <h5 class="landing-guide__title" id="h-c-avatar-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-progress" aria-labelledby="c-progress-title">
@@ -1786,13 +1861,26 @@
               <code class="landing-demo__file">components/progress.css</code>
             </div>
             <div class="landing-demo__stage">
-              <div class="cai-progress" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-label="Upload, 25%">
-                <div class="cai-progress__fill" style="width:25%"></div>
-              </div>
-              <div class="cai-progress" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" aria-label="Build, 67%">
-                <div class="cai-progress__fill" style="width:67%"></div>
-              </div>
+              <progress class="cai-progress" value="25" max="100" aria-label="Upload, 25%"></progress>
+              <progress class="cai-progress" value="67" max="100" aria-label="Build, 67%"></progress>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Progress</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-progress-when">When to use</h5>
+                <p>To show how far a task that takes time has got.</p>
+                <h5 class="landing-guide__title" id="h-c-progress-when-not">When not to use</h5>
+                <p>For a score or a measure within a known range: use a meter. Do not use it as a decorative bar.</p>
+                <h5 class="landing-guide__title" id="h-c-progress-how">How it works</h5>
+                <p>The native progress element. The browser exposes the role and the value. No value attribute means indeterminate.</p>
+                <h5 class="landing-guide__title" id="h-c-progress-content">Content guidance</h5>
+                <p>Name it with the figure: "Upload, 25%". Say what is happening, not just the number.</p>
+                <h5 class="landing-guide__title" id="h-c-progress-keyboard">Keyboard and ARIA</h5>
+                <p>Not interactive. Announce completion in a polite live region.</p>
+                <h5 class="landing-guide__title" id="h-c-progress-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-tooltip" aria-labelledby="c-tooltip-title">
@@ -1806,6 +1894,23 @@
                 <div class="cai-tooltip__text" role="tooltip" id="tooltip-demo">Tooltip content</div>
               </div>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Tooltip</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-tooltip-when">When to use</h5>
+                <p>To explain a control whose label is not enough, in a sentence at most.</p>
+                <h5 class="landing-guide__title" id="h-c-tooltip-when-not">When not to use</h5>
+                <p>For anything essential, long or interactive. On touch devices there is no hover: put important text on the page.</p>
+                <h5 class="landing-guide__title" id="h-c-tooltip-how">How it works</h5>
+                <p>CSS only: it opens on hover and on keyboard focus, and stays open while the pointer is over it (WCAG 1.4.13, hoverable).</p>
+                <h5 class="landing-guide__title" id="h-c-tooltip-content">Content guidance</h5>
+                <p>One short sentence, no links. The control keeps its own accessible name.</p>
+                <h5 class="landing-guide__title" id="h-c-tooltip-keyboard">Keyboard and ARIA</h5>
+                <p>Opens when the control receives focus, closes when it loses focus. The Escape key does not close it.</p>
+                <h5 class="landing-guide__title" id="h-c-tooltip-issues">Known issues</h5>
+                <p>Partial WCAG 1.4.13: the tooltip cannot be dismissed with Escape without moving focus or the pointer. Keep tooltips non-essential.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-card" aria-labelledby="c-card-title">
@@ -1823,6 +1928,23 @@
                 <p class="cai-card__body">48 active connections.</p>
               </div>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Card</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-card-when">When to use</h5>
+                <p>To group a small set of related facts that read as one unit.</p>
+                <h5 class="landing-guide__title" id="h-c-card-when-not">When not to use</h5>
+                <p>Do not nest cards. Do not make the whole card a click target with a script: link the title instead.</p>
+                <h5 class="landing-guide__title" id="h-c-card-how">How it works</h5>
+                <p>A container with a title and a body. Pick the heading level that fits the page outline.</p>
+                <h5 class="landing-guide__title" id="h-c-card-content">Content guidance</h5>
+                <p>A short noun title, then one or two lines. No full stops on titles.</p>
+                <h5 class="landing-guide__title" id="h-c-card-keyboard">Keyboard and ARIA</h5>
+                <p>Not interactive. A link inside it follows the normal link rules.</p>
+                <h5 class="landing-guide__title" id="h-c-card-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-figure" aria-labelledby="c-figure-title">
@@ -1845,6 +1967,23 @@
                 <figcaption class="cai-figure__caption">Requests per day, last six days.</figcaption>
               </figure>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Figure</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-figure-when">When to use</h5>
+                <p>To show a chart, image or diagram with a caption.</p>
+                <h5 class="landing-guide__title" id="h-c-figure-when-not">When not to use</h5>
+                <p>For decoration. A decorative image gets an empty alt and no figure.</p>
+                <h5 class="landing-guide__title" id="h-c-figure-how">How it works</h5>
+                <p>A native figure with a figcaption. The media needs a text alternative; a chart needs its data as text or a table.</p>
+                <h5 class="landing-guide__title" id="h-c-figure-content">Content guidance</h5>
+                <p>The caption says what the figure shows and for what period or scope.</p>
+                <h5 class="landing-guide__title" id="h-c-figure-keyboard">Keyboard and ARIA</h5>
+                <p>Not interactive.</p>
+                <h5 class="landing-guide__title" id="h-c-figure-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo landing-demo--wide" id="c-table" aria-labelledby="c-table-title">
@@ -1868,6 +2007,23 @@
               </div>
             </div>
             <p class="landing-demo__note">Below 480px of container width each row becomes a card.</p>
+            <details class="landing-guide">
+              <summary>Guidance for Table</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-table-when">When to use</h5>
+                <p>To compare records across several attributes.</p>
+                <h5 class="landing-guide__title" id="h-c-table-when-not">When not to use</h5>
+                <p>For layout. For a short list of one attribute, use a list.</p>
+                <h5 class="landing-guide__title" id="h-c-table-how">How it works</h5>
+                <p>A native table with caption, thead and th scope. In a wrapper that scrolls and can take focus. Below 480px of container width each row becomes a card, using data-label.</p>
+                <h5 class="landing-guide__title" id="h-c-table-content">Content guidance</h5>
+                <p>Column headings are short nouns. The caption names the table. Put units in the heading, not in every cell.</p>
+                <h5 class="landing-guide__title" id="h-c-table-keyboard">Keyboard and ARIA</h5>
+                <p>The scroll region is focusable so keyboard users can scroll it with the arrow keys. Sticky first column keeps the row name in view.</p>
+                <h5 class="landing-guide__title" id="h-c-table-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo landing-demo--wide" id="c-code" aria-labelledby="c-code-title">
@@ -1896,6 +2052,23 @@ player.play();</code></pre>
               </div>
               <p>Inline code looks like <code class="cai-code-inline">var(--cai-text-primary)</code> inside a sentence.</p>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Code</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-code-when">When to use</h5>
+                <p>To show code or terminal output the reader may copy.</p>
+                <h5 class="landing-guide__title" id="h-c-code-when-not">When not to use</h5>
+                <p>For long files; link to the source instead.</p>
+                <h5 class="landing-guide__title" id="h-c-code-how">How it works</h5>
+                <p>A pre with a code element. Highlighting is an enhancement: without JavaScript the block is plain, readable text.</p>
+                <h5 class="landing-guide__title" id="h-c-code-content">Content guidance</h5>
+                <p>Label the language with data-lang and name the block with aria-label.</p>
+                <h5 class="landing-guide__title" id="h-c-code-keyboard">Keyboard and ARIA</h5>
+                <p>The block is focusable (tabindex 0) so it can be scrolled with the keyboard.</p>
+                <h5 class="landing-guide__title" id="h-c-code-issues">Known issues</h5>
+                <p>Syntax colours are decoration; the code is not read differently by assistive technology.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-icons" aria-labelledby="c-icons-title">
@@ -1925,6 +2098,23 @@ player.play();</code></pre>
               </div>
             </div>
             <p class="landing-demo__note">Click an icon to copy its SVG. CAI ships the grid, not an icon set: these four are local to this page.</p>
+            <details class="landing-guide">
+              <summary>Guidance for Icon grid</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-icons-when">When to use</h5>
+                <p>To let readers browse and copy a set of icons.</p>
+                <h5 class="landing-guide__title" id="h-c-icons-when-not">When not to use</h5>
+                <p>Do not use icons as the only label of an action.</p>
+                <h5 class="landing-guide__title" id="h-c-icons-how">How it works</h5>
+                <p>Items with a data-svg attribute. CAI ships the grid, not an icon set. The script makes each item focusable and announces the copy.</p>
+                <h5 class="landing-guide__title" id="h-c-icons-content">Content guidance</h5>
+                <p>Each item shows the icon name in text. Decorative icons are aria-hidden.</p>
+                <h5 class="landing-guide__title" id="h-c-icons-keyboard">Keyboard and ARIA</h5>
+                <p>Tab to an item, Enter or Space to copy it.</p>
+                <h5 class="landing-guide__title" id="h-c-icons-issues">Known issues</h5>
+                <p>Items are made into role="button" by JavaScript on a div (PRINCIPLES red line 4). Planned: render native buttons.</p>
+              </div>
+            </details>
           </article>
 
         </div>
@@ -1968,6 +2158,23 @@ player.play();</code></pre>
                 </div>
               </div>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Alert</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-alert-when">When to use</h5>
+                <p>To tell the reader about a state that matters on the page: information, success, warning, error.</p>
+                <h5 class="landing-guide__title" id="h-c-alert-when-not">When not to use</h5>
+                <p>For a message that must interrupt: use a dialog. Do not stack more than one or two alerts.</p>
+                <h5 class="landing-guide__title" id="h-c-alert-how">How it works</h5>
+                <p>A block with an icon, a title and a body. The type is written in the title, not only in the colour.</p>
+                <h5 class="landing-guide__title" id="h-c-alert-content">Content guidance</h5>
+                <p>Say what happened and what to do next. "The build failed. Check the log and run it again."</p>
+                <h5 class="landing-guide__title" id="h-c-alert-keyboard">Keyboard and ARIA</h5>
+                <p>Not interactive. If it appears after an action, put it in a live region (role="status" or role="alert") so it is announced.</p>
+                <h5 class="landing-guide__title" id="h-c-alert-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-toast" aria-labelledby="c-toast-title">
@@ -1985,6 +2192,23 @@ player.play();</code></pre>
               </div>
             </div>
             <p class="landing-demo__note">A static specimen: CAI styles the toast and leaves placement and timing to you.</p>
+            <details class="landing-guide">
+              <summary>Guidance for Toast</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-toast-when">When to use</h5>
+                <p>To confirm a low-stakes result that needs no reply, such as "Draft saved".</p>
+                <h5 class="landing-guide__title" id="h-c-toast-when-not">When not to use</h5>
+                <p>For errors the reader must act on, or anything they might miss: toasts disappear.</p>
+                <h5 class="landing-guide__title" id="h-c-toast-how">How it works</h5>
+                <p>A styled block with a close button. CAI leaves placement and timing to you; if it fades, give it at least 5 seconds and let it be paused.</p>
+                <h5 class="landing-guide__title" id="h-c-toast-content">Content guidance</h5>
+                <p>Past tense, one short line. No actions inside it.</p>
+                <h5 class="landing-guide__title" id="h-c-toast-keyboard">Keyboard and ARIA</h5>
+                <p>The close button is reachable with Tab. Announce the toast in a polite live region.</p>
+                <h5 class="landing-guide__title" id="h-c-toast-issues">Known issues</h5>
+                <p>CAI ships the look only: the live region and the timer are the consumer's job.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-modal" aria-labelledby="c-modal-title">
@@ -1995,23 +2219,40 @@ player.play();</code></pre>
             </div>
             <div class="landing-demo__stage">
               <div class="o-row">
-                <button class="cai-btn cai-btn--primary" type="button" data-modal-trigger="landing-modal">Open modal</button>
+                <button class="cai-btn cai-btn--primary" type="button" commandfor="landing-modal" command="show-modal">Open modal</button>
               </div>
               <dialog class="cai-modal" id="landing-modal" aria-labelledby="landing-modal-title">
                 <div class="cai-modal__header">
-                  <button class="cai-modal__close" data-modal-close="landing-modal" aria-label="Close modal" type="button">×</button>
+                  <button class="cai-modal__close" commandfor="landing-modal" command="close" aria-label="Close dialog" type="button">×</button>
                   <h2 class="cai-modal__title" id="landing-modal-title">Confirm action</h2>
                 </div>
                 <div class="cai-modal__body">
                   <p>This action cannot be undone. Continue?</p>
                 </div>
                 <div class="cai-modal__footer">
-                  <button class="cai-btn cai-btn--ghost" data-modal-close="landing-modal" type="button">Cancel</button>
-                  <button class="cai-btn cai-btn--primary" data-modal-close="landing-modal" type="button">Confirm</button>
+                  <button class="cai-btn cai-btn--ghost" commandfor="landing-modal" command="close" type="button">Cancel</button>
+                  <button class="cai-btn cai-btn--primary" commandfor="landing-modal" command="close" type="button">Confirm</button>
                 </div>
               </dialog>
             </div>
             <p class="landing-demo__note">A native <code class="cai-code-inline">&lt;dialog&gt;</code>: Esc closes it and focus returns to the button.</p>
+            <details class="landing-guide">
+              <summary>Guidance for Modal</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-modal-when">When to use</h5>
+                <p>To ask for a decision or short input that must be settled before the reader continues.</p>
+                <h5 class="landing-guide__title" id="h-c-modal-when-not">When not to use</h5>
+                <p>For information the reader can ignore: use an alert. Do not open one on page load.</p>
+                <h5 class="landing-guide__title" id="h-c-modal-how">How it works</h5>
+                <p>A native dialog opened with showModal(). Buttons use command="show-modal" and command="close" with commandfor; a small script supplies those in browsers without them.</p>
+                <h5 class="landing-guide__title" id="h-c-modal-content">Content guidance</h5>
+                <p>The title names the decision: "Delete this draft". Buttons repeat the action: "Delete draft" and "Cancel", never "OK".</p>
+                <h5 class="landing-guide__title" id="h-c-modal-keyboard">Keyboard and ARIA</h5>
+                <p>The browser traps focus, Escape closes it and focus returns to the opener. Give the dialog aria-labelledby.</p>
+                <h5 class="landing-guide__title" id="h-c-modal-issues">Known issues</h5>
+                <p>command and commandfor are not yet in every supported browser: without them and without JavaScript the open button does nothing.</p>
+              </div>
+            </details>
           </article>
 
         </div>
@@ -2027,16 +2268,33 @@ player.play();</code></pre>
               <span class="cai-tag cai-tag--purple">JS: tabs.js</span>
             </div>
             <div class="landing-demo__stage landing-demo__stage--flush">
-              <div class="cai-tabs" role="tablist" aria-label="Tabs demo">
-                <div class="cai-tab is-active" role="tab" id="tab-summary" aria-selected="true" aria-controls="panel-summary" tabindex="0">Summary</div>
-                <div class="cai-tab" role="tab" id="tab-settings" aria-selected="false" aria-controls="panel-settings" tabindex="-1">Settings</div>
-                <div class="cai-tab" role="tab" id="tab-logs" aria-selected="false" aria-controls="panel-logs" tabindex="-1">Logs</div>
-              </div>
-              <div role="tabpanel" id="panel-summary" aria-labelledby="tab-summary" tabindex="0"><p>Three services are running.</p></div>
-              <div role="tabpanel" id="panel-settings" aria-labelledby="tab-settings" tabindex="-1"><p>Deploys run on every push.</p></div>
-              <div role="tabpanel" id="panel-logs" aria-labelledby="tab-logs" tabindex="-1"><p>No errors in the last hour.</p></div>
+              <nav class="cai-tabs" aria-label="Tabs demo">
+                <a class="cai-tab is-active" id="tab-summary" href="#panel-summary">Summary</a>
+                <a class="cai-tab" id="tab-settings" href="#panel-settings">Settings</a>
+                <a class="cai-tab" id="tab-logs" href="#panel-logs">Logs</a>
+              </nav>
+              <div class="cai-tabpanel" id="panel-summary"><p>Three services are running.</p></div>
+              <div class="cai-tabpanel" id="panel-settings"><p>Deploys run on every push.</p></div>
+              <div class="cai-tabpanel" id="panel-logs"><p>No errors in the last hour.</p></div>
             </div>
             <p class="landing-demo__note">Arrow keys, Home and End move between tabs.</p>
+            <details class="landing-guide">
+              <summary>Guidance for Tabs</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-tabs-when">When to use</h5>
+                <p>To switch between panels of the same level that the reader will not compare side by side.</p>
+                <h5 class="landing-guide__title" id="h-c-tabs-when-not">When not to use</h5>
+                <p>For navigation between pages, or for content the reader needs all at once.</p>
+                <h5 class="landing-guide__title" id="h-c-tabs-how">How it works</h5>
+                <p>Without JavaScript: links to panels that are all visible. With it: the ARIA tabs pattern, added by the script, with roving tabindex.</p>
+                <h5 class="landing-guide__title" id="h-c-tabs-content">Content guidance</h5>
+                <p>Labels are one or two words that name the panel.</p>
+                <h5 class="landing-guide__title" id="h-c-tabs-keyboard">Keyboard and ARIA</h5>
+                <p>Tab moves into the tab list; arrow keys move between tabs; Home and End go to the first and last; Tab leaves to the panel.</p>
+                <h5 class="landing-guide__title" id="h-c-tabs-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo" id="c-breadcrumb" aria-labelledby="c-breadcrumb-title">
@@ -2055,6 +2313,23 @@ player.play();</code></pre>
                 </div>
               </nav>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Breadcrumb</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-breadcrumb-when">When to use</h5>
+                <p>To show where the page sits in a hierarchy of three or more levels.</p>
+                <h5 class="landing-guide__title" id="h-c-breadcrumb-when-not">When not to use</h5>
+                <p>On a flat site, or as the only way to navigate.</p>
+                <h5 class="landing-guide__title" id="h-c-breadcrumb-how">How it works</h5>
+                <p>A nav landmark with links and separators. The last item is the current page with aria-current="page".</p>
+                <h5 class="landing-guide__title" id="h-c-breadcrumb-content">Content guidance</h5>
+                <p>Use the page titles. Do not repeat the current page as a link.</p>
+                <h5 class="landing-guide__title" id="h-c-breadcrumb-keyboard">Keyboard and ARIA</h5>
+                <p>Each ancestor is a normal link in the tab order.</p>
+                <h5 class="landing-guide__title" id="h-c-breadcrumb-issues">Known issues</h5>
+                <p>None known.</p>
+              </div>
+            </details>
           </article>
 
           <article class="landing-demo landing-demo--wide" id="c-sidebar" aria-labelledby="c-sidebar-title">
@@ -2078,12 +2353,12 @@ player.play();</code></pre>
                   <a class="cai-sidebar__link" href="#platform">Platform</a>
                 </div>
                 <div class="cai-sidebar__footer" id="c-theme-switcher">
-                  <span class="cai-theme-switcher__label">Color mode</span>
-                  <div class="cai-theme-switcher" role="group" aria-label="Color mode (sidebar demo)">
-                    <button class="cai-theme-btn is-active" type="button" data-landing-mode="light" aria-pressed="true">Light</button>
-                    <button class="cai-theme-btn" type="button" data-landing-mode="dark" aria-pressed="false">Dark</button>
-                    <button class="cai-theme-btn" type="button" data-landing-mode="high-contrast" aria-pressed="false">HC</button>
-                  </div>
+                  <fieldset class="cai-theme-switcher">
+                    <legend class="cai-theme-switcher__label">Color mode</legend>
+                    <label class="cai-theme-btn" data-theme="light"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="light" checked>Light</label>
+                    <label class="cai-theme-btn" data-theme="dark"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="dark">Dark</label>
+                    <label class="cai-theme-btn" data-theme="high-contrast"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="high-contrast">High contrast</label>
+                  </fieldset>
                 </div>
               </nav>
               <div class="landing-demo__stage">
@@ -2101,6 +2376,23 @@ player.play();</code></pre>
                 <p class="landing-demo__note">Color mode buttons for the sidebar. The three in this specimen work: they switch the mode of this page.</p>
               </div>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Sidebar and color-mode switcher</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-sidebar-when">When to use</h5>
+                <p>For the main navigation of a documentation or app shell with many sections.</p>
+                <h5 class="landing-guide__title" id="h-c-sidebar-when-not">When not to use</h5>
+                <p>For a short list of pages: a header navigation is simpler.</p>
+                <h5 class="landing-guide__title" id="h-c-sidebar-how">How it works</h5>
+                <p>A nav landmark. On small screens it is a native popover drawer opened by a button with popovertarget. The color-mode switcher is a native radio group; checking a radio sets the mode, even without JavaScript.</p>
+                <h5 class="landing-guide__title" id="h-c-sidebar-content">Content guidance</h5>
+                <p>Section labels are nouns. The switcher is called "Color mode".</p>
+                <h5 class="landing-guide__title" id="h-c-sidebar-keyboard">Keyboard and ARIA</h5>
+                <p>Escape and a click outside close the drawer; focus returns to the button. Arrow keys move between the mode radios.</p>
+                <h5 class="landing-guide__title" id="h-c-sidebar-issues">Known issues</h5>
+                <p>Without the popover API the navigation stays visible above the content. A stored color mode can flash once on load, because no inline script sets it.</p>
+              </div>
+            </details>
           </article>
 
         </div>
@@ -2118,7 +2410,7 @@ player.play();</code></pre>
             <div class="landing-demo__stage o-grid landing-cols-2">
               <div class="cai-player" data-type="video" role="group" aria-label="Video player">
                 <div class="cai-player-media-wrap is-paused">
-                  <video class="cai-player-video" preload="metadata" playsinline aria-label="The Earth at night, rotating. No sound.">
+                  <video class="cai-player-video" preload="metadata" controls playsinline aria-label="The Earth at night, rotating. No sound.">
                     <source src="./assets/video-CdxnVEqE.mp4" type="video/mp4">
                   </video>
                   <div class="cai-player-overlay" aria-hidden="true">
@@ -2131,11 +2423,7 @@ player.play();</code></pre>
                       <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
                       <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
                     </button>
-                    <div class="cai-player-seekbar" role="slider" aria-label="Seek video" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-                      <div class="cai-player-seekbar-buf"></div>
-                      <div class="cai-player-seekbar-fill"></div>
-                      <div class="cai-player-seekbar-thumb"></div>
-                    </div>
+                    <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek video">
                   </div>
                   <div class="cai-player-btns">
                     <span class="cai-player-time cai-player-current">0:00</span>
@@ -2146,10 +2434,7 @@ player.play();</code></pre>
                         <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                         <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                       </button>
-                      <div class="cai-player-seekbar cai-player-volbar" role="slider" aria-label="Video volume" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100" tabindex="0">
-                        <div class="cai-player-seekbar-fill" style="width:100%"></div>
-                        <div class="cai-player-seekbar-thumb" style="left:100%"></div>
-                      </div>
+                      <input class="cai-player-seekbar cai-player-volbar" type="range" min="0" max="1000" step="1" value="1000" style="--cai-seek: 100%" aria-label="Video volume">
                     </div>
                   </div>
                 </div>
@@ -2157,7 +2442,7 @@ player.play();</code></pre>
 
               <div class="landing-demo__stage">
                 <div class="cai-player" data-type="audio" role="group" aria-label="Audio player">
-                  <audio class="cai-player-audio" preload="none">
+                  <audio class="cai-player-audio" preload="none" controls>
                     <source src="./assets/audio-ChPxQzX6.mp3" type="audio/mpeg">
                   </audio>
                   <div class="cai-player-controls cai-player-controls--audio">
@@ -2167,11 +2452,7 @@ player.play();</code></pre>
                     </button>
                     <div class="cai-player-progress-row cai-player-progress-row--audio">
                       <span class="cai-player-time cai-player-current">0:00</span>
-                      <div class="cai-player-seekbar" role="slider" aria-label="Seek audio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-                        <div class="cai-player-seekbar-buf"></div>
-                        <div class="cai-player-seekbar-fill"></div>
-                        <div class="cai-player-seekbar-thumb"></div>
-                      </div>
+                      <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek audio">
                       <span class="cai-player-time cai-player-duration">0:00</span>
                     </div>
                   </div>
@@ -2180,6 +2461,7 @@ player.play();</code></pre>
 
                 <!-- data-src is set by landing.js (the build does not rewrite data-* URLs) -->
                 <div class="cai-player" data-type="midi" role="group" aria-label="MIDI player">
+                  <p class="cai-player-fallback">MIDI playback needs JavaScript.</p>
                   <div class="cai-player-controls cai-player-controls--audio">
                     <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play" disabled>
                       <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
@@ -2187,11 +2469,7 @@ player.play();</code></pre>
                     </button>
                     <div class="cai-player-progress-row cai-player-progress-row--audio">
                       <span class="cai-player-time cai-player-current">0:00</span>
-                      <div class="cai-player-seekbar" role="slider" aria-label="Seek MIDI" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0">
-                        <div class="cai-player-seekbar-buf"></div>
-                        <div class="cai-player-seekbar-fill"></div>
-                        <div class="cai-player-seekbar-thumb"></div>
-                      </div>
+                      <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek MIDI">
                       <span class="cai-player-time cai-player-duration">0:00</span>
                     </div>
                     <span class="cai-player-midi-status"></span>
@@ -2200,6 +2478,23 @@ player.play();</code></pre>
                 <p class="landing-demo__note">MIDI, parsed and played with Web Audio by <code class="cai-code-inline">midi.js</code>, which loads only when a MIDI player is on the page.</p>
               </div>
             </div>
+            <details class="landing-guide">
+              <summary>Guidance for Player</summary>
+              <div class="landing-guide__body">
+                <h5 class="landing-guide__title" id="h-c-player-when">When to use</h5>
+                <p>To play video, audio or a MIDI file in the page.</p>
+                <h5 class="landing-guide__title" id="h-c-player-when-not">When not to use</h5>
+                <p>Do not autoplay. Do not use it for background media.</p>
+                <h5 class="landing-guide__title" id="h-c-player-how">How it works</h5>
+                <p>Without JavaScript the native controls of the audio and video element are shown. The script replaces them with the CAI controls; seek and volume are native range inputs. MIDI needs JavaScript and Web Audio.</p>
+                <h5 class="landing-guide__title" id="h-c-player-content">Content guidance</h5>
+                <p>Name each player with aria-label and give video a text alternative or a transcript.</p>
+                <h5 class="landing-guide__title" id="h-c-player-keyboard">Keyboard and ARIA</h5>
+                <p>Space or K plays and pauses, M mutes, F goes full screen on video. The sliders take arrow keys, Home, End and Page Up and Down.</p>
+                <h5 class="landing-guide__title" id="h-c-player-issues">Known issues</h5>
+                <p>Captions and audio description depend on the media you provide. MIDI has no equivalent without JavaScript.</p>
+              </div>
+            </details>
           </article>
 
         </div>
@@ -2212,15 +2507,13 @@ player.play();</code></pre>
             <div class="landing-demo__head">
               <h4 class="landing-demo__title" id="c-animations-title">Keyframes</h4>
               <code class="landing-demo__file">components/_animations.css</code>
-              <span class="cai-tag cai-tag--purple">JS: toggle.js</span>
             </div>
             <div class="landing-demo__stage landing-anim">
-              <div class="cai-toggle">
-                <div class="cai-toggle__track" role="switch" tabindex="0" aria-checked="false" aria-labelledby="anim-toggle-label">
-                  <div class="cai-toggle__thumb"></div>
-                </div>
-                <span class="cai-toggle__label" id="anim-toggle-label">Play animations</span>
-              </div>
+              <label class="cai-toggle">
+                <input class="cai-toggle__input" type="checkbox" role="switch">
+                <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+                <span class="cai-toggle__label">Play animations</span>
+              </label>
               <p class="landing-motion__reduced landing-demo__note">Reduced motion is on, so the animations do not run.</p>
               <ul class="o-grid landing-cols-4 landing-anim__tiles">
                 <li class="landing-anim__tile"><span class="landing-anim__stage" aria-hidden="true"><span class="landing-anim__spin"></span></span><code>cai-spin</code></li>
@@ -2278,7 +2571,7 @@ player.play();</code></pre>
               <code class="landing-demo__file">src/*.js</code>
             </div>
             <details class="landing-fold" open data-fold-narrow>
-              <summary>All <span data-count="modules">11</span> JavaScript modules</summary>
+              <summary>All <span data-count="modules">10</span> JavaScript modules</summary>
               <div class="landing-demo__stage">
               <div class="cai-table-wrap" role="region" aria-label="JavaScript modules" tabindex="0">
                 <table class="cai-table">
@@ -2288,13 +2581,12 @@ player.play();</code></pre>
                   <tbody>
                     <tr><td data-label="Module"><div><code>cai.js</code></div></td><td data-label="What it does"><div>Entry: re-exports every module and initializes them all on load</div></td><td data-label="Key exports"><div>Everything below</div></td></tr>
                     <tr><td data-label="Module"><div><code>theme.js</code></div></td><td data-label="What it does"><div>Color mode switching</div></td><td data-label="Key exports"><div><code>applyTheme</code></div></td></tr>
-                    <tr><td data-label="Module"><div><code>sidebar.js</code></div></td><td data-label="What it does"><div>Mobile drawer, overlay and active link</div></td><td data-label="Key exports"><div><code>openSidebar</code>, <code>closeSidebar</code>, <code>initSidebar</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>sidebar.js</code></div></td><td data-label="What it does"><div>Active link while scrolling, and closing the popover drawer after a link is followed</div></td><td data-label="Key exports"><div><code>initSidebar</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>clipboard.js</code></div></td><td data-label="What it does"><div>Copy with visual feedback</div></td><td data-label="Key exports"><div><code>copyToClipboard</code>, <code>initCopyButtons</code></div></td></tr>
-                    <tr><td data-label="Module"><div><code>modal.js</code></div></td><td data-label="What it does"><div>Dialog triggers and focus trap</div></td><td data-label="Key exports"><div><code>createFocusTrap</code>, <code>initModals</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>modal.js</code></div></td><td data-label="What it does"><div>Fallback for the <code>command</code> and <code>commandfor</code> attributes in browsers without them</div></td><td data-label="Key exports"><div><code>initModals</code>, <code>supportsCommands</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>highlight.js</code></div></td><td data-label="What it does"><div>Dependency-free syntax highlight for code blocks</div></td><td data-label="Key exports"><div><code>highlightBlock</code>, <code>initHighlight</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>player.js</code></div></td><td data-label="What it does"><div>Video, audio and MIDI players with one UI</div></td><td data-label="Key exports"><div><code>mountPlayer</code>, <code>mountMidiPlayer</code>, <code>initPlayers</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>tabs.js</code></div></td><td data-label="What it does"><div>Tab activation and keyboard support</div></td><td data-label="Key exports"><div><code>activateTab</code>, <code>initTabs</code></div></td></tr>
-                    <tr><td data-label="Module"><div><code>toggle.js</code></div></td><td data-label="What it does"><div>Switch state, click and keyboard</div></td><td data-label="Key exports"><div><code>setToggleState</code>, <code>initToggles</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>utils.js</code></div></td><td data-label="What it does"><div>Pure helpers</div></td><td data-label="Key exports"><div><code>formatTime</code>, <code>escapeHtml</code>, <code>calculateProgress</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>midi.js</code></div></td><td data-label="What it does"><div>MIDI parser and Web Audio scheduler, loaded on demand</div></td><td data-label="Key exports"><div><code>MidiPlayer</code></div></td></tr>
                   </tbody>

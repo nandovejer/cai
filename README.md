@@ -9,6 +9,7 @@ No framework. No build step for consumers.
 
 [![CI](https://github.com/nandovejer/cai/actions/workflows/ci.yml/badge.svg)](https://github.com/nandovejer/cai/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+![Status: beta](https://img.shields.io/badge/status-beta-orange)
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
 ![Node](https://img.shields.io/badge/node-%3E%3D20-339933)
 ![pnpm](https://img.shields.io/badge/pnpm-9-f69220)
@@ -22,6 +23,9 @@ No framework. No build step for consumers.
 </div>
 
 ---
+
+> [!WARNING]
+> **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
 
 CAI is built with plain CSS, ES modules and native browser APIs. Adopt only the tokens, add the components, or take the whole app shell: the three layers are independent packages that stack in one direction.
 
@@ -82,7 +86,7 @@ Or from a CDN — drop the lines for the layers you do not use:
 
 Pin an exact version and add an `integrity` hash in production; see [SECURITY.md](./SECURITY.md). A console warning tells you when a layer is loaded without the one below it.
 
-> **Release status:** the `3.0.0` snippets above work once the release is published. Until then the packages in this repository are versioned `2.0.0` with a pending major changeset.
+> **Release status:** CAI is in beta. The `3.0.0` snippets above work once the release is published. Until then the packages in this repository are versioned `2.0.0` with a pending major changeset.
 
 ## Principles
 

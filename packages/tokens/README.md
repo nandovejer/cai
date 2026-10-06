@@ -2,6 +2,8 @@
 
 Design tokens and self-hosted web fonts for the CAI Design System.
 
+> **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
+
 This is the base layer and works on its own: it has no dependencies. `@cai-ds/core` and `@cai-ds/platform` build on it.
 
 ## Installation

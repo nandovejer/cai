@@ -2,6 +2,8 @@
 
 Reusable CSS components and vanilla JS behaviors for the CAI Design System.
 
+> **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
+
 ## Prerequisites
 
 Requires `@cai-ds/tokens` (declared as a peer dependency), loaded first. `@cai-ds/platform` is optional and builds on this package.

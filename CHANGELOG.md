@@ -2,6 +2,8 @@
 
 All notable changes to this project are documented here.
 
+> **Status: beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
+
 ## Unreleased
 
 ### Fixed — Modularization release

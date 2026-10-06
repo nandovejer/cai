@@ -138,6 +138,20 @@ pnpm dev
 
 If you change sources during dev, re-run `pnpm build` or a specific build command to regenerate the assets — the apps load the built `dist/` files.
 
+### Running the landing page
+
+1. Install dependencies once: `pnpm install`.
+2. Start the dev server: `pnpm dev`.
+3. Open [http://localhost:5173/](http://localhost:5173/). The landing lives in `apps/landing/` (`index.html`, `landing.css`, `landing.js`).
+
+| App | URL | Source |
+| --- | --- | --- |
+| Landing | `http://localhost:5173/` | `apps/landing/` |
+| Core + tokens docs | `http://localhost:5173/docs/` | `apps/docs/` |
+| Platform docs | `http://localhost:5173/platform/` | `apps/platform-docs/` |
+
+Edits to files under `apps/landing/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm platform:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
+
 ## Commands
 
 ```bash

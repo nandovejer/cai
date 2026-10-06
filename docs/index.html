@@ -11,9 +11,11 @@
     if(["light","dark","high-contrast"].indexOf(m)<0){m=matchMedia("(prefers-contrast: more)").matches?"high-contrast":matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
     document.documentElement.dataset.theme=m})();
   </script>
-  <script type="module" crossorigin src="./assets/index-oOTMJw5Q.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/preload-helper-CmczP7LR.js">
-  <link rel="stylesheet" crossorigin href="./assets/preload-helper-kyxJPe1-.css">
+  <script type="module" crossorigin src="./assets/index-BCR3vIso.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/platform-d0uOm2B1.js">
+  <link rel="modulepreload" crossorigin href="./assets/highlight-H5RH7X4Q.js">
+  <link rel="modulepreload" crossorigin href="./assets/preload-helper-Dp1pzeXC.js">
+  <link rel="stylesheet" crossorigin href="./assets/platform-J-uoJxRf.css">
   <link rel="stylesheet" crossorigin href="./assets/index-DGanTm4s.css">
 </head>
 <body class="cai-platform-page">
@@ -27,6 +29,7 @@
         <a href="#tokens">Tokens</a>
         <a href="#core">Core</a>
         <a href="#platform">Platform</a>
+        <a href="./html/">HTML</a>
         <a href="./docs/">Docs</a>
       </nav>
       <div class="landing-modes" role="group" aria-label="Color mode">
@@ -1433,7 +1436,7 @@
           <article class="landing-demo landing-demo--wide" id="c-elements" aria-labelledby="c-elements-title">
             <div class="landing-demo__head">
               <h4 class="landing-demo__title" id="c-elements-title">Base elements</h4>
-              <code class="landing-demo__file">elements/_elements.css</code>
+              <code class="landing-demo__file">elements/*.css</code>
               <code class="landing-demo__file">generic/_reset.css</code>
             </div>
             <div class="landing-demo__stage o-grid landing-cols-2">
@@ -1460,6 +1463,7 @@
                 </div>
               </div>
             </div>
+            <p class="landing-demo__note">Every current HTML element, with a live example, is on <a href="./html/">the HTML elements page</a>.</p>
             <p class="landing-demo__note">The reset sets border-box sizing, removes default margins, thins scrollbars and collapses motion when reduced motion is requested.</p>
           </article>
 

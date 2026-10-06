@@ -12,3 +12,18 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--cai-text-primary);
 }
 
+
+/* ========================================================================== */
+/* Address & hgroup — contact block and heading with a subtitle              */
+/* ========================================================================== */
+
+:where(address) {
+  font-style: normal;
+  color: var(--cai-text-secondary);
+}
+
+:where(hgroup > p) {
+  margin-block-start: var(--cai-space-02);
+  font-size: var(--cai-text-md);
+  color: var(--cai-text-secondary);
+}

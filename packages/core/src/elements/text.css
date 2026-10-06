@@ -27,3 +27,70 @@ figcaption {
   font-style: italic;
 }
 
+
+/* ========================================================================== */
+/* Paragraph                                                                 */
+/* ========================================================================== */
+
+:where(p) {
+  text-wrap: pretty;
+}
+
+/* ========================================================================== */
+/* Blockquote — a quotation set apart                                        */
+/* ========================================================================== */
+
+:where(blockquote) {
+  padding-block: var(--cai-space-02);
+  padding-inline: var(--cai-space-05);
+  border-inline-start: 3px solid var(--cai-border-strong);
+  color: var(--cai-text-secondary);
+}
+
+/* ========================================================================== */
+/* Lists — description list, ordered / unordered (unclassed), menu           */
+/* ========================================================================== */
+
+:where(dt) {
+  font-weight: 600;
+}
+
+:where(dd) {
+  padding-inline-start: var(--cai-space-05);
+  color: var(--cai-text-secondary);
+}
+
+:where(dl > dd + dt) {
+  margin-block-start: var(--cai-space-03);
+}
+
+/* The reset removes the list padding, which leaves the markers outside the
+   box. Only for lists without a class, so any component list is untouched. */
+:where(ul:not([class]), ol:not([class])) {
+  padding-inline-start: 1.25em;
+}
+
+/* <menu> is a toolbar list: a wrapping row, no markers */
+:where(menu) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cai-space-03);
+  list-style: none;
+}
+
+/* ========================================================================== */
+/* Pre — preformatted text (.cai-code-block overrides all of this)           */
+/* ========================================================================== */
+
+:where(pre) {
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-sm);
+  line-height: 1.6;
+  white-space: pre;
+  tab-size: 2;
+  overflow-x: auto;
+  padding: var(--cai-space-04) var(--cai-space-05);
+  background: var(--cai-layer-02);
+  border: 1px solid var(--cai-border-subtle);
+  border-radius: var(--cai-radius-sm);
+}

@@ -54,3 +54,72 @@ time {
   color: var(--cai-text-secondary);
 }
 
+
+/* ========================================================================== */
+/* Text-level semantics — only where the browser default needs help          */
+/* (i, em, cite, q, ruby, rp, bdi, bdo, data, br, wbr, span: native look)    */
+/* ========================================================================== */
+
+:where(abbr[title]) {
+  cursor: help;
+  text-underline-offset: 0.2em;
+}
+
+:where(b, strong, dfn) {
+  font-weight: 600;
+}
+
+:where(s) {
+  color: var(--cai-text-secondary);
+}
+
+:where(u) {
+  text-underline-offset: 0.2em;
+}
+
+/* The browser shrinks these relative to the parent, which can drop them
+   under the 12px floor; max() keeps them readable */
+:where(small) {
+  font-size: max(0.875em, var(--cai-text-xs));
+}
+
+:where(sub, sup) {
+  font-size: max(0.75em, var(--cai-text-xs));
+  /* Without this they push the line box apart */
+  line-height: 0;
+}
+
+:where(rt) {
+  font-size: max(0.6em, var(--cai-text-xs));
+}
+
+/* Computer output and variables. Not code inside <pre>: .cai-code-block
+   and pre set their own type. */
+:where(:not(pre) > code, samp, var) {
+  font-family: var(--cai-font-mono);
+  font-size: max(0.875em, var(--cai-text-xs));
+}
+
+:where(var) {
+  font-style: italic;
+}
+
+/* ========================================================================== */
+/* Edits — del / ins                                                         */
+/* ========================================================================== */
+
+:where(del, ins) {
+  color: var(--cai-text-primary);
+  padding: 0 2px;
+  border-radius: 2px;
+  text-decoration-thickness: 1px;
+}
+
+:where(del) {
+  background: var(--cai-color-danger-bg);
+}
+
+:where(ins) {
+  background: var(--cai-color-success-bg);
+  text-underline-offset: 0.2em;
+}

@@ -154,7 +154,8 @@ test.describe('HTML elements page', () => {
     const { failed, problems } = await open(page);
     expect(failed).toEqual([]);
     expect(problems).toEqual([]);
-    await expect(page.locator('h1')).toHaveCount(1);
+    // The heading demos hold h1 too, but they sit in a stage hidden from assistive technology
+    await expect(page.locator('h1:not(.elements-stage *)')).toHaveCount(1);
   });
 
   test('announces the number of elements and categories it lists', async ({ page }) => {

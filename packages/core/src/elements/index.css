@@ -1,0 +1,17 @@
+/* ==========================================================================
+   CAI — 3. ELEMENTS
+   Styles for bare HTML elements, no classes. One file per MDN category of
+   https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements
+   Specificity: rules that existed before v3.1 keep type specificity (0,0,1);
+   every newer rule is wrapped in :where() (0,0,0), so any .cai-* class,
+   or the consumer's own rules, win without a fight.
+   Elements that have a component (table, input, select, button, progress)
+   are styled through its .cai-* class, not here.
+   ========================================================================== */
+
+@import url("./document.css");
+@import url("./sections.css");
+@import url("./text.css");
+@import url("./inline.css");
+@import url("./forms.css");
+@import url("./interactive.css");

@@ -1,0 +1,56 @@
+/* ==========================================================================
+   CAI — 3. ELEMENTS · inline
+   Inline text: a, mark, kbd, time. Specificity: type (0,0,1).
+   ========================================================================== */
+
+a {
+  color: var(--cai-brand-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+  border-radius: var(--cai-radius-sm);
+}
+
+/* ========================================================================== */
+/* Mark — text highlighting                                                  */
+/* ========================================================================== */
+
+mark {
+  background: var(--cai-color-warning-bg);
+  color: var(--cai-text-primary);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+/* ========================================================================== */
+/* Keyboard — key display                                                    */
+/* ========================================================================== */
+
+kbd {
+  font-family: var(--cai-font-mono);
+  /* Relative to the surrounding text, never below the 12px floor */
+  font-size: max(0.875em, var(--cai-text-xs));
+  padding: 2px 6px;
+  background: var(--cai-bg-ui);
+  border: 1px solid var(--cai-border-strong);
+  border-radius: var(--cai-radius-sm);
+  box-shadow: 0 2px 0 var(--cai-border-strong);
+  display: inline-block;
+}
+
+/* ========================================================================== */
+/* Time — semantic timestamps                                                */
+/* ========================================================================== */
+
+time {
+  font-size: max(0.95em, var(--cai-text-xs));
+  color: var(--cai-text-secondary);
+}
+

@@ -1,0 +1,43 @@
+/* ==========================================================================
+   CAI — 3. ELEMENTS · interactive
+   Native disclosure: details, summary. Specificity: type (0,0,1).
+   ========================================================================== */
+
+/* ========================================================================== */
+/* Details & Summary — native accordion                                      */
+/* ========================================================================== */
+
+details {
+  border: 1px solid var(--cai-border-subtle);
+  border-radius: var(--cai-radius-md);
+  padding: var(--cai-space-04);
+  margin-block: var(--cai-space-03);
+  background: var(--cai-bg-ui);
+  transition: background var(--cai-duration-base);
+}
+
+details[open] {
+  background: var(--cai-layer-01);
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--cai-text-primary);
+  user-select: none;
+  padding: var(--cai-space-02);
+  margin: calc(-1 * var(--cai-space-04));
+  margin-bottom: var(--cai-space-03);
+  border-radius: var(--cai-radius-sm);
+  transition: background var(--cai-duration-fast);
+}
+
+summary:hover {
+  background: var(--cai-bg-ui-hover);
+}
+
+summary:focus-visible {
+  outline: 2px solid var(--cai-border-interactive);
+  outline-offset: 2px;
+}
+

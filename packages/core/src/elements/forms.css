@@ -1,0 +1,32 @@
+/* ==========================================================================
+   CAI — 3. ELEMENTS · forms
+   Form-related elements without a component: textarea, output, meter. Specificity: type (0,0,1).
+   ========================================================================== */
+
+textarea {
+  resize: vertical;
+}
+
+
+/* ========================================================================== */
+/* Output — form results                                                     */
+/* ========================================================================== */
+
+output {
+  display: inline-block;
+  padding: var(--cai-space-02) var(--cai-space-03);
+  background: var(--cai-bg-ui);
+  border-radius: var(--cai-radius-sm);
+  font-family: var(--cai-font-mono);
+  font-size: max(0.9em, var(--cai-text-xs));
+}
+
+/* ========================================================================== */
+/* Meter — progress indicator (visual only)                                  */
+/* ========================================================================== */
+
+meter {
+  width: 100%;
+  height: 20px;
+  border-radius: var(--cai-radius-sm);
+}

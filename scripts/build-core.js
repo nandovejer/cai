@@ -63,8 +63,8 @@ await writeCssWithMin(resolve(distRoot, "cai.css"), css);
 console.log(`✓ Core CSS built → ${resolve(distRoot, "cai.css")} (+ min)`);
 
 // --- CSS: base layer required by per-component files ---
-const baseCss = ["settings/_settings.css", "generic/_reset.css", "elements/_elements.css"]
-  .map((f) => readFileSync(resolve(srcRoot, f), "utf-8"))
+const baseCss = ["settings/_settings.css", "generic/_reset.css", "elements/index.css"]
+  .map((f) => inlineCssImports(resolve(srcRoot, f)))
   .join("\n");
 await writeCssWithMin(resolve(distRoot, "base.css"), baseCss);
 console.log(`✓ Base CSS built → ${resolve(distRoot, "base.css")} (+ min)`);

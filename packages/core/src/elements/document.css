@@ -1,0 +1,30 @@
+/* ==========================================================================
+   CAI — 3. ELEMENTS · document
+   Document root: html, body. Specificity: type (0,0,1).
+   ========================================================================== */
+
+html {
+  background: var(--cai-bg-page);
+  scroll-behavior: smooth;
+  transition: background var(--cai-duration-base);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-base);
+  background: var(--cai-bg-page);
+  color: var(--cai-text-primary);
+  line-height: 1.5;
+  /* App-shell layout (sidebar + main) is opt-in via class="o-shell" —
+     see objects/_objects.css. The bare <body> stays layout-neutral. */
+  transition:
+    background var(--cai-duration-base),
+    color      var(--cai-duration-base);
+}
+

@@ -40,6 +40,33 @@ const selectorsByFile = new Map(
   ]),
 );
 
+/**
+ * Rules that predate the :where() convention (v3.0). They keep their type
+ * specificity so consumers see no change; do not add to this list.
+ */
+const LEGACY_TYPE_SELECTORS = new Set([
+  'html',
+  'body',
+  'a',
+  'a:hover',
+  'a:focus-visible',
+  'hr',
+  'textarea',
+  'h1, h2, h3, h4, h5, h6',
+  'details',
+  'details[open]',
+  'summary',
+  'summary:hover',
+  'summary:focus-visible',
+  'mark',
+  'kbd',
+  'time',
+  'figure',
+  'figcaption',
+  'output',
+  'meter',
+]);
+
 /** True when `tag` is used as a type selector in any of the given preludes. */
 const hasTypeSelector = (preludes, tag) =>
   preludes.some((prelude) => new RegExp(`(^|[^\\w.#:\\[-])${tag}(?![\\w-])`).test(prelude));
@@ -106,16 +133,15 @@ test.describe('Element styles match the inventory', () => {
     }
   }
 
-  test('element rules have zero specificity, so any .cai-* class wins', () => {
+  test('new element rules have zero specificity, so any .cai-* class wins', () => {
     const offenders = [];
     for (const [file, preludes] of selectorsByFile) {
-      for (const prelude of preludes) {
-        if (/^(html|body)\b/.test(prelude) || prelude.includes(':where(')) continue;
+      for (const raw of preludes) {
+        const prelude = raw.replace(/\s+/g, ' ');
+        if (LEGACY_TYPE_SELECTORS.has(prelude) || prelude.startsWith(':where(')) continue;
         offenders.push(`${file}: ${prelude}`);
       }
     }
-    // Pre-existing document-level rules (html, body) are allowed; everything
-    // else must be wrapped in :where()
     expect(offenders).toEqual([]);
   });
 });

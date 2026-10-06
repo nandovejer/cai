@@ -51,7 +51,7 @@ The repository is a small monorepo with three package layers:
 - [`@cai-ds/core`](./packages/core) — reusable CSS components and vanilla JS behaviors
 - [`@cai-ds/platform`](./packages/platform) — app-shell patterns built on top of core
 
-The landing (`apps/landing/`), the core + tokens docs (`apps/docs/`) and the platform docs (`apps/platform-docs/`) consume those packages during development.
+The landing (`apps/landing/`), the core + tokens docs (`apps/docs/`), the platform docs (`apps/platform-docs/`) and the HTML elements reference (`apps/html-elements/`) consume those packages during development.
 
 ## Adoption levels
 
@@ -100,7 +100,8 @@ cai-design-system/
 ├── apps/                      # Internal apps (not publishable)
 │   ├── landing/               # Landing: what CAI is, the three levels, everything live
 │   ├── docs/                  # Core + tokens technical docs
-│   └── platform-docs/         # Platform docs and live demos
+│   ├── platform-docs/         # Platform docs and live demos
+│   └── html-elements/         # Every current HTML element, live, and how CAI styles it
 ├── packages/
 │   ├── tokens/                # @cai-ds/tokens
 │   │   ├── tokens.json        # Source of truth for primitives
@@ -134,7 +135,7 @@ pnpm install
 pnpm dev
 ```
 
-`pnpm dev` starts Vite at `localhost:5173` (landing at `/`, core docs at `/docs/`, platform docs at `/platform/`). Its `predev` hook builds `dist/` first if any package is missing one.
+`pnpm dev` starts Vite at `localhost:5173` (landing at `/`, core docs at `/docs/`, platform docs at `/platform/`, HTML elements at `/html/`). Its `predev` hook builds `dist/` first if any package is missing one.
 
 If you change sources during dev, re-run `pnpm build` or a specific build command to regenerate the assets — the apps load the built `dist/` files.
 
@@ -149,6 +150,7 @@ If you change sources during dev, re-run `pnpm build` or a specific build comman
 | Landing | `http://localhost:5173/` | `apps/landing/` |
 | Core + tokens docs | `http://localhost:5173/docs/` | `apps/docs/` |
 | Platform docs | `http://localhost:5173/platform/` | `apps/platform-docs/` |
+| HTML elements | `http://localhost:5173/html/` | `apps/html-elements/` |
 
 Edits to files under `apps/landing/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm platform:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
 
@@ -312,7 +314,7 @@ Known gaps are tracked in the security and design reviews; the main ones are con
 
 ## GitHub Pages
 
-The public site is the optimized build of the three apps, committed in `docs/` (landing at `/`, core docs at `/docs/`, platform docs at `/platform/`). Configure Pages to deploy from the `main` branch, `/docs` folder.
+The public site is the optimized build of the four apps, committed in `docs/` (landing at `/`, core docs at `/docs/`, platform docs at `/platform/`, HTML elements at `/html/`). Configure Pages to deploy from the `main` branch, `/docs` folder.
 
 ```bash
 pnpm pages:build   # packages + Vite build with relative URLs, then commit docs/

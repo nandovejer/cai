@@ -41,3 +41,32 @@ summary:focus-visible {
   outline-offset: 2px;
 }
 
+
+/* ========================================================================== */
+/* Dialog — native modal / non-modal dialog (.cai-modal overrides this)      */
+/* ========================================================================== */
+
+/* No display here: the browser shows a dialog only while it is open */
+:where(dialog) {
+  padding: var(--cai-space-06);
+  color: var(--cai-text-primary);
+  background: var(--cai-layer-01);
+  border: 1px solid var(--cai-border-subtle);
+  border-radius: var(--cai-radius-lg);
+  box-shadow: var(--cai-shadow-lg);
+  max-width: min(90vw, 600px);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* The reset zeroes every margin, including the auto margin the browser uses
+   to center a dialog. .cai-modal centers itself with top / left / transform,
+   so only dialogs without a class get it back. */
+:where(dialog:not([class])) {
+  margin: auto;
+}
+
+/* A pseudo-element cannot go inside :where(), so this is (0,0,1) */
+:where(dialog)::backdrop {
+  background: var(--cai-bg-overlay, rgba(0, 0, 0, 0.5));
+}

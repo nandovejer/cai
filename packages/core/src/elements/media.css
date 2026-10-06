@@ -1,0 +1,29 @@
+/* ==========================================================================
+   CAI — 3. ELEMENTS · media
+   Images, video, audio, embedded content, canvas and svg.
+   Every rule is :where() (0,0,0): any class wins.
+   ========================================================================== */
+
+/* Never wider than the box they sit in */
+:where(img, picture, video, canvas, svg, iframe, embed, object) {
+  max-width: 100%;
+}
+
+/* Keep the aspect ratio when only the width shrinks. Not svg: an icon with
+   just a height attribute would otherwise jump to the 150px default. */
+:where(img, video, canvas) {
+  height: auto;
+}
+
+/* Remove the gap the baseline leaves under an inline replaced element */
+:where(img, video, canvas, audio, iframe, embed, object) {
+  vertical-align: middle;
+}
+
+:where(iframe) {
+  border: 0;
+}
+
+:where(audio[controls]) {
+  width: 100%;
+}

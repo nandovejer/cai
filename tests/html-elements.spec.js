@@ -138,7 +138,8 @@ test.describe('Element styles match the inventory', () => {
     for (const [file, preludes] of selectorsByFile) {
       for (const raw of preludes) {
         const prelude = raw.replace(/\s+/g, ' ');
-        if (LEGACY_TYPE_SELECTORS.has(prelude) || prelude.startsWith(':where(')) continue;
+        // A pseudo-element cannot go inside :where(): ":where(dialog)::backdrop" is the floor
+        if (LEGACY_TYPE_SELECTORS.has(prelude) || /^:where\(.*\)(::[\w-]+)?$/.test(prelude)) continue;
         offenders.push(`${file}: ${prelude}`);
       }
     }

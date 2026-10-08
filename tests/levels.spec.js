@@ -38,7 +38,13 @@ test.describe('Adoption levels', () => {
     expect(await cssVar(page, '--cai-bg-page')).not.toBe('');
     // Core-only settings must not leak into the tokens layer
     expect(await cssVar(page, '--cai-z-modal')).toBe('');
-    expect(await page.evaluate(() => document.fonts.check('16px "Gidole"'))).toBe(true);
+    // The one bundled font (ET Book) is declared and its file loads
+    const etBookLoaded = await page.evaluate(() =>
+      document.fonts
+        .load('16px "ET Book"')
+        .then((faces) => faces.length > 0 && faces.every((face) => face.status === 'loaded')),
+    );
+    expect(etBookLoaded).toBe(true);
   });
 
   test('level 2: tokens + core', async ({ page }) => {

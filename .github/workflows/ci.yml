@@ -97,6 +97,9 @@ jobs:
       - name: Check shipped strings
         run: pnpm check:strings
 
+      - name: Check exceptions register
+        run: pnpm check:exceptions
+
   test-ui:
     name: UI Tests (Playwright)
     runs-on: ubuntu-latest

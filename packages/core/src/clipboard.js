@@ -1,13 +1,15 @@
 /**
  * CAI Design System — Copy to clipboard
- * Visual-feedback copy helper + delegated bindings for copy buttons and
- * icon-grid items.
+ * Visual-feedback copy helper + delegated bindings for copy buttons
+ * (`button.cai-copy-btn[data-copy]`, icon-grid items included). The buttons
+ * are native, so Enter and Space need no handling here.
  *
  * Importing this module has no side effects; call initCopyButtons() to
  * wire up delegation, or use copyToClipboard() directly.
  */
 
 import { enableJs } from "./utils.js";
+import { t } from "./i18n.js";
 
 const LIVE_REGION_ID = "cai-live-region";
 let clearAnnouncement;
@@ -48,13 +50,10 @@ function announce(message) {
   }, 2000);
 }
 
-const COPIED = "Copied to clipboard";
-const COPY_FAILED = "Copy failed. Select the text and copy it manually.";
-
 export async function copyToClipboard(text, el, type = "btn") {
   try {
     await navigator.clipboard.writeText(text);
-    announce(COPIED);
+    announce(t("copiedStatus", el));
 
     if (type === "swatch") {
       el.classList.add("is-copied");
@@ -65,7 +64,7 @@ export async function copyToClipboard(text, el, type = "btn") {
       setTimeout(() => el.classList.remove("is-copied"), 1200);
     } else {
       const original = el.textContent;
-      el.textContent = "✓ Copied";
+      el.textContent = t("copied", el);
       el.classList.add("is-copied");
       setTimeout(() => {
         el.textContent = original;
@@ -73,91 +72,22 @@ export async function copyToClipboard(text, el, type = "btn") {
       }, 1200);
     }
   } catch (err) {
-    announce(COPY_FAILED);
+    announce(t("copyFailed", el));
     console.error("Failed to copy:", err);
   }
 }
 
-function activateCopyTarget(target) {
-  if (!target) return;
-
-  if (target.matches(".cai-copy-btn, .copy-btn")) {
-    const text = target.dataset.copy;
-    if (text) copyToClipboard(text, target);
-  }
-}
-
-async function copyIconItem(iconItem) {
-  const svgCode = iconItem.dataset.svg;
-  const label = iconItem.querySelector(".cai-icon-name");
-  if (!svgCode || !label) return;
-
-  const originalText = label.textContent;
-  try {
-    await navigator.clipboard.writeText(svgCode);
-    announce(COPIED);
-    label.textContent = "✓ Copied!";
-    iconItem.classList.add("is-copied");
-    setTimeout(() => {
-      label.textContent = originalText;
-      iconItem.classList.remove("is-copied");
-    }, 1200);
-  } catch (err) {
-    announce(COPY_FAILED);
-    console.error("Failed to copy icon:", err);
-  }
-}
-
 /**
- * Make non-button copy targets keyboard-accessible.
- */
-function initCopyA11y() {
-  document.querySelectorAll(".cai-icon-item").forEach((item) => {
-    item.setAttribute("role", "button");
-    item.setAttribute("tabindex", "0");
-    item.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        item.click();
-      }
-    });
-  });
-}
-
-/**
- * Wire up delegated click + keyboard handling for all copy targets.
+ * Wire up delegated click handling for all copy buttons.
  */
 export function initCopyButtons() {
   enableJs();
-  initCopyA11y();
   // Create the live region up front: some screen readers ignore a region
   // that is inserted and filled at the same time.
   getLiveRegion();
 
   document.body.addEventListener("click", async (e) => {
-    // --- Copy icon SVG ---
-    const iconItem = e.target.closest(".cai-icon-item");
-    if (iconItem) {
-      await copyIconItem(iconItem);
-      return;
-    }
-
-    // --- Copy button ---
-    const copyBtn = e.target.closest(".cai-copy-btn, .copy-btn");
-    if (copyBtn) {
-      const text = copyBtn.dataset.copy;
-      if (!text) return;
-      await copyToClipboard(text, copyBtn);
-    }
-  });
-
-  document.addEventListener("keydown", (e) => {
-    const copyTarget = e.target.closest?.(".cai-copy-btn, .copy-btn");
-    if (!copyTarget) return;
-
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      activateCopyTarget(copyTarget);
-    }
+    const copyBtn = e.target.closest(".cai-copy-btn");
+    if (copyBtn?.dataset.copy) await copyToClipboard(copyBtn.dataset.copy, copyBtn);
   });
 }

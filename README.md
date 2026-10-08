@@ -110,7 +110,7 @@ cai-design-system/
 │   ├── tokens/                # @cai-ds/tokens
 │   │   ├── tokens.json        # Source of truth for primitives
 │   │   ├── src/semantic.css   # Semantic tokens (light / dark / high-contrast)
-│   │   ├── fonts/             # Gidole, ET Book, Monoid woff2 + licences
+│   │   ├── fonts/             # ET Book woff2 + licence
 │   │   └── dist/              # Generated — do not edit directly
 │   ├── core/                  # @cai-ds/core
 │   │   ├── src/               # Edit here, never dist/
@@ -362,4 +362,4 @@ Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 ## License
 
-MIT, including the fonts. Gidole, ET Book and Monoid (tokens) and Comic Shanns (core) are MIT licensed; their notices ship next to the font files (`LICENSE-*.txt`).
+MIT, including the fonts. Every bundled font is under the MIT License only: ET Book (tokens) and Comic Shanns (core). Their notices ship next to the font files (`LICENSE-*.txt`). Body, UI and code text use the system fonts, so nothing else is bundled.

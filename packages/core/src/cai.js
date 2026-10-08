@@ -40,6 +40,7 @@ export {
   initPlayers,
 } from "./player.js";
 export { activateTab, initTabs } from "./tabs.js";
+export { t, getLang, registerLocale } from "./i18n.js";
 export {
   formatTime,
   isCustomTheme,

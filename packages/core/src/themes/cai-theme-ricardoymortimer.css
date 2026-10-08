@@ -76,9 +76,8 @@
   --cai-shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6),
     0 6px 12px rgba(8, 201, 82, 0.12);
 
-  /* Typography — Gidole for UI, Comic Shanns for headings */
-  --cai-font-sans: "Gidole", system-ui, sans-serif;
-  --cai-font-heading: "Comic Shanns", "Gidole", system-ui, sans-serif;
+  /* Typography — the base sans for UI, Comic Shanns for headings */
+  --cai-font-heading: "Comic Shanns", var(--cai-font-sans);
 
   /* Backgrounds — deep space aesthetic */
   --cai-bg-page: var(--rm-space);
@@ -158,7 +157,7 @@
 [data-theme="ricardoymortimer"] h1,
 [data-theme="ricardoymortimer"] h2,
 [data-theme="ricardoymortimer"] h3 {
-  font-family: "Comic Shanns", Gidole, system-ui, sans-serif;
+  font-family: var(--cai-font-heading);
   font-weight: 400; /* Comic Shanns has no weight variants */
   letter-spacing: 0.02em;
   line-height: 1.15;

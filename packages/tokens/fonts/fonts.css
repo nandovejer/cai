@@ -1,9 +1,10 @@
 /* ==========================================================================
    CAI Design System — Self-hosted fonts
-   All MIT licensed (see LICENSE-*.txt next to the font folders):
-     Gidole   — Andreas Larsen          https://github.com/larsenwork/Gidole
+   Every bundled font is under the MIT License only (see LICENSE-*.txt next
+   to the font folders):
      ET Book  — Krasny, Scranton, Tufte https://github.com/edwardtufte/et-book
-     Monoid   — Andreas Larsen          https://github.com/larsenwork/monoid
+   Sans and mono use the system font stacks (see tokens.json), so nothing
+   is downloaded for body, UI or code text.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -42,46 +43,4 @@
   font-weight: 700;
   font-display: swap;
   src: url("./serif/ETBook-Bold.woff2") format("woff2");
-}
-
-/* --------------------------------------------------------------------------
-   Gidole — Body and UI
-   Gidole ships a single weight. It is declared for 300–500; 600 and above
-   are synthesized by the browser.
-   -------------------------------------------------------------------------- */
-
-@font-face {
-  font-family: Gidole;
-  font-style: normal;
-  font-weight: 300 500;
-  font-display: swap;
-  src: url("./sans/Gidole-Regular.woff2") format("woff2");
-}
-
-/* --------------------------------------------------------------------------
-   Monoid — Code
-   -------------------------------------------------------------------------- */
-
-@font-face {
-  font-family: Monoid;
-  font-style: normal;
-  font-weight: 400 500;
-  font-display: swap;
-  src: url("./mono/Monoid-Regular.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: Monoid;
-  font-style: italic;
-  font-weight: 400 500;
-  font-display: swap;
-  src: url("./mono/Monoid-Italic.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: Monoid;
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("./mono/Monoid-Bold.woff2") format("woff2");
 }

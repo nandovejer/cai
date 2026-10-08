@@ -1,5 +1,5 @@
 /**
- * CAI — shipped-strings check (PRINCIPLES.md §4, red line 10).
+ * CAI — shipped-strings check (PRINCIPLES.md §4, strong rule SR-1).
  * Scans the visible text of the four apps for wording the principles forbid:
  * vague link/button text and Title Case headings. Code samples are skipped.
  *

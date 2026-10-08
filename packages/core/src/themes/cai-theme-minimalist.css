@@ -84,10 +84,10 @@
   --cai-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
   --cai-shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
 
-  /* Typography — Gidole everywhere, headings included, for a calmer feel */
-  --cai-font-sans: "Gidole", system-ui, sans-serif;
-  --cai-font-serif: "Gidole", system-ui, sans-serif;
-  --cai-font-heading: "Gidole", system-ui, sans-serif;
+  /* Typography — one calm sans everywhere, headings included: the base
+     system sans stands in for the serif too */
+  --cai-font-serif: var(--cai-font-sans);
+  --cai-font-heading: var(--cai-font-sans);
 
   /* Backgrounds */
   --cai-bg-page: var(--min-bg);

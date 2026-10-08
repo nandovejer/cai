@@ -126,6 +126,7 @@ async function buildJS() {
     // midi.js is NOT copied: rollup already emits it as the lazy chunk.
     const jsModules = [
       "utils.js",
+      "i18n.js",
       "theme.js",
       "sidebar.js",
       "clipboard.js",

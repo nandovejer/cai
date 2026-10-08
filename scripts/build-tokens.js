@@ -150,7 +150,7 @@ function copyFontDir(fontName) {
   }
 }
 
-["serif", "sans", "mono"].forEach(copyFontDir);
+["serif"].forEach(copyFontDir);
 const fontsSrc = resolve(__dirname, "../packages/tokens/fonts");
 for (const file of readdirSync(fontsSrc).filter((f) => f.startsWith("LICENSE"))) {
   copyFileSync(resolve(fontsSrc, file), resolve(distRoot, "fonts", file));

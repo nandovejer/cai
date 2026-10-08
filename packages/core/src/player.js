@@ -9,6 +9,7 @@
  */
 
 import { enableJs, formatTime } from "./utils.js";
+import { t } from "./i18n.js";
 
 /** Share (0-1) a range input currently stands at. */
 function rangeShare(bar) {
@@ -113,7 +114,7 @@ export function bindPlayerUI(root, controls, mediaLike) {
     const iconPause = playPauseBtn?.querySelector(".icon-pause");
     if (iconPlay) iconPlay.style.display = playing ? "none" : "";
     if (iconPause) iconPause.style.display = playing ? "" : "none";
-    playPauseBtn?.setAttribute("aria-label", playing ? "Pause" : "Play");
+    playPauseBtn?.setAttribute("aria-label", t(playing ? "pause" : "play", root));
   }
 
   function setMuteState(muted) {
@@ -121,7 +122,7 @@ export function bindPlayerUI(root, controls, mediaLike) {
     const off = muteBtn?.querySelector(".icon-vol-off");
     if (on) on.style.display = muted ? "none" : "";
     if (off) off.style.display = muted ? "" : "none";
-    muteBtn?.setAttribute("aria-label", muted ? "Unmute" : "Mute");
+    muteBtn?.setAttribute("aria-label", t(muted ? "unmute" : "mute", root));
   }
 
   function updateSeekUI() {
@@ -131,7 +132,10 @@ export function bindPlayerUI(root, controls, mediaLike) {
       setRange(
         seekbar,
         share,
-        `${formatTime(mediaLike.currentTime)} of ${formatTime(mediaLike.duration)}`,
+        t("timeOf", root, {
+          current: formatTime(mediaLike.currentTime),
+          total: formatTime(mediaLike.duration),
+        }),
       );
     }
     if (currentEl) currentEl.textContent = formatTime(mediaLike.currentTime);
@@ -324,7 +328,10 @@ export function mountPlayer(root) {
       const isFs = !!document.fullscreenElement;
       if (iconExpand) iconExpand.style.display = isFs ? "none" : "";
       if (iconCompress) iconCompress.style.display = isFs ? "" : "none";
-      fsBtn.setAttribute("aria-label", isFs ? "Exit fullscreen" : "Fullscreen");
+      fsBtn.setAttribute(
+        "aria-label",
+        t(isFs ? "exitFullscreen" : "fullscreen", root),
+      );
     });
 
     // f = fullscreen shortcut (video-specific)
@@ -355,7 +362,7 @@ export async function mountMidiPlayer(root) {
 
   // Loading state
   if (statusEl) {
-    statusEl.textContent = "Loading…";
+    statusEl.textContent = t("loading", root);
     statusEl.setAttribute("aria-live", "polite"); // Bug 1.11: screen reader support
   }
   if (playPauseBtn) playPauseBtn.disabled = true;
@@ -366,7 +373,7 @@ export async function mountMidiPlayer(root) {
   try {
     player = await MidiPlayer.load(src);
   } catch (err) {
-    if (statusEl) statusEl.textContent = "Failed to load MIDI file.";
+    if (statusEl) statusEl.textContent = t("midiError", root);
     console.error("[CAI] MIDI load error:", err);
     return;
   }

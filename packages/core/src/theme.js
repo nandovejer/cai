@@ -11,6 +11,7 @@
  * choice and keeps the radios in step with it.
  */
 import { enableJs } from "./utils.js";
+import { t } from "./i18n.js";
 
 
 // Color modes: luminosity variants (light/dark/high-contrast)
@@ -80,7 +81,7 @@ function syncButtons(theme) {
   document.querySelectorAll(".cai-theme-apply-btn").forEach((btn) => {
     const active = btn.dataset.theme === theme;
     btn.classList.toggle("is-active", active);
-    btn.textContent = active ? "Applied" : "Apply theme";
+    btn.textContent = t(active ? "themeApplied" : "applyTheme", btn);
     btn.setAttribute("aria-pressed", String(active));
   });
 

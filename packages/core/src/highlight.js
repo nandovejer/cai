@@ -10,6 +10,7 @@
  */
 
 import { escapeHtml } from "./utils.js";
+import { t } from "./i18n.js";
 
 function highlightCSS(code) {
   return escapeHtml(code)
@@ -79,7 +80,7 @@ export function initHighlight() {
   document.querySelectorAll("pre.cai-code-block").forEach((pre, index) => {
     if (!pre.hasAttribute("aria-label")) {
       const lang = (pre.dataset.lang || "code").toUpperCase();
-      pre.setAttribute("aria-label", `${lang} example`);
+      pre.setAttribute("aria-label", t("codeExample", pre, { lang }));
     }
 
     if (!pre.querySelector(".cai-code-block__copy")) {
@@ -87,8 +88,8 @@ export function initHighlight() {
       button.type = "button";
       button.className = "cai-copy-btn cai-code-block__copy";
       button.dataset.copy = pre.querySelector("code")?.textContent || "";
-      button.setAttribute("aria-label", `Copy code example ${index + 1}`);
-      button.textContent = "Copy";
+      button.setAttribute("aria-label", t("copyCode", pre, { n: index + 1 }));
+      button.textContent = t("copy", pre);
       pre.appendChild(button);
     }
 

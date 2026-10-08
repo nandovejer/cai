@@ -14,15 +14,19 @@ See [DIST-RULES.md](./.claude/DIST-RULES.md) for full regeneration steps.
 
 `docs/` at the repo root is the output of `pnpm pages:build` (Vite, `--mode pages`, relative URLs) and is committed so GitHub Pages can serve it. Never edit it by hand: change `apps/` or `packages/`, rebuild, and commit the result.
 
-### 3. Bundled fonts must be MIT licensed
+### 3. Bundled fonts must be MIT licensed, and only MIT
 
-Every font file shipped by a package must be under the MIT License, with its notice next to it as `LICENSE-<Font>.txt` (`pnpm check:pack` enforces the notice). Dual-licensed fonts are fine if MIT is one of the options. OFL-only fonts are not accepted.
+Every font file shipped by a package must have the repository's licence (MIT) as its only licence, with its notice next to it as `LICENSE-<Font>.txt` (`pnpm check:pack` enforces the notice). Dual-licensed fonts are not accepted, even when MIT is one of the options, and neither is OFL. Sans and mono use the system stacks; prefer them to bundling a face (PRINCIPLES.md red line 13).
+
+### 4. Two levels of rules
+
+PRINCIPLES.md has red lines (`RL-n`, absolute, never excepted) and strong rules (`SR-n`). A strong rule may be broken only with a `cai-exception: EX-nnn` comment next to the code and a row in [EXCEPTIONS.md](./EXCEPTIONS.md); `pnpm check:exceptions` keeps them in step. Size ceilings in `budgets.json` are a red line: never raise one.
 
 ---
 
 ## JS in `packages/core/src/`
 
-Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/midi`.
+Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/i18n`, `/midi`.
 
 | Module         | Key exports                                                    |
 | -------------- | -------------------------------------------------------------- |
@@ -34,6 +38,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 | `player.js`    | `initSeekbar(bar, onSeek)`, `wrapHTMLMedia(el)`, `bindPlayerUI(root, controls, mediaLike)`, `mountPlayer(root)`, `mountMidiPlayer(root)` (async), `initPlayers()` |
 | `tabs.js`      | `activateTab(tab)`, `initTabs()` — upgrades linked panels to the ARIA tabs pattern |
 | `utils.js`     | `formatTime(seconds)` (`mm:ss`), `escapeHtml`, `calculateProgress`, `enableJs()` (sets `data-cai-js` on `<html>`), … |
+| `i18n.js`      | `t(key, el, vars?)` — string for the language of `el` (nearest `lang`, then subtag, then English; `data-cai-label-<key>` overrides), `getLang(el)`, `registerLocale(lang, messages)`; ships `en` and `es` |
 | `midi.js`      | `MidiPlayer` — MIDI Format 0/1 parser + Web Audio scheduler (lazy-loaded chunk) |
 
 ---
@@ -64,7 +69,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 4. Document it in `apps/landing/index.html` (the component showcase): a demo article with an id, and a `<details class="landing-guide">` with the six guidance headings (`h-<id>-when`, `-when-not`, `-how`, `-content`, `-keyboard`, `-issues`), then add it to the list in the "every component has the six guidance sections" test. State the no-JS behavior and any known issue in the statement in `apps/docs/index.html`
 5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/showcase.css`
 
-**Before delivering anything, read [PRINCIPLES.md](./PRINCIPLES.md): its red lines are enforced by stylelint, ESLint, `pnpm check:size`, `pnpm check:strings` and the Playwright suites (axe, no-JS, reduced motion, forced colors).**
+**Before delivering anything, read [PRINCIPLES.md](./PRINCIPLES.md): its red lines are enforced by stylelint, ESLint, `pnpm check:size`, `pnpm check:strings`, `pnpm check:exceptions` and the Playwright suites (axe, no-JS, reduced motion, forced colors).**
 
 **Vanilla checklist before delivering any JS:**
 
@@ -104,4 +109,5 @@ Edit `packages/core/src/settings/_settings.css` only, then regenerate `dist/cai.
 - Dropdown / context menu
 - Pagination
 - Documented grid system
+- A contrast checker that consumers run against their own theme (PRINCIPLES.md §1)
 - HTML elements page: a table of the deprecated elements with their modern replacement, and a grid of the 22 `input` types

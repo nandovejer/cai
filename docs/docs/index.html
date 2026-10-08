@@ -1,96 +1,140 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="minimalist">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAI Core + Tokens - Technical Docs</title>
-  <meta name="description" content="Technical documentation for @cai-ds/tokens and @cai-ds/core: architecture, commands, and integration patterns.">
-  <script type="module" crossorigin src="../assets/platform-CD9j7MVZ.js"></script>
-  <script type="module" crossorigin src="../assets/docs-C5XeeA6Z.js"></script>
-  <script type="module" crossorigin src="../assets/preload-helper-Dp1pzeXC.js"></script>
-  <script type="module" crossorigin src="../assets/cai-W-SYGMo1.js"></script>
-  <link rel="stylesheet" crossorigin href="../assets/platform-mMONJDB-.css">
-  <link rel="stylesheet" crossorigin href="../assets/docs-BMPtXR3X.css">
-  <link rel="stylesheet" crossorigin href="../assets/index-D5XYootr.css">
+  <title>CAI documentation: tokens, components and guidance</title>
+  <meta name="description" content="Documentation for the CAI design system: installation, tokens, every core component with its usage guidance, platform patterns and the accessibility statement.">
+  <script>
+    /* Color mode before first paint: stored choice, else the OS preference. */
+    (function(){var m=null;try{m=localStorage.getItem("cai-site-mode")}catch(e){}
+    if(["light","dark","high-contrast"].indexOf(m)<0){m=matchMedia("(prefers-contrast: more)").matches?"high-contrast":matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
+    document.documentElement.dataset.theme=m})();
+  </script>
+  <script type="module" crossorigin src="../assets/docs/index-2baLrFYm.js"></script>
+  <link rel="modulepreload" crossorigin href="../assets/platform-CDwzOTQ6.js">
+  <link rel="modulepreload" crossorigin href="../assets/highlight-DUyICkX6.js">
+  <link rel="modulepreload" crossorigin href="../assets/preload-helper-Dp1pzeXC.js">
+  <link rel="modulepreload" crossorigin href="../assets/sidebar-DaehTYEa.js">
+  <link rel="stylesheet" crossorigin href="../assets/platform-B6knDOqp.css">
+  <link rel="stylesheet" crossorigin href="../assets/index-taV7KH9S.css">
 </head>
-<body class="o-shell">
+<body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
-  <button class="cai-nav-toggle" type="button" aria-label="Open navigation" popovertarget="sidebar-docs">
+  <button class="cai-nav-toggle" type="button" aria-label="Open the documentation navigation" popovertarget="docs-nav">
     <span class="cai-nav-toggle__bar"></span>
     <span class="cai-nav-toggle__bar"></span>
     <span class="cai-nav-toggle__bar"></span>
   </button>
 
-  <nav class="cai-sidebar" id="sidebar-docs" popover aria-label="Docs navigation">
+  <nav class="cai-sidebar" id="docs-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__brand">
       <div class="cai-sidebar__brand-name">
-        <span class="cai-sidebar__logo">C</span>
+        <span class="cai-sidebar__logo" aria-hidden="true">C</span>
         CAI
       </div>
-      <div class="cai-sidebar__version">Core + Tokens</div>
+      <div class="cai-sidebar__version">v3.0.0 · Beta</div>
     </div>
 
-    <div class="cai-sidebar__section" data-group="start">
-      <div class="cai-sidebar__section-label">Overview</div>
+    <div class="cai-sidebar__section">
+      <div class="cai-sidebar__section-label">Get started</div>
       <a class="cai-sidebar__link is-active" href="#installation">Installation</a>
       <a class="cai-sidebar__link" href="#packages">Package boundaries</a>
       <a class="cai-sidebar__link" href="#build">Build commands</a>
     </div>
 
-    <div class="cai-sidebar__section" data-group="tokens">
+    <div class="cai-sidebar__section">
       <div class="cai-sidebar__section-label">Tokens</div>
-      <a class="cai-sidebar__link" href="#tokens">Token model</a>
-      <a class="cai-sidebar__link" href="#tokens-typography">Type scale</a>
-      <a class="cai-sidebar__link" href="#themes">Themes &amp; modes</a>
+      <a class="cai-sidebar__link" href="#tokens">Token overview</a>
+      <a class="cai-sidebar__link" href="#t-primitives">Color primitives</a>
+      <a class="cai-sidebar__link" href="#t-semantic">Semantic tokens</a>
+      <a class="cai-sidebar__link" href="#t-modes">Color modes</a>
+      <a class="cai-sidebar__link" href="#t-spacing">Spacing</a>
+      <a class="cai-sidebar__link" href="#t-sizing">Sizing</a>
+      <a class="cai-sidebar__link" href="#t-type">Typography</a>
+      <a class="cai-sidebar__link" href="#t-radius">Radius</a>
+      <a class="cai-sidebar__link" href="#t-shadow">Shadows</a>
+      <a class="cai-sidebar__link" href="#tokens-model">Token model</a>
+      <a class="cai-sidebar__link" href="#themes">Themes and modes</a>
     </div>
 
-    <div class="cai-sidebar__section" data-group="core">
+    <div class="cai-sidebar__section">
       <div class="cai-sidebar__section-label">Core</div>
-      <a class="cai-sidebar__link" href="#core">Core architecture</a>
-      <a class="cai-sidebar__link" href="#platform-link">Platform docs</a>
+      <a class="cai-sidebar__link" href="#core">Core overview</a>
+      <a class="cai-sidebar__link" href="#c-motion">Motion</a>
+      <a class="cai-sidebar__link" href="#c-settings">Settings</a>
+      <a class="cai-sidebar__link" href="#c-elements">Base elements</a>
+      <a class="cai-sidebar__link" href="#c-objects">Layout objects</a>
+      <a class="cai-sidebar__link" href="#c-button">Button</a>
+      <a class="cai-sidebar__link" href="#c-copy">Copy button</a>
+      <a class="cai-sidebar__link" href="#c-form">Form</a>
+      <a class="cai-sidebar__link" href="#c-tag">Tag and badge</a>
+      <a class="cai-sidebar__link" href="#c-avatar">Avatar</a>
+      <a class="cai-sidebar__link" href="#c-progress">Progress</a>
+      <a class="cai-sidebar__link" href="#c-tooltip">Tooltip</a>
+      <a class="cai-sidebar__link" href="#c-card">Card</a>
+      <a class="cai-sidebar__link" href="#c-figure">Figure</a>
+      <a class="cai-sidebar__link" href="#c-table">Table</a>
+      <a class="cai-sidebar__link" href="#c-code">Code</a>
+      <a class="cai-sidebar__link" href="#c-icons">Icon grid</a>
+      <a class="cai-sidebar__link" href="#c-alert">Alert</a>
+      <a class="cai-sidebar__link" href="#c-toast">Toast</a>
+      <a class="cai-sidebar__link" href="#c-modal">Modal</a>
+      <a class="cai-sidebar__link" href="#c-tabs">Tabs</a>
+      <a class="cai-sidebar__link" href="#c-breadcrumb">Breadcrumb</a>
+      <a class="cai-sidebar__link" href="#c-sidebar">Sidebar and color mode</a>
+      <a class="cai-sidebar__link" href="#c-player">Player</a>
+      <a class="cai-sidebar__link" href="#c-animations">Keyframes</a>
+      <a class="cai-sidebar__link" href="#c-utilities">Utilities</a>
+      <a class="cai-sidebar__link" href="#c-js">JavaScript modules</a>
     </div>
 
-    <div class="cai-sidebar__section" data-group="a11y">
-      <div class="cai-sidebar__section-label">Accessibility</div>
+    <div class="cai-sidebar__section">
+      <div class="cai-sidebar__section-label">Platform</div>
+      <a class="cai-sidebar__link" href="#platform">Platform patterns</a>
+    </div>
+
+    <div class="cai-sidebar__section">
+      <div class="cai-sidebar__section-label">About</div>
       <a class="cai-sidebar__link" href="#accessibility">Accessibility statement</a>
     </div>
 
     <div class="cai-sidebar__footer">
-      <div class="cai-platform-actions">
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../">Home</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../platform/">Platform</a>
-      </div>
+      <fieldset class="cai-theme-switcher">
+        <legend class="cai-theme-switcher__label">Color mode</legend>
+        <label class="cai-theme-btn" data-theme="light"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="light" checked>Light</label>
+        <label class="cai-theme-btn" data-theme="dark"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="dark">Dark</label>
+        <label class="cai-theme-btn" data-theme="high-contrast"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="high-contrast">High contrast</label>
+      </fieldset>
     </div>
   </nav>
-
-  <main class="o-main cai-platform-content" id="main-content">
-    <nav class="docs-sitenav" aria-label="Site navigation">
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+    <nav class="docs-sitenav" aria-label="Site">
       <a href="../">Home</a>
-      <a href="../docs/" aria-current="page">Core &amp; Tokens</a>
-      <a href="../platform/">Platform</a>
+      <a href="../docs/" aria-current="page">Documentation</a>
+      <a href="../platform/">Platform reference</a>
+      <a href="../html/">HTML elements</a>
     </nav>
 
-    <header class="cai-platform-page-header">
-      <h1 class="cai-platform-page-header__title">Core + Tokens technical documentation</h1>
-      <p class="cai-platform-page-header__lead">Technical reference for architecture, package boundaries, build flow, and copy/paste integration snippets for @cai-ds/tokens and @cai-ds/core.</p>
+    <header class="docs-header">
+      <h1 class="docs-header__title">CAI documentation</h1>
+      <p class="docs-header__lead">Everything in the system on one page: how to install it, the tokens, every core component with its usage guidance, the platform patterns and the accessibility statement. Every example is rendered live with the CSS you install.</p>
+      <div class="cai-alert cai-alert--warning" role="note">
+        <div class="cai-alert__icon" aria-hidden="true">!</div>
+        <div>
+          <div class="cai-alert__title">Beta</div>
+          <div class="cai-alert__body">Names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.</div>
+        </div>
+      </div>
     </header>
 
-    <div class="cai-alert cai-alert--warning" role="note">
-      <div class="cai-alert__icon" aria-hidden="true">!</div>
-      <div>
-        <div class="cai-alert__title">Beta</div>
-        <div class="cai-alert__body">CAI is in beta. The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.</div>
-      </div>
-    </div>
-
-    <section class="docs-section" id="installation" aria-labelledby="h-installation">
-      <h2 class="docs-section__title" id="h-installation">Installation</h2>
-      <div class="docs-section__subtitle">Three layers, adopted in order. Stop at the level you need: each layer requires the ones below it and nothing above it.</div>
-
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Level 1 — Tokens only</h3>
-        <p>CSS custom properties (primitives + light, dark and high-contrast semantics) and one MIT-licensed font, ET Book, for headings. Text and code use the system fonts. No other CAI package needed.</p>
+    <section class="docs-chapter" id="installation" aria-labelledby="installation-title">
+      <h2 class="docs-chapter__title" id="installation-title">Installation</h2>
+      <p class="docs-lead">Three layers, adopted in order. Stop at the level you need: each layer requires the ones below it and nothing above it.</p>
+      <div class="docs-prose">
+        <h3 class="docs-prose__title">Level 1: tokens only</h3>
+        <p>CSS custom properties (primitives + light, dark and high-contrast semantics) and one MIT-licensed font, ET Book, for headings. The <code class="cai-code-inline">vejer</code> identity also sets running text in it. Text and code use the system fonts. No other CAI package needed.</p>
         <div class="cai-platform-command-block">
           <code class="cai-platform-command-block__cmd">
             <span class="cai-platform-command-block__prefix">$</span>
@@ -102,8 +146,8 @@
         <p>Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens without any <code class="cai-code-inline">@font-face</code>.</p>
       </div>
 
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Level 2 — Tokens + Core</h3>
+      <div class="docs-prose">
+        <h3 class="docs-prose__title">Level 2: tokens and core</h3>
         <p>Components and optional JS behaviors. Core requires tokens, loaded first.</p>
         <div class="cai-platform-command-block">
           <code class="cai-platform-command-block__cmd">
@@ -119,8 +163,8 @@
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
       </div>
 
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Level 3 — Tokens + Core + Platform</h3>
+      <div class="docs-prose">
+        <h3 class="docs-prose__title">Level 3: tokens, core and platform</h3>
         <p>App-shell patterns. Platform requires both core and tokens.</p>
         <div class="cai-platform-command-block">
           <code class="cai-platform-command-block__cmd">
@@ -137,8 +181,8 @@
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
       </div>
 
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Notes</h3>
+      <div class="docs-prose">
+        <h3 class="docs-prose__title">Notes</h3>
         <ul>
           <li>npm and pnpm install the required lower layers automatically; Yarn only warns, so list every package as above.</li>
           <li>Pin exact versions on a CDN and add an <code class="cai-code-inline">integrity</code> hash in production.</li>
@@ -147,169 +191,2540 @@
       </div>
     </section>
 
-    <section class="docs-section" id="packages" aria-labelledby="h-packages">
-      <h2 class="docs-section__title" id="h-packages">Package boundaries</h2>
-      <div class="docs-section__subtitle">Unidirectional dependency chain.</div>
-      <pre class="cai-code-block" data-lang="text"><code>@cai-ds/tokens   -> primitives + semantic token contracts (standalone)
+    <section class="docs-chapter" id="packages" aria-labelledby="packages-title">
+      <h2 class="docs-chapter__title" id="packages-title">Package boundaries</h2>
+      <p class="docs-lead">One direction only: each package depends on the ones above it in this list.</p>
+      <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Package dependency chain"><code>@cai-ds/tokens   -> primitives + semantic token contracts (standalone)
       ↓ required by
 @cai-ds/core     -> reusable CSS components + optional JS behaviors
       ↓ required by
 @cai-ds/platform -> app-shell patterns (documented at /platform/)</code></pre>
     </section>
 
-    <section class="docs-section" id="tokens" aria-labelledby="h-tokens">
-      <h2 class="docs-section__title" id="h-tokens">Tokens (Technical)</h2>
-      <div class="docs-section__subtitle">Two-layer token model. Components consume semantic tokens only.</div>
-
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Layer model</h3>
-        <pre class="cai-code-block" data-lang="text"><code>packages/tokens/tokens.json
-  -> source of primitives (blue-10..100, gray-10..100, spacing, radius...)
-
-packages/tokens/dist/cai-tokens.css
-  Layer 1: generated primitives
-  Layer 2: handwritten semantics per theme (light/dark/high-contrast)</code></pre>
-      </div>
-
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Component token rule</h3>
-        <pre class="cai-code-block" data-lang="css"><code>/* Correct: semantic tokens */
-color: var(--cai-text-primary);
-background: var(--cai-brand-primary);
-border-color: var(--cai-border-subtle);
-
-/* Incorrect: primitive scales */
-color: var(--cai-gray-100);
-background: var(--cai-blue-60);</code></pre>
-      </div>
-
-      <div class="docs-subsection" id="tokens-typography">
-        <h3 class="docs-subsection__title">Type scale and minimum sizes</h3>
-        <p>Every size is in <code class="cai-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller.</p>
-        <div class="cai-table-wrap" role="region" aria-label="Type scale" tabindex="0">
-          <table class="cai-table">
-            <caption>Font-size tokens</caption>
-            <thead>
-              <tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">At 16px root</th><th scope="col">Use</th></tr>
-            </thead>
-            <tbody>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-xs</code></td><td data-label="Value">0.75rem</td><td data-label="At 16px root">12px</td><td data-label="Use">Absolute floor. Micro-copy only: badges, tags, counters, version labels. Never running text.</td></tr>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-sm</code></td><td data-label="Value">0.875rem</td><td data-label="At 16px root">14px</td><td data-label="Use">Floor for secondary and UI text: helper and error text, captions, table headers, breadcrumbs, tooltips.</td></tr>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-md</code></td><td data-label="Value">0.9375rem</td><td data-label="At 16px root">15px</td><td data-label="Use">Default UI text: buttons, labels, table cells, tabs, navigation.</td></tr>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-base</code></td><td data-label="Value">1rem</td><td data-label="At 16px root">16px</td><td data-label="Use">Body and running text. Form fields on touch screens.</td></tr>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-lg</code></td><td data-label="Value">1.25rem</td><td data-label="At 16px root">20px</td><td data-label="Use">Lead paragraphs, dialog titles.</td></tr>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-xl</code></td><td data-label="Value">1.5rem</td><td data-label="At 16px root">24px</td><td data-label="Use">Headings.</td></tr>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-2xl</code></td><td data-label="Value">2rem</td><td data-label="At 16px root">32px</td><td data-label="Use">Headings.</td></tr>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-3xl</code></td><td data-label="Value">2.625rem</td><td data-label="At 16px root">42px</td><td data-label="Use">Page titles.</td></tr>
-              <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-4xl</code></td><td data-label="Value">3.375rem</td><td data-label="At 16px root">54px</td><td data-label="Use">Display.</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <ul>
-          <li><strong>Body text</strong> is never below <code class="cai-code-inline">--cai-text-base</code> (16px), with a line height of 1.5.</li>
-          <li><strong>Secondary and UI text</strong> is never below <code class="cai-code-inline">--cai-text-sm</code> (14px).</li>
-          <li><strong>Nothing</strong> goes below <code class="cai-code-inline">--cai-text-xs</code> (12px). Sizes relative to their context (<code class="cai-code-inline">kbd</code>, <code class="cai-code-inline">time</code>, <code class="cai-code-inline">output</code>, inline code, captions) are clamped with <code class="cai-code-inline">max()</code> so they cannot fall below the floor inside small text.</li>
-          <li><strong>Form fields</strong> use <code class="cai-code-inline">--cai-text-control</code> (core setting): <code class="cai-code-inline">--cai-text-md</code> on desktop, <code class="cai-code-inline">--cai-text-base</code> (16px) at 768px and below and on touch screens, where iOS Safari zooms the page into any smaller field.</li>
-        </ul>
-      </div>
-
-      <div class="docs-subsection" id="tokens-fills">
-        <h3 class="docs-subsection__title">Solid fills</h3>
-        <p>Surfaces that carry <code class="cai-code-inline">--cai-text-on-color</code> use the fill tokens, not the brand or status color directly: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>. In light and high contrast they equal the brand and danger colors; in dark mode they are a step darker, because the dark brand is light enough to be read as text and white on it falls below 4.5:1.</p>
-      </div>
-
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Add primitive token</h3>
-        <ol>
-          <li>Edit <code class="cai-code-inline">packages/tokens/tokens.json</code>.</li>
-          <li>Run <code class="cai-code-inline">pnpm tokens:build</code>.</li>
-          <li>Map to semantics only if needed.</li>
-        </ol>
-      </div>
-
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Add semantic token</h3>
-        <ol>
-          <li>Edit <code class="cai-code-inline">packages/tokens/src/semantic.css</code> in all 3 theme blocks, then run <code class="cai-code-inline">pnpm tokens:build</code>.</li>
-          <li>Keep names stable across light, dark, and high-contrast.</li>
-          <li>Use the semantic token in components.</li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="docs-section" id="core" aria-labelledby="h-core">
-      <h2 class="docs-section__title" id="h-core">Core (Technical)</h2>
-      <div class="docs-section__subtitle">Core ships ITCSS layers + optional vanilla JS behavior helpers.</div>
-
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">CSS architecture (ITCSS)</h3>
-        <pre class="cai-code-block" data-lang="text"><code>packages/core/src/
-  settings/_settings.css
-  generic/_reset.css
-  elements/_elements.css
-  objects/_objects.css
-  components/_components.css
-  utilities/_utilities.css</code></pre>
-      </div>
-
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">JS behavior entrypoint</h3>
-        <pre class="cai-code-block" data-lang="js"><code>import "/packages/core/dist/cai.js";
-
-// Includes helpers for:
-// - theme persistence
-// - copy buttons
-// - tabs and media player bindings
-// - syntax-highlight utility for code blocks</code></pre>
-      </div>
-
-      <div class="docs-subsection">
-        <h3 class="docs-subsection__title">Minimal page skeleton</h3>
-        <pre class="cai-code-block" data-lang="html"><code>&lt;html lang=&quot;en&quot; data-theme=&quot;minimalist&quot;&gt;
-&lt;head&gt;
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/tokens/dist/cai-tokens.css&quot;&gt;
-  &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/core/dist/cai.css&quot;&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Run action&lt;/button&gt;
-  &lt;div class=&quot;cai-field&quot;&gt;
-    &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
-    &lt;input id=&quot;email&quot; class=&quot;cai-input&quot; type=&quot;email&quot;&gt;
-  &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-      </div>
-    </section>
-
-    <section class="docs-section" id="themes" aria-labelledby="h-themes">
-      <h2 class="docs-section__title" id="h-themes">Themes &amp; modes</h2>
-      <div class="docs-section__subtitle">Identity and color mode are independent.</div>
-      <pre class="cai-code-block" data-lang="html"><code>&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;light&quot;&gt;
-
-&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;dark&quot;&gt;
-
-&lt;!-- Custom identity --&gt;
-&lt;html data-theme=&quot;ricardoymortimer&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
-    </section>
-
-    <section class="docs-section" id="build" aria-labelledby="h-build">
-      <h2 class="docs-section__title" id="h-build">Build commands</h2>
-      <div class="docs-section__subtitle">Commands used in this monorepo workflow.</div>
-      <pre class="cai-code-block" data-lang="bash"><code>pnpm dev
+    <section class="docs-chapter" id="build" aria-labelledby="build-title">
+      <h2 class="docs-chapter__title" id="build-title">Build commands</h2>
+      <p class="docs-lead">For working on CAI itself, in this repository.</p>
+      <pre class="cai-code-block" data-lang="bash" tabindex="0" role="region" aria-label="Build commands"><code>pnpm dev
 pnpm tokens:build
 pnpm core:build
 pnpm build
 
-# Optional checks
+# Checks
 pnpm lint:css
 pnpm lint:js
+pnpm check:contrast
 pnpm test:unit</code></pre>
     </section>
 
-    <section class="docs-section" id="accessibility" aria-labelledby="h-accessibility">
-      <h2 class="docs-section__title" id="h-accessibility">Accessibility statement</h2>
-      <div class="docs-section__subtitle">What CAI aims for, what is checked on every change, and what has not been tested. Last reviewed on 6 October 2026.</div>
+    <section class="cai-platform-section docs-wrap" id="tokens" aria-labelledby="tokens-title">
+      <header class="cai-platform-page-header">
+        <p class="docs-eyebrow">Level 1 · @cai-ds/tokens</p>
+        <h2 class="cai-platform-page-header__title" id="tokens-title">Tokens</h2>
+        <p class="cai-platform-page-header__lead">Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.</p>
+      </header>
 
+      <nav class="docs-toc docs-toc--inline" aria-label="Tokens contents">
+        <div>
+          <p class="docs-eyebrow">Tokens</p>
+          <ul>
+            <li><a href="#t-primitives">Color primitives</a></li>
+            <li><a href="#t-semantic">Semantic tokens</a></li>
+            <li><a href="#t-modes">Color modes</a></li>
+            <li><a href="#t-spacing">Spacing</a></li>
+            <li><a href="#t-sizing">Sizing</a></li>
+            <li><a href="#t-type">Typography</a></li>
+            <li><a href="#t-radius">Radius</a></li>
+            <li><a href="#t-shadow">Shadows</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo docs-demo--wide" id="t-primitives" aria-labelledby="t-primitives-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="t-primitives-title">Color primitives</h3>
+            <code class="docs-demo__file">tokens.json → color</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="docs-ramp">
+              <span class="docs-ramp__label" id="ramp-blue">blue</span>
+              <ul aria-labelledby="ramp-blue">
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-10)" aria-hidden="true"></span>10</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-20)" aria-hidden="true"></span>20</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-30)" aria-hidden="true"></span>30</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-40)" aria-hidden="true"></span>40</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-50)" aria-hidden="true"></span>50</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-60)" aria-hidden="true"></span>60</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-70)" aria-hidden="true"></span>70</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-80)" aria-hidden="true"></span>80</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-90)" aria-hidden="true"></span>90</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-blue-100)" aria-hidden="true"></span>100</li>
+              </ul>
+            </div>
+            <div class="docs-ramp">
+              <span class="docs-ramp__label" id="ramp-gray">gray</span>
+              <ul aria-labelledby="ramp-gray">
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-10)" aria-hidden="true"></span>10</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-20)" aria-hidden="true"></span>20</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-30)" aria-hidden="true"></span>30</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-40)" aria-hidden="true"></span>40</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-50)" aria-hidden="true"></span>50</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-60)" aria-hidden="true"></span>60</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-70)" aria-hidden="true"></span>70</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-80)" aria-hidden="true"></span>80</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-90)" aria-hidden="true"></span>90</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-gray-100)" aria-hidden="true"></span>100</li>
+              </ul>
+            </div>
+            <div class="docs-ramp">
+              <span class="docs-ramp__label" id="ramp-green">green</span>
+              <ul aria-labelledby="ramp-green">
+                <li><span class="docs-swatch" style="--v: var(--cai-green-10)" aria-hidden="true"></span>10</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-green-20)" aria-hidden="true"></span>20</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-green-30)" aria-hidden="true"></span>30</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-green-40)" aria-hidden="true"></span>40</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-green-50)" aria-hidden="true"></span>50</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-green-60)" aria-hidden="true"></span>60</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-green-70)" aria-hidden="true"></span>70</li>
+              </ul>
+            </div>
+            <div class="docs-ramp">
+              <span class="docs-ramp__label" id="ramp-red">red</span>
+              <ul aria-labelledby="ramp-red">
+                <li><span class="docs-swatch" style="--v: var(--cai-red-10)" aria-hidden="true"></span>10</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-red-20)" aria-hidden="true"></span>20</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-red-30)" aria-hidden="true"></span>30</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-red-40)" aria-hidden="true"></span>40</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-red-50)" aria-hidden="true"></span>50</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-red-60)" aria-hidden="true"></span>60</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-red-70)" aria-hidden="true"></span>70</li>
+              </ul>
+            </div>
+            <div class="docs-ramp">
+              <span class="docs-ramp__label" id="ramp-yellow">yellow</span>
+              <ul aria-labelledby="ramp-yellow">
+                <li><span class="docs-swatch" style="--v: var(--cai-yellow-10)" aria-hidden="true"></span>10</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-yellow-20)" aria-hidden="true"></span>20</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-yellow-30)" aria-hidden="true"></span>30</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-yellow-40)" aria-hidden="true"></span>40</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-yellow-50)" aria-hidden="true"></span>50</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-yellow-60)" aria-hidden="true"></span>60</li>
+              </ul>
+            </div>
+            <div class="docs-ramp">
+              <span class="docs-ramp__label" id="ramp-teal">teal</span>
+              <ul aria-labelledby="ramp-teal">
+                <li><span class="docs-swatch" style="--v: var(--cai-teal-10)" aria-hidden="true"></span>10</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-teal-20)" aria-hidden="true"></span>20</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-teal-40)" aria-hidden="true"></span>40</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-teal-50)" aria-hidden="true"></span>50</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-teal-60)" aria-hidden="true"></span>60</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-teal-70)" aria-hidden="true"></span>70</li>
+              </ul>
+            </div>
+            <div class="docs-ramp">
+              <span class="docs-ramp__label" id="ramp-purple">purple</span>
+              <ul aria-labelledby="ramp-purple">
+                <li><span class="docs-swatch" style="--v: var(--cai-purple-10)" aria-hidden="true"></span>10</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-purple-20)" aria-hidden="true"></span>20</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-purple-40)" aria-hidden="true"></span>40</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-purple-50)" aria-hidden="true"></span>50</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-purple-60)" aria-hidden="true"></span>60</li>
+                <li><span class="docs-swatch" style="--v: var(--cai-purple-70)" aria-hidden="true"></span>70</li>
+              </ul>
+            </div>
+          </div>
+          <p class="docs-demo__note">Raw values. Never used directly in components.</p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="t-semantic" aria-labelledby="t-semantic-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="t-semantic-title">Semantic tokens</h3>
+            <code class="docs-demo__file">src/semantic.css</code>
+          </div>
+          <p class="docs-demo__note">Each chip shows the token in light, dark and high contrast, left to right.</p>
+          <details class="docs-fold" open data-fold-narrow>
+            <summary>All <span data-count="semantic">54</span> semantic tokens, in 10 groups</summary>
+            <div class="docs-demo__stage">
+            <h4 class="docs-subhead">Backgrounds (6)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-bg-page)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-bg-page)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-page)"></span>
+                </span>
+                <code class="u-select-all">--cai-bg-page</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-bg-ui)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-bg-ui)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-ui)"></span>
+                </span>
+                <code class="u-select-all">--cai-bg-ui</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-bg-ui-hover)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-bg-ui-hover)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-ui-hover)"></span>
+                </span>
+                <code class="u-select-all">--cai-bg-ui-hover</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-bg-ui-active)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-bg-ui-active)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-ui-active)"></span>
+                </span>
+                <code class="u-select-all">--cai-bg-ui-active</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-bg-overlay)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-bg-overlay)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-overlay)"></span>
+                </span>
+                <code class="u-select-all">--cai-bg-overlay</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-bg-media)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-bg-media)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-bg-media)"></span>
+                </span>
+                <code class="u-select-all">--cai-bg-media</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Text (6)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-primary)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-primary)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-primary)"></span>
+                </span>
+                <code class="u-select-all">--cai-text-primary</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-secondary)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-secondary)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-secondary)"></span>
+                </span>
+                <code class="u-select-all">--cai-text-secondary</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-placeholder)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-placeholder)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-placeholder)"></span>
+                </span>
+                <code class="u-select-all">--cai-text-placeholder</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-disabled)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-disabled)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-disabled)"></span>
+                </span>
+                <code class="u-select-all">--cai-text-disabled</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-on-color)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-on-color)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-on-color)"></span>
+                </span>
+                <code class="u-select-all">--cai-text-on-color</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-inverse)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-inverse)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-inverse)"></span>
+                </span>
+                <code class="u-select-all">--cai-text-inverse</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Borders (3)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-border-subtle)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-border-subtle)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-border-subtle)"></span>
+                </span>
+                <code class="u-select-all">--cai-border-subtle</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-border-strong)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-border-strong)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-border-strong)"></span>
+                </span>
+                <code class="u-select-all">--cai-border-strong</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-border-interactive)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-border-interactive)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-border-interactive)"></span>
+                </span>
+                <code class="u-select-all">--cai-border-interactive</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Brand (7)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-primary)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-primary)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-primary)"></span>
+                </span>
+                <code class="u-select-all">--cai-brand-primary</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-hover)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-hover)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-hover)"></span>
+                </span>
+                <code class="u-select-all">--cai-brand-hover</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-active)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-active)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-active)"></span>
+                </span>
+                <code class="u-select-all">--cai-brand-active</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-subtle)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-subtle)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-subtle)"></span>
+                </span>
+                <code class="u-select-all">--cai-brand-subtle</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill)"></span>
+                </span>
+                <code class="u-select-all">--cai-brand-fill</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill-hover)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill-hover)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill-hover)"></span>
+                </span>
+                <code class="u-select-all">--cai-brand-fill-hover</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill-active)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill-active)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill-active)"></span>
+                </span>
+                <code class="u-select-all">--cai-brand-fill-active</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Icons (3)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-icon-primary)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-icon-primary)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-icon-primary)"></span>
+                </span>
+                <code class="u-select-all">--cai-icon-primary</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-icon-secondary)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-icon-secondary)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-icon-secondary)"></span>
+                </span>
+                <code class="u-select-all">--cai-icon-secondary</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-icon-inverse)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-icon-inverse)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-icon-inverse)"></span>
+                </span>
+                <code class="u-select-all">--cai-icon-inverse</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Layers (3)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-layer-01)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-layer-01)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-layer-01)"></span>
+                </span>
+                <code class="u-select-all">--cai-layer-01</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-layer-02)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-layer-02)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-layer-02)"></span>
+                </span>
+                <code class="u-select-all">--cai-layer-02</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-layer-03)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-layer-03)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-layer-03)"></span>
+                </span>
+                <code class="u-select-all">--cai-layer-03</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Sidebar (9)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-bg</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-text)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-text)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-text)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-text</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-text-hover)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-text-hover)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-text-hover)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-text-hover</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-hover)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-hover)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-hover)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-hover</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-active-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-active-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-active-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-active-bg</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-active-text)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-active-text)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-active-text)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-active-text</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-border)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-border)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-border)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-border</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-label)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-label)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-label)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-label</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-logo-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-logo-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-logo-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-sidebar-logo-bg</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Status (10)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-success)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-success)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-success)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-success</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-success-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-success-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-success-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-success-bg</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-danger</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-danger-bg</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger-fill)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger-fill)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger-fill)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-danger-fill</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-warning</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning-accent)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning-accent)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning-accent)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-warning-accent</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-warning-bg</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-info)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-info)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-info)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-info</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-info-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-info-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-info-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-info-bg</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Inputs (2)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-input-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-input-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-input-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-input-bg</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-input-border)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-input-border)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-input-border)"></span>
+                </span>
+                <code class="u-select-all">--cai-input-border</code>
+              </li>
+            </ul>
+            <h4 class="docs-subhead">Extended (5)</h4>
+            <ul class="docs-token-grid">
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-teal)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-teal)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-teal)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-teal</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-teal-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-teal-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-teal-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-teal-bg</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-purple)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-purple)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-purple)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-purple</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-purple-bg)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-purple-bg)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-purple-bg)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-purple-bg</code>
+              </li>
+              <li class="docs-token">
+                <span class="docs-token__modes" aria-hidden="true">
+                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-code)"></span>
+                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-code)"></span>
+                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-code)"></span>
+                </span>
+                <code class="u-select-all">--cai-color-code</code>
+              </li>
+            </ul>
+          </div>
+          </details>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="t-modes" aria-labelledby="t-modes-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="t-modes-title">Color modes</h3>
+            <code class="docs-demo__file">src/semantic.css</code>
+          </div>
+          <div class="docs-demo__stage docs-scopes">
+            <div class="docs-scope" data-theme="light">
+              <h4 class="docs-subhead">Light</h4>
+              <p><code class="cai-code-inline">data-theme="light"</code></p>
+              <p>Body text with <a href="#t-semantic">one link</a>.</p>
+              <div class="o-row">
+                <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+                <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
+              </div>
+              <progress class="cai-progress" value="60" max="100" aria-label="Progress in light mode"></progress>
+              <div class="cai-alert cai-alert--warning">
+                <div class="cai-alert__icon" aria-hidden="true">!</div>
+                <div>
+                  <div class="cai-alert__title">Warning</div>
+                  <div class="cai-alert__body">Same markup in every mode.</div>
+                </div>
+              </div>
+            </div>
+            <div class="docs-scope" data-theme="dark">
+              <h4 class="docs-subhead">Dark</h4>
+              <p><code class="cai-code-inline">data-theme="dark"</code></p>
+              <p>Body text with <a href="#t-semantic">one link</a>.</p>
+              <div class="o-row">
+                <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+                <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
+              </div>
+              <progress class="cai-progress" value="60" max="100" aria-label="Progress in dark mode"></progress>
+              <div class="cai-alert cai-alert--warning">
+                <div class="cai-alert__icon" aria-hidden="true">!</div>
+                <div>
+                  <div class="cai-alert__title">Warning</div>
+                  <div class="cai-alert__body">Same markup in every mode.</div>
+                </div>
+              </div>
+            </div>
+            <div class="docs-scope" data-theme="high-contrast">
+              <h4 class="docs-subhead">High contrast</h4>
+              <p><code class="cai-code-inline">data-theme="high-contrast"</code></p>
+              <p>Body text with <a href="#t-semantic">one link</a>.</p>
+              <div class="o-row">
+                <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+                <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
+              </div>
+              <progress class="cai-progress" value="60" max="100" aria-label="Progress in high-contrast mode"></progress>
+              <div class="cai-alert cai-alert--warning">
+                <div class="cai-alert__icon" aria-hidden="true">!</div>
+                <div>
+                  <div class="cai-alert__title">Warning</div>
+                  <div class="cai-alert__body">Same markup in every mode.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="docs-demo__note">Same markup, one attribute. Set <code class="cai-code-inline">data-theme</code> on <code class="cai-code-inline">&lt;html&gt;</code>, or on any element to scope a mode to it.</p>
+        </article>
+
+        <article class="docs-demo" id="t-spacing" aria-labelledby="t-spacing-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="t-spacing-title">Spacing</h3>
+            <code class="docs-demo__file">tokens.json → spacing</code>
+          </div>
+          <div class="docs-demo__stage">
+            <ul class="docs-scale-list">
+              <li class="docs-scale">
+                <code>--cai-space-01</code>
+                <span>2px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-01)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-02</code>
+                <span>4px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-02)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-03</code>
+                <span>8px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-03)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-04</code>
+                <span>12px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-04)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-05</code>
+                <span>16px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-05)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-06</code>
+                <span>24px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-06)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-07</code>
+                <span>32px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-07)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-08</code>
+                <span>40px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-08)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-09</code>
+                <span>48px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-09)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-10</code>
+                <span>64px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-10)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-11</code>
+                <span>80px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-11)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-12</code>
+                <span>96px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-12)" aria-hidden="true"></span>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="docs-demo" id="t-sizing" aria-labelledby="t-sizing-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="t-sizing-title">Sizing</h3>
+            <code class="docs-demo__file">tokens.json → sizing</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-stack">
+              <div class="docs-box docs-box--height" style="--v: var(--cai-size-height-sm)">--cai-size-height-sm · 24px</div>
+              <div class="docs-box docs-box--height" style="--v: var(--cai-size-height-md)">--cai-size-height-md · 32px</div>
+              <div class="docs-box docs-box--height" style="--v: var(--cai-size-height-lg)">--cai-size-height-lg · 40px</div>
+              <div class="docs-box docs-box--height" style="--v: var(--cai-size-height-xl)">--cai-size-height-xl · 48px</div>
+            </div>
+          </div>
+          <p class="docs-demo__note">Control heights: tags and copy buttons, small buttons, inputs and buttons, large buttons.</p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="t-type" aria-labelledby="t-type-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="t-type-title">Typography</h3>
+            <code class="docs-demo__file">tokens.json → typography</code>
+          </div>
+          <div class="docs-demo__stage">
+            <ul class="o-grid docs-cols-3 docs-fonts">
+              <li class="docs-font" style="--v: var(--cai-font-sans)">
+                <code>--cai-font-sans</code>
+                <span class="docs-font__sample">System sans</span>
+                <span class="docs-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:600">600</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
+              </li>
+              <li class="docs-font" style="--v: var(--cai-font-serif)">
+                <code>--cai-font-serif</code>
+                <span class="docs-font__sample">ET Book</span>
+                <span class="docs-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:600">600</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
+              </li>
+              <li class="docs-font" style="--v: var(--cai-font-mono)">
+                <code>--cai-font-mono</code>
+                <span class="docs-font__sample">System mono</span>
+                <span class="docs-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
+              </li>
+            </ul>
+            <ul class="docs-scale-list">
+              <li class="docs-scale">
+                <code>--cai-text-xs</code>
+                <span>0.75rem · 12px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-xs)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-sm</code>
+                <span>0.875rem · 14px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-sm)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-md</code>
+                <span>0.9375rem · 15px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-md)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-base</code>
+                <span>1rem · 16px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-base)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-lg</code>
+                <span>1.25rem · 20px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-lg)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-xl</code>
+                <span>1.5rem · 24px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-xl)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-2xl</code>
+                <span>2rem · 32px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-2xl)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-3xl</code>
+                <span>2.625rem · 42px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-3xl)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-4xl</code>
+                <span>3.375rem · 54px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-4xl)">Consistent Adaptive Identity</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="docs-demo" id="t-radius" aria-labelledby="t-radius-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="t-radius-title">Radius</h3>
+            <code class="docs-demo__file">tokens.json → radius</code>
+          </div>
+          <div class="docs-demo__stage">
+            <ul class="docs-specimens">
+              <li>
+                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-none)" aria-hidden="true"></span>
+                <code>--cai-radius-none</code>
+                <span>0px</span>
+              </li>
+              <li>
+                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-sm)" aria-hidden="true"></span>
+                <code>--cai-radius-sm</code>
+                <span>2px</span>
+              </li>
+              <li>
+                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-md)" aria-hidden="true"></span>
+                <code>--cai-radius-md</code>
+                <span>4px</span>
+              </li>
+              <li>
+                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-lg)" aria-hidden="true"></span>
+                <code>--cai-radius-lg</code>
+                <span>8px</span>
+              </li>
+              <li>
+                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-xl)" aria-hidden="true"></span>
+                <code>--cai-radius-xl</code>
+                <span>12px</span>
+              </li>
+              <li>
+                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-full)" aria-hidden="true"></span>
+                <code>--cai-radius-full</code>
+                <span>9999px</span>
+              </li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="docs-demo" id="t-shadow" aria-labelledby="t-shadow-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="t-shadow-title">Shadows</h3>
+            <code class="docs-demo__file">tokens.json → shadow</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-grid docs-shadows">
+              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-sm)">--cai-shadow-sm</div>
+              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-md)">--cai-shadow-md</div>
+              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-lg)">--cai-shadow-lg</div>
+              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-icon)">--cai-shadow-icon</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="docs-demo docs-demo--wide docs-prose-card" id="tokens-model" aria-labelledby="tokens-model-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="tokens-model-title">Token model</h3>
+            <code class="docs-demo__file">packages/tokens</code>
+          </div>
+          <div class="docs-prose">
+            <h4 class="docs-prose__title">Layer model</h4>
+            <pre class="cai-code-block" data-lang="text"><code>packages/tokens/tokens.json
+      -> source of primitives (blue-10..100, gray-10..100, spacing, radius...)
+
+    packages/tokens/dist/cai-tokens.css
+      Layer 1: generated primitives
+      Layer 2: handwritten semantics per theme (light/dark/high-contrast)</code></pre>
+          </div>
+
+          <div class="docs-prose">
+            <h4 class="docs-prose__title">Component token rule</h4>
+            <pre class="cai-code-block" data-lang="css"><code>/* Correct: semantic tokens */
+    color: var(--cai-text-primary);
+    background: var(--cai-brand-primary);
+    border-color: var(--cai-border-subtle);
+
+    /* Incorrect: primitive scales */
+    color: var(--cai-gray-100);
+    background: var(--cai-blue-60);</code></pre>
+          </div>
+
+          <div class="docs-prose" id="tokens-typography">
+            <h4 class="docs-prose__title">Type scale and minimum sizes</h4>
+            <p>Every size is in <code class="cai-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Type scale" tabindex="0">
+              <table class="cai-table">
+                <caption>Font-size tokens</caption>
+                <thead>
+                  <tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">At 16px root</th><th scope="col">Use</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-xs</code></td><td data-label="Value">0.75rem</td><td data-label="At 16px root">12px</td><td data-label="Use">Absolute floor. Micro-copy only: badges, tags, counters, version labels. Never running text.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-sm</code></td><td data-label="Value">0.875rem</td><td data-label="At 16px root">14px</td><td data-label="Use">Floor for secondary and UI text: helper and error text, captions, table headers, breadcrumbs, tooltips.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-md</code></td><td data-label="Value">0.9375rem</td><td data-label="At 16px root">15px</td><td data-label="Use">Default UI text: buttons, labels, table cells, tabs, navigation.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-base</code></td><td data-label="Value">1rem</td><td data-label="At 16px root">16px</td><td data-label="Use">Body and running text. Form fields on touch screens.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-lg</code></td><td data-label="Value">1.25rem</td><td data-label="At 16px root">20px</td><td data-label="Use">Lead paragraphs, dialog titles.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-xl</code></td><td data-label="Value">1.5rem</td><td data-label="At 16px root">24px</td><td data-label="Use">Headings.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-2xl</code></td><td data-label="Value">2rem</td><td data-label="At 16px root">32px</td><td data-label="Use">Headings.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-3xl</code></td><td data-label="Value">2.625rem</td><td data-label="At 16px root">42px</td><td data-label="Use">Page titles.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-4xl</code></td><td data-label="Value">3.375rem</td><td data-label="At 16px root">54px</td><td data-label="Use">Display.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul>
+              <li><strong>Body text</strong> is never below <code class="cai-code-inline">--cai-text-base</code> (16px), with a line height of 1.5.</li>
+              <li><strong>Secondary and UI text</strong> is never below <code class="cai-code-inline">--cai-text-sm</code> (14px).</li>
+              <li><strong>Nothing</strong> goes below <code class="cai-code-inline">--cai-text-xs</code> (12px). Sizes relative to their context (<code class="cai-code-inline">kbd</code>, <code class="cai-code-inline">time</code>, <code class="cai-code-inline">output</code>, inline code, captions) are clamped with <code class="cai-code-inline">max()</code> so they cannot fall below the floor inside small text.</li>
+              <li><strong>Form fields</strong> use <code class="cai-code-inline">--cai-text-control</code> (core setting): <code class="cai-code-inline">--cai-text-md</code> on desktop, <code class="cai-code-inline">--cai-text-base</code> (16px) at 768px and below and on touch screens, where iOS Safari zooms the page into any smaller field.</li>
+            </ul>
+          </div>
+
+          <div class="docs-prose" id="tokens-fills">
+            <h4 class="docs-prose__title">Solid fills</h4>
+            <p>Surfaces that carry <code class="cai-code-inline">--cai-text-on-color</code> use the fill tokens, not the brand or status color directly: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>. In light and high contrast they equal the brand and danger colors; in dark mode they are a step darker, because the dark brand is light enough to be read as text and white on it falls below 4.5:1.</p>
+          </div>
+
+          <div class="docs-prose">
+            <h4 class="docs-prose__title">Add primitive token</h4>
+            <ol>
+              <li>Edit <code class="cai-code-inline">packages/tokens/tokens.json</code>.</li>
+              <li>Run <code class="cai-code-inline">pnpm tokens:build</code>.</li>
+              <li>Map to semantics only if needed.</li>
+            </ol>
+          </div>
+
+          <div class="docs-prose">
+            <h4 class="docs-prose__title">Add semantic token</h4>
+            <ol>
+              <li>Edit <code class="cai-code-inline">packages/tokens/src/semantic.css</code> in all 3 theme blocks, then run <code class="cai-code-inline">pnpm tokens:build</code>.</li>
+              <li>Keep names stable across light, dark, and high-contrast.</li>
+              <li>Use the semantic token in components.</li>
+            </ol>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="docs-chapter" id="themes" aria-labelledby="themes-title">
+      <h2 class="docs-chapter__title" id="themes-title">Themes and modes</h2>
+      <p class="docs-lead">A color mode changes luminosity; a custom theme changes the whole identity. They are independent.</p>
+      <p>The three base modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>. Two custom themes ship with core, each with its own light, dark and high-contrast modes set with <code class="cai-code-inline">data-mode</code>:</p>
+      <ul>
+        <li><strong>Minimalist</strong> (<code class="cai-code-inline">cai-theme-minimalist.css</code>): one system sans throughout, warm neutrals.</li>
+        <li><strong>Vejer</strong> (<code class="cai-code-inline">cai-theme-vejer.css</code>): a reading theme inspired by Vejer de la Frontera. ET Book for running text and headings, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, and every link underlined.</li>
+      </ul>
+      <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Theme and mode examples"><code>&lt;html data-theme=&quot;dark&quot;&gt;
+
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/themes/cai-theme-vejer.min.css&quot;&gt;
+&lt;html data-theme=&quot;vejer&quot; data-mode=&quot;dark&quot;&gt;</code></pre>
+      <p>Every theme is measured by <code class="cai-code-inline">pnpm check:contrast</code> in every mode: 4.5:1 for text, 3:1 for disabled text, borders and focus rings.</p>
+    </section>
+
+
+    <section class="cai-platform-section docs-wrap" id="core" aria-labelledby="core-title">
+      <header class="cai-platform-page-header">
+        <p class="docs-eyebrow">Level 2 · @cai-ds/core</p>
+        <h2 class="cai-platform-page-header__title" id="core-title">Core</h2>
+        <p class="cai-platform-page-header__lead">Settings, base styles, layout objects, <span data-count="components">20</span> components and utilities, layered in ITCSS order. Interactive components name the optional JS module that drives them.</p>
+      </header>
+
+      <nav class="docs-toc" aria-label="Core contents">
+        <div>
+          <p class="docs-eyebrow">Settings</p>
+          <ul>
+            <li><a href="#c-motion">Motion</a></li>
+            <li><a href="#c-settings">Stacking, layout and breakpoints</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="docs-eyebrow">Base and layout</p>
+          <ul>
+            <li><a href="#c-elements">Base elements</a></li>
+            <li><a href="#c-objects">Layout objects</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="docs-eyebrow">Actions and forms</p>
+          <ul>
+            <li><a href="#c-button">Button</a></li>
+            <li><a href="#c-copy">Copy button</a></li>
+            <li><a href="#c-form">Form</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="docs-eyebrow">Display</p>
+          <ul>
+            <li><a href="#c-tag">Tag and badge</a></li>
+            <li><a href="#c-avatar">Avatar</a></li>
+            <li><a href="#c-progress">Progress</a></li>
+            <li><a href="#c-tooltip">Tooltip</a></li>
+            <li><a href="#c-card">Card</a></li>
+            <li><a href="#c-figure">Figure</a></li>
+            <li><a href="#c-table">Table</a></li>
+            <li><a href="#c-code">Code</a></li>
+            <li><a href="#c-icons">Icon grid</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="docs-eyebrow">Feedback</p>
+          <ul>
+            <li><a href="#c-alert">Alert</a></li>
+            <li><a href="#c-toast">Toast</a></li>
+            <li><a href="#c-modal">Modal</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="docs-eyebrow">Navigation</p>
+          <ul>
+            <li><a href="#c-tabs">Tabs</a></li>
+            <li><a href="#c-breadcrumb">Breadcrumb</a></li>
+            <li><a href="#c-sidebar">Sidebar</a></li>
+            <li><a href="#c-theme-switcher">Color mode switcher</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="docs-eyebrow">Media and motion</p>
+          <ul>
+            <li><a href="#c-player">Player</a></li>
+            <li><a href="#c-animations">Keyframes</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="docs-eyebrow">Helpers</p>
+          <ul>
+            <li><a href="#c-utilities">Utilities</a></li>
+            <li><a href="#c-js">JavaScript modules</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="docs-demo-grid">
+        <article class="docs-demo docs-demo--wide docs-prose-card" id="core-architecture" aria-labelledby="core-architecture-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="core-architecture-title">Architecture</h3>
+            <code class="docs-demo__file">packages/core/src</code>
+          </div>
+          <div class="docs-prose">
+            <h4 class="docs-prose__title">CSS architecture (ITCSS)</h4>
+            <pre class="cai-code-block" data-lang="text"><code>packages/core/src/
+      settings/_settings.css
+      generic/_reset.css
+      elements/_elements.css
+      objects/_objects.css
+      components/_components.css
+      utilities/_utilities.css</code></pre>
+          </div>
+
+          <div class="docs-prose">
+            <h4 class="docs-prose__title">JS behavior entrypoint</h4>
+            <pre class="cai-code-block" data-lang="js"><code>import "/packages/core/dist/cai.js";
+
+    // Includes helpers for:
+    // - theme persistence
+    // - copy buttons
+    // - tabs and media player bindings
+    // - syntax-highlight utility for code blocks</code></pre>
+          </div>
+
+          <div class="docs-prose">
+            <h4 class="docs-prose__title">Minimal page skeleton</h4>
+            <pre class="cai-code-block" data-lang="html"><code>&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
+    &lt;head&gt;
+      &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/tokens/dist/cai-tokens.css&quot;&gt;
+      &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/core/dist/cai.css&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Run action&lt;/button&gt;
+      &lt;div class=&quot;cai-field&quot;&gt;
+        &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
+        &lt;input id=&quot;email&quot; class=&quot;cai-input&quot; type=&quot;email&quot;&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre>
+          </div>
+        </article>
+      </div>
+    </section>
+
+      <!-- ---------- Settings ---------- -->
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo docs-demo--wide" id="c-motion" aria-labelledby="c-motion-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-motion-title">Motion</h2>
+            <code class="docs-demo__file">settings/_settings.css</code>
+          </div>
+          <div class="docs-demo__stage docs-motion">
+            <label class="cai-toggle">
+              <input class="cai-toggle__input" type="checkbox" role="switch">
+              <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+              <span class="cai-toggle__label">Run transitions</span>
+            </label>
+            <p class="docs-motion__reduced docs-demo__note">Reduced motion is on, so the dots jump instead of travelling.</p>
+            <div class="o-grid docs-cols-2">
+              <div class="docs-demo__stage">
+                <h3 class="docs-subhead">Durations</h3>
+                <ul class="docs-scale-list">
+                  <li class="docs-scale">
+                    <code>--cai-duration-instant</code>
+                    <span>0.05s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-instant)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-fast</code>
+                    <span>0.1s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-fast)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-base</code>
+                    <span>0.2s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-base)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-slow</code>
+                    <span>0.3s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-slow)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-slower</code>
+                    <span>0.5s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-slower)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-lazy</code>
+                    <span>0.8s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-lazy)"></span></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="docs-demo__stage">
+                <h3 class="docs-subhead">Easings</h3>
+                <ul class="docs-scale-list">
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-standard</code>
+                    <span>cubic-bezier(0.4, 0, 0.2, 1)</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-standard)"></span></span>
+                  </li>
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-enter</code>
+                    <span>cubic-bezier(0, 0, 0.2, 1)</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-enter)"></span></span>
+                  </li>
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-exit</code>
+                    <span>cubic-bezier(0.4, 0, 1, 1)</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-exit)"></span></span>
+                  </li>
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-spring</code>
+                    <span>cubic-bezier(0.34, 1.56, 0.64, 1)</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-spring)"></span></span>
+                  </li>
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-linear</code>
+                    <span>linear</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-linear)"></span></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <p class="docs-demo__note">Ships with core, not with tokens.</p>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="c-settings" aria-labelledby="c-settings-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-settings-title">Stacking, layout and breakpoints</h2>
+            <code class="docs-demo__file">settings/_settings.css</code>
+          </div>
+          <div class="docs-demo__stage o-grid docs-cols-2">
+            <div>
+              <h3 class="docs-subhead">Z-index scale</h3>
+              <ul class="docs-scale-list">
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-base</code><span>0</span><span class="docs-scale__note">Default layer</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-raised</code><span>10</span><span class="docs-scale__note">Tooltips, sticky bars</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-overlay</code><span>90</span><span class="docs-scale__note">Drawer backdrop</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-sidebar</code><span>100</span><span class="docs-scale__note">Sidebar</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-modal</code><span>200</span><span class="docs-scale__note">Modal, navigation toggle</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-toast</code><span>300</span><span class="docs-scale__note">Skip link, toasts</span></li>
+              </ul>
+            </div>
+            <div>
+              <h3 class="docs-subhead">Layout, breakpoints and type</h3>
+              <ul class="docs-scale-list">
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-sidebar-width</code><span>256px</span><span class="docs-scale__note">Sidebar and app-shell column</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-content-max</code><span>1100px</span><span class="docs-scale__note">Maximum content width</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-sm</code><span>480px</span><span class="docs-scale__note">Small mobile</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-md</code><span>768px</span><span class="docs-scale__note">Tablet, sidebar collapse</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-lg</code><span>1024px</span><span class="docs-scale__note">Narrow desktop</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-xl</code><span>1280px</span><span class="docs-scale__note">Standard desktop</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-2xl</code><span>1440px</span><span class="docs-scale__note">Wide screen</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-font-heading</code><span>var(--cai-font-serif)</span><span class="docs-scale__note">Heading font family</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-text-control</code><span>var(--cai-text-md)</span><span class="docs-scale__note">Form field text; --cai-text-base (16px) at 768px and below and on touch screens</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-scrollbar-size</code><span>4px</span><span class="docs-scale__note">Scrollbar thickness</span></li>
+              </ul>
+            </div>
+          </div>
+          <p class="docs-demo__note">Ships with core, not with tokens. Breakpoints are reference values: CSS media queries cannot read custom properties.</p>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo docs-demo--wide" id="c-elements" aria-labelledby="c-elements-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-elements-title">Base elements</h2>
+            <code class="docs-demo__file">elements/*.css</code>
+            <code class="docs-demo__file">generic/_reset.css</code>
+          </div>
+          <div class="docs-demo__stage o-grid docs-cols-2">
+            <div class="docs-demo__stage">
+              <h3 class="docs-heading-sample">Headings use ET Book</h3>
+              <p>Paragraphs use the system sans, and <a href="#c-elements">links use the brand color</a>.</p>
+              <hr>
+              <details>
+                <summary>A native disclosure</summary>
+                <p>The <code class="cai-code-inline">details</code> element needs no JavaScript.</p>
+              </details>
+              <p>Use <mark>mark</mark> to highlight, and <kbd>Ctrl</kbd> <kbd>K</kbd> for keys.</p>
+              <p>Released on <time datetime="2026-09-30">30 September 2026</time>.</p>
+            </div>
+            <div class="docs-demo__stage">
+              <figure>
+                <p>A bare <code class="cai-code-inline">figure</code> is a padded surface.</p>
+                <figcaption>And this is its figcaption.</figcaption>
+              </figure>
+              <p><label for="el-output">Output</label> <output id="el-output">42 results</output></p>
+              <div>
+                <label for="el-meter">Meter, 6 of 10</label>
+                <meter id="el-meter" min="0" max="10" low="3" high="8" optimum="5" value="6">6 of 10</meter>
+              </div>
+            </div>
+          </div>
+          <p class="docs-demo__note">Every current HTML element, with a live example, is on <a href="../html/">the HTML elements page</a>.</p>
+          <p class="docs-demo__note">The reset sets border-box sizing, removes default margins, thins scrollbars and collapses motion when reduced motion is requested.</p>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo docs-demo--wide" id="c-objects" aria-labelledby="c-objects-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-objects-title">Layout objects</h2>
+            <code class="docs-demo__file">objects/_objects.css</code>
+          </div>
+          <div class="docs-demo__stage o-grid docs-cols-2">
+            <div class="docs-demo__stage">
+              <code class="docs-demo__file">.o-stack</code>
+              <div class="o-stack">
+                <div class="docs-box">1</div>
+                <div class="docs-box">2</div>
+                <div class="docs-box">3</div>
+              </div>
+            </div>
+            <div class="docs-demo__stage">
+              <code class="docs-demo__file">.o-row</code>
+              <div class="o-row">
+                <div class="docs-box">1</div>
+                <div class="docs-box">2</div>
+                <div class="docs-box">3</div>
+                <div class="docs-box">4</div>
+                <div class="docs-box">5</div>
+              </div>
+            </div>
+            <div class="docs-demo__stage">
+              <code class="docs-demo__file">.o-grid</code>
+              <div class="o-grid docs-cols-4">
+                <div class="docs-box">1</div>
+                <div class="docs-box">2</div>
+                <div class="docs-box">3</div>
+                <div class="docs-box">4</div>
+              </div>
+            </div>
+            <div class="docs-demo__stage">
+              <code class="docs-demo__file">.o-media</code>
+              <div class="o-media">
+                <span class="cai-avatar cai-avatar--md" aria-hidden="true">AB</span>
+                <div class="o-media__body">
+                  <p>Media object</p>
+                  <p class="u-text-muted">A fixed item beside content that takes the remaining width.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="docs-demo__note"><code class="cai-code-inline">.o-shell</code>, <code class="cai-code-inline">.o-main</code> and <code class="cai-code-inline">.o-container</code> are page-level: <a href="#docs-nav">this page uses them</a>.</p>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo" id="c-button" aria-labelledby="c-button-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-button-title">Button</h2>
+            <code class="docs-demo__file">components/button.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-row">
+              <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+              <button class="cai-btn cai-btn--secondary" type="button">Secondary</button>
+              <button class="cai-btn cai-btn--outline" type="button">Outline</button>
+              <button class="cai-btn cai-btn--ghost" type="button">Ghost</button>
+              <button class="cai-btn cai-btn--danger" type="button">Danger</button>
+            </div>
+            <div class="o-row">
+              <button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Small</button>
+              <button class="cai-btn cai-btn--primary" type="button">Default</button>
+              <button class="cai-btn cai-btn--primary cai-btn--lg" type="button">Large</button>
+            </div>
+            <div class="o-row">
+              <button class="cai-btn cai-btn--primary" type="button" disabled>Disabled</button>
+              <a class="cai-btn cai-btn--outline" href="#c-button">Link as button</a>
+            </div>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-button-when">When to use</h3>
+              <p>To start an action on the current page: save, send, open a dialog. Use the primary variant once per view.</p>
+              <h3 class="docs-guide__title" id="h-c-button-when-not">When not to use</h3>
+              <p>To go to another page. Use a link, or a link styled with the button class. Do not use a disabled button to hide an action.</p>
+              <h3 class="docs-guide__title" id="h-c-button-how">How it works</h3>
+              <p>A native button element with a variant and a size modifier. Without JavaScript it works as any button; inside a form, set the type.</p>
+              <h3 class="docs-guide__title" id="h-c-button-content">Content guidance</h3>
+              <p>Start with a verb and say the result: "Save changes", "Delete draft". Never "OK", "Submit" or "Click here". Sentence case.</p>
+              <h3 class="docs-guide__title" id="h-c-button-keyboard">Keyboard and ARIA</h3>
+              <p>Tab to reach it, Enter or Space to press it. The focus ring is the shared 2px ring. No ARIA is needed; add an aria-label only to an icon-only button.</p>
+              <h3 class="docs-guide__title" id="h-c-button-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-copy" aria-labelledby="c-copy-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-copy-title">Copy button</h2>
+            <code class="docs-demo__file">components/copy-btn.css</code>
+            <span class="cai-tag cai-tag--purple">JS: clipboard.js</span>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-row">
+              <code class="cai-code-inline">var(--cai-brand-primary)</code>
+              <button class="cai-copy-btn" type="button" data-copy="var(--cai-brand-primary)" aria-label="Copy the brand token reference">Copy</button>
+            </div>
+          </div>
+          <p class="docs-demo__note">The button copies the text in its <code class="cai-code-inline">data-copy</code> attribute.</p>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-copy-when">When to use</h3>
+              <p>To copy a short string the reader will paste elsewhere, such as a command or a token name.</p>
+              <h3 class="docs-guide__title" id="h-c-copy-when-not">When not to use</h3>
+              <p>For long text, or where selecting the text is enough. Never as the only way to get the content.</p>
+              <h3 class="docs-guide__title" id="h-c-copy-how">How it works</h3>
+              <p>A button with data-copy. It needs JavaScript and the Clipboard API, so it is hidden until the script runs; the text it copies is always on the page, selectable.</p>
+              <h3 class="docs-guide__title" id="h-c-copy-content">Content guidance</h3>
+              <p>Name what is copied in the accessible name: "Copy the install command". The visible label is "Copy"; the result is announced in a polite live region.</p>
+              <h3 class="docs-guide__title" id="h-c-copy-keyboard">Keyboard and ARIA</h3>
+              <p>Tab, then Enter or Space. A polite status message announces "Copied to clipboard" or the failure.</p>
+              <h3 class="docs-guide__title" id="h-c-copy-issues">Known issues</h3>
+              <p>Needs a secure context (https or localhost) for the Clipboard API; the failure is announced and the text can still be selected.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="c-form" aria-labelledby="c-form-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-form-title">Form</h2>
+            <code class="docs-demo__file">components/form.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-grid docs-cols-3">
+              <div>
+                <h3 class="docs-subhead">Text</h3>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-name">Project name</label>
+                  <input class="cai-input" id="f-name" type="text" placeholder="My project" aria-describedby="f-name-help">
+                  <div class="cai-field__helper" id="f-name-help">Shown on the dashboard.</div>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label cai-field__label--required" for="f-email">Email</label>
+                  <input class="cai-input" id="f-email" type="email" placeholder="jane@example.com" required autocomplete="off">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-slug">Slug</label>
+                  <input class="cai-input cai-input--error" id="f-slug" type="text" value="my project" aria-invalid="true" aria-describedby="f-slug-error">
+                  <div class="cai-field__error" id="f-slug-error">Use letters, numbers and dashes only.</div>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-disabled">Disabled</label>
+                  <input class="cai-input" id="f-disabled" type="text" value="Not editable" disabled>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-readonly">Read-only</label>
+                  <input class="cai-input" id="f-readonly" type="text" value="cai-7f3a" readonly>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-notes">Notes</label>
+                  <textarea class="cai-input cai-input--textarea" id="f-notes" rows="3" placeholder="Anything else?"></textarea>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="docs-subhead">Choice</h3>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-role">Role</label>
+                  <div class="cai-select-wrap">
+                    <select class="cai-input" id="f-role">
+                      <option value="">Select a role</option>
+                      <option value="dev">Developer</option>
+                      <option value="design">Designer</option>
+                      <option value="pm">Product manager</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cai-field">
+                  <div class="cai-field__label" id="f-notify-label">Notifications</div>
+                  <div class="cai-check-group" role="group" aria-labelledby="f-notify-label">
+                    <div class="cai-check-item"><input type="checkbox" id="f-check-1" checked><label for="f-check-1">Email</label></div>
+                    <div class="cai-check-item"><input type="checkbox" id="f-check-2"><label for="f-check-2">Push</label></div>
+                    <div class="cai-check-item"><input type="checkbox" id="f-check-3" disabled><label for="f-check-3">SMS (disabled)</label></div>
+                  </div>
+                </div>
+                <div class="cai-field">
+                  <fieldset class="cai-fieldset">
+                    <legend>Plan</legend>
+                    <div class="cai-check-group">
+                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-1" checked><label for="f-radio-1">Free</label></div>
+                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-2"><label for="f-radio-2">Team</label></div>
+                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-3"><label for="f-radio-3">Enterprise</label></div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="o-stack">
+                  <label class="cai-toggle">
+                    <input class="cai-toggle__input" type="checkbox" role="switch" checked>
+                    <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+                    <span class="cai-toggle__label">Public profile</span>
+                  </label>
+                  <label class="cai-toggle">
+                    <input class="cai-toggle__input" type="checkbox" role="switch">
+                    <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+                    <span class="cai-toggle__label">Weekly digest</span>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="docs-subhead">Pickers and values</h3>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-date">Date</label>
+                  <input class="cai-input" id="f-date" type="date">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-time">Time</label>
+                  <input class="cai-input" id="f-time" type="time">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-color">Color</label>
+                  <input class="cai-input" id="f-color" type="color" value="#0f62fe">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-file">File</label>
+                  <input class="cai-input" id="f-file" type="file">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-range">Volume <output class="cai-output" id="f-range-out" for="f-range">50</output></label>
+                  <input class="cai-input" id="f-range" type="range" min="0" max="100" value="50" data-output="f-range-out">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-meter">Storage used, 6 of 10 GB</label>
+                  <meter class="cai-meter" id="f-meter" min="0" max="10" low="3" high="8" optimum="2" value="6">6 of 10 GB</meter>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-list">Browser</label>
+                  <input class="cai-input" id="f-list" list="f-browsers" placeholder="Start typing">
+                  <datalist id="f-browsers">
+                    <option value="Chrome"></option>
+                    <option value="Edge"></option>
+                    <option value="Firefox"></option>
+                    <option value="Safari"></option>
+                  </datalist>
+                </div>
+              </div>
+            </div>
+
+            <details>
+              <summary>More input types (8)</summary>
+              <div class="o-grid docs-cols-4">
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-number">number</label>
+                  <input class="cai-input" id="f-number" type="number" value="3" min="0" max="10">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-password">password</label>
+                  <input class="cai-input" id="f-password" type="password" value="secret" autocomplete="off">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-tel">tel</label>
+                  <input class="cai-input" id="f-tel" type="tel" placeholder="+34 600 000 000" autocomplete="off">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-url">url</label>
+                  <input class="cai-input" id="f-url" type="url" placeholder="https://example.com" autocomplete="off">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-search">search</label>
+                  <input class="cai-input" id="f-search" type="search" placeholder="Search">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-datetime">datetime-local</label>
+                  <input class="cai-input" id="f-datetime" type="datetime-local">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-month">month</label>
+                  <input class="cai-input" id="f-month" type="month">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-week">week</label>
+                  <input class="cai-input" id="f-week" type="week">
+                </div>
+              </div>
+            </details>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-form-when">When to use</h3>
+              <p>To collect input. Use the native control that fits the data: text, email, date, range, select, checkbox, radio, switch.</p>
+              <h3 class="docs-guide__title" id="h-c-form-when-not">When not to use</h3>
+              <p>Do not rebuild a native control from divs. Do not use a placeholder as the label.</p>
+              <h3 class="docs-guide__title" id="h-c-form-how">How it works</h3>
+              <p>Native inputs with the field, label, helper and error classes. The switch is a checkbox with role="switch"; all of it works without JavaScript and submits with the form.</p>
+              <h3 class="docs-guide__title" id="h-c-form-content">Content guidance</h3>
+              <p>Every control has a visible label. Hints go in a helper linked with aria-describedby. An error says what is wrong and how to fix it, next to the field, prefixed with "Error:".</p>
+              <h3 class="docs-guide__title" id="h-c-form-keyboard">Keyboard and ARIA</h3>
+              <p>Tab between fields, Space toggles checkboxes and switches, arrow keys move inside radio groups and sliders. Group related controls with fieldset and legend.</p>
+              <h3 class="docs-guide__title" id="h-c-form-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo" id="c-tag" aria-labelledby="c-tag-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-tag-title">Tag and badge</h2>
+            <code class="docs-demo__file">components/tag.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-row">
+              <span class="cai-tag cai-tag--gray">Gray</span>
+              <span class="cai-tag cai-tag--blue">Blue</span>
+              <span class="cai-tag cai-tag--green cai-tag--dot">Green</span>
+              <span class="cai-tag cai-tag--red cai-tag--dot">Red</span>
+              <span class="cai-tag cai-tag--yellow">Yellow</span>
+              <span class="cai-tag cai-tag--teal">Teal</span>
+              <span class="cai-tag cai-tag--purple">Purple</span>
+            </div>
+            <div class="o-row">
+              <span class="cai-badge cai-badge--primary">3</span>
+              <span class="cai-badge cai-badge--gray">12</span>
+              <span class="cai-badge cai-badge--danger">99+</span>
+            </div>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-tag-when">When to use</h3>
+              <p>To label an item with a short status or category, or to show a count.</p>
+              <h3 class="docs-guide__title" id="h-c-tag-when-not">When not to use</h3>
+              <p>Not for actions: a tag is not clickable. Not for long text.</p>
+              <h3 class="docs-guide__title" id="h-c-tag-how">How it works</h3>
+              <p>Inline spans with a colour modifier. Colour carries no meaning on its own: the text says it, and the dot variant adds a shape.</p>
+              <h3 class="docs-guide__title" id="h-c-tag-content">Content guidance</h3>
+              <p>One or two words, sentence case. "Running", "Degraded", never only a colour name.</p>
+              <h3 class="docs-guide__title" id="h-c-tag-keyboard">Keyboard and ARIA</h3>
+              <p>Not interactive, so not focusable. A count badge needs context in the text next to it for screen readers.</p>
+              <h3 class="docs-guide__title" id="h-c-tag-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-avatar" aria-labelledby="c-avatar-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-avatar-title">Avatar</h2>
+            <code class="docs-demo__file">components/avatar.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-row">
+              <span class="cai-avatar cai-avatar--sm" role="img" aria-label="Ana Belén, small">AB</span>
+              <span class="cai-avatar cai-avatar--md" role="img" aria-label="Carlos Díaz, medium">CD</span>
+              <span class="cai-avatar cai-avatar--lg" role="img" aria-label="Eva Flores, large">EF</span>
+            </div>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-avatar-when">When to use</h3>
+              <p>To identify a person or account with initials where space is tight.</p>
+              <h3 class="docs-guide__title" id="h-c-avatar-when-not">When not to use</h3>
+              <p>When the name is already shown next to it and the avatar adds nothing: hide it from assistive technology instead.</p>
+              <h3 class="docs-guide__title" id="h-c-avatar-how">How it works</h3>
+              <p>A span with role="img" and an aria-label holding the full name, in three sizes.</p>
+              <h3 class="docs-guide__title" id="h-c-avatar-content">Content guidance</h3>
+              <p>Initials in capitals. The accessible name is the real name, not the initials.</p>
+              <h3 class="docs-guide__title" id="h-c-avatar-keyboard">Keyboard and ARIA</h3>
+              <p>Not interactive.</p>
+              <h3 class="docs-guide__title" id="h-c-avatar-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-progress" aria-labelledby="c-progress-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-progress-title">Progress</h2>
+            <code class="docs-demo__file">components/progress.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <progress class="cai-progress" value="25" max="100" aria-label="Upload, 25%"></progress>
+            <progress class="cai-progress" value="67" max="100" aria-label="Build, 67%"></progress>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-progress-when">When to use</h3>
+              <p>To show how far a task that takes time has got.</p>
+              <h3 class="docs-guide__title" id="h-c-progress-when-not">When not to use</h3>
+              <p>For a score or a measure within a known range: use a meter. Do not use it as a decorative bar.</p>
+              <h3 class="docs-guide__title" id="h-c-progress-how">How it works</h3>
+              <p>The native progress element. The browser exposes the role and the value. No value attribute means indeterminate.</p>
+              <h3 class="docs-guide__title" id="h-c-progress-content">Content guidance</h3>
+              <p>Name it with the figure: "Upload, 25%". Say what is happening, not just the number.</p>
+              <h3 class="docs-guide__title" id="h-c-progress-keyboard">Keyboard and ARIA</h3>
+              <p>Not interactive. Announce completion in a polite live region.</p>
+              <h3 class="docs-guide__title" id="h-c-progress-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-tooltip" aria-labelledby="c-tooltip-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-tooltip-title">Tooltip</h2>
+            <code class="docs-demo__file">components/tooltip.css</code>
+          </div>
+          <div class="docs-demo__stage docs-demo__stage--tooltip">
+            <div class="cai-tooltip">
+              <button class="cai-btn cai-btn--outline cai-btn--sm" type="button" aria-describedby="tooltip-demo">Hover or focus me</button>
+              <div class="cai-tooltip__text" role="tooltip" id="tooltip-demo">Tooltip content</div>
+            </div>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-tooltip-when">When to use</h3>
+              <p>To explain a control whose label is not enough, in a sentence at most.</p>
+              <h3 class="docs-guide__title" id="h-c-tooltip-when-not">When not to use</h3>
+              <p>For anything essential, long or interactive. On touch devices there is no hover: put important text on the page.</p>
+              <h3 class="docs-guide__title" id="h-c-tooltip-how">How it works</h3>
+              <p>CSS only: it opens on hover and on keyboard focus, and stays open while the pointer is over it (WCAG 1.4.13, hoverable).</p>
+              <h3 class="docs-guide__title" id="h-c-tooltip-content">Content guidance</h3>
+              <p>One short sentence, no links. The control keeps its own accessible name.</p>
+              <h3 class="docs-guide__title" id="h-c-tooltip-keyboard">Keyboard and ARIA</h3>
+              <p>Opens when the control receives focus, closes when it loses focus. The Escape key does not close it.</p>
+              <h3 class="docs-guide__title" id="h-c-tooltip-issues">Known issues</h3>
+              <p>Partial WCAG 1.4.13: the tooltip cannot be dismissed with Escape without moving focus or the pointer. Keep tooltips non-essential.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-card" aria-labelledby="c-card-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-card-title">Card</h2>
+            <code class="docs-demo__file">components/card.css</code>
+          </div>
+          <div class="docs-demo__stage o-grid docs-cols-2">
+            <div class="cai-card">
+              <p class="cai-card__title">API gateway</p>
+              <p class="cai-card__body">1,204 requests per minute.</p>
+            </div>
+            <div class="cai-card">
+              <p class="cai-card__title">Database</p>
+              <p class="cai-card__body">48 active connections.</p>
+            </div>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-card-when">When to use</h3>
+              <p>To group a small set of related facts that read as one unit.</p>
+              <h3 class="docs-guide__title" id="h-c-card-when-not">When not to use</h3>
+              <p>Do not nest cards. Do not make the whole card a click target with a script: link the title instead.</p>
+              <h3 class="docs-guide__title" id="h-c-card-how">How it works</h3>
+              <p>A container with a title and a body. Pick the heading level that fits the page outline.</p>
+              <h3 class="docs-guide__title" id="h-c-card-content">Content guidance</h3>
+              <p>A short noun title, then one or two lines. No full stops on titles.</p>
+              <h3 class="docs-guide__title" id="h-c-card-keyboard">Keyboard and ARIA</h3>
+              <p>Not interactive. A link inside it follows the normal link rules.</p>
+              <h3 class="docs-guide__title" id="h-c-card-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-figure" aria-labelledby="c-figure-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-figure-title">Figure</h2>
+            <code class="docs-demo__file">components/figure.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <figure class="cai-figure u-mb-0">
+              <div class="cai-figure__media">
+                <svg viewBox="0 0 320 96" role="img" aria-label="Bar chart with six rising bars" fill="currentColor">
+                  <rect x="8" y="64" width="40" height="32"/>
+                  <rect x="60" y="52" width="40" height="44"/>
+                  <rect x="112" y="40" width="40" height="56"/>
+                  <rect x="164" y="30" width="40" height="66"/>
+                  <rect x="216" y="16" width="40" height="80"/>
+                  <rect x="268" y="4" width="40" height="92"/>
+                </svg>
+              </div>
+              <figcaption class="cai-figure__caption">Requests per day, last six days.</figcaption>
+            </figure>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-figure-when">When to use</h3>
+              <p>To show a chart, image or diagram with a caption.</p>
+              <h3 class="docs-guide__title" id="h-c-figure-when-not">When not to use</h3>
+              <p>For decoration. A decorative image gets an empty alt and no figure.</p>
+              <h3 class="docs-guide__title" id="h-c-figure-how">How it works</h3>
+              <p>A native figure with a figcaption. The media needs a text alternative; a chart needs its data as text or a table.</p>
+              <h3 class="docs-guide__title" id="h-c-figure-content">Content guidance</h3>
+              <p>The caption says what the figure shows and for what period or scope.</p>
+              <h3 class="docs-guide__title" id="h-c-figure-keyboard">Keyboard and ARIA</h3>
+              <p>Not interactive.</p>
+              <h3 class="docs-guide__title" id="h-c-figure-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="c-table" aria-labelledby="c-table-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-table-title">Table</h2>
+            <code class="docs-demo__file">components/table.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-table-wrap" role="region" aria-label="Service status" tabindex="0">
+              <table class="cai-table cai-table--sticky-col">
+                <caption>Service status</caption>
+                <thead>
+                  <tr><th scope="col">Service</th><th scope="col">Status</th><th scope="col">CPU</th><th scope="col">Region</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Service">api-gateway</td><td data-label="Status"><span class="cai-tag cai-tag--green cai-tag--dot">Running</span></td><td data-label="CPU">12%</td><td data-label="Region">eu-west-1</td></tr>
+                  <tr><td data-label="Service">data-pipeline</td><td data-label="Status"><span class="cai-tag cai-tag--yellow cai-tag--dot">Degraded</span></td><td data-label="CPU">78%</td><td data-label="Region">us-east-1</td></tr>
+                  <tr><td data-label="Service">mailer</td><td data-label="Status"><span class="cai-tag cai-tag--red cai-tag--dot">Stopped</span></td><td data-label="CPU">0%</td><td data-label="Region">eu-west-1</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p class="docs-demo__note">Below 480px of container width each row becomes a card.</p>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-table-when">When to use</h3>
+              <p>To compare records across several attributes.</p>
+              <h3 class="docs-guide__title" id="h-c-table-when-not">When not to use</h3>
+              <p>For layout. For a short list of one attribute, use a list.</p>
+              <h3 class="docs-guide__title" id="h-c-table-how">How it works</h3>
+              <p>A native table with caption, thead and th scope. In a wrapper that scrolls and can take focus. Below 480px of container width each row becomes a card, using data-label.</p>
+              <h3 class="docs-guide__title" id="h-c-table-content">Content guidance</h3>
+              <p>Column headings are short nouns. The caption names the table. Put units in the heading, not in every cell.</p>
+              <h3 class="docs-guide__title" id="h-c-table-keyboard">Keyboard and ARIA</h3>
+              <p>The scroll region is focusable so keyboard users can scroll it with the arrow keys. Sticky first column keeps the row name in view.</p>
+              <h3 class="docs-guide__title" id="h-c-table-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="c-code" aria-labelledby="c-code-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-code-title">Code</h2>
+            <code class="docs-demo__file">components/code.css</code>
+            <span class="cai-tag cai-tag--purple">JS: highlight.js</span>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-grid docs-cols-3">
+              <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="CSS example"><code>.panel {
+  padding: var(--cai-space-05);
+  color: var(--cai-text-primary);
+  background: var(--cai-layer-01);
+}</code></pre>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="HTML example"><code>&lt;button
+  class=&quot;cai-btn cai-btn--primary&quot;
+  type=&quot;button&quot;&gt;
+  Save changes
+&lt;/button&gt;</code></pre>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="JavaScript example"><code>import { MidiPlayer }
+  from &quot;@cai-ds/core/midi&quot;;
+
+const player = await MidiPlayer.load(url);
+player.play();</code></pre>
+            </div>
+            <p>Inline code looks like <code class="cai-code-inline">var(--cai-text-primary)</code> inside a sentence.</p>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-code-when">When to use</h3>
+              <p>To show code or terminal output the reader may copy.</p>
+              <h3 class="docs-guide__title" id="h-c-code-when-not">When not to use</h3>
+              <p>For long files; link to the source instead.</p>
+              <h3 class="docs-guide__title" id="h-c-code-how">How it works</h3>
+              <p>A pre with a code element. Highlighting is an enhancement: without JavaScript the block is plain, readable text.</p>
+              <h3 class="docs-guide__title" id="h-c-code-content">Content guidance</h3>
+              <p>Label the language with data-lang and name the block with aria-label.</p>
+              <h3 class="docs-guide__title" id="h-c-code-keyboard">Keyboard and ARIA</h3>
+              <p>The block is focusable (tabindex 0) so it can be scrolled with the keyboard.</p>
+              <h3 class="docs-guide__title" id="h-c-code-issues">Known issues</h3>
+              <p>Syntax colours are decoration; the code is not read differently by assistive technology.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-icons" aria-labelledby="c-icons-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-icons-title">Icon grid</h2>
+            <code class="docs-demo__file">components/icon-grid.css</code>
+            <span class="cai-tag cai-tag--purple">JS: clipboard.js</span>
+          </div>
+          <div class="docs-demo__stage">
+            <ul class="cai-icon-grid">
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-plus">Plus</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-plus-copy" aria-labelledby="c-icons-plus-copy c-icons-plus" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-check">Check</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-check-copy" aria-labelledby="c-icons-check-copy c-icons-check" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12l5 5 9-10&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-arrow">Arrow</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-arrow-copy" aria-labelledby="c-icons-arrow-copy c-icons-arrow" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-close">Close</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-close-copy" aria-labelledby="c-icons-close-copy c-icons-close" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+            </ul>
+          </div>
+          <p class="docs-demo__note">Each icon has a button that copies its SVG. CAI ships the grid, not an icon set: these four are local to this page.</p>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-icons-when">When to use</h3>
+              <p>To let readers browse and copy a set of icons.</p>
+              <h3 class="docs-guide__title" id="h-c-icons-when-not">When not to use</h3>
+              <p>Do not use icons as the only label of an action.</p>
+              <h3 class="docs-guide__title" id="h-c-icons-how">How it works</h3>
+              <p>A list of icons. Each item shows the icon, its name and a native copy button with the SVG in data-copy. Without JavaScript the copy buttons are hidden and the list still shows every icon and name. CAI ships the grid, not an icon set.</p>
+              <h3 class="docs-guide__title" id="h-c-icons-content">Content guidance</h3>
+              <p>Each item shows the icon name in text. Decorative icons are aria-hidden.</p>
+              <h3 class="docs-guide__title" id="h-c-icons-keyboard">Keyboard and ARIA</h3>
+              <p>Tab to a copy button, Enter or Space to copy. Each button is named by its own text and the icon name (aria-labelledby), for example "Copy SVG Plus". The result is announced in a polite live region.</p>
+              <h3 class="docs-guide__title" id="h-c-icons-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo" id="c-alert" aria-labelledby="c-alert-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-alert-title">Alert</h2>
+            <code class="docs-demo__file">components/alert.css</code>
+          </div>
+          <div class="docs-demo__stage docs-demo__stage--flush">
+            <div class="cai-alert cai-alert--info">
+              <div class="cai-alert__icon" aria-hidden="true">i</div>
+              <div>
+                <div class="cai-alert__title">Information</div>
+                <div class="cai-alert__body">A new version is available.</div>
+              </div>
+            </div>
+            <div class="cai-alert cai-alert--success">
+              <div class="cai-alert__icon" aria-hidden="true">✓</div>
+              <div>
+                <div class="cai-alert__title">Success</div>
+                <div class="cai-alert__body">Deployment completed.</div>
+              </div>
+            </div>
+            <div class="cai-alert cai-alert--warning">
+              <div class="cai-alert__icon" aria-hidden="true">!</div>
+              <div>
+                <div class="cai-alert__title">Warning</div>
+                <div class="cai-alert__body">Storage is almost full.</div>
+              </div>
+            </div>
+            <div class="cai-alert cai-alert--error">
+              <div class="cai-alert__icon" aria-hidden="true">×</div>
+              <div>
+                <div class="cai-alert__title">Error</div>
+                <div class="cai-alert__body">The build failed.</div>
+              </div>
+            </div>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-alert-when">When to use</h3>
+              <p>To tell the reader about a state that matters on the page: information, success, warning, error.</p>
+              <h3 class="docs-guide__title" id="h-c-alert-when-not">When not to use</h3>
+              <p>For a message that must interrupt: use a dialog. Do not stack more than one or two alerts.</p>
+              <h3 class="docs-guide__title" id="h-c-alert-how">How it works</h3>
+              <p>A block with an icon, a title and a body. The type is written in the title, not only in the colour.</p>
+              <h3 class="docs-guide__title" id="h-c-alert-content">Content guidance</h3>
+              <p>Say what happened and what to do next. "The build failed. Check the log and run it again."</p>
+              <h3 class="docs-guide__title" id="h-c-alert-keyboard">Keyboard and ARIA</h3>
+              <p>Not interactive. If it appears after an action, put it in a live region (role="status" or role="alert") so it is announced.</p>
+              <h3 class="docs-guide__title" id="h-c-alert-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-toast" aria-labelledby="c-toast-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-toast-title">Toast</h2>
+            <code class="docs-demo__file">components/toast.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-toast" role="status">
+              <div class="cai-toast__content">
+                <div class="cai-toast__kind">SUCCESS</div>
+                <div class="cai-toast__msg">File exported successfully.</div>
+              </div>
+              <button class="cai-toast__close" type="button" aria-label="Dismiss notification">×</button>
+            </div>
+          </div>
+          <p class="docs-demo__note">A static specimen: CAI styles the toast and leaves placement and timing to you.</p>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-toast-when">When to use</h3>
+              <p>To confirm a low-stakes result that needs no reply, such as "Draft saved".</p>
+              <h3 class="docs-guide__title" id="h-c-toast-when-not">When not to use</h3>
+              <p>For errors the reader must act on, or anything they might miss: toasts disappear.</p>
+              <h3 class="docs-guide__title" id="h-c-toast-how">How it works</h3>
+              <p>A styled block with a close button. CAI leaves placement and timing to you; if it fades, give it at least 5 seconds and let it be paused.</p>
+              <h3 class="docs-guide__title" id="h-c-toast-content">Content guidance</h3>
+              <p>Past tense, one short line. No actions inside it.</p>
+              <h3 class="docs-guide__title" id="h-c-toast-keyboard">Keyboard and ARIA</h3>
+              <p>The close button is reachable with Tab. Announce the toast in a polite live region.</p>
+              <h3 class="docs-guide__title" id="h-c-toast-issues">Known issues</h3>
+              <p>CAI ships the look only: the live region and the timer are the consumer's job.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-modal" aria-labelledby="c-modal-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-modal-title">Modal</h2>
+            <code class="docs-demo__file">components/modal.css</code>
+            <span class="cai-tag cai-tag--purple">JS: modal.js</span>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-row">
+              <button class="cai-btn cai-btn--primary" type="button" commandfor="docs-modal" command="show-modal">Open modal</button>
+            </div>
+            <dialog class="cai-modal" id="docs-modal" aria-labelledby="docs-modal-title">
+              <div class="cai-modal__header">
+                <button class="cai-modal__close" commandfor="docs-modal" command="close" aria-label="Close dialog" type="button">×</button>
+                <h2 class="cai-modal__title" id="docs-modal-title">Confirm action</h2>
+              </div>
+              <div class="cai-modal__body">
+                <p>This action cannot be undone. Continue?</p>
+              </div>
+              <div class="cai-modal__footer">
+                <button class="cai-btn cai-btn--ghost" commandfor="docs-modal" command="close" type="button">Cancel</button>
+                <button class="cai-btn cai-btn--primary" commandfor="docs-modal" command="close" type="button">Confirm</button>
+              </div>
+            </dialog>
+          </div>
+          <p class="docs-demo__note">A native <code class="cai-code-inline">&lt;dialog&gt;</code>: Esc closes it and focus returns to the button.</p>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-modal-when">When to use</h3>
+              <p>To ask for a decision or short input that must be settled before the reader continues.</p>
+              <h3 class="docs-guide__title" id="h-c-modal-when-not">When not to use</h3>
+              <p>For information the reader can ignore: use an alert. Do not open one on page load.</p>
+              <h3 class="docs-guide__title" id="h-c-modal-how">How it works</h3>
+              <p>A native dialog opened with showModal(). Buttons use command="show-modal" and command="close" with commandfor; a small script supplies those in browsers without them.</p>
+              <h3 class="docs-guide__title" id="h-c-modal-content">Content guidance</h3>
+              <p>The title names the decision: "Delete this draft". Buttons repeat the action: "Delete draft" and "Cancel", never "OK".</p>
+              <h3 class="docs-guide__title" id="h-c-modal-keyboard">Keyboard and ARIA</h3>
+              <p>The browser traps focus, Escape closes it and focus returns to the opener. Give the dialog aria-labelledby.</p>
+              <h3 class="docs-guide__title" id="h-c-modal-issues">Known issues</h3>
+              <p>command and commandfor are not yet in every supported browser: without them and without JavaScript the open button does nothing.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo" id="c-tabs" aria-labelledby="c-tabs-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-tabs-title">Tabs</h2>
+            <code class="docs-demo__file">components/tabs.css</code>
+            <span class="cai-tag cai-tag--purple">JS: tabs.js</span>
+          </div>
+          <div class="docs-demo__stage docs-demo__stage--flush">
+            <nav class="cai-tabs" aria-label="Tabs demo">
+              <a class="cai-tab is-active" id="tab-summary" href="#panel-summary">Summary</a>
+              <a class="cai-tab" id="tab-settings" href="#panel-settings">Settings</a>
+              <a class="cai-tab" id="tab-logs" href="#panel-logs">Logs</a>
+            </nav>
+            <div class="cai-tabpanel" id="panel-summary"><p>Three services are running.</p></div>
+            <div class="cai-tabpanel" id="panel-settings"><p>Deploys run on every push.</p></div>
+            <div class="cai-tabpanel" id="panel-logs"><p>No errors in the last hour.</p></div>
+          </div>
+          <p class="docs-demo__note">Arrow keys, Home and End move between tabs.</p>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-tabs-when">When to use</h3>
+              <p>To switch between panels of the same level that the reader will not compare side by side.</p>
+              <h3 class="docs-guide__title" id="h-c-tabs-when-not">When not to use</h3>
+              <p>For navigation between pages, or for content the reader needs all at once.</p>
+              <h3 class="docs-guide__title" id="h-c-tabs-how">How it works</h3>
+              <p>Without JavaScript: links to panels that are all visible. With it: the ARIA tabs pattern, added by the script, with roving tabindex.</p>
+              <h3 class="docs-guide__title" id="h-c-tabs-content">Content guidance</h3>
+              <p>Labels are one or two words that name the panel.</p>
+              <h3 class="docs-guide__title" id="h-c-tabs-keyboard">Keyboard and ARIA</h3>
+              <p>Tab moves into the tab list; arrow keys move between tabs; Home and End go to the first and last; Tab leaves to the panel.</p>
+              <h3 class="docs-guide__title" id="h-c-tabs-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo" id="c-breadcrumb" aria-labelledby="c-breadcrumb-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-breadcrumb-title">Breadcrumb</h2>
+            <code class="docs-demo__file">components/breadcrumb.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <nav aria-label="Breadcrumb demo">
+              <div class="cai-breadcrumb">
+                <a class="cai-breadcrumb__item" href="#core">Core</a>
+                <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
+                <a class="cai-breadcrumb__item" href="#core">Core</a>
+                <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
+                <span class="cai-breadcrumb__item" aria-current="page">Breadcrumb</span>
+              </div>
+            </nav>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-breadcrumb-when">When to use</h3>
+              <p>To show where the page sits in a hierarchy of three or more levels.</p>
+              <h3 class="docs-guide__title" id="h-c-breadcrumb-when-not">When not to use</h3>
+              <p>On a flat site, or as the only way to navigate.</p>
+              <h3 class="docs-guide__title" id="h-c-breadcrumb-how">How it works</h3>
+              <p>A nav landmark with links and separators. The last item is the current page with aria-current="page".</p>
+              <h3 class="docs-guide__title" id="h-c-breadcrumb-content">Content guidance</h3>
+              <p>Use the page titles. Do not repeat the current page as a link.</p>
+              <h3 class="docs-guide__title" id="h-c-breadcrumb-keyboard">Keyboard and ARIA</h3>
+              <p>Each ancestor is a normal link in the tab order.</p>
+              <h3 class="docs-guide__title" id="h-c-breadcrumb-issues">Known issues</h3>
+              <p>None known.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="c-sidebar" aria-labelledby="c-sidebar-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-sidebar-title">Sidebar</h2>
+            <code class="docs-demo__file">components/sidebar.css</code>
+          </div>
+          <div class="docs-demo__stage docs-sidebar-demo">
+            <nav class="cai-sidebar" aria-label="Sidebar specimen">
+              <div class="cai-sidebar__brand">
+                <div class="cai-sidebar__brand-name">
+                  <span class="cai-sidebar__logo" aria-hidden="true">C</span>
+                  CAI
+                </div>
+                <div class="cai-sidebar__version">v3.0.0</div>
+              </div>
+              <div class="cai-sidebar__section">
+                <div class="cai-sidebar__section-label">System</div>
+                <a class="cai-sidebar__link is-active" href="#tokens" aria-current="true">Tokens</a>
+                <a class="cai-sidebar__link" href="#core">Core</a>
+                <a class="cai-sidebar__link" href="#platform">Platform</a>
+              </div>
+              <div class="cai-sidebar__footer" id="c-theme-switcher">
+                <fieldset class="cai-theme-switcher" disabled>
+                  <legend class="cai-theme-switcher__label">Color mode (specimen)</legend>
+                  <label class="cai-theme-btn" data-theme="light"><input class="cai-theme-btn__input" type="radio" name="cai-theme-specimen" value="light" checked>Light</label>
+                  <label class="cai-theme-btn" data-theme="dark"><input class="cai-theme-btn__input" type="radio" name="cai-theme-specimen" value="dark">Dark</label>
+                  <label class="cai-theme-btn" data-theme="high-contrast"><input class="cai-theme-btn__input" type="radio" name="cai-theme-specimen" value="high-contrast">High contrast</label>
+                </fieldset>
+              </div>
+            </nav>
+            <div class="docs-demo__stage">
+              <div class="o-row">
+                <button class="cai-nav-toggle" type="button" aria-label="Navigation toggle (specimen)" disabled>
+                  <span class="cai-nav-toggle__bar"></span>
+                  <span class="cai-nav-toggle__bar"></span>
+                  <span class="cai-nav-toggle__bar"></span>
+                </button>
+                <code class="docs-demo__file">.cai-nav-toggle</code>
+              </div>
+              <p class="docs-demo__note">On small screens the sidebar becomes a drawer. <a href="#docs-nav">This page's navigation uses it live</a>.</p>
+              <h3 class="docs-demo__title">Color mode switcher</h3>
+              <code class="docs-demo__file">components/theme-switcher.css</code>
+              <p class="docs-demo__note">A native radio group for the color mode. This specimen is disabled; the working one is at the foot of <a href="#docs-nav">this page's navigation</a>, and it works without JavaScript.</p>
+            </div>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-sidebar-when">When to use</h3>
+              <p>For the main navigation of a documentation or app shell with many sections.</p>
+              <h3 class="docs-guide__title" id="h-c-sidebar-when-not">When not to use</h3>
+              <p>For a short list of pages: a header navigation is simpler.</p>
+              <h3 class="docs-guide__title" id="h-c-sidebar-how">How it works</h3>
+              <p>A nav landmark. On small screens it is a native popover drawer opened by a button with popovertarget. The color-mode switcher is a native radio group; checking a radio sets the mode, even without JavaScript.</p>
+              <h3 class="docs-guide__title" id="h-c-sidebar-content">Content guidance</h3>
+              <p>Section labels are nouns. The switcher is called "Color mode".</p>
+              <h3 class="docs-guide__title" id="h-c-sidebar-keyboard">Keyboard and ARIA</h3>
+              <p>Escape and a click outside close the drawer; focus returns to the button. Arrow keys move between the mode radios.</p>
+              <h3 class="docs-guide__title" id="h-c-sidebar-issues">Known issues</h3>
+              <p>Without the popover API the navigation stays visible above the content. A stored color mode can flash once on load, because no inline script sets it.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo docs-demo--wide" id="c-player" aria-labelledby="c-player-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-player-title">Player</h2>
+            <code class="docs-demo__file">components/player.css</code>
+            <span class="cai-tag cai-tag--purple">JS: player.js</span>
+          </div>
+          <div class="docs-demo__stage o-grid docs-cols-2">
+            <div class="cai-player" data-type="video" role="group" aria-label="Video player">
+              <div class="cai-player-media-wrap is-paused">
+                <video class="cai-player-video" preload="metadata" controls playsinline aria-label="The Earth at night, rotating. No sound.">
+                  <source src="../assets/video-CdxnVEqE.mp4" type="video/mp4">
+                </video>
+                <div class="cai-player-overlay" aria-hidden="true">
+                  <svg class="cai-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+                </div>
+              </div>
+              <div class="cai-player-controls">
+                <div class="cai-player-progress-row">
+                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                  </button>
+                  <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek video">
+                </div>
+                <div class="cai-player-btns">
+                  <span class="cai-player-time cai-player-current">0:00</span>
+                  <span class="cai-player-spacer"></span>
+                  <span class="cai-player-time cai-player-duration">0:00</span>
+                  <div class="cai-player-vol-wrap">
+                    <button class="cai-player-btn cai-player-mute" type="button" aria-label="Mute">
+                      <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                      <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                    </button>
+                    <input class="cai-player-seekbar cai-player-volbar" type="range" min="0" max="1000" step="1" value="1000" style="--cai-seek: 100%" aria-label="Video volume">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="docs-demo__stage">
+              <div class="cai-player" data-type="audio" role="group" aria-label="Audio player">
+                <audio class="cai-player-audio" preload="none" controls>
+                  <source src="../assets/audio-ChPxQzX6.mp3" type="audio/mpeg">
+                </audio>
+                <div class="cai-player-controls cai-player-controls--audio">
+                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                  </button>
+                  <div class="cai-player-progress-row cai-player-progress-row--audio">
+                    <span class="cai-player-time cai-player-current">0:00</span>
+                    <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek audio">
+                    <span class="cai-player-time cai-player-duration">0:00</span>
+                  </div>
+                </div>
+              </div>
+              <p class="docs-demo__note">Audio, MP3. Nothing is downloaded until you press play.</p>
+
+              <!-- data-src is set by landing.js (the build does not rewrite data-* URLs) -->
+              <div class="cai-player" data-type="midi" role="group" aria-label="MIDI player">
+                <p class="cai-player-fallback">MIDI playback needs JavaScript.</p>
+                <div class="cai-player-controls cai-player-controls--audio">
+                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play" disabled>
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                  </button>
+                  <div class="cai-player-progress-row cai-player-progress-row--audio">
+                    <span class="cai-player-time cai-player-current">0:00</span>
+                    <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek MIDI">
+                    <span class="cai-player-time cai-player-duration">0:00</span>
+                  </div>
+                  <span class="cai-player-midi-status"></span>
+                </div>
+              </div>
+              <p class="docs-demo__note">MIDI, parsed and played with Web Audio by <code class="cai-code-inline">midi.js</code>, which loads only when a MIDI player is on the page.</p>
+            </div>
+          </div>
+          <div class="docs-guide">
+              <h3 class="docs-guide__title" id="h-c-player-when">When to use</h3>
+              <p>To play video, audio or a MIDI file in the page.</p>
+              <h3 class="docs-guide__title" id="h-c-player-when-not">When not to use</h3>
+              <p>Do not autoplay. Do not use it for background media.</p>
+              <h3 class="docs-guide__title" id="h-c-player-how">How it works</h3>
+              <p>Without JavaScript the native controls of the audio and video element are shown. The script replaces them with the CAI controls; seek and volume are native range inputs. MIDI needs JavaScript and Web Audio.</p>
+              <h3 class="docs-guide__title" id="h-c-player-content">Content guidance</h3>
+              <p>Name each player with aria-label and give video a text alternative or a transcript.</p>
+              <h3 class="docs-guide__title" id="h-c-player-keyboard">Keyboard and ARIA</h3>
+              <p>Space or K plays and pauses, M mutes, F goes full screen on video. The sliders take arrow keys, Home, End and Page Up and Down.</p>
+              <h3 class="docs-guide__title" id="h-c-player-issues">Known issues</h3>
+              <p>Captions and audio description depend on the media you provide. MIDI has no equivalent without JavaScript.</p>
+            </div>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo docs-demo--wide" id="c-animations" aria-labelledby="c-animations-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-animations-title">Keyframes</h2>
+            <code class="docs-demo__file">components/_animations.css</code>
+          </div>
+          <div class="docs-demo__stage docs-anim">
+            <label class="cai-toggle">
+              <input class="cai-toggle__input" type="checkbox" role="switch">
+              <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+              <span class="cai-toggle__label">Play animations</span>
+            </label>
+            <p class="docs-motion__reduced docs-demo__note">Reduced motion is on, so the animations do not run.</p>
+            <ul class="o-grid docs-cols-4 docs-anim__tiles">
+              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__spin"></span></span><code>cai-spin</code></li>
+              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__shimmer"></span></span><code>cai-shimmer</code></li>
+              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__pulse"></span></span><code>cai-pulse</code></li>
+              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__slide">Aa</span></span><code>cai-slide-up</code></li>
+            </ul>
+          </div>
+          <p class="docs-demo__note">A fifth keyframe, <code class="cai-code-inline">cai-fade-in</code>, opens the modal.</p>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo docs-demo--wide" id="c-utilities" aria-labelledby="c-utilities-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-utilities-title">Utilities</h2>
+            <code class="docs-demo__file">utilities/_utilities.css</code>
+          </div>
+          <details class="docs-fold" open data-fold-narrow>
+            <summary>All <span data-count="utilities">16</span> utility classes</summary>
+            <div class="docs-demo__stage">
+            <div class="cai-table-wrap" role="region" aria-label="Utility classes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th><th scope="col">Example</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.u-hidden</code></div></td><td data-label="Effect"><div>Removes the element from the page</div></td><td data-label="Example"><div><span class="u-hidden">Hidden</span><span class="u-text-muted">(nothing renders)</span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-sr-only</code></div></td><td data-label="Effect"><div>Visible to screen readers only</div></td><td data-label="Example"><div><span class="u-sr-only">Read by screen readers</span><span class="u-text-muted">(screen readers only)</span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-text-mono</code></div></td><td data-label="Effect"><div>Monospace font</div></td><td data-label="Example"><div><span class="u-text-mono">0123 abc</span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-text-primary</code></div></td><td data-label="Effect"><div>Primary text color</div></td><td data-label="Example"><div><span class="u-text-primary">Primary text</span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-text-muted</code></div></td><td data-label="Effect"><div>Secondary text color</div></td><td data-label="Example"><div><span class="u-text-muted">Muted text</span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-truncate</code></div></td><td data-label="Effect"><div>One line, ellipsis on overflow</div></td><td data-label="Example"><div><span class="u-truncate docs-util-narrow">A long line that gets cut</span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-flex</code></div></td><td data-label="Effect"><div>Flex container</div></td><td data-label="Example"><div><span class="u-flex"><span class="docs-box">a</span><span class="docs-box">b</span></span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-flex-center</code></div></td><td data-label="Effect"><div>Flex, centered on both axes</div></td><td data-label="Example"><div><span class="u-flex-center docs-util-frame"><span class="docs-box">a</span></span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-flex-between</code></div></td><td data-label="Effect"><div>Flex, items pushed to the ends</div></td><td data-label="Example"><div><span class="u-flex-between docs-util-frame"><span class="docs-box">a</span><span class="docs-box">b</span></span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-flex-1</code></div></td><td data-label="Effect"><div>Takes the remaining space</div></td><td data-label="Example"><div><span class="u-flex docs-util-frame"><span class="docs-box">a</span><span class="docs-box u-flex-1">flex 1</span></span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-mb-0</code> <code>.u-mb-sm</code> <code>.u-mb-md</code> <code>.u-mb-lg</code></div></td><td data-label="Effect"><div>Bottom margin: 0, 8px, 16px, 32px</div></td><td data-label="Example"><div><span class="docs-util-margins"><span class="docs-box u-mb-0">0</span><span class="docs-box u-mb-sm">sm</span><span class="docs-box u-mb-md">md</span><span class="docs-box u-mb-lg">lg</span></span></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-select-all</code></div></td><td data-label="Effect"><div>One click selects the whole text</div></td><td data-label="Example"><div><code class="u-select-all">click-selects-all</code></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.u-no-events</code></div></td><td data-label="Effect"><div>Ignores pointer events</div></td><td data-label="Example"><div><a class="u-no-events" href="#c-utilities" tabindex="-1" aria-disabled="true">Link you cannot click</a></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </details>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="c-js" aria-labelledby="c-js-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="c-js-title">JavaScript modules</h2>
+            <code class="docs-demo__file">src/*.js</code>
+          </div>
+          <details class="docs-fold" open data-fold-narrow>
+            <summary>All <span data-count="modules">11</span> JavaScript modules</summary>
+            <div class="docs-demo__stage">
+            <div class="cai-table-wrap" role="region" aria-label="JavaScript modules" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Module</th><th scope="col">What it does</th><th scope="col">Key exports</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Module"><div><code>cai.js</code></div></td><td data-label="What it does"><div>Entry: re-exports every module and initializes them all on load</div></td><td data-label="Key exports"><div>Everything below</div></td></tr>
+                  <tr><td data-label="Module"><div><code>theme.js</code></div></td><td data-label="What it does"><div>Color mode switching</div></td><td data-label="Key exports"><div><code>applyTheme</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>sidebar.js</code></div></td><td data-label="What it does"><div>Active link while scrolling, and closing the popover drawer after a link is followed</div></td><td data-label="Key exports"><div><code>initSidebar</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>clipboard.js</code></div></td><td data-label="What it does"><div>Copy with visual feedback</div></td><td data-label="Key exports"><div><code>copyToClipboard</code>, <code>initCopyButtons</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>modal.js</code></div></td><td data-label="What it does"><div>Fallback for the <code>command</code> and <code>commandfor</code> attributes in browsers without them</div></td><td data-label="Key exports"><div><code>initModals</code>, <code>supportsCommands</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>highlight.js</code></div></td><td data-label="What it does"><div>Dependency-free syntax highlight for code blocks</div></td><td data-label="Key exports"><div><code>highlightBlock</code>, <code>initHighlight</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>player.js</code></div></td><td data-label="What it does"><div>Video, audio and MIDI players with one UI</div></td><td data-label="Key exports"><div><code>mountPlayer</code>, <code>mountMidiPlayer</code>, <code>initPlayers</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>tabs.js</code></div></td><td data-label="What it does"><div>Tab activation and keyboard support</div></td><td data-label="Key exports"><div><code>activateTab</code>, <code>initTabs</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>i18n.js</code></div></td><td data-label="What it does"><div>Text the scripts write, in English and Spanish, chosen by the nearest <code>lang</code></div></td><td data-label="Key exports"><div><code>t</code>, <code>getLang</code>, <code>registerLocale</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>utils.js</code></div></td><td data-label="What it does"><div>Pure helpers</div></td><td data-label="Key exports"><div><code>formatTime</code>, <code>escapeHtml</code>, <code>calculateProgress</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>midi.js</code></div></td><td data-label="What it does"><div>MIDI parser and Web Audio scheduler, loaded on demand</div></td><td data-label="Key exports"><div><code>MidiPlayer</code></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </details>
+          <p class="docs-demo__note">Importing a single module has no side effects until you call its <code class="cai-code-inline">init</code> function.</p>
+          <p class="docs-top"><a href="#main-content">Back to top</a></p>
+        </article>
+
+      </div>
+
+
+    <section class="cai-platform-section docs-wrap" id="platform" aria-labelledby="platform-title">
+      <header class="cai-platform-page-header">
+        <p class="docs-eyebrow">Level 3 · @cai-ds/platform</p>
+        <h2 class="cai-platform-page-header__title" id="platform-title">Platform</h2>
+        <p class="cai-platform-page-header__lead">Page-level patterns built on core. <a href="../">The home page</a> is built with them: its body, main, sections, action groups and footer are all platform classes.</p>
+        <p class="docs-ref"><a href="../platform/">Platform reference</a></p>
+      </header>
+
+      <nav class="docs-toc docs-toc--inline" aria-label="Platform contents">
+        <div>
+          <p class="docs-eyebrow">Platform</p>
+          <ul>
+            <li><a href="#p-anatomy">Page anatomy</a></li>
+            <li><a href="#p-header">Page header</a></li>
+            <li><a href="#p-section">Section</a></li>
+            <li><a href="#p-actions">Actions</a></li>
+            <li><a href="#p-command">Command block</a></li>
+            <li><a href="#p-features">Feature grid</a></li>
+            <li><a href="#p-footer">Footer</a></li>
+            <li><a href="#p-image">Image</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="docs-demo-grid">
+
+        <article class="docs-demo docs-demo--wide" id="p-anatomy" aria-labelledby="p-anatomy-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="p-anatomy-title">Page anatomy</h3>
+            <code class="docs-demo__file">components/_components.css</code>
+          </div>
+          <div class="docs-demo__stage">
+            <figure class="docs-figure">
+              <div class="docs-anatomy">
+                <div class="docs-box">
+                  .cai-platform-page
+                  <div class="docs-box">.cai-platform-skip-link</div>
+                  <div class="docs-box">header</div>
+                  <div class="docs-box">
+                    .cai-platform-main
+                    <div class="docs-box">.cai-platform-section</div>
+                    <div class="docs-box">.cai-platform-section</div>
+                  </div>
+                  <div class="docs-box">.cai-platform-footer</div>
+                </div>
+              </div>
+              <div class="cai-platform-page--gradient docs-gradient-sample">.cai-platform-page--gradient</div>
+              <figcaption>Press Tab at the top of this page to see the skip link. The gradient modifier, shown above, is meant for short pages. In an app shell, <code class="cai-code-inline">.cai-platform-content</code> pads the main column beside the sidebar.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="docs-demo" id="p-header" aria-labelledby="p-header-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="p-header-title">Page header</h3>
+            <code class="docs-demo__file">.cai-platform-page-header</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-page-header u-mb-0">
+              <p class="cai-platform-page-header__title">Billing</p>
+              <p class="cai-platform-page-header__lead">Invoices, payment methods and plan limits for your workspace.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="docs-demo" id="p-section" aria-labelledby="p-section-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="p-section-title">Section</h3>
+            <code class="docs-demo__file">.cai-platform-section</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-section">
+              <div class="docs-box">Heading</div>
+              <div class="docs-box">Lead</div>
+              <div class="docs-box">Content</div>
+            </div>
+          </div>
+          <p class="docs-demo__note">Children are spaced by <code class="cai-code-inline">--cai-space-05</code>.</p>
+        </article>
+
+        <article class="docs-demo" id="p-actions" aria-labelledby="p-actions-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="p-actions-title">Actions</h3>
+            <code class="docs-demo__file">.cai-platform-actions</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-actions">
+              <button class="cai-btn cai-btn--primary" type="button">Save</button>
+              <button class="cai-btn cai-btn--outline" type="button">Preview</button>
+              <button class="cai-btn cai-btn--ghost" type="button">Cancel</button>
+            </div>
+          </div>
+          <p class="docs-demo__note">Stacks full-width at 480px and below.</p>
+        </article>
+
+        <article class="docs-demo" id="p-command" aria-labelledby="p-command-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="p-command-title">Command block</h3>
+            <code class="docs-demo__file">.cai-platform-command-block</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-command-block u-mb-0">
+              <code class="cai-platform-command-block__cmd u-select-all"><span class="cai-platform-command-block__prefix" aria-hidden="true">$ </span>npm install @cai-ds/platform</code>
+              <button class="cai-copy-btn" type="button" data-copy="npm install @cai-ds/platform" aria-label="Copy the platform install command">Copy</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="p-features" aria-labelledby="p-features-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="p-features-title">Feature grid</h3>
+            <code class="docs-demo__file">.cai-platform-feature-grid</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-feature-grid">
+              <div class="cai-card">
+                <p class="cai-card__title">Usage</p>
+                <p class="cai-card__body u-mb-0">1.2 million requests this month.</p>
+              </div>
+              <div class="cai-card">
+                <p class="cai-card__title">Team</p>
+                <p class="cai-card__body u-mb-0">Eight members, two pending invites.</p>
+              </div>
+              <div class="cai-card">
+                <p class="cai-card__title">Billing</p>
+                <p class="cai-card__body u-mb-0">Next invoice on the first of the month.</p>
+              </div>
+              <div class="cai-card">
+                <p class="cai-card__title">Security</p>
+                <p class="cai-card__body u-mb-0">Two-factor sign-in is on for everyone.</p>
+              </div>
+            </div>
+          </div>
+          <p class="docs-demo__note">Two columns, one at 768px and below.</p>
+        </article>
+
+        <article class="docs-demo docs-demo--wide" id="p-footer" aria-labelledby="p-footer-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="p-footer-title">Footer</h3>
+            <code class="docs-demo__file">.cai-platform-footer</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-footer">
+              <p class="u-text-muted">Acme Inc. · All systems normal</p>
+              <div class="cai-platform-actions">
+                <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Status</button>
+                <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Support</button>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="docs-demo" id="p-image" aria-labelledby="p-image-title">
+          <div class="docs-demo__head">
+            <h3 class="docs-demo__title" id="p-image-title">Image</h3>
+            <code class="docs-demo__file">.cai-platform-image</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-image cai-platform-image--3x2"></div>
+          </div>
+          <p class="docs-demo__note">A frame around a native <code class="cai-code-inline">&lt;picture&gt;</code>. With no image, it shows this abstract placeholder, in a night version in dark mode, without JavaScript. Ratios: 16:9, <code class="cai-code-inline">--4x3</code>, <code class="cai-code-inline">--3x2</code>, <code class="cai-code-inline">--1x1</code>, <code class="cai-code-inline">--21x9</code>, <code class="cai-code-inline">--9x16</code>. <a href="../platform/#p-image">Image guidance and markup</a>.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="docs-chapter docs-prose-chapter" id="accessibility" aria-labelledby="accessibility-title">
+      <h2 class="docs-chapter__title" id="accessibility-title">Accessibility statement</h2>
+      <p class="docs-lead">What CAI aims for, what is checked on every change, and what has not been tested. Last reviewed on 8 October 2026.</p>
       <h3 id="h-a11y-target">Target</h3>
       <p>CAI aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to. A design system cannot make a service accessible by itself: how you use the components decides the result.</p>
 
@@ -320,12 +2735,13 @@ pnpm test:unit</code></pre>
         <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, and no control that needs JavaScript is left on screen doing nothing.</li>
         <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
         <li>Forced colors: a focused button keeps a visible outline.</li>
-        <li>Contrast of the text written for the landing page, in all three modes.</li>
+        <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
+        <li>Contrast of every token pair a component draws, by a script, in the three base modes and in each mode of the shipped custom themes (minimalist and vejer).</li>
       </ul>
 
       <h3 id="h-a11y-not-tested">What has not been tested</h3>
       <ul>
-        <li>Screen readers. NVDA, JAWS, VoiceOver and TalkBack have not been used to test CAI. Nothing here says a component works with them.</li>
+        <li>Screen readers. No assistive technology has been used to test this release: NVDA, JAWS, VoiceOver, TalkBack and Orca have not been tried. Nothing here says a component works with them.</li>
         <li>Speech recognition and screen magnifier software.</li>
         <li>Zoom to 400 percent by hand. Only the 320 pixel width is measured.</li>
         <li>Research with disabled people.</li>
@@ -335,31 +2751,25 @@ pnpm test:unit</code></pre>
       <h3 id="h-a11y-known">Known issues</h3>
       <ul>
         <li>The tooltip cannot be dismissed with the Escape key. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
-        <li>The items of the icon grid are made focusable and given the button role by a script, on a div. A native button is planned.</li>
         <li>The modal buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
         <li>The MIDI player needs JavaScript and Web Audio. Without them it shows a message.</li>
-        <li>A stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
+        <li>On the Platform reference, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
+        <li>The button of the example form on the home page opens a popover that says nothing was sent; a status region repeats it for screen readers when JavaScript runs. This has not been tested with a screen reader.</li>
       </ul>
 
       <h3 id="h-a11y-report">Report a problem</h3>
       <p>If something does not work for you, <a href="https://github.com/nandovejer/cai/issues">open an issue on GitHub</a> and say what you were trying to do, the browser and the assistive technology you use.</p>
     </section>
-
-    <section class="docs-section" id="platform-link" aria-labelledby="h-platform-link">
-      <h2 class="docs-section__title" id="h-platform-link">Platform documentation</h2>
-      <div class="docs-section__subtitle">For app-shell components and copy/paste templates, use the dedicated Platform docs page.</div>
-      <div class="cai-platform-actions">
-        <a class="cai-btn cai-btn--primary" href="../platform/">Open the Platform docs</a>
-        <a class="cai-btn cai-btn--outline" href="../">Back to the home page</a>
-      </div>
-    </section>
   </main>
 
-  <footer class="cai-platform-footer o-container">
-    <p style="color: var(--cai-text-secondary); font-size: var(--cai-text-sm);">Technical docs for @cai-ds/tokens and @cai-ds/core</p>
-    <div class="cai-platform-actions">
-      <a class="cai-btn cai-btn--ghost" href="../">Home</a>
-      <a class="cai-btn cai-btn--ghost" href="../platform/">Platform Docs</a>
+  <footer class="docs-footer">
+    <div class="cai-platform-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-platform-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../platform/">Platform reference</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
     </div>
   </footer>
 

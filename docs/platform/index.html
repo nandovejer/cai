@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI Platform — Reference</title>
   <meta name="description" content="@cai-ds/platform reference: app-shell patterns, layout primitives, and installation guide.">
-  <script type="module" crossorigin src="../assets/platform/index-DDcUZ-AE.js"></script>
-  <link rel="modulepreload" crossorigin href="../assets/platform-CD9j7MVZ.js">
-  <link rel="modulepreload" crossorigin href="../assets/docs-C5XeeA6Z.js">
+  <script type="module" crossorigin src="../assets/platform/index-DikZSQ-j.js"></script>
+  <link rel="modulepreload" crossorigin href="../assets/platform-CDwzOTQ6.js">
   <link rel="modulepreload" crossorigin href="../assets/preload-helper-Dp1pzeXC.js">
-  <link rel="stylesheet" crossorigin href="../assets/platform-mMONJDB-.css">
-  <link rel="stylesheet" crossorigin href="../assets/docs-BMPtXR3X.css">
-  <link rel="stylesheet" crossorigin href="../assets/index-Cn7AKoq7.css">
+  <link rel="stylesheet" crossorigin href="../assets/platform-B6knDOqp.css">
+  <link rel="stylesheet" crossorigin href="../assets/index-CWp-AEw_.css">
 </head>
 <body class="o-shell">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -1014,7 +1012,7 @@
         <h3 class="pdocs-subsection__title">Theme + mode examples</h3>
         <pre class="cai-code-block" data-lang="html"><code>&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;light&quot;&gt;
 &lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;dark&quot;&gt;
-&lt;html data-theme=&quot;ricardoymortimer&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
+&lt;html data-theme=&quot;vejer&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
       </div>
 
       <div class="pdocs-subsection">
@@ -1161,6 +1159,16 @@
                 <td>&lt;span&gt;</td>
                 <td>Shell prefix character (<code class="cai-code-inline">$</code>, <code class="cai-code-inline">pnpm</code>, etc.). Secondary color, non-selectable.</td>
               </tr>
+              <tr>
+                <td>.cai-platform-image</td>
+                <td>&lt;div&gt;</td>
+                <td>16:9 frame around a native <code class="cai-code-inline">&lt;picture&gt;</code>. The image fills it; with no image, an abstract placeholder shows, in a night version in dark mode.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-image--4x3, --3x2, --1x1, --21x9, --9x16</td>
+                <td>&lt;div&gt;</td>
+                <td>Modifiers. Other aspect ratios, each with its own placeholder.</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1306,6 +1314,23 @@
         <p>No interaction of its own. As a direct child of <code>&lt;body&gt;</code> the native <code>&lt;footer&gt;</code> is the contentinfo landmark.</p>
         <h4 class="pdocs-guide__title" id="h-p-footer-issues">Known issues</h4>
         <p>None known.</p>
+      </article>
+
+      <article class="pdocs-subsection pdocs-guide" id="p-image" aria-labelledby="h-p-image">
+        <h3 class="pdocs-subsection__title" id="h-p-image">Image</h3>
+        <p class="pdocs-guide__classes"><code>.cai-platform-image</code>, <code>--4x3</code>, <code>--3x2</code>, <code>--1x1</code>, <code>--21x9</code>, <code>--9x16</code></p>
+        <h4 class="pdocs-guide__title" id="h-p-image-when">When to use</h4>
+        <p>To show an image in a box of fixed shape, such as a card cover or an article header, when the image may be missing: content from people or a content system, or a page built before its images exist.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-when-not">When not to use</h4>
+        <p>For an image that must keep its own shape, such as a chart or a screenshot: the frame crops it. For icons and logos: use an <code>&lt;img&gt;</code> or an SVG at its own size. Never to stand in for an image that carries information: if it is missing, say so in text.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-how">How it works</h4>
+        <p>A <code>&lt;div&gt;</code> of fixed aspect ratio, 16:9 unless a modifier sets another, around a native <code>&lt;picture&gt;</code> with AVIF and WebP sources and a JPEG <code>&lt;img&gt;</code>. The image fills the frame and is cropped to it. A frame with no image shows an abstract placeholder in the colours of the vejer theme, chosen in AVIF, WebP or JPEG with <code>image-set()</code>. In dark mode it shows a night version; high contrast keeps the day version. No JavaScript is involved. While an image loads, or if it fails, the frame shows a flat surface, and a failed image's alt text is drawn on it. Transparent PNG and SVG images sit on that surface too. Without CSS the image shows at its own size. The placeholder files ship in <code>dist/placeholders/</code>: every ratio at 640, 1280 and 1920 pixels on the long side in AVIF and WebP, at 640 and 1280 in JPEG, and two SVGs, day and night, that fit any size. Point your own <code>&lt;picture&gt;</code> at them to show the placeholder on purpose.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-content">Content guidance</h4>
+        <p>Give every real image an alt text that says what it shows, in one plain sentence. If the image is decorative or the text next to it already says the same, use <code>alt=""</code>. Never describe the placeholder: it is a background and nothing reads it out. The frame crops the image to its ratio, so keep text and essential detail away from the edges, and describe what stays visible. Set <code>width</code> and <code>height</code> on the <code>&lt;img&gt;</code> to the image's own size so the page does not jump while it loads. Add <code>loading="lazy"</code> only to images below the fold; leave it off a hero or any image visible when the page opens, so it loads at once. Do not put text in images.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-keyboard">Keyboard and ARIA</h4>
+        <p>No interaction of its own. Screen readers announce the <code>&lt;img&gt;</code> by its alt text and skip the placeholder; an empty frame announces nothing. Do not add a role or an <code>aria-label</code> to the frame. If the image is a link, the link takes its name from the alt text, so the alt text must then say where it goes.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-issues">Known issues</h4>
+        <p>In forced-colors mode browsers drop the placeholder, and the frame shows a thin border instead. If an image fails to load, some browsers add a broken-image icon next to its alt text. The night version follows a dark mode set on a page or a section, but not a light section inside a dark one.</p>
       </article>
 
     </section>
@@ -1540,6 +1565,49 @@ if (range &amp;&amp; out) {
             </article>
           </div>
         </div>
+      </div>
+
+      <div class="pdocs-subsection" id="demo-image">
+        <h3 class="pdocs-subsection__title">Image</h3>
+        <div class="pdocs-preview">
+          <div class="cai-platform-feature-grid">
+            <figure>
+              <div class="cai-platform-image">
+                <picture>
+                  <source type="image/avif" srcset="data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAG1pZjFhdmlmbWlhZgAAANZtZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAAImlsb2MAAAAAREAAAQABAAAAAAD6AAEAAAAAAAACyQAAACNpaW5mAAAAAAABAAAAFWluZmUCAAAAAAEAAGF2MDEAAAAAVmlwcnAAAAA4aXBjbwAAAAxhdjFDgUFsAAAAABRpc3BlAAAAAAAAAoAAAAFoAAAAEHBpeGkAAAAAAwwMDAAAABZpcG1hAAAAAAAAAAEAAQOBAgMAAALRbWRhdBIACgpYZif7OxoCGg3CMrgFEgADjjjhQMBnrhRJy5UKaVr1MgsyHsmMw+QYWcTjEYu1bCkZVYHatwbNtzBNu+/xnbUi4ISGEWndvohh/JLT5T/em42s+lFINQNMBcLIfo2uBPZBA88x+AJwIxGjGjNj5W2n2GL7JfZ9KifHYQsbLyNv/13HzHboloNLvnvHkQyrYEIfEV+TFNAcETlTCUgqm+UQ7yTl4f5kEUpwCtdHE0slJYf+1jkGIpHVqhc48q7L/XDy990nYq95NnRFAmpqEMzRn3M5Fp4u6X52kTrOqpAYjPWJTDafrqTy7eOl2Hb0kRQijb1Q6mhfIjpU2Ts9vKoTCO2oFn+hAYlM56Y6I3hJtxhLTGqhS9I5oJJt2Ngl/8hvHnYz129o61oIbFjKxrHsfzf3sWtiHk+4L19YwHil7J1WD6lPUKM/5UZ1yK2gV1kWIojwt5kY5h4mvBVVfeo8mQeOcr1fdCTQynfg+4FKXyR61ZcLDX/0S+Jmxb3KaMudCReGWQPoZuBE9J2BSa2xVVkPw6XQ3QnRe5pwVRnp1H6lZBsi/qfsaVNF/7uX2H4ytmLXht/fnN+Tg0sVnhIyic42XzR1bVDR+kPrDQyyaBVypjKuCqLE50GhM/lfc1fj7TL5F9+ARpqvd5lasyUnbslnIbciuaRxTARl8Jxc8BxOUt0RODlm7W71wvd5ZdfkJWXj3zc32BaZun4F9OXX3nWxVZrk/FtyCx51MZdLcfmGiAjv8Ro2nked0DAN1hPn7sx1gNCj4Dbj6Z94IXg9DeZJ9pN2wpwi1ov0UFkPeZpzcih5PXu+EQ62LVHkhU6keVMOVwPZiQ1U9d9XECcGzLBjASLG+ogSFcuqGMIIO54D6Ikdp72guZO+Cc7RLfw5ec2QeA8HTMwC20E+gUKoz8F4ATQ7A52nNyHi79xRXkIR+m0x 640w, data:image/avif;base64,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 1280w" sizes="(min-width: 768px) 50vw, 100vw">
+                  <source type="image/webp" srcset="data:image/webp;base64,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 640w, ../assets/sky-1280-DLwE0Wu6.webp 1280w" sizes="(min-width: 768px) 50vw, 100vw">
+                  <img src="../assets/sky-1280-DzbMonfi.jpg" srcset="../assets/sky-640-DiDB5hBk.jpg 640w, ../assets/sky-1280-DzbMonfi.jpg 1280w" sizes="(min-width: 768px) 50vw, 100vw" width="1280" height="720" alt="Blue sky with a few white clouds" loading="lazy" decoding="async">
+                </picture>
+              </div>
+              <figcaption>With an image</figcaption>
+            </figure>
+            <figure>
+              <div class="cai-platform-image" id="demo-image-empty"></div>
+              <figcaption>With no image: the placeholder</figcaption>
+            </figure>
+          </div>
+        </div>
+        <p>To show the placeholder on purpose, point a <code class="cai-code-inline">&lt;picture&gt;</code> at the files in <code class="cai-code-inline">dist/placeholders/</code>, named <code class="cai-code-inline">placeholder-&lt;ratio&gt;-&lt;width&gt;</code>. It is decorative, so its alt text is empty.</p>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;div class="cai-platform-image"&gt;
+  &lt;picture&gt;
+    &lt;source type="image/avif"
+      srcset="placeholders/placeholder-16x9-640.avif 640w,
+              placeholders/placeholder-16x9-1280.avif 1280w,
+              placeholders/placeholder-16x9-1920.avif 1920w"
+      sizes="(min-width: 768px) 50vw, 100vw"&gt;
+    &lt;source type="image/webp"
+      srcset="placeholders/placeholder-16x9-640.webp 640w,
+              placeholders/placeholder-16x9-1280.webp 1280w,
+              placeholders/placeholder-16x9-1920.webp 1920w"
+      sizes="(min-width: 768px) 50vw, 100vw"&gt;
+    &lt;img src="placeholders/placeholder-16x9-1280.jpg"
+      srcset="placeholders/placeholder-16x9-640.jpg 640w,
+              placeholders/placeholder-16x9-1280.jpg 1280w"
+      sizes="(min-width: 768px) 50vw, 100vw"
+      width="1280" height="720" alt="" decoding="async"&gt;
+  &lt;/picture&gt;
+&lt;/div&gt;</code></pre>
+        <p>Replace <code class="cai-code-inline">placeholders/</code> with <code class="cai-code-inline">https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/placeholders/</code>, or with the path where your bundler serves the package. Ratios: <code class="cai-code-inline">16x9</code>, <code class="cai-code-inline">4x3</code>, <code class="cai-code-inline">3x2</code>, <code class="cai-code-inline">1x1</code>, <code class="cai-code-inline">21x9</code> and <code class="cai-code-inline">9x16</code> (widths 360, 720 and 1080). JPEG stops at 1280 (720 for 9x16). For the night version, use <code class="cai-code-inline">placeholder-night-</code> instead. <code class="cai-code-inline">placeholder.svg</code> and <code class="cai-code-inline">placeholder-night.svg</code> fit any size. Add <code class="cai-code-inline">loading="lazy"</code> when the frame is below the fold.</p>
       </div>
 
       <div class="pdocs-subsection">

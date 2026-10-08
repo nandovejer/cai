@@ -30,6 +30,7 @@ const patternOf = {
   'feature-grid': 'features',
   'command-block': 'command',
   footer: 'footer',
+  image: 'image',
 };
 
 const sections = ['when', 'when-not', 'how', 'content', 'keyboard', 'issues'];

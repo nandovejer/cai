@@ -82,7 +82,7 @@ ET Book ships roman, italic, semi-bold and bold. Sans and mono are system stacks
 - `--cai-font-sans`: `system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`
 - `--cai-font-mono`: `ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace`
 
-The extra font used by one custom theme (Comic Shanns, MIT) ships with `@cai-ds/core`.
+`@cai-ds/core` ships no fonts. Its `vejer` theme sets the serif for running text through `--cai-font-body`, using this ET Book.
 
 ## License
 

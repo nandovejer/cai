@@ -1,10 +1,10 @@
 /**
  * CAI Design System — Landing page checks
- * The landing (apps/landing) is a level-3 consumer that shows the whole
- * system with the base color modes only. These tests cover the objectively
- * checkable items of its acceptance checklist, and compare the inventory it
- * renders (and the counts in its copy) against the package sources, so the
- * page cannot drift from the system.
+ * The landing (apps/landing, served at /) says what CAI is for and why to
+ * use it, and how to adopt it. It is a level-3 consumer with the base color
+ * modes only. The documentation, with every component and its guidance,
+ * lives on its own page (tests/docs.spec.js); old links to the sections that
+ * moved there still say where they went.
  * Run with: pnpm test:ui
  */
 
@@ -28,35 +28,19 @@ const lightBlock = semanticCss.slice(
 );
 const semanticTokens = [...lightBlock.matchAll(/^\s*(--cai-[\w-]+):/gm)].map((m) => m[1]);
 
-const componentFiles = readdirSync(fromRepo('packages/core/src/components')).filter(
-  (file) => file.endsWith('.css') && file !== 'index.css',
+const components = readdirSync(fromRepo('packages/core/src/components')).filter(
+  (file) => file.endsWith('.css') && file !== 'index.css' && !file.startsWith('_'),
 );
-const components = componentFiles.filter((file) => !file.startsWith('_'));
 
 const objectsCss = readFileSync(fromRepo('packages/core/src/objects/_objects.css'), 'utf-8');
 const layoutObjects = new Set([...objectsCss.matchAll(/^\.(o-[a-z]+)\b/gm)].map((m) => m[1]));
-
-const utilitiesCss = readFileSync(fromRepo('packages/core/src/utilities/_utilities.css'), 'utf-8');
-const utilities = new Set([...utilitiesCss.matchAll(/^\.(u-[a-z0-9-]+)\b/gm)].map((m) => m[1]));
-
-const jsModules = readdirSync(fromRepo('packages/core/src')).filter((file) => file.endsWith('.js'));
-
-const settingsCss = readFileSync(fromRepo('packages/core/src/settings/_settings.css'), 'utf-8');
-const settingNames = (prefix) =>
-  [...settingsCss.matchAll(new RegExp(`^\\s*(--cai-${prefix}-[\\w-]+):`, 'gm'))].map((m) => m[1]);
-
-const platformCss = readFileSync(
-  fromRepo('packages/platform/src/components/_components.css'),
-  'utf-8',
-);
-const platformClasses = [...new Set(platformCss.match(/\.cai-platform-[a-z_-]+/g))];
 
 const MODES = ['light', 'dark', 'high-contrast'];
 
 /* ---- Helpers ----------------------------------------------------------- */
 
 /** Open the landing and collect failed requests and console problems. */
-async function open(page) {
+async function open(page, path = '/') {
   const requests = [];
   const failed = [];
   const problems = [];
@@ -68,7 +52,7 @@ async function open(page) {
     if (msg.type() === 'warning' || msg.type() === 'error') problems.push(msg.text());
   });
   page.on('pageerror', (err) => problems.push(err.message));
-  await page.goto('/');
+  await page.goto(path);
   await page.waitForLoadState('networkidle');
   await page.evaluate(() => document.fonts.ready);
   return { requests, failed, problems };
@@ -93,41 +77,43 @@ test.describe('Landing page', () => {
       expect(requests.filter((url) => /\/cai(\.min)?\.js/.test(url))).toEqual([]);
     });
 
-    test('the mode switch changes data-theme and keeps both switches in sync', async ({ page }) => {
+    test('the header switcher is a native radio group in a fieldset', async ({ page }) => {
       await open(page);
+
+      const switcher = page.locator('.landing-header fieldset.cai-theme-switcher');
+      await expect(switcher).toHaveCount(1);
+      await expect(switcher.locator('legend')).toHaveText('Color mode');
+      await expect(switcher.locator('input[type="radio"][name="cai-theme"]')).toHaveCount(3);
       expect(await theme(page)).toBe('light');
 
       for (const mode of ['dark', 'high-contrast', 'light']) {
-        await page.click(`.landing-modes [data-landing-mode="${mode}"]`);
+        await page.click(`.landing-header .cai-theme-btn:has(input[value="${mode}"])`);
         expect(await theme(page)).toBe(mode);
         expect(await page.evaluate(() => document.documentElement.dataset.mode)).toBeUndefined();
-        await expect(page.locator('.landing-modes [aria-pressed="true"]')).toHaveAttribute(
-          'data-landing-mode',
-          mode,
-        );
         await expect(page.locator('input[name="cai-theme"]:checked')).toHaveValue(mode);
       }
-
-      // The sidebar specimen's buttons drive the same mode
-      await page.click('.cai-theme-btn:has(input[value="dark"])');
-      expect(await theme(page)).toBe('dark');
-      await expect(page.locator('.landing-modes [aria-pressed="true"]')).toHaveAttribute(
-        'data-landing-mode',
-        'dark',
-      );
     });
 
-    test('the chosen mode survives a reload, under its own storage key', async ({ page }) => {
+    test('the arrow keys move between the modes', async ({ page }) => {
       await open(page);
-      await page.click('.landing-modes [data-landing-mode="high-contrast"]');
 
-      expect(await page.evaluate(() => localStorage.getItem('cai-landing-mode'))).toBe(
-        'high-contrast',
-      );
-      // The docs apps read cai-theme: the landing must not touch it
+      await page.focus('.landing-header input[value="light"]');
+      await page.keyboard.press('ArrowRight');
+      expect(await theme(page)).toBe('dark');
+    });
+
+    test('the chosen mode survives a reload, under the site key', async ({ page }) => {
+      await open(page);
+      await page.click('.landing-header .cai-theme-btn:has(input[value="high-contrast"])');
+
+      expect(await page.evaluate(() => localStorage.getItem('cai-site-mode'))).toBe('high-contrast');
+      // The platform docs read cai-theme: the landing must not touch it
       expect(await page.evaluate(() => localStorage.getItem('cai-theme'))).toBeNull();
 
       await page.reload();
+      expect(await theme(page)).toBe('high-contrast');
+      // The documentation page follows the same choice
+      await page.goto('/docs/');
       expect(await theme(page)).toBe('high-contrast');
     });
 
@@ -141,17 +127,6 @@ test.describe('Landing page', () => {
         await page.emulateMedia({ colorScheme: 'light' });
         await expect.poll(() => theme(page)).toBe('light');
       });
-    });
-
-    test('a mode can be scoped to any element', async ({ page }) => {
-      await open(page);
-
-      const backgrounds = await page
-        .locator('#t-modes .landing-scope')
-        .evaluateAll((scopes) => scopes.map((el) => getComputedStyle(el).backgroundColor));
-      expect(backgrounds).toHaveLength(3);
-      // light and dark pages differ, whatever the mode of the page itself
-      expect(backgrounds[0]).not.toBe(backgrounds[1]);
     });
   });
 
@@ -172,20 +147,136 @@ test.describe('Landing page', () => {
       });
     }
 
+    test('color mode options are targets of 24px or more at 360px', async ({ page }) => {
+      await page.setViewportSize({ width: 360, height: 800 });
+      await open(page);
+
+      const boxes = await page
+        .locator('.landing-header .cai-theme-btn')
+        .evaluateAll((labels) => labels.map((el) => el.getBoundingClientRect()));
+      expect(boxes).toHaveLength(3);
+      for (const box of boxes) {
+        expect(box.width).toBeGreaterThanOrEqual(24);
+        expect(box.height).toBeGreaterThanOrEqual(24);
+      }
+    });
+
+    for (const width of [320, 360, 1280]) {
+      test(`header: the visual order follows the DOM order at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page);
+
+        const [brand, nav, modes] = await Promise.all(
+          ['.landing-header__brand', '.landing-header__nav', '.landing-header .cai-theme-switcher'].map((selector) =>
+            page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON()),
+          ),
+        );
+        const before = (a, b) => a.bottom <= b.top + 1 || (Math.abs(a.top - b.top) < a.height && a.left < b.left);
+        expect(before(brand, nav)).toBe(true);
+        expect(before(nav, modes)).toBe(true);
+      });
+    }
+
     test('content is centred at 1440px', async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 });
       await open(page);
 
       const boxes = await page.locator('.landing-wrap').evaluateAll((wraps) =>
-        wraps.map((el) => {
-          const rect = el.getBoundingClientRect();
-          return { left: rect.left, right: document.documentElement.clientWidth - rect.right };
-        }),
+        wraps
+          .filter((el) => el.checkVisibility())
+          .map((el) => {
+            const rect = el.getBoundingClientRect();
+            return { left: rect.left, right: document.documentElement.clientWidth - rect.right };
+          }),
       );
       expect(boxes.length).toBeGreaterThan(5);
       for (const { left, right } of boxes) {
         expect(left).toBeGreaterThan(100);
         expect(Math.abs(left - right)).toBeLessThanOrEqual(1);
+      }
+    });
+
+    test('the page stays short: five screens or fewer at 1280px', async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 900 });
+      await open(page);
+
+      expect(await page.evaluate(() => document.body.scrollHeight)).toBeLessThanOrEqual(5 * 1000);
+    });
+  });
+
+  test.describe('first screen', () => {
+    test('says what CAI is for, then offers one primary action', async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 900 });
+      await open(page);
+
+      await expect(page.locator('h1')).toHaveText('Build accessible websites with plain HTML and CSS');
+      const hero = page.locator('.landing-hero');
+      await expect(hero.locator('.cai-btn--primary')).toHaveCount(2); // the CTA, and the example form's button
+      await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toHaveText('Get started');
+      await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toBeInViewport();
+    });
+
+    test('the example form is real, sends nothing and says so', async ({ page }) => {
+      await open(page);
+
+      const form = page.locator('form.landing-try');
+      await expect(form).toHaveAttribute('aria-labelledby', 'try-title');
+      await expect(page.locator('#try-title')).toHaveText('Example form (nothing is sent)');
+      // Real controls: typed into and toggled, never inert
+      await page.fill('#try-name', 'my-site');
+      await page.check('#try-platform');
+      await expect(page.locator('#try-platform')).toBeChecked();
+      // No personal data is asked for or remembered
+      await expect(form.locator('#try-name')).toHaveAttribute('autocomplete', 'off');
+      // The button does not submit: it opens a native popover that says nothing was sent
+      const button = form.locator('button');
+      await expect(button).toHaveAttribute('type', 'button');
+      await expect(page.locator('#try-status')).toHaveText('');
+      await expect(page.locator('#try-status')).toHaveAttribute('role', 'status');
+      await button.click();
+      await expect(page.locator('#try-note')).toBeVisible();
+      // Repeated in the status region; the popover has no role of its own
+      await expect(page.locator('#try-status')).toHaveText('This is an example: nothing was created or sent.');
+      expect(await page.locator('#try-note').getAttribute('role')).toBeNull();
+      await expect(page.locator('#try-note')).toContainText('nothing was created or sent');
+      await page.keyboard.press('Escape');
+      await expect(page.locator('#try-note')).toBeHidden();
+      expect(new URL(page.url()).search).toBe('');
+    });
+  });
+
+  test.describe('old links to sections that moved to the docs', () => {
+    test('are hidden until targeted', async ({ page }) => {
+      await open(page);
+
+      await expect(page.locator('.landing-moved-list')).toBeHidden();
+    });
+
+    for (const id of ['c-button', 't-semantic', 'p-footer', 'core']) {
+      test(`/#${id} says where it went and links to /docs/#${id}`, async ({ page }) => {
+        await open(page, `/#${id}`);
+
+        const notice = page.locator(`#${id}.landing-moved`);
+        await expect(notice).toBeVisible();
+        await expect(notice).toBeInViewport();
+        await expect(notice.locator('a')).toHaveAttribute('href', `/docs/#${id}`);
+        await expect(page.locator('#moved-title')).toBeVisible();
+        // Only the targeted notice shows
+        await expect(page.locator('.landing-moved:visible')).toHaveCount(1);
+      });
+    }
+
+    test('every old anchor leads to an element of the docs page', async ({ page }) => {
+      await open(page);
+
+      const hrefs = await page
+        .locator('.landing-moved a')
+        .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+      expect(hrefs.length).toBeGreaterThan(40);
+      await page.goto('/docs/');
+      for (const href of hrefs) {
+        const hash = href.split('#')[1];
+        if (hash) await expect(page.locator(`[id="${hash}"]`), href).toHaveCount(1);
       }
     });
   });
@@ -295,15 +386,16 @@ test.describe('Landing page', () => {
   });
 
   test.describe('structure', () => {
-    test('exactly one h1 and no skipped heading level', async ({ page }) => {
+    test('a unique title, one h1 and no skipped heading level', async ({ page }) => {
       await open(page);
 
+      expect(await page.title()).toMatch(/^CAI: /);
       await expect(page.locator('h1')).toHaveCount(1);
       const levels = await page
         .locator('h1, h2, h3, h4, h5, h6')
         .evaluateAll((headings) =>
           headings
-            .filter((el) => el.offsetParent !== null)
+            .filter((el) => el.offsetParent !== null || el.classList.contains('u-sr-only'))
             .map((el) => ({ level: Number(el.tagName[1]), text: el.textContent.trim() })),
         );
       expect(levels[0].level).toBe(1);
@@ -338,9 +430,7 @@ test.describe('Landing page', () => {
       );
       expect(broken).toEqual([]);
     });
-  });
 
-  test.describe('inventory', () => {
     test('the counts in the copy match the packages', async ({ page }) => {
       await open(page);
 
@@ -350,8 +440,6 @@ test.describe('Landing page', () => {
         semantic: semanticTokens.length,
         components: components.length,
         objects: layoutObjects.size,
-        utilities: utilities.size,
-        modules: jsModules.length,
       };
       const counts = await page.locator('[data-count]').evaluateAll((els) =>
         els.map((el) => [el.dataset.count, Number(el.textContent)]),
@@ -360,203 +448,11 @@ test.describe('Landing page', () => {
       for (const [key, value] of counts) expect(value, key).toBe(expected[key]);
     });
 
-    test('every primitive color has a swatch', async ({ page }) => {
-      await open(page);
-
-      const shown = await page
-        .locator('#t-primitives .landing-swatch')
-        .evaluateAll((swatches) => swatches.map((el) => el.style.getPropertyValue('--v')));
-      expect(shown).toEqual(primitiveColors.map((name) => `var(${name})`));
-    });
-
-    test('every semantic token has a chip in the three modes', async ({ page }) => {
-      await open(page);
-
-      const chips = await page.locator('#t-semantic .landing-token').evaluateAll((tokens) =>
-        tokens.map((el) => ({
-          name: el.querySelector('code').textContent,
-          modes: [...el.querySelectorAll('.landing-swatch')].map((swatch) => swatch.dataset.theme),
-          values: [...el.querySelectorAll('.landing-swatch')].map((swatch) =>
-            swatch.style.getPropertyValue('--v'),
-          ),
-        })),
-      );
-      expect(chips.map((chip) => chip.name)).toEqual(semanticTokens);
-      for (const chip of chips) {
-        expect(chip.modes, chip.name).toEqual(MODES);
-        expect(new Set(chip.values), chip.name).toEqual(new Set([`var(${chip.name})`]));
-      }
-    });
-
-    test('every scale token is shown', async ({ page }) => {
-      await open(page);
-
-      const text = async (selector) => (await page.locator(selector).textContent()) ?? '';
-      const expectAll = (haystack, names) => {
-        for (const name of names) expect(haystack, name).toContain(name);
-      };
-
-      expectAll(await text('#t-spacing'), Object.keys(tokens.spacing).map((k) => `--cai-space-${k}`));
-      expectAll(await text('#t-sizing'), Object.keys(tokens.sizing).map((k) => `--cai-size-${k}`));
-      expectAll(await text('#t-type'), Object.keys(tokens.typography).map((k) => `--cai-${k}`));
-      expectAll(await text('#t-radius'), Object.keys(tokens.radius).map((k) => `--cai-radius-${k}`));
-      expectAll(await text('#t-shadow'), Object.keys(tokens.shadow).map((k) => `--cai-shadow-${k}`));
-      expectAll(await text('#c-motion'), [...settingNames('duration'), ...settingNames('easing')]);
-      expectAll(await text('#c-settings'), [...settingNames('z'), ...settingNames('bp')]);
-    });
-
-    test('tabs: arrow keys, Home and End move between tabs and show their panel', async ({ page }) => {
-      await open(page);
-
-      await page.focus('#tab-summary');
-      await expect(page.locator('#tab-summary')).toHaveAttribute('role', 'tab');
-      await page.keyboard.press('ArrowRight');
-      await expect(page.locator('#tab-settings')).toBeFocused();
-      await expect(page.locator('#tab-settings')).toHaveAttribute('aria-selected', 'true');
-      await expect(page.locator('#panel-settings')).toBeVisible();
-      await expect(page.locator('#panel-summary')).toBeHidden();
-
-      await page.keyboard.press('End');
-      await expect(page.locator('#tab-logs')).toBeFocused();
-      await page.keyboard.press('Home');
-      await expect(page.locator('#tab-summary')).toBeFocused();
-      await page.keyboard.press('ArrowLeft');
-      await expect(page.locator('#tab-logs')).toBeFocused();
-    });
-
-    test('every component has the six guidance sections', async ({ page }) => {
-      await open(page);
-
-      // One guide per core component file (red line 18 for the first two
-      // sections, SR-5 for the rest). The colour-mode switcher is documented
-      // in the sidebar guide, where it lives.
-      const guide = { 'copy-btn': 'c-copy', 'icon-grid': 'c-icons', 'theme-switcher': 'c-sidebar' };
-      const ids = [...new Set(components.map((file) => guide[file.replace('.css', '')] ?? `c-${file.replace('.css', '')}`))];
-      expect(ids.length).toBeGreaterThanOrEqual(19);
-      const sections = ['when', 'when-not', 'how', 'content', 'keyboard', 'issues'];
-      for (const id of ids) {
-        for (const section of sections) {
-          await expect(page.locator(`#h-${id}-${section}`), `${id} ${section}`).toHaveCount(1);
-        }
-        // "When to use" and "When not to use" say something: a heading
-        // followed by at least a sentence before the next heading
-        for (const section of ['when', 'when-not']) {
-          const text = await page.locator(`#h-${id}-${section}`).evaluate((heading) => {
-            let text = '';
-            for (let el = heading.nextElementSibling; el && !/^H[1-6]$/.test(el.tagName); el = el.nextElementSibling) {
-              text += el.textContent;
-            }
-            return text.trim();
-          });
-          expect(text.length, `${id} ${section} has content`).toBeGreaterThan(20);
-        }
-      }
-    });
-
-    test('every core component file has a demo', async ({ page }) => {
-      await open(page);
-
-      const files = await page.locator('#core .landing-demo__file').allTextContents();
-      for (const file of componentFiles) {
-        expect(files, file).toContain(`components/${file}`);
-      }
-      // One anchor per component (theme-switcher lives inside the sidebar demo)
-      const ids = {
-        'copy-btn': 'c-copy',
-        'icon-grid': 'c-icons',
-      };
-      for (const file of components) {
-        const name = file.replace('.css', '');
-        await expect(page.locator(`#${ids[name] ?? `c-${name}`}`)).toHaveCount(1);
-      }
-    });
-
-    test('every platform class is used or named on the page', async ({ page }) => {
-      await open(page);
-
-      const html = await page.content();
-      for (const selector of platformClasses) {
-        expect(html, selector).toContain(selector.slice(1));
-      }
-    });
-  });
-
-  test.describe('demos', () => {
-    test('the interactive demos are wired', async ({ page }) => {
-      await open(page);
-
-      // Tabs
-      await page.click('#tab-settings');
-      await expect(page.locator('#panel-settings')).toBeVisible();
-      await expect(page.locator('#panel-summary')).toBeHidden();
-
-      // Toggle drives the motion demo without extra JS
-      const dot = page.locator('#c-motion .landing-motion__dot').first();
-      const before = await dot.evaluate((el) => getComputedStyle(el).insetInlineStart);
-      await page.click('#c-motion .cai-toggle');
-      await expect(page.locator('#c-motion .cai-toggle__input')).toBeChecked();
-      await expect
-        .poll(() => dot.evaluate((el) => getComputedStyle(el).insetInlineStart))
-        .not.toBe(before);
-
-      // Modal
-      await page.click('[commandfor="landing-modal"][command="show-modal"]');
-      await expect(page.locator('#landing-modal')).toBeVisible();
-      await page.keyboard.press('Escape');
-      await expect(page.locator('#landing-modal')).toBeHidden();
-
-      // Players: the video knows its duration, the MIDI file was found and parsed
-      await expect(page.locator('.cai-player[data-type="video"] .cai-player-duration')).not.toHaveText('0:00');
-      await expect(page.locator('.cai-player[data-type="midi"] .cai-player-duration')).not.toHaveText('0:00');
-      await expect(page.locator('.cai-player[data-type="midi"] .cai-player-playpause')).toBeEnabled();
-    });
-
     test('code blocks are highlighted without an injected copy button', async ({ page }) => {
       await open(page);
 
       expect(await page.locator('pre.cai-code-block .tok-tag').count()).toBeGreaterThan(0);
       await expect(page.locator('.cai-code-block__copy')).toHaveCount(0);
-    });
-  });
-
-  test.describe('long lists fold on narrow screens', () => {
-    const folds = (page) =>
-      page.locator('details[data-fold-narrow]').evaluateAll((all) => all.map((el) => el.open));
-
-    test('open on a wide screen', async ({ page }) => {
-      await page.setViewportSize({ width: 1280, height: 800 });
-      await open(page);
-
-      expect(await folds(page)).toEqual([true, true, true]);
-    });
-
-    test('closed at 360px, and opened by the native summary', async ({ page }) => {
-      await page.setViewportSize({ width: 360, height: 800 });
-      await open(page);
-
-      expect(await folds(page)).toEqual([false, false, false]);
-      await expect(page.locator('#t-semantic .landing-token').first()).toBeHidden();
-
-      await page.click('#t-semantic summary');
-      await expect(page.locator('#t-semantic .landing-token').first()).toBeVisible();
-      await expect(page.locator('#t-semantic .landing-token')).toHaveCount(semanticTokens.length);
-      // Opening a fold does not widen the page
-      expect(
-        await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth),
-      ).toBe(0);
-    });
-
-    test('a link to a folded card still lands on that card', async ({ page }) => {
-      await page.setViewportSize({ width: 360, height: 800 });
-      await page.goto('/#c-js');
-      await page.waitForLoadState('networkidle');
-
-      // Folding shortens the page above the target: the page scrolls back to it
-      expect(await folds(page)).toEqual([false, false, false]);
-      const top = () =>
-        page.evaluate(() => Math.round(document.getElementById('c-js').getBoundingClientRect().top));
-      await expect.poll(top).toBeGreaterThanOrEqual(0);
-      await expect.poll(top).toBeLessThan(400);
     });
   });
 
@@ -572,17 +468,6 @@ test.describe('Landing page', () => {
         await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
         // Nothing is hidden waiting for a script
         await expect(page.locator('main [hidden]')).toHaveCount(0);
-        expect(
-          await page
-            .locator('details[data-fold-narrow]')
-            .evaluateAll((all) => all.every((el) => el.open)),
-        ).toBe(true);
-        await expect(page.locator('#t-semantic .landing-token').last()).toBeVisible();
-        await expect(page.locator('#c-utilities tbody tr').last()).toBeVisible();
-        for (const panel of ['#panel-summary', '#panel-settings', '#panel-logs']) {
-          await expect(page.locator(panel)).toBeVisible();
-        }
-
         // The adoption message does not depend on a script
         await expect(page.locator('#adopt .landing-level')).toHaveCount(3);
         for (const id of ['snip-l1', 'snip-l2', 'snip-l3']) {
@@ -594,6 +479,17 @@ test.describe('Landing page', () => {
         ).toBe(0);
       });
     }
+
+    test('the color mode switcher and the example form work', async ({ page }) => {
+      await page.goto('/');
+      const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+      const light = await background();
+      await page.click('.landing-header .cai-theme-btn:has(input[value="dark"])');
+      await expect.poll(background).not.toBe(light);
+
+      await page.click('form.landing-try button');
+      await expect(page.locator('#try-note')).toBeVisible();
+    });
   });
 
   test.describe('copy and accessibility of the page itself', () => {
@@ -620,33 +516,35 @@ test.describe('Landing page', () => {
       expect(offenders).toEqual([]);
     });
 
+    test('the beta and version tags are text', async ({ page }) => {
+      await open(page);
+
+      await expect(page.locator('.landing-header__brand')).toContainText('v3.0.0');
+      await expect(page.locator('.landing-header__brand')).toContainText('Beta');
+    });
+
     test('the page background is one flat color', async ({ page }) => {
       await open(page);
 
-      // The platform gradient fades to a lighter layer over the whole height
-      // of the page: on a page this long, dark mode ends up with two tones.
       expect(await page.evaluate(() => getComputedStyle(document.body).backgroundImage)).toBe(
         'none',
       );
     });
 
-    test('standalone links and specimen controls are honest targets', async ({ page }) => {
+    test('standalone links are honest targets', async ({ page }) => {
       await open(page);
 
       const heights = await page
-        .locator('.landing-ref a, .landing-level__body a, .landing-toc a, .landing-header__nav a')
+        .locator('.landing-level__body a, .landing-guides a, .landing-header__nav a')
         .evaluateAll((links) => links.map((el) => el.getBoundingClientRect().height));
-      expect(heights.length).toBeGreaterThan(40);
+      expect(heights.length).toBeGreaterThan(10);
       for (const height of heights) expect(height).toBeGreaterThanOrEqual(24);
-
-      // The navigation toggle in the sidebar specimen opens nothing: it says so
-      await expect(page.locator('.landing-demo__stage .cai-nav-toggle')).toBeDisabled();
     });
 
     for (const mode of MODES) {
       test(`landing-local text has a contrast of 4.5:1 or more in ${mode}`, async ({ page }) => {
         await page.addInitScript((value) => {
-          localStorage.setItem('cai-landing-mode', value);
+          localStorage.setItem('cai-site-mode', value);
         }, mode);
         await open(page);
         expect(await theme(page)).toBe(mode);
@@ -706,58 +604,30 @@ test.describe('Landing page', () => {
           }
           return { checked, failures: [...new Set(failures)] };
         });
-        expect(checked).toBeGreaterThan(200);
+        expect(checked).toBeGreaterThan(60);
         expect(failures).toEqual([]);
       });
     }
 
-    test('keyboard: skip link first, focus trapped in the modal and returned', async ({ page }) => {
+    test('keyboard: skip link first, then the main content', async ({ page }) => {
       await open(page);
 
       await page.keyboard.press('Tab');
       await expect(page.locator('.cai-platform-skip-link')).toBeFocused();
       await page.keyboard.press('Enter');
       await expect(page.locator('#main-content')).toBeFocused();
-
-      const trigger = page.locator('[commandfor="landing-modal"][command="show-modal"]');
-      await trigger.focus();
-      await page.keyboard.press('Enter');
-      await expect(page.locator('#landing-modal')).toBeVisible();
-      // The browser traps focus in a modal <dialog>: it may rest on the
-      // browser's own controls (body here), never on the page behind
-      for (let i = 0; i < 5; i += 1) {
-        await page.keyboard.press('Tab');
-        expect(
-          await page.evaluate(
-            () =>
-              document.activeElement === document.body ||
-              Boolean(document.activeElement.closest('#landing-modal')),
-          ),
-        ).toBe(true);
-      }
-      await page.keyboard.press('Escape');
-      await expect(trigger).toBeFocused();
-
-      // Focusable regions show a ring the page controls, in every mode
-      const region = page.locator('#c-table .cai-table-wrap');
-      await region.focus();
-      await page.keyboard.press('Shift+Tab');
-      await page.keyboard.press('Tab');
-      await expect(region).toBeFocused();
-      expect(await region.evaluate((el) => getComputedStyle(el).outlineStyle)).toBe('solid');
     });
   });
 
   test.describe('reduced motion', () => {
     test.use({ reducedMotion: 'reduce' });
 
-    test('no smooth scrolling, and the motion demos say so', async ({ page }) => {
+    test('no smooth scrolling', async ({ page }) => {
       await open(page);
 
       expect(
         await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior),
       ).toBe('auto');
-      await expect(page.locator('#c-motion .landing-motion__reduced')).toBeVisible();
     });
   });
 });

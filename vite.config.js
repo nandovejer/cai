@@ -39,8 +39,9 @@ function normalizeAppEntryRoutes(outRoot, relative) {
         let html = readFileSync(resolve(outRoot, built), "utf-8");
         if (relative) {
           html = html
-            // assets: emitted relative to apps/<app>/, i.e. two levels deep
-            .replaceAll('"../../', `"${up}`)
+            // assets: emitted relative to apps/<app>/, i.e. two levels deep,
+            // at the start of an attribute or of each srcset candidate
+            .replace(/("|,\s*)\.\.\/\.\.\//g, (_, before) => `${before}${up}`)
             // links between apps: "/", "/docs/", "/platform/", "/html/"
             .replace(/href="\/(docs\/|platform\/|html\/)?(#[^"]*)?"/g, (_, route = "", hash = "") =>
               `href="${up}${route}${hash}"`,

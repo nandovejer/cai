@@ -17,10 +17,10 @@ import { t } from "./i18n.js";
 // Color modes: luminosity variants (light/dark/high-contrast)
 export const MODES = ["light", "dark", "high-contrast"];
 // Custom themes: complete visual identities
-export const CUSTOM_THEMES = ["ricardoymortimer", "minimalist"];
+export const CUSTOM_THEMES = ["vejer", "minimalist"];
 // Default color mode for each custom theme (used when no mode is stored)
 const CUSTOM_THEME_DEFAULT_MODE = {
-  ricardoymortimer: "dark",
+  vejer: "light",
   minimalist: "light",
 };
 const ALL_THEMES = [...MODES, ...CUSTOM_THEMES];

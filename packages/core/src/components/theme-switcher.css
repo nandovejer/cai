@@ -12,7 +12,19 @@
    tokens/semantic.css re-scopes the page from the checked radio with
    :root:has(), so it works without JavaScript. */
 .cai-theme-switcher {
+  /* Colours come from the surface the switcher sits on: the page by
+     default, the sidebar inside .cai-sidebar (below). Declared here, so
+     each button's own data-theme does not re-scope them. */
+  --cai-switcher-label: var(--cai-text-secondary);
+  --cai-switcher-border: var(--cai-border-strong);
+  --cai-switcher-hover-bg: var(--cai-bg-ui-hover);
+  --cai-switcher-hover-text: var(--cai-text-primary);
+  --cai-switcher-focus: var(--cai-border-interactive);
+  --cai-switcher-on-bg: var(--cai-brand-fill);
+  --cai-switcher-on-text: var(--cai-text-on-color);
+
   display: flex;
+  flex-wrap: wrap;
   gap: var(--cai-space-02);
   border: 0;
   min-inline-size: 0;
@@ -23,7 +35,7 @@
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--cai-sidebar-label);
+  color: var(--cai-switcher-label);
   margin-bottom: var(--cai-space-03);
   display: block;
   padding: 0;
@@ -33,11 +45,11 @@
   position: relative;
   flex: 1;
   min-height: 28px;
-  border: 1px solid var(--cai-sidebar-border);
+  border: 1px solid var(--cai-switcher-border);
   background: transparent;
-  /* inherit, not var(--cai-sidebar-text): each button carries its own
-     data-theme, which re-scopes the tokens to that mode. The label must
-     follow the sidebar it sits on (2.2:1 on the light minimalist sidebar). */
+  /* inherit, not a token: each button carries its own data-theme, which
+     re-scopes the tokens to that mode. The label must follow the surface it
+     sits on (2.2:1 on the light minimalist sidebar). */
   color: inherit;
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
@@ -62,23 +74,56 @@
 }
 
 .cai-theme-btn:hover {
-  background: var(--cai-sidebar-hover);
-  color: var(--cai-sidebar-text-hover);
+  background: var(--cai-switcher-hover-bg);
+  color: var(--cai-switcher-hover-text);
 }
 
-/* The switcher sits on the sidebar surface: --cai-border-interactive is
-   black on a black sidebar in high contrast */
 .cai-theme-btn:has(.cai-theme-btn__input:focus-visible),
 .cai-theme-btn:focus-visible {
-  outline: 2px solid var(--cai-sidebar-text-hover);
+  outline: 2px solid var(--cai-switcher-focus);
   outline-offset: 2px;
 }
 
 .cai-theme-btn.is-active,
 .cai-theme-btn:has(.cai-theme-btn__input:checked) {
-  background: var(--cai-sidebar-active-bg);
-  color: var(--cai-sidebar-active-text);
-  border-color: var(--cai-sidebar-active-bg);
+  background: var(--cai-switcher-on-bg);
+  color: var(--cai-switcher-on-text);
+  border-color: var(--cai-switcher-on-bg);
+}
+
+/* Disabled (a specimen, or a mode the page cannot offer): a dashed border,
+   so the state does not rest on colour (RL-6, RL-7) */
+.cai-theme-btn:has(.cai-theme-btn__input:disabled) {
+  border-style: dashed;
+  cursor: not-allowed;
+}
+
+/* On the sidebar surface. --cai-border-interactive would be black on a
+   black sidebar in high contrast. */
+.cai-sidebar .cai-theme-switcher {
+  --cai-switcher-label: var(--cai-sidebar-label);
+  --cai-switcher-border: var(--cai-sidebar-border);
+  --cai-switcher-hover-bg: var(--cai-sidebar-hover);
+  --cai-switcher-hover-text: var(--cai-sidebar-text-hover);
+  --cai-switcher-focus: var(--cai-sidebar-text-hover);
+  --cai-switcher-on-bg: var(--cai-sidebar-active-bg);
+  --cai-switcher-on-text: var(--cai-sidebar-active-text);
+}
+
+/* Forced colors drop the backgrounds: the checked mode keeps a system
+   highlight and a thicker border, so the state is not lost. */
+@media (forced-colors: active) {
+  .cai-theme-btn {
+    border-color: ButtonText;
+  }
+
+  .cai-theme-btn.is-active,
+  .cai-theme-btn:has(.cai-theme-btn__input:checked) {
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+    border: 2px solid Highlight;
+  }
 }
 
 /* When a custom theme is active, mode buttons step back visually. A dashed

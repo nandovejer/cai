@@ -66,8 +66,8 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 1. **Check first:** is there a native HTML element or browser API that solves this? (`dialog`, `details`, `popover`, `<input type="...">`, CSS `:has()`, etc.). If so, use it as the base.
 2. Create `packages/core/src/components/<name>.css` (use the standard header of the sibling files) and add its `@import` to `packages/core/src/components/index.css` in cascade order
 3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./.claude/DIST-RULES.md)), then `node scripts/check-pack.js --update`
-4. Document it in `apps/landing/index.html` (the component showcase): a demo article with an id, and a `<details class="landing-guide">` with the six guidance headings (`h-<id>-when`, `-when-not`, `-how`, `-content`, `-keyboard`, `-issues`), then add it to the list in the "every component has the six guidance sections" test. State the no-JS behavior and any known issue in the statement in `apps/docs/index.html`
-5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/showcase.css`
+4. Document it in `apps/docs/index.html` (the single documentation page): an `<article class="docs-demo" id="c-<name>">` with an `h2` title, a live demo, and a `<div class="docs-guide">` with the six guidance headings as `h3` (`h-c-<name>-when`, `-when-not`, `-how`, `-content`, `-keyboard`, `-issues`), then a "Back to top" link. Add it to the page navigation (`#docs-nav`) and to the Core contents list, and to the old-anchor list at the end of `apps/landing/index.html`. The "every component has the six guidance sections" test in `tests/docs.spec.js` finds it from the file name. State the no-JS behavior and any known issue in the accessibility statement on the same page.
+5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/reference.css`
 
 **Before delivering anything, read [PRINCIPLES.md](./PRINCIPLES.md): its red lines are enforced by stylelint, ESLint, `pnpm check:size`, `pnpm check:strings`, `pnpm check:exceptions` and the Playwright suites (axe, no-JS, reduced motion, forced colors).**
 

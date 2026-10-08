@@ -23,7 +23,7 @@ export function formatTime(seconds) {
  */
 export function isCustomTheme(
   theme,
-  customThemes = ["ricardoymortimer", "minimalist"],
+  customThemes = ["vejer", "minimalist"],
 ) {
   return customThemes.includes(theme);
 }

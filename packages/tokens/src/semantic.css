@@ -67,11 +67,11 @@
   --cai-sidebar-logo-bg: var(--cai-blue-60);
 
   /* Status */
-  --cai-color-success: var(--cai-green-60);
+  --cai-color-success: var(--cai-green-70); /* 4.5:1 or more on every surface, layer-03 included (green-60 fell to 3.8:1) */
   --cai-color-success-bg: var(--cai-green-10);
-  --cai-color-danger: var(--cai-red-60);
+  --cai-color-danger: var(--cai-red-70); /* layer-03 included (red-60 fell to 3.8:1) */
   --cai-color-danger-bg: var(--cai-red-10);
-  --cai-color-danger-fill: var(--cai-color-danger);
+  --cai-color-danger-fill: var(--cai-red-60); /* the danger button keeps its red: white text 5:1 */
   --cai-color-warning: var(--cai-yellow-60);
   --cai-color-warning-accent: var(--cai-yellow-30);
   --cai-color-warning-bg: var(--cai-yellow-10);
@@ -80,14 +80,14 @@
 
   /* Inputs */
   --cai-input-bg: #fff;
-  --cai-input-border: var(--cai-gray-50);
+  --cai-input-border: var(--cai-gray-60); /* 3:1 or more on every surface, layer-03 included (gray-50 fell to 2.5:1) */
 
   /* Extended */
-  --cai-color-teal: var(--cai-teal-60);
+  --cai-color-teal: var(--cai-teal-70);
   --cai-color-teal-bg: var(--cai-teal-10);
-  --cai-color-purple: var(--cai-purple-60);
+  --cai-color-purple: var(--cai-purple-70);
   --cai-color-purple-bg: var(--cai-purple-10);
-  --cai-color-code: var(--cai-purple-60);
+  --cai-color-code: var(--cai-purple-70);
 }
 
 /* -------------------------------------------------------------------------
@@ -113,7 +113,7 @@
   --cai-text-primary: var(--cai-gray-10);
   --cai-text-secondary: var(--cai-gray-30);
   --cai-text-placeholder: var(--cai-gray-50); /* 4.6:1 on the input */
-  --cai-text-disabled: var(--cai-gray-50);
+  --cai-text-disabled: var(--cai-gray-40); /* 3.3:1 on layer-03, the deepest surface (gray-50 fell to 2.4:1) */
   --cai-text-on-color: #fff;
   --cai-text-inverse: var(--cai-gray-100);
 
@@ -155,27 +155,27 @@
   --cai-sidebar-logo-bg: var(--cai-blue-60);
 
   /* Status */
-  --cai-color-success: var(--cai-green-30); /* 4.5:1 on success-bg over a hovered row (green-40 fell to 4.0:1) */
+  --cai-color-success: var(--cai-green-20); /* 4.5:1 on its tint over layer-03, the lightest dark surface */
   --cai-color-success-bg: rgba(66, 190, 101, 0.12);
-  --cai-color-danger: var(--cai-red-30); /* 4.5:1 on danger-bg over a hovered row (red-40 fell to 4.4:1) */
+  --cai-color-danger: var(--cai-red-20);
   --cai-color-danger-bg: rgba(250, 77, 86, 0.12);
   --cai-color-danger-fill: var(--cai-red-60); /* white text 4.8:1 */
-  --cai-color-warning: var(--cai-yellow-30);
+  --cai-color-warning: var(--cai-yellow-20);
   --cai-color-warning-accent: var(--cai-yellow-20);
   --cai-color-warning-bg: rgba(241, 194, 27, 0.12);
-  --cai-color-info: var(--cai-blue-30); /* 4.5:1 on info-bg over a hovered row (blue-40 fell to 4.0:1) */
+  --cai-color-info: var(--cai-blue-20);
   --cai-color-info-bg: rgba(120, 169, 255, 0.12);
 
   /* Inputs */
   --cai-input-bg: var(--cai-gray-90);
-  --cai-input-border: var(--cai-gray-60);
+  --cai-input-border: var(--cai-gray-40); /* 3:1 or more on every surface, layer-03 included (gray-60 fell to 1.6:1) */
 
   /* Extended */
-  --cai-color-teal: var(--cai-teal-40);
+  --cai-color-teal: var(--cai-teal-20);
   --cai-color-teal-bg: rgba(61, 219, 217, 0.12);
   --cai-color-purple: var(--cai-purple-20); /* 4.5:1 on purple-bg over a hovered row (purple-40 fell to 4.0:1; there is no purple-30) */
   --cai-color-purple-bg: rgba(190, 149, 255, 0.12);
-  --cai-color-code: var(--cai-purple-40);
+  --cai-color-code: var(--cai-purple-20); /* 4.5:1 on layer-03 (purple-40 fell to 3.3:1) */
 }
 
 /* -------------------------------------------------------------------------
@@ -237,9 +237,9 @@
   --cai-sidebar-logo-bg: #fff;
 
   /* Status */
-  --cai-color-success: var(--cai-green-60);
+  --cai-color-success: var(--cai-green-70); /* 4.5:1 or more on layer-03 too */
   --cai-color-success-bg: var(--cai-green-10);
-  --cai-color-danger: var(--cai-red-60);
+  --cai-color-danger: var(--cai-red-70);
   --cai-color-danger-bg: var(--cai-red-10);
   --cai-color-danger-fill: var(--cai-color-danger);
   --cai-color-warning: var(--cai-yellow-60);
@@ -253,9 +253,9 @@
   --cai-input-border: #000;
 
   /* Extended */
-  --cai-color-teal: var(--cai-teal-60);
+  --cai-color-teal: var(--cai-teal-70);
   --cai-color-teal-bg: var(--cai-teal-10);
-  --cai-color-purple: var(--cai-purple-60);
+  --cai-color-purple: var(--cai-purple-70);
   --cai-color-purple-bg: var(--cai-purple-10);
   --cai-color-code: var(--cai-blue-80);
 }

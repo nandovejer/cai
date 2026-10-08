@@ -251,6 +251,9 @@ for (const app of APPS) {
             ['invalid', '[aria-invalid="true"]', (p) => !p.matches('[aria-invalid="true"]')],
             ['disabled', 'button:disabled, input:disabled, select:disabled, textarea:disabled', (p) => !p.disabled],
           ];
+          // A visually hidden radio or checkbox shows its state on its label
+          const face = (el) =>
+            el.matches('input') && el.closest('label') && getComputedStyle(el).opacity === '0' ? el.closest('label') : el;
           const kind = (el) => `${el.tagName}|${el.type ?? ''}|${[...el.classList].filter((c) => !/^is-|--error$/.test(c)).sort().join('.')}`;
           const offenders = [];
           for (const [name, selector, isPeer] of STATES) {
@@ -259,7 +262,7 @@ for (const app of APPS) {
               const peer = [...document.querySelectorAll(el.tagName)].find(
                 (p) => p !== el && isPeer(p) && kind(p) === kind(el) && p.checkVisibility({ visibilityProperty: true }),
               );
-              if (peer && shape(peer) === shape(el)) {
+              if (peer && shape(face(peer)) === shape(face(el))) {
                 offenders.push(`${name} ${el.tagName.toLowerCase()}.${[...el.classList].join('.')} "${(el.textContent || el.value || '').trim().slice(0, 30)}"`);
               }
             }

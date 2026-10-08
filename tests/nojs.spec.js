@@ -28,7 +28,6 @@ for (const app of APPS) {
       '.cai-copy-btn',
       '.cai-theme-apply-btn',
       '.cai-theme-mode-btn',
-      '.landing-modes button',
       '.elements-modes button',
       '.cai-player button',
       '[role="switch"]:not(input)',
@@ -61,3 +60,10 @@ for (const app of APPS) {
     expect(dead, 'visible controls that need JavaScript').toEqual([]);
   });
 }
+
+test('/platform/: the image placeholder shows without JavaScript', async ({ page }) => {
+  await page.goto('/platform/');
+  const empty = page.locator('#demo-image-empty');
+  await expect(empty).toBeVisible();
+  expect(await empty.evaluate((el) => getComputedStyle(el).backgroundImage)).toMatch(/placeholder-16x9-1920\.avif/);
+});

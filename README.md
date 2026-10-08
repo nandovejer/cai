@@ -55,7 +55,7 @@ The repository is a small monorepo with three package layers:
 - [`@cai-ds/core`](./packages/core) — reusable CSS components and vanilla JS behaviors
 - [`@cai-ds/platform`](./packages/platform) — app-shell patterns built on top of core
 
-The landing (`apps/landing/`), the core + tokens docs (`apps/docs/`), the platform docs (`apps/platform-docs/`) and the HTML elements reference (`apps/html-elements/`) consume those packages during development.
+The home page (`apps/landing/`), the documentation (`apps/docs/`), the platform docs (`apps/platform-docs/`) and the HTML elements reference (`apps/html-elements/`) consume those packages during development.
 
 ## Adoption levels
 
@@ -102,8 +102,8 @@ See [STRUCTURE.md](./.claude/STRUCTURE.md) for the full annotated directory layo
 ```text
 cai-design-system/
 ├── apps/                      # Internal apps (not publishable)
-│   ├── landing/               # Landing: what CAI is, the three levels, everything live
-│   ├── docs/                  # Core + tokens technical docs
+│   ├── landing/               # Home page: what CAI is for, why, and how to adopt it
+│   ├── docs/                  # The documentation: install, tokens, every component and its guidance
 │   ├── platform-docs/         # Platform docs and live demos
 │   └── html-elements/         # Every current HTML element, live, and how CAI styles it
 ├── packages/
@@ -139,7 +139,7 @@ pnpm install
 pnpm dev
 ```
 
-`pnpm dev` starts Vite at `localhost:5173` (landing at `/`, core docs at `/docs/`, platform docs at `/platform/`, HTML elements at `/html/`). Its `predev` hook builds `dist/` first if any package is missing one.
+`pnpm dev` starts Vite at `localhost:5173` (home page at `/`, documentation at `/docs/`, platform docs at `/platform/`, HTML elements at `/html/`). Its `predev` hook builds `dist/` first if any package is missing one.
 
 If you change sources during dev, re-run `pnpm build` or a specific build command to regenerate the assets — the apps load the built `dist/` files.
 
@@ -152,7 +152,7 @@ If you change sources during dev, re-run `pnpm build` or a specific build comman
 | App | URL | Source |
 | --- | --- | --- |
 | Landing | `http://localhost:5173/` | `apps/landing/` |
-| Core + tokens docs | `http://localhost:5173/docs/` | `apps/docs/` |
+| Documentation | `http://localhost:5173/docs/` | `apps/docs/` |
 | Platform docs | `http://localhost:5173/platform/` | `apps/platform-docs/` |
 | HTML elements | `http://localhost:5173/html/` | `apps/html-elements/` |
 
@@ -270,7 +270,7 @@ Published JS modules: `theme`, `sidebar`, `clipboard`, `modal`, `highlight`, `pl
 <html data-theme="dark"></html>
 ```
 
-**Custom themes** (`minimalist`, `ricardoymortimer`) are complete visual identities shipped by `@cai-ds/core` under `dist/themes/`. They use `data-theme="<name>"` plus `data-mode` for their own light/dark/high-contrast variants.
+**Custom themes** (`minimalist`, `vejer`) are complete visual identities shipped by `@cai-ds/core` under `dist/themes/`. They use `data-theme="<name>"` plus `data-mode` for their own light/dark/high-contrast variants.
 
 > **Under review.** Custom themes are being reconsidered and are deliberately left out of the landing and of the three-layer adoption story. They still ship in core. One consequence to know about: `cai.js` applies `minimalist` when the visitor has no stored choice, overriding a `data-theme` you set in markup. If you need a base mode as your default, import the individual modules (for example `@cai-ds/core/clipboard`) instead of `cai.js`, and set `data-theme` yourself.
 
@@ -362,4 +362,4 @@ Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 ## License
 
-MIT, including the fonts. Every bundled font is under the MIT License only: ET Book (tokens) and Comic Shanns (core). Their notices ship next to the font files (`LICENSE-*.txt`). Body, UI and code text use the system fonts, so nothing else is bundled.
+MIT, including the fonts. Every bundled font is under the MIT License only: ET Book, in `@cai-ds/tokens`. Its notice ships next to the font files (`LICENSE-ETBook.txt`). Body, UI and code text use the system fonts, so nothing else is bundled; `@cai-ds/core` ships no fonts.

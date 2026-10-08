@@ -37,8 +37,8 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     test('should persist theme after page reload', async ({ page }) => {
-      // Set a theme
-      await page.evaluate(() => localStorage.setItem('cai-theme', 'dark'));
+      // The documentation page keeps the color mode under the site's key
+      await page.evaluate(() => localStorage.setItem('cai-site-mode', 'dark'));
       await page.reload();
       
       // Verify it persists

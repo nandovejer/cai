@@ -1012,7 +1012,7 @@
         <h3 class="pdocs-subsection__title">Theme + mode examples</h3>
         <pre class="cai-code-block" data-lang="html"><code>&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;light&quot;&gt;
 &lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;dark&quot;&gt;
-&lt;html data-theme=&quot;ricardoymortimer&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
+&lt;html data-theme=&quot;vejer&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
       </div>
 
       <div class="pdocs-subsection">
@@ -1159,6 +1159,16 @@
                 <td>&lt;span&gt;</td>
                 <td>Shell prefix character (<code class="cai-code-inline">$</code>, <code class="cai-code-inline">pnpm</code>, etc.). Secondary color, non-selectable.</td>
               </tr>
+              <tr>
+                <td>.cai-platform-image</td>
+                <td>&lt;div&gt;</td>
+                <td>16:9 frame around a native <code class="cai-code-inline">&lt;picture&gt;</code>. The image fills it; with no image, an abstract placeholder shows, in a night version in dark mode.</td>
+              </tr>
+              <tr>
+                <td>.cai-platform-image--4x3, --3x2, --1x1, --21x9, --9x16</td>
+                <td>&lt;div&gt;</td>
+                <td>Modifiers. Other aspect ratios, each with its own placeholder.</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -1304,6 +1314,23 @@
         <p>No interaction of its own. As a direct child of <code>&lt;body&gt;</code> the native <code>&lt;footer&gt;</code> is the contentinfo landmark.</p>
         <h4 class="pdocs-guide__title" id="h-p-footer-issues">Known issues</h4>
         <p>None known.</p>
+      </article>
+
+      <article class="pdocs-subsection pdocs-guide" id="p-image" aria-labelledby="h-p-image">
+        <h3 class="pdocs-subsection__title" id="h-p-image">Image</h3>
+        <p class="pdocs-guide__classes"><code>.cai-platform-image</code>, <code>--4x3</code>, <code>--3x2</code>, <code>--1x1</code>, <code>--21x9</code>, <code>--9x16</code></p>
+        <h4 class="pdocs-guide__title" id="h-p-image-when">When to use</h4>
+        <p>To show an image in a box of fixed shape, such as a card cover or an article header, when the image may be missing: content from people or a content system, or a page built before its images exist.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-when-not">When not to use</h4>
+        <p>For an image that must keep its own shape, such as a chart or a screenshot: the frame crops it. For icons and logos: use an <code>&lt;img&gt;</code> or an SVG at its own size. Never to stand in for an image that carries information: if it is missing, say so in text.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-how">How it works</h4>
+        <p>A <code>&lt;div&gt;</code> of fixed aspect ratio, 16:9 unless a modifier sets another, around a native <code>&lt;picture&gt;</code> with AVIF and WebP sources and a JPEG <code>&lt;img&gt;</code>. The image fills the frame and is cropped to it. A frame with no image shows an abstract placeholder in the colours of the vejer theme, chosen in AVIF, WebP or JPEG with <code>image-set()</code>. In dark mode it shows a night version; high contrast keeps the day version. No JavaScript is involved. While an image loads, or if it fails, the frame shows a flat surface, and a failed image's alt text is drawn on it. Transparent PNG and SVG images sit on that surface too. Without CSS the image shows at its own size. The placeholder files ship in <code>dist/placeholders/</code>: every ratio at 640, 1280 and 1920 pixels on the long side in AVIF and WebP, at 640 and 1280 in JPEG, and two SVGs, day and night, that fit any size. Point your own <code>&lt;picture&gt;</code> at them to show the placeholder on purpose.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-content">Content guidance</h4>
+        <p>Give every real image an alt text that says what it shows, in one plain sentence. If the image is decorative or the text next to it already says the same, use <code>alt=""</code>. Never describe the placeholder: it is a background and nothing reads it out. The frame crops the image to its ratio, so keep text and essential detail away from the edges, and describe what stays visible. Set <code>width</code> and <code>height</code> on the <code>&lt;img&gt;</code> to the image's own size so the page does not jump while it loads. Add <code>loading="lazy"</code> only to images below the fold; leave it off a hero or any image visible when the page opens, so it loads at once. Do not put text in images.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-keyboard">Keyboard and ARIA</h4>
+        <p>No interaction of its own. Screen readers announce the <code>&lt;img&gt;</code> by its alt text and skip the placeholder; an empty frame announces nothing. Do not add a role or an <code>aria-label</code> to the frame. If the image is a link, the link takes its name from the alt text, so the alt text must then say where it goes.</p>
+        <h4 class="pdocs-guide__title" id="h-p-image-issues">Known issues</h4>
+        <p>In forced-colors mode browsers drop the placeholder, and the frame shows a thin border instead. If an image fails to load, some browsers add a broken-image icon next to its alt text. The night version follows a dark mode set on a page or a section, but not a light section inside a dark one.</p>
       </article>
 
     </section>
@@ -1538,6 +1565,49 @@ if (range &amp;&amp; out) {
             </article>
           </div>
         </div>
+      </div>
+
+      <div class="pdocs-subsection" id="demo-image">
+        <h3 class="pdocs-subsection__title">Image</h3>
+        <div class="pdocs-preview">
+          <div class="cai-platform-feature-grid">
+            <figure>
+              <div class="cai-platform-image">
+                <picture>
+                  <source type="image/avif" srcset="/apps/platform-docs/assets/sky-640.avif 640w, /apps/platform-docs/assets/sky-1280.avif 1280w" sizes="(min-width: 768px) 50vw, 100vw">
+                  <source type="image/webp" srcset="/apps/platform-docs/assets/sky-640.webp 640w, /apps/platform-docs/assets/sky-1280.webp 1280w" sizes="(min-width: 768px) 50vw, 100vw">
+                  <img src="/apps/platform-docs/assets/sky-1280.jpg" srcset="/apps/platform-docs/assets/sky-640.jpg 640w, /apps/platform-docs/assets/sky-1280.jpg 1280w" sizes="(min-width: 768px) 50vw, 100vw" width="1280" height="720" alt="Blue sky with a few white clouds" loading="lazy" decoding="async">
+                </picture>
+              </div>
+              <figcaption>With an image</figcaption>
+            </figure>
+            <figure>
+              <div class="cai-platform-image" id="demo-image-empty"></div>
+              <figcaption>With no image: the placeholder</figcaption>
+            </figure>
+          </div>
+        </div>
+        <p>To show the placeholder on purpose, point a <code class="cai-code-inline">&lt;picture&gt;</code> at the files in <code class="cai-code-inline">dist/placeholders/</code>, named <code class="cai-code-inline">placeholder-&lt;ratio&gt;-&lt;width&gt;</code>. It is decorative, so its alt text is empty.</p>
+        <pre class="cai-code-block" data-lang="html"><code>&lt;div class="cai-platform-image"&gt;
+  &lt;picture&gt;
+    &lt;source type="image/avif"
+      srcset="placeholders/placeholder-16x9-640.avif 640w,
+              placeholders/placeholder-16x9-1280.avif 1280w,
+              placeholders/placeholder-16x9-1920.avif 1920w"
+      sizes="(min-width: 768px) 50vw, 100vw"&gt;
+    &lt;source type="image/webp"
+      srcset="placeholders/placeholder-16x9-640.webp 640w,
+              placeholders/placeholder-16x9-1280.webp 1280w,
+              placeholders/placeholder-16x9-1920.webp 1920w"
+      sizes="(min-width: 768px) 50vw, 100vw"&gt;
+    &lt;img src="placeholders/placeholder-16x9-1280.jpg"
+      srcset="placeholders/placeholder-16x9-640.jpg 640w,
+              placeholders/placeholder-16x9-1280.jpg 1280w"
+      sizes="(min-width: 768px) 50vw, 100vw"
+      width="1280" height="720" alt="" decoding="async"&gt;
+  &lt;/picture&gt;
+&lt;/div&gt;</code></pre>
+        <p>Replace <code class="cai-code-inline">placeholders/</code> with <code class="cai-code-inline">https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/placeholders/</code>, or with the path where your bundler serves the package. Ratios: <code class="cai-code-inline">16x9</code>, <code class="cai-code-inline">4x3</code>, <code class="cai-code-inline">3x2</code>, <code class="cai-code-inline">1x1</code>, <code class="cai-code-inline">21x9</code> and <code class="cai-code-inline">9x16</code> (widths 360, 720 and 1080). JPEG stops at 1280 (720 for 9x16). For the night version, use <code class="cai-code-inline">placeholder-night-</code> instead. <code class="cai-code-inline">placeholder.svg</code> and <code class="cai-code-inline">placeholder-night.svg</code> fit any size. Add <code class="cai-code-inline">loading="lazy"</code> when the frame is below the fold.</p>
       </div>
 
       <div class="pdocs-subsection">

@@ -92,7 +92,7 @@ Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `loadin
 - **`./utils`** → Pure helper functions (`formatTime`, `escapeHtml`, …)
 - **`./themes/*`** → Custom theme stylesheets
   - `cai-theme-minimalist.css`
-  - `cai-theme-ricardoymortimer.css`
+  - `cai-theme-vejer.css`
 
 ## Components included
 
@@ -109,7 +109,7 @@ Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `loadin
 Two built-in custom themes are available:
 
 - **Minimalist** (`data-theme="minimalist"`) — one system sans throughout, headings included, warm neutrals
-- **Ricardo & Mortimer** (`data-theme="ricardoymortimer"`) — Expressive, animated series–inspired
+- **Vejer** (`data-theme="vejer"`) — a reading theme inspired by Vejer de la Frontera: ET Book for running text and headings, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, every link underlined
 
 All themes support light, dark, and high-contrast color modes via `data-mode`.
 
@@ -125,4 +125,4 @@ The core JS (`cai.js`) provides no-dependency implementations of:
 
 ## License
 
-MIT, fonts included: Comic Shanns, used by one custom theme, is MIT licensed (`dist/fonts/custom-faces/LICENSE-ComicShanns.txt`).
+MIT. Core ships no fonts; the serif used by the `vejer` theme (ET Book, MIT) comes with `@cai-ds/tokens`.

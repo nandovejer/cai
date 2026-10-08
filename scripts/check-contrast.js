@@ -1,7 +1,8 @@
 /**
  * CAI — token contrast (PRINCIPLES.md §1, red lines 5 and 7).
- * Resolves the semantic tokens of the three base themes (light, dark,
- * high-contrast) to their real values and measures the pairs the components
+ * Resolves the semantic tokens of the three base modes (light, dark,
+ * high-contrast) and of every custom theme in packages/core/src/themes, in
+ * its default mode and in each data-mode, to their real values and measures the pairs the components
  * draw: text on its surfaces at 4.5:1, focus ring, borders and icons at 3:1.
  * Translucent tokens are composited over the surface below, as in the page.
  * WCAG 2.x relative luminance.
@@ -11,24 +12,25 @@
  *
  * Usage: node scripts/check-contrast.js
  */
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path) => readFileSync(resolve(root, path), "utf-8");
 
-const THEMES = ["light", "dark", "high-contrast"];
+const BASE = ["light", "dark", "high-contrast"];
 
 /* ---- Pairs: [foreground tokens, background tokens, minimum] --------------
    A background written "a > b" is token a composited over token b. */
 const SURFACES = ["bg-page", "bg-ui", "bg-ui-hover", "layer-01", "layer-02", "input-bg"];
+const STATUS = ["success", "danger", "warning", "info", "teal", "purple"];
 const PAIRS = [
   // Text and links on the surfaces they sit on
   [["text-primary", "text-secondary", "brand-primary", "brand-hover"], SURFACES, 4.5],
   [["text-primary", "text-secondary"], ["layer-03", "bg-ui-active"], 4.5],
   [["text-placeholder"], ["input-bg"], 4.5],
-  [["text-disabled"], ["bg-page", "bg-ui", "input-bg", "layer-01", "layer-02"], 3],
+  [["text-disabled"], ["bg-page", "bg-ui", "input-bg", "layer-01", "layer-02", "layer-03"], 3],
   // Text on solid fills
   [["text-on-color"], ["brand-fill", "brand-fill-hover", "brand-fill-active", "color-danger-fill"], 4.5],
   // Sidebar
@@ -36,7 +38,7 @@ const PAIRS = [
   [["sidebar-text-hover"], ["sidebar-hover"], 4.5],
   [["sidebar-active-text"], ["sidebar-active-bg"], 4.5],
   // Status text on its tint (alerts, tags), also on a hovered row
-  ...["success", "danger", "warning", "info", "teal", "purple"].map((s) => [
+  ...STATUS.map((s) => [
     [`color-${s}`],
     [`color-${s}-bg > bg-page`, `color-${s}-bg > bg-ui`, `color-${s}-bg > bg-ui-hover`],
     4.5,
@@ -48,6 +50,18 @@ const PAIRS = [
   [["border-strong", "icon-primary", "icon-secondary"], ["bg-page", "bg-ui"], 3],
 ];
 
+/* Also on the deepest layer (tooltip, toast, table header) and as plain text on the
+   page: status and code colours and their tints keep 4.5:1 there too.
+   Measured for every theme and mode. */
+const THEME_PAIRS = [
+  ...STATUS.map((s) => [[`color-${s}`], [`color-${s}-bg > layer-03`, "bg-page", "bg-ui", "layer-03"], 4.5]),
+  [["color-code"], ["layer-03"], 4.5],
+  // The field border on every surface a field can sit on (WCAG 1.4.11)
+  [["input-border"], [...SURFACES, "layer-03"], 3],
+  // .cai-badge--gray: white text on the strong border colour
+  [["text-on-color"], ["border-strong"], 4.5],
+];
+
 /* ---- Token values ------------------------------------------------------- */
 
 const tokens = JSON.parse(read("packages/tokens/tokens.json"));
@@ -56,13 +70,53 @@ for (const [family, steps] of Object.entries(tokens.color)) {
   for (const [step, { value }] of Object.entries(steps)) primitives[`--cai-${family}-${step}`] = value;
 }
 
-const semantic = read("packages/tokens/src/semantic.css").replace(/\/\*[\s\S]*?\*\//g, "");
-const themes = {};
-for (const [, selector, body] of semantic.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
-  const name = selector.match(/\[data-theme="([\w-]+)"\]/)?.[1];
-  if (!THEMES.includes(name)) continue;
-  themes[name] = Object.fromEntries([...body.matchAll(/(--cai-[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
+/** Every "selector { --custom: value; }" block of a stylesheet. */
+function blocks(css) {
+  const clean = css.replace(/\/\*[\s\S]*?\*\//g, "").replace(/@font-face\s*\{[^}]*\}/g, "");
+  return [...clean.matchAll(/([^{}]+)\{([^}]*)\}/g)].map(([, selector, body]) => ({
+    selectors: selector.split(",").map((x) => x.trim()),
+    props: Object.fromEntries([...body.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()])),
+  }));
 }
+
+// Base color modes: data-theme="light" (also :root), "dark", "high-contrast"
+const base = {};
+for (const { selectors, props } of blocks(read("packages/tokens/src/semantic.css"))) {
+  for (const selector of selectors) {
+    const name = selector.match(/^\[data-theme="([\w-]+)"\]$/)?.[1];
+    if (BASE.includes(name)) base[name] = { ...base[name], ...props };
+  }
+}
+
+// Custom themes (packages/core/src/themes): the theme block sets its default
+// mode; each [data-mode] block layers on top of it. Anything a theme does not
+// define falls back to the :root (light) value, as in the browser.
+const themes = {};
+for (const name of BASE) themes[name] = { ...base.light, ...base[name] };
+const MODES = ["light", "dark", "high-contrast"];
+const themesDir = resolve(root, "packages/core/src/themes");
+for (const file of readdirSync(themesDir).filter((f) => /^cai-theme-.+\.css$/.test(f))) {
+  const custom = {};
+  for (const { selectors, props } of blocks(read(`packages/core/src/themes/${file}`))) {
+    for (const selector of selectors) {
+      const m = selector.match(/^\[data-theme="([\w-]+)"\](?:\[data-mode="([\w-]+)"\])?$/);
+      if (!m) continue;
+      const key = m[2] ?? "default";
+      custom[m[1]] ??= {};
+      custom[m[1]][key] = { ...custom[m[1]][key], ...props };
+    }
+  }
+  for (const [name, modes] of Object.entries(custom)) {
+    const missing = MODES.filter((mode) => !modes[mode]);
+    if (!modes.default || missing.length) {
+      console.error(`✗ ${file}: theme "${name}" needs a [data-theme] block and the modes ${MODES.join(", ")} (missing: ${["default", ...missing].filter((k) => !modes[k]).join(", ")})`);
+      process.exit(1);
+    }
+    themes[name] = { ...base.light, ...modes.default };
+    for (const mode of MODES) themes[`${name}/${mode}`] = { ...base.light, ...modes.default, ...modes[mode] };
+  }
+}
+const THEMES = Object.keys(themes);
 
 function parse(value) {
   const hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)?.[1];
@@ -79,10 +133,11 @@ function parse(value) {
 }
 
 function value(theme, name) {
-  // A theme block redefines only what changes; light is the :root default
-  const raw = themes[theme][name] ?? themes.light[name] ?? primitives[name];
+  // Each theme map already holds the :root (light) defaults under its own
+  // values, so a var() resolves in the theme that uses it, as in the page
+  const raw = themes[theme][name] ?? primitives[name];
   if (raw === undefined) throw new Error(`${theme}: ${name} is not defined`);
-  const ref = raw.match(/^var\((--cai-[\w-]+)\)$/)?.[1];
+  const ref = raw.match(/^var\((--[\w-]+)\)$/)?.[1];
   return ref ? value(theme, ref) : raw;
 }
 
@@ -118,7 +173,7 @@ const failures = [];
 const known = [];
 let measured = 0;
 for (const theme of THEMES) {
-  for (const [foregrounds, backgrounds, minimum] of PAIRS) {
+  for (const [foregrounds, backgrounds, minimum] of [...PAIRS, ...THEME_PAIRS]) {
     for (const fg of foregrounds) {
       for (const bg of backgrounds) {
         const back = surface(theme, bg);

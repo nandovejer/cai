@@ -44,10 +44,10 @@ describe("formatTime", () => {
 });
 
 describe("isCustomTheme", () => {
-  const customThemes = ["ricardoymortimer", "minimalist"];
+  const customThemes = ["vejer", "minimalist"];
 
   it("identifies custom themes", () => {
-    expect(isCustomTheme("ricardoymortimer", customThemes)).toBe(true);
+    expect(isCustomTheme("vejer", customThemes)).toBe(true);
     expect(isCustomTheme("minimalist", customThemes)).toBe(true);
   });
 
@@ -58,8 +58,10 @@ describe("isCustomTheme", () => {
   });
 
   it("uses default custom themes if not provided", () => {
-    expect(isCustomTheme("ricardoymortimer")).toBe(true);
+    expect(isCustomTheme("vejer")).toBe(true);
     expect(isCustomTheme("minimalist")).toBe(true);
+    // Removed in favour of vejer
+    expect(isCustomTheme("ricardoymortimer")).toBe(false);
   });
 });
 
@@ -211,7 +213,7 @@ describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
   });
 
   it("core ships no docs-app selectors", () => {
-    for (const f of ["cai.js", "cai.css", "themes/cai-theme-minimalist.css"]) {
+    for (const f of ["cai.js", "cai.css", "themes/cai-theme-minimalist.css", "themes/cai-theme-vejer.css"]) {
       expect(readFileSync(resolve(coreDist, f), "utf-8")).not.toMatch(/\.docs-|#demo-form/);
     }
   });
@@ -221,7 +223,6 @@ describe.skipIf(!distBuilt)("published CSS only references files that ship", () 
   const cssFiles = [
     tokensDist,
     resolve(process.cwd(), "packages/tokens/dist/fonts.css"),
-    resolve(coreDist, "themes/cai-theme-ricardoymortimer.css"),
   ];
 
   it.each(cssFiles)("every url() in %s resolves inside dist", (cssFile) => {

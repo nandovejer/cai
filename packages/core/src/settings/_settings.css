@@ -8,6 +8,10 @@
 :root {
   /* Typography — serif for headings, sans for UI, mono for code */
   --cai-font-heading: var(--cai-font-serif);
+  /* Running text: what <body> and everything that inherits from it uses.
+     A theme can set it to the serif (vejer does); controls, labels,
+     tables and navigation always keep --cai-font-sans. */
+  --cai-font-body: var(--cai-font-sans);
   /* Text inside form fields. Never below 16px on touch screens: iOS Safari
      zooms the page when a focused field is smaller. */
   --cai-text-control: var(--cai-text-md);

@@ -1,22 +1,22 @@
 /**
  * CAI landing — page glue.
- * Wires the core behaviors the gallery demonstrates, one module at a time.
+ * Everything here is an enhancement: the color mode switcher is a native
+ * radio group that works without JavaScript (:root:has() in the tokens),
+ * and the example form's button opens a native popover.
  *
  * cai.js is deliberately not loaded: its auto-init applies the stored or
- * default theme to <html>, and this page owns its own color mode (light,
- * dark or high contrast, stored under its own key).
+ * default custom theme to <html>, and this page shows the base color modes
+ * (light, dark or high contrast), stored under the site's own key.
  */
 
 import { initCopyButtons } from "/packages/core/dist/clipboard.js";
 import { highlightBlock } from "/packages/core/dist/highlight.js";
-import { initTabs } from "/packages/core/dist/tabs.js";
-import { initModals } from "/packages/core/dist/modal.js";
-import { initPlayers } from "/packages/core/dist/player.js";
 
 /* ---- Color mode ------------------------------------------------------- */
 
+// Shared with the documentation page, so the choice follows the visitor
 const MODES = ["light", "dark", "high-contrast"];
-const MODE_KEY = "cai-landing-mode";
+const MODE_KEY = "cai-site-mode";
 const root = document.documentElement;
 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 const prefersContrast = window.matchMedia("(prefers-contrast: more)");
@@ -42,11 +42,6 @@ function setMode(mode, persist) {
       localStorage.setItem(MODE_KEY, mode);
     } catch (_) {}
   }
-  document.querySelectorAll("[data-landing-mode]").forEach((button) => {
-    const active = button.dataset.landingMode === mode;
-    button.setAttribute("aria-pressed", String(active));
-  });
-  // The sidebar specimen's native radios follow the same mode
   document.querySelectorAll('input[name="cai-theme"]').forEach((radio) => {
     radio.checked = radio.value === mode;
   });
@@ -55,16 +50,12 @@ function setMode(mode, persist) {
 function initModes() {
   setMode(storedMode() || osMode(), false);
 
-  document.addEventListener("click", (e) => {
-    const button = e.target.closest("[data-landing-mode]");
-    if (button) setMode(button.dataset.landingMode, true);
-  });
   document.addEventListener("change", (e) => {
     const radio = e.target.closest?.('input[name="cai-theme"]');
     if (radio?.checked) setMode(radio.value, true);
   });
 
-  // Follow the OS while the visitor has not chosen a mode here
+  // Follow the OS while the visitor has not chosen a mode
   [prefersDark, prefersContrast].forEach((query) => {
     query.addEventListener("change", () => {
       if (!storedMode()) setMode(osMode(), false);
@@ -84,87 +75,25 @@ function initCopy() {
   initCopyButtons();
 }
 
-/* ---- Small enhancements ----------------------------------------------- */
+/* ---- Example form ----------------------------------------------------- */
 
-function initFolds() {
-  // The long reference lists are native <details>, open in the markup so they
-  // read without JS. On a narrow screen they start closed, to keep the page a
-  // reasonable length; opening one is the browser's own behavior.
-  if (!window.matchMedia("(max-width: 768px)").matches) return;
-  const target = document.getElementById(window.location.hash.slice(1));
-  document.querySelectorAll("details[data-fold-narrow]").forEach((details) => {
-    // eslint-disable-next-line no-restricted-syntax -- RL-3: sets the initial state only; opening and closing stay native
-    if (!details.contains(target)) details.open = false;
-  });
-  // Folding moves everything below it: go back to the requested section
-  if (target) target.scrollIntoView();
-}
-
-function initRangeOutputs() {
-  document.querySelectorAll('input[type="range"][data-output]').forEach((input) => {
-    const output = document.getElementById(input.dataset.output);
-    if (!output) return;
-    input.addEventListener("input", () => {
-      output.textContent = input.value;
-    });
-  });
-}
-
-function initLevelNav() {
-  const links = new Map();
-  document.querySelectorAll(".landing-levelnav__link").forEach((link) => {
-    links.set(link.getAttribute("href").slice(1), link);
-  });
-  if (!links.size || !("IntersectionObserver" in window)) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const link = links.get(entry.target.id);
-        if (entry.isIntersecting) link.setAttribute("aria-current", "true");
-        else link.removeAttribute("aria-current");
-      });
-    },
-    { rootMargin: "-20% 0px -70% 0px" },
-  );
-  links.forEach((_, id) => {
-    const section = document.getElementById(id);
-    if (section) observer.observe(section);
-  });
-}
-
-function initMidiSource() {
-  // A build does not rewrite data-* URLs. new URL(…, import.meta.url) is
-  // plain ESM, and it is also what makes the build emit the file.
-  const player = document.querySelector('.cai-player[data-type="midi"]');
-  if (player) {
-    player.dataset.src = new URL(
-      "../platform-docs/assets/sample.mid",
-      import.meta.url,
-    ).href;
-  }
-}
-
-function syncLoadedMedia() {
-  // mountPlayer() reads the duration on "loadedmetadata" only, and a video
-  // with preload="metadata" can have it before this module runs.
-  document.querySelectorAll(".cai-player video, .cai-player audio").forEach((media) => {
-    if (media.readyState >= 1) media.dispatchEvent(new window.Event("loadedmetadata"));
+function initTryStatus() {
+  // The popover shows the message without JavaScript. A screen reader may not
+  // announce a popover opening, so the status region (always in the page,
+  // empty) repeats its text. The popover itself has no role: one announcement.
+  const note = document.getElementById("try-note");
+  const status = document.getElementById("try-status");
+  if (!note || !status) return;
+  note.addEventListener("toggle", (e) => {
+    status.textContent = e.newState === "open" ? note.textContent.trim() : "";
   });
 }
 
 /* ---- Boot -------------------------------------------------------------- */
 
 initModes();
-initFolds();
+initTryStatus();
 initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each
 // block, and core ships no position for it.
 document.querySelectorAll("pre.cai-code-block").forEach(highlightBlock);
-initTabs();
-initModals();
-initRangeOutputs();
-initLevelNav();
-initMidiSource();
-initPlayers();
-syncLoadedMedia();

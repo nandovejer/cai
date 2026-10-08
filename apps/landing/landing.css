@@ -28,11 +28,6 @@
   min-width: 0;
 }
 
-.landing-system {
-  display: grid;
-  gap: var(--cai-space-10);
-}
-
 .landing-levels {
   display: grid;
   gap: var(--cai-space-06);
@@ -51,15 +46,6 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--cai-text-secondary);
-}
-
-.landing-subhead {
-  margin-bottom: var(--cai-space-02);
-}
-
-/* Core gives headings a family and a weight, and leaves the size to the page */
-.landing-heading-sample {
-  font-size: var(--cai-text-xl);
 }
 
 .landing-lead {
@@ -118,20 +104,24 @@
   color: var(--cai-text-primary);
 }
 
-/* Needs JavaScript: hidden until it runs (the sidebar specimen below has a
-   native radio switcher that works on its own) */
-:root:not([data-cai-js]) .landing-modes {
-  display: none;
-}
-
+/* The color mode switcher: core's native radio group, which works without
+   JavaScript. Its legend sits beside the buttons to keep the header short. */
 .landing-modes {
-  display: flex;
-  gap: var(--cai-space-02);
+  align-items: center;
+  gap: var(--cai-space-02) var(--cai-space-03);
 }
 
-.landing-modes [aria-pressed="true"] {
-  background: var(--cai-brand-subtle);
-  border-color: var(--cai-brand-primary);
+.landing-modes .cai-theme-switcher__label {
+  float: inline-start;
+  margin-block: 0;
+  margin-inline: 0 var(--cai-space-02);
+}
+
+.landing-modes .cai-theme-btn {
+  flex: none;
+  min-block-size: var(--cai-size-height-sm);
+  padding-inline: var(--cai-space-03);
+  border-radius: var(--cai-radius-md);
 }
 
 /* --------------------------------------------------------------------------
@@ -197,48 +187,6 @@
   list-style: none;
   display: grid;
   gap: var(--cai-space-03);
-}
-
-.landing-stack__item {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--cai-space-04);
-  align-items: start;
-  padding: var(--cai-space-05);
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
-  border-left: 2px solid var(--cai-brand-primary);
-}
-
-.landing-stack__body {
-  display: grid;
-  gap: var(--cai-space-02);
-  justify-items: start;
-}
-
-.landing-stack__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--cai-space-02) var(--cai-space-04);
-}
-
-.landing-stack__name {
-  font-size: var(--cai-text-lg);
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--cai-text-primary);
-}
-
-.landing-stack__pkg {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
-  overflow-wrap: anywhere;
-}
-
-.landing-stack__desc {
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
 }
 
 .landing-stack--mini {
@@ -340,21 +288,13 @@
    Adoption level cards
    -------------------------------------------------------------------------- */
 
-.landing-level,
-.landing-demo {
+.landing-level {
   display: grid;
   gap: var(--cai-space-05);
   align-content: start;
   background: var(--cai-layer-01);
   border: 1px solid var(--cai-border-subtle);
-}
-
-.landing-level {
   padding: var(--cai-space-06);
-}
-
-.landing-demo {
-  padding: var(--cai-space-05);
 }
 
 .landing-level__head {
@@ -408,649 +348,97 @@
   font-size: var(--cai-text-sm);
 }
 
-/* --------------------------------------------------------------------------
-   Gallery: sticky level bar, table of contents, groups, demo cards
-   -------------------------------------------------------------------------- */
-
-.landing-levelnav {
-  position: sticky;
-  top: 0;
-  z-index: var(--cai-z-raised);
-  background: var(--cai-bg-page);
-  border-bottom: 1px solid var(--cai-border-subtle);
-}
-
-.landing-levelnav > .landing-wrap {
-  display: flex;
-  gap: var(--cai-space-02);
-}
-
-.landing-levelnav__link {
-  display: inline-flex;
-  align-items: center;
-  height: var(--cai-size-height-xl);
-  padding-inline: var(--cai-space-04);
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
-  border-bottom: 2px solid transparent;
-  white-space: nowrap;
-  transition: color var(--cai-duration-fast), border-color var(--cai-duration-fast);
-}
-
-/* Line the first label up with the content edge */
-.landing-levelnav__link:first-child {
-  margin-inline-start: calc(-1 * var(--cai-space-04));
-}
-
-.landing-levelnav__link:hover {
-  color: var(--cai-text-primary);
-  text-decoration: none;
-}
-
-.landing-levelnav__link[aria-current="true"] {
-  color: var(--cai-brand-primary);
-  border-bottom-color: var(--cai-brand-primary);
-  font-weight: 500;
-}
-
-#system [id] {
-  scroll-margin-top: calc(var(--cai-size-height-xl) + var(--cai-space-05));
-}
-
-.landing-ref {
-  margin-top: var(--cai-space-04);
-  font-size: var(--cai-text-md);
-}
-
 /* Links that stand alone (not inside a sentence) are targets of 24px or more */
-.landing-ref a,
-.landing-level__body a {
+.landing-level__body a,
+.landing-guides a {
   display: inline-flex;
   align-items: center;
   min-height: var(--cai-size-height-sm);
 }
 
-.landing-toc {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--cai-space-05);
-  padding: var(--cai-space-05);
+/* --------------------------------------------------------------------------
+   Example form, guidance links, fit lists
+   -------------------------------------------------------------------------- */
+
+/* On layer-02, so the fields (input-bg, a raised layer) read as fields */
+.landing-try {
+  padding: var(--cai-space-06);
+  background: var(--cai-layer-02);
   border: 1px solid var(--cai-border-subtle);
+  border-radius: var(--cai-radius-lg);
+  box-shadow: var(--cai-shadow-sm);
 }
 
-.landing-toc ul {
-  list-style: none;
-  display: grid;
-  gap: var(--cai-space-02);
-  margin-top: var(--cai-space-03);
-  font-size: var(--cai-text-md);
+.landing-try__title {
+  font-size: var(--cai-text-xl);
 }
 
-/* A single group reads better as one wrapping row */
-.landing-toc--inline {
-  grid-template-columns: minmax(0, 1fr);
+.landing-try__intro {
+  margin-block: var(--cai-space-02) var(--cai-space-05);
+  color: var(--cai-text-secondary);
 }
 
-.landing-toc--inline ul {
+/* A native popover: opened by the button without JavaScript, closed with
+   Escape or a click outside */
+.landing-try__note {
+  max-inline-size: min(90vw, 32rem);
+  margin: auto;
+  padding: var(--cai-space-05) var(--cai-space-06);
+  background: var(--cai-layer-01);
+  color: var(--cai-text-primary);
+  border: 2px solid var(--cai-border-strong);
+  border-radius: var(--cai-radius-md);
+  box-shadow: var(--cai-shadow-lg);
+}
+
+.landing-subtitle {
+  font-size: var(--cai-text-lg);
+  margin-block: var(--cai-space-07) var(--cai-space-03);
+}
+
+.landing-guides {
   display: flex;
   flex-wrap: wrap;
   gap: var(--cai-space-02) var(--cai-space-06);
-}
-
-.landing-toc a {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--cai-size-height-sm);
-}
-
-.landing-group {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-lg);
-  font-weight: 500;
-  letter-spacing: 0;
-  padding-top: var(--cai-space-05);
-  margin-top: var(--cai-space-05);
-  border-top: 1px solid var(--cai-border-subtle);
-}
-
-.landing-demo-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-05);
-}
-
-.landing-demo--wide {
-  grid-column: 1 / -1;
-}
-
-.landing-demo__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--cai-space-02) var(--cai-space-04);
-}
-
-.landing-demo__title {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-base);
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: 0;
-}
-
-.landing-demo__file {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
-  overflow-wrap: anywhere;
-}
-
-.landing-demo__stage {
-  display: grid;
-  gap: var(--cai-space-04);
-  align-content: start;
-}
-
-/* Components that bring their own bottom margin (alerts, tabs) */
-.landing-demo__stage--flush {
-  gap: 0;
-}
-
-/* Room above the button for the tooltip */
-.landing-demo__stage--tooltip {
-  justify-items: start;
-  padding-top: var(--cai-space-08);
-}
-
-.landing-demo__stage > figure {
-  margin: 0;
-}
-
-.landing-demo__note {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
-}
-
-/* Guidance per component: when to use, when not to, how it works, content,
-   keyboard and ARIA, known issues (PRINCIPLES.md section 4) */
-.landing-guide {
-  border-top: 1px solid var(--cai-border-subtle);
-  padding-block: var(--cai-space-04) 0;
-  font-size: var(--cai-text-sm);
-}
-
-.landing-guide > summary {
-  cursor: pointer;
-  font-weight: 500;
-  color: var(--cai-text-primary);
-}
-
-.landing-guide__body {
-  display: grid;
-  gap: var(--cai-space-02);
-  margin-block-start: var(--cai-space-04);
-}
-
-.landing-guide__title {
-  margin-block: var(--cai-space-03) 0;
-  font-size: var(--cai-text-sm);
-  font-weight: 600;
-  color: var(--cai-text-primary);
-}
-
-.landing-guide__body p {
-  margin: 0;
-  max-inline-size: 65ch;
-  color: var(--cai-text-secondary);
-}
-
-.landing-cols-2,
-.landing-cols-3,
-.landing-cols-4 {
-  align-items: start;
-}
-
-.landing-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.landing-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.landing-cols-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-/* A long reference list inside a demo card: a native <details>, open in the
-   markup. landing.js closes it on narrow screens; without JS it stays open. */
-.landing-fold,
-.landing-fold[open] {
-  margin: 0;
   padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
-}
-
-.landing-fold > summary {
-  margin: 0;
-  padding: var(--cai-space-02) var(--cai-space-03);
-  font-size: var(--cai-text-md);
-  font-weight: 500;
-  background: var(--cai-layer-02);
-}
-
-.landing-fold[open] > summary {
-  margin-bottom: var(--cai-space-05);
-}
-
-/* --------------------------------------------------------------------------
-   Token specimens
-   -------------------------------------------------------------------------- */
-
-/* The layered background shows alpha tokens over the page color */
-.landing-swatch {
-  display: block;
-  height: var(--cai-size-height-xl);
-  background: linear-gradient(var(--v), var(--v)), var(--cai-bg-page);
-  border: 1px solid var(--cai-border-subtle);
-}
-
-.landing-ramp {
-  display: grid;
-  grid-template-columns: var(--cai-space-11) minmax(0, 1fr);
-  gap: var(--cai-space-04);
-  align-items: center;
-}
-
-.landing-ramp__label {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-primary);
-}
-
-.landing-ramp ul {
-  display: flex;
   list-style: none;
 }
 
-.landing-ramp li {
-  flex: 1;
-  min-width: 0;
-  text-align: center;
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
-}
-
-.landing-token-grid {
-  list-style: none;
+.landing-fit {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--cai-space-03) var(--cai-space-05);
-  margin-bottom: var(--cai-space-04);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--cai-space-07);
 }
 
-.landing-token {
-  display: flex;
-  align-items: center;
-  gap: var(--cai-space-03);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-sm);
-  overflow-wrap: anywhere;
-}
-
-.landing-token__modes {
-  display: flex;
-  flex-shrink: 0;
-}
-
-.landing-token__modes .landing-swatch {
-  width: var(--cai-space-06);
-  height: var(--cai-space-06);
-  border-color: var(--cai-border-strong);
-}
-
-.landing-scopes {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-/* A scoped mode must re-declare background and color: the token values change
-   on this element, but nothing repaints it unless it asks for them. */
-.landing-scope {
-  display: grid;
-  gap: var(--cai-space-04);
-  align-content: start;
-  padding: var(--cai-space-05);
-  background: var(--cai-bg-page);
-  color: var(--cai-text-primary);
-  border: 1px solid var(--cai-border-strong);
-}
-
-.landing-scope .cai-alert {
-  margin-bottom: 0;
-}
-
-.landing-scale-list,
-.landing-specimens,
-.landing-fonts,
-.landing-anim__tiles {
-  list-style: none;
-}
-
-.landing-scale-list {
+.landing-fit__list {
   display: grid;
   gap: var(--cai-space-03);
-}
-
-.landing-scale {
-  display: grid;
-  grid-template-columns: calc(var(--cai-space-12) * 2) var(--cai-space-09) minmax(0, 1fr);
-  gap: var(--cai-space-04);
-  align-items: center;
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
-  overflow-wrap: anywhere;
-}
-
-.landing-scale--easing {
-  grid-template-columns: calc(var(--cai-space-12) * 2) minmax(0, 1fr);
-}
-
-.landing-scale--easing > :last-child {
-  grid-column: 1 / -1;
-}
-
-/* name, value, what it is used for */
-.landing-scale--note {
-  grid-template-columns: calc(var(--cai-space-12) * 1.5) calc(var(--cai-space-12) * 1.5) minmax(0, 1fr);
-}
-
-.landing-scale--note code {
-  color: var(--cai-text-primary);
-}
-
-.landing-scale__note {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-sm);
-}
-
-.landing-scale__bar {
-  display: block;
-  width: var(--v);
-  max-width: 100%;
-  height: var(--cai-space-04);
-  background: var(--cai-brand-primary);
-}
-
-.landing-scale__type {
-  font-size: var(--v);
-  font-family: var(--cai-font-sans);
-  color: var(--cai-text-primary);
-  line-height: 1.2;
-}
-
-.landing-font {
-  display: grid;
-  gap: var(--cai-space-02);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
+  padding-inline-start: var(--cai-space-06);
   color: var(--cai-text-secondary);
 }
 
-.landing-font__sample,
-.landing-font__weights {
-  font-family: var(--v);
-  color: var(--cai-text-primary);
-}
-
-.landing-font__sample {
-  font-size: var(--cai-text-xl);
-  line-height: 1.2;
-}
-
-.landing-font__weights {
-  font-size: var(--cai-text-base);
-}
-
-.landing-specimens {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cai-space-05);
-}
-
-.landing-specimens li {
-  display: grid;
-  gap: var(--cai-space-02);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
-}
-
-.landing-shadows {
-  gap: var(--cai-space-06);
-  padding: var(--cai-space-05);
-  background: var(--cai-layer-02);
-}
-
-.landing-box {
-  padding: var(--cai-space-04);
-  background: var(--cai-layer-02);
-  border: 1px dashed var(--cai-border-strong);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
-  overflow-wrap: anywhere;
-}
-
-.landing-box--height {
-  display: flex;
-  align-items: center;
-  align-self: flex-start;
-  height: var(--v);
-  padding-block: 0;
-}
-
-.landing-box--radius {
-  display: block;
-  width: var(--cai-space-10);
-  height: var(--cai-space-10);
-  border-style: solid;
-  border-radius: var(--v);
-}
-
-.landing-box--shadow {
-  padding: var(--cai-space-06);
-  background: var(--cai-layer-01);
-  border: 0;
-  box-shadow: var(--v);
-}
-
-/* --------------------------------------------------------------------------
-   Motion and keyframes demos (off until the visitor turns them on)
-   -------------------------------------------------------------------------- */
-
-.landing-motion__track {
-  display: block;
-  position: relative;
-  height: var(--cai-space-05);
-  background: var(--cai-layer-02);
-}
-
-.landing-motion__dot {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: var(--cai-space-05);
-  background: var(--cai-brand-primary);
-  transition: inset-inline-start var(--cai-duration-lazy) var(--cai-easing-standard);
-}
-
-.landing-motion__dot--duration {
-  transition-duration: var(--v);
-}
-
-.landing-motion__dot--easing {
-  transition-timing-function: var(--v);
-}
-
-.landing-motion:has(.cai-toggle__input:checked) .landing-motion__dot {
-  inset-inline-start: calc(100% - var(--cai-space-05));
-}
-
-.landing-motion__reduced {
+/* Old links to sections that moved to the docs: shown only when one of them
+   is the URL fragment. :has() in :is() so a browser without it drops the rule
+   and keeps the heading, rather than invalidating the whole rule. */
+.landing-moved:not(:target) {
   display: none;
 }
 
-.landing-anim__tile {
-  display: grid;
-  gap: var(--cai-space-03);
-  justify-items: center;
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+:is(.landing-moved-list:not(:has(.landing-moved:target))) {
+  display: none;
 }
 
-.landing-anim__stage {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: var(--cai-space-11);
-  background: var(--cai-layer-02);
+.landing-moved-list {
+  padding-block: var(--cai-space-07);
 }
 
-.landing-anim__spin {
-  width: var(--cai-space-07);
-  height: var(--cai-space-07);
-  border: 2px solid var(--cai-border-subtle);
-  border-top-color: var(--cai-brand-primary);
-  border-radius: var(--cai-radius-full);
-}
-
-.landing-anim__shimmer {
-  width: 70%;
-  height: var(--cai-space-05);
-  background: linear-gradient(90deg, var(--cai-layer-03) 25%, var(--cai-layer-01) 50%, var(--cai-layer-03) 75%);
-  background-size: 200% 100%;
-}
-
-.landing-anim__pulse {
-  width: var(--cai-space-04);
-  height: var(--cai-space-04);
-  border-radius: var(--cai-radius-full);
-  background: var(--cai-color-success);
-}
-
-.landing-anim__slide {
-  font-family: var(--cai-font-heading);
-  font-size: var(--cai-text-xl);
-  color: var(--cai-text-primary);
-}
-
-.landing-anim:has(.cai-toggle__input:checked) .landing-anim__spin {
-  animation: cai-spin var(--cai-duration-lazy) var(--cai-easing-linear) infinite;
-}
-
-.landing-anim:has(.cai-toggle__input:checked) .landing-anim__shimmer {
-  animation: cai-shimmer calc(var(--cai-duration-lazy) * 2) var(--cai-easing-linear) infinite;
-}
-
-.landing-anim:has(.cai-toggle__input:checked) .landing-anim__pulse {
-  animation: cai-pulse calc(var(--cai-duration-lazy) * 2) var(--cai-easing-standard) infinite;
-}
-
-.landing-anim:has(.cai-toggle__input:checked) .landing-anim__slide {
-  animation: cai-slide-up var(--cai-duration-slower) var(--cai-easing-enter) both;
-}
-
-/* --------------------------------------------------------------------------
-   Platform anatomy, sidebar specimen, utilities examples
-   -------------------------------------------------------------------------- */
-
-.landing-anatomy,
-.landing-anatomy .landing-box {
-  display: grid;
-  gap: var(--cai-space-03);
-}
-
-/* The page modifier on a small box: enough height to see both gradients */
-.landing-gradient-sample {
-  display: flex;
-  align-items: flex-end;
-  min-height: calc(var(--cai-space-12) * 1.5);
-  margin-top: var(--cai-space-03);
-  padding: var(--cai-space-04);
-  border: 1px dashed var(--cai-border-strong);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
-}
-
-.landing-sidebar-demo {
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--cai-space-06);
-}
-
-/* The sidebar is a full-height sticky column, and a fixed drawer at 768px and
-   below: pin it in place so it can be shown inline. (0,2,0) beats the core
-   rules inside their media query too. */
-.landing-demo__stage .cai-sidebar {
-  position: relative;
-  height: calc(var(--cai-space-12) * 4);
-  max-width: 100%;
-  transform: none;
-  z-index: var(--cai-z-base);
-}
-
-.landing-demo__stage .cai-nav-toggle {
-  position: static;
-  display: flex;
-}
-
-.landing-util-narrow {
-  display: block;
-  max-width: calc(var(--cai-space-12) * 1.5);
-}
-
-.landing-util-frame {
-  width: calc(var(--cai-space-12) * 2);
-  max-width: 100%;
-  border: 1px dashed var(--cai-border-strong);
-}
-
-.landing-util-margins {
-  display: inline-block;
-  border: 1px dashed var(--cai-border-strong);
-}
-
-.landing-util-margins .landing-box {
-  display: block;
+.landing-moved {
+  font-size: var(--cai-text-lg);
 }
 
 /* --------------------------------------------------------------------------
    Local patches for gaps in core. Remove each one when core fixes it.
    -------------------------------------------------------------------------- */
-
-/* The toggle here is a specimen with nothing to open: it is disabled, and core
-   has no disabled style for it. */
-.landing-demo__stage .cai-nav-toggle:disabled {
-  cursor: default;
-}
-
-/* A sticky first column paints itself with --cai-bg-page: a grey band on any
-   other surface. Hover keeps the component's own color (higher specificity). */
-.landing-demo__stage .cai-table--sticky-col td:first-child {
-  background: var(--cai-layer-01);
-}
-
-/* A closed <details> keeps the bottom margin of its summary: empty space
-   under the label. */
-.landing-demo__stage details:not([open]) > summary {
-  margin-bottom: calc(-1 * var(--cai-space-04));
-}
 
 /* .cai-platform-footer (768px and below) and .cai-platform-actions (480px and
    below) become columns but keep flex-wrap: wrap. A wrapping column nested in
@@ -1068,20 +456,6 @@
   }
 }
 
-/* When a table stacks into cards its <caption> stays a table-caption inside
-   a block, and shrinks to one word per line. */
-@container (max-width: 480px) {
-  .landing-demo__stage .cai-table caption {
-    display: block;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .landing-motion__reduced {
-    display: block;
-  }
-}
-
 /* --------------------------------------------------------------------------
    Responsive
    -------------------------------------------------------------------------- */
@@ -1096,34 +470,23 @@
   .landing-hero__title {
     font-size: var(--cai-text-3xl);
   }
-
-  .landing-scopes {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 768px) {
+  /* Brand, then the navigation on its own row, then the color mode: the
+     visual order follows the DOM order (WCAG 1.3.2, 2.4.3) */
   .landing-header__nav {
-    order: 3;
     flex-basis: 100%;
     margin-inline-start: 0;
   }
 
-  .landing-modes {
-    margin-inline-start: auto;
-  }
-
-  .landing-facts,
-  .landing-cols-4 {
+  .landing-facts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .landing-level__head,
   .landing-level__body,
-  .landing-demo-grid,
-  .landing-cols-2,
-  .landing-cols-3,
-  .landing-sidebar-demo {
+  .landing-fit {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1133,19 +496,6 @@
 
   .landing-stack--mini {
     min-width: 0;
-  }
-
-  /* Table of contents: each group becomes one wrapping row of links */
-  .landing-toc {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--cai-space-04);
-  }
-
-  .landing-toc ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--cai-space-02) var(--cai-space-05);
-    margin-top: var(--cai-space-02);
   }
 }
 
@@ -1175,32 +525,8 @@
     padding: var(--cai-space-04);
   }
 
-  .landing-ramp {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--cai-space-02);
-  }
-
-  .landing-scale {
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--cai-space-02) var(--cai-space-04);
-  }
-
-  .landing-scale > :last-child {
-    grid-column: 1 / -1;
-  }
-
-  .landing-scale--easing {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  /* Denser token chips */
-  .landing-token-grid {
-    gap: var(--cai-space-02);
-  }
-
-  .landing-token__modes .landing-swatch {
-    width: var(--cai-space-05);
-    height: var(--cai-space-05);
+  .landing-try {
+    padding: var(--cai-space-05);
   }
 
   /* Page footer: three short links fit on one row */

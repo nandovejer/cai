@@ -32,20 +32,26 @@ function isOpenPopover(el) {
 
 /**
  * Wire up nav active state, drawer controls, and section observation.
+ * @param {ParentNode} [root=document] - Limit it to one sidebar, for a page
+ *   that also shows a sidebar specimen whose links must stay inert.
  */
-export function initSidebar() {
-  const navLinks = Array.from(document.querySelectorAll(".cai-sidebar__link"));
+export function initSidebar(root = document) {
+  const navLinks = Array.from(root.querySelectorAll(".cai-sidebar__link"));
   const linkMap = new Map(
     navLinks.map((link) => [link.getAttribute("href"), link]),
   );
-  let currentActive = document.querySelector(".cai-sidebar__link.is-active");
+  let currentActive = root.querySelector(".cai-sidebar__link.is-active");
 
+  // A link to a section of this page is the current *location*
+  // (aria-current="true"); "page" is kept for a link to another document, so
+  // the page's own site navigation stays the only aria-current="page".
   function setCurrentLink(link) {
     navLinks.forEach((item) => {
       const isActive = item === link;
       item.classList.toggle("is-active", isActive);
-      if (isActive) item.setAttribute("aria-current", "page");
-      else item.removeAttribute("aria-current");
+      if (isActive) {
+        item.setAttribute("aria-current", item.getAttribute("href")?.startsWith("#") ? "true" : "page");
+      } else item.removeAttribute("aria-current");
     });
   }
 
@@ -97,7 +103,7 @@ export function initSidebar() {
   // link in step and closes the drawer, which a popover does not do itself.
   document.addEventListener("click", (e) => {
     const link = e.target.closest?.(".cai-sidebar__link");
-    if (!link) return;
+    if (!link || !navLinks.includes(link)) return;
 
     const targetId = link.getAttribute("href");
     const targetEl = targetId?.startsWith("#")

@@ -1,6 +1,7 @@
 /**
  * CAI docs apps — showcase glue
- * Docs-only enhancements shared by apps/docs and apps/platform-docs.
+ * Docs-only enhancements for apps/platform-docs (the documentation page,
+ * apps/docs, has its own glue in reference.js).
  * Not part of any published package: consumers never load this file.
  */
 

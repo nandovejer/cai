@@ -121,6 +121,152 @@
 	user-select: none;
 }
 
+/* Image: a frame of fixed ratio around a native <picture>. With no image
+   inside, its background shows an abstract placeholder, without JavaScript.
+   The placeholder is decorative: a background image is never announced.
+   JPEG is the fallback for browsers without AVIF or WebP, at 1280 at most. */
+.cai-platform-image {
+	display: block;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	background-color: var(--cai-layer-03);
+	background-image: image-set(
+		url("../placeholders/placeholder-16x9-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-16x9-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-16x9-1280.jpg") type("image/jpeg")
+	);
+	background-position: center;
+	background-size: cover;
+}
+
+.cai-platform-image--4x3 {
+	aspect-ratio: 4 / 3;
+	background-image: image-set(
+		url("../placeholders/placeholder-4x3-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-4x3-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-4x3-1280.jpg") type("image/jpeg")
+	);
+}
+
+.cai-platform-image--3x2 {
+	aspect-ratio: 3 / 2;
+	background-image: image-set(
+		url("../placeholders/placeholder-3x2-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-3x2-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-3x2-1280.jpg") type("image/jpeg")
+	);
+}
+
+.cai-platform-image--1x1 {
+	aspect-ratio: 1;
+	background-image: image-set(
+		url("../placeholders/placeholder-1x1-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-1x1-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-1x1-1280.jpg") type("image/jpeg")
+	);
+}
+
+.cai-platform-image--21x9 {
+	aspect-ratio: 21 / 9;
+	background-image: image-set(
+		url("../placeholders/placeholder-21x9-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-21x9-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-21x9-1280.jpg") type("image/jpeg")
+	);
+}
+
+.cai-platform-image--9x16 {
+	aspect-ratio: 9 / 16;
+	background-image: image-set(
+		url("../placeholders/placeholder-9x16-1080.avif") type("image/avif"),
+		url("../placeholders/placeholder-9x16-1080.webp") type("image/webp"),
+		url("../placeholders/placeholder-9x16-720.jpg") type("image/jpeg")
+	);
+}
+
+/* Dark mode: the night variant, on the same hooks as the dark tokens
+   (data-theme, a custom theme's data-mode, and the no-JS switcher radio).
+   High contrast keeps the day variant. */
+:where([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-platform-image {
+	background-image: image-set(
+		url("../placeholders/placeholder-night-16x9-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-night-16x9-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-night-16x9-1280.jpg") type("image/jpeg")
+	);
+}
+
+:where([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-platform-image--4x3 {
+	background-image: image-set(
+		url("../placeholders/placeholder-night-4x3-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-night-4x3-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-night-4x3-1280.jpg") type("image/jpeg")
+	);
+}
+
+:where([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-platform-image--3x2 {
+	background-image: image-set(
+		url("../placeholders/placeholder-night-3x2-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-night-3x2-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-night-3x2-1280.jpg") type("image/jpeg")
+	);
+}
+
+:where([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-platform-image--1x1 {
+	background-image: image-set(
+		url("../placeholders/placeholder-night-1x1-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-night-1x1-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-night-1x1-1280.jpg") type("image/jpeg")
+	);
+}
+
+:where([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-platform-image--21x9 {
+	background-image: image-set(
+		url("../placeholders/placeholder-night-21x9-1920.avif") type("image/avif"),
+		url("../placeholders/placeholder-night-21x9-1920.webp") type("image/webp"),
+		url("../placeholders/placeholder-night-21x9-1280.jpg") type("image/jpeg")
+	);
+}
+
+:where([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-platform-image--9x16 {
+	background-image: image-set(
+		url("../placeholders/placeholder-night-9x16-1080.avif") type("image/avif"),
+		url("../placeholders/placeholder-night-9x16-1080.webp") type("image/webp"),
+		url("../placeholders/placeholder-night-9x16-720.jpg") type("image/jpeg")
+	);
+}
+
+/* The image fills the frame; its own width and height attributes still
+   reserve the space before the CSS loads */
+.cai-platform-image :where(picture, img) {
+	display: block;
+	inline-size: 100%;
+	block-size: 100%;
+}
+
+/* A flat surface behind the image: if it fails, the browser draws the alt
+   text here, at the contrast of text on --cai-layer-03 (red line 7). A
+   transparent PNG or SVG shows on this surface too. */
+.cai-platform-image :where(img) {
+	object-fit: cover;
+	background-color: var(--cai-layer-03);
+	color: var(--cai-text-primary);
+}
+
+/* Forced colours drop the placeholder: a system-colour edge keeps an empty
+   frame visible as a box */
+@media (forced-colors: active) {
+	.cai-platform-image {
+		border: 1px solid CanvasText;
+	}
+}
+
+/* Save-Data, where a browser ever supports it: a flat surface instead */
+@media (prefers-reduced-data: reduce) {
+	.cai-platform-image {
+		background-image: none;
+	}
+}
+
 @media (max-width: 768px) {
 	.cai-platform-content {
 		padding-top: calc(var(--cai-space-07) + var(--cai-space-06));

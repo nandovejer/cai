@@ -1,0 +1,277 @@
+/* ==========================================================================
+   CAI Design System — Theme: Vejer
+   A reading theme inspired by Vejer de la Frontera (Cádiz): whitewashed
+   walls, sandstone arches, terracotta roofs, a clear Andalusian sky and
+   black wrought iron. Serif running text (ET Book), warm surfaces.
+   The sky blue is the interactive colour and nothing else (blue means "you
+   can act on it"). Sandstone and terracotta are decoration only: surfaces,
+   borders, rules. They never mark a state. Status colours keep their hues
+   (green success, red danger, yellow warning, blue info) in a shade that
+   reaches 4.5:1 on every surface of the theme.
+   Reference: packages/core/src/themes/cai-theme-vejer.spec.md
+
+   Usage (CDN):
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/themes/cai-theme-vejer.css">
+     <html data-theme="vejer">                        light (default)
+     <html data-theme="vejer" data-mode="dark">
+     <html data-theme="vejer" data-mode="high-contrast">
+
+   Requires: @cai-ds/tokens (cai-tokens.css) loaded first, for the scales
+   and for ET Book (fonts.css). With tokens.min.css (no fonts) the serif
+   falls back to the system serifs listed below.
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   VEJER — LIGHT (the default mode): whitewash and sandstone by day.
+   Contrast measured by scripts/check-contrast.js on every surface,
+   layer-03 and the hovered-row tint included.
+   -------------------------------------------------------------------------- */
+
+[data-theme="vejer"],
+[data-theme="vejer"][data-mode="light"] {
+  /* Private palette. Never referenced outside this file. */
+  --vej-whitewash: #fbf8f2; /* the walls: a warm, creamy white */
+  --vej-lime: #fffdf9; /* fresh whitewash, raised surfaces */
+  --vej-sand: #f4ede0; /* sun on sandstone: hover */
+  --vej-stone: #efe6d6; /* cut sandstone: the deepest layer */
+  --vej-stone-shade: #ebe0cc; /* sandstone in shade: pressed */
+  --vej-ochre-line: #e3d4b8; /* sandstone joints: hairlines */
+  --vej-iron: #231c16; /* wrought iron: text, 13.6:1 on the stone */
+  --vej-wood: #6b5a48; /* old door wood: secondary text, 5:1 or more */
+  --vej-line: #8b7d6f; /* field and strong borders, 3:1 on every surface */
+  --vej-terracotta: #b8613f; /* roof tiles: decoration only, never a state */
+  --vej-sky: #2365a6; /* the sky, deepened to 4.6:1: links and actions */
+
+  /* Typography: serif running text and headings. Controls, labels, tables
+     and code keep the sans and the mono (see the rules further down). */
+  --cai-font-serif: "ET Book", charter, "Bitstream Charter", "Sitka Text", cambria, georgia, serif;
+  --cai-font-heading: var(--cai-font-serif);
+  --cai-font-body: var(--cai-font-serif);
+
+  /* Radius: soft, like the arches */
+  --cai-radius-md: 6px;
+  --cai-radius-lg: 14px;
+  --cai-radius-xl: 22px;
+
+  /* Shadows: warm brown, not black */
+  --cai-shadow-sm: 0 1px 2px rgba(35, 28, 22, 0.08), 0 0 1px rgba(35, 28, 22, 0.1);
+  --cai-shadow-md: 0 4px 10px rgba(35, 28, 22, 0.1), 0 2px 4px rgba(35, 28, 22, 0.06);
+  --cai-shadow-lg: 0 14px 28px rgba(35, 28, 22, 0.14), 0 6px 12px rgba(35, 28, 22, 0.08);
+
+  /* Backgrounds */
+  --cai-bg-page: var(--vej-whitewash);
+  --cai-bg-ui: var(--vej-lime);
+  --cai-bg-ui-hover: var(--vej-sand);
+  --cai-bg-ui-active: var(--vej-stone-shade);
+  --cai-bg-overlay: rgba(35, 28, 22, 0.5);
+  --cai-bg-media: #000;
+
+  /* Text */
+  --cai-text-primary: var(--vej-iron);
+  --cai-text-secondary: var(--vej-wood);
+  --cai-text-placeholder: #7a6a58; /* 5.1:1 on the input */
+  --cai-text-disabled: #8f8172; /* 3:1 on layer-03, the worst surface */
+  --cai-text-on-color: #fff;
+  --cai-text-inverse: #fff;
+
+  /* Borders */
+  --cai-border-subtle: var(--vej-ochre-line);
+  --cai-border-strong: #807366; /* 4.6:1 under the white text of .cai-badge--gray; 3:1 or more as a border */
+  --cai-border-interactive: var(--vej-sky);
+
+  /* Brand: the sky */
+  --cai-brand-primary: var(--vej-sky);
+  --cai-brand-hover: #1b5089;
+  --cai-brand-active: #143d69;
+  --cai-brand-subtle: #e3eef9;
+  --cai-brand-fill: var(--vej-sky); /* white text 6:1 */
+  --cai-brand-fill-hover: #1b5089;
+  --cai-brand-fill-active: #143d69;
+
+  /* Icons */
+  --cai-icon-primary: var(--vej-iron);
+  --cai-icon-secondary: var(--vej-wood);
+  --cai-icon-inverse: #fff;
+
+  /* Layers */
+  --cai-layer-01: var(--vej-lime);
+  --cai-layer-02: var(--vej-whitewash);
+  --cai-layer-03: var(--vej-stone);
+
+  /* Sidebar: a dark wooden door with sandstone lettering */
+  --cai-sidebar-bg: #2a211a;
+  --cai-sidebar-text: #e3d5bf; /* 10.9:1 */
+  --cai-sidebar-text-hover: #fff;
+  --cai-sidebar-hover: #3a2f25;
+  --cai-sidebar-active-bg: #9cc8ee; /* light sky */
+  --cai-sidebar-active-text: #1a140f; /* 10.4:1 */
+  --cai-sidebar-border: #3d3127;
+  --cai-sidebar-label: #b9a78f; /* 6.8:1 */
+  --cai-sidebar-logo-bg: #9cc8ee; /* shares the active link's text colour */
+
+  /* Status: the base hues, a shade deeper where the warm surfaces need it */
+  --cai-color-success: #177734;
+  --cai-color-success-bg: var(--cai-green-10);
+  --cai-color-danger: #ca1c25;
+  --cai-color-danger-bg: var(--cai-red-10);
+  --cai-color-danger-fill: var(--cai-color-danger);
+  --cai-color-warning: var(--cai-yellow-60);
+  --cai-color-warning-accent: var(--cai-yellow-30);
+  --cai-color-warning-bg: var(--cai-yellow-10);
+  --cai-color-info: var(--cai-blue-70);
+  --cai-color-info-bg: var(--cai-blue-10);
+
+  /* Inputs */
+  --cai-input-bg: var(--vej-lime);
+  --cai-input-border: var(--vej-line);
+
+  /* Extended. Code is purple: never blue (interactive), never terracotta or
+     ochre (they would read as danger or warning) */
+  --cai-color-teal: #00736f;
+  --cai-color-teal-bg: var(--cai-teal-10);
+  --cai-color-purple: #803ae9;
+  --cai-color-purple-bg: var(--cai-purple-10);
+  --cai-color-code: #803ae9;
+}
+
+/* -------------------------------------------------------------------------
+   VEJER — DARK: shaded stone and wood at night, whitewash for text.
+   Only what differs from light.
+   -------------------------------------------------------------------------- */
+
+[data-theme="vejer"][data-mode="dark"] {
+  --vej-whitewash: #1c1712;
+  --vej-lime: #241e18;
+  --vej-sand: #2e261f;
+  --vej-stone: #3a3028;
+  --vej-stone-shade: #3a3028;
+  --vej-ochre-line: #43382d;
+  --vej-iron: #f3ece1; /* whitewash by night: 11:1 on the stone */
+  --vej-wood: #b8a690; /* 5.5:1 on the stone */
+  --vej-line: #877a69; /* 3:1 on every surface */
+  --vej-terracotta: #c9785a;
+  --vej-sky: #6fb1ec; /* 5:1 on the stone and on the brand tint */
+  --cai-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --cai-shadow-md: 0 4px 10px rgba(0, 0, 0, 0.5);
+  --cai-shadow-lg: 0 14px 28px rgba(0, 0, 0, 0.6);
+  --cai-bg-overlay: rgba(10, 8, 6, 0.7);
+  --cai-text-placeholder: #a08f7a; /* 5.3:1 on the input */
+  --cai-text-disabled: #877a69; /* 3:1 on layer-03 */
+  --cai-border-strong: #7d7062; /* white badge text 4.8:1; 3:1 or more on page, surface and hover */
+  --cai-text-inverse: var(--vej-whitewash);
+  --cai-brand-hover: #9ccaf2;
+  --cai-brand-active: #c8e1f8;
+  --cai-brand-subtle: rgba(140, 196, 245, 0.12);
+  --cai-brand-fill: #1d63a8; /* white text 6.2:1: the light sky is for text */
+  --cai-brand-fill-hover: #18548f;
+  --cai-brand-fill-active: #134577;
+  --cai-icon-inverse: var(--vej-whitewash);
+  --cai-sidebar-bg: #14100c;
+  --cai-sidebar-text: #cbbba5; /* 10.1:1 */
+  --cai-sidebar-hover: #241e18;
+  --cai-sidebar-active-bg: #8cc4f5;
+  --cai-sidebar-active-text: #14100c;
+  --cai-sidebar-border: #2e261f;
+  --cai-sidebar-label: #a8977f; /* 6.7:1 */
+  --cai-sidebar-logo-bg: #8cc4f5;
+  --cai-color-success: var(--cai-green-30);
+  --cai-color-success-bg: rgba(66, 190, 101, 0.12);
+  --cai-color-danger: var(--cai-red-30);
+  --cai-color-danger-bg: rgba(250, 77, 86, 0.12);
+  --cai-color-danger-fill: var(--cai-red-60); /* white text 4.8:1 */
+  --cai-color-warning: var(--cai-yellow-30);
+  --cai-color-warning-accent: var(--cai-yellow-20);
+  --cai-color-warning-bg: rgba(241, 194, 27, 0.12);
+  --cai-color-info: var(--cai-blue-30);
+  --cai-color-info-bg: rgba(120, 169, 255, 0.12);
+  --cai-color-teal: var(--cai-teal-40);
+  --cai-color-teal-bg: rgba(61, 219, 217, 0.12);
+  --cai-color-purple: var(--cai-purple-20);
+  --cai-color-purple-bg: rgba(190, 149, 255, 0.12);
+  --cai-color-code: var(--cai-purple-40); /* 5.5:1 on layer-03 */
+}
+
+/* -------------------------------------------------------------------------
+   VEJER — HIGH CONTRAST: white and grey surfaces with no tint, black text,
+   status colours at 7:1 or more. Primary and secondary text are both
+   near-black, so nothing depends on telling them apart.
+   -------------------------------------------------------------------------- */
+
+[data-theme="vejer"][data-mode="high-contrast"] {
+  --vej-whitewash: #fff;
+  --vej-lime: #fff;
+  --vej-sand: var(--cai-gray-10);
+  --vej-stone: var(--cai-gray-20);
+  --vej-stone-shade: var(--cai-gray-20);
+  --vej-ochre-line: var(--cai-gray-70);
+  --vej-iron: #000;
+  --vej-wood: var(--cai-gray-100);
+  --vej-line: #000;
+  --vej-terracotta: #000;
+  --vej-sky: var(--cai-blue-80);
+  --cai-shadow-sm: none;
+  --cai-shadow-md: 0 0 0 1px #000;
+  --cai-shadow-lg: 0 0 0 2px #000;
+  --cai-text-placeholder: var(--cai-gray-70);
+  --cai-text-disabled: var(--cai-gray-60); /* 3.8:1 on layer-03 */
+  --cai-border-strong: #000;
+  --cai-border-interactive: #000;
+  --cai-brand-hover: var(--cai-blue-90);
+  --cai-brand-active: var(--cai-blue-100);
+  --cai-brand-subtle: var(--cai-blue-10);
+  --cai-brand-fill-hover: var(--cai-blue-90);
+  --cai-brand-fill-active: var(--cai-blue-100);
+  --cai-layer-02: var(--cai-gray-10);
+  --cai-sidebar-bg: #000;
+  --cai-sidebar-text: var(--cai-gray-30);
+  --cai-sidebar-hover: var(--cai-gray-90);
+  --cai-sidebar-active-bg: #fff;
+  --cai-sidebar-active-text: #000;
+  --cai-sidebar-border: var(--cai-gray-80);
+  --cai-sidebar-label: var(--cai-gray-50);
+  --cai-sidebar-logo-bg: #fff;
+  --cai-color-success: #105224;
+  --cai-color-danger: #8d131a;
+  --cai-color-warning: #5a4300;
+  --cai-color-warning-accent: var(--cai-yellow-40);
+  --cai-color-info: var(--cai-blue-80);
+  --cai-color-teal: #00504d;
+  --cai-color-purple: #5828a1;
+  --cai-color-code: #5828a1;
+}
+
+/* -------------------------------------------------------------------------
+   VEJER — TYPE, LINKS AND DECORATION
+   Specificity 0, so any class wins: these only set defaults.
+   -------------------------------------------------------------------------- */
+
+/* Running text in ET Book, a size up, with more leading for its small
+   x-height. */
+:where([data-theme="vejer"] body) {
+  font-size: 1.0625rem; /* 17px at a 16px root */
+  line-height: 1.6;
+}
+
+/* Labels, legends, tables and navigation stay in the sans. Controls already
+   do: they never inherit the body font. */
+:where([data-theme="vejer"]) :where(label, legend, table, nav) {
+  font-family: var(--cai-font-sans);
+  line-height: 1.5;
+}
+
+/* Every link in content, cards and lists is underlined. The sky blue is
+   close in lightness to the iron text, so colour alone would not mark it
+   (WCAG 1.4.1, RL-6). Links inside a <nav> are exempt: their position says
+   they are links. Button classes remove the underline themselves. The
+   :not(:where()) keeps the specificity at 0. */
+:where([data-theme="vejer"] a):not(:where(nav a)) {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+/* Terracotta, the one decorative accent: the rule of a quotation. It marks
+   nothing and carries no meaning. */
+:where([data-theme="vejer"] blockquote) {
+  border-inline-start-color: var(--vej-terracotta);
+}

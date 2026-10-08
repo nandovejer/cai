@@ -44,3 +44,28 @@ test.describe('forced-colors: active', () => {
     expect(outline.width).toBeGreaterThanOrEqual(2);
   });
 });
+
+test.describe('forced-colors: the color mode switcher', () => {
+  test.use({ forcedColors: 'active' });
+
+  test('/: the checked mode stays visible', async ({ page, browserName }) => {
+    test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
+    await page.goto('/');
+    const styles = await page.locator('.landing-header .cai-theme-btn').evaluateAll((labels) =>
+      labels.map((el) => ({
+        checked: el.querySelector('input').checked,
+        visible: el.checkVisibility(),
+        background: getComputedStyle(el).backgroundColor,
+        border: parseFloat(getComputedStyle(el).borderTopWidth),
+      })),
+    );
+    expect(styles.every((s) => s.visible)).toBe(true);
+    const [checked] = styles.filter((s) => s.checked);
+    const others = styles.filter((s) => !s.checked);
+    // The checked option has a system highlight and a thicker border
+    for (const other of others) {
+      expect(checked.background).not.toBe(other.background);
+      expect(checked.border).toBeGreaterThan(other.border);
+    }
+  });
+});

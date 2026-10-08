@@ -163,20 +163,6 @@ async function buildJS() {
 
 await buildJS();
 
-// --- Copy custom-faces fonts (+ their licence texts) for theme usage ---
-const themeFontsSrc = resolve(coreRoot, "fonts/custom-faces");
-const themeFontsDest = resolve(distRoot, "fonts/custom-faces");
-if (existsSync(themeFontsSrc)) {
-  mkdirSync(themeFontsDest, { recursive: true });
-  readdirSync(themeFontsSrc).forEach((f) => {
-    copyFileSync(
-      resolve(themeFontsSrc, f),
-      resolve(themeFontsDest, f)
-    );
-  });
-  console.log(`✓ Custom-faces fonts copied → ${themeFontsDest}`);
-}
-
 // --- Themes: copy src/themes/*.css → dist/themes/ ---
 const themesSrcDir = resolve(srcRoot, "themes");
 const themesDistDir = resolve(distRoot, "themes");

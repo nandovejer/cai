@@ -11,11 +11,11 @@
     if(["light","dark","high-contrast"].indexOf(m)<0){m=matchMedia("(prefers-contrast: more)").matches?"high-contrast":matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
     document.documentElement.dataset.theme=m})();
   </script>
-  <script type="module" crossorigin src="./assets/index-CrjBY7Ke.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/platform-sphjuVTa.js">
-  <link rel="modulepreload" crossorigin href="./assets/highlight-BK0BlmnV.js">
+  <script type="module" crossorigin src="./assets/index-C1gvbXwk.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/platform-D0bKKmv5.js">
+  <link rel="modulepreload" crossorigin href="./assets/highlight-DUyICkX6.js">
   <link rel="modulepreload" crossorigin href="./assets/preload-helper-Dp1pzeXC.js">
-  <link rel="stylesheet" crossorigin href="./assets/platform-beoYF_cP.css">
+  <link rel="stylesheet" crossorigin href="./assets/platform-DIBxNJfe.css">
   <link rel="stylesheet" crossorigin href="./assets/index-CIm99rQ9.css">
 </head>
 <body class="cai-platform-page">
@@ -187,7 +187,7 @@
               <p class="landing-eyebrow">Level 1</p>
               <h3 class="landing-level__title" id="level-1-title">Tokens only</h3>
               <span class="cai-tag cai-tag--green">Standalone</span>
-              <p class="u-text-muted">Your CSS, your components, CAI's values. One stylesheet of custom properties plus three MIT-licensed fonts.</p>
+              <p class="u-text-muted">Your CSS, your components, CAI's values. One stylesheet of custom properties plus one MIT-licensed font.</p>
             </div>
             <ol class="landing-stack landing-stack--mini" aria-label="Layers included in level 1">
               <li class="is-included">tokens</li>
@@ -202,7 +202,7 @@
                 <li><span data-count="primitives">48</span> color primitives in <span data-count="families">7</span> families</li>
                 <li><span data-count="semantic">53</span> semantic tokens, each defined for light, dark and high contrast</li>
                 <li>Spacing (12), control heights (4), type sizes (9), radii (6) and shadows (3)</li>
-                <li>Gidole, ET Book and Monoid, self-hosted and MIT licensed</li>
+                <li>ET Book for headings, self-hosted and MIT licensed; system fonts for text and code</li>
               </ul>
             </div>
             <div>
@@ -1102,8 +1102,8 @@
               <ul class="o-grid landing-cols-3 landing-fonts">
                 <li class="landing-font" style="--v: var(--cai-font-sans)">
                   <code>--cai-font-sans</code>
-                  <span class="landing-font__sample">Gidole</span>
-                  <span class="landing-font__weights"><span style="font-weight:400">400</span></span>
+                  <span class="landing-font__sample">System sans</span>
+                  <span class="landing-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:600">600</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
                 </li>
                 <li class="landing-font" style="--v: var(--cai-font-serif)">
                   <code>--cai-font-serif</code>
@@ -1112,7 +1112,7 @@
                 </li>
                 <li class="landing-font" style="--v: var(--cai-font-mono)">
                   <code>--cai-font-mono</code>
-                  <span class="landing-font__sample">Monoid</span>
+                  <span class="landing-font__sample">System mono</span>
                   <span class="landing-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
                 </li>
               </ul>
@@ -1442,7 +1442,7 @@
             <div class="landing-demo__stage o-grid landing-cols-2">
               <div class="landing-demo__stage">
                 <h5 class="landing-heading-sample">Headings use ET Book</h5>
-                <p>Paragraphs use Gidole, and <a href="#c-elements">links use the brand color</a>.</p>
+                <p>Paragraphs use the system sans, and <a href="#c-elements">links use the brand color</a>.</p>
                 <hr>
                 <details>
                   <summary>A native disclosure</summary>
@@ -2078,26 +2078,30 @@ player.play();</code></pre>
               <span class="cai-tag cai-tag--purple">JS: clipboard.js</span>
             </div>
             <div class="landing-demo__stage">
-              <div class="cai-icon-grid">
-                <div class="cai-icon-item" data-svg="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;">
-                  <div class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></div>
-                  <div class="cai-icon-name">Plus</div>
-                </div>
-                <div class="cai-icon-item" data-svg="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12l5 5 9-10&quot;/&gt;&lt;/svg&gt;">
-                  <div class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></div>
-                  <div class="cai-icon-name">Check</div>
-                </div>
-                <div class="cai-icon-item" data-svg="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">
-                  <div class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-                  <div class="cai-icon-name">Arrow</div>
-                </div>
-                <div class="cai-icon-item" data-svg="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;">
-                  <div class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></div>
-                  <div class="cai-icon-name">Close</div>
-                </div>
-              </div>
+              <ul class="cai-icon-grid">
+                <li class="cai-icon-item">
+                  <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+                  <span class="cai-icon-name" id="c-icons-plus">Plus</span>
+                  <button type="button" class="cai-copy-btn" id="c-icons-plus-copy" aria-labelledby="c-icons-plus-copy c-icons-plus" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+                </li>
+                <li class="cai-icon-item">
+                  <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+                  <span class="cai-icon-name" id="c-icons-check">Check</span>
+                  <button type="button" class="cai-copy-btn" id="c-icons-check-copy" aria-labelledby="c-icons-check-copy c-icons-check" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12l5 5 9-10&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+                </li>
+                <li class="cai-icon-item">
+                  <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                  <span class="cai-icon-name" id="c-icons-arrow">Arrow</span>
+                  <button type="button" class="cai-copy-btn" id="c-icons-arrow-copy" aria-labelledby="c-icons-arrow-copy c-icons-arrow" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+                </li>
+                <li class="cai-icon-item">
+                  <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+                  <span class="cai-icon-name" id="c-icons-close">Close</span>
+                  <button type="button" class="cai-copy-btn" id="c-icons-close-copy" aria-labelledby="c-icons-close-copy c-icons-close" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+                </li>
+              </ul>
             </div>
-            <p class="landing-demo__note">Click an icon to copy its SVG. CAI ships the grid, not an icon set: these four are local to this page.</p>
+            <p class="landing-demo__note">Each icon has a button that copies its SVG. CAI ships the grid, not an icon set: these four are local to this page.</p>
             <details class="landing-guide">
               <summary>Guidance for Icon grid</summary>
               <div class="landing-guide__body">
@@ -2106,13 +2110,13 @@ player.play();</code></pre>
                 <h5 class="landing-guide__title" id="h-c-icons-when-not">When not to use</h5>
                 <p>Do not use icons as the only label of an action.</p>
                 <h5 class="landing-guide__title" id="h-c-icons-how">How it works</h5>
-                <p>Items with a data-svg attribute. CAI ships the grid, not an icon set. The script makes each item focusable and announces the copy.</p>
+                <p>A list of icons. Each item shows the icon, its name and a native copy button with the SVG in data-copy. Without JavaScript the copy buttons are hidden and the list still shows every icon and name. CAI ships the grid, not an icon set.</p>
                 <h5 class="landing-guide__title" id="h-c-icons-content">Content guidance</h5>
                 <p>Each item shows the icon name in text. Decorative icons are aria-hidden.</p>
                 <h5 class="landing-guide__title" id="h-c-icons-keyboard">Keyboard and ARIA</h5>
-                <p>Tab to an item, Enter or Space to copy it.</p>
+                <p>Tab to a copy button, Enter or Space to copy. Each button is named by its own text and the icon name (aria-labelledby), for example "Copy SVG Plus". The result is announced in a polite live region.</p>
                 <h5 class="landing-guide__title" id="h-c-icons-issues">Known issues</h5>
-                <p>Items are made into role="button" by JavaScript on a div (PRINCIPLES red line 4). Planned: render native buttons.</p>
+                <p>None known.</p>
               </div>
             </details>
           </article>
@@ -2571,7 +2575,7 @@ player.play();</code></pre>
               <code class="landing-demo__file">src/*.js</code>
             </div>
             <details class="landing-fold" open data-fold-narrow>
-              <summary>All <span data-count="modules">10</span> JavaScript modules</summary>
+              <summary>All <span data-count="modules">11</span> JavaScript modules</summary>
               <div class="landing-demo__stage">
               <div class="cai-table-wrap" role="region" aria-label="JavaScript modules" tabindex="0">
                 <table class="cai-table">
@@ -2587,6 +2591,7 @@ player.play();</code></pre>
                     <tr><td data-label="Module"><div><code>highlight.js</code></div></td><td data-label="What it does"><div>Dependency-free syntax highlight for code blocks</div></td><td data-label="Key exports"><div><code>highlightBlock</code>, <code>initHighlight</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>player.js</code></div></td><td data-label="What it does"><div>Video, audio and MIDI players with one UI</div></td><td data-label="Key exports"><div><code>mountPlayer</code>, <code>mountMidiPlayer</code>, <code>initPlayers</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>tabs.js</code></div></td><td data-label="What it does"><div>Tab activation and keyboard support</div></td><td data-label="Key exports"><div><code>activateTab</code>, <code>initTabs</code></div></td></tr>
+                    <tr><td data-label="Module"><div><code>i18n.js</code></div></td><td data-label="What it does"><div>Text the scripts write, in English and Spanish, chosen by the nearest <code>lang</code></div></td><td data-label="Key exports"><div><code>t</code>, <code>getLang</code>, <code>registerLocale</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>utils.js</code></div></td><td data-label="What it does"><div>Pure helpers</div></td><td data-label="Key exports"><div><code>formatTime</code>, <code>escapeHtml</code>, <code>calculateProgress</code></div></td></tr>
                     <tr><td data-label="Module"><div><code>midi.js</code></div></td><td data-label="What it does"><div>MIDI parser and Web Audio scheduler, loaded on demand</div></td><td data-label="Key exports"><div><code>MidiPlayer</code></div></td></tr>
                   </tbody>

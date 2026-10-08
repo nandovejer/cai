@@ -35,6 +35,12 @@
   color: var(--cai-brand-primary);
 }
 
+/* The current page is marked by weight too, not by colour alone (RL-6) */
+.docs-sitenav a[aria-current="page"] {
+  color: var(--cai-brand-primary);
+  font-weight: 600;
+}
+
 /* --------------------------------------------------------------------------
    DOCS APP LAYOUT
    -------------------------------------------------------------------------- */
@@ -941,23 +947,6 @@
   right: calc(var(--cai-space-04) + 48px);
 }
 
-.docs-back-to-top {
-  position: fixed;
-  right: var(--cai-space-05);
-  bottom: var(--cai-space-05);
-  z-index: var(--cai-z-raised);
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity var(--cai-duration-fast), transform var(--cai-duration-fast);
-}
-
-.docs-back-to-top.is-visible {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
-}
-
 @media (max-width: 768px) {
   .docs-demo-grid-2,
   .docs-demo-grid-3 {
@@ -1054,11 +1043,6 @@
   .docs-theme-card__left,
   .docs-theme-card__right {
     padding: var(--cai-space-05);
-  }
-
-  .docs-back-to-top {
-    right: var(--cai-space-04);
-    bottom: var(--cai-space-04);
   }
 }
 

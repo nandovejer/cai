@@ -9,8 +9,10 @@ const landingRoot = resolve(__dirname, "apps/landing");
 const platformDocsRoot = resolve(__dirname, "apps/platform-docs");
 const htmlElementsRoot = resolve(__dirname, "apps/html-elements");
 const distRoot = resolve(__dirname, "dist");
-// `vite build --mode pages` builds the GitHub Pages site into docs/
-const pagesRoot = resolve(__dirname, "docs");
+// `vite build --mode pages` builds the GitHub Pages site into docs/.
+// CAI_PAGES_OUT builds it elsewhere: scripts/check-generated.js compares
+// that fresh build with the committed docs/ (red line 14).
+const pagesRoot = resolve(__dirname, process.env.CAI_PAGES_OUT ?? "docs");
 
 // Public routes of the four apps. `up` is the path back to the site root.
 const ROUTES = [

@@ -167,11 +167,12 @@
   font-size: var(--cai-text-2xl);
   font-weight: 300;
   letter-spacing: -0.5px;
-  margin-bottom: var(--cai-space-02);
+  margin-block: 0 var(--cai-space-02);
   color: var(--cai-text-primary);
 }
 
 .pdocs-section__subtitle {
+  margin-block-start: 0;
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
   margin-bottom: var(--cai-space-06);
@@ -187,7 +188,24 @@
 .pdocs-subsection__title {
   font-size: var(--cai-text-base);
   font-weight: 600;
-  margin-bottom: var(--cai-space-04);
+  margin-block: 0 var(--cai-space-04);
+  color: var(--cai-text-primary);
+}
+
+/* Pattern guidance: the six sections of each platform pattern */
+.pdocs-guide {
+  max-inline-size: 70ch;
+}
+
+.pdocs-guide__classes {
+  margin-block-end: var(--cai-space-04);
+  color: var(--cai-text-secondary);
+}
+
+.pdocs-guide__title {
+  font-size: var(--cai-text-md);
+  font-weight: 600;
+  margin-block: var(--cai-space-05) var(--cai-space-02);
   color: var(--cai-text-primary);
 }
 
@@ -714,4 +732,9 @@
   .pdocs-primitive-grid--4 {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* Needs JavaScript: hidden until it runs, never shown dead (red line 2) */
+:root:not([data-cai-js]) [data-pdocs-motion-replay] {
+  display: none;
 }

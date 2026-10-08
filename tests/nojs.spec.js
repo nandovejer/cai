@@ -41,4 +41,23 @@ for (const app of APPS) {
     jsOnly);
     expect([...new Set(dead)], 'visible JavaScript-only controls').toEqual([]);
   });
+
+  test(`${app}: no control that carries a script hook is shown dead`, async ({ page }) => {
+    await page.goto(app);
+    // Scripts bind to data-* hooks (PRINCIPLES.md §3). Without JavaScript, a
+    // visible control with a hook must still do something natively: submit
+    // or reset its form, open a popover, or run a command. A specimen button
+    // with no hook is inert in both states and is not reported.
+    const dead = await page.evaluate(() =>
+      [...document.querySelectorAll('button, input[type="button"], [role="button"], a[href^="javascript:"]')]
+        .filter((el) => el.checkVisibility({ visibilityProperty: true }) && !el.closest('[aria-hidden="true"], [inert]'))
+        .filter((el) => !el.disabled)
+        .filter((el) => el.matches('a') || [...el.attributes].some((a) => a.name.startsWith('data-')))
+        .filter((el) => !(el.form && ['submit', 'reset'].includes(el.type)))
+        .filter((el) => !el.popoverTargetElement)
+        .filter((el) => !(el.getAttribute('commandfor') && 'commandForElement' in HTMLButtonElement.prototype))
+        .map((el) => `${el.tagName.toLowerCase()}.${[...el.classList].join('.')} [${[...el.attributes].filter((a) => a.name.startsWith('data-')).map((a) => a.name).join(' ')}] "${el.textContent.trim().slice(0, 30)}"`),
+    );
+    expect(dead, 'visible controls that need JavaScript').toEqual([]);
+  });
 }

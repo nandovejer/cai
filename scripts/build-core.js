@@ -140,12 +140,18 @@ async function buildJS() {
     }
     console.log(`✓ ${jsModules.length} JS modules copied → dist/`);
 
-    // Minify JS outputs with esbuild
-    for (const jsFile of ["cai.js", "midi.js", ...jsModules]) {
+    // Minify JS outputs with esbuild. A minified file imports the minified
+    // siblings, so cai.min.js lazy-loads midi.min.js, not the unminified
+    // chunk (red line 17: the chunk a page loads is the one budgeted).
+    const minified = ["cai.js", "midi.js", ...jsModules];
+    for (const jsFile of minified) {
       const jsPath = resolve(distRoot, jsFile);
       if (!existsSync(jsPath)) continue;
       const src = readFileSync(jsPath, "utf-8");
-      const { code: minJs } = await esbuild.transform(src, { loader: "js", minify: true });
+      const { code } = await esbuild.transform(src, { loader: "js", minify: true });
+      const minJs = code.replace(/(["'])\.\/([\w-]+)\.js\1/g, (match, quote, name) =>
+        minified.includes(`${name}.js`) ? `${quote}./${name}.min.js${quote}` : match,
+      );
       writeFileSync(resolve(distRoot, jsFile.replace(".js", ".min.js")), minJs, "utf-8");
     }
     console.log("✓ JS outputs minified (*.min.js)");

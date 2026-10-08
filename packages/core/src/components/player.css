@@ -15,7 +15,7 @@
 .cai-player-media-wrap {
   position: relative;
   width: 100%;
-  background: black;
+  background: var(--cai-bg-media);
   cursor: pointer;
   line-height: 0;
 }
@@ -198,7 +198,7 @@
   appearance: none;
   inline-size: 12px;
   block-size: 12px;
-  margin-block-start: -4px; /* centre the thumb on the 4px track */
+  margin-block-start: calc(var(--cai-space-02) * -1); /* centre the 12px thumb on the 4px track */
   border: 0;
   border-radius: 50%;
   background: var(--cai-brand-primary);

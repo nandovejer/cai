@@ -27,7 +27,7 @@
   color: var(--cai-text-secondary);
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
+  margin-bottom: calc(var(--cai-space-01) * -1); /* over the 2px tablist border */
   transition: color var(--cai-duration-fast),
     border-color var(--cai-duration-fast);
   white-space: nowrap;

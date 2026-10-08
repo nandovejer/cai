@@ -7,13 +7,14 @@ test.describe('prefers-reduced-motion: reduce', () => {
   test.use({ reducedMotion: 'reduce' });
 
   for (const app of ['/', '/docs/', '/platform/', '/html/']) {
-    test(`${app}: no transition or animation runs`, async ({ page }) => {
+    test(`${app}: no transition, animation or smooth scroll runs (RL-8)`, async ({ page }) => {
       await page.goto(app);
       const moving = await page.evaluate(() => {
         const seconds = (v) => v.split(',').map((x) => parseFloat(x) * (x.trim().endsWith('ms') ? 0.001 : 1));
         const offenders = [];
-        for (const el of document.querySelectorAll('body *')) {
+        for (const el of [document.documentElement, ...document.querySelectorAll('body, body *')]) {
           const s = getComputedStyle(el);
+          if (s.scrollBehavior === 'smooth') offenders.push(`${el.tagName.toLowerCase()} scroll-behavior: smooth`);
           const t = Math.max(...seconds(s.transitionDuration));
           const a = s.animationName !== 'none' ? Math.max(...seconds(s.animationDuration)) : 0;
           if (t > 0.001 || a > 0.001) {

@@ -84,9 +84,13 @@ jobs:
       - name: Run build
         run: pnpm build
 
-      # After the build: the dist-dependent suites are skipped without dist/
+      # After the build: the dist-dependent suites are skipped without dist/.
+      # CAI_RELEASE: on main (and PRs into it) the red-line debt register
+      # must be empty (PRINCIPLES.md, Migration)
       - name: Run unit tests
         run: pnpm test:unit
+        env:
+          CAI_RELEASE: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
 
       - name: Check tarball contents
         run: pnpm check:pack
@@ -96,6 +100,14 @@ jobs:
 
       - name: Check shipped strings
         run: pnpm check:strings
+
+      # Red line 7: text 4.5:1, focus ring and borders 3:1, three themes
+      - name: Check token contrast
+        run: pnpm check:contrast
+
+      # Red line 14: docs/ is exactly the output of the Pages build
+      - name: Check generated files
+        run: pnpm check:generated
 
       - name: Check exceptions register
         run: pnpm check:exceptions

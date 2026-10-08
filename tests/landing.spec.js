@@ -427,15 +427,28 @@ test.describe('Landing page', () => {
     test('every component has the six guidance sections', async ({ page }) => {
       await open(page);
 
-      const ids = [
-        'c-button', 'c-copy', 'c-form', 'c-tag', 'c-avatar', 'c-progress', 'c-tooltip',
-        'c-card', 'c-figure', 'c-table', 'c-code', 'c-icons', 'c-alert', 'c-toast',
-        'c-modal', 'c-tabs', 'c-breadcrumb', 'c-sidebar', 'c-player',
-      ];
+      // One guide per core component file (red line 18 for the first two
+      // sections, SR-5 for the rest). The colour-mode switcher is documented
+      // in the sidebar guide, where it lives.
+      const guide = { 'copy-btn': 'c-copy', 'icon-grid': 'c-icons', 'theme-switcher': 'c-sidebar' };
+      const ids = [...new Set(components.map((file) => guide[file.replace('.css', '')] ?? `c-${file.replace('.css', '')}`))];
+      expect(ids.length).toBeGreaterThanOrEqual(19);
       const sections = ['when', 'when-not', 'how', 'content', 'keyboard', 'issues'];
       for (const id of ids) {
         for (const section of sections) {
           await expect(page.locator(`#h-${id}-${section}`), `${id} ${section}`).toHaveCount(1);
+        }
+        // "When to use" and "When not to use" say something: a heading
+        // followed by at least a sentence before the next heading
+        for (const section of ['when', 'when-not']) {
+          const text = await page.locator(`#h-${id}-${section}`).evaluate((heading) => {
+            let text = '';
+            for (let el = heading.nextElementSibling; el && !/^H[1-6]$/.test(el.tagName); el = el.nextElementSibling) {
+              text += el.textContent;
+            }
+            return text.trim();
+          });
+          expect(text.length, `${id} ${section} has content`).toBeGreaterThan(20);
         }
       }
     });

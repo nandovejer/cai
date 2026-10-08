@@ -18,12 +18,13 @@
   --cai-bg-ui-hover: var(--cai-gray-10);
   --cai-bg-ui-active: var(--cai-gray-20);
   --cai-bg-overlay: rgba(22, 22, 22, 0.5);
+  --cai-bg-media: #000; /* behind video: letterboxing, the same in every mode */
 
   /* Text */
   --cai-text-primary: var(--cai-gray-100);
   --cai-text-secondary: var(--cai-gray-70);
   --cai-text-placeholder: var(--cai-gray-60); /* 5:1 on white (WCAG 1.4.3) */
-  --cai-text-disabled: var(--cai-gray-30);
+  --cai-text-disabled: var(--cai-gray-60);
   --cai-text-on-color: #fff;
   --cai-text-inverse: #fff;
 
@@ -106,19 +107,20 @@
   --cai-bg-ui-hover: var(--cai-gray-80);
   --cai-bg-ui-active: var(--cai-gray-70);
   --cai-bg-overlay: rgba(0, 0, 0, 0.65);
+  --cai-bg-media: #000; /* behind video: letterboxing, the same in every mode */
 
   /* Text */
   --cai-text-primary: var(--cai-gray-10);
   --cai-text-secondary: var(--cai-gray-30);
   --cai-text-placeholder: var(--cai-gray-50); /* 4.6:1 on the input */
-  --cai-text-disabled: var(--cai-gray-70);
+  --cai-text-disabled: var(--cai-gray-50);
   --cai-text-on-color: #fff;
   --cai-text-inverse: var(--cai-gray-100);
 
   /* Borders */
   --cai-border-subtle: var(--cai-gray-80);
   --cai-border-strong: var(--cai-gray-60);
-  --cai-border-interactive: var(--cai-blue-50);
+  --cai-border-interactive: var(--cai-blue-40); /* focus ring: 3:1 on every dark surface, layer-03 included (blue-50 fell to 2.3:1) */
 
   /* Brand */
   /* blue-40: 4.5:1 or more as text on every dark surface, brand-subtle
@@ -153,15 +155,15 @@
   --cai-sidebar-logo-bg: var(--cai-blue-60);
 
   /* Status */
-  --cai-color-success: var(--cai-green-40);
+  --cai-color-success: var(--cai-green-30); /* 4.5:1 on success-bg over a hovered row (green-40 fell to 4.0:1) */
   --cai-color-success-bg: rgba(66, 190, 101, 0.12);
-  --cai-color-danger: var(--cai-red-40); /* red-50 fell to 3.9:1 on danger-bg */
+  --cai-color-danger: var(--cai-red-30); /* 4.5:1 on danger-bg over a hovered row (red-40 fell to 4.4:1) */
   --cai-color-danger-bg: rgba(250, 77, 86, 0.12);
   --cai-color-danger-fill: var(--cai-red-60); /* white text 4.8:1 */
   --cai-color-warning: var(--cai-yellow-30);
   --cai-color-warning-accent: var(--cai-yellow-20);
   --cai-color-warning-bg: rgba(241, 194, 27, 0.12);
-  --cai-color-info: var(--cai-blue-40);
+  --cai-color-info: var(--cai-blue-30); /* 4.5:1 on info-bg over a hovered row (blue-40 fell to 4.0:1) */
   --cai-color-info-bg: rgba(120, 169, 255, 0.12);
 
   /* Inputs */
@@ -171,7 +173,7 @@
   /* Extended */
   --cai-color-teal: var(--cai-teal-40);
   --cai-color-teal-bg: rgba(61, 219, 217, 0.12);
-  --cai-color-purple: var(--cai-purple-40);
+  --cai-color-purple: var(--cai-purple-20); /* 4.5:1 on purple-bg over a hovered row (purple-40 fell to 4.0:1; there is no purple-30) */
   --cai-color-purple-bg: rgba(190, 149, 255, 0.12);
   --cai-color-code: var(--cai-purple-40);
 }
@@ -189,6 +191,7 @@
   --cai-bg-ui-hover: var(--cai-gray-10);
   --cai-bg-ui-active: var(--cai-gray-20);
   --cai-bg-overlay: rgba(0, 0, 0, 0.5);
+  --cai-bg-media: #000; /* behind video: letterboxing, the same in every mode */
 
   /* Text */
   --cai-text-primary: #000;

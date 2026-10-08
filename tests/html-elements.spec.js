@@ -40,30 +40,6 @@ const selectorsByFile = new Map(
   ]),
 );
 
-/**
- * Rules that predate the :where() convention (v3.0). They keep their type
- * specificity so consumers see no change; do not add to this list.
- */
-const LEGACY_TYPE_SELECTORS = new Set([
-  'html',
-  'body',
-  'hr',
-  'textarea',
-  'h1, h2, h3, h4, h5, h6',
-  'details',
-  'details[open]',
-  'summary',
-  'summary:hover',
-  'summary:focus-visible',
-  'mark',
-  'kbd',
-  'time',
-  'figure',
-  'figcaption',
-  'output',
-  'meter',
-]);
-
 /** True when `tag` is used as a type selector in any of the given preludes. */
 const hasTypeSelector = (preludes, tag) =>
   preludes.some((prelude) => new RegExp(`(^|[^\\w.#:\\[-])${tag}(?![\\w-])`).test(prelude));
@@ -130,13 +106,14 @@ test.describe('Element styles match the inventory', () => {
     }
   }
 
-  test('new element rules have zero specificity, so any .cai-* class wins', () => {
+  // Red line 11; stylelint (cai/no-bare-element) enforces it for every file in packages/
+  test('element rules have zero specificity, so any .cai-* class wins', () => {
     const offenders = [];
     for (const [file, preludes] of selectorsByFile) {
       for (const raw of preludes) {
         const prelude = raw.replace(/\s+/g, ' ');
         // A pseudo-element cannot go inside :where(): ":where(dialog)::backdrop" is the floor
-        if (LEGACY_TYPE_SELECTORS.has(prelude) || /^:where\(.*\)(::[\w-]+)?$/.test(prelude)) continue;
+        if (/^:where\(.*\)(::[\w-]+)?$/.test(prelude)) continue;
         offenders.push(`${file}: ${prelude}`);
       }
     }

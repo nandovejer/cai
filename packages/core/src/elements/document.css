@@ -3,19 +3,19 @@
    Document root: html, body. Specificity: type (0,0,1).
    ========================================================================== */
 
-html {
+:where(html) {
   background: var(--cai-bg-page);
   scroll-behavior: smooth;
   transition: background var(--cai-duration-base);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
+  :where(html) {
     scroll-behavior: auto;
   }
 }
 
-body {
+:where(body) {
   font-family: var(--cai-font-sans);
   font-size: var(--cai-text-base);
   background: var(--cai-bg-page);

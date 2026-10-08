@@ -21,37 +21,11 @@ function initSectionAnchors() {
   });
 }
 
-function initBackToTop() {
-  const button = document.querySelector("[data-back-to-top]");
-  if (!button) return;
-
-  const toggle = () => {
-    button.classList.toggle("is-visible", window.scrollY > 300);
-  };
-
-  button.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  toggle();
-  window.addEventListener("scroll", toggle, { passive: true });
-}
-
-// Escape key closes all open details elements
-function initDetailsKeyboard() {
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      document.querySelectorAll("details[open]").forEach((detail) => {
-        detail.open = false;
-      });
-    }
-  });
-}
-
 // Demo breadcrumb links (href="#") should not navigate
 function initDemoBreadcrumbs() {
   document.body.addEventListener("click", (e) => {
     const demoBreadcrumbLink = e.target.closest('.cai-breadcrumb a[href="#"]');
+    // eslint-disable-next-line no-restricted-syntax -- RL-3: a demo link with nowhere to go; following "#" would only jump to the top
     if (demoBreadcrumbLink) e.preventDefault();
   });
 }
@@ -75,6 +49,7 @@ function initFormDemos() {
   const demoForm = document.getElementById("demo-form");
   if (demoForm) {
     demoForm.addEventListener("submit", (e) => {
+      // eslint-disable-next-line no-restricted-syntax -- RL-3: a demo form has no endpoint; the result is shown in place
       e.preventDefault();
       const result = document.getElementById("form-result");
       if (!result) return;
@@ -98,8 +73,6 @@ function initFormDemos() {
 
 function boot() {
   initSectionAnchors();
-  initBackToTop();
-  initDetailsKeyboard();
   initDemoBreadcrumbs();
   initFormDemos();
 }

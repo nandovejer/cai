@@ -98,10 +98,12 @@ function initDemoGuards() {
   stages.forEach((stage) => {
     stage.addEventListener("click", (e) => {
       const link = e.target.closest('a[href="#"], area[href="#"]');
+      // eslint-disable-next-line no-restricted-syntax -- RL-3: a demo link with nowhere to go; following "#" would only jump to the top
       if (link) e.preventDefault();
     });
     stage.addEventListener("submit", (e) => {
       // Native validation has already run: only a valid form gets here
+      // eslint-disable-next-line no-restricted-syntax -- RL-3: a demo form has no endpoint; native validation has already run
       if (e.target.matches("form:not([method='dialog'])")) e.preventDefault();
     });
   });

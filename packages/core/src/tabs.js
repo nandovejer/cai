@@ -26,6 +26,9 @@ function panelOf(tab) {
   return id ? document.getElementById(id) : null;
 }
 
+/** Keys of the ARIA tabs pattern and where each one moves the focus. */
+const TAB_KEYS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1, Home: "start", End: "end" };
+
 /** Add the ARIA roles and relationships. Idempotent. */
 function upgrade(tablist) {
   tablist.setAttribute("role", "tablist");
@@ -110,7 +113,8 @@ export function initTabs(root = document) {
   document.addEventListener("click", (e) => {
     const tab = e.target.closest?.(".cai-tab");
     if (!tab || !tab.closest(".cai-tabs[role='tablist']")) return;
-    e.preventDefault(); // the link only matters without JavaScript
+    // eslint-disable-next-line no-restricted-syntax -- RL-3: the tab is a link only without JavaScript; with it, the tab shows its panel in place
+    e.preventDefault();
     activateTab(tab);
   });
 
@@ -118,18 +122,9 @@ export function initTabs(root = document) {
     const tab = e.target.closest?.(".cai-tab");
     if (!tab || !tab.closest(".cai-tabs[role='tablist']")) return;
 
-    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-      e.preventDefault();
-      moveTabFocus(tab, 1);
-    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-      e.preventDefault();
-      moveTabFocus(tab, -1);
-    } else if (e.key === "Home") {
-      e.preventDefault();
-      moveTabFocus(tab, "start");
-    } else if (e.key === "End") {
-      e.preventDefault();
-      moveTabFocus(tab, "end");
-    }
+    if (!Object.hasOwn(TAB_KEYS, e.key)) return;
+    // eslint-disable-next-line no-restricted-syntax -- RL-3: the ARIA tabs pattern moves focus with these keys; without this the page would scroll as well
+    e.preventDefault();
+    moveTabFocus(tab, TAB_KEYS[e.key]);
   });
 }

@@ -7,7 +7,7 @@
 /* Details & Summary — native accordion                                      */
 /* ========================================================================== */
 
-details {
+:where(details) {
   border: 1px solid var(--cai-border-subtle);
   border-radius: var(--cai-radius-md);
   padding: var(--cai-space-04);
@@ -16,11 +16,11 @@ details {
   transition: background var(--cai-duration-base);
 }
 
-details[open] {
+:where(details[open]) {
   background: var(--cai-layer-01);
 }
 
-summary {
+:where(summary) {
   cursor: pointer;
   font-weight: 600;
   color: var(--cai-text-primary);
@@ -32,11 +32,11 @@ summary {
   transition: background var(--cai-duration-fast);
 }
 
-summary:hover {
+:where(summary:hover) {
   background: var(--cai-bg-ui-hover);
 }
 
-summary:focus-visible {
+:where(summary:focus-visible) {
   outline: 2px solid var(--cai-border-interactive);
   outline-offset: 2px;
 }

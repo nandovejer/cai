@@ -46,6 +46,11 @@
   color: var(--cai-brand-primary);
 }
 
+/* The current page is marked by weight too, not by colour alone (RL-6) */
+.elements-sitenav a[aria-current="page"] {
+  font-weight: 600;
+}
+
 /* Needs JavaScript: hidden until it runs */
 :root:not([data-cai-js]) .elements-modes {
   display: none;

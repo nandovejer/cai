@@ -93,6 +93,7 @@ function initFolds() {
   if (!window.matchMedia("(max-width: 768px)").matches) return;
   const target = document.getElementById(window.location.hash.slice(1));
   document.querySelectorAll("details[data-fold-narrow]").forEach((details) => {
+    // eslint-disable-next-line no-restricted-syntax -- RL-3: sets the initial state only; opening and closing stay native
     if (!details.contains(target)) details.open = false;
   });
   // Folding moves everything below it: go back to the requested section

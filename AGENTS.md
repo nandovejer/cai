@@ -98,7 +98,7 @@ Edit `packages/core/src/settings/_settings.css` only, then regenerate `dist/cai.
 ### Adding a style for a bare HTML element
 
 1. Put the rule in the file of its MDN category under `packages/core/src/elements/` (`document`, `sections`, `text`, `inline`, `media`, `forms`, `interactive`).
-2. Wrap the whole selector in `:where()` (specificity 0), so any `.cai-*` class or the consumer's own rule wins. A pseudo-element goes outside: `:where(dialog)::backdrop`. Rules that predate this convention are listed in `tests/html-elements.spec.js`; do not add to that list.
+2. Wrap the whole selector in `:where()` (specificity 0), so any `.cai-*` class or the consumer's own rule wins. A pseudo-element goes outside: `:where(dialog)::backdrop`. There is no exception (red line 11): stylelint's `cai/no-bare-element` rule fails on any bare type selector in `packages/`.
 3. Elements that already have a component (`table`, `input`, `select`, `button`) are styled through its class, not here.
 4. Update the element's `styledBy` in `tests/fixtures/html-elements.json` and its card in `apps/html-elements/index.html`, then run `pnpm core:build` and `pnpm test:ui`.
 

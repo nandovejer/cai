@@ -15,8 +15,8 @@
     "pages:build": "pnpm build && vite build --mode pages",
     "core:build": "node scripts/build-core.js",
     "platform:build": "node scripts/build-platform.js",
-    "lint:css": "stylelint \"packages/**/*.css\" \"!packages/**/dist/**\"",
-    "lint:js": "eslint \"packages/**/*.js\" \"scripts/**/*.js\"",
+    "lint:css": "stylelint \"packages/**/*.css\" \"apps/**/*.css\"",
+    "lint:js": "eslint \"packages/**/*.js\" \"apps/**/*.js\" \"scripts/**/*.js\" \"tests/**/*.js\" \"*.config.js\"",
     "tokens:build": "node scripts/build-tokens.js",
     "test:unit": "vitest run",
     "test:ui": "playwright test",
@@ -25,7 +25,9 @@
     "audit:prod": "pnpm audit --prod --audit-level=high",
     "check:size": "node scripts/check-size.js",
     "check:strings": "node scripts/check-strings.js",
-    "check:exceptions": "node scripts/check-exceptions.js"
+    "check:exceptions": "node scripts/check-exceptions.js",
+    "check:contrast": "node scripts/check-contrast.js",
+    "check:generated": "node scripts/check-generated.js"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

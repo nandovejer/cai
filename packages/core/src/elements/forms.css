@@ -3,7 +3,7 @@
    Form-related elements without a component: textarea, output, meter. Specificity: type (0,0,1).
    ========================================================================== */
 
-textarea {
+:where(textarea) {
   resize: vertical;
 }
 
@@ -12,7 +12,7 @@ textarea {
 /* Output — form results                                                     */
 /* ========================================================================== */
 
-output {
+:where(output) {
   display: inline-block;
   padding: var(--cai-space-02) var(--cai-space-03);
   background: var(--cai-bg-ui);
@@ -25,7 +25,7 @@ output {
 /* Meter — progress indicator (visual only)                                  */
 /* ========================================================================== */
 
-meter {
+:where(meter) {
   width: 100%;
   height: 20px;
   border-radius: var(--cai-radius-sm);

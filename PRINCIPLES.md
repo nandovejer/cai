@@ -31,7 +31,7 @@ Accessibility is the baseline, not a feature, a phase or a ticket.
 - **Contrast minimums:** 4.5:1 for text, 3:1 for large text, UI borders, icons and focus rings, in the three shipped themes (`light`, `dark`, `high-contrast`).
 - **Custom themes are the consumer's responsibility.** CAI guarantees its shipped themes and provides a tool to check a custom theme against the same minimums (backlog).
 - **Motion is opt-in.** Any animation longer than 150 ms or that moves content is disabled under `prefers-reduced-motion: reduce`. No auto-playing media, no parallax, no infinite loops.
-- **Disabled controls are a last resort.** Prefer leaving the control enabled and explaining the error. If you must disable, keep the label readable (≥ 3:1).
+- **Disabled controls are a last resort.** Prefer leaving the control enabled and explaining the error. If you must disable, keep the label readable (≥ 3:1, red line 7) and mark the state with something other than colour.
 - **Names come from the DOM.** Use `<label>`, visible text, `aria-labelledby`. `aria-label` is the fallback, never the default.
 - **Known issues are public.** Any confirmed accessibility defect goes in `CHANGELOG.md` under "Known issues" and in EXCEPTIONS.md until fixed, with the WCAG criterion it fails.
 - **Assistive technology testing (`SR-6`).** A release that changes markup, CSS or JS of a component is tested by hand with NVDA + Firefox, VoiceOver + Safari, TalkBack + Chrome and Orca + Firefox. The accessibility statement lists only the combinations that were actually used for that release.
@@ -143,7 +143,7 @@ Absolute. A PR that crosses one is closed, not reviewed.
 4. **No `div` or `span` with a `role` when a native element exists** (`button`, `a`, `input`, `dialog`, `nav`, `table`).
 5. **No `outline: none` without a visible `:focus-visible` replacement.**
 6. **No state communicated by colour alone.**
-7. **No text below 4.5:1 contrast** in any shipped theme, including hover and disabled states of the text itself.
+7. **No text below 4.5:1 contrast** in any shipped theme, hover included. **Disabled text keeps at least 3:1**, and the disabled state has a cue other than colour (a dashed border on buttons).
 8. **No animation that ignores `prefers-reduced-motion`.**
 9. **No placeholder used as a label. No icon-only control without an accessible name.**
 10. **No primitive token or literal colour/space value in a component.** Semantic tokens only.

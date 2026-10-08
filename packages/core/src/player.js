@@ -195,6 +195,7 @@ export function bindPlayerUI(root, controls, mediaLike) {
     if (["INPUT", "BUTTON", "SELECT", "TEXTAREA"].includes(e.target.tagName))
       return;
     if (e.key === " " || e.key === "k") {
+      // eslint-disable-next-line no-restricted-syntax -- RL-3: Space plays or pauses the focused player, as native media controls do, instead of scrolling the page
       e.preventDefault();
       mediaLike.paused ? mediaLike.play() : mediaLike.pause();
     }

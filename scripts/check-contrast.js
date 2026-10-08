@@ -1,0 +1,140 @@
+/**
+ * CAI — token contrast (PRINCIPLES.md §1, red lines 5 and 7).
+ * Resolves the semantic tokens of the three base themes (light, dark,
+ * high-contrast) to their real values and measures the pairs the components
+ * draw: text on its surfaces at 4.5:1, focus ring, borders and icons at 3:1.
+ * Translucent tokens are composited over the surface below, as in the page.
+ * WCAG 2.x relative luminance.
+ *
+ * The browser checks (axe, tests/red-lines.spec.js) measure what the demos
+ * render; this one covers every pair a consumer can build from the tokens.
+ *
+ * Usage: node scripts/check-contrast.js
+ */
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const read = (path) => readFileSync(resolve(root, path), "utf-8");
+
+const THEMES = ["light", "dark", "high-contrast"];
+
+/* ---- Pairs: [foreground tokens, background tokens, minimum] --------------
+   A background written "a > b" is token a composited over token b. */
+const SURFACES = ["bg-page", "bg-ui", "bg-ui-hover", "layer-01", "layer-02", "input-bg"];
+const PAIRS = [
+  // Text and links on the surfaces they sit on
+  [["text-primary", "text-secondary", "brand-primary", "brand-hover"], SURFACES, 4.5],
+  [["text-primary", "text-secondary"], ["layer-03", "bg-ui-active"], 4.5],
+  [["text-placeholder"], ["input-bg"], 4.5],
+  [["text-disabled"], ["bg-page", "bg-ui", "input-bg", "layer-01", "layer-02"], 3],
+  // Text on solid fills
+  [["text-on-color"], ["brand-fill", "brand-fill-hover", "brand-fill-active", "color-danger-fill"], 4.5],
+  // Sidebar
+  [["sidebar-text", "sidebar-label", "sidebar-text-hover"], ["sidebar-bg"], 4.5],
+  [["sidebar-text-hover"], ["sidebar-hover"], 4.5],
+  [["sidebar-active-text"], ["sidebar-active-bg"], 4.5],
+  // Status text on its tint (alerts, tags), also on a hovered row
+  ...["success", "danger", "warning", "info", "teal", "purple"].map((s) => [
+    [`color-${s}`],
+    [`color-${s}-bg > bg-page`, `color-${s}-bg > bg-ui`, `color-${s}-bg > bg-ui-hover`],
+    4.5,
+  ]),
+  [["color-code"], ["bg-page", "bg-ui", "layer-02"], 4.5],
+  // Non-text: focus ring, field boundaries, strong borders, icons (WCAG 1.4.11)
+  [["border-interactive"], [...SURFACES, "layer-03"], 3],
+  [["input-border"], ["input-bg"], 3],
+  [["border-strong", "icon-primary", "icon-secondary"], ["bg-page", "bg-ui"], 3],
+];
+
+/* ---- Token values ------------------------------------------------------- */
+
+const tokens = JSON.parse(read("packages/tokens/tokens.json"));
+const primitives = {};
+for (const [family, steps] of Object.entries(tokens.color)) {
+  for (const [step, { value }] of Object.entries(steps)) primitives[`--cai-${family}-${step}`] = value;
+}
+
+const semantic = read("packages/tokens/src/semantic.css").replace(/\/\*[\s\S]*?\*\//g, "");
+const themes = {};
+for (const [, selector, body] of semantic.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
+  const name = selector.match(/\[data-theme="([\w-]+)"\]/)?.[1];
+  if (!THEMES.includes(name)) continue;
+  themes[name] = Object.fromEntries([...body.matchAll(/(--cai-[\w-]+)\s*:\s*([^;]+);/g)].map((m) => [m[1], m[2].trim()]));
+}
+
+function parse(value) {
+  const hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)?.[1];
+  if (hex) {
+    const full = hex.length === 3 ? [...hex].map((c) => c + c).join("") : hex;
+    return { r: parseInt(full.slice(0, 2), 16), g: parseInt(full.slice(2, 4), 16), b: parseInt(full.slice(4, 6), 16), a: 1 };
+  }
+  const rgb = value.match(/^rgba?\(([^)]+)\)$/)?.[1];
+  if (rgb) {
+    const [r, g, b, a = 1] = rgb.split(/[\s,/]+/).filter(Boolean).map(Number);
+    return { r, g, b, a };
+  }
+  throw new Error(`cannot read the colour "${value}"`);
+}
+
+function value(theme, name) {
+  // A theme block redefines only what changes; light is the :root default
+  const raw = themes[theme][name] ?? themes.light[name] ?? primitives[name];
+  if (raw === undefined) throw new Error(`${theme}: ${name} is not defined`);
+  const ref = raw.match(/^var\((--cai-[\w-]+)\)$/)?.[1];
+  return ref ? value(theme, ref) : raw;
+}
+
+const over = (top, bottom) => ({
+  r: top.r * top.a + bottom.r * (1 - top.a),
+  g: top.g * top.a + bottom.g * (1 - top.a),
+  b: top.b * top.a + bottom.b * (1 - top.a),
+  a: 1,
+});
+const luminance = ({ r, g, b }) => {
+  const c = (v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * c(r) + 0.7152 * c(g) + 0.0722 * c(b);
+};
+const ratio = (x, y) => {
+  const [a, b] = [luminance(x), luminance(y)];
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+};
+
+/** A background spec ("a > b > …") as an opaque colour, over the page. */
+function surface(theme, spec) {
+  const layers = spec.split(">").map((s) => parse(value(theme, `--cai-${s.trim()}`)));
+  let result = parse(value(theme, "--cai-bg-page"));
+  for (const layer of layers.reverse()) result = over(layer, result);
+  return result;
+}
+
+/* ---- Run ------------------------------------------------------------------ */
+
+const { debt } = JSON.parse(read("tests/fixtures/red-line-debt.json"));
+const registered = (text) => debt.some((e) => e.check === "token-contrast" && text.includes(e.match));
+
+const failures = [];
+const known = [];
+let measured = 0;
+for (const theme of THEMES) {
+  for (const [foregrounds, backgrounds, minimum] of PAIRS) {
+    for (const fg of foregrounds) {
+      for (const bg of backgrounds) {
+        const back = surface(theme, bg);
+        const result = ratio(over(parse(value(theme, `--cai-${fg}`)), back), back);
+        measured += 1;
+        if (result + 1e-9 >= minimum) continue;
+        const line = `${theme}: --cai-${fg} on ${bg} is ${result.toFixed(2)}:1 (needs ${minimum}:1)`;
+        (registered(line) ? known : failures).push(line);
+      }
+    }
+  }
+}
+
+for (const line of known) console.warn(`! ${line} — registered in tests/fixtures/red-line-debt.json`);
+if (failures.length) {
+  console.error(failures.map((f) => `✗ ${f}`).join("\n"));
+  process.exit(1);
+}
+console.log(`✓ contrast: ${measured} token pairs in ${THEMES.length} themes${known.length ? `, ${known.length} registered as debt` : ""}`);

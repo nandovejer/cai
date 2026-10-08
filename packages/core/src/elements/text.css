@@ -3,7 +3,7 @@
    Flow content: hr, figure, figcaption. Specificity: type (0,0,1).
    ========================================================================== */
 
-hr {
+:where(hr) {
   border: none;
   border-top: 1px solid var(--cai-border-subtle);
 }
@@ -13,14 +13,14 @@ hr {
 /* Figure & Figcaption — semantic media containers                           */
 /* ========================================================================== */
 
-figure {
+:where(figure) {
   margin: var(--cai-space-06) 0;
   padding: var(--cai-space-04);
   background: var(--cai-bg-ui);
   border-radius: var(--cai-radius-md);
 }
 
-figcaption {
+:where(figcaption) {
   font-size: max(0.875em, var(--cai-text-sm));
   color: var(--cai-text-secondary);
   margin-top: var(--cai-space-03);

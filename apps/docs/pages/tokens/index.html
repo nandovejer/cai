@@ -1,0 +1,38 @@
+<!-- cai:page
+title: Tokens
+description: Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.
+area: tokens
+order: 0
+lead: false
+generate: gallery
+-->
+    <p class="docs-eyebrow">Level 1 · @cai-ds/tokens</p>
+
+    <p class="docs-lead">Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.</p>
+
+    <div class="docs-prose">
+            <h2 id="layer-model" class="docs-prose__title">Layer model</h2>
+            <pre class="cai-code-block" data-lang="text"><code>packages/tokens/tokens.json
+      -> source of primitives (blue-10..100, gray-10..100, spacing, radius...)
+
+    packages/tokens/dist/cai-tokens.css
+      Layer 1: generated primitives
+      Layer 2: handwritten semantics per theme (light/dark/high-contrast)</code></pre>
+          </div>
+
+    <div class="docs-prose">
+            <h2 id="component-token-rule" class="docs-prose__title">Component token rule</h2>
+            <pre class="cai-code-block" data-lang="css"><code>/* Correct: semantic tokens */
+    color: var(--cai-text-primary);
+    background: var(--cai-brand-primary);
+    border-color: var(--cai-divider);
+
+    /* Incorrect: primitive scales */
+    color: var(--cai-gray-100);
+    background: var(--cai-blue-60);</code></pre>
+          </div>
+
+    <div class="docs-prose" id="tokens-fills">
+            <h2 id="solid-fills" class="docs-prose__title">Solid fills</h2>
+            <p>Surfaces that carry <code class="cai-code-inline">--cai-text-on-fill</code> use the fill tokens, not the brand or status color directly: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>. In light and high contrast they equal the brand and danger colors; in dark mode they are a step darker, because the dark brand is light enough to be read as text and white on it falls below 4.5:1.</p>
+          </div>

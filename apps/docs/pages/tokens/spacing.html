@@ -1,0 +1,83 @@
+<!-- cai:page
+title: Spacing and sizing
+description: The space scale and the control heights.
+area: tokens
+order: 2
+group: families
+files: tokens.json → spacing
+-->
+    <div class="docs-block" id="t-spacing">
+          <div class="docs-demo__stage">
+            <ul class="docs-scale-list">
+              <li class="docs-scale">
+                <code>--cai-space-3xs</code>
+                <span>2px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-3xs)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-2xs</code>
+                <span>4px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-2xs)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-xs</code>
+                <span>8px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-xs)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-sm</code>
+                <span>12px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-sm)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-md</code>
+                <span>16px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-md)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-lg</code>
+                <span>24px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-lg)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-xl</code>
+                <span>32px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-xl)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-2xl</code>
+                <span>48px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-2xl)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-3xl</code>
+                <span>64px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-3xl)" aria-hidden="true"></span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-space-4xl</code>
+                <span>96px</span>
+                <span class="docs-scale__bar" style="--v: var(--cai-space-4xl)" aria-hidden="true"></span>
+              </li>
+            </ul>
+          </div>
+          <p class="docs-demo__note">A 2px hairline, then the 4px base times 1, 2, 3, 4, 6, 8, 12, 16 and 24: each power of two and its 1.5× half step.</p>
+        
+    </div>
+
+    <section class="docs-block" id="t-sizing" aria-labelledby="t-sizing-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="t-sizing-title">Control heights</h2>
+            <code class="docs-demo__file">tokens.json → control</code>
+          </div>
+          <div class="docs-demo__stage">
+            <div class="o-stack">
+              <div class="docs-box docs-box--height" style="--v: var(--cai-control-sm)">--cai-control-sm · 28px</div>
+              <div class="docs-box docs-box--height" style="--v: var(--cai-control-md)">--cai-control-md · 36px</div>
+              <div class="docs-box docs-box--height" style="--v: var(--cai-control-lg)">--cai-control-lg · 44px</div>
+              <div class="docs-box docs-box--height" style="--v: var(--cai-control-xl)">--cai-control-xl · 56px</div>
+            </div>
+          </div>
+          <p class="docs-demo__note">44px, the WCAG 2.5.5 target size, and steps of 1.25× around it on the 4px grid. For close buttons, small buttons, inputs and buttons, large buttons.</p>
+        
+    </section>

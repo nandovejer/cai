@@ -1,0 +1,87 @@
+<!-- cai:page
+title: Motion
+description: Durations and easings, and how reduced motion stops them. Ships with @cai-ds/core.
+area: tokens
+order: 7
+group: families
+files: settings/_settings.css
+-->
+    <div class="docs-block" id="c-motion">
+          <div class="docs-demo__stage docs-motion">
+            <label class="cai-toggle">
+              <input class="cai-toggle__input" type="checkbox" role="switch">
+              <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+              <span class="cai-toggle__label">Run transitions</span>
+            </label>
+            <p class="docs-motion__reduced docs-demo__note">Reduced motion is on, so the dots jump instead of travelling.</p>
+            <div class="o-grid docs-cols-2">
+              <div class="docs-demo__stage">
+                <h2 id="durations" class="docs-subhead">Durations</h2>
+                <ul class="docs-scale-list">
+                  <li class="docs-scale">
+                    <code>--cai-duration-instant</code>
+                    <span>0.05s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-instant)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-fast</code>
+                    <span>0.1s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-fast)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-base</code>
+                    <span>0.2s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-base)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-slow</code>
+                    <span>0.3s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-slow)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-slower</code>
+                    <span>0.5s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-slower)"></span></span>
+                  </li>
+                  <li class="docs-scale">
+                    <code>--cai-duration-lazy</code>
+                    <span>0.8s</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-lazy)"></span></span>
+                  </li>
+                </ul>
+              </div>
+              <div class="docs-demo__stage">
+                <h2 id="easings" class="docs-subhead">Easings</h2>
+                <ul class="docs-scale-list">
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-standard</code>
+                    <span>cubic-bezier(0.3, 0, 0.1, 1)</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-standard)"></span></span>
+                  </li>
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-enter</code>
+                    <span>cubic-bezier(0.15, 0.6, 0.3, 1)</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-enter)"></span></span>
+                  </li>
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-exit</code>
+                    <span>cubic-bezier(0.5, 0, 0.85, 0.4)</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-exit)"></span></span>
+                  </li>
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-spring</code>
+                    <span>cubic-bezier(0.3, 1.35, 0.55, 1)</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-spring)"></span></span>
+                  </li>
+                  <li class="docs-scale docs-scale--easing">
+                    <code>--cai-easing-linear</code>
+                    <span>linear</span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-linear)"></span></span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <p class="docs-demo__note">Ships with core, not with tokens.</p>
+        
+    </div>

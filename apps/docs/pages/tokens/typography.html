@@ -1,0 +1,106 @@
+<!-- cai:page
+title: Typography
+description: Font stacks, the type scale and the minimum sizes.
+area: tokens
+order: 3
+group: families
+-->
+    <div class="docs-block" id="t-type">
+          <div class="docs-demo__stage">
+            <ul class="o-grid docs-cols-3 docs-fonts">
+              <li class="docs-font" style="--v: var(--cai-font-sans)">
+                <code>--cai-font-sans</code>
+                <span class="docs-font__sample">System sans</span>
+                <span class="docs-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:600">600</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
+              </li>
+              <li class="docs-font" style="--v: var(--cai-font-serif)">
+                <code>--cai-font-serif</code>
+                <span class="docs-font__sample">ET Book</span>
+                <span class="docs-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:600">600</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
+              </li>
+              <li class="docs-font" style="--v: var(--cai-font-mono)">
+                <code>--cai-font-mono</code>
+                <span class="docs-font__sample">System mono</span>
+                <span class="docs-font__weights"><span style="font-weight:400">400</span> <span style="font-weight:700">700</span> <span style="font-style:italic">italic</span></span>
+              </li>
+            </ul>
+            <ul class="docs-scale-list">
+              <li class="docs-scale">
+                <code>--cai-text-xs</code>
+                <span>0.75rem · 12px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-xs)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-sm</code>
+                <span>0.875rem · 14px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-sm)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-md</code>
+                <span>0.9375rem · 15px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-md)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-base</code>
+                <span>1rem · 16px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-base)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-lg</code>
+                <span>1.25rem · 20px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-lg)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-xl</code>
+                <span>1.5625rem · 25px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-xl)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-2xl</code>
+                <span>1.9375rem · 31px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-2xl)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-3xl</code>
+                <span>2.4375rem · 39px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-3xl)">Consistent Adaptive Identity</span>
+              </li>
+              <li class="docs-scale">
+                <code>--cai-text-4xl</code>
+                <span>3.0625rem · 49px</span>
+                <span class="docs-scale__type u-truncate" style="--v: var(--cai-text-4xl)">Consistent Adaptive Identity</span>
+              </li>
+            </ul>
+          </div>
+        
+    </div>
+
+    <div class="docs-prose" id="tokens-typography">
+            <h2 id="type-scale-and-minimum-sizes" class="docs-prose__title">Type scale and minimum sizes</h2>
+            <p>Every size is in <code class="cai-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller. Above the 16px base each step is the one before times 1.25, rounded to whole pixels; below it are the readability floors.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Type scale" tabindex="0">
+              <table class="cai-table">
+                <caption>Font-size tokens</caption>
+                <thead>
+                  <tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">At 16px root</th><th scope="col">Use</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-xs</code></td><td data-label="Value">0.75rem</td><td data-label="At 16px root">12px</td><td data-label="Use">Absolute floor. Micro-copy only: badges, tags, counters, version labels. Never running text.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-sm</code></td><td data-label="Value">0.875rem</td><td data-label="At 16px root">14px</td><td data-label="Use">Floor for secondary and UI text: helper and error text, captions, table headers, breadcrumbs, tooltips.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-md</code></td><td data-label="Value">0.9375rem</td><td data-label="At 16px root">15px</td><td data-label="Use">Default UI text: buttons, labels, table cells, tabs, navigation.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-base</code></td><td data-label="Value">1rem</td><td data-label="At 16px root">16px</td><td data-label="Use">Body and running text. Form fields on touch screens.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-lg</code></td><td data-label="Value">1.25rem</td><td data-label="At 16px root">20px</td><td data-label="Use">Lead paragraphs, dialog titles.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-xl</code></td><td data-label="Value">1.5625rem</td><td data-label="At 16px root">25px</td><td data-label="Use">Headings.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-2xl</code></td><td data-label="Value">1.9375rem</td><td data-label="At 16px root">31px</td><td data-label="Use">Headings.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-3xl</code></td><td data-label="Value">2.4375rem</td><td data-label="At 16px root">39px</td><td data-label="Use">Page titles.</td></tr>
+                  <tr><td data-label="Token"><code class="cai-code-inline">--cai-text-4xl</code></td><td data-label="Value">3.0625rem</td><td data-label="At 16px root">49px</td><td data-label="Use">Display.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul>
+              <li><strong>Body text</strong> is never below <code class="cai-code-inline">--cai-text-base</code> (16px), with a line height of 1.5.</li>
+              <li><strong>Secondary and UI text</strong> is never below <code class="cai-code-inline">--cai-text-sm</code> (14px).</li>
+              <li><strong>Nothing</strong> goes below <code class="cai-code-inline">--cai-text-xs</code> (12px). Sizes relative to their context (<code class="cai-code-inline">kbd</code>, <code class="cai-code-inline">time</code>, <code class="cai-code-inline">output</code>, inline code, captions) are clamped with <code class="cai-code-inline">max()</code> so they cannot fall below the floor inside small text.</li>
+              <li><strong>Form fields</strong> use <code class="cai-code-inline">--cai-text-control</code> (core setting): <code class="cai-code-inline">--cai-text-md</code> on desktop, <code class="cai-code-inline">--cai-text-base</code> (16px) at 768px and below and on touch screens, where iOS Safari zooms the page into any smaller field.</li>
+            </ul>
+          </div>

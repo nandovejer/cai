@@ -1,0 +1,40 @@
+<!-- cai:page
+title: Layers and breakpoints
+description: The z-index scale, content widths and breakpoints. Ships with @cai-ds/core.
+area: tokens
+order: 8
+group: families
+files: settings/_settings.css
+-->
+    <div class="docs-block" id="c-settings">
+          <div class="docs-demo__stage o-grid docs-cols-2">
+            <div>
+              <h2 id="z-index-scale" class="docs-subhead">Z-index scale</h2>
+              <ul class="docs-scale-list">
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-base</code><span>0</span><span class="docs-scale__note">Default layer</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-raised</code><span>10</span><span class="docs-scale__note">Tooltips, sticky bars</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-overlay</code><span>90</span><span class="docs-scale__note">Drawer backdrop</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-sidebar</code><span>100</span><span class="docs-scale__note">Sidebar</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-modal</code><span>200</span><span class="docs-scale__note">Modal, navigation toggle</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-toast</code><span>300</span><span class="docs-scale__note">Skip link, toasts</span></li>
+              </ul>
+            </div>
+            <div>
+              <h2 id="layout-breakpoints-and-type" class="docs-subhead">Layout, breakpoints and type</h2>
+              <ul class="docs-scale-list">
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-sidebar-width</code><span>256px</span><span class="docs-scale__note">Sidebar and app-shell column</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-content-max</code><span>1100px</span><span class="docs-scale__note">Maximum content width</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-sm</code><span>480px</span><span class="docs-scale__note">Small mobile</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-md</code><span>768px</span><span class="docs-scale__note">Tablet, sidebar collapse</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-lg</code><span>1024px</span><span class="docs-scale__note">Narrow desktop</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-xl</code><span>1280px</span><span class="docs-scale__note">Standard desktop</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-2xl</code><span>1440px</span><span class="docs-scale__note">Wide screen</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-font-heading</code><span>var(--cai-font-serif)</span><span class="docs-scale__note">Heading font family</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-text-control</code><span>var(--cai-text-md)</span><span class="docs-scale__note">Form field text; --cai-text-base (16px) at 768px and below and on touch screens</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-scrollbar-size</code><span>4px</span><span class="docs-scale__note">Scrollbar thickness</span></li>
+              </ul>
+            </div>
+          </div>
+          <p class="docs-demo__note">Ships with core, not with tokens. Breakpoints are reference values: CSS media queries cannot read custom properties.</p>
+        
+    </div>

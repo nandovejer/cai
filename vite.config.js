@@ -121,6 +121,9 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: outRoot,
       emptyOutDir: true,
+      // Pages: every asset is a file, never a data: URI, so a CSP can keep
+      // media-src and connect-src at 'self' (the MIDI demo fetches its file)
+      ...(pages ? { assetsInlineLimit: 0 } : {}),
       rollupOptions: {
         input: {
           index: resolve(landingRoot, "index.html"),

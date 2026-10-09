@@ -67,8 +67,12 @@ function warnOnce(lang, message) {
  * @param {object} messages - { key: "text with {vars}" }
  */
 export function registerLocale(lang, messages) {
-  const tag = lang.toLowerCase();
-  locales[tag] = { ...locales[tag], ...messages };
+  const tag = String(lang).toLowerCase();
+  // A language tag only (BCP 47 shape): never "__proto__" or "constructor"
+  if (!/^[a-z]{2,8}(-[a-z0-9]{1,8})*$/.test(tag)) {
+    throw new TypeError(`registerLocale: "${lang}" is not a language tag`);
+  }
+  locales[tag] = { ...(Object.hasOwn(locales, tag) ? locales[tag] : {}), ...messages };
 }
 
 /** Language of `el`: nearest lang attribute, then <html lang>. */

@@ -153,3 +153,13 @@ describe("i18n — dictionaries", () => {
     }
   });
 });
+
+describe("registerLocale rejects what is not a language tag", () => {
+  it("throws on __proto__ and constructor, and leaves the prototype alone", async () => {
+    const { registerLocale } = await import("../packages/core/src/i18n.js");
+    expect(() => registerLocale("__proto__", { play: "x" })).toThrow(TypeError);
+    expect(() => registerLocale("constructor", { play: "x" })).toThrow(TypeError);
+    expect(({}).play).toBeUndefined();
+    expect(() => registerLocale("pt-BR", { play: "Reproduzir" })).not.toThrow();
+  });
+});

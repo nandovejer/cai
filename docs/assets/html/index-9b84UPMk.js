@@ -1,0 +1,1 @@
+import"../platform-CgyDHOSZ.js";const t=document.querySelector("[data-moved-to]");if(t){const e=decodeURIComponent(window.location.hash.slice(1)),o=new URL(t.href);e==="index"?o.hash="html-index":/^(el|cat|code|d)-[\w-]+$/.test(e)&&(o.hash=e),window.location.replace(o.href)}

@@ -31,6 +31,8 @@ const locales = {
     copyCode: "Copy code example {n}",
     applyTheme: "Apply theme",
     themeApplied: "Applied",
+    changeMode: "Change color mode. Current: {mode}",
+    modeChanged: "Color mode: {mode}",
   },
   es: {
     play: "Reproducir",
@@ -50,6 +52,8 @@ const locales = {
     copyCode: "Copiar el ejemplo de código {n}",
     applyTheme: "Aplicar tema",
     themeApplied: "Aplicado",
+    changeMode: "Cambiar el modo de color. Actual: {mode}",
+    modeChanged: "Modo de color: {mode}",
   },
 };
 

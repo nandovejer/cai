@@ -136,6 +136,70 @@ export function applyMode(mode, parentTheme, { persist = true } = {}) {
   syncButtons(parentTheme);
 }
 
+/* --- Cycle button: one button for a .cai-theme-switcher--cycle group ---
+   The radios stay the source of truth and the no-JS control. The button
+   checks the next enabled radio and fires its change event, so whatever
+   listens to the radios (initThemeSystem or a page's own script) applies it. */
+
+function labelOf(radio) {
+  return radio?.closest(".cai-theme-btn")?.textContent.trim() ?? "";
+}
+
+function renderCycle(group) {
+  const button = group.querySelector(":scope > .cai-theme-cycle");
+  if (!button) return;
+  const current = group.querySelector("input:checked");
+  const icon = current?.closest(".cai-theme-btn")?.querySelector(".cai-theme-btn__icon");
+  button.replaceChildren(...(icon ? [icon.cloneNode(true)] : []));
+  const name = t("changeMode", button, { mode: labelOf(current) || "—" });
+  button.setAttribute("aria-label", name);
+  button.title = name;
+}
+
+function cycle(group) {
+  const radios = [...group.querySelectorAll("input[type=radio]:not(:disabled)")];
+  if (!radios.length) return;
+  const next = radios[(radios.findIndex((r) => r.checked) + 1) % radios.length];
+  next.checked = true;
+  next.dispatchEvent(new Event("change", { bubbles: true }));
+  renderCycle(group);
+  group.querySelector(":scope > .cai-theme-cycle__status").textContent = t(
+    "modeChanged",
+    group,
+    { mode: labelOf(next) },
+  );
+}
+
+/**
+ * Turn each fieldset.cai-theme-switcher--cycle into one button that steps
+ * through its modes, showing the icon of the current one. Idempotent.
+ */
+export function initThemeCycle(root = document) {
+  enableJs();
+  const groups = root.querySelectorAll(".cai-theme-switcher--cycle");
+  groups.forEach((group) => {
+    if (group.querySelector(":scope > .cai-theme-cycle")) return;
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "cai-theme-cycle";
+    button.addEventListener("click", () => cycle(group));
+    const status = document.createElement("span");
+    status.className = "cai-theme-cycle__status";
+    status.setAttribute("role", "status");
+    group.querySelector("legend")?.after(button, status) ?? group.prepend(button, status);
+    group.addEventListener("change", () => renderCycle(group));
+    renderCycle(group);
+  });
+  // Scripts that set the mode check the radios without a change event;
+  // they set data-theme in the same task, so re-render after it.
+  if (groups.length) {
+    new MutationObserver(() => groups.forEach(renderCycle)).observe(
+      document.documentElement,
+      { attributes: true, attributeFilter: ["data-theme", "data-mode"] },
+    );
+  }
+}
+
 /**
  * Wire up theme buttons, OS preference syncing, and the initial theme.
  */

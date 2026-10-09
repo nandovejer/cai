@@ -98,6 +98,68 @@
   cursor: not-allowed;
 }
 
+/* Optional icon before each mode name: an inline <svg> in currentColor */
+.cai-theme-btn__icon {
+  inline-size: 1em;
+  block-size: 1em;
+  flex-shrink: 0;
+}
+
+/* Cycle variant (.cai-theme-switcher--cycle): without JavaScript it is the
+   radio group above. initThemeCycle() adds one button that steps through
+   the modes; the radios stay in the page, checked, hidden from view. */
+.cai-theme-switcher--cycle:has(> .cai-theme-cycle) > .cai-theme-btn {
+  display: none;
+}
+
+.cai-theme-switcher--cycle:has(> .cai-theme-cycle) > .cai-theme-switcher__label,
+.cai-theme-cycle__status {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.cai-theme-cycle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: 2.25rem;
+  block-size: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--cai-switcher-border);
+  border-radius: var(--cai-radius-md);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background var(--cai-duration-fast),
+    color var(--cai-duration-fast);
+}
+
+.cai-theme-cycle .cai-theme-btn__icon {
+  inline-size: 1.25rem;
+  block-size: 1.25rem;
+}
+
+.cai-theme-cycle:hover {
+  background: var(--cai-switcher-hover-bg);
+  color: var(--cai-switcher-hover-text);
+}
+
+.cai-theme-cycle:focus-visible {
+  outline: 2px solid var(--cai-switcher-focus);
+  outline-offset: 2px;
+}
+
+@media (forced-colors: active) {
+  .cai-theme-cycle {
+    border-color: ButtonText;
+  }
+}
+
 /* On the sidebar surface. --cai-border-interactive would be black on a
    black sidebar in high contrast. */
 .cai-sidebar .cai-theme-switcher {

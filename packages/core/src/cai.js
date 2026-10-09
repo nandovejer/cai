@@ -9,7 +9,7 @@
  *   import { initTabs } from "@cai-ds/core/tabs";
  */
 
-import { initThemeSystem } from "./theme.js";
+import { initThemeSystem, initThemeCycle } from "./theme.js";
 import { initSidebar } from "./sidebar.js";
 import { initCopyButtons } from "./clipboard.js";
 import { initModals } from "./modal.js";
@@ -26,6 +26,7 @@ export {
   applyTheme,
   applyMode,
   initThemeSystem,
+  initThemeCycle,
 } from "./theme.js";
 export { initSidebar } from "./sidebar.js";
 export { copyToClipboard, initCopyButtons } from "./clipboard.js";
@@ -68,6 +69,7 @@ function warnIfTokensMissing() {
 function boot() {
   warnIfTokensMissing();
   initThemeSystem();
+  initThemeCycle();
   initSidebar();
   initCopyButtons();
   initModals();

@@ -35,6 +35,8 @@ export default [
         cancelAnimationFrame: "readonly",
         performance: "readonly",
         IntersectionObserver: "readonly",
+        MutationObserver: "readonly",
+        Event: "readonly",
         AudioContext: "readonly",
         fetch: "readonly",
         setTimeout: "readonly",

@@ -27,14 +27,11 @@ function getLiveRegion() {
     region.setAttribute("role", "status");
     Object.assign(region.style, {
       position: "absolute",
-      width: "1px",
-      height: "1px",
-      padding: "0",
-      margin: "-1px",
+      inlineSize: "1px",
+      blockSize: "1px",
       overflow: "hidden",
-      clip: "rect(0, 0, 0, 0)",
+      clipPath: "inset(50%)",
       whiteSpace: "nowrap",
-      border: "0",
     });
     document.body.append(region);
   }

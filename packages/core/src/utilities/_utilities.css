@@ -12,16 +12,15 @@
 .u-hidden {
   display: none;
 }
+/* Read by assistive technology, not painted: a 1px box clipped to nothing,
+   out of the flow, that keeps its words on one line so none are dropped. */
 .u-sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+  inline-size: 1px;
+  block-size: 1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
-  border: 0;
 }
 
 /* Text */

@@ -8,6 +8,7 @@ import { describe, it, expect } from "vitest";
 import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { homedir } from "node:os";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path) => readFileSync(resolve(root, path), "utf-8");
@@ -231,8 +232,10 @@ describe("§3: no inline scripts in the apps", () => {
 });
 
 describe("Pages site: Content-Security-Policy", () => {
-  const pages = ["docs/index.html", "docs/docs/index.html", "docs/platform/index.html", "docs/html/index.html"];
+  // Every HTML file of the published site, wherever the generator put it
+  const pages = filesIn(["docs"], [".html"]).map(rel).sort();
   it("every published page has a CSP that only runs the site's own scripts", () => {
+    expect(pages).toContain("docs/docs/index.html");
     for (const page of pages) {
       const html = read(page);
       const csp = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/)?.[1];
@@ -241,5 +244,15 @@ describe("Pages site: Content-Security-Policy", () => {
       expect(scriptSrc, page).toBe("script-src 'self'");
       expect(html.indexOf("Content-Security-Policy"), `${page}: the CSP must come before any script`).toBeLessThan(html.search(/<script\b/i) === -1 ? Infinity : html.search(/<script\b/i));
     }
+  });
+});
+
+describe("Pages site: no local details in the output (docs-redesign SEC-PLG-10)", () => {
+  it("no published file holds the repository path or the home folder", () => {
+    const local = [root, homedir()];
+    const offenders = filesIn(["docs"], [".html", ".js", ".css", ".json", ".svg"])
+      .filter((p) => local.some((path) => readFileSync(p, "utf-8").includes(path)))
+      .map(rel);
+    expect(offenders).toEqual([]);
   });
 });

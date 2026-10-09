@@ -43,9 +43,15 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 
 ---
 
-## Vite config
+## Vite config and the docs site generator
 
-`root: <repo-root>` + `publicDir: false` → absolute paths like `/packages/...` and `/apps/...` in HTML resolve correctly in dev. In build, `outDir: dist/` with the four apps as entries (`/`, `/docs/`, `/platform/`, `/html/`).
+`root: <repo-root>` + `publicDir: false` → absolute paths like `/packages/...` and `/apps/...` in HTML resolve correctly in dev. The routes come from the plugin in `scripts/docs-site/` (`plugin.js` is the Vite glue, `site.js` the unit-tested logic, `html.js` a strict tokenizer); nothing is listed by hand:
+
+- Every file under `apps/docs/pages/` is a page: `pages/index.html` → `/docs/`, `pages/a/b.html` → `/docs/a/b/`. Names starting with `_` are not pages. A page is a fragment (the inside of `<main>`) with front matter in a leading `<!-- cai:page -->` comment (`title`, `description`, `area` required; one `key: value` per line).
+- The layout `apps/docs/_layouts/<layout>.html` wraps it. Templates know two things only: `<!-- cai:include <name> -->` (a file of `apps/docs/_partials/`) and `{{title}}`, `{{description}}`, `{{root}}`, `{{content}}` (layouts and partials only). The landing includes the same `header` and `site-links` partials. The generator adds `aria-current="page"` to the current site link.
+- Dev server: route → file lookup table; a route without its trailing slash answers 301. Editing a layout, partial, page or `site.json` reloads the browser.
+- Build: one entry per route (plus `/`, `/platform/`, `/html/`); each HTML file is moved to `<route>/index.html`, and in the pages build its asset URLs and links between pages are relative to its depth.
+- Links: write internal links root-absolute with a trailing slash (`/docs/#c-button`). The build fails, with `file:line`, on a mis-nested tag, a duplicate id, an unknown route, a missing trailing slash or a `#fragment` that is not an id on the target page (a warning in dev).
 
 ---
 
@@ -53,7 +59,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 
 `tokens` is standalone; `core` requires `tokens`; `platform` requires `core` and `tokens`. The contract is expressed as required `peerDependencies` with literal ranges (never `workspace:`), and the three packages share one version (changesets `fixed`).
 
-- Nothing in `packages/*/src` may reference docs-app hooks (`.docs-*`, `#demo-form`, …). Docs-only behavior lives in `apps/docs/reference.js`.
+- Nothing in `packages/*/src` may reference docs-app hooks (`.docs-*`, `#demo-form`, …). Docs-only behavior lives in `apps/docs/reference.js`; the docs site generator in `scripts/docs-site/` is development tooling and never ships.
 - `pnpm check:pack` verifies what each tarball ships against `packages/<name>/pack-files.txt`; after intentionally adding or removing a published file run `node scripts/check-pack.js --update`.
 - Releases: add a changeset (`pnpm changeset`); never run `npm publish` by hand.
 
@@ -66,7 +72,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 1. **Check first:** is there a native HTML element or browser API that solves this? (`dialog`, `details`, `popover`, `<input type="...">`, CSS `:has()`, etc.). If so, use it as the base.
 2. Create `packages/core/src/components/<name>.css` (use the standard header of the sibling files) and add its `@import` to `packages/core/src/components/index.css` in cascade order
 3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./.claude/DIST-RULES.md)), then `node scripts/check-pack.js --update`
-4. Document it in `apps/docs/index.html` (the single documentation page): an `<article class="docs-demo" id="c-<name>">` with an `h2` title, a live demo, and a `<div class="docs-guide">` with the six guidance headings as `h3` (`h-c-<name>-when`, `-when-not`, `-how`, `-content`, `-keyboard`, `-issues`), then a "Back to top" link. Add it to the page navigation (`#docs-nav`) and to the Core contents list, and to the old-anchor list at the end of `apps/landing/index.html`. The "every component has the six guidance sections" test in `tests/docs.spec.js` finds it from the file name. State the no-JS behavior and any known issue in the accessibility statement on the same page.
+4. Document it in `apps/docs/pages/index.html` (the documentation page, rendered by the docs site generator; see "Vite config and the docs site generator"): an `<article class="docs-demo" id="c-<name>">` with an `h2` title, a live demo, and a `<div class="docs-guide">` with the six guidance headings as `h3` (`h-c-<name>-when`, `-when-not`, `-how`, `-content`, `-keyboard`, `-issues`), then a "Back to top" link. Add it to the page navigation (`apps/docs/_partials/legacy-nav.html`) and to the Core contents list, and to the old-anchor list at the end of `apps/landing/index.html`. The "every component has the six guidance sections" test in `tests/docs.spec.js` finds it from the file name. State the no-JS behavior and any known issue in the accessibility statement on the same page.
 5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/reference.css`
 
 **Before delivering anything, read [PRINCIPLES.md](./PRINCIPLES.md): its red lines are enforced by stylelint, ESLint, `pnpm check:size`, `pnpm check:strings`, `pnpm check:exceptions` and the Playwright suites (axe, no-JS, reduced motion, forced colors).**
@@ -83,7 +89,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 1. Add it to `packages/tokens/src/semantic.css` in all three theme blocks (`:root, [data-theme="light"]`, `[data-theme="dark"]`, `[data-theme="high-contrast"]`)
 2. If it references a new primitive, also add that to `tokens.json`
 3. Run `pnpm tokens:build`
-4. Document it in the Tokens section of `apps/docs/index.html`
+4. Document it in the Tokens section of `apps/docs/pages/index.html`
 
 ### Adding a new primitive color
 
@@ -100,7 +106,7 @@ Edit `packages/core/src/settings/_settings.css` only, then regenerate `dist/cai.
 1. Put the rule in the file of its MDN category under `packages/core/src/elements/` (`document`, `sections`, `text`, `inline`, `media`, `forms`, `interactive`).
 2. Wrap the whole selector in `:where()` (specificity 0), so any `.cai-*` class or the consumer's own rule wins. A pseudo-element goes outside: `:where(dialog)::backdrop`. There is no exception (red line 11): stylelint's `cai/no-bare-element` rule fails on any bare type selector in `packages/`.
 3. Elements that already have a component (`table`, `input`, `select`, `button`) are styled through its class, not here.
-4. Update the element's `styledBy` in `tests/fixtures/html-elements.json` and its card in the HTML elements chapter of `apps/docs/index.html` (`#html-elements`), then run `pnpm core:build` and `pnpm test:ui`.
+4. Update the element's `styledBy` in `tests/fixtures/html-elements.json` and its card in the HTML elements chapter of `apps/docs/pages/index.html` (`#html-elements`), then run `pnpm core:build` and `pnpm test:ui`.
 
 ---
 

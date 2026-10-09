@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <meta name="description" content="{{description}}">
+  <link rel="icon" href="/apps/landing/assets/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/apps/landing/assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apps/landing/assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
+  <link rel="stylesheet" href="/apps/landing/site-header.css">
+  <link rel="stylesheet" href="/apps/docs/reference.css">
+  <link rel="stylesheet" href="/apps/docs/elements.css">
+</head>
+<body class="o-shell docs-page">
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- cai:include header -->
+
+  <!-- cai:include legacy-nav -->
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+
+{{content}}
+  </main>
+
+  <!-- cai:include footer -->
+
+  <script type="module" src="/apps/docs/reference.js"></script>
+</body>
+</html>

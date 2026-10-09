@@ -15,7 +15,7 @@ async function isModalVisible(modal) {
 
 test.describe('CAI Design System UI Smoke Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/apps/docs/index.html');
+    await page.goto('/docs/');
     await page.waitForLoadState('networkidle');
   });
 

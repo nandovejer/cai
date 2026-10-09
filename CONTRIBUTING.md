@@ -144,7 +144,7 @@ If UI change, include screenshot or link to demo.
 To keep releases stable without heavy maintenance, use this minimum baseline:
 
 - Unit tests for behavior in `packages/core/src/cai.js` and `packages/core/src/midi.js`
-- UI smoke tests for critical flows in `apps/docs/index.html`
+- UI smoke tests for critical flows in the documentation (`/docs/`, source in `apps/docs/pages/`)
 - Automated a11y smoke on key pages/components
 
 If you touch `packages/platform/src/`, rebuild Platform and verify the consuming apps still render correctly:

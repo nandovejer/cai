@@ -700,40 +700,41 @@ test.describe('Documentation page', () => {
 });
 
 test.describe('Site header and navigation toggle', () => {
-  // One header on every page: home, docs and the two moved-page stubs. The
-  // markup is the same text in each file, apart from the current page link.
-  const HEADER_FILES = [
-    'apps/landing/index.html',
-    'apps/docs/index.html',
-    'apps/platform-docs/index.html',
-    'apps/html-elements/index.html',
-  ];
-  const headerOf = (file) => {
-    const html = readFileSync(fromRepo(file), 'utf-8');
-    const match = html.match(/<header class="site-header"[\s\S]*?<\/header>/);
-    return match?.[0].replace(/ aria-current="page"/g, '');
+  // One header on every page, from one partial of the docs site generator
+  // (scripts/docs-site). The landing and the docs layout include it; the two
+  // moved-page stubs still carry a copy until they are removed, so their copy
+  // must stay the partial's text. The generator marks the current link.
+  const read = (file) => readFileSync(fromRepo(file), 'utf-8');
+  const unmarked = (html) => html.replace(/ aria-current="page"/g, '').replace(/^\s+/gm, '');
+  const HEADER = read('apps/docs/_partials/header.html');
+  const SITE_LINKS = read('apps/docs/_partials/site-links.html');
+  const INCLUDERS = {
+    'apps/landing/index.html': ['header', 'site-links'],
+    'apps/docs/_layouts/page.html': ['header', 'legacy-nav'],
+    'apps/docs/_partials/legacy-nav.html': ['site-links'],
   };
-
-  const drawerSiteOf = (file) => {
-    const html = readFileSync(fromRepo(file), 'utf-8');
-    const match = html.match(/<nav class="cai-sidebar__section page-nav__site"[\s\S]*?<\/nav>/);
-    return match?.[0].replace(/ aria-current="page"/g, '');
-  };
+  const STUBS = ['apps/platform-docs/index.html', 'apps/html-elements/index.html'];
 
   test('every page has the same header markup, and the same site links in its drawer', () => {
-    const [first, ...rest] = HEADER_FILES.map(headerOf);
-    expect(first).toContain('popovertarget="page-nav"');
-    for (const [i, header] of rest.entries()) expect(header, HEADER_FILES[i + 1]).toBe(first);
-    const [site, ...sites] = HEADER_FILES.map(drawerSiteOf);
-    expect(site).toContain('aria-label="Site"');
-    for (const [i, other] of sites.entries()) expect(other, HEADER_FILES[i + 1]).toBe(site);
+    expect(HEADER).toContain('popovertarget="page-nav"');
+    expect(HEADER).not.toContain('aria-current');
+    expect(SITE_LINKS).toContain('aria-label="Site"');
+    for (const [file, partials] of Object.entries(INCLUDERS)) {
+      for (const name of partials) expect(read(file), file).toContain(`<!-- cai:include ${name} -->`);
+    }
+    for (const file of STUBS) {
+      const html = read(file);
+      expect(unmarked(html.match(/<header class="site-header"[\s\S]*?<\/header>/)[0]), file).toBe(unmarked(HEADER).trim());
+      expect(unmarked(html.match(/<nav class="cai-sidebar__section page-nav__site"[\s\S]*?<\/nav>/)[0]), file).toBe(unmarked(SITE_LINKS).trim());
+    }
     // The drawer's site links are the header's, in the same order
     const hrefs = (html) => [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
-    expect(hrefs(site)).toEqual(hrefs(first.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0]));
-    for (const file of HEADER_FILES) {
-      const html = readFileSync(fromRepo(file), 'utf-8');
-      expect(html, file).toMatch(/<nav class="cai-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+">/);
-      expect(html, file).toContain('href="/apps/landing/site-header.css"');
+    expect(hrefs(SITE_LINKS)).toEqual(hrefs(HEADER.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0]));
+    for (const file of ['apps/landing/index.html', 'apps/docs/_partials/legacy-nav.html', ...STUBS]) {
+      expect(read(file), file).toMatch(/<nav class="cai-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+">/);
+    }
+    for (const file of ['apps/landing/index.html', 'apps/docs/_layouts/page.html', ...STUBS]) {
+      expect(read(file), file).toContain('href="/apps/landing/site-header.css"');
     }
   });
 

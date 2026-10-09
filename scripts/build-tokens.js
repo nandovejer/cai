@@ -7,6 +7,8 @@
  *   tokens.css     → primitives + semantic, no @font-face (bring your own fonts)
  *   fonts.css      → @font-face only
  *   tokens.json    → primitives source, for tooling
+ *   cai-tokens.dtcg.json → primitives + semantic (three modes) in the W3C
+ *                    Design Tokens (DTCG) format, for Figma and other tools
  *   fonts/         → woff2 files + their MIT licence texts
  *
  * Usage: node scripts/build-tokens.js (from the repo root)
@@ -25,6 +27,7 @@ import {
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as esbuild from "esbuild";
+import { buildDtcg } from "./tokens-dtcg.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const tokensPath = resolve(__dirname, "../packages/tokens/tokens.json");
@@ -34,7 +37,8 @@ const outputPath = resolve(distRoot, "cai-tokens.css");
 const semanticPath = resolve(__dirname, "../packages/tokens/src/semantic.css");
 
 const tokens = JSON.parse(readFileSync(tokensPath, "utf-8"));
-const semanticLayer = `\n\n${readFileSync(semanticPath, "utf-8")}`;
+const semanticCss = readFileSync(semanticPath, "utf-8");
+const semanticLayer = `\n\n${semanticCss}`;
 
 // ---- Generate primitives ----
 function generatePrimitives(tokens) {
@@ -129,6 +133,9 @@ console.log("✓ Split entries built → tokens.css, fonts.css (+ min)");
 
 copyFileSync(tokensPath, resolve(distRoot, "tokens.json"));
 console.log("✓ tokens.json copied → dist/");
+
+writeFileSync(resolve(distRoot, "cai-tokens.dtcg.json"), `${JSON.stringify(buildDtcg(tokens, semanticCss), null, 2)}\n`, "utf-8");
+console.log("✓ DTCG tokens → dist/cai-tokens.dtcg.json");
 
 // Copy font files and their licence texts
 function copyFontDir(fontName) {

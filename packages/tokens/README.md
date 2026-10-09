@@ -32,6 +32,7 @@ import '@cai-ds/tokens'
 - **`./tokens.css`** → primitives + semantic themes, without any `@font-face` (bring your own fonts)
 - **`./fonts.css`** → the `@font-face` declarations only
 - **`./tokens.json`** → the primitives source, for tooling
+- **`./dtcg`** → `cai-tokens.dtcg.json` — primitives and semantic tokens in the W3C Design Tokens (DTCG) format, for Figma and other design tools. Two groups, one per collection: `primitives` (one mode) and `semantic` (modes Light, Dark and High contrast in `$extensions.mode`, `$value` is Light). Semantic tokens are aliases of primitives where the CSS uses a primitive. Names: drop `--cai-`; the first segment is the group, the rest is the name (`--cai-surface-page` ↔ `surface/page`; `--cai-surface` is `surface/$root`)
 - **`./fonts/*`** → the woff2 files
 
 ## What's included

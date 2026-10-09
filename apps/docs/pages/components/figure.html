@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Figure
-description: An image, chart or code with its caption.
+description: Shows an image, a chart or a diagram with a caption that says what it is.
 area: components
 group: content
 files: components/figure.css
@@ -33,20 +33,65 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-figure" aria-label="Copy the figure markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Figure markup"><code id="code-figure">&lt;figure class=&quot;cai-figure&quot;&gt;
+  &lt;div class=&quot;cai-figure__media&quot;&gt;
+    &lt;img src=&quot;requests.png&quot; width=&quot;640&quot; height=&quot;192&quot; alt=&quot;Bar chart: requests rise every day, from 1,200 on Monday to 3,400 on Saturday.&quot;&gt;
+  &lt;/div&gt;
+  &lt;figcaption class=&quot;cai-figure__caption&quot;&gt;Requests per day, last six days.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Figure parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-figure</code></div></td><td data-label="What it does"><div>A padded surface with a brand-coloured start border and rounded corners</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-figure__media</code></div></td><td data-label="What it does"><div>Rounds and clips the image, chart or code inside</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-figure__caption</code></div></td><td data-label="What it does"><div>Smaller, italic, secondary text colour</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A native figure with a figcaption. The media needs a text alternative; a chart needs its data as text or a table.</p>
+            <p>The native <code>&lt;figure&gt;</code> and <code>&lt;figcaption&gt;</code>, styled by <code>components/figure.css</code>. No JavaScript.</p>
+            <ul>
+              <li>The caption names the figure for assistive technology.</li>
+              <li>A bare <code>&lt;figure&gt;</code> with no class also gets a simple style from the base elements.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: a figure is HTML and CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Not interactive.</p>
+            <p>A figure is not interactive and takes no focus.</p>
+            <ul>
+              <li>The media needs its own text alternative: <code>alt</code> on an <code>&lt;img&gt;</code>, or <code>role="img"</code> and <code>aria-label</code> on an inline <code>&lt;svg&gt;</code>.</li>
+              <li>A chart also needs its numbers as text: in the alt text, the caption or a <a href="/docs/components/table/">table</a> next to it.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To show a chart, image or diagram with a caption.</p>
+            <p>Use a figure for a chart, an image, a diagram or a code sample that the text refers to and that needs a caption.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For decoration. A decorative image gets an empty alt and no figure.</p>
+            <p>Do not use a figure for decoration.</p>
+            <ul>
+              <li>A decorative image gets <code>alt=""</code> and no figure.</li>
+              <li>For a picture in a box of fixed shape, use the platform <a href="/docs/platform/image/">image</a>.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>The caption says what the figure shows and for what period or scope.</p>
+            <p>The caption says what the figure shows, and for what period or scope.</p>
+            <ul>
+              <li>The alt text says what the reader would see: the trend, not "chart".</li>
+              <li>Do not repeat the caption in the alt text.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

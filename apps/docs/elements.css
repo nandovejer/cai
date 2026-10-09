@@ -12,7 +12,8 @@
    How to read a card, index
    -------------------------------------------------------------------------- */
 
-.elements-eyebrow {
+.elements-eyebrow,
+.docs-snippet__lang {
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   font-weight: 500;
@@ -126,12 +127,15 @@
   min-width: 0;
 }
 
-/* Snippet: label bar + code block */
+/* Snippet: label bar + code block (an element card's, and "Copy the
+   markup" on the component and pattern pages) */
+.docs-snippet,
 .elements-snippet {
   display: grid;
   gap: var(--cai-space-2xs);
 }
 
+.docs-snippet__bar,
 .elements-snippet__bar {
   display: flex;
   align-items: center;
@@ -141,16 +145,19 @@
 
 /* The bar carries the label; the absolute language badge would sit on top of
    the first line of code. */
+.docs-snippet .cai-code-block::before,
 .elements-snippet .cai-code-block::before {
   content: none;
 }
 
 /* No width jump when the label becomes "✓ Copied" */
+.docs-snippet .cai-copy-btn,
 .elements-snippet .cai-copy-btn {
   min-width: calc(var(--cai-space-3xl) + var(--cai-space-md) + var(--cai-space-xs));
   justify-content: center;
 }
 
+.docs-snippet .cai-copy-btn:not(:hover, .is-copied),
 .elements-snippet .cai-copy-btn:not(:hover, .is-copied) {
   background: var(--cai-surface);
   border-color: var(--cai-outline);

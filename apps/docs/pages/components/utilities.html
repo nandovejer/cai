@@ -1,12 +1,18 @@
 <!-- cai:page
 title: Utility classes
-description: The single-purpose u-* classes.
+description: Small u-* classes that do one thing each, for the cases a component does not cover.
 area: components
 order: 2001
 group: helpers
 files: utilities/_utilities.css
 -->
     <div class="docs-block" id="c-utilities">
+          <p>Use a utility for a one-off adjustment. If you add the same utilities to the same element again and again, you need a component or a class of your own.</p>
+          <ul>
+            <li>Utilities win over components: they come last in the cascade.</li>
+            <li><code>.u-sr-only</code> hides text from the screen but not from screen readers. <code>.u-hidden</code> hides it from both.</li>
+            <li><code>.u-no-events</code> only stops the pointer: a keyboard can still reach and use the element. Never use it to disable a control.</li>
+          </ul>
           <details class="docs-fold" open data-fold-narrow>
             <summary>All <span data-count="utilities">16</span> utility classes</summary>
             <div class="docs-demo__stage">

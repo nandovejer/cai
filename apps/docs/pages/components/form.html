@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Form fields
-description: Text fields, choices, pickers and their labels, hints and errors.
+description: Collect input with native fields, choices and pickers, each with a visible label, a hint and an error.
 area: components
 group: actions
 files: components/form.css
@@ -25,7 +25,7 @@ toc: h2,h3
                 <div class="cai-field">
                   <label class="cai-field__label" for="f-slug">Slug</label>
                   <input class="cai-input cai-input--error" id="f-slug" type="text" value="my project" aria-invalid="true" aria-describedby="f-slug-error">
-                  <div class="cai-field__error" id="f-slug-error">Use letters, numbers and dashes only.</div>
+                  <div class="cai-field__error" id="f-slug-error"><span class="u-sr-only">Error: </span>Use letters, numbers and dashes only.</div>
                 </div>
                 <div class="cai-field">
                   <label class="cai-field__label" for="f-disabled">Disabled</label>
@@ -172,20 +172,121 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-field" aria-label="Copy the text field with a hint markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Text field with a hint markup"><code id="code-field">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;project-name&quot;&gt;Project name&lt;/label&gt;
+  &lt;input class=&quot;cai-input&quot; id=&quot;project-name&quot; type=&quot;text&quot; aria-describedby=&quot;project-name-hint&quot;&gt;
+  &lt;div class=&quot;cai-field__helper&quot; id=&quot;project-name-hint&quot;&gt;Shown on the dashboard.&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-field-error" aria-label="Copy the field with an error markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Field with an error markup"><code id="code-field-error">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;slug&quot;&gt;Slug&lt;/label&gt;
+  &lt;input class=&quot;cai-input cai-input--error&quot; id=&quot;slug&quot; type=&quot;text&quot; aria-invalid=&quot;true&quot; aria-describedby=&quot;slug-error&quot;&gt;
+  &lt;div class=&quot;cai-field__error&quot; id=&quot;slug-error&quot;&gt;&lt;span class=&quot;u-sr-only&quot;&gt;Error: &lt;/span&gt;Use letters, numbers and dashes only.&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-radios" aria-label="Copy the radio group markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Radio group markup"><code id="code-radios">&lt;fieldset class=&quot;cai-fieldset&quot;&gt;
+  &lt;legend&gt;Plan&lt;/legend&gt;
+  &lt;div class=&quot;cai-check-group&quot;&gt;
+    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;plan&quot; id=&quot;plan-free&quot; checked&gt;&lt;label for=&quot;plan-free&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;plan&quot; id=&quot;plan-team&quot;&gt;&lt;label for=&quot;plan-team&quot;&gt;Team&lt;/label&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/fieldset&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-switch" aria-label="Copy the switch markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Switch markup"><code id="code-switch">&lt;label class=&quot;cai-toggle&quot;&gt;
+  &lt;input class=&quot;cai-toggle__input&quot; type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;
+  &lt;span class=&quot;cai-toggle__track&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;cai-toggle__thumb&quot;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;cai-toggle__label&quot;&gt;Weekly digest&lt;/span&gt;
+&lt;/label&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>Every control is a native element with a CAI class. The state comes from native attributes.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Form classes and states" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-field</code></div></td><td data-label="Effect"><div>Wraps one label, its control, its hint and its error</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-field__label</code></div></td><td data-label="Effect"><div>The visible label</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-field__label--required</code></div></td><td data-label="Effect"><div>Adds a red " *" after the label</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-field__helper</code></div></td><td data-label="Effect"><div>A hint under the control</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-field__error</code></div></td><td data-label="Effect"><div>An error under the control, in the danger colour</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-input</code></div></td><td data-label="Effect"><div>Text, email, number, date, time, colour, file and range inputs, <code>&lt;select&gt;</code> and <code>&lt;textarea&gt;</code>; 44 px high</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-input--error</code></div></td><td data-label="Effect"><div>A 2 px danger underline; pair it with <code>aria-invalid="true"</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-input--textarea</code></div></td><td data-label="Effect"><div>Auto height, at least 80 px, resizes vertically</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-select-wrap</code></div></td><td data-label="Effect"><div>Wraps a <code>&lt;select&gt;</code> to draw its arrow</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-check-group</code>, <code>.cai-check-item</code></div></td><td data-label="Effect"><div>A list of checkboxes or radios, each with its label</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-fieldset</code></div></td><td data-label="Effect"><div>A bordered group with an upper-case <code>&lt;legend&gt;</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-toggle</code></div></td><td data-label="Effect"><div>A switch: a checkbox with <code>role="switch"</code> drawn as a track and a thumb</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-meter</code>, <code>.cai-output</code></div></td><td data-label="Effect"><div>A <code>&lt;meter&gt;</code> bar and a computed value</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>disabled</code>, <code>readonly</code></div></td><td data-label="Effect"><div>Faded; read-only also gets a dashed underline</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>Native inputs with the field, label, helper and error classes. The switch is a checkbox with role="switch"; all of it works without JavaScript and submits with the form.</p>
+            <p>Native form controls, styled by <code>components/form.css</code>. No JavaScript: the browser owns the state, the keyboard, validation and submission.</p>
+            <ul>
+              <li>Each control gets its name from its <code>&lt;label&gt;</code>; the hint and the error are tied to it with <code>aria-describedby</code>.</li>
+              <li>CAI does not mark a field as invalid for you: add <code>.cai-input--error</code>, <code>aria-invalid="true"</code> and the error text when your validation fails.</li>
+              <li>Field text is 16 px at 768 px and below and on touch screens, so iOS Safari does not zoom in.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Every control works and submits with its form, including the switch. Only what your own script adds is missing, such as live validation or a value echoed in an <code>&lt;output&gt;</code>.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Tab between fields, Space toggles checkboxes and switches, arrow keys move inside radio groups and sliders. Group related controls with fieldset and legend.</p>
+            <p>The native keys apply. Tab moves between controls.</p>
+            <ul>
+              <li>Space checks a checkbox or a switch.</li>
+              <li>Arrow keys choose within a radio group, and move a range slider.</li>
+              <li>Group related controls in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>, or a <code>role="group"</code> named with <code>aria-labelledby</code>.</li>
+              <li>Write "Error: " before the error text, hidden visually with <code>.u-sr-only</code> if you like.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To collect input. Use the native control that fits the data: text, email, date, range, select, checkbox, radio, switch.</p>
+            <p>Use these fields to collect input, with the native control that fits the data.</p>
+            <ul>
+              <li>Text, email, number, date, time: an input of that <code>type</code>.</li>
+              <li>One choice from a few: radios. From many: a select.</li>
+              <li>Several choices: checkboxes. A setting that applies at once: a switch.</li>
+            </ul>
             <h3 id="when-not">When not to use</h3>
-            <p>Do not rebuild a native control from divs. Do not use a placeholder as the label.</p>
+            <p>Do not rebuild a native control from <code>&lt;div&gt;</code> elements.</p>
+            <ul>
+              <li>Do not use a placeholder as the label: it disappears when the reader types.</li>
+              <li>Do not use a switch inside a form that is sent with a button: use a checkbox.</li>
+              <li>To show how far a task has got, use <a href="/docs/components/progress/">progress</a>, not a meter.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Every control has a visible label. Hints go in a helper linked with aria-describedby. An error says what is wrong and how to fix it, next to the field, prefixed with "Error:".</p>
+            <p>Every control has a visible label that names what to enter.</p>
+            <ul>
+              <li>Labels are short nouns, in sentence case: "Project name".</li>
+              <li>A hint, under the control, says the format or why you ask.</li>
+              <li>An error says what is wrong and how to fix it: "Use letters, numbers and dashes only."</li>
+              <li>If you mark required fields with "*", say once, above the form, what it means.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

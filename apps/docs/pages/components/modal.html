@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Modal
-description: A native dialog that asks for a decision before going on.
+description: Asks for a decision that must be made before the reader goes on, in a native dialog.
 area: components
 group: feedback
 files: components/modal.css
@@ -12,47 +12,127 @@ toc: h2,h3
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <div class="o-row">
-              <button class="cai-btn cai-btn--primary" type="button" commandfor="docs-modal" command="show-modal">Open modal</button>
+              <button class="cai-btn cai-btn--danger" type="button" commandfor="docs-modal" command="show-modal">Delete draft</button>
             </div>
             <dialog class="cai-modal" id="docs-modal" aria-labelledby="docs-modal-title">
               <div class="cai-modal__header">
                 <button class="cai-modal__close" commandfor="docs-modal" command="close" aria-label="Close dialog" type="button">×</button>
-                <h2 class="cai-modal__title" id="docs-modal-title">Confirm action</h2>
+                <h2 class="cai-modal__title" id="docs-modal-title">Delete this draft?</h2>
               </div>
               <div class="cai-modal__body">
-                <p>This action cannot be undone. Continue?</p>
+                <p>You cannot undo this. The draft and its comments are deleted.</p>
               </div>
               <div class="cai-modal__footer">
                 <button class="cai-btn cai-btn--ghost" commandfor="docs-modal" command="close" type="button">Cancel</button>
-                <button class="cai-btn cai-btn--primary" commandfor="docs-modal" command="close" type="button">Confirm</button>
+                <button class="cai-btn cai-btn--danger" commandfor="docs-modal" command="close" type="button">Delete draft</button>
               </div>
             </dialog>
           </div>
 
-          <p class="docs-demo__note">A native <code class="cai-code-inline">&lt;dialog&gt;</code>: Esc closes it and focus returns to the button.</p>
+          <p class="docs-demo__note">A native <code class="cai-code-inline">&lt;dialog&gt;</code>. Escape closes it and focus goes back to the button that opened it. Nothing is deleted here.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>command and commandfor are not yet in every supported browser: without them and without JavaScript the open button does nothing.</p>
+          <p>Some supported browsers do not have the <code>command</code> and <code>commandfor</code> attributes yet. In those browsers, with JavaScript off, the open button does nothing. Give the reader another way to the same action.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Modal documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-modal" aria-label="Copy the modal markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Modal markup"><code id="code-modal">&lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;button&quot; commandfor=&quot;rename&quot; command=&quot;show-modal&quot;&gt;Rename project&lt;/button&gt;
+
+&lt;dialog class=&quot;cai-modal&quot; id=&quot;rename&quot; aria-labelledby=&quot;rename-title&quot;&gt;
+  &lt;div class=&quot;cai-modal__header&quot;&gt;
+    &lt;button class=&quot;cai-modal__close&quot; type=&quot;button&quot; commandfor=&quot;rename&quot; command=&quot;close&quot; aria-label=&quot;Close dialog&quot;&gt;×&lt;/button&gt;
+    &lt;h2 class=&quot;cai-modal__title&quot; id=&quot;rename-title&quot;&gt;Rename project&lt;/h2&gt;
+  &lt;/div&gt;
+  &lt;form method=&quot;dialog&quot;&gt;
+    &lt;div class=&quot;cai-modal__body&quot;&gt;
+      &lt;div class=&quot;cai-field&quot;&gt;
+        &lt;label class=&quot;cai-field__label&quot; for=&quot;rename-name&quot;&gt;New name&lt;/label&gt;
+        &lt;input class=&quot;cai-input&quot; id=&quot;rename-name&quot; type=&quot;text&quot; autofocus&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;cai-modal__footer&quot;&gt;
+      &lt;button class=&quot;cai-btn cai-btn--ghost&quot; type=&quot;button&quot; commandfor=&quot;rename&quot; command=&quot;close&quot;&gt;Cancel&lt;/button&gt;
+      &lt;button class=&quot;cai-btn cai-btn--primary&quot; value=&quot;rename&quot;&gt;Rename project&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-modal-js" aria-label="Copy the fallback script code">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Fallback script code"><code id="code-modal-js">import { initModals } from &quot;@cai-ds/core/modal&quot;;
+initModals();</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One size and no modifiers: up to 600 px wide and 90 % of the viewport high, scrolling inside when the content is longer.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Modal parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-modal</code></div></td><td data-label="What it does"><div>The dialog surface, with a dimmed and slightly blurred backdrop</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-modal__header</code>, <code>__title</code></div></td><td data-label="What it does"><div>The title row, with a rule under it</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-modal__close</code></div></td><td data-label="What it does"><div>The × button, at the end of the title row, 28 px at least</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-modal__body</code></div></td><td data-label="What it does"><div>The content</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-modal__footer</code></div></td><td data-label="What it does"><div>The buttons, at the end of the row, with a rule above them</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>command="show-modal"</code>, <code>command="close"</code></div></td><td data-label="What it does"><div>Open and close the dialog named in <code>commandfor</code></div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A native dialog opened with showModal(). Buttons use command="show-modal" and command="close" with commandfor; a small script supplies those in browsers without them.</p>
+            <p>A native <code>&lt;dialog&gt;</code>, styled by <code>components/modal.css</code> and opened as a modal.</p>
+            <ul>
+              <li>The browser does the hard part: the page behind is inert, focus stays inside, Escape closes, and focus goes back to the opener.</li>
+              <li>Buttons open and close it with <code>command</code> and <code>commandfor</code>, with no script.</li>
+              <li><code>initModals()</code> from <code>modal.js</code> handles the same two commands in browsers that do not support them yet, and does nothing in the others. <code>cai.js</code> runs it.</li>
+              <li>A <code>&lt;form method="dialog"&gt;</code> inside closes the dialog when it is sent, and its <code>returnValue</code> is the value of the button pressed.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>In browsers that support <code>command</code>, everything works. In the others the open button does nothing: see Known issues.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>The browser traps focus, Escape closes it and focus returns to the opener. Give the dialog aria-labelledby.</p>
+            <p>Tab and Shift+Tab move inside the dialog only; Escape closes it.</p>
+            <ul>
+              <li>On open, focus goes to the first focusable element, or to the one with <code>autofocus</code>.</li>
+              <li>Name the dialog with <code>aria-labelledby</code> pointing at its title.</li>
+              <li>The × button needs <code>aria-label="Close dialog"</code>: its text is a symbol.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To ask for a decision or short input that must be settled before the reader continues.</p>
+            <p>Use a modal to ask for a decision or a short input that must be settled before the reader goes on.</p>
+            <ul>
+              <li>To confirm an action that cannot be undone.</li>
+              <li>To ask for one or two values, such as a new name.</li>
+            </ul>
             <h3 id="when-not">When not to use</h3>
-            <p>For information the reader can ignore: use an alert. Do not open one on page load.</p>
+            <p>Do not use a modal for something the reader can ignore or come back to.</p>
+            <ul>
+              <li>For information about the page, use an <a href="/docs/components/alert/">alert</a>.</li>
+              <li>For a confirmation that needs no answer, use a <a href="/docs/components/toast/">toast</a>.</li>
+              <li>For a long form, use its own page.</li>
+              <li>Never open a modal when the page loads.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>The title names the decision: "Delete this draft". Buttons repeat the action: "Delete draft" and "Cancel", never "OK".</p>
+            <p>The title asks the question or names the task: "Delete this draft?"</p>
+            <ul>
+              <li>The body says what happens, in one or two sentences.</li>
+              <li>The main button repeats the action: "Delete draft". The other one is "Cancel".</li>
+              <li>Never "OK", "Yes" or "Confirm".</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

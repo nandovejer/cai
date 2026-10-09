@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Alert
-description: A message about the page or a task, in four status colours with an icon and a title.
+description: Tells the reader about the page or a task: information, success, a warning or an error.
 area: components
 group: feedback
 files: components/alert.css
@@ -48,20 +48,74 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-alert" aria-label="Copy the warning alert markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Warning alert markup"><code id="code-alert">&lt;div class=&quot;cai-alert cai-alert--warning&quot;&gt;
+  &lt;div class=&quot;cai-alert__icon&quot; aria-hidden=&quot;true&quot;&gt;!&lt;/div&gt;
+  &lt;div&gt;
+    &lt;div class=&quot;cai-alert__title&quot;&gt;Warning&lt;/div&gt;
+    &lt;div class=&quot;cai-alert__body&quot;&gt;Storage is almost full. Delete old builds to free space.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One modifier sets the status. Write the status in the title too: the colour is only a second cue.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Alert variants" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Use it for</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-alert--info</code></div></td><td data-label="Use it for"><div>Something useful to know</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-alert--success</code></div></td><td data-label="Use it for"><div>A task that finished well</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-alert--warning</code></div></td><td data-label="Use it for"><div>Something that may go wrong soon</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-alert--error</code></div></td><td data-label="Use it for"><div>Something that went wrong and needs action</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A block with an icon, a title and a body. The type is written in the title, not only in the colour.</p>
+            <p>A block with an icon, a title and a body, styled by <code>components/alert.css</code>. No JavaScript.</p>
+            <ul>
+              <li>The icon is decorative (<code>aria-hidden="true"</code>): the title already names the status.</li>
+              <li>The start border and the title take the status colour; the body stays in the secondary text colour.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the alert is static HTML and CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Not interactive. If it appears after an action, put it in a live region (role="status" or role="alert") so it is announced.</p>
+            <p>An alert is not interactive and takes no focus.</p>
+            <ul>
+              <li>An alert that is on the page when it loads needs no role.</li>
+              <li>An alert that appears after an action must be announced: insert it into a container that is already on the page with <code>role="status"</code>, or <code>role="alert"</code> for an error that needs attention now.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To tell the reader about a state that matters on the page: information, success, warning, error.</p>
+            <p>Use an alert to tell the reader about a state that matters on this page.</p>
+            <ul>
+              <li>Information they need before they act: "This project is archived."</li>
+              <li>The result of a task: success, a warning or an error.</li>
+            </ul>
             <h3 id="when-not">When not to use</h3>
-            <p>For a message that must interrupt: use a dialog. Do not stack more than one or two alerts.</p>
+            <p>Do not use an alert for a message that must stop the reader, or one they can safely miss.</p>
+            <ul>
+              <li>A decision the reader must make before going on: use a <a href="/docs/components/modal/">modal</a>.</li>
+              <li>A short confirmation that needs no action: use a <a href="/docs/components/toast/">toast</a>.</li>
+              <li>An error on one field: put it next to the field (<a href="/docs/components/form/">form fields</a>).</li>
+              <li>More than two alerts at once: merge them, or the reader stops reading them.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Say what happened and what to do next. "The build failed. Check the log and run it again."</p>
+            <p>Say what happened, then what to do next.</p>
+            <ul>
+              <li>The title is the status in one or two words: "Warning", "Build failed".</li>
+              <li>The body is one or two short sentences: "The build failed. Check the log and run it again."</li>
+              <li>Never rely on the colour or the icon alone.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

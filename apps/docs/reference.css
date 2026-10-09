@@ -134,6 +134,20 @@
   overflow-wrap: anywhere;
 }
 
+/* A link inside the sentence of a list item is underlined, as core does in a
+   paragraph: colour alone never marks a link (WCAG 1.4.1). Lists that are
+   only links (galleries, the A–Z index, contents) carry a class and keep
+   their own look. */
+:where(.docs-view, .docs-prose, .docs-block, .docs-body > ul:not([class])) li > a:not([class]) {
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+/* A plain list of sentences keeps a readable line length */
+:where(.docs-body > ul:not([class])) {
+  max-width: 70ch;
+}
+
 /* Reference pages: a section, its h2 and its blocks */
 .docs-block,
 .docs-component {

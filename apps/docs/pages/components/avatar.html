@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Avatar
-description: A person's or a team's initials or picture, in three sizes.
+description: Shows who a person or a team is, with their initials, in three sizes.
 area: components
 group: content
 files: components/avatar.css
@@ -11,9 +11,9 @@ toc: h2,h3
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <div class="o-row">
-              <span class="cai-avatar cai-avatar--sm" role="img" aria-label="Ana Belén, small">AB</span>
-              <span class="cai-avatar cai-avatar--md" role="img" aria-label="Carlos Díaz, medium">CD</span>
-              <span class="cai-avatar cai-avatar--lg" role="img" aria-label="Eva Flores, large">EF</span>
+              <span class="cai-avatar cai-avatar--sm" role="img" aria-label="Ana Belén">AB</span>
+              <span class="cai-avatar cai-avatar--md" role="img" aria-label="Carlos Díaz">CD</span>
+              <span class="cai-avatar cai-avatar--lg" role="img" aria-label="Eva Flores">EF</span>
             </div>
           </div>
           </div>
@@ -25,20 +25,69 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-avatar" aria-label="Copy the avatar markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar markup"><code id="code-avatar">&lt;span class=&quot;cai-avatar cai-avatar--md&quot; role=&quot;img&quot; aria-label=&quot;Carlos Díaz&quot;&gt;CD&lt;/span&gt;</code></pre>
+            </div>
+            <p>Next to the person's name, the avatar repeats it: hide it instead.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-avatar-named" aria-label="Copy the avatar next to a name markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar next to a name markup"><code id="code-avatar-named">&lt;span class=&quot;cai-avatar cai-avatar--sm&quot; aria-hidden=&quot;true&quot;&gt;CD&lt;/span&gt; Carlos Díaz</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>Pick one size modifier. Without one, the avatar has no size of its own.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Avatar sizes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Size</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-avatar--sm</code></div></td><td data-label="Size"><div>24 × 24 px, extra-small text</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-avatar--md</code></div></td><td data-label="Size"><div>36 × 36 px, small text</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-avatar--lg</code></div></td><td data-label="Size"><div>48 × 48 px, base text</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A span with role="img" and an aria-label holding the full name, in three sizes.</p>
+            <p>An inline box that centres its text, styled by <code>components/avatar.css</code>. No JavaScript.</p>
+            <ul>
+              <li>The initials are set in the mono font, in capitals (<code>text-transform: uppercase</code>).</li>
+              <li>The colours are the brand tint and the brand text colour, in every mode.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the avatar is HTML and CSS only.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Not interactive.</p>
+            <p>An avatar is not interactive and takes no focus.</p>
+            <ul>
+              <li>On its own, it is an image: <code>role="img"</code> and an <code>aria-label</code> with the full name, so a screen reader does not spell out the initials.</li>
+              <li>Next to the name, it is decoration: <code>aria-hidden="true"</code>.</li>
+              <li>Inside a link or a button, the control's text names it; hide the avatar.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To identify a person or account with initials where space is tight.</p>
+            <p>Use an avatar to identify a person or an account where space is tight, such as a list of members or the author of a comment.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>When the name is already shown next to it and the avatar adds nothing: hide it from assistive technology instead.</p>
+            <p>Do not use an avatar as the only way to tell people apart.</p>
+            <ul>
+              <li>Two people can share initials: show the name as text nearby.</li>
+              <li>For a status or a category, use a <a href="/docs/components/tag/">tag</a>.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Initials in capitals. The accessible name is the real name, not the initials.</p>
+            <p>Two initials, from the name the person uses.</p>
+            <ul>
+              <li>The accessible name is the full name, never the initials.</li>
+              <li>Use the same size for every avatar in one list.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

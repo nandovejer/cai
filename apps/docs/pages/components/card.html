@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Card
-description: Groups content about one thing on a raised surface.
+description: Groups a few facts about one thing on a bordered surface.
 area: components
 group: content
 files: components/card.css
@@ -28,20 +28,65 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-card" aria-label="Copy the card markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Card markup"><code id="code-card">&lt;article class=&quot;cai-card&quot;&gt;
+  &lt;h3 class=&quot;cai-card__title&quot;&gt;Database&lt;/h3&gt;
+  &lt;p class=&quot;cai-card__body&quot;&gt;48 active connections.&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers: one card, three classes.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Card parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-card</code></div></td><td data-label="What it does"><div>The surface: border, padding, a shadow on hover</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-card__title</code></div></td><td data-label="What it does"><div>Base size, semibold, primary text colour</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-card__body</code></div></td><td data-label="What it does"><div>Medium size, secondary text colour</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A container with a title and a body. Pick the heading level that fits the page outline.</p>
+            <p>A container styled by <code>components/card.css</code>. No JavaScript.</p>
+            <ul>
+              <li>Use any element: <code>&lt;article&gt;</code> for a self-contained item, <code>&lt;div&gt;</code> for a group of facts, <code>&lt;li&gt;</code> inside a list of cards.</li>
+              <li>The title class goes on the heading level that fits the page outline.</li>
+              <li>To lay cards out, use the <a href="/docs/components/layout/">grid object</a> or the <a href="/docs/platform/feature-grid/">feature grid</a>.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: a card is HTML and CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Not interactive. A link inside it follows the normal link rules.</p>
+            <p>A card is not interactive and takes no focus.</p>
+            <ul>
+              <li>Links and buttons inside it keep their own behaviour.</li>
+              <li>To link a whole card, put the link on the title text, not around the card: one tab stop, and a name that is the title.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To group a small set of related facts that read as one unit.</p>
+            <p>Use a card to group a small set of facts that read as one unit, often in a grid of similar items.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>Do not nest cards. Do not make the whole card a click target with a script: link the title instead.</p>
+            <p>Do not use a card to box content that is not a separate thing.</p>
+            <ul>
+              <li>For rows of records with the same attributes, use a <a href="/docs/components/table/">table</a>.</li>
+              <li>For a message about the page, use an <a href="/docs/components/alert/">alert</a>.</li>
+              <li>Do not put a card inside a card.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>A short noun title, then one or two lines. No full stops on titles.</p>
+            <p>A short noun as the title, then one or two lines.</p>
+            <ul>
+              <li>No full stop on the title.</li>
+              <li>Keep cards in one group parallel: the same kind of title, the same length of body.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Button
-description: Starts an action on the current page.
+description: Starts an action on the current page, such as saving, sending or opening a dialog.
 area: components
 group: actions
 files: components/button.css
@@ -36,20 +36,80 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-button" aria-label="Copy the primary button markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Primary button markup"><code id="code-button">&lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;button&quot;&gt;Save changes&lt;/button&gt;</code></pre>
+            </div>
+            <p>A link that goes somewhere, with the look of a button:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-button-link" aria-label="Copy the link styled as a button markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Link styled as a button markup"><code id="code-button-link">&lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;/pricing/&quot;&gt;See the plans&lt;/a&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>Combine <code>.cai-btn</code> with one variant and, if needed, one size.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Button variants and sizes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-btn--primary</code></div></td><td data-label="Effect"><div>Brand fill: the main action of the view</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-btn--secondary</code></div></td><td data-label="Effect"><div>Strong neutral surface: a second action</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-btn--outline</code></div></td><td data-label="Effect"><div>Brand text and border, no fill</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-btn--ghost</code></div></td><td data-label="Effect"><div>Brand text only: a low-priority action</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-btn--danger</code></div></td><td data-label="Effect"><div>Danger fill: an action that deletes or cannot be undone</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-btn--sm</code></div></td><td data-label="Effect"><div>36 px high, small text</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-btn--lg</code></div></td><td data-label="Effect"><div>56 px high, base text</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>disabled</code></div></td><td data-label="Effect"><div>Muted text, dashed border, no pointer events</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>The default height is 44 px. An <code>&lt;svg&gt;</code> inside the button is drawn at 16 × 16 px, before or after the label.</p>
             <h3 id="how">How it works</h3>
-            <p>A native button element with a variant and a size modifier. Without JavaScript it works as any button; inside a form, set the type.</p>
+            <p>A native <code>&lt;button&gt;</code> (or <code>&lt;a&gt;</code>) with classes from <code>components/button.css</code>. No JavaScript.</p>
+            <ul>
+              <li>Set <code>type="button"</code> unless the button submits a form; the default type is <code>submit</code>.</li>
+              <li>The height is a minimum: the label can grow with the reader's font size.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>A button works like any native button: it submits its form or runs nothing. What it does on click is up to your script.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Tab to reach it, Enter or Space to press it. The focus ring is the shared 2px ring. No ARIA is needed; add an aria-label only to an icon-only button.</p>
+            <p>Tab reaches the button; Enter or Space presses it. A link styled as a button answers to Enter only, as every link does.</p>
+            <ul>
+              <li>No ARIA is needed: the visible label is the name.</li>
+              <li>An icon-only button needs a name: <code>aria-label="Close"</code>, and the icon <code>aria-hidden="true"</code>.</li>
+              <li>A disabled button is skipped by Tab and screen readers may not find it: prefer an enabled button that explains what is missing.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To start an action on the current page: save, send, open a dialog. Use the primary variant once per view.</p>
+            <p>Use a button to start an action on the current page: save, send, delete, open a dialog.</p>
+            <ul>
+              <li>One primary button per view, for the action most people take.</li>
+              <li>Secondary, outline or ghost buttons for the other actions.</li>
+            </ul>
             <h3 id="when-not">When not to use</h3>
-            <p>To go to another page. Use a link, or a link styled with the button class. Do not use a disabled button to hide an action.</p>
+            <p>Do not use a button to go to another page: use a link, styled as a button only when it is the main call to action.</p>
+            <ul>
+              <li>For several related actions in a row, use an <a href="/docs/platform/actions/">action group</a>.</li>
+              <li>Do not disable a button to hide an action the reader cannot take yet: say why instead.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Start with a verb and say the result: "Save changes", "Delete draft". Never "OK", "Submit" or "Click here". Sentence case.</p>
+            <p>Start with a verb and say the result: "Save changes", "Delete draft".</p>
+            <ul>
+              <li>Never "OK", "Submit" or "Click here".</li>
+              <li>Sentence case, two or three words, no full stop.</li>
+              <li>Use the same words for the same action everywhere.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Copy button
-description: Copies a command or value, and says it did.
+description: Copies a command or a value to the clipboard, and says it did.
 area: components
 group: actions
 files: components/copy-btn.css
@@ -17,30 +17,81 @@ toc: h2,h3
             </div>
           </div>
 
-          <p class="docs-demo__note">The button copies the text in its <code class="cai-code-inline">data-copy</code> attribute.</p>
+          <p class="docs-demo__note">The button copies the text of its <code class="cai-code-inline">data-copy</code> attribute.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Needs a secure context (https or localhost) for the Clipboard API; the failure is announced and the text can still be selected.</p>
+          <p>The Clipboard API needs a secure context (https, or localhost while you develop). Elsewhere the copy fails: the failure is announced, and the text can still be selected and copied by hand.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Copy button documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-copy" aria-label="Copy the copy button markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Copy button markup"><code id="code-copy">&lt;code class=&quot;cai-code-inline&quot;&gt;npm install @cai-ds/core&lt;/code&gt;
+&lt;button class=&quot;cai-copy-btn&quot; type=&quot;button&quot; data-copy=&quot;npm install @cai-ds/core&quot; aria-label=&quot;Copy the install command&quot;&gt;Copy&lt;/button&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-copy-js" aria-label="Copy the copy script code">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Copy script code"><code id="code-copy-js">import { initCopyButtons } from &quot;@cai-ds/core/clipboard&quot;;
+initCopyButtons();</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One class and one attribute. The look does not change.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Copy button options" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-copy-btn</code></div></td><td data-label="Effect"><div>Small mono button, 24 px high; hidden until the script runs</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-copy</code></div></td><td data-label="Effect"><div>The exact text to copy</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.is-copied</code></div></td><td data-label="Effect"><div>Set by the script for about a second after a copy: success colour, label "Copied"</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A button with data-copy. It needs JavaScript and the Clipboard API, so it is hidden until the script runs; the text it copies is always on the page, selectable.</p>
+            <p>A native <code>&lt;button&gt;</code>, styled by <code>components/copy-btn.css</code> and wired by <code>clipboard.js</code>.</p>
+            <ul>
+              <li><code>initCopyButtons()</code> listens for clicks on any <code>.cai-copy-btn</code> and copies its <code>data-copy</code>. <code>cai.js</code> runs it.</li>
+              <li>For about a second the label reads "Copied", then goes back.</li>
+              <li>A polite live region says "Copied to clipboard", or that the copy failed. The texts come from <code>i18n.js</code>, in the language of the page.</li>
+              <li><code>copyToClipboard(text, el)</code> does the same for your own controls.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The button is hidden, because it would do nothing. The text it copies stays on the page, so the reader selects and copies it.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Tab, then Enter or Space. A polite status message announces "Copied to clipboard" or the failure.</p>
+            <p>Tab reaches the button; Enter or Space copies. Focus stays on the button.</p>
+            <ul>
+              <li>The visible label is "Copy"; the <code>aria-label</code> starts with it and says what is copied: "Copy the install command".</li>
+              <li>The result is announced in a polite live region shared by every copy button.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To copy a short string the reader will paste elsewhere, such as a command or a token name.</p>
+            <p>Use a copy button for a short string the reader will paste somewhere else: a command, a token name, a key.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For long text, or where selecting the text is enough. Never as the only way to get the content.</p>
+            <p>Do not use a copy button where selecting the text is just as easy, or as the only way to get the content.</p>
+            <ul>
+              <li>For a shell command with its prompt, use a <a href="/docs/platform/command-block/">command block</a>.</li>
+              <li>For long text, show it in a <a href="/docs/components/code/">code block</a> the reader can select.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Name what is copied in the accessible name: "Copy the install command". The visible label is "Copy"; the result is announced in a polite live region.</p>
+            <p>Keep the visible label "Copy", and name what it copies in the accessible name.</p>
+            <ul>
+              <li>Start the accessible name with the visible word: "Copy the install command".</li>
+              <li>Copy exactly what is shown, without a prompt sign or extra spaces.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

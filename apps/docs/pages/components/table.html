@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Table
-description: Rows and columns of data that stay readable at 320 px.
+description: Compares records across several attributes, in rows and columns that stay readable at 320 px.
 area: components
 group: content
 files: components/table.css
@@ -25,7 +25,7 @@ toc: h2,h3
             </div>
           </div>
 
-          <p class="docs-demo__note">Below 480px of container width each row becomes a card.</p>
+          <p class="docs-demo__note">Make the window narrow: below 480 px of container width each row becomes a card.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
@@ -35,20 +35,73 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-table" aria-label="Copy the table markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Table markup"><code id="code-table">&lt;div class=&quot;cai-table-wrap&quot; role=&quot;region&quot; aria-label=&quot;Invoices&quot; tabindex=&quot;0&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;caption&gt;Invoices&lt;/caption&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Number&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Date&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Amount (€)&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td data-label=&quot;Number&quot;&gt;INV-0042&lt;/td&gt;&lt;td data-label=&quot;Date&quot;&gt;1 Oct 2026&lt;/td&gt;&lt;td data-label=&quot;Amount (€)&quot;&gt;120.00&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <div class="cai-table-wrap" role="region" aria-label="Table options" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-table</code></div></td><td data-label="Effect"><div>Full width, header row on the strong surface, a rule between rows, a highlight on the row under the pointer</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-table-wrap</code></div></td><td data-label="Effect"><div>Scrolls the table sideways when it is wider than its container</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-table--sticky-col</code></div></td><td data-label="Effect"><div>Keeps the first column in view while the table scrolls sideways</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-label</code> on each <code>&lt;td&gt;</code></div></td><td data-label="Effect"><div>The column name shown before the value when rows become cards</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A native table with caption, thead and th scope. In a wrapper that scrolls and can take focus. Below 480px of container width each row becomes a card, using data-label.</p>
+            <p>A native <code>&lt;table&gt;</code> with <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code> and <code>&lt;th scope&gt;</code>, styled by <code>components/table.css</code>. No JavaScript.</p>
+            <ul>
+              <li>The wrapper is a container: below 480 px of its own width, a container query turns each row into a card of label and value pairs.</li>
+              <li>The labels come from <code>data-label</code>; a cell without one shows its value only.</li>
+              <li>A cell that holds more than one element needs a wrapper <code>&lt;div&gt;</code> inside it, so the value stays together.</li>
+              <li>Cards change the <code>display</code> of the table elements, which can hide the table from some screen readers. The stylesheet recommends <code>role="table"</code>, <code>"row"</code> and <code>"cell"</code> on a table that stacks.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: scrolling, the sticky column and the cards are all CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>The scroll region is focusable so keyboard users can scroll it with the arrow keys. Sticky first column keeps the row name in view.</p>
+            <p>The wrapper takes focus (<code>tabindex="0"</code>) so keyboard users can scroll it with the arrow keys.</p>
+            <ul>
+              <li>Give the wrapper <code>role="region"</code> and an <code>aria-label</code>, so that focus stop has a name.</li>
+              <li><code>scope="col"</code> on column headers, and <code>scope="row"</code> on a header cell that names its row.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To compare records across several attributes.</p>
+            <p>Use a table to compare records across the same attributes: services and their status, invoices and their amounts.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For layout. For a short list of one attribute, use a list.</p>
+            <p>Do not use a table for layout.</p>
+            <ul>
+              <li>For one attribute per item, use a list.</li>
+              <li>For a few items of equal weight, use <a href="/docs/components/card/">cards</a>.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Column headings are short nouns. The caption names the table. Put units in the heading, not in every cell.</p>
+            <p>The caption names the table; column headings are short nouns.</p>
+            <ul>
+              <li>Put units in the heading, not in every cell: "Amount (€)".</li>
+              <li>Put the column that identifies the row first.</li>
+              <li>Align numbers the same way in a column, with the same number of decimals.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

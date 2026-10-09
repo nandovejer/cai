@@ -1,12 +1,13 @@
 <!-- cai:page
 title: Layout objects
-description: Stack, row, grid and media layouts, and the page-level objects.
+description: Lay out blocks in a stack, a row, a grid or beside an image, and the page itself, with the o-* classes.
 area: components
 order: 2000
 group: helpers
 files: objects/_objects.css
 -->
     <div class="docs-block" id="c-objects">
+          <h2 id="objects-examples">Examples</h2>
           <div class="docs-demo__stage o-grid docs-cols-2">
             <div class="docs-demo__stage">
               <code class="docs-demo__file">.o-stack</code>
@@ -48,4 +49,49 @@ files: objects/_objects.css
           </div>
           <p class="docs-demo__note"><code class="cai-code-inline">.o-shell</code>, <code class="cai-code-inline">.o-main</code> and <code class="cai-code-inline">.o-container</code> are page-level: <a href="#page-nav">this page uses them</a>.</p>
         
+          <h2 id="objects-reference">Pick an object</h2>
+          <p>Objects only lay things out: no colour, no type. Spacing comes from the space tokens.</p>
+          <div class="cai-table-wrap" role="region" aria-label="Layout objects" tabindex="0">
+            <table class="cai-table">
+              <thead>
+                <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="Class"><div><code>.o-stack</code></div></td><td data-label="What it does"><div>A column, 12 px between items</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-row</code></div></td><td data-label="What it does"><div>A row that wraps, items centred vertically, 12 px between them</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-grid</code></div></td><td data-label="What it does"><div>A grid with 16 px gaps; set the columns with your own <code>grid-template-columns</code></div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-media</code>, <code>.o-media__body</code></div></td><td data-label="What it does"><div>A fixed item, such as an avatar, beside content that takes the remaining width</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-container</code></div></td><td data-label="What it does"><div>The content width (<code>--cai-content-max</code>, 1100 px) and page padding; less padding at 480 px and below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-shell</code></div></td><td data-label="What it does"><div>The app layout: a sidebar column (<code>--cai-sidebar-width</code>) beside the main area, a footer across the bottom; one column at 768 px and below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-main</code></div></td><td data-label="What it does"><div>The main area inside <code>.o-shell</code></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 id="objects-markup">Copy the markup</h2>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-objects-media" aria-label="Copy the media object markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Media object markup"><code id="code-objects-media">&lt;div class=&quot;o-media&quot;&gt;
+  &lt;span class=&quot;cai-avatar cai-avatar--md&quot; aria-hidden=&quot;true&quot;&gt;AB&lt;/span&gt;
+  &lt;div class=&quot;o-media__body&quot;&gt;
+    &lt;p&gt;Ana Belén&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-objects-shell" aria-label="Copy the app shell markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="App shell markup"><code id="code-objects-shell">&lt;body class=&quot;o-shell&quot;&gt;
+  &lt;nav class=&quot;cai-sidebar&quot; aria-label=&quot;Main&quot;&gt;…&lt;/nav&gt;
+  &lt;main class=&quot;o-main&quot; id=&quot;main-content&quot;&gt;
+    &lt;div class=&quot;o-container&quot;&gt;…&lt;/div&gt;
+  &lt;/main&gt;
+  &lt;footer class=&quot;cai-platform-footer&quot;&gt;…&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+          </div>
+          <p>For whole pages without a sidebar, the <a href="/docs/platform/shell/">page shell</a> of platform does the same job.</p>
     </div>

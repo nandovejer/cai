@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Tabs
-description: Switch between panels of related content; stacked sections without JS.
+description: Switches between panels of related content in one place; without JavaScript the panels are stacked sections.
 area: components
 group: navigation
 files: components/tabs.css
@@ -11,7 +11,7 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage docs-demo__stage--flush">
-            <nav class="cai-tabs" aria-label="Tabs demo">
+            <nav class="cai-tabs" aria-label="Service details">
               <a class="cai-tab is-active" id="tab-summary" href="#panel-summary">Summary</a>
               <a class="cai-tab" id="tab-settings" href="#panel-settings">Settings</a>
               <a class="cai-tab" id="tab-logs" href="#panel-logs">Logs</a>
@@ -21,7 +21,7 @@ toc: h2,h3
             <div class="cai-tabpanel" id="panel-logs"><p>No errors in the last hour.</p></div>
           </div>
 
-          <p class="docs-demo__note">Arrow keys, Home and End move between tabs; Space selects one.</p>
+          <p class="docs-demo__note">Focus a tab, then use the arrow keys, Home and End. The Code and Design tabs of this page are the same component.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
@@ -31,20 +31,78 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tabs" aria-label="Copy the tabs markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Tabs markup"><code id="code-tabs">&lt;nav class=&quot;cai-tabs&quot; aria-label=&quot;Project&quot;&gt;
+  &lt;a class=&quot;cai-tab&quot; href=&quot;#project-summary&quot;&gt;Summary&lt;/a&gt;
+  &lt;a class=&quot;cai-tab&quot; href=&quot;#project-settings&quot;&gt;Settings&lt;/a&gt;
+&lt;/nav&gt;
+&lt;div class=&quot;cai-tabpanel&quot; id=&quot;project-summary&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;cai-tabpanel&quot; id=&quot;project-settings&quot;&gt;…&lt;/div&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tabs-js" aria-label="Copy the tabs script code">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Tabs script code"><code id="code-tabs-js">import { initTabs } from &quot;@cai-ds/core/tabs&quot;;
+initTabs();</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One look. The tab that opens first is the first one that matches:</p>
+            <div class="cai-table-wrap" role="region" aria-label="Which tab opens first" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Order</th><th scope="col">Tab</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Order"><div>1</div></td><td data-label="Tab"><div>The tab whose panel holds the element named in the URL fragment</div></td></tr>
+                  <tr><td data-label="Order"><div>2</div></td><td data-label="Tab"><div>A tab with <code>aria-selected="true"</code> or <code>.is-active</code> in the markup</div></td></tr>
+                  <tr><td data-label="Order"><div>3</div></td><td data-label="Tab"><div>The first tab</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>Without JavaScript: links to panels that are all visible. With it: the ARIA tabs pattern, added by the script, with roving tabindex.</p>
+            <p>A row of in-page links to the panels, styled by <code>components/tabs.css</code> and upgraded by <code>tabs.js</code>.</p>
+            <ul>
+              <li><code>initTabs()</code> adds the ARIA tabs pattern: <code>role="tablist"</code>, <code>"tab"</code> and <code>"tabpanel"</code>, <code>aria-selected</code>, <code>aria-controls</code>, <code>aria-labelledby</code> and a roving <code>tabindex</code>. It hides the inactive panels. <code>cai.js</code> runs it.</li>
+              <li>A link to an element inside a hidden panel opens its tab, on load, on <code>hashchange</code> and on click.</li>
+              <li>Inactive panels are <code>hidden="until-found"</code> where the browser supports it, so find in page reaches them and opens their tab.</li>
+              <li><code>activateTab(tab)</code> selects a tab from your own script.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The tabs are a row of links, and every panel is shown, stacked, in order. Each link jumps to its panel. Give each panel a heading, so the stacked page still reads well.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Tab moves into the tab list; arrow keys move between tabs; Home and End go to the first and last; Space selects the focused tab; Tab leaves to the panel. In right-to-left text, Left and Right follow the reading direction. A link to a section inside a hidden panel opens its tab, and find in page reaches the hidden panels in browsers that support <code>hidden="until-found"</code>.</p>
+            <p>Tab moves into the tab row, to the selected tab; Tab again leaves for the panel.</p>
+            <ul>
+              <li>Left and Right (or Up and Down) move to the next tab and select it; Home and End go to the first and the last.</li>
+              <li>Space or Enter selects the focused tab.</li>
+              <li>In right-to-left text, Left and Right follow the reading direction.</li>
+              <li>Name the tab row with <code>aria-label</code>; the name stays when it becomes a tab list.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To switch between panels of the same level that the reader will not compare side by side.</p>
+            <p>Use tabs to switch between panels of the same level that readers do not need side by side, such as the summary, settings and logs of one service.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For navigation between pages, or for content the reader needs all at once.</p>
+            <p>Do not use tabs to move between pages, or to hide content readers need all at once.</p>
+            <ul>
+              <li>Between pages, use a <a href="/docs/components/sidebar/">sidebar</a> or header links.</li>
+              <li>For steps in order, use separate pages.</li>
+              <li>More than five or six tabs do not fit a phone: use sections with headings.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Labels are one or two words that name the panel.</p>
+            <p>Name each tab after its panel, in one or two words.</p>
+            <ul>
+              <li>Sentence case, no verbs: "Summary", "Settings".</li>
+              <li>Use the same name for the panel's heading.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

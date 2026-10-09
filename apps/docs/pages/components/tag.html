@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Tag and badge
-description: A short label for status, category or count.
+description: Labels an item with a short status or category (tag), or shows a count (badge).
 area: components
 group: content
 files: components/tag.css
@@ -34,20 +34,75 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tag" aria-label="Copy the status tag markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Status tag markup"><code id="code-tag">&lt;span class=&quot;cai-tag cai-tag--green cai-tag--dot&quot;&gt;Running&lt;/span&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-badge" aria-label="Copy the count badge markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Count badge markup"><code id="code-badge">&lt;a href=&quot;/inbox/&quot;&gt;Inbox &lt;span class=&quot;cai-badge cai-badge--primary&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;u-sr-only&quot;&gt; unread&lt;/span&gt;&lt;/a&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>A tag takes one colour and, if you like, the dot. A badge takes one colour.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Tag and badge variants" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-tag--gray</code></div></td><td data-label="Effect"><div>Neutral: a category with no status</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-tag--blue</code></div></td><td data-label="Effect"><div>Information colours</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-tag--green</code></div></td><td data-label="Effect"><div>Success colours</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-tag--yellow</code></div></td><td data-label="Effect"><div>Warning colours</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-tag--red</code></div></td><td data-label="Effect"><div>Danger colours</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-tag--teal</code>, <code>.cai-tag--purple</code></div></td><td data-label="Effect"><div>Extra colours for categories, with no status meaning</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-tag--dot</code></div></td><td data-label="Effect"><div>A small dot before the text, a second cue besides colour</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-badge--primary</code></div></td><td data-label="Effect"><div>Brand fill</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-badge--gray</code></div></td><td data-label="Effect"><div>Neutral fill</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-badge--danger</code></div></td><td data-label="Effect"><div>Danger fill</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>Inline spans with a colour modifier. Colour carries no meaning on its own: the text says it, and the dot variant adds a shape.</p>
+            <p>Inline <code>&lt;span&gt;</code> elements, styled by <code>components/tag.css</code>. No JavaScript.</p>
+            <ul>
+              <li>A tag is at least 24 px high, in extra-small text, on a tint of its colour.</li>
+              <li>A badge is a small rounded count in the mono font, at least 20 px wide.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: tags and badges are HTML and CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Not interactive, so not focusable. A count badge needs context in the text next to it for screen readers.</p>
+            <p>Tags and badges are not interactive and take no focus.</p>
+            <ul>
+              <li>The text carries the meaning; the colour adds nothing a screen reader needs.</li>
+              <li>A count needs context: put the badge inside the link or heading it counts, and add the unit as visually hidden text if it is not on screen ("3 unread").</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To label an item with a short status or category, or to show a count.</p>
+            <p>Use a tag to label an item with a short status or category, and a badge to show a count next to a link or a heading.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>Not for actions: a tag is not clickable. Not for long text.</p>
+            <p>Do not use a tag for an action: it is not clickable.</p>
+            <ul>
+              <li>For an action, use a <a href="/docs/components/button/">button</a>.</li>
+              <li>For a sentence, use an <a href="/docs/components/alert/">alert</a>.</li>
+              <li>Do not give teal or purple a status meaning: they are for categories.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>One or two words, sentence case. "Running", "Degraded", never only a colour name.</p>
+            <p>One or two words, in sentence case: "Running", "Degraded".</p>
+            <ul>
+              <li>Never only a colour name: the reader may not see the colour.</li>
+              <li>Badges hold numbers; cap them ("99+") so they keep their size.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

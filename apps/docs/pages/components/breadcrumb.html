@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Breadcrumb
-description: Where the page sits in the site, as a trail of links.
+description: Shows where the page sits in the site, as a trail of links to its parents.
 area: components
 group: navigation
 files: components/breadcrumb.css
@@ -10,15 +10,16 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <nav aria-label="Breadcrumb demo">
+            <nav aria-label="Example breadcrumb">
               <div class="cai-breadcrumb">
-                <a class="cai-breadcrumb__item" href="/docs/components/">Core</a>
+                <a class="cai-breadcrumb__item" href="/docs/">Docs</a>
                 <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
-                <a class="cai-breadcrumb__item" href="/docs/components/">Core</a>
+                <a class="cai-breadcrumb__item" href="/docs/components/">Components</a>
                 <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
                 <span class="cai-breadcrumb__item" aria-current="page">Breadcrumb</span>
               </div>
             </nav>
+            <p class="docs-demo__note">The trail at the top of this page is the same component, with a › separator.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
@@ -29,20 +30,69 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-breadcrumb" aria-label="Copy the breadcrumb markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Breadcrumb markup"><code id="code-breadcrumb">&lt;nav aria-label=&quot;Breadcrumb&quot;&gt;
+  &lt;div class=&quot;cai-breadcrumb&quot;&gt;
+    &lt;a class=&quot;cai-breadcrumb__item&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;
+    &lt;span class=&quot;cai-breadcrumb__sep&quot; aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;
+    &lt;a class=&quot;cai-breadcrumb__item&quot; href=&quot;/settings/&quot;&gt;Settings&lt;/a&gt;
+    &lt;span class=&quot;cai-breadcrumb__sep&quot; aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;
+    &lt;span class=&quot;cai-breadcrumb__item&quot; aria-current=&quot;page&quot;&gt;Billing&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers. The separator is your character: "/" and "›" are common.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Breadcrumb parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-breadcrumb</code></div></td><td data-label="What it does"><div>The row: wraps onto more lines when it is narrow</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-breadcrumb__item</code></div></td><td data-label="What it does"><div>A parent link, or the current page as text</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>aria-current="page"</code></div></td><td data-label="What it does"><div>Marks the current page: primary text colour and medium weight</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-breadcrumb__sep</code></div></td><td data-label="What it does"><div>The separator, in the muted text colour</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A nav landmark with links and separators. The last item is the current page with aria-current="page".</p>
+            <p>A <code>&lt;nav&gt;</code> landmark around a wrapping row of links, styled by <code>components/breadcrumb.css</code>. No JavaScript.</p>
+            <ul>
+              <li>The current page is a <code>&lt;span&gt;</code>, not a link to itself.</li>
+              <li>The separators are hidden from assistive technology.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the breadcrumb is links and CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Each ancestor is a normal link in the tab order.</p>
+            <p>Tab reaches each parent link in order; Enter follows it. The current page is not in the tab order.</p>
+            <ul>
+              <li>Name the <code>&lt;nav&gt;</code> "Breadcrumb" with <code>aria-label</code>, so it differs from the main navigation.</li>
+              <li><code>aria-current="page"</code> tells screen readers which item is the current page.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To show where the page sits in a hierarchy of three or more levels.</p>
+            <p>Use a breadcrumb when pages sit three or more levels deep, so the reader sees where they are and can go up a level.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>On a flat site, or as the only way to navigate.</p>
+            <p>Do not use a breadcrumb on a flat site, or as the only navigation.</p>
+            <ul>
+              <li>For the main sections of a site, use a <a href="/docs/components/sidebar/">sidebar</a> or a header navigation.</li>
+              <li>For steps in a process, show the step number in the page heading instead.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Use the page titles. Do not repeat the current page as a link.</p>
+            <p>Use the title of each page, shortened if it is long.</p>
+            <ul>
+              <li>Start at the home or the top of the section.</li>
+              <li>End with the current page, as text, not as a link.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

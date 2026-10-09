@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Toast
-description: A brief confirmation that does not interrupt.
+description: Confirms a small result, such as "Draft saved", without interrupting the reader.
 area: components
 group: feedback
 files: components/toast.css
@@ -12,37 +12,89 @@ toc: h2,h3
           <div class="docs-demo__stage">
             <div class="cai-toast" role="status">
               <div class="cai-toast__content">
-                <div class="cai-toast__kind">SUCCESS</div>
-                <div class="cai-toast__msg">File exported successfully.</div>
+                <div class="cai-toast__kind">Success</div>
+                <div class="cai-toast__msg">File exported.</div>
               </div>
               <button class="cai-toast__close" type="button" aria-label="Dismiss notification">×</button>
             </div>
           </div>
 
-          <p class="docs-demo__note">A static specimen: CAI styles the toast and leaves placement and timing to you.</p>
+          <p class="docs-demo__note">A static specimen: CAI draws the toast, and you place it, show it and hide it.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>CAI ships the look only: the live region and the timer are the consumer's job.</p>
+          <p>CAI ships the look only. The live region, the placement, the timing and the close button's behaviour are yours to build, and to make accessible.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Toast documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>Keep an empty live region on the page, and put the toast inside it when the result happens.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-toast" aria-label="Copy the toast in its live region markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Toast in its live region markup"><code id="code-toast">&lt;div role=&quot;status&quot;&gt;
+  &lt;div class=&quot;cai-toast&quot;&gt;
+    &lt;div class=&quot;cai-toast__content&quot;&gt;
+      &lt;div class=&quot;cai-toast__kind&quot;&gt;Saved&lt;/div&gt;
+      &lt;div class=&quot;cai-toast__msg&quot;&gt;Draft saved.&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button class=&quot;cai-toast__close&quot; type=&quot;button&quot; aria-label=&quot;Dismiss notification&quot;&gt;×&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Toast parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-toast</code></div></td><td data-label="What it does"><div>A raised box on the strong surface, 320 px wide at most and never wider than its container</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-toast__kind</code></div></td><td data-label="What it does"><div>A small mono label above the message</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-toast__msg</code></div></td><td data-label="What it does"><div>The message</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-toast__close</code></div></td><td data-label="What it does"><div>The × button, 28 px at least</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A styled block with a close button. CAI leaves placement and timing to you; if it fades, give it at least 5 seconds and let it be paused.</p>
+            <p>A styled block from <code>components/toast.css</code>. CAI has no toast script.</p>
+            <ul>
+              <li>Position it with your own CSS, for example fixed at the bottom of the screen, above the page with <code>--cai-z-toast</code>.</li>
+              <li>If it hides by itself, leave it on screen for at least 5 seconds and keep it while it has focus or the pointer is over it.</li>
+              <li>The close button needs your script to remove the toast.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>A toast only appears in answer to something your script did, so it does not exist without JavaScript. Show the same result on the page, for example in an <a href="/docs/components/alert/">alert</a> after a form is sent.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>The close button is reachable with Tab. Announce the toast in a polite live region.</p>
+            <p>Showing a toast does not move focus.</p>
+            <ul>
+              <li>Insert it into a polite live region (<code>role="status"</code>) that is already on the page, so screen readers announce it.</li>
+              <li>The close button is reachable with Tab, and named "Dismiss notification".</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To confirm a low-stakes result that needs no reply, such as "Draft saved".</p>
+            <p>Use a toast to confirm a small result that needs no answer: "Draft saved", "Link copied".</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For errors the reader must act on, or anything they might miss: toasts disappear.</p>
+            <p>Do not use a toast for anything the reader must act on or must not miss: it goes away.</p>
+            <ul>
+              <li>For an error, use an <a href="/docs/components/alert/">alert</a> next to what failed.</li>
+              <li>For a decision, use a <a href="/docs/components/modal/">modal</a>.</li>
+              <li>Do not put links or buttons in it, other than the close button.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Past tense, one short line. No actions inside it.</p>
+            <p>One short line, in the past tense: "File exported."</p>
+            <ul>
+              <li>The kind label is one word: "Saved", "Success".</li>
+              <li>Do not repeat what the page already shows.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

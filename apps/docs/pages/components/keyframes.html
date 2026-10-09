@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Keyframes
-description: The shared animations, and how reduced motion stops them.
+description: Five shared animations for your own components, which stop when the reader asks for reduced motion.
 area: components
 order: 2002
 group: helpers
@@ -22,5 +22,35 @@ files: components/_animations.css
             </ul>
           </div>
           <p class="docs-demo__note">A fifth keyframe, <code class="cai-code-inline">cai-fade-in</code>, opens the modal.</p>
+          <h2 id="keyframes-use">Use a keyframe</h2>
+          <p>Name the keyframe in your own <code>animation</code>, and take its duration from a <a href="/docs/tokens/motion/">motion token</a>.</p>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">CSS</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-keyframes" aria-label="Copy the panel that slides in code">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Panel that slides in code"><code id="code-keyframes">.panel[open] {
+  animation: cai-slide-up var(--cai-duration-base) var(--cai-easing-enter);
+}</code></pre>
+          </div>
+          <ul>
+            <li>Under reduced motion every <code>--cai-duration-*</code> token is <code>0s</code>, so the animation does not run and the element shows in its final state.</li>
+            <li>A hard-coded duration ignores reduced motion: never write one.</li>
+            <li>Do not loop an animation for ever: stop it when the task ends.</li>
+          </ul>
+          <div class="cai-table-wrap" role="region" aria-label="Keyframes" tabindex="0">
+            <table class="cai-table">
+              <thead>
+                <tr><th scope="col">Keyframe</th><th scope="col">What it does</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="Keyframe"><div><code>cai-spin</code></div></td><td data-label="What it does"><div>One full turn, for a loading indicator</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>cai-shimmer</code></div></td><td data-label="What it does"><div>Moves a background gradient across, for a loading placeholder</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>cai-pulse</code></div></td><td data-label="What it does"><div>Grows and fades out, then back, to draw the eye once</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>cai-slide-up</code></div></td><td data-label="What it does"><div>Fades in while rising 8 px, for something that appears</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>cai-fade-in</code></div></td><td data-label="What it does"><div>Fades in, used by the modal and its backdrop</div></td></tr>
+              </tbody>
+            </table>
+          </div>
         
     </div>

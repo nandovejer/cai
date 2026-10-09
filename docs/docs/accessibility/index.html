@@ -9,11 +9,11 @@
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../assets/site-header-T8jVbU25.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-BazDvnI8.js"></script>
+  <script type="module" crossorigin src="../../assets/site-header-DBHN-t3i.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-DbshRHeD.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/reference-DZj7GSWV.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-D3HhxxF5.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-2s0JDuqQ.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-DzSLovBy.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-CfACLTM_.css">
 </head>
 <body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -34,8 +34,49 @@
         <a class="site-header__components" href="../../docs/components/">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
+      <a class="site-header__az" href="../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
     </div>
   </header>
+  <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../../docs/search-index.json"
+          data-cai-label-results="{n} results"
+          data-cai-label-result="1 result"
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-none="No results for “{query}”."
+          data-cai-label-loading="Loading the search index…"
+          data-cai-label-error="Search is not available right now.">
+    <search class="cai-platform-search__body">
+      <div class="cai-platform-search__head">
+        <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Close search</button></form>
+      </div>
+      <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Use the arrow keys to move through them.</p>
+      <p class="cai-platform-search__status" role="status"></p>
+      <p data-cai-search-show="none" hidden>Check the spelling or try a shorter word.</p>
+      <div class="cai-platform-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Popular</h3>
+          <ul>
+            <li><a href="../../docs/get-started/">Install CAI <span>Get started</span></a></li>
+            <li><a href="../../docs/components/button/">Button <span>Components</span></a></li>
+            <li><a href="../../docs/components/form/">Form fields <span>Components</span></a></li>
+            <li><a href="../../docs/tokens/color/">Color <span>Tokens</span></a></li>
+            <li><a href="../../docs/tokens/modes/">Color modes and themes <span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements"></ul></div>
+      </div>
+      <p class="cai-platform-search__foot">Can’t find it? <a href="../../docs/a-z/">Browse the A–Z index</a></p>
+    </search>
+  </dialog>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -87,11 +128,11 @@
 
       <h2 id="h-a11y-checked">What is checked on every change</h2>
       <ul>
-        <li>An automated scan with axe-core of the home page and of every page of the documentation, in the light, dark and high-contrast modes. On component and pattern pages the scan runs once with each tab open. A serious or critical finding fails the build.</li>
-        <li>Keyboard use of the sidebar drawer, the modal dialog, the tabs, the Code and Design tabs of the component pages, and the "On this page" index, whose links open the tab of the section they point at.</li>
-        <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode.</li>
+        <li>An automated scan with axe-core of the home page and of every page of the documentation, in the light, dark and high-contrast modes. On component and pattern pages the scan runs once with each tab open, and on a sample of pages once with the search dialog open, with results and with none. A serious or critical finding fails the build.</li>
+        <li>Keyboard use of the sidebar drawer, the modal dialog, the tabs, the Code and Design tabs of the component pages, the "On this page" index, whose links open the tab of the section they point at, and the search: Ctrl+K, the arrow keys through the results, Enter and Escape.</li>
+        <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, the search button is a link to the A–Z index, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode.</li>
         <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
-        <li>Forced colors: a focused button keeps a visible outline, and the selected tab keeps its underline.</li>
+        <li>Forced colors: a focused button and a focused search result keep a visible outline, the selected tab keeps its underline, and the search dialog keeps its border.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
         <li>Contrast of every token pair a component draws, by a script, in the three base modes and in each mode of the shipped custom themes (minimalist and vejer).</li>
       </ul>
@@ -113,6 +154,9 @@
         <li>On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
         <li>On component pages, the Design or Code tab you chose last is opened after the page has loaded, so the content below the tabs can move once.</li>
         <li>In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code>, find in page (Ctrl+F) does not find text in the tab that is not open. Open the other tab, or turn JavaScript off to see both.</li>
+        <li>Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut.</li>
+        <li>The search has not been tested with a screen reader. The number of results is announced once you stop typing.</li>
+        <li>At 400 percent zoom the whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.</li>
         <li>The button of the example form on the home page opens a popover that says nothing was sent; a status region repeats it for screen readers when JavaScript runs. This has not been tested with a screen reader.</li>
       </ul>
 

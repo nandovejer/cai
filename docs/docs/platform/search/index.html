@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Page header – Platform – CAI documentation</title>
-  <meta name="description" content="Title, lead and eyebrow at the top of a page.">
+  <title>Search – Platform – CAI documentation</title>
+  <meta name="description" content="Finds a page, a section or an HTML element of a site by name, from a button in the header.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
@@ -94,7 +94,7 @@
       <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/platform/">Platform</a>
         <ul class="docs-nav__pages">
           <li><a class="cai-sidebar__link" href="../../../docs/platform/shell/">Page shell</a></li>
-          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/platform/page-header/">Page header</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/page-header/">Page header</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/section/">Section</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/footer/">Footer</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/skip-link/">Skip link</a></li>
@@ -102,7 +102,7 @@
           <li><a class="cai-sidebar__link" href="../../../docs/platform/command-block/">Command block</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/feature-grid/">Feature grid</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/image/">Image</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/platform/search/">Search</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/platform/search/">Search</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/templates/">Page templates</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/classes/">Class reference</a></li>
         </ul>
@@ -120,16 +120,16 @@
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
         <a class="cai-breadcrumb__item" href="../../../docs/platform/">Platform</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Page header</span>
+        <span class="cai-breadcrumb__item" aria-current="page">Search</span>
       </div>
     </nav>
     <div class="docs-page-head__title">
-      <h1 class="docs-title">Page header</h1>
-      <code class="docs-demo__file">.cai-platform-page-header</code>
-      <code class="docs-demo__file">__title</code>
-      <code class="docs-demo__file">__lead</code>
+      <h1 class="docs-title">Search</h1>
+      <code class="docs-demo__file">.cai-platform-search</code>
+      <code class="docs-demo__file">.cai-platform-search-trigger</code>
+      <span class="cai-tag cai-tag--purple">JS: search.js</span>
     </div>
-    <p class="docs-lead">Title, lead and eyebrow at the top of a page.</p>
+    <p class="docs-lead">Finds a page, a section or an HTML element of a site by name, from a button in the header.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -140,7 +140,9 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
           <ul class="docs-onpage__sub">
             <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
           </ul>
         </li>
@@ -149,57 +151,129 @@
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
           </ul>
         </li>
       </ul>
     </details>
   </nav>
   <div class="docs-body">
-    <div class="docs-component" id="p-header">
+    <div class="docs-component" id="p-search">
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <div class="cai-platform-page-header u-mb-0">
-              <p class="cai-platform-page-header__title">Billing</p>
-              <p class="cai-platform-page-header__lead">Invoices, payment methods and plan limits for your workspace.</p>
-            </div>
+            <a href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+            <button class="cai-platform-search-trigger" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+              <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <span class="cai-platform-search-trigger__label">Search docs…</span>
+              <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+            </button>
+            <p class="docs-demo__note">The same search as the one in this site’s header. Without JavaScript the button is a link to the A–Z index.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Page header documentation">
+          <p>The search has not been tested with a screen reader yet. Ctrl+K opens this search instead of the browser’s own web search box: use the address bar to search the web. At 400 percent zoom the whole dialog scrolls, so the field can move out of view while you read the results.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Search documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page header markup"><code>&lt;div class=&quot;cai-platform-page-header&quot;&gt;
-  &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Page title&lt;/h1&gt;
-  &lt;p class=&quot;cai-platform-page-header__lead&quot;&gt;A short description of the page.&lt;/p&gt;
-&lt;/div&gt;</code></pre>
+            <p>The trigger, with the link it replaces, goes in the header. The dialog goes once per page, anywhere in <code>&lt;body&gt;</code>. Every text is yours: write it in the page’s language.</p>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Search markup"><code>&lt;a href=&quot;/a-z/&quot; data-cai-search-fallback&gt;A–Z index&lt;/a&gt;
+&lt;button class=&quot;cai-platform-search-trigger&quot; type=&quot;button&quot; data-cai-search-open
+        aria-haspopup=&quot;dialog&quot; aria-keyshortcuts=&quot;Control+K Meta+K&quot; hidden&gt;
+  &lt;span class=&quot;cai-platform-search-trigger__label&quot;&gt;Search docs…&lt;/span&gt;
+  &lt;kbd class=&quot;cai-platform-search-trigger__key&quot; aria-hidden=&quot;true&quot;&gt;Ctrl K&lt;/kbd&gt;
+&lt;/button&gt;
+
+&lt;dialog class=&quot;cai-modal cai-platform-search&quot; aria-labelledby=&quot;search-title&quot;
+        data-cai-search data-cai-search-src=&quot;/search-index.json&quot;
+        data-cai-label-results=&quot;{n} results&quot;
+        data-cai-label-result=&quot;1 result&quot;
+        data-cai-label-capped=&quot;{shown} of {n} results. Type more to narrow them.&quot;
+        data-cai-label-none=&quot;No results for “{query}”.&quot;
+        data-cai-label-loading=&quot;Loading the search index…&quot;
+        data-cai-label-error=&quot;Search is not available right now.&quot;&gt;
+  &lt;search class=&quot;cai-platform-search__body&quot;&gt;
+    &lt;div class=&quot;cai-platform-search__head&quot;&gt;
+      &lt;h2 class=&quot;cai-platform-search__title&quot; id=&quot;search-title&quot;&gt;&lt;label for=&quot;search-q&quot;&gt;Search the documentation&lt;/label&gt;&lt;/h2&gt;
+      &lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;cai-btn cai-btn--ghost cai-platform-search__close&quot;&gt;Close search&lt;/button&gt;&lt;/form&gt;
+    &lt;/div&gt;
+    &lt;input class=&quot;cai-input&quot; id=&quot;search-q&quot; type=&quot;text&quot; maxlength=&quot;100&quot; autocomplete=&quot;off&quot;
+           spellcheck=&quot;false&quot; enterkeyhint=&quot;go&quot; autofocus aria-describedby=&quot;search-hint&quot;&gt;
+    &lt;p class=&quot;cai-field__helper&quot; id=&quot;search-hint&quot;&gt;Results update as you type. Use the arrow keys to move through them.&lt;/p&gt;
+    &lt;p role=&quot;status&quot;&gt;&lt;/p&gt;
+    &lt;p data-cai-search-show=&quot;none&quot; hidden&gt;Check the spelling or try a shorter word.&lt;/p&gt;
+    &lt;div class=&quot;cai-platform-search__results&quot; data-cai-search-results&gt;
+      &lt;div hidden&gt;&lt;h3&gt;Pages&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;pages&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
+      &lt;div hidden&gt;&lt;h3&gt;Sections&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;sections&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
+      &lt;div hidden&gt;&lt;h3&gt;HTML elements&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;elements&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;cai-platform-search__foot&quot;&gt;Can’t find it? &lt;a href=&quot;/a-z/&quot;&gt;Browse the A–Z index&lt;/a&gt;&lt;/p&gt;
+  &lt;/search&gt;
+&lt;/dialog&gt;
+
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+            <h3 id="variants">Variants and options</h3>
+            <ul>
+              <li><code>.cai-platform-search-trigger--compact</code>: at 768 pixels and below, the trigger shows the magnifier only; its name stays the label text. Add an <code>&lt;svg class=&quot;cai-platform-search-trigger__icon&quot;&gt;</code> for it.</li>
+              <li>More than one trigger: every <code>[data-cai-search-open]</code> opens the dialog (this site has one in the header and one on the documentation home).</li>
+              <li>An element with <code>data-cai-search-show=&quot;idle&quot;</code> inside <code>[data-cai-search-results]</code> shows while the field is empty, for example a short list of popular pages; one with <code>data-cai-search-show=&quot;none&quot;</code> shows when nothing matches.</li>
+              <li>Leave out a <code>[data-cai-search-list]</code> to leave out that group.</li>
+              <li>The texts the script writes are the <code>data-cai-label-*</code> attributes of the dialog: <code>results</code>, <code>result</code>, <code>capped</code>, <code>none</code>, <code>loading</code> and <code>error</code>, with <code>{n}</code>, <code>{shown}</code> and <code>{query}</code> in them. A missing label writes nothing.</li>
+            </ul>
             <h3 id="how">How it works</h3>
-            <p>A wrapper with a title and an optional lead paragraph. The title is the page's <code>&lt;h1&gt;</code>; the class only changes how it looks.</p>
+            <p>Load <code>platform.min.js</code>, or import <code>initSearch</code> from <code>@cai-ds/platform/search</code> and call it. It shows the button, hides the link, and opens the native <code>&lt;dialog&gt;</code> with <code>showModal()</code>: the browser traps the focus, closes it with Escape and returns the focus. The first time it opens, it reads the index.</p>
+            <p>The index is a JSON file, version 1. Each list holds <code>[text, url, meta, lang]</code>; <code>meta</code> (shown muted after the text) and <code>lang</code> are optional, and URLs are relative to the file:</p>
+            <pre class="cai-code-block" data-lang="json" tabindex="0" role="region" aria-label="Search index format"><code>{
+  &quot;version&quot;: 1,
+  &quot;pages&quot;: [[&quot;Button&quot;, &quot;components/button/&quot;, &quot;Components&quot;]],
+  &quot;sections&quot;: [[&quot;When to use, Button › Design&quot;, &quot;components/button/#when&quot;]],
+  &quot;elements&quot;: [[&quot;&lt;table&gt; element, Tables&quot;, &quot;html/tables/#el-table&quot;]]
+}</code></pre>
+            <p>A result matches when its text contains every word typed, without regard to case or accents; the ones that start with the words come first. Each group shows 8 results at most, and the status line says how many there are.</p>
+            <p>What the component accepts, so that an index built from a CMS cannot harm the page:</p>
+            <ul>
+              <li>The JSON comes only from the page’s own origin, over http or https, and a redirect fails the request. Your Content-Security-Policy needs <code>connect-src 'self'</code>; to use an index from another site, host a copy on yours. The browser caches it like any file.</li>
+              <li>Links are only <code>http:</code> and <code>https:</code> URLs; any other item is left out. Text is written as text, never as HTML.</li>
+              <li>Limits: 1,000,000 characters of JSON, 10,000 results, 300 characters a text, 8 words a search, 100 characters in the field. Unknown fields are ignored. An index that is not version 1 shows the error text.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The button stays hidden and the link shows: write a page that lists every page by name, such as an A–Z index. The dialog is never opened.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>No interaction. The title must be an <code>&lt;h1&gt;</code> so screen reader users can find it from the heading list.</p>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <ul>
+              <li><kbd>Ctrl</kbd> + <kbd>K</kbd> or <kbd>⌘</kbd> + <kbd>K</kbd> opens the search from anywhere on the page, except while typing in a text area or an editable region, or while another dialog is open. Pressed again, it selects the text in the field.</li>
+              <li>Down arrow moves from the field to the first result; Down and Up move between results, across groups; Home and End go to the first and last. Up on the first result goes back to the field.</li>
+              <li>Enter in the field opens the first result; on a result it follows the link. Typing on a result goes back to the field.</li>
+              <li>Escape or <em>Close search</em> closes the dialog, whatever the field holds, and the focus returns to where it was. The field is <code>type=&quot;text&quot;</code> for that reason: in a <code>type=&quot;search&quot;</code> field, Chrome and Safari use the first Escape to clear the text. A result on the same page closes it and moves the focus to that section’s heading.</li>
+              <li>The heading names the dialog and labels the field. The count is announced once the reader stops typing (<code>role=&quot;status&quot;</code>). Results are links in lists under headings, not a combobox.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>At the top of a page or a main view, to give its title and one sentence about what it is for.</p>
+            <p>On a site of more than a few pages, where readers look for something by its name: a component, a setting, an article title.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For the title of a section inside the page: use a plain heading of the right level. Do not use it twice on one page.</p>
+            <p>Instead of navigation: the menu and an index page stay, because search needs typing and a name the reader may not know. Not for searching inside long texts or across many sites: this matches titles and headings only.</p>
             <h3 id="content">Writing the content</h3>
-            <p>The title names the page in a few words, in sentence case. The lead is one sentence, under 25 words, that says what the reader can do here.</p>
+            <ul>
+              <li>The trigger says what is searched: “Search docs…”. Keep it short in every language (“Buscar…”) rather than cutting it off.</li>
+              <li>Give section results their page: “When to use, Button › Design”, so a result makes sense on its own.</li>
+              <li>Point the fallback link and the line under the results at the same index page.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The trigger’s text is full-contrast text, not placeholder grey, inside a field-like border. The focused result has the same focus ring as every link; in forced colors the dialog keeps a border.</p>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>
 
   </div>
   <ul class="docs-pager">
-    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/platform/shell/">Previous: Page shell</a></li>
-    <li class="docs-pager__next"><a rel="next" href="../../../docs/platform/section/">Next: Section</a></li>
+    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/platform/image/">Previous: Image</a></li>
+    <li class="docs-pager__next"><a rel="next" href="../../../docs/platform/templates/">Next: Page templates</a></li>
   </ul>
   </main>
 

@@ -9,11 +9,11 @@
   <link rel="icon" href="../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../assets/site-header-T8jVbU25.js"></script>
-  <script type="module" crossorigin src="../assets/reference-BazDvnI8.js"></script>
+  <script type="module" crossorigin src="../assets/site-header-DBHN-t3i.js"></script>
+  <script type="module" crossorigin src="../assets/reference-DbshRHeD.js"></script>
   <link rel="stylesheet" crossorigin href="../assets/reference-DZj7GSWV.css">
-  <link rel="stylesheet" crossorigin href="../assets/site-header-D3HhxxF5.css">
-  <link rel="stylesheet" crossorigin href="../assets/reference-2s0JDuqQ.css">
+  <link rel="stylesheet" crossorigin href="../assets/site-header-DzSLovBy.css">
+  <link rel="stylesheet" crossorigin href="../assets/reference-CfACLTM_.css">
 </head>
 <body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -34,8 +34,49 @@
         <a class="site-header__components" href="../docs/components/">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
+      <a class="site-header__az" href="../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
     </div>
   </header>
+  <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../docs/search-index.json"
+          data-cai-label-results="{n} results"
+          data-cai-label-result="1 result"
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-none="No results for “{query}”."
+          data-cai-label-loading="Loading the search index…"
+          data-cai-label-error="Search is not available right now.">
+    <search class="cai-platform-search__body">
+      <div class="cai-platform-search__head">
+        <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Close search</button></form>
+      </div>
+      <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Use the arrow keys to move through them.</p>
+      <p class="cai-platform-search__status" role="status"></p>
+      <p data-cai-search-show="none" hidden>Check the spelling or try a shorter word.</p>
+      <div class="cai-platform-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Popular</h3>
+          <ul>
+            <li><a href="../docs/get-started/">Install CAI <span>Get started</span></a></li>
+            <li><a href="../docs/components/button/">Button <span>Components</span></a></li>
+            <li><a href="../docs/components/form/">Form fields <span>Components</span></a></li>
+            <li><a href="../docs/tokens/color/">Color <span>Tokens</span></a></li>
+            <li><a href="../docs/tokens/modes/">Color modes and themes <span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements"></ul></div>
+      </div>
+      <p class="cai-platform-search__foot">Can’t find it? <a href="../docs/a-z/">Browse the A–Z index</a></p>
+    </search>
+  </dialog>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -64,7 +105,15 @@
   <div class="docs-body">
     <p class="docs-lead">Install CAI, find a component and copy its markup. Every example is live and follows the color mode you pick.</p>
     <p class="docs-hub__beta"><span class="cai-tag cai-tag--yellow">Beta</span> Names and classes can still change. Pin an exact version. <a href="https://github.com/nandovejer/cai/blob/main/CHANGELOG.md">Read the changelog</a></p>
-    <p class="docs-hub__find"><a class="cai-btn cai-btn--outline" href="../docs/a-z/">Browse the A–Z index</a></p>
+    <p class="docs-hub__find">
+      <a class="cai-btn cai-btn--outline" href="../docs/a-z/" data-cai-search-fallback>Browse the A–Z index</a>
+      <button class="cai-platform-search-trigger docs-hub__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+      <span class="docs-hub__find-hint">Find components, tokens and HTML elements by name.</span>
+    </p>
 
     <h2 class="u-sr-only" id="hub-start">Start here</h2>
     <ul class="docs-hub__cards">

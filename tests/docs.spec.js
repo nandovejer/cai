@@ -60,7 +60,6 @@ const MODES = ['light', 'dark', 'high-contrast'];
 // One guide per core component file, each on its own page
 const GUIDE_ID = { 'copy-btn': 'c-copy', 'icon-grid': 'c-icons' };
 const guideIds = [...new Set(components.map((file) => GUIDE_ID[file.replace('.css', '')] ?? `c-${file.replace('.css', '')}`))];
-const SECTIONS = ['when', 'when-not', 'how', 'content', 'keyboard', 'issues'];
 
 const ALL = routes();
 // A sample of layouts for the heavier checks: the hub, an index, a component, a token page, the largest page
@@ -276,8 +275,10 @@ test.describe('Documentation site', () => {
       await gotoId(page, 'c-button');
 
       const toc = page.getByRole('navigation', { name: 'On this page' });
-      await expect(toc.getByRole('link')).toHaveText(['Example', 'Known issues', 'When to use', 'When not to use', 'How it works', 'Content guidance', 'Keyboard and ARIA']);
-      await page.locator('#h-c-button-how').scrollIntoViewIfNeeded();
+      // Both tabs' sections, each h3 under its tab's h2 (NAV-13)
+      await expect(toc.getByRole('link')).toHaveText(['Example', 'Known issues', 'Code', 'How it works', 'Keyboard and ARIA', 'Design', 'When to use', 'When not to use', 'Writing the content']);
+      await expect(toc.locator('li:has(> a[href="#design"]) > ul a')).toHaveText(['When to use', 'When not to use', 'Writing the content']);
+      await page.locator('#how').scrollIntoViewIfNeeded();
       await expect(toc.locator('[aria-current="true"]')).toHaveCount(1);
       await expect(toc.locator('[aria-current="page"]')).toHaveCount(0);
       // the sidebar keeps its own mark
@@ -408,32 +409,34 @@ test.describe('Documentation site', () => {
       expectAll(await text('c-settings'), [...settingNames('z'), ...settingNames('bp')]);
     });
 
-    test('every component has its page: example, known issues, then the guidance sections as h2', async ({ page }) => {
-      // Red line 18 for the first two sections, SR-5 for the rest. Phase 3
-      // of the docs redesign turns the guidance into the Code and Design tabs.
+    test('every component has its page: example, known issues, then the Code and Design tabs (RL-18, SR-5)', async ({ page }) => {
+      // ia.md §6, a11y.md TAB-16/17; the source structure is checked in tests/docs-site.test.js
       expect(guideIds.length).toBeGreaterThanOrEqual(20);
       for (const id of guideIds) {
         const route = await gotoId(page, id);
         expect(route, id).toMatch(/^\/docs\/components\/[a-z-]+\/$/);
         await expect(page.locator('h2#example'), `${id} example`).toBeVisible();
-        const order = await page.locator('main h2[id]:not(.docs-example *)').evaluateAll((hs) => hs.map((h) => h.id));
-        expect(order.indexOf(`h-${id}-issues`), `${id}: known issues after the example`).toBe(order.indexOf('example') + 1);
-        for (const section of SECTIONS) {
-          const heading = page.locator(`#h-${id}-${section}`);
-          await expect(heading, `${id} ${section}`).toHaveCount(1);
-          expect(await heading.evaluate((el) => el.tagName), `${id} ${section}`).toBe('H2');
-          await expect(heading, `${id} ${section}`).toBeVisible();
+        // Known issues: visible, outside the panels, never empty
+        await expect(page.locator('h2#known-issues'), `${id} known issues`).toBeVisible();
+        await expect(page.locator('[role="tabpanel"] #known-issues, .cai-tabpanel #known-issues')).toHaveCount(0);
+        await expect(page.locator('#known-issues + p'), id).not.toBeEmpty();
+        // The same two tabs on every page, Code first and selected by default (TAB-16)
+        const tablist = page.getByRole('tablist', { name: /documentation$/ });
+        await expect(tablist.getByRole('tab'), id).toHaveText(['Code', 'Design']);
+        await expect(tablist.getByRole('tab', { name: 'Code' })).toHaveAttribute('aria-selected', 'true');
+        await expect(page.locator('#code-panel')).toBeVisible();
+        await expect(page.locator('#design-panel')).toBeHidden();
+        // RL-18: When to use and When not to use are on the page, in the Design tab
+        for (const section of ['when', 'when-not', 'how', 'content', 'keyboard']) {
+          await expect(page.locator(`#${section}`), `${id} ${section}`).toHaveCount(1);
         }
+        await page.getByRole('tab', { name: 'Design' }).click();
         for (const section of ['when', 'when-not']) {
-          const text = await page.locator(`#h-${id}-${section}`).evaluate((heading) => {
-            let content = '';
-            for (let el = heading.nextElementSibling; el && !/^H[1-6]$/.test(el.tagName); el = el.nextElementSibling) {
-              content += el.textContent;
-            }
-            return content.trim();
-          });
-          expect(text.length, `${id} ${section} has content`).toBeGreaterThan(20);
+          await expect(page.locator(`#${section}`), `${id} ${section}`).toBeVisible();
+          const text = await page.locator(`#${section} + p`).textContent();
+          expect(text.trim().length, `${id} ${section} has content`).toBeGreaterThan(20);
         }
+        await page.evaluate(() => localStorage.clear());
       }
     });
 
@@ -526,7 +529,7 @@ test.describe('Documentation site', () => {
       await expect(guide).toContainText('cai-mode-switcher--cycle');
       await expect(guide).toContainText('initThemeCycle()');
       await expect(guide.locator('pre')).toContainText(['cai-mode-btn__icon']);
-      await expect(page.locator('#h-c-mode-switcher-keyboard + p')).toContainText('Change color mode. Current:');
+      await expect(page.locator('#keyboard + p')).toContainText('Change color mode. Current:');
       await gotoId(page, 'h-a11y-checked');
       await expect(page.locator('#accessibility')).toContainText('three radio buttons');
     });
@@ -1017,10 +1020,10 @@ test.describe('Site header and navigation toggle', () => {
   });
 
   test('an anchored heading lands below the sticky header', async ({ page }) => {
-    await gotoId(page, 'h-c-button-how');
-    await page.evaluate(() => document.getElementById('h-c-button-how').scrollIntoView());
+    await gotoId(page, 'c-button');
+    await page.evaluate(() => document.getElementById('how').scrollIntoView());
     const header = await page.evaluate(() => document.querySelector('.site-header').getBoundingClientRect().bottom);
-    const target = await page.evaluate(() => document.getElementById('h-c-button-how').getBoundingClientRect().top);
+    const target = await page.evaluate(() => document.getElementById('how').getBoundingClientRect().top);
     expect(target).toBeGreaterThanOrEqual(header);
   });
 });

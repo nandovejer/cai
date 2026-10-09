@@ -5,6 +5,7 @@ area: platform
 order: 8
 group: patterns
 files: .cai-platform-feature-grid
+toc: h2,h3
 -->
     <div class="docs-component" id="p-features">
           <h2 id="example">Example</h2>
@@ -31,12 +32,15 @@ files: .cai-platform-feature-grid
             <p class="docs-demo__note">Two columns, one at 768px and below.</p>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-features-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-prose">
-            <h2 id="markup">Copy the markup</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Feature grid documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
             <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Feature grid markup"><code>&lt;div class=&quot;cai-platform-feature-grid&quot;&gt;
   &lt;article class=&quot;cai-card&quot;&gt;
     &lt;h3&gt;Feature one&lt;/h3&gt;
@@ -47,17 +51,20 @@ files: .cai-platform-feature-grid
     &lt;p&gt;Description.&lt;/p&gt;
   &lt;/article&gt;
 &lt;/div&gt;</code></pre>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-features-when">When to use</h2>
-            <p>To show a short set of features or options of equal weight, each in its own card.</p>
-            <h2 class="docs-guide__title" id="h-p-features-when-not">When not to use</h2>
-            <p>For data that readers compare across rows and columns: use a table. Not for a single item, or for items with a clear order: use a list.</p>
-            <h2 class="docs-guide__title" id="h-p-features-how">How it works</h2>
+            <h3 id="how">How it works</h3>
             <p>A two-column grid that becomes one column below 768 px. Each child is usually a <code>.cai-card</code>.</p>
-            <h2 class="docs-guide__title" id="h-p-features-content">Content guidance</h2>
-            <p>Keep the cards parallel: a heading of the same level and one or two sentences each. An even number of items fills the two columns.</p>
-            <h2 class="docs-guide__title" id="h-p-features-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>No interaction of its own. If a whole card is a link, put the link on its heading text and keep the rest as plain text.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To show a short set of features or options of equal weight, each in its own card.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For data that readers compare across rows and columns: use a table. Not for a single item, or for items with a clear order: use a list.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Keep the cards parallel: a heading of the same level and one or two sentences each. An even number of items fills the two columns.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

@@ -4,6 +4,7 @@ description: Groups content about one thing on a raised surface.
 area: components
 group: content
 files: components/card.css
+toc: h2,h3
 -->
     <div class="docs-component" id="c-card">
           <h2 id="example">Example</h2>
@@ -19,20 +20,28 @@ files: components/card.css
             </div>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-card-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-card-when">When to use</h2>
-            <p>To group a small set of related facts that read as one unit.</p>
-            <h2 class="docs-guide__title" id="h-c-card-when-not">When not to use</h2>
-            <p>Do not nest cards. Do not make the whole card a click target with a script: link the title instead.</p>
-            <h2 class="docs-guide__title" id="h-c-card-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Card documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>A container with a title and a body. Pick the heading level that fits the page outline.</p>
-            <h2 class="docs-guide__title" id="h-c-card-content">Content guidance</h2>
-            <p>A short noun title, then one or two lines. No full stops on titles.</p>
-            <h2 class="docs-guide__title" id="h-c-card-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Not interactive. A link inside it follows the normal link rules.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To group a small set of related facts that read as one unit.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not nest cards. Do not make the whole card a click target with a script: link the title instead.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>A short noun title, then one or two lines. No full stops on titles.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

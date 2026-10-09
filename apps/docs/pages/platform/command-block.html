@@ -5,6 +5,7 @@ area: platform
 order: 7
 group: patterns
 files: .cai-platform-command-block, __cmd, __prefix
+toc: h2,h3
 -->
     <div class="docs-component" id="p-command">
           <h2 id="example">Example</h2>
@@ -16,12 +17,15 @@ files: .cai-platform-command-block, __cmd, __prefix
             </div>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-command-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-prose">
-            <h2 id="markup">Copy the markup</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Command block documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
             <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Command block with a copy button markup"><code>&lt;div class=&quot;cai-platform-command-block&quot;&gt;
   &lt;code class=&quot;cai-platform-command-block__cmd&quot;&gt;
     &lt;span class=&quot;cai-platform-command-block__prefix&quot;&gt;$&lt;/span&gt;
@@ -29,17 +33,20 @@ files: .cai-platform-command-block, __cmd, __prefix
   &lt;/code&gt;
   &lt;button class=&quot;cai-copy-btn&quot; data-copy=&quot;pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform&quot; aria-label=&quot;Copy command&quot;&gt;Copy&lt;/button&gt;
 &lt;/div&gt;</code></pre>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-command-when">When to use</h2>
-            <p>To show one terminal command that readers copy, such as an install command.</p>
-            <h2 class="docs-guide__title" id="h-p-command-when-not">When not to use</h2>
-            <p>For several lines of code or output: use a code block. Not for commands the reader must edit before running without saying so.</p>
-            <h2 class="docs-guide__title" id="h-p-command-how">How it works</h2>
+            <h3 id="how">How it works</h3>
             <p>A box with the command in <code>&lt;code&gt;</code> and a native copy button. The prompt sign is decorative and cannot be selected. Without JavaScript the copy button is hidden and the command can still be selected and copied.</p>
-            <h2 class="docs-guide__title" id="h-p-command-content">Content guidance</h2>
-            <p>Show the command exactly as it should run. Name the copy button by what it copies, for example "Copy install command".</p>
-            <h2 class="docs-guide__title" id="h-p-command-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab reaches the copy button; Enter or Space copies. The result is announced in a polite live region.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To show one terminal command that readers copy, such as an install command.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For several lines of code or output: use a code block. Not for commands the reader must edit before running without saying so.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Show the command exactly as it should run. Name the copy button by what it copies, for example "Copy install command".</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

@@ -5,6 +5,7 @@ area: platform
 order: 5
 group: patterns
 files: .cai-platform-skip-link
+toc: h2,h3
 -->
     <div class="docs-component" id="p-skip">
           <h2 id="example">Example</h2>
@@ -13,24 +14,30 @@ files: .cai-platform-skip-link
             <p class="docs-demo__note">This page has one: press Tab at the top of the page to see it.</p>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-skip-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-prose">
-            <h2 id="markup">Copy the markup</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Skip link documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
             <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Skip link markup"><code>&lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;</code></pre>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-skip-when">When to use</h2>
-            <p>On every page that has navigation or a header before the main content.</p>
-            <h2 class="docs-guide__title" id="h-p-skip-when-not">When not to use</h2>
-            <p>As the only way to reach the content: the page still needs a logical heading order and landmarks.</p>
-            <h2 class="docs-guide__title" id="h-p-skip-how">How it works</h2>
+            <h3 id="how">How it works</h3>
             <p>A normal link to the <code>id</code> of <code>&lt;main&gt;</code>, first in <code>&lt;body&gt;</code>. It sits off screen and slides in when it receives focus. The browser does the jump; no JavaScript.</p>
-            <h2 class="docs-guide__title" id="h-p-skip-content">Content guidance</h2>
-            <p>Say where it goes: "Skip to main content". Do not add other text.</p>
-            <h2 class="docs-guide__title" id="h-p-skip-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab once from the top of the page to reveal it; Enter follows it and moves focus to the main area. Under reduced motion it appears without sliding.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>On every page that has navigation or a header before the main content.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>As the only way to reach the content: the page still needs a logical heading order and landmarks.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Say where it goes: "Skip to main content". Do not add other text.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

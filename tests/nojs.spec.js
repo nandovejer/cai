@@ -4,7 +4,7 @@
  * Each test says what the page must still do without scripts.
  */
 import { test, expect } from '@playwright/test';
-import { gotoId, notFoundRoute, routes } from './helpers/docs-site.js';
+import { gotoId, notFoundRoute, routes, routesWith } from './helpers/docs-site.js';
 
 const APPS = ['/', ...routes(), notFoundRoute];
 
@@ -58,6 +58,27 @@ for (const app of APPS) {
         .map((el) => `${el.tagName.toLowerCase()}.${[...el.classList].join('.')} [${[...el.attributes].filter((a) => a.name.startsWith('data-')).map((a) => a.name).join(' ')}] "${el.textContent.trim().slice(0, 30)}"`),
     );
     expect(dead, 'visible controls that need JavaScript').toEqual([]);
+  });
+}
+
+// a11y.md TAB-1/TAB-3: the Code and Design tabs of a component or pattern page
+for (const route of routesWith('docs-view-tabs')) {
+  test(`${route}: Code and Design are stacked sections, each under its visible h2`, async ({ page }) => {
+    await page.goto(route);
+    const row = page.getByRole('navigation', { name: /documentation$/ });
+    await expect(row.getByRole('link')).toHaveText(['Code', 'Design']);
+    await expect(page.getByRole('tab')).toHaveCount(0);
+    for (const [panel, heading, text] of [['code-panel', 'code', 'Code'], ['design-panel', 'design', 'Design']]) {
+      await expect(page.locator(`#${panel}`)).toBeVisible();
+      await expect(page.locator(`#${heading}`)).toBeVisible();
+      await expect(page.locator(`#${heading}`)).toHaveText(text);
+      expect(await page.locator(`#${heading}`).evaluate((h) => h.tagName)).toBe('H2');
+    }
+    // Known issues, above them, and When to use / When not to use (red line 18)
+    for (const id of ['known-issues', 'when', 'when-not', 'how', 'keyboard']) await expect(page.locator(`#${id}`)).toBeVisible();
+    // Code comes first, in the DOM and on screen
+    const top = (id) => page.locator(`#${id}`).evaluate((el) => el.getBoundingClientRect().top);
+    expect(await top('code')).toBeLessThan(await top('design'));
   });
 }
 

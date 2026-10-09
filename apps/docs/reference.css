@@ -156,16 +156,57 @@
   background: var(--cai-surface);
 }
 
-.docs-component > .docs-guide {
-  border-block-start: 0;
-  padding-block-start: 0;
+/* The Code and Design tabs (core .cai-tabs). Without JavaScript the tab row
+   is two in-page links and both panels follow, stacked, each under its own
+   visible h2. With it, tabs.js shows one panel; the h2 stays for screen
+   readers and "On this page" (a11y.md TAB-2), only not painted. */
+.docs-view-tabs {
+  margin-block: var(--cai-space-lg) 0;
 }
 
-.docs-component .docs-guide__title {
+.docs-view {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr); /* a long code line scrolls inside its block */
+  gap: var(--cai-space-sm);
+  align-content: start;
+}
+
+.docs-view p,
+.docs-view li {
+  max-width: 70ch;
+}
+
+.docs-view h3 {
+  margin-block-start: var(--cai-space-md);
+  font-size: var(--cai-text-xl);
+}
+
+.docs-view > .docs-view__title + h3 {
+  margin-block-start: 0;
+}
+
+/* Stacked (no JavaScript): each panel starts with a rule and its h2 */
+.docs-view__title {
   margin-block-start: var(--cai-space-lg);
-  font-family: var(--cai-font-heading);
-  font-size: var(--cai-text-2xl);
-  font-weight: 400;
+  padding-block-start: var(--cai-space-md);
+  border-block-start: 1px solid var(--cai-divider);
+}
+
+.docs-view[role="tabpanel"] > .docs-view__title {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The one line that points at the other tab's accessibility notes */
+.docs-view__xref {
+  margin-block-start: var(--cai-space-md);
+  padding-block-start: var(--cai-space-sm);
+  border-block-start: 1px solid var(--cai-divider);
+  color: var(--cai-text-secondary);
 }
 
 /* --------------------------------------------------------------------------
@@ -200,6 +241,13 @@
 .docs-onpage .cai-sidebar__link:hover {
   background: var(--cai-surface-muted);
   color: var(--cai-text-primary);
+}
+
+/* The h3 of a section (on a component page, of a tab), under its h2 */
+.docs-onpage__sub {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .docs-onpage .docs-onpage__sub .cai-sidebar__link {
@@ -750,27 +798,6 @@ h2.docs-demo__title {
 .docs-demo__note {
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
-}
-
-/* Guidance per component, always expanded: when to use, when not to, how
-   it works, content, keyboard and ARIA, known issues (PRINCIPLES.md §9) */
-.docs-guide {
-  display: grid;
-  gap: var(--cai-space-2xs);
-  border-top: 1px solid var(--cai-divider);
-  padding-block-start: var(--cai-space-sm);
-}
-
-.docs-guide__title {
-  margin-block: var(--cai-space-sm) 0;
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-base);
-  font-weight: 600;
-  color: var(--cai-text-primary);
-}
-
-.docs-guide__title:first-child {
-  margin-block-start: 0;
 }
 
 .docs-cols-2,

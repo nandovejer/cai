@@ -5,6 +5,7 @@ area: components
 group: navigation
 files: components/tabs.css
 module: tabs.js
+toc: h2,h3
 -->
     <div class="docs-component" id="c-tabs">
           <h2 id="example">Example</h2>
@@ -20,22 +21,30 @@ module: tabs.js
             <div class="cai-tabpanel" id="panel-logs"><p>No errors in the last hour.</p></div>
           </div>
 
-          <p class="docs-demo__note">Arrow keys, Home and End move between tabs.</p>
+          <p class="docs-demo__note">Arrow keys, Home and End move between tabs; Space selects one.</p>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-tabs-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-tabs-when">When to use</h2>
-            <p>To switch between panels of the same level that the reader will not compare side by side.</p>
-            <h2 class="docs-guide__title" id="h-c-tabs-when-not">When not to use</h2>
-            <p>For navigation between pages, or for content the reader needs all at once.</p>
-            <h2 class="docs-guide__title" id="h-c-tabs-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Tabs documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>Without JavaScript: links to panels that are all visible. With it: the ARIA tabs pattern, added by the script, with roving tabindex.</p>
-            <h2 class="docs-guide__title" id="h-c-tabs-content">Content guidance</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>Tab moves into the tab list; arrow keys move between tabs; Home and End go to the first and last; Space selects the focused tab; Tab leaves to the panel. In right-to-left text, Left and Right follow the reading direction. A link to a section inside a hidden panel opens its tab, and find in page reaches the hidden panels in browsers that support <code>hidden="until-found"</code>.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To switch between panels of the same level that the reader will not compare side by side.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For navigation between pages, or for content the reader needs all at once.</p>
+            <h3 id="content">Writing the content</h3>
             <p>Labels are one or two words that name the panel.</p>
-            <h2 class="docs-guide__title" id="h-c-tabs-keyboard">Keyboard and ARIA</h2>
-            <p>Tab moves into the tab list; arrow keys move between tabs; Home and End go to the first and last; Tab leaves to the panel.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

@@ -2,8 +2,9 @@
  * CAI Design System — Platform docs guidance
  * Every block class that @cai-ds/platform ships belongs to a pattern, and
  * every pattern has its page in the documentation (apps/docs, the Platform
- * area, /docs/platform/) with the six guidance sections (PRINCIPLES.md red line 18
- * and strong rule SR-5). The class list
+ * area, /docs/platform/) with the same structure as a component page: example,
+ * known issues, then the Code and Design tabs (PRINCIPLES.md red line 18 and
+ * strong rule SR-5). The class list
  * is read from the package source, so a new class without a pattern fails.
  * Run with: pnpm test:ui
  */
@@ -35,7 +36,8 @@ const patternOf = {
   image: 'image',
 };
 
-const sections = ['when', 'when-not', 'how', 'content', 'keyboard', 'issues'];
+// Code tab, then Design tab; Known issues is above them (ia.md §6)
+const sections = ['known-issues', 'how', 'keyboard', 'when', 'when-not', 'content'];
 
 test.describe('Platform docs', () => {
   test('every platform class belongs to a pattern', () => {
@@ -44,16 +46,17 @@ test.describe('Platform docs', () => {
     }
   });
 
-  test('every platform pattern has its page with the six guidance sections', async ({ page }) => {
+  test('every platform pattern has its page: example, known issues, Code and Design', async ({ page }) => {
     for (const pattern of new Set(Object.values(patternOf))) {
       const route = await gotoId(page, `p-${pattern}`);
       expect(route, pattern).toMatch(/^\/docs\/platform\/[a-z-]+\/$/);
       // A pattern is a page: its name is the h1, like a core component
       await expect(page.locator('h1.docs-title'), pattern).toHaveCount(1);
+      await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab'), pattern).toHaveText(['Code', 'Design']);
       for (const section of sections) {
-        const heading = page.locator(`#h-p-${pattern}-${section}`);
+        const heading = page.locator(`#${section}`);
         await expect(heading, `${pattern} ${section}`).toHaveCount(1);
-        expect(await heading.evaluate((h) => h.tagName), `${pattern} ${section}`).toBe('H2');
+        expect(await heading.evaluate((h) => h.tagName), `${pattern} ${section}`).toBe(section === 'known-issues' ? 'H2' : 'H3');
         // A heading with nothing under it is not documentation
         const text = await heading.evaluate((h) => h.nextElementSibling?.textContent.trim() ?? '');
         expect(text.length, `${pattern} ${section} is empty`).toBeGreaterThan(10);

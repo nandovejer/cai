@@ -5,7 +5,7 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { notFoundRoute, routeOf, routes } from './helpers/docs-site.js';
+import { notFoundRoute, routeOf, routes, routesWith } from './helpers/docs-site.js';
 
 // Every page in Chromium; a sample of layouts in Firefox and WebKit (a11y.md TEST-1)
 const APPS = ['/', ...routes(), notFoundRoute];
@@ -13,11 +13,16 @@ const SAMPLE = ['/', '/docs/', '/docs/components/', routeOf('c-button'), '/docs/
 const THEMES = ['light', 'dark', 'high-contrast'];
 const BLOCKING = ['serious', 'critical'];
 
-for (const app of APPS) {
+// axe skips hidden content: component pages are scanned again with the
+// Design tab open (a11y.md TEST-2)
+const DESIGN = routesWith('docs-view-tabs').map((route) => `${route}#design`);
+
+for (const app of [...APPS, ...DESIGN]) {
   for (const theme of THEMES) {
     test(`axe: ${app} in ${theme}`, async ({ page, browserName }, testInfo) => {
       test.skip(browserName !== 'chromium' && !SAMPLE.includes(app), 'sampled outside Chromium');
       await page.goto(app);
+      if (app.endsWith('#design')) await expect(page.locator('#design-panel')).toBeVisible();
       await page.evaluate((t) => {
         document.documentElement.dataset.theme = t;
       }, theme);

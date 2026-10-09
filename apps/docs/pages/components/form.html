@@ -4,6 +4,7 @@ description: Text fields, choices, pickers and their labels, hints and errors.
 area: components
 group: actions
 files: components/form.css
+toc: h2,h3
 -->
     <div class="docs-component" id="c-form">
           <h2 id="example">Example</h2>
@@ -163,20 +164,28 @@ files: components/form.css
             </details>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-form-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-form-when">When to use</h2>
-            <p>To collect input. Use the native control that fits the data: text, email, date, range, select, checkbox, radio, switch.</p>
-            <h2 class="docs-guide__title" id="h-c-form-when-not">When not to use</h2>
-            <p>Do not rebuild a native control from divs. Do not use a placeholder as the label.</p>
-            <h2 class="docs-guide__title" id="h-c-form-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Form fields documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>Native inputs with the field, label, helper and error classes. The switch is a checkbox with role="switch"; all of it works without JavaScript and submits with the form.</p>
-            <h2 class="docs-guide__title" id="h-c-form-content">Content guidance</h2>
-            <p>Every control has a visible label. Hints go in a helper linked with aria-describedby. An error says what is wrong and how to fix it, next to the field, prefixed with "Error:".</p>
-            <h2 class="docs-guide__title" id="h-c-form-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab between fields, Space toggles checkboxes and switches, arrow keys move inside radio groups and sliders. Group related controls with fieldset and legend.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To collect input. Use the native control that fits the data: text, email, date, range, select, checkbox, radio, switch.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not rebuild a native control from divs. Do not use a placeholder as the label.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Every control has a visible label. Hints go in a helper linked with aria-describedby. An error says what is wrong and how to fix it, next to the field, prefixed with "Error:".</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

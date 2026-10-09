@@ -4,6 +4,7 @@ description: A brief confirmation that does not interrupt.
 area: components
 group: feedback
 files: components/toast.css
+toc: h2,h3
 -->
     <div class="docs-component" id="c-toast">
           <h2 id="example">Example</h2>
@@ -20,20 +21,28 @@ files: components/toast.css
 
           <p class="docs-demo__note">A static specimen: CAI styles the toast and leaves placement and timing to you.</p>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-toast-issues">Known issues</h2>
-            <p>CAI ships the look only: the live region and the timer are the consumer's job.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-toast-when">When to use</h2>
-            <p>To confirm a low-stakes result that needs no reply, such as "Draft saved".</p>
-            <h2 class="docs-guide__title" id="h-c-toast-when-not">When not to use</h2>
-            <p>For errors the reader must act on, or anything they might miss: toasts disappear.</p>
-            <h2 class="docs-guide__title" id="h-c-toast-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>CAI ships the look only: the live region and the timer are the consumer's job.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Toast documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>A styled block with a close button. CAI leaves placement and timing to you; if it fades, give it at least 5 seconds and let it be paused.</p>
-            <h2 class="docs-guide__title" id="h-c-toast-content">Content guidance</h2>
-            <p>Past tense, one short line. No actions inside it.</p>
-            <h2 class="docs-guide__title" id="h-c-toast-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>The close button is reachable with Tab. Announce the toast in a polite live region.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To confirm a low-stakes result that needs no reply, such as "Draft saved".</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For errors the reader must act on, or anything they might miss: toasts disappear.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Past tense, one short line. No actions inside it.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

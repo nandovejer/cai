@@ -5,6 +5,7 @@ area: components
 group: feedback
 files: components/modal.css
 module: modal.js
+toc: h2,h3
 -->
     <div class="docs-component" id="c-modal">
           <h2 id="example">Example</h2>
@@ -30,20 +31,28 @@ module: modal.js
 
           <p class="docs-demo__note">A native <code class="cai-code-inline">&lt;dialog&gt;</code>: Esc closes it and focus returns to the button.</p>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-modal-issues">Known issues</h2>
-            <p>command and commandfor are not yet in every supported browser: without them and without JavaScript the open button does nothing.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-modal-when">When to use</h2>
-            <p>To ask for a decision or short input that must be settled before the reader continues.</p>
-            <h2 class="docs-guide__title" id="h-c-modal-when-not">When not to use</h2>
-            <p>For information the reader can ignore: use an alert. Do not open one on page load.</p>
-            <h2 class="docs-guide__title" id="h-c-modal-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>command and commandfor are not yet in every supported browser: without them and without JavaScript the open button does nothing.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Modal documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>A native dialog opened with showModal(). Buttons use command="show-modal" and command="close" with commandfor; a small script supplies those in browsers without them.</p>
-            <h2 class="docs-guide__title" id="h-c-modal-content">Content guidance</h2>
-            <p>The title names the decision: "Delete this draft". Buttons repeat the action: "Delete draft" and "Cancel", never "OK".</p>
-            <h2 class="docs-guide__title" id="h-c-modal-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>The browser traps focus, Escape closes it and focus returns to the opener. Give the dialog aria-labelledby.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To ask for a decision or short input that must be settled before the reader continues.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For information the reader can ignore: use an alert. Do not open one on page load.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>The title names the decision: "Delete this draft". Buttons repeat the action: "Delete draft" and "Cancel", never "OK".</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

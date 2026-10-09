@@ -4,6 +4,7 @@ description: A short hint on hover or focus, never essential content.
 area: components
 group: feedback
 files: components/tooltip.css
+toc: h2,h3
 -->
     <div class="docs-component" id="c-tooltip">
           <h2 id="example">Example</h2>
@@ -15,20 +16,28 @@ files: components/tooltip.css
             </div>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-tooltip-issues">Known issues</h2>
-            <p>Partial WCAG 1.4.13: the tooltip cannot be dismissed with Escape without moving focus or the pointer. Keep tooltips non-essential.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-tooltip-when">When to use</h2>
-            <p>To explain a control whose label is not enough, in a sentence at most.</p>
-            <h2 class="docs-guide__title" id="h-c-tooltip-when-not">When not to use</h2>
-            <p>For anything essential, long or interactive. On touch devices there is no hover: put important text on the page.</p>
-            <h2 class="docs-guide__title" id="h-c-tooltip-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>Partial WCAG 1.4.13: the tooltip cannot be dismissed with Escape without moving focus or the pointer. Keep tooltips non-essential.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Tooltip documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>CSS only: it opens on hover and on keyboard focus, and stays open while the pointer is over it (WCAG 1.4.13, hoverable).</p>
-            <h2 class="docs-guide__title" id="h-c-tooltip-content">Content guidance</h2>
-            <p>One short sentence, no links. The control keeps its own accessible name.</p>
-            <h2 class="docs-guide__title" id="h-c-tooltip-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Opens when the control receives focus, closes when it loses focus. The Escape key does not close it.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To explain a control whose label is not enough, in a sentence at most.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For anything essential, long or interactive. On touch devices there is no hover: put important text on the page.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>One short sentence, no links. The control keeps its own accessible name.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

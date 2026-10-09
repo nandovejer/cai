@@ -5,6 +5,7 @@ area: components
 group: media
 files: components/player.css
 module: player.js
+toc: h2,h3
 -->
     <div class="docs-component" id="c-player">
           <h2 id="example">Example</h2>
@@ -81,20 +82,28 @@ module: player.js
             </div>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-player-issues">Known issues</h2>
-            <p>Captions and audio description depend on the media you provide. MIDI has no equivalent without JavaScript.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-player-when">When to use</h2>
-            <p>To play video, audio or a MIDI file in the page.</p>
-            <h2 class="docs-guide__title" id="h-c-player-when-not">When not to use</h2>
-            <p>Do not autoplay. Do not use it for background media.</p>
-            <h2 class="docs-guide__title" id="h-c-player-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>Captions and audio description depend on the media you provide. MIDI has no equivalent without JavaScript.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Player documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>Without JavaScript the native controls of the audio and video element are shown. The script replaces them with the CAI controls; seek and volume are native range inputs. MIDI needs JavaScript and Web Audio.</p>
-            <h2 class="docs-guide__title" id="h-c-player-content">Content guidance</h2>
-            <p>Name each player with aria-label and give video a text alternative or a transcript.</p>
-            <h2 class="docs-guide__title" id="h-c-player-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Space or K plays and pauses, M mutes, F goes full screen on video. The sliders take arrow keys, Home, End and Page Up and Down.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To play video, audio or a MIDI file in the page.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not autoplay. Do not use it for background media.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Name each player with aria-label and give video a text alternative or a transcript.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

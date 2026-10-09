@@ -2,7 +2,8 @@
  * CAI documentation site — page glue, loaded by every page.
  * Wires the core behaviors the examples demonstrate, one module at a time,
  * the few HTML element demos that need a line of script (canvas,
- * template, custom element), and "On this page".
+ * template, custom element), "On this page", and the Code / Design tab
+ * the reader chose last (view.js).
  *
  * cai.js is deliberately not loaded: its auto-init applies the stored or
  * default custom theme to <html>, and this page shows the base color modes
@@ -17,6 +18,7 @@ import { initModals } from "/packages/core/dist/modal.js";
 import { initPlayers } from "/packages/core/dist/player.js";
 import { initSidebar } from "/packages/core/dist/sidebar.js";
 import { initSiteHeader } from "../landing/site-header.js";
+import { initDocsView } from "./view.js";
 
 /* ---- Small enhancements ----------------------------------------------- */
 
@@ -165,6 +167,9 @@ initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each
 // block, and core ships no position for it.
 document.querySelectorAll("pre.cai-code-block").forEach(highlightBlock);
+// The remembered Code / Design tab first: initTabs() opens the tab it marks,
+// unless the URL fragment points into the other one
+initDocsView();
 initTabs();
 initModals();
 initRangeOutputs();

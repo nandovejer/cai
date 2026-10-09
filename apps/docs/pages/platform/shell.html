@@ -5,6 +5,7 @@ area: platform
 order: 1
 group: patterns
 files: .cai-platform-page, --gradient, .cai-platform-main, .cai-platform-content
+toc: h2,h3
 -->
     <div class="docs-component" id="p-shell">
           <h2 id="example">Example</h2>
@@ -29,20 +30,28 @@ files: .cai-platform-page, --gradient, .cai-platform-main, .cai-platform-content
             </figure>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-shell-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-shell-when">When to use</h2>
-            <p>For the whole page of an app or a product site: a header, a main area that grows and a footer that stays at the bottom.</p>
-            <h2 class="docs-guide__title" id="h-p-shell-when-not">When not to use</h2>
-            <p>Inside a component or a card: it sets a full-height grid on its element. Do not nest one page shell inside another. Do not use the gradient variant behind long text, where a flat surface is easier to read.</p>
-            <h2 class="docs-guide__title" id="h-p-shell-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Page shell documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>Put <code>.cai-platform-page</code> on <code>&lt;body&gt;</code>: a three-row grid (header, main, footer) at least the height of the viewport. Use <code>.cai-platform-main</code> on <code>&lt;main&gt;</code> for a page without a sidebar, or <code>.cai-platform-content</code> for the column next to one. CSS only.</p>
-            <h2 class="docs-guide__title" id="h-p-shell-content">Content guidance</h2>
-            <p>Keep one <code>&lt;main&gt;</code> per page, with an <code>id</code> that the skip link points to. Start it with the page header, so the first heading is the <code>&lt;h1&gt;</code>.</p>
-            <h2 class="docs-guide__title" id="h-p-shell-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>No interaction of its own. Landmarks come from the native elements: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>. Do not add <code>role</code> to them.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>For the whole page of an app or a product site: a header, a main area that grows and a footer that stays at the bottom.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Inside a component or a card: it sets a full-height grid on its element. Do not nest one page shell inside another. Do not use the gradient variant behind long text, where a flat surface is easier to read.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Keep one <code>&lt;main&gt;</code> per page, with an <code>id</code> that the skip link points to. Start it with the page header, so the first heading is the <code>&lt;h1&gt;</code>.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

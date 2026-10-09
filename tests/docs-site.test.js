@@ -21,6 +21,7 @@ import {
   parseFrontMatter,
   relativizeLinks,
   renderPage,
+  renderToc,
   rootOf,
   routeOfPage,
   scanSite,
@@ -178,6 +179,32 @@ describe("HTML reader", () => {
     expect(() => readHtml("</div>", "f.html")).toThrow(/no open element/);
     expect(() => readHtml('<a id="x"></a>\n<b id="x"></b>', "f.html")).toThrow('f.html:2: duplicate id "x" (first at line 1)');
     expect(() => readHtml('<a href="1" href="2"></a>', "f.html")).toThrow(/twice/);
+  });
+});
+
+/* ---- "On this page" ------------------------------------------------------ */
+
+describe("On this page", () => {
+  const page = (toc) => ({ file: "p.html", meta: { toc } });
+  const body = '<h2 id="a">A</h2><h2 id="b">B</h2><h3 id="b1">B one</h3><h3 id="b2">B two</h3><h2 id="c">C</h2><div data-docs-specimen><h3>Demo</h3></div>';
+
+  it("lists each h3 in a nested list under its h2, and leaves demos out", () => {
+    const html = renderToc(page("h2,h3"), body);
+    const items = readHtml(html, "toc").links.map((l) => l.href);
+    expect(items).toEqual(["#a", "#b", "#b1", "#b2", "#c"]);
+    expect(html.replace(/\s+/g, " ")).toContain('href="#b">B</a> <ul class="docs-onpage__sub"> <li><a class="cai-sidebar__link docs-onpage__link" href="#b1">B one</a></li> <li><a class="cai-sidebar__link docs-onpage__link" href="#b2">B two</a></li> </ul> </li>');
+    expect(html).not.toContain("Demo");
+  });
+
+  it("lists h2 only by default, and needs three of them", () => {
+    expect(readHtml(renderToc(page("h2"), body), "toc").links.map((l) => l.href)).toEqual(["#a", "#b", "#c"]);
+    expect(renderToc(page("h2"), '<h2 id="a">A</h2><h2 id="b">B</h2>')).toBe("");
+    expect(renderToc(page("false"), body)).toBe("");
+  });
+
+  it("refuses a listed heading without an id, and an h3 before any h2", () => {
+    expect(() => renderToc(page("h2"), "<h2>A</h2><h2 id='b'>B</h2><h2 id='c'>C</h2>")).toThrow(/needs an id/);
+    expect(() => renderToc(page("h2,h3"), '<h3 id="x">X</h3><h2 id="a">A</h2><h2 id="b">B</h2><h2 id="c">C</h2>')).toThrow(/before any h2/);
   });
 });
 
@@ -430,6 +457,54 @@ describe("the CAI docs site", () => {
       const one = links.get(route);
       const two = new Set([...one, ...[...one].flatMap((r) => [...(links.get(r) ?? [])])]);
       for (const c of components) expect(two.has(c.route), `${route} → ${c.route}`).toBe(true);
+    }
+  });
+
+  it("gives every component and pattern page the same structure: example, known issues, then the Code and Design tabs (PRINCIPLES RL-18, SR-5)", () => {
+    // ia.md §6 and a11y.md TAB-1/3/16/17. The sections still to come are not
+    // required yet: Copy the markup (components), Variants and options,
+    // Without JavaScript, Do and don't, Contrast and focus (EX-006).
+    const viewPages = site.pages.filter(
+      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "platform" && p.meta.group === "patterns"),
+    );
+    expect(viewPages).toHaveLength(29);
+    const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
+    const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
+    for (const page of viewPages) {
+      const where = page.file;
+      expect(page.meta.toc, where).toBe("h2,h3");
+      const { headings } = readHtml(page.body, page.file);
+      const h2 = headings.filter((h) => h.level === 2 && !h.specimen).map((h) => h.id);
+      expect(h2, where).toEqual(["example", "known-issues", "code", "design"]);
+      // The tab row: Code then Design, named after the page, linking the two panels
+      const tabs = [...page.body.matchAll(/<a class="cai-tab" href="#([a-z-]+)" data-docs-view="([a-z]+)">([^<]*)<\/a>/g)].map((m) => m.slice(1).join(" "));
+      expect(tabs, where).toEqual(["code-panel code Code", "design-panel design Design"]);
+      expect(page.body, where).toContain(`<nav class="cai-tabs docs-view-tabs" aria-label="${page.meta.title} documentation">`);
+      // Known issues before the tab row, so never inside a panel, and never empty
+      const at = (text) => page.body.indexOf(text);
+      expect(at('<h2 id="known-issues">'), where).toBeLessThan(at('<nav class="cai-tabs docs-view-tabs"'));
+      expect(page.body, where).toMatch(/<h2 id="known-issues">Known issues<\/h2>\s*<p>[^<]{5,}/);
+      // Each panel: its h2, then its sections in the template's order
+      for (const [panel, heading, ids, required] of [
+        ["code-panel", "code", CODE, ["how", "keyboard"]],
+        ["design-panel", "design", DESIGN, ["when", "when-not", "content"]],
+      ]) {
+        const start = at(`<div class="cai-tabpanel docs-view" id="${panel}">`);
+        expect(start, `${where} #${panel}`).toBeGreaterThan(0);
+        const inner = page.body.slice(start).match(/^<div[^>]*>([\s\S]*?)\n {10}<\/div>/)[1];
+        expect(inner.trim().startsWith(`<h2 class="docs-view__title" id="${heading}">`), `${where} #${heading}`).toBe(true);
+        const sections = readHtml(inner, page.file).headings.filter((h) => h.level === 3).map((h) => h.id);
+        const known = sections.filter((id) => ids.includes(id));
+        expect(known, `${where} #${panel} order`).toEqual(ids.filter((id) => known.includes(id)));
+        for (const id of required) expect(known, `${where} #${id}`).toContain(id);
+        // It ends with the one line pointing at the other tab's notes
+        expect(inner, `${where} #${panel}`).toMatch(/<p class="docs-view__xref"><a href="#[a-z-]+">[^<]+<\/a>[^<]+<\/p>\s*$/);
+      }
+      // RL-18: When to use and When not to use say something
+      for (const id of ["when", "when-not"]) {
+        const text = page.body.split(`<h3 id="${id}">`)[1].split("<h3")[0].replace(/<[^>]+>/g, "").replace(/\s+/g, " ");
+        expect(text.length, `${where} #${id}`).toBeGreaterThan(20);
+      }
     }
   });
 

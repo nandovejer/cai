@@ -80,8 +80,9 @@ export const HUB_AREA = "hub";
  * names what is specific to a page.
  */
 const TEMPLATE_HEADINGS = new Set([
-  "Example", "Known issues", "When to use", "When not to use", "How it works", "Content guidance",
-  "Keyboard and ARIA", "Copy the markup",
+  "Example", "Known issues", "Code", "Design", "Copy the markup", "Variants and options", "How it works",
+  "Without JavaScript", "Keyboard and ARIA", "When to use", "When not to use", "Do and don't",
+  "Writing the content", "Contrast and focus", "Tokens it uses",
 ]);
 
 /** What an A–Z entry is, by the area of its page. */
@@ -396,9 +397,12 @@ export function renderPageHead(site, page) {
 
 /**
  * "On this page": the h2 (or h2 and h3) of the content that have an id,
- * outside demos. Only on a page with three or more of them. A closed
- * <details> on narrow screens; the docs script opens it as a rail on wide
- * ones and marks the section in view (core's initSidebar).
+ * outside demos. Only on a page with three or more h2. Each h3 is listed
+ * under its h2, in a nested list (on a component page: the sections of the
+ * Code and of the Design tab, both, whichever tab is open; core's tabs.js
+ * opens the tab of a section a link points at). A closed <details> on narrow
+ * screens; the docs script opens it as a rail on wide ones and marks the
+ * section in view (core's initSidebar).
  */
 export function renderToc(page, html) {
   if (page.meta.toc === "false") return "";
@@ -407,10 +411,19 @@ export function renderToc(page, html) {
   if (headings.filter((h) => h.level === 2).length < 3) return "";
   const missing = headings.find((h) => !h.id);
   if (missing) throw new Error(`${page.file}: the heading "${missing.text}" belongs in "On this page" and needs an id`);
-  const items = headings
-    .map((h) => `        <li${h.level === 3 ? ' class="docs-onpage__sub"' : ""}>${link(`#${h.id}`, h.text, ' class="cai-sidebar__link docs-onpage__link"')}</li>`)
-    .join("\n");
-  return `  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">\n    <details class="docs-onpage__fold">\n      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>\n      <ul class="docs-onpage__list">\n${items}\n      </ul>\n    </details>\n  </nav>`;
+  if (headings[0].level !== 2) throw new Error(`${page.file}: the h3 "${headings[0].text}" comes before any h2`);
+  const item = (h) => link(`#${h.id}`, h.text, ' class="cai-sidebar__link docs-onpage__link"');
+  const lines = [];
+  headings.forEach((h, i) => {
+    const next = headings[i + 1];
+    if (h.level === 2) {
+      lines.push(next?.level === 3 ? `        <li>${item(h)}\n          <ul class="docs-onpage__sub">` : `        <li>${item(h)}</li>`);
+      return;
+    }
+    lines.push(`            <li>${item(h)}</li>`);
+    if (next?.level !== 3) lines.push("          </ul>\n        </li>");
+  });
+  return `  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">\n    <details class="docs-onpage__fold">\n      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>\n      <ul class="docs-onpage__list">\n${lines.join("\n")}\n      </ul>\n    </details>\n  </nav>`;
 }
 
 /** Previous / Next in sidebar order, inside the area, on its leaf pages. */
@@ -484,7 +497,8 @@ export function renderGallery(site, page) {
 
 /**
  * Every entry of the A–Z index (and later the search index): each page, each
- * heading specific to a page, and each HTML element card.
+ * heading specific to a page (the levels of its "On this page"), and each
+ * HTML element card.
  * Returns [{ name, href, kind }] sorted by name.
  */
 export function indexEntries(site) {
@@ -494,12 +508,14 @@ export function indexEntries(site) {
     const area = areaOf(site, page);
     const kind = area?.id === "platform" && page.route === areaRoute(area) ? "Platform" : AREA_KIND[page.meta.area] ?? "Page";
     entries.push({ name: page.meta.title, href: page.route, kind });
+    // The levels "On this page" lists: on a component page, the h3 of its tabs too
+    const sectionLevels = page.meta.toc === "h2,h3" ? [2, 3] : [2];
     for (const h of contentOf(page).headings) {
       if (h.specimen || !h.id) continue;
       const element = /^el-(.+)-title$/.exec(h.id);
       if (element && h.level === 2) {
         entries.push({ name: `${h.text} element`, href: `${page.route}#el-${element[1]}`, kind: `HTML element, ${page.meta.title}` });
-      } else if (h.level === 2 && !TEMPLATE_HEADINGS.has(h.text) && h.text !== page.meta.title) {
+      } else if (sectionLevels.includes(h.level) && !TEMPLATE_HEADINGS.has(h.text) && h.text !== page.meta.title) {
         entries.push({ name: h.text, href: `${page.route}#${h.id}`, kind: `Section of ${page.meta.title}` });
       }
     }

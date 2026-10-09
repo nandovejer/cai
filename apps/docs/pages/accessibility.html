@@ -11,11 +11,11 @@ lead: false
 
       <h2 id="h-a11y-checked">What is checked on every change</h2>
       <ul>
-        <li>An automated scan with axe-core of the home page and of every page of the documentation, in the light, dark and high-contrast modes. A serious or critical finding fails the build.</li>
-        <li>Keyboard use of the sidebar drawer, the modal dialog and the tabs.</li>
-        <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode.</li>
+        <li>An automated scan with axe-core of the home page and of every page of the documentation, in the light, dark and high-contrast modes. On component and pattern pages the scan runs once with each tab open. A serious or critical finding fails the build.</li>
+        <li>Keyboard use of the sidebar drawer, the modal dialog, the tabs, the Code and Design tabs of the component pages, and the "On this page" index, whose links open the tab of the section they point at.</li>
+        <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode.</li>
         <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
-        <li>Forced colors: a focused button keeps a visible outline.</li>
+        <li>Forced colors: a focused button keeps a visible outline, and the selected tab keeps its underline.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
         <li>Contrast of every token pair a component draws, by a script, in the three base modes and in each mode of the shipped custom themes (minimalist and vejer).</li>
       </ul>
@@ -35,6 +35,8 @@ lead: false
         <li>The modal buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
         <li>The MIDI player needs JavaScript and Web Audio. Without them it shows a message.</li>
         <li>On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
+        <li>On component pages, the Design or Code tab you chose last is opened after the page has loaded, so the content below the tabs can move once.</li>
+        <li>In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code>, find in page (Ctrl+F) does not find text in the tab that is not open. Open the other tab, or turn JavaScript off to see both.</li>
         <li>The button of the example form on the home page opens a popover that says nothing was sent; a status region repeats it for screen readers when JavaScript runs. This has not been tested with a screen reader.</li>
       </ul>
 

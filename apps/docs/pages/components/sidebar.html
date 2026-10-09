@@ -4,6 +4,7 @@ description: Site navigation that becomes a drawer on small screens.
 area: components
 group: navigation
 files: components/sidebar.css
+toc: h2,h3
 -->
     <div class="docs-component" id="c-sidebar">
           <h2 id="example">Example</h2>
@@ -45,20 +46,28 @@ files: components/sidebar.css
             </div>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-sidebar-issues">Known issues</h2>
-            <p>Without the popover API the navigation stays visible above the content.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-sidebar-when">When to use</h2>
-            <p>For the main navigation of a documentation or app shell with many sections.</p>
-            <h2 class="docs-guide__title" id="h-c-sidebar-when-not">When not to use</h2>
-            <p>For a short list of pages: a header navigation is simpler.</p>
-            <h2 class="docs-guide__title" id="h-c-sidebar-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>Without the popover API the navigation stays visible above the content.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Sidebar documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>A nav landmark. On small screens it is a native popover drawer opened by a button with popovertarget, <code class="cai-code-inline">.cai-nav-toggle</code>. Put that button first in your header row, so the focus order follows the screen; <code class="cai-code-inline">.cai-nav-toggle--fixed</code> pins it to the top start corner instead, for a page with no header.</p>
-            <h2 class="docs-guide__title" id="h-c-sidebar-content">Content guidance</h2>
-            <p>Section labels are nouns.</p>
-            <h2 class="docs-guide__title" id="h-c-sidebar-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Escape and a click outside close the drawer; focus returns to the button.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>For the main navigation of a documentation or app shell with many sections.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For a short list of pages: a header navigation is simpler.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Section labels are nouns.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

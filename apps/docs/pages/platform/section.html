@@ -5,6 +5,7 @@ area: platform
 order: 3
 group: patterns
 files: .cai-platform-section
+toc: h2,h3
 -->
     <div class="docs-component" id="p-section">
           <h2 id="example">Example</h2>
@@ -18,20 +19,28 @@ files: .cai-platform-section
             <p class="docs-demo__note">Children are spaced by <code class="cai-code-inline">--cai-space-md</code>.</p>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-section-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-section-when">When to use</h2>
-            <p>To group related blocks inside the main area with the same vertical space between them.</p>
-            <h2 class="docs-guide__title" id="h-p-section-when-not">When not to use</h2>
-            <p>For space between paragraphs of running text: the text styles already handle that. Not for side-by-side layout: use the grid object or the feature grid.</p>
-            <h2 class="docs-guide__title" id="h-p-section-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Section documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>A one-column grid with the section gap token between its children. Use it on a <code>&lt;section&gt;</code> when the group has its own heading, or on a <code>&lt;div&gt;</code> when it does not.</p>
-            <h2 class="docs-guide__title" id="h-p-section-content">Content guidance</h2>
-            <p>Give each <code>&lt;section&gt;</code> a heading, and name it with <code>aria-labelledby</code> pointing at that heading.</p>
-            <h2 class="docs-guide__title" id="h-p-section-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>No interaction. A <code>&lt;section&gt;</code> with an accessible name becomes a region landmark; one without a name does not.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To group related blocks inside the main area with the same vertical space between them.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For space between paragraphs of running text: the text styles already handle that. Not for side-by-side layout: use the grid object or the feature grid.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Give each <code>&lt;section&gt;</code> a heading, and name it with <code>aria-labelledby</code> pointing at that heading.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

@@ -4,6 +4,7 @@ description: A short label for status, category or count.
 area: components
 group: content
 files: components/tag.css
+toc: h2,h3
 -->
     <div class="docs-component" id="c-tag">
           <h2 id="example">Example</h2>
@@ -25,20 +26,28 @@ files: components/tag.css
             </div>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-tag-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-tag-when">When to use</h2>
-            <p>To label an item with a short status or category, or to show a count.</p>
-            <h2 class="docs-guide__title" id="h-c-tag-when-not">When not to use</h2>
-            <p>Not for actions: a tag is not clickable. Not for long text.</p>
-            <h2 class="docs-guide__title" id="h-c-tag-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Tag and badge documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>Inline spans with a colour modifier. Colour carries no meaning on its own: the text says it, and the dot variant adds a shape.</p>
-            <h2 class="docs-guide__title" id="h-c-tag-content">Content guidance</h2>
-            <p>One or two words, sentence case. "Running", "Degraded", never only a colour name.</p>
-            <h2 class="docs-guide__title" id="h-c-tag-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Not interactive, so not focusable. A count badge needs context in the text next to it for screen readers.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To label an item with a short status or category, or to show a count.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Not for actions: a tag is not clickable. Not for long text.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>One or two words, sentence case. "Running", "Degraded", never only a colour name.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

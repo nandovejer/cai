@@ -64,7 +64,7 @@ JS is the last layer, never the foundation. A page built with CAI must be usable
 
 - **Three layers, in this order:** HTML that works alone → CSS that improves it → JS that enhances it. Design and document the no-JS state first.
 - **If the standard does it, JS does not.** Opening a `dialog`, toggling `details`, showing a `popover`, validating a `required` field, scrolling to an anchor: none of these get custom JS.
-- **JS never conflicts with native behaviour.** No `preventDefault()` on native actions unless you replace them with something strictly better and documented. No re-implementing `Tab` order, `Escape`, form submission or link navigation.
+- **JS never conflicts with native behaviour.** No `preventDefault()` on native actions unless you replace them with something strictly better and documented. No re-implementing `Tab` order, `Escape`, form submission or link navigation. **One case is allowed by name:** a site-wide search may take a shortcut with a modifier key (`Ctrl+K` and `Meta+K`, both accepted, with no platform detection), if the trigger shows it (visible "Ctrl K" hint and `aria-keyshortcuts`), the accessibility statement lists it, and it is ignored during IME composition and while focus is in a `textarea` or editable content. Single-character shortcuts are never allowed (WCAG 2.1.4).
 - **JS is an enhancement, never a requirement.** Each use must degrade: tabs become stacked sections, the mode switcher becomes radios, the copy button becomes selectable text.
 - **Feature-detect, never user-agent-sniff.** `if ("showPopover" in HTMLElement.prototype)`, `CSS.supports()`, `@supports`.
 - **Importing a module has no side effects.** Only `init*()` touches the DOM. `init*()` is idempotent and scoped (accepts a root element).

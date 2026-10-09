@@ -2,7 +2,9 @@
    CAI — DOCUMENTATION PAGE
    Consumer-side styles for apps/docs (the single documentation page),
    written the way any level-3 consumer would: on top of tokens + core +
-   platform. The page shell is core's .o-shell with a .cai-sidebar.
+   platform. The page shell is core's .o-shell with a .cai-sidebar, under
+   the site header shared with the home page (apps/landing/site-header.css).
+   The HTML elements reference has its own file, elements.css.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
      - media queries use the literal values of --cai-bp-* (480, 768, 1024),
@@ -14,6 +16,29 @@
 /* --------------------------------------------------------------------------
    Layout
    -------------------------------------------------------------------------- */
+
+/* The site header spans the shell; the sidebar and main share the next row */
+.docs-page {
+  grid-template-rows: auto 1fr auto;
+}
+
+.docs-page > .site-header {
+  grid-column: 1 / -1;
+  grid-row: 1;
+}
+
+.docs-page > .cai-sidebar,
+.docs-page > .o-main {
+  grid-row: 2;
+}
+
+.docs-page > footer {
+  grid-row: 3;
+}
+
+.docs-header-bar {
+  padding-inline: var(--cai-space-05);
+}
 
 .docs-wrap {
   width: 100%;
@@ -77,27 +102,6 @@
   max-width: var(--cai-content-max);
   margin-inline: auto;
   padding-inline: var(--cai-space-07);
-}
-
-.docs-sitenav {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cai-space-02) var(--cai-space-06);
-  padding-block-end: var(--cai-space-04);
-  border-bottom: 1px solid var(--cai-border-subtle);
-}
-
-.docs-sitenav a {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--cai-size-height-sm);
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
-}
-
-.docs-sitenav a[aria-current="page"] {
-  color: var(--cai-text-primary);
-  font-weight: 600;
 }
 
 .docs-header {
@@ -172,6 +176,34 @@
 
 .docs-footer {
   padding-inline: var(--cai-space-07);
+}
+
+/* --------------------------------------------------------------------------
+   Page navigation: the long groups fold, with a native <details>
+   -------------------------------------------------------------------------- */
+
+.docs-nav-group,
+.docs-nav-group[open] {
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.docs-nav-group > summary {
+  margin: 0;
+  padding-block: var(--cai-space-02);
+  border-radius: 0;
+}
+
+.docs-nav-group > summary:hover {
+  background: var(--cai-sidebar-hover);
+  color: var(--cai-sidebar-text-hover);
+}
+
+.docs-nav-group > summary:focus-visible {
+  outline: 2px solid var(--cai-sidebar-text-hover);
+  outline-offset: -2px;
 }
 
 /* --------------------------------------------------------------------------
@@ -705,6 +737,43 @@ h2.docs-demo__title {
 }
 
 /* --------------------------------------------------------------------------
+   Platform: when to use it, class reference
+   -------------------------------------------------------------------------- */
+
+.docs-decision-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--cai-space-05);
+}
+
+.docs-decision-card {
+  display: grid;
+  gap: var(--cai-space-03);
+  align-content: start;
+  padding: var(--cai-space-05);
+  background: var(--cai-layer-01);
+  border: 1px solid var(--cai-border-subtle);
+}
+
+.docs-decision-card__title {
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-base);
+  font-weight: 600;
+}
+
+.docs-decision-card ul {
+  display: grid;
+  gap: var(--cai-space-02);
+  padding-inline-start: var(--cai-space-06);
+}
+
+.docs-ref-table td:first-child {
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-sm);
+  overflow-wrap: anywhere;
+}
+
+/* --------------------------------------------------------------------------
    Platform anatomy, sidebar specimen, utilities examples
    -------------------------------------------------------------------------- */
 
@@ -798,6 +867,16 @@ h2.docs-demo__title {
   }
 }
 
+/* The drawer's toggle is fixed at the top start corner: start the header
+   after it, so it never covers the brand */
+@supports selector(:popover-open) {
+  @media (max-width: 768px) {
+    .docs-header-bar {
+      padding-inline-start: calc(var(--cai-size-height-lg) + var(--cai-space-04) * 2);
+    }
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .docs-motion__reduced {
     display: block;
@@ -815,10 +894,21 @@ h2.docs-demo__title {
 }
 
 @media (max-width: 768px) {
-  /* The navigation toggle is fixed at the top start corner: start the page
-     below it, so it never covers the site links */
-  .docs-main {
-    padding-block-start: calc(var(--cai-size-height-lg) + var(--cai-space-04) * 2);
+  /* One column: header, (the sidebar when it is not a drawer), main, footer */
+  .docs-page {
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  .docs-page > .cai-sidebar {
+    grid-row: 2;
+  }
+
+  .docs-page > .o-main {
+    grid-row: 3;
+  }
+
+  .docs-page > footer {
+    grid-row: 4;
   }
 
   .docs-cols-4 {
@@ -826,6 +916,7 @@ h2.docs-demo__title {
   }
 
   .docs-demo-grid,
+  .docs-decision-grid,
   .docs-cols-2,
   .docs-cols-3,
   .docs-sidebar-demo {

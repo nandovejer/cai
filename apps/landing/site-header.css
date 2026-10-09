@@ -1,0 +1,87 @@
+/* ==========================================================================
+   CAI — SITE HEADER
+   The header shared by the home page (apps/landing) and the documentation
+   page (apps/docs): brand, the three site links and the color mode switcher.
+   Consumer-side styles on top of tokens + core. Each page sets the inline
+   gutter and width of .site-header__inner with its own wrapper class.
+   Rules: semantic tokens only; no literal colors.
+   ========================================================================== */
+
+.site-header {
+  border-bottom: 1px solid var(--cai-border-subtle);
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cai-space-03) var(--cai-space-05);
+  padding-block: var(--cai-space-04);
+}
+
+.site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cai-space-03);
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-md);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--cai-text-primary);
+}
+
+/* The mark is drawn in currentColor: the brand color in every theme */
+.site-header__mark {
+  display: inline-flex;
+  color: var(--cai-brand-primary);
+}
+
+.site-header__brand:hover {
+  text-decoration: none;
+}
+
+.site-header__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cai-space-02) var(--cai-space-05);
+  margin-inline-start: auto;
+}
+
+.site-header__nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--cai-size-height-md);
+  font-size: var(--cai-text-md);
+  color: var(--cai-text-secondary);
+}
+
+.site-header__nav a:hover {
+  color: var(--cai-text-primary);
+}
+
+/* The current page: weight as well as color, never color alone (RL-6) */
+.site-header__nav a[aria-current="page"] {
+  color: var(--cai-text-primary);
+  font-weight: 600;
+}
+
+/* The color mode switcher: core's cycle variant. Without JavaScript it is
+   the native radio group, with its legend beside the buttons to keep the
+   header short; initThemeCycle() turns it into one icon button. */
+.site-modes {
+  align-items: center;
+  gap: var(--cai-space-02) var(--cai-space-03);
+}
+
+.site-modes .cai-theme-switcher__label {
+  float: inline-start;
+  margin-block: 0;
+  margin-inline: 0 var(--cai-space-02);
+}
+
+.site-modes .cai-theme-btn {
+  flex: none;
+  min-block-size: var(--cai-size-height-sm);
+  padding-inline: var(--cai-space-03);
+  border-radius: var(--cai-radius-md);
+}

@@ -5,7 +5,8 @@
  */
 import { test, expect } from '@playwright/test';
 
-const APPS = ['/', '/docs/', '/platform/', '/html/'];
+// /platform/ and /html/ are redirect stubs to /docs/ (tests/moved-pages.spec.js)
+const APPS = ['/', '/docs/'];
 
 for (const app of APPS) {
   test(`${app}: content is readable without JavaScript`, async ({ page }) => {
@@ -28,7 +29,6 @@ for (const app of APPS) {
       '.cai-copy-btn',
       '.cai-theme-apply-btn',
       '.cai-theme-mode-btn',
-      '.elements-modes button',
       '.cai-player button',
       '[role="switch"]:not(input)',
       '[role="slider"]:not(input)',
@@ -61,9 +61,21 @@ for (const app of APPS) {
   });
 }
 
-test('/platform/: the image placeholder shows without JavaScript', async ({ page }) => {
-  await page.goto('/platform/');
+test('/docs/: the image placeholder shows without JavaScript', async ({ page }) => {
+  await page.goto('/docs/');
   const empty = page.locator('#demo-image-empty');
   await expect(empty).toBeVisible();
   expect(await empty.evaluate((el) => getComputedStyle(el).backgroundImage)).toMatch(/placeholder-16x9-1920\.avif/);
+});
+
+test('/docs/: the color mode switcher is three radios that set the mode', async ({ page }) => {
+  await page.goto('/docs/');
+  const switcher = page.locator('.site-header .cai-theme-switcher--cycle');
+  await expect(switcher.locator('.cai-theme-btn')).toHaveCount(3);
+  for (const label of await switcher.locator('.cai-theme-btn').all()) await expect(label).toBeVisible();
+  await expect(page.locator('.cai-theme-cycle')).toHaveCount(0);
+  const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  const light = await background();
+  await switcher.locator('.cai-theme-btn:has(input[value="dark"])').click();
+  await expect.poll(background).not.toBe(light);
 });

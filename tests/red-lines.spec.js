@@ -1,6 +1,6 @@
 /**
  * CAI — the red lines of PRINCIPLES.md that can only be checked in a browser.
- * Every test runs on the four apps; the visual ones run in the three base
+ * Every test runs on the home and documentation pages; the visual ones run in the three base
  * themes. The static half lives in tests/red-lines.test.js, stylelint and
  * ESLint; the no-JavaScript half (RL-2) in tests/nojs.spec.js.
  *
@@ -11,7 +11,8 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
 
-const APPS = ['/', '/docs/', '/platform/', '/html/'];
+// /platform/ and /html/ are redirect stubs to /docs/ (tests/moved-pages.spec.js)
+const APPS = ['/', '/docs/'];
 const THEMES = ['light', 'dark', 'high-contrast'];
 const FIXTURES = ['level-1-tokens.html', 'level-2-core.html', 'level-3-platform.html', 'core-without-tokens.html'];
 
@@ -249,7 +250,7 @@ for (const app of APPS) {
             ['selected', '[aria-selected="true"]', (p) => p.getAttribute('aria-selected') === 'false'],
             ['pressed', '[aria-pressed="true"]', (p) => p.getAttribute('aria-pressed') === 'false'],
             ['invalid', '[aria-invalid="true"]', (p) => !p.matches('[aria-invalid="true"]')],
-            ['disabled', 'button:disabled, input:disabled, select:disabled, textarea:disabled', (p) => !p.disabled],
+            ['disabled', 'button:disabled, input:disabled, select:disabled, textarea:disabled', (p) => !p.matches(':disabled')],
           ];
           // A visually hidden radio or checkbox shows its state on its label
           const face = (el) =>

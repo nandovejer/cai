@@ -1,8 +1,9 @@
 /**
  * CAI Design System — Platform docs guidance
  * Every block class that @cai-ds/platform ships belongs to a pattern, and
- * every pattern is documented in apps/platform-docs with the six guidance
- * sections (PRINCIPLES.md red line 18 and strong rule SR-5). The class list
+ * every pattern is documented on the documentation page (apps/docs, the
+ * Platform part) with the six guidance sections (PRINCIPLES.md red line 18
+ * and strong rule SR-5). The class list
  * is read from the package source, so a new class without a pattern fails.
  * Run with: pnpm test:ui
  */
@@ -43,13 +44,17 @@ test.describe('Platform docs', () => {
   });
 
   test('every platform pattern has the six guidance sections', async ({ page }) => {
-    await page.goto('/apps/platform-docs/index.html');
+    await page.goto('/docs/');
 
     for (const pattern of new Set(Object.values(patternOf))) {
       await expect(page.locator(`#p-${pattern}`), pattern).toHaveCount(1);
+      // A pattern is a section of the page: its own h2, like a core component
+      await expect(page.locator(`#p-${pattern} > .docs-demo__head h2`), pattern).toHaveCount(1);
+      await expect(page.locator(`#p-${pattern} .docs-top a[href="#main-content"]`), pattern).toHaveText('Back to top');
       for (const section of sections) {
         const heading = page.locator(`#h-p-${pattern}-${section}`);
         await expect(heading, `${pattern} ${section}`).toHaveCount(1);
+        expect(await heading.evaluate((h) => h.tagName), `${pattern} ${section}`).toBe('H3');
         // A heading with nothing under it is not documentation
         const text = await heading.evaluate((h) => h.nextElementSibling?.textContent.trim() ?? '');
         expect(text.length, `${pattern} ${section} is empty`).toBeGreaterThan(10);
@@ -58,7 +63,7 @@ test.describe('Platform docs', () => {
   });
 
   test('keyboard: the skip link is first and moves focus to the main area', async ({ page }) => {
-    await page.goto('/apps/platform-docs/index.html');
+    await page.goto('/docs/');
     await page.keyboard.press('Tab');
     const skip = page.locator('.cai-platform-skip-link');
     await expect(skip).toBeFocused();
@@ -70,8 +75,16 @@ test.describe('Platform docs', () => {
     expect(await page.evaluate(() => !!document.activeElement.closest('#main-content'))).toBe(true);
   });
 
+  test('the page navigation links to every pattern', async ({ page }) => {
+    await page.goto('/docs/');
+    const hrefs = await page
+      .locator('#docs-nav .cai-sidebar__link')
+      .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+    for (const pattern of new Set(Object.values(patternOf))) expect(hrefs, pattern).toContain(`#p-${pattern}`);
+  });
+
   test('keyboard: a command block copy button is a native button reached with Tab', async ({ page }) => {
-    await page.goto('/apps/platform-docs/index.html');
+    await page.goto('/docs/');
     const copy = page.locator('.cai-platform-command-block .cai-copy-btn').first();
     await expect(copy).toHaveJSProperty('tagName', 'BUTTON');
     await copy.focus();

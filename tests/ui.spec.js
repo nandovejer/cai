@@ -23,17 +23,13 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     test('should switch to dark theme and persist', async ({ page }) => {
       // Get initial theme
       const initialTheme = await page.evaluate(() => document.documentElement.dataset.theme);
-      
-      // Click theme button to switch
-      const themeBtn = await page.$('[data-theme="dark"]');
-      if (themeBtn) {
-        await themeBtn.click();
-        await page.waitForTimeout(300);
 
-        // Verify theme changed
-        const newTheme = await page.evaluate(() => document.documentElement.dataset.theme);
-        expect(newTheme).not.toBe(initialTheme);
-      }
+      // The header's cycle button steps to the next mode
+      await page.click('.site-header .cai-theme-cycle');
+
+      // Verify theme changed
+      const newTheme = await page.evaluate(() => document.documentElement.dataset.theme);
+      expect(newTheme).not.toBe(initialTheme);
     });
 
     test('should persist theme after page reload', async ({ page }) => {
@@ -46,8 +42,10 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       expect(theme).toBe('dark');
     });
 
+    // cai.js (initThemeSystem) and its own storage key: no site page loads
+    // cai.js since the platform reference moved into /docs/, so a fixture does
     test('should persist a theme chosen with the switcher', async ({ page }) => {
-      await page.goto('/apps/platform-docs/index.html');
+      await page.goto('/tests/fixtures/theme-switcher.html');
       await page.waitForLoadState('networkidle');
 
       await page.click('.cai-theme-btn:has(input[value="dark"])');
@@ -56,8 +54,7 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     test('theme switcher is a native radio group that checks the active mode', async ({ page }) => {
-      // The theme switcher lives in the platform docs footer
-      await page.goto('/apps/platform-docs/index.html');
+      await page.goto('/tests/fixtures/theme-switcher.html');
       await page.waitForLoadState('networkidle');
 
       await expect(page.locator('fieldset.cai-theme-switcher legend')).toHaveText('Color mode');

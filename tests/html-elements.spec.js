@@ -1,7 +1,8 @@
 /**
  * CAI Design System — HTML elements reference checks
- * apps/html-elements (served at /html/) lists every current (non-deprecated)
- * HTML element from MDN with a live example or a snippet. The inventory lives
+ * The HTML elements part of the documentation page (apps/docs, served at
+ * /docs/#html-elements; /html/ redirects there) lists every current
+ * (non-deprecated) HTML element from MDN with a live example or a snippet. The inventory lives
  * in tests/fixtures/html-elements.json; these tests keep the page and the
  * element styles in packages/core/src/elements/ in step with it.
  * Run with: pnpm test:ui
@@ -57,7 +58,7 @@ async function open(page) {
     if (msg.type() === 'warning' || msg.type() === 'error') problems.push(msg.text());
   });
   page.on('pageerror', (err) => problems.push(err.message));
-  await page.goto('/html/');
+  await page.goto('/docs/');
   await page.waitForLoadState('networkidle');
   await page.evaluate(() => document.fonts.ready);
   return { failed, problems };
@@ -123,7 +124,7 @@ test.describe('Element styles match the inventory', () => {
 
 /* ---- The page ----------------------------------------------------------- */
 
-test.describe('HTML elements page', () => {
+test.describe('HTML elements reference, on the documentation page', () => {
   test('loads cleanly', async ({ page }) => {
     const { failed, problems } = await open(page);
     expect(failed).toEqual([]);
@@ -176,7 +177,7 @@ test.describe('HTML elements page', () => {
 
   test('has an A-Z index linking to every element', async ({ page }) => {
     await open(page);
-    const index = page.locator('#index');
+    const index = page.locator('#html-index');
     await expect(index.locator('tbody tr')).toHaveCount(elements.length);
     const names = await index.locator('tbody tr th a').allTextContents();
     expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
@@ -194,17 +195,30 @@ test.describe('HTML elements page', () => {
 
   test('is reachable from the landing and works in every color mode', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('.landing-header__nav a[href="/html/"]')).toHaveCount(1);
+    await expect(page.locator('.site-header__nav a[href="/docs/"]')).toHaveCount(1);
 
     await open(page);
-    for (const mode of ['light', 'dark', 'high-contrast']) {
-      await page.click(`[data-elements-mode="${mode}"]`);
+    await expect(page.locator('#docs-nav a[href="#html-elements"]')).toHaveCount(1);
+    // The header's cycle button: light, then dark, high contrast and light again
+    for (const mode of ['dark', 'high-contrast', 'light']) {
+      await page.click('.site-header .cai-theme-cycle');
       expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(mode);
-      await expect(page.locator('[data-elements-mode][aria-pressed="true"]')).toHaveAttribute(
-        'data-elements-mode',
-        mode,
-      );
     }
+  });
+
+  test('the demos that need a script are wired', async ({ page }) => {
+    await open(page);
+    // Assets the build cannot see in markup get their URL from the script
+    // (Vite may inline a small file as a data: URL)
+    await expect(page.locator('#el-object object')).toHaveAttribute('data', /shapes.*\.svg|^data:image\/svg/);
+    await expect(page.locator('#el-track track')).toHaveAttribute('src', /captions.*\.vtt|^data:/);
+    // The canvas is painted, and repainted with the new tokens in another mode
+    const pixel = () =>
+      page.evaluate(() => [...document.getElementById('d-canvas').getContext('2d').getImageData(60, 60, 1, 1).data].join());
+    const light = await pixel();
+    expect(light).not.toBe('0,0,0,0');
+    await page.click('.site-header .cai-theme-cycle');
+    await expect.poll(pixel).not.toBe(light);
   });
 
   test('has no horizontal overflow on a phone', async ({ page }) => {

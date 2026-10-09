@@ -1,0 +1,188 @@
+/* ==========================================================================
+   CAI — HTML ELEMENTS REFERENCE
+   The HTML elements part of the documentation page (apps/docs, #html-elements),
+   written on top of tokens + core + platform. Not part of any published
+   package. The page layout and the snippet bars come from reference.css.
+   Rules:
+     - semantic tokens only (no primitive color tokens, no literal colors);
+     - media queries use the literal values of --cai-bp-* (768, 480).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   How to read a card, index
+   -------------------------------------------------------------------------- */
+
+.elements-eyebrow {
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-xs);
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cai-text-secondary);
+}
+
+.elements-legend {
+  display: grid;
+  gap: var(--cai-space-03);
+  margin-bottom: var(--cai-space-07);
+  padding: var(--cai-space-05);
+  background: var(--cai-layer-01);
+  border: 1px solid var(--cai-border-subtle);
+}
+
+.elements-legend ul {
+  display: grid;
+  gap: var(--cai-space-02);
+}
+
+.elements-index__title,
+.elements-section__title {
+  font-family: var(--cai-font-serif);
+  font-size: var(--cai-text-2xl);
+  font-weight: 300;
+  letter-spacing: -0.5px;
+}
+
+.elements-index__lead,
+.elements-section__lead {
+  margin-block: var(--cai-space-02) var(--cai-space-05);
+  color: var(--cai-text-secondary);
+  max-width: 70ch;
+}
+
+/* --------------------------------------------------------------------------
+   Category sections and element cards
+   -------------------------------------------------------------------------- */
+
+/* The page grid spaces the sections; the rule marks where a category starts */
+.elements-section {
+  padding-top: var(--cai-space-07);
+  border-top: 1px solid var(--cai-border-subtle);
+}
+
+.elements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
+  gap: var(--cai-space-05);
+}
+
+/* Tables stack into cards under 480px of container width: give them room */
+.elements-grid--wide {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 36rem), 1fr));
+}
+
+.elements-card {
+  display: grid;
+  gap: var(--cai-space-04);
+  align-content: start;
+  padding: var(--cai-space-05);
+  background: var(--cai-layer-01);
+  border: 1px solid var(--cai-border-subtle);
+}
+
+.elements-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--cai-space-02) var(--cai-space-04);
+}
+
+.elements-card__title {
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-lg);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.elements-card__mdn {
+  margin-inline-start: auto;
+  font-size: var(--cai-text-sm);
+}
+
+.elements-card__desc {
+  color: var(--cai-text-secondary);
+}
+
+.elements-card__style {
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-secondary);
+}
+
+/* The live example. Dashed edge: this is a specimen, not page content. */
+.elements-stage {
+  display: grid;
+  gap: var(--cai-space-04);
+  align-content: start;
+  padding: var(--cai-space-05);
+  background: var(--cai-bg-page);
+  border: 1px dashed var(--cai-border-strong);
+  /* No scroll here: a scrolling region would need keyboard focus. Media is
+     capped to the width by core, tables and code scroll in their own region. */
+  overflow-wrap: anywhere;
+}
+
+.elements-stage > * {
+  min-width: 0;
+}
+
+/* Snippet: label bar + code block */
+.elements-snippet {
+  display: grid;
+  gap: var(--cai-space-02);
+}
+
+.elements-snippet__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cai-space-04);
+}
+
+/* The bar carries the label; the absolute language badge would sit on top of
+   the first line of code. */
+.elements-snippet .cai-code-block::before {
+  content: none;
+}
+
+/* No width jump when the label becomes "✓ Copied" */
+.elements-snippet .cai-copy-btn {
+  min-width: calc(var(--cai-space-11) + var(--cai-space-03));
+  justify-content: center;
+}
+
+.elements-snippet .cai-copy-btn:not(:hover, .is-copied) {
+  background: var(--cai-layer-01);
+  border-color: var(--cai-border-strong);
+}
+
+/* --------------------------------------------------------------------------
+   Specimens that need a little help to show up
+   -------------------------------------------------------------------------- */
+
+/* A fixed-size box for the demos that resize or clip their content */
+.elements-stage canvas,
+.elements-stage iframe {
+  background: var(--cai-layer-02);
+}
+
+/* <demo-card> is the custom element the slot and template demos define */
+demo-card {
+  display: block;
+}
+
+/* --------------------------------------------------------------------------
+   Small screens
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+  .elements-card,
+  .elements-stage {
+    padding: var(--cai-space-04);
+  }
+
+  .elements-section__title,
+  .elements-index__title {
+    font-size: var(--cai-text-xl);
+  }
+}

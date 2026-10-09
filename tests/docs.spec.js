@@ -2,7 +2,9 @@
  * CAI Design System — documentation page checks
  * The documentation (apps/docs, served at /docs/) is one page: installation,
  * every token, every core component with its six guidance sections, the
- * platform patterns and the accessibility statement. These tests compare the
+ * platform patterns, the HTML elements reference and the accessibility
+ * statement. The platform patterns and the HTML elements have their own
+ * specs (platform-docs, html-elements); /platform/ and /html/ redirect here. These tests compare the
  * inventory it renders against the package sources, so the page cannot drift
  * from the system, and check the structure the accessibility review asked for
  * (h2 per component, h3 per guidance section, a way back to the top).
@@ -97,19 +99,34 @@ test.describe('Documentation page', () => {
       expect(requests.filter((url) => /\/cai(\.min)?\.js/.test(url))).toEqual([]);
     });
 
-    test('the switcher in the navigation sets the mode, under the site key', async ({ page }) => {
+    test('the header has the site links and the cycle switcher, like the home page', async ({ page }) => {
+      await open(page);
+
+      const links = page.locator('.site-header__nav a');
+      await expect(links).toHaveText(['Home', 'Docs', 'GitHub']);
+      await expect(page.locator('.site-header__nav a[aria-current="page"]')).toHaveText('Docs');
+      // Exactly one radio group drives the tokens on this page
+      await expect(page.locator('fieldset:has(input[name="cai-theme"])')).toHaveCount(1);
+      await expect(page.locator('input[name="cai-theme"]')).toHaveCount(3);
+      await expect(page.locator('#docs-nav fieldset')).toHaveCount(0);
+    });
+
+    test('the cycle button in the header sets the mode, under the site key', async ({ page }) => {
       await open(page);
       expect(await theme(page)).toBe('light');
 
+      const button = page.locator('.site-header .cai-theme-cycle');
+      await expect(button).toHaveAccessibleName('Change color mode. Current: Light');
       for (const mode of ['dark', 'high-contrast', 'light']) {
-        await page.click(`#docs-nav .cai-theme-btn:has(input[value="${mode}"])`);
+        await button.click();
         expect(await theme(page)).toBe(mode);
-        await expect(page.locator('#docs-nav input[name="cai-theme"]:checked')).toHaveValue(mode);
+        await expect(page.locator('input[name="cai-theme"]:checked')).toHaveValue(mode);
       }
-      await page.click('#docs-nav .cai-theme-btn:has(input[value="dark"])');
+      await button.click();
       expect(await page.evaluate(() => localStorage.getItem('cai-site-mode'))).toBe('dark');
       await page.reload();
       expect(await theme(page)).toBe('dark');
+      await expect(button).toHaveAccessibleName('Change color mode. Current: Dark');
     });
 
     test('a mode can be scoped to any element', async ({ page }) => {
@@ -124,7 +141,36 @@ test.describe('Documentation page', () => {
   });
 
   test.describe('layout', () => {
-    for (const width of [360, 768, 1280]) {
+    for (const width of [1024, 1440]) {
+      test(`the header sits above the sidebar and the content at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page);
+
+        const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+        const [header, nav, main] = await Promise.all(['.site-header', '#docs-nav', '#main-content'].map(box));
+        expect(header.width).toBe(width);
+        expect(nav.top).toBeGreaterThanOrEqual(header.bottom - 1);
+        expect(main.top).toBeGreaterThanOrEqual(header.bottom - 1);
+        expect(main.left).toBeGreaterThanOrEqual(nav.right - 1);
+      });
+    }
+
+    for (const width of [320, 768]) {
+      test(`the drawer toggle never covers the header at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page);
+
+        const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+        const toggle = await box('.cai-nav-toggle[popovertarget="docs-nav"]');
+        for (const selector of ['.site-header__brand', '.site-header__nav', '.site-header .cai-theme-cycle']) {
+          const b = await box(selector);
+          const overlaps = !(b.right <= toggle.left || b.left >= toggle.right || b.bottom <= toggle.top || b.top >= toggle.bottom);
+          expect(overlaps, selector).toBe(false);
+        }
+      });
+    }
+
+    for (const width of [320, 360, 768, 1280]) {
       test(`no horizontal overflow at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
         await open(page);
@@ -141,12 +187,14 @@ test.describe('Documentation page', () => {
       await open(page);
 
       expect(await page.title()).toMatch(/^CAI documentation/);
-      await expect(page.locator('h1')).toHaveCount(1);
+      // The heading demos of the HTML elements sit in stages hidden from
+      // assistive technology: they are specimens, not the page outline
+      await expect(page.locator('h1:not([aria-hidden="true"] *)')).toHaveCount(1);
       const levels = await page
         .locator('h1, h2, h3, h4, h5, h6')
         .evaluateAll((headings) =>
           headings
-            .filter((el) => el.offsetParent !== null)
+            .filter((el) => el.offsetParent !== null && !el.closest('[aria-hidden="true"]'))
             .map((el) => ({ level: Number(el.tagName[1]), text: el.textContent.trim() })),
         );
       expect(levels[0].level).toBe(1);
@@ -175,7 +223,8 @@ test.describe('Documentation page', () => {
     test('every in-page link points at an element that exists', async ({ page }) => {
       await open(page);
 
-      const broken = await page.locator('a[href^="#"]').evaluateAll((links) =>
+      // The HTML element demos hold links to "#" on purpose: a script keeps them from jumping
+      const broken = await page.locator('a[href^="#"]:not(.elements-stage *)').evaluateAll((links) =>
         links
           .map((link) => link.getAttribute('href'))
           .filter((href) => !document.getElementById(href.slice(1))),
@@ -202,7 +251,7 @@ test.describe('Documentation page', () => {
       // The only aria-current="page" is the site navigation's own entry (the
       // breadcrumb specimen shows one inside its own demo)
       await expect(page.locator('[aria-current="page"]:not(.cai-breadcrumb *)')).toHaveCount(1);
-      await expect(page.locator('.docs-sitenav [aria-current="page"]')).toHaveText('Documentation');
+      await expect(page.locator('.site-header__nav [aria-current="page"]')).toHaveText('Docs');
       // The specimen sidebar takes no part in it
       await expect(page.locator('#c-sidebar .cai-sidebar [aria-current="page"]')).toHaveCount(0);
     });
@@ -385,6 +434,31 @@ test.describe('Documentation page', () => {
       }
       await expect(page.locator('#c-sidebar .docs-demo__stage .cai-nav-toggle')).toBeDisabled();
       await expect(page.locator('#c-sidebar a[href="#docs-nav"]').first()).toBeVisible();
+      await expect(page.locator('#c-sidebar a[href="#site-header"]').first()).toBeVisible();
+      // No dead cycle button: the specimen is not a cycle group
+      await expect(page.locator('#c-sidebar .cai-theme-cycle')).toHaveCount(0);
+    });
+
+    test('the cycle variant is documented: markup, init, no-JS state and names', async ({ page }) => {
+      await open(page);
+
+      const guide = page.locator('#c-sidebar');
+      await expect(guide).toContainText('cai-theme-switcher--cycle');
+      await expect(guide).toContainText('initThemeCycle()');
+      await expect(guide.locator('pre')).toContainText(['cai-theme-btn__icon']);
+      await expect(page.locator('#h-c-sidebar-keyboard + p')).toContainText('Change color mode. Current:');
+      await expect(page.locator('#h-c-accessibility, #accessibility')).toContainText('three radio buttons');
+    });
+
+    test('the long navigation groups fold natively', async ({ page }) => {
+      await open(page);
+
+      const groups = page.locator('#docs-nav details.docs-nav-group');
+      await expect(groups).toHaveCount(2);
+      await expect(groups.locator('summary')).toHaveText(['Platform', 'HTML elements']);
+      await expect(page.locator('#docs-nav a[href="#p-shell"]')).toBeHidden();
+      await page.click('#docs-nav summary:has-text("Platform")');
+      await expect(page.locator('#docs-nav a[href="#p-shell"]')).toBeVisible();
     });
   });
 
@@ -460,7 +534,8 @@ test.describe('Documentation page', () => {
       await page.goto('/docs/');
       const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       const light = await background();
-      await page.click('#docs-nav .cai-theme-btn:has(input[value="dark"])');
+      await expect(page.locator('.cai-theme-cycle')).toHaveCount(0);
+      await page.click('.site-header .cai-theme-btn:has(input[value="dark"])');
       await expect.poll(background).not.toBe(light);
     });
   });
@@ -496,7 +571,7 @@ test.describe('Documentation page', () => {
       await open(page);
 
       const heights = await page
-        .locator('.docs-ref a, .docs-toc a, .docs-sitenav a, .docs-top a')
+        .locator('.docs-ref a, .docs-toc a, .site-header__nav a, .docs-top a')
         .evaluateAll((links) => links.map((el) => el.getBoundingClientRect().height));
       expect(heights.length).toBeGreaterThan(40);
       for (const height of heights) expect(height).toBeGreaterThanOrEqual(24);

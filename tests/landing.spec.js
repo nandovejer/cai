@@ -77,37 +77,49 @@ test.describe('Landing page', () => {
       expect(requests.filter((url) => /\/cai(\.min)?\.js/.test(url))).toEqual([]);
     });
 
-    test('the header switcher is a native radio group in a fieldset', async ({ page }) => {
+    test('the header switcher is a radio group that becomes one cycle button', async ({ page }) => {
       await open(page);
 
-      const switcher = page.locator('.landing-header fieldset.cai-theme-switcher');
+      // The native radio group stays in the page, under the button
+      const switcher = page.locator('.site-header fieldset.cai-theme-switcher--cycle');
       await expect(switcher).toHaveCount(1);
       await expect(switcher.locator('legend')).toHaveText('Color mode');
       await expect(switcher.locator('input[type="radio"][name="cai-theme"]')).toHaveCount(3);
       expect(await theme(page)).toBe('light');
 
-      for (const mode of ['dark', 'high-contrast', 'light']) {
-        await page.click(`.landing-header .cai-theme-btn:has(input[value="${mode}"])`);
+      const button = switcher.locator('button.cai-theme-cycle');
+      await expect(button).toHaveCount(1);
+      await expect(button).toHaveAccessibleName('Change color mode. Current: Light');
+      await expect(switcher.locator('.cai-theme-btn').first()).toBeHidden();
+
+      for (const [mode, label] of [['dark', 'Dark'], ['high-contrast', 'High contrast'], ['light', 'Light']]) {
+        await button.click();
         expect(await theme(page)).toBe(mode);
         expect(await page.evaluate(() => document.documentElement.dataset.mode)).toBeUndefined();
         await expect(page.locator('input[name="cai-theme"]:checked')).toHaveValue(mode);
+        await expect(button).toHaveAccessibleName(`Change color mode. Current: ${label}`);
+        await expect(switcher.locator('[role="status"]')).toHaveText(`Color mode: ${label}`);
       }
     });
 
-    test('the arrow keys move between the modes', async ({ page }) => {
+    test('the cycle button works from the keyboard', async ({ page }) => {
       await open(page);
 
-      await page.focus('.landing-header input[value="light"]');
-      await page.keyboard.press('ArrowRight');
+      await page.locator('.site-header .cai-theme-cycle').focus();
+      await page.keyboard.press('Enter');
       expect(await theme(page)).toBe('dark');
+      await page.keyboard.press('Space');
+      expect(await theme(page)).toBe('high-contrast');
     });
 
     test('the chosen mode survives a reload, under the site key', async ({ page }) => {
       await open(page);
-      await page.click('.landing-header .cai-theme-btn:has(input[value="high-contrast"])');
+      // light → dark → high contrast
+      await page.click('.site-header .cai-theme-cycle');
+      await page.click('.site-header .cai-theme-cycle');
 
       expect(await page.evaluate(() => localStorage.getItem('cai-site-mode'))).toBe('high-contrast');
-      // The platform docs read cai-theme: the landing must not touch it
+      // cai.js (core's theme module) reads cai-theme: the site must not touch it
       expect(await page.evaluate(() => localStorage.getItem('cai-theme'))).toBeNull();
 
       await page.reload();
@@ -147,14 +159,14 @@ test.describe('Landing page', () => {
       });
     }
 
-    test('color mode options are targets of 24px or more at 360px', async ({ page }) => {
+    test('the color mode button is a target of 24px or more at 360px', async ({ page }) => {
       await page.setViewportSize({ width: 360, height: 800 });
       await open(page);
 
       const boxes = await page
-        .locator('.landing-header .cai-theme-btn')
-        .evaluateAll((labels) => labels.map((el) => el.getBoundingClientRect()));
-      expect(boxes).toHaveLength(3);
+        .locator('.site-header .cai-theme-cycle')
+        .evaluateAll((buttons) => buttons.map((el) => el.getBoundingClientRect()));
+      expect(boxes).toHaveLength(1);
       for (const box of boxes) {
         expect(box.width).toBeGreaterThanOrEqual(24);
         expect(box.height).toBeGreaterThanOrEqual(24);
@@ -167,7 +179,7 @@ test.describe('Landing page', () => {
         await open(page);
 
         const [brand, nav, modes] = await Promise.all(
-          ['.landing-header__brand', '.landing-header__nav', '.landing-header .cai-theme-switcher'].map((selector) =>
+          ['.site-header__brand', '.site-header__nav', '.site-header .cai-theme-switcher'].map((selector) =>
             page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON()),
           ),
         );
@@ -480,11 +492,37 @@ test.describe('Landing page', () => {
       });
     }
 
+    test('the color mode switcher is three radios: targets of 24px or more at 360px', async ({ page }) => {
+      await page.setViewportSize({ width: 360, height: 800 });
+      await page.goto('/');
+
+      await expect(page.locator('.site-header .cai-theme-cycle')).toHaveCount(0);
+      const boxes = await page
+        .locator('.site-header .cai-theme-btn')
+        .evaluateAll((labels) => labels.map((el) => el.getBoundingClientRect()));
+      expect(boxes).toHaveLength(3);
+      for (const box of boxes) {
+        expect(box.width).toBeGreaterThanOrEqual(24);
+        expect(box.height).toBeGreaterThanOrEqual(24);
+      }
+    });
+
+    test('the arrow keys move between the modes', async ({ page }) => {
+      await page.goto('/');
+      const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+      const light = await background();
+
+      await page.focus('.site-header input[value="light"]');
+      await page.keyboard.press('ArrowRight');
+      await expect(page.locator('.site-header input[value="dark"]')).toBeChecked();
+      await expect.poll(background).not.toBe(light);
+    });
+
     test('the color mode switcher and the example form work', async ({ page }) => {
       await page.goto('/');
       const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       const light = await background();
-      await page.click('.landing-header .cai-theme-btn:has(input[value="dark"])');
+      await page.click('.site-header .cai-theme-btn:has(input[value="dark"])');
       await expect.poll(background).not.toBe(light);
 
       await page.click('form.landing-try button');
@@ -519,8 +557,8 @@ test.describe('Landing page', () => {
     test('the beta and version tags are text', async ({ page }) => {
       await open(page);
 
-      await expect(page.locator('.landing-header__brand')).toContainText('v3.0.0');
-      await expect(page.locator('.landing-header__brand')).toContainText('Beta');
+      await expect(page.locator('.site-header__brand')).toContainText('v3.0.0');
+      await expect(page.locator('.site-header__brand')).toContainText('Beta');
     });
 
     test('the page background is one flat color', async ({ page }) => {
@@ -535,7 +573,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       const heights = await page
-        .locator('.landing-level__body a, .landing-guides a, .landing-header__nav a')
+        .locator('.landing-level__body a, .landing-guides a, .site-header__nav a')
         .evaluateAll((links) => links.map((el) => el.getBoundingClientRect().height));
       expect(heights.length).toBeGreaterThan(10);
       for (const height of heights) expect(height).toBeGreaterThanOrEqual(24);

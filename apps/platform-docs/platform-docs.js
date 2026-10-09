@@ -1,69 +1,57 @@
 /**
- * CAI platform docs — page entry
- * Points the MIDI player at a URL that exists in the built site (the build
- * does not rewrite data-* attributes), then loads cai.js. The import is
- * dynamic on purpose: a static import would run cai.js, and mount the
- * players, before this module's body.
+ * /platform/ moved into the documentation page, /docs/#platform.
+ * The page's meta refresh sends every visitor there, with or without
+ * JavaScript. This module only keeps the section an old link asked for: it
+ * maps the old #fragment to its id on the documentation page and goes there
+ * first. Not part of any published package.
  */
 
-const midiPlayer = document.querySelector('.cai-player[data-type="midi"]');
-if (midiPlayer) {
-  midiPlayer.dataset.src = new URL("./assets/sample.mid", import.meta.url).href;
+// Old id → new id. Sections that duplicated tokens and core now point at them.
+const MOVED = {
+  installation: "installation",
+  "when-to-use": "platform",
+  architecture: "packages",
+  colors: "t-semantic",
+  "colors-palette": "t-primitives",
+  "colors-semantic": "t-semantic",
+  tokens: "tokens",
+  "tokens-spacing": "t-spacing",
+  "tokens-elevation": "t-shadow",
+  "tokens-motion": "c-motion",
+  "tokens-typography-scales": "t-type",
+  "tokens-usage": "platform",
+  "tokens-theme": "themes-custom",
+  primitives: "core",
+  "prim-box": "c-objects",
+  "prim-stack": "c-objects",
+  "prim-grid": "c-objects",
+  "prim-text": "c-elements",
+  "prim-buttons": "c-button",
+  "prim-form": "c-form",
+  "prim-tags": "c-tag",
+  "prim-html": "html-elements",
+  components: "core",
+  "comp-alerts": "c-alert",
+  "comp-modal": "c-modal",
+  "comp-cards": "c-card",
+  "comp-nav": "c-tabs",
+  "comp-players": "c-player",
+  themes: "themes",
+  reference: "p-reference",
+  guidance: "p-shell",
+  examples: "p-examples",
+  templates: "p-templates",
+  "live-demo": "p-image",
+  "demo-image": "demo-image",
+  source: "build",
+};
+
+const link = document.querySelector("[data-moved-to]");
+if (link) {
+  const old = decodeURIComponent(window.location.hash.slice(1));
+  const target = new URL(link.href);
+  // The pattern sections and their guidance kept their ids (p-*, h-p-*)
+  if (MOVED[old]) target.hash = MOVED[old];
+  else if (/^(h-)?p-[\w-]+$/.test(old)) target.hash = old;
+  window.location.replace(target.href);
 }
-
-import("../../packages/core/dist/cai.js");
-
-/* Demo wiring, moved here from an inline script (PRINCIPLES.md §3) */
-function bindRangeOutput(inputId, outputId) {
-  const input = document.getElementById(inputId);
-  const output = document.getElementById(outputId);
-  if (!input || !output) return;
-
-  const sync = () => {
-    output.value = input.value;
-  };
-
-  input.addEventListener("input", sync);
-  sync();
-}
-
-bindRangeOutput("pf-range-a", "pf-range-a-out");
-bindRangeOutput("pf-range-b", "pf-range-b-out");
-bindRangeOutput("pf-ex-experience", "pf-ex-experience-out");
-
-const demoForm = document.getElementById("pf-demo-form");
-const formResult = document.getElementById("pf-form-result");
-
-if (demoForm && formResult) {
-  demoForm.addEventListener("submit", (event) => {
-    // eslint-disable-next-line no-restricted-syntax -- RL-3: a demo form has no endpoint; the result is shown in place
-    event.preventDefault();
-    if (!demoForm.checkValidity()) {
-      formResult.textContent = "Please complete required fields before submitting.";
-      return;
-    }
-    formResult.textContent = "Form submitted successfully (demo only).";
-  });
-
-  demoForm.addEventListener("reset", () => {
-    formResult.textContent = "";
-  });
-}
-
-const motionReplayBtn = document.querySelector("[data-pdocs-motion-replay]");
-const motionCards = Array.from(document.querySelectorAll("[data-pdocs-motion-card]"));
-
-if (motionReplayBtn && motionCards.length) {
-  const replayMotion = () => {
-    motionCards.forEach((card, index) => {
-      card.classList.remove("is-revealing");
-      window.setTimeout(() => {
-        card.classList.add("is-revealing");
-      }, index * 90);
-    });
-  };
-
-  motionReplayBtn.addEventListener("click", replayMotion);
-  replayMotion();
-}
-

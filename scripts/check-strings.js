@@ -1,6 +1,6 @@
 /**
  * CAI — shipped-strings check (PRINCIPLES.md §4, strong rule SR-1).
- * Scans the visible text of the four apps for wording the principles forbid:
+ * Scans the visible text of every app page (index.html in each app folder) for wording the principles forbid:
  * vague link/button text and Title Case headings. Code samples are skipped.
  *
  * Usage: node scripts/check-strings.js

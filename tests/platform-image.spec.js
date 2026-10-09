@@ -171,7 +171,7 @@ test.describe('Platform image', () => {
   });
 
   test('the docs demos use a picture with AVIF and WebP sources and a sized img', async ({ page }) => {
-    await page.goto('/platform/');
+    await page.goto('/docs/'); // the platform reference is part of the docs page
     const pictures = page.locator('.cai-platform-image picture');
     expect(await pictures.count()).toBeGreaterThan(0);
     for (const picture of await pictures.all()) {
@@ -204,12 +204,12 @@ test.describe('Platform image', () => {
       external.push(href);
       return route.abort();
     });
-    await page.goto('/platform/');
+    await page.goto('/docs/'); // the platform reference is part of the docs page
     await page.locator('#demo-image').scrollIntoViewIfNeeded();
     await page.waitForLoadState('networkidle');
     expect(external).toEqual([]);
     // The placeholder and the demo image did load, from here
     expect(images.some((url) => /placeholders\/placeholder-16x9-1920\.(avif|webp|jpg)$/.test(url))).toBe(true);
-    expect(images.some((url) => /assets\/sky-\d+\.(avif|webp|jpg)$/.test(url))).toBe(true);
+    expect(images.some((url) => /assets\/desert-\d+\.(avif|webp|jpg)$/.test(url))).toBe(true);
   });
 });

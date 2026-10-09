@@ -6,7 +6,8 @@ import { test, expect } from '@playwright/test';
 test.describe('prefers-reduced-motion: reduce', () => {
   test.use({ reducedMotion: 'reduce' });
 
-  for (const app of ['/', '/docs/', '/platform/', '/html/']) {
+  // /platform/ and /html/ are redirect stubs now: their content is on /docs/
+  for (const app of ['/', '/docs/']) {
     test(`${app}: no transition, animation or smooth scroll runs (RL-8)`, async ({ page }) => {
       await page.goto(app);
       const moving = await page.evaluate(() => {
@@ -48,10 +49,31 @@ test.describe('forced-colors: active', () => {
 test.describe('forced-colors: the color mode switcher', () => {
   test.use({ forcedColors: 'active' });
 
+  for (const app of ['/', '/docs/']) {
+    test(`${app}: the cycle button keeps a visible edge and a visible icon`, async ({ page, browserName }) => {
+      test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
+      await page.goto(app);
+      const button = page.locator('.site-header .cai-theme-cycle');
+      await expect(button).toBeVisible();
+      const style = await button.evaluate((el) => {
+        const s = getComputedStyle(el);
+        const icon = el.querySelector('svg');
+        return { border: s.borderTopStyle, width: parseFloat(s.borderTopWidth), icon: icon?.getBoundingClientRect().width ?? 0 };
+      });
+      expect(style.border).toBe('solid');
+      expect(style.width).toBeGreaterThanOrEqual(1);
+      expect(style.icon).toBeGreaterThan(0);
+    });
+  }
+});
+
+test.describe('forced-colors: the color mode switcher without JavaScript', () => {
+  test.use({ forcedColors: 'active', javaScriptEnabled: false });
+
   test('/: the checked mode stays visible', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
     await page.goto('/');
-    const styles = await page.locator('.landing-header .cai-theme-btn').evaluateAll((labels) =>
+    const styles = await page.locator('.site-header .cai-theme-btn').evaluateAll((labels) =>
       labels.map((el) => ({
         checked: el.querySelector('input').checked,
         visible: el.checkVisibility(),

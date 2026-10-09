@@ -3,7 +3,8 @@
  * Resolves the semantic tokens of the three base modes (light, dark,
  * high-contrast) and of every custom theme in packages/core/src/themes, in
  * its default mode and in each data-mode, to their real values and measures the pairs the components
- * draw: text on its surfaces at 4.5:1, focus ring, borders and icons at 3:1.
+ * draw: text on its surfaces at 4.5:1, focus ring and borders at 3:1 (icons use
+ * the text tokens, so they meet 4.5:1).
  * Translucent tokens are composited over the surface below, as in the page.
  * WCAG 2.x relative luminance.
  *
@@ -23,16 +24,16 @@ const BASE = ["light", "dark", "high-contrast"];
 
 /* ---- Pairs: [foreground tokens, background tokens, minimum] --------------
    A background written "a > b" is token a composited over token b. */
-const SURFACES = ["bg-page", "bg-ui", "bg-ui-hover", "layer-01", "layer-02", "input-bg"];
+const SURFACES = ["surface-page", "surface", "surface-hover", "surface-muted", "input-bg"];
 const STATUS = ["success", "danger", "warning", "info", "teal", "purple"];
 const PAIRS = [
   // Text and links on the surfaces they sit on
   [["text-primary", "text-secondary", "brand-primary", "brand-hover"], SURFACES, 4.5],
-  [["text-primary", "text-secondary"], ["layer-03", "bg-ui-active"], 4.5],
-  [["text-placeholder"], ["input-bg"], 4.5],
-  [["text-disabled"], ["bg-page", "bg-ui", "input-bg", "layer-01", "layer-02", "layer-03"], 3],
+  [["text-primary", "text-secondary"], ["surface-strong", "surface-pressed"], 4.5],
+  [["text-muted"], ["input-bg", "surface-page", "surface"], 4.5],
+  [["text-disabled"], ["surface-page", "surface", "input-bg", "surface-muted", "surface-strong"], 3],
   // Text on solid fills
-  [["text-on-color"], ["brand-fill", "brand-fill-hover", "brand-fill-active", "color-danger-fill"], 4.5],
+  [["text-on-fill"], ["brand-fill", "brand-fill-hover", "brand-fill-active", "color-danger-fill"], 4.5],
   // Sidebar
   [["sidebar-text", "sidebar-label", "sidebar-text-hover"], ["sidebar-bg"], 4.5],
   [["sidebar-text-hover"], ["sidebar-hover"], 4.5],
@@ -40,26 +41,26 @@ const PAIRS = [
   // Status text on its tint (alerts, tags), also on a hovered row
   ...STATUS.map((s) => [
     [`color-${s}`],
-    [`color-${s}-bg > bg-page`, `color-${s}-bg > bg-ui`, `color-${s}-bg > bg-ui-hover`],
+    [`color-${s}-bg > surface-page`, `color-${s}-bg > surface`, `color-${s}-bg > surface-hover`],
     4.5,
   ]),
-  [["color-code"], ["bg-page", "bg-ui", "layer-02"], 4.5],
-  // Non-text: focus ring, field boundaries, strong borders, icons (WCAG 1.4.11)
-  [["border-interactive"], [...SURFACES, "layer-03"], 3],
+  [["color-code"], ["surface-page", "surface", "surface-muted"], 4.5],
+  // Non-text: focus ring, field boundaries, outlines (WCAG 1.4.11)
+  [["focus-ring"], [...SURFACES, "surface-strong"], 3],
   [["input-border"], ["input-bg"], 3],
-  [["border-strong", "icon-primary", "icon-secondary"], ["bg-page", "bg-ui"], 3],
+  [["outline"], ["surface-page", "surface"], 3],
 ];
 
-/* Also on the deepest layer (tooltip, toast, table header) and as plain text on the
-   page: status and code colours and their tints keep 4.5:1 there too.
+/* Also on the strong surface (tooltip, toast, table header) and as plain text on
+   every surface: status and code colours and their tints keep 4.5:1 there too.
    Measured for every theme and mode. */
 const THEME_PAIRS = [
-  ...STATUS.map((s) => [[`color-${s}`], [`color-${s}-bg > layer-03`, "bg-page", "bg-ui", "layer-03"], 4.5]),
-  [["color-code"], ["layer-03"], 4.5],
+  ...STATUS.map((s) => [[`color-${s}`], [`color-${s}-bg > surface-strong`, "surface-page", "surface", "surface-hover", "surface-muted", "surface-strong"], 4.5]),
+  [["color-code"], ["surface-strong"], 4.5],
   // The field border on every surface a field can sit on (WCAG 1.4.11)
-  [["input-border"], [...SURFACES, "layer-03"], 3],
-  // .cai-badge--gray: white text on the strong border colour
-  [["text-on-color"], ["border-strong"], 4.5],
+  [["input-border"], [...SURFACES, "surface-strong"], 3],
+  // .cai-badge--gray: white text on the outline colour
+  [["text-on-fill"], ["outline"], 4.5],
 ];
 
 /* ---- Token values ------------------------------------------------------- */
@@ -159,7 +160,7 @@ const ratio = (x, y) => {
 /** A background spec ("a > b > …") as an opaque colour, over the page. */
 function surface(theme, spec) {
   const layers = spec.split(">").map((s) => parse(value(theme, `--cai-${s.trim()}`)));
-  let result = parse(value(theme, "--cai-bg-page"));
+  let result = parse(value(theme, "--cai-surface-page"));
   for (const layer of layers.reverse()) result = over(layer, result);
   return result;
 }

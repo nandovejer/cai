@@ -6,10 +6,10 @@
    -------------------------------------------------------------------------- */
 
 
-/* --cai-layer-02: the syntax colors reach 4.5:1 on it in light, dark and
-   high contrast (on --cai-layer-03 they fell to 3.3–3.8:1) */
+/* --cai-surface-muted: the syntax colors reach 4.5:1 on it in light, dark and
+   high contrast (on --cai-surface-strong they fell to 3.3–3.8:1) */
 .cai-code-block {
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
   color: var(--cai-text-primary);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-sm);
@@ -17,7 +17,7 @@
   overflow-x: auto;
   border-radius: var(--cai-radius-sm);
   line-height: 1.6;
-  border: 1px solid var(--cai-border-subtle);
+  border: 1px solid var(--cai-divider);
   transition: background var(--cai-duration-base);
   position: relative;
   /* pre reset: content is displayed exactly as written */
@@ -79,11 +79,11 @@
 }
 
 .cai-code-inline {
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
   color: var(--cai-color-code);
   font-family: var(--cai-font-mono);
   font-size: max(0.9em, var(--cai-text-xs));
   padding: var(--cai-space-01) var(--cai-space-02);
   border-radius: var(--cai-radius-sm);
-  border: 1px solid var(--cai-border-subtle);
+  border: 1px solid var(--cai-divider);
 }

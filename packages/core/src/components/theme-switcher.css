@@ -16,12 +16,12 @@
      default, the sidebar inside .cai-sidebar (below). Declared here, so
      each button's own data-theme does not re-scope them. */
   --cai-switcher-label: var(--cai-text-secondary);
-  --cai-switcher-border: var(--cai-border-strong);
-  --cai-switcher-hover-bg: var(--cai-bg-ui-hover);
+  --cai-switcher-border: var(--cai-outline);
+  --cai-switcher-hover-bg: var(--cai-surface-hover);
   --cai-switcher-hover-text: var(--cai-text-primary);
-  --cai-switcher-focus: var(--cai-border-interactive);
+  --cai-switcher-focus: var(--cai-focus-ring);
   --cai-switcher-on-bg: var(--cai-brand-fill);
-  --cai-switcher-on-text: var(--cai-text-on-color);
+  --cai-switcher-on-text: var(--cai-text-on-fill);
 
   display: flex;
   flex-wrap: wrap;
@@ -160,7 +160,7 @@
   }
 }
 
-/* On the sidebar surface. --cai-border-interactive would be black on a
+/* On the sidebar surface. --cai-focus-ring would be black on a
    black sidebar in high contrast. */
 .cai-sidebar .cai-theme-switcher {
   --cai-switcher-label: var(--cai-sidebar-label);
@@ -205,7 +205,7 @@
 .cai-theme-apply-btn {
   width: 100%;
   min-height: 26px;
-  border: 1px solid var(--cai-border-interactive);
+  border: 1px solid var(--cai-focus-ring);
   background: transparent;
   color: var(--cai-brand-primary);
   font-family: var(--cai-font-mono);
@@ -229,6 +229,6 @@
 
 .cai-theme-apply-btn.is-active {
   background: var(--cai-brand-fill);
-  color: var(--cai-text-on-color);
+  color: var(--cai-text-on-fill);
   border-color: var(--cai-brand-fill);
 }

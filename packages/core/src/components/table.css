@@ -16,7 +16,7 @@
 
 /* The wrapper is a focusable scroll region (tabindex="0") */
 .cai-table-wrap:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -42,7 +42,7 @@
 }
 
 .cai-table th {
-  background: var(--cai-layer-03);
+  background: var(--cai-surface-strong);
   color: var(--cai-text-primary);
   text-align: start;
   padding: var(--cai-space-03) var(--cai-space-05);
@@ -55,13 +55,13 @@
 
 .cai-table td {
   padding: var(--cai-space-04) var(--cai-space-05);
-  border-bottom: 1px solid var(--cai-border-subtle);
+  border-bottom: 1px solid var(--cai-divider);
   color: var(--cai-text-primary);
   transition: background var(--cai-duration-fast);
 }
 
 .cai-table tr:hover td {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
 }
 
 .cai-table tr:last-child td {
@@ -82,16 +82,16 @@
 
 .cai-table--sticky-col th:first-child {
   z-index: 2;
-  background: var(--cai-layer-03);
+  background: var(--cai-surface-strong);
 }
 
 .cai-table--sticky-col td:first-child {
   z-index: 1;
-  background: var(--cai-bg-page);
+  background: var(--cai-surface-page);
 }
 
 .cai-table--sticky-col tr:hover td:first-child {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
 }
 
 /* ---- Container-query card stacking ---------------------------------
@@ -122,7 +122,7 @@
 
   /* Each row becomes a card */
   .cai-table tr {
-    border: 1px solid var(--cai-border-subtle);
+    border: 1px solid var(--cai-divider);
     border-radius: var(--cai-radius-md);
     margin-bottom: var(--cai-space-04);
     overflow: hidden;
@@ -135,7 +135,7 @@
     align-items: baseline;
     gap: var(--cai-space-05);
     padding: var(--cai-space-03) var(--cai-space-04);
-    border-bottom: 1px solid var(--cai-border-subtle);
+    border-bottom: 1px solid var(--cai-divider);
   }
 
   .cai-table tr:last-child td:last-child {

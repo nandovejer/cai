@@ -21,7 +21,7 @@
 }
 
 :where(a:focus-visible) {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
   border-radius: var(--cai-radius-sm);
 }
@@ -46,10 +46,10 @@
   /* Relative to the surrounding text, never below the 12px floor */
   font-size: max(0.875em, var(--cai-text-xs));
   padding: var(--cai-space-01) var(--cai-space-02);
-  background: var(--cai-bg-ui);
-  border: 1px solid var(--cai-border-strong);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-outline);
   border-radius: var(--cai-radius-sm);
-  box-shadow: 0 2px 0 var(--cai-border-strong);
+  box-shadow: 0 2px 0 var(--cai-outline);
   display: inline-block;
 }
 

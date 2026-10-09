@@ -35,7 +35,6 @@
   font-size: var(--cai-text-xl);
   font-weight: 600;
   letter-spacing: -0.5px;
-  /* --cai-text-inverse turns dark in dark mode: 1.1:1 on the sidebar */
   color: var(--cai-sidebar-text-hover);
   display: flex;
   align-items: center;
@@ -53,7 +52,7 @@
   font-family: var(--cai-font-mono);
   font-weight: 500;
   /* The logo shares its background with the active link in every theme;
-     --cai-text-on-color was white on white in high contrast */
+     --cai-text-on-fill was white on white in high contrast */
   color: var(--cai-sidebar-active-text);
   flex-shrink: 0;
 }
@@ -103,7 +102,7 @@
   font-weight: 500;
 }
 
-/* Focus rings on the sidebar surface: --cai-border-interactive is black on
+/* Focus rings on the sidebar surface: --cai-focus-ring is black on
    the black sidebar in high contrast. Links draw the ring inside themselves,
    in their own text color, which contrasts with their background in every
    state (default, hover, active). */
@@ -152,7 +151,7 @@
   inline-size: var(--cai-size-height-lg);
   block-size: var(--cai-size-height-lg);
   background: transparent;
-  border: 1px solid var(--cai-border-strong);
+  border: 1px solid var(--cai-outline);
   border-radius: var(--cai-radius-md);
   color: var(--cai-text-primary);
   cursor: pointer;
@@ -165,7 +164,7 @@
 }
 
 .cai-nav-toggle:hover {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
 }
 
 .cai-nav-toggle--fixed {
@@ -173,11 +172,11 @@
   inset-block-start: var(--cai-space-04);
   inset-inline-start: var(--cai-space-04);
   z-index: var(--cai-z-modal);
-  background: var(--cai-bg-page);
+  background: var(--cai-surface-page);
 }
 
 .cai-nav-toggle:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -213,7 +212,7 @@
     }
 
     .cai-sidebar[popover]::backdrop {
-      background: var(--cai-bg-overlay);
+      background: var(--cai-scrim);
     }
   }
 }

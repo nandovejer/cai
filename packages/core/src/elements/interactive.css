@@ -8,16 +8,16 @@
 /* ========================================================================== */
 
 :where(details) {
-  border: 1px solid var(--cai-border-subtle);
+  border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-md);
   padding: var(--cai-space-04);
   margin-block: var(--cai-space-03);
-  background: var(--cai-bg-ui);
+  background: var(--cai-surface);
   transition: background var(--cai-duration-base);
 }
 
 :where(details[open]) {
-  background: var(--cai-layer-01);
+  background: var(--cai-surface);
 }
 
 :where(summary) {
@@ -33,11 +33,11 @@
 }
 
 :where(summary:hover) {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
 }
 
 :where(summary:focus-visible) {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -50,8 +50,8 @@
 :where(dialog) {
   padding: var(--cai-space-06);
   color: var(--cai-text-primary);
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-lg);
   box-shadow: var(--cai-shadow-lg);
   max-width: min(90vw, 600px);
@@ -73,5 +73,5 @@
 
 /* A pseudo-element cannot go inside :where(), so this is (0,0,1) */
 :where(dialog)::backdrop {
-  background: var(--cai-bg-overlay);
+  background: var(--cai-scrim);
 }

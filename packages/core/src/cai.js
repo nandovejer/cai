@@ -57,7 +57,7 @@ export {
 // The tokens layer is a required peer: without it every var(--cai-*) is empty.
 function warnIfTokensMissing() {
   const probe = getComputedStyle(document.documentElement).getPropertyValue(
-    "--cai-bg-page",
+    "--cai-surface-page",
   );
   if (!probe.trim()) {
     console.warn(

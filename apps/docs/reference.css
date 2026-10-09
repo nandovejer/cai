@@ -211,17 +211,17 @@
    -------------------------------------------------------------------------- */
 
 .cai-code-block:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
 /* .cai-copy-btn has a subtle border and no fill: on the command block
-   (--cai-layer-03) it reads as plain text. Give it a surface and a boundary;
+   (--cai-surface-strong) it reads as plain text. Give it a surface and a boundary;
    hover and .is-copied keep the component's own colors. */
 .docs-snippet .cai-copy-btn:not(:hover, .is-copied),
 .cai-platform-command-block .cai-copy-btn:not(:hover, .is-copied) {
-  background: var(--cai-layer-01);
-  border-color: var(--cai-border-strong);
+  background: var(--cai-surface);
+  border-color: var(--cai-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -232,8 +232,8 @@
   display: grid;
   gap: var(--cai-space-05);
   align-content: start;
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
   padding: var(--cai-space-05);
 }
 
@@ -259,7 +259,7 @@
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: var(--cai-space-05);
   padding: var(--cai-space-05);
-  border: 1px solid var(--cai-border-subtle);
+  border: 1px solid var(--cai-divider);
 }
 
 .docs-toc ul {
@@ -358,7 +358,7 @@ h2.docs-demo__title {
 .docs-guide {
   display: grid;
   gap: var(--cai-space-02);
-  border-top: 1px solid var(--cai-border-subtle);
+  border-top: 1px solid var(--cai-divider);
   padding-block-start: var(--cai-space-04);
 }
 
@@ -408,7 +408,7 @@ h2.docs-demo__title {
   padding: var(--cai-space-02) var(--cai-space-03);
   font-size: var(--cai-text-md);
   font-weight: 500;
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
 }
 
 .docs-fold[open] > summary {
@@ -423,8 +423,8 @@ h2.docs-demo__title {
 .docs-swatch {
   display: block;
   height: var(--cai-size-height-xl);
-  background: linear-gradient(var(--v), var(--v)), var(--cai-bg-page);
-  border: 1px solid var(--cai-border-subtle);
+  background: linear-gradient(var(--v), var(--v)), var(--cai-surface-page);
+  border: 1px solid var(--cai-divider);
 }
 
 .docs-ramp {
@@ -479,7 +479,7 @@ h2.docs-demo__title {
 .docs-token__modes .docs-swatch {
   width: var(--cai-space-06);
   height: var(--cai-space-06);
-  border-color: var(--cai-border-strong);
+  border-color: var(--cai-outline);
 }
 
 .docs-scopes {
@@ -493,9 +493,9 @@ h2.docs-demo__title {
   gap: var(--cai-space-04);
   align-content: start;
   padding: var(--cai-space-05);
-  background: var(--cai-bg-page);
+  background: var(--cai-surface-page);
   color: var(--cai-text-primary);
-  border: 1px solid var(--cai-border-strong);
+  border: 1px solid var(--cai-outline);
 }
 
 .docs-scope .cai-alert {
@@ -602,13 +602,13 @@ h2.docs-demo__title {
 .docs-shadows {
   gap: var(--cai-space-06);
   padding: var(--cai-space-05);
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
 }
 
 .docs-box {
   padding: var(--cai-space-04);
-  background: var(--cai-layer-02);
-  border: 1px dashed var(--cai-border-strong);
+  background: var(--cai-surface-muted);
+  border: 1px dashed var(--cai-outline);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
@@ -633,7 +633,7 @@ h2.docs-demo__title {
 
 .docs-box--shadow {
   padding: var(--cai-space-06);
-  background: var(--cai-layer-01);
+  background: var(--cai-surface);
   border: 0;
   box-shadow: var(--v);
 }
@@ -646,7 +646,7 @@ h2.docs-demo__title {
   display: block;
   position: relative;
   height: var(--cai-space-05);
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
 }
 
 .docs-motion__dot {
@@ -689,13 +689,13 @@ h2.docs-demo__title {
   justify-content: center;
   width: 100%;
   height: var(--cai-space-11);
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
 }
 
 .docs-anim__spin {
   width: var(--cai-space-07);
   height: var(--cai-space-07);
-  border: 2px solid var(--cai-border-subtle);
+  border: 2px solid var(--cai-divider);
   border-top-color: var(--cai-brand-primary);
   border-radius: var(--cai-radius-full);
 }
@@ -703,7 +703,7 @@ h2.docs-demo__title {
 .docs-anim__shimmer {
   width: 70%;
   height: var(--cai-space-05);
-  background: linear-gradient(90deg, var(--cai-layer-03) 25%, var(--cai-layer-01) 50%, var(--cai-layer-03) 75%);
+  background: linear-gradient(90deg, var(--cai-surface-strong) 25%, var(--cai-surface) 50%, var(--cai-surface-strong) 75%);
   background-size: 200% 100%;
 }
 
@@ -751,8 +751,8 @@ h2.docs-demo__title {
   gap: var(--cai-space-03);
   align-content: start;
   padding: var(--cai-space-05);
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
 }
 
 .docs-decision-card__title {
@@ -790,7 +790,7 @@ h2.docs-demo__title {
   min-height: calc(var(--cai-space-12) * 1.5);
   margin-top: var(--cai-space-03);
   padding: var(--cai-space-04);
-  border: 1px dashed var(--cai-border-strong);
+  border: 1px dashed var(--cai-outline);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
@@ -825,12 +825,12 @@ h2.docs-demo__title {
 .docs-util-frame {
   width: calc(var(--cai-space-12) * 2);
   max-width: 100%;
-  border: 1px dashed var(--cai-border-strong);
+  border: 1px dashed var(--cai-outline);
 }
 
 .docs-util-margins {
   display: inline-block;
-  border: 1px dashed var(--cai-border-strong);
+  border: 1px dashed var(--cai-outline);
 }
 
 .docs-util-margins .docs-box {
@@ -847,10 +847,10 @@ h2.docs-demo__title {
   cursor: default;
 }
 
-/* A sticky first column paints itself with --cai-bg-page: a grey band on any
+/* A sticky first column paints itself with --cai-surface-page: a grey band on any
    other surface. Hover keeps the component's own color (higher specificity). */
 .docs-demo__stage .cai-table--sticky-col td:first-child {
-  background: var(--cai-layer-01);
+  background: var(--cai-surface);
 }
 
 /* A closed <details> keeps the bottom margin of its summary: empty space

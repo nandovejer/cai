@@ -27,8 +27,8 @@
   gap: var(--cai-space-03);
   margin-bottom: var(--cai-space-07);
   padding: var(--cai-space-05);
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
 }
 
 .elements-legend ul {
@@ -58,7 +58,7 @@
 /* The page grid spaces the sections; the rule marks where a category starts */
 .elements-section {
   padding-top: var(--cai-space-07);
-  border-top: 1px solid var(--cai-border-subtle);
+  border-top: 1px solid var(--cai-divider);
 }
 
 .elements-grid {
@@ -77,8 +77,8 @@
   gap: var(--cai-space-04);
   align-content: start;
   padding: var(--cai-space-05);
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
 }
 
 .elements-card__head {
@@ -115,8 +115,8 @@
   gap: var(--cai-space-04);
   align-content: start;
   padding: var(--cai-space-05);
-  background: var(--cai-bg-page);
-  border: 1px dashed var(--cai-border-strong);
+  background: var(--cai-surface-page);
+  border: 1px dashed var(--cai-outline);
   /* No scroll here: a scrolling region would need keyboard focus. Media is
      capped to the width by core, tables and code scroll in their own region. */
   overflow-wrap: anywhere;
@@ -152,8 +152,8 @@
 }
 
 .elements-snippet .cai-copy-btn:not(:hover, .is-copied) {
-  background: var(--cai-layer-01);
-  border-color: var(--cai-border-strong);
+  background: var(--cai-surface);
+  border-color: var(--cai-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -163,7 +163,7 @@
 /* A fixed-size box for the demos that resize or clip their content */
 .elements-stage canvas,
 .elements-stage iframe {
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
 }
 
 /* <demo-card> is the custom element the slot and template demos define */

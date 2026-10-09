@@ -85,7 +85,7 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--cai-space-05);
-  border-top: 1px solid var(--cai-border-subtle);
+  border-top: 1px solid var(--cai-divider);
   padding-top: var(--cai-space-06);
 }
 
@@ -142,7 +142,7 @@
 
 .landing-stack--mini .is-excluded {
   background: transparent;
-  border: 1px dashed var(--cai-border-strong);
+  border: 1px dashed var(--cai-outline);
   color: var(--cai-text-secondary);
 }
 
@@ -167,8 +167,8 @@
   display: grid;
   gap: var(--cai-space-04);
   padding: var(--cai-space-05);
-  background: var(--cai-layer-01);
-  border: 1px dashed var(--cai-border-strong);
+  background: var(--cai-surface);
+  border: 1px dashed var(--cai-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -194,7 +194,7 @@
 }
 
 .cai-code-block:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -206,12 +206,12 @@
 }
 
 /* .cai-copy-btn has a subtle border and no fill: on the command block
-   (--cai-layer-03) it reads as plain text. Give it a surface and a boundary;
+   (--cai-surface-strong) it reads as plain text. Give it a surface and a boundary;
    hover and .is-copied keep the component's own colors. */
 .landing-snippet .cai-copy-btn:not(:hover, .is-copied),
 .cai-platform-command-block .cai-copy-btn:not(:hover, .is-copied) {
-  background: var(--cai-layer-01);
-  border-color: var(--cai-border-strong);
+  background: var(--cai-surface);
+  border-color: var(--cai-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -222,8 +222,8 @@
   display: grid;
   gap: var(--cai-space-05);
   align-content: start;
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
   padding: var(--cai-space-06);
 }
 
@@ -290,11 +290,11 @@
    Example form, guidance links, fit lists
    -------------------------------------------------------------------------- */
 
-/* On layer-02, so the fields (input-bg, a raised layer) read as fields */
+/* On surface-muted, so the fields (input-bg, a raised layer) read as fields */
 .landing-try {
   padding: var(--cai-space-06);
-  background: var(--cai-layer-02);
-  border: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface-muted);
+  border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-lg);
   box-shadow: var(--cai-shadow-sm);
 }
@@ -314,9 +314,9 @@
   max-inline-size: min(90vw, 32rem);
   margin: auto;
   padding: var(--cai-space-05) var(--cai-space-06);
-  background: var(--cai-layer-01);
+  background: var(--cai-surface);
   color: var(--cai-text-primary);
-  border: 2px solid var(--cai-border-strong);
+  border: 2px solid var(--cai-outline);
   border-radius: var(--cai-radius-md);
   box-shadow: var(--cai-shadow-lg);
 }

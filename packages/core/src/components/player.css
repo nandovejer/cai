@@ -7,15 +7,15 @@
 
 
 .cai-player {
-  background: var(--cai-layer-03);
-  border: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface-strong);
+  border: 1px solid var(--cai-divider);
   overflow: hidden;
 }
 
 .cai-player-media-wrap {
   position: relative;
   width: 100%;
-  background: var(--cai-bg-media);
+  background: var(--cai-surface-media);
   cursor: pointer;
   line-height: 0;
 }
@@ -45,7 +45,7 @@
 .cai-play-icon {
   width: 56px;
   height: 56px;
-  color: var(--cai-text-on-color);
+  color: var(--cai-text-on-fill);
   filter: drop-shadow(var(--cai-shadow-icon));
   opacity: 0.9;
 }
@@ -55,8 +55,8 @@
   flex-direction: column;
   gap: var(--cai-space-02);
   padding: var(--cai-space-03) var(--cai-space-04);
-  background: var(--cai-layer-03);
-  border-top: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface-strong);
+  border-top: 1px solid var(--cai-divider);
 }
 
 .cai-player-controls--audio {
@@ -104,7 +104,7 @@
   padding: 0;
   background: transparent;
   border: none;
-  color: var(--cai-icon-primary);
+  color: var(--cai-text-primary);
   cursor: pointer;
   border-radius: var(--cai-radius-sm);
   transition: background var(--cai-duration-fast),
@@ -113,12 +113,12 @@
 }
 
 .cai-player-btn:hover {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
   color: var(--cai-brand-primary);
 }
 
 .cai-player-btn:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 1px;
 }
 
@@ -159,8 +159,8 @@
   background: linear-gradient(
     to right,
     var(--cai-brand-primary) var(--cai-seek),
-    var(--cai-bg-ui-active) var(--cai-seek) var(--cai-buf),
-    var(--cai-border-subtle) var(--cai-buf)
+    var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
+    var(--cai-divider) var(--cai-buf)
   );
 }
 
@@ -170,8 +170,8 @@
   background: linear-gradient(
     to right,
     var(--cai-brand-primary) var(--cai-seek),
-    var(--cai-bg-ui-active) var(--cai-seek) var(--cai-buf),
-    var(--cai-border-subtle) var(--cai-buf)
+    var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
+    var(--cai-divider) var(--cai-buf)
   );
 }
 
@@ -180,8 +180,8 @@
   background: linear-gradient(
     to left,
     var(--cai-brand-primary) var(--cai-seek),
-    var(--cai-bg-ui-active) var(--cai-seek) var(--cai-buf),
-    var(--cai-border-subtle) var(--cai-buf)
+    var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
+    var(--cai-divider) var(--cai-buf)
   );
 }
 
@@ -189,8 +189,8 @@
   background: linear-gradient(
     to left,
     var(--cai-brand-primary) var(--cai-seek),
-    var(--cai-bg-ui-active) var(--cai-seek) var(--cai-buf),
-    var(--cai-border-subtle) var(--cai-buf)
+    var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
+    var(--cai-divider) var(--cai-buf)
   );
 }
 
@@ -213,7 +213,7 @@
 }
 
 .cai-player-seekbar:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 

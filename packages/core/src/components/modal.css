@@ -10,9 +10,9 @@
    layer, the centering (margin: auto), the inert page behind it, the focus
    trap, Escape and focus restoration. CSS only draws the surface. */
 .cai-modal {
-  background: var(--cai-bg-ui);
+  background: var(--cai-surface);
   color: var(--cai-text-primary);
-  border: 1px solid var(--cai-border-subtle);
+  border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-lg);
   box-shadow: var(--cai-shadow-lg);
   padding: var(--cai-space-08);
@@ -26,7 +26,7 @@
 }
 
 .cai-modal::backdrop {
-  background: var(--cai-bg-overlay);
+  background: var(--cai-scrim);
   backdrop-filter: blur(2px);
   animation: cai-fade-in var(--cai-duration-fast) ease-out;
 }
@@ -35,7 +35,7 @@
 .cai-modal__header {
   margin-bottom: var(--cai-space-06);
   padding-bottom: var(--cai-space-04);
-  border-bottom: 1px solid var(--cai-border-subtle);
+  border-bottom: 1px solid var(--cai-divider);
 }
 
 .cai-modal__title {
@@ -66,7 +66,7 @@
 }
 
 .cai-modal__close:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -81,7 +81,7 @@
   gap: var(--cai-space-04);
   justify-content: flex-end;
   padding-top: var(--cai-space-04);
-  border-top: 1px solid var(--cai-border-subtle);
+  border-top: 1px solid var(--cai-divider);
 }
 
 @keyframes cai-fade-in {

@@ -35,7 +35,7 @@ test.describe('Adoption levels', () => {
 
     expect(failed).toEqual([]);
     expect(warnings).toEqual([]);
-    expect(await cssVar(page, '--cai-bg-page')).not.toBe('');
+    expect(await cssVar(page, '--cai-surface-page')).not.toBe('');
     // Core-only settings must not leak into the tokens layer
     expect(await cssVar(page, '--cai-z-modal')).toBe('');
     // The one bundled font (ET Book) is declared and its file loads

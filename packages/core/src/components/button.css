@@ -26,7 +26,7 @@
 }
 
 .cai-btn:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -50,7 +50,7 @@
 /* Variants */
 .cai-btn--primary {
   background: var(--cai-brand-fill);
-  color: var(--cai-text-on-color);
+  color: var(--cai-text-on-fill);
 }
 .cai-btn--primary:hover {
   background: var(--cai-brand-fill-hover);
@@ -60,14 +60,13 @@
 }
 
 .cai-btn--secondary {
-  background: var(--cai-layer-03);
+  background: var(--cai-surface-strong);
   color: var(--cai-text-primary);
 }
-/* --cai-text-on-color, not --cai-text-inverse: the inverse text turns dark in
-   dark mode and fell to 3.6:1 on --cai-border-strong */
+/* White text on the outline colour in every mode (4.5:1, check:contrast) */
 .cai-btn--secondary:hover {
-  background: var(--cai-border-strong);
-  color: var(--cai-text-on-color);
+  background: var(--cai-outline);
+  color: var(--cai-text-on-fill);
 }
 
 .cai-btn--ghost {
@@ -89,7 +88,7 @@
 
 .cai-btn--danger {
   background: var(--cai-color-danger-fill);
-  color: var(--cai-text-on-color);
+  color: var(--cai-text-on-fill);
 }
 .cai-btn--danger:hover {
   filter: brightness(0.88);

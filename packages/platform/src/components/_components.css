@@ -14,7 +14,7 @@
 	inset-inline-start: var(--cai-space-04);
 	z-index: var(--cai-z-toast);
 	background: var(--cai-brand-fill);
-	color: var(--cai-text-on-color);
+	color: var(--cai-text-on-fill);
 	padding: var(--cai-space-03) var(--cai-space-04);
 	text-decoration: none;
 	transform: translateY(-200%);
@@ -28,7 +28,7 @@
 .cai-platform-page--gradient {
 	background:
 		radial-gradient(circle at top left, var(--cai-brand-subtle), transparent 28%),
-		linear-gradient(180deg, var(--cai-bg-page) 0%, var(--cai-layer-02) 100%);
+		linear-gradient(180deg, var(--cai-surface-page) 0%, var(--cai-surface-muted) 100%);
 }
 
 .cai-platform-main {
@@ -86,14 +86,14 @@
 	justify-content: space-between;
 	gap: var(--cai-space-05);
 	flex-wrap: wrap;
-	border-top: 1px solid var(--cai-border-subtle);
+	border-top: 1px solid var(--cai-divider);
 	padding-top: var(--cai-space-06);
 	padding-bottom: var(--cai-space-08);
 }
 
 .cai-platform-command-block {
-	background: var(--cai-layer-03);
-	border: 1px solid var(--cai-border-subtle);
+	background: var(--cai-surface-strong);
+	border: 1px solid var(--cai-divider);
 	padding: var(--cai-space-05) var(--cai-space-06);
 	margin-bottom: var(--cai-space-06);
 	display: flex;
@@ -103,7 +103,7 @@
 	flex-wrap: wrap;
 }
 
-/* --cai-border-interactive falls to 2.3:1 on --cai-layer-03 in dark mode */
+/* --cai-focus-ring falls to 2.3:1 on --cai-surface-strong in dark mode */
 .cai-platform-command-block .cai-copy-btn:focus-visible {
 	outline-color: var(--cai-text-primary);
 }
@@ -129,7 +129,7 @@
 	display: block;
 	aspect-ratio: 16 / 9;
 	overflow: hidden;
-	background-color: var(--cai-layer-03);
+	background-color: var(--cai-surface-strong);
 	background-image: image-set(
 		url("../placeholders/placeholder-16x9-1920.avif") type("image/avif"),
 		url("../placeholders/placeholder-16x9-1920.webp") type("image/webp"),
@@ -244,11 +244,11 @@
 }
 
 /* A flat surface behind the image: if it fails, the browser draws the alt
-   text here, at the contrast of text on --cai-layer-03 (red line 7). A
+   text here, at the contrast of text on --cai-surface-strong (red line 7). A
    transparent PNG or SVG shows on this surface too. */
 .cai-platform-image :where(img) {
 	object-fit: cover;
-	background-color: var(--cai-layer-03);
+	background-color: var(--cai-surface-strong);
 	color: var(--cai-text-primary);
 }
 

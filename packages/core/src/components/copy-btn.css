@@ -15,7 +15,7 @@
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   background: transparent;
-  border: 1px solid var(--cai-border-subtle);
+  border: 1px solid var(--cai-divider);
   color: var(--cai-text-secondary);
   cursor: pointer;
   transition: background var(--cai-duration-fast),
@@ -30,7 +30,7 @@
 }
 
 /* Text stays primary on hover: the brand blue on brand-subtle falls under
-   4.5:1 on the dark layer-02 and layer-03 surfaces (RL-7) */
+   4.5:1 on the dark surface-muted and surface-strong surfaces (RL-7) */
 .cai-copy-btn:hover {
   background: var(--cai-brand-subtle);
   color: var(--cai-text-primary);
@@ -38,7 +38,7 @@
 }
 
 .cai-copy-btn:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 

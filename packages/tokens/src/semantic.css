@@ -8,52 +8,50 @@
      <html data-theme="high-contrast"> → high contrast
    Custom themes (packages/core/src/themes/*.css) override these under their
    own [data-theme="<name>"] scope and use data-mode for luminosity variants.
+
+   Surfaces, the same model in every mode: the page and the surfaces on it
+   (cards, dialogs, fields) are one flat face. Two tones step away from it:
+   --cai-surface-muted (code, wells) one step, --cai-surface-strong (table
+   headers, tags, tooltips, toasts) two. Hover takes the muted step and
+   pressed the strong one. Light steps darker from white; dark steps
+   lighter from gray-90, and keeps gray-100 for the sidebar.
    -------------------------------------------------------------------------- */
 
 :root,
 [data-theme="light"] {
-  /* Backgrounds */
-  --cai-bg-page: var(--cai-gray-10);
-  --cai-bg-ui: #fff;
-  --cai-bg-ui-hover: var(--cai-gray-10);
-  --cai-bg-ui-active: var(--cai-gray-20);
-  --cai-bg-overlay: rgba(13, 14, 17, 0.5);
-  --cai-bg-media: #000; /* behind video: letterboxing, the same in every mode */
+  /* Surfaces */
+  --cai-surface-page: #fff;
+  --cai-surface: #fff;
+  --cai-surface-hover: var(--cai-gray-10);
+  --cai-surface-pressed: var(--cai-gray-20);
+  --cai-surface-muted: var(--cai-gray-10);
+  --cai-surface-strong: var(--cai-gray-20);
+  --cai-scrim: rgba(13, 14, 17, 0.6); /* gray-100 */
+  --cai-surface-media: #000; /* behind video: letterboxing, the same in every mode */
 
-  /* Text */
+  /* Text (icons use the same tokens) */
   --cai-text-primary: var(--cai-gray-100);
   --cai-text-secondary: var(--cai-gray-70);
-  --cai-text-placeholder: var(--cai-gray-60); /* 5:1 on white (WCAG 1.4.3) */
+  --cai-text-muted: var(--cai-gray-60); /* placeholders and hints: 4.5:1 or more on white (WCAG 1.4.3) */
   --cai-text-disabled: var(--cai-gray-60);
-  --cai-text-on-color: #fff;
-  --cai-text-inverse: #fff;
+  --cai-text-on-fill: #fff;
 
-  /* Borders */
-  --cai-border-subtle: var(--cai-gray-20);
-  --cai-border-strong: var(--cai-gray-60);
-  --cai-border-interactive: var(--cai-blue-60);
+  /* Lines */
+  --cai-divider: var(--cai-gray-20);
+  --cai-outline: var(--cai-gray-60);
+  --cai-focus-ring: var(--cai-blue-60);
 
   /* Brand */
   --cai-brand-primary: var(--cai-blue-60);
   --cai-brand-hover: var(--cai-blue-70);
   --cai-brand-active: var(--cai-blue-80);
   --cai-brand-subtle: var(--cai-blue-10);
-  /* Solid brand surfaces that carry --cai-text-on-color (primary button,
+  /* Solid brand surfaces that carry --cai-text-on-fill (primary button,
      badge). Same as the brand in light; darker than it in dark mode, where
      the brand is light enough to be read as text on dark surfaces. */
   --cai-brand-fill: var(--cai-brand-primary);
   --cai-brand-fill-hover: var(--cai-brand-hover);
   --cai-brand-fill-active: var(--cai-brand-active);
-
-  /* Icons */
-  --cai-icon-primary: var(--cai-gray-100);
-  --cai-icon-secondary: var(--cai-gray-70);
-  --cai-icon-inverse: #fff;
-
-  /* Layers (stacked surfaces) */
-  --cai-layer-01: #fff;
-  --cai-layer-02: var(--cai-gray-10);
-  --cai-layer-03: var(--cai-gray-20);
 
   /* Sidebar */
   --cai-sidebar-bg: var(--cai-gray-100);
@@ -67,11 +65,11 @@
   --cai-sidebar-logo-bg: var(--cai-blue-60);
 
   /* Status */
-  --cai-color-success: var(--cai-green-70); /* 4.5:1 or more on every surface, layer-03 included (green-60 fell to 3.8:1) */
+  --cai-color-success: var(--cai-green-70); /* 4.5:1 or more on every surface, surface-strong included */
   --cai-color-success-bg: var(--cai-green-10);
-  --cai-color-danger: var(--cai-red-70); /* layer-03 included (red-60 fell to 3.8:1) */
+  --cai-color-danger: var(--cai-red-70);
   --cai-color-danger-bg: var(--cai-red-10);
-  --cai-color-danger-fill: var(--cai-red-60); /* the danger button keeps its red: white text 5:1 */
+  --cai-color-danger-fill: var(--cai-red-60); /* the danger button keeps its red under white text */
   --cai-color-warning: var(--cai-yellow-60);
   --cai-color-warning-accent: var(--cai-yellow-30);
   --cai-color-warning-bg: var(--cai-yellow-10);
@@ -80,7 +78,7 @@
 
   /* Inputs */
   --cai-input-bg: #fff;
-  --cai-input-border: var(--cai-gray-60); /* 3:1 or more on every surface, layer-03 included (gray-50 fell to 2.5:1) */
+  --cai-input-border: var(--cai-gray-60); /* 3:1 or more on every surface, surface-strong included */
 
   /* Extended */
   --cai-color-teal: var(--cai-teal-70);
@@ -101,81 +99,71 @@
    invalidating the whole rule. */
 [data-theme="dark"],
 :is(:root:has(input[name="cai-theme"][value="dark"]:checked)) {
-  /* Backgrounds */
-  --cai-bg-page: var(--cai-gray-100);
-  --cai-bg-ui: var(--cai-gray-90);
-  --cai-bg-ui-hover: var(--cai-gray-80);
-  --cai-bg-ui-active: var(--cai-gray-70);
-  --cai-bg-overlay: rgba(0, 0, 0, 0.65);
-  --cai-bg-media: #000; /* behind video: letterboxing, the same in every mode */
+  /* Surfaces */
+  --cai-surface-page: var(--cai-gray-90);
+  --cai-surface: var(--cai-gray-90);
+  --cai-surface-hover: var(--cai-gray-80);
+  --cai-surface-pressed: var(--cai-gray-70);
+  --cai-surface-muted: var(--cai-gray-80);
+  --cai-surface-strong: var(--cai-gray-70);
+  --cai-scrim: rgba(0, 0, 0, 0.7);
+  --cai-surface-media: #000; /* behind video: letterboxing, the same in every mode */
 
-  /* Text */
+  /* Text (icons use the same tokens) */
   --cai-text-primary: var(--cai-gray-10);
   --cai-text-secondary: var(--cai-gray-30);
-  --cai-text-placeholder: var(--cai-gray-50); /* 4.6:1 on the input */
-  --cai-text-disabled: var(--cai-gray-40); /* 3.3:1 on layer-03, the deepest surface (gray-50 fell to 2.4:1) */
-  --cai-text-on-color: #fff;
-  --cai-text-inverse: var(--cai-gray-100);
+  --cai-text-muted: var(--cai-gray-50);
+  --cai-text-disabled: var(--cai-gray-40); /* 3:1 or more on surface-strong, the lightest surface */
+  --cai-text-on-fill: #fff;
 
-  /* Borders */
-  --cai-border-subtle: var(--cai-gray-80);
-  --cai-border-strong: var(--cai-gray-60);
-  --cai-border-interactive: var(--cai-blue-40); /* focus ring: 3:1 on every dark surface, layer-03 included (blue-50 fell to 2.3:1) */
+  /* Lines */
+  --cai-divider: var(--cai-gray-80);
+  --cai-outline: var(--cai-gray-60);
+  --cai-focus-ring: var(--cai-blue-40); /* 3:1 or more on every dark surface */
 
   /* Brand */
-  /* blue-40: 4.5:1 or more as text on every dark surface, brand-subtle
-     included (blue-50 fell to 3.9:1 on it) */
+  /* blue-40: 4.5:1 or more as text on every dark surface */
   --cai-brand-primary: var(--cai-blue-40);
   --cai-brand-hover: var(--cai-blue-30);
   --cai-brand-active: var(--cai-blue-20);
-  --cai-brand-subtle: rgba(32, 143, 255, 0.12);
-  --cai-brand-fill: var(--cai-blue-60); /* white text 5:1 */
+  --cai-brand-subtle: rgba(32, 143, 255, 0.14); /* blue-50 */
+  --cai-brand-fill: var(--cai-blue-60); /* white text 4.5:1 or more */
   --cai-brand-fill-hover: var(--cai-blue-70);
   --cai-brand-fill-active: var(--cai-blue-80);
 
-  /* Icons */
-  --cai-icon-primary: var(--cai-gray-10);
-  --cai-icon-secondary: var(--cai-gray-30);
-  --cai-icon-inverse: var(--cai-gray-100);
-
-  /* Layers */
-  --cai-layer-01: var(--cai-gray-90);
-  --cai-layer-02: var(--cai-gray-80);
-  --cai-layer-03: var(--cai-gray-70);
-
   /* Sidebar */
-  --cai-sidebar-bg: #0d0d0d;
+  --cai-sidebar-bg: var(--cai-gray-100);
   --cai-sidebar-text: var(--cai-gray-40);
   --cai-sidebar-text-hover: #fff;
   --cai-sidebar-hover: var(--cai-gray-90);
   --cai-sidebar-active-bg: var(--cai-blue-60);
   --cai-sidebar-active-text: #fff;
-  --cai-sidebar-border: var(--cai-gray-90);
-  --cai-sidebar-label: var(--cai-gray-50); /* 5.8:1 (gray-60 gave 3.9:1) */
+  --cai-sidebar-border: var(--cai-gray-80);
+  --cai-sidebar-label: var(--cai-gray-50);
   --cai-sidebar-logo-bg: var(--cai-blue-60);
 
   /* Status */
-  --cai-color-success: var(--cai-green-20); /* 4.5:1 on its tint over layer-03, the lightest dark surface */
-  --cai-color-success-bg: rgba(82, 207, 146, 0.12);
+  --cai-color-success: var(--cai-green-20); /* 4.5:1 on its tint over surface-strong, the lightest dark surface */
+  --cai-color-success-bg: rgba(82, 207, 146, 0.14); /* green-40 */
   --cai-color-danger: var(--cai-red-20);
-  --cai-color-danger-bg: rgba(239, 79, 81, 0.12);
-  --cai-color-danger-fill: var(--cai-red-60); /* white text 4.8:1 */
+  --cai-color-danger-bg: rgba(239, 79, 81, 0.14); /* red-50 */
+  --cai-color-danger-fill: var(--cai-red-60); /* white text 4.5:1 or more */
   --cai-color-warning: var(--cai-yellow-20);
   --cai-color-warning-accent: var(--cai-yellow-20);
-  --cai-color-warning-bg: rgba(255, 205, 81, 0.12);
+  --cai-color-warning-bg: rgba(255, 205, 81, 0.14); /* yellow-30 */
   --cai-color-info: var(--cai-blue-20);
-  --cai-color-info-bg: rgba(119, 185, 255, 0.12);
+  --cai-color-info-bg: rgba(119, 185, 255, 0.14); /* blue-40 */
 
   /* Inputs */
   --cai-input-bg: var(--cai-gray-90);
-  --cai-input-border: var(--cai-gray-40); /* 3:1 or more on every surface, layer-03 included (gray-60 fell to 1.6:1) */
+  --cai-input-border: var(--cai-gray-40); /* 3:1 or more on every surface, surface-strong included */
 
   /* Extended */
   --cai-color-teal: var(--cai-teal-20);
-  --cai-color-teal-bg: rgba(98, 201, 181, 0.12);
-  --cai-color-purple: var(--cai-purple-20); /* 4.5:1 on purple-bg over a hovered row (purple-40 fell to 4.0:1; there is no purple-30) */
-  --cai-color-purple-bg: rgba(202, 154, 255, 0.12);
-  --cai-color-code: var(--cai-purple-20); /* 4.5:1 on layer-03 (purple-40 fell to 3.3:1) */
+  --cai-color-teal-bg: rgba(98, 201, 181, 0.14); /* teal-40 */
+  --cai-color-purple: var(--cai-purple-20);
+  --cai-color-purple-bg: rgba(202, 154, 255, 0.14); /* purple-40 */
+  --cai-color-code: var(--cai-purple-20); /* 4.5:1 on surface-strong */
 }
 
 /* -------------------------------------------------------------------------
@@ -185,26 +173,27 @@
 
 [data-theme="high-contrast"],
 :is(:root:has(input[name="cai-theme"][value="high-contrast"]:checked)) {
-  /* Backgrounds */
-  --cai-bg-page: #fff;
-  --cai-bg-ui: #fff;
-  --cai-bg-ui-hover: var(--cai-gray-10);
-  --cai-bg-ui-active: var(--cai-gray-20);
-  --cai-bg-overlay: rgba(0, 0, 0, 0.5);
-  --cai-bg-media: #000; /* behind video: letterboxing, the same in every mode */
+  /* Surfaces */
+  --cai-surface-page: #fff;
+  --cai-surface: #fff;
+  --cai-surface-hover: var(--cai-gray-10);
+  --cai-surface-pressed: var(--cai-gray-20);
+  --cai-surface-muted: var(--cai-gray-10);
+  --cai-surface-strong: var(--cai-gray-20);
+  --cai-scrim: rgba(0, 0, 0, 0.6);
+  --cai-surface-media: #000; /* behind video: letterboxing, the same in every mode */
 
-  /* Text */
+  /* Text (icons use the same tokens) */
   --cai-text-primary: #000;
   --cai-text-secondary: var(--cai-gray-100);
-  --cai-text-placeholder: var(--cai-gray-70);
+  --cai-text-muted: var(--cai-gray-70);
   --cai-text-disabled: var(--cai-gray-60);
-  --cai-text-on-color: #fff;
-  --cai-text-inverse: #fff;
+  --cai-text-on-fill: #fff;
 
-  /* Borders */
-  --cai-border-subtle: var(--cai-gray-70);
-  --cai-border-strong: #000;
-  --cai-border-interactive: #000;
+  /* Lines */
+  --cai-divider: var(--cai-gray-70);
+  --cai-outline: #000;
+  --cai-focus-ring: #000;
 
   /* Brand */
   --cai-brand-primary: var(--cai-blue-80);
@@ -214,16 +203,6 @@
   --cai-brand-fill: var(--cai-brand-primary);
   --cai-brand-fill-hover: var(--cai-brand-hover);
   --cai-brand-fill-active: var(--cai-brand-active);
-
-  /* Icons */
-  --cai-icon-primary: #000;
-  --cai-icon-secondary: var(--cai-gray-100);
-  --cai-icon-inverse: #fff;
-
-  /* Layers */
-  --cai-layer-01: #fff;
-  --cai-layer-02: var(--cai-gray-10);
-  --cai-layer-03: var(--cai-gray-20);
 
   /* Sidebar */
   --cai-sidebar-bg: #000;
@@ -237,7 +216,7 @@
   --cai-sidebar-logo-bg: #fff;
 
   /* Status */
-  --cai-color-success: var(--cai-green-70); /* 4.5:1 or more on layer-03 too */
+  --cai-color-success: var(--cai-green-70); /* 4.5:1 or more on surface-strong too */
   --cai-color-success-bg: var(--cai-green-10);
   --cai-color-danger: var(--cai-red-70);
   --cai-color-danger-bg: var(--cai-red-10);

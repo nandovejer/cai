@@ -9,7 +9,7 @@
 .cai-tabs {
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
   display: flex;
-  border-bottom: 2px solid var(--cai-border-subtle);
+  border-bottom: 2px solid var(--cai-divider);
   margin-bottom: var(--cai-space-05);
   overflow-x: auto;
   scrollbar-width: none; /* Firefox */
@@ -40,13 +40,13 @@
 }
 
 .cai-tab:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: -2px;
 }
 
 .cai-tabpanel:focus-visible,
 [role="tabpanel"]:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 

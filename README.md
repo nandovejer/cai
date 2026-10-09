@@ -282,7 +282,7 @@ Components must use semantic tokens:
 /* Correct */
 color: var(--cai-text-primary);
 background: var(--cai-brand-primary);
-border-color: var(--cai-border-subtle);
+border-color: var(--cai-divider);
 
 /* Incorrect — breaks theming */
 color: var(--cai-gray-100);

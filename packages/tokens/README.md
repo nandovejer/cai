@@ -52,8 +52,8 @@ All tokens are available as CSS custom properties (CSS variables) scoped to `:ro
 
 /* Semantic (light theme by default) */
 --cai-text-primary
---cai-bg-ui
---cai-border-subtle
+--cai-surface
+--cai-divider
 --cai-brand-primary
 ```
 

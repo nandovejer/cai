@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Section
-description: A titled band of content with consistent spacing.
+description: Groups the blocks of one part of a page, with the same space between them everywhere.
 area: platform
 order: 3
 group: patterns
@@ -27,20 +27,60 @@ toc: h2,h3
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-section" aria-label="Copy the section markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Section markup"><code id="code-section">&lt;section class=&quot;cai-platform-section&quot; aria-labelledby=&quot;team-title&quot;&gt;
+  &lt;h2 id=&quot;team-title&quot;&gt;Team&lt;/h2&gt;
+  &lt;p&gt;Eight members, two pending invites.&lt;/p&gt;
+  &lt;div class=&quot;cai-platform-actions&quot;&gt;…&lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers: one class, one gap.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Section class" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-platform-section</code></div></td><td data-label="Effect"><div>A one-column grid with 16 px (<code>--cai-space-md</code>) between its children</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A one-column grid with the section gap token between its children. Use it on a <code>&lt;section&gt;</code> when the group has its own heading, or on a <code>&lt;div&gt;</code> when it does not.</p>
+            <p>CSS grid from <code>@cai-ds/platform</code>. No JavaScript.</p>
+            <ul>
+              <li>Inside <code>.cai-platform-main</code>, sections are 64 px apart; inside a section, blocks are 16 px apart.</li>
+              <li>Use it on a <code>&lt;section&gt;</code> when the group has its own heading, or on a <code>&lt;div&gt;</code> when it does not.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the section is CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>No interaction. A <code>&lt;section&gt;</code> with an accessible name becomes a region landmark; one without a name does not.</p>
+            <p>The section has no interaction.</p>
+            <ul>
+              <li>A <code>&lt;section&gt;</code> named with <code>aria-labelledby</code> becomes a region landmark; one without a name does not.</li>
+              <li>Name only the sections people would jump to, or the landmark list gets long.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To group related blocks inside the main area with the same vertical space between them.</p>
+            <p>Use a section to group related blocks in the main area, with the same space between them on every page.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For space between paragraphs of running text: the text styles already handle that. Not for side-by-side layout: use the grid object or the feature grid.</p>
+            <p>Do not use it to space the paragraphs of running text: the text styles already do.</p>
+            <ul>
+              <li>For blocks side by side, use the <a href="/docs/components/layout/">grid object</a> or the <a href="/docs/platform/feature-grid/">feature grid</a>.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Give each <code>&lt;section&gt;</code> a heading, and name it with <code>aria-labelledby</code> pointing at that heading.</p>
+            <p>Start each section with a heading that says what the section is for.</p>
+            <ul>
+              <li>Use the next heading level after the page title: <code>&lt;h2&gt;</code> under the <code>&lt;h1&gt;</code>.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Platform
-description: Page patterns built on core: shell, header, sections, footer and more, and when to use platform at all.
+description: Page patterns built on core, from the page shell to the site search, and how to tell whether you need them.
 area: platform
 order: 0
 lead: false
@@ -8,7 +8,11 @@ generate: gallery
 -->
     <p class="docs-eyebrow">Level 3 · @cai-ds/platform</p>
 
-    <p class="docs-lead">Page-level patterns built on core: the page shell, skip link, page header, sections, action groups, feature grids, command blocks, the footer and an image frame. <a href="/">The home page</a> is built with them. Every class starts with <code class="cai-code-inline">.cai-platform-</code> and uses semantic tokens only.</p>
+    <p class="docs-lead">Page patterns built on core, from the page shell to the site search, and how to tell whether you need them.</p>
+    <ul>
+      <li>Every class starts with <code class="cai-code-inline">.cai-platform-</code> and uses semantic tokens only.</li>
+      <li><a href="/">The CAI home page</a> and these docs are built with them.</li>
+    </ul>
 
     <div class="docs-decision-grid">
         <div class="docs-decision-card">
@@ -16,7 +20,7 @@ generate: gallery
           <ul>
             <li>You build a site or an app with a header, a main area and a footer on every page.</li>
             <li>You want the same spacing and layout across many pages.</li>
-            <li>You want a skip link, feature grids and action groups without writing the layout yourself.</li>
+            <li>You want a skip link, a page header, feature grids and a site search without writing them yourself.</li>
           </ul>
         </div>
         <div class="docs-decision-card">
@@ -31,7 +35,7 @@ generate: gallery
 
     <div class="docs-prose">
         <h2 id="your-own-components-on-top" class="docs-prose__title">Your own components on top</h2>
-        <p>Style what you add with semantic tokens too, never with the primitive scales, so it follows the color mode and any <a href="/docs/tokens/modes/">custom theme</a>.</p>
+        <p>Style what you add with semantic tokens too, so it follows the color mode and any <a href="/docs/tokens/modes/">custom theme</a>.</p>
         <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Semantic tokens in an app-level component"><code>.my-panel {
   background: var(--cai-surface);
   border: 1px solid var(--cai-divider);
@@ -43,6 +47,6 @@ generate: gallery
   border-color: var(--cai-outline);
 }
 
-/* Avoid primitive scales in app-level components */
-/* bad: color: var(--cai-gray-100); */</code></pre>
+/* Not a primitive colour: it would stay the same in dark mode */
+/* color: var(--cai-gray-100); */</code></pre>
       </div>

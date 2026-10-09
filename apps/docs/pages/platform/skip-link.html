@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Skip link
-description: Lets keyboard users jump to the main content.
+description: Lets keyboard users jump past the header to the main content.
 area: platform
 order: 5
 group: patterns
@@ -23,21 +23,59 @@ toc: h2,h3
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Skip link markup"><code>&lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;</code></pre>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-skip-link" aria-label="Copy the skip link markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Skip link markup"><code id="code-skip-link">&lt;body&gt;
+  &lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+  &lt;header&gt;…&lt;/header&gt;
+  &lt;main id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;…&lt;/main&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no variants: one class on one link.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Skip link class" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-platform-skip-link</code></div></td><td data-label="Effect"><div>Off screen until it has focus, then fixed at the top start corner, in the brand fill, above everything</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A normal link to the <code>id</code> of <code>&lt;main&gt;</code>, first in <code>&lt;body&gt;</code>. It sits off screen and slides in when it receives focus. The browser does the jump; no JavaScript.</p>
+            <p>A normal link to the <code>id</code> of <code>&lt;main&gt;</code>, first in <code>&lt;body&gt;</code>, styled by <code>@cai-ds/platform</code>.</p>
+            <ul>
+              <li>It slides in when it receives focus, over <code>--cai-duration-fast</code>; under reduced motion it appears at once.</li>
+              <li>The browser does the jump. <code>tabindex="-1"</code> on <code>&lt;main&gt;</code> lets it take the focus, so the next Tab starts inside it in every browser.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the skip link is a link and CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Tab once from the top of the page to reveal it; Enter follows it and moves focus to the main area. Under reduced motion it appears without sliding.</p>
+            <p>Press Tab once from the top of the page and the link appears; Enter follows it to the main content.</p>
+            <ul>
+              <li>It must be the first focusable element of the page.</li>
+              <li>No ARIA: its text is its name.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>On every page that has navigation or a header before the main content.</p>
+            <p>Put a skip link on every page that has a header or navigation before the main content.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>As the only way to reach the content: the page still needs a logical heading order and landmarks.</p>
+            <p>Do not rely on it alone: the page still needs landmarks and a logical heading order.</p>
+            <ul>
+              <li>Do not add a list of skip links to every section: one to the main content is enough.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Say where it goes: "Skip to main content". Do not add other text.</p>
+            <p>Say where it goes: "Skip to main content".</p>
+            <ul>
+              <li>Use the same text on every page.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

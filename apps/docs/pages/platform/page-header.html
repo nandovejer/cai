@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Page header
-description: Title, lead and eyebrow at the top of a page.
+description: Gives a page its title and one sentence about what it is for.
 area: platform
 order: 2
 group: patterns
@@ -26,24 +26,60 @@ toc: h2,h3
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page header markup"><code>&lt;div class=&quot;cai-platform-page-header&quot;&gt;
-  &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Page title&lt;/h1&gt;
-  &lt;p class=&quot;cai-platform-page-header__lead&quot;&gt;A short description of the page.&lt;/p&gt;
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-page-header" aria-label="Copy the page header markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page header markup"><code id="code-page-header">&lt;div class=&quot;cai-platform-page-header&quot;&gt;
+  &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Billing&lt;/h1&gt;
+  &lt;p class=&quot;cai-platform-page-header__lead&quot;&gt;Invoices, payment methods and plan limits for your workspace.&lt;/p&gt;
 &lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers. The lead is optional.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Page header parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-platform-page-header</code></div></td><td data-label="What it does"><div>The block, with 32 px of space below it</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-page-header__title</code></div></td><td data-label="What it does"><div>The title: heading font, 3xl size, light weight; 2xl at 480 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-page-header__lead</code></div></td><td data-label="What it does"><div>One paragraph in the secondary text colour, 600 px wide at most</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A wrapper with a title and an optional lead paragraph. The title is the page's <code>&lt;h1&gt;</code>; the class only changes how it looks.</p>
+            <p>A wrapper with a title and a lead, styled by <code>@cai-ds/platform</code>. No JavaScript.</p>
+            <ul>
+              <li>The classes change the look only. The title must be the page's <code>&lt;h1&gt;</code>.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the page header is HTML and CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>No interaction. The title must be an <code>&lt;h1&gt;</code> so screen reader users can find it from the heading list.</p>
+            <p>The page header has no interaction.</p>
+            <ul>
+              <li>An <code>&lt;h1&gt;</code> title lets screen reader users find the page title from the heading list.</li>
+              <li>Keep it inside <code>&lt;main&gt;</code>, so the skip link lands right before it.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>At the top of a page or a main view, to give its title and one sentence about what it is for.</p>
+            <p>Use a page header at the top of a page or a main view, to give its title and one sentence about what it is for.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For the title of a section inside the page: use a plain heading of the right level. Do not use it twice on one page.</p>
+            <p>Do not use it for a section inside the page: use a plain heading of the right level.</p>
+            <ul>
+              <li>One page header per page.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>The title names the page in a few words, in sentence case. The lead is one sentence, under 25 words, that says what the reader can do here.</p>
+            <p>The title names the page in a few words, in sentence case.</p>
+            <ul>
+              <li>The lead is one sentence, under 25 words, that says what the reader can do here.</li>
+              <li>Match the title to the link that led here and to the start of <code>&lt;title&gt;</code>.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

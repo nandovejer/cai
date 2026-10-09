@@ -1,12 +1,13 @@
 <!-- cai:page
 title: Class reference
-description: Every cai-platform class in one table.
+description: Every cai-platform class, what element it goes on and what it does, in one place.
 area: platform
 order: 11
 group: reference
 files: components/_components.css, components/search.css
 -->
     <div class="docs-block" id="p-reference">
+          <p>Look up a class by name. Each pattern's own page has its markup and guidance.</p>
           <div class="docs-prose">
             <h2 id="page-structure" class="docs-prose__title">Page structure</h2>
             <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Platform classes: page structure">
@@ -22,22 +23,22 @@ files: components/_components.css, components/search.css
               <tr>
                 <td data-label="Class"><div>.cai-platform-page</div></td>
                 <td data-label="Element"><div>&lt;body&gt;</div></td>
-                <td data-label="Description"><div>Root grid (header / 1fr / footer). Sets <code class="cai-code-inline">min-height: 100vh</code>.</div></td>
+                <td data-label="Description"><div>Three rows: header, main (takes the free space), footer. At least the height of the screen.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-page--gradient</div></td>
                 <td data-label="Element"><div>&lt;body&gt;</div></td>
-                <td data-label="Description"><div>Modifier. Adds a radial brand-subtle gradient at the top-left corner. Use on marketing or landing pages.</div></td>
+                <td data-label="Description"><div>Modifier. A soft brand tint in the top corner. For short pages such as a landing page.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-skip-link</div></td>
                 <td data-label="Element"><div>&lt;a&gt;</div></td>
-                <td data-label="Description"><div>Visually hidden until focused. Jumps to <code class="cai-code-inline">#main-content</code>. Required for keyboard accessibility.</div></td>
+                <td data-label="Description"><div>Off screen until it has focus. Links to the <code class="cai-code-inline">id</code> of <code class="cai-code-inline">&lt;main&gt;</code>. First in <code class="cai-code-inline">&lt;body&gt;</code> on every page.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-main</div></td>
                 <td data-label="Element"><div>&lt;main&gt;</div></td>
-                <td data-label="Description"><div>Main content area. Grid with <code class="cai-code-inline">gap: --cai-space-3xl</code> between sections. Combine with <code class="cai-code-inline">.o-container</code> for horizontal centering.</div></td>
+                <td data-label="Description"><div>Main content area. Grid with <code class="cai-code-inline">gap: --cai-space-3xl</code> between sections. Combine with <code class="cai-code-inline">.o-container</code> for the content width and padding.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-content</div></td>
@@ -83,7 +84,7 @@ files: components/_components.css, components/search.css
               <tr>
                 <td data-label="Class"><div>.cai-platform-footer</div></td>
                 <td data-label="Element"><div>&lt;footer&gt;</div></td>
-                <td data-label="Description"><div>Flex row (space-between). Includes a top border and vertical padding. Collapses to column on mobile. Combine with <code class="cai-code-inline">.o-container</code>.</div></td>
+                <td data-label="Description"><div>Flex row (space-between). Includes a top border and vertical padding. Stacks at 768 px and below. Combine with <code class="cai-code-inline">.o-container</code>.</div></td>
               </tr>
             </tbody>
           </table>
@@ -104,17 +105,17 @@ files: components/_components.css, components/search.css
               <tr>
                 <td data-label="Class"><div>.cai-platform-actions</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>Flex row with wrapping and gap for CTA button groups. Collapses to column on mobile &lt;480px.</div></td>
+                <td data-label="Description"><div>Flex row with wrapping and gap for CTA button groups. One per line, full width, at 480 px and below.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-feature-grid</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>2-column grid for feature cards. Collapses to 1 column on mobile. Place <code class="cai-code-inline">.cai-card</code> elements as direct children.</div></td>
+                <td data-label="Description"><div>2-column grid for feature cards. One column at 768 px and below. Place <code class="cai-code-inline">.cai-card</code> elements as direct children.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-command-block</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>Installation/CLI command display. Dark background, mono font. Flex row: command on left, copy button on right.</div></td>
+                <td data-label="Description"><div>One shell command on the strong surface: the command, then a copy button, in a row that wraps.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-command-block__cmd</div></td>
@@ -124,7 +125,7 @@ files: components/_components.css, components/search.css
               <tr>
                 <td data-label="Class"><div>.cai-platform-command-block__prefix</div></td>
                 <td data-label="Element"><div>&lt;span&gt;</div></td>
-                <td data-label="Description"><div>Shell prefix character (<code class="cai-code-inline">$</code>, <code class="cai-code-inline">pnpm</code>, etc.). Secondary color, non-selectable.</div></td>
+                <td data-label="Description"><div>The prompt sign, such as <code class="cai-code-inline">$</code>. Secondary colour; it cannot be selected.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-image</div></td>

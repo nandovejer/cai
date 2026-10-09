@@ -123,7 +123,7 @@ test.describe('search: results', () => {
     for (const list of await dialog(page).locator('[data-cai-search-list]').all()) {
       expect(await list.locator('li > a').count()).toBeLessThanOrEqual(8);
     }
-    await expect(status(page)).toHaveText(/^\d+ of \d+ results\. Type more to narrow them\.$/);
+    await expect(status(page)).toHaveText(/^\d+ of \d+ results\. Type more to narrow\.$/);
     await field(page).fill('keyboard tooltip');
     await expect(status(page)).toHaveText('1 result');
     await expect(results(page)).toHaveText(['Keyboard and ARIA, Tooltip › Code']);

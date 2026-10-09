@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Footer
-description: Site footer with project links.
+description: Ends every page with who made the site, its licence and a few secondary links.
 area: platform
 order: 4
 group: patterns
@@ -29,27 +29,61 @@ toc: h2,h3
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Footer markup"><code>&lt;footer class=&quot;cai-platform-footer o-container&quot;&gt;
-  &lt;p&gt;Built with CAI Design System.&lt;/p&gt;
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-footer" aria-label="Copy the footer markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Footer markup"><code id="code-footer">&lt;footer class=&quot;cai-platform-footer o-container&quot;&gt;
+  &lt;p&gt;Acme Inc. · MIT licence&lt;/p&gt;
   &lt;div class=&quot;cai-platform-actions&quot;&gt;
-    &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;
-    &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/docs/&quot;&gt;Docs&lt;/a&gt;
+    &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/status/&quot;&gt;Service status&lt;/a&gt;
+    &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/accessibility/&quot;&gt;Accessibility statement&lt;/a&gt;
   &lt;/div&gt;
 &lt;/footer&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Footer class" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-platform-footer</code></div></td><td data-label="Effect"><div>A rule on top; its children spread along one row, and stack at 768 px and below</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A <code>&lt;footer&gt;</code> with a top border that spreads its children across a row and stacks them below 768 px.</p>
+            <p>A flex row from <code>@cai-ds/platform</code> on a <code>&lt;footer&gt;</code>. No JavaScript.</p>
+            <ul>
+              <li>Add <code>.o-container</code> to line it up with the content.</li>
+              <li>Group the links in an <a href="/docs/platform/actions/">action group</a>.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the footer is HTML and CSS. A <a href="/docs/components/mode-switcher/">color mode switcher</a> inside it keeps working as radios.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>No interaction of its own. As a direct child of <code>&lt;body&gt;</code> the native <code>&lt;footer&gt;</code> is the contentinfo landmark.</p>
+            <p>The footer has no interaction of its own; its links keep theirs.</p>
+            <ul>
+              <li>A <code>&lt;footer&gt;</code> that is a direct child of <code>&lt;body&gt;</code> is the contentinfo landmark.</li>
+              <li>Keep the links in the same order on every page.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>At the end of the page, for ownership, licence and a few secondary links.</p>
+            <p>Use a footer at the end of every page, for who made the site, its licence and a few secondary links.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For the main navigation or for content readers need to complete a task: put those in the header or the main area.</p>
+            <p>Do not put the main navigation, or anything needed to finish a task, in the footer.</p>
+            <ul>
+              <li>Main navigation goes in the header or a <a href="/docs/components/sidebar/">sidebar</a>.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Keep it short: who made it, the licence and two or three links whose text says where they go.</p>
+            <p>Keep it short: who made it, the licence, and two to four links.</p>
+            <ul>
+              <li>Each link says where it goes: "Accessibility statement", not "Legal".</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

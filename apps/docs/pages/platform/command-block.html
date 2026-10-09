@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Command block
-description: A shell command with a copy button.
+description: Shows one shell command with a button that copies it.
 area: platform
 order: 7
 group: patterns
@@ -26,27 +26,62 @@ toc: h2,h3
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Command block with a copy button markup"><code>&lt;div class=&quot;cai-platform-command-block&quot;&gt;
-  &lt;code class=&quot;cai-platform-command-block__cmd&quot;&gt;
-    &lt;span class=&quot;cai-platform-command-block__prefix&quot;&gt;$&lt;/span&gt;
-    pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform
-  &lt;/code&gt;
-  &lt;button class=&quot;cai-copy-btn&quot; data-copy=&quot;pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform&quot; aria-label=&quot;Copy command&quot;&gt;Copy&lt;/button&gt;
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-command-block" aria-label="Copy the command block markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Command block markup"><code id="code-command-block">&lt;div class=&quot;cai-platform-command-block&quot;&gt;
+  &lt;code class=&quot;cai-platform-command-block__cmd&quot;&gt;&lt;span class=&quot;cai-platform-command-block__prefix&quot; aria-hidden=&quot;true&quot;&gt;$ &lt;/span&gt;pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform&lt;/code&gt;
+  &lt;button class=&quot;cai-copy-btn&quot; type=&quot;button&quot; data-copy=&quot;pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform&quot; aria-label=&quot;Copy the install command&quot;&gt;Copy&lt;/button&gt;
 &lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Command block parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-platform-command-block</code></div></td><td data-label="What it does"><div>The box, on the strong surface; the command and the button share a row and wrap when narrow</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-command-block__cmd</code></div></td><td data-label="What it does"><div>The command, in the mono font; breaks anywhere rather than overflow</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-command-block__prefix</code></div></td><td data-label="What it does"><div>The prompt sign, in the secondary colour; it cannot be selected</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A box with the command in <code>&lt;code&gt;</code> and a native copy button. The prompt sign is decorative and cannot be selected. Without JavaScript the copy button is hidden and the command can still be selected and copied.</p>
+            <p>A box from <code>@cai-ds/platform</code> with the command in a <code>&lt;code&gt;</code> and a core <a href="/docs/components/copy-button/">copy button</a>.</p>
+            <ul>
+              <li>The button copies its <code>data-copy</code>: the command without the prompt.</li>
+              <li>At 480 px and below the button takes the full width, under the command.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The copy button is hidden. The command stays on screen, and the reader selects and copies it; the prompt is not selected with it.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Tab reaches the copy button; Enter or Space copies. The result is announced in a polite live region.</p>
+            <p>Tab reaches the copy button; Enter or Space copies.</p>
+            <ul>
+              <li>The prompt sign is <code>aria-hidden="true"</code>, so screen readers read the command only.</li>
+              <li>The result is announced in a polite live region.</li>
+              <li>The focus ring on the button uses the primary text colour, for contrast on the strong surface.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To show one terminal command that readers copy, such as an install command.</p>
+            <p>Use a command block for one terminal command the reader copies and runs, such as an install command.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For several lines of code or output: use a code block. Not for commands the reader must edit before running without saying so.</p>
+            <p>Do not use it for several lines of code or for output.</p>
+            <ul>
+              <li>For code or output, use a <a href="/docs/components/code/">code block</a>.</li>
+              <li>For a command the reader must change before running it, say what to change, next to it.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Show the command exactly as it should run. Name the copy button by what it copies, for example "Copy install command".</p>
+            <p>Show the command exactly as it should run.</p>
+            <ul>
+              <li>Name the copy button by what it copies: "Copy the install command".</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

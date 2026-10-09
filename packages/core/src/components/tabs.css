@@ -27,8 +27,9 @@
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
   cursor: pointer;
+  /* Inside the row, above its 2px rule: the row scrolls (overflow-x), so a
+     border pulled over the rule with a negative margin would be clipped */
   border-bottom: 2px solid transparent;
-  margin-bottom: calc(var(--cai-space-3xs) * -1); /* over the 2px tablist border */
   transition: color var(--cai-duration-fast),
     border-color var(--cai-duration-fast);
   white-space: nowrap;
@@ -56,12 +57,32 @@
   margin-block-end: var(--cai-space-md);
 }
 
-.cai-tabpanel[hidden] {
+/* An inactive panel is hidden="until-found" where the browser supports it:
+   the browser skips its content but find in page still reaches it (and the
+   script then opens its tab), so only plain hidden removes the box. */
+.cai-tabpanel[hidden]:not([hidden="until-found"]) {
   display: none;
+}
+
+.cai-tabpanel[hidden] {
+  margin-block-end: 0;
 }
 
 .cai-tab.is-active {
   color: var(--cai-brand-primary);
   border-bottom-color: var(--cai-brand-primary);
-  font-weight: 500;
+  font-weight: 600;
+}
+
+/* Forced colors: a transparent border may be painted in the text colour, so
+   inactive tabs draw theirs in Canvas and only the selected tab shows its
+   underline, in Highlight (with its weight, the cue is not colour alone). */
+@media (forced-colors: active) {
+  .cai-tab {
+    border-bottom-color: Canvas;
+  }
+
+  .cai-tab.is-active {
+    border-bottom-color: Highlight;
+  }
 }

@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
-import { dirname, resolve } from "path";
+import { dirname, resolve, sep } from "path";
+import { tmpdir } from "os";
 import { fileURLToPath } from "url";
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "fs";
 
@@ -13,6 +14,11 @@ const distRoot = resolve(__dirname, "dist");
 // CAI_PAGES_OUT builds it elsewhere: scripts/check-generated.js compares
 // that fresh build with the committed docs/ (red line 14).
 const pagesRoot = resolve(__dirname, process.env.CAI_PAGES_OUT ?? "docs");
+// emptyOutDir wipes pagesRoot: allow only docs/ or a folder inside the OS temp dir
+const insideTmp = pagesRoot.startsWith(resolve(tmpdir()) + sep);
+if (pagesRoot !== resolve(__dirname, "docs") && !insideTmp) {
+  throw new Error(`CAI_PAGES_OUT must be docs/ or a folder inside ${tmpdir()}, got ${pagesRoot}`);
+}
 
 // Public routes of the four apps. `up` is the path back to the site root.
 const ROUTES = [

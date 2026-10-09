@@ -12,48 +12,51 @@
 import { escapeHtml } from "./utils.js";
 import { t } from "./i18n.js";
 
-function highlightCSS(code) {
-  return escapeHtml(code)
-    .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="tok-comment">$1</span>')
-    .replace(
-      /(var|@import|@media|@keyframes)/g,
-      '<span class="tok-keyword">$1</span>',
-    )
-    .replace(/(--[\w-]+)(?=\s*[;:,)])/g, '<span class="tok-property">$1</span>')
-    .replace(
-      /(:\s*)(&#x27;[^&#x27;]*&#x27;|&quot;[^&quot;]*&quot;)/g,
-      '$1<span class="tok-string">$2</span>',
-    )
-    .replace(/(#[0-9a-fA-F]{3,8})/g, '<span class="tok-string">$1</span>');
+/**
+ * One pass over the raw code: the first rule that matches at a position wins,
+ * and every piece is escaped exactly once. Earlier versions chained
+ * replace() calls over escaped HTML, so a later rule could match inside the
+ * markup an earlier one had added (the keyword `class` in `<span class=…>`).
+ */
+function tokenize(code, rules) {
+  const pattern = new RegExp(rules.map(([, source]) => `(${source})`).join("|"), "gm");
+  let html = "";
+  let last = 0;
+  for (const match of code.matchAll(pattern)) {
+    if (match[0] === "") continue;
+    const rule = match.slice(1).findIndex((group) => group !== undefined);
+    html += escapeHtml(code.slice(last, match.index));
+    html += `<span class="${rules[rule][0]}">${escapeHtml(match[0])}</span>`;
+    last = match.index + match[0].length;
+  }
+  return html + escapeHtml(code.slice(last));
 }
 
-function highlightHTML(code) {
-  return escapeHtml(code)
-    .replace(/(<!--[\s\S]*?-->)/g, '<span class="tok-comment">$1</span>')
-    .replace(/(&lt;\/?)([\w-]+)/g, '<span class="tok-tag">$1$2</span>')
-    .replace(/\s([\w-]+)=(&quot;)/g, ' <span class="tok-attr">$1</span>=$2')
-    .replace(
-      /(&quot;)(.*?)(&quot;)/g,
-      '<span class="tok-string">$1$2$3</span>',
-    );
-}
+const CSS_RULES = [
+  ["tok-comment", String.raw`\/\*[\s\S]*?\*\/`],
+  ["tok-string", String.raw`"[^"\n]*"|'[^'\n]*'`],
+  ["tok-keyword", String.raw`@(?:import|media|keyframes|layer|supports|container)\b|\bvar\b`],
+  ["tok-property", String.raw`--[\w-]+(?=\s*[;:,)])`],
+  ["tok-string", String.raw`#[0-9a-fA-F]{3,8}\b`],
+];
 
-function highlightJS(code) {
-  return escapeHtml(code)
-    .replace(/(\/\/.*$)/gm, '<span class="tok-comment">$1</span>')
-    .replace(
-      /(import|export|from|const|let|var|return|function|class|new|if|else|=&gt;)/g,
-      '<span class="tok-keyword">$1</span>',
-    )
-    .replace(
-      /(&quot;[^&quot;]*&quot;|&#x27;[^&#x27;]*&#x27;|`[^`]*`)/g,
-      '<span class="tok-string">$1</span>',
-    )
-    .replace(
-      /([A-Z][a-zA-Z]+)(?=\s*[=(])/g,
-      '<span class="tok-name">$1</span>',
-    );
-}
+const HTML_RULES = [
+  ["tok-comment", String.raw`<!--[\s\S]*?-->`],
+  ["tok-tag", String.raw`<\/?[\w-]+`],
+  ["tok-attr", String.raw`(?<=\s)[\w-]+(?==)`],
+  ["tok-string", String.raw`"[^"]*"`],
+];
+
+const JS_RULES = [
+  ["tok-comment", String.raw`\/\/.*$|\/\*[\s\S]*?\*\/`],
+  ["tok-string", String.raw`"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|\x60(?:[^\x60\\]|\\.)*\x60`],
+  ["tok-keyword", String.raw`\b(?:import|export|from|const|let|var|return|function|class|new|if|else|async|await)\b|=>`],
+  ["tok-name", String.raw`\b[A-Z][a-zA-Z]+(?=\s*[=(])`],
+];
+
+const highlightCSS = (code) => tokenize(code, CSS_RULES);
+const highlightHTML = (code) => tokenize(code, HTML_RULES);
+const highlightJS = (code) => tokenize(code, JS_RULES);
 
 /**
  * Highlight a single pre.cai-code-block element (language via data-lang).

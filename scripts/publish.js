@@ -6,6 +6,9 @@
  *
  * Tarballs are created with `pnpm pack` (rewrites the workspace: protocol)
  * and uploaded with `npm publish` (OIDC trusted publishing + provenance).
+ * Before upload, the real tarball is checked against pack-files.txt and its
+ * manifest against the workspace: protocol, so what ships is what was
+ * reviewed (check-pack.js inspects `npm pack --dry-run`, not this file).
  *
  * Usage: node scripts/publish.js [--dry-run]   (run `pnpm build` first)
  */
@@ -22,6 +25,24 @@ const dryRun = process.argv.includes("--dry-run");
 
 // Order matters: a layer is only published after the one it depends on.
 const PACKAGES = ["tokens", "core", "platform"];
+
+function checkTarball(tarball, pkgRoot, name) {
+  const shipped = execFileSync("tar", ["-tzf", tarball], { encoding: "utf-8" })
+    .split("\n")
+    .filter((line) => line && !line.endsWith("/"))
+    .map((line) => line.replace(/^package\//, ""))
+    .sort();
+  const expected = readFileSync(resolve(pkgRoot, "pack-files.txt"), "utf-8").split("\n").filter(Boolean).sort();
+  const added = shipped.filter((p) => !expected.includes(p));
+  const removed = expected.filter((p) => !shipped.includes(p));
+  if (added.length || removed.length) {
+    throw new Error(
+      `${name}: tarball differs from pack-files.txt\n  added: ${added.join(", ") || "none"}\n  missing: ${removed.join(", ") || "none"}`,
+    );
+  }
+  const manifest = execFileSync("tar", ["-xzOf", tarball, "package/package.json"], { encoding: "utf-8" });
+  if (manifest.includes("workspace:")) throw new Error(`${name}: tarball manifest still uses the workspace: protocol`);
+}
 
 function isPublished(name, version) {
   try {
@@ -49,6 +70,7 @@ for (const dir of PACKAGES) {
   const outDir = mkdtempSync(join(tmpdir(), "cai-pack-"));
   execFileSync("pnpm", ["pack", "--pack-destination", outDir], { cwd: pkgRoot, stdio: "inherit" });
   const tarball = join(outDir, readdirSync(outDir).find((f) => f.endsWith(".tgz")));
+  checkTarball(tarball, pkgRoot, name);
 
   const args = ["publish", tarball, "--access", "public", "--provenance"];
   if (dryRun) args.push("--dry-run");

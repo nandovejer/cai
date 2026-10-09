@@ -89,7 +89,8 @@ function dictionaryFor(el) {
     );
     return locales.en;
   }
-  const dict = locales[lang] || locales[lang.split("-")[0]];
+  const own = (key) => (Object.hasOwn(locales, key) ? locales[key] : undefined);
+  const dict = own(lang) || own(lang.split("-")[0]);
   if (!dict) {
     warnOnce(
       lang,

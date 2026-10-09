@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI: accessible websites from plain HTML and CSS</title>
   <meta name="description" content="CAI (Consistent Adaptive Identity) is a design system of tokens, components and page layouts in plain CSS and HTML. It works without JavaScript, has three color modes and needs no build step.">
-  <script>
-    /* Color mode before first paint: stored choice, else the OS preference. */
-    (function(){var m=null;try{m=localStorage.getItem("cai-site-mode")}catch(e){}
-    if(["light","dark","high-contrast"].indexOf(m)<0){m=matchMedia("(prefers-contrast: more)").matches?"high-contrast":matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
-    document.documentElement.dataset.theme=m})();
-  </script>
   <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
   <link rel="stylesheet" href="/packages/core/dist/cai.css">
   <link rel="stylesheet" href="/packages/platform/dist/platform.css">

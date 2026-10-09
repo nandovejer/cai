@@ -12,6 +12,8 @@ import { fileURLToPath } from "url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const SCAN = ["packages", "apps", "scripts", "tests"];
+// Root files: package.json and the build and lint configs
+const ROOT_FILES = ["package.json", "vite.config.js", "eslint.config.js", "stylelint.config.js", "playwright.config.js"];
 const SKIP = new Set(["node_modules", "dist", "fonts"]);
 const EXTENSIONS = new Set([".js", ".css", ".html", ".json"]);
 const COMMENT = /cai-exception:\s*(EX-\d{3})/g;
@@ -48,6 +50,16 @@ for (const dir of SCAN) {
       found.get(m[1]).add(file);
       if (!rows.has(m[1])) problems.push(`${file}: ${m[1]} has no row in EXCEPTIONS.md`);
     }
+  }
+}
+
+for (const name of ROOT_FILES) {
+  const path = resolve(root, name);
+  if (!existsSync(path)) continue;
+  for (const m of readFileSync(path, "utf-8").matchAll(COMMENT)) {
+    if (!found.has(m[1])) found.set(m[1], new Set());
+    found.get(m[1]).add(name);
+    if (!rows.has(m[1])) problems.push(`${name}: ${m[1]} has no row in EXCEPTIONS.md`);
   }
 }
 

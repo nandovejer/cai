@@ -220,3 +220,12 @@ describe("RL-15: status colours keep their set and their meaning", () => {
     expect(offenders).toEqual([]);
   });
 });
+
+describe("§3: no inline scripts in the apps", () => {
+  it("every <script> in an app page loads a file", () => {
+    const offenders = filesIn(["apps"], [".html"])
+      .filter((p) => /<script\b(?![^>]*\bsrc=)[^>]*>/i.test(readFileSync(p, "utf-8").replace(/<pre[\s\S]*?<\/pre>|<code[\s\S]*?<\/code>/gi, "")))
+      .map(rel);
+    expect(offenders).toEqual([]);
+  });
+});

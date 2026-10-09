@@ -43,8 +43,9 @@ jobs:
           node-version: 22
           cache: pnpm
 
+      # No lifecycle scripts while a contents: write token sits in .git/config
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       # No `publish` input: this job can only open the version PR
       - name: Create or update the version PR

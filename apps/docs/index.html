@@ -5,12 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI documentation: tokens, components and guidance</title>
   <meta name="description" content="Documentation for the CAI design system: installation, tokens, every core component with its usage guidance, platform patterns and the accessibility statement.">
-  <script>
-    /* Color mode before first paint: stored choice, else the OS preference. */
-    (function(){var m=null;try{m=localStorage.getItem("cai-site-mode")}catch(e){}
-    if(["light","dark","high-contrast"].indexOf(m)<0){m=matchMedia("(prefers-contrast: more)").matches?"high-contrast":matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}
-    document.documentElement.dataset.theme=m})();
-  </script>
   <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
   <link rel="stylesheet" href="/packages/core/dist/cai.css">
   <link rel="stylesheet" href="/packages/platform/dist/platform.css">

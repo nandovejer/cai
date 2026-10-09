@@ -23,6 +23,36 @@
 // Hard limits: MIDI files are untrusted input (any URL, user uploads).
 // A malformed or hostile file must fail fast, never hang the main thread.
 const MAX_FILE_BYTES = 5 * 1024 * 1024;
+
+// Read a response body, stopping as soon as it passes `limit` bytes: a
+// missing or false content-length must not let a huge file be buffered.
+async function readLimited(res, limit) {
+  if (!res.body) {
+    const buffer = await res.arrayBuffer();
+    if (buffer.byteLength > limit) throw new Error('MIDI file too large');
+    return buffer;
+  }
+  const reader = res.body.getReader();
+  const chunks = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > limit) {
+      reader.cancel();
+      throw new Error('MIDI file too large');
+    }
+    chunks.push(value);
+  }
+  const bytes = new Uint8Array(size);
+  let offset = 0;
+  for (const chunk of chunks) {
+    bytes.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return bytes.buffer;
+}
 const MAX_EVENTS     = 500_000;
 
 export class MidiParser {
@@ -296,7 +326,7 @@ export class MidiPlayer {
       if (Number(res.headers.get('content-length')) > MAX_FILE_BYTES) {
         throw new Error('MIDI file too large');
       }
-      const buffer = await res.arrayBuffer();
+      const buffer = await readLimited(res, MAX_FILE_BYTES);
       const midi   = MidiParser.parse(buffer);
       const { timeline, duration } = buildTimeline(midi);
       this._timeline = timeline;

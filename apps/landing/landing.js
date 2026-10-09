@@ -12,6 +12,7 @@
 import { initCopyButtons } from "/packages/core/dist/clipboard.js";
 import { highlightBlock } from "/packages/core/dist/highlight.js";
 import { initThemeCycle } from "/packages/core/dist/theme.js";
+import { initSiteHeader } from "./site-header.js";
 
 /* ---- Color mode ------------------------------------------------------- */
 
@@ -95,6 +96,7 @@ function initTryStatus() {
 initModes();
 // One button that steps through the modes; the radios stay underneath
 initThemeCycle();
+initSiteHeader();
 initTryStatus();
 initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each

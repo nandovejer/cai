@@ -693,3 +693,48 @@ test.describe('Documentation page', () => {
     });
   });
 });
+
+test.describe('Site header and navigation toggle', () => {
+  for (const path of ['/', '/docs/']) {
+    test(`the header stays at the top while scrolling: ${path}`, async ({ page }) => {
+      await page.goto(path);
+      await page.evaluate(() => window.scrollTo(0, 2000));
+      await expect.poll(() => page.evaluate(() => Math.round(document.querySelector('.site-header').getBoundingClientRect().top))).toBe(0);
+      const height = await page.evaluate(() => document.querySelector('.site-header').offsetHeight);
+      expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--site-header-h'))).toBe(`${height}px`);
+    });
+  }
+
+  test('an anchored heading lands below the sticky header', async ({ page }) => {
+    await page.goto('/docs/');
+    await page.evaluate(() => document.getElementById('tokens').scrollIntoView());
+    const header = await page.evaluate(() => document.querySelector('.site-header').getBoundingClientRect().bottom);
+    const target = await page.evaluate(() => document.getElementById('tokens').getBoundingClientRect().top);
+    expect(target).toBeGreaterThanOrEqual(header);
+  });
+
+  test('the hamburger turns into the CAI mark while the drawer is open, and back', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 640 });
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto('/docs/');
+    const d = () => page.evaluate(() =>
+      [...document.querySelectorAll('.docs-nav-toggle__icon path')].map((p) => getComputedStyle(p).d));
+    const closed = await d();
+    expect(closed.every((v) => v === 'none' || /^path\(/.test(v))).toBe(true);
+
+    const toggle = page.locator('.docs-nav-toggle');
+    await toggle.click();
+    await expect(page.locator('#docs-nav')).toBeVisible();
+    // the toggle is not covered by the drawer: it can close it again
+    const nav = await page.locator('#docs-nav').boundingBox();
+    const btn = await toggle.boundingBox();
+    expect(nav.y).toBeGreaterThanOrEqual(btn.y + btn.height);
+    const open = await d();
+    expect(open[1]).toContain('M 24 8 C 15.16 8 8 15.16 8 24');
+    expect(open).not.toEqual(closed);
+
+    await toggle.click();
+    await expect(page.locator('#docs-nav')).toBeHidden();
+    expect(await d()).toEqual(closed);
+  });
+});

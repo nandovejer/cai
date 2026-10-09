@@ -17,6 +17,7 @@ import { initModals } from "/packages/core/dist/modal.js";
 import { initPlayers } from "/packages/core/dist/player.js";
 import { initSidebar } from "/packages/core/dist/sidebar.js";
 import { initThemeCycle } from "/packages/core/dist/theme.js";
+import { initSiteHeader } from "../landing/site-header.js";
 
 /* ---- Color mode ------------------------------------------------------- */
 
@@ -200,6 +201,7 @@ function syncLoadedMedia() {
 initModes();
 // One button in the header that steps through the modes; the radios stay
 initThemeCycle();
+initSiteHeader();
 initFolds();
 initAssets();
 initCopy();

@@ -36,6 +36,7 @@ export default [
         performance: "readonly",
         IntersectionObserver: "readonly",
         MutationObserver: "readonly",
+        ResizeObserver: "readonly",
         Event: "readonly",
         AudioContext: "readonly",
         fetch: "readonly",

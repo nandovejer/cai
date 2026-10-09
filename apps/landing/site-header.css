@@ -7,7 +7,19 @@
    Rules: semantic tokens only; no literal colors.
    ========================================================================== */
 
+/* Sticky: the site links and the color mode stay at hand while reading.
+   --site-header-h is the header's measured height (site-header.js), with a
+   one-row estimate before it runs or without JavaScript. Anchored targets
+   stop below the header instead of under it. */
+:root {
+  scroll-padding-block-start: calc(var(--site-header-h, 3.875rem) + var(--cai-space-04));
+}
+
 .site-header {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--cai-z-overlay);
+  background: var(--cai-bg-page);
   border-bottom: 1px solid var(--cai-border-subtle);
 }
 

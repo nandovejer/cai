@@ -867,6 +867,12 @@ h2.docs-demo__title {
   }
 }
 
+/* The sidebar sticks below the sticky site header, not under it */
+.docs-page > .cai-sidebar {
+  inset-block-start: var(--site-header-h, 3.875rem);
+  height: calc(100vh - var(--site-header-h, 3.875rem));
+}
+
 /* The drawer's toggle is fixed at the top start corner: start the header
    after it, so it never covers the brand */
 @supports selector(:popover-open) {
@@ -874,7 +880,54 @@ h2.docs-demo__title {
     .docs-header-bar {
       padding-inline-start: calc(var(--cai-size-height-lg) + var(--cai-space-04) * 2);
     }
+
+    /* The drawer opens below the header, so its toggle stays in view and
+       closes it again */
+    .docs-page > .cai-sidebar[popover] {
+      inset-block-start: var(--site-header-h, 3.875rem);
+      height: calc(100dvh - var(--site-header-h, 3.875rem));
+    }
   }
+}
+
+/* --------------------------------------------------------------------------
+   Navigation toggle: the hamburger turns into the CAI mark while the drawer
+   is open. Each bar is one of the mark's shapes (top bar → triangle, middle
+   → half circle, bottom → square), drawn with the same commands so the
+   browser can interpolate the CSS d property. State comes from the
+   popover itself (:popover-open), no script. Where d is not animatable the
+   shapes switch without motion; reduced motion zeroes the duration token.
+   -------------------------------------------------------------------------- */
+
+.docs-nav-toggle__icon {
+  inline-size: 100%;
+  block-size: 100%;
+  overflow: visible;
+}
+
+.docs-nav-toggle__icon path {
+  fill: currentcolor;
+  transition: d var(--cai-duration-slower) cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.docs-nav-toggle__c {
+  transition-delay: var(--cai-duration-instant);
+}
+
+.docs-nav-toggle__i {
+  transition-delay: var(--cai-duration-fast);
+}
+
+:root:has(#docs-nav:popover-open) .docs-nav-toggle__a {
+  d: path("M28 20C30 16 32 12 34 8C36 12 38 16 40 20C38 20 36 20 34 20C32 20 30 20 28 20Z");
+}
+
+:root:has(#docs-nav:popover-open) .docs-nav-toggle__c {
+  d: path("M24 8C15.16 8 8 15.16 8 24C8 32.84 15.16 40 24 40C24 34.67 24 29.33 24 24C24 18.67 24 13.33 24 8Z");
+}
+
+:root:has(#docs-nav:popover-open) .docs-nav-toggle__i {
+  d: path("M28 24C32 24 36 24 40 24C40 29.33 40 34.67 40 40C36 40 32 40 28 40C28 34.67 28 29.33 28 24Z");
 }
 
 @media (prefers-reduced-motion: reduce) {

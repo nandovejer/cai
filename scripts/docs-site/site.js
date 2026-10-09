@@ -368,11 +368,11 @@ function readSourceHtml(text, file, firstLine = 1) {
  * Render and check the whole site: the nesting of every source, the fragments'
  * safety, duplicate ids on each rendered page, and every internal link.
  * `extra` are full documents outside apps/docs/pages (the landing):
- * [{ route, file, html }]. `legacy` are routes whose ids are not checked.
+ * [{ route, file, html }]. `unchecked` are routes known to exist whose ids are not checked.
  * Returns { rendered: Map route → html, problems: [string] }. Throws on a
  * malformed source (that is never a warning).
  */
-export function buildSite(site, { extra = [], legacy = [], root } = {}) {
+export function buildSite(site, { extra = [], unchecked = [], root } = {}) {
   const reader = sourceReader(site);
   const sourceLinks = (text, file, firstLine, fragment) => {
     if (fragment) assertFragmentSafe(text, file);
@@ -413,7 +413,7 @@ export function buildSite(site, { extra = [], legacy = [], root } = {}) {
     docs.push({ route: doc.route, ids: new Set(ids.keys()), links });
   }
 
-  const known = new Map([...docs.map((d) => [d.route, d.ids]), ...legacy.map((route) => [route, null])]);
+  const known = new Map([...docs.map((d) => [d.route, d.ids]), ...unchecked.map((route) => [route, null])]);
   const seen = new Set();
   const problems = checkLinks(docs, known).filter((p) => !seen.has(p) && seen.add(p));
   return { rendered, problems };

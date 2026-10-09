@@ -50,7 +50,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 - Every file under `apps/docs/pages/` is a page: `pages/index.html` → `/docs/`, `pages/a/b.html` → `/docs/a/b/`. Names starting with `_` are not pages. A page is a fragment (the inside of `<main>`) with front matter in a leading `<!-- cai:page -->` comment (`title`, `description`, `area` required; one `key: value` per line).
 - The layout `apps/docs/_layouts/<layout>.html` wraps it. Templates know two things only: `<!-- cai:include <name> -->` (a file of `apps/docs/_partials/`) and `{{title}}`, `{{description}}`, `{{root}}`, `{{content}}` (layouts and partials only). The landing includes the same `header` and `site-links` partials. The generator adds `aria-current="page"` to the current site link.
 - Dev server: route → file lookup table; a route without its trailing slash answers 301. Editing a layout, partial, page or `site.json` reloads the browser.
-- Build: one entry per route (plus `/`, `/platform/`, `/html/`); each HTML file is moved to `<route>/index.html`, and in the pages build its asset URLs and links between pages are relative to its depth.
+- Build: one entry per route (plus the landing at `/`); each HTML file is moved to `<route>/index.html`, and in the pages build its asset URLs and links between pages are relative to its depth.
 - Links: write internal links root-absolute with a trailing slash (`/docs/#c-button`). The build fails, with `file:line`, on a mis-nested tag, a duplicate id, an unknown route, a missing trailing slash or a `#fragment` that is not an id on the target page (a warning in dev).
 
 ---

@@ -11,7 +11,6 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
 
-// /platform/ and /html/ are redirect stubs to /docs/ (tests/moved-pages.spec.js)
 const APPS = ['/', '/docs/'];
 const THEMES = ['light', 'dark', 'high-contrast'];
 const FIXTURES = ['level-1-tokens.html', 'level-2-core.html', 'level-3-platform.html', 'core-without-tokens.html'];

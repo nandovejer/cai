@@ -1,7 +1,7 @@
 /**
  * CAI Design System — HTML elements reference checks
  * The HTML elements part of the documentation page (apps/docs, served at
- * /docs/#html-elements; /html/ redirects there) lists every current
+ * /docs/#html-elements) lists every current
  * (non-deprecated) HTML element from MDN with a live example or a snippet. The inventory lives
  * in tests/fixtures/html-elements.json; these tests keep the page and the
  * element styles in packages/core/src/elements/ in step with it.

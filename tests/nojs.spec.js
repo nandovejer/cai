@@ -5,7 +5,6 @@
  */
 import { test, expect } from '@playwright/test';
 
-// /platform/ and /html/ are redirect stubs to /docs/ (tests/moved-pages.spec.js)
 const APPS = ['/', '/docs/'];
 
 for (const app of APPS) {

@@ -21,14 +21,6 @@ import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { buildSite, parseFrontMatter, readInside, relativizeLinks, renderDocument, renderPage, rootOf, scanSite } from "./site.js";
 
-/**
- * The two old pages that now send visitors to /docs/. They are full documents
- * outside the generator and go in phase 2 of the docs redesign.
- */
-const LEGACY = [
-  { route: "/platform/", file: "apps/platform-docs/index.html" },
-  { route: "/html/", file: "apps/html-elements/index.html" },
-];
 const LANDING = { route: "/", file: "apps/landing/index.html" };
 
 /** Output file of a route: "/" → "index.html", "/docs/a/" → "docs/a/index.html". */
@@ -54,7 +46,6 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot }) {
   /** Every HTML document of the site: route, source file (repo-relative), kind. */
   const documents = () => [
     { ...LANDING, kind: "landing" },
-    ...LEGACY.map((d) => ({ ...d, kind: "legacy" })),
     ...scan().pages.map((p) => ({ route: p.route, file: p.file, kind: "page" })),
   ];
   const routes = () => new Set(documents().map((d) => d.route));
@@ -63,7 +54,6 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot }) {
   const check = () =>
     buildSite(scan(), {
       extra: [{ ...LANDING, html: readInside(landingAbs, [dirname(landingAbs)]) }],
-      legacy: LEGACY.map((d) => d.route),
     }).problems;
 
   return {

@@ -6,7 +6,6 @@ import { test, expect } from '@playwright/test';
 test.describe('prefers-reduced-motion: reduce', () => {
   test.use({ reducedMotion: 'reduce' });
 
-  // /platform/ and /html/ are redirect stubs now: their content is on /docs/
   for (const app of ['/', '/docs/']) {
     test(`${app}: no transition, animation or smooth scroll runs (RL-8)`, async ({ page }) => {
       await page.goto(app);

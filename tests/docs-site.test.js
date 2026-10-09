@@ -286,12 +286,12 @@ describe("scanning and building a site", () => {
     expect(html).toContain('<a href="/docs/" aria-current="page">Docs</a>');
     expect(html).toContain('  <main id="main-content">\n<p><a href="/docs/#main-content">Up</a></p>\n  </main>');
     expect(html).not.toContain(repoRoot); // SEC-PLG-10
-    expect(buildSite(site, { legacy: ["/"] }).problems).toEqual([]);
+    expect(buildSite(site, { unchecked: ["/"] }).problems).toEqual([]);
   });
 
   it("reports broken links with the source file and line", () => {
     const { repoRoot, docsDir } = fixture({ "pages/a.html": PAGE("A", "<p>\n<a href=\"/docs/b/\">B</a></p>") });
-    expect(buildSite(scanSite(docsDir, repoRoot), { legacy: ["/"] }).problems).toEqual(["apps/docs/pages/a.html:7: /docs/b/ is not a page of the site"]);
+    expect(buildSite(scanSite(docsDir, repoRoot), { unchecked: ["/"] }).problems).toEqual(["apps/docs/pages/a.html:7: /docs/b/ is not a page of the site"]);
   });
 
   it("fails when two files make the same route", () => {
@@ -337,7 +337,7 @@ describe("scanning and building a site", () => {
       "_partials/b.html": "<!-- cai:include a -->",
       "pages/index.html": PAGE("Home", "<!-- cai:include a -->"),
     });
-    expect(() => buildSite(scanSite(docsDir, repoRoot), { legacy: ["/"] })).toThrow(/include cycle a → b → a/);
+    expect(() => buildSite(scanSite(docsDir, repoRoot), { unchecked: ["/"] })).toThrow(/include cycle a → b → a/);
   });
 
   it("fails on a duplicate id between the layout and the page", () => {
@@ -353,13 +353,13 @@ describe("the CAI docs site", () => {
   const landing = { route: "/", file: "apps/landing/index.html", html: readFileSync(join(repo, "apps/landing/index.html"), "utf-8") };
 
   it("builds with every source well nested and every internal link resolving", () => {
-    const { rendered, problems } = buildSite(site, { extra: [landing], legacy: ["/platform/", "/html/"] });
+    const { rendered, problems } = buildSite(site, { extra: [landing] });
     expect(problems).toEqual([]);
     expect([...rendered.keys()].sort()).toEqual(["/", ...site.pages.map((p) => p.route)].sort());
   });
 
   it("renders one header for every page from the shared partial", () => {
-    const { rendered } = buildSite(site, { extra: [landing], legacy: ["/platform/", "/html/"] });
+    const { rendered } = buildSite(site, { extra: [landing] });
     const header = (html) => html.match(/<header class="site-header"[\s\S]*?<\/header>/)[0];
     const partial = readFileSync(join(repo, "apps/docs/_partials/header.html"), "utf-8").trim();
     const flat = (html) => html.replace(/ aria-current="page"/g, "").replace(/\s+/g, " ");

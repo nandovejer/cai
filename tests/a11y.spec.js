@@ -6,7 +6,6 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-// /platform/ and /html/ are redirect stubs to /docs/ (tests/moved-pages.spec.js)
 const APPS = ['/', '/docs/'];
 const THEMES = ['light', 'dark', 'high-contrast'];
 const BLOCKING = ['serious', 'critical'];

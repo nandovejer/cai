@@ -3,8 +3,7 @@
  * The landing (apps/landing, served at /) says what CAI is for and why to
  * use it, and how to adopt it. It is a level-3 consumer with the base color
  * modes only. The documentation, with every component and its guidance,
- * lives on its own page (tests/docs.spec.js); old links to the sections that
- * moved there still say where they went.
+ * lives on its own pages (tests/docs.spec.js).
  * Run with: pnpm test:ui
  */
 
@@ -274,42 +273,6 @@ test.describe('Landing page', () => {
       await expect(hero.locator('.cai-btn--primary')).toHaveCount(1);
       await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toHaveText('Get started');
       await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toBeInViewport();
-    });
-  });
-
-  test.describe('old links to sections that moved to the docs', () => {
-    test('are hidden until targeted', async ({ page }) => {
-      await open(page);
-
-      await expect(page.locator('.landing-moved-list')).toBeHidden();
-    });
-
-    for (const id of ['c-button', 't-semantic', 'p-footer', 'core']) {
-      test(`/#${id} says where it went and links to /docs/#${id}`, async ({ page }) => {
-        await open(page, `/#${id}`);
-
-        const notice = page.locator(`#${id}.landing-moved`);
-        await expect(notice).toBeVisible();
-        await expect(notice).toBeInViewport();
-        await expect(notice.locator('a')).toHaveAttribute('href', `/docs/#${id}`);
-        await expect(page.locator('#moved-title')).toBeVisible();
-        // Only the targeted notice shows
-        await expect(page.locator('.landing-moved:visible')).toHaveCount(1);
-      });
-    }
-
-    test('every old anchor leads to an element of the docs page', async ({ page }) => {
-      await open(page);
-
-      const hrefs = await page
-        .locator('.landing-moved a')
-        .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
-      expect(hrefs.length).toBeGreaterThan(40);
-      await page.goto('/docs/');
-      for (const href of hrefs) {
-        const hash = href.split('#')[1];
-        if (hash) await expect(page.locator(`[id="${hash}"]`), href).toHaveCount(1);
-      }
     });
   });
 

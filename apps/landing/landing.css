@@ -312,25 +312,6 @@
   color: var(--cai-text-secondary);
 }
 
-/* Old links to sections that moved to the docs: shown only when one of them
-   is the URL fragment. :has() in :is() so a browser without it drops the rule
-   and keeps the heading, rather than invalidating the whole rule. */
-.landing-moved:not(:target) {
-  display: none;
-}
-
-:is(.landing-moved-list:not(:has(.landing-moved:target))) {
-  display: none;
-}
-
-.landing-moved-list {
-  padding-block: var(--cai-space-xl);
-}
-
-.landing-moved {
-  font-size: var(--cai-text-lg);
-}
-
 /* --------------------------------------------------------------------------
    Local patches for gaps in core. Remove each one when core fixes it.
    -------------------------------------------------------------------------- */

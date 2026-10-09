@@ -36,13 +36,6 @@
   grid-row: 3;
 }
 
-.docs-wrap {
-  width: 100%;
-  max-width: var(--cai-content-max);
-  margin-inline: auto;
-  padding-inline: var(--cai-space-xl);
-}
-
 /* Grid and flex items default to min-width: auto, which lets a long <pre> or
    a table widen the whole page. Zero specificity: any core rule still wins. */
 :where(.docs-page)
@@ -113,11 +106,6 @@
 .docs-body > .elements-section {
   padding-block-start: 0;
   border-block-start: 0;
-}
-
-/* Chapters that carry their own gutter (the documentation home) */
-.docs-body > .docs-wrap {
-  padding-inline: 0;
 }
 
 .docs-page-head {
@@ -540,22 +528,6 @@
   gap: var(--cai-space-sm);
 }
 
-.docs-header {
-  display: grid;
-  gap: var(--cai-space-md);
-}
-
-.docs-header__title {
-  font-size: var(--cai-text-4xl);
-  line-height: 1.1;
-}
-
-.docs-header__lead {
-  font-size: var(--cai-text-lg);
-  color: var(--cai-text-secondary);
-  max-width: 65ch;
-}
-
 .docs-chapter {
   display: grid;
   gap: var(--cai-space-md);
@@ -598,18 +570,6 @@
 .docs-prose-chapter h3 {
   font-size: var(--cai-text-xl);
   margin-block-start: var(--cai-space-md);
-}
-
-/* A link that stands alone at the end of each component */
-.docs-top {
-  margin-block-start: var(--cai-space-2xs);
-  font-size: var(--cai-text-md);
-}
-
-.docs-top a {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--cai-control-sm);
 }
 
 .docs-footer {
@@ -687,36 +647,16 @@
 /* .cai-copy-btn has a subtle border and no fill: on the command block
    (--cai-surface-strong) it reads as plain text. Give it a surface and a boundary;
    hover and .is-copied keep the component's own colors. */
-.docs-snippet .cai-copy-btn:not(:hover, .is-copied),
 .cai-platform-command-block .cai-copy-btn:not(:hover, .is-copied) {
   background: var(--cai-surface);
   border-color: var(--cai-outline);
 }
 
 /* --------------------------------------------------------------------------
-   Demo cards
+   Demos: contents lists, demo heads and stages, guidance
    -------------------------------------------------------------------------- */
-
-.docs-demo {
-  display: grid;
-  gap: var(--cai-space-md);
-  align-content: start;
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  padding: var(--cai-space-md);
-}
-
-/* --------------------------------------------------------------------------
-   Gallery: sticky level bar, table of contents, groups, demo cards
-   -------------------------------------------------------------------------- */
-
-.docs-ref {
-  margin-top: var(--cai-space-sm);
-  font-size: var(--cai-text-md);
-}
 
 /* Links that stand alone (not inside a sentence) are targets of 24px or more */
-.docs-ref a,
 .docs-toc a {
   display: inline-flex;
   align-items: center;
@@ -754,16 +694,6 @@
   display: inline-flex;
   align-items: center;
   min-height: var(--cai-control-sm);
-}
-
-.docs-demo-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-md);
-}
-
-.docs-demo--wide {
-  grid-column: 1 / -1;
 }
 
 .docs-demo__head {
@@ -1380,7 +1310,6 @@ h2.docs-demo__title {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .docs-demo-grid,
   .docs-hub__cards,
   .docs-decision-grid,
   .docs-cols-2,
@@ -1404,16 +1333,11 @@ h2.docs-demo__title {
 }
 
 @media (max-width: 480px) {
-  .docs-wrap {
-    padding-inline: var(--cai-space-md);
-  }
-
   .docs-main > * {
     padding-inline: var(--cai-space-md);
   }
 
-  .docs-title,
-  .docs-header__title {
+  .docs-title {
     font-size: var(--cai-text-2xl);
   }
 
@@ -1421,8 +1345,7 @@ h2.docs-demo__title {
     font-size: var(--cai-text-xl);
   }
 
-  .docs-lead,
-  .docs-header__lead {
+  .docs-lead {
     font-size: var(--cai-text-base);
   }
 

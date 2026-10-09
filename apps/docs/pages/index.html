@@ -3,106 +3,28 @@ title: CAI documentation
 description: Documentation for the CAI design system: install it, find a component and copy its markup, look up a token, a platform pattern or an HTML element.
 area: hub
 lead: false
-toc: h2
+toc: false
 -->
-    <header class="docs-header">
-      <p class="docs-header__lead">Everything in the system on one page: how to install it, the tokens, every core component and platform pattern with its usage guidance, every HTML element as CAI styles it, and the accessibility statement. Every example is rendered live with the CSS you install.</p>
-      <div class="cai-alert cai-alert--warning" role="note">
-        <div class="cai-alert__icon" aria-hidden="true">!</div>
-        <div>
-          <div class="cai-alert__title">Beta</div>
-          <div class="cai-alert__body">Names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.</div>
-        </div>
-      </div>
-    </header>
+    <p class="docs-lead">Install CAI, find a component and copy its markup. Every example is live and follows the color mode you pick.</p>
+    <p class="docs-hub__beta"><span class="cai-tag cai-tag--yellow">Beta</span> Names and classes can still change. Pin an exact version. <a href="https://github.com/nandovejer/cai/blob/main/CHANGELOG.md">Read the changelog</a></p>
+    <p class="docs-hub__find"><a class="cai-btn cai-btn--outline" href="/docs/a-z/">Browse the A–Z index</a></p>
 
-    
+    <h2 class="u-sr-only" id="hub-start">Start here</h2>
+    <ul class="docs-hub__cards">
+      <li class="docs-hub-card">
+        <h3 class="docs-hub-card__title"><a href="/docs/get-started/">Get started</a></h3>
+        <p>Install the tokens only, add the components, or take the full stack. One command or three CDN tags.</p>
+      </li>
+      <li class="docs-hub-card">
+        <h3 class="docs-hub-card__title"><a href="/docs/components/">Components</a></h3>
+        <p>20 components with a live demo, the markup to copy, and when to use each.</p>
+      </li>
+    </ul>
 
-    
-
-    
-
-    
-
-    
-
-    <section class="cai-platform-section docs-wrap" id="core" aria-labelledby="core-title">
-      <header class="cai-platform-page-header">
-        <p class="docs-eyebrow">Level 2 · @cai-ds/core</p>
-        <h2 class="cai-platform-page-header__title" id="core-title">Core</h2>
-        <p class="cai-platform-page-header__lead">Settings, base styles, layout objects, <span data-count="components">20</span> components and utilities, layered in ITCSS order. Interactive components name the optional JS module that drives them.</p>
-      </header>
-
-      <nav class="docs-toc" aria-label="Core contents">
-        <div>
-          <p class="docs-eyebrow">Settings</p>
-          <ul>
-            <li><a href="/docs/tokens/motion/">Motion</a></li>
-            <li><a href="/docs/tokens/layout/">Stacking, layout and breakpoints</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="docs-eyebrow">Base and layout</p>
-          <ul>
-            <li><a href="/docs/html/#c-elements">Base elements</a></li>
-            <li><a href="/docs/components/layout/">Layout objects</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="docs-eyebrow">Actions and forms</p>
-          <ul>
-            <li><a href="/docs/components/button/">Button</a></li>
-            <li><a href="/docs/components/copy-button/">Copy button</a></li>
-            <li><a href="/docs/components/form/">Form</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="docs-eyebrow">Display</p>
-          <ul>
-            <li><a href="/docs/components/tag/">Tag and badge</a></li>
-            <li><a href="/docs/components/avatar/">Avatar</a></li>
-            <li><a href="/docs/components/progress/">Progress</a></li>
-            <li><a href="/docs/components/tooltip/">Tooltip</a></li>
-            <li><a href="/docs/components/card/">Card</a></li>
-            <li><a href="/docs/components/figure/">Figure</a></li>
-            <li><a href="/docs/components/table/">Table</a></li>
-            <li><a href="/docs/components/code/">Code</a></li>
-            <li><a href="/docs/components/icon-grid/">Icon grid</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="docs-eyebrow">Feedback</p>
-          <ul>
-            <li><a href="/docs/components/alert/">Alert</a></li>
-            <li><a href="/docs/components/toast/">Toast</a></li>
-            <li><a href="/docs/components/modal/">Modal</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="docs-eyebrow">Navigation</p>
-          <ul>
-            <li><a href="/docs/components/tabs/">Tabs</a></li>
-            <li><a href="/docs/components/breadcrumb/">Breadcrumb</a></li>
-            <li><a href="/docs/components/sidebar/">Sidebar</a></li>
-            <li><a href="/docs/components/mode-switcher/">Color mode switcher</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="docs-eyebrow">Media and motion</p>
-          <ul>
-            <li><a href="/docs/components/player/">Player</a></li>
-            <li><a href="/docs/components/keyframes/">Keyframes</a></li>
-          </ul>
-        </div>
-        <div>
-          <p class="docs-eyebrow">Helpers</p>
-          <ul>
-            <li><a href="/docs/components/utilities/">Utilities</a></li>
-            <li><a href="/docs/get-started/javascript/">JavaScript modules</a></li>
-          </ul>
-        </div>
-      </nav>
-
-    </section>
-
-      <!-- ---------- Settings ---------- -->
+    <h2 id="hub-more">More reference</h2>
+    <ul class="docs-hub__more">
+      <li><a href="/docs/tokens/">Tokens</a> <span>Colors, spacing, type and motion, in light, dark and high contrast.</span></li>
+      <li><a href="/docs/platform/">Platform</a> <span>Page patterns: shell, header, sections and footer.</span></li>
+      <li><a href="/docs/html/">HTML elements</a> <span>How CAI styles each of the 116 HTML elements.</span></li>
+      <li><a href="/docs/accessibility/">Accessibility</a> <span>What is tested, what is not, and the known issues.</span></li>
+    </ul>

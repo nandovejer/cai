@@ -53,7 +53,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 
 `tokens` is standalone; `core` requires `tokens`; `platform` requires `core` and `tokens`. The contract is expressed as required `peerDependencies` with literal ranges (never `workspace:`), and the three packages share one version (changesets `fixed`).
 
-- Nothing in `packages/*/src` may reference docs-app hooks (`.docs-*`, `#demo-form`, …). Docs-only behavior lives in `apps/docs/docs.js`.
+- Nothing in `packages/*/src` may reference docs-app hooks (`.docs-*`, `#demo-form`, …). Docs-only behavior lives in `apps/docs/reference.js`.
 - `pnpm check:pack` verifies what each tarball ships against `packages/<name>/pack-files.txt`; after intentionally adding or removing a published file run `node scripts/check-pack.js --update`.
 - Releases: add a changeset (`pnpm changeset`); never run `npm publish` by hand.
 
@@ -100,7 +100,7 @@ Edit `packages/core/src/settings/_settings.css` only, then regenerate `dist/cai.
 1. Put the rule in the file of its MDN category under `packages/core/src/elements/` (`document`, `sections`, `text`, `inline`, `media`, `forms`, `interactive`).
 2. Wrap the whole selector in `:where()` (specificity 0), so any `.cai-*` class or the consumer's own rule wins. A pseudo-element goes outside: `:where(dialog)::backdrop`. There is no exception (red line 11): stylelint's `cai/no-bare-element` rule fails on any bare type selector in `packages/`.
 3. Elements that already have a component (`table`, `input`, `select`, `button`) are styled through its class, not here.
-4. Update the element's `styledBy` in `tests/fixtures/html-elements.json` and its card in `apps/html-elements/index.html`, then run `pnpm core:build` and `pnpm test:ui`.
+4. Update the element's `styledBy` in `tests/fixtures/html-elements.json` and its card in the HTML elements chapter of `apps/docs/index.html` (`#html-elements`), then run `pnpm core:build` and `pnpm test:ui`.
 
 ---
 

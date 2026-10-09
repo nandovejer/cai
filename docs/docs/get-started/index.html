@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tokens – CAI documentation</title>
-  <meta name="description" content="Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.">
+  <title>Install CAI – Get started – CAI documentation</title>
+  <meta name="description" content="Three layers, adopted in order. Stop at the level you need: each layer requires the ones below it and nothing above it.">
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
@@ -47,21 +47,14 @@
       </ul>
     </div>
     <ul class="docs-nav">
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/get-started/">Get started</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/components/">Components</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" aria-current="page" href="../../docs/tokens/">Tokens</a>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="page" href="../../docs/get-started/">Get started</a>
         <ul class="docs-nav__pages">
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/color/">Color</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/spacing/">Spacing and sizing</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/typography/">Typography</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/modes/">Color modes and themes</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/radius/">Radius</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/shadows/">Shadows</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/motion/">Motion</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/layout/">Layers and breakpoints</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/palette/">Color palette</a></li>
+          <li><a class="cai-sidebar__link" href="../../docs/get-started/structure/">How CAI is organised</a></li>
+          <li><a class="cai-sidebar__link" href="../../docs/get-started/javascript/">JavaScript modules</a></li>
         </ul>
       </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/tokens/">Tokens</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/platform/">Platform</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/html/">HTML elements</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/accessibility/">Accessibility</a></li>
@@ -74,94 +67,92 @@
       <div class="cai-breadcrumb">
         <a class="cai-breadcrumb__item" href="../../docs/">Docs</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Tokens</span>
+        <span class="cai-breadcrumb__item" aria-current="page">Install CAI</span>
       </div>
     </nav>
-    <h1 class="docs-title">Tokens</h1>
+    <h1 class="docs-title">Install CAI</h1>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#layer-model">Layer model</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#component-token-rule">Component token rule</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#solid-fills">Solid fills</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#group-families">Token families</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#level-1-tokens-only">Level 1: tokens only</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#level-2-tokens-and-core">Level 2: tokens and core</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#level-3-tokens-core-and-platform">Level 3: tokens, core and platform</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#notes">Notes</a></li>
       </ul>
     </details>
   </nav>
   <div class="docs-body">
-    <p class="docs-eyebrow">Level 1 · @cai-ds/tokens</p>
+    <div class="docs-block" id="installation">
+      <p class="docs-lead">Three layers, adopted in order. Stop at the level you need: each layer requires the ones below it and nothing above it.</p>
+      <div class="cai-alert cai-alert--warning" role="note">
+        <div class="cai-alert__icon" aria-hidden="true">!</div>
+        <div>
+          <div class="cai-alert__title">Beta</div>
+          <div class="cai-alert__body">Names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.</div>
+        </div>
+      </div>
+      <div class="docs-prose">
+        <h2 id="level-1-tokens-only" class="docs-prose__title">Level 1: tokens only</h2>
+        <p>CSS custom properties (primitives + light, dark and high-contrast semantics) and one MIT-licensed font, ET Book, for headings. The <code class="cai-code-inline">vejer</code> identity also sets running text in it. Text and code use the system fonts. No other CAI package needed.</p>
+        <div class="cai-platform-command-block">
+          <code class="cai-platform-command-block__cmd">
+            <span class="cai-platform-command-block__prefix">$</span>
+            pnpm add @cai-ds/tokens
+          </code>
+          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens" aria-label="Copy tokens install command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 1"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;</code></pre>
+        <p>Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens without any <code class="cai-code-inline">@font-face</code>.</p>
+      </div>
 
-    <p class="docs-lead">Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.</p>
+      <div class="docs-prose">
+        <h2 id="level-2-tokens-and-core" class="docs-prose__title">Level 2: tokens and core</h2>
+        <p>Components and optional JS behaviors. Core requires tokens, loaded first.</p>
+        <div class="cai-platform-command-block">
+          <code class="cai-platform-command-block__cmd">
+            <span class="cai-platform-command-block__prefix">$</span>
+            pnpm add @cai-ds/tokens @cai-ds/core
+          </code>
+          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core" aria-label="Copy tokens and core install command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 2"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
 
-    <div class="docs-prose">
-            <h2 id="layer-model" class="docs-prose__title">Layer model</h2>
-            <pre class="cai-code-block" data-lang="text"><code>packages/tokens/tokens.json
-      -> source of primitives (blue-10..100, gray-10..100, spacing, radius...)
+&lt;!-- Optional JS behaviors --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+      </div>
 
-    packages/tokens/dist/cai-tokens.css
-      Layer 1: generated primitives
-      Layer 2: handwritten semantics per theme (light/dark/high-contrast)</code></pre>
-          </div>
+      <div class="docs-prose">
+        <h2 id="level-3-tokens-core-and-platform" class="docs-prose__title">Level 3: tokens, core and platform</h2>
+        <p>App-shell patterns. Platform requires both core and tokens.</p>
+        <div class="cai-platform-command-block">
+          <code class="cai-platform-command-block__cmd">
+            <span class="cai-platform-command-block__prefix">$</span>
+            pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform
+          </code>
+          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform" aria-label="Copy full stack install command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 3"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.css&quot;&gt;
 
-    <div class="docs-prose">
-            <h2 id="component-token-rule" class="docs-prose__title">Component token rule</h2>
-            <pre class="cai-code-block" data-lang="css"><code>/* Correct: semantic tokens */
-    color: var(--cai-text-primary);
-    background: var(--cai-brand-primary);
-    border-color: var(--cai-divider);
+&lt;!-- Optional JS behaviors --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+      </div>
 
-    /* Incorrect: primitive scales */
-    color: var(--cai-gray-100);
-    background: var(--cai-blue-60);</code></pre>
-          </div>
+      <div class="docs-prose">
+        <h2 id="notes" class="docs-prose__title">Notes</h2>
+        <ul>
+          <li>npm and pnpm install the required lower layers automatically; Yarn only warns, so list every package as above.</li>
+          <li>Pin exact versions on a CDN and add an <code class="cai-code-inline">integrity</code> hash in production.</li>
+          <li>A console warning tells you when a layer is loaded without the one below it.</li>
+        </ul>
+      </div>
+    
+    </div>
 
-    <div class="docs-prose" id="tokens-fills">
-            <h2 id="solid-fills" class="docs-prose__title">Solid fills</h2>
-            <p>Surfaces that carry <code class="cai-code-inline">--cai-text-on-fill</code> use the fill tokens, not the brand or status color directly: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>. In light and high contrast they equal the brand and danger colors; in dark mode they are a step darker, because the dark brand is light enough to be read as text and white on it falls below 4.5:1.</p>
-          </div>
-  <section class="docs-gallery" aria-labelledby="group-families">
-    <h2 id="group-families">Token families</h2>
-    <ul class="docs-gallery__cards">
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/color/">Color</a></h3>
-        <p class="docs-card__desc">The semantic colour tokens, each in light, dark and high contrast side by side.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/spacing/">Spacing and sizing</a></h3>
-        <p class="docs-card__desc">The space scale and the control heights.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/typography/">Typography</a></h3>
-        <p class="docs-card__desc">Font stacks, the type scale and the minimum sizes.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/modes/">Color modes and themes</a></h3>
-        <p class="docs-card__desc">Switch light, dark and high contrast, use the shipped themes, or make your own.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/radius/">Radius</a></h3>
-        <p class="docs-card__desc">The corner radius scale.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/shadows/">Shadows</a></h3>
-        <p class="docs-card__desc">The elevation scale.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/motion/">Motion</a></h3>
-        <p class="docs-card__desc">Durations and easings, and how reduced motion stops them. Ships with @cai-ds/core.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/layout/">Layers and breakpoints</a></h3>
-        <p class="docs-card__desc">The z-index scale, content widths and breakpoints. Ships with @cai-ds/core.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/palette/">Color palette</a></h3>
-        <p class="docs-card__desc">The primitive colour scales, for theme authors: components never use them.</p>
-      </li>
-    </ul>
-  </section>
   </div>
 
   </main>

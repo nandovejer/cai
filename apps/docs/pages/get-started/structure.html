@@ -1,0 +1,65 @@
+<!-- cai:page
+title: How CAI is organised
+description: The three packages, the CSS layers and the JavaScript entry point.
+area: get-started
+order: 2
+-->
+    <section class="docs-block" id="packages" aria-labelledby="packages-title">
+      <h2 class="docs-chapter__title" id="packages-title">Package boundaries</h2>
+      <p class="docs-lead">One direction only: each package depends on the ones above it in this list.</p>
+      <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Package dependency chain"><code>@cai-ds/tokens   -> primitives + semantic token contracts (standalone)
+      ↓ required by
+@cai-ds/core     -> reusable CSS components + optional JS behaviors
+      ↓ required by
+@cai-ds/platform -> page and app-shell patterns</code></pre>
+      <p>Platform can use core and tokens; core can use tokens; nothing in tokens or core may use platform. The packages declare this as required peer dependencies, and a console warning tells you when a layer is loaded without the one below it.</p>
+    
+    </section>
+
+    <p class="docs-block">Settings, base styles, layout objects, <span data-count="components">20</span> components and utilities, layered in ITCSS order. Interactive components name the optional JS module that drives them.</p>
+
+    <section class="docs-block" id="core-architecture" aria-labelledby="core-architecture-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="core-architecture-title">Architecture</h2>
+            <code class="docs-demo__file">packages/core/src</code>
+          </div>
+          <div class="docs-prose">
+            <h3 class="docs-prose__title">CSS architecture (ITCSS)</h3>
+            <pre class="cai-code-block" data-lang="text"><code>packages/core/src/
+      settings/_settings.css
+      generic/_reset.css
+      elements/_elements.css
+      objects/_objects.css
+      components/_components.css
+      utilities/_utilities.css</code></pre>
+          </div>
+
+          <div class="docs-prose">
+            <h3 class="docs-prose__title">JS behavior entrypoint</h3>
+            <pre class="cai-code-block" data-lang="js"><code>import "/packages/core/dist/cai.js";
+
+    // Includes helpers for:
+    // - theme persistence
+    // - copy buttons
+    // - tabs and media player bindings
+    // - syntax-highlight utility for code blocks</code></pre>
+          </div>
+
+          <div class="docs-prose">
+            <h3 class="docs-prose__title">Minimal page skeleton</h3>
+            <pre class="cai-code-block" data-lang="html"><code>&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
+    &lt;head&gt;
+      &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/tokens/dist/cai-tokens.css&quot;&gt;
+      &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/core/dist/cai.css&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Run action&lt;/button&gt;
+      &lt;div class=&quot;cai-field&quot;&gt;
+        &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
+        &lt;input id=&quot;email&quot; class=&quot;cai-input&quot; type=&quot;email&quot;&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre>
+          </div>
+        
+    </section>

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shadows – Tokens – CAI documentation</title>
-  <meta name="description" content="The elevation scale.">
+  <title>How CAI is organised – Get started – CAI documentation</title>
+  <meta name="description" content="The three packages, the CSS layers and the JavaScript entry point.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
@@ -47,21 +47,14 @@
       </ul>
     </div>
     <ul class="docs-nav">
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/tokens/">Tokens</a>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/get-started/">Get started</a>
         <ul class="docs-nav__pages">
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/color/">Color</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/spacing/">Spacing and sizing</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/typography/">Typography</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/modes/">Color modes and themes</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/radius/">Radius</a></li>
-          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/shadows/">Shadows</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/motion/">Motion</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/layout/">Layers and breakpoints</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/get-started/structure/">How CAI is organised</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/get-started/javascript/">JavaScript modules</a></li>
         </ul>
       </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/tokens/">Tokens</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/platform/">Platform</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
@@ -74,35 +67,79 @@
       <div class="cai-breadcrumb">
         <a class="cai-breadcrumb__item" href="../../../docs/">Docs</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <a class="cai-breadcrumb__item" href="../../../docs/tokens/">Tokens</a>
+        <a class="cai-breadcrumb__item" href="../../../docs/get-started/">Get started</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Shadows</span>
+        <span class="cai-breadcrumb__item" aria-current="page">How CAI is organised</span>
       </div>
     </nav>
-    <div class="docs-page-head__title">
-      <h1 class="docs-title">Shadows</h1>
-      <code class="docs-demo__file">tokens.json → shadow</code>
-    </div>
-    <p class="docs-lead">The elevation scale.</p>
+    <h1 class="docs-title">How CAI is organised</h1>
+    <p class="docs-lead">The three packages, the CSS layers and the JavaScript entry point.</p>
   </div>
 
   <div class="docs-body">
-    <div class="docs-block" id="t-shadow">
-          <div class="docs-demo__stage">
-            <div class="o-grid docs-shadows">
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-sm)">--cai-shadow-sm</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-md)">--cai-shadow-md</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-lg)">--cai-shadow-lg</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-icon)">--cai-shadow-icon</div>
-            </div>
+    <section class="docs-block" id="packages" aria-labelledby="packages-title">
+      <h2 class="docs-chapter__title" id="packages-title">Package boundaries</h2>
+      <p class="docs-lead">One direction only: each package depends on the ones above it in this list.</p>
+      <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Package dependency chain"><code>@cai-ds/tokens   -> primitives + semantic token contracts (standalone)
+      ↓ required by
+@cai-ds/core     -> reusable CSS components + optional JS behaviors
+      ↓ required by
+@cai-ds/platform -> page and app-shell patterns</code></pre>
+      <p>Platform can use core and tokens; core can use tokens; nothing in tokens or core may use platform. The packages declare this as required peer dependencies, and a console warning tells you when a layer is loaded without the one below it.</p>
+    
+    </section>
+
+    <p class="docs-block">Settings, base styles, layout objects, <span data-count="components">20</span> components and utilities, layered in ITCSS order. Interactive components name the optional JS module that drives them.</p>
+
+    <section class="docs-block" id="core-architecture" aria-labelledby="core-architecture-title">
+          <div class="docs-demo__head">
+            <h2 class="docs-demo__title" id="core-architecture-title">Architecture</h2>
+            <code class="docs-demo__file">packages/core/src</code>
+          </div>
+          <div class="docs-prose">
+            <h3 class="docs-prose__title">CSS architecture (ITCSS)</h3>
+            <pre class="cai-code-block" data-lang="text"><code>packages/core/src/
+      settings/_settings.css
+      generic/_reset.css
+      elements/_elements.css
+      objects/_objects.css
+      components/_components.css
+      utilities/_utilities.css</code></pre>
+          </div>
+
+          <div class="docs-prose">
+            <h3 class="docs-prose__title">JS behavior entrypoint</h3>
+            <pre class="cai-code-block" data-lang="js"><code>import "/packages/core/dist/cai.js";
+
+    // Includes helpers for:
+    // - theme persistence
+    // - copy buttons
+    // - tabs and media player bindings
+    // - syntax-highlight utility for code blocks</code></pre>
+          </div>
+
+          <div class="docs-prose">
+            <h3 class="docs-prose__title">Minimal page skeleton</h3>
+            <pre class="cai-code-block" data-lang="html"><code>&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
+    &lt;head&gt;
+      &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/tokens/dist/cai-tokens.css&quot;&gt;
+      &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/core/dist/cai.css&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+      &lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Run action&lt;/button&gt;
+      &lt;div class=&quot;cai-field&quot;&gt;
+        &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
+        &lt;input id=&quot;email&quot; class=&quot;cai-input&quot; type=&quot;email&quot;&gt;
+      &lt;/div&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;</code></pre>
           </div>
         
-    </div>
+    </section>
 
   </div>
   <ul class="docs-pager">
-    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/tokens/radius/">Previous: Radius</a></li>
-    <li class="docs-pager__next"><a rel="next" href="../../../docs/tokens/motion/">Next: Motion</a></li>
+    <li class="docs-pager__next"><a rel="next" href="../../../docs/get-started/javascript/">Next: JavaScript modules</a></li>
   </ul>
   </main>
 

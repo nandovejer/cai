@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shadows – Tokens – CAI documentation</title>
-  <meta name="description" content="The elevation scale.">
+  <title>JavaScript modules – Get started – CAI documentation</title>
+  <meta name="description" content="What each optional module does, how to import one, and what happens without JavaScript.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
@@ -47,21 +47,14 @@
       </ul>
     </div>
     <ul class="docs-nav">
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/tokens/">Tokens</a>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/get-started/">Get started</a>
         <ul class="docs-nav__pages">
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/color/">Color</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/spacing/">Spacing and sizing</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/typography/">Typography</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/modes/">Color modes and themes</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/radius/">Radius</a></li>
-          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/shadows/">Shadows</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/motion/">Motion</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/layout/">Layers and breakpoints</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/get-started/structure/">How CAI is organised</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/get-started/javascript/">JavaScript modules</a></li>
         </ul>
       </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/tokens/">Tokens</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/platform/">Platform</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
@@ -74,35 +67,49 @@
       <div class="cai-breadcrumb">
         <a class="cai-breadcrumb__item" href="../../../docs/">Docs</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <a class="cai-breadcrumb__item" href="../../../docs/tokens/">Tokens</a>
+        <a class="cai-breadcrumb__item" href="../../../docs/get-started/">Get started</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Shadows</span>
+        <span class="cai-breadcrumb__item" aria-current="page">JavaScript modules</span>
       </div>
     </nav>
-    <div class="docs-page-head__title">
-      <h1 class="docs-title">Shadows</h1>
-      <code class="docs-demo__file">tokens.json → shadow</code>
-    </div>
-    <p class="docs-lead">The elevation scale.</p>
+    <h1 class="docs-title">JavaScript modules</h1>
+    <p class="docs-lead">What each optional module does, how to import one, and what happens without JavaScript.</p>
   </div>
 
   <div class="docs-body">
-    <div class="docs-block" id="t-shadow">
-          <div class="docs-demo__stage">
-            <div class="o-grid docs-shadows">
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-sm)">--cai-shadow-sm</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-md)">--cai-shadow-md</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-lg)">--cai-shadow-lg</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-icon)">--cai-shadow-icon</div>
+    <div class="docs-block" id="c-js">
+          <details class="docs-fold" open data-fold-narrow>
+            <summary>All <span data-count="modules">11</span> JavaScript modules</summary>
+            <div class="docs-demo__stage">
+            <div class="cai-table-wrap" role="region" aria-label="JavaScript modules" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Module</th><th scope="col">What it does</th><th scope="col">Key exports</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Module"><div><code>cai.js</code></div></td><td data-label="What it does"><div>Entry: re-exports every module and initializes them all on load</div></td><td data-label="Key exports"><div>Everything below</div></td></tr>
+                  <tr><td data-label="Module"><div><code>theme.js</code></div></td><td data-label="What it does"><div>Color mode switching</div></td><td data-label="Key exports"><div><code>applyTheme</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>sidebar.js</code></div></td><td data-label="What it does"><div>Active link while scrolling, and closing the popover drawer after a link is followed</div></td><td data-label="Key exports"><div><code>initSidebar</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>clipboard.js</code></div></td><td data-label="What it does"><div>Copy with visual feedback</div></td><td data-label="Key exports"><div><code>copyToClipboard</code>, <code>initCopyButtons</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>modal.js</code></div></td><td data-label="What it does"><div>Fallback for the <code>command</code> and <code>commandfor</code> attributes in browsers without them</div></td><td data-label="Key exports"><div><code>initModals</code>, <code>supportsCommands</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>highlight.js</code></div></td><td data-label="What it does"><div>Dependency-free syntax highlight for code blocks</div></td><td data-label="Key exports"><div><code>highlightBlock</code>, <code>initHighlight</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>player.js</code></div></td><td data-label="What it does"><div>Video, audio and MIDI players with one UI</div></td><td data-label="Key exports"><div><code>mountPlayer</code>, <code>mountMidiPlayer</code>, <code>initPlayers</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>tabs.js</code></div></td><td data-label="What it does"><div>Tab activation and keyboard support</div></td><td data-label="Key exports"><div><code>activateTab</code>, <code>initTabs</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>i18n.js</code></div></td><td data-label="What it does"><div>Text the scripts write, in English and Spanish, chosen by the nearest <code>lang</code></div></td><td data-label="Key exports"><div><code>t</code>, <code>getLang</code>, <code>registerLocale</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>utils.js</code></div></td><td data-label="What it does"><div>Pure helpers</div></td><td data-label="Key exports"><div><code>formatTime</code>, <code>escapeHtml</code>, <code>calculateProgress</code></div></td></tr>
+                  <tr><td data-label="Module"><div><code>midi.js</code></div></td><td data-label="What it does"><div>MIDI parser and Web Audio scheduler, loaded on demand</div></td><td data-label="Key exports"><div><code>MidiPlayer</code></div></td></tr>
+                </tbody>
+              </table>
             </div>
           </div>
+          </details>
+          <p class="docs-demo__note">Importing a single module has no side effects until you call its <code class="cai-code-inline">init</code> function.</p>
         
     </div>
 
   </div>
   <ul class="docs-pager">
-    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/tokens/radius/">Previous: Radius</a></li>
-    <li class="docs-pager__next"><a rel="next" href="../../../docs/tokens/motion/">Next: Motion</a></li>
+    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/get-started/structure/">Previous: How CAI is organised</a></li>
   </ul>
   </main>
 

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tokens – CAI documentation</title>
-  <meta name="description" content="Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.">
+  <title>Accessibility statement – Accessibility – CAI documentation</title>
+  <meta name="description" content="What CAI aims for, what is checked on every change, and what has not been tested. Last reviewed on 9 October 2026.">
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
@@ -49,22 +49,10 @@
     <ul class="docs-nav">
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/get-started/">Get started</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/components/">Components</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" aria-current="page" href="../../docs/tokens/">Tokens</a>
-        <ul class="docs-nav__pages">
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/color/">Color</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/spacing/">Spacing and sizing</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/typography/">Typography</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/modes/">Color modes and themes</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/radius/">Radius</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/shadows/">Shadows</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/motion/">Motion</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/layout/">Layers and breakpoints</a></li>
-          <li><a class="cai-sidebar__link" href="../../docs/tokens/palette/">Color palette</a></li>
-        </ul>
-      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/tokens/">Tokens</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/platform/">Platform</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/html/">HTML elements</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/accessibility/">Accessibility</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="page" href="../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
 
@@ -74,94 +62,63 @@
       <div class="cai-breadcrumb">
         <a class="cai-breadcrumb__item" href="../../docs/">Docs</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Tokens</span>
+        <span class="cai-breadcrumb__item" aria-current="page">Accessibility statement</span>
       </div>
     </nav>
-    <h1 class="docs-title">Tokens</h1>
+    <h1 class="docs-title">Accessibility statement</h1>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#layer-model">Layer model</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#component-token-rule">Component token rule</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#solid-fills">Solid fills</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#group-families">Token families</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-a11y-target">Target</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-a11y-checked">What is checked on every change</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-a11y-not-tested">What has not been tested</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-a11y-known">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-a11y-report">Report a problem</a></li>
       </ul>
     </details>
   </nav>
   <div class="docs-body">
-    <p class="docs-eyebrow">Level 1 · @cai-ds/tokens</p>
+    <div class="docs-block docs-prose-chapter" id="accessibility">
+      <p class="docs-lead">What CAI aims for, what is checked on every change, and what has not been tested. Last reviewed on 9 October 2026.</p>
+      <h2 id="h-a11y-target">Target</h2>
+      <p>CAI aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to. A design system cannot make a service accessible by itself: how you use the components decides the result.</p>
 
-    <p class="docs-lead">Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.</p>
+      <h2 id="h-a11y-checked">What is checked on every change</h2>
+      <ul>
+        <li>An automated scan with axe-core of the home page and of every page of the documentation, in the light, dark and high-contrast modes. A serious or critical finding fails the build.</li>
+        <li>Keyboard use of the sidebar drawer, the modal dialog and the tabs.</li>
+        <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode.</li>
+        <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
+        <li>Forced colors: a focused button keeps a visible outline.</li>
+        <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
+        <li>Contrast of every token pair a component draws, by a script, in the three base modes and in each mode of the shipped custom themes (minimalist and vejer).</li>
+      </ul>
 
-    <div class="docs-prose">
-            <h2 id="layer-model" class="docs-prose__title">Layer model</h2>
-            <pre class="cai-code-block" data-lang="text"><code>packages/tokens/tokens.json
-      -> source of primitives (blue-10..100, gray-10..100, spacing, radius...)
+      <h2 id="h-a11y-not-tested">What has not been tested</h2>
+      <ul>
+        <li>Screen readers. No assistive technology has been used to test this release: NVDA, JAWS, VoiceOver, TalkBack and Orca have not been tried. Nothing here says a component works with them.</li>
+        <li>Speech recognition and screen magnifier software.</li>
+        <li>Zoom to 400 percent by hand. Only the 320 pixel width is measured.</li>
+        <li>Research with disabled people.</li>
+      </ul>
+      <p>Automated tools find only part of the problems. Treat this list as the gap, and test your own pages.</p>
 
-    packages/tokens/dist/cai-tokens.css
-      Layer 1: generated primitives
-      Layer 2: handwritten semantics per theme (light/dark/high-contrast)</code></pre>
-          </div>
+      <h2 id="h-a11y-known">Known issues</h2>
+      <ul>
+        <li>The tooltip cannot be dismissed with the Escape key. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
+        <li>The modal buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
+        <li>The MIDI player needs JavaScript and Web Audio. Without them it shows a message.</li>
+        <li>On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
+        <li>The button of the example form on the home page opens a popover that says nothing was sent; a status region repeats it for screen readers when JavaScript runs. This has not been tested with a screen reader.</li>
+      </ul>
 
-    <div class="docs-prose">
-            <h2 id="component-token-rule" class="docs-prose__title">Component token rule</h2>
-            <pre class="cai-code-block" data-lang="css"><code>/* Correct: semantic tokens */
-    color: var(--cai-text-primary);
-    background: var(--cai-brand-primary);
-    border-color: var(--cai-divider);
+      <h2 id="h-a11y-report">Report a problem</h2>
+      <p>If something does not work for you, <a href="https://github.com/nandovejer/cai/issues">open an issue on GitHub</a> and say what you were trying to do, the browser and the assistive technology you use.</p>
+    
+    </div>
 
-    /* Incorrect: primitive scales */
-    color: var(--cai-gray-100);
-    background: var(--cai-blue-60);</code></pre>
-          </div>
-
-    <div class="docs-prose" id="tokens-fills">
-            <h2 id="solid-fills" class="docs-prose__title">Solid fills</h2>
-            <p>Surfaces that carry <code class="cai-code-inline">--cai-text-on-fill</code> use the fill tokens, not the brand or status color directly: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>. In light and high contrast they equal the brand and danger colors; in dark mode they are a step darker, because the dark brand is light enough to be read as text and white on it falls below 4.5:1.</p>
-          </div>
-  <section class="docs-gallery" aria-labelledby="group-families">
-    <h2 id="group-families">Token families</h2>
-    <ul class="docs-gallery__cards">
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/color/">Color</a></h3>
-        <p class="docs-card__desc">The semantic colour tokens, each in light, dark and high contrast side by side.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/spacing/">Spacing and sizing</a></h3>
-        <p class="docs-card__desc">The space scale and the control heights.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/typography/">Typography</a></h3>
-        <p class="docs-card__desc">Font stacks, the type scale and the minimum sizes.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/modes/">Color modes and themes</a></h3>
-        <p class="docs-card__desc">Switch light, dark and high contrast, use the shipped themes, or make your own.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/radius/">Radius</a></h3>
-        <p class="docs-card__desc">The corner radius scale.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/shadows/">Shadows</a></h3>
-        <p class="docs-card__desc">The elevation scale.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/motion/">Motion</a></h3>
-        <p class="docs-card__desc">Durations and easings, and how reduced motion stops them. Ships with @cai-ds/core.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/layout/">Layers and breakpoints</a></h3>
-        <p class="docs-card__desc">The z-index scale, content widths and breakpoints. Ships with @cai-ds/core.</p>
-      </li>
-      <li class="docs-card">
-        <h3 class="docs-card__title"><a href="../../docs/tokens/palette/">Color palette</a></h3>
-        <p class="docs-card__desc">The primitive colour scales, for theme authors: components never use them.</p>
-      </li>
-    </ul>
-  </section>
   </div>
 
   </main>

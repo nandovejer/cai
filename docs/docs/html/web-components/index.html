@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Components – HTML elements – CAI documentation</title>
+  <meta name="description" content="The two HTML elements behind custom elements: a template that is parsed but not rendered, and a slot that shows light-DOM content inside a shadow tree.">
+  <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <script type="module" crossorigin src="../../../assets/site-header-T8jVbU25.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CzKDnCsw.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWg7wXWy.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BNQQrHe0.css">
+</head>
+<body class="o-shell docs-page">
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/#core">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="cai-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#installation">Get started</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#core">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#tokens">Tokens</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#platform">Platform</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/html/">HTML elements</a>
+        <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../../docs/html/forms/">Forms</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/text/">Text blocks</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/inline/">Inline text</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/structure/">Page structure</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/tables/">Tables</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/media/">Images and media</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/widgets/">Built-in widgets</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/embeds/">Frames and embeds</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/svg-mathml/">SVG and MathML</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/scripting/">Script and canvas</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/edits/">Tracked edits</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/metadata/">Page metadata</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/html/document/">Document root</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/html/web-components/">Web Components</a></li>
+        </ul>
+      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#accessibility">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <div class="cai-breadcrumb">
+        <a class="cai-breadcrumb__item" href="../../../docs/">Docs</a>
+        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
+        <a class="cai-breadcrumb__item" href="../../../docs/html/">HTML elements</a>
+        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
+        <span class="cai-breadcrumb__item" aria-current="page">Web Components</span>
+      </div>
+    </nav>
+    <h1 class="docs-title">Web Components</h1>
+  </div>
+
+  <div class="docs-body">
+    <div class="docs-block elements-section" id="cat-web-components" data-category="web-components">
+        <p class="elements-section__lead">The two HTML elements behind custom elements: a template that is parsed but not rendered, and a slot that shows light-DOM content inside a shadow tree.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-slot" data-element="slot" aria-labelledby="el-slot-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-slot-title"><code>&lt;slot&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/slot">MDN<span class="u-sr-only"> reference for the slot element</span></a>
+          </div>
+          <p class="elements-card__desc">A gap in the shadow tree of a web component that the page fills with its own markup. A named slot takes only the elements whose slot attribute matches its name.</p>
+          <div class="elements-stage">
+            <template id="d-slot-template">
+              <style>
+                article { padding: var(--cai-space-sm); border: 1px solid var(--cai-divider); }
+                h4 { margin-bottom: var(--cai-space-2xs); }
+              </style>
+              <article>
+                <h3><slot name="title">Untitled</slot></h3>
+                <slot>No content.</slot>
+              </article>
+            </template>
+
+            <demo-card>
+              <span slot="title">Hello from the light DOM</span>
+              This text fills the default slot.
+            </demo-card>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-slot" aria-label="Copy the slot markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="slot markup"><code id="code-slot">&lt;template id=&quot;d-slot-template&quot;&gt;
+  &lt;style&gt;
+    article { padding: var(--cai-space-sm); border: 1px solid var(--cai-divider); }
+    h4 { margin-bottom: var(--cai-space-2xs); }
+  &lt;/style&gt;
+  &lt;article&gt;
+    &lt;h4&gt;&lt;slot name=&quot;title&quot;&gt;Untitled&lt;/slot&gt;&lt;/h4&gt;
+    &lt;slot&gt;No content.&lt;/slot&gt;
+  &lt;/article&gt;
+&lt;/template&gt;
+
+&lt;demo-card&gt;
+  &lt;span slot=&quot;title&quot;&gt;Hello from the light DOM&lt;/span&gt;
+  This text fills the default slot.
+&lt;/demo-card&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept. The custom element takes a few lines of script. Design tokens cross the shadow boundary, so the card follows the color mode.</p>
+        </article>
+
+        <article class="elements-card" id="el-template" data-element="template" aria-labelledby="el-template-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-template-title"><code>&lt;template&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template">MDN<span class="u-sr-only"> reference for the template element</span></a>
+          </div>
+          <p class="elements-card__desc">Markup the browser reads but does not show, ready to be copied into the page with script.</p>
+          <div class="elements-stage">
+            <template id="d-template">
+              <li>Item <span data-n></span></li>
+            </template>
+
+            <button class="cai-btn cai-btn--outline" type="button" id="d-template-add">Add an item</button>
+            <ul id="d-template-list"></ul>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-template" aria-label="Copy the template markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="template markup"><code id="code-template">&lt;template id=&quot;d-template&quot;&gt;
+  &lt;li&gt;Item &lt;span data-n&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/template&gt;
+
+&lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; id=&quot;d-template-add&quot;&gt;Add an item&lt;/button&gt;
+&lt;ul id=&quot;d-template-list&quot;&gt;&lt;/ul&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+        </div>
+      
+    </div>
+
+  </div>
+  <ul class="docs-pager">
+    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/html/document/">Previous: Document root</a></li>
+  </ul>
+  </main>
+
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-platform-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-platform-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/#accessibility">Accessibility statement</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

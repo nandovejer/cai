@@ -211,11 +211,12 @@ test.describe('Landing page', () => {
           ),
         );
         const before = (a, b) => a.bottom <= b.top + 1 || (Math.abs(a.top - b.top) < a.height && a.left < b.left);
-        // At 768px and below: menu button, brand (the site links are in the
-        // drawer). Above: brand, site links.
+        // At 768px and below: menu button, brand, then Components, the one
+        // site link left in the row (the others are in the drawer). Above:
+        // brand, site links.
         if (width <= 768) {
           expect(before(menu, brand)).toBe(true);
-          expect(nav.width).toBe(0);
+          expect(before(brand, nav)).toBe(true);
         } else {
           expect(menu.width).toBe(0);
           expect(before(brand, nav)).toBe(true);
@@ -233,7 +234,7 @@ test.describe('Landing page', () => {
       const local = await drawer.locator('a[href^="#"]').evaluateAll((links) => links.map((a) => a.getAttribute('href')));
       expect(local.length).toBeGreaterThan(3);
       for (const href of local) await expect(page.locator(href), href).toHaveCount(1);
-      await expect(drawer.locator('a[href^="/docs/#"]')).toHaveCount(6);
+      await expect(drawer.locator('a[href^="/docs/"]:not([href="/docs/"])')).toHaveCount(6);
     });
 
     test('content is centred at 1440px', async ({ page }) => {

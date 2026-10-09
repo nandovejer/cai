@@ -17,6 +17,15 @@ if (pagesRoot !== resolve(__dirname, "docs") && !insideTmp) {
 }
 
 /**
+ * The site's path on GitHub Pages (https://<user>.github.io/cai/). Only the
+ * not-found page uses it, as its <base href>: GitHub Pages serves /404.html
+ * at whatever URL was missing, so its relative URLs need a fixed base. A fork
+ * or a custom domain changes it ("/" for a domain of its own); if it is wrong,
+ * the 404 page is still readable, only unstyled.
+ */
+export const PAGES_BASE = "/cai/";
+
+/**
  * Content-Security-Policy for the published GitHub Pages site. Pages cannot
  * send headers, so it goes in a <meta>; only the pages build gets it (the
  * dev server needs its own websocket and client). Scripts come only from
@@ -60,7 +69,7 @@ export default defineConfig(({ mode }) => {
     publicDir: false,
     // The site's routes, dev server, layouts and partials, link check and the
     // move of each HTML file to its route: scripts/docs-site/plugin.js
-    plugins: [docsSite({ repoRoot: __dirname, relative: pages, outRoot }), ...(pages ? [pagesCsp()] : [])],
+    plugins: [docsSite({ repoRoot: __dirname, relative: pages, outRoot, pagesBase: PAGES_BASE }), ...(pages ? [pagesCsp()] : [])],
     server: {
       open: "/",
       fs: {

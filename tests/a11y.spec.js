@@ -5,14 +5,18 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { notFoundRoute, routeOf, routes } from './helpers/docs-site.js';
 
-const APPS = ['/', '/docs/'];
+// Every page in Chromium; a sample of layouts in Firefox and WebKit (a11y.md TEST-1)
+const APPS = ['/', ...routes(), notFoundRoute];
+const SAMPLE = ['/', '/docs/', '/docs/components/', routeOf('c-button'), '/docs/a-z/', routeOf('h-a11y-target')];
 const THEMES = ['light', 'dark', 'high-contrast'];
 const BLOCKING = ['serious', 'critical'];
 
 for (const app of APPS) {
   for (const theme of THEMES) {
-    test(`axe: ${app} in ${theme}`, async ({ page }, testInfo) => {
+    test(`axe: ${app} in ${theme}`, async ({ page, browserName }, testInfo) => {
+      test.skip(browserName !== 'chromium' && !SAMPLE.includes(app), 'sampled outside Chromium');
       await page.goto(app);
       await page.evaluate((t) => {
         document.documentElement.dataset.theme = t;

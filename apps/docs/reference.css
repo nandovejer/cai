@@ -1,6 +1,6 @@
 /* ==========================================================================
    CAI — DOCUMENTATION PAGE
-   Consumer-side styles for apps/docs (the single documentation page),
+   Consumer-side styles for apps/docs (the pages of the documentation site),
    written the way any level-3 consumer would: on top of tokens + core +
    platform. The page shell is core's .o-shell with a .cai-sidebar, under
    the site header shared with the home page (apps/landing/site-header.css).
@@ -80,9 +80,13 @@
    Page: site links, header, chapters, prose
    -------------------------------------------------------------------------- */
 
+/* main: the page head (breadcrumb, h1, lead), "On this page", the content
+   and Previous / Next. From 1280px "On this page" is a rail at the end. */
 .docs-main {
+  /* .o-main scrolls on its own; here the document scrolls, so the rail can stick */
+  overflow-y: visible;
   display: grid;
-  gap: var(--cai-space-3xl);
+  gap: var(--cai-space-xl);
   align-content: start;
   padding-block: var(--cai-space-lg) var(--cai-space-3xl);
 }
@@ -92,12 +96,448 @@
   scroll-margin-top: var(--cai-space-lg);
 }
 
-/* The sections already carry their own width and gutter */
-.docs-main > :not(.docs-wrap) {
+.docs-main > * {
   width: 100%;
   max-width: var(--cai-content-max);
   margin-inline: auto;
   padding-inline: var(--cai-space-xl);
+}
+
+.docs-body {
+  display: grid;
+  gap: var(--cai-space-2xl);
+  align-content: start;
+}
+
+/* A category page needs no rule to mark where the category starts */
+.docs-body > .elements-section {
+  padding-block-start: 0;
+  border-block-start: 0;
+}
+
+/* Chapters that carry their own gutter (the documentation home) */
+.docs-body > .docs-wrap {
+  padding-inline: 0;
+}
+
+.docs-page-head {
+  display: grid;
+  gap: var(--cai-space-sm);
+}
+
+.docs-page-head__title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--cai-space-2xs) var(--cai-space-sm);
+}
+
+.docs-title {
+  font-size: var(--cai-text-4xl);
+  line-height: 1.1;
+}
+
+.docs-page-head__title .docs-title {
+  margin-inline-end: var(--cai-space-xs);
+}
+
+/* A long URL or class name in running text wraps instead of widening the page */
+:where(.docs-body) :where(p, li, td) code {
+  overflow-wrap: anywhere;
+}
+
+/* Reference pages: a section, its h2 and its blocks */
+.docs-block,
+.docs-component {
+  display: grid;
+  gap: var(--cai-space-md);
+  align-content: start;
+}
+
+:where(.docs-body) h2 {
+  font-size: var(--cai-text-2xl);
+  margin-block-start: var(--cai-space-md);
+}
+
+/* A component page: the live example, then its guidance */
+.docs-example {
+  display: grid;
+  gap: var(--cai-space-md);
+  padding: var(--cai-space-md);
+  border: 1px solid var(--cai-divider);
+  background: var(--cai-surface);
+}
+
+.docs-component > .docs-guide {
+  border-block-start: 0;
+  padding-block-start: 0;
+}
+
+.docs-component .docs-guide__title {
+  margin-block-start: var(--cai-space-lg);
+  font-family: var(--cai-font-heading);
+  font-size: var(--cai-text-2xl);
+  font-weight: 400;
+}
+
+/* --------------------------------------------------------------------------
+   "On this page": a closed <details> under the page head; from 1280px a
+   rail at the end of the row, opened by the docs script, with the section
+   in view marked by weight and a start border (core's initSidebar).
+   -------------------------------------------------------------------------- */
+
+.docs-onpage__fold {
+  margin: 0;
+}
+
+.docs-onpage__title {
+  font-size: var(--cai-text-md);
+}
+
+.docs-onpage__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-inline-start: 1px solid var(--cai-divider);
+}
+
+.docs-onpage .cai-sidebar__link {
+  margin-inline-start: -1px;
+  padding: var(--cai-space-2xs) var(--cai-space-sm);
+  border-inline-start: 2px solid transparent;
+  font-size: var(--cai-text-md);
+  color: var(--cai-text-secondary);
+}
+
+.docs-onpage .cai-sidebar__link:hover {
+  background: var(--cai-surface-muted);
+  color: var(--cai-text-primary);
+}
+
+.docs-onpage .docs-onpage__sub .cai-sidebar__link {
+  padding-inline-start: var(--cai-space-lg);
+}
+
+.docs-onpage .cai-sidebar__link.is-active,
+.docs-onpage .cai-sidebar__link[aria-current="true"] {
+  border-inline-start-color: var(--cai-brand-primary);
+  background: none;
+  color: var(--cai-text-primary);
+  font-weight: 600;
+}
+
+@media (min-width: 1280px) {
+  .docs-main:has(> .docs-onpage) {
+    grid-template-columns: minmax(0, 1fr) 13rem;
+    column-gap: 0;
+  }
+
+  .docs-main:has(> .docs-onpage) > * {
+    grid-column: 1;
+  }
+
+  .docs-main > .docs-onpage {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    align-self: start;
+    position: sticky;
+    inset-block-start: calc(var(--site-header-h) + var(--cai-space-lg));
+    max-block-size: calc(100vh - var(--site-header-h) - var(--cai-space-2xl));
+    overflow-y: auto;
+    padding-inline: 0 var(--cai-space-md);
+  }
+
+  /* A rail, not a box */
+  .docs-onpage__fold,
+  .docs-onpage__fold[open] {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .docs-onpage__title {
+    margin: 0 0 var(--cai-space-xs);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Previous / Next, galleries, the A–Z index, the documentation home
+   -------------------------------------------------------------------------- */
+
+.docs-pager {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cai-space-sm) var(--cai-space-lg);
+  border-block-start: 1px solid var(--cai-divider);
+  padding-block-start: var(--cai-space-md);
+}
+
+.docs-pager a,
+.docs-gallery__rows a,
+.docs-hub__more a,
+.docs-az__list a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--cai-control-sm);
+}
+
+.docs-pager__next {
+  margin-inline-start: auto;
+}
+
+.docs-gallery {
+  display: grid;
+  gap: var(--cai-space-md);
+  align-content: start;
+}
+
+.docs-gallery__cards,
+.docs-gallery__rows,
+.docs-hub__cards,
+.docs-hub__more,
+.docs-az__list,
+.docs-az__letters ul,
+.docs-not-found__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.docs-gallery__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: var(--cai-space-md);
+}
+
+.docs-gallery__rows,
+.docs-hub__more {
+  display: grid;
+  gap: var(--cai-space-2xs);
+}
+
+.docs-gallery__desc,
+.docs-hub__more span {
+  color: var(--cai-text-secondary);
+}
+
+/* A card is one link: its name, stretched over the card (HUB-1), with a
+   focus ring round the whole card (HUB-4). */
+.docs-card,
+.docs-hub-card {
+  position: relative;
+  display: grid;
+  gap: var(--cai-space-xs);
+  align-content: start;
+  padding: var(--cai-space-md);
+  border: 1px solid var(--cai-divider);
+  background: var(--cai-surface);
+}
+
+.docs-card:hover,
+.docs-hub-card:hover {
+  border-color: var(--cai-outline);
+  box-shadow: var(--cai-shadow-sm);
+}
+
+.docs-card__title,
+.docs-hub-card__title {
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-lg);
+  font-weight: 600;
+}
+
+.docs-card__title a::after,
+.docs-hub-card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* The link keeps its own ring; the card gets one too */
+.docs-card__title a:focus-visible::after,
+.docs-hub-card__title a:focus-visible::after {
+  outline: 2px solid var(--cai-focus-ring);
+  outline-offset: 2px;
+}
+
+.docs-card__desc {
+  font-size: var(--cai-text-md);
+  color: var(--cai-text-secondary);
+}
+
+/* The thumbnail: a reduced, inert specimen (HUB-2) */
+.docs-card__thumb {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cai-space-xs);
+  min-block-size: 6rem;
+  padding: var(--cai-space-sm);
+  background: var(--cai-surface-muted);
+}
+
+/* Parts of the thumbnails that are not a component of their own */
+.docs-thumb__card {
+  display: grid;
+  gap: var(--cai-space-2xs);
+  font-size: var(--cai-text-sm);
+}
+
+.docs-thumb__dialog {
+  box-shadow: var(--cai-shadow-md);
+}
+
+.docs-thumb__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cai-space-xs);
+}
+
+.docs-thumb__row .cai-progress {
+  inline-size: 6rem;
+}
+
+.docs-thumb__figure,
+.docs-thumb__field {
+  display: grid;
+  gap: var(--cai-space-2xs);
+  font-size: var(--cai-text-sm);
+}
+
+.docs-thumb__caption {
+  color: var(--cai-text-secondary);
+}
+
+.docs-thumb__label {
+  font-weight: 600;
+}
+
+.docs-thumb__sidebar {
+  display: grid;
+  gap: var(--cai-space-2xs);
+  min-inline-size: 8rem;
+  padding: var(--cai-space-xs);
+  background: var(--cai-sidebar-bg);
+  color: var(--cai-sidebar-text);
+  font-size: var(--cai-text-sm);
+}
+
+.docs-thumb__table {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  border: 1px solid var(--cai-divider);
+  font-size: var(--cai-text-sm);
+  background: var(--cai-surface);
+}
+
+.docs-thumb__table > * {
+  padding: var(--cai-space-3xs) var(--cai-space-sm);
+  border-block-end: 1px solid var(--cai-divider);
+}
+
+.docs-thumb__table > :nth-child(-n + 2) {
+  font-weight: 600;
+}
+
+.docs-thumb__tabs {
+  display: flex;
+  border-block-end: 1px solid var(--cai-divider);
+  font-size: var(--cai-text-sm);
+}
+
+.docs-thumb__tab {
+  padding: var(--cai-space-2xs) var(--cai-space-xs);
+  border-block-end: 2px solid transparent;
+}
+
+.docs-thumb__tab--on {
+  border-block-end-color: var(--cai-brand-primary);
+  font-weight: 600;
+}
+
+.docs-thumb__toast {
+  position: static;
+}
+
+.docs-thumb__tip {
+  display: grid;
+  justify-items: center;
+  gap: var(--cai-space-2xs);
+}
+
+.docs-thumb__bubble {
+  padding: var(--cai-space-3xs) var(--cai-space-xs);
+  background: var(--cai-surface-strong);
+  color: var(--cai-text-primary);
+  font-size: var(--cai-text-xs);
+}
+
+.docs-az__letters ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cai-space-2xs);
+}
+
+.docs-az__letters li > * {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cai-control-sm);
+  min-block-size: var(--cai-control-sm);
+}
+
+.docs-az__letters span {
+  color: var(--cai-text-secondary);
+}
+
+.docs-az__letter {
+  display: grid;
+  gap: var(--cai-space-xs);
+}
+
+.docs-az__list {
+  display: grid;
+  gap: 0 var(--cai-space-lg);
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+}
+
+.docs-az__kind {
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-secondary);
+}
+
+.docs-hub__beta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cai-space-xs);
+}
+
+.docs-hub__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--cai-space-lg);
+}
+
+.docs-hub-card {
+  padding: var(--cai-space-lg);
+}
+
+.docs-hub-card__title {
+  font-family: var(--cai-font-heading);
+  font-size: var(--cai-text-2xl);
+  font-weight: 400;
+}
+
+.docs-not-found__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cai-space-sm);
 }
 
 .docs-header {
@@ -144,6 +584,8 @@
 
 .docs-prose {
   display: grid;
+  /* One column that never grows past the page: a long code line scrolls inside its block */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--cai-space-sm);
   align-content: start;
 }
@@ -175,31 +617,62 @@
 }
 
 /* --------------------------------------------------------------------------
-   Page navigation: the long groups fold, with a native <details>
+   Sidebar: the six areas, the current one expanded (generated, see
+   scripts/docs-site). The current page and its area are marked by weight
+   and a start border, a real border so forced colors keep it (RL-6).
    -------------------------------------------------------------------------- */
 
-.docs-nav-group,
-.docs-nav-group[open] {
+.docs-nav,
+.docs-nav ul {
+  list-style: none;
   margin: 0;
-  border: 0;
-  border-radius: 0;
-  background: none;
+  padding: 0;
 }
 
-.docs-nav-group > summary {
-  margin: 0;
-  padding-block: var(--cai-space-2xs);
-  border-radius: 0;
+.docs-nav {
+  padding-block: var(--cai-space-sm);
 }
 
-.docs-nav-group > summary:hover {
-  background: var(--cai-sidebar-hover);
+.docs-nav .cai-sidebar__link {
+  border-inline-start: 3px solid transparent;
+}
+
+.docs-nav__area {
+  font-weight: 600;
+}
+
+.docs-nav__pages .cai-sidebar__link {
+  padding-inline-start: var(--cai-space-xl);
+}
+
+.docs-nav__pages .docs-nav__pages .cai-sidebar__link {
+  padding-inline-start: calc(var(--cai-space-xl) + var(--cai-space-sm));
+}
+
+.docs-nav__group > .cai-sidebar__section-label {
+  display: block;
+  margin: var(--cai-space-sm) 0 0;
+  padding-inline-start: var(--cai-space-xl);
+}
+
+/* The area of the current page: a thinner cue than the page itself */
+.docs-nav .cai-sidebar__link[aria-current="true"] {
+  border-inline-start-color: var(--cai-sidebar-label);
   color: var(--cai-sidebar-text-hover);
 }
 
-.docs-nav-group > summary:focus-visible {
-  outline: 2px solid var(--cai-sidebar-text-hover);
-  outline-offset: -2px;
+.docs-nav .cai-sidebar__link[aria-current="page"] {
+  border-inline-start-color: var(--cai-sidebar-text-hover);
+  background: var(--cai-sidebar-hover);
+  color: var(--cai-sidebar-text-hover);
+  font-weight: 600;
+}
+
+/* Rows of 44px on touch screens (2.5.5) */
+@media (pointer: coarse) {
+  .docs-nav .cai-sidebar__link {
+    min-block-size: var(--cai-control-lg);
+  }
 }
 
 /* --------------------------------------------------------------------------
@@ -908,6 +1381,7 @@ h2.docs-demo__title {
   }
 
   .docs-demo-grid,
+  .docs-hub__cards,
   .docs-decision-grid,
   .docs-cols-2,
   .docs-cols-3,
@@ -934,10 +1408,11 @@ h2.docs-demo__title {
     padding-inline: var(--cai-space-md);
   }
 
-  .docs-main > :not(.docs-wrap) {
+  .docs-main > * {
     padding-inline: var(--cai-space-md);
   }
 
+  .docs-title,
   .docs-header__title {
     font-size: var(--cai-text-2xl);
   }

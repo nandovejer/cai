@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{title}}</title>
+  <title>{{doctitle}}</title>
   <meta name="description" content="{{description}}">
   <link rel="icon" href="/apps/landing/assets/favicon.ico" sizes="32x32">
   <link rel="icon" href="/apps/landing/assets/favicon.svg" type="image/svg+xml">
@@ -20,10 +20,19 @@
 
   <!-- cai:include header -->
 
-  <!-- cai:include legacy-nav -->
-  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
+    <!-- cai:include site-links -->
+{{nav}}
+  </nav>
 
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+{{pagehead}}
+{{toc}}
+  <div class="docs-body">
 {{content}}
+{{generated}}
+  </div>
+{{pager}}
   </main>
 
   <!-- cai:include footer -->

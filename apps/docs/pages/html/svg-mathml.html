@@ -1,0 +1,74 @@
+<!-- cai:page
+title: SVG and MathML
+description: Two languages that live inside HTML. Both are parsed as part of the page and can be styled with the same tokens.
+area: html
+order: 9
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-svg-mathml" data-category="svg-mathml">
+        <p class="elements-section__lead">Two languages that live inside HTML. Both are parsed as part of the page and can be styled with the same tokens.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-math" data-element="math" aria-labelledby="el-math-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-math-title"><code>&lt;math&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/math">MDN<span class="u-sr-only"> reference for the math element</span></a>
+          </div>
+          <p class="elements-card__desc">A formula written in MathML. It stays real text: selectable, zoomable and readable by screen readers.</p>
+          <div class="elements-stage">
+            <math display="block">
+              <mrow>
+                <mi>x</mi><mo>=</mo>
+                <mfrac>
+                  <mrow><mo>−</mo><mi>b</mi><mo>±</mo><msqrt><mrow><msup><mi>b</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>a</mi><mi>c</mi></mrow></msqrt></mrow>
+                  <mrow><mn>2</mn><mi>a</mi></mrow>
+                </mfrac>
+              </mrow>
+            </math>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-math" aria-label="Copy the math markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="math markup"><code id="code-math">&lt;math display=&quot;block&quot;&gt;
+  &lt;mrow&gt;
+    &lt;mi&gt;x&lt;/mi&gt;&lt;mo&gt;=&lt;/mo&gt;
+    &lt;mfrac&gt;
+      &lt;mrow&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mo&gt;±&lt;/mo&gt;&lt;msqrt&gt;&lt;mrow&gt;&lt;msup&gt;&lt;mi&gt;b&lt;/mi&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;/msup&gt;&lt;mo&gt;−&lt;/mo&gt;&lt;mn&gt;4&lt;/mn&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;mi&gt;c&lt;/mi&gt;&lt;/mrow&gt;&lt;/msqrt&gt;&lt;/mrow&gt;
+      &lt;mrow&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;a&lt;/mi&gt;&lt;/mrow&gt;
+    &lt;/mfrac&gt;
+  &lt;/mrow&gt;
+&lt;/math&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept. The browser lays it out. CAI adds nothing.</p>
+        </article>
+
+        <article class="elements-card" id="el-svg" data-element="svg" aria-labelledby="el-svg-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-svg-title"><code>&lt;svg&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/svg">MDN<span class="u-sr-only"> reference for the svg element</span></a>
+          </div>
+          <p class="elements-card__desc">A vector image written into the page. It can use the page colors and tokens, and stays sharp at any size.</p>
+          <div class="elements-stage">
+            <svg viewBox="0 0 240 120" width="240" height="120" role="img" aria-labelledby="d-svg-title" style="color: var(--cai-brand-primary)">
+              <title id="d-svg-title">A square and a circle</title>
+              <rect x="20" y="20" width="80" height="80" fill="currentColor"/>
+              <circle cx="170" cy="60" r="40" fill="none" stroke="currentColor" stroke-width="6"/>
+            </svg>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-svg" aria-label="Copy the svg markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="svg markup"><code id="code-svg">&lt;svg viewBox=&quot;0 0 240 120&quot; width=&quot;240&quot; height=&quot;120&quot; role=&quot;img&quot; aria-labelledby=&quot;d-svg-title&quot; style=&quot;color: var(--cai-brand-primary)&quot;&gt;
+  &lt;title id=&quot;d-svg-title&quot;&gt;A square and a circle&lt;/title&gt;
+  &lt;rect x=&quot;20&quot; y=&quot;20&quot; width=&quot;80&quot; height=&quot;80&quot; fill=&quot;currentColor&quot;/&gt;
+  &lt;circle cx=&quot;170&quot; cy=&quot;60&quot; r=&quot;40&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;6&quot;/&gt;
+&lt;/svg&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class. CAI only caps the width. Icons keep the size their own class or attributes give them.</p>
+        </article>
+        </div>
+      
+    </div>

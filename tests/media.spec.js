@@ -2,11 +2,15 @@
  * CAI — user preferences (PRINCIPLES.md §6): reduced motion and forced colors.
  */
 import { test, expect } from '@playwright/test';
+import { routeOf } from './helpers/docs-site.js';
+
+// The landing, the docs home and the pages with the most motion and controls
+const PAGES = [...new Set(['/', '/docs/', routeOf('c-motion'), routeOf('c-animations'), routeOf('c-button')])];
 
 test.describe('prefers-reduced-motion: reduce', () => {
   test.use({ reducedMotion: 'reduce' });
 
-  for (const app of ['/', '/docs/']) {
+  for (const app of PAGES) {
     test(`${app}: no transition, animation or smooth scroll runs (RL-8)`, async ({ page }) => {
       await page.goto(app);
       const moving = await page.evaluate(() => {
@@ -31,9 +35,9 @@ test.describe('prefers-reduced-motion: reduce', () => {
 test.describe('forced-colors: active', () => {
   test.use({ forcedColors: 'active' });
 
-  test('/docs/: a focused button keeps a visible outline', async ({ page, browserName }) => {
+  test('docs: a focused button keeps a visible outline', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
-    await page.goto('/docs/');
+    await page.goto(routeOf('c-button'));
     const btn = page.locator('button.cai-btn, .cai-copy-btn').first();
     await btn.focus();
     const outline = await btn.evaluate((el) => {
@@ -48,7 +52,7 @@ test.describe('forced-colors: active', () => {
 test.describe('forced-colors: the color mode switcher', () => {
   test.use({ forcedColors: 'active' });
 
-  for (const app of ['/', '/docs/']) {
+  for (const app of [...new Set(['/', '/docs/', routeOf('c-button')])]) {
     test(`${app}: the cycle button keeps a visible edge and a visible icon`, async ({ page, browserName }) => {
       test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
       await page.goto(app);

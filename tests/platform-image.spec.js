@@ -8,6 +8,7 @@
  */
 
 import { test, expect } from '@playwright/test';
+import { routeOf } from './helpers/docs-site.js';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { JPEG_LONG_SIDES, LONG_SIDES, RATIOS, VARIANTS, sizeOf } from '../scripts/build-placeholders.js';
@@ -171,7 +172,7 @@ test.describe('Platform image', () => {
   });
 
   test('the docs demos use a picture with AVIF and WebP sources and a sized img', async ({ page }) => {
-    await page.goto('/docs/'); // the platform reference is part of the docs page
+    await page.goto(routeOf('demo-image')); // the image pattern's page
     const pictures = page.locator('.cai-platform-image picture');
     expect(await pictures.count()).toBeGreaterThan(0);
     for (const picture of await pictures.all()) {
@@ -204,7 +205,7 @@ test.describe('Platform image', () => {
       external.push(href);
       return route.abort();
     });
-    await page.goto('/docs/'); // the platform reference is part of the docs page
+    await page.goto(routeOf('demo-image')); // the image pattern's page
     await page.locator('#demo-image').scrollIntoViewIfNeeded();
     await page.waitForLoadState('networkidle');
     expect(external).toEqual([]);

@@ -1,0 +1,563 @@
+<!-- cai:page
+title: Inline text
+description: Words and phrases inside a block: emphasis, abbreviations, code, time, annotations. Pick the element for its meaning, then let the style follow.
+area: html
+order: 3
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-inline" data-category="inline">
+        <p class="elements-section__lead">Words and phrases inside a block: emphasis, abbreviations, code, time, annotations. Pick the element for its meaning, then let the style follow.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-a" data-element="a" aria-labelledby="el-a-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-a-title"><code>&lt;a&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/a">MDN<span class="u-sr-only"> reference for the a element</span></a>
+          </div>
+          <p class="elements-card__desc">A link to another page, a file, a place on the same page or an email address. CAI colors it with the brand color and underlines it on hover, with a visible focus ring.</p>
+          <div class="elements-stage">
+            <p>Read the <a href="#">full reference</a> before you start.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-a" aria-label="Copy the a markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="a markup"><code id="code-a">&lt;p&gt;Read the &lt;a href=&quot;#&quot;&gt;full reference&lt;/a&gt; before you start.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-abbr" data-element="abbr" aria-labelledby="el-abbr-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-abbr-title"><code>&lt;abbr&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/abbr">MDN<span class="u-sr-only"> reference for the abbr element</span></a>
+          </div>
+          <p class="elements-card__desc">A short form of a word or phrase, such as HTML. Put the full form in the title attribute; with a title, it gets a dotted underline and a help cursor.</p>
+          <div class="elements-stage">
+            <p>CAI uses plain <abbr title="Cascading Style Sheets">CSS</abbr>.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-abbr" aria-label="Copy the abbr markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="abbr markup"><code id="code-abbr">&lt;p&gt;CAI uses plain &lt;abbr title=&quot;Cascading Style Sheets&quot;&gt;CSS&lt;/abbr&gt;.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-b" data-element="b" aria-labelledby="el-b-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-b-title"><code>&lt;b&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/b">MDN<span class="u-sr-only"> reference for the b element</span></a>
+          </div>
+          <p class="elements-card__desc">Makes a few words stand out in bold without saying they matter more, such as the option names in a how-to. If they do matter more, use strong.</p>
+          <div class="elements-stage">
+            <p>The <b>ET Book</b> typeface is used for headings.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-b" aria-label="Copy the b markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="b markup"><code id="code-b">&lt;p&gt;The &lt;b&gt;ET Book&lt;/b&gt; typeface is used for headings.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-bdi" data-element="bdi" aria-labelledby="el-bdi-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-bdi-title"><code>&lt;bdi&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/bdi">MDN<span class="u-sr-only"> reference for the bdi element</span></a>
+          </div>
+          <p class="elements-card__desc">Keeps text whose writing direction you cannot know in advance, such as a user name that may be Arabic or Hebrew, from scrambling the text around it.</p>
+          <div class="elements-stage">
+            <p>User <bdi>إيان</bdi> scored 90 points.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-bdi" aria-label="Copy the bdi markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="bdi markup"><code id="code-bdi">&lt;p&gt;User &lt;bdi&gt;إيان&lt;/bdi&gt; scored 90 points.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-bdo" data-element="bdo" aria-labelledby="el-bdo-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-bdo-title"><code>&lt;bdo&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/bdo">MDN<span class="u-sr-only"> reference for the bdo element</span></a>
+          </div>
+          <p class="elements-card__desc">Forces its text to run left to right or right to left, as set by dir, whatever the characters are. You rarely need it: bdi covers most cases.</p>
+          <div class="elements-stage">
+            <p><bdo dir="rtl">This text runs right to left.</bdo></p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-bdo" aria-label="Copy the bdo markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="bdo markup"><code id="code-bdo">&lt;p&gt;&lt;bdo dir=&quot;rtl&quot;&gt;This text runs right to left.&lt;/bdo&gt;&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-br" data-element="br" aria-labelledby="el-br-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-br-title"><code>&lt;br&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/br">MDN<span class="u-sr-only"> reference for the br element</span></a>
+          </div>
+          <p class="elements-card__desc">A line break that is part of the content, as in a postal address or a poem. Do not use it to add space.</p>
+          <div class="elements-stage">
+            <p>Line one<br>Line two<br>Line three</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-br" aria-label="Copy the br markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="br markup"><code id="code-br">&lt;p&gt;Line one&lt;br&gt;Line two&lt;br&gt;Line three&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-cite" data-element="cite" aria-labelledby="el-cite-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-cite-title"><code>&lt;cite&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/cite">MDN<span class="u-sr-only"> reference for the cite element</span></a>
+          </div>
+          <p class="elements-card__desc">The title of a book, film, paper, song or other work you mention. Not for the name of a person.</p>
+          <div class="elements-stage">
+            <p><cite>The Design of Everyday Things</cite> is a book by Don Norman.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-cite" aria-label="Copy the cite markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="cite markup"><code id="code-cite">&lt;p&gt;&lt;cite&gt;The Design of Everyday Things&lt;/cite&gt; is a book by Don Norman.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-code" data-element="code" aria-labelledby="el-code-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-code-title"><code>&lt;code&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/code">MDN<span class="u-sr-only"> reference for the code element</span></a>
+          </div>
+          <p class="elements-card__desc">A short piece of code, a file name or a command inside a sentence. CAI sets it in the mono font at a readable size.</p>
+          <div class="elements-stage">
+            <p>Use <code>var(--cai-brand-primary)</code> for links.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-code" aria-label="Copy the code markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="code markup"><code id="code-code">&lt;p&gt;Use &lt;code&gt;var(--cai-brand-primary)&lt;/code&gt; for links.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class. For a block of code use pre.cai-code-block; .cai-code-inline adds a chip look to inline code.</p>
+        </article>
+
+        <article class="elements-card" id="el-data" data-element="data" aria-labelledby="el-data-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-data-title"><code>&lt;data&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/data">MDN<span class="u-sr-only"> reference for the data element</span></a>
+          </div>
+          <p class="elements-card__desc">Pairs visible text with a value for software, held in the value attribute, such as a product name with its code. For dates and times, use time.</p>
+          <div class="elements-stage">
+            <p>CAI has <data value="3">three</data> layers.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-data" aria-label="Copy the data markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="data markup"><code id="code-data">&lt;p&gt;CAI has &lt;data value=&quot;3&quot;&gt;three&lt;/data&gt; layers.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-dfn" data-element="dfn" aria-labelledby="el-dfn-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-dfn-title"><code>&lt;dfn&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dfn">MDN<span class="u-sr-only"> reference for the dfn element</span></a>
+          </div>
+          <p class="elements-card__desc">Marks a term at the place where the text explains what it means.</p>
+          <div class="elements-stage">
+            <p>A <dfn>design token</dfn> is a named design decision, stored as a variable.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dfn" aria-label="Copy the dfn markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="dfn markup"><code id="code-dfn">&lt;p&gt;A &lt;dfn&gt;design token&lt;/dfn&gt; is a named design decision, stored as a variable.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-em" data-element="em" aria-labelledby="el-em-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-em-title"><code>&lt;em&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/em">MDN<span class="u-sr-only"> reference for the em element</span></a>
+          </div>
+          <p class="elements-card__desc">Puts stress on a word, the one you would say louder, which can change the meaning of the sentence. Browsers show it in italic.</p>
+          <div class="elements-stage">
+            <p>Load the tokens <em>before</em> the core.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-em" aria-label="Copy the em markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="em markup"><code id="code-em">&lt;p&gt;Load the tokens &lt;em&gt;before&lt;/em&gt; the core.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-i" data-element="i" aria-labelledby="el-i-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-i-title"><code>&lt;i&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/i">MDN<span class="u-sr-only"> reference for the i element</span></a>
+          </div>
+          <p class="elements-card__desc">Italic text with no extra stress, for words read in another voice: a phrase in another language, a character's inner voice. For stress, use em.</p>
+          <div class="elements-stage">
+            <p>The result is <i lang="la">ad hoc</i>, not a rule.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-i" aria-label="Copy the i markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="i markup"><code id="code-i">&lt;p&gt;The result is &lt;i lang=&quot;la&quot;&gt;ad hoc&lt;/i&gt;, not a rule.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-kbd" data-element="kbd" aria-labelledby="el-kbd-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-kbd-title"><code>&lt;kbd&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/kbd">MDN<span class="u-sr-only"> reference for the kbd element</span></a>
+          </div>
+          <p class="elements-card__desc">A key or other input the user should press or type, such as Ctrl + C. CAI draws it as a key cap.</p>
+          <div class="elements-stage">
+            <p>Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open the command palette.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-kbd" aria-label="Copy the kbd markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="kbd markup"><code id="code-kbd">&lt;p&gt;Press &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;K&lt;/kbd&gt; to open the command palette.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-mark" data-element="mark" aria-labelledby="el-mark-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-mark-title"><code>&lt;mark&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/mark">MDN<span class="u-sr-only"> reference for the mark element</span></a>
+          </div>
+          <p class="elements-card__desc">Highlights text because it matters right now, such as the words that matched a search. It does not add importance: use strong for that.</p>
+          <div class="elements-stage">
+            <p>Search results for <mark>tokens</mark>.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-mark" aria-label="Copy the mark markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="mark markup"><code id="code-mark">&lt;p&gt;Search results for &lt;mark&gt;tokens&lt;/mark&gt;.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-q" data-element="q" aria-labelledby="el-q-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-q-title"><code>&lt;q&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/q">MDN<span class="u-sr-only"> reference for the q element</span></a>
+          </div>
+          <p class="elements-card__desc">A short quotation inside a sentence. The browser adds the quotation marks of the page language, so do not type your own.</p>
+          <div class="elements-stage">
+            <p>As they say, <q>less is more</q>.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-q" aria-label="Copy the q markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="q markup"><code id="code-q">&lt;p&gt;As they say, &lt;q&gt;less is more&lt;/q&gt;.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-rp" data-element="rp" aria-labelledby="el-rp-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-rp-title"><code>&lt;rp&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/rp">MDN<span class="u-sr-only"> reference for the rp element</span></a>
+          </div>
+          <p class="elements-card__desc">Parentheses that appear around a ruby annotation only in browsers that cannot place it above the text.</p>
+          <div class="elements-stage">
+            <ruby>漢<rp>(</rp><rt>kan</rt><rp>)</rp>字<rp>(</rp><rt>ji</rt><rp>)</rp></ruby>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-rp" aria-label="Copy the rp markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="rp markup"><code id="code-rp">&lt;ruby&gt;漢&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;kan&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;字&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ji&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-rt" data-element="rt" aria-labelledby="el-rt-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-rt-title"><code>&lt;rt&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/rt">MDN<span class="u-sr-only"> reference for the rt element</span></a>
+          </div>
+          <p class="elements-card__desc">The text of a ruby annotation, such as how a character is pronounced. CAI keeps it above the 12px floor.</p>
+          <div class="elements-stage">
+            <ruby>漢<rp>(</rp><rt>kan</rt><rp>)</rp>字<rp>(</rp><rt>ji</rt><rp>)</rp></ruby>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-rt" aria-label="Copy the rt markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="rt markup"><code id="code-rt">&lt;ruby&gt;漢&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;kan&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;字&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ji&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-ruby" data-element="ruby" aria-labelledby="el-ruby-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-ruby-title"><code>&lt;ruby&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ruby">MDN<span class="u-sr-only"> reference for the ruby element</span></a>
+          </div>
+          <p class="elements-card__desc">Puts small notes above or beside characters, mostly to show how East Asian characters are read. Each note goes in an rt.</p>
+          <div class="elements-stage">
+            <ruby>漢<rp>(</rp><rt>kan</rt><rp>)</rp>字<rp>(</rp><rt>ji</rt><rp>)</rp></ruby>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-ruby" aria-label="Copy the ruby markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="ruby markup"><code id="code-ruby">&lt;ruby&gt;漢&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;kan&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;字&lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ji&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-s" data-element="s" aria-labelledby="el-s-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-s-title"><code>&lt;s&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/s">MDN<span class="u-sr-only"> reference for the s element</span></a>
+          </div>
+          <p class="elements-card__desc">Text that is no longer true or no longer applies, such as an old price. For a tracked removal, use del. CAI also tones it down to the secondary color.</p>
+          <div class="elements-stage">
+            <p><s>$20</s> $15 this week.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-s" aria-label="Copy the s markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="s markup"><code id="code-s">&lt;p&gt;&lt;s&gt;$20&lt;/s&gt; $15 this week.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-samp" data-element="samp" aria-labelledby="el-samp-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-samp-title"><code>&lt;samp&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/samp">MDN<span class="u-sr-only"> reference for the samp element</span></a>
+          </div>
+          <p class="elements-card__desc">Text a program printed, such as an error message or the output of a terminal command.</p>
+          <div class="elements-stage">
+            <p>The console prints <samp>Layer "tokens" is missing.</samp></p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-samp" aria-label="Copy the samp markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="samp markup"><code id="code-samp">&lt;p&gt;The console prints &lt;samp&gt;Layer &quot;tokens&quot; is missing.&lt;/samp&gt;&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-small" data-element="small" aria-labelledby="el-small-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-small-title"><code>&lt;small&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/small">MDN<span class="u-sr-only"> reference for the small element</span></a>
+          </div>
+          <p class="elements-card__desc">Fine print: copyright lines, legal notes, disclaimers. CAI never sets it under the 12px floor.</p>
+          <div class="elements-stage">
+            <p>Total: $15 <small>Prices include VAT.</small></p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-small" aria-label="Copy the small markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="small markup"><code id="code-small">&lt;p&gt;Total: $15 &lt;small&gt;Prices include VAT.&lt;/small&gt;&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-span" data-element="span" aria-labelledby="el-span-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-span-title"><code>&lt;span&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/span">MDN<span class="u-sr-only"> reference for the span element</span></a>
+          </div>
+          <p class="elements-card__desc">A plain inline wrapper that adds no meaning. Use it to hang a class or a lang attribute on a few words.</p>
+          <div class="elements-stage">
+            <p>CAI is <span class="cai-tag cai-tag--green">stable</span>.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-span" aria-label="Copy the span markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="span markup"><code id="code-span">&lt;p&gt;CAI is &lt;span class=&quot;cai-tag cai-tag--green&quot;&gt;stable&lt;/span&gt;.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-strong" data-element="strong" aria-labelledby="el-strong-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-strong-title"><code>&lt;strong&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/strong">MDN<span class="u-sr-only"> reference for the strong element</span></a>
+          </div>
+          <p class="elements-card__desc">Words the reader must not miss: a warning, a key condition, a deadline. For stress that changes how a sentence reads, use em.</p>
+          <div class="elements-stage">
+            <p><strong>Warning:</strong> do not edit the dist folder.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-strong" aria-label="Copy the strong markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="strong markup"><code id="code-strong">&lt;p&gt;&lt;strong&gt;Warning:&lt;/strong&gt; do not edit the dist folder.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-sub" data-element="sub" aria-labelledby="el-sub-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-sub-title"><code>&lt;sub&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/sub">MDN<span class="u-sr-only"> reference for the sub element</span></a>
+          </div>
+          <p class="elements-card__desc">Text set lower and smaller, such as the 2 in the formula for water. CAI keeps it from pushing the lines apart.</p>
+          <div class="elements-stage">
+            <p>Water is H<sub>2</sub>O.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-sub" aria-label="Copy the sub markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="sub markup"><code id="code-sub">&lt;p&gt;Water is H&lt;sub&gt;2&lt;/sub&gt;O.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-sup" data-element="sup" aria-labelledby="el-sup-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-sup-title"><code>&lt;sup&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/sup">MDN<span class="u-sr-only"> reference for the sup element</span></a>
+          </div>
+          <p class="elements-card__desc">Text set higher and smaller, for powers, footnote numbers and the letters in 1st. CAI keeps it from pushing the lines apart.</p>
+          <div class="elements-stage">
+            <p>E = mc<sup>2</sup></p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-sup" aria-label="Copy the sup markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="sup markup"><code id="code-sup">&lt;p&gt;E = mc&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-time" data-element="time" aria-labelledby="el-time-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-time-title"><code>&lt;time&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/time">MDN<span class="u-sr-only"> reference for the time element</span></a>
+          </div>
+          <p class="elements-card__desc">A date, a time or a duration. Put a form software can read in the datetime attribute, and write whatever suits the reader inside.</p>
+          <div class="elements-stage">
+            <p>Released on <time datetime="2026-10-06">6 October 2026</time>.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-time" aria-label="Copy the time markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="time markup"><code id="code-time">&lt;p&gt;Released on &lt;time datetime=&quot;2026-10-06&quot;&gt;6 October 2026&lt;/time&gt;.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-u" data-element="u" aria-labelledby="el-u-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-u-title"><code>&lt;u&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/u">MDN<span class="u-sr-only"> reference for the u element</span></a>
+          </div>
+          <p class="elements-card__desc">An underline for a note that is not a link, such as a flagged spelling mistake. Readers take underlines for links, so use it sparingly.</p>
+          <div class="elements-stage">
+            <p>This word is <u>mispelled</u>.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-u" aria-label="Copy the u markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="u markup"><code id="code-u">&lt;p&gt;This word is &lt;u&gt;mispelled&lt;/u&gt;.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-var" data-element="var" aria-labelledby="el-var-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-var-title"><code>&lt;var&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/var">MDN<span class="u-sr-only"> reference for the var element</span></a>
+          </div>
+          <p class="elements-card__desc">The name of a variable in a formula or in code, such as x in an equation.</p>
+          <div class="elements-stage">
+            <p>Solve <var>x</var> + <var>y</var> = 10.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-var" aria-label="Copy the var markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="var markup"><code id="code-var">&lt;p&gt;Solve &lt;var&gt;x&lt;/var&gt; + &lt;var&gt;y&lt;/var&gt; = 10.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/inline.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-wbr" data-element="wbr" aria-labelledby="el-wbr-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-wbr-title"><code>&lt;wbr&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/wbr">MDN<span class="u-sr-only"> reference for the wbr element</span></a>
+          </div>
+          <p class="elements-card__desc">Tells the browser where it may wrap a long word or URL when it runs out of room. Nothing shows when the line does not wrap.</p>
+          <div class="elements-stage">
+            <p style="max-inline-size: 12ch">https://<wbr>example.com/<wbr>very/<wbr>long/<wbr>path</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-wbr" aria-label="Copy the wbr markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="wbr markup"><code id="code-wbr">&lt;p style=&quot;max-inline-size: 12ch&quot;&gt;https://&lt;wbr&gt;example.com/&lt;wbr&gt;very/&lt;wbr&gt;long/&lt;wbr&gt;path&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+        </div>
+      
+    </div>

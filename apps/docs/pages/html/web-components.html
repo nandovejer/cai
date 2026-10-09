@@ -1,0 +1,88 @@
+<!-- cai:page
+title: Web Components
+description: The two HTML elements behind custom elements: a template that is parsed but not rendered, and a slot that shows light-DOM content inside a shadow tree.
+area: html
+order: 14
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-web-components" data-category="web-components">
+        <p class="elements-section__lead">The two HTML elements behind custom elements: a template that is parsed but not rendered, and a slot that shows light-DOM content inside a shadow tree.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-slot" data-element="slot" aria-labelledby="el-slot-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-slot-title"><code>&lt;slot&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/slot">MDN<span class="u-sr-only"> reference for the slot element</span></a>
+          </div>
+          <p class="elements-card__desc">A gap in the shadow tree of a web component that the page fills with its own markup. A named slot takes only the elements whose slot attribute matches its name.</p>
+          <div class="elements-stage">
+            <template id="d-slot-template">
+              <style>
+                article { padding: var(--cai-space-sm); border: 1px solid var(--cai-divider); }
+                h4 { margin-bottom: var(--cai-space-2xs); }
+              </style>
+              <article>
+                <h3><slot name="title">Untitled</slot></h3>
+                <slot>No content.</slot>
+              </article>
+            </template>
+
+            <demo-card>
+              <span slot="title">Hello from the light DOM</span>
+              This text fills the default slot.
+            </demo-card>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-slot" aria-label="Copy the slot markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="slot markup"><code id="code-slot">&lt;template id=&quot;d-slot-template&quot;&gt;
+  &lt;style&gt;
+    article { padding: var(--cai-space-sm); border: 1px solid var(--cai-divider); }
+    h4 { margin-bottom: var(--cai-space-2xs); }
+  &lt;/style&gt;
+  &lt;article&gt;
+    &lt;h4&gt;&lt;slot name=&quot;title&quot;&gt;Untitled&lt;/slot&gt;&lt;/h4&gt;
+    &lt;slot&gt;No content.&lt;/slot&gt;
+  &lt;/article&gt;
+&lt;/template&gt;
+
+&lt;demo-card&gt;
+  &lt;span slot=&quot;title&quot;&gt;Hello from the light DOM&lt;/span&gt;
+  This text fills the default slot.
+&lt;/demo-card&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept. The custom element takes a few lines of script. Design tokens cross the shadow boundary, so the card follows the color mode.</p>
+        </article>
+
+        <article class="elements-card" id="el-template" data-element="template" aria-labelledby="el-template-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-template-title"><code>&lt;template&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template">MDN<span class="u-sr-only"> reference for the template element</span></a>
+          </div>
+          <p class="elements-card__desc">Markup the browser reads but does not show, ready to be copied into the page with script.</p>
+          <div class="elements-stage">
+            <template id="d-template">
+              <li>Item <span data-n></span></li>
+            </template>
+
+            <button class="cai-btn cai-btn--outline" type="button" id="d-template-add">Add an item</button>
+            <ul id="d-template-list"></ul>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-template" aria-label="Copy the template markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="template markup"><code id="code-template">&lt;template id=&quot;d-template&quot;&gt;
+  &lt;li&gt;Item &lt;span data-n&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/template&gt;
+
+&lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; id=&quot;d-template-add&quot;&gt;Add an item&lt;/button&gt;
+&lt;ul id=&quot;d-template-list&quot;&gt;&lt;/ul&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+        </div>
+      
+    </div>

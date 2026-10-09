@@ -1,0 +1,414 @@
+<!-- cai:page
+title: Tables
+description: Tabular data. A table has no style of its own in CAI: add the .cai-table class to the table and wrap it in .cai-table-wrap so it can scroll.
+area: html
+order: 5
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-tables" data-category="tables">
+        <p class="elements-section__lead">Tabular data. A table has no style of its own in CAI: add the .cai-table class to the table and wrap it in .cai-table-wrap so it can scroll.</p>
+        <div class="elements-grid elements-grid--wide">
+        <article class="elements-card" id="el-caption" data-element="caption" aria-labelledby="el-caption-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-caption-title"><code>&lt;caption&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/caption">MDN<span class="u-sr-only"> reference for the caption element</span></a>
+          </div>
+          <p class="elements-card__desc">The title of a table, which screen readers read with it. It must be the first child of the table.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <caption>Packages and their layer</caption>
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-caption" aria-label="Copy the caption markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="caption markup"><code id="code-caption">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;caption&gt;Packages and their layer&lt;/caption&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/table.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-col" data-element="col" aria-labelledby="el-col-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-col-title"><code>&lt;col&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/col">MDN<span class="u-sr-only"> reference for the col element</span></a>
+          </div>
+          <p class="elements-card__desc">One column, or several with span, inside a colgroup. Use it to set the width, background or border of a whole column.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <colgroup><col><col style="background: var(--cai-brand-subtle)"></colgroup>
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-col" aria-label="Copy the col markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="col markup"><code id="code-col">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;colgroup&gt;&lt;col&gt;&lt;col style=&quot;background: var(--cai-brand-subtle)&quot;&gt;&lt;/colgroup&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-colgroup" data-element="colgroup" aria-labelledby="el-colgroup-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-colgroup-title"><code>&lt;colgroup&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/colgroup">MDN<span class="u-sr-only"> reference for the colgroup element</span></a>
+          </div>
+          <p class="elements-card__desc">Groups the columns of a table so you can size or color them together. It goes after the caption and before the rows.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <colgroup><col><col style="background: var(--cai-brand-subtle)"></colgroup>
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-colgroup" aria-label="Copy the colgroup markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="colgroup markup"><code id="code-colgroup">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;colgroup&gt;&lt;col&gt;&lt;col style=&quot;background: var(--cai-brand-subtle)&quot;&gt;&lt;/colgroup&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-table" data-element="table" aria-labelledby="el-table-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-table-title"><code>&lt;table&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table">MDN<span class="u-sr-only"> reference for the table element</span></a>
+          </div>
+          <p class="elements-card__desc">Data in rows and columns that people compare, never page layout. Add .cai-table to the table and wrap it in .cai-table-wrap.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-table" aria-label="Copy the table markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="table markup"><code id="code-table">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/table.css</code>. Under 480px of width the table stacks into cards: the header row is hidden from sight and stays available to screen readers.</p>
+        </article>
+
+        <article class="elements-card" id="el-tbody" data-element="tbody" aria-labelledby="el-tbody-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-tbody-title"><code>&lt;tbody&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/tbody">MDN<span class="u-sr-only"> reference for the tbody element</span></a>
+          </div>
+          <p class="elements-card__desc">Holds the main rows of a table, between the heading rows and the footer rows.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-tbody" aria-label="Copy the tbody markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="tbody markup"><code id="code-tbody">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/table.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-td" data-element="td" aria-labelledby="el-td-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-td-title"><code>&lt;td&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/td">MDN<span class="u-sr-only"> reference for the td element</span></a>
+          </div>
+          <p class="elements-card__desc">One cell of data in a table row.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-td" aria-label="Copy the td markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="td markup"><code id="code-td">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/table.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-tfoot" data-element="tfoot" aria-labelledby="el-tfoot-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-tfoot-title"><code>&lt;tfoot&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/tfoot">MDN<span class="u-sr-only"> reference for the tfoot element</span></a>
+          </div>
+          <p class="elements-card__desc">Rows at the bottom of a table that sum up the columns, such as totals.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+                <tfoot>
+                  <tr><td>Total</td><td>2</td></tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-tfoot" aria-label="Copy the tfoot markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="tfoot markup"><code id="code-tfoot">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+    &lt;tfoot&gt;
+      &lt;tr&gt;&lt;td&gt;Total&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tfoot&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/table.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-th" data-element="th" aria-labelledby="el-th-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-th-title"><code>&lt;th&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/th">MDN<span class="u-sr-only"> reference for the th element</span></a>
+          </div>
+          <p class="elements-card__desc">A cell that labels a row or a column. Set scope="col" or scope="row" so screen readers know which cells it labels.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Package</th><th scope="col">Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><th scope="row">tokens</th><td>1</td></tr>
+                  <tr><th scope="row">core</th><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-th" aria-label="Copy the th markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="th markup"><code id="code-th">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Package&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;tokens&lt;/th&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;core&lt;/th&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/table.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-thead" data-element="thead" aria-labelledby="el-thead-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-thead-title"><code>&lt;thead&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/thead">MDN<span class="u-sr-only"> reference for the thead element</span></a>
+          </div>
+          <p class="elements-card__desc">The rows at the top of a table that hold the column headings.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-thead" aria-label="Copy the thead markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="thead markup"><code id="code-thead">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/table.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-tr" data-element="tr" aria-labelledby="el-tr-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-tr-title"><code>&lt;tr&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/tr">MDN<span class="u-sr-only"> reference for the tr element</span></a>
+          </div>
+          <p class="elements-card__desc">One row of a table, holding td and th cells.</p>
+          <div class="elements-stage">
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Packages">
+              <table class="cai-table">
+                <thead>
+                  <tr><th>Package</th><th>Layer</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>tokens</td><td>1</td></tr>
+                  <tr><td>core</td><td>2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-tr" aria-label="Copy the tr markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="tr markup"><code id="code-tr">&lt;div class=&quot;cai-table-wrap&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Packages&quot;&gt;
+  &lt;table class=&quot;cai-table&quot;&gt;
+    &lt;thead&gt;
+      &lt;tr&gt;&lt;th&gt;Package&lt;/th&gt;&lt;th&gt;Layer&lt;/th&gt;&lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;&lt;td&gt;tokens&lt;/td&gt;&lt;td&gt;1&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td&gt;core&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/table.css</code>.</p>
+        </article>
+        </div>
+      
+    </div>

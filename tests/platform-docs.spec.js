@@ -1,8 +1,8 @@
 /**
  * CAI Design System — Platform docs guidance
  * Every block class that @cai-ds/platform ships belongs to a pattern, and
- * every pattern is documented on the documentation page (apps/docs, the
- * Platform part) with the six guidance sections (PRINCIPLES.md red line 18
+ * every pattern has its page in the documentation (apps/docs, the Platform
+ * area, /docs/platform/) with the six guidance sections (PRINCIPLES.md red line 18
  * and strong rule SR-5). The class list
  * is read from the package source, so a new class without a pattern fails.
  * Run with: pnpm test:ui
@@ -11,6 +11,7 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { gotoId, moved, routeOf } from './helpers/docs-site.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -43,18 +44,17 @@ test.describe('Platform docs', () => {
     }
   });
 
-  test('every platform pattern has the six guidance sections', async ({ page }) => {
-    await page.goto('/docs/');
-
+  test('every platform pattern has its page with the six guidance sections', async ({ page }) => {
+    test.skip(!moved('platform'), 'until the area moves to its pages'); // phase-2-transition
     for (const pattern of new Set(Object.values(patternOf))) {
-      await expect(page.locator(`#p-${pattern}`), pattern).toHaveCount(1);
-      // A pattern is a section of the page: its own h2, like a core component
-      await expect(page.locator(`#p-${pattern} > .docs-demo__head h2`), pattern).toHaveCount(1);
-      await expect(page.locator(`#p-${pattern} .docs-top a[href="#main-content"]`), pattern).toHaveText('Back to top');
+      const route = await gotoId(page, `p-${pattern}`);
+      expect(route, pattern).toMatch(/^\/docs\/platform\/[a-z-]+\/$/);
+      // A pattern is a page: its name is the h1, like a core component
+      await expect(page.locator('h1.docs-title'), pattern).toHaveCount(1);
       for (const section of sections) {
         const heading = page.locator(`#h-p-${pattern}-${section}`);
         await expect(heading, `${pattern} ${section}`).toHaveCount(1);
-        expect(await heading.evaluate((h) => h.tagName), `${pattern} ${section}`).toBe('H3');
+        expect(await heading.evaluate((h) => h.tagName), `${pattern} ${section}`).toBe('H2');
         // A heading with nothing under it is not documentation
         const text = await heading.evaluate((h) => h.nextElementSibling?.textContent.trim() ?? '');
         expect(text.length, `${pattern} ${section} is empty`).toBeGreaterThan(10);
@@ -63,7 +63,7 @@ test.describe('Platform docs', () => {
   });
 
   test('keyboard: the skip link is first and moves focus to the main area', async ({ page }) => {
-    await page.goto('/docs/');
+    await gotoId(page, 'p-skip');
     await page.keyboard.press('Tab');
     const skip = page.locator('.cai-platform-skip-link');
     await expect(skip).toBeFocused();
@@ -75,16 +75,19 @@ test.describe('Platform docs', () => {
     expect(await page.evaluate(() => !!document.activeElement.closest('#main-content'))).toBe(true);
   });
 
-  test('the page navigation links to every pattern', async ({ page }) => {
-    await page.goto('/docs/');
-    const hrefs = await page
-      .locator('#page-nav .cai-sidebar__link')
-      .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
-    for (const pattern of new Set(Object.values(patternOf))) expect(hrefs, pattern).toContain(`#p-${pattern}`);
+  test('the Platform area lists every pattern, in the sidebar and in its gallery', async ({ page }) => {
+    test.skip(!moved('platform'), 'until the area moves to its pages'); // phase-2-transition
+    await page.goto('/docs/platform/');
+    const nav = await page.locator('.docs-nav a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+    const cards = await page.locator('.docs-gallery a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+    for (const pattern of new Set(Object.values(patternOf))) {
+      expect(nav, pattern).toContain(routeOf(`p-${pattern}`));
+      expect(cards, pattern).toContain(routeOf(`p-${pattern}`));
+    }
   });
 
   test('keyboard: a command block copy button is a native button reached with Tab', async ({ page }) => {
-    await page.goto('/docs/');
+    await gotoId(page, 'p-command');
     const copy = page.locator('.cai-platform-command-block .cai-copy-btn').first();
     await expect(copy).toHaveJSProperty('tagName', 'BUTTON');
     await copy.focus();

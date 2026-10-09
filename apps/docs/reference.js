@@ -1,8 +1,8 @@
 /**
- * CAI documentation page — page glue.
+ * CAI documentation site — page glue, loaded by every page.
  * Wires the core behaviors the examples demonstrate, one module at a time,
- * and the few HTML element demos that need a line of script (canvas,
- * template, custom element).
+ * the few HTML element demos that need a line of script (canvas,
+ * template, custom element), and "On this page".
  *
  * cai.js is deliberately not loaded: its auto-init applies the stored or
  * default custom theme to <html>, and this page shows the base color modes
@@ -15,6 +15,7 @@ import { highlightBlock } from "/packages/core/dist/highlight.js";
 import { initTabs } from "/packages/core/dist/tabs.js";
 import { initModals } from "/packages/core/dist/modal.js";
 import { initPlayers } from "/packages/core/dist/player.js";
+import { initSidebar } from "/packages/core/dist/sidebar.js";
 import { initSiteHeader } from "../landing/site-header.js";
 
 /* ---- Small enhancements ----------------------------------------------- */
@@ -31,6 +32,18 @@ function initFolds() {
   });
   // Folding moves everything below it: go back to the requested section
   if (target) target.scrollIntoView();
+}
+
+function initOnThisPage() {
+  // A closed <details> in the markup, so it reads without JS on every
+  // screen; from 1280px it is a rail beside the content: open it, and mark
+  // the section in view (aria-current="true", core's scroll spy). Below
+  // 1280px nothing is marked: the list is closed.
+  const nav = document.querySelector(".docs-onpage");
+  if (!nav || !window.matchMedia("(min-width: 1280px)").matches) return;
+  // eslint-disable-next-line no-restricted-syntax -- RL-3: sets the initial state only; opening and closing stay native
+  nav.querySelector("details").open = true;
+  initSidebar(nav);
 }
 
 function initRangeOutputs() {
@@ -146,6 +159,7 @@ function syncLoadedMedia() {
 // page). The canvas demo paints with the token values: repaint it per mode.
 initSiteHeader({ onModeChange: drawCanvas });
 initFolds();
+initOnThisPage();
 initAssets();
 initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each

@@ -1,0 +1,53 @@
+<!-- cai:page
+title: Document root
+description: The root of the page and the container of everything the reader sees. These two are documented as markup; CAI styles them in the document layer.
+area: html
+order: 13
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-root" data-category="root">
+        <p class="elements-section__lead">The root of the page and the container of everything the reader sees. These two are documented as markup; CAI styles them in the document layer.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-body" data-element="body" aria-labelledby="el-body-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-body-title"><code>&lt;body&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/body">MDN<span class="u-sr-only"> reference for the body element</span></a>
+          </div>
+          <p class="elements-card__desc">Holds everything a visitor sees on the page. Each page has one, right after the head.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-body" aria-label="Copy the body markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="body markup"><code id="code-body">&lt;body class=&quot;o-shell&quot;&gt;
+  &lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+  &lt;main id=&quot;main-content&quot;&gt;…&lt;/main&gt;
+&lt;/body&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/document.css</code>, with no class. Layout-neutral until you add o-shell for the sidebar and main layout.</p>
+        </article>
+
+        <article class="elements-card" id="el-html" data-element="html" aria-labelledby="el-html-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-html-title"><code>&lt;html&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/html">MDN<span class="u-sr-only"> reference for the html element</span></a>
+          </div>
+          <p class="elements-card__desc">The outermost tag, wrapping the whole page. Put <code>lang</code> on it so screen readers and translation tools pick the right language, and <code>data-theme</code> to choose the CAI color mode.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-html" aria-label="Copy the html markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="html markup"><code id="code-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
+  &lt;head&gt;…&lt;/head&gt;
+  &lt;body&gt;…&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/document.css</code>, with no class. CAI reads <code>data-theme</code> on this element: light, dark or high-contrast.</p>
+        </article>
+        </div>
+      
+    </div>

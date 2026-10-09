@@ -1,0 +1,123 @@
+<!-- cai:page
+title: Page metadata
+description: What the page tells browsers, search engines and scripts about itself. Visitors never see it, so these cards show the markup only.
+area: html
+order: 12
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-metadata" data-category="metadata">
+        <p class="elements-section__lead">What the page tells browsers, search engines and scripts about itself. Visitors never see it, so these cards show the markup only.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-base" data-element="base" aria-labelledby="el-base-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-base-title"><code>&lt;base&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/base">MDN<span class="u-sr-only"> reference for the base element</span></a>
+          </div>
+          <p class="elements-card__desc">Changes the starting point of every relative URL on the page, and can set a default target for links. Use at most one, and place it before any tag that has a URL.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-base" aria-label="Copy the base markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="base markup"><code id="code-base">&lt;base href=&quot;https://example.com/app/&quot; target=&quot;_blank&quot;&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept. It also rewrites hash-only links such as href="#top", so use it with care.</p>
+        </article>
+
+        <article class="elements-card" id="el-head" data-element="head" aria-labelledby="el-head-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-head-title"><code>&lt;head&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/head">MDN<span class="u-sr-only"> reference for the head element</span></a>
+          </div>
+          <p class="elements-card__desc">The part of the page the visitor never sees: the title, the character set, stylesheets, scripts and other settings for the browser.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-head" aria-label="Copy the head markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="head markup"><code id="code-head">&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;My page&lt;/title&gt;
+&lt;/head&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-link" data-element="link" aria-labelledby="el-link-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-link-title"><code>&lt;link&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link">MDN<span class="u-sr-only"> reference for the link element</span></a>
+          </div>
+          <p class="elements-card__desc">Points the browser to a file the page needs, most often a stylesheet, but also icons and preloads. Load tokens first, then core, then platform.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-link" aria-label="Copy the link markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="link markup"><code id="code-link">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-meta" data-element="meta" aria-labelledby="el-meta-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-meta-title"><code>&lt;meta&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta">MDN<span class="u-sr-only"> reference for the meta element</span></a>
+          </div>
+          <p class="elements-card__desc">Settings and facts for browsers and search engines that have no tag of their own: character set, viewport, description, color scheme.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-meta" aria-label="Copy the meta markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="meta markup"><code id="code-meta">&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;meta name=&quot;description&quot; content=&quot;A vanilla design system in plain CSS.&quot;&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-style" data-element="style" aria-labelledby="el-style-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-style-title"><code>&lt;style&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/style">MDN<span class="u-sr-only"> reference for the style element</span></a>
+          </div>
+          <p class="elements-card__desc">CSS written straight into the page. Prefer a linked stylesheet, and keep this for a few lines of critical or generated CSS.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-style" aria-label="Copy the style markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="style markup"><code id="code-style">&lt;style&gt;
+  .banner { padding: var(--cai-space-md); }
+&lt;/style&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-title" data-element="title" aria-labelledby="el-title-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-title-title"><code>&lt;title&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/title">MDN<span class="u-sr-only"> reference for the title element</span></a>
+          </div>
+          <p class="elements-card__desc">The name of the page. Browsers show it in the tab, bookmarks and search results use it, and screen readers announce it first.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-title" aria-label="Copy the title markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="title markup"><code id="code-title">&lt;title&gt;HTML elements: CAI Design System&lt;/title&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+        </div>
+      
+    </div>

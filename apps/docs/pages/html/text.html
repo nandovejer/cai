@@ -1,0 +1,360 @@
+<!-- cai:page
+title: Text blocks
+description: Paragraphs, lists, quotations and preformatted text: the blocks that hold the reading content of a page.
+area: html
+order: 2
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-text" data-category="text">
+        <p class="elements-section__lead">Paragraphs, lists, quotations and preformatted text: the blocks that hold the reading content of a page.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-blockquote" data-element="blockquote" aria-labelledby="el-blockquote-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-blockquote-title"><code>&lt;blockquote&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/blockquote">MDN<span class="u-sr-only"> reference for the blockquote element</span></a>
+          </div>
+          <p class="elements-card__desc">A longer quotation, set apart as its own block. Put the source URL in the cite attribute, and say who said it outside the quote, for example in a figcaption.</p>
+          <div class="elements-stage">
+            <blockquote>
+              <p>The best interface is the one the browser already ships.</p>
+            </blockquote>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-blockquote" aria-label="Copy the blockquote markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="blockquote markup"><code id="code-blockquote">&lt;blockquote&gt;
+  &lt;p&gt;The best interface is the one the browser already ships.&lt;/p&gt;
+&lt;/blockquote&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-dd" data-element="dd" aria-labelledby="el-dd-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-dd-title"><code>&lt;dd&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dd">MDN<span class="u-sr-only"> reference for the dd element</span></a>
+          </div>
+          <p class="elements-card__desc">The value or explanation that follows a dt in a description list. One term can have several.</p>
+          <div class="elements-stage">
+            <dl>
+              <dt>Token</dt>
+              <dd>A named design decision, stored as a variable.</dd>
+            </dl>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dd" aria-label="Copy the dd markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="dd markup"><code id="code-dd">&lt;dl&gt;
+  &lt;dt&gt;Token&lt;/dt&gt;
+  &lt;dd&gt;A named design decision, stored as a variable.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-div" data-element="div" aria-labelledby="el-div-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-div-title"><code>&lt;div&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/div">MDN<span class="u-sr-only"> reference for the div element</span></a>
+          </div>
+          <p class="elements-card__desc">A plain box that adds no meaning. Use it only when no other element fits, and give it a class that says what it is for.</p>
+          <div class="elements-stage">
+            <div class="o-stack">
+              <div>First block</div>
+              <div>Second block</div>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-div" aria-label="Copy the div markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="div markup"><code id="code-div">&lt;div class=&quot;o-stack&quot;&gt;
+  &lt;div&gt;First block&lt;/div&gt;
+  &lt;div&gt;Second block&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept. CAI adds no style. The o-stack layout object spaces the children.</p>
+        </article>
+
+        <article class="elements-card" id="el-dl" data-element="dl" aria-labelledby="el-dl-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-dl-title"><code>&lt;dl&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dl">MDN<span class="u-sr-only"> reference for the dl element</span></a>
+          </div>
+          <p class="elements-card__desc">A list of names paired with values: a glossary, product specs, the details of a file. Each dt names something and the dd after it explains it.</p>
+          <div class="elements-stage">
+            <dl>
+              <dt>Tokens</dt>
+              <dd>Layer 1, standalone.</dd>
+              <dt>Core</dt>
+              <dd>Layer 2, requires tokens.</dd>
+            </dl>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dl" aria-label="Copy the dl markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="dl markup"><code id="code-dl">&lt;dl&gt;
+  &lt;dt&gt;Tokens&lt;/dt&gt;
+  &lt;dd&gt;Layer 1, standalone.&lt;/dd&gt;
+  &lt;dt&gt;Core&lt;/dt&gt;
+  &lt;dd&gt;Layer 2, requires tokens.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-dt" data-element="dt" aria-labelledby="el-dt-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-dt-title"><code>&lt;dt&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dt">MDN<span class="u-sr-only"> reference for the dt element</span></a>
+          </div>
+          <p class="elements-card__desc">The name half of a name and value pair in a description list, such as a word in a glossary. CAI sets it in a heavier weight.</p>
+          <div class="elements-stage">
+            <dl>
+              <dt>Platform</dt>
+              <dd>Layer 3, app patterns.</dd>
+            </dl>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dt" aria-label="Copy the dt markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="dt markup"><code id="code-dt">&lt;dl&gt;
+  &lt;dt&gt;Platform&lt;/dt&gt;
+  &lt;dd&gt;Layer 3, app patterns.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-figcaption" data-element="figcaption" aria-labelledby="el-figcaption-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-figcaption-title"><code>&lt;figcaption&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/figcaption">MDN<span class="u-sr-only"> reference for the figcaption element</span></a>
+          </div>
+          <p class="elements-card__desc">The caption of a figure. Make it the first or the last child of the figure.</p>
+          <div class="elements-stage">
+            <figure>
+              <img src="/apps/docs/assets/shapes.svg" alt="A blue square and a grey circle" width="240" height="120">
+              <figcaption>Two shapes, drawn in SVG.</figcaption>
+            </figure>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-figcaption" aria-label="Copy the figcaption markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="figcaption markup"><code id="code-figcaption">&lt;figure&gt;
+  &lt;img src=&quot;shapes.svg&quot; alt=&quot;A blue square and a grey circle&quot; width=&quot;240&quot; height=&quot;120&quot;&gt;
+  &lt;figcaption&gt;Two shapes, drawn in SVG.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-figure" data-element="figure" aria-labelledby="el-figure-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-figure-title"><code>&lt;figure&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/figure">MDN<span class="u-sr-only"> reference for the figure element</span></a>
+          </div>
+          <p class="elements-card__desc">Wraps an image, a diagram, a code listing or a quote that the text refers to, with an optional caption. It could move elsewhere on the page without breaking the text.</p>
+          <div class="elements-stage">
+            <figure>
+              <img src="/apps/docs/assets/shapes.svg" alt="A blue square and a grey circle" width="240" height="120">
+              <figcaption>Two shapes, drawn in SVG.</figcaption>
+            </figure>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-figure" aria-label="Copy the figure markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="figure markup"><code id="code-figure">&lt;figure&gt;
+  &lt;img src=&quot;shapes.svg&quot; alt=&quot;A blue square and a grey circle&quot; width=&quot;240&quot; height=&quot;120&quot;&gt;
+  &lt;figcaption&gt;Two shapes, drawn in SVG.&lt;/figcaption&gt;
+&lt;/figure&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class. CAI makes a bare figure a padded surface. The .cai-figure component adds more.</p>
+        </article>
+
+        <article class="elements-card" id="el-hr" data-element="hr" aria-labelledby="el-hr-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-hr-title"><code>&lt;hr&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/hr">MDN<span class="u-sr-only"> reference for the hr element</span></a>
+          </div>
+          <p class="elements-card__desc">Marks a change of topic or scene between paragraphs. Use it for that meaning, not as a decorative line: for a plain line, use a border.</p>
+          <div class="elements-stage">
+            <p>Above the break.</p>
+            <hr>
+            <p>Below the break.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-hr" aria-label="Copy the hr markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="hr markup"><code id="code-hr">&lt;p&gt;Above the break.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Below the break.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-li" data-element="li" aria-labelledby="el-li-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-li-title"><code>&lt;li&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/li">MDN<span class="u-sr-only"> reference for the li element</span></a>
+          </div>
+          <p class="elements-card__desc">One item of a list. Its parent is an ol, a ul or a menu.</p>
+          <div class="elements-stage">
+            <ul>
+              <li>Tokens</li>
+              <li>Core</li>
+              <li>Platform</li>
+            </ul>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-li" aria-label="Copy the li markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="li markup"><code id="code-li">&lt;ul&gt;
+  &lt;li&gt;Tokens&lt;/li&gt;
+  &lt;li&gt;Core&lt;/li&gt;
+  &lt;li&gt;Platform&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-menu" data-element="menu" aria-labelledby="el-menu-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-menu-title"><code>&lt;menu&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/menu">MDN<span class="u-sr-only"> reference for the menu element</span></a>
+          </div>
+          <p class="elements-card__desc">A list of actions the user can take, such as the buttons of a toolbar. Browsers treat it like a ul; CAI lays it out as a row.</p>
+          <div class="elements-stage">
+            <menu>
+              <li><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Cut</button></li>
+              <li><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Copy</button></li>
+              <li><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Paste</button></li>
+            </menu>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-menu" aria-label="Copy the menu markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="menu markup"><code id="code-menu">&lt;menu&gt;
+  &lt;li&gt;&lt;button class=&quot;cai-btn cai-btn--outline cai-btn--sm&quot; type=&quot;button&quot;&gt;Cut&lt;/button&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;button class=&quot;cai-btn cai-btn--outline cai-btn--sm&quot; type=&quot;button&quot;&gt;Copy&lt;/button&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;button class=&quot;cai-btn cai-btn--outline cai-btn--sm&quot; type=&quot;button&quot;&gt;Paste&lt;/button&gt;&lt;/li&gt;
+&lt;/menu&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-ol" data-element="ol" aria-labelledby="el-ol-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-ol-title"><code>&lt;ol&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ol">MDN<span class="u-sr-only"> reference for the ol element</span></a>
+          </div>
+          <p class="elements-card__desc">A list where the order matters, such as steps or a ranking. A list with no class gets its markers back inside the box.</p>
+          <div class="elements-stage">
+            <ol>
+              <li>Install the tokens.</li>
+              <li>Add the core.</li>
+              <li>Add the platform.</li>
+            </ol>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-ol" aria-label="Copy the ol markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="ol markup"><code id="code-ol">&lt;ol&gt;
+  &lt;li&gt;Install the tokens.&lt;/li&gt;
+  &lt;li&gt;Add the core.&lt;/li&gt;
+  &lt;li&gt;Add the platform.&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-p" data-element="p" aria-labelledby="el-p-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-p-title"><code>&lt;p&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/p">MDN<span class="u-sr-only"> reference for the p element</span></a>
+          </div>
+          <p class="elements-card__desc">One paragraph of text. CAI asks the browser to avoid leaving a single word alone on the last line.</p>
+          <div class="elements-stage">
+            <p>CAI is a vanilla design system: tokens, components and app patterns in plain CSS and ES modules, with no framework and no build step.</p>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-p" aria-label="Copy the p markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="p markup"><code id="code-p">&lt;p&gt;CAI is a vanilla design system: tokens, components and app patterns in plain CSS and ES modules, with no framework and no build step.&lt;/p&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-pre" data-element="pre" aria-labelledby="el-pre-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-pre-title"><code>&lt;pre&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/pre">MDN<span class="u-sr-only"> reference for the pre element</span></a>
+          </div>
+          <p class="elements-card__desc">Text shown exactly as typed, with every space and line break, in a fixed-width font. For code, add the .cai-code-block class and a code element.</p>
+          <div class="elements-stage">
+            <pre>$ pnpm add @cai-ds/tokens
+            $ pnpm add @cai-ds/core</pre>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-pre" aria-label="Copy the pre markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="pre markup"><code id="code-pre">&lt;pre&gt;$ pnpm add @cai-ds/tokens
+$ pnpm add @cai-ds/core&lt;/pre&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-ul" data-element="ul" aria-labelledby="el-ul-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-ul-title"><code>&lt;ul&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/ul">MDN<span class="u-sr-only"> reference for the ul element</span></a>
+          </div>
+          <p class="elements-card__desc">A list where the order does not matter, such as features or ingredients. A list with no class gets its markers back inside the box.</p>
+          <div class="elements-stage">
+            <ul>
+              <li>Tokens</li>
+              <li>Core</li>
+              <li>Platform</li>
+            </ul>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-ul" aria-label="Copy the ul markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="ul markup"><code id="code-ul">&lt;ul&gt;
+  &lt;li&gt;Tokens&lt;/li&gt;
+  &lt;li&gt;Core&lt;/li&gt;
+  &lt;li&gt;Platform&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/text.css</code>, with no class.</p>
+        </article>
+        </div>
+      
+    </div>

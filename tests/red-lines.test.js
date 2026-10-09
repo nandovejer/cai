@@ -247,6 +247,29 @@ describe("Pages site: Content-Security-Policy", () => {
   });
 });
 
+describe("Pages site: the not-found page (docs-redesign SEC-MISC-3/4/5)", () => {
+  // Served by GitHub Pages at any missing URL: nothing in it may be relative to the page
+  const html = read("docs/404.html");
+  const base = /export const PAGES_BASE = "([^"]*)";/.exec(read("vite.config.js"))[1];
+
+  it("starts every URL at the site's path (root-relative, never another host), with the CSP first", () => {
+    expect(base).toMatch(/^\/([A-Za-z0-9._-]+\/)?$/);
+    const charset = html.indexOf("<meta charset");
+    const csp = html.indexOf("Content-Security-Policy");
+    expect(charset).toBeGreaterThan(-1);
+    expect(csp).toBeGreaterThan(charset);
+    expect(html.search(/(href|src)="/)).toBeGreaterThan(csp);
+    // No <base>: it would send the skip link's #main-content to the home page
+    expect(html).not.toMatch(/<base\b/);
+    const urls = [...html.matchAll(/(?:href|src)="([^"]*)"/g)].map((m) => m[1]);
+    for (const url of urls) expect(url.startsWith(base) || url.startsWith("#") || url.startsWith("https://github.com/"), url).toBe(true);
+  });
+
+  it("runs no script", () => {
+    expect(html).not.toMatch(/<script/i);
+  });
+});
+
 describe("Pages site: no local details in the output (docs-redesign SEC-PLG-10)", () => {
   it("no published file holds the repository path or the home folder", () => {
     const local = [root, homedir()];

@@ -1,0 +1,158 @@
+<!-- cai:page
+title: Images and media
+description: Images, sound and video, plus the elements that add captions or make parts of an image clickable.
+area: html
+order: 6
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-media" data-category="media">
+        <p class="elements-section__lead">Images, sound and video, plus the elements that add captions or make parts of an image clickable.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-area" data-element="area" aria-labelledby="el-area-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-area-title"><code>&lt;area&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/area">MDN<span class="u-sr-only"> reference for the area element</span></a>
+          </div>
+          <p class="elements-card__desc">One clickable shape on an image map, with its own link and alt text. It always sits inside a map.</p>
+          <div class="elements-stage">
+            <img src="/apps/docs/assets/shapes.svg" alt="A blue square and a grey circle" width="240" height="120" usemap="#d-areas">
+            <map name="d-areas">
+              <area shape="rect" coords="20,20,100,100" href="#" alt="The square">
+              <area shape="circle" coords="170,60,40" href="#" alt="The circle">
+            </map>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-area" aria-label="Copy the area markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="area markup"><code id="code-area">&lt;img src=&quot;shapes.svg&quot; alt=&quot;A blue square and a grey circle&quot; width=&quot;240&quot; height=&quot;120&quot; usemap=&quot;#d-areas&quot;&gt;
+&lt;map name=&quot;d-areas&quot;&gt;
+  &lt;area shape=&quot;rect&quot; coords=&quot;20,20,100,100&quot; href=&quot;#&quot; alt=&quot;The square&quot;&gt;
+  &lt;area shape=&quot;circle&quot; coords=&quot;170,60,40&quot; href=&quot;#&quot; alt=&quot;The circle&quot;&gt;
+&lt;/map&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-audio" data-element="audio" aria-labelledby="el-audio-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-audio-title"><code>&lt;audio&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/audio">MDN<span class="u-sr-only"> reference for the audio element</span></a>
+          </div>
+          <p class="elements-card__desc">Plays sound with the browser's own controls. Offer one source per file format, and put a link to the file inside for browsers that cannot play it.</p>
+          <div class="elements-stage">
+            <audio controls>
+              <source src="/apps/docs/assets/audio.mp3" type="audio/mpeg">
+              Your browser does not support audio.
+            </audio>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-audio" aria-label="Copy the audio markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="audio markup"><code id="code-audio">&lt;audio controls&gt;
+  &lt;source src=&quot;audio.mp3&quot; type=&quot;audio/mpeg&quot;&gt;
+  Your browser does not support audio.
+&lt;/audio&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class. CAI makes the controls full width. The .cai-player component builds its own.</p>
+        </article>
+
+        <article class="elements-card" id="el-img" data-element="img" aria-labelledby="el-img-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-img-title"><code>&lt;img&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img">MDN<span class="u-sr-only"> reference for the img element</span></a>
+          </div>
+          <p class="elements-card__desc">Shows an image. Always write alt: say what the image shows, or leave it empty when it is only decoration.</p>
+          <div class="elements-stage">
+            <img src="/apps/docs/assets/shapes.svg" alt="A blue square and a grey circle" width="240" height="120">
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-img" aria-label="Copy the img markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="img markup"><code id="code-img">&lt;img src=&quot;shapes.svg&quot; alt=&quot;A blue square and a grey circle&quot; width=&quot;240&quot; height=&quot;120&quot;&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class. CAI keeps it inside its box and keeps the aspect ratio.</p>
+        </article>
+
+        <article class="elements-card" id="el-map" data-element="map" aria-labelledby="el-map-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-map-title"><code>&lt;map&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/map">MDN<span class="u-sr-only"> reference for the map element</span></a>
+          </div>
+          <p class="elements-card__desc">Turns parts of an image into links, with one area per clickable shape. Connect it to the img with usemap.</p>
+          <div class="elements-stage">
+            <img src="/apps/docs/assets/shapes.svg" alt="A blue square and a grey circle" width="240" height="120" usemap="#d-map">
+            <map name="d-map">
+              <area shape="rect" coords="20,20,100,100" href="#" alt="The square">
+              <area shape="circle" coords="170,60,40" href="#" alt="The circle">
+            </map>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-map" aria-label="Copy the map markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="map markup"><code id="code-map">&lt;img src=&quot;shapes.svg&quot; alt=&quot;A blue square and a grey circle&quot; width=&quot;240&quot; height=&quot;120&quot; usemap=&quot;#d-map&quot;&gt;
+&lt;map name=&quot;d-map&quot;&gt;
+  &lt;area shape=&quot;rect&quot; coords=&quot;20,20,100,100&quot; href=&quot;#&quot; alt=&quot;The square&quot;&gt;
+  &lt;area shape=&quot;circle&quot; coords=&quot;170,60,40&quot; href=&quot;#&quot; alt=&quot;The circle&quot;&gt;
+&lt;/map&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-track" data-element="track" aria-labelledby="el-track-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-track-title"><code>&lt;track&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/track">MDN<span class="u-sr-only"> reference for the track element</span></a>
+          </div>
+          <p class="elements-card__desc">A text file timed to an audio or video, such as captions, subtitles or chapter titles. It goes inside the audio or video element.</p>
+          <div class="elements-stage">
+            <video controls preload="metadata" width="320" aria-label="A sun rises behind an arched window on a whitewashed wall. No sound.">
+              <source src="/apps/docs/assets/video.mp4" type="video/mp4">
+              <track kind="captions" srclang="en" label="English" data-asset="captions" default>
+            </video>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-track" aria-label="Copy the track markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="track markup"><code id="code-track">&lt;video controls preload=&quot;metadata&quot; width=&quot;320&quot; aria-label=&quot;A sun rises behind an arched window on a whitewashed wall. No sound.&quot;&gt;
+  &lt;source src=&quot;video.mp4&quot; type=&quot;video/mp4&quot;&gt;
+  &lt;track kind=&quot;captions&quot; srclang=&quot;en&quot; label=&quot;English&quot; src=&quot;captions.vtt&quot; default&gt;
+&lt;/video&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-video" data-element="video" aria-labelledby="el-video-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-video-title"><code>&lt;video&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video">MDN<span class="u-sr-only"> reference for the video element</span></a>
+          </div>
+          <p class="elements-card__desc">Plays video with the browser's own controls. Always give a text alternative, and captions when there is speech or other sound.</p>
+          <div class="elements-stage">
+            <video controls preload="metadata" width="320" aria-label="A sun rises behind an arched window on a whitewashed wall. No sound.">
+              <source src="/apps/docs/assets/video.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-video" aria-label="Copy the video markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="video markup"><code id="code-video">&lt;video controls preload=&quot;metadata&quot; width=&quot;320&quot; aria-label=&quot;A sun rises behind an arched window on a whitewashed wall. No sound.&quot;&gt;
+  &lt;source src=&quot;video.mp4&quot; type=&quot;video/mp4&quot;&gt;
+&lt;/video&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class. CAI keeps it inside its box. The .cai-player component builds its own controls.</p>
+        </article>
+        </div>
+      
+    </div>

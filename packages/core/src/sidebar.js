@@ -21,6 +21,22 @@ function focusSidebarTarget(targetEl) {
   focusTarget.focus({ preventScroll: true });
 }
 
+/**
+ * Bring a link into view inside the list that scrolls it, never the page:
+ * scrollIntoView() would also scroll the document and move the keyboard's
+ * starting point to the link, so the next Tab would skip the skip link.
+ */
+function revealInList(link) {
+  for (let box = link.parentElement; box && box !== document.body; box = box.parentElement) {
+    if (box.scrollHeight <= box.clientHeight || !/auto|scroll/.test(getComputedStyle(box).overflowY)) continue;
+    const l = link.getBoundingClientRect();
+    const b = box.getBoundingClientRect();
+    if (l.top < b.top) box.scrollTop -= b.top - l.top;
+    else if (l.bottom > b.bottom) box.scrollTop += l.bottom - b.bottom;
+    return;
+  }
+}
+
 /** True when `el` is a popover that is currently showing. */
 function isOpenPopover(el) {
   try {
@@ -64,7 +80,7 @@ export function initSidebar(root = document) {
   const updateActiveState = (newActive) => {
     if (currentActive === newActive || !newActive) return;
     setCurrentLink(newActive);
-    newActive.scrollIntoView({ block: "nearest" });
+    revealInList(newActive);
     currentActive = newActive;
   };
 

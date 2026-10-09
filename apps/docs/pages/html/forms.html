@@ -1,0 +1,448 @@
+<!-- cai:page
+title: Forms
+description: Controls and the structure around them. Fields, selects and buttons are styled through their .cai-* class; textarea, output, meter and progress have a native look in CAI.
+area: html
+order: 1
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-forms" data-category="forms">
+        <p class="elements-section__lead">Controls and the structure around them. Fields, selects and buttons are styled through their .cai-* class; textarea, output, meter and progress have a native look in CAI.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-button" data-element="button" aria-labelledby="el-button-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-button-title"><code>&lt;button&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/button">MDN<span class="u-sr-only"> reference for the button element</span></a>
+          </div>
+          <p class="elements-card__desc">Runs an action when clicked or pressed. Always set type: inside a form it submits by default.</p>
+          <div class="elements-stage">
+            <button class="cai-btn cai-btn--primary" type="button">Save</button>
+            <button class="cai-btn cai-btn--outline" type="button">Cancel</button>
+            <button class="cai-btn cai-btn--ghost" type="button" disabled>Disabled</button>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-button" aria-label="Copy the button markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="button markup"><code id="code-button">&lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;button&quot;&gt;Save&lt;/button&gt;
+&lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot;&gt;Cancel&lt;/button&gt;
+&lt;button class=&quot;cai-btn cai-btn--ghost&quot; type=&quot;button&quot; disabled&gt;Disabled&lt;/button&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/button.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-datalist" data-element="datalist" aria-labelledby="el-datalist-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-datalist-title"><code>&lt;datalist&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/datalist">MDN<span class="u-sr-only"> reference for the datalist element</span></a>
+          </div>
+          <p class="elements-card__desc">Suggestions offered while the user types in an input. The user can still type anything else.</p>
+          <div class="elements-stage">
+            <div class="cai-field">
+              <label class="cai-field__label" for="d-datalist">Browser</label>
+              <input class="cai-input" id="d-datalist" list="d-browsers" placeholder="Start typing">
+              <datalist id="d-browsers">
+                <option value="Chrome"></option>
+                <option value="Firefox"></option>
+                <option value="Safari"></option>
+              </datalist>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-datalist" aria-label="Copy the datalist markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="datalist markup"><code id="code-datalist">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-datalist&quot;&gt;Browser&lt;/label&gt;
+  &lt;input class=&quot;cai-input&quot; id=&quot;d-datalist&quot; list=&quot;d-browsers&quot; placeholder=&quot;Start typing&quot;&gt;
+  &lt;datalist id=&quot;d-browsers&quot;&gt;
+    &lt;option value=&quot;Chrome&quot;&gt;&lt;/option&gt;
+    &lt;option value=&quot;Firefox&quot;&gt;&lt;/option&gt;
+    &lt;option value=&quot;Safari&quot;&gt;&lt;/option&gt;
+  &lt;/datalist&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-fieldset" data-element="fieldset" aria-labelledby="el-fieldset-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-fieldset-title"><code>&lt;fieldset&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/fieldset">MDN<span class="u-sr-only"> reference for the fieldset element</span></a>
+          </div>
+          <p class="elements-card__desc">Wraps related controls, such as the parts of an address or a set of radio buttons. A legend as its first child names the group.</p>
+          <div class="elements-stage">
+            <fieldset class="cai-fieldset">
+              <legend>Plan</legend>
+              <div class="cai-check-group">
+                <div class="cai-check-item"><input type="radio" name="d-plan" id="d-plan-1" checked><label for="d-plan-1">Free</label></div>
+                <div class="cai-check-item"><input type="radio" name="d-plan" id="d-plan-2"><label for="d-plan-2">Team</label></div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-fieldset" aria-label="Copy the fieldset markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="fieldset markup"><code id="code-fieldset">&lt;fieldset class=&quot;cai-fieldset&quot;&gt;
+  &lt;legend&gt;Plan&lt;/legend&gt;
+  &lt;div class=&quot;cai-check-group&quot;&gt;
+    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;d-plan&quot; id=&quot;d-plan-1&quot; checked&gt;&lt;label for=&quot;d-plan-1&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;d-plan&quot; id=&quot;d-plan-2&quot;&gt;&lt;label for=&quot;d-plan-2&quot;&gt;Team&lt;/label&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/fieldset&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-form" data-element="form" aria-labelledby="el-form-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-form-title"><code>&lt;form&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/form">MDN<span class="u-sr-only"> reference for the form element</span></a>
+          </div>
+          <p class="elements-card__desc">Wraps controls whose values are sent together. The browser checks required fields and formats before it sends anything.</p>
+          <div class="elements-stage">
+            <form action="#" class="o-stack">
+              <div class="cai-field">
+              <label class="cai-field__label" for="d-form-name">Name</label>
+              <input class="cai-input" id="d-form-name" name="name" required>
+            </div>
+              <button class="cai-btn cai-btn--primary" type="submit">Send</button>
+            </form>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-form" aria-label="Copy the form markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="form markup"><code id="code-form">&lt;form action=&quot;#&quot; class=&quot;o-stack&quot;&gt;
+  &lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-form-name&quot;&gt;Name&lt;/label&gt;
+  &lt;input class=&quot;cai-input&quot; id=&quot;d-form-name&quot; name=&quot;name&quot; required&gt;
+&lt;/div&gt;
+  &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Send&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>. Leave Name empty and press Send: the browser stops the submit and says why.</p>
+        </article>
+
+        <article class="elements-card" id="el-input" data-element="input" aria-labelledby="el-input-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-input-title"><code>&lt;input&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input">MDN<span class="u-sr-only"> reference for the input element</span></a>
+          </div>
+          <p class="elements-card__desc">A field the user fills in. The type attribute decides which one: text, email, number, range, color, date and more.</p>
+          <div class="elements-stage">
+            <div class="cai-field">
+              <label class="cai-field__label" for="d-input">Email</label>
+              <input class="cai-input" id="d-input" type="email" placeholder="jane@example.com" autocomplete="off">
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-input" aria-label="Copy the input markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="input markup"><code id="code-input">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-input&quot;&gt;Email&lt;/label&gt;
+  &lt;input class=&quot;cai-input&quot; id=&quot;d-input&quot; type=&quot;email&quot; placeholder=&quot;jane@example.com&quot; autocomplete=&quot;off&quot;&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-label" data-element="label" aria-labelledby="el-label-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-label-title"><code>&lt;label&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/label">MDN<span class="u-sr-only"> reference for the label element</span></a>
+          </div>
+          <p class="elements-card__desc">The visible name of a control. Connect them with for and id: screen readers announce it, and clicking it focuses or toggles the control.</p>
+          <div class="elements-stage">
+            <div class="cai-field">
+              <label class="cai-field__label" for="d-label">Project name</label>
+              <input class="cai-input" id="d-label" type="text">
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-label" aria-label="Copy the label markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="label markup"><code id="code-label">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-label&quot;&gt;Project name&lt;/label&gt;
+  &lt;input class=&quot;cai-input&quot; id=&quot;d-label&quot; type=&quot;text&quot;&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-legend" data-element="legend" aria-labelledby="el-legend-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-legend-title"><code>&lt;legend&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/legend">MDN<span class="u-sr-only"> reference for the legend element</span></a>
+          </div>
+          <p class="elements-card__desc">The name of a fieldset, announced when the user enters the group. It is the first child of the fieldset.</p>
+          <div class="elements-stage">
+            <fieldset class="cai-fieldset">
+              <legend>Notifications</legend>
+              <div class="cai-check-group">
+                <div class="cai-check-item"><input type="checkbox" id="d-notify-1" checked><label for="d-notify-1">Email</label></div>
+                <div class="cai-check-item"><input type="checkbox" id="d-notify-2"><label for="d-notify-2">Push</label></div>
+              </div>
+            </fieldset>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-legend" aria-label="Copy the legend markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="legend markup"><code id="code-legend">&lt;fieldset class=&quot;cai-fieldset&quot;&gt;
+  &lt;legend&gt;Notifications&lt;/legend&gt;
+  &lt;div class=&quot;cai-check-group&quot;&gt;
+    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;d-notify-1&quot; checked&gt;&lt;label for=&quot;d-notify-1&quot;&gt;Email&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;d-notify-2&quot;&gt;&lt;label for=&quot;d-notify-2&quot;&gt;Push&lt;/label&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/fieldset&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-meter" data-element="meter" aria-labelledby="el-meter-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-meter-title"><code>&lt;meter&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meter">MDN<span class="u-sr-only"> reference for the meter element</span></a>
+          </div>
+          <p class="elements-card__desc">Shows a measurement on a known scale, such as storage used or a password score. To show how far a task has got, use progress.</p>
+          <div class="elements-stage">
+            <label for="d-meter">Storage used, 6 of 10 GB</label>
+            <meter id="d-meter" min="0" max="10" low="3" high="8" optimum="2" value="6">6 of 10 GB</meter>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-meter" aria-label="Copy the meter markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="meter markup"><code id="code-meter">&lt;label for=&quot;d-meter&quot;&gt;Storage used, 6 of 10 GB&lt;/label&gt;
+&lt;meter id=&quot;d-meter&quot; min=&quot;0&quot; max=&quot;10&quot; low=&quot;3&quot; high=&quot;8&quot; optimum=&quot;2&quot; value=&quot;6&quot;&gt;6 of 10 GB&lt;/meter&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-optgroup" data-element="optgroup" aria-labelledby="el-optgroup-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-optgroup-title"><code>&lt;optgroup&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/optgroup">MDN<span class="u-sr-only"> reference for the optgroup element</span></a>
+          </div>
+          <p class="elements-card__desc">A labelled set of options inside a select, such as cities grouped by country. The label itself cannot be chosen.</p>
+          <div class="elements-stage">
+            <div class="cai-field">
+              <label class="cai-field__label" for="d-optgroup">Role</label>
+              <div class="cai-select-wrap">
+                <select class="cai-input" id="d-optgroup">
+                  <optgroup label="Product">
+                    <option>Designer</option>
+                    <option>Product manager</option>
+                  </optgroup>
+                  <optgroup label="Engineering">
+                    <option>Developer</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-optgroup" aria-label="Copy the optgroup markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="optgroup markup"><code id="code-optgroup">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-optgroup&quot;&gt;Role&lt;/label&gt;
+  &lt;div class=&quot;cai-select-wrap&quot;&gt;
+    &lt;select class=&quot;cai-input&quot; id=&quot;d-optgroup&quot;&gt;
+      &lt;optgroup label=&quot;Product&quot;&gt;
+        &lt;option&gt;Designer&lt;/option&gt;
+        &lt;option&gt;Product manager&lt;/option&gt;
+      &lt;/optgroup&gt;
+      &lt;optgroup label=&quot;Engineering&quot;&gt;
+        &lt;option&gt;Developer&lt;/option&gt;
+      &lt;/optgroup&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-option" data-element="option" aria-labelledby="el-option-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-option-title"><code>&lt;option&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/option">MDN<span class="u-sr-only"> reference for the option element</span></a>
+          </div>
+          <p class="elements-card__desc">One choice in a select, or one suggestion in a datalist.</p>
+          <div class="elements-stage">
+            <div class="cai-field">
+              <label class="cai-field__label" for="d-option">Role</label>
+              <div class="cai-select-wrap">
+                <select class="cai-input" id="d-option">
+                  <option value="">Select a role</option>
+                  <option value="dev">Developer</option>
+                  <option value="design">Designer</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-option" aria-label="Copy the option markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="option markup"><code id="code-option">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-option&quot;&gt;Role&lt;/label&gt;
+  &lt;div class=&quot;cai-select-wrap&quot;&gt;
+    &lt;select class=&quot;cai-input&quot; id=&quot;d-option&quot;&gt;
+      &lt;option value=&quot;&quot;&gt;Select a role&lt;/option&gt;
+      &lt;option value=&quot;dev&quot;&gt;Developer&lt;/option&gt;
+      &lt;option value=&quot;design&quot;&gt;Designer&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-output" data-element="output" aria-labelledby="el-output-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-output-title"><code>&lt;output&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/output">MDN<span class="u-sr-only"> reference for the output element</span></a>
+          </div>
+          <p class="elements-card__desc">Shows the result of a calculation or of something the user did. Screen readers announce it when it changes.</p>
+          <div class="elements-stage">
+            <label for="d-range">Volume <output id="d-range-out" for="d-range">50</output></label>
+            <input class="cai-input" id="d-range" type="range" min="0" max="100" value="50" data-output="d-range-out">
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-output" aria-label="Copy the output markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="output markup"><code id="code-output">&lt;label for=&quot;d-range&quot;&gt;Volume &lt;output id=&quot;d-range-out&quot; for=&quot;d-range&quot;&gt;50&lt;/output&gt;&lt;/label&gt;
+&lt;input class=&quot;cai-input&quot; id=&quot;d-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;50&quot; data-output=&quot;d-range-out&quot;&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-progress" data-element="progress" aria-labelledby="el-progress-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-progress-title"><code>&lt;progress&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/progress">MDN<span class="u-sr-only"> reference for the progress element</span></a>
+          </div>
+          <p class="elements-card__desc">Shows how far a task has got, such as an upload. Leave out value while you cannot tell, and the bar shows activity without an amount.</p>
+          <div class="elements-stage">
+            <label for="d-progress">Uploading, 70%</label>
+            <progress id="d-progress" max="100" value="70">70%</progress>
+            <label for="d-progress-wait">Working</label>
+            <progress id="d-progress-wait">Working</progress>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-progress" aria-label="Copy the progress markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="progress markup"><code id="code-progress">&lt;label for=&quot;d-progress&quot;&gt;Uploading, 70%&lt;/label&gt;
+&lt;progress id=&quot;d-progress&quot; max=&quot;100&quot; value=&quot;70&quot;&gt;70%&lt;/progress&gt;
+&lt;label for=&quot;d-progress-wait&quot;&gt;Working&lt;/label&gt;
+&lt;progress id=&quot;d-progress-wait&quot;&gt;Working&lt;/progress&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class. The .cai-progress component is a separate div for custom bars.</p>
+        </article>
+
+        <article class="elements-card" id="el-select" data-element="select" aria-labelledby="el-select-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-select-title"><code>&lt;select&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/select">MDN<span class="u-sr-only"> reference for the select element</span></a>
+          </div>
+          <p class="elements-card__desc">A list of fixed choices the user picks from. When there are only a few and they should all stay in view, radio buttons are quicker.</p>
+          <div class="elements-stage">
+            <div class="cai-field">
+              <label class="cai-field__label" for="d-select">Role</label>
+              <div class="cai-select-wrap">
+                <select class="cai-input" id="d-select">
+                  <option value="">Select a role</option>
+                  <option value="dev">Developer</option>
+                  <option value="design">Designer</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-select" aria-label="Copy the select markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="select markup"><code id="code-select">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-select&quot;&gt;Role&lt;/label&gt;
+  &lt;div class=&quot;cai-select-wrap&quot;&gt;
+    &lt;select class=&quot;cai-input&quot; id=&quot;d-select&quot;&gt;
+      &lt;option value=&quot;&quot;&gt;Select a role&lt;/option&gt;
+      &lt;option value=&quot;dev&quot;&gt;Developer&lt;/option&gt;
+      &lt;option value=&quot;design&quot;&gt;Designer&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
+        </article>
+
+        <article class="elements-card" id="el-selectedcontent" data-element="selectedcontent" aria-labelledby="el-selectedcontent-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-selectedcontent-title"><code>&lt;selectedcontent&gt;</code></h2>
+            <span class="cai-tag cai-tag--purple">Experimental</span>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/selectedcontent">MDN<span class="u-sr-only"> reference for the selectedcontent element</span></a>
+          </div>
+          <p class="elements-card__desc">Repeats the chosen option inside the button of a customizable select, so its icons and formatting carry over. Experimental: check the browser compatibility table on MDN before you rely on it.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-selectedcontent" aria-label="Copy the selectedcontent markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="selectedcontent markup"><code id="code-selectedcontent">&lt;select&gt;
+  &lt;button&gt;
+    &lt;selectedcontent&gt;&lt;/selectedcontent&gt;
+  &lt;/button&gt;
+  &lt;option value=&quot;design&quot;&gt;Design&lt;/option&gt;
+  &lt;option value=&quot;build&quot;&gt;Build&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-textarea" data-element="textarea" aria-labelledby="el-textarea-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-textarea-title"><code>&lt;textarea&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/textarea">MDN<span class="u-sr-only"> reference for the textarea element</span></a>
+          </div>
+          <p class="elements-card__desc">A field for text that runs over several lines, such as a message. CAI lets it grow vertically only.</p>
+          <div class="elements-stage">
+            <div class="cai-field">
+              <label class="cai-field__label" for="d-textarea">Notes</label>
+              <textarea class="cai-input cai-input--textarea" id="d-textarea" rows="3" placeholder="Anything else?"></textarea>
+            </div>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-textarea" aria-label="Copy the textarea markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="textarea markup"><code id="code-textarea">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-textarea&quot;&gt;Notes&lt;/label&gt;
+  &lt;textarea class=&quot;cai-input cai-input--textarea&quot; id=&quot;d-textarea&quot; rows=&quot;3&quot; placeholder=&quot;Anything else?&quot;&gt;&lt;/textarea&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class.</p>
+        </article>
+        </div>
+      
+    </div>

@@ -1,0 +1,124 @@
+<!-- cai:page
+title: Frames and embeds
+description: Content that comes from somewhere else: other pages in frames, files shown by a viewer, and images that change with the screen.
+area: html
+order: 8
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-embedded" data-category="embedded">
+        <p class="elements-section__lead">Content that comes from somewhere else: other pages in frames, files shown by a viewer, and images that change with the screen.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-embed" data-element="embed" aria-labelledby="el-embed-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-embed-title"><code>&lt;embed&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/embed">MDN<span class="u-sr-only"> reference for the embed element</span></a>
+          </div>
+          <p class="elements-card__desc">Shows an external file, such as a PDF, with whatever viewer the browser has. It has no fallback content, so give it a title.</p>
+          <div class="elements-stage">
+            <embed type="image/svg+xml" data-asset="shapes" width="240" height="120" title="A blue square and a grey circle">
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-embed" aria-label="Copy the embed markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="embed markup"><code id="code-embed">&lt;embed src=&quot;shapes.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;240&quot; height=&quot;120&quot; title=&quot;A blue square and a grey circle&quot;&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-iframe" data-element="iframe" aria-labelledby="el-iframe-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-iframe-title"><code>&lt;iframe&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe">MDN<span class="u-sr-only"> reference for the iframe element</span></a>
+          </div>
+          <p class="elements-card__desc">Shows another web page inside this one, here a small one written in place with <code>srcdoc</code>. Always give it a title, and load it lazily when it is below the fold.</p>
+          <div class="elements-stage">
+            <iframe srcdoc="&lt;p style=&quot;font: 1rem system-ui; margin: 1rem&quot;&gt;A separate document, embedded in this page.&lt;/p&gt;" title="An embedded example document" loading="lazy" width="320" height="120"></iframe>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-iframe" aria-label="Copy the iframe markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="iframe markup"><code id="code-iframe">&lt;iframe srcdoc=&quot;&amp;lt;p&amp;gt;A separate document, embedded in this page.&amp;lt;/p&amp;gt;&quot;
+  title=&quot;An embedded example document&quot; loading=&quot;lazy&quot; width=&quot;320&quot; height=&quot;120&quot;&gt;&lt;/iframe&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-object" data-element="object" aria-labelledby="el-object-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-object-title"><code>&lt;object&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/object">MDN<span class="u-sr-only"> reference for the object element</span></a>
+          </div>
+          <p class="elements-card__desc">Shows an external file, such as a PDF or an image, and takes fallback content inside for when the file cannot load.</p>
+          <div class="elements-stage">
+            <object type="image/svg+xml" data-asset="shapes" width="240" height="120" aria-label="A blue square and a grey circle">
+              A blue square and a grey circle
+            </object>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-object" aria-label="Copy the object markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="object markup"><code id="code-object">&lt;object data=&quot;shapes.svg&quot; type=&quot;image/svg+xml&quot; width=&quot;240&quot; height=&quot;120&quot; aria-label=&quot;A blue square and a grey circle&quot;&gt;
+  A blue square and a grey circle
+&lt;/object&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-picture" data-element="picture" aria-labelledby="el-picture-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-picture-title"><code>&lt;picture&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/picture">MDN<span class="u-sr-only"> reference for the picture element</span></a>
+          </div>
+          <p class="elements-card__desc">Gives the browser several versions of one image so it can pick the best fit: by width, by file format or by pixel density. It must contain an img.</p>
+          <div class="elements-stage">
+            <picture>
+              <source media="(max-width: 30rem)" srcset="/apps/docs/assets/shapes-compact.svg">
+              <img src="/apps/docs/assets/shapes.svg" alt="A blue square and a grey circle" width="240" height="120">
+            </picture>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-picture" aria-label="Copy the picture markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="picture markup"><code id="code-picture">&lt;picture&gt;
+  &lt;source media=&quot;(max-width: 30rem)&quot; srcset=&quot;shapes-compact.svg&quot;&gt;
+  &lt;img src=&quot;shapes.svg&quot; alt=&quot;A blue square and a grey circle&quot; width=&quot;240&quot; height=&quot;120&quot;&gt;
+&lt;/picture&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class. Make the window narrower than 30rem and the picture switches to the compact image.</p>
+        </article>
+
+        <article class="elements-card" id="el-source" data-element="source" aria-labelledby="el-source-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-source-title"><code>&lt;source&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/source">MDN<span class="u-sr-only"> reference for the source element</span></a>
+          </div>
+          <p class="elements-card__desc">One file option inside a picture, audio or video. The browser takes the first one it can use.</p>
+          <div class="elements-stage">
+            <picture>
+              <source srcset="/apps/docs/assets/shapes.svg" type="image/svg+xml">
+              <img src="/apps/docs/assets/shapes.svg" alt="A blue square and a grey circle" width="240" height="120">
+            </picture>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-source" aria-label="Copy the source markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="source markup"><code id="code-source">&lt;picture&gt;
+  &lt;source srcset=&quot;shapes.svg&quot; type=&quot;image/svg+xml&quot;&gt;
+  &lt;img src=&quot;shapes.svg&quot; alt=&quot;A blue square and a grey circle&quot; width=&quot;240&quot; height=&quot;120&quot;&gt;
+&lt;/picture&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+        </div>
+      
+    </div>

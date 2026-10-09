@@ -1,0 +1,115 @@
+<!-- cai:page
+title: Built-in widgets
+description: Disclosure and dialogs, native and with no script needed.
+area: html
+order: 7
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-interactive" data-category="interactive">
+        <p class="elements-section__lead">Disclosure and dialogs, native and with no script needed.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-details" data-element="details" aria-labelledby="el-details-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-details-title"><code>&lt;details&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/details">MDN<span class="u-sr-only"> reference for the details element</span></a>
+          </div>
+          <p class="elements-card__desc">Hides extra content behind a summary the user opens and closes, with no script needed. It starts closed unless you add open.</p>
+          <div class="elements-stage">
+            <details>
+              <summary>What is CAI?</summary>
+              <p>A vanilla design system in plain CSS and ES modules.</p>
+            </details>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-details" aria-label="Copy the details markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="details markup"><code id="code-details">&lt;details&gt;
+  &lt;summary&gt;What is CAI?&lt;/summary&gt;
+  &lt;p&gt;A vanilla design system in plain CSS and ES modules.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/interactive.css</code>, with no class.</p>
+        </article>
+
+        <article class="elements-card" id="el-dialog" data-element="dialog" aria-labelledby="el-dialog-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-dialog-title"><code>&lt;dialog&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog">MDN<span class="u-sr-only"> reference for the dialog element</span></a>
+          </div>
+          <p class="elements-card__desc">A box above the page for a task or a message. Opened with showModal() it makes the rest of the page inert, shows a backdrop and closes with Escape. The button here opens it with no script.</p>
+          <div class="elements-stage">
+            <button class="cai-btn cai-btn--primary" type="button" command="show-modal" commandfor="d-dialog">Open dialog</button>
+            <dialog id="d-dialog" aria-labelledby="d-dialog-title">
+              <h3 id="d-dialog-title">A native dialog</h3>
+              <p>Press Escape or the button to close it.</p>
+              <form method="dialog">
+                <button class="cai-btn cai-btn--primary">Close</button>
+              </form>
+            </dialog>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dialog" aria-label="Copy the dialog markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="dialog markup"><code id="code-dialog">&lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;button&quot; command=&quot;show-modal&quot; commandfor=&quot;d-dialog&quot;&gt;Open dialog&lt;/button&gt;
+&lt;dialog id=&quot;d-dialog&quot; aria-labelledby=&quot;d-dialog-title&quot;&gt;
+  &lt;h4 id=&quot;d-dialog-title&quot;&gt;A native dialog&lt;/h4&gt;
+  &lt;p&gt;Press Escape or the button to close it.&lt;/p&gt;
+  &lt;form method=&quot;dialog&quot;&gt;
+    &lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Close&lt;/button&gt;
+  &lt;/form&gt;
+&lt;/dialog&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/interactive.css</code>, with no class. A dialog with no class gets a surface and its centering back. .cai-modal is the component with a header, body and footer.</p>
+        </article>
+
+        <article class="elements-card" id="el-geolocation" data-element="geolocation" aria-labelledby="el-geolocation-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-geolocation-title"><code>&lt;geolocation&gt;</code></h2>
+            <span class="cai-tag cai-tag--purple">Experimental</span>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/geolocation">MDN<span class="u-sr-only"> reference for the geolocation element</span></a>
+          </div>
+          <p class="elements-card__desc">A button drawn by the browser that shares the visitor's location and handles the permission prompt itself. Experimental and of limited availability: check the compatibility table on MDN. The autolocate and watch attributes control when it reads the position.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-geolocation" aria-label="Copy the geolocation markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="geolocation markup"><code id="code-geolocation">&lt;geolocation&gt;
+  &lt;button id=&quot;fallback&quot;&gt;Use location&lt;/button&gt;
+&lt;/geolocation&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-summary" data-element="summary" aria-labelledby="el-summary-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-summary-title"><code>&lt;summary&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/summary">MDN<span class="u-sr-only"> reference for the summary element</span></a>
+          </div>
+          <p class="elements-card__desc">The label of a details that always stays in view: clicking it opens and closes the rest. CAI gives it a hover and a focus ring.</p>
+          <div class="elements-stage">
+            <details>
+              <summary>What is CAI?</summary>
+              <p>A vanilla design system in plain CSS and ES modules.</p>
+            </details>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-summary" aria-label="Copy the summary markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="summary markup"><code id="code-summary">&lt;details&gt;
+  &lt;summary&gt;What is CAI?&lt;/summary&gt;
+  &lt;p&gt;A vanilla design system in plain CSS and ES modules.&lt;/p&gt;
+&lt;/details&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/interactive.css</code>, with no class.</p>
+        </article>
+        </div>
+      
+    </div>

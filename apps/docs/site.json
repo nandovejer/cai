@@ -1,10 +1,22 @@
 {
   "areas": [
-    { "id": "get-started", "label": "Get started", "slug": "get-started" },
-    { "id": "components", "label": "Components", "slug": "components" },
-    { "id": "tokens", "label": "Tokens", "slug": "tokens" },
-    { "id": "platform", "label": "Platform", "slug": "platform" },
+    { "id": "get-started", "label": "Get started", "slug": "get-started", "fallback": "/docs/#installation" },
+    { "id": "components", "label": "Components", "slug": "components", "fallback": "/docs/#core", "groups": [
+      { "id": "actions", "label": "Actions and input" },
+      { "id": "content", "label": "Show content" },
+      { "id": "feedback", "label": "Feedback and status" },
+      { "id": "navigation", "label": "Navigation" },
+      { "id": "media", "label": "Media" },
+      { "id": "helpers", "label": "Helpers", "sidebar": true, "list": true }
+    ] },
+    { "id": "tokens", "label": "Tokens", "slug": "tokens", "fallback": "/docs/#tokens", "groups": [
+      { "id": "families", "label": "Token families" }
+    ] },
+    { "id": "platform", "label": "Platform", "slug": "platform", "fallback": "/docs/#platform", "groups": [
+      { "id": "patterns", "label": "Patterns" },
+      { "id": "reference", "label": "Reference", "list": true }
+    ] },
     { "id": "html", "label": "HTML elements", "slug": "html" },
-    { "id": "accessibility", "label": "Accessibility", "slug": "accessibility" }
+    { "id": "accessibility", "label": "Accessibility", "slug": "accessibility", "fallback": "/docs/#accessibility" }
   ]
 }

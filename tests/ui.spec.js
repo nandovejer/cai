@@ -5,6 +5,7 @@
  */
 
 import { test, expect } from '@playwright/test';
+import { routeOf } from './helpers/docs-site.js';
 
 async function isModalVisible(modal) {
   return modal.evaluate((el) => {
@@ -15,7 +16,8 @@ async function isModalVisible(modal) {
 
 test.describe('CAI Design System UI Smoke Tests', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/docs/');
+    // A component page: its demos (modal, tabs) are what these tests drive
+    await page.goto(routeOf('docs-modal'));
     await page.waitForLoadState('networkidle');
   });
 

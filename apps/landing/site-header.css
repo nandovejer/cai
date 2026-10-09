@@ -1,10 +1,11 @@
 /* ==========================================================================
    CAI — SITE HEADER
-   One header for every page of the site (home, docs and the two moved-page
-   stubs), with the same markup on each (tests/landing.spec.js compares
-   them): the menu button, the brand, the three site links and the color
-   mode switcher. At 768px and below the site links move into the drawer
-   the menu button opens (#page-nav, see "Menu button and drawer").
+   One header for every page of the site (home and docs), from one partial
+   (apps/docs/_partials/header.html): the menu button, the brand and the
+   site links. At 768px and below Home, Docs and GitHub move into the drawer
+   the menu button opens (#page-nav, see "Menu button and drawer");
+   Components stays in the row at every width, so any component is two
+   links away from any page.
    This file is the only source of the header's layout: the pages add none.
    Consumer-side styles on top of tokens + core.
    Rules: semantic tokens only; no literal colors.
@@ -84,10 +85,10 @@
   color: var(--cai-text-primary);
 }
 
-/* The current page: an underline as well as color, never color alone
-   (RL-6). Not bold: the links keep their width, so the header is laid out
-   the same on every page. */
-.site-header__nav a[aria-current="page"] {
+/* The current page, or the section it belongs to (aria-current="true"): an
+   underline as well as color, never color alone (RL-6). Not bold: the links
+   keep their width, so the header is laid out the same on every page. */
+.site-header__nav a[aria-current] {
   color: var(--cai-text-primary);
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -159,9 +160,10 @@
   block-size: var(--cai-control-lg);
 }
 
-/* The narrowest screens: the version tag goes (it is also in the install
-   snippets), the name stays beside the mark */
-@media (max-width: 359px) {
+/* Small screens: the version tag goes (it is also in the install
+   snippets), the name stays beside the mark, and the row keeps room for
+   Components */
+@media (max-width: 479px) {
   .site-header__tag {
     display: none;
   }
@@ -176,9 +178,8 @@
 
    One breakpoint, 768px (--cai-bp-md, where core turns the sidebar into a
    drawer and shows the button): at 768px and below the site links live in
-   the drawer, above it in the header row. Exactly one copy is displayed at
-   any width, so assistive technology never meets the "Site" navigation
-   twice. Both moves depend on the popover API: without it there is no
+   the drawer, above it in the header row (Components stays in the row).
+   Exactly one copy of each link is displayed at any width. Both moves depend on the popover API: without it there is no
    drawer, and the links stay in the row.
    -------------------------------------------------------------------------- */
 
@@ -190,7 +191,13 @@
 /* The current page in the drawer: the same underline as in the row, in the
    sidebar's text color (never color alone, RL-6). Not the filled "active"
    style, which marks the section in view. */
-.page-nav__site .cai-sidebar__link[aria-current="page"] {
+.page-nav__site ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-nav__site .cai-sidebar__link[aria-current] {
   color: var(--cai-sidebar-text-hover);
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -216,7 +223,7 @@
       display: flex;
     }
 
-    .site-header__nav {
+    .site-header__nav a:not(.site-header__components) {
       display: none;
     }
 

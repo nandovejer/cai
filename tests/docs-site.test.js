@@ -14,6 +14,7 @@ import {
   buildSite,
   checkLinks,
   currentOf,
+  assertThumbSafe,
   escapeHtml,
   expand,
   markCurrent,
@@ -101,13 +102,17 @@ describe("routes", () => {
     expect(rootOf("/")).toBe("./");
     expect(rootOf("/docs/")).toBe("../");
     expect(rootOf("/docs/components/button/")).toBe("../../../");
+    expect(rootOf("/404.html")).toBe("./");
   });
 
-  it("marks Home on the landing and Docs on every docs page", () => {
-    expect(currentOf("/")).toBe("/");
-    expect(currentOf("/docs/")).toBe("/docs/");
-    expect(currentOf("/docs/tokens/color/")).toBe("/docs/");
-    expect(currentOf("/platform/")).toBe(null);
+  it("marks Home on the landing, Docs on every docs page and Components in its area", () => {
+    const marks = (route) => Object.fromEntries(currentOf(route));
+    expect(marks("/")).toEqual({ "/": "page" });
+    expect(marks("/docs/")).toEqual({ "/docs/": "page" });
+    expect(marks("/docs/tokens/color/")).toEqual({ "/docs/": "true" });
+    expect(marks("/docs/components/")).toEqual({ "/docs/": "true", "/docs/components/": "page" });
+    expect(marks("/docs/components/button/")).toEqual({ "/docs/": "true", "/docs/components/": "true" });
+    expect(marks("/404.html")).toEqual({});
   });
 
   it("makes root-absolute links to known routes relative, and leaves the rest", () => {
@@ -117,6 +122,8 @@ describe("routes", () => {
       '<a href="../../../">a</a><a href="../../../docs/#x">b</a><a href="../../../docs/components/button/">c</a><a href="/packages/x.css">d</a><a href="/docs">e</a><a href="https://x.org/docs/">f</a>',
     );
     expect(relativizeLinks('<a href="/docs/#x">b</a>', "/", routes)).toBe('<a href="./docs/#x">b</a>');
+    // The not-found page: from the site's path
+    expect(relativizeLinks('<a href="/">a</a><a href="/docs/#x">b</a>', "/404.html", routes, "/cai/")).toBe('<a href="/cai/">a</a><a href="/cai/docs/#x">b</a>');
   });
 });
 
@@ -191,7 +198,7 @@ describe("includes and placeholders", () => {
     },
     values: { title: 'A "quoted" <title>', description: "d", root: "../", content: "<p>{{title}} <!-- cai:include header --></p>" },
     placeholders: true,
-    current: "/docs/",
+    current: new Map([["/docs/", "page"]]),
     ...extra,
   });
 
@@ -223,8 +230,9 @@ describe("includes and placeholders", () => {
 
   it("marks only links inside a <nav>, never the brand link", () => {
     const html = '<a class="brand" href="/">CAI</a><nav><a href="/">Home</a></nav>';
-    expect(markCurrent(html, "/")).toBe('<a class="brand" href="/">CAI</a><nav><a href="/" aria-current="page">Home</a></nav>');
-    expect(markCurrent(html, null)).toBe(html);
+    expect(markCurrent(html, new Map([["/", "page"]]))).toBe('<a class="brand" href="/">CAI</a><nav><a href="/" aria-current="page">Home</a></nav>');
+    expect(markCurrent(html, new Map([["/", "true"]]))).toBe('<a class="brand" href="/">CAI</a><nav><a href="/" aria-current="true">Home</a></nav>');
+    expect(markCurrent(html, new Map())).toBe(html);
   });
 });
 
@@ -283,7 +291,7 @@ describe("scanning and building a site", () => {
     ]);
     const html = renderPage(site.byRoute.get("/docs/components/button/"), site);
     expect(html).toContain("<title>Button</title>");
-    expect(html).toContain('<a href="/docs/" aria-current="page">Docs</a>');
+    expect(html).toContain('<a href="/docs/" aria-current="true">Docs</a>');
     expect(html).toContain('  <main id="main-content">\n<p><a href="/docs/#main-content">Up</a></p>\n  </main>');
     expect(html).not.toContain(repoRoot); // SEC-PLG-10
     expect(buildSite(site, { unchecked: ["/"] }).problems).toEqual([]);
@@ -351,22 +359,95 @@ describe("scanning and building a site", () => {
 describe("the CAI docs site", () => {
   const site = scanSite(join(repo, "apps/docs"), repo);
   const landing = { route: "/", file: "apps/landing/index.html", html: readFileSync(join(repo, "apps/landing/index.html"), "utf-8") };
+  const { rendered, problems } = buildSite(site, { extra: [landing] });
+  const pages = [...rendered].filter(([route]) => route !== "/");
 
   it("builds with every source well nested and every internal link resolving", () => {
-    const { rendered, problems } = buildSite(site, { extra: [landing] });
     expect(problems).toEqual([]);
-    expect([...rendered.keys()].sort()).toEqual(["/", ...site.pages.map((p) => p.route)].sort());
+    expect([...rendered.keys()].sort()).toEqual(["/", "/404.html", ...site.pages.map((p) => p.route)].sort());
   });
 
-  it("renders one header for every page from the shared partial", () => {
-    const { rendered } = buildSite(site, { extra: [landing] });
+  it("renders one header for every page from the shared partial, with the current links marked", () => {
     const header = (html) => html.match(/<header class="site-header"[\s\S]*?<\/header>/)[0];
     const partial = readFileSync(join(repo, "apps/docs/_partials/header.html"), "utf-8").trim();
-    const flat = (html) => html.replace(/ aria-current="page"/g, "").replace(/\s+/g, " ");
+    const flat = (html) => html.replace(/ aria-current="(page|true)"/g, "").replace(/\s+/g, " ");
     for (const [route, html] of rendered) {
       expect(flat(header(html)), route).toBe(flat(partial));
-      const current = header(html).match(/<a href="([^"]*)" aria-current="page">/g);
-      expect(current, route).toEqual([`<a href="${currentOf(route)}" aria-current="page">`]);
+      const marked = [...header(html).matchAll(/<a[^>]* href="([^"]*)" aria-current="(page|true)">/g)].map(([, href, value]) => [href, value]);
+      expect(marked, route).toEqual([...currentOf(route)]);
     }
+  });
+
+  it("titles every page as \"<h1> – <area> – CAI documentation\" and gives it one h1 (NAV-2)", () => {
+    const titles = new Set();
+    for (const [route, html] of pages) {
+      const title = html.match(/<title>([^<]*)<\/title>/)[1];
+      // The heading specimens of the HTML elements pages are aria-hidden h1s: the page h1 is .docs-title
+      const h1 = [...html.matchAll(/<h1 class="docs-title">([\s\S]*?)<\/h1>/g)].map((m) => m[1]);
+      expect(h1, route).toHaveLength(1);
+      expect(title.startsWith(h1[0].replace(/&amp;/g, "&")), `${route}: ${title}`).toBe(true);
+      expect(title.endsWith("CAI documentation"), route).toBe(true);
+      expect(titles.has(title), `${route}: ${title} is not unique`).toBe(false);
+      titles.add(title);
+    }
+  });
+
+  it("marks the current page in the sidebar, its area with \"true\", and expands only that area (NAV-9, NAV-10)", () => {
+    for (const [route, html] of pages) {
+      const nav = html.match(/<ul class="docs-nav">[\s\S]*?\n {4}<\/ul>/)[0];
+      const current = [...nav.matchAll(/aria-current="page" href="([^"]*)"/g)].map((m) => m[1]);
+      const page = site.byRoute.get(route);
+      const area = site.areas.find((a) => a.id === page?.meta.area);
+      expect(current, route).toEqual(area ? [route] : []);
+      const parents = [...nav.matchAll(/aria-current="true" href="([^"]*)"/g)].map((m) => m[1]);
+      expect(parents, route).toEqual(area && route !== `/docs/${area.slug}/` ? [`/docs/${area.slug}/`] : []);
+      expect(nav, route).not.toContain("is-active");
+      // One nested list at most: the current area
+      expect((nav.match(/<li><a class="cai-sidebar__link docs-nav__area"[^>]*>[^<]*<\/a>\n/g) ?? []).length, route).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it("lists every page in the A–Z index, and every HTML element", () => {
+    const az = rendered.get("/docs/a-z/");
+    for (const page of site.pages.filter((p) => p.meta.search !== "false")) expect(az, page.route).toContain(`href="${page.route}"`);
+    const elements = JSON.parse(readFileSync(join(repo, "tests/fixtures/html-elements.json"), "utf-8")).elements;
+    for (const { name } of elements) expect(az, name).toContain(`#el-${name}"`);
+  });
+
+  it("reaches every component in two links from any page, without opening anything (ia.md §14)", () => {
+    if (!site.byRoute.has("/docs/components/")) return; // phase-2-transition
+    // Links shown at every width: the header row (Components stays in it on a
+    // phone) and the content of main; the drawer and "On this page" are closed.
+    const components = site.pages.filter((p) => p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers");
+    expect(components).toHaveLength(20);
+    const visible = (html) => {
+      const header = html.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0];
+      const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<nav class="docs-onpage"[\s\S]*?<\/nav>/, "");
+      const row = [...header.matchAll(/<a([^>]*) href="([^"]*)"/g)].filter(([, attrs]) => attrs.includes("site-header__components")).map((m) => m[2]);
+      return new Set([...row, ...[...main.matchAll(/href="(\/docs\/[^"#]*)/g)].map((m) => m[1])]);
+    };
+    const links = new Map([...rendered].map(([route, html]) => [route, visible(html)]));
+    for (const [route] of rendered) {
+      const one = links.get(route);
+      const two = new Set([...one, ...[...one].flatMap((r) => [...(links.get(r) ?? [])])]);
+      for (const c of components) expect(two.has(c.route), `${route} → ${c.route}`).toBe(true);
+    }
+  });
+
+  it("renders the not-found page with no <base> and no script (SEC-MISC-3/5)", () => {
+    const html = rendered.get("/404.html");
+    expect(html).not.toMatch(/<base\b/);
+    expect(html).not.toMatch(/<script/i);
+    expect(html).toContain("<h1 class=\"docs-title\">Page not found</h1>");
+  });
+
+  it("keeps gallery thumbnails inert: no id, script, media, form or handler (HUB-2, SEC-PLG-12)", () => {
+    if (!site.byRoute.has("/docs/components/")) return; // phase-2-transition
+    expect(() => assertThumbSafe('<span id="x">a</span>', "t.html")).toThrow(/id/);
+    expect(() => assertThumbSafe('<span onclick="x()">a</span>', "t.html")).toThrow(/onclick/);
+    expect(() => assertThumbSafe("<video></video>", "t.html")).toThrow(/video/);
+    expect(() => assertThumbSafe('<a href="javascript:x">a</a>', "t.html")).toThrow(/javascript/);
+    const gallery = rendered.get("/docs/components/");
+    expect(gallery.match(/<div class="docs-card__thumb" inert aria-hidden="true">/g)).toHaveLength(20);
   });
 });

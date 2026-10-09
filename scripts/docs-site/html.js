@@ -135,7 +135,8 @@ export function* tags(html, file = "<html>") {
  *   headings: [{ level, id, text, line, specimen }],
  *   elements: Set<tag name>,            every element used
  * }
- * `specimen` is true for a heading inside [data-docs-specimen] (a demo).
+ * `specimen` is true for a heading inside a demo: [data-docs-specimen],
+ * [aria-hidden="true"], [inert] or a <dialog> (a demo is not the outline).
  */
 export function readHtml(html, file = "<html>") {
   const stack = [];
@@ -170,9 +171,10 @@ export function readHtml(html, file = "<html>") {
         if (foreign) continue;
         throw new HtmlError(file, line, `<${name}/> is not a void element: write <${name}></${name}>`);
       }
-      stack.push({ name, line, foreign: FOREIGN.has(name), specimen: attrs.has("data-docs-specimen") });
+      const isSpecimen = attrs.has("data-docs-specimen") || attrs.get("aria-hidden") === "true" || attrs.has("inert") || name === "dialog";
+      stack.push({ name, line, foreign: FOREIGN.has(name), specimen: isSpecimen });
       if (FOREIGN.has(name)) foreign++;
-      if (attrs.has("data-docs-specimen")) specimen++;
+      if (isSpecimen) specimen++;
     } else {
       const { name, line } = tag;
       if (VOID.has(name)) throw new HtmlError(file, line, `</${name}> closes a void element`);

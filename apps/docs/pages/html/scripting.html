@@ -1,0 +1,71 @@
+<!-- cai:page
+title: Script and canvas
+description: Elements that carry or host script: a drawing surface, a fallback for when script is off, and the script itself.
+area: html
+order: 10
+lead: false
+-->
+    <div class="docs-block elements-section" id="cat-scripting" data-category="scripting">
+        <p class="elements-section__lead">Elements that carry or host script: a drawing surface, a fallback for when script is off, and the script itself.</p>
+        <div class="elements-grid">
+        <article class="elements-card" id="el-canvas" data-element="canvas" aria-labelledby="el-canvas-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-canvas-title"><code>&lt;canvas&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/canvas">MDN<span class="u-sr-only"> reference for the canvas element</span></a>
+          </div>
+          <p class="elements-card__desc">A drawing area you paint with script, for charts or games. Screen readers cannot see what is drawn, so put a text alternative inside it.</p>
+          <div class="elements-stage">
+            <canvas id="d-canvas" width="240" height="120" role="img" aria-label="A square and a circle, drawn with the canvas API">
+              A square and a circle.
+            </canvas>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-canvas" aria-label="Copy the canvas markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="canvas markup"><code id="code-canvas">&lt;canvas id=&quot;d-canvas&quot; width=&quot;240&quot; height=&quot;120&quot; role=&quot;img&quot; aria-label=&quot;A square and a circle, drawn with the canvas API&quot;&gt;
+  A square and a circle.
+&lt;/canvas&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Styled by <code>elements/media.css</code>, with no class. This one is drawn from the token values, so it follows the color mode.</p>
+        </article>
+
+        <article class="elements-card" id="el-noscript" data-element="noscript" aria-labelledby="el-noscript-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-noscript-title"><code>&lt;noscript&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/noscript">MDN<span class="u-sr-only"> reference for the noscript element</span></a>
+          </div>
+          <p class="elements-card__desc">Content that shows only when script is off or cannot run. This card shows the markup only: on this page it would never render.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-noscript" aria-label="Copy the noscript markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="noscript markup"><code id="code-noscript">&lt;noscript&gt;
+  &lt;p&gt;This page needs JavaScript for the live demos.&lt;/p&gt;
+&lt;/noscript&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+
+        <article class="elements-card" id="el-script" data-element="script" aria-labelledby="el-script-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="el-script-title"><code>&lt;script&gt;</code></h2>
+            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script">MDN<span class="u-sr-only"> reference for the script element</span></a>
+          </div>
+          <p class="elements-card__desc">Runs JavaScript, written inline or loaded from a file. Use type="module" for the CAI behaviors.</p>
+          <p class="elements-card__style">Markup only: this element is not rendered.</p>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-script" aria-label="Copy the script markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="script markup"><code id="code-script">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+        </article>
+        </div>
+      
+    </div>

@@ -11,7 +11,9 @@
  *   partials (also in the landing, which shares the header).
  * - Pages build: asset URLs and links between pages are relative to each
  *   page's own depth, so the site works under /<repo>/; each HTML file is
- *   moved to <route>/index.html.
+ *   moved to <route>/index.html. The not-found page (apps/docs/404.html)
+ *   becomes /404.html, with every URL starting at the site's path on GitHub
+ *   Pages ("/<repo>/"), because it is served at any URL.
  * - Every internal link is checked: an error in a build, a warning in dev.
  * - Editing a layout, a partial, a page or site.json reloads the browser.
  *
@@ -19,20 +21,26 @@
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
-import { buildSite, parseFrontMatter, readInside, relativizeLinks, renderDocument, renderPage, rootOf, scanSite } from "./site.js";
+import { NOT_FOUND_ROUTE, buildSite, parseFrontMatter, readInside, relativizeLinks, renderDocument, renderPage, rootOf, scanSite } from "./site.js";
 
 const LANDING = { route: "/", file: "apps/landing/index.html" };
 
-/** Output file of a route: "/" → "index.html", "/docs/a/" → "docs/a/index.html". */
-const outFileOf = (route) => `${route.slice(1)}index.html`;
+/** Output file of a route: "/" → "index.html", "/docs/a/" → "docs/a/index.html", "/404.html" → "404.html". */
+const outFileOf = (route) => (route.endsWith(".html") ? route.slice(1) : `${route.slice(1)}index.html`);
+
+/** The path of the site on GitHub Pages: where the not-found page's URLs start. */
+export const BASE_PATH = /^\/([A-Za-z0-9._-]+\/)?$/;
 
 /**
  * @param {object} options
  * @param {string} options.repoRoot   absolute path of the repository
  * @param {boolean} options.relative  pages build: relative URLs at any depth
  * @param {string} options.outRoot    build output folder
+ * @param {string} [options.pagesBase] pages build: the site's path, "/<repo>/"
  */
-export function docsSite({ repoRoot, relative: relativeUrls, outRoot }) {
+export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase = "/" }) {
+  // An absolute URL here would make every asset of the 404 page a third-party request (SEC-MISC-3)
+  if (!BASE_PATH.test(pagesBase)) throw new Error(`pagesBase must be "/" or "/<name>/", got ${pagesBase}`);
   const docsDir = resolve(repoRoot, "apps/docs");
   const landingAbs = resolve(repoRoot, LANDING.file);
   const toRepo = (abs) => relative(repoRoot, abs).split(sep).join("/");
@@ -47,7 +55,10 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot }) {
   const documents = () => [
     { ...LANDING, kind: "landing" },
     ...scan().pages.map((p) => ({ route: p.route, file: p.file, kind: "page" })),
+    ...(scan().notFound ? [{ route: NOT_FOUND_ROUTE, file: scan().notFound.file, kind: "page" }] : []),
   ];
+  /** {{root}} of a document in the pages build: relative to its depth; the site's path on the 404. */
+  const rootFor = (route) => (route === NOT_FOUND_ROUTE ? pagesBase : rootOf(route));
   const routes = () => new Set(documents().map((d) => d.route));
 
   /** Render everything and check it; returns the link problems. */
@@ -75,7 +86,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot }) {
                 renderBuiltUrl(filename, { hostId, hostType }) {
                   if (hostType !== "html") return undefined;
                   const doc = documents().find((d) => d.file === hostId);
-                  return doc ? rootOf(doc.route) + filename : undefined;
+                  return doc ? rootFor(doc.route) + filename : undefined;
                 },
               },
             }
@@ -179,11 +190,11 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot }) {
             scanned = scan().byFile.get(resolve(repoRoot, file));
           }
           const page = { ...scanned, ...parseFrontMatter(html, file, scan().areas) };
-          out = renderPage(page, scan(), { root: relativeUrls ? rootOf(doc.route) : "/" });
+          out = renderPage(page, scan(), { root: relativeUrls ? rootFor(doc.route) : "/" });
         } else if (doc.kind === "landing") {
           out = renderDocument(html, file, doc.route, scan());
         }
-        return relativeUrls ? relativizeLinks(out, doc.route, routes()) : out;
+        return relativeUrls ? relativizeLinks(out, doc.route, routes(), rootFor(doc.route)) : out;
       },
     },
 

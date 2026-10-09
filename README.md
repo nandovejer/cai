@@ -55,7 +55,7 @@ The repository is a small monorepo with three package layers:
 - [`@cai-ds/core`](./packages/core) — reusable CSS components and vanilla JS behaviors
 - [`@cai-ds/platform`](./packages/platform) — app-shell patterns built on top of core
 
-The home page (`apps/landing/`) and the documentation (`apps/docs/`: tokens, core, platform patterns and the HTML elements reference on one page) consume those packages during development.
+The home page (`apps/landing/`) and the documentation (`apps/docs/`: tokens, core, platform patterns and the HTML elements reference, one page each) consume those packages during development.
 
 ## Adoption levels
 

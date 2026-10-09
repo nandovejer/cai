@@ -4,8 +4,9 @@
  * Each test says what the page must still do without scripts.
  */
 import { test, expect } from '@playwright/test';
+import { gotoId, notFoundRoute, routes } from './helpers/docs-site.js';
 
-const APPS = ['/', '/docs/'];
+const APPS = ['/', ...routes(), notFoundRoute];
 
 for (const app of APPS) {
   test(`${app}: content is readable without JavaScript`, async ({ page }) => {
@@ -60,14 +61,14 @@ for (const app of APPS) {
   });
 }
 
-test('/docs/: the image placeholder shows without JavaScript', async ({ page }) => {
-  await page.goto('/docs/');
+test('docs: the image placeholder shows without JavaScript', async ({ page }) => {
+  await gotoId(page, 'demo-image-empty');
   const empty = page.locator('#demo-image-empty');
   await expect(empty).toBeVisible();
   expect(await empty.evaluate((el) => getComputedStyle(el).backgroundImage)).toMatch(/placeholder-16x9-1920\.avif/);
 });
 
-test('/docs/: the color mode switcher is three radios that set the mode', async ({ page }) => {
+test('docs: the color mode switcher is three radios that set the mode', async ({ page }) => {
   await page.goto('/docs/');
   const switcher = page.locator('footer .cai-mode-switcher--cycle');
   await expect(switcher.locator('.cai-mode-btn')).toHaveCount(3);
@@ -89,9 +90,9 @@ for (const app of APPS) {
     await expect(drawer).toBeHidden();
     await toggle.click();
     await expect(drawer).toBeVisible();
-    // the site links are in the drawer, first, and not in the header row
-    await expect(page.locator('.site-header__nav')).toBeHidden();
-    await expect(drawer.getByRole('navigation', { name: 'Site' }).getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
+    // the site links are in the drawer, first; only Components stays in the header row
+    await expect(page.locator('.site-header__nav a:visible')).toHaveText(['Components']);
+    await expect(drawer.getByRole('list', { name: 'Site' }).getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
     // With no script to measure it, the header's height is the CSS value:
     // the drawer opens right below the header, never over its button
     const header = await page.locator('.site-header').boundingBox();

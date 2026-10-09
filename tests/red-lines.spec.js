@@ -1,6 +1,6 @@
 /**
  * CAI — the red lines of PRINCIPLES.md that can only be checked in a browser.
- * Every test runs on the home and documentation pages; the visual ones run in the three base
+ * Every test runs on the home page and every page of the docs site; the visual ones run in the three base
  * themes. The static half lives in tests/red-lines.test.js, stylelint and
  * ESLint; the no-JavaScript half (RL-2) in tests/nojs.spec.js.
  *
@@ -10,8 +10,10 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
+import { notFoundRoute, routeOf, routes } from './helpers/docs-site.js';
 
-const APPS = ['/', '/docs/'];
+// The landing and every page of the docs site (a11y.md TEST-7)
+const APPS = ['/', ...routes(), notFoundRoute];
 const THEMES = ['light', 'dark', 'high-contrast'];
 const FIXTURES = ['level-1-tokens.html', 'level-2-core.html', 'level-3-platform.html', 'core-without-tokens.html'];
 
@@ -375,7 +377,7 @@ test.describe('RL-7: syntax colours on the code block', () => {
     test(`every --cai-code-* colour keeps 4.5:1 (7:1 in high contrast) in ${theme}`, async ({ page }) => {
       // No background transition between the light first paint and the mode
       await page.emulateMedia({ reducedMotion: 'reduce' });
-      await open(page, '/docs/', theme);
+      await open(page, routeOf('c-code-syntax'), theme);
 
       const { seen, offenders } = await page.evaluate(() => {
         const rgb = (value) => value.match(/\d+(\.\d+)?/g).slice(0, 3).map(Number);

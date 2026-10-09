@@ -278,8 +278,8 @@ test.describe('Documentation site', () => {
 
       const toc = page.getByRole('navigation', { name: 'On this page' });
       // Both tabs' sections, each h3 under its tab's h2 (NAV-13)
-      await expect(toc.getByRole('link')).toHaveText(['Example', 'Known issues', 'Code', 'Copy the markup', 'Variants and options', 'How it works', 'Without JavaScript', 'Keyboard and ARIA', 'Design', 'When to use', 'When not to use', 'Writing the content']);
-      await expect(toc.locator('li:has(> a[href="#design"]) > ul a')).toHaveText(['When to use', 'When not to use', 'Writing the content']);
+      await expect(toc.getByRole('link')).toHaveText(['Example', 'Known issues', 'Code', 'Copy the markup', 'Variants and options', 'How it works', 'Without JavaScript', 'Keyboard and ARIA', 'Design', 'When to use', 'When not to use', "Do and don't", 'Writing the content', 'Contrast and focus', 'Tokens it uses']);
+      await expect(toc.locator('li:has(> a[href="#design"]) > ul a')).toHaveText(['When to use', 'When not to use', "Do and don't", 'Writing the content', 'Contrast and focus', 'Tokens it uses']);
       await page.locator('#how').scrollIntoViewIfNeeded();
       await expect(toc.locator('[aria-current="true"]')).toHaveCount(1);
       await expect(toc.locator('[aria-current="page"]')).toHaveCount(0);
@@ -526,7 +526,8 @@ test.describe('Documentation site', () => {
       await gotoId(page, 'c-mode-switcher');
 
       const guide = page.locator('#c-mode-switcher');
-      await expect(guide.locator('fieldset.cai-mode-switcher')).toHaveAttribute('disabled', '');
+      // The Example's specimen (the Design tab's Do and don't has inert ones of its own)
+      await expect(guide.locator('.docs-example fieldset.cai-mode-switcher')).toHaveAttribute('disabled', '');
       await expect(guide.locator('a[href="#site-footer"]').first()).toBeVisible();
       await expect(guide).toContainText('cai-mode-switcher--cycle');
       await expect(guide).toContainText('initThemeCycle()');

@@ -491,9 +491,8 @@ describe("the CAI docs site", () => {
   });
 
   it("gives every component and pattern page the same structure: example, known issues, then the Code and Design tabs (PRINCIPLES RL-18, SR-5)", () => {
-    // ia.md §6 and a11y.md TAB-1/3/16/17. Every Code section is required; the
-    // Design sections of phase 6 are not yet: Do and don't, Contrast and focus
-    // (EX-006).
+    // ia.md §6 and a11y.md TAB-1/3/16/17. Every section of both tabs is
+    // required; tests/docs-design.test.js checks what the Design sections say.
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "platform" && p.meta.group === "patterns"),
     );
@@ -517,7 +516,7 @@ describe("the CAI docs site", () => {
       // Each panel: its h2, then its sections in the template's order
       for (const [panel, heading, ids, required] of [
         ["code-panel", "code", CODE, CODE],
-        ["design-panel", "design", DESIGN, ["when", "when-not", "content"]],
+        ["design-panel", "design", DESIGN, DESIGN],
       ]) {
         const start = at(`<div class="cai-tabpanel docs-view" id="${panel}">`);
         expect(start, `${where} #${panel}`).toBeGreaterThan(0);

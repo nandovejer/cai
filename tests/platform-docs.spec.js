@@ -74,7 +74,8 @@ test.describe('Platform docs', () => {
   test('keyboard: the skip link is first and moves focus to the main area', async ({ page }) => {
     await gotoId(page, 'p-skip');
     await page.keyboard.press('Tab');
-    const skip = page.locator('.cai-platform-skip-link');
+    // The page's own link: the Design tab's examples are spans, never links
+    const skip = page.locator('a.cai-platform-skip-link[href="#main-content"]');
     await expect(skip).toBeFocused();
     await expect(skip).toBeInViewport();
     await page.keyboard.press('Enter');

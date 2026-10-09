@@ -1,0 +1,42 @@
+<!-- cai:page
+title: Page header
+description: Title, lead and eyebrow at the top of a page.
+area: platform
+order: 2
+group: patterns
+files: .cai-platform-page-header, __title, __lead
+-->
+    <div class="docs-component" id="p-header">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-page-header u-mb-0">
+              <p class="cai-platform-page-header__title">Billing</p>
+              <p class="cai-platform-page-header__lead">Invoices, payment methods and plan limits for your workspace.</p>
+            </div>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-header-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-prose">
+            <h2 id="markup">Copy the markup</h2>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page header markup"><code>&lt;div class=&quot;cai-platform-page-header&quot;&gt;
+  &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Page title&lt;/h1&gt;
+  &lt;p class=&quot;cai-platform-page-header__lead&quot;&gt;A short description of the page.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-header-when">When to use</h2>
+            <p>At the top of a page or a main view, to give its title and one sentence about what it is for.</p>
+            <h2 class="docs-guide__title" id="h-p-header-when-not">When not to use</h2>
+            <p>For the title of a section inside the page: use a plain heading of the right level. Do not use it twice on one page.</p>
+            <h2 class="docs-guide__title" id="h-p-header-how">How it works</h2>
+            <p>A wrapper with a title and an optional lead paragraph. The title is the page's <code>&lt;h1&gt;</code>; the class only changes how it looks.</p>
+            <h2 class="docs-guide__title" id="h-p-header-content">Content guidance</h2>
+            <p>The title names the page in a few words, in sentence case. The lead is one sentence, under 25 words, that says what the reader can do here.</p>
+            <h2 class="docs-guide__title" id="h-p-header-keyboard">Keyboard and ARIA</h2>
+            <p>No interaction. The title must be an <code>&lt;h1&gt;</code> so screen reader users can find it from the heading list.</p>
+          </div>
+    </div>

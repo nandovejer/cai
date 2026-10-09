@@ -1,0 +1,37 @@
+<!-- cai:page
+title: Section
+description: A titled band of content with consistent spacing.
+area: platform
+order: 3
+group: patterns
+files: .cai-platform-section
+-->
+    <div class="docs-component" id="p-section">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-section">
+              <div class="docs-box">Heading</div>
+              <div class="docs-box">Lead</div>
+              <div class="docs-box">Content</div>
+            </div>
+            <p class="docs-demo__note">Children are spaced by <code class="cai-code-inline">--cai-space-md</code>.</p>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-section-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-section-when">When to use</h2>
+            <p>To group related blocks inside the main area with the same vertical space between them.</p>
+            <h2 class="docs-guide__title" id="h-p-section-when-not">When not to use</h2>
+            <p>For space between paragraphs of running text: the text styles already handle that. Not for side-by-side layout: use the grid object or the feature grid.</p>
+            <h2 class="docs-guide__title" id="h-p-section-how">How it works</h2>
+            <p>A one-column grid with the section gap token between its children. Use it on a <code>&lt;section&gt;</code> when the group has its own heading, or on a <code>&lt;div&gt;</code> when it does not.</p>
+            <h2 class="docs-guide__title" id="h-p-section-content">Content guidance</h2>
+            <p>Give each <code>&lt;section&gt;</code> a heading, and name it with <code>aria-labelledby</code> pointing at that heading.</p>
+            <h2 class="docs-guide__title" id="h-p-section-keyboard">Keyboard and ARIA</h2>
+            <p>No interaction. A <code>&lt;section&gt;</code> with an accessible name becomes a region landmark; one without a name does not.</p>
+          </div>
+    </div>

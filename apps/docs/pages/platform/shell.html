@@ -1,0 +1,48 @@
+<!-- cai:page
+title: Page shell
+description: Header, main and footer layout for every page.
+area: platform
+order: 1
+group: patterns
+files: .cai-platform-page, --gradient, .cai-platform-main, .cai-platform-content
+-->
+    <div class="docs-component" id="p-shell">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <figure class="docs-figure">
+              <div class="docs-anatomy">
+                <div class="docs-box">
+                  .cai-platform-page
+                  <div class="docs-box">.cai-platform-skip-link</div>
+                  <div class="docs-box">header</div>
+                  <div class="docs-box">
+                    .cai-platform-main
+                    <div class="docs-box">.cai-platform-section</div>
+                    <div class="docs-box">.cai-platform-section</div>
+                  </div>
+                  <div class="docs-box">.cai-platform-footer</div>
+                </div>
+              </div>
+              <div class="cai-platform-page--gradient docs-gradient-sample">.cai-platform-page--gradient</div>
+              <figcaption>The anatomy of a page. The gradient modifier, shown above, is meant for short pages. In an app shell, <code class="cai-code-inline">.cai-platform-content</code> pads the main column beside the sidebar.</figcaption>
+            </figure>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-shell-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-shell-when">When to use</h2>
+            <p>For the whole page of an app or a product site: a header, a main area that grows and a footer that stays at the bottom.</p>
+            <h2 class="docs-guide__title" id="h-p-shell-when-not">When not to use</h2>
+            <p>Inside a component or a card: it sets a full-height grid on its element. Do not nest one page shell inside another. Do not use the gradient variant behind long text, where a flat surface is easier to read.</p>
+            <h2 class="docs-guide__title" id="h-p-shell-how">How it works</h2>
+            <p>Put <code>.cai-platform-page</code> on <code>&lt;body&gt;</code>: a three-row grid (header, main, footer) at least the height of the viewport. Use <code>.cai-platform-main</code> on <code>&lt;main&gt;</code> for a page without a sidebar, or <code>.cai-platform-content</code> for the column next to one. CSS only.</p>
+            <h2 class="docs-guide__title" id="h-p-shell-content">Content guidance</h2>
+            <p>Keep one <code>&lt;main&gt;</code> per page, with an <code>id</code> that the skip link points to. Start it with the page header, so the first heading is the <code>&lt;h1&gt;</code>.</p>
+            <h2 class="docs-guide__title" id="h-p-shell-keyboard">Keyboard and ARIA</h2>
+            <p>No interaction of its own. Landmarks come from the native elements: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>. Do not add <code>role</code> to them.</p>
+          </div>
+    </div>

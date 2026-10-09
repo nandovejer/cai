@@ -1,0 +1,44 @@
+<!-- cai:page
+title: Action group
+description: A row of related buttons and links.
+area: platform
+order: 6
+group: patterns
+files: .cai-platform-actions
+-->
+    <div class="docs-component" id="p-actions">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-actions">
+              <button class="cai-btn cai-btn--primary" type="button">Save</button>
+              <button class="cai-btn cai-btn--outline" type="button">Preview</button>
+              <button class="cai-btn cai-btn--ghost" type="button">Cancel</button>
+            </div>
+            <p class="docs-demo__note">Stacks full-width at 480px and below.</p>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-actions-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-prose">
+            <h2 id="markup">Copy the markup</h2>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Action group markup"><code>&lt;div class=&quot;cai-platform-actions&quot;&gt;
+  &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;/docs/&quot;&gt;Get started&lt;/a&gt;
+  &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#reference&quot;&gt;Read the class reference&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-actions-when">When to use</h2>
+            <p>For two or three related actions together, such as a primary and a secondary button after a form or in a hero.</p>
+            <h2 class="docs-guide__title" id="h-p-actions-when-not">When not to use</h2>
+            <p>For navigation menus or long lists of links: use a <code>&lt;nav&gt;</code> with a list. Not for more than three actions: the reader cannot tell which one matters.</p>
+            <h2 class="docs-guide__title" id="h-p-actions-how">How it works</h2>
+            <p>A wrapping row with a fixed gap. Below 480 px the actions stack and take the full width, so each one stays an easy target.</p>
+            <h2 class="docs-guide__title" id="h-p-actions-content">Content guidance</h2>
+            <p>Put the main action first. Each label starts with a verb and makes sense on its own: "Save details", "Browse the components". Use <code>&lt;a&gt;</code> to go somewhere and <code>&lt;button&gt;</code> to do something.</p>
+            <h2 class="docs-guide__title" id="h-p-actions-keyboard">Keyboard and ARIA</h2>
+            <p>Tab moves through the actions in source order, which is also the visual order. Each control keeps its native keyboard behaviour.</p>
+          </div>
+    </div>

@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Web Components – HTML elements – CAI documentation</title>
-  <meta name="description" content="The two HTML elements behind custom elements: a template that is parsed but not rendered, and a slot that shows light-DOM content inside a shadow tree.">
+  <title>Page templates – Platform – CAI documentation</title>
+  <meta name="description" content="Whole-page markup to start from.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
@@ -50,25 +50,22 @@
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#installation">Get started</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#core">Components</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#tokens">Tokens</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/platform/">Platform</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/html/">HTML elements</a>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/platform/">Platform</a>
         <ul class="docs-nav__pages">
-          <li><a class="cai-sidebar__link" href="../../../docs/html/forms/">Forms</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/text/">Text blocks</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/inline/">Inline text</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/structure/">Page structure</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/tables/">Tables</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/media/">Images and media</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/widgets/">Built-in widgets</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/embeds/">Frames and embeds</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/svg-mathml/">SVG and MathML</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/scripting/">Script and canvas</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/edits/">Tracked edits</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/metadata/">Page metadata</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/html/document/">Document root</a></li>
-          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/html/web-components/">Web Components</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/shell/">Page shell</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/page-header/">Page header</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/section/">Section</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/footer/">Footer</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/skip-link/">Skip link</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/actions/">Action group</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/command-block/">Command block</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/feature-grid/">Feature grid</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/image/">Image</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/platform/templates/">Page templates</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/classes/">Class reference</a></li>
         </ul>
       </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#accessibility">Accessibility</a></li>
     </ul>
   </nav>
@@ -79,100 +76,102 @@
       <div class="cai-breadcrumb">
         <a class="cai-breadcrumb__item" href="../../../docs/">Docs</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <a class="cai-breadcrumb__item" href="../../../docs/html/">HTML elements</a>
+        <a class="cai-breadcrumb__item" href="../../../docs/platform/">Platform</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Web Components</span>
+        <span class="cai-breadcrumb__item" aria-current="page">Page templates</span>
       </div>
     </nav>
-    <h1 class="docs-title">Web Components</h1>
+    <h1 class="docs-title">Page templates</h1>
+    <p class="docs-lead">Whole-page markup to start from.</p>
   </div>
-
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#landing-page-shell">Landing page shell</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#feature-grid-block">Feature grid block</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#install-command-and-actions">Install command and actions</a></li>
+      </ul>
+    </details>
+  </nav>
   <div class="docs-body">
-    <div class="docs-block elements-section" id="cat-web-components" data-category="web-components">
-        <p class="elements-section__lead">The two HTML elements behind custom elements: a template that is parsed but not rendered, and a slot that shows light-DOM content inside a shadow tree.</p>
-        <div class="elements-grid">
-        <article class="elements-card" id="el-slot" data-element="slot" aria-labelledby="el-slot-title">
-          <div class="elements-card__head">
-            <h2 class="elements-card__title" id="el-slot-title"><code>&lt;slot&gt;</code></h2>
-            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/slot">MDN<span class="u-sr-only"> reference for the slot element</span></a>
-          </div>
-          <p class="elements-card__desc">A gap in the shadow tree of a web component that the page fills with its own markup. A named slot takes only the elements whose slot attribute matches its name.</p>
-          <div class="elements-stage">
-            <template id="d-slot-template">
-              <style>
-                article { padding: var(--cai-space-sm); border: 1px solid var(--cai-divider); }
-                h4 { margin-bottom: var(--cai-space-2xs); }
-              </style>
-              <article>
-                <h3><slot name="title">Untitled</slot></h3>
-                <slot>No content.</slot>
-              </article>
-            </template>
+    <div class="docs-block" id="p-templates">
+          <p class="docs-demo__note">Whole blocks to paste into a page and adapt.</p>
+          <div class="docs-prose">
+            <h2 id="landing-page-shell" class="docs-prose__title">Landing page shell</h2>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Landing page shell markup"><code>&lt;body class=&quot;cai-platform-page cai-platform-page--gradient&quot;&gt;
+  &lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
 
-            <demo-card>
-              <span slot="title">Hello from the light DOM</span>
-              This text fills the default slot.
-            </demo-card>
-          </div>
-          <div class="elements-snippet">
-            <div class="elements-snippet__bar">
-              <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-slot" aria-label="Copy the slot markup">Copy</button>
-            </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="slot markup"><code id="code-slot">&lt;template id=&quot;d-slot-template&quot;&gt;
-  &lt;style&gt;
-    article { padding: var(--cai-space-sm); border: 1px solid var(--cai-divider); }
-    h4 { margin-bottom: var(--cai-space-2xs); }
-  &lt;/style&gt;
-  &lt;article&gt;
-    &lt;h4&gt;&lt;slot name=&quot;title&quot;&gt;Untitled&lt;/slot&gt;&lt;/h4&gt;
-    &lt;slot&gt;No content.&lt;/slot&gt;
-  &lt;/article&gt;
-&lt;/template&gt;
+  &lt;main id=&quot;main-content&quot; class=&quot;cai-platform-main o-container&quot;&gt;
+    &lt;section class=&quot;cai-platform-section&quot;&gt;
+      &lt;div class=&quot;cai-platform-page-header&quot;&gt;
+        &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Your product headline&lt;/h1&gt;
+        &lt;p class=&quot;cai-platform-page-header__lead&quot;&gt;One sentence value proposition.&lt;/p&gt;
+      &lt;/div&gt;
 
-&lt;demo-card&gt;
-  &lt;span slot=&quot;title&quot;&gt;Hello from the light DOM&lt;/span&gt;
-  This text fills the default slot.
-&lt;/demo-card&gt;</code></pre>
-          </div>
-          <p class="elements-card__style">CAI adds no style: the browser look is kept. The custom element takes a few lines of script. Design tokens cross the shadow boundary, so the card follows the color mode.</p>
-        </article>
+      &lt;div class=&quot;cai-platform-actions&quot;&gt;
+        &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#get-started&quot;&gt;Get started&lt;/a&gt;
+        &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#learn-more&quot;&gt;Browse the components&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
 
-        <article class="elements-card" id="el-template" data-element="template" aria-labelledby="el-template-title">
-          <div class="elements-card__head">
-            <h2 class="elements-card__title" id="el-template-title"><code>&lt;template&gt;</code></h2>
-            <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/template">MDN<span class="u-sr-only"> reference for the template element</span></a>
+  &lt;footer class=&quot;cai-platform-footer o-container&quot;&gt;
+    &lt;p&gt;Footer text&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
           </div>
-          <p class="elements-card__desc">Markup the browser reads but does not show, ready to be copied into the page with script.</p>
-          <div class="elements-stage">
-            <template id="d-template">
-              <li>Item <span data-n></span></li>
-            </template>
+          <div class="docs-prose">
+            <h2 id="feature-grid-block" class="docs-prose__title">Feature grid block</h2>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Feature grid block markup"><code>&lt;section class=&quot;cai-platform-section&quot;&gt;
+  &lt;h2&gt;Key capabilities&lt;/h2&gt;
+  &lt;div class=&quot;cai-platform-feature-grid&quot;&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability one&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability two&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability three&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability four&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+          </div>
+          <div class="docs-prose">
+            <h2 id="install-command-and-actions" class="docs-prose__title">Install command and actions</h2>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Install command and actions markup"><code>&lt;div class=&quot;cai-platform-command-block&quot;&gt;
+  &lt;code class=&quot;cai-platform-command-block__cmd&quot;&gt;
+    &lt;span class=&quot;cai-platform-command-block__prefix&quot;&gt;$&lt;/span&gt;
+    pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform
+  &lt;/code&gt;
+  &lt;button class=&quot;cai-copy-btn&quot;
+    data-copy=&quot;pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform&quot;
+    aria-label=&quot;Copy install command&quot;&gt;
+    Copy
+  &lt;/button&gt;
+&lt;/div&gt;
 
-            <button class="cai-btn cai-btn--outline" type="button" id="d-template-add">Add an item</button>
-            <ul id="d-template-list"></ul>
+&lt;div class=&quot;cai-platform-actions&quot;&gt;
+  &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#quickstart&quot;&gt;Quickstart&lt;/a&gt;
+  &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#reference&quot;&gt;Reference&lt;/a&gt;
+  &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/docs/&quot;&gt;Core docs&lt;/a&gt;
+&lt;/div&gt;</code></pre>
           </div>
-          <div class="elements-snippet">
-            <div class="elements-snippet__bar">
-              <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-template" aria-label="Copy the template markup">Copy</button>
-            </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="template markup"><code id="code-template">&lt;template id=&quot;d-template&quot;&gt;
-  &lt;li&gt;Item &lt;span data-n&gt;&lt;/span&gt;&lt;/li&gt;
-&lt;/template&gt;
-
-&lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; id=&quot;d-template-add&quot;&gt;Add an item&lt;/button&gt;
-&lt;ul id=&quot;d-template-list&quot;&gt;&lt;/ul&gt;</code></pre>
-          </div>
-          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
-        </article>
-        </div>
-      
+        
     </div>
 
   </div>
   <ul class="docs-pager">
-    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/html/document/">Previous: Document root</a></li>
+    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/platform/image/">Previous: Image</a></li>
+    <li class="docs-pager__next"><a rel="next" href="../../../docs/platform/classes/">Next: Class reference</a></li>
   </ul>
   </main>
 

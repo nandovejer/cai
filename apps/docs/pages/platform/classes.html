@@ -1,0 +1,144 @@
+<!-- cai:page
+title: Class reference
+description: Every cai-platform class in one table.
+area: platform
+order: 11
+group: reference
+files: components/_components.css
+-->
+    <div class="docs-block" id="p-reference">
+          <div class="docs-prose">
+            <h2 id="page-structure" class="docs-prose__title">Page structure</h2>
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Platform classes: page structure">
+          <table class="cai-table docs-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Element</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-page</div></td>
+                <td data-label="Element"><div>&lt;body&gt;</div></td>
+                <td data-label="Description"><div>Root grid (header / 1fr / footer). Sets <code class="cai-code-inline">min-height: 100vh</code>.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-page--gradient</div></td>
+                <td data-label="Element"><div>&lt;body&gt;</div></td>
+                <td data-label="Description"><div>Modifier. Adds a radial brand-subtle gradient at the top-left corner. Use on marketing or landing pages.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-skip-link</div></td>
+                <td data-label="Element"><div>&lt;a&gt;</div></td>
+                <td data-label="Description"><div>Visually hidden until focused. Jumps to <code class="cai-code-inline">#main-content</code>. Required for keyboard accessibility.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-main</div></td>
+                <td data-label="Element"><div>&lt;main&gt;</div></td>
+                <td data-label="Description"><div>Main content area. Grid with <code class="cai-code-inline">gap: --cai-space-3xl</code> between sections. Combine with <code class="cai-code-inline">.o-container</code> for horizontal centering.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-content</div></td>
+                <td data-label="Element"><div>&lt;div&gt; / &lt;main&gt;</div></td>
+                <td data-label="Description"><div>Padded content wrapper with max-width cap. For app-shell layouts where the sidebar handles its own width.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-section</div></td>
+                <td data-label="Element"><div>&lt;section&gt;</div></td>
+                <td data-label="Description"><div>Grid container with vertical gap between child elements. Use as the direct child of <code class="cai-code-inline">.cai-platform-main</code>.</div></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="header-and-footer" class="docs-prose__title">Header and footer</h2>
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Platform classes: header and footer">
+          <table class="cai-table docs-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Element</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-page-header</div></td>
+                <td data-label="Element"><div>&lt;div&gt; / &lt;header&gt;</div></td>
+                <td data-label="Description"><div>Hero-style page header block with bottom margin. Contains a title and optional lead.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-page-header__title</div></td>
+                <td data-label="Element"><div>&lt;h1&gt;</div></td>
+                <td data-label="Description"><div>Heading: heading font, size 3xl, weight 300, tight letter-spacing.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-page-header__lead</div></td>
+                <td data-label="Element"><div>&lt;p&gt;</div></td>
+                <td data-label="Description"><div>Subtitle: secondary text color, max-width 600px.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-footer</div></td>
+                <td data-label="Element"><div>&lt;footer&gt;</div></td>
+                <td data-label="Description"><div>Flex row (space-between). Includes a top border and vertical padding. Collapses to column on mobile. Combine with <code class="cai-code-inline">.o-container</code>.</div></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="content-patterns" class="docs-prose__title">Content patterns</h2>
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Platform classes: content patterns">
+          <table class="cai-table docs-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Element</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-actions</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>Flex row with wrapping and gap for CTA button groups. Collapses to column on mobile &lt;480px.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-feature-grid</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>2-column grid for feature cards. Collapses to 1 column on mobile. Place <code class="cai-code-inline">.cai-card</code> elements as direct children.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-command-block</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>Installation/CLI command display. Dark background, mono font. Flex row: command on left, copy button on right.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-command-block__cmd</div></td>
+                <td data-label="Element"><div>&lt;code&gt;</div></td>
+                <td data-label="Description"><div>The command text. Mono font, wraps on overflow.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-command-block__prefix</div></td>
+                <td data-label="Element"><div>&lt;span&gt;</div></td>
+                <td data-label="Description"><div>Shell prefix character (<code class="cai-code-inline">$</code>, <code class="cai-code-inline">pnpm</code>, etc.). Secondary color, non-selectable.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-image</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>16:9 frame around a native <code class="cai-code-inline">&lt;picture&gt;</code>. The image fills it; with no image, an abstract placeholder shows, in a night version in dark mode.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-image--4x3, --3x2, --1x1, --21x9, --9x16</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>Modifiers. Other aspect ratios, each with its own placeholder.</div></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+        
+    </div>

@@ -1,0 +1,36 @@
+<!-- cai:page
+title: Skip link
+description: Lets keyboard users jump to the main content.
+area: platform
+order: 5
+group: patterns
+files: .cai-platform-skip-link
+-->
+    <div class="docs-component" id="p-skip">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <p class="docs-demo__note">This page has one: press Tab at the top of the page to see it.</p>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-skip-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-prose">
+            <h2 id="markup">Copy the markup</h2>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Skip link markup"><code>&lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;</code></pre>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-skip-when">When to use</h2>
+            <p>On every page that has navigation or a header before the main content.</p>
+            <h2 class="docs-guide__title" id="h-p-skip-when-not">When not to use</h2>
+            <p>As the only way to reach the content: the page still needs a logical heading order and landmarks.</p>
+            <h2 class="docs-guide__title" id="h-p-skip-how">How it works</h2>
+            <p>A normal link to the <code>id</code> of <code>&lt;main&gt;</code>, first in <code>&lt;body&gt;</code>. It sits off screen and slides in when it receives focus. The browser does the jump; no JavaScript.</p>
+            <h2 class="docs-guide__title" id="h-p-skip-content">Content guidance</h2>
+            <p>Say where it goes: "Skip to main content". Do not add other text.</p>
+            <h2 class="docs-guide__title" id="h-p-skip-keyboard">Keyboard and ARIA</h2>
+            <p>Tab once from the top of the page to reveal it; Enter follows it and moves focus to the main area. Under reduced motion it appears without sliding.</p>
+          </div>
+    </div>

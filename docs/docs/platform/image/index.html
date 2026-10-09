@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image – Platform – CAI documentation</title>
+  <meta name="description" content="Responsive image frame with placeholders.">
+  <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <script type="module" crossorigin src="../../../assets/site-header-T8jVbU25.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CzKDnCsw.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWg7wXWy.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BNQQrHe0.css">
+</head>
+<body class="o-shell docs-page">
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/#core">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="cai-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#installation">Get started</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#core">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#tokens">Tokens</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/platform/">Platform</a>
+        <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/shell/">Page shell</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/page-header/">Page header</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/section/">Section</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/footer/">Footer</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/skip-link/">Skip link</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/actions/">Action group</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/command-block/">Command block</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/feature-grid/">Feature grid</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/platform/image/">Image</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/templates/">Page templates</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/classes/">Class reference</a></li>
+        </ul>
+      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/#accessibility">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <div class="cai-breadcrumb">
+        <a class="cai-breadcrumb__item" href="../../../docs/">Docs</a>
+        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
+        <a class="cai-breadcrumb__item" href="../../../docs/platform/">Platform</a>
+        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
+        <span class="cai-breadcrumb__item" aria-current="page">Image</span>
+      </div>
+    </nav>
+    <div class="docs-page-head__title">
+      <h1 class="docs-title">Image</h1>
+      <code class="docs-demo__file">.cai-platform-image</code>
+      <code class="docs-demo__file">--4x3</code>
+      <code class="docs-demo__file">--3x2</code>
+      <code class="docs-demo__file">--1x1</code>
+      <code class="docs-demo__file">--21x9</code>
+      <code class="docs-demo__file">--9x16</code>
+    </div>
+    <p class="docs-lead">Responsive image frame with placeholders.</p>
+  </div>
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-issues">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-when">When to use</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-when-not">When not to use</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-how">How it works</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-content">Content guidance</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-keyboard">Keyboard and ARIA</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#show-the-placeholder-on-purpose">Show the placeholder on purpose</a></li>
+      </ul>
+    </details>
+  </nav>
+  <div class="docs-body">
+    <div class="docs-component" id="p-image">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage" id="demo-image">
+            <div class="cai-platform-feature-grid">
+              <figure>
+                <div class="cai-platform-image">
+                  <picture>
+                    <source type="image/avif" srcset="../../../assets/desert-640-7S-Gq-k8.avif 640w, ../../../assets/desert-1280-ChG3-tQT.avif 1280w" sizes="(min-width: 768px) 50vw, 100vw">
+                    <source type="image/webp" srcset="../../../assets/desert-640-3pzpTNhG.webp 640w, ../../../assets/desert-1280-CsDmC_7e.webp 1280w" sizes="(min-width: 768px) 50vw, 100vw">
+                    <img src="../../../assets/desert-1280-vTBQm6Ag.jpg" srcset="../../../assets/desert-640-BOV7mApg.jpg 640w, ../../../assets/desert-1280-vTBQm6Ag.jpg 1280w" sizes="(min-width: 768px) 50vw, 100vw" width="1280" height="720" alt="Out-of-focus sand dunes under a low sun and a blue sky" loading="lazy" decoding="async">
+                  </picture>
+                </div>
+                <figcaption>With an image</figcaption>
+              </figure>
+              <figure>
+                <div class="cai-platform-image" id="demo-image-empty"></div>
+                <figcaption>With no image: the placeholder</figcaption>
+              </figure>
+            </div>
+            <p class="docs-demo__note">Ratios: 16:9, <code class="cai-code-inline">--4x3</code>, <code class="cai-code-inline">--3x2</code>, <code class="cai-code-inline">--1x1</code>, <code class="cai-code-inline">--21x9</code>, <code class="cai-code-inline">--9x16</code>.</p>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-image-issues">Known issues</h2>
+            <p>In forced-colors mode browsers drop the placeholder, and the frame shows a thin border instead. If an image fails to load, some browsers add a broken-image icon next to its alt text. The night version follows a dark mode set on a page or a section, but not a light section inside a dark one.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-image-when">When to use</h2>
+            <p>To show an image in a box of fixed shape, such as a card cover or an article header, when the image may be missing: content from people or a content system, or a page built before its images exist.</p>
+            <h2 class="docs-guide__title" id="h-p-image-when-not">When not to use</h2>
+            <p>For an image that must keep its own shape, such as a chart or a screenshot: the frame crops it. For icons and logos: use an <code>&lt;img&gt;</code> or an SVG at its own size. Never to stand in for an image that carries information: if it is missing, say so in text.</p>
+            <h2 class="docs-guide__title" id="h-p-image-how">How it works</h2>
+            <p>A <code>&lt;div&gt;</code> of fixed aspect ratio, 16:9 unless a modifier sets another, around a native <code>&lt;picture&gt;</code> with AVIF and WebP sources and a JPEG <code>&lt;img&gt;</code>. The image fills the frame and is cropped to it. A frame with no image shows an abstract placeholder in the colours of the <a href="../../../docs/#themes">vejer theme</a>, chosen in AVIF, WebP or JPEG with <code>image-set()</code>. In dark mode it shows a night version; high contrast keeps the day version. No JavaScript is involved. While an image loads, or if it fails, the frame shows a flat surface, and a failed image's alt text is drawn on it. Transparent PNG and SVG images sit on that surface too. Without CSS the image shows at its own size. The placeholder files ship in <code>dist/placeholders/</code>: every ratio at 640, 1280 and 1920 pixels on the long side in AVIF and WebP, at 640 and 1280 in JPEG, and two SVGs, day and night, that fit any size. Point your own <code>&lt;picture&gt;</code> at them to show the placeholder on purpose.</p>
+            <h2 class="docs-guide__title" id="h-p-image-content">Content guidance</h2>
+            <p>Give every real image an alt text that says what it shows, in one plain sentence. If the image is decorative or the text next to it already says the same, use <code>alt=""</code>. Never describe the placeholder: it is a background and nothing reads it out. The frame crops the image to its ratio, so keep text and essential detail away from the edges, and describe what stays visible. Set <code>width</code> and <code>height</code> on the <code>&lt;img&gt;</code> to the image's own size so the page does not jump while it loads. Add <code>loading="lazy"</code> only to images below the fold; leave it off a hero or any image visible when the page opens, so it loads at once. Do not put text in images.</p>
+            <h2 class="docs-guide__title" id="h-p-image-keyboard">Keyboard and ARIA</h2>
+            <p>No interaction of its own. Screen readers announce the <code>&lt;img&gt;</code> by its alt text and skip the placeholder; an empty frame announces nothing. Do not add a role or an <code>aria-label</code> to the frame. If the image is a link, the link takes its name from the alt text, so the alt text must then say where it goes.</p>
+          </div>
+          <div class="docs-prose">
+            <h2 id="show-the-placeholder-on-purpose" class="docs-prose__title">Show the placeholder on purpose</h2>
+            <p>Point a <code class="cai-code-inline">&lt;picture&gt;</code> at the files in <code class="cai-code-inline">dist/placeholders/</code>, named <code class="cai-code-inline">placeholder-&lt;ratio&gt;-&lt;width&gt;</code>. It is decorative, so its alt text is empty.</p>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Placeholder image markup"><code>&lt;div class="cai-platform-image"&gt;
+  &lt;picture&gt;
+    &lt;source type="image/avif"
+      srcset="placeholders/placeholder-16x9-640.avif 640w,
+              placeholders/placeholder-16x9-1280.avif 1280w,
+              placeholders/placeholder-16x9-1920.avif 1920w"
+      sizes="(min-width: 768px) 50vw, 100vw"&gt;
+    &lt;source type="image/webp"
+      srcset="placeholders/placeholder-16x9-640.webp 640w,
+              placeholders/placeholder-16x9-1280.webp 1280w,
+              placeholders/placeholder-16x9-1920.webp 1920w"
+      sizes="(min-width: 768px) 50vw, 100vw"&gt;
+    &lt;img src="placeholders/placeholder-16x9-1280.jpg"
+      srcset="placeholders/placeholder-16x9-640.jpg 640w,
+              placeholders/placeholder-16x9-1280.jpg 1280w"
+      sizes="(min-width: 768px) 50vw, 100vw"
+      width="1280" height="720" alt="" decoding="async"&gt;
+  &lt;/picture&gt;
+&lt;/div&gt;</code></pre>
+            <p>Replace <code class="cai-code-inline">placeholders/</code> with <code class="cai-code-inline">https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/placeholders/</code>, or with the path where your bundler serves the package. Ratios: <code class="cai-code-inline">16x9</code>, <code class="cai-code-inline">4x3</code>, <code class="cai-code-inline">3x2</code>, <code class="cai-code-inline">1x1</code>, <code class="cai-code-inline">21x9</code> and <code class="cai-code-inline">9x16</code> (widths 360, 720 and 1080). JPEG stops at 1280 (720 for 9x16). For the night version, use <code class="cai-code-inline">placeholder-night-</code> instead. <code class="cai-code-inline">placeholder.svg</code> and <code class="cai-code-inline">placeholder-night.svg</code> fit any size. Add <code class="cai-code-inline">loading="lazy"</code> when the frame is below the fold.</p>
+          </div>
+    </div>
+
+  </div>
+  <ul class="docs-pager">
+    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/platform/feature-grid/">Previous: Feature grid</a></li>
+    <li class="docs-pager__next"><a rel="next" href="../../../docs/platform/templates/">Next: Page templates</a></li>
+  </ul>
+  </main>
+
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-platform-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-platform-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/#accessibility">Accessibility statement</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

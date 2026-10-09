@@ -1,0 +1,48 @@
+<!-- cai:page
+title: Platform
+description: Page patterns built on core: shell, header, sections, footer and more, and when to use platform at all.
+area: platform
+order: 0
+lead: false
+generate: gallery
+-->
+    <p class="docs-eyebrow">Level 3 · @cai-ds/platform</p>
+
+    <p class="docs-lead">Page-level patterns built on core: the page shell, skip link, page header, sections, action groups, feature grids, command blocks, the footer and an image frame. <a href="/">The home page</a> is built with them. Every class starts with <code class="cai-code-inline">.cai-platform-</code> and uses semantic tokens only.</p>
+
+    <div class="docs-decision-grid">
+        <div class="docs-decision-card">
+          <h2 id="use-platform-when" class="docs-decision-card__title">Use platform when</h2>
+          <ul>
+            <li>You build a site or an app with a header, a main area and a footer on every page.</li>
+            <li>You want the same spacing and layout across many pages.</li>
+            <li>You want a skip link, feature grids and action groups without writing the layout yourself.</li>
+          </ul>
+        </div>
+        <div class="docs-decision-card">
+          <h2 id="use-core-alone-when" class="docs-decision-card__title">Use core alone when</h2>
+          <ul>
+            <li>You only need components such as buttons, forms and cards.</li>
+            <li>You have your own layout system, or a framework that owns the page shell.</li>
+            <li>You build a single widget, not a whole page.</li>
+          </ul>
+        </div>
+      </div>
+
+    <div class="docs-prose">
+        <h2 id="your-own-components-on-top" class="docs-prose__title">Your own components on top</h2>
+        <p>Style what you add with semantic tokens too, never with the primitive scales, so it follows the color mode and any <a href="/docs/#themes">custom theme</a>.</p>
+        <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Semantic tokens in an app-level component"><code>.my-panel {
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
+  color: var(--cai-text-primary);
+}
+
+.my-panel:hover {
+  background: var(--cai-surface-muted);
+  border-color: var(--cai-outline);
+}
+
+/* Avoid primitive scales in app-level components */
+/* bad: color: var(--cai-gray-100); */</code></pre>
+      </div>

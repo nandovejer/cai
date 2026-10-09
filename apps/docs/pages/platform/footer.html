@@ -1,0 +1,48 @@
+<!-- cai:page
+title: Footer
+description: Site footer with project links.
+area: platform
+order: 4
+group: patterns
+files: .cai-platform-footer
+-->
+    <div class="docs-component" id="p-footer">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-platform-footer">
+              <p class="u-text-muted">Acme Inc. · All systems normal</p>
+              <div class="cai-platform-actions">
+                <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Status</button>
+                <button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Support</button>
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-footer-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-prose">
+            <h2 id="markup">Copy the markup</h2>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Footer markup"><code>&lt;footer class=&quot;cai-platform-footer o-container&quot;&gt;
+  &lt;p&gt;Built with CAI Design System.&lt;/p&gt;
+  &lt;div class=&quot;cai-platform-actions&quot;&gt;
+    &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;
+    &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/docs/&quot;&gt;Docs&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-p-footer-when">When to use</h2>
+            <p>At the end of the page, for ownership, licence and a few secondary links.</p>
+            <h2 class="docs-guide__title" id="h-p-footer-when-not">When not to use</h2>
+            <p>For the main navigation or for content readers need to complete a task: put those in the header or the main area.</p>
+            <h2 class="docs-guide__title" id="h-p-footer-how">How it works</h2>
+            <p>A <code>&lt;footer&gt;</code> with a top border that spreads its children across a row and stacks them below 768 px.</p>
+            <h2 class="docs-guide__title" id="h-p-footer-content">Content guidance</h2>
+            <p>Keep it short: who made it, the licence and two or three links whose text says where they go.</p>
+            <h2 class="docs-guide__title" id="h-p-footer-keyboard">Keyboard and ARIA</h2>
+            <p>No interaction of its own. As a direct child of <code>&lt;body&gt;</code> the native <code>&lt;footer&gt;</code> is the contentinfo landmark.</p>
+          </div>
+    </div>

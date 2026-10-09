@@ -131,7 +131,7 @@ Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without
 - **Decisions are written down.** A new component, a removed one, a changed default: each gets a changeset entry.
 - **Accessibility statement.** The docs app publishes which WCAG 2.2 criteria and EN 301 549 clauses are met, which are not, and which assistive technologies were tested for the current release. Update it on every release.
 - **Tests encode the rules.** Every rule here that a machine can check has a check in `tests/`, stylelint, ESLint or `scripts/check-*.js`.
-- **Docs per component (`SR-5`).** Every core component and platform pattern has its own page with, in this order: a one-line summary, a live example, *Known issues* (always visible; "None known." when empty), and two tabs, **Code** and **Design**, that stack as plain sections without JavaScript. **Code**: *Copy the markup* · *Variants and options* · *How it works* · *Without JavaScript* · *Keyboard and ARIA*. **Design**: *When to use* · *When not to use* · *Do and don't* · *Writing the content* · *Contrast and focus*. Plus an axe and a keyboard test. *When to use* and *When not to use* are red line 18.
+- **Docs per component (`SR-5`).** Every core component and platform pattern has its own page with, in this order: a one-line summary, a live example, *Known issues* (always visible; "None known." when empty), and two tabs, **Code** and **Design**, that stack as plain sections without JavaScript. **Code**: *Copy the markup* · *Variants and options* · *How it works* · *Without JavaScript* · *Keyboard and ARIA*. **Design**: *When to use* · *When not to use* · *Do and don't* · *Writing the content* · *Contrast and focus* · *Tokens it uses*. Plus an axe and a keyboard test. *When to use* and *When not to use* are red line 18.
 - **Beta.** CAI is in beta: any release may break anything, always with a changeset that explains how to migrate. It leaves beta when every red line is checked by a tool, the EN 301 549 mapping is published, the public API (`.cai-*` classes, `data-cai-*` hooks, semantic tokens, JS exports) is frozen, the backlog in AGENTS.md is done, and the maintainer considers it stable. From then on, semantic versioning applies strictly.
 
 ---
@@ -191,7 +191,7 @@ Copy into the PR description and tick every line. An unticked line needs an EXCE
 - [ ] Only semantic tokens; logical properties; no !important
 - [ ] Generated strings come from the i18n dictionary, in English and Spanish
 - [ ] Strings: sentence case, verb-first buttons, meaningful links, visible labels
-- [ ] Docs page: summary · example · Known issues · Code (markup, variants, how it works, without JS, keyboard and ARIA) · Design (when to use, when not to use, do and don't, writing the content, contrast and focus)
+- [ ] Docs page: summary · example · Known issues · Code (markup, variants, how it works, without JS, keyboard and ARIA) · Design (when to use, when not to use, do and don't, writing the content, contrast and focus, tokens it uses)
 - [ ] Tests added (axe + keyboard) and `pnpm test:ui` green
 - [ ] `pnpm check:size` and `pnpm check:exceptions` green
 - [ ] dist/ regenerated, `check-pack` updated, changeset added

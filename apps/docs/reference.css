@@ -32,7 +32,10 @@
   grid-row: 2;
 }
 
+/* The footer stays in main's column: the sticky sidebar, as tall as the
+   viewport, reaches into the last row at the end of the page */
 .docs-page > footer {
+  grid-column: 2;
   grid-row: 3;
 }
 
@@ -74,7 +77,7 @@
    -------------------------------------------------------------------------- */
 
 /* main: the page head (breadcrumb, h1, lead), "On this page", the content
-   and Previous / Next. From 1280px "On this page" is a rail at the end. */
+   and the end of the page ("Keep going", Previous / Next). From 1280px "On this page" is a rail at the end. */
 .docs-main {
   /* .o-main scrolls on its own; here the document scrolls, so the rail can stick */
   overflow-y: visible;
@@ -473,27 +476,82 @@
    Previous / Next, galleries, the A–Z index, the documentation home
    -------------------------------------------------------------------------- */
 
+/* The end of every page but the hub: "Keep going" (the area's essential
+   links, site.json), then Previous / Next as two link blocks, the whole
+   block the link, stacked from 480px */
+.docs-end {
+  display: grid;
+  gap: var(--cai-space-md);
+  border-block-start: 1px solid var(--cai-divider);
+  padding-block-start: var(--cai-space-lg);
+}
+
+.docs-end__title {
+  margin: 0;
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-md);
+}
+
+.docs-end__links,
 .docs-pager {
   list-style: none;
   margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cai-space-sm) var(--cai-space-lg);
-  border-block-start: 1px solid var(--cai-divider);
-  padding-block-start: var(--cai-space-md);
+  padding: 0;
 }
 
-.docs-pager a,
+.docs-end__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cai-space-2xs) var(--cai-space-lg);
+}
+
+.docs-pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--cai-space-md);
+}
+
+.docs-pager__next {
+  grid-column: 2;
+  text-align: end;
+}
+
+.docs-pager__link {
+  display: grid;
+  gap: var(--cai-space-3xs);
+  block-size: 100%;
+  padding: var(--cai-space-sm) var(--cai-space-md);
+  border: 1px solid var(--cai-divider);
+  border-radius: var(--cai-radius-md);
+}
+
+.docs-pager__link:hover {
+  border-color: var(--cai-outline);
+  background: var(--cai-surface-hover);
+  text-decoration: none;
+}
+
+.docs-pager__link:hover .docs-pager__title {
+  text-decoration: underline;
+}
+
+.docs-pager__label {
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-secondary);
+}
+
+.docs-pager__title {
+  font-size: var(--cai-text-lg);
+  font-weight: 600;
+}
+
+.docs-end__links a,
 .docs-gallery__rows a,
 .docs-hub__more a,
 .docs-az__list a {
   display: inline-flex;
   align-items: center;
   min-block-size: var(--cai-control-sm);
-}
-
-.docs-pager__next {
-  margin-inline-start: auto;
 }
 
 .docs-gallery {
@@ -1549,6 +1607,7 @@ h2.docs-demo__title {
   }
 
   .docs-page > footer {
+    grid-column: 1;
     grid-row: 4;
   }
 
@@ -1581,6 +1640,14 @@ h2.docs-demo__title {
 @media (max-width: 480px) {
   .docs-main > * {
     padding-inline: var(--cai-space-md);
+  }
+
+  .docs-pager {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .docs-pager__next {
+    grid-column: 1;
   }
 
   .docs-title {

@@ -11,7 +11,7 @@
  * What the generator writes around each page, from the front matter of all
  * of them (one data source, so they never disagree): the sidebar (six areas,
  * only the current one expanded), the breadcrumb, the page title and lead,
- * "On this page", Previous / Next, the galleries of the area index pages and
+ * "On this page", "Keep going" and Previous / Next, the galleries of the area index pages and
  * the A–Z index. apps/docs/404.html is the not-found page: its URLs start at
  * the site's path, because GitHub Pages serves it at any URL.
  *
@@ -40,6 +40,8 @@ export const SITE_TITLE = "CAI documentation";
 const SEGMENT = /^[a-z0-9][a-z0-9-]*$/;
 const NAME = /^[a-z0-9-]+$/;
 const MAX_INCLUDE_DEPTH = 3;
+/** Links of an area's "Keep going" list (site.json `essentials`). */
+export const MAX_ESSENTIALS = 3;
 
 /** Front matter keys: required, or the default when missing. */
 const FRONT_MATTER = {
@@ -65,9 +67,9 @@ const FRONT_MATTER = {
 };
 
 /** The values a layout or partial may use as {{key}}. */
-const PLACEHOLDERS = new Set(["title", "doctitle", "description", "root", "content", "nav", "pagehead", "toc", "pager", "generated"]);
+const PLACEHOLDERS = new Set(["title", "doctitle", "description", "root", "content", "nav", "pagehead", "toc", "endnav", "generated"]);
 /** Values inserted as HTML, not escaped. Only the generator produces them. */
-const RAW_VALUES = new Set(["content", "nav", "pagehead", "toc", "pager", "generated"]);
+const RAW_VALUES = new Set(["content", "nav", "pagehead", "toc", "endnav", "generated"]);
 
 /** Partials whose links to the current page and its parents get aria-current. */
 const CURRENT_PARTIALS = new Set(["header", "site-links"]);
@@ -236,7 +238,7 @@ export function scanSite(docsDir, repoRoot = resolve(docsDir, "../..")) {
   const validGroups = (groups) =>
     groups === undefined || (Array.isArray(groups) && groups.every((g) => NAME.test(g?.id ?? "") && typeof g.label === "string"));
   if (!Array.isArray(areas) || areas.some((a) => !NAME.test(a?.id ?? "") || typeof a.label !== "string" || !NAME.test(a.slug ?? "") || !validGroups(a.groups))) {
-    throw new Error(`${rel(join(docsDir, "site.json"))}: "areas" is a list of { id, label, slug, groups? }`);
+    throw new Error(`${rel(join(docsDir, "site.json"))}: "areas" is a list of { id, label, slug, groups?, essentials? }`);
   }
 
   const pagesDir = join(docsDir, "pages");
@@ -266,6 +268,19 @@ export function scanSite(docsDir, repoRoot = resolve(docsDir, "../..")) {
     const other = byRoute.get(page.route);
     if (other) throw new Error(`${page.file} and ${other.file} both make ${page.route}: keep one`);
     byRoute.set(page.route, page);
+  }
+  // "Keep going" of each area: up to MAX_ESSENTIALS pages of the site, data not code
+  for (const area of areas) {
+    const where = `${rel(join(docsDir, "site.json"))}: area "${area.id}"`;
+    const list = area.essentials ?? [];
+    if (!Array.isArray(list) || list.length > MAX_ESSENTIALS) throw new Error(`${where}: "essentials" is a list of up to ${MAX_ESSENTIALS} { href, label? }`);
+    for (const item of list) {
+      if (typeof item?.href !== "string" || (item.label !== undefined && (typeof item.label !== "string" || !item.label.trim()))) {
+        throw new Error(`${where}: an essential is { href, label? }`);
+      }
+      if (!byRoute.has(item.href)) throw new Error(`${where}: essential ${item.href} is not a page of the site`);
+    }
+    if (new Set(list.map((item) => item.href)).size !== list.length) throw new Error(`${where}: an essential is listed twice`);
   }
   pages.sort((a, b) => (a.route < b.route ? -1 : a.route > b.route ? 1 : 0));
 
@@ -316,8 +331,41 @@ export function sectionsOf(site, area) {
   ].filter((s) => s.pages.length);
 }
 
-/** The pages of an area in sidebar order, flat (for Previous / Next). */
+/** The pages of an area under its index in sidebar order, flat. */
 const flatPagesOf = (site, area) => sectionsOf(site, area).flatMap((s) => s.pages);
+
+/**
+ * The reading order of Previous / Next: the sidebar order across the areas,
+ * each area's index first. The hub area (the home, the A–Z index) and the
+ * not-found page are not in it. Cached on the site.
+ */
+export function readingOrder(site) {
+  site.readingOrder ??= site.areas.flatMap((area) => [indexOf(site, area), ...flatPagesOf(site, area)].filter(Boolean));
+  return site.readingOrder;
+}
+
+/** The pages before and after a page in the reading order: { prev, next } (null at the ends), or null when it is not in it. */
+export function neighboursOf(site, page) {
+  const order = readingOrder(site);
+  const i = order.findIndex((p) => p.route === page.route);
+  if (i === -1) return null;
+  return { prev: order[i - 1] ?? null, next: order[i + 1] ?? null };
+}
+
+/**
+ * The "Keep going" links of a page: its area's `essentials` (site.json), in
+ * that order, without the page itself and without its Previous / Next (the
+ * pager below already links them). [{ route, label }].
+ */
+export function essentialsOf(site, page) {
+  const area = areaOf(site, page);
+  if (!area) return [];
+  const { prev, next } = neighboursOf(site, page) ?? {};
+  const skip = new Set([page.route, prev?.route, next?.route]);
+  return (area.essentials ?? [])
+    .filter((item) => !skip.has(item.href))
+    .map((item) => ({ route: item.href, label: item.label ?? site.byRoute.get(item.href).meta.title }));
+}
 
 /** The text of <title>: "<h1> – <Area> – CAI documentation", shorter on the hub and area indexes. */
 export function docTitleOf(site, page) {
@@ -429,17 +477,36 @@ export function renderToc(page, html) {
   return `  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">\n    <details class="docs-onpage__fold">\n      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>\n      <ul class="docs-onpage__list">\n${lines.join("\n")}\n      </ul>\n    </details>\n  </nav>`;
 }
 
-/** Previous / Next in sidebar order, inside the area, on its leaf pages. */
-export function renderPager(site, page) {
-  const area = areaOf(site, page);
-  if (!area || page.route === areaRoute(area)) return "";
-  const pages = flatPagesOf(site, area);
-  const i = pages.findIndex((p) => p.route === page.route);
-  if (i === -1) return "";
-  const items = [];
-  if (pages[i - 1]) items.push(`    <li class="docs-pager__prev">${link(pages[i - 1].route, `Previous: ${pages[i - 1].meta.title}`, ' rel="prev"')}</li>`);
-  if (pages[i + 1]) items.push(`    <li class="docs-pager__next">${link(pages[i + 1].route, `Next: ${pages[i + 1].meta.title}`, ' rel="next"')}</li>`);
-  return items.length ? `  <ul class="docs-pager">\n${items.join("\n")}\n  </ul>` : "";
+/**
+ * The end of a page: "Keep going", a labelled nav with the area's essential
+ * links, then Previous / Next in the reading order (across areas: an area's
+ * index leads to its first page, its last page to the next area's index).
+ * Each pager link is one block, a small "Previous" / "Next" above the page's
+ * title; its name is "Previous: <title>", an aria-label that starts with
+ * the visible text (from the two lines alone Chrome makes "Previous
+ * Breadcrumb"). Nothing on the hub area and the not-found page.
+ */
+export function renderEndNav(site, page) {
+  const around = neighboursOf(site, page);
+  const essentials = essentialsOf(site, page);
+  if (!around && !essentials.length) return "";
+  const lines = ['  <nav class="docs-end" aria-labelledby="docs-end-title">', '    <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>'];
+  if (essentials.length) {
+    lines.push('    <ul class="docs-end__links">', ...essentials.map((e) => `      <li>${link(e.route, e.label)}</li>`), "    </ul>");
+  }
+  const pager = [];
+  for (const [key, label, rel] of [["prev", "Previous", "prev"], ["next", "Next", "next"]]) {
+    const target = around?.[key];
+    if (!target) continue;
+    pager.push(
+      `      <li class="docs-pager__${key}"><a class="docs-pager__link" rel="${rel}" href="${escapeHtml(target.route)}" aria-label="${label}: ${escapeHtml(target.meta.title)}">` +
+        `<span class="docs-pager__label">${label}</span> ` +
+        `<span class="docs-pager__title">${escapeHtml(target.meta.title)}</span></a></li>`,
+    );
+  }
+  if (pager.length) lines.push('    <ul class="docs-pager">', ...pager, "    </ul>");
+  lines.push("  </nav>");
+  return lines.join("\n");
 }
 
 /** Markup a gallery thumbnail must never carry: it is decorative and inert (HUB-2, SEC-PLG-12). */
@@ -711,7 +778,7 @@ export function renderPage(page, site, options = {}) {
       nav: renderNav(site, page),
       pagehead: renderPageHead(site, page),
       toc: renderToc(page, `${content}\n${generated}`),
-      pager: renderPager(site, page),
+      endnav: renderEndNav(site, page),
       generated,
     },
   });
@@ -788,7 +855,7 @@ function readSourceHtml(text, file, firstLine = 1) {
 /**
  * Render and check the whole site: the nesting of every source, the fragments'
  * safety, duplicate ids on each rendered page, and every internal link
- * (the generated ones too: sidebar, breadcrumb, galleries, A–Z).
+ * (the generated ones too: sidebar, breadcrumb, end of page, galleries, A–Z).
  * `extra` are full documents outside apps/docs/pages (the landing):
  * [{ route, file, html }]. `unchecked` are routes known to exist whose ids are not checked.
  * Returns { rendered: Map route → html, problems: [string] }. Throws on a
@@ -818,7 +885,7 @@ export function buildSite(site, { extra = [], unchecked = [], root } = {}) {
     const html = renderPage(page, site, { reader, root });
     const layout = reader.layout(page.meta.layout);
     const { ids, links: renderedLinks } = readHtml(html, `${page.file} (rendered as ${page.route})`);
-    // Links the generator wrote (sidebar, breadcrumb, pager, galleries, A–Z)
+    // Links the generator wrote (sidebar, breadcrumb, end of page, galleries, A–Z)
     const sourceHrefs = new Set();
     const links = [
       ...sourceLinks(page.body, page.file, page.bodyLine, true),

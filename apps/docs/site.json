@@ -1,6 +1,10 @@
 {
   "areas": [
-    { "id": "get-started", "label": "Get started", "slug": "get-started" },
+    { "id": "get-started", "label": "Get started", "slug": "get-started", "essentials": [
+      { "href": "/docs/components/" },
+      { "href": "/docs/tokens/modes/" },
+      { "href": "/docs/tokens/color/", "label": "Color tokens" }
+    ] },
     { "id": "components", "label": "Components", "slug": "components", "groups": [
       { "id": "actions", "label": "Actions and input" },
       { "id": "content", "label": "Show content" },
@@ -8,15 +12,35 @@
       { "id": "navigation", "label": "Navigation" },
       { "id": "media", "label": "Media" },
       { "id": "helpers", "label": "Helpers", "sidebar": true, "list": true }
+    ], "essentials": [
+      { "href": "/docs/get-started/" },
+      { "href": "/docs/tokens/color/", "label": "Color tokens" },
+      { "href": "/docs/platform/templates/" }
     ] },
     { "id": "tokens", "label": "Tokens", "slug": "tokens", "groups": [
       { "id": "families", "label": "Token families" }
+    ], "essentials": [
+      { "href": "/docs/tokens/modes/" },
+      { "href": "/docs/components/" },
+      { "href": "/docs/tokens/figma/" }
     ] },
     { "id": "platform", "label": "Platform", "slug": "platform", "groups": [
       { "id": "patterns", "label": "Patterns" },
       { "id": "reference", "label": "Reference", "list": true }
+    ], "essentials": [
+      { "href": "/docs/platform/templates/" },
+      { "href": "/docs/components/" },
+      { "href": "/docs/get-started/" }
     ] },
-    { "id": "html", "label": "HTML elements", "slug": "html" },
-    { "id": "accessibility", "label": "Accessibility", "slug": "accessibility" }
+    { "id": "html", "label": "HTML elements", "slug": "html", "essentials": [
+      { "href": "/docs/a-z/" },
+      { "href": "/docs/components/form/" },
+      { "href": "/docs/components/" }
+    ] },
+    { "id": "accessibility", "label": "Accessibility", "slug": "accessibility", "essentials": [
+      { "href": "/docs/components/" },
+      { "href": "/docs/get-started/" },
+      { "href": "/docs/a-z/" }
+    ] }
   ]
 }

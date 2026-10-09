@@ -17,6 +17,9 @@ import {
   checkLinks,
   currentOf,
   assertThumbSafe,
+  MAX_ESSENTIALS,
+  essentialsOf,
+  readingOrder,
   escapeHtml,
   expand,
   indexEntries,
@@ -337,6 +340,20 @@ describe("scanning and building a site", () => {
     expect(buildSite(scanSite(docsDir, repoRoot), { unchecked: ["/"] }).problems).toEqual(["apps/docs/pages/a.html:7: /docs/b/ is not a page of the site"]);
   });
 
+  it("fails on an essential that is not a page, listed twice, or past the limit", () => {
+    const site = (essentials) =>
+      fixture({ "site.json": JSON.stringify({ areas: [{ id: "components", label: "Components", slug: "components", essentials }] }), "pages/components/index.html": PAGE("Components") });
+    const scan = (essentials) => {
+      const { repoRoot, docsDir } = site(essentials);
+      return () => scanSite(docsDir, repoRoot);
+    };
+    expect(scan([{ href: "/docs/nope/" }])).toThrow(/essential \/docs\/nope\/ is not a page of the site/);
+    expect(scan([{ href: "/docs/" }, { href: "/docs/" }])).toThrow(/listed twice/);
+    expect(scan(Array.from({ length: MAX_ESSENTIALS + 1 }, () => ({ href: "/docs/" })))).toThrow(/up to 3/);
+    expect(scan([{ href: "/docs/", label: "" }])).toThrow(/\{ href, label\? \}/);
+    expect(scan([{ href: "/docs/" }])).not.toThrow();
+  });
+
   it("fails when two files make the same route", () => {
     const { repoRoot, docsDir } = fixture({ "pages/a.html": PAGE("A"), "pages/a/index.html": PAGE("A again") });
     expect(() => scanSite(docsDir, repoRoot)).toThrow(/both make \/docs\/a\//);
@@ -570,6 +587,76 @@ describe("the CAI docs site", () => {
     expect(index.elements).toContainEqual(["<table> element, Tables", "html/tables/#el-table"]);
     // Plain JSON, small enough to fetch on the first open
     expect(JSON.stringify(index).length).toBeLessThan(200_000);
+  });
+
+  /** The Previous / Next targets, accessible names and "Keep going" links of a rendered page. */
+  const endOf = (html) => {
+    const nav = html.match(/<nav class="docs-end" aria-labelledby="docs-end-title">[\s\S]*?<\/nav>/)?.[0] ?? null;
+    const rel = (kind) => nav?.match(new RegExp(`rel="${kind}" href="([^"]*)" aria-label="([^"]*)"`))?.slice(1) ?? null;
+    const links = nav?.match(/<ul class="docs-end__links">([\s\S]*?)<\/ul>/)?.[1].match(/href="[^"]*"/g)?.map((h) => h.slice(6, -1)) ?? [];
+    return { nav, prev: rel("prev"), next: rel("next"), links };
+  };
+
+  it("reads the areas in sidebar order, each index first, every docs page once but the hub area and the not-found page", () => {
+    const order = readingOrder(site).map((p) => p.route);
+    const expected = site.pages.filter((p) => p.meta.area !== "hub" && p.meta.nav !== "false");
+    expect([...order].sort()).toEqual(expected.map((p) => p.route).sort());
+    expect(new Set(order).size).toBe(order.length);
+    // The six area indexes, in site.json order, each before its own pages
+    const indexes = site.areas.map((a) => `/docs/${a.slug}/`);
+    expect(order.filter((r) => indexes.includes(r))).toEqual(indexes);
+    for (const route of order) {
+      const area = site.areas.find((a) => a.id === site.byRoute.get(route).meta.area);
+      expect(order.indexOf(route), route).toBeGreaterThanOrEqual(order.indexOf(`/docs/${area.slug}/`));
+    }
+    expect(order.slice(0, 4)).toEqual(["/docs/get-started/", "/docs/get-started/structure/", "/docs/get-started/javascript/", "/docs/components/"]);
+    expect(order.at(-1)).toBe("/docs/accessibility/");
+  });
+
+  it("ends every docs page but the hub and the not-found page with Previous or Next, a consistent chain (A.next = B ⇔ B.prev = A)", () => {
+    const order = readingOrder(site).map((p) => p.route);
+    for (const [route, html] of rendered) {
+      const { nav, prev, next } = endOf(html);
+      if (!order.includes(route)) {
+        expect(nav, route).toBeNull();
+        continue;
+      }
+      expect(prev || next, route).toBeTruthy();
+      const i = order.indexOf(route);
+      expect(prev?.[0] ?? null, route).toBe(order[i - 1] ?? null);
+      expect(next?.[0] ?? null, route).toBe(order[i + 1] ?? null);
+      if (next) expect(endOf(rendered.get(next[0])).prev?.[0], `${route} → ${next[0]}`).toBe(route);
+      if (prev) expect(endOf(rendered.get(prev[0])).next?.[0], `${prev[0]} → ${route}`).toBe(route);
+      // The name says which way and where: "Previous: Breadcrumb"
+      for (const [kind, link] of [["Previous", prev], ["Next", next]]) {
+        if (link) expect(link[1], route).toBe(`${kind}: ${site.byRoute.get(link[0]).meta.title.replace(/&/g, "&amp;")}`);
+      }
+    }
+    expect(endOf(rendered.get("/docs/tokens/")).prev?.[0]).toBe("/docs/components/keyframes/");
+    expect(endOf(rendered.get("/docs/tokens/")).next?.[0]).toBe("/docs/tokens/color/");
+    expect(endOf(rendered.get("/docs/get-started/javascript/")).next?.[0]).toBe("/docs/components/");
+  });
+
+  it("lists up to three essentials per area (site.json), never the page itself nor its Previous / Next, all existing pages", () => {
+    for (const area of site.areas) {
+      expect(area.essentials?.length, area.id).toBeGreaterThan(0);
+      expect(area.essentials.length, area.id).toBeLessThanOrEqual(MAX_ESSENTIALS);
+    }
+    for (const [route, html] of rendered) {
+      const { nav, prev, next, links } = endOf(html);
+      if (!nav) continue;
+      const page = site.byRoute.get(route);
+      expect(links, route).toEqual(essentialsOf(site, page).map((e) => e.route));
+      expect(links.length, route).toBeGreaterThan(0);
+      expect(links, route).not.toContain(route);
+      for (const target of links) {
+        expect(site.byRoute.has(target), `${route} → ${target}`).toBe(true);
+        expect([prev?.[0], next?.[0]], `${route} → ${target}`).not.toContain(target);
+      }
+    }
+    // Data, not code: the Tokens list, on its index and on one of its own targets
+    expect(endOf(rendered.get("/docs/tokens/")).links).toEqual(["/docs/tokens/modes/", "/docs/components/", "/docs/tokens/figma/"]);
+    expect(endOf(rendered.get("/docs/tokens/modes/")).links).toEqual(["/docs/components/", "/docs/tokens/figma/"]);
   });
 
   it("renders the not-found page with no <base> and no script (SEC-MISC-3/5)", () => {

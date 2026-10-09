@@ -12,6 +12,7 @@
  */
 
 import { test, expect } from '@playwright/test';
+import AxeBuilder from '@axe-core/playwright';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
@@ -269,8 +270,80 @@ test.describe('Documentation site', () => {
     test('breadcrumb and Previous / Next follow the sidebar order', async ({ page }) => {
       await gotoId(page, 'c-button');
       await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).locator('a, [aria-current]')).toHaveText(['Docs', 'Components', 'Button']);
-      await expect(page.locator('.docs-pager a')).toHaveText(['Previous: Breadcrumb', 'Next: Card']);
+      const end = page.getByRole('navigation', { name: 'Keep going' });
+      await expect(end.getByRole('link', { name: 'Previous: Breadcrumb', exact: true })).toHaveAttribute('rel', 'prev');
+      await expect(end.getByRole('link', { name: 'Next: Card', exact: true })).toHaveAttribute('rel', 'next');
     });
+
+    test('an area index leads on to its first page, and the last page of an area to the next area', async ({ page }) => {
+      await page.goto('/docs/tokens/');
+      const end = page.getByRole('navigation', { name: 'Keep going' });
+      await expect(end.getByRole('link', { name: 'Previous: Keyframes', exact: true })).toHaveAttribute('href', /\/docs\/components\/keyframes\/$/);
+      await expect(end.getByRole('link', { name: 'Next: Color', exact: true })).toHaveAttribute('href', /\/docs\/tokens\/color\/$/);
+      await expect(end.locator('.docs-end__links a')).toHaveText(['Color modes and themes', 'Components', 'Tokens in Figma']);
+    });
+
+    test('the end of the page: one "Keep going" landmark, reached by Tab, with link blocks of 24px or more', async ({ page }) => {
+      for (const width of [360, 1280]) {
+        await page.setViewportSize({ width, height: 800 });
+        await gotoId(page, 'c-button');
+        await expect(page.getByRole('navigation', { name: 'Keep going' })).toHaveCount(1);
+        const end = page.locator('.docs-end');
+        await expect(end.locator('h2')).toHaveText('Keep going');
+        // Tab from the last essential link reaches Previous, then Next
+        await end.locator('.docs-end__links a').last().focus();
+        await page.keyboard.press('Tab');
+        await expect(page.locator('.docs-pager__prev a')).toBeFocused();
+        await page.keyboard.press('Tab');
+        await expect(page.locator('.docs-pager__next a')).toBeFocused();
+        const outline = await page.locator('.docs-pager__next a').evaluate((el) => getComputedStyle(el).outlineStyle);
+        expect(outline).not.toBe('none');
+        const [prev, next] = await page.locator('.docs-pager a').evaluateAll((links) => links.map((a) => a.getBoundingClientRect().toJSON()));
+        for (const box of [prev, next]) expect(box.height).toBeGreaterThanOrEqual(24);
+        // Side by side, or stacked full width at 480px and below
+        if (width <= 480) {
+          expect(next.top).toBeGreaterThanOrEqual(prev.bottom);
+          expect(Math.round(next.width)).toBe(Math.round(prev.width));
+        } else {
+          expect(Math.round(next.top)).toBe(Math.round(prev.top));
+          expect(next.left).toBeGreaterThan(prev.right);
+        }
+      }
+    });
+
+    for (const mode of MODES) {
+      test(`the end of the page passes axe in ${mode}`, async ({ page }) => {
+        for (const route of ['/docs/get-started/', '/docs/tokens/', routeOf('c-button')]) {
+          await page.goto(route);
+          await page.evaluate((m) => {
+            document.documentElement.dataset.theme = m;
+          }, mode);
+          await page.waitForTimeout(400);
+          const { violations } = await new AxeBuilder({ page })
+            .include('.docs-end')
+            .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+            .analyze();
+          expect(violations.map((v) => `${v.impact} ${v.id}`), route).toEqual([]);
+        }
+      });
+    }
+
+    for (const width of [1024, 1280, 1440]) {
+      test(`the sidebar never covers the footer at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await gotoId(page, 'c-button');
+        await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+        const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
+        const [nav, footer] = await Promise.all([box('#page-nav'), box('body > footer')]);
+        expect(footer.top).toBeLessThan(800);
+        expect(footer.left).toBeGreaterThanOrEqual(nav.right - 1);
+        // Nothing in the footer starts under the sidebar
+        const lefts = await page.locator('body > footer :is(p, a, button)').evaluateAll((els) =>
+          els.filter((el) => el.checkVisibility()).map((el) => el.getBoundingClientRect().left),
+        );
+        for (const left of lefts) expect(left).toBeGreaterThanOrEqual(nav.right - 1);
+      });
+    }
 
     test('"On this page" is a rail with scroll spy at 1280px: aria-current="true", never "page"', async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
@@ -647,6 +720,8 @@ test.describe('Documentation site', () => {
             found.push(node.textContent.trim());
           }
           document.querySelectorAll('[aria-label], [title], [alt]').forEach((el) => {
+            // "Previous: Color modes and themes" names a link to that page
+            if (el.closest(`a[href^="${themesPage}"]`)) return;
             for (const name of ['aria-label', 'title', 'alt']) {
               if (/theme/i.test(el.getAttribute(name) ?? '')) found.push(el.getAttribute(name));
             }
@@ -661,7 +736,7 @@ test.describe('Documentation site', () => {
       for (const route of ['/docs/', '/docs/components/', routeOf('c-button'), '/docs/a-z/', '/docs/platform/']) {
         await page.goto(route);
         const heights = await page
-          .locator('.docs-nav a, .docs-pager a, .docs-gallery__rows a, .docs-hub__more a, .docs-az__list a, .site-header__nav a')
+          .locator('.docs-nav a, .docs-end a, .docs-gallery__rows a, .docs-hub__more a, .docs-az__list a, .site-header__nav a')
           .evaluateAll((links) => links.filter((el) => el.checkVisibility()).map((el) => [el.textContent.trim(), el.getBoundingClientRect().height]));
         expect(heights.length, route).toBeGreaterThan(5);
         for (const [text, height] of heights) expect(height, `${route} ${text}`).toBeGreaterThanOrEqual(24);

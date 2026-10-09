@@ -99,6 +99,29 @@ for (const app of ['/', '/docs/', '/docs/components/button/', notFoundRoute]) {
   });
 }
 
+// a11y.md SRCH-4: at 320 px the header stays one row without JavaScript.
+// The fallback link shows "A–Z"; its name stays "A–Z index" (2.5.3).
+for (const app of ['/', '/docs/', '/docs/components/button/', notFoundRoute]) {
+  test(`${app}: the header is one row at 320 px, with the short A–Z link`, async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await page.goto(app);
+    const link = page.getByRole('banner').getByRole('link', { name: 'A–Z index', exact: true });
+    await expect(link).toBeVisible();
+    // painted text: the link's words outside a visually hidden (1 px, clipped) box
+    expect(await link.evaluate((a) => [...a.childNodes]
+      .filter((n) => n.nodeType === Node.TEXT_NODE || n.getBoundingClientRect().width > 1)
+      .map((n) => n.textContent).join('').trim())).toBe('A–Z');
+    const rows = await page.locator('.site-header__inner').evaluate((row) =>
+      new Set([...row.children]
+        .filter((el) => el.checkVisibility())
+        .map((el) => Math.round(el.getBoundingClientRect().top + el.getBoundingClientRect().height / 2))).size);
+    expect(rows, 'rows of controls in the header').toBe(1);
+    const { height } = await page.locator('.site-header').boundingBox();
+    const oneRow = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--site-header-h')) * 16);
+    expect(height).toBeLessThanOrEqual(oneRow + 1);
+  });
+}
+
 test('docs: the A–Z index links every page', async ({ page }) => {
   await page.goto('/docs/a-z/');
   const hrefs = new Set(await page.locator('main a').evaluateAll((links) => links.map((a) => new URL(a.href).pathname)));

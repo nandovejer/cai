@@ -86,6 +86,16 @@
   --cai-color-purple: var(--cai-purple-70);
   --cai-color-purple-bg: var(--cai-purple-10);
   --cai-color-code: var(--cai-purple-70);
+
+  /* Code syntax (pre.cai-code-block, on --cai-surface-muted). Keywords stay
+     ink and bold; colour goes to what the author wrote: names, properties,
+     values. Comments are muted and italic. No red: red means error. */
+  --cai-code-comment: var(--cai-gray-60); /* 5.2:1 */
+  --cai-code-keyword: var(--cai-text-primary);
+  --cai-code-name: var(--cai-blue-70); /* 9.0:1 */
+  --cai-code-property: var(--cai-purple-60); /* 5.8:1 */
+  --cai-code-string: var(--cai-green-60); /* 4.9:1 */
+  --cai-code-literal: var(--cai-yellow-60); /* 6.9:1 */
 }
 
 /* -------------------------------------------------------------------------
@@ -164,6 +174,14 @@
   --cai-color-purple: var(--cai-purple-20);
   --cai-color-purple-bg: rgba(202, 154, 255, 0.14); /* purple-40 */
   --cai-color-code: var(--cai-purple-20); /* 4.5:1 on surface-strong */
+
+  /* Code syntax, on --cai-surface-muted (gray-80) */
+  --cai-code-comment: var(--cai-gray-40); /* 6.7:1 */
+  --cai-code-keyword: var(--cai-text-primary);
+  --cai-code-name: var(--cai-blue-30); /* 9.4:1 */
+  --cai-code-property: var(--cai-purple-40); /* 6.3:1 */
+  --cai-code-string: var(--cai-green-40); /* 7.1:1 */
+  --cai-code-literal: var(--cai-yellow-40); /* 6.6:1 */
 }
 
 /* -------------------------------------------------------------------------
@@ -237,4 +255,13 @@
   --cai-color-purple: var(--cai-purple-70);
   --cai-color-purple-bg: var(--cai-purple-10);
   --cai-color-code: var(--cai-blue-80);
+
+  /* Code syntax, on --cai-surface-muted: 7:1 or more, darker steps of the
+     same hues as light */
+  --cai-code-comment: var(--cai-gray-70); /* 8.7:1 */
+  --cai-code-keyword: var(--cai-text-primary);
+  --cai-code-name: var(--cai-blue-80); /* 13.6:1 */
+  --cai-code-property: var(--cai-purple-70); /* 9.7:1 */
+  --cai-code-string: var(--cai-green-70); /* 8.3:1 */
+  --cai-code-literal: var(--cai-yellow-70); /* 11.1:1 */
 }

@@ -426,7 +426,7 @@ test.describe('Documentation page', () => {
     test('code blocks are highlighted without an injected copy button', async ({ page }) => {
       await open(page);
 
-      expect(await page.locator('pre.cai-code-block .tok-tag').count()).toBeGreaterThan(0);
+      expect(await page.locator('pre.cai-code-block .tok-name').count()).toBeGreaterThan(0);
       await expect(page.locator('.cai-code-block__copy')).toHaveCount(0);
     });
 

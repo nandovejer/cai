@@ -1,7 +1,7 @@
 /**
  * CAI Design System — Syntax highlight
  * Lightweight tokenizer with no dependencies for documentation code blocks.
- * Supports HTML, CSS, and JS/JSX.
+ * Supports HTML, CSS, JS/JSX, JSON and shell (bash, sh, shell).
  *
  * Importing this module has no side effects; call initHighlight() to
  * enhance every pre.cai-code-block on the page, or highlightBlock(pre)
@@ -32,31 +32,57 @@ function tokenize(code, rules) {
   return html + escapeHtml(code.slice(last));
 }
 
+/* Six classes, one per --cai-code-* token: tok-comment, tok-keyword,
+   tok-name (tags, selectors, functions, commands), tok-property (attributes,
+   CSS and JSON properties, flags, variables), tok-string, tok-literal
+   (numbers, units, colours, booleans, entities). Rules are tried in order. */
+const STRING = String.raw`"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'`;
+const NUMBER = String.raw`\b\d+(?:\.\d+)?`;
+
 const CSS_RULES = [
   ["tok-comment", String.raw`\/\*[\s\S]*?\*\/`],
-  ["tok-string", String.raw`"[^"\n]*"|'[^'\n]*'`],
-  ["tok-keyword", String.raw`@(?:import|media|keyframes|layer|supports|container)\b|\bvar\b`],
-  ["tok-property", String.raw`--[\w-]+(?=\s*[;:,)])`],
-  ["tok-string", String.raw`#[0-9a-fA-F]{3,8}\b`],
+  ["tok-string", STRING],
+  ["tok-keyword", String.raw`@[\w-]+|!important`],
+  ["tok-name", String.raw`^[ \t]*[^\s@{}/][^{};]*(?=\{)|[\w-]+(?=\()`],
+  ["tok-property", String.raw`--[\w-]+|(?<=^[ \t]*|[{;(]\s*)[\w-]+(?=\s*:)`],
+  ["tok-literal", String.raw`#[\da-fA-F]{3,8}\b|${NUMBER}(?:%|[a-z]+)?`],
 ];
 
 const HTML_RULES = [
   ["tok-comment", String.raw`<!--[\s\S]*?-->`],
-  ["tok-tag", String.raw`<\/?[\w-]+`],
-  ["tok-attr", String.raw`(?<=\s)[\w-]+(?==)`],
-  ["tok-string", String.raw`"[^"]*"`],
+  ["tok-keyword", String.raw`<![^>]*>`],
+  ["tok-name", String.raw`<\/?[\w-]+`],
+  ["tok-property", String.raw`(?<=<[\w-]+\s[^<>]*)[\w:.@-]+(?=[\s=/>])`],
+  ["tok-string", String.raw`"[^"]*"|'[^']*'`],
+  ["tok-literal", String.raw`&#?\w+;`],
 ];
 
 const JS_RULES = [
-  ["tok-comment", String.raw`\/\/.*$|\/\*[\s\S]*?\*\/`],
-  ["tok-string", String.raw`"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|\x60(?:[^\x60\\]|\\.)*\x60`],
-  ["tok-keyword", String.raw`\b(?:import|export|from|const|let|var|return|function|class|new|if|else|async|await)\b|=>`],
-  ["tok-name", String.raw`\b[A-Z][a-zA-Z]+(?=\s*[=(])`],
+  ["tok-comment", String.raw`\/\/.*|\/\*[\s\S]*?\*\/`],
+  ["tok-string", String.raw`${STRING}|\x60(?:[^\x60\\]|\\.)*\x60`],
+  ["tok-keyword", String.raw`\b(?:import|export|default|from|const|let|var|return|function|class|extends|new|if|else|for|of|in|while|async|await|try|catch|throw|typeof|this)\b|=>`],
+  ["tok-literal", String.raw`\b(?:true|false|null|undefined)\b|${NUMBER}`],
+  ["tok-name", String.raw`[\w$]+(?=\s*\()|\b[A-Z][\w$]*`],
 ];
 
-const highlightCSS = (code) => tokenize(code, CSS_RULES);
-const highlightHTML = (code) => tokenize(code, HTML_RULES);
-const highlightJS = (code) => tokenize(code, JS_RULES);
+const SH_RULES = [
+  ["tok-comment", String.raw`(?<=^|\s)#.*`],
+  ["tok-string", String.raw`"(?:[^"\\]|\\.)*"|'[^']*'`],
+  ["tok-keyword", String.raw`\b(?:if|then|elif|else|fi|for|in|do|done|while|case|esac|export)\b`],
+  ["tok-property", String.raw`\$\{?\w+\}?|(?<=\s)--?[\w-]+`],
+  ["tok-name", String.raw`(?<=^[ \t]*|[|;&][ \t]*)[\w./-]+`],
+];
+
+const LANGS = {
+  css: CSS_RULES,
+  html: HTML_RULES,
+  js: JS_RULES,
+  jsx: JS_RULES,
+  json: [["tok-property", `(?:${STRING})(?=\\s*:)`], ...JS_RULES],
+  bash: SH_RULES,
+  sh: SH_RULES,
+  shell: SH_RULES,
+};
 
 /**
  * Highlight a single pre.cai-code-block element (language via data-lang).
@@ -67,13 +93,7 @@ export function highlightBlock(pre) {
   const lang = pre.dataset.lang || "txt";
   const raw = code.textContent;
 
-  let highlighted;
-  if (lang === "css") highlighted = highlightCSS(raw);
-  else if (lang === "html") highlighted = highlightHTML(raw);
-  else if (lang === "js" || lang === "jsx") highlighted = highlightJS(raw);
-  else highlighted = escapeHtml(raw);
-
-  code.innerHTML = highlighted;
+  code.innerHTML = LANGS[lang] ? tokenize(raw, LANGS[lang]) : escapeHtml(raw);
 }
 
 /**

@@ -11,7 +11,8 @@
  *     Bézier ease (LIGHTNESS), steeper in the middle steps where text and
  *     surfaces meet. A family may place a step elsewhere on the curve
  *     (yellow-60 sits at 65: a dark amber that reads as text on the light
- *     surfaces).
+ *     surfaces; yellow-70 at 75, a brown that keeps 7:1 or more for the
+ *     high-contrast code colours).
  *   - Chroma: a bell over the same curve, peaking at the family's `peak`
  *     step, softer towards white and black, then reduced, keeping hue and
  *     lightness, until the colour fits the sRGB gamut.
@@ -50,7 +51,7 @@ export const FAMILIES = {
   gray: { hue: [250, 256], chroma: 0.016, peak: 55, width: 0.6, steps: STEPS_ALL },
   green: { hue: [160, 156], chroma: 0.15, peak: 50, width: 0.8, steps: [10, 20, 30, 40, 50, 60, 70] },
   red: { hue: [18, 31], chroma: 0.2, peak: 58, width: 0.8, steps: [10, 20, 30, 40, 50, 60, 70] },
-  yellow: { hue: [96, 54], chroma: 0.15, peak: 32, width: 1, steps: [10, 20, 30, 40, 50, [60, 65]] },
+  yellow: { hue: [96, 54], chroma: 0.15, peak: 32, width: 1, steps: [10, 20, 30, 40, 50, [60, 65], [70, 75]] },
   teal: { hue: [176, 184], chroma: 0.105, peak: 48, width: 0.8, steps: [10, 20, 40, 50, 60, 70] },
   purple: { hue: [308, 300], chroma: 0.21, peak: 62, width: 0.85, steps: [10, 20, 40, 50, 60, 70] },
 };

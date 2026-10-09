@@ -6,8 +6,8 @@
    -------------------------------------------------------------------------- */
 
 
-/* --cai-surface-muted: the syntax colors reach 4.5:1 on it in light, dark and
-   high contrast (on --cai-surface-strong they fell to 3.3–3.8:1) */
+/* --cai-surface-muted: the --cai-code-* colours are measured on it
+   (4.5:1 or more, 7:1 in high contrast; pnpm check:contrast) */
 .cai-code-block {
   background: var(--cai-surface-muted);
   color: var(--cai-text-primary);
@@ -34,34 +34,29 @@
   white-space: inherit;
 }
 
-/* Syntax highlight tokens */
-.cai-code-block .tok-keyword {
-  color: var(--cai-color-info);
-}
-.cai-code-block .tok-string {
-  color: var(--cai-color-success);
-}
+/* Syntax highlight: CAI's own scheme, one per color mode (--cai-code-*).
+   Keywords are ink and bold; names, properties and values carry the colour;
+   comments are muted and italic. Weight and style survive forced colors,
+   where every colour becomes the system text colour. */
 .cai-code-block .tok-comment {
-  color: var(--cai-text-secondary);
+  color: var(--cai-code-comment);
   font-style: italic;
 }
-.cai-code-block .tok-property {
-  color: var(--cai-color-code);
-}
-.cai-code-block .tok-tag {
-  color: var(--cai-color-info);
-}
-.cai-code-block .tok-attr {
-  color: var(--cai-color-code);
-}
-.cai-code-block .tok-value {
-  color: var(--cai-color-success);
+.cai-code-block .tok-keyword {
+  color: var(--cai-code-keyword);
+  font-weight: 600;
 }
 .cai-code-block .tok-name {
-  color: var(--cai-color-warning);
+  color: var(--cai-code-name);
 }
-.cai-code-block .tok-error {
-  color: var(--cai-color-danger);
+.cai-code-block .tok-property {
+  color: var(--cai-code-property);
+}
+.cai-code-block .tok-string {
+  color: var(--cai-code-string);
+}
+.cai-code-block .tok-literal {
+  color: var(--cai-code-literal);
 }
 
 /* lang badge */

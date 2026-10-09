@@ -26,6 +26,7 @@ const BASE = ["light", "dark", "high-contrast"];
    A background written "a > b" is token a composited over token b. */
 const SURFACES = ["surface-page", "surface", "surface-hover", "surface-muted", "input-bg"];
 const STATUS = ["success", "danger", "warning", "info", "teal", "purple"];
+const CODE = ["comment", "keyword", "name", "property", "string", "literal"].map((t) => `code-${t}`);
 const PAIRS = [
   // Text and links on the surfaces they sit on
   [["text-primary", "text-secondary", "brand-primary", "brand-hover"], SURFACES, 4.5],
@@ -57,11 +58,17 @@ const PAIRS = [
 const THEME_PAIRS = [
   ...STATUS.map((s) => [[`color-${s}`], [`color-${s}-bg > surface-strong`, "surface-page", "surface", "surface-hover", "surface-muted", "surface-strong"], 4.5]),
   [["color-code"], ["surface-strong"], 4.5],
+  // Syntax colours on the code block (.cai-code-block sits on surface-muted)
+  [CODE, ["surface-muted"], 4.5],
   // The field border on every surface a field can sit on (WCAG 1.4.11)
   [["input-border"], [...SURFACES, "surface-strong"], 3],
   // .cai-badge--gray: white text on the outline colour
   [["text-on-fill"], ["outline"], 4.5],
 ];
+
+/* CAI's own high-contrast mode goes beyond AA where it can: the syntax
+   colours keep 7:1 (WCAG 1.4.6, AAA) on the code block. */
+const HC_PAIRS = [[CODE, ["surface-muted"], 7]];
 
 /* ---- Token values ------------------------------------------------------- */
 
@@ -174,7 +181,7 @@ const failures = [];
 const known = [];
 let measured = 0;
 for (const theme of THEMES) {
-  for (const [foregrounds, backgrounds, minimum] of [...PAIRS, ...THEME_PAIRS]) {
+  for (const [foregrounds, backgrounds, minimum] of [...PAIRS, ...THEME_PAIRS, ...(theme === "high-contrast" ? HC_PAIRS : [])]) {
     for (const fg of foregrounds) {
       for (const bg of backgrounds) {
         const back = surface(theme, bg);

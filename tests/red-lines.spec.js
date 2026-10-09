@@ -366,3 +366,42 @@ for (const app of APPS) {
     }
   });
 }
+
+/* ---- RL-7: syntax colours ------------------------------------------------ */
+
+const SYNTAX = ['comment', 'keyword', 'name', 'property', 'string', 'literal'];
+
+test.describe('RL-7: syntax colours on the code block', () => {
+  for (const theme of THEMES) {
+    test(`every --cai-code-* colour keeps 4.5:1 (7:1 in high contrast) in ${theme}`, async ({ page }) => {
+      // No background transition between the light first paint and the mode
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await open(page, '/docs/', theme);
+
+      const { seen, offenders } = await page.evaluate(() => {
+        const rgb = (value) => value.match(/\d+(\.\d+)?/g).slice(0, 3).map(Number);
+        const luminance = (color) => {
+          const [r, g, b] = rgb(color).map((v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4));
+          return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        };
+        const seen = {};
+        const offenders = [];
+        for (const span of document.querySelectorAll('pre.cai-code-block code [class^="tok-"]')) {
+          const pre = span.closest('pre');
+          const mode = pre.closest('[data-theme]').dataset.theme;
+          const [a, b] = [luminance(getComputedStyle(span).color), luminance(getComputedStyle(pre).backgroundColor)];
+          const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+          const kind = span.className.slice(4);
+          (seen[mode] ??= new Set()).add(kind);
+          const minimum = mode === 'high-contrast' ? 7 : 4.5;
+          if (ratio < minimum) offenders.push(`${mode} .tok-${kind} "${span.textContent.slice(0, 20)}" ${ratio.toFixed(2)}:1`);
+        }
+        return { seen: Object.fromEntries(Object.entries(seen).map(([k, v]) => [k, [...v].sort()])), offenders };
+      });
+
+      expect(offenders).toEqual([]);
+      // The page mode and the three specimen columns each show all six classes
+      for (const mode of new Set([theme, ...THEMES])) expect(seen[mode], mode).toEqual([...SYNTAX].sort());
+    });
+  }
+});

@@ -95,6 +95,26 @@
   text-underline-offset: var(--cai-space-2xs);
 }
 
+/* Search: with JavaScript, @cai-ds/platform's button (magnifier only at
+   768px and below); without it, a plain link to the A–Z index, like the
+   site links. Both sit at the end of the row. */
+.site-header__az:not([hidden]) {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--cai-control-lg);
+  font-size: var(--cai-text-md);
+}
+
+.site-header__search {
+  min-inline-size: 13rem;
+}
+
+@media (max-width: 768px) {
+  .site-header__search {
+    min-inline-size: var(--cai-control-lg);
+  }
+}
+
 /* The color mode switcher, in the page footer: core's cycle variant. It is
    one icon button; without JavaScript it is the native radio group, with
    its legend beside the buttons. */

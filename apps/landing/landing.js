@@ -10,6 +10,7 @@
 
 import { initCopyButtons } from "/packages/core/dist/clipboard.js";
 import { highlightBlock } from "/packages/core/dist/highlight.js";
+import { initSearch } from "/packages/platform/dist/search.js";
 import { initSiteHeader } from "./site-header.js";
 
 /* ---- Copy buttons ----------------------------------------------------- */
@@ -28,6 +29,8 @@ function initCopy() {
 
 // Color mode, menu drawer and header height (shared with the docs)
 initSiteHeader();
+// The search button in the header, Ctrl+K and ⌘K (@cai-ds/platform)
+initSearch();
 initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each
 // block, and core ships no position for it.

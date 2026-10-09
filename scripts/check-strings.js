@@ -17,7 +17,7 @@ const appsDir = resolve(root, "apps");
 const VAGUE = /^(ok|okay|submit|yes|no|click here|here|read more|learn more|more|this page|this link)$/i;
 
 // Words that may be capitalised inside a sentence-case heading
-const ALLOWED_CAPS = /^(CAI|CSS|HTML|JS|JSON|ARIA|WCAG|MIDI|API|npm|pnpm|URL|UI|UX|ITCSS|BEM|CDN|ES|SVG|MDN|DOM|OK|Tokens|Core|Platform|Level|Components)$/;
+const ALLOWED_CAPS = /^(CAI|CSS|HTML|JS|JavaScript|JSON|ARIA|WCAG|MIDI|API|npm|pnpm|URL|UI|UX|ITCSS|BEM|CDN|ES|SVG|MDN|DOM|OK|Tokens|Core|Platform|Level|Components)$/;
 
 // Removed parts keep their line breaks, so the reported line numbers stay right
 const blank = (text) => text.replace(/[^\n]/g, "");

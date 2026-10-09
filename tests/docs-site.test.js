@@ -11,12 +11,15 @@ import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { readHtml } from "../scripts/docs-site/html.js";
 import {
+  SEARCH_INDEX_ROUTE,
+  buildSearchIndex,
   buildSite,
   checkLinks,
   currentOf,
   assertThumbSafe,
   escapeHtml,
   expand,
+  indexEntries,
   markCurrent,
   parseFrontMatter,
   readInside,
@@ -126,6 +129,10 @@ describe("routes", () => {
     expect(relativizeLinks('<a href="/docs/#x">b</a>', "/", routes)).toBe('<a href="./docs/#x">b</a>');
     // The not-found page: from the site's path
     expect(relativizeLinks('<a href="/">a</a><a href="/docs/#x">b</a>', "/404.html", routes, "/cai/")).toBe('<a href="/cai/">a</a><a href="/cai/docs/#x">b</a>');
+    // The search index URL of the dialog, from any depth
+    const dialog = '<dialog data-cai-search data-cai-search-src="/docs/search-index.json"></dialog>';
+    expect(relativizeLinks(dialog, "/docs/components/button/", routes)).toContain('data-cai-search-src="../../../docs/search-index.json"');
+    expect(relativizeLinks(dialog, "/", routes)).toContain('data-cai-search-src="./docs/search-index.json"');
   });
 });
 
@@ -490,7 +497,7 @@ describe("the CAI docs site", () => {
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "platform" && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(29);
+    expect(viewPages).toHaveLength(30);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {
@@ -529,6 +536,41 @@ describe("the CAI docs site", () => {
         expect(text.length, `${where} #${id}`).toBeGreaterThan(20);
       }
     }
+  });
+
+  it("builds the search index from the same data as the A–Z index (SEC-IDX-5, SEC-PLG-9)", () => {
+    const index = buildSearchIndex(site);
+    expect(Object.keys(index)).toEqual(["version", "pages", "sections", "elements"]);
+    expect(index.version).toBe(1);
+    const items = [...index.pages, ...index.sections, ...index.elements];
+    // Relative to the JSON file: no scheme, no root-absolute or backslash URL
+    for (const [text, url] of items) {
+      expect(typeof text, url).toBe("string");
+      expect(url, text).not.toMatch(/^([a-z][a-z0-9+.-]*:|\/|\\)/i);
+    }
+    // Every URL is a page of the site and every fragment an id on it (a11y.md TEST-13)
+    const base = `https://example.org${SEARCH_INDEX_ROUTE}`;
+    for (const [text, url] of items) {
+      const target = new URL(url, base);
+      const html = rendered.get(target.pathname);
+      expect(html, `${text}: ${url}`).toBeTruthy();
+      if (target.hash) expect(html, `${text}: ${url}`).toContain(`id="${decodeURIComponent(target.hash.slice(1))}"`);
+    }
+    // The A–Z index and the search never disagree: every A–Z entry is a result
+    const urls = new Set(items.map(([, url]) => new URL(url, base).pathname + new URL(url, base).hash));
+    for (const entry of indexEntries(site)) expect(urls.has(entry.href), entry.href).toBe(true);
+    // Pages, with their area
+    expect(index.pages).toContainEqual(["Button", "components/button/", "Components"]);
+    expect(index.pages).toContainEqual(["CAI documentation", "./"]);
+    expect(index.pages.find(([title]) => title === "A–Z index")).toBeUndefined();
+    // Template headings are kept, named after their page and tab; the tab row is not
+    expect(index.sections).toContainEqual(["When to use, Button › Design", "components/button/#when"]);
+    expect(index.sections).toContainEqual(["Keyboard and ARIA, Button › Code", "components/button/#keyboard"]);
+    expect(index.sections).toContainEqual(["Known issues, Button", "components/button/#known-issues"]);
+    expect(index.sections.filter(([, url]) => /#(example|code|design)$/.test(url))).toEqual([]);
+    expect(index.elements).toContainEqual(["<table> element, Tables", "html/tables/#el-table"]);
+    // Plain JSON, small enough to fetch on the first open
+    expect(JSON.stringify(index).length).toBeLessThan(200_000);
   });
 
   it("renders the not-found page with no <base> and no script (SEC-MISC-3/5)", () => {

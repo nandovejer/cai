@@ -59,6 +59,34 @@ test.describe('RL-12: no third-party network request', () => {
   }
 });
 
+// security.md SEC-NET-6: the code path that fetches, the site search
+test.describe('RL-12: searching makes no third-party request', () => {
+  for (const url of ['/', '/docs/', routeOf('c-button')]) {
+    test(url, async ({ page }) => {
+      const external = [];
+      await page.route('**/*', (route) => {
+        const { protocol, hostname, href } = new URL(route.request().url());
+        if (['data:', 'blob:'].includes(protocol) || ['localhost', '127.0.0.1', '[::1]'].includes(hostname)) return route.continue();
+        external.push(href);
+        return route.abort();
+      });
+      await page.goto(url);
+      await page.waitForLoadState('networkidle');
+      // Opened with the button, then with Ctrl+K, with a query each time
+      const dialog = page.getByRole('dialog', { name: 'Search the documentation' });
+      await page.getByRole('banner').getByRole('button', { name: /^Search docs/ }).click();
+      await dialog.getByRole('textbox').fill('button');
+      await expect(dialog.locator('[data-cai-search-list] a').first()).toBeVisible();
+      await page.keyboard.press('Escape');
+      await page.keyboard.press('Control+k');
+      await dialog.getByRole('textbox').fill('table');
+      await expect(dialog.locator('[data-cai-search-list] a').first()).toBeVisible();
+      await page.waitForLoadState('networkidle');
+      expect(external, 'requests to other hosts').toEqual([]);
+    });
+  }
+});
+
 /* ---- RL-4, RL-9: semantics and names ------------------------------------ */
 
 for (const app of APPS) {

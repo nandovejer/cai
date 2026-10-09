@@ -49,10 +49,12 @@ const settingsCss = readFileSync(fromRepo('packages/core/src/settings/_settings.
 const settingNames = (prefix) =>
   [...settingsCss.matchAll(new RegExp(`^\\s*(--cai-${prefix}-[\\w-]+):`, 'gm'))].map((m) => m[1]);
 
-const platformCss = readFileSync(
-  fromRepo('packages/platform/src/components/_components.css'),
-  'utf-8',
-);
+// Every CSS file of the platform package (the shell patterns and the search)
+const platformDir = fromRepo('packages/platform/src/components');
+const platformCss = readdirSync(platformDir)
+  .filter((file) => file.endsWith('.css'))
+  .map((file) => readFileSync(`${platformDir}/${file}`, 'utf-8'))
+  .join('\n');
 const platformClasses = [...new Set(platformCss.match(/\.cai-platform-[a-z_-]+/g))];
 
 const MODES = ['light', 'dark', 'high-contrast'];
@@ -589,7 +591,8 @@ test.describe('Documentation site', () => {
         for (const route of ALL) {
           await page.goto(route);
           await expect(page.locator('html'), route).toHaveAttribute('data-theme', 'light');
-          await expect(page.locator('main [hidden]'), route).toHaveCount(0);
+          // Nothing is hidden but the search buttons, which only work with JavaScript
+          await expect(page.locator('main [hidden]:not([data-cai-search-open])'), route).toHaveCount(0);
           expect(
             await page.locator('details[data-fold-narrow]').evaluateAll((all) => all.every((el) => el.open)),
             route,

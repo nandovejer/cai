@@ -7,7 +7,15 @@ toc: false
 -->
     <p class="docs-lead">Install CAI, find a component and copy its markup. Every example is live and follows the color mode you pick.</p>
     <p class="docs-hub__beta"><span class="cai-tag cai-tag--yellow">Beta</span> Names and classes can still change. Pin an exact version. <a href="https://github.com/nandovejer/cai/blob/main/CHANGELOG.md">Read the changelog</a></p>
-    <p class="docs-hub__find"><a class="cai-btn cai-btn--outline" href="/docs/a-z/">Browse the A–Z index</a></p>
+    <p class="docs-hub__find">
+      <a class="cai-btn cai-btn--outline" href="/docs/a-z/" data-cai-search-fallback>Browse the A–Z index</a>
+      <button class="cai-platform-search-trigger docs-hub__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+      <span class="docs-hub__find-hint">Find components, tokens and HTML elements by name.</span>
+    </p>
 
     <h2 class="u-sr-only" id="hub-start">Start here</h2>
     <ul class="docs-hub__cards">

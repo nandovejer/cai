@@ -83,7 +83,8 @@ test.describe('Code and Design tabs on a component page', () => {
   test('the stored tab opens on the next page, silently (TAB-13)', async ({ page }) => {
     await page.goto(BUTTON);
     await tab(page, 'Design').click();
-    expect(await stored(page)).toBe('design');
+    // view.js stores the choice once the click has been handled (a timeout)
+    await expect.poll(() => stored(page)).toBe('design');
     const before = await page.evaluate(() => window.history.length);
     await page.goto(routeOf('c-card'));
     await expect(tab(page, 'Design')).toHaveAttribute('aria-selected', 'true');

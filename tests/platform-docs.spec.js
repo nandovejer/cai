@@ -10,13 +10,18 @@
  */
 
 import { test, expect } from '@playwright/test';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf } from './helpers/docs-site.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
-const platformCss = readFileSync(fromRepo('packages/platform/src/components/_components.css'), 'utf-8');
+// Every CSS file of the package: the shell patterns and the search
+const platformDir = fromRepo('packages/platform/src/components');
+const platformCss = readdirSync(platformDir)
+  .filter((file) => file.endsWith('.css'))
+  .map((file) => readFileSync(`${platformDir}/${file}`, 'utf-8'))
+  .join('\n');
 // Blocks only: elements (__) and modifiers (--) are covered by their block
 const blocks = [...new Set(
   [...platformCss.matchAll(/\.cai-platform-([\w-]+)/g)].map((m) => m[1].split(/__|--/)[0]),
@@ -34,6 +39,8 @@ const patternOf = {
   'command-block': 'command',
   footer: 'footer',
   image: 'image',
+  search: 'search',
+  'search-trigger': 'search',
 };
 
 // Code tab, then Design tab; Known issues is above them (ia.md §6)

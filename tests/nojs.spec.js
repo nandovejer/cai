@@ -30,6 +30,7 @@ for (const app of APPS) {
       '.cai-theme-apply-btn',
       '.cai-theme-mode-btn',
       '.cai-player button',
+      '.cai-platform-search-trigger',
       '[role="switch"]:not(input)',
       '[role="slider"]:not(input)',
     ].join(', ');
@@ -81,6 +82,34 @@ for (const route of routesWith('docs-view-tabs')) {
     expect(await top('code')).toBeLessThan(await top('design'));
   });
 }
+
+// a11y.md SRCH-1, SRCH-28: no search dialog without JavaScript; the
+// header's search is a plain link to the A–Z index, which lists every page
+for (const app of ['/', '/docs/', '/docs/components/button/', notFoundRoute]) {
+  test(`${app}: the search is a link to the A–Z index`, async ({ page }) => {
+    await page.goto(app);
+    const banner = page.getByRole('banner');
+    const link = banner.getByRole('link', { name: 'A–Z index' });
+    await expect(link).toBeVisible();
+    await expect(banner.getByRole('button', { name: /^Search docs/ })).toBeHidden();
+    await expect(page.getByRole('dialog')).toHaveCount(0);
+    const href = await link.evaluate((a) => a.href);
+    const response = await page.request.get(href);
+    expect(response.status()).toBe(200);
+  });
+}
+
+test('docs: the A–Z index links every page', async ({ page }) => {
+  await page.goto('/docs/a-z/');
+  const hrefs = new Set(await page.locator('main a').evaluateAll((links) => links.map((a) => new URL(a.href).pathname)));
+  for (const route of routes().filter((r) => r !== '/docs/a-z/')) expect(hrefs.has(route), route).toBe(true);
+});
+
+test('docs: the home shows the A–Z link in place of the big search button', async ({ page }) => {
+  await page.goto('/docs/');
+  await expect(page.getByRole('main').getByRole('link', { name: 'Browse the A–Z index' })).toBeVisible();
+  await expect(page.getByRole('main').getByRole('button', { name: /^Search docs/ })).toBeHidden();
+});
 
 test('docs: the image placeholder shows without JavaScript', async ({ page }) => {
   await gotoId(page, 'demo-image-empty');

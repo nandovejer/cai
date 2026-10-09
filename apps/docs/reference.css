@@ -359,6 +359,24 @@
   color: var(--cai-text-secondary);
 }
 
+/* The big search button of the home (the A–Z link without JavaScript),
+   with its hint below */
+.docs-hub__find {
+  display: grid;
+  justify-items: start;
+  gap: var(--cai-space-2xs);
+}
+
+.docs-hub__search {
+  inline-size: min(100%, 36rem);
+  min-block-size: var(--cai-control-xl);
+  font-size: var(--cai-text-md);
+}
+
+.docs-hub__find-hint {
+  color: var(--cai-text-secondary);
+}
+
 /* A card is one link: its name, stretched over the card (HUB-1), with a
    focus ring round the whole card (HUB-4). */
 .docs-card,

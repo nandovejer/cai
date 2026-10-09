@@ -38,7 +38,7 @@ test.describe('forced-colors: active', () => {
   test('docs: a focused button keeps a visible outline', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
     await page.goto(routeOf('c-button'));
-    const btn = page.locator('button.cai-btn, .cai-copy-btn').first();
+    const btn = page.locator('main button.cai-btn, main .cai-copy-btn').first();
     await btn.focus();
     const outline = await btn.evaluate((el) => {
       const s = getComputedStyle(el);

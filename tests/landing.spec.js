@@ -525,6 +525,8 @@ test.describe('Landing page', () => {
           const node = walker.currentNode;
           if (!/theme/i.test(node.textContent)) continue;
           if (node.parentElement.closest('code, pre, script, style')) continue;
+          // The site search's dialog names docs pages by their titles ("Color modes and themes")
+          if (node.parentElement.closest('[data-cai-search]')) continue;
           found.push(node.textContent.trim());
         }
         document.querySelectorAll('[aria-label], [title], [alt]').forEach((el) => {

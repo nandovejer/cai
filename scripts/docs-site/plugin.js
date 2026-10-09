@@ -14,6 +14,9 @@
  *   moved to <route>/index.html. The not-found page (apps/docs/404.html)
  *   becomes /404.html, with every URL starting at the site's path on GitHub
  *   Pages ("/<repo>/"), because it is served at any URL.
+ * - The search index (@cai-ds/platform search, format version 1) is
+ *   generated from the same scan as the A–Z page: served at
+ *   /docs/search-index.json in dev, written there by the build.
  * - Every internal link is checked: an error in a build, a warning in dev.
  * - Editing a layout, a partial, a page or site.json reloads the browser.
  *
@@ -21,7 +24,19 @@
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
-import { NOT_FOUND_ROUTE, buildSite, parseFrontMatter, readInside, relativizeLinks, renderDocument, renderPage, rootOf, scanSite } from "./site.js";
+import {
+  NOT_FOUND_ROUTE,
+  SEARCH_INDEX_ROUTE,
+  buildSearchIndex,
+  buildSite,
+  parseFrontMatter,
+  readInside,
+  relativizeLinks,
+  renderDocument,
+  renderPage,
+  rootOf,
+  scanSite,
+} from "./site.js";
 
 const LANDING = { route: "/", file: "apps/landing/index.html" };
 
@@ -63,6 +78,9 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
   /** {{root}} of a document in the pages build: relative to its depth; the site's path on the 404. */
   const rootFor = (route) => (route === NOT_FOUND_ROUTE ? pagesBase : rootOf(route));
   const routes = () => new Set(documents().map((d) => d.route));
+
+  /** The search index, as the bytes that are published. */
+  const searchIndex = () => JSON.stringify(buildSearchIndex(scan()));
 
   /** Render everything and check it; returns the link problems. */
   const check = () =>
@@ -148,6 +166,17 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
           logger.error(`[cai-docs-site] ${error.message}`);
           return next();
         }
+        // The search index: generated, never a file (SEC-PLG-6)
+        if (path === SEARCH_INDEX_ROUTE) {
+          try {
+            const body = searchIndex();
+            res.setHeader("Content-Type", "application/json; charset=utf-8");
+            return res.end(body);
+          } catch (error) {
+            logger.error(`[cai-docs-site] ${error.message}`);
+            return next();
+          }
+        }
         const file = map.get(path);
         if (file) {
           req.url = query ? `${file}?${query}` : file;
@@ -199,6 +228,11 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
         }
         return relativeUrls ? relativizeLinks(out, doc.route, routes(), rootFor(doc.route)) : out;
       },
+    },
+
+    generateBundle() {
+      // Unhashed, next to the pages: every page points at it from its depth
+      this.emitFile({ type: "asset", fileName: SEARCH_INDEX_ROUTE.slice(1), source: searchIndex() });
     },
 
     closeBundle() {

@@ -20,7 +20,7 @@ All notable changes to this project are documented here.
 ### Native-first release — BREAKING
 See `.changeset/native-first-principles.md` and [PRINCIPLES.md](./PRINCIPLES.md): native switch, dialog, popover drawer, radio color-mode switcher, progressive tabs, native range sliders and `<progress>`; cascade layers; no `!important`; logical properties.
 
-**Known issues:** the tooltip cannot be dismissed with Escape (WCAG 1.4.13, partial); icon-grid items get `role="button"` from script; no screen reader has been used to test the components.
+**Known issues:** the tooltip cannot be dismissed with Escape (WCAG 1.4.13, partial); icon-grid items get `role="button"` from script; no screen reader has been used to test the components or the site search; Ctrl+K opens the site search instead of the browser's web search.
 
 ### Changed — BREAKING (migration note)
 - **`body` no longer forces `display: flex; min-height: 100vh`.** The app-shell layout is opt-in: add `class="o-shell"` to `<body>` (grid shell with sidebar), as the bundled apps already do. Bare-body consumers relying on the implicit flex shell must add the class.

@@ -499,33 +499,89 @@ export function renderGallery(site, page) {
     .join("\n");
 }
 
+/** The h2 of a component page's tab panels: its h3 belong to that tab. */
+const VIEW_HEADINGS = new Set(["code", "design"]);
+
 /**
- * Every entry of the A–Z index (and later the search index): each page, each
- * heading specific to a page (the levels of its "On this page"), and each
- * HTML element card.
+ * What the A–Z index and the search index are both made of, so the two never
+ * disagree: every page that is not marked `search: false`, with its headings
+ * (the levels of its "On this page", outside demos) and its HTML element
+ * cards (the h2 `el-<name>-title`).
+ * Returns [{ page, title, route, area (label or null), kind, keywords,
+ * sections: [{ text, id, tab (label of its tab or null), template }],
+ * elements: [{ text, id }] }] in route order. `template` marks a heading
+ * every component page has ("When to use"): it names nothing on its own.
+ */
+export function indexData(site) {
+  return site.pages
+    .filter((page) => page.meta.search !== "false")
+    .map((page) => {
+      const area = areaOf(site, page);
+      const kind = area?.id === "platform" && page.route === areaRoute(area) ? "Platform" : AREA_KIND[page.meta.area] ?? "Page";
+      // The levels "On this page" lists: on a component page, the h3 of its tabs too
+      const sectionLevels = page.meta.toc === "h2,h3" ? [2, 3] : [2];
+      const sections = [];
+      const elements = [];
+      let tab = null;
+      for (const h of contentOf(page).headings) {
+        if (h.specimen || !h.id) continue;
+        if (h.level === 2) tab = VIEW_HEADINGS.has(h.id) ? h.text : null;
+        const element = /^el-(.+)-title$/.exec(h.id);
+        if (element && h.level === 2) {
+          elements.push({ text: `${h.text} element`, id: `el-${element[1]}` });
+        } else if (sectionLevels.includes(h.level) && h.text !== page.meta.title) {
+          sections.push({ text: h.text, id: h.id, tab: h.level > 2 ? tab : null, template: TEMPLATE_HEADINGS.has(h.text) });
+        }
+      }
+      const keywords = page.meta.keywords.split(",").map((k) => k.trim()).filter(Boolean);
+      return { page, title: page.meta.title, route: page.route, area: area?.label ?? null, kind, keywords, sections, elements };
+    });
+}
+
+/**
+ * Every entry of the A–Z index: each page, each heading specific to a page
+ * (template headings left out), and each HTML element card.
  * Returns [{ name, href, kind }] sorted by name.
  */
 export function indexEntries(site) {
   const entries = [];
-  for (const page of site.pages) {
-    if (page.meta.search === "false") continue;
-    const area = areaOf(site, page);
-    const kind = area?.id === "platform" && page.route === areaRoute(area) ? "Platform" : AREA_KIND[page.meta.area] ?? "Page";
-    entries.push({ name: page.meta.title, href: page.route, kind });
-    // The levels "On this page" lists: on a component page, the h3 of its tabs too
-    const sectionLevels = page.meta.toc === "h2,h3" ? [2, 3] : [2];
-    for (const h of contentOf(page).headings) {
-      if (h.specimen || !h.id) continue;
-      const element = /^el-(.+)-title$/.exec(h.id);
-      if (element && h.level === 2) {
-        entries.push({ name: `${h.text} element`, href: `${page.route}#el-${element[1]}`, kind: `HTML element, ${page.meta.title}` });
-      } else if (sectionLevels.includes(h.level) && !TEMPLATE_HEADINGS.has(h.text) && h.text !== page.meta.title) {
-        entries.push({ name: h.text, href: `${page.route}#${h.id}`, kind: `Section of ${page.meta.title}` });
-      }
-    }
+  for (const { title, route, kind, sections, elements } of indexData(site)) {
+    entries.push({ name: title, href: route, kind });
+    for (const s of sections) if (!s.template) entries.push({ name: s.text, href: `${route}#${s.id}`, kind: `Section of ${title}` });
+    for (const e of elements) entries.push({ name: e.text, href: `${route}#${e.id}`, kind: `HTML element, ${title}` });
   }
   const key = (e) => e.name.replace(/^[^\p{L}\p{N}]+/u, "");
   return entries.sort((a, b) => key(a).localeCompare(key(b), "en", { sensitivity: "base" }) || a.href.localeCompare(b.href));
+}
+
+/** Where the search index is published, next to the pages it points at. */
+export const SEARCH_INDEX_ROUTE = `${DOCS_ROUTE}search-index.json`;
+
+/** Template headings the search leaves out: the page itself, or its tab row. */
+const NOT_SEARCHED = new Set(["example", "code", "design"]);
+
+/**
+ * The search index of @cai-ds/platform's search (format version 1, the
+ * public contract documented on /docs/platform/search/), from the same data
+ * as the A–Z index: three lists of [text, url, meta?]. URLs are relative to
+ * the JSON file, so the site works under any path; a section's URL carries
+ * its page and its fragment, since "#how" exists on many pages. A section or
+ * element names its page (and tab) in its text, "When to use, Button ›
+ * Design", so it makes sense alone (a11y.md SRCH-19) and is found by the
+ * page's name; that is why template headings are kept here. Plain data for
+ * JSON.stringify (SEC-PLG-9).
+ */
+export function buildSearchIndex(site) {
+  const url = (route, id = "") => (route.slice(DOCS_ROUTE.length) || "./") + (id && `#${id}`);
+  const index = { version: 1, pages: [], sections: [], elements: [] };
+  for (const { title, route, area, sections, elements } of indexData(site)) {
+    index.pages.push(area ? [title, url(route), area] : [title, url(route)]);
+    for (const s of sections) {
+      if (!NOT_SEARCHED.has(s.id)) index.sections.push([`${s.text}, ${title}${s.tab ? ` › ${s.tab}` : ""}`, url(route, s.id)]);
+    }
+    for (const e of elements) index.elements.push([`${e.text}, ${title}`, url(route, e.id)]);
+  }
+  return index;
 }
 
 /** The A–Z index: a row of letters, then one h2 and one list per letter. */
@@ -674,9 +730,11 @@ export function renderDocument(html, file, route, site, options = {}) {
  * not-found page `root` is the site's path: "/docs/" becomes "/cai/docs/".
  */
 export function relativizeLinks(html, route, routes, root = rootOf(route)) {
-  return html.replace(/href="\/([^"#?]*)(#[^"]*)?"/g, (whole, path, hash = "") =>
-    routes.has(`/${path}`) ? `href="${root}${path}${hash}"` : whole,
-  );
+  return html
+    .replace(/href="\/([^"#?]*)(#[^"]*)?"/g, (whole, path, hash = "") =>
+      routes.has(`/${path}`) ? `href="${root}${path}${hash}"` : whole,
+    )
+    .replaceAll(`data-cai-search-src="${SEARCH_INDEX_ROUTE}"`, `data-cai-search-src="${root}${SEARCH_INDEX_ROUTE.slice(1)}"`);
 }
 
 /* ---- Checking ---------------------------------------------------------- */

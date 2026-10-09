@@ -52,6 +52,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 - The layout `apps/docs/_layouts/<layout>.html` wraps it. Templates know two things only: `<!-- cai:include <name> -->` (a file of `apps/docs/_partials/`) and a fixed set of `{{…}}` values (layouts and partials only). The landing includes the same `header` and `site-links` partials. The generator marks the current site links (`aria-current`).
 - Dev server: route → file lookup table; a route without its trailing slash answers 301. Editing a layout, partial, page or `site.json` reloads the browser.
 - Build: one entry per route (plus the landing at `/`); each HTML file is moved to `<route>/index.html`, and in the pages build its asset URLs and links between pages are relative to its depth.
+- Search: the generator also writes `/docs/search-index.json` (`buildSearchIndex()`, from the same `indexData()` as the A–Z page, so the two never disagree), served by the dev middleware and emitted by the build. Every page gets the header's search button and the dialog partial `_partials/search.html`, with `data-cai-search-src="/docs/search-index.json"` made relative in the pages build. The component is `@cai-ds/platform/search` (`initSearch()`); its fixed text is in the partial and the strings it writes are the dialog's `data-cai-label-*` (EX-005).
 - Links: write internal links root-absolute with a trailing slash (`/docs/components/button/#how`). The build fails, with `file:line`, on a mis-nested tag, a duplicate id, an unknown route, a missing trailing slash or a `#fragment` that is not an id on the target page (a warning in dev).
 
 ---
@@ -60,6 +61,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 
 `tokens` is standalone; `core` requires `tokens`; `platform` requires `core` and `tokens`. The contract is expressed as required `peerDependencies` with literal ranges (never `workspace:`), and the three packages share one version (changesets `fixed`).
 
+- Platform JS: `platform.js` (entry; warns without core, wires the search) and `search.js` (`initSearch(root)`, exported as `@cai-ds/platform/search`). `platform.min.js` is bundled with esbuild, so the 2 kB budget measures the search too; `pnpm check:size` fails if a budgeted file imports an unbudgeted one statically. HTML sinks (`innerHTML`, `insertAdjacentHTML`, `eval`, …) are an ESLint error in `packages/platform/src` and `apps/` (security.md SEC-IDX-2).
 - Nothing in `packages/*/src` may reference docs-app hooks (`.docs-*`, `#demo-form`, …). Docs-only behavior lives in `apps/docs/reference.js` (and the modules it imports, such as `apps/docs/view.js`, the remembered Code / Design tab); the docs site generator in `scripts/docs-site/` is development tooling and never ships.
 - `pnpm check:pack` verifies what each tarball ships against `packages/<name>/pack-files.txt`; after intentionally adding or removing a published file run `node scripts/check-pack.js --update`.
 - Releases: add a changeset (`pnpm changeset`); never run `npm publish` by hand.

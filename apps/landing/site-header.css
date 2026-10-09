@@ -23,17 +23,20 @@
   border-bottom: 1px solid var(--cai-border-subtle);
 }
 
+/* One row at every width: 40px controls (2.5.8 with room to spare) and a
+   short sticky band, about 56px */
 .site-header__inner {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   gap: var(--cai-space-03) var(--cai-space-05);
-  padding-block: var(--cai-space-04);
+  padding-block: var(--cai-space-03);
 }
 
 .site-header__brand {
   display: inline-flex;
   align-items: center;
+  flex-shrink: 0;
+  min-block-size: var(--cai-size-height-lg);
   gap: var(--cai-space-03);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-md);
@@ -54,15 +57,14 @@
 
 .site-header__nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--cai-space-02) var(--cai-space-05);
+  gap: var(--cai-space-05);
   margin-inline-start: auto;
 }
 
 .site-header__nav a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cai-size-height-md);
+  min-block-size: var(--cai-size-height-lg);
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
 }
@@ -96,4 +98,38 @@
   min-block-size: var(--cai-size-height-sm);
   padding-inline: var(--cai-space-03);
   border-radius: var(--cai-radius-md);
+}
+
+/* The cycle button matches the other header controls */
+.site-modes .cai-theme-cycle {
+  inline-size: var(--cai-size-height-lg);
+  block-size: var(--cai-size-height-lg);
+}
+
+/* Narrow screens keep one row: the version tag goes first (the version is
+   also in the install snippets), then the name beside the mark, which stays
+   the link's accessible name */
+@media (max-width: 479px) {
+  .site-header__inner {
+    gap: var(--cai-space-04);
+  }
+
+  .site-header__nav {
+    gap: var(--cai-space-04);
+  }
+
+  .site-header__tag {
+    display: none;
+  }
+}
+
+@media (max-width: 359px) {
+  .site-header__name {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }

@@ -873,14 +873,8 @@ h2.docs-demo__title {
   height: calc(100vh - var(--site-header-h, 3.875rem));
 }
 
-/* The drawer's toggle is fixed at the top start corner: start the header
-   after it, so it never covers the brand */
 @supports selector(:popover-open) {
   @media (max-width: 768px) {
-    .docs-header-bar {
-      padding-inline-start: calc(var(--cai-size-height-lg) + var(--cai-space-04) * 2);
-    }
-
     /* The drawer opens below the header, so its toggle stays in view and
        closes it again */
     .docs-page > .cai-sidebar[popover] {

@@ -557,8 +557,7 @@ test.describe('Landing page', () => {
     test('the beta and version tags are text', async ({ page }) => {
       await open(page);
 
-      await expect(page.locator('.site-header__brand')).toContainText('v3.0.0');
-      await expect(page.locator('.site-header__brand')).toContainText('Beta');
+      await expect(page.locator('.site-header__brand .site-header__tag')).toHaveText('v3.0.0 beta');
     });
 
     test('the page background is one flat color', async ({ page }) => {

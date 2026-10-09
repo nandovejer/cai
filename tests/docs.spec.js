@@ -696,6 +696,29 @@ test.describe('Documentation page', () => {
 
 test.describe('Site header and navigation toggle', () => {
   for (const path of ['/', '/docs/']) {
+    test(`one row, about 56px, with no overflow at every width: ${path}`, async ({ page }) => {
+      for (const width of [320, 360, 768, 1440]) {
+        await page.setViewportSize({ width, height: 700 });
+        await page.goto(path);
+        const { height, overflow } = await page.evaluate(() => ({
+          height: document.querySelector('.site-header').offsetHeight,
+          overflow: document.documentElement.scrollWidth - window.innerWidth,
+        }));
+        expect(height, `${width}px`).toBeLessThanOrEqual(60);
+        expect(overflow, `${width}px`).toBe(0);
+      }
+    });
+  }
+
+  test('on a phone, the drawer toggle is the first control after the skip link', async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 640 });
+    await page.goto('/docs/');
+    await page.keyboard.press('Tab');
+    await page.keyboard.press('Tab');
+    await expect(page.locator('.docs-nav-toggle')).toBeFocused();
+  });
+
+  for (const path of ['/', '/docs/']) {
     test(`the header stays at the top while scrolling: ${path}`, async ({ page }) => {
       await page.goto(path);
       await page.evaluate(() => window.scrollTo(0, 2000));

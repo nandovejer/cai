@@ -142,24 +142,38 @@
    popover API, the navigation simply stays visible above the content.
    -------------------------------------------------------------------------- */
 
+/* In the flow by default: put it first in your header row, so the focus
+   order follows what is on screen (WCAG 2.4.3). A bordered button on the
+   page surface, like the other header controls. --fixed pins it to the top
+   start corner instead, for a page with no header. */
 .cai-nav-toggle {
   display: none;
-  position: fixed;
-  inset-block-start: var(--cai-space-04);
-  inset-inline-start: var(--cai-space-04);
-  z-index: var(--cai-z-modal);
-  width: 40px;
-  height: 40px;
-  background: var(--cai-sidebar-bg);
-  border: 1px solid var(--cai-sidebar-border);
-  /* --cai-text-inverse turns dark in dark mode: invisible bars */
-  color: var(--cai-sidebar-text-hover);
+  flex-shrink: 0;
+  inline-size: var(--cai-size-height-lg);
+  block-size: var(--cai-size-height-lg);
+  background: transparent;
+  border: 1px solid var(--cai-border-strong);
+  border-radius: var(--cai-radius-md);
+  color: var(--cai-text-primary);
   cursor: pointer;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: var(--cai-space-02);
   padding: var(--cai-space-03);
+  transition: background var(--cai-duration-fast);
+}
+
+.cai-nav-toggle:hover {
+  background: var(--cai-bg-ui-hover);
+}
+
+.cai-nav-toggle--fixed {
+  position: fixed;
+  inset-block-start: var(--cai-space-04);
+  inset-inline-start: var(--cai-space-04);
+  z-index: var(--cai-z-modal);
+  background: var(--cai-bg-page);
 }
 
 .cai-nav-toggle:focus-visible {

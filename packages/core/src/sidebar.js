@@ -37,20 +37,26 @@ function isOpenPopover(el) {
  */
 export function initSidebar(root = document) {
   const navLinks = Array.from(root.querySelectorAll(".cai-sidebar__link"));
+  const isInPage = (link) => link.getAttribute("href")?.startsWith("#");
   const linkMap = new Map(
     navLinks.map((link) => [link.getAttribute("href"), link]),
   );
   let currentActive = root.querySelector(".cai-sidebar__link.is-active");
 
   // A link to a section of this page is the current *location*
-  // (aria-current="true"); "page" is kept for a link to another document, so
-  // the page's own site navigation stays the only aria-current="page".
+  // (aria-current="true"); "page" is kept for a link to another document.
+  // The scroll spy only moves the mark between in-page links: a link to
+  // another document (a site link in the drawer) keeps the aria-current its
+  // markup gives it.
   function setCurrentLink(link) {
-    navLinks.forEach((item) => {
+    const managed = new Set(navLinks.filter(isInPage));
+    if (currentActive) managed.add(currentActive);
+    managed.add(link);
+    managed.forEach((item) => {
       const isActive = item === link;
       item.classList.toggle("is-active", isActive);
       if (isActive) {
-        item.setAttribute("aria-current", item.getAttribute("href")?.startsWith("#") ? "true" : "page");
+        item.setAttribute("aria-current", isInPage(item) ? "true" : "page");
       } else item.removeAttribute("aria-current");
     });
   }

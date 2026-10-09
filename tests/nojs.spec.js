@@ -79,3 +79,26 @@ test('/docs/: the color mode switcher is three radios that set the mode', async 
   await switcher.locator('.cai-theme-btn:has(input[value="dark"])').click();
   await expect.poll(background).not.toBe(light);
 });
+
+for (const app of APPS) {
+  test(`${app}: the menu drawer opens and closes without JavaScript`, async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 640 });
+    await page.goto(app);
+    const toggle = page.getByRole('button', { name: 'Menu', exact: true });
+    const drawer = page.locator('#page-nav');
+    await expect(toggle).toBeVisible();
+    await expect(drawer).toBeHidden();
+    await toggle.click();
+    await expect(drawer).toBeVisible();
+    // the site links are in the drawer, first, and not in the header row
+    await expect(page.locator('.site-header__nav')).toBeHidden();
+    await expect(drawer.getByRole('navigation', { name: 'Site' }).getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
+    // With no script to measure it, the header's height is the CSS value:
+    // the drawer opens right below the header, never over its button
+    const header = await page.locator('.site-header').boundingBox();
+    const nav = await drawer.boundingBox();
+    expect(Math.abs(nav.y - (header.y + header.height))).toBeLessThanOrEqual(1);
+    await page.keyboard.press('Escape');
+    await expect(drawer).toBeHidden();
+  });
+}

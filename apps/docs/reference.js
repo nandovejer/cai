@@ -15,63 +15,7 @@ import { highlightBlock } from "/packages/core/dist/highlight.js";
 import { initTabs } from "/packages/core/dist/tabs.js";
 import { initModals } from "/packages/core/dist/modal.js";
 import { initPlayers } from "/packages/core/dist/player.js";
-import { initSidebar } from "/packages/core/dist/sidebar.js";
-import { initThemeCycle } from "/packages/core/dist/theme.js";
 import { initSiteHeader } from "../landing/site-header.js";
-
-/* ---- Color mode ------------------------------------------------------- */
-
-// Shared with the home page, so the choice follows the visitor
-const MODES = ["light", "dark", "high-contrast"];
-const MODE_KEY = "cai-site-mode";
-const root = document.documentElement;
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-const prefersContrast = window.matchMedia("(prefers-contrast: more)");
-
-function storedMode() {
-  try {
-    const mode = localStorage.getItem(MODE_KEY);
-    return MODES.includes(mode) ? mode : null;
-  } catch (_) {
-    return null;
-  }
-}
-
-function osMode() {
-  if (prefersContrast.matches) return "high-contrast";
-  return prefersDark.matches ? "dark" : "light";
-}
-
-function setMode(mode, persist) {
-  root.dataset.theme = mode;
-  if (persist) {
-    try {
-      localStorage.setItem(MODE_KEY, mode);
-    } catch (_) {}
-  }
-  // The native radios show the mode (and set it without JavaScript)
-  document.querySelectorAll('input[name="cai-theme"]').forEach((radio) => {
-    radio.checked = radio.value === mode;
-  });
-  // The canvas demo paints with the token values: repaint it
-  drawCanvas();
-}
-
-function initModes() {
-  setMode(storedMode() || osMode(), false);
-
-  document.addEventListener("change", (e) => {
-    const radio = e.target.closest?.('input[name="cai-theme"]');
-    if (radio?.checked) setMode(radio.value, true);
-  });
-
-  // Follow the OS while the visitor has not chosen a mode
-  [prefersDark, prefersContrast].forEach((query) => {
-    query.addEventListener("change", () => {
-      if (!storedMode()) setMode(osMode(), false);
-    });
-  });
-}
 
 /* ---- Small enhancements ----------------------------------------------- */
 
@@ -151,7 +95,7 @@ function drawCanvas() {
   const canvas = document.getElementById("d-canvas");
   const ctx = canvas?.getContext("2d");
   if (!ctx) return;
-  const style = getComputedStyle(root);
+  const style = getComputedStyle(document.documentElement);
   const token = (name) => style.getPropertyValue(name).trim();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = token("--cai-brand-primary");
@@ -198,10 +142,9 @@ function syncLoadedMedia() {
 
 /* ---- Boot -------------------------------------------------------------- */
 
-initModes();
-// One button in the header that steps through the modes; the radios stay
-initThemeCycle();
-initSiteHeader();
+// Color mode, menu drawer and header height (shared with the home
+// page). The canvas demo paints with the token values: repaint it per mode.
+initSiteHeader({ onModeChange: drawCanvas });
 initFolds();
 initAssets();
 initCopy();
@@ -211,9 +154,6 @@ document.querySelectorAll("pre.cai-code-block").forEach(highlightBlock);
 initTabs();
 initModals();
 initRangeOutputs();
-// The page navigation only: the sidebar specimen's links stay inert
-const nav = document.getElementById("docs-nav");
-if (nav) initSidebar(nav);
 initPlayers();
 syncLoadedMedia();
 initDemoGuards();

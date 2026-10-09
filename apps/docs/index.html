@@ -19,12 +19,12 @@
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" id="site-header">
-    <div class="site-header__inner docs-header-bar">
-      <button class="cai-nav-toggle docs-nav-toggle" type="button" aria-label="Documentation navigation" popovertarget="docs-nav">
-        <svg class="docs-nav-toggle__icon" viewBox="8 8 32 32" aria-hidden="true" focusable="false">
-          <path class="docs-nav-toggle__a" d="M12 16.5C12 15.5 12 14.5 12 13.5C20 13.5 28 13.5 36 13.5C36 14.5 36 15.5 36 16.5C28 16.5 20 16.5 12 16.5Z"/>
-          <path class="docs-nav-toggle__c" d="M36 22.5C28 22.5 20 22.5 12 22.5C12 23.5 12 24.5 12 25.5C20 25.5 28 25.5 36 25.5C36 24.5 36 23.5 36 22.5Z"/>
-          <path class="docs-nav-toggle__i" d="M12 31.5C20 31.5 28 31.5 36 31.5C36 32.5 36 33.5 36 34.5C28 34.5 20 34.5 12 34.5C12 33.5 12 32.5 12 31.5Z"/>
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
       <a class="site-header__brand" href="/"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
@@ -42,7 +42,14 @@
     </div>
   </header>
 
-  <nav class="cai-sidebar" id="docs-nav" popover aria-label="Documentation">
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
+    <nav class="cai-sidebar__section page-nav__site" aria-label="Site">
+      <div class="cai-sidebar__section-label">Site</div>
+      <a class="cai-sidebar__link" href="/">Home</a>
+      <a class="cai-sidebar__link" href="/docs/" aria-current="page">Docs</a>
+      <a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a>
+    </nav>
+
     <div class="cai-sidebar__section">
       <div class="cai-sidebar__section-label">Get started</div>
       <a class="cai-sidebar__link is-active" href="#installation">Installation</a>
@@ -1558,7 +1565,7 @@ pnpm test:unit</code></pre>
               </div>
             </div>
           </div>
-          <p class="docs-demo__note"><code class="cai-code-inline">.o-shell</code>, <code class="cai-code-inline">.o-main</code> and <code class="cai-code-inline">.o-container</code> are page-level: <a href="#docs-nav">this page uses them</a>.</p>
+          <p class="docs-demo__note"><code class="cai-code-inline">.o-shell</code>, <code class="cai-code-inline">.o-main</code> and <code class="cai-code-inline">.o-container</code> are page-level: <a href="#page-nav">this page uses them</a>.</p>
           <p class="docs-top"><a href="#main-content">Back to top</a></p>
         </article>
 
@@ -2370,7 +2377,7 @@ player.play();</code></pre>
                 </button>
                 <code class="docs-demo__file">.cai-nav-toggle</code>
               </div>
-              <p class="docs-demo__note">On small screens the sidebar becomes a drawer. <a href="#docs-nav">This page's navigation uses it live</a>.</p>
+              <p class="docs-demo__note">On small screens the sidebar becomes a drawer. <a href="#page-nav">This page's navigation uses it live</a>.</p>
               <h3 class="docs-demo__title">Color mode switcher</h3>
               <code class="docs-demo__file">components/theme-switcher.css</code>
               <p class="docs-demo__note">A native radio group for the color mode. This specimen is disabled. The working one, in the cycle variant, is in <a href="#site-header">this page's header</a>: one button with the icon of the current mode.</p>

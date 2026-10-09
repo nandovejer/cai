@@ -1,18 +1,23 @@
 /* ==========================================================================
    CAI — SITE HEADER
-   The header shared by the home page (apps/landing) and the documentation
-   page (apps/docs): brand, the three site links and the color mode switcher.
-   Consumer-side styles on top of tokens + core. Each page sets the inline
-   gutter and width of .site-header__inner with its own wrapper class.
+   One header for every page of the site (home, docs and the two moved-page
+   stubs), with the same markup on each (tests/landing.spec.js compares
+   them): the menu button, the brand, the three site links and the color
+   mode switcher. At 768px and below the site links move into the drawer
+   the menu button opens (#page-nav, see "Menu button and drawer").
+   This file is the only source of the header's layout: the pages add none.
+   Consumer-side styles on top of tokens + core.
    Rules: semantic tokens only; no literal colors.
    ========================================================================== */
 
 /* Sticky: the site links and the color mode stay at hand while reading.
    --site-header-h is the header's measured height (site-header.js), with a
-   one-row estimate before it runs or without JavaScript. Anchored targets
-   stop below the header instead of under it. */
+   one-row value before it runs or without JavaScript (40px controls, two
+   8px paddings and the 1px border). Anchored targets stop below the header
+   instead of under it. */
 :root {
-  scroll-padding-block-start: calc(var(--site-header-h, 3.875rem) + var(--cai-space-04));
+  --site-header-h: 3.5625rem;
+  scroll-padding-block-start: calc(var(--site-header-h) + var(--cai-space-04));
 }
 
 .site-header {
@@ -24,12 +29,17 @@
 }
 
 /* One row at every width: 40px controls (2.5.8 with room to spare) and a
-   short sticky band, about 56px */
+   short sticky band, 57px. Full width with the same gutter on every page,
+   so the controls never move when you go from one page to another. It may
+   wrap only where the row cannot hold it: without JavaScript (below), or
+   in a browser without the popover API, where the links stay in the row. */
 .site-header__inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--cai-space-03) var(--cai-space-05);
   padding-block: var(--cai-space-03);
+  padding-inline: var(--cai-space-05);
 }
 
 .site-header__brand {
@@ -43,6 +53,8 @@
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--cai-text-primary);
+  /* Pushes the links and the color mode to the end of the row */
+  margin-inline-end: auto;
 }
 
 /* The mark is drawn in currentColor: the brand color in every theme */
@@ -58,7 +70,6 @@
 .site-header__nav {
   display: flex;
   gap: var(--cai-space-05);
-  margin-inline-start: auto;
 }
 
 .site-header__nav a {
@@ -73,16 +84,21 @@
   color: var(--cai-text-primary);
 }
 
-/* The current page: weight as well as color, never color alone (RL-6) */
+/* The current page: an underline as well as color, never color alone
+   (RL-6). Not bold: the links keep their width, so the header is laid out
+   the same on every page. */
 .site-header__nav a[aria-current="page"] {
   color: var(--cai-text-primary);
-  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: var(--cai-space-02);
 }
 
 /* The color mode switcher: core's cycle variant. Without JavaScript it is
    the native radio group, with its legend beside the buttons to keep the
    header short; initThemeCycle() turns it into one icon button. */
 .site-modes {
+  flex-shrink: 0;
   align-items: center;
   gap: var(--cai-space-02) var(--cai-space-03);
 }
@@ -106,25 +122,37 @@
   block-size: var(--cai-size-height-lg);
 }
 
-/* Narrow screens keep one row: the version tag goes first (the version is
-   also in the install snippets), then the name beside the mark, which stays
-   the link's accessible name */
-@media (max-width: 479px) {
-  .site-header__inner {
-    gap: var(--cai-space-04);
-  }
-
-  .site-header__nav {
-    gap: var(--cai-space-04);
-  }
-
+/* The narrowest screens: the version tag goes (it is also in the install
+   snippets), the name stays beside the mark */
+@media (max-width: 359px) {
   .site-header__tag {
     display: none;
   }
 }
 
-@media (max-width: 359px) {
-  .site-header__name {
+/* Without JavaScript the color mode is the three radios, too wide for the
+   row at 768px and below: they take a second row of their own, at the end,
+   so the header has a known height (57px + one 24px row + the gap) for the
+   drawer offset. Below 480px the legend is read, not shown, to keep the
+   radios on one line. */
+@media (scripting: none) and (max-width: 768px) {
+  :root {
+    --site-header-h: calc(3.5625rem + var(--cai-size-height-sm) + var(--cai-space-03));
+  }
+
+  .site-header__inner {
+    flex-wrap: wrap;
+    row-gap: var(--cai-space-03);
+  }
+
+  .site-modes {
+    flex-basis: 100%;
+    justify-content: flex-end;
+  }
+}
+
+@media (scripting: none) and (max-width: 479px) {
+  .site-modes .cai-theme-switcher__label {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -132,4 +160,95 @@
     clip-path: inset(50%);
     white-space: nowrap;
   }
+}
+
+/* --------------------------------------------------------------------------
+   Menu button and drawer. The button is core's .cai-nav-toggle and opens
+   #page-nav, core's .cai-sidebar as a native popover drawer: the site
+   links first (.page-nav__site), then the page's own sections. On the
+   documentation page the same nav is the sidebar column on wider screens;
+   elsewhere it is a drawer only (--drawer), hidden unless it is open.
+
+   One breakpoint, 768px (--cai-bp-md, where core turns the sidebar into a
+   drawer and shows the button): at 768px and below the site links live in
+   the drawer, above it in the header row. Exactly one copy is displayed at
+   any width, so assistive technology never meets the "Site" navigation
+   twice. Both moves depend on the popover API: without it there is no
+   drawer, and the links stay in the row.
+   -------------------------------------------------------------------------- */
+
+.page-nav--drawer,
+.page-nav__site {
+  display: none;
+}
+
+/* The current page in the drawer: the same underline as in the row, in the
+   sidebar's text color (never color alone, RL-6). Not the filled "active"
+   style, which marks the section in view. */
+.page-nav__site .cai-sidebar__link[aria-current="page"] {
+  color: var(--cai-sidebar-text-hover);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: var(--cai-space-02);
+}
+
+@supports selector(:popover-open) {
+  @media (max-width: 768px) {
+    /* The drawer opens below the header, so the button stays in view and
+       closes it again */
+    .cai-sidebar.page-nav[popover] {
+      inset-block-start: var(--site-header-h);
+      height: calc(100dvh - var(--site-header-h));
+    }
+
+    /* The backdrop dims the page, not the header: the X that closes the
+       drawer keeps its full contrast (1.4.11) */
+    .cai-sidebar.page-nav[popover]::backdrop {
+      inset-block-start: var(--site-header-h);
+    }
+
+    .page-nav--drawer:popover-open {
+      display: flex;
+    }
+
+    .site-header__nav {
+      display: none;
+    }
+
+    .page-nav__site {
+      display: block;
+      border-block-end: 1px solid var(--cai-sidebar-border);
+    }
+  }
+}
+
+/* Three bars while the drawer is closed, an X while it is open: the top and
+   bottom bars (6 units from the middle of the 24-unit icon) meet in the
+   middle and turn 45°, the middle one fades. State
+   comes from the popover itself (:popover-open), no script; reduced motion
+   zeroes the duration token. The button's name stays "Menu"; the browser
+   exposes the expanded state of a popovertarget button. */
+.site-header__menu-icon {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.site-header__menu-bar {
+  fill: currentcolor;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform var(--cai-duration-base) var(--cai-easing-standard),
+    opacity var(--cai-duration-base) var(--cai-easing-standard);
+}
+
+:root:has(#page-nav:popover-open) .site-header__menu-bar:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+:root:has(#page-nav:popover-open) .site-header__menu-bar:nth-child(2) {
+  opacity: 0;
+}
+
+:root:has(#page-nav:popover-open) .site-header__menu-bar:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
 }

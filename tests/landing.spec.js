@@ -178,16 +178,38 @@ test.describe('Landing page', () => {
         await page.setViewportSize({ width, height: 800 });
         await open(page);
 
-        const [brand, nav, modes] = await Promise.all(
-          ['.site-header__brand', '.site-header__nav', '.site-header .cai-theme-switcher'].map((selector) =>
+        const [menu, brand, nav, modes] = await Promise.all(
+          ['.site-header__menu', '.site-header__brand', '.site-header__nav', '.site-header .cai-theme-switcher'].map((selector) =>
             page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON()),
           ),
         );
         const before = (a, b) => a.bottom <= b.top + 1 || (Math.abs(a.top - b.top) < a.height && a.left < b.left);
-        expect(before(brand, nav)).toBe(true);
-        expect(before(nav, modes)).toBe(true);
+        // At 768px and below: menu button, brand, color mode (the site links
+        // are in the drawer). Above: brand, site links, color mode.
+        if (width <= 768) {
+          expect(before(menu, brand)).toBe(true);
+          expect(nav.width).toBe(0);
+          expect(before(brand, modes)).toBe(true);
+        } else {
+          expect(menu.width).toBe(0);
+          expect(before(brand, nav)).toBe(true);
+          expect(before(nav, modes)).toBe(true);
+        }
       });
     }
+
+    test('the menu drawer lists the sections of this page and of the docs', async ({ page }) => {
+      await page.setViewportSize({ width: 360, height: 800 });
+      await open(page);
+
+      await page.getByRole('button', { name: 'Menu', exact: true }).click();
+      const drawer = page.getByRole('navigation', { name: 'Home page' });
+      await expect(drawer).toBeVisible();
+      const local = await drawer.locator('a[href^="#"]').evaluateAll((links) => links.map((a) => a.getAttribute('href')));
+      expect(local.length).toBeGreaterThan(3);
+      for (const href of local) await expect(page.locator(href), href).toHaveCount(1);
+      await expect(drawer.locator('a[href^="/docs/#"]')).toHaveCount(6);
+    });
 
     test('content is centred at 1440px', async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 });
@@ -425,9 +447,11 @@ test.describe('Landing page', () => {
       await expect(page.locator('body > header')).toHaveCount(1);
       await expect(page.locator('main')).toHaveCount(1);
       await expect(page.locator('footer')).toHaveCount(1);
+      // Navs that are displayed: the site links live in the header row or,
+      // at 768px and below, in the menu drawer, never in both at once
       const names = await page
         .locator('nav')
-        .evaluateAll((navs) => navs.map((el) => el.getAttribute('aria-label')));
+        .evaluateAll((navs) => navs.filter((el) => el.checkVisibility()).map((el) => el.getAttribute('aria-label')));
       expect(names.every(Boolean)).toBe(true);
       expect(new Set(names).size).toBe(names.length);
     });

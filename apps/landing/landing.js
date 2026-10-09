@@ -11,59 +11,7 @@
 
 import { initCopyButtons } from "/packages/core/dist/clipboard.js";
 import { highlightBlock } from "/packages/core/dist/highlight.js";
-import { initThemeCycle } from "/packages/core/dist/theme.js";
 import { initSiteHeader } from "./site-header.js";
-
-/* ---- Color mode ------------------------------------------------------- */
-
-// Shared with the documentation page, so the choice follows the visitor
-const MODES = ["light", "dark", "high-contrast"];
-const MODE_KEY = "cai-site-mode";
-const root = document.documentElement;
-const prefersDark = window.matchMedia("(prefers-color-scheme: dark)");
-const prefersContrast = window.matchMedia("(prefers-contrast: more)");
-
-function storedMode() {
-  try {
-    const mode = localStorage.getItem(MODE_KEY);
-    return MODES.includes(mode) ? mode : null;
-  } catch (_) {
-    return null;
-  }
-}
-
-function osMode() {
-  if (prefersContrast.matches) return "high-contrast";
-  return prefersDark.matches ? "dark" : "light";
-}
-
-function setMode(mode, persist) {
-  root.dataset.theme = mode;
-  if (persist) {
-    try {
-      localStorage.setItem(MODE_KEY, mode);
-    } catch (_) {}
-  }
-  document.querySelectorAll('input[name="cai-theme"]').forEach((radio) => {
-    radio.checked = radio.value === mode;
-  });
-}
-
-function initModes() {
-  setMode(storedMode() || osMode(), false);
-
-  document.addEventListener("change", (e) => {
-    const radio = e.target.closest?.('input[name="cai-theme"]');
-    if (radio?.checked) setMode(radio.value, true);
-  });
-
-  // Follow the OS while the visitor has not chosen a mode
-  [prefersDark, prefersContrast].forEach((query) => {
-    query.addEventListener("change", () => {
-      if (!storedMode()) setMode(osMode(), false);
-    });
-  });
-}
 
 /* ---- Copy buttons ----------------------------------------------------- */
 
@@ -93,9 +41,7 @@ function initTryStatus() {
 
 /* ---- Boot -------------------------------------------------------------- */
 
-initModes();
-// One button that steps through the modes; the radios stay underneath
-initThemeCycle();
+// Color mode, menu drawer and header height (shared with the docs)
 initSiteHeader();
 initTryStatus();
 initCopy();

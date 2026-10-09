@@ -78,7 +78,7 @@ test.describe('Platform docs', () => {
   test('the page navigation links to every pattern', async ({ page }) => {
     await page.goto('/docs/');
     const hrefs = await page
-      .locator('#docs-nav .cai-sidebar__link')
+      .locator('#page-nav .cai-sidebar__link')
       .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
     for (const pattern of new Set(Object.values(patternOf))) expect(hrefs, pattern).toContain(`#p-${pattern}`);
   });

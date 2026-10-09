@@ -108,7 +108,7 @@ test.describe('Documentation page', () => {
       // Exactly one radio group drives the tokens on this page
       await expect(page.locator('fieldset:has(input[name="cai-theme"])')).toHaveCount(1);
       await expect(page.locator('input[name="cai-theme"]')).toHaveCount(3);
-      await expect(page.locator('#docs-nav fieldset')).toHaveCount(0);
+      await expect(page.locator('#page-nav fieldset')).toHaveCount(0);
     });
 
     test('the cycle button in the header sets the mode, under the site key', async ({ page }) => {
@@ -147,7 +147,7 @@ test.describe('Documentation page', () => {
         await open(page);
 
         const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
-        const [header, nav, main] = await Promise.all(['.site-header', '#docs-nav', '#main-content'].map(box));
+        const [header, nav, main] = await Promise.all(['.site-header', '#page-nav', '#main-content'].map(box));
         expect(header.width).toBe(width);
         expect(nav.top).toBeGreaterThanOrEqual(header.bottom - 1);
         expect(main.top).toBeGreaterThanOrEqual(header.bottom - 1);
@@ -161,7 +161,7 @@ test.describe('Documentation page', () => {
         await open(page);
 
         const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
-        const toggle = await box('.cai-nav-toggle[popovertarget="docs-nav"]');
+        const toggle = await box('.cai-nav-toggle[popovertarget="page-nav"]');
         for (const selector of ['.site-header__brand', '.site-header__nav', '.site-header .cai-theme-cycle']) {
           const b = await box(selector);
           const overlaps = !(b.right <= toggle.left || b.left >= toggle.right || b.bottom <= toggle.top || b.top >= toggle.bottom);
@@ -211,9 +211,11 @@ test.describe('Documentation page', () => {
 
       await expect(page.locator('main')).toHaveCount(1);
       await expect(page.locator('body > footer')).toHaveCount(1);
+      // Navs that are displayed: the site links live in the header row or,
+      // at 768px and below, in the menu drawer, never in both at once
       const names = await page
         .locator('nav')
-        .evaluateAll((navs) => navs.map((el) => el.getAttribute('aria-label')));
+        .evaluateAll((navs) => navs.filter((el) => el.checkVisibility()).map((el) => el.getAttribute('aria-label')));
       expect(names.every(Boolean)).toBe(true);
       expect(new Set(names).size).toBe(names.length);
       const ids = await page.locator('[id]').evaluateAll((els) => els.map((el) => el.id));
@@ -236,7 +238,7 @@ test.describe('Documentation page', () => {
       await open(page);
 
       const hrefs = await page
-        .locator('#docs-nav .cai-sidebar__link')
+        .locator('#page-nav .cai-sidebar__link')
         .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
       for (const id of guideIds) expect(hrefs, id).toContain(`#${id}`);
     });
@@ -246,12 +248,15 @@ test.describe('Documentation page', () => {
       await open(page);
 
       await page.locator('#c-table').scrollIntoViewIfNeeded();
-      await expect(page.locator('#docs-nav [aria-current="true"]')).toHaveCount(1);
-      await expect(page.locator('#docs-nav [aria-current="page"]')).toHaveCount(0);
-      // The only aria-current="page" is the site navigation's own entry (the
-      // breadcrumb specimen shows one inside its own demo)
-      await expect(page.locator('[aria-current="page"]:not(.cai-breadcrumb *)')).toHaveCount(1);
+      await expect(page.locator('#page-nav [aria-current="true"]')).toHaveCount(1);
+      await expect(page.locator('#page-nav > :not(.page-nav__site) [aria-current="page"]')).toHaveCount(0);
+      // The only aria-current="page" is the site navigation's own entry, in
+      // the header row and in the drawer's site links (one of the two is
+      // displayed at a time); the breadcrumb specimen shows one in its demo
+      await expect(page.locator('[aria-current="page"]:not(.cai-breadcrumb *)')).toHaveText(['Docs', 'Docs']);
       await expect(page.locator('.site-header__nav [aria-current="page"]')).toHaveText('Docs');
+      // the scroll spy leaves the drawer's link to this page marked
+      await expect(page.locator('.page-nav__site [aria-current="page"]')).toHaveText('Docs');
       // The specimen sidebar takes no part in it
       await expect(page.locator('#c-sidebar .cai-sidebar [aria-current="page"]')).toHaveCount(0);
     });
@@ -433,7 +438,7 @@ test.describe('Documentation page', () => {
         await expect(radio).toBeDisabled();
       }
       await expect(page.locator('#c-sidebar .docs-demo__stage .cai-nav-toggle')).toBeDisabled();
-      await expect(page.locator('#c-sidebar a[href="#docs-nav"]').first()).toBeVisible();
+      await expect(page.locator('#c-sidebar a[href="#page-nav"]').first()).toBeVisible();
       await expect(page.locator('#c-sidebar a[href="#site-header"]').first()).toBeVisible();
       // No dead cycle button: the specimen is not a cycle group
       await expect(page.locator('#c-sidebar .cai-theme-cycle')).toHaveCount(0);
@@ -453,12 +458,12 @@ test.describe('Documentation page', () => {
     test('the long navigation groups fold natively', async ({ page }) => {
       await open(page);
 
-      const groups = page.locator('#docs-nav details.docs-nav-group');
+      const groups = page.locator('#page-nav details.docs-nav-group');
       await expect(groups).toHaveCount(2);
       await expect(groups.locator('summary')).toHaveText(['Platform', 'HTML elements']);
-      await expect(page.locator('#docs-nav a[href="#p-shell"]')).toBeHidden();
-      await page.click('#docs-nav summary:has-text("Platform")');
-      await expect(page.locator('#docs-nav a[href="#p-shell"]')).toBeVisible();
+      await expect(page.locator('#page-nav a[href="#p-shell"]')).toBeHidden();
+      await page.click('#page-nav summary:has-text("Platform")');
+      await expect(page.locator('#page-nav a[href="#p-shell"]')).toBeVisible();
     });
   });
 
@@ -695,7 +700,69 @@ test.describe('Documentation page', () => {
 });
 
 test.describe('Site header and navigation toggle', () => {
-  for (const path of ['/', '/docs/']) {
+  // One header on every page: home, docs and the two moved-page stubs. The
+  // markup is the same text in each file, apart from the current page link.
+  const HEADER_FILES = [
+    'apps/landing/index.html',
+    'apps/docs/index.html',
+    'apps/platform-docs/index.html',
+    'apps/html-elements/index.html',
+  ];
+  const headerOf = (file) => {
+    const html = readFileSync(fromRepo(file), 'utf-8');
+    const match = html.match(/<header class="site-header"[\s\S]*?<\/header>/);
+    return match?.[0].replace(/ aria-current="page"/g, '');
+  };
+
+  const drawerSiteOf = (file) => {
+    const html = readFileSync(fromRepo(file), 'utf-8');
+    const match = html.match(/<nav class="cai-sidebar__section page-nav__site"[\s\S]*?<\/nav>/);
+    return match?.[0].replace(/ aria-current="page"/g, '');
+  };
+
+  test('every page has the same header markup, and the same site links in its drawer', () => {
+    const [first, ...rest] = HEADER_FILES.map(headerOf);
+    expect(first).toContain('popovertarget="page-nav"');
+    for (const [i, header] of rest.entries()) expect(header, HEADER_FILES[i + 1]).toBe(first);
+    const [site, ...sites] = HEADER_FILES.map(drawerSiteOf);
+    expect(site).toContain('aria-label="Site"');
+    for (const [i, other] of sites.entries()) expect(other, HEADER_FILES[i + 1]).toBe(site);
+    // The drawer's site links are the header's, in the same order
+    const hrefs = (html) => [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
+    expect(hrefs(site)).toEqual(hrefs(first.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0]));
+    for (const file of HEADER_FILES) {
+      const html = readFileSync(fromRepo(file), 'utf-8');
+      expect(html, file).toMatch(/<nav class="cai-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+">/);
+      expect(html, file).toContain('href="/apps/landing/site-header.css"');
+    }
+  });
+
+  const PAGES = [
+    { path: '/', current: 'Home' },
+    { path: '/docs/', current: 'Docs' },
+  ];
+  const PARTS = ['.site-header', '.site-header__menu', '.site-header__brand', '.site-header__nav', '.site-modes'];
+  const layout = (page) =>
+    page.evaluate((parts) => parts.map((selector) => {
+      const r = document.querySelector(selector).getBoundingClientRect();
+      return [r.x, r.y, r.width, r.height].map(Math.round).join(',');
+    }), PARTS);
+
+  for (const width of [320, 360, 768, 1440]) {
+    test(`the header is laid out the same on the home and docs pages at ${width}px`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 700 });
+      const boxes = [];
+      for (const { path } of PAGES) {
+        await page.goto(path);
+        boxes.push(await layout(page));
+      }
+      expect(boxes[1]).toEqual(boxes[0]);
+      // The menu button shows where the drawer exists, 768px and below
+      await expect(page.locator('.site-header__menu')).toBeVisible({ visible: width <= 768 });
+    });
+  }
+
+  for (const { path, current } of PAGES) {
     test(`one row, about 56px, with no overflow at every width: ${path}`, async ({ page }) => {
       for (const width of [320, 360, 768, 1440]) {
         await page.setViewportSize({ width, height: 700 });
@@ -708,17 +775,62 @@ test.describe('Site header and navigation toggle', () => {
         expect(overflow, `${width}px`).toBe(0);
       }
     });
-  }
 
-  test('on a phone, the drawer toggle is the first control after the skip link', async ({ page }) => {
-    await page.setViewportSize({ width: 360, height: 640 });
-    await page.goto('/docs/');
-    await page.keyboard.press('Tab');
-    await page.keyboard.press('Tab');
-    await expect(page.locator('.docs-nav-toggle')).toBeFocused();
-  });
+    test(`the current page link is marked by more than color: ${path}`, async ({ page }) => {
+      await page.goto(path);
+      const link = page.locator('.site-header__nav a[aria-current="page"]');
+      await expect(link).toHaveText(current);
+      expect(await link.evaluate((el) => getComputedStyle(el).textDecorationLine)).toBe('underline');
+    });
 
-  for (const path of ['/', '/docs/']) {
+    for (const [width, order] of [
+      [360, ['.cai-platform-skip-link', '.site-header__menu', '.site-header__brand', '.site-header .cai-theme-cycle']],
+      [1440, [
+        '.cai-platform-skip-link',
+        '.site-header__brand',
+        '.site-header__nav a >> nth=0',
+        '.site-header__nav a >> nth=1',
+        '.site-header__nav a >> nth=2',
+        '.site-header .cai-theme-cycle',
+      ]],
+    ]) {
+      test(`the focus order follows the header row at ${width}px: ${path}`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 640 });
+        await page.goto(path);
+        for (const selector of order) {
+          await page.keyboard.press('Tab');
+          await expect(page.locator(selector)).toBeFocused();
+        }
+      });
+    }
+
+    test(`on a phone the site links are in the drawer, first, and nowhere else: ${path}`, async ({ page }) => {
+      await page.setViewportSize({ width: 360, height: 640 });
+      await page.goto(path);
+      await expect(page.locator('.site-header__nav')).toBeHidden();
+      await expect(page.getByRole('navigation', { name: 'Site' })).toHaveCount(0);
+
+      await page.getByRole('button', { name: 'Menu', exact: true }).click();
+      const site = page.getByRole('navigation', { name: 'Site' });
+      await expect(site).toHaveCount(1);
+      await expect(site.getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
+      await expect(site.locator('[aria-current="page"]')).toHaveText(current);
+      // first in the drawer: the first Tab from the button lands on Home
+      await page.keyboard.press('Tab');
+      await expect(site.getByRole('link', { name: 'Home' })).toBeFocused();
+      const underline = await site.locator('[aria-current="page"]').evaluate((el) => getComputedStyle(el).textDecorationLine);
+      expect(underline).toBe('underline');
+    });
+
+    test(`on a wide screen the site links are in the header row only: ${path}`, async ({ page }) => {
+      await page.setViewportSize({ width: 1440, height: 800 });
+      await page.goto(path);
+      const site = page.getByRole('navigation', { name: 'Site' });
+      await expect(site).toHaveCount(1);
+      await expect(site).toHaveClass(/site-header__nav/);
+      await expect(page.locator('.page-nav__site')).toBeHidden();
+    });
+
     test(`the header stays at the top while scrolling: ${path}`, async ({ page }) => {
       await page.goto(path);
       await page.evaluate(() => window.scrollTo(0, 2000));
@@ -726,7 +838,91 @@ test.describe('Site header and navigation toggle', () => {
       const height = await page.evaluate(() => document.querySelector('.site-header').offsetHeight);
       expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--site-header-h'))).toBe(`${height}px`);
     });
+
+    test(`the hamburger turns into an X while the drawer is open, and back: ${path}`, async ({ page }) => {
+      await page.setViewportSize({ width: 360, height: 640 });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto(path);
+      const bars = () => page.evaluate(() =>
+        [...document.querySelectorAll('.site-header__menu-bar')].map((bar) => {
+          const style = getComputedStyle(bar);
+          const box = bar.getBoundingClientRect();
+          return {
+            transform: style.transform,
+            opacity: style.opacity,
+            duration: style.transitionDuration,
+            middle: Math.round(box.top + box.height / 2),
+          };
+        }));
+      const closed = await bars();
+      expect(closed).toHaveLength(3);
+      for (const bar of closed) {
+        expect(bar.transform).toBe('none');
+        expect(bar.opacity).toBe('1');
+        // reduced motion: the icon swaps at once
+        expect(bar.duration.split(', ').every((d) => d === '0s')).toBe(true);
+      }
+
+      const toggle = page.getByRole('button', { name: 'Menu', exact: true });
+      await expect(toggle).toHaveAttribute('popovertarget', 'page-nav');
+      await toggle.click();
+      const drawer = page.locator('#page-nav');
+      await expect(drawer).toBeVisible();
+      // the drawer opens below the header: the same button closes it again
+      const nav = await drawer.boundingBox();
+      const btn = await toggle.boundingBox();
+      expect(nav.y).toBeGreaterThanOrEqual(btn.y + btn.height);
+      // An X: the outer bars cross at 45 degrees in the middle of the
+      // button, the middle bar is gone. matrix(a, b, …): a = cos, b = sin.
+      const open = await bars();
+      const turn = (m) => m.match(/^matrix\(([^,]+), ([^,]+)/).slice(1).map(Number);
+      const [a1, b1] = turn(open[0].transform);
+      const [a3, b3] = turn(open[2].transform);
+      expect(a1).toBeCloseTo(Math.SQRT1_2, 3);
+      expect(b1).toBeCloseTo(Math.SQRT1_2, 3);
+      expect(a3).toBeCloseTo(Math.SQRT1_2, 3);
+      expect(b3).toBeCloseTo(-Math.SQRT1_2, 3);
+      expect(open[1].opacity).toBe('0');
+      const centre = Math.round(btn.y + btn.height / 2);
+      expect(Math.abs(open[0].middle - centre)).toBeLessThanOrEqual(1);
+      expect(Math.abs(open[2].middle - centre)).toBeLessThanOrEqual(1);
+      await expect(toggle).toHaveAccessibleName('Menu');
+
+      await toggle.click();
+      await expect(drawer).toBeHidden();
+      expect(await bars()).toEqual(closed);
+    });
+
+    test(`the drawer: Tab enters it, a section link closes it, Escape closes it: ${path}`, async ({ page }) => {
+      await page.setViewportSize({ width: 360, height: 640 });
+      await page.goto(path);
+      const toggle = page.locator('.site-header__menu');
+      const drawer = page.locator('#page-nav');
+
+      await toggle.focus();
+      await page.keyboard.press('Enter');
+      await expect(drawer).toBeVisible();
+      await page.keyboard.press('Tab');
+      expect(await page.evaluate(() => document.activeElement.closest('#page-nav') !== null)).toBe(true);
+      await page.keyboard.press('Escape');
+      await expect(drawer).toBeHidden();
+      await expect(toggle).toBeFocused();
+
+      await toggle.click();
+      const link = drawer.locator('a.cai-sidebar__link[href^="#"]').first();
+      const target = await link.getAttribute('href');
+      await link.click();
+      await expect(drawer).toBeHidden();
+      await expect(page).toHaveURL(new RegExp(`${target}$`));
+    });
   }
+
+  test('on the home page the contents are a drawer only: no sidebar on a wide screen', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 800 });
+    await page.goto('/');
+    await expect(page.locator('#page-nav')).toBeHidden();
+    await expect(page.locator('.site-header__menu')).toBeHidden();
+  });
 
   test('an anchored heading lands below the sticky header', async ({ page }) => {
     await page.goto('/docs/');
@@ -734,30 +930,5 @@ test.describe('Site header and navigation toggle', () => {
     const header = await page.evaluate(() => document.querySelector('.site-header').getBoundingClientRect().bottom);
     const target = await page.evaluate(() => document.getElementById('tokens').getBoundingClientRect().top);
     expect(target).toBeGreaterThanOrEqual(header);
-  });
-
-  test('the hamburger turns into the CAI mark while the drawer is open, and back', async ({ page }) => {
-    await page.setViewportSize({ width: 360, height: 640 });
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/docs/');
-    const d = () => page.evaluate(() =>
-      [...document.querySelectorAll('.docs-nav-toggle__icon path')].map((p) => getComputedStyle(p).d));
-    const closed = await d();
-    expect(closed.every((v) => v === 'none' || /^path\(/.test(v))).toBe(true);
-
-    const toggle = page.locator('.docs-nav-toggle');
-    await toggle.click();
-    await expect(page.locator('#docs-nav')).toBeVisible();
-    // the toggle is not covered by the drawer: it can close it again
-    const nav = await page.locator('#docs-nav').boundingBox();
-    const btn = await toggle.boundingBox();
-    expect(nav.y).toBeGreaterThanOrEqual(btn.y + btn.height);
-    const open = await d();
-    expect(open[1]).toContain('M 24 8 C 15.16 8 8 15.16 8 24');
-    expect(open).not.toEqual(closed);
-
-    await toggle.click();
-    await expect(page.locator('#docs-nav')).toBeHidden();
-    expect(await d()).toEqual(closed);
   });
 });

@@ -198,7 +198,7 @@ test.describe('HTML elements reference, on the documentation page', () => {
     await expect(page.locator('.site-header__nav a[href="/docs/"]')).toHaveCount(1);
 
     await open(page);
-    await expect(page.locator('#docs-nav a[href="#html-elements"]')).toHaveCount(1);
+    await expect(page.locator('#page-nav a[href="#html-elements"]')).toHaveCount(1);
     // The header's cycle button: light, then dark, high contrast and light again
     for (const mode of ['dark', 'high-contrast', 'light']) {
       await page.click('.site-header .cai-theme-cycle');

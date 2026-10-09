@@ -1,1 +1,0 @@
-import"./site-header-D5uxikVw.js";import{i as e,h as c,a as i}from"./site-header-BYtdkXSo.js";function r(){document.querySelectorAll("[data-copy-from]").forEach(t=>{const o=document.getElementById(t.dataset.copyFrom);o&&(t.dataset.copy=o.textContent.trim())}),i()}e();r();document.querySelectorAll("pre.cai-code-block").forEach(c);

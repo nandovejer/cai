@@ -1,0 +1,209 @@
+/* ==========================================================================
+	 CAI Platform: search.
+	 A button shaped like a field that opens a native <dialog> (core's
+	 .cai-modal surface) with a field and grouped lists of links. Without
+	 JavaScript the button stays hidden and a plain link to an index shows.
+	 ========================================================================== */
+
+/* The trigger: real text at full contrast, not placeholder grey, inside a
+   field-like border; one row, at least 44px high */
+.cai-platform-search-trigger:not([hidden]) {
+	display: inline-flex;
+}
+
+.cai-platform-search-trigger {
+	align-items: center;
+	gap: var(--cai-space-xs);
+	min-block-size: var(--cai-control-lg);
+	min-inline-size: var(--cai-control-lg);
+	padding-inline: var(--cai-space-sm);
+	border: 1px solid var(--cai-input-border);
+	border-radius: var(--cai-radius-md);
+	background: var(--cai-input-bg);
+	color: var(--cai-text-secondary);
+	font: inherit;
+	font-size: var(--cai-text-sm);
+	cursor: pointer;
+}
+
+.cai-platform-search-trigger:hover {
+	color: var(--cai-text-primary);
+	border-color: var(--cai-text-secondary);
+}
+
+.cai-platform-search-trigger:focus-visible {
+	outline: 2px solid var(--cai-focus-ring);
+	outline-offset: 2px;
+}
+
+.cai-platform-search-trigger__icon {
+	flex: none;
+	inline-size: 1.125rem;
+	block-size: 1.125rem;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 2;
+}
+
+.cai-platform-search-trigger__key {
+	margin-inline-start: auto;
+	padding-inline: var(--cai-space-2xs);
+	border: 1px solid var(--cai-divider);
+	border-radius: var(--cai-radius-sm);
+	font-family: var(--cai-font-mono);
+	font-size: var(--cai-text-xs);
+	white-space: nowrap;
+}
+
+/* The shortcut needs a keyboard */
+@media (pointer: coarse) and (hover: none) {
+	.cai-platform-search-trigger__key {
+		display: none;
+	}
+}
+
+/* Narrow screens: the magnifier only. The label stays in the accessible
+   name ("Search docs"), clipped, not removed. */
+@media (max-width: 768px) {
+	.cai-platform-search-trigger--compact {
+		justify-content: center;
+		padding-inline: 0;
+	}
+
+	.cai-platform-search-trigger--compact .cai-platform-search-trigger__label {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.cai-platform-search-trigger--compact .cai-platform-search-trigger__key {
+		display: none;
+	}
+}
+
+/* The dialog: a column whose list of results scrolls between the field and
+   the footer line; the whole dialog scrolls when the screen is too short
+   for both (400 % zoom). Full screen on narrow screens. */
+.cai-platform-search {
+	inline-size: min(100%, 40rem);
+	max-inline-size: 100%;
+	max-block-size: min(80dvb, 40rem);
+	/* core's reset zeroes the auto margins that centre a dialog */
+	margin: 10dvb auto auto;
+	padding: var(--cai-space-lg);
+}
+
+.cai-platform-search[open] {
+	display: flex;
+	flex-direction: column;
+}
+
+.cai-platform-search__body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cai-space-xs);
+	min-block-size: 0;
+}
+
+.cai-platform-search__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cai-space-xs) var(--cai-space-md);
+}
+
+.cai-platform-search__title {
+	margin: 0;
+	font-size: var(--cai-text-lg);
+}
+
+/* At the end of the row, also when it wraps below the title */
+.cai-platform-search__head > :last-child {
+	margin-inline-start: auto;
+}
+
+.cai-platform-search__close {
+	min-block-size: var(--cai-control-lg);
+}
+
+.cai-platform-search__results {
+	flex: 0 1 auto;
+	overflow-y: auto;
+	/* Room for the focus ring of the first and last result */
+	padding: var(--cai-space-2xs);
+	margin-inline: calc(-1 * var(--cai-space-2xs));
+}
+
+/* With results, the list keeps a few rows in view when the dialog is short */
+.cai-platform-search__results:has(> :not([hidden]) li) {
+	min-block-size: 5rem;
+}
+
+.cai-platform-search__results :where(h3) {
+	margin-block: var(--cai-space-sm) var(--cai-space-2xs);
+	font-size: var(--cai-text-sm);
+	color: var(--cai-text-secondary);
+}
+
+.cai-platform-search__results :where(ul) {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* A result: the whole row is the link, at least 24px high (44px on touch);
+   the focused one has the shared focus ring of every link */
+.cai-platform-search__results :where(a) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0 var(--cai-space-md);
+	min-block-size: var(--cai-control-sm);
+	padding: var(--cai-space-2xs) var(--cai-space-xs);
+	border-radius: var(--cai-radius-sm);
+}
+
+.cai-platform-search__results :where(a):hover {
+	background: var(--cai-surface-hover);
+}
+
+.cai-platform-search__results :where(a span) {
+	color: var(--cai-text-secondary);
+	font-size: var(--cai-text-sm);
+}
+
+@media (pointer: coarse) {
+	.cai-platform-search__results :where(a) {
+		min-block-size: var(--cai-control-lg);
+	}
+}
+
+.cai-platform-search__foot {
+	margin: 0;
+	padding-block-start: var(--cai-space-sm);
+	border-block-start: 1px solid var(--cai-divider);
+}
+
+@media (max-width: 768px), (max-height: 30rem) {
+	.cai-platform-search {
+		inline-size: 100%;
+		max-block-size: 100dvb;
+		block-size: 100dvb;
+		margin: 0;
+		border-radius: 0;
+		padding: var(--cai-space-md);
+	}
+}
+
+/* Forced colours: the edge of the dialog is a real border, in the system's
+   text colour (a shadow alone disappears) */
+@media (forced-colors: active) {
+	.cai-platform-search {
+		border-color: CanvasText;
+	}
+}

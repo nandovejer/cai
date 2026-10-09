@@ -18,6 +18,64 @@ const NATIVE_KEYS = "/^(Escape|Esc|Tab)$/";
 const NATIVE_MESSAGE =
   "dialog, popover and details handle Escape and focus order natively: do not re-implement them (red line 3).";
 
+// The syntax page code may not use: RL-16, RL-1, RL-12, RL-3 and RL-8
+const PAGE_SYNTAX = [
+  // RL-16, as in the base rules
+  { selector: `MemberExpression[object.name='navigator'][property.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
+  { selector: `MemberExpression[object.property.name='navigator'][property.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
+  { selector: `VariableDeclarator[init.name='navigator'] > ObjectPattern > Property[key.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
+  // RL-1: the same for dynamic import()
+  {
+    selector: "ImportExpression > Literal[value=/^(?![./])/]",
+    message: "No runtime dependency: import our own files only (red line 1).",
+  },
+  // RL-12: no third-party request. A URL literal in page code is one.
+  {
+    selector: "Literal[value=/^(https?:)?\\/\\//]",
+    message: "No third-party network request from a package or an app (red line 12).",
+  },
+  {
+    selector: "TemplateElement[value.raw=/^(https?:)?\\/\\//]",
+    message: "No third-party network request from a package or an app (red line 12).",
+  },
+  // RL-3: Escape, Tab order, details and dialog state are the browser's
+  { selector: `BinaryExpression > Literal[value=${NATIVE_KEYS}]`, message: NATIVE_MESSAGE },
+  { selector: `SwitchCase > Literal[value=${NATIVE_KEYS}]`, message: NATIVE_MESSAGE },
+  {
+    selector: "AssignmentExpression > MemberExpression.left[property.name='open']",
+    message: "Let the browser open and close details and dialog (red line 3). If this only sets an initial state, say why in an eslint-disable comment.",
+  },
+  {
+    selector: "CallExpression[callee.property.name=/^(setAttribute|removeAttribute|toggleAttribute)$/][arguments.0.value='open']",
+    message: "Let the browser open and close details and dialog (red line 3).",
+  },
+  {
+    selector: "CallExpression[callee.property.name='preventDefault']",
+    message:
+      "preventDefault() cancels a native action (red line 3, PRINCIPLES.md §3). If what replaces it is strictly better, document why in an eslint-disable-next-line comment.",
+  },
+  // RL-8: smooth scrolling and script animation ignore prefers-reduced-motion
+  {
+    selector: "Property[key.name='behavior'][value.value='smooth']",
+    message: "Smooth scrolling belongs to CSS scroll-behavior, inside prefers-reduced-motion: no-preference (red line 8).",
+  },
+  {
+    selector: "CallExpression[callee.property.name='animate']",
+    message: "Script animations ignore the --cai-duration-* tokens: use CSS, or check prefers-reduced-motion and document it (red line 8).",
+  },
+];
+
+// docs-redesign security.md SEC-IDX-1/2: text from an index, a CMS or the
+// URL reaches the page through textContent only. Enforced on platform (the
+// search renders index data) and the apps; core's highlight.js writes its
+// own escaped tokenizer output and is not covered yet.
+const HTML_SINK = "No HTML from strings: build nodes and set textContent (security.md SEC-IDX-1).";
+const NO_HTML_SINKS = [
+  { selector: "AssignmentExpression > MemberExpression.left[property.name=/^(innerHTML|outerHTML)$/]", message: HTML_SINK },
+  { selector: "CallExpression[callee.property.name=/^(insertAdjacentHTML|createContextualFragment|parseFromString|write|writeln)$/]", message: HTML_SINK },
+  { selector: "CallExpression[callee.name='eval'], NewExpression[callee.name='Function'], NewExpression[callee.name='DOMParser']", message: HTML_SINK },
+];
+
 export default [
   js.configs.recommended,
   {
@@ -96,52 +154,13 @@ export default [
           ],
         },
       ],
-      "no-restricted-syntax": [
-        "error",
-        // RL-16, as above
-        { selector: `MemberExpression[object.name='navigator'][property.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
-        { selector: `MemberExpression[object.property.name='navigator'][property.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
-        { selector: `VariableDeclarator[init.name='navigator'] > ObjectPattern > Property[key.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
-        // RL-1: the same for dynamic import()
-        {
-          selector: "ImportExpression > Literal[value=/^(?![./])/]",
-          message: "No runtime dependency: import our own files only (red line 1).",
-        },
-        // RL-12: no third-party request. A URL literal in page code is one.
-        {
-          selector: "Literal[value=/^(https?:)?\\/\\//]",
-          message: "No third-party network request from a package or an app (red line 12).",
-        },
-        {
-          selector: "TemplateElement[value.raw=/^(https?:)?\\/\\//]",
-          message: "No third-party network request from a package or an app (red line 12).",
-        },
-        // RL-3: Escape, Tab order, details and dialog state are the browser's
-        { selector: `BinaryExpression > Literal[value=${NATIVE_KEYS}]`, message: NATIVE_MESSAGE },
-        { selector: `SwitchCase > Literal[value=${NATIVE_KEYS}]`, message: NATIVE_MESSAGE },
-        {
-          selector: "AssignmentExpression > MemberExpression.left[property.name='open']",
-          message: "Let the browser open and close details and dialog (red line 3). If this only sets an initial state, say why in an eslint-disable comment.",
-        },
-        {
-          selector: "CallExpression[callee.property.name=/^(setAttribute|removeAttribute|toggleAttribute)$/][arguments.0.value='open']",
-          message: "Let the browser open and close details and dialog (red line 3).",
-        },
-        {
-          selector: "CallExpression[callee.property.name='preventDefault']",
-          message:
-            "preventDefault() cancels a native action (red line 3, PRINCIPLES.md §3). If what replaces it is strictly better, document why in an eslint-disable-next-line comment.",
-        },
-        // RL-8: smooth scrolling and script animation ignore prefers-reduced-motion
-        {
-          selector: "Property[key.name='behavior'][value.value='smooth']",
-          message: "Smooth scrolling belongs to CSS scroll-behavior, inside prefers-reduced-motion: no-preference (red line 8).",
-        },
-        {
-          selector: "CallExpression[callee.property.name='animate']",
-          message: "Script animations ignore the --cai-duration-* tokens: use CSS, or check prefers-reduced-motion and document it (red line 8).",
-        },
-      ],
+      "no-restricted-syntax": ["error", ...PAGE_SYNTAX],
+    },
+  },
+  {
+    files: ["packages/platform/src/**/*.js", "apps/**/*.js"],
+    rules: {
+      "no-restricted-syntax": ["error", ...PAGE_SYNTAX, ...NO_HTML_SINKS],
     },
   },
   {

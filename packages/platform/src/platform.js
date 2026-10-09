@@ -1,16 +1,16 @@
-// Platform is CSS-first: this entrypoint carries no behavior beyond a
-// load-order check, and is reserved for future platform-level hooks.
+/**
+ * CAI Platform — entry. Loading it (one <script type="module">) checks that
+ * core is loaded first and wires the site search (search.js) once the page
+ * is parsed. Importing search.js on its own has no side effects.
+ */
+import { initSearch } from "./search.js";
 
-// Core is a required peer: platform styles are built on its settings layer.
+export { initSearch } from "./search.js";
+
 if (typeof document !== "undefined") {
-  const probe = getComputedStyle(document.documentElement).getPropertyValue(
-    "--cai-z-toast",
-  );
-  if (!probe.trim()) {
-    console.warn(
-      "[cai] @cai-ds/core is not loaded. Load cai-tokens.css and cai.css before platform.css.",
-    );
-  }
+  // Core is a required peer: platform styles are built on its settings layer
+  getComputedStyle(document.documentElement).getPropertyValue("--cai-z-toast") || console.warn("[cai] Load @cai-ds/core first");
+  // A module runs once the page is parsed; a classic loader may run it earlier
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", () => initSearch());
+  else initSearch();
 }
-
-export {};

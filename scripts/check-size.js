@@ -12,7 +12,9 @@
  *   - each `max` equals the ceiling in the PRINCIPLES.md table (same order),
  *     which changes only with its own changeset, so budgets.json cannot be
  *     raised quietly;
- *   - every chunk a budgeted JS file imports lazily is budgeted too.
+ *   - every chunk a budgeted JS file imports lazily is budgeted too, and it
+ *     imports no other file statically (platform.min.js bundles search.js,
+ *     so its budget measures everything a <script> of it loads).
  *
  * Usage: node scripts/check-size.js
  */
@@ -52,7 +54,15 @@ const budgeted = new Set(budgets.filter((b) => b.file).map((b) => resolve(root, 
 for (const { file } of budgets.filter((b) => b.file?.endsWith(".js"))) {
   const path = resolve(root, file);
   if (!existsSync(path)) continue;
-  for (const [, target] of readFileSync(path, "utf-8").matchAll(/import\(\s*["'](\.{1,2}\/[^"']+)["']\s*\)/g)) {
+  const code = readFileSync(path, "utf-8");
+  for (const [, from, bare] of code.matchAll(/(?:^|[;}\s])(?:import|export)\b[^"'();]*?\bfrom\s*["'](\.{1,2}\/[^"']+)["']|(?:^|[;}\s])import\s*["'](\.{1,2}\/[^"']+)["']/g)) {
+    const file = from ?? bare;
+    if (!budgeted.has(resolve(dirname(path), file))) {
+      console.error(`✗ ${relative(root, path)} imports ${file} statically, which has no budget: bundle it into the budgeted file`);
+      failed = true;
+    }
+  }
+  for (const [, target] of code.matchAll(/import\(\s*["'](\.{1,2}\/[^"']+)["']\s*\)/g)) {
     const chunk = resolve(dirname(path), target);
     if (!budgeted.has(chunk)) {
       console.error(`✗ ${file} lazy-loads ${relative(root, chunk)}, which has no budget`);

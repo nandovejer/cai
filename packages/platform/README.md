@@ -31,11 +31,14 @@ import '@cai-ds/platform'
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.js"></script>
+<!-- Only for the search: it wires the dialog when the page loads -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.js"></script>
 ```
 
 ## Package exports
 
-- **`.`** → `platform.js` — Reserved for platform-level behavior; today it only warns when core is not loaded
+- **`.`** → `platform.js` — Warns when core is not loaded and wires the search (`initSearch()`) once the page is parsed. `platform.min.js` is one file with the search inside
+- **`./search`** → `search.js` — `initSearch(root = document)`, idempotent; importing it has no side effects
 - **`./css`** → `platform.css` — App shell and layout primitives (`./css/min` for the minified twin)
 - **`./placeholders/*`** → `dist/placeholders/` — The image placeholder: `placeholder[-night]-<ratio>-<width>.{avif,webp,jpg}`, `placeholder.svg` and `placeholder-night.svg`
 
@@ -52,6 +55,22 @@ import '@cai-ds/platform'
 - `.cai-platform-skip-link` — Accessibility skip link
 - `.cai-platform-command-block` — Command-line-style code snippet
 - `.cai-platform-image` — Fixed-ratio frame around a native `<picture>`; modifiers `--4x3`, `--3x2`, `--1x1`, `--21x9`, `--9x16`
+- `.cai-platform-search-trigger` (`--compact`, `__icon`, `__label`, `__key`) and `.cai-platform-search` (`__body`, `__head`, `__title`, `__close`, `__results`, `__foot`) — Site search: a button that opens a native `<dialog>` of grouped links
+
+## Search
+
+A button shaped like a field ("Search docs…", <kbd>Ctrl K</kbd>) opens a native `<dialog>` with a field and the results as links, grouped under Pages, Sections and HTML elements (8 per group at most). Ctrl+K and ⌘K open it too. Without JavaScript the button stays hidden and a plain link to your index page shows. Every fixed text is in your markup, and the few the script writes (the count, "no results", loading, error) are `data-cai-label-*` attributes on the dialog, in the page's language. The full markup, the keyboard model and the index format are on the [Search page of the docs](https://nandovejer.github.io/cai/docs/platform/search/).
+
+The index is a JSON file on the same origin (`data-cai-search-src`), format version 1, with URLs relative to the file:
+
+```json
+{ "version": 1,
+  "pages": [["Button", "components/button/", "Components"]],
+  "sections": [["When to use, Button › Design", "components/button/#when"]],
+  "elements": [["<table> element, Tables", "html/tables/#el-table"]] }
+```
+
+Each item is `[text, url, meta?, lang?]`. The component fetches it only from the page's own origin, without following redirects (your CSP needs `connect-src 'self'`), keeps only `http:` and `https:` links, writes every text as text, and has limits: 1,000,000 characters of JSON, 10,000 results, 300 characters a text, 8 words a search. Unknown fields are ignored.
 
 ## Image and placeholder
 

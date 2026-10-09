@@ -75,6 +75,11 @@ for (const file of jsModules) {
     entryPoints: [resolve(srcRoot, file)],
     outfile: resolve(distRoot, file.replace(/\.js$/, ".min.js")),
     bundle: true,
+    // Bundle our own relative files only: a bare import (another package,
+    // a third-party module) stays an import, which check-size then rejects,
+    // instead of being inlined silently into a published file (RL-1;
+    // security.md, phase 4 review, answer 5a)
+    packages: "external",
     format: "esm",
     minify: true,
     target: "es2022",

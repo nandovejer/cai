@@ -350,6 +350,25 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
     }
   });
 
+  test('does not follow a redirect of the index to another origin (SEC-NET-2)', async ({ page }) => {
+    // Another origin on this machine (127.0.0.1 is not localhost), so the
+    // control below makes no request to the internet. Playwright does not
+    // route the request a redirect makes, so requests are recorded as sent.
+    const OTHER = 'http://127.0.0.1:5173/x.json';
+    const sent = [];
+    page.on('request', (request) => sent.push(request.url()));
+    await page.route('**/search-index.json', (route) => route.fulfill({ status: 302, headers: { Location: OTHER } }));
+    await open(page);
+    await page.keyboard.press('Control+k');
+    await expect(status(page)).toHaveText('Search is not available right now.');
+    expect(sent.filter((url) => new URL(url).origin !== new URL(page.url()).origin)).toEqual([]);
+    // Control: a plain fetch() of the same URL follows the 302 (the dev
+    // server has no CSP), so the empty list above is the search's redirect: "error"
+    const src = await page.locator('[data-cai-search]').evaluate((d) => new URL(d.dataset.caiSearchSrc, document.baseURI).href);
+    await page.evaluate((url) => fetch(url).catch(() => {}), src);
+    await expect.poll(() => sent).toContain(OTHER);
+  });
+
   test('writes every text as text, keeps only http(s) links and a valid lang (SEC-IDX-1/4/6, SRCH-31)', async ({ page }) => {
     await page.route('**/search-index.json', (route) =>
       route.fulfill({

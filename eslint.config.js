@@ -66,14 +66,31 @@ const PAGE_SYNTAX = [
 ];
 
 // docs-redesign security.md SEC-IDX-1/2: text from an index, a CMS or the
-// URL reaches the page through textContent only. Enforced on platform (the
-// search renders index data) and the apps; core's highlight.js writes its
-// own escaped tokenizer output and is not covered yet.
+// URL reaches the page through textContent only. Enforced on every package
+// and app; core's highlight.js, which writes its own escaped tokenizer
+// output, carries the one justified eslint-disable.
 const HTML_SINK = "No HTML from strings: build nodes and set textContent (security.md SEC-IDX-1).";
+const SINK_PROPS = "/^(innerHTML|outerHTML|srcdoc)$/";
 const NO_HTML_SINKS = [
-  { selector: "AssignmentExpression > MemberExpression.left[property.name=/^(innerHTML|outerHTML)$/]", message: HTML_SINK },
-  { selector: "CallExpression[callee.property.name=/^(insertAdjacentHTML|createContextualFragment|parseFromString|write|writeln)$/]", message: HTML_SINK },
-  { selector: "CallExpression[callee.name='eval'], NewExpression[callee.name='Function'], NewExpression[callee.name='DOMParser']", message: HTML_SINK },
+  // el.innerHTML = s, el["innerHTML"] = s, iframe.srcdoc = s
+  { selector: `AssignmentExpression > MemberExpression.left[property.name=${SINK_PROPS}]`, message: HTML_SINK },
+  { selector: `AssignmentExpression > MemberExpression.left[property.value=${SINK_PROPS}]`, message: HTML_SINK },
+  // Object.assign(el, { innerHTML }) and other object literals that carry a sink
+  { selector: `Property[key.name=${SINK_PROPS}], Property[key.value=${SINK_PROPS}]`, message: HTML_SINK },
+  {
+    selector: "CallExpression[callee.property.name=/^(insertAdjacentHTML|createContextualFragment|parseFromString|write|writeln|eval|setHTMLUnsafe|parseHTMLUnsafe)$/]",
+    message: HTML_SINK,
+  },
+  { selector: "CallExpression[callee.name=/^(eval|Function)$/], NewExpression[callee.name=/^(Function|DOMParser)$/]", message: HTML_SINK },
+  // setTimeout("code") / setInterval(`code`): a string is evaluated
+  {
+    selector: "CallExpression[callee.name=/^set(Timeout|Interval)$/][arguments.0.type=/^(Literal|TemplateLiteral)$/]",
+    message: HTML_SINK,
+  },
+  {
+    selector: "CallExpression[callee.property.name=/^set(Timeout|Interval)$/][arguments.0.type=/^(Literal|TemplateLiteral)$/]",
+    message: HTML_SINK,
+  },
 ];
 
 export default [
@@ -154,12 +171,6 @@ export default [
           ],
         },
       ],
-      "no-restricted-syntax": ["error", ...PAGE_SYNTAX],
-    },
-  },
-  {
-    files: ["packages/platform/src/**/*.js", "apps/**/*.js"],
-    rules: {
       "no-restricted-syntax": ["error", ...PAGE_SYNTAX, ...NO_HTML_SINKS],
     },
   },

@@ -93,6 +93,7 @@ export function highlightBlock(pre) {
   const lang = pre.dataset.lang || "txt";
   const raw = code.textContent;
 
+  // eslint-disable-next-line no-restricted-syntax -- SEC-IDX-1: tokenize() passes every slice of the source through escapeHtml(); its only markup is <span class="…"> with a constant class from LANGS
   code.innerHTML = LANGS[lang] ? tokenize(raw, LANGS[lang]) : escapeHtml(raw);
 }
 

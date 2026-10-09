@@ -6,13 +6,15 @@
  *   sample.mid  original two-track melody, written byte by byte below
  *   audio.mp3   30 s of synthesised chords (ffmpeg aevalsrc), no metadata
  *   video.mp4   20 s abstract animation in the vejer palette, silent
+ *   desert-*    blurred desert for the image demo (AVIF, WebP, JPEG)
  *
- * Needs ffmpeg with libmp3lame and libx264. Output is committed, so CI does
- * not need ffmpeg. Usage: node scripts/build-demo-media.js
+ * Needs ffmpeg with libmp3lame and libx264, and ImageMagick (`magick`) with
+ * AVIF support for the desert. Output is committed, so CI needs neither.
+ * Usage: node scripts/build-demo-media.js
  */
 
 import { execFileSync } from "child_process";
-import { writeFileSync } from "fs";
+import { rmSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
@@ -129,3 +131,28 @@ ffmpeg([
   resolve(out, "video.mp4"),
 ]);
 console.log("✓ video.mp4");
+
+/* ---- Image: blurred desert (docs image demo) ---------------------------- */
+
+// Sky gradient, a sun glow and sand dunes, blurred so it reads as a photo
+// out of focus. AVIF, WebP and JPEG at 640 and 1280 wide, 16:9.
+const magick = (args) => execFileSync("magick", args, { stdio: "inherit" });
+const desert = resolve(out, "desert-master.png");
+magick([
+  "-size", "1280x720", "gradient:#3d7cc4-#cfe0ec",
+  "(", "-size", "1280x720", "radial-gradient:#fbf6ea-none", "-geometry", "+180-170", ")", "-composite",
+  "(", "-size", "1280x340", "gradient:#e9ad74-#cf8d55", ")", "-geometry", "+0+380", "-composite",
+  "-fill", "#d99a5f", "-draw", "ellipse 300 470 520 70 180 360",
+  "-fill", "#c98247", "-draw", "ellipse 1000 560 560 110 180 360",
+  "-blur", "0x28", "-strip", desert,
+]);
+for (const width of [640, 1280]) {
+  const height = (width * 9) / 16;
+  const base = resolve(out, `desert-${width}`);
+  const resize = ["-resize", `${width}x${height}!`, "-strip"];
+  magick([desert, ...resize, "-quality", "50", `${base}.avif`]);
+  magick([desert, ...resize, "-quality", "60", `${base}.webp`]);
+  magick([desert, ...resize, "-quality", "72", "-interlace", "Plane", `${base}.jpg`]);
+}
+rmSync(desert);
+console.log("✓ desert-{640,1280}.{avif,webp,jpg}");

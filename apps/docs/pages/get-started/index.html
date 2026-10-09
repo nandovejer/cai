@@ -1,75 +1,98 @@
 <!-- cai:page
 title: Install CAI
-description: Three layers, adopted in order. Stop at the level you need: each layer requires the ones below it and nothing above it.
+description: Pick a level, then copy one install command or the CDN tags. Each level needs the ones below it and nothing above.
 area: get-started
 order: 1
 lead: false
 -->
     <div class="docs-block" id="installation">
-      <p class="docs-lead">Three layers, adopted in order. Stop at the level you need: each layer requires the ones below it and nothing above it.</p>
+      <p class="docs-lead">Pick a level, then copy one install command or the CDN tags. Each level needs the ones below it and nothing above.</p>
       <div class="cai-alert cai-alert--warning" role="note">
         <div class="cai-alert__icon" aria-hidden="true">!</div>
         <div>
           <div class="cai-alert__title">Beta</div>
-          <div class="cai-alert__body">Names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.</div>
+          <div class="cai-alert__body">Names, classes and behaviour can still change before the stable release. Pin an exact version, and read the changelog before you upgrade.</div>
         </div>
       </div>
       <div class="docs-prose">
+        <h2 id="which-level" class="docs-prose__title">Which level do I need?</h2>
+        <ul>
+          <li><strong>Your own components, CAI's colours and spacing:</strong> level 1, tokens only.</li>
+          <li><strong>Ready-made buttons, forms, tables and dialogs:</strong> level 2, tokens and core.</li>
+          <li><strong>Whole pages: shell, page header, footer, search:</strong> level 3, all three packages.</li>
+        </ul>
+      </div>
+      <div class="docs-prose">
         <h2 id="level-1-tokens-only" class="docs-prose__title">Level 1: tokens only</h2>
-        <p>CSS custom properties (primitives + light, dark and high-contrast semantics) and one MIT-licensed font, ET Book, for headings. The <code class="cai-code-inline">vejer</code> identity also sets running text in it. Text and code use the system fonts. No other CAI package needed.</p>
+        <p>CSS custom properties: the colour, space and type scales, and the colours of light, dark and high contrast. No other CAI package is needed.</p>
         <div class="cai-platform-command-block">
           <code class="cai-platform-command-block__cmd">
-            <span class="cai-platform-command-block__prefix">$</span>
+            <span class="cai-platform-command-block__prefix" aria-hidden="true">$</span>
             pnpm add @cai-ds/tokens
           </code>
-          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens" aria-label="Copy tokens install command">Copy</button>
+          <button class="cai-copy-btn" type="button" data-copy="pnpm add @cai-ds/tokens" aria-label="Copy the tokens install command">Copy</button>
         </div>
         <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 1"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;</code></pre>
-        <p>Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens without any <code class="cai-code-inline">@font-face</code>.</p>
+        <ul>
+          <li>Headings use ET Book, an MIT-licensed font that ships with the tokens; text and code use the system fonts.</li>
+          <li>Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens without any <code class="cai-code-inline">@font-face</code>.</li>
+        </ul>
       </div>
 
       <div class="docs-prose">
         <h2 id="level-2-tokens-and-core" class="docs-prose__title">Level 2: tokens and core</h2>
-        <p>Components and optional JS behaviors. Core requires tokens, loaded first.</p>
+        <p>The <span data-count="components">20</span> components, the styles of bare HTML elements, and optional JavaScript. Load tokens first.</p>
         <div class="cai-platform-command-block">
           <code class="cai-platform-command-block__cmd">
-            <span class="cai-platform-command-block__prefix">$</span>
+            <span class="cai-platform-command-block__prefix" aria-hidden="true">$</span>
             pnpm add @cai-ds/tokens @cai-ds/core
           </code>
-          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core" aria-label="Copy tokens and core install command">Copy</button>
+          <button class="cai-copy-btn" type="button" data-copy="pnpm add @cai-ds/tokens @cai-ds/core" aria-label="Copy the tokens and core install command">Copy</button>
         </div>
         <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 2"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
 
-&lt;!-- Optional JS behaviors --&gt;
+&lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+        <p>Every page works without the script. See <a href="/docs/get-started/javascript/">what each JavaScript module adds</a>.</p>
       </div>
 
       <div class="docs-prose">
         <h2 id="level-3-tokens-core-and-platform" class="docs-prose__title">Level 3: tokens, core and platform</h2>
-        <p>App-shell patterns. Platform requires both core and tokens.</p>
+        <p>Page patterns: the page shell, page header, sections, footer, image frame and site search. Platform needs core and tokens.</p>
         <div class="cai-platform-command-block">
           <code class="cai-platform-command-block__cmd">
-            <span class="cai-platform-command-block__prefix">$</span>
+            <span class="cai-platform-command-block__prefix" aria-hidden="true">$</span>
             pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform
           </code>
-          <button class="cai-copy-btn" data-copy="pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform" aria-label="Copy full stack install command">Copy</button>
+          <button class="cai-copy-btn" type="button" data-copy="pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform" aria-label="Copy the full stack install command">Copy</button>
         </div>
         <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 3"><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.css&quot;&gt;
 
-&lt;!-- Optional JS behaviors --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;!-- Optional: core behaviours, and the site search --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.js&quot;&gt;&lt;/script&gt;</code></pre>
       </div>
 
       <div class="docs-prose">
-        <h2 id="notes" class="docs-prose__title">Notes</h2>
+        <h2 id="notes" class="docs-prose__title">Before you ship</h2>
         <ul>
-          <li>npm and pnpm install the required lower layers automatically; Yarn only warns, so list every package as above.</li>
-          <li>Pin exact versions on a CDN and add an <code class="cai-code-inline">integrity</code> hash in production.</li>
-          <li>A console warning tells you when a layer is loaded without the one below it.</li>
+          <li>npm and pnpm install the lower levels for you. Yarn only warns, so list every package, as above.</li>
+          <li>On a CDN, pin an exact version and add an <code class="cai-code-inline">integrity</code> hash.</li>
+          <li>The core and platform scripts warn in the console when the level below is missing.</li>
+          <li>Set <code class="cai-code-inline">lang</code> on <code class="cai-code-inline">&lt;html&gt;</code>: core's scripts write their text in that language (English and Spanish ship).</li>
         </ul>
       </div>
-    
+
+      <div class="docs-prose">
+        <h2 id="next-steps" class="docs-prose__title">Next steps</h2>
+        <ul>
+          <li><a href="/docs/components/">Browse the components</a> and copy their markup.</li>
+          <li><a href="/docs/tokens/modes/">Set up the color modes</a>: light, dark and high contrast.</li>
+          <li><a href="/docs/tokens/">Learn how the tokens work</a> before you write your own components.</li>
+          <li><a href="/docs/get-started/structure/">See how CAI is organised</a>: packages, CSS layers and the page skeleton.</li>
+        </ul>
+      </div>
     </div>

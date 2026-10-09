@@ -1,12 +1,19 @@
 <!-- cai:page
 title: Shadows
-description: The elevation scale.
+description: The elevation scale: how far a surface seems to float above the page.
 area: tokens
 order: 6
 group: families
 files: tokens.json → shadow
 -->
     <div class="docs-block" id="t-shadow">
+          <p>The higher the surface, the larger the shadow. Never use a shadow as the only edge of a surface: pair it with a border, because shadows disappear in forced colors.</p>
+          <ul>
+            <li><code class="cai-code-inline">--cai-shadow-sm</code>: a card under the pointer.</li>
+            <li><code class="cai-code-inline">--cai-shadow-md</code>: tooltips and toasts.</li>
+            <li><code class="cai-code-inline">--cai-shadow-lg</code>: dialogs and the drawer.</li>
+            <li><code class="cai-code-inline">--cai-shadow-icon</code>: an icon over a picture, such as the play button on a video.</li>
+          </ul>
           <div class="docs-demo__stage">
             <div class="o-grid docs-shadows">
               <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-sm)">--cai-shadow-sm</div>

@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Tokens
-description: Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.
+description: CSS custom properties for every colour, space, size and type value. Use the semantic ones: they change with the color mode.
 area: tokens
 order: 0
 lead: false
@@ -8,31 +8,45 @@ generate: gallery
 -->
     <p class="docs-eyebrow">Level 1 · @cai-ds/tokens</p>
 
-    <p class="docs-lead">Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.</p>
+    <p class="docs-lead">CSS custom properties for every colour, space, size and type value. Use the semantic ones: they change with the color mode.</p>
 
     <div class="docs-prose">
-            <h2 id="layer-model" class="docs-prose__title">Layer model</h2>
-            <pre class="cai-code-block" data-lang="text"><code>packages/tokens/tokens.json
-      -> source of primitives (blue-10..100, gray-10..100, spacing, radius...)
-
-    packages/tokens/dist/cai-tokens.css
-      Layer 1: generated primitives
-      Layer 2: handwritten semantics per theme (light/dark/high-contrast)</code></pre>
+            <h2 id="layer-model" class="docs-prose__title">Two layers</h2>
+            <ul>
+              <li><strong>Primitives</strong> hold raw values: <code class="cai-code-inline">--cai-blue-60</code>, <code class="cai-code-inline">--cai-space-md</code>. They are the same in every mode.</li>
+              <li><strong>Semantic tokens</strong> give a colour a job: <code class="cai-code-inline">--cai-text-primary</code>, <code class="cai-code-inline">--cai-surface-page</code>. Each mode points them at different primitives.</li>
+              <li>Space, size, radius, shadow and type scales are primitives that components use directly: they do not change with the mode.</li>
+            </ul>
+            <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Where the tokens come from"><code>packages/tokens/tokens.json        the source of the primitives
+packages/tokens/src/semantic.css   the semantic colours, per mode
+dist/cai-tokens.css                both layers, and the ET Book font
+dist/tokens.css                    both layers, no font</code></pre>
           </div>
 
     <div class="docs-prose">
-            <h2 id="component-token-rule" class="docs-prose__title">Component token rule</h2>
-            <pre class="cai-code-block" data-lang="css"><code>/* Correct: semantic tokens */
-    color: var(--cai-text-primary);
-    background: var(--cai-brand-primary);
-    border-color: var(--cai-divider);
+            <h2 id="component-token-rule" class="docs-prose__title">Use semantic colours, never primitive ones</h2>
+            <p>A component that uses a primitive colour looks right in one mode and wrong in the others.</p>
+            <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Semantic and primitive colour tokens"><code>/* Do: semantic tokens follow the mode */
+.panel {
+  color: var(--cai-text-primary);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
+  padding: var(--cai-space-md);
+}
 
-    /* Incorrect: primitive scales */
-    color: var(--cai-gray-100);
-    background: var(--cai-blue-60);</code></pre>
+/* Don't: a primitive colour stays the same in dark mode */
+.panel {
+  color: var(--cai-gray-100);
+  background: var(--cai-blue-10);
+}</code></pre>
           </div>
 
     <div class="docs-prose" id="tokens-fills">
-            <h2 id="solid-fills" class="docs-prose__title">Solid fills</h2>
-            <p>Surfaces that carry <code class="cai-code-inline">--cai-text-on-fill</code> use the fill tokens, not the brand or status color directly: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>. In light and high contrast they equal the brand and danger colors; in dark mode they are a step darker, because the dark brand is light enough to be read as text and white on it falls below 4.5:1.</p>
+            <h2 id="solid-fills" class="docs-prose__title">Text on a solid fill</h2>
+            <p>Behind <code class="cai-code-inline">--cai-text-on-fill</code>, use a fill token, not the brand or status colour.</p>
+            <ul>
+              <li>The fills: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>.</li>
+              <li>In light and high contrast they equal the brand and danger colours. In dark mode they are a step darker: the dark brand colour is light enough to read as text, and white on it falls below 4.5:1.</li>
+            </ul>
           </div>
+

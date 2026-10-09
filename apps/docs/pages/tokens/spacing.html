@@ -1,12 +1,13 @@
 <!-- cai:page
 title: Spacing and sizing
-description: The space scale and the control heights.
+description: The space scale for gaps and padding, and the heights of buttons and fields.
 area: tokens
 order: 2
 group: families
 files: tokens.json → spacing
 -->
     <div class="docs-block" id="t-spacing">
+          <p>Take every gap, padding and margin from this scale, so spacing lines up across components. Use the smaller steps inside a component and the larger ones between sections.</p>
           <div class="docs-demo__stage">
             <ul class="docs-scale-list">
               <li class="docs-scale">
@@ -78,6 +79,12 @@ files: tokens.json → spacing
               <div class="docs-box docs-box--height" style="--v: var(--cai-control-xl)">--cai-control-xl · 56px</div>
             </div>
           </div>
-          <p class="docs-demo__note">44px, the WCAG 2.5.5 target size, and steps of 1.25× around it on the 4px grid. For close buttons, small buttons, inputs and buttons, large buttons.</p>
+          <p class="docs-demo__note">44px is the WCAG 2.5.5 target size; the other steps are about 1.25× apart on the 4px grid.</p>
+          <ul>
+            <li><code class="cai-code-inline">--cai-control-sm</code>: close buttons and other small icon targets.</li>
+            <li><code class="cai-code-inline">--cai-control-md</code>: small buttons.</li>
+            <li><code class="cai-code-inline">--cai-control-lg</code>: buttons and fields, the default.</li>
+            <li><code class="cai-code-inline">--cai-control-xl</code>: large buttons.</li>
+          </ul>
         
     </section>

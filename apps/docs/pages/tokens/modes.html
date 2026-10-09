@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Color modes and themes
-description: Switch light, dark and high contrast, use the shipped themes, or make your own.
+description: Switch between light, dark and high contrast with one attribute, use a shipped theme, or make your own.
 area: tokens
 order: 4
 group: families
@@ -65,8 +65,11 @@ group: families
 
     <section class="docs-block docs-chapter" id="themes" aria-labelledby="themes-title">
       <h2 class="docs-chapter__title" id="themes-title">Themes and modes</h2>
-      <p class="docs-lead">A color mode changes luminosity; a custom theme changes the whole identity. They are independent.</p>
-      <p>The three base modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>. Two custom themes ship with core, each with its own light, dark and high-contrast modes set with <code class="cai-code-inline">data-mode</code>:</p>
+      <p class="docs-lead">A color mode changes how light or dark the page is; a theme changes its whole identity. You can combine them.</p>
+      <ul>
+        <li>The three modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>.</li>
+        <li>Two themes ship with core, each in a stylesheet of its own. Set the theme with <code class="cai-code-inline">data-theme</code> and its mode with <code class="cai-code-inline">data-mode</code>.</li>
+      </ul>
       <ul>
         <li><strong>Minimalist</strong> (<code class="cai-code-inline">cai-theme-minimalist.css</code>): one system sans throughout, warm neutrals.</li>
         <li><strong>Vejer</strong> (<code class="cai-code-inline">cai-theme-vejer.css</code>): a reading theme inspired by Vejer de la Frontera. ET Book for running text and headings, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, and every link underlined.</li>
@@ -74,11 +77,15 @@ group: families
       <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Theme and mode examples"><code>&lt;html data-theme=&quot;dark&quot;&gt;
 
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/themes/cai-theme-vejer.min.css&quot;&gt;
-&lt;html data-theme=&quot;vejer&quot; data-mode-icon=&quot;dark&quot;&gt;
-&lt;html data-theme=&quot;minimalist&quot; data-mode-icon=&quot;high-contrast&quot;&gt;</code></pre>
+&lt;html data-theme=&quot;vejer&quot; data-mode=&quot;dark&quot;&gt;
+&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
       <p>Every theme is measured by <code class="cai-code-inline">pnpm check:contrast</code> in every mode: 4.5:1 for text, 3:1 for disabled text, borders and focus rings.</p>
       <h3 class="docs-prose__title" id="themes-custom">Make your own theme</h3>
-      <p>A theme overrides semantic tokens, never the primitive scales and never component CSS. Check it against the same contrast minimums: CAI guarantees only the themes it ships.</p>
+      <p>A theme overrides semantic tokens, and may change the fonts, radii and shadows. It never changes the primitive colours or component CSS.</p>
+      <ul>
+        <li>Give it a <code class="cai-code-inline">data-theme</code> name of its own.</li>
+        <li>Check it against the same contrast minimums: CAI guarantees only the themes it ships.</li>
+      </ul>
       <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Custom theme template"><code>[data-theme=&quot;my-brand&quot;] {
   --cai-brand-primary: #0057ff;
   --cai-brand-hover: #0043c2;

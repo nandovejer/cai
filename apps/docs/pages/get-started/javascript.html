@@ -1,10 +1,33 @@
 <!-- cai:page
 title: JavaScript modules
-description: What each optional module does, how to import one, and what happens without JavaScript.
+description: What each optional script adds, how to load only the one you need, and what a page does without them.
 area: get-started
 order: 3
 -->
     <div class="docs-block" id="c-js">
+          <p>Every CAI page works without JavaScript. The scripts add behaviour on top: copying, highlighting, a cycling color mode button, scroll spy, players and tabs.</p>
+          <h2 id="js-load">Load all of it, or one module</h2>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-js-all" aria-label="Copy the all modules markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="All modules markup"><code id="code-js-all">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+          </div>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">JS</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-js-one" aria-label="Copy the one module code">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="One module code"><code id="code-js-one">import { initTabs } from &quot;@cai-ds/core/tabs&quot;;
+initTabs();</code></pre>
+          </div>
+          <ul>
+            <li><code>cai.js</code> starts every module when the page loads.</li>
+            <li>Importing a single module does nothing until you call its <code>init</code> function.</li>
+            <li>The site search is in <code>@cai-ds/platform</code>: see <a href="/docs/platform/search/">Search</a>.</li>
+          </ul>
+          <h2 id="js-modules">The modules</h2>
           <details class="docs-fold" open data-fold-narrow>
             <summary>All <span data-count="modules">11</span> JavaScript modules</summary>
             <div class="docs-demo__stage">
@@ -30,6 +53,23 @@ order: 3
             </div>
           </div>
           </details>
-          <p class="docs-demo__note">Importing a single module has no side effects until you call its <code class="cai-code-inline">init</code> function.</p>
+          <h2 id="js-without">Without JavaScript</h2>
+          <p>What each behaviour falls back to when the script does not run:</p>
+          <div class="cai-table-wrap" role="region" aria-label="Behaviour without JavaScript" tabindex="0">
+            <table class="cai-table">
+              <thead>
+                <tr><th scope="col">Component</th><th scope="col">Without JavaScript</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="Component"><div><a href="/docs/components/tabs/">Tabs</a></div></td><td data-label="Without JavaScript"><div>Links, and every panel stacked</div></td></tr>
+                <tr><td data-label="Component"><div><a href="/docs/components/mode-switcher/">Color mode switcher</a></div></td><td data-label="Without JavaScript"><div>Three radios that still change the mode; not remembered</div></td></tr>
+                <tr><td data-label="Component"><div><a href="/docs/components/copy-button/">Copy button</a></div></td><td data-label="Without JavaScript"><div>Hidden; the text stays selectable</div></td></tr>
+                <tr><td data-label="Component"><div><a href="/docs/components/player/">Player</a></div></td><td data-label="Without JavaScript"><div>The browser's own media controls; MIDI shows its fallback text</div></td></tr>
+                <tr><td data-label="Component"><div><a href="/docs/components/modal/">Modal</a></div></td><td data-label="Without JavaScript"><div>Opens where the browser supports <code>command</code>; elsewhere the open button does nothing</div></td></tr>
+                <tr><td data-label="Component"><div><a href="/docs/components/code/">Code</a></div></td><td data-label="Without JavaScript"><div>Plain text, no colours</div></td></tr>
+                <tr><td data-label="Component"><div><a href="/docs/components/sidebar/">Sidebar</a></div></td><td data-label="Without JavaScript"><div>Works, drawer included; the current link does not follow the scroll</div></td></tr>
+              </tbody>
+            </table>
+          </div>
         
     </div>

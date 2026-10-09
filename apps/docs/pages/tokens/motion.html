@@ -1,12 +1,13 @@
 <!-- cai:page
 title: Motion
-description: Durations and easings, and how reduced motion stops them. Ships with @cai-ds/core.
+description: The durations and easings of every transition, which drop to zero when the reader asks for reduced motion. Ships with @cai-ds/core.
 area: tokens
 order: 7
 group: families
 files: settings/_settings.css
 -->
     <div class="docs-block" id="c-motion">
+          <p>Take every duration from a token. Under <code class="cai-code-inline">prefers-reduced-motion: reduce</code> all the durations become <code class="cai-code-inline">0s</code>, so motion stops everywhere with no extra CSS.</p>
           <div class="docs-demo__stage docs-motion">
             <label class="cai-toggle">
               <input class="cai-toggle__input" type="checkbox" role="switch">
@@ -83,5 +84,13 @@ files: settings/_settings.css
             </div>
           </div>
           <p class="docs-demo__note">Ships with core, not with tokens.</p>
+          <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="A transition with motion tokens"><code>.panel {
+  transition: opacity var(--cai-duration-base) var(--cai-easing-standard);
+}</code></pre>
+          <ul>
+            <li><strong>Standard</strong> for movement within the page, <strong>enter</strong> for things that arrive, <strong>exit</strong> for things that leave.</li>
+            <li><strong>Spring</strong> overshoots a little: keep it for small, playful details.</li>
+            <li>Never hard-code a duration: it would ignore reduced motion.</li>
+          </ul>
         
     </div>

@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Layers and breakpoints
-description: The z-index scale, content widths and breakpoints. Ships with @cai-ds/core.
+description: Which layer sits on top, how wide content gets, and where the layout changes. Ships with @cai-ds/core.
 area: tokens
 order: 8
 group: families
@@ -29,12 +29,17 @@ files: settings/_settings.css
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-lg</code><span>1024px</span><span class="docs-scale__note">Narrow desktop</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-xl</code><span>1280px</span><span class="docs-scale__note">Standard desktop</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-bp-2xl</code><span>1440px</span><span class="docs-scale__note">Wide screen</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-font-body</code><span>var(--cai-font-sans)</span><span class="docs-scale__note">Running text; vejer sets it to the serif</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-font-heading</code><span>var(--cai-font-serif)</span><span class="docs-scale__note">Heading font family</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-text-control</code><span>var(--cai-text-md)</span><span class="docs-scale__note">Form field text; --cai-text-base (16px) at 768px and below and on touch screens</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-scrollbar-size</code><span>4px</span><span class="docs-scale__note">Scrollbar thickness</span></li>
               </ul>
             </div>
           </div>
-          <p class="docs-demo__note">Ships with core, not with tokens. Breakpoints are reference values: CSS media queries cannot read custom properties.</p>
+          <p class="docs-demo__note">Ships with core, not with tokens.</p>
+          <ul>
+            <li>Use the z-index tokens instead of numbers, so layers stay in this order.</li>
+            <li>Breakpoints are reference values: media queries cannot read custom properties, so write the number, such as <code class="cai-code-inline">@media (max-width: 768px)</code>.</li>
+          </ul>
         
     </div>

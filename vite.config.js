@@ -20,7 +20,9 @@ if (pagesRoot !== resolve(__dirname, "docs") && !insideTmp) {
   throw new Error(`CAI_PAGES_OUT must be docs/ or a folder inside ${tmpdir()}, got ${pagesRoot}`);
 }
 
-// Public routes of the four apps. `up` is the path back to the site root.
+// Public routes: the home page, the documentation, and the two old pages
+// (/platform/, /html/) that are now stubs sending visitors to /docs/.
+// `up` is the path back to the site root.
 const ROUTES = [
   { built: "apps/landing/index.html", out: "index.html", up: "./" },
   { built: "apps/docs/index.html", out: "docs/index.html", up: "../" },
@@ -65,7 +67,7 @@ function pagesCsp() {
  * Vite emits each HTML entry at its source path (apps/<app>/index.html).
  * Move them to their public routes. With a relative base (pages mode) the
  * URLs inside each page are rewritten for its new depth, including the
- * root-absolute links between the four apps, so the site works from any
+ * root-absolute links between the apps, so the site works from any
  * sub-path (https://<user>.github.io/<repo>/).
  */
 function normalizeAppEntryRoutes(outRoot, relative) {
@@ -154,7 +156,7 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: outRoot,
       emptyOutDir: true,
-      // Pages: every asset is a file, never a data: URI, so a CSP can keep
+      // Pages: every asset is a file, never a data: URI, so the CSP can keep
       // media-src and connect-src at 'self' (the MIDI demo fetches its file)
       ...(pages ? { assetsInlineLimit: 0 } : {}),
       rollupOptions: {

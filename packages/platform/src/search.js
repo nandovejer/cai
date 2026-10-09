@@ -142,7 +142,7 @@ export function initSearch(root = document) {
   // dialog's data-cai-label-<key> attributes, authored in the page's
   // language. Split and joined, never String.replace() with the query
   // (SEC-IDX-10); a missing label writes nothing.
-  const say = (key, vars) =>
+  const say = (key, vars = {}) =>
     status.replaceChildren(
       ...(box.getAttribute(`data-cai-label-${key}`) ?? "").split(/\{(\w+)\}/).map((part, i) => (i % 2 ? (Object.hasOwn(vars, part) ? vars[part] : "") : part)),
     );
@@ -235,7 +235,8 @@ export function initSearch(root = document) {
     } else if (at > -1 && (key.length === 1 || key === "Backspace") && !e.ctrlKey && !e.metaKey) {
       input.focus();
     }
-    if (target === input && key === "Enter" && input.value.trim()) $("[data-cai-search-list] a")?.click();
+    // Not the Enter that ends an IME composition
+    if (target === input && key === "Enter" && !e.isComposing && input.value.trim()) $("[data-cai-search-list] a")?.click();
   });
 
   // A result on this page: close, let the link scroll (core's tabs.js opens
@@ -244,7 +245,12 @@ export function initSearch(root = document) {
     const a = e.target.closest("a");
     if (!a) return;
     box.close();
-    const target = a.pathname === location.pathname && document.getElementById(decodeURIComponent(a.hash.slice(1)));
+    let target;
+    try {
+      target = a.pathname === location.pathname && document.getElementById(decodeURIComponent(a.hash.slice(1)));
+    } catch {
+      // A malformed escape in the hash: the link still navigates (SEC-MISC-11)
+    }
     if (target) {
       setTimeout(() => {
         // A heading takes focus from script only; a control keeps its own tabindex

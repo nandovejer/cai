@@ -102,6 +102,16 @@ test.describe('search: opening and closing', () => {
     await dialog(page).getByRole('button', { name: 'Close search' }).click();
     await expect(button).toBeFocused();
   });
+
+  test('after Ctrl+K and Escape with nothing focused, Tab starts at the skip link (2.4.3)', async ({ page }) => {
+    // The browser starts the next Tab from the closed dialog: it comes first in <body>
+    await open(page);
+    await page.keyboard.press('Control+k');
+    await expect(field(page)).toBeFocused();
+    await page.keyboard.press('Escape');
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('link', { name: 'Skip to main content' })).toBeFocused();
+  });
 });
 
 test.describe('search: results', () => {
@@ -209,6 +219,15 @@ test.describe('search: keyboard (SRCH-20)', () => {
     await expect(page).toHaveURL(new RegExp(`${routeOf('c-modal')}$`));
   });
 
+  test('the Enter that ends an IME composition does not follow a result (3.2.2)', async ({ page }) => {
+    await open(page);
+    await searchFor(page, 'tabs');
+    await field(page).dispatchEvent('keydown', { key: 'Enter', isComposing: true, bubbles: true });
+    await page.waitForTimeout(300);
+    await expect(page).toHaveURL(new RegExp(`${BUTTON}$`));
+    await expect(dialog(page)).toBeVisible();
+  });
+
   test('the focused result has the focus ring (SRCH-21) and is at least 24px high (SRCH-22)', async ({ page }) => {
     await open(page);
     await searchFor(page, 'tab');
@@ -259,6 +278,42 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
     await expect(dialog(page).getByRole('link', { name: 'Browse the A–Z index' })).toBeVisible();
     expect(requests).toHaveLength(1);
     expect(new URL(requests[0]).origin).toBe(new URL(page.url()).origin);
+  });
+
+  test('a label with a placeholder the state does not have still shows, and the next open retries (SEC-IDX-9)', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    let requests = 0;
+    await page.route('**/search-index.json', (route) => {
+      requests++;
+      return route.fulfill({ status: 500, body: 'no' });
+    });
+    await open(page);
+    await page.locator('[data-cai-search]').evaluate((d) => {
+      d.setAttribute('data-cai-label-error', 'Down {n}');
+      d.setAttribute('data-cai-label-loading', 'Loading {n}');
+    });
+    for (let i = 1; i <= 2; i++) {
+      await page.keyboard.press('Control+k');
+      await expect(status(page)).toHaveText('Down');
+      await page.keyboard.press('Escape');
+      expect(requests).toBe(i);
+    }
+    expect(errors).toEqual([]);
+  });
+
+  test('a same-page result with a malformed hash navigates without an error (SEC-MISC-11)', async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    await page.route('**/search-index.json', (route) =>
+      route.fulfill({ contentType: 'application/json', body: JSON.stringify({ version: 1, pages: [['broken hash', `${BUTTON}#%E0%A4%A`]] }) }),
+    );
+    await open(page);
+    await searchFor(page, 'broken');
+    await results(page).first().click();
+    await expect(dialog(page)).toBeHidden();
+    await page.waitForTimeout(100);
+    expect(errors).toEqual([]);
   });
 
   test('says it is loading while the index is on its way', async ({ page }) => {

@@ -16,10 +16,12 @@
   <link rel="stylesheet" href="/apps/docs/elements.css">
 </head>
 <body class="o-shell docs-page">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <!-- cai:include search -->
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
   <!-- cai:include header -->
-  <!-- cai:include search -->
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <!-- cai:include site-links -->

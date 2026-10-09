@@ -15,10 +15,12 @@
   <link rel="stylesheet" href="/apps/landing/landing.css">
 </head>
 <body class="cai-platform-page">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <!-- cai:include search -->
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
   <!-- cai:include header -->
-  <!-- cai:include search -->
 
   <nav class="cai-sidebar page-nav page-nav--drawer" id="page-nav" popover aria-label="Home page">
     <!-- cai:include site-links -->

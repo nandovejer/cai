@@ -18,7 +18,7 @@ A new reading theme, `vejer`, replaces `ricardoymortimer`. Body text gets its ow
 
 **New (`@cai-ds/tokens`)**
 
-- Four primitives: `--cai-green-70` (`#0e6027`), `--cai-red-70` (`#a2191f`), `--cai-teal-70` (`#005d5d`) and `--cai-purple-70` (`#6929c4`).
+- Four primitives: `--cai-green-70`, `--cai-red-70`, `--cai-teal-70` and `--cai-purple-70`.
 
 **Changed (`@cai-ds/tokens`)**
 

@@ -36,7 +36,7 @@ import '@cai-ds/tokens'
 
 ## What's included
 
-- **Primitives** (Layer 1): Color scales, spacing, typography, shadows, radius tokens — generated from `tokens.json`
+- **Primitives** (Layer 1): Color scales, spacing, typography, shadows, radius tokens — generated from `tokens.json`. The colour scales are CAI's own palette, computed in OKLCH (one lightness curve for every family, so a step number means the same contrast in every colour)
 - **Semantic themes** (Layer 2): Light, dark, and high-contrast color modes — source in `src/semantic.css`
 - **One self-hosted font**, MIT licensed: ET Book (serif, for headings), included in `cai-tokens.css`
 - **System font stacks** for sans and mono, so body, UI and code text download nothing

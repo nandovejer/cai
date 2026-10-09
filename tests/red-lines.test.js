@@ -229,3 +229,17 @@ describe("§3: no inline scripts in the apps", () => {
     expect(offenders).toEqual([]);
   });
 });
+
+describe("Pages site: Content-Security-Policy", () => {
+  const pages = ["docs/index.html", "docs/docs/index.html", "docs/platform/index.html", "docs/html/index.html"];
+  it("every published page has a CSP that only runs the site's own scripts", () => {
+    for (const page of pages) {
+      const html = read(page);
+      const csp = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/)?.[1];
+      expect(csp, `${page} has no CSP meta`).toBeTruthy();
+      const scriptSrc = csp.split(";").map((d) => d.trim()).find((d) => d.startsWith("script-src"));
+      expect(scriptSrc, page).toBe("script-src 'self'");
+      expect(html.indexOf("Content-Security-Policy"), `${page}: the CSP must come before any script`).toBeLessThan(html.search(/<script\b/i) === -1 ? Infinity : html.search(/<script\b/i));
+    }
+  });
+});

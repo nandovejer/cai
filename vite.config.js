@@ -29,6 +29,39 @@ const ROUTES = [
 ];
 
 /**
+ * Content-Security-Policy for the published GitHub Pages site. Pages cannot
+ * send headers, so it goes in a <meta>; only the pages build gets it (the
+ * dev server needs its own websocket and client). Scripts come only from
+ * the site itself; inline styles stay allowed for the demos' style
+ * attributes and the HTML elements page's <style> example.
+ */
+export const PAGES_CSP = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "media-src 'self'",
+  "font-src 'self'",
+  "connect-src 'self'",
+  "frame-src 'self' data:",
+  // The HTML elements page demonstrates <object> and <embed> with its own files
+  "object-src 'self' data:",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join("; ");
+
+function pagesCsp() {
+  return {
+    name: "pages-csp",
+    transformIndexHtml: {
+      order: "post",
+      handler: (html) =>
+        html.replace(/(<meta charset="[^"]*">)/i, `$1\n  <meta http-equiv="Content-Security-Policy" content="${PAGES_CSP}">`),
+    },
+  };
+}
+
+/**
  * Vite emits each HTML entry at its source path (apps/<app>/index.html).
  * Move them to their public routes. With a relative base (pages mode) the
  * URLs inside each page are rewritten for its new depth, including the
@@ -111,7 +144,7 @@ export default defineConfig(({ mode }) => {
     // Relative URLs so the Pages site works under /<repo>/ and on a custom domain
     base: pages ? "./" : "/",
     publicDir: false,
-    plugins: [devRouteRewrite(), normalizeAppEntryRoutes(outRoot, pages)],
+    plugins: [devRouteRewrite(), normalizeAppEntryRoutes(outRoot, pages), ...(pages ? [pagesCsp()] : [])],
     server: {
       open: "/",
       fs: {

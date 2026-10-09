@@ -1,11 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" preserveAspectRatio="xMidYMid slice">
-  <!-- CAI image placeholder (MIT). Abstract arches in the colours of the vejer theme: whitewash, sky, sandstone, terracotta, door wood and wrought iron. Master of the rasters next to it: edit here, then run `pnpm placeholders:build`. -->
-  <rect width="1200" height="1200" fill="#fbf8f2"/>
-  <path d="M450 1200V560a260 260 0 0 1 520 0V1200Z" fill="#6fb1ec"/>
-  <circle cx="780" cy="500" r="72" fill="#fffdf9"/>
-  <path d="M180 1200V600a190 190 0 0 1 380 0V1200Z" fill="#efe6d6"/>
-  <circle cx="280" cy="950" r="200" fill="#b8613f"/>
-  <path d="M590 1200V800a62 62 0 0 1 124 0V1200Z" fill="#6b5a48"/>
-  <path d="M400 560a310 310 0 0 1 620 0h-12a298 298 0 0 0-596 0Z" fill="#231c16"/>
-  <path d="M0 886C300 851 720 921 1200 873V1200H0Z" fill="#e3d4b8"/>
+  <!-- CAI image placeholder (MIT). A soft sky: flat patches of blue and light, blurred into one field. Master of the rasters next to it: edit here, then run `pnpm placeholders:build`, which applies the same blur (stdDeviation, in viewBox units) with ImageMagick. -->
+  <filter id="soft" x="-600" y="-600" width="2400" height="2400" filterUnits="userSpaceOnUse"><feGaussianBlur stdDeviation="150"/></filter>
+  <g filter="url(#soft)">
+    <rect x="-600" y="-600" width="2400" height="2400" fill="#a6dcee"/>
+    <circle cx="-40" cy="960" r="300" fill="#62c4e3"/>
+    <circle cx="1180" cy="1140" r="380" fill="#52b4e6"/>
+    <circle cx="40" cy="80" r="460" fill="#2a7fd4"/>
+    <circle cx="540" cy="860" r="260" fill="#d6f1f7"/>
+    <circle cx="940" cy="200" r="320" fill="#eef9fb"/>
+  </g>
+  <!-- Watermark: the CAI mark once, large and tilted 30°, centred so every crop shows part of it -->
+  <g id="watermark" fill="#fff" fill-opacity="0.18">
+    <path d="M328 128.9L872 1071.1A544 544 0 0 1 328 128.9ZM649.8 414.2L622.4 -41.1L1003.1 210.2ZM717.8 532L1071.1 328L1343.1 799.1L989.8 1003.1Z"/>
+  </g>
 </svg>

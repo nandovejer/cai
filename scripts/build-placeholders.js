@@ -15,7 +15,7 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, readdirSync, rmSync, statSync, unlinkSync } from "node:fs";
+import { mkdtempSync, readFileSync, readdirSync, rmSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -76,7 +76,35 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
       // Render the master once at twice the largest size, then only downscale:
       // the master is square and every ratio is a centred crop (like `cover`).
       const big = join(tmp, `${prefix}.png`);
-      magick("-background", "none", "-density", "307.2", join(dir, `${prefix}.svg`), "-resize", "3840x3840!", big);
+      const master = join(dir, `${prefix}.svg`);
+      // ImageMagick's SVG renderer ignores filters: a feGaussianBlur in the
+      // master is applied here instead. Blur a small render (fast, and a
+      // blurred field upscales without loss), edges extended like the
+      // master's oversized background. A <g id="watermark"> stays sharp: it
+      // is rendered on its own at full size and laid over the blurred field.
+      const source = readFileSync(master, "utf-8");
+      const blur = /stdDeviation="([\d.]+)"/.exec(source);
+      if (blur) {
+        const watermark = /<g id="watermark"[\s\S]*?<\/g>/.exec(source);
+        const field = join(tmp, `${prefix}-field.svg`);
+        writeFileSync(field, watermark ? source.replace(watermark[0], "") : source);
+        const small = 480; // px for the 1200-unit viewBox
+        magick(
+          "-background", "none", "-density", String((96 * small) / 1200), field,
+          "-resize", `${small}x${small}!`,
+          "-virtual-pixel", "edge", "-blur", `0x${(Number(blur[1]) * small) / 1200}`,
+          "-resize", "3840x3840!", big,
+        );
+        if (watermark) {
+          const mark = join(tmp, `${prefix}-watermark.svg`);
+          writeFileSync(mark, `${/<svg[^>]*>/.exec(source)[0]}${watermark[0]}</svg>`);
+          const markPng = join(tmp, `${prefix}-watermark.png`);
+          magick("-background", "none", "-density", "307.2", mark, "-resize", "3840x3840!", markPng);
+          magick(big, markPng, "-composite", big);
+        }
+      } else {
+        magick("-background", "none", "-density", "307.2", master, "-resize", "3840x3840!", big);
+      }
 
       for (const [name, ratio] of Object.entries(RATIOS)) {
         for (const long of LONG_SIDES) {

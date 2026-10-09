@@ -4,6 +4,9 @@
    The browser exposes the role, the value and the "indeterminate" state
    (no value attribute); CSS only draws it. Name it with aria-label or a
    <label>, and put the figure in the label ("Upload, 25%").
+   Contrast (WCAG 1.4.11, 3:1 in every mode): the fill is the brand colour on
+   a surface-muted track, and the track's edge is the field border colour, so
+   the whole length of the bar is visible on any surface.
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
@@ -14,15 +17,15 @@
   display: block;
   inline-size: 100%;
   block-size: 8px;
-  border: 0;
+  border: 1px solid var(--cai-input-border);
   border-radius: var(--cai-radius-sm);
-  background: var(--cai-divider);
+  background: var(--cai-surface-muted);
   overflow: hidden;
   accent-color: var(--cai-brand-primary);
 }
 
 .cai-progress::-webkit-progress-bar {
-  background: var(--cai-divider);
+  background: var(--cai-surface-muted);
   border-radius: var(--cai-radius-sm);
 }
 
@@ -37,14 +40,21 @@
   border-radius: var(--cai-radius-sm);
 }
 
-/* Forced colors flatten backgrounds to Canvas: keep the bar and its fill */
+/* Forced colors flatten backgrounds to Canvas: keep the bar and its fill.
+   One rule per engine: a selector list with a pseudo-element the browser
+   does not know is dropped whole. */
 @media (forced-colors: active) {
-  .cai-progress {
-    border: 1px solid CanvasText;
+  .cai-progress,
+  .cai-progress::-webkit-progress-bar {
+    border-color: CanvasText;
+    background: Canvas;
     forced-color-adjust: none;
   }
 
-  .cai-progress::-webkit-progress-value,
+  .cai-progress::-webkit-progress-value {
+    background: Highlight;
+  }
+
   .cai-progress::-moz-progress-bar {
     background: Highlight;
   }

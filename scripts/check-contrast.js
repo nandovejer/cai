@@ -50,6 +50,10 @@ const PAIRS = [
   [["focus-ring"], [...SURFACES, "surface-strong"], 3],
   [["input-border"], ["input-bg"], 3],
   [["outline"], ["surface-page", "surface"], 3],
+  // Progress and player seek bars: the fill on the track (surface-muted) and the
+  // played part on the buffered part (surface-pressed); the track's edge is
+  // input-border, measured on every surface in THEME_PAIRS
+  [["brand-primary"], ["surface-muted", "surface-pressed"], 3],
 ];
 
 /* Also on the strong surface (tooltip, toast, table header) and as plain text on

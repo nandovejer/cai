@@ -138,7 +138,9 @@
    keyboard (arrows, Home, End, PageUp/PageDown) and the slider semantics come
    from the browser. JS only feeds --cai-seek (played share) and --cai-buf
    (buffered share), both percentages. The element is 24px tall (WCAG 2.5.8);
-   the visible track is 4px. */
+   the visible track is 4px inside a 1px edge of the field border colour, 3:1
+   on the controls; the played part keeps 3:1 on the buffered (surface-pressed)
+   and unbuffered (surface-muted) parts in every mode (WCAG 1.4.11). */
 .cai-player-seekbar {
   --cai-seek: 0%;
   --cai-buf: 0%;
@@ -155,23 +157,25 @@
 
 .cai-player-seekbar::-webkit-slider-runnable-track {
   block-size: 4px;
+  border: 1px solid var(--cai-input-border);
   border-radius: var(--cai-radius-sm);
   background: linear-gradient(
     to right,
     var(--cai-brand-primary) var(--cai-seek),
     var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
-    var(--cai-divider) var(--cai-buf)
+    var(--cai-surface-muted) var(--cai-buf)
   );
 }
 
 .cai-player-seekbar::-moz-range-track {
   block-size: 4px;
+  border: 1px solid var(--cai-input-border);
   border-radius: var(--cai-radius-sm);
   background: linear-gradient(
     to right,
     var(--cai-brand-primary) var(--cai-seek),
     var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
-    var(--cai-divider) var(--cai-buf)
+    var(--cai-surface-muted) var(--cai-buf)
   );
 }
 
@@ -181,7 +185,7 @@
     to left,
     var(--cai-brand-primary) var(--cai-seek),
     var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
-    var(--cai-divider) var(--cai-buf)
+    var(--cai-surface-muted) var(--cai-buf)
   );
 }
 
@@ -190,7 +194,7 @@
     to left,
     var(--cai-brand-primary) var(--cai-seek),
     var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
-    var(--cai-divider) var(--cai-buf)
+    var(--cai-surface-muted) var(--cai-buf)
   );
 }
 
@@ -267,19 +271,27 @@
 }
 
 /* Forced colors flatten backgrounds to Canvas: keep the track, the played
-   part and the thumb of the seek and volume bars */
+   part and the thumb of the seek and volume bars.
+   One rule per engine: a selector list with a pseudo-element the browser
+   does not know is dropped whole. */
 @media (forced-colors: active) {
-  .cai-player-seekbar::-webkit-slider-runnable-track,
-  .cai-player-seekbar::-moz-range-track {
+  .cai-player-seekbar::-webkit-slider-runnable-track {
+    border-color: CanvasText;
     forced-color-adjust: none;
-    background: linear-gradient(
-      to right,
-      Highlight var(--cai-seek),
-      CanvasText var(--cai-seek)
-    );
+    background: linear-gradient(to right, Highlight var(--cai-seek), Canvas var(--cai-seek));
   }
 
-  .cai-player-seekbar::-webkit-slider-thumb,
+  .cai-player-seekbar::-moz-range-track {
+    border-color: CanvasText;
+    forced-color-adjust: none;
+    background: linear-gradient(to right, Highlight var(--cai-seek), Canvas var(--cai-seek));
+  }
+
+  .cai-player-seekbar::-webkit-slider-thumb {
+    forced-color-adjust: none;
+    background: Highlight;
+  }
+
   .cai-player-seekbar::-moz-range-thumb {
     forced-color-adjust: none;
     background: Highlight;

@@ -15,7 +15,7 @@ toc: h2,h3
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>In high contrast the done part and the track are only 1.5:1 apart, under the 3:1 of WCAG 1.4.11 (Non-text contrast) when the bar alone gives the value. Write the figure in words next to the bar, as in the example. Listed in the <a href="/docs/accessibility/">accessibility statement</a>.</p>
+          <p>None known.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Progress documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -45,7 +45,7 @@ toc: h2,h3
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>The native <code>&lt;progress&gt;</code> element, styled by <code>components/progress.css</code>: an 8 px bar, full width, with the brand colour as the fill.</p>
+            <p>The native <code>&lt;progress&gt;</code> element, styled by <code>components/progress.css</code>: an 8 px bar, full width, with the brand colour as the fill and a 1 px edge in the field border colour, so the whole length shows on any surface.</p>
             <ul>
               <li>The browser exposes the role and the value to assistive technology.</li>
               <li>In Chromium and WebKit browsers the fill slides to a new value; under reduced motion it jumps.</li>
@@ -93,15 +93,15 @@ toc: h2,h3
               <li>When it ends, say so: "Upload complete".</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
-            <p>The done part is the brand colour on a track of the divider colour.</p>
+            <p>The done part is the brand colour on a muted track. The track has an edge in the field border colour, so you can see where the bar ends.</p>
             <div class="cai-table-wrap" role="region" aria-label="Progress contrast in each mode" tabindex="0">
               <table class="cai-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Done part against the track</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-divider</code></div></td><td data-label="Light"><div>4.7:1</div></td><td data-label="Dark"><div>6.7:1</div></td><td data-label="High contrast"><div><strong>1.5:1, fails</strong></div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Done part against the page</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Done part against the track</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.2:1</div></td><td data-label="Dark"><div>6.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of the track against the page</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -111,9 +111,9 @@ toc: h2,h3
               <li><strong>Not colour alone:</strong> put the figure in words next to the bar or in its name, so the value never depends on telling the two parts of the bar apart.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 5 tokens that <code>components/progress.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 6 tokens that <code>components/progress.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a></dd></div>
               <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
               <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-slow</code>, <code>--cai-easing-enter</code></dd></div>
             </dl>

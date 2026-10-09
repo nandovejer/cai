@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Color modes and themes – Tokens – CAI documentation</title>
-  <meta name="description" content="Switch between light, dark and high contrast with one attribute, use a shipped theme, or make your own.">
+  <title>Tokens in Figma – Tokens – CAI documentation</title>
+  <meta name="description" content="The tokens as one design-tokens file for Figma variables and other design tools, with the same names and the three modes.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
@@ -97,13 +97,13 @@
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/color/">Color</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/spacing/">Spacing and sizing</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/typography/">Typography</a></li>
-          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/modes/">Color modes and themes</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/modes/">Color modes and themes</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/radius/">Radius</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/shadows/">Shadows</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/motion/">Motion</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/layout/">Layers and breakpoints</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
         </ul>
       </li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/platform/">Platform</a></li>
@@ -120,118 +120,135 @@
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
         <a class="cai-breadcrumb__item" href="../../../docs/tokens/">Tokens</a>
         <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Color modes and themes</span>
+        <span class="cai-breadcrumb__item" aria-current="page">Tokens in Figma</span>
       </div>
     </nav>
-    <h1 class="docs-title">Color modes and themes</h1>
-    <p class="docs-lead">Switch between light, dark and high contrast with one attribute, use a shipped theme, or make your own.</p>
+    <div class="docs-page-head__title">
+      <h1 class="docs-title">Tokens in Figma</h1>
+      <code class="docs-demo__file">dist/cai-tokens.dtcg.json</code>
+    </div>
+    <p class="docs-lead">The tokens as one design-tokens file for Figma variables and other design tools, with the same names and the three modes.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#light">Light</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#dark">Dark</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#high-contrast">High contrast</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#themes-title">Themes and modes</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#get-the-file">Get the file</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#names">One rule for every name</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#modes">Figma modes and color modes</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#import">Import it</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#limits">Known limits</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#keep-in-step">Keep Figma and the code in step</a></li>
       </ul>
     </details>
   </nav>
   <div class="docs-body">
-    <div class="docs-block" id="t-modes">
-          <div class="docs-demo__stage docs-scopes">
-            <div class="docs-scope" data-theme="light">
-              <h2 id="light" class="docs-subhead">Light</h2>
-              <p><code class="cai-code-inline">data-theme="light"</code></p>
-              <p>Body text with <a href="../../../docs/tokens/color/">one link</a>.</p>
-              <div class="o-row">
-                <button class="cai-btn cai-btn--primary" type="button">Primary</button>
-                <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
-              </div>
-              <progress class="cai-progress" value="60" max="100" aria-label="Progress in light mode"></progress>
-              <div class="cai-alert cai-alert--warning">
-                <div class="cai-alert__icon" aria-hidden="true">!</div>
-                <div>
-                  <div class="cai-alert__title">Warning</div>
-                  <div class="cai-alert__body">Same markup in every mode.</div>
-                </div>
-              </div>
-            </div>
-            <div class="docs-scope" data-theme="dark">
-              <h2 id="dark" class="docs-subhead">Dark</h2>
-              <p><code class="cai-code-inline">data-theme="dark"</code></p>
-              <p>Body text with <a href="../../../docs/tokens/color/">one link</a>.</p>
-              <div class="o-row">
-                <button class="cai-btn cai-btn--primary" type="button">Primary</button>
-                <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
-              </div>
-              <progress class="cai-progress" value="60" max="100" aria-label="Progress in dark mode"></progress>
-              <div class="cai-alert cai-alert--warning">
-                <div class="cai-alert__icon" aria-hidden="true">!</div>
-                <div>
-                  <div class="cai-alert__title">Warning</div>
-                  <div class="cai-alert__body">Same markup in every mode.</div>
-                </div>
-              </div>
-            </div>
-            <div class="docs-scope" data-theme="high-contrast">
-              <h2 id="high-contrast" class="docs-subhead">High contrast</h2>
-              <p><code class="cai-code-inline">data-theme="high-contrast"</code></p>
-              <p>Body text with <a href="../../../docs/tokens/color/">one link</a>.</p>
-              <div class="o-row">
-                <button class="cai-btn cai-btn--primary" type="button">Primary</button>
-                <span class="cai-tag cai-tag--green cai-tag--dot">Active</span>
-              </div>
-              <progress class="cai-progress" value="60" max="100" aria-label="Progress in high-contrast mode"></progress>
-              <div class="cai-alert cai-alert--warning">
-                <div class="cai-alert__icon" aria-hidden="true">!</div>
-                <div>
-                  <div class="cai-alert__title">Warning</div>
-                  <div class="cai-alert__body">Same markup in every mode.</div>
-                </div>
-              </div>
+    <div class="docs-block" id="t-figma">
+          <div class="cai-alert cai-alert--warning">
+            <div class="cai-alert__icon" aria-hidden="true">!</div>
+            <div>
+              <p class="cai-alert__title">Not tested in Figma yet</p>
+              <p class="cai-alert__body">Nobody has imported this file into Figma or Tokens Studio yet. The limits below come from Figma's help and from reports, checked on 9 October 2026. What a test does check is that the file matches the CSS. If you import it, <a href="https://github.com/nandovejer/cai/issues">tell us what happened</a>.</p>
             </div>
           </div>
-          <p class="docs-demo__note">Same markup, one attribute. Set <code class="cai-code-inline">data-theme</code> on <code class="cai-code-inline">&lt;html&gt;</code>, or on any element to scope a mode to it.</p>
-        
+
+          <h2 id="get-the-file">Get the file</h2>
+          <p><code>@cai-ds/tokens</code> includes every token in the W3C Design Tokens (DTCG) JSON format, in one file. <code>pnpm tokens:build</code> generates it from the same sources as the CSS, so the two always match.</p>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">Path</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dtcg-path" aria-label="Copy the path of the tokens file">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Where the tokens file is"><code id="code-dtcg-path">node_modules/@cai-ds/tokens/dist/cai-tokens.dtcg.json</code></pre>
+          </div>
+          <ul>
+            <li>From a bundler or a script: <code>import tokens from "@cai-ds/tokens/dtcg"</code> (the <code>./dtcg</code> export).</li>
+            <li>Without installing anything: <code>https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.dtcg.json</code>. Download it, then import the downloaded file.</li>
+          </ul>
+          <p>The file has two groups, one for each Figma collection you want:</p>
+          <div class="cai-table-wrap" role="region" aria-label="The two groups of the tokens file" tabindex="0">
+            <table class="cai-table">
+              <thead>
+                <tr><th scope="col">Group in the file</th><th scope="col">Meant as the collection</th><th scope="col">Modes</th><th scope="col">Comes from</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="Group in the file"><div><code>primitives</code></div></td><td data-label="Meant as the collection"><div>CAI primitives</div></td><td data-label="Modes"><div>One: Value</div></td><td data-label="Comes from"><div><code>tokens.json</code>: colour scales, space, control sizes, type, radius, shadows</div></td></tr>
+                <tr><td data-label="Group in the file"><div><code>semantic</code></div></td><td data-label="Meant as the collection"><div>CAI semantic</div></td><td data-label="Modes"><div>Light, Dark, High contrast</div></td><td data-label="Comes from"><div><code>src/semantic.css</code>: the <a href="../../../docs/tokens/color/">55 colours</a> that change with the mode</div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>A semantic token points at a primitive whenever the CSS does: <code>--cai-divider</code> is <code>var(--cai-gray-20)</code> in light mode, so <code>divider</code> is an alias of <code>{primitives.gray.20}</code>. Motion, layers and breakpoints ship with <code>@cai-ds/core</code>, so they are not in the file.</p>
+
+          <h2 id="names">One rule for every name</h2>
+          <p>Remove <code>--cai-</code>. The first word becomes the group and the rest becomes the name, joined by a slash.</p>
+          <div class="cai-table-wrap" role="region" aria-label="CSS custom properties and their Figma variables" tabindex="0">
+            <table class="cai-table">
+              <thead>
+                <tr><th scope="col">CSS custom property</th><th scope="col">Figma variable</th><th scope="col">Collection</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="CSS custom property"><div><code>--cai-surface-page</code></div></td><td data-label="Figma variable"><div><code>surface/page</code></div></td><td data-label="Collection"><div>CAI semantic</div></td></tr>
+                <tr><td data-label="CSS custom property"><div><code>--cai-text-secondary</code></div></td><td data-label="Figma variable"><div><code>text/secondary</code></div></td><td data-label="Collection"><div>CAI semantic</div></td></tr>
+                <tr><td data-label="CSS custom property"><div><code>--cai-color-danger-bg</code></div></td><td data-label="Figma variable"><div><code>color/danger-bg</code></div></td><td data-label="Collection"><div>CAI semantic</div></td></tr>
+                <tr><td data-label="CSS custom property"><div><code>--cai-space-md</code></div></td><td data-label="Figma variable"><div><code>space/md</code></div></td><td data-label="Collection"><div>CAI primitives</div></td></tr>
+                <tr><td data-label="CSS custom property"><div><code>--cai-blue-60</code></div></td><td data-label="Figma variable"><div><code>blue/60</code></div></td><td data-label="Collection"><div>CAI primitives</div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>One exception: <code>--cai-surface</code> is also the name of a group, so in the file it is <code>surface/$root</code>. Figma joins nested groups with slashes, so a tool that keeps the top group writes <code>semantic/surface/page</code>: the rest of the name does not change.</p>
+
+          <h2 id="modes">Figma modes and color modes</h2>
+          <p>Each mode of the semantic collection matches one value of <code>data-theme</code> on <code>&lt;html&gt;</code>. So a frame set to Dark in Figma shows what the page shows with <code>data-theme="dark"</code>.</p>
+          <div class="cai-table-wrap" role="region" aria-label="Figma modes and the color modes of the page" tabindex="0">
+            <table class="cai-table">
+              <thead>
+                <tr><th scope="col">Figma mode</th><th scope="col"><code>data-theme</code></th><th scope="col">Where it is in the file</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="Figma mode"><div>Light</div></td><td data-label="data-theme"><div><code>light</code>, or none</div></td><td data-label="Where it is in the file"><div><code>$value</code>, and <code>$extensions.mode.Light</code></div></td></tr>
+                <tr><td data-label="Figma mode"><div>Dark</div></td><td data-label="data-theme"><div><code>dark</code></div></td><td data-label="Where it is in the file"><div><code>$extensions.mode.Dark</code></div></td></tr>
+                <tr><td data-label="Figma mode"><div>High contrast</div></td><td data-label="data-theme"><div><code>high-contrast</code></div></td><td data-label="Where it is in the file"><div><code>$extensions.mode["High contrast"]</code></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The two looks that ship with core, <a href="../../../docs/tokens/modes/#themes">minimalist and vejer</a>, are not in the file. To have them in Figma, add them as extra modes and copy their values from their CSS files. This step is optional.</p>
+
+          <h2 id="import">Import it</h2>
+          <p>Two ways in. Neither has been tried with this file yet.</p>
+          <ul>
+            <li><strong>Tokens Studio or Terrazzo:</strong> they read DTCG files, so load this one as it is. The Dark and High contrast values are in <code>$extensions.mode</code>, a CAI extension that is not part of the DTCG standard, so check that your tool turns them into modes.</li>
+            <li><strong>Figma, without a plugin:</strong> the Variables panel imports DTCG files, but it makes <strong>one mode for each file</strong>, and an alias to another collection needs Figma's own <code>com.figma.aliasData</code> extension. This file therefore needs a conversion step first, described below. Imported as it is, you get the Light values only.</li>
+          </ul>
+          <p>To convert the file for Figma's own import, with a short script or by hand:</p>
+          <ol>
+            <li>Write the <code>primitives</code> group to a file of its own, and import it as the <strong>CAI primitives</strong> collection.</li>
+            <li>For each mode (Light, Dark, High contrast), write a file with the <code>semantic</code> group, where each token's <code>$value</code> is its value under <code>$extensions.mode</code> for that mode.</li>
+            <li>In those files, give each alias to a primitive (<code>{primitives.gray.90}</code>) the <code>com.figma.aliasData</code> extension that names the variable in CAI primitives, or write the colour instead of the alias.</li>
+            <li>Import the Light file to create the <strong>CAI semantic</strong> collection, then each of the other two files with <em>Import mode</em>, named Dark and High contrast.</li>
+          </ol>
+          <p>Files ready for each mode may ship in the package later, once an import has been checked in a real Figma file.</p>
+
+          <h2 id="limits">Known limits</h2>
+          <p>From <a href="https://help.figma.com/hc/en-us/articles/15343816063383">Figma's help on modes and import</a> (read on 9 October 2026) or from other users' reports, and not checked against this file:</p>
+          <ul>
+            <li><strong>Import the primitives before the semantic tokens</strong>, which point at them, if your tool makes two collections. Otherwise the aliases cannot resolve.</li>
+            <li><strong>Descriptions are lost.</strong> Figma's help does not mention them, and users report that they do not arrive. Each token's job is on the <a href="../../../docs/tokens/color/">Color page</a>.</li>
+            <li><strong>Sizes in <code>rem</code> are skipped.</strong> Figma takes dimensions in <code>px</code> only, and the type scale is in <code>rem</code>.</li>
+            <li><strong>Font stacks are skipped.</strong> Figma takes a single font name, not a list. Set the fonts in Figma's text styles.</li>
+            <li><strong>Modes need a paid Figma plan</strong> (Professional, Organization, Enterprise or Education), and the number of modes per collection depends on the plan.</li>
+          </ul>
+
+          <h2 id="keep-in-step">Keep Figma and the code in step</h2>
+          <ul>
+            <li>Import again whenever <code>@cai-ds/tokens</code> changes version. The file is regenerated with every release.</li>
+            <li>Never change a value in Figma alone: change the token in the code, and Figma follows on the next import.</li>
+            <li>Name your own variables with the same rule, so a designer and a developer use the same words.</li>
+          </ul>
     </div>
-
-    <section class="docs-block docs-chapter" id="themes" aria-labelledby="themes-title">
-      <h2 class="docs-chapter__title" id="themes-title">Themes and modes</h2>
-      <p class="docs-lead">A color mode changes how light or dark the page is; a theme changes its whole identity. You can combine them.</p>
-      <ul>
-        <li>The three modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>.</li>
-        <li>Two themes ship with core, each in a stylesheet of its own. Set the theme with <code class="cai-code-inline">data-theme</code> and its mode with <code class="cai-code-inline">data-mode</code>.</li>
-      </ul>
-      <ul>
-        <li><strong>Minimalist</strong> (<code class="cai-code-inline">cai-theme-minimalist.css</code>): one system sans throughout, warm neutrals.</li>
-        <li><strong>Vejer</strong> (<code class="cai-code-inline">cai-theme-vejer.css</code>): a reading theme inspired by Vejer de la Frontera. ET Book for running text and headings, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, and every link underlined.</li>
-      </ul>
-      <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Theme and mode examples"><code>&lt;html data-theme=&quot;dark&quot;&gt;
-
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/themes/cai-theme-vejer.min.css&quot;&gt;
-&lt;html data-theme=&quot;vejer&quot; data-mode=&quot;dark&quot;&gt;
-&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
-      <p>Every theme is measured by <code class="cai-code-inline">pnpm check:contrast</code> in every mode: 4.5:1 for text, 3:1 for disabled text, borders and focus rings.</p>
-      <h3 class="docs-prose__title" id="themes-custom">Make your own theme</h3>
-      <p>A theme overrides semantic tokens, and may change the fonts, radii and shadows. It never changes the primitive colours or component CSS.</p>
-      <ul>
-        <li>Give it a <code class="cai-code-inline">data-theme</code> name of its own.</li>
-        <li>Check it against the same contrast minimums: CAI guarantees only the themes it ships.</li>
-      </ul>
-      <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Custom theme template"><code>[data-theme=&quot;my-brand&quot;] {
-  --cai-brand-primary: #0057ff;
-  --cai-brand-hover: #0043c2;
-  --cai-surface-page: #f8faff;
-  --cai-text-primary: #0d1320;
-  --cai-divider: #dbe3f2;
-}</code></pre>
-    </section>
 
   </div>
   <ul class="docs-pager">
-    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/tokens/typography/">Previous: Typography</a></li>
-    <li class="docs-pager__next"><a rel="next" href="../../../docs/tokens/radius/">Next: Radius</a></li>
+    <li class="docs-pager__prev"><a rel="prev" href="../../../docs/tokens/palette/">Previous: Color palette</a></li>
   </ul>
   </main>
 

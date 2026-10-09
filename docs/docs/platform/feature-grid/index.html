@@ -9,11 +9,11 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CKj4cAp9.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -71,7 +71,7 @@
         <a class="site-header__components" href="../../../docs/components/">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
       <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
         <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <span class="cai-platform-search-trigger__label">Search docs…</span>
@@ -150,7 +150,10 @@
           <ul class="docs-onpage__sub">
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
           </ul>
         </li>
       </ul>
@@ -232,7 +235,7 @@
               <li>To link a card, put the link on its title text and keep the rest plain: one tab stop per card.</li>
               <li>Give each card a heading, so screen reader users can move from card to card.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -244,11 +247,36 @@
               <li>For items with an order, use a numbered list.</li>
               <li>For a single item, use a card on its own.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Parallel cards: the same kind of title and one sentence each.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-feature-grid"><div class="cai-card"><p class="cai-card__title">Usage</p><p class="cai-card__body u-mb-0">1.2 million requests this month.</p></div><div class="cai-card"><p class="cai-card__title">Team</p><p class="cai-card__body u-mb-0">Eight members.</p></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Plans the reader compares, value by value, in cards: use a table, with one column per plan.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-feature-grid"><div class="cai-card"><p class="cai-card__title">Team</p><p class="cai-card__body u-mb-0">€20 a month, 10 users, 50 GB.</p></div><div class="cai-card"><p class="cai-card__title">Business</p><p class="cai-card__body u-mb-0">50 GB more, €45 a month and 25 users.</p></div></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Keep the cards parallel: the same heading level and one or two sentences each.</p>
             <ul>
               <li>An even number of items fills the two columns.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The grid adds no colour of its own: the cards in it keep the pairs on the <a href="../../../docs/components/card/#contrast">card page</a>.</p>
+            <ul>
+              <li><strong>Focus:</strong> the grid takes none; what is inside keeps its own ring.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 1 tokens that the <code>.cai-platform-feature-grid</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-sm</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

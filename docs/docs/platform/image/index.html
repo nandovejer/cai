@@ -9,11 +9,11 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CKj4cAp9.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -71,7 +71,7 @@
         <a class="site-header__components" href="../../../docs/components/">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
       <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
         <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <span class="cai-platform-search-trigger__label">Search docs…</span>
@@ -155,7 +155,10 @@
           <ul class="docs-onpage__sub">
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
           </ul>
         </li>
       </ul>
@@ -275,7 +278,7 @@
               <li>Do not add a role or an <code>aria-label</code> to the frame.</li>
               <li>If the image is a link, the link takes its name from the alt text, which must then say where it goes.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -292,6 +295,21 @@
               <li>For icons and logos, use an <code>&lt;img&gt;</code> or an SVG at its own size.</li>
               <li>Never let the placeholder stand in for an image that carries information: if it is missing, say so in text.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A real image, with an alt text that says what it shows.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-image"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="640" height="360" alt="Out-of-focus sand dunes under a low sun"></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The placeholder where the content is the image: a floor plan nobody can see, with nothing in words.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <figure class="u-mb-0"><div class="cai-platform-image"></div><figcaption>Floor plan of the ground floor</figcaption></figure>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Give every real image an alt text that says what it shows, in one plain sentence.</p>
             <ul>
@@ -302,6 +320,28 @@
               <li>Add <code>loading="lazy"</code> only below the fold; an image visible when the page opens should load at once.</li>
               <li>Do not put text in images.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The frame is the strong surface; if an image fails to load, its alt text shows in primary text on it.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Image contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Alt text of a broken image</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>8.7:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the frame takes none.</li>
+              <li><strong>Images:</strong> their own colours are yours. The placeholder is a background drawing with no meaning, so it has no minimum.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 2 tokens that the <code>.cai-platform-image</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

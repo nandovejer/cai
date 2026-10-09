@@ -9,11 +9,11 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CKj4cAp9.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -71,7 +71,7 @@
         <a class="site-header__components" href="../../../docs/components/">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
       <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
         <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <span class="cai-platform-search-trigger__label">Search docs…</span>
@@ -103,6 +103,7 @@
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/motion/">Motion</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/layout/">Layers and breakpoints</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
         </ul>
       </li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/platform/">Platform</a></li>
@@ -153,476 +154,421 @@
             <li><strong>Status</strong> for success, warning, danger and information, and nothing else.</li>
             <li><strong>Sidebar</strong>, <strong>inputs</strong> and <strong>code syntax</strong> for those components only.</li>
           </ul>
-          <p class="docs-demo__note">Each chip shows the token in light, dark and high contrast, left to right. One click on a name selects all of it, ready to copy.</p>
+          <p class="docs-demo__note">Each token shows its job, then its value in light, dark and high contrast, side by side. One click on a name selects all of it, ready to copy. In Figma the same names are variables: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
           <details class="docs-fold" open data-fold-narrow>
             <summary>All <span data-count="semantic">55</span> semantic tokens, in 9 groups</summary>
             <div class="docs-demo__stage">
             <h2 id="surfaces-8" class="docs-subhead">Surfaces (8)</h2>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-page)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-page)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-page)"></span>
-                </span>
+              <li class="docs-token" id="cai-surface-page">
                 <code class="u-select-all">--cai-surface-page</code>
+                <span class="docs-token__role">The page background.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-page)"></span>Light <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-page)"></span>Dark <code>#16191e</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-page)"></span>High contrast <code>#fff</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface)"></span>
-                </span>
+              <li class="docs-token" id="cai-surface">
                 <code class="u-select-all">--cai-surface</code>
+                <span class="docs-token__role">Cards, dialogs and fields: the same face as the page.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface)"></span>Light <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface)"></span>Dark <code>#16191e</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface)"></span>High contrast <code>#fff</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-hover)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-hover)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-hover)"></span>
-                </span>
+              <li class="docs-token" id="cai-surface-hover">
                 <code class="u-select-all">--cai-surface-hover</code>
+                <span class="docs-token__role">A row or a control under the pointer.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-hover)"></span>Light <code>#f9fafc</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-hover)"></span>Dark <code>#282d34</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-hover)"></span>High contrast <code>#f9fafc</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-pressed)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-pressed)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-pressed)"></span>
-                </span>
+              <li class="docs-token" id="cai-surface-pressed">
                 <code class="u-select-all">--cai-surface-pressed</code>
+                <span class="docs-token__role">A control while it is pressed.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-pressed)"></span>Light <code>#e9eef4</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-pressed)"></span>Dark <code>#434951</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-pressed)"></span>High contrast <code>#e9eef4</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-muted)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-muted)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-muted)"></span>
-                </span>
+              <li class="docs-token" id="cai-surface-muted">
                 <code class="u-select-all">--cai-surface-muted</code>
+                <span class="docs-token__role">Code blocks and wells, one step from the page.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-muted)"></span>Light <code>#f9fafc</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-muted)"></span>Dark <code>#282d34</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-muted)"></span>High contrast <code>#f9fafc</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-strong)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-strong)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-strong)"></span>
-                </span>
+              <li class="docs-token" id="cai-surface-strong">
                 <code class="u-select-all">--cai-surface-strong</code>
+                <span class="docs-token__role">Table headers, tags, tooltips and toasts, two steps from the page.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-strong)"></span>Light <code>#e9eef4</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-strong)"></span>Dark <code>#434951</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-strong)"></span>High contrast <code>#e9eef4</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-scrim)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-scrim)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-scrim)"></span>
-                </span>
+              <li class="docs-token" id="cai-scrim">
                 <code class="u-select-all">--cai-scrim</code>
+                <span class="docs-token__role">Dims the page behind a dialog or the drawer.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-scrim)"></span>Light <code>rgba(13, 14, 17, 0.6)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-scrim)"></span>Dark <code>rgba(0, 0, 0, 0.7)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-scrim)"></span>High contrast <code>rgba(0, 0, 0, 0.6)</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-media)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-media)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-media)"></span>
-                </span>
+              <li class="docs-token" id="cai-surface-media">
                 <code class="u-select-all">--cai-surface-media</code>
+                <span class="docs-token__role">Behind a video. The same in every mode.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-surface-media)"></span>Light <code>#000</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-surface-media)"></span>Dark <code>#000</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-surface-media)"></span>High contrast <code>#000</code></span>
               </li>
             </ul>
             <h2 id="text-5" class="docs-subhead">Text (5)</h2>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-primary)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-primary)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-primary)"></span>
-                </span>
+              <li class="docs-token" id="cai-text-primary">
                 <code class="u-select-all">--cai-text-primary</code>
+                <span class="docs-token__role">Body text, headings and icons.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-primary)"></span>Light <code>#0d0e11</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-primary)"></span>Dark <code>#f9fafc</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-primary)"></span>High contrast <code>#000</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-secondary)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-secondary)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-secondary)"></span>
-                </span>
+              <li class="docs-token" id="cai-text-secondary">
                 <code class="u-select-all">--cai-text-secondary</code>
+                <span class="docs-token__role">Labels, hints and captions.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-secondary)"></span>Light <code>#434951</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-secondary)"></span>Dark <code>#ced5dd</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-secondary)"></span>High contrast <code>#0d0e11</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-muted)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-muted)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-muted)"></span>
-                </span>
+              <li class="docs-token" id="cai-text-muted">
                 <code class="u-select-all">--cai-text-muted</code>
+                <span class="docs-token__role">Placeholders and separators.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-muted)"></span>Light <code>#646b73</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-muted)"></span>Dark <code>#889099</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-muted)"></span>High contrast <code>#434951</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-disabled)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-disabled)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-disabled)"></span>
-                </span>
+              <li class="docs-token" id="cai-text-disabled">
                 <code class="u-select-all">--cai-text-disabled</code>
+                <span class="docs-token__role">Disabled controls: 3:1, CAI's own floor.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-disabled)"></span>Light <code>#646b73</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-disabled)"></span>Dark <code>#adb5bd</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-disabled)"></span>High contrast <code>#646b73</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-on-fill)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-on-fill)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-on-fill)"></span>
-                </span>
+              <li class="docs-token" id="cai-text-on-fill">
                 <code class="u-select-all">--cai-text-on-fill</code>
+                <span class="docs-token__role">Text on a solid fill: primary and danger buttons, badges.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-text-on-fill)"></span>Light <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-text-on-fill)"></span>Dark <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-text-on-fill)"></span>High contrast <code>#fff</code></span>
               </li>
             </ul>
             <h2 id="lines-3" class="docs-subhead">Lines (3)</h2>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-divider)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-divider)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-divider)"></span>
-                </span>
+              <li class="docs-token" id="cai-divider">
                 <code class="u-select-all">--cai-divider</code>
+                <span class="docs-token__role">Decorative lines between content. No minimum.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-divider)"></span>Light <code>#e9eef4</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-divider)"></span>Dark <code>#282d34</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-divider)"></span>High contrast <code>#434951</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-outline)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-outline)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-outline)"></span>
-                </span>
+              <li class="docs-token" id="cai-outline">
                 <code class="u-select-all">--cai-outline</code>
+                <span class="docs-token__role">Borders that identify a control: 3:1.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-outline)"></span>Light <code>#646b73</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-outline)"></span>Dark <code>#646b73</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-outline)"></span>High contrast <code>#000</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-focus-ring)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-focus-ring)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-focus-ring)"></span>
-                </span>
+              <li class="docs-token" id="cai-focus-ring">
                 <code class="u-select-all">--cai-focus-ring</code>
+                <span class="docs-token__role">The focus outline: 3:1 on every surface.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-focus-ring)"></span>Light <code>#0066cf</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-focus-ring)"></span>Dark <code>#77b9ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-focus-ring)"></span>High contrast <code>#000</code></span>
               </li>
             </ul>
             <h2 id="brand-7" class="docs-subhead">Brand (7)</h2>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-primary)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-primary)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-primary)"></span>
-                </span>
+              <li class="docs-token" id="cai-brand-primary">
                 <code class="u-select-all">--cai-brand-primary</code>
+                <span class="docs-token__role">Links, outline and ghost buttons, the current tab.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-primary)"></span>Light <code>#0066cf</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-primary)"></span>Dark <code>#77b9ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-primary)"></span>High contrast <code>#00256c</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-hover)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-hover)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-hover)"></span>
-                </span>
+              <li class="docs-token" id="cai-brand-hover">
                 <code class="u-select-all">--cai-brand-hover</code>
+                <span class="docs-token__role">A link under the pointer.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-hover)"></span>Light <code>#004299</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-hover)"></span>Dark <code>#b3d9ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-hover)"></span>High contrast <code>#000d4e</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-active)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-active)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-active)"></span>
-                </span>
+              <li class="docs-token" id="cai-brand-active">
                 <code class="u-select-all">--cai-brand-active</code>
+                <span class="docs-token__role">A link while it is pressed.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-active)"></span>Light <code>#00256c</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-active)"></span>Dark <code>#dff0ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-active)"></span>High contrast <code>#020831</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-subtle)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-subtle)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-subtle)"></span>
-                </span>
+              <li class="docs-token" id="cai-brand-subtle">
                 <code class="u-select-all">--cai-brand-subtle</code>
+                <span class="docs-token__role">A light brand tint: avatars, a hovered outline button.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-subtle)"></span>Light <code>#f6fbff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-subtle)"></span>Dark <code>rgba(32, 143, 255, 0.14)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-subtle)"></span>High contrast <code>#f6fbff</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill)"></span>
-                </span>
+              <li class="docs-token" id="cai-brand-fill">
                 <code class="u-select-all">--cai-brand-fill</code>
+                <span class="docs-token__role">The fill behind white text: primary button, badge, checked box.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill)"></span>Light <code>#0066cf</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill)"></span>Dark <code>#0066cf</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill)"></span>High contrast <code>#00256c</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill-hover)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill-hover)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill-hover)"></span>
-                </span>
+              <li class="docs-token" id="cai-brand-fill-hover">
                 <code class="u-select-all">--cai-brand-fill-hover</code>
+                <span class="docs-token__role">The primary button under the pointer.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill-hover)"></span>Light <code>#004299</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill-hover)"></span>Dark <code>#004299</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill-hover)"></span>High contrast <code>#000d4e</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill-active)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill-active)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill-active)"></span>
-                </span>
+              <li class="docs-token" id="cai-brand-fill-active">
                 <code class="u-select-all">--cai-brand-fill-active</code>
+                <span class="docs-token__role">The primary button while it is pressed.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-brand-fill-active)"></span>Light <code>#00256c</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-brand-fill-active)"></span>Dark <code>#00256c</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-brand-fill-active)"></span>High contrast <code>#020831</code></span>
               </li>
             </ul>
             <h2 id="sidebar-9" class="docs-subhead">Sidebar (9)</h2>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-bg">
                 <code class="u-select-all">--cai-sidebar-bg</code>
+                <span class="docs-token__role">The sidebar panel.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-bg)"></span>Light <code>#0d0e11</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-bg)"></span>Dark <code>#0d0e11</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-bg)"></span>High contrast <code>#000</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-text)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-text)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-text)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-text">
                 <code class="u-select-all">--cai-sidebar-text</code>
+                <span class="docs-token__role">Sidebar links.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-text)"></span>Light <code>#adb5bd</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-text)"></span>Dark <code>#adb5bd</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-text)"></span>High contrast <code>#ced5dd</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-text-hover)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-text-hover)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-text-hover)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-text-hover">
                 <code class="u-select-all">--cai-sidebar-text-hover</code>
+                <span class="docs-token__role">A sidebar link under the pointer, the brand name, the focus ring.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-text-hover)"></span>Light <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-text-hover)"></span>Dark <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-text-hover)"></span>High contrast <code>#fff</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-hover)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-hover)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-hover)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-hover">
                 <code class="u-select-all">--cai-sidebar-hover</code>
+                <span class="docs-token__role">Behind a sidebar link under the pointer.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-hover)"></span>Light <code>#16191e</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-hover)"></span>Dark <code>#16191e</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-hover)"></span>High contrast <code>#16191e</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-active-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-active-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-active-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-active-bg">
                 <code class="u-select-all">--cai-sidebar-active-bg</code>
+                <span class="docs-token__role">Behind the current sidebar link.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-active-bg)"></span>Light <code>#0066cf</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-active-bg)"></span>Dark <code>#0066cf</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-active-bg)"></span>High contrast <code>#fff</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-active-text)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-active-text)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-active-text)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-active-text">
                 <code class="u-select-all">--cai-sidebar-active-text</code>
+                <span class="docs-token__role">The current sidebar link.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-active-text)"></span>Light <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-active-text)"></span>Dark <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-active-text)"></span>High contrast <code>#000</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-border)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-border)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-border)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-border">
                 <code class="u-select-all">--cai-sidebar-border</code>
+                <span class="docs-token__role">Lines between the parts of the sidebar. Decorative.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-border)"></span>Light <code>#16191e</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-border)"></span>Dark <code>#282d34</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-border)"></span>High contrast <code>#282d34</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-label)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-label)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-label)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-label">
                 <code class="u-select-all">--cai-sidebar-label</code>
+                <span class="docs-token__role">Section labels and the version.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-label)"></span>Light <code>#889099</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-label)"></span>Dark <code>#889099</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-label)"></span>High contrast <code>#889099</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-logo-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-logo-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-logo-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-sidebar-logo-bg">
                 <code class="u-select-all">--cai-sidebar-logo-bg</code>
+                <span class="docs-token__role">Behind the logo.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-sidebar-logo-bg)"></span>Light <code>#0066cf</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-sidebar-logo-bg)"></span>Dark <code>#0066cf</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-sidebar-logo-bg)"></span>High contrast <code>#fff</code></span>
               </li>
             </ul>
             <h2 id="status-10" class="docs-subhead">Status (10)</h2>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-success)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-success)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-success)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-success">
                 <code class="u-select-all">--cai-color-success</code>
+                <span class="docs-token__role">Success text and borders.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-success)"></span>Light <code>#005733</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-success)"></span>Dark <code>#beffda</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-success)"></span>High contrast <code>#005733</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-success-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-success-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-success-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-success-bg">
                 <code class="u-select-all">--cai-color-success-bg</code>
+                <span class="docs-token__role">The success tint behind alerts and tags.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-success-bg)"></span>Light <code>#eefff5</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-success-bg)"></span>Dark <code>rgba(82, 207, 146, 0.14)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-success-bg)"></span>High contrast <code>#eefff5</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-danger">
                 <code class="u-select-all">--cai-color-danger</code>
+                <span class="docs-token__role">Error text and the border of an invalid field.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger)"></span>Light <code>#8c000c</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger)"></span>Dark <code>#ffe7e6</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger)"></span>High contrast <code>#8c000c</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-danger-bg">
                 <code class="u-select-all">--cai-color-danger-bg</code>
+                <span class="docs-token__role">The danger tint.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger-bg)"></span>Light <code>#fff8f8</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger-bg)"></span>Dark <code>rgba(239, 79, 81, 0.14)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger-bg)"></span>High contrast <code>#fff8f8</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger-fill)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger-fill)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger-fill)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-danger-fill">
                 <code class="u-select-all">--cai-color-danger-fill</code>
+                <span class="docs-token__role">The danger button and badge, behind white text.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-danger-fill)"></span>Light <code>#c31a26</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-danger-fill)"></span>Dark <code>#c31a26</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-danger-fill)"></span>High contrast <code>#8c000c</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-warning">
                 <code class="u-select-all">--cai-color-warning</code>
+                <span class="docs-token__role">Warning text.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning)"></span>Light <code>#7c4d00</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning)"></span>Dark <code>#ffedb7</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning)"></span>High contrast <code>#7c4d00</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning-accent)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning-accent)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning-accent)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-warning-accent">
                 <code class="u-select-all">--cai-color-warning-accent</code>
+                <span class="docs-token__role">The start border of a warning alert. Decorative.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning-accent)"></span>Light <code>#ffcd51</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning-accent)"></span>Dark <code>#ffedb7</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning-accent)"></span>High contrast <code>#e2a928</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-warning-bg">
                 <code class="u-select-all">--cai-color-warning-bg</code>
+                <span class="docs-token__role">The warning tint.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-warning-bg)"></span>Light <code>#fffae8</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-warning-bg)"></span>Dark <code>rgba(255, 205, 81, 0.14)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-warning-bg)"></span>High contrast <code>#fffae8</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-info)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-info)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-info)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-info">
                 <code class="u-select-all">--cai-color-info</code>
+                <span class="docs-token__role">Information text.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-info)"></span>Light <code>#004299</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-info)"></span>Dark <code>#dff0ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-info)"></span>High contrast <code>#00256c</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-info-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-info-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-info-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-info-bg">
                 <code class="u-select-all">--cai-color-info-bg</code>
+                <span class="docs-token__role">The information tint.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-info-bg)"></span>Light <code>#f6fbff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-info-bg)"></span>Dark <code>rgba(119, 185, 255, 0.14)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-info-bg)"></span>High contrast <code>#f6fbff</code></span>
               </li>
             </ul>
             <h2 id="inputs-2" class="docs-subhead">Inputs (2)</h2>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-input-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-input-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-input-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-input-bg">
                 <code class="u-select-all">--cai-input-bg</code>
+                <span class="docs-token__role">Inside a field.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-input-bg)"></span>Light <code>#fff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-input-bg)"></span>Dark <code>#16191e</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-input-bg)"></span>High contrast <code>#fff</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-input-border)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-input-border)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-input-border)"></span>
-                </span>
+              <li class="docs-token" id="cai-input-border">
                 <code class="u-select-all">--cai-input-border</code>
+                <span class="docs-token__role">The edge of a field: 3:1 on every surface.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-input-border)"></span>Light <code>#646b73</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-input-border)"></span>Dark <code>#adb5bd</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-input-border)"></span>High contrast <code>#000</code></span>
               </li>
             </ul>
             <h2 id="extended-5" class="docs-subhead">Extended (5)</h2>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-teal)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-teal)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-teal)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-teal">
                 <code class="u-select-all">--cai-color-teal</code>
+                <span class="docs-token__role">Category text (teal tag). Never a status.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-teal)"></span>Light <code>#00554b</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-teal)"></span>Dark <code>#c3fbec</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-teal)"></span>High contrast <code>#00554b</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-teal-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-teal-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-teal-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-teal-bg">
                 <code class="u-select-all">--cai-color-teal-bg</code>
+                <span class="docs-token__role">The teal tint.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-teal-bg)"></span>Light <code>#effefa</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-teal-bg)"></span>Dark <code>rgba(98, 201, 181, 0.14)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-teal-bg)"></span>High contrast <code>#effefa</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-purple)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-purple)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-purple)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-purple">
                 <code class="u-select-all">--cai-color-purple</code>
+                <span class="docs-token__role">Category text (purple tag). Never a status.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-purple)"></span>Light <code>#610ca0</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-purple)"></span>Dark <code>#f3e8ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-purple)"></span>High contrast <code>#610ca0</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-purple-bg)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-purple-bg)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-purple-bg)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-purple-bg">
                 <code class="u-select-all">--cai-color-purple-bg</code>
+                <span class="docs-token__role">The purple tint.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-purple-bg)"></span>Light <code>#fcf9ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-purple-bg)"></span>Dark <code>rgba(202, 154, 255, 0.14)</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-purple-bg)"></span>High contrast <code>#fcf9ff</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-code)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-code)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-code)"></span>
-                </span>
+              <li class="docs-token" id="cai-color-code">
                 <code class="u-select-all">--cai-color-code</code>
+                <span class="docs-token__role">Inline code.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-color-code)"></span>Light <code>#610ca0</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-color-code)"></span>Dark <code>#f3e8ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-color-code)"></span>High contrast <code>#00256c</code></span>
               </li>
             </ul>
             <h2 id="code-syntax-6" class="docs-subhead">Code syntax (6)</h2>
             <p class="docs-demo__note">The colours of <code>pre.cai-code-block</code>, measured on <code>--cai-surface-muted</code>: 4.5:1 or more, 7:1 or more in high contrast. See <a href="../../../docs/components/code/#c-code-syntax">the syntax specimen</a>.</p>
             <ul class="docs-token-grid">
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-comment)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-comment)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-comment)"></span>
-                </span>
+              <li class="docs-token" id="cai-code-comment">
                 <code class="u-select-all">--cai-code-comment</code>
+                <span class="docs-token__role">Comments, also in italics.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-comment)"></span>Light <code>#646b73</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-comment)"></span>Dark <code>#adb5bd</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-comment)"></span>High contrast <code>#434951</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-keyword)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-keyword)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-keyword)"></span>
-                </span>
+              <li class="docs-token" id="cai-code-keyword">
                 <code class="u-select-all">--cai-code-keyword</code>
+                <span class="docs-token__role">Keywords, also in bold.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-keyword)"></span>Light <code>#0d0e11</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-keyword)"></span>Dark <code>#f9fafc</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-keyword)"></span>High contrast <code>#000</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-name)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-name)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-name)"></span>
-                </span>
+              <li class="docs-token" id="cai-code-name">
                 <code class="u-select-all">--cai-code-name</code>
+                <span class="docs-token__role">Tags, selectors, functions and commands.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-name)"></span>Light <code>#004299</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-name)"></span>Dark <code>#b3d9ff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-name)"></span>High contrast <code>#00256c</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-property)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-property)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-property)"></span>
-                </span>
+              <li class="docs-token" id="cai-code-property">
                 <code class="u-select-all">--cai-code-property</code>
+                <span class="docs-token__role">Attributes, properties, flags and variables.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-property)"></span>Light <code>#853bca</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-property)"></span>Dark <code>#ca9aff</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-property)"></span>High contrast <code>#610ca0</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-string)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-string)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-string)"></span>
-                </span>
+              <li class="docs-token" id="cai-code-string">
                 <code class="u-select-all">--cai-code-string</code>
+                <span class="docs-token__role">Strings.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-string)"></span>Light <code>#007f4d</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-string)"></span>Dark <code>#52cf92</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-string)"></span>High contrast <code>#005733</code></span>
               </li>
-              <li class="docs-token">
-                <span class="docs-token__modes" aria-hidden="true">
-                  <span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-literal)"></span>
-                  <span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-literal)"></span>
-                  <span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-literal)"></span>
-                </span>
+              <li class="docs-token" id="cai-code-literal">
                 <code class="u-select-all">--cai-code-literal</code>
+                <span class="docs-token__role">Numbers, colours and entities.</span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="light" style="--v: var(--cai-code-literal)"></span>Light <code>#7c4d00</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="dark" style="--v: var(--cai-code-literal)"></span>Dark <code>#e2a928</code></span>
+                <span class="docs-token__mode"><span class="docs-swatch" data-theme="high-contrast" style="--v: var(--cai-code-literal)"></span>High contrast <code>#553000</code></span>
               </li>
             </ul>
           </div>

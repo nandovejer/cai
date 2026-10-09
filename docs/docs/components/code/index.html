@@ -9,11 +9,11 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CKj4cAp9.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -71,7 +71,7 @@
         <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
       <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
         <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <span class="cai-platform-search-trigger__label">Search docs…</span>
@@ -166,7 +166,10 @@
           <ul class="docs-onpage__sub">
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
           </ul>
         </li>
       </ul>
@@ -365,7 +368,7 @@ initHighlight();</code></pre>
               <li><code>tabindex="0"</code>, <code>role="region"</code> and an <code>aria-label</code> that names the code, so the focus stop has a name.</li>
               <li>Inline code needs nothing.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -378,6 +381,21 @@ initHighlight();</code></pre>
               <li>For a whole file, link to the source.</li>
               <li>For a key the reader presses, use <code>&lt;kbd&gt;</code>.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Code that works when it is pasted: the command alone.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <pre class="cai-code-block" data-lang="shell"><code>npm install @cai-ds/core</code></pre>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A prompt sign and the output in the same block: pasted, the “$” and the output lines fail.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <pre class="cai-code-block" data-lang="shell"><code>$ npm install @cai-ds/core&#10;added 1 package in 2s</code></pre>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Show code that works when it is pasted.</p>
             <ul>
@@ -385,6 +403,40 @@ initHighlight();</code></pre>
               <li>Set <code>data-lang</code>; use <code>text</code> for output that is not code.</li>
               <li>Keep lines short: a long line makes the reader scroll sideways.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The code and its syntax colours sit on the muted surface. In high contrast every syntax colour reaches 7:1.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Code contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Code</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>18.4:1</div></td><td data-label="Dark"><div>13.2:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Comment</div></td><td data-label="Colour on background"><div><code>--cai-code-comment</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.6:1</div></td><td data-label="High contrast"><div>8.7:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Keyword</div></td><td data-label="Colour on background"><div><code>--cai-code-keyword</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>18.4:1</div></td><td data-label="Dark"><div>13.2:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Name</div></td><td data-label="Colour on background"><div><code>--cai-code-name</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>8.9:1</div></td><td data-label="Dark"><div>9.4:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Property</div></td><td data-label="Colour on background"><div><code>--cai-code-property</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.7:1</div></td><td data-label="Dark"><div>6.3:1</div></td><td data-label="High contrast"><div>9.7:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>String</div></td><td data-label="Colour on background"><div><code>--cai-code-string</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>7.0:1</div></td><td data-label="High contrast"><div>8.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Literal</div></td><td data-label="Colour on background"><div><code>--cai-code-literal</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>6.8:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>11.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Language label</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>8.7:1</div></td><td data-label="Dark"><div>9.3:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Inline code</div></td><td data-label="Colour on background"><div><code>--cai-color-code</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>9.7:1</div></td><td data-label="Dark"><div>11.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> core draws no ring of its own on a scrollable block (<code>tabindex="0"</code>): it gets the browser's. These docs add the CAI ring in <code>reference.css</code>; do the same if your blocks scroll.</li>
+              <li><strong>Not colour alone:</strong> keywords are bold and comments italic, so the syntax still reads without the colours.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 21 tokens that <code>components/code.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-code-comment"><code>--cai-code-comment</code></a>, <a href="../../../docs/tokens/color/#cai-code-keyword"><code>--cai-code-keyword</code></a>, <a href="../../../docs/tokens/color/#cai-code-literal"><code>--cai-code-literal</code></a>, <a href="../../../docs/tokens/color/#cai-code-name"><code>--cai-code-name</code></a>, <a href="../../../docs/tokens/color/#cai-code-property"><code>--cai-code-property</code></a>, <a href="../../../docs/tokens/color/#cai-code-string"><code>--cai-code-string</code></a>, <a href="../../../docs/tokens/color/#cai-color-code"><code>--cai-color-code</code></a>, <a href="../../../docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="../../../docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="../../../docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-3xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-base</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

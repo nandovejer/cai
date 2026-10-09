@@ -9,11 +9,11 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CKj4cAp9.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -71,7 +71,7 @@
         <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
       <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
         <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <span class="cai-platform-search-trigger__label">Search docs…</span>
@@ -165,7 +165,10 @@
           <ul class="docs-onpage__sub">
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
           </ul>
         </li>
       </ul>
@@ -253,7 +256,7 @@
               <li>An icon-only button needs a name: <code>aria-label="Close"</code>, and the icon <code>aria-hidden="true"</code>.</li>
               <li>A disabled button is skipped by Tab and screen readers may not find it: prefer an enabled button that explains what is missing.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -269,6 +272,21 @@
               <li>For several related actions in a row, use an <a href="../../../docs/platform/actions/">action group</a>.</li>
               <li>Do not disable a button to hide an action the reader cannot take yet: say why instead.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> One primary button, for the action most people take; the others are quieter.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-row"><button class="cai-btn cai-btn--primary" type="button">Save changes</button><button class="cai-btn cai-btn--ghost" type="button">Cancel</button></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Two primary buttons: neither one reads as the next step, so the reader has to stop and compare.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-row"><button class="cai-btn cai-btn--primary" type="button">Save changes</button><button class="cai-btn cai-btn--primary" type="button">Publish</button></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Start with a verb and say the result: "Save changes", "Delete draft".</p>
             <ul>
@@ -276,6 +294,40 @@
               <li>Sentence case, two or three words, no full stop.</li>
               <li>Use the same words for the same action everywhere.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Filled buttons put white text on a fill; outline and ghost buttons put brand text on the page.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Button contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Primary label</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>5.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Primary label, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill-hover</code></div></td><td data-label="Light"><div>9.3:1</div></td><td data-label="Dark"><div>9.3:1</div></td><td data-label="High contrast"><div>17.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary label</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>8.7:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary label, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-outline</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.3:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Outline and ghost label</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Outline and ghost label, hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>7.1:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Danger label</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-color-danger-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>6.0:1</div></td><td data-label="High contrast"><div>9.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Disabled label and border</div></td><td data-label="Colour on background"><div><code>--cai-text-disabled</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.4:1</div></td><td data-label="High contrast"><div>5.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons. Disabled text has no WCAG minimum; CAI asks 3:1.</p>
+            <ul>
+              <li><strong>Focus:</strong> a 2 px <code>--cai-focus-ring</code> outline, 2 px outside the button, on every variant.</li>
+              <li><strong>Not colour alone:</strong> a disabled button has a dashed border; the outline variant's border is the brand colour, as its text.</li>
+              <li><strong>Target:</strong> 44 px high by default, 36 px for <code>.cai-btn--sm</code>.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 24 tokens that <code>components/button.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-brand-fill"><code>--cai-brand-fill</code></a>, <a href="../../../docs/tokens/color/#cai-brand-fill-active"><code>--cai-brand-fill-active</code></a>, <a href="../../../docs/tokens/color/#cai-brand-fill-hover"><code>--cai-brand-fill-hover</code></a>, <a href="../../../docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="../../../docs/tokens/color/#cai-brand-subtle"><code>--cai-brand-subtle</code></a>, <a href="../../../docs/tokens/color/#cai-color-danger-fill"><code>--cai-color-danger-fill</code></a>, <a href="../../../docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="../../../docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="../../../docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="../../../docs/tokens/color/#cai-text-disabled"><code>--cai-text-disabled</code></a>, <a href="../../../docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-control-md</code>, <code>--cai-control-xl</code>, <code>--cai-space-lg</code>, <code>--cai-space-sm</code>, <code>--cai-space-xl</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-base</code>, <code>--cai-text-md</code>, <code>--cai-text-sm</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

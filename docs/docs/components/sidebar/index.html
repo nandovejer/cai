@@ -9,11 +9,11 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CKj4cAp9.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -71,7 +71,7 @@
         <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
       <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
         <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <span class="cai-platform-search-trigger__label">Search docs…</span>
@@ -166,7 +166,10 @@
           <ul class="docs-onpage__sub">
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
           </ul>
         </li>
       </ul>
@@ -285,7 +288,7 @@ initSidebar();</code></pre>
               <li>Mark the current page with <code>aria-current="page"</code> as well as <code>.is-active</code>: the class is only the look.</li>
               <li>The menu button keeps the name "Menu" whether the drawer is open or closed; the popover exposes the state.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -297,12 +300,63 @@ initSidebar();</code></pre>
               <li>For the trail to the current page, use a <a href="../../../docs/components/breadcrumb/">breadcrumb</a>.</li>
               <li>For panels of one page, use <a href="../../../docs/components/tabs/">tabs</a>.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Short nouns, grouped under a label, in the order people need them.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="docs-dodont__sidebar"><span class="cai-sidebar__section-label">Account</span><span class="cai-sidebar__link">Profile</span><span class="cai-sidebar__link">Billing</span><span class="cai-sidebar__link">Team</span></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Sentences and catch-alls as links: “Manage your billing details” is slow to scan and “Other stuff” says nothing.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="docs-dodont__sidebar"><span class="cai-sidebar__section-label">Menu</span><span class="cai-sidebar__link">Manage your billing details</span><span class="cai-sidebar__link">Profile</span><span class="cai-sidebar__link">Other stuff</span></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Name each link after the page it opens, in a word or two.</p>
             <ul>
               <li>Section labels are nouns: "Account", "Billing".</li>
               <li>Order the links by how often people need them.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The sidebar has its own tokens: light text on a dark panel in every mode, and a filled current link.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Sidebar contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-text</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>9.3:1</div></td><td data-label="Dark"><div>9.3:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link, hover</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-text-hover</code> on <code>--cai-sidebar-hover</code></div></td><td data-label="Light"><div>17.6:1</div></td><td data-label="Dark"><div>17.6:1</div></td><td data-label="High contrast"><div>17.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current link</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-active-text</code> on <code>--cai-sidebar-active-bg</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>5.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current link fill</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-active-bg</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>3.4:1</div></td><td data-label="Dark"><div>3.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Section label and version</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-label</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>5.9:1</div></td><td data-label="High contrast"><div>6.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Menu button</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Menu button border</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>3.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Menu button focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> a link gets a 2 px outline inside its edge, in its own text colour, so the ring has the link's own contrast; other controls in the sidebar take <code>--cai-sidebar-text-hover</code>. The menu button has the 2 px <code>--cai-focus-ring</code> outline.</li>
+              <li><strong>Not colour alone:</strong> the current link is filled and carries <code>aria-current</code>.</li>
+              <li><strong>Target:</strong> the menu button is 44 px square.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 36 tokens that <code>components/sidebar.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="../../../docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="../../../docs/tokens/color/#cai-scrim"><code>--cai-scrim</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-active-bg"><code>--cai-sidebar-active-bg</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-active-text"><code>--cai-sidebar-active-text</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-bg"><code>--cai-sidebar-bg</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-border"><code>--cai-sidebar-border</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-hover"><code>--cai-sidebar-hover</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-label"><code>--cai-sidebar-label</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-logo-bg"><code>--cai-sidebar-logo-bg</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-text"><code>--cai-sidebar-text</code></a>, <a href="../../../docs/tokens/color/#cai-sidebar-text-hover"><code>--cai-sidebar-text-hover</code></a>, <a href="../../../docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="../../../docs/tokens/color/#cai-surface-page"><code>--cai-surface-page</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-space-2xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xl</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-font-sans</code>, <code>--cai-text-md</code>, <code>--cai-text-sm</code>, <code>--cai-text-xl</code>, <code>--cai-text-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-lg</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-base</code>, <code>--cai-duration-fast</code>, <code>--cai-duration-slow</code>, <code>--cai-easing-standard</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/layout/">Layers and breakpoints</a></dt><dd><code>--cai-sidebar-width</code>, <code>--cai-z-modal</code>, <code>--cai-z-sidebar</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

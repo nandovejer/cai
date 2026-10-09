@@ -9,11 +9,11 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CKj4cAp9.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -71,7 +71,7 @@
         <a class="site-header__components" href="../../../docs/components/">Components</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
       <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
         <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <span class="cai-platform-search-trigger__label">Search docs…</span>
@@ -150,7 +150,10 @@
           <ul class="docs-onpage__sub">
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
           </ul>
         </li>
       </ul>
@@ -218,7 +221,7 @@
               <li>A <code>&lt;footer&gt;</code> that is a direct child of <code>&lt;body&gt;</code> is the contentinfo landmark.</li>
               <li>Keep the links in the same order on every page.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -229,11 +232,37 @@
             <ul>
               <li>Main navigation goes in the header or a <a href="../../../docs/components/sidebar/">sidebar</a>.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Two to four links that say where they go.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-footer"><p class="u-text-muted">Acme Inc.</p><div class="cai-platform-actions"><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Accessibility statement</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Status</button></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The main navigation in the footer: the reader has to reach the end of the page to move around.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-footer"><p class="u-text-muted">Acme Inc.</p><div class="cai-platform-actions"><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Dashboard</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Projects</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Billing</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Settings</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Team</button></div></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Keep it short: who made it, the licence, and two to four links.</p>
             <ul>
               <li>Each link says where it goes: "Accessibility statement", not "Legal".</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The footer adds only a top rule (<code>--cai-divider</code>), which is decorative; its text and links keep their own colours.</p>
+            <ul>
+              <li><strong>Focus:</strong> links and buttons in it keep their own ring.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 4 tokens that the <code>.cai-platform-footer</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-divider"><code>--cai-divider</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-xl</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

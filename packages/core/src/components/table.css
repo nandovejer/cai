@@ -31,7 +31,7 @@
   text-align: start;
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
-  padding: var(--cai-space-03) var(--cai-space-05);
+  padding: var(--cai-space-xs) var(--cai-space-md);
   caption-side: top;
 }
 
@@ -45,7 +45,7 @@
   background: var(--cai-surface-strong);
   color: var(--cai-text-primary);
   text-align: start;
-  padding: var(--cai-space-03) var(--cai-space-05);
+  padding: var(--cai-space-xs) var(--cai-space-md);
   font-weight: 500;
   font-size: var(--cai-text-sm);
   letter-spacing: 0.5px;
@@ -54,7 +54,7 @@
 }
 
 .cai-table td {
-  padding: var(--cai-space-04) var(--cai-space-05);
+  padding: var(--cai-space-sm) var(--cai-space-md);
   border-bottom: 1px solid var(--cai-divider);
   color: var(--cai-text-primary);
   transition: background var(--cai-duration-fast);
@@ -124,7 +124,7 @@
   .cai-table tr {
     border: 1px solid var(--cai-divider);
     border-radius: var(--cai-radius-md);
-    margin-bottom: var(--cai-space-04);
+    margin-bottom: var(--cai-space-sm);
     overflow: hidden;
   }
 
@@ -133,8 +133,8 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: var(--cai-space-05);
-    padding: var(--cai-space-03) var(--cai-space-04);
+    gap: var(--cai-space-md);
+    padding: var(--cai-space-xs) var(--cai-space-sm);
     border-bottom: 1px solid var(--cai-divider);
   }
 
@@ -168,10 +168,10 @@
 @media (max-width: 480px) {
   /* Tables — reduce cell padding on small screens */
   .cai-table th {
-    padding: var(--cai-space-02) var(--cai-space-03);
+    padding: var(--cai-space-2xs) var(--cai-space-xs);
   }
 
   .cai-table td {
-    padding: var(--cai-space-03) var(--cai-space-03);
+    padding: var(--cai-space-xs) var(--cai-space-xs);
   }
 }

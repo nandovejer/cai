@@ -10,8 +10,8 @@
 :where(details) {
   border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-md);
-  padding: var(--cai-space-04);
-  margin-block: var(--cai-space-03);
+  padding: var(--cai-space-sm);
+  margin-block: var(--cai-space-xs);
   background: var(--cai-surface);
   transition: background var(--cai-duration-base);
 }
@@ -25,9 +25,9 @@
   font-weight: 600;
   color: var(--cai-text-primary);
   user-select: none;
-  padding: var(--cai-space-02);
-  margin: calc(-1 * var(--cai-space-04));
-  margin-bottom: var(--cai-space-03);
+  padding: var(--cai-space-2xs);
+  margin: calc(-1 * var(--cai-space-sm));
+  margin-bottom: var(--cai-space-xs);
   border-radius: var(--cai-radius-sm);
   transition: background var(--cai-duration-fast);
 }
@@ -48,7 +48,7 @@
 
 /* No display here: the browser shows a dialog only while it is open */
 :where(dialog) {
-  padding: var(--cai-space-06);
+  padding: var(--cai-space-lg);
   color: var(--cai-text-primary);
   background: var(--cai-surface);
   border: 1px solid var(--cai-divider);
@@ -61,7 +61,7 @@
 
 /* The reset zeroes every margin: space the dialog's own blocks */
 :where(dialog > * + *) {
-  margin-block-start: var(--cai-space-04);
+  margin-block-start: var(--cai-space-sm);
 }
 
 /* The reset zeroes every margin, including the auto margin the browser uses

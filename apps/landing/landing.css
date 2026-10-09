@@ -18,7 +18,7 @@
   width: 100%;
   max-width: var(--cai-content-max);
   margin-inline: auto;
-  padding-inline: var(--cai-space-07);
+  padding-inline: var(--cai-space-xl);
 }
 
 /* Grid and flex items default to min-width: auto, which lets a long <pre> or
@@ -30,7 +30,7 @@
 
 .landing-levels {
   display: grid;
-  gap: var(--cai-space-06);
+  gap: var(--cai-space-lg);
 }
 
 .landing-h2 {
@@ -61,38 +61,38 @@
 .landing-hero {
   display: grid;
   grid-template-columns: 7fr 5fr;
-  gap: var(--cai-space-09);
+  gap: var(--cai-space-2xl);
   align-items: center;
-  padding-block: var(--cai-space-10) 0;
+  padding-block: var(--cai-space-3xl) 0;
 }
 
 .landing-hero__title {
   font-size: var(--cai-text-4xl);
   line-height: 1.1;
   text-wrap: balance;
-  margin-top: var(--cai-space-04);
+  margin-top: var(--cai-space-sm);
 }
 
 .landing-hero__lead {
   font-size: var(--cai-text-lg);
   color: var(--cai-text-secondary);
   max-width: 65ch;
-  margin-block: var(--cai-space-05) var(--cai-space-06);
+  margin-block: var(--cai-space-md) var(--cai-space-lg);
 }
 
 .landing-facts {
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
   border-top: 1px solid var(--cai-divider);
-  padding-top: var(--cai-space-06);
+  padding-top: var(--cai-space-lg);
 }
 
 .landing-facts__item {
   display: flex;
   flex-direction: column;
-  gap: var(--cai-space-02);
+  gap: var(--cai-space-2xs);
 }
 
 .landing-facts__value {
@@ -116,16 +116,16 @@
 .landing-stack {
   list-style: none;
   display: grid;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
 }
 
 .landing-stack--mini {
-  gap: var(--cai-space-02);
-  min-width: calc(var(--cai-space-12) * 2);
+  gap: var(--cai-space-2xs);
+  min-width: calc(var(--cai-space-4xl) * 2);
 }
 
 .landing-stack--mini li {
-  padding: var(--cai-space-02) var(--cai-space-04);
+  padding: var(--cai-space-2xs) var(--cai-space-sm);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-sm);
 }
@@ -152,7 +152,7 @@
 
 .landing-points {
   list-style: none;
-  gap: var(--cai-space-06);
+  gap: var(--cai-space-lg);
 }
 
 .landing-point__title {
@@ -165,8 +165,8 @@
 
 .landing-render {
   display: grid;
-  gap: var(--cai-space-04);
-  padding: var(--cai-space-05);
+  gap: var(--cai-space-sm);
+  padding: var(--cai-space-md);
   background: var(--cai-surface);
   border: 1px dashed var(--cai-outline);
 }
@@ -177,14 +177,14 @@
 
 .landing-snippet {
   display: grid;
-  gap: var(--cai-space-02);
+  gap: var(--cai-space-2xs);
 }
 
 .landing-snippet__bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
 }
 
 /* The bar carries the label; the absolute language badge would sit on top of
@@ -201,7 +201,7 @@
 /* No width jump when the label becomes "✓ Copied" */
 .landing-snippet .cai-copy-btn,
 .landing-level .cai-copy-btn {
-  min-width: calc(var(--cai-space-11) + var(--cai-space-03));
+  min-width: calc(var(--cai-space-3xl) + var(--cai-space-md) + var(--cai-space-xs));
   justify-content: center;
 }
 
@@ -220,23 +220,23 @@
 
 .landing-level {
   display: grid;
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
   align-content: start;
   background: var(--cai-surface);
   border: 1px solid var(--cai-divider);
-  padding: var(--cai-space-06);
+  padding: var(--cai-space-lg);
 }
 
 .landing-level__head {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
   align-items: start;
 }
 
 .landing-level__intro {
   display: grid;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   justify-items: start;
 }
 
@@ -247,27 +247,27 @@
 .landing-level__body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-07);
+  gap: var(--cai-space-xl);
 }
 
 .landing-level__body > div {
   display: grid;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   align-content: start;
   justify-items: start;
   font-size: var(--cai-text-md);
 }
 
 .landing-level__get {
-  padding-inline-start: var(--cai-space-05);
+  padding-inline-start: var(--cai-space-md);
   display: grid;
-  gap: var(--cai-space-02);
+  gap: var(--cai-space-2xs);
   font-size: var(--cai-text-md);
 }
 
 .landing-level__snippets {
   display: grid;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
 }
 
 .landing-level .cai-platform-command-block {
@@ -283,7 +283,7 @@
 .landing-guides a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cai-size-height-sm);
+  min-height: var(--cai-control-sm);
 }
 
 /* --------------------------------------------------------------------------
@@ -292,7 +292,7 @@
 
 /* On surface-muted, so the fields (input-bg, a raised layer) read as fields */
 .landing-try {
-  padding: var(--cai-space-06);
+  padding: var(--cai-space-lg);
   background: var(--cai-surface-muted);
   border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-lg);
@@ -304,7 +304,7 @@
 }
 
 .landing-try__intro {
-  margin-block: var(--cai-space-02) var(--cai-space-05);
+  margin-block: var(--cai-space-2xs) var(--cai-space-md);
   color: var(--cai-text-secondary);
 }
 
@@ -313,7 +313,7 @@
 .landing-try__note {
   max-inline-size: min(90vw, 32rem);
   margin: auto;
-  padding: var(--cai-space-05) var(--cai-space-06);
+  padding: var(--cai-space-md) var(--cai-space-lg);
   background: var(--cai-surface);
   color: var(--cai-text-primary);
   border: 2px solid var(--cai-outline);
@@ -323,13 +323,13 @@
 
 .landing-subtitle {
   font-size: var(--cai-text-lg);
-  margin-block: var(--cai-space-07) var(--cai-space-03);
+  margin-block: var(--cai-space-xl) var(--cai-space-xs);
 }
 
 .landing-guides {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-02) var(--cai-space-06);
+  gap: var(--cai-space-2xs) var(--cai-space-lg);
   padding: 0;
   list-style: none;
 }
@@ -337,13 +337,13 @@
 .landing-fit {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-07);
+  gap: var(--cai-space-xl);
 }
 
 .landing-fit__list {
   display: grid;
-  gap: var(--cai-space-03);
-  padding-inline-start: var(--cai-space-06);
+  gap: var(--cai-space-xs);
+  padding-inline-start: var(--cai-space-lg);
   color: var(--cai-text-secondary);
 }
 
@@ -359,7 +359,7 @@
 }
 
 .landing-moved-list {
-  padding-block: var(--cai-space-07);
+  padding-block: var(--cai-space-xl);
 }
 
 .landing-moved {
@@ -393,8 +393,8 @@
 @media (max-width: 1023px) {
   .landing-hero {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--cai-space-07);
-    padding-block: var(--cai-space-08) 0;
+    gap: var(--cai-space-xl);
+    padding-block: calc(var(--cai-space-xl) + var(--cai-space-xs)) 0;
   }
 
   .landing-hero__title {
@@ -414,7 +414,7 @@
   }
 
   .landing-level__body {
-    gap: var(--cai-space-05);
+    gap: var(--cai-space-md);
   }
 
   .landing-stack--mini {
@@ -424,7 +424,7 @@
 
 @media (max-width: 480px) {
   .landing-wrap {
-    padding-inline: var(--cai-space-05);
+    padding-inline: var(--cai-space-md);
   }
 
   .landing-h2 {
@@ -441,15 +441,15 @@
   }
 
   .landing-level {
-    padding: var(--cai-space-05);
+    padding: var(--cai-space-md);
   }
 
   .landing-level .cai-platform-command-block {
-    padding: var(--cai-space-04);
+    padding: var(--cai-space-sm);
   }
 
   .landing-try {
-    padding: var(--cai-space-05);
+    padding: var(--cai-space-md);
   }
 
   /* Page footer: three short links fit on one row */
@@ -466,6 +466,6 @@
 /* Stacked footer: line the ghost links' text up with the line above */
 @media (max-width: 768px) {
   body > footer .cai-platform-actions {
-    margin-inline-start: calc(-1 * var(--cai-space-04));
+    margin-inline-start: calc(-1 * var(--cai-space-sm));
   }
 }

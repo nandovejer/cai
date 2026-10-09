@@ -10,7 +10,7 @@
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
   display: flex;
   border-bottom: 2px solid var(--cai-divider);
-  margin-bottom: var(--cai-space-05);
+  margin-bottom: var(--cai-space-md);
   overflow-x: auto;
   scrollbar-width: none; /* Firefox */
   -webkit-overflow-scrolling: touch;
@@ -23,12 +23,12 @@
 .cai-tab {
   display: block;
   text-decoration: none;
-  padding: var(--cai-space-04) var(--cai-space-05);
+  padding: var(--cai-space-sm) var(--cai-space-md);
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  margin-bottom: calc(var(--cai-space-01) * -1); /* over the 2px tablist border */
+  margin-bottom: calc(var(--cai-space-3xs) * -1); /* over the 2px tablist border */
   transition: color var(--cai-duration-fast),
     border-color var(--cai-duration-fast);
   white-space: nowrap;
@@ -53,7 +53,7 @@
 /* No-JS state: the tab links jump to their panel, and every panel stays
    visible, stacked below the links. */
 .cai-tabpanel {
-  margin-block-end: var(--cai-space-05);
+  margin-block-end: var(--cai-space-md);
 }
 
 .cai-tabpanel[hidden] {

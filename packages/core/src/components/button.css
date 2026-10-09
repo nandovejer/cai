@@ -10,15 +10,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   font-family: var(--cai-font-sans);
   font-size: var(--cai-text-md);
   font-weight: 400;
   border: 1px solid transparent;
   cursor: pointer;
   /* min-height: the label can grow with the user's font size */
-  min-height: var(--cai-size-height-lg);
-  padding: 0 var(--cai-space-06);
+  min-height: var(--cai-control-lg);
+  padding: 0 var(--cai-space-lg);
   text-decoration: none;
   transition: background var(--cai-duration-fast),
     border-color var(--cai-duration-fast), color var(--cai-duration-fast);
@@ -96,13 +96,13 @@
 
 /* Sizes */
 .cai-btn--sm {
-  min-height: var(--cai-size-height-md);
+  min-height: var(--cai-control-md);
   font-size: var(--cai-text-sm);
-  padding: 0 var(--cai-space-04);
+  padding: 0 var(--cai-space-sm);
 }
 
 .cai-btn--lg {
-  min-height: var(--cai-size-height-xl);
+  min-height: var(--cai-control-xl);
   font-size: var(--cai-text-base);
-  padding: 0 var(--cai-space-07);
+  padding: 0 var(--cai-space-xl);
 }

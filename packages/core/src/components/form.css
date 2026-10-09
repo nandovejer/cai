@@ -8,7 +8,7 @@
 
 .cai-field {
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
-  margin-bottom: var(--cai-space-05);
+  margin-bottom: var(--cai-space-md);
 }
 
 .cai-field__label {
@@ -16,7 +16,7 @@
   font-size: var(--cai-text-md);
   font-weight: 400;
   color: var(--cai-text-secondary);
-  margin-bottom: var(--cai-space-02);
+  margin-bottom: var(--cai-space-2xs);
 }
 
 .cai-field__label--required::after {
@@ -27,26 +27,26 @@
 .cai-field__helper {
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
-  margin-top: var(--cai-space-02);
+  margin-top: var(--cai-space-2xs);
 }
 
 .cai-field__error {
   font-size: var(--cai-text-sm);
   color: var(--cai-color-danger);
-  margin-top: var(--cai-space-02);
+  margin-top: var(--cai-space-2xs);
 }
 
 .cai-input {
   display: block;
   width: 100%;
-  height: var(--cai-size-height-lg);
+  height: var(--cai-control-lg);
   background: var(--cai-input-bg);
   border: none;
   border-bottom: 1px solid var(--cai-input-border);
   color: var(--cai-text-primary);
   font-family: var(--cai-font-sans);
   font-size: var(--cai-text-control);
-  padding: 0 var(--cai-space-04);
+  padding: 0 var(--cai-space-sm);
   transition: border-color var(--cai-duration-fast),
     background var(--cai-duration-base);
 }
@@ -71,7 +71,7 @@
 
 .cai-input--textarea {
   height: auto;
-  padding: var(--cai-space-03) var(--cai-space-04);
+  padding: var(--cai-space-xs) var(--cai-space-sm);
   min-height: 80px;
   resize: vertical;
 }
@@ -93,7 +93,7 @@
 .cai-select-wrap::after {
   content: "▾";
   position: absolute;
-  inset-inline-end: var(--cai-space-04);
+  inset-inline-end: var(--cai-space-sm);
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
@@ -104,7 +104,7 @@
 .cai-select-wrap .cai-input {
   appearance: none;
   cursor: pointer;
-  padding-inline-end: var(--cai-space-07);
+  padding-inline-end: var(--cai-space-xl);
 }
 
 /* --------------------------------------------------------------------------
@@ -113,7 +113,7 @@
 
 .cai-input[type="range"] {
   height: auto;
-  padding: var(--cai-space-02) 0;
+  padding: var(--cai-space-2xs) 0;
   border-bottom: none;
   background: transparent;
   accent-color: var(--cai-brand-primary);
@@ -131,8 +131,8 @@
    -------------------------------------------------------------------------- */
 
 .cai-input[type="color"] {
-  height: var(--cai-size-height-md);
-  padding: var(--cai-space-01) var(--cai-space-02);
+  height: var(--cai-control-md);
+  padding: var(--cai-space-3xs) var(--cai-space-2xs);
   cursor: pointer;
   width: 64px;
   border-bottom: 1px solid var(--cai-input-border);
@@ -145,7 +145,7 @@
 
 .cai-input[type="file"] {
   height: auto;
-  padding: var(--cai-space-03) var(--cai-space-04);
+  padding: var(--cai-space-xs) var(--cai-space-sm);
   cursor: pointer;
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
@@ -155,11 +155,11 @@
   background: var(--cai-surface-strong);
   color: var(--cai-text-primary);
   border: none;
-  padding: var(--cai-space-02) var(--cai-space-04);
+  padding: var(--cai-space-2xs) var(--cai-space-sm);
   font-size: var(--cai-text-sm);
   font-family: var(--cai-font-sans);
   cursor: pointer;
-  margin-inline-end: var(--cai-space-04);
+  margin-inline-end: var(--cai-space-sm);
   transition: background var(--cai-duration-fast);
 }
 
@@ -204,7 +204,7 @@
 .cai-fieldset {
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
   border: 1px solid var(--cai-divider);
-  padding: var(--cai-space-05) var(--cai-space-06);
+  padding: var(--cai-space-md) var(--cai-space-lg);
   margin: 0;
   background: var(--cai-input-bg);
 }
@@ -214,7 +214,7 @@
   font-size: var(--cai-text-sm);
   font-weight: 500;
   color: var(--cai-text-secondary);
-  padding: 0 var(--cai-space-03);
+  padding: 0 var(--cai-space-xs);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -279,13 +279,13 @@
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
   display: flex;
   flex-direction: column;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
 }
 
 .cai-check-item {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   cursor: pointer;
   user-select: none;
 }
@@ -363,7 +363,7 @@
 .cai-toggle {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   cursor: pointer;
   user-select: none;
   position: relative;

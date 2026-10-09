@@ -53,8 +53,8 @@
 .cai-player-controls {
   display: flex;
   flex-direction: column;
-  gap: var(--cai-space-02);
-  padding: var(--cai-space-03) var(--cai-space-04);
+  gap: var(--cai-space-2xs);
+  padding: var(--cai-space-xs) var(--cai-space-sm);
   background: var(--cai-surface-strong);
   border-top: 1px solid var(--cai-divider);
 }
@@ -62,14 +62,14 @@
 .cai-player-controls--audio {
   flex-direction: row;
   align-items: center;
-  gap: var(--cai-space-04);
-  padding: var(--cai-space-04) var(--cai-space-05);
+  gap: var(--cai-space-sm);
+  padding: var(--cai-space-sm) var(--cai-space-md);
 }
 
 .cai-player-progress-row {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
 }
 
 .cai-player-progress-row--audio {
@@ -88,7 +88,7 @@
 .cai-player-btns {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-02);
+  gap: var(--cai-space-2xs);
 }
 
 .cai-player-spacer {
@@ -131,7 +131,7 @@
 .cai-player-vol-wrap {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-01);
+  gap: var(--cai-space-3xs);
 }
 
 /* Seek and volume bars are native <input type="range">: pointer, touch,
@@ -198,7 +198,7 @@
   appearance: none;
   inline-size: 12px;
   block-size: 12px;
-  margin-block-start: calc(var(--cai-space-02) * -1); /* centre the 12px thumb on the 4px track */
+  margin-block-start: calc(var(--cai-space-2xs) * -1); /* centre the 12px thumb on the 4px track */
   border: 0;
   border-radius: 50%;
   background: var(--cai-brand-primary);
@@ -227,7 +227,7 @@
 
 .cai-player-fallback {
   margin: 0;
-  padding: var(--cai-space-04) var(--cai-space-05);
+  padding: var(--cai-space-sm) var(--cai-space-md);
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
 }
@@ -245,7 +245,7 @@
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
-  margin-inline-start: var(--cai-space-03);
+  margin-inline-start: var(--cai-space-xs);
   white-space: nowrap;
 }
 
@@ -258,7 +258,7 @@
   .cai-player-controls--audio {
     flex-direction: column;
     align-items: stretch;
-    gap: var(--cai-space-03);
+    gap: var(--cai-space-xs);
   }
 
   .cai-player-progress-row--audio {

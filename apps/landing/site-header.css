@@ -12,7 +12,7 @@
    one-row estimate before it runs or without JavaScript. Anchored targets
    stop below the header instead of under it. */
 :root {
-  scroll-padding-block-start: calc(var(--site-header-h, 3.875rem) + var(--cai-space-04));
+  scroll-padding-block-start: calc(var(--site-header-h, 3.875rem) + var(--cai-space-sm));
 }
 
 .site-header {
@@ -23,21 +23,21 @@
   border-bottom: 1px solid var(--cai-divider);
 }
 
-/* One row at every width: 40px controls (2.5.8 with room to spare) and a
+/* One row at every width: 44px controls (the 2.5.5 target size) and a
    short sticky band, about 56px */
 .site-header__inner {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-03) var(--cai-space-05);
-  padding-block: var(--cai-space-03);
+  gap: var(--cai-space-xs) var(--cai-space-md);
+  padding-block: var(--cai-space-2xs);
 }
 
 .site-header__brand {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  min-block-size: var(--cai-size-height-lg);
-  gap: var(--cai-space-03);
+  min-block-size: var(--cai-control-lg);
+  gap: var(--cai-space-xs);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-md);
   font-weight: 500;
@@ -57,14 +57,14 @@
 
 .site-header__nav {
   display: flex;
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
   margin-inline-start: auto;
 }
 
 .site-header__nav a {
   display: inline-flex;
   align-items: center;
-  min-block-size: var(--cai-size-height-lg);
+  min-block-size: var(--cai-control-lg);
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
 }
@@ -84,26 +84,26 @@
    header short; initThemeCycle() turns it into one icon button. */
 .site-modes {
   align-items: center;
-  gap: var(--cai-space-02) var(--cai-space-03);
+  gap: var(--cai-space-2xs) var(--cai-space-xs);
 }
 
 .site-modes .cai-theme-switcher__label {
   float: inline-start;
   margin-block: 0;
-  margin-inline: 0 var(--cai-space-02);
+  margin-inline: 0 var(--cai-space-2xs);
 }
 
 .site-modes .cai-theme-btn {
   flex: none;
-  min-block-size: var(--cai-size-height-sm);
-  padding-inline: var(--cai-space-03);
+  min-block-size: var(--cai-control-sm);
+  padding-inline: var(--cai-space-xs);
   border-radius: var(--cai-radius-md);
 }
 
 /* The cycle button matches the other header controls */
 .site-modes .cai-theme-cycle {
-  inline-size: var(--cai-size-height-lg);
-  block-size: var(--cai-size-height-lg);
+  inline-size: var(--cai-control-lg);
+  block-size: var(--cai-control-lg);
 }
 
 /* Narrow screens keep one row: the version tag goes first (the version is
@@ -111,11 +111,11 @@
    the link's accessible name */
 @media (max-width: 479px) {
   .site-header__inner {
-    gap: var(--cai-space-04);
+    gap: var(--cai-space-sm);
   }
 
   .site-header__nav {
-    gap: var(--cai-space-04);
+    gap: var(--cai-space-sm);
   }
 
   .site-header__tag {

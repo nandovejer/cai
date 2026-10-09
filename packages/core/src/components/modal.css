@@ -15,7 +15,7 @@
   border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-lg);
   box-shadow: var(--cai-shadow-lg);
-  padding: var(--cai-space-08);
+  padding: var(--cai-space-xl);
   max-inline-size: min(90vw, 600px);
   max-block-size: 90vh;
   overflow-y: auto;
@@ -33,8 +33,8 @@
 
 /* Modal content structure */
 .cai-modal__header {
-  margin-bottom: var(--cai-space-06);
-  padding-bottom: var(--cai-space-04);
+  margin-bottom: var(--cai-space-lg);
+  padding-bottom: var(--cai-space-sm);
   border-bottom: 1px solid var(--cai-divider);
 }
 
@@ -51,12 +51,12 @@
   align-items: center;
   justify-content: center;
   /* 24×24 minimum target (WCAG 2.5.8) */
-  min-width: var(--cai-size-height-sm);
-  min-height: var(--cai-size-height-sm);
+  min-width: var(--cai-control-sm);
+  min-height: var(--cai-control-sm);
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--cai-space-02);
+  padding: var(--cai-space-2xs);
   color: var(--cai-text-secondary);
   transition: color var(--cai-duration-fast);
 }
@@ -71,16 +71,16 @@
 }
 
 .cai-modal__body {
-  margin-bottom: var(--cai-space-06);
+  margin-bottom: var(--cai-space-lg);
   color: var(--cai-text-primary);
   line-height: 1.6;
 }
 
 .cai-modal__footer {
   display: flex;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   justify-content: flex-end;
-  padding-top: var(--cai-space-04);
+  padding-top: var(--cai-space-sm);
   border-top: 1px solid var(--cai-divider);
 }
 

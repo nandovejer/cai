@@ -314,7 +314,7 @@ test.describe('Documentation page', () => {
       };
 
       expectAll(await text('#t-spacing'), Object.keys(tokens.spacing).map((k) => `--cai-space-${k}`));
-      expectAll(await text('#t-sizing'), Object.keys(tokens.sizing).map((k) => `--cai-size-${k}`));
+      expectAll(await text('#t-sizing'), Object.keys(tokens.control).map((k) => `--cai-control-${k}`));
       expectAll(await text('#t-type'), Object.keys(tokens.typography).map((k) => `--cai-${k}`));
       expectAll(await text('#t-radius'), Object.keys(tokens.radius).map((k) => `--cai-radius-${k}`));
       expectAll(await text('#t-shadow'), Object.keys(tokens.shadow).map((k) => `--cai-shadow-${k}`));

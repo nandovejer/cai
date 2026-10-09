@@ -14,7 +14,7 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { gotoId, moved, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
+import { gotoId, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -149,7 +149,6 @@ test.describe('Documentation site', () => {
 
   test.describe('header and color modes', () => {
     test('the header has the site links, with Docs current on the hub', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await open(page);
 
       await expect(page.locator('.site-header__nav a')).toHaveText(['Home', 'Docs', 'Components', 'GitHub']);
@@ -161,7 +160,6 @@ test.describe('Documentation site', () => {
     });
 
     test('on a component page, Docs and Components are the current section', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await gotoId(page, 'c-button');
       await expect(page.locator('.site-header__nav a[aria-current="true"]')).toHaveText(['Docs', 'Components']);
       await expect(page.locator('.site-header__nav a[aria-current="page"]')).toHaveCount(0);
@@ -246,7 +244,6 @@ test.describe('Documentation site', () => {
 
   test.describe('navigation', () => {
     test('the sidebar shows the six areas and expands only the current one', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await gotoId(page, 'c-button');
       const areas = page.locator('.docs-nav > li > a');
       await expect(areas).toHaveText(['Get started', 'Components', 'Tokens', 'Platform', 'HTML elements', 'Accessibility']);
@@ -260,7 +257,6 @@ test.describe('Documentation site', () => {
     });
 
     test('the current page is marked by more than color, in the sidebar', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await gotoId(page, 'c-button');
       const style = (sel) => page.locator(sel).evaluate((el) => {
         const s = getComputedStyle(el);
@@ -270,14 +266,12 @@ test.describe('Documentation site', () => {
     });
 
     test('breadcrumb and Previous / Next follow the sidebar order', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await gotoId(page, 'c-button');
       await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).locator('a, [aria-current]')).toHaveText(['Docs', 'Components', 'Button']);
       await expect(page.locator('.docs-pager a')).toHaveText(['Previous: Breadcrumb', 'Next: Card']);
     });
 
     test('"On this page" is a rail with scroll spy at 1280px: aria-current="true", never "page"', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await page.setViewportSize({ width: 1280, height: 800 });
       await gotoId(page, 'c-button');
 
@@ -294,7 +288,6 @@ test.describe('Documentation site', () => {
     });
 
     test('"On this page" is closed below 1280px and opens natively', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await page.setViewportSize({ width: 360, height: 800 });
       await gotoId(page, 'c-button');
       const toc = page.getByRole('navigation', { name: 'On this page' });
@@ -305,7 +298,6 @@ test.describe('Documentation site', () => {
 
     for (const width of [360, 1280]) {
       test(`every component is two links away from every page at ${width}px (ia.md §14)`, async ({ page }) => {
-        test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
         // Only links visible without opening anything: the header's
         // Components, then a card of the gallery
         test.slow();
@@ -324,7 +316,6 @@ test.describe('Documentation site', () => {
 
   test.describe('galleries and the A–Z index', () => {
     test('a gallery card is one link, named like its heading, with an inert thumbnail (HUB-1, HUB-2)', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await open(page, '/docs/components/');
       const cards = page.locator('.docs-card');
       await expect(cards).toHaveCount(20);
@@ -418,7 +409,6 @@ test.describe('Documentation site', () => {
     });
 
     test('every component has its page: example, known issues, then the guidance sections as h2', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       // Red line 18 for the first two sections, SR-5 for the rest. Phase 3
       // of the docs redesign turns the guidance into the Code and Design tabs.
       expect(guideIds.length).toBeGreaterThanOrEqual(20);
@@ -448,7 +438,6 @@ test.describe('Documentation site', () => {
     });
 
     test('every core component file is named on its page', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       const files = [];
       for (const route of routesOf('components')) {
         await page.goto(route);
@@ -458,7 +447,6 @@ test.describe('Documentation site', () => {
     });
 
     test('every platform class is used or named on the platform pages', () => {
-      test.skip(!moved('platform'), 'until the area moves to its pages'); // phase-2-transition
       const html = routesOf('platform').map((route) => site.byRoute.get(route).body).join('\n');
       for (const selector of platformClasses) expect(html, selector).toContain(selector.slice(1));
     });
@@ -530,7 +518,6 @@ test.describe('Documentation site', () => {
     });
 
     test('the color mode switcher has its own page: the cycle variant, its markup, init, no-JS state and names', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       await gotoId(page, 'c-mode-switcher');
 
       const guide = page.locator('#c-mode-switcher');
@@ -560,7 +547,6 @@ test.describe('Documentation site', () => {
     });
 
     test('closed at 360px, and opened by the native summary', async ({ page }) => {
-      test.skip(!moved('tokens'), 'until the area moves to its pages'); // phase-2-transition
       await page.setViewportSize({ width: 360, height: 800 });
       for (const route of FOLDS) {
         await open(page, route);
@@ -665,7 +651,6 @@ test.describe('Documentation site', () => {
     });
 
     test('standalone links are targets of 24px or more', async ({ page }) => {
-      test.skip(!moved('components'), 'until the area moves to its pages'); // phase-2-transition
       for (const route of ['/docs/', '/docs/components/', routeOf('c-button'), '/docs/a-z/', '/docs/platform/']) {
         await page.goto(route);
         const heights = await page

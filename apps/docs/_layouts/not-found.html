@@ -18,8 +18,7 @@
      at the site's path (PAGES_BASE in vite.config.js), never relative to
      the page, and no base element: it would send the skip link's
      #main-content to the home page. No script: it never runs code and never
-     repeats the URL (security.md SEC-MISC-5). Without a script the color
-     mode radios in the footer still work. -->
+     repeats the URL (security.md SEC-MISC-5). -->
 <body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
@@ -37,6 +36,11 @@
   </div>
   </main>
 
-  <!-- cai:include footer -->
+  <!-- The links of every page; no color mode switcher: its button needs the script -->
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-platform-footer">
+      <!-- cai:include footer-links -->
+    </div>
+  </footer>
 </body>
 </html>

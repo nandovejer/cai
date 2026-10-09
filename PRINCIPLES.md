@@ -122,6 +122,9 @@ Words are a component. A button with the wrong label is a broken button. These r
 | Each lazy chunk (`midi`) | — | ≤ 3 kB | 3 kB | 4 kB |
 | `platform` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | `platform` JS | — | ≤ 1 kB | 1 kB | 2 kB |
+| Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |
+
+Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).
 
 ## 9. Evidence, transparency and stability
 

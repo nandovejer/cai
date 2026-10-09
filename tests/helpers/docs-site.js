@@ -42,6 +42,3 @@ export async function gotoId(page, id, { hash = false } = {}) {
   await page.waitForLoadState("networkidle");
   return route;
 }
-
-/** True once an area has its own pages (its index page exists). */
-export const moved = (area) => site.byRoute.has(`/docs/${site.areas.find((a) => a.id === area).slug}/`);

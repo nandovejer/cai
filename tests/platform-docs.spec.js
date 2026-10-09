@@ -11,7 +11,7 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { gotoId, moved, routeOf } from './helpers/docs-site.js';
+import { gotoId, routeOf } from './helpers/docs-site.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -45,7 +45,6 @@ test.describe('Platform docs', () => {
   });
 
   test('every platform pattern has its page with the six guidance sections', async ({ page }) => {
-    test.skip(!moved('platform'), 'until the area moves to its pages'); // phase-2-transition
     for (const pattern of new Set(Object.values(patternOf))) {
       const route = await gotoId(page, `p-${pattern}`);
       expect(route, pattern).toMatch(/^\/docs\/platform\/[a-z-]+\/$/);
@@ -76,7 +75,6 @@ test.describe('Platform docs', () => {
   });
 
   test('the Platform area lists every pattern, in the sidebar and in its gallery', async ({ page }) => {
-    test.skip(!moved('platform'), 'until the area moves to its pages'); // phase-2-transition
     await page.goto('/docs/platform/');
     const nav = await page.locator('.docs-nav a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
     const cards = await page.locator('.docs-gallery a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));

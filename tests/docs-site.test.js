@@ -415,7 +415,6 @@ describe("the CAI docs site", () => {
   });
 
   it("reaches every component in two links from any page, without opening anything (ia.md §14)", () => {
-    if (!site.byRoute.has("/docs/components/")) return; // phase-2-transition
     // Links shown at every width: the header row (Components stays in it on a
     // phone) and the content of main; the drawer and "On this page" are closed.
     const components = site.pages.filter((p) => p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers");
@@ -442,7 +441,6 @@ describe("the CAI docs site", () => {
   });
 
   it("keeps gallery thumbnails inert: no id, script, media, form or handler (HUB-2, SEC-PLG-12)", () => {
-    if (!site.byRoute.has("/docs/components/")) return; // phase-2-transition
     expect(() => assertThumbSafe('<span id="x">a</span>', "t.html")).toThrow(/id/);
     expect(() => assertThumbSafe('<span onclick="x()">a</span>', "t.html")).toThrow(/onclick/);
     expect(() => assertThumbSafe("<video></video>", "t.html")).toThrow(/video/);

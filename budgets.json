@@ -1,11 +1,12 @@
 {
-  "$comment": "min+gzip budgets in bytes, from PRINCIPLES.md section 7. `max` is a red line and never goes up: if a file does not fit, optimise or remove something. Above `ideal` the check warns; below `floor` it warns that something is probably missing.",
+  "$comment": "min+gzip budgets in bytes (raw bytes where compression is none), from PRINCIPLES.md section 8. `max` is a red line and never goes up: if a file does not fit, optimise or remove something. Above `ideal` the check warns; below `floor` it warns that something is probably missing.",
   "budgets": [
     { "name": "tokens CSS", "file": "packages/tokens/dist/cai-tokens.min.css", "floor": 1024, "ideal": 3072, "max": 5120 },
     { "name": "core CSS", "file": "packages/core/dist/cai.min.css", "ideal": 12288, "max": 15360 },
     { "name": "core JS (entry, lazy chunks excluded)", "file": "packages/core/dist/cai.min.js", "ideal": 5120, "max": 8192 },
     { "name": "core JS lazy chunk: midi", "file": "packages/core/dist/midi.min.js", "ideal": 3072, "max": 4096 },
     { "name": "platform CSS", "file": "packages/platform/dist/platform.min.css", "ideal": 2048, "max": 4096 },
-    { "name": "platform JS", "file": "packages/platform/dist/platform.min.js", "ideal": 1024, "max": 2048 }
+    { "name": "platform JS", "file": "packages/platform/dist/platform.min.js", "ideal": 1024, "max": 2048 },
+    { "name": "docs page HTML (each, uncompressed)", "glob": "docs/**/*.html", "compression": "none", "ideal": 61440, "max": 81920 }
   ]
 }

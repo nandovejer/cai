@@ -70,13 +70,13 @@ test('/docs/: the image placeholder shows without JavaScript', async ({ page }) 
 
 test('/docs/: the color mode switcher is three radios that set the mode', async ({ page }) => {
   await page.goto('/docs/');
-  const switcher = page.locator('.site-header .cai-theme-switcher--cycle');
-  await expect(switcher.locator('.cai-theme-btn')).toHaveCount(3);
-  for (const label of await switcher.locator('.cai-theme-btn').all()) await expect(label).toBeVisible();
-  await expect(page.locator('.cai-theme-cycle')).toHaveCount(0);
+  const switcher = page.locator('footer .cai-mode-switcher--cycle');
+  await expect(switcher.locator('.cai-mode-btn')).toHaveCount(3);
+  for (const label of await switcher.locator('.cai-mode-btn').all()) await expect(label).toBeVisible();
+  await expect(page.locator('.cai-mode-cycle')).toBeHidden();
   const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const light = await background();
-  await switcher.locator('.cai-theme-btn:has(input[value="dark"])').click();
+  await switcher.locator('.cai-mode-btn:has(input[value="dark"])').click();
   await expect.poll(background).not.toBe(light);
 });
 

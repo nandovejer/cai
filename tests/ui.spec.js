@@ -25,7 +25,7 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       const initialTheme = await page.evaluate(() => document.documentElement.dataset.theme);
 
       // The header's cycle button steps to the next mode
-      await page.click('.site-header .cai-theme-cycle');
+      await page.click('footer .cai-mode-cycle');
 
       // Verify theme changed
       const newTheme = await page.evaluate(() => document.documentElement.dataset.theme);
@@ -45,20 +45,20 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     // cai.js (initThemeSystem) and its own storage key: no site page loads
     // cai.js since the platform reference moved into /docs/, so a fixture does
     test('should persist a theme chosen with the switcher', async ({ page }) => {
-      await page.goto('/tests/fixtures/theme-switcher.html');
+      await page.goto('/tests/fixtures/mode-switcher.html');
       await page.waitForLoadState('networkidle');
 
-      await page.click('.cai-theme-btn:has(input[value="dark"])');
+      await page.click('.cai-mode-btn:has(input[value="dark"])');
 
       expect(await page.evaluate(() => localStorage.getItem('cai-theme'))).toBe('dark');
     });
 
-    test('theme switcher is a native radio group that checks the active mode', async ({ page }) => {
-      await page.goto('/tests/fixtures/theme-switcher.html');
+    test('mode switcher is a native radio group that checks the active mode', async ({ page }) => {
+      await page.goto('/tests/fixtures/mode-switcher.html');
       await page.waitForLoadState('networkidle');
 
-      await expect(page.locator('fieldset.cai-theme-switcher legend')).toHaveText('Color mode');
-      await page.click('.cai-theme-btn:has(input[value="dark"])');
+      await expect(page.locator('fieldset.cai-mode-switcher legend')).toHaveText('Color mode');
+      await page.click('.cai-mode-btn:has(input[value="dark"])');
       await expect(page.locator('input[name="cai-theme"][value="dark"]')).toBeChecked();
       await expect(page.locator('input[name="cai-theme"][value="light"]')).not.toBeChecked();
     });

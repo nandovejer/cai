@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mode switcher, radio group, with cai.js</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+</head>
+<body>
+  <main>
+    <h1>Mode switcher, radio group, with cai.js</h1>
+    <fieldset class="cai-mode-switcher">
+      <legend class="cai-mode-switcher__label">Color mode</legend>
+      <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light">Light</label>
+      <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark">Dark</label>
+      <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast">High contrast</label>
+    </fieldset>
+  </main>
+  <script type="module" src="/packages/core/dist/cai.js"></script>
+</body>
+</html>

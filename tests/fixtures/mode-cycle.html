@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Mode switcher, cycle variant</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+</head>
+<body>
+  <main>
+    <h1>Mode switcher, cycle variant</h1>
+    <fieldset class="cai-mode-switcher cai-mode-switcher--cycle">
+      <legend class="cai-mode-switcher__label">Color mode</legend>
+      <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" data-icon="sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg>Light</label>
+      <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" data-icon="moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20 15A8 8 0 0 1 9 4a8 8 0 1 0 11 11Z"/></svg>Dark</label>
+      <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" data-icon="contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+    </fieldset>
+  </main>
+  <script type="module">
+    import { initThemeCycle } from "/packages/core/dist/theme.js";
+    initThemeCycle();
+  </script>
+</body>
+</html>

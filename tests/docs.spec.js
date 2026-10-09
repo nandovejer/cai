@@ -58,7 +58,7 @@ const MODES = ['light', 'dark', 'high-contrast'];
 
 // One guide per core component file. The color-mode switcher is documented
 // in the sidebar guide, where it lives.
-const GUIDE_ID = { 'copy-btn': 'c-copy', 'icon-grid': 'c-icons', 'theme-switcher': 'c-sidebar' };
+const GUIDE_ID = { 'copy-btn': 'c-copy', 'icon-grid': 'c-icons', 'mode-switcher': 'c-sidebar' };
 const guideIds = [...new Set(components.map((file) => GUIDE_ID[file.replace('.css', '')] ?? `c-${file.replace('.css', '')}`))];
 const SECTIONS = ['when', 'when-not', 'how', 'content', 'keyboard', 'issues'];
 
@@ -115,7 +115,7 @@ test.describe('Documentation page', () => {
       await open(page);
       expect(await theme(page)).toBe('light');
 
-      const button = page.locator('.site-header .cai-theme-cycle');
+      const button = page.locator('footer .cai-mode-cycle');
       await expect(button).toHaveAccessibleName('Change color mode. Current: Light');
       for (const mode of ['dark', 'high-contrast', 'light']) {
         await button.click();
@@ -162,7 +162,7 @@ test.describe('Documentation page', () => {
 
         const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
         const toggle = await box('.cai-nav-toggle[popovertarget="page-nav"]');
-        for (const selector of ['.site-header__brand', '.site-header__nav', '.site-header .cai-theme-cycle']) {
+        for (const selector of ['.site-header__brand', '.site-header__nav']) {
           const b = await box(selector);
           const overlaps = !(b.right <= toggle.left || b.left >= toggle.right || b.bottom <= toggle.top || b.top >= toggle.bottom);
           expect(overlaps, selector).toBe(false);
@@ -433,24 +433,24 @@ test.describe('Documentation page', () => {
     test('the sidebar specimen is inert and says where the working switcher is', async ({ page }) => {
       await open(page);
 
-      await expect(page.locator('#c-sidebar fieldset.cai-theme-switcher')).toHaveAttribute('disabled', '');
+      await expect(page.locator('#c-sidebar fieldset.cai-mode-switcher')).toHaveAttribute('disabled', '');
       for (const radio of await page.locator('#c-sidebar input[type="radio"]').all()) {
         await expect(radio).toBeDisabled();
       }
       await expect(page.locator('#c-sidebar .docs-demo__stage .cai-nav-toggle')).toBeDisabled();
       await expect(page.locator('#c-sidebar a[href="#page-nav"]').first()).toBeVisible();
-      await expect(page.locator('#c-sidebar a[href="#site-header"]').first()).toBeVisible();
+      await expect(page.locator('#c-sidebar a[href="#site-footer"]').first()).toBeVisible();
       // No dead cycle button: the specimen is not a cycle group
-      await expect(page.locator('#c-sidebar .cai-theme-cycle')).toHaveCount(0);
+      await expect(page.locator('#c-sidebar .cai-mode-cycle')).toHaveCount(0);
     });
 
     test('the cycle variant is documented: markup, init, no-JS state and names', async ({ page }) => {
       await open(page);
 
       const guide = page.locator('#c-sidebar');
-      await expect(guide).toContainText('cai-theme-switcher--cycle');
+      await expect(guide).toContainText('cai-mode-switcher--cycle');
       await expect(guide).toContainText('initThemeCycle()');
-      await expect(guide.locator('pre')).toContainText(['cai-theme-btn__icon']);
+      await expect(guide.locator('pre')).toContainText(['cai-mode-btn__icon']);
       await expect(page.locator('#h-c-sidebar-keyboard + p')).toContainText('Change color mode. Current:');
       await expect(page.locator('#h-c-accessibility, #accessibility')).toContainText('three radio buttons');
     });
@@ -539,8 +539,8 @@ test.describe('Documentation page', () => {
       await page.goto('/docs/');
       const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       const light = await background();
-      await expect(page.locator('.cai-theme-cycle')).toHaveCount(0);
-      await page.click('.site-header .cai-theme-btn:has(input[value="dark"])');
+      await expect(page.locator('.cai-mode-cycle')).toBeHidden();
+      await page.click('footer .cai-mode-btn:has(input[value="dark"])');
       await expect.poll(background).not.toBe(light);
     });
   });
@@ -741,7 +741,7 @@ test.describe('Site header and navigation toggle', () => {
     { path: '/', current: 'Home' },
     { path: '/docs/', current: 'Docs' },
   ];
-  const PARTS = ['.site-header', '.site-header__menu', '.site-header__brand', '.site-header__nav', '.site-modes'];
+  const PARTS = ['.site-header', '.site-header__menu', '.site-header__brand', '.site-header__nav'];
   const layout = (page) =>
     page.evaluate((parts) => parts.map((selector) => {
       const r = document.querySelector(selector).getBoundingClientRect();
@@ -784,14 +784,13 @@ test.describe('Site header and navigation toggle', () => {
     });
 
     for (const [width, order] of [
-      [360, ['.cai-platform-skip-link', '.site-header__menu', '.site-header__brand', '.site-header .cai-theme-cycle']],
+      [360, ['.cai-platform-skip-link', '.site-header__menu', '.site-header__brand']],
       [1440, [
         '.cai-platform-skip-link',
         '.site-header__brand',
         '.site-header__nav a >> nth=0',
         '.site-header__nav a >> nth=1',
         '.site-header__nav a >> nth=2',
-        '.site-header .cai-theme-cycle',
       ]],
     ]) {
       test(`the focus order follows the header row at ${width}px: ${path}`, async ({ page }) => {

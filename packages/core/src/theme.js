@@ -7,7 +7,7 @@
  * wire up persistence, OS preference syncing, and the initial theme.
  *
  * The color-mode switcher is a native radio group and works without this
- * module (see components/theme-switcher.css); this module persists the
+ * module (see components/mode-switcher.css); this module persists the
  * choice and keeps the radios in step with it.
  */
 import { enableJs } from "./utils.js";
@@ -73,7 +73,7 @@ function syncButtons(theme) {
   // Mode radios (footer) — checked only when a base color mode is selected
   document.querySelectorAll('input[name="cai-theme"]').forEach((radio) => {
     radio.checked = !isCustom && radio.value === theme;
-    const label = radio.closest(".cai-theme-btn");
+    const label = radio.closest(".cai-mode-btn");
     label?.classList.toggle("is-dimmed", isCustom);
   });
 
@@ -136,21 +136,24 @@ export function applyMode(mode, parentTheme, { persist = true } = {}) {
   syncButtons(parentTheme);
 }
 
-/* --- Cycle button: one button for a .cai-theme-switcher--cycle group ---
+/* --- Cycle button: one button for a .cai-mode-switcher--cycle group ---
    The radios stay the source of truth and the no-JS control. The button
    checks the next enabled radio and fires its change event, so whatever
    listens to the radios (initThemeSystem or a page's own script) applies it. */
 
 function labelOf(radio) {
-  return radio?.closest(".cai-theme-btn")?.textContent.trim() ?? "";
+  return radio?.closest(".cai-mode-btn")?.textContent.trim() ?? "";
 }
 
 function renderCycle(group) {
-  const button = group.querySelector(":scope > .cai-theme-cycle");
+  const button = group.querySelector(":scope > .cai-mode-cycle");
   if (!button) return;
   const current = group.querySelector("input:checked");
-  const icon = current?.closest(".cai-theme-btn")?.querySelector(".cai-theme-btn__icon");
-  button.replaceChildren(...(icon ? [icon.cloneNode(true)] : []));
+  // A button that ships its own icons ([data-mode-icon]) shows the right one by CSS
+  if (!button.querySelector("[data-mode-icon]")) {
+    const icon = current?.closest(".cai-mode-btn")?.querySelector(".cai-mode-btn__icon");
+    button.replaceChildren(...(icon ? [icon.cloneNode(true)] : []));
+  }
   const name = t("changeMode", button, { mode: labelOf(current) || "—" });
   button.setAttribute("aria-label", name);
   button.title = name;
@@ -163,37 +166,48 @@ function cycle(group) {
   next.checked = true;
   next.dispatchEvent(new Event("change", { bubbles: true }));
   renderCycle(group);
-  group.querySelector(":scope > .cai-theme-cycle__status").textContent = t(
+  group.querySelector(":scope > .cai-mode-cycle__status").textContent = t(
     "modeChanged",
     group,
     { mode: labelOf(next) },
   );
 }
 
+const wiredGroups = new WeakSet();
+
 /**
- * Turn each fieldset.cai-theme-switcher--cycle into one button that steps
- * through its modes, showing the icon of the current one. Idempotent.
+ * Turn each fieldset.cai-mode-switcher--cycle into one button that steps
+ * through its modes, showing the icon of the current one. Uses the
+ * .cai-mode-cycle button already in the markup, or adds one. Idempotent.
  */
 export function initThemeCycle(root = document) {
   enableJs();
-  const groups = root.querySelectorAll(".cai-theme-switcher--cycle");
-  groups.forEach((group) => {
-    if (group.querySelector(":scope > .cai-theme-cycle")) return;
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "cai-theme-cycle";
+  const fresh = [...root.querySelectorAll(".cai-mode-switcher--cycle")].filter(
+    (group) => !wiredGroups.has(group),
+  );
+  fresh.forEach((group) => {
+    wiredGroups.add(group);
+    let button = group.querySelector(":scope > .cai-mode-cycle");
+    if (!button) {
+      button = document.createElement("button");
+      button.type = "button";
+      button.className = "cai-mode-cycle";
+      group.querySelector("legend")?.after(button) ?? group.prepend(button);
+    }
+    if (!group.querySelector(":scope > .cai-mode-cycle__status")) {
+      const status = document.createElement("span");
+      status.className = "cai-mode-cycle__status";
+      status.setAttribute("role", "status");
+      button.after(status);
+    }
     button.addEventListener("click", () => cycle(group));
-    const status = document.createElement("span");
-    status.className = "cai-theme-cycle__status";
-    status.setAttribute("role", "status");
-    group.querySelector("legend")?.after(button, status) ?? group.prepend(button, status);
     group.addEventListener("change", () => renderCycle(group));
     renderCycle(group);
   });
   // Scripts that set the mode check the radios without a change event;
   // they set data-theme in the same task, so re-render after it.
-  if (groups.length) {
-    new MutationObserver(() => groups.forEach(renderCycle)).observe(
+  if (fresh.length) {
+    new MutationObserver(() => fresh.forEach(renderCycle)).observe(
       document.documentElement,
       { attributes: true, attributeFilter: ["data-theme", "data-mode"] },
     );

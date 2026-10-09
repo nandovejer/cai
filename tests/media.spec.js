@@ -53,7 +53,7 @@ test.describe('forced-colors: the color mode switcher', () => {
     test(`${app}: the cycle button keeps a visible edge and a visible icon`, async ({ page, browserName }) => {
       test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
       await page.goto(app);
-      const button = page.locator('.site-header .cai-theme-cycle');
+      const button = page.locator('footer .cai-mode-cycle');
       await expect(button).toBeVisible();
       const style = await button.evaluate((el) => {
         const s = getComputedStyle(el);
@@ -73,7 +73,7 @@ test.describe('forced-colors: the color mode switcher without JavaScript', () =>
   test('/: the checked mode stays visible', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
     await page.goto('/');
-    const styles = await page.locator('.site-header .cai-theme-btn').evaluateAll((labels) =>
+    const styles = await page.locator('footer .cai-mode-btn').evaluateAll((labels) =>
       labels.map((el) => ({
         checked: el.querySelector('input').checked,
         visible: el.checkVisibility(),

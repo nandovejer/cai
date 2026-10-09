@@ -1,17 +1,17 @@
 /* --------------------------------------------------------------------------
-   CAI Component: theme-switcher
-   Theme switcher buttons (footer + apply buttons)
+   CAI Component: mode-switcher
+   Color mode switcher (radio group or one icon button)
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-/* Native radio group: <fieldset class="cai-theme-switcher"> with a <legend>
-   and one <label class="cai-theme-btn"><input type="radio" name="cai-theme">
+/* Native radio group: <fieldset class="cai-mode-switcher"> with a <legend>
+   and one <label class="cai-mode-btn"><input type="radio" name="cai-theme">
    per mode. The browser owns the state and the arrow-key behavior, and
    tokens/semantic.css re-scopes the page from the checked radio with
    :root:has(), so it works without JavaScript. */
-.cai-theme-switcher {
+.cai-mode-switcher {
   /* Colours come from the surface the switcher sits on: the page by
      default, the sidebar inside .cai-sidebar (below). Declared here, so
      each button's own data-theme does not re-scope them. */
@@ -30,7 +30,7 @@
   min-inline-size: 0;
 }
 
-.cai-theme-switcher__label {
+.cai-mode-switcher__label {
   font-size: var(--cai-text-xs);
   font-weight: 500;
   letter-spacing: 1px;
@@ -41,7 +41,7 @@
   padding: 0;
 }
 
-.cai-theme-btn {
+.cai-mode-btn {
   position: relative;
   flex: 1;
   min-height: 28px;
@@ -63,7 +63,7 @@
 }
 
 /* The radio is visually hidden but stays focusable and clickable */
-.cai-theme-btn__input {
+.cai-mode-btn__input {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -73,19 +73,19 @@
   clip-path: inset(50%);
 }
 
-.cai-theme-btn:hover {
+.cai-mode-btn:hover {
   background: var(--cai-switcher-hover-bg);
   color: var(--cai-switcher-hover-text);
 }
 
-.cai-theme-btn:has(.cai-theme-btn__input:focus-visible),
-.cai-theme-btn:focus-visible {
+.cai-mode-btn:has(.cai-mode-btn__input:focus-visible),
+.cai-mode-btn:focus-visible {
   outline: 2px solid var(--cai-switcher-focus);
   outline-offset: 2px;
 }
 
-.cai-theme-btn.is-active,
-.cai-theme-btn:has(.cai-theme-btn__input:checked) {
+.cai-mode-btn.is-active,
+.cai-mode-btn:has(.cai-mode-btn__input:checked) {
   background: var(--cai-switcher-on-bg);
   color: var(--cai-switcher-on-text);
   border-color: var(--cai-switcher-on-bg);
@@ -93,27 +93,41 @@
 
 /* Disabled (a specimen, or a mode the page cannot offer): a dashed border,
    so the state does not rest on colour (RL-6, RL-7) */
-.cai-theme-btn:has(.cai-theme-btn__input:disabled) {
+.cai-mode-btn:has(.cai-mode-btn__input:disabled) {
   border-style: dashed;
   cursor: not-allowed;
 }
 
 /* Optional icon before each mode name: an inline <svg> in currentColor */
-.cai-theme-btn__icon {
+.cai-mode-btn__icon {
   inline-size: 1em;
   block-size: 1em;
   flex-shrink: 0;
 }
 
-/* Cycle variant (.cai-theme-switcher--cycle): without JavaScript it is the
-   radio group above. initThemeCycle() adds one button that steps through
-   the modes; the radios stay in the page, checked, hidden from view. */
-.cai-theme-switcher--cycle:has(> .cai-theme-cycle) > .cai-theme-btn {
-  display: none;
+/* Cycle variant (.cai-mode-switcher--cycle): the radios above are the
+   control and the source of truth. The markup may also carry the button
+   (.cai-mode-cycle) with one icon per mode; with scripting on, the button
+   shows and the radios hide, so nothing flickers while the script loads.
+   Without scripting the radios show and the button hides. If the markup has
+   no button, initThemeCycle() adds one. */
+@media (scripting: enabled) {
+  .cai-mode-switcher--cycle:has(> .cai-mode-cycle) > .cai-mode-btn {
+    display: none;
+  }
+
+  .cai-mode-switcher--cycle:has(> .cai-mode-cycle) > .cai-mode-switcher__label {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
 
-.cai-theme-switcher--cycle:has(> .cai-theme-cycle) > .cai-theme-switcher__label,
-.cai-theme-cycle__status {
+.cai-mode-cycle__status {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -123,7 +137,19 @@
   white-space: nowrap;
 }
 
-.cai-theme-cycle {
+/* The button shows the icon of the checked mode, with no script: each icon
+   carries data-mode-icon and only the one matching the checked radio displays */
+.cai-mode-cycle > [data-mode-icon] {
+  display: none;
+}
+
+.cai-mode-switcher--cycle:has(input[value="light"]:checked) > .cai-mode-cycle > [data-mode-icon="light"],
+.cai-mode-switcher--cycle:has(input[value="dark"]:checked) > .cai-mode-cycle > [data-mode-icon="dark"],
+.cai-mode-switcher--cycle:has(input[value="high-contrast"]:checked) > .cai-mode-cycle > [data-mode-icon="high-contrast"] {
+  display: block;
+}
+
+.cai-mode-cycle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -139,30 +165,36 @@
     color var(--cai-duration-fast);
 }
 
-.cai-theme-cycle .cai-theme-btn__icon {
+.cai-mode-cycle .cai-mode-btn__icon {
   inline-size: 1.25rem;
   block-size: 1.25rem;
 }
 
-.cai-theme-cycle:hover {
+.cai-mode-cycle:hover {
   background: var(--cai-switcher-hover-bg);
   color: var(--cai-switcher-hover-text);
 }
 
-.cai-theme-cycle:focus-visible {
+.cai-mode-cycle:focus-visible {
   outline: 2px solid var(--cai-switcher-focus);
   outline-offset: 2px;
 }
 
+@media (scripting: none) {
+  .cai-mode-cycle {
+    display: none;
+  }
+}
+
 @media (forced-colors: active) {
-  .cai-theme-cycle {
+  .cai-mode-cycle {
     border-color: ButtonText;
   }
 }
 
 /* On the sidebar surface. --cai-focus-ring would be black on a
    black sidebar in high contrast. */
-.cai-sidebar .cai-theme-switcher {
+.cai-sidebar .cai-mode-switcher {
   --cai-switcher-label: var(--cai-sidebar-label);
   --cai-switcher-border: var(--cai-sidebar-border);
   --cai-switcher-hover-bg: var(--cai-sidebar-hover);
@@ -175,12 +207,12 @@
 /* Forced colors drop the backgrounds: the checked mode keeps a system
    highlight and a thicker border, so the state is not lost. */
 @media (forced-colors: active) {
-  .cai-theme-btn {
+  .cai-mode-btn {
     border-color: ButtonText;
   }
 
-  .cai-theme-btn.is-active,
-  .cai-theme-btn:has(.cai-theme-btn__input:checked) {
+  .cai-mode-btn.is-active,
+  .cai-mode-btn:has(.cai-mode-btn__input:checked) {
     forced-color-adjust: none;
     background: Highlight;
     color: HighlightText;
@@ -191,7 +223,7 @@
 /* When a custom theme is active, mode buttons step back visually. A dashed
    border instead of opacity: they stay operable, so their label keeps its
    text contrast (WCAG 1.4.3). */
-.cai-theme-btn.is-dimmed {
+.cai-mode-btn.is-dimmed {
   border-style: dashed;
 }
 

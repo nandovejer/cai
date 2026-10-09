@@ -49,7 +49,7 @@ Every component also ships as its own file in `dist/components/` — load only w
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/components/card.css">
 ```
 
-Available: `alert`, `avatar`, `breadcrumb`, `button`, `card`, `code`, `copy-btn`, `figure`, `form`, `icon-grid`, `modal`, `player`, `progress`, `sidebar`, `table`, `tabs`, `tag`, `theme-switcher`, `toast`, `tooltip` (+ `_animations` for the shared keyframes). Each has a `.min.css` twin.
+Available: `alert`, `avatar`, `breadcrumb`, `button`, `card`, `code`, `copy-btn`, `figure`, `form`, `icon-grid`, `modal`, `mode-switcher`, `player`, `progress`, `sidebar`, `table`, `tabs`, `tag`, `toast`, `tooltip` (+ `_animations` for the shared keyframes). Each has a `.min.css` twin.
 
 ### Using a single JS behavior
 

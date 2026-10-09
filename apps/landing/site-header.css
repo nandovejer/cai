@@ -94,30 +94,67 @@
   text-underline-offset: var(--cai-space-2xs);
 }
 
-/* The color mode switcher: core's cycle variant. Without JavaScript it is
-   the native radio group, with its legend beside the buttons to keep the
-   header short; initThemeCycle() turns it into one icon button. */
+/* The color mode switcher, in the page footer: core's cycle variant. It is
+   one icon button; without JavaScript it is the native radio group, with
+   its legend beside the buttons. */
 .site-modes {
   flex-shrink: 0;
   align-items: center;
   gap: var(--cai-space-2xs) var(--cai-space-xs);
 }
 
-.site-modes .cai-theme-switcher__label {
+/* Bottom-right corner of the footer. The auto margin takes the free space
+   (the footer wraps, and is a column on small screens), so the switcher
+   never overlaps the text or the links. */
+.cai-platform-footer > .site-modes {
+  justify-content: flex-end;
+  margin-inline-start: auto;
+}
+
+/* 768px and below: two columns. The first takes all the width for the text
+   and the links; the second holds only the button, at the bottom, so the
+   footer is two rows, never three. Without JavaScript the radios are too
+   wide for a column: they take a row of their own, at the end. */
+@media (max-width: 768px) {
+  .cai-platform-footer:has(> .site-modes) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  .cai-platform-footer:has(> .site-modes) > :not(.site-modes) {
+    grid-column: 1;
+  }
+
+  .cai-platform-footer > .site-modes {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    align-self: end;
+  }
+}
+
+@media (scripting: none) and (max-width: 768px) {
+  .cai-platform-footer > .site-modes {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+}
+
+.site-modes .cai-mode-switcher__label {
   float: inline-start;
   margin-block: 0;
   margin-inline: 0 var(--cai-space-2xs);
 }
 
-.site-modes .cai-theme-btn {
+.site-modes .cai-mode-btn {
   flex: none;
   min-block-size: var(--cai-control-sm);
   padding-inline: var(--cai-space-xs);
   border-radius: var(--cai-radius-md);
 }
 
-/* The cycle button matches the other header controls */
-.site-modes .cai-theme-cycle {
+/* The cycle button matches the other controls */
+.site-modes .cai-mode-cycle {
   inline-size: var(--cai-control-lg);
   block-size: var(--cai-control-lg);
 }
@@ -127,38 +164,6 @@
 @media (max-width: 359px) {
   .site-header__tag {
     display: none;
-  }
-}
-
-/* Without JavaScript the color mode is the three radios, too wide for the
-   row at 768px and below: they take a second row of their own, at the end,
-   so the header has a known height (53px + one 28px row + the gap) for the
-   drawer offset. Below 480px the legend is read, not shown, to keep the
-   radios on one line. */
-@media (scripting: none) and (max-width: 768px) {
-  :root {
-    --site-header-h: calc(3.3125rem + var(--cai-control-sm) + var(--cai-space-xs));
-  }
-
-  .site-header__inner {
-    flex-wrap: wrap;
-    row-gap: var(--cai-space-xs);
-  }
-
-  .site-modes {
-    flex-basis: 100%;
-    justify-content: flex-end;
-  }
-}
-
-@media (scripting: none) and (max-width: 479px) {
-  .site-modes .cai-theme-switcher__label {
-    position: absolute;
-    inline-size: 1px;
-    block-size: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
   }
 }
 

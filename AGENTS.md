@@ -30,7 +30,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 
 | Module         | Key exports                                                    |
 | -------------- | -------------------------------------------------------------- |
-| `theme.js`     | `applyTheme(theme)` (sets `data-theme` on `<html>`, persists), `applyMode`, `getInitialTheme`, `initThemeSystem()`, `initThemeCycle()` (one button for a `.cai-theme-switcher--cycle` group) |
+| `theme.js`     | `applyTheme(theme)` (sets `data-theme` on `<html>`, persists), `applyMode`, `getInitialTheme`, `initThemeSystem()`, `initThemeCycle()` (one button for a `.cai-mode-switcher--cycle` group) |
 | `sidebar.js`   | `initSidebar()` — scroll-spy active link; closes the popover drawer on navigation |
 | `clipboard.js` | `copyToClipboard(text, el, type)` (visual feedback), `initCopyButtons()` |
 | `modal.js`     | `initModals()` — fallback for `command`/`commandfor` on a native `<dialog>`; `supportsCommands()` |

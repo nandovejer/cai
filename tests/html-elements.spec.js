@@ -201,7 +201,7 @@ test.describe('HTML elements reference, on the documentation page', () => {
     await expect(page.locator('#page-nav a[href="#html-elements"]')).toHaveCount(1);
     // The header's cycle button: light, then dark, high contrast and light again
     for (const mode of ['dark', 'high-contrast', 'light']) {
-      await page.click('.site-header .cai-theme-cycle');
+      await page.click('footer .cai-mode-cycle');
       expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(mode);
     }
   });
@@ -217,7 +217,7 @@ test.describe('HTML elements reference, on the documentation page', () => {
       page.evaluate(() => [...document.getElementById('d-canvas').getContext('2d').getImageData(60, 60, 1, 1).data].join());
     const light = await pixel();
     expect(light).not.toBe('0,0,0,0');
-    await page.click('.site-header .cai-theme-cycle');
+    await page.click('footer .cai-mode-cycle');
     await expect.poll(pixel).not.toBe(light);
   });
 

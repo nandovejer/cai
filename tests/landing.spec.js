@@ -81,16 +81,16 @@ test.describe('Landing page', () => {
       await open(page);
 
       // The native radio group stays in the page, under the button
-      const switcher = page.locator('.site-header fieldset.cai-theme-switcher--cycle');
+      const switcher = page.locator('footer fieldset.cai-mode-switcher--cycle');
       await expect(switcher).toHaveCount(1);
       await expect(switcher.locator('legend')).toHaveText('Color mode');
       await expect(switcher.locator('input[type="radio"][name="cai-theme"]')).toHaveCount(3);
       expect(await theme(page)).toBe('light');
 
-      const button = switcher.locator('button.cai-theme-cycle');
+      const button = switcher.locator('button.cai-mode-cycle');
       await expect(button).toHaveCount(1);
       await expect(button).toHaveAccessibleName('Change color mode. Current: Light');
-      await expect(switcher.locator('.cai-theme-btn').first()).toBeHidden();
+      await expect(switcher.locator('.cai-mode-btn').first()).toBeHidden();
 
       for (const [mode, label] of [['dark', 'Dark'], ['high-contrast', 'High contrast'], ['light', 'Light']]) {
         await button.click();
@@ -105,7 +105,7 @@ test.describe('Landing page', () => {
     test('the cycle button works from the keyboard', async ({ page }) => {
       await open(page);
 
-      await page.locator('.site-header .cai-theme-cycle').focus();
+      await page.locator('footer .cai-mode-cycle').focus();
       await page.keyboard.press('Enter');
       expect(await theme(page)).toBe('dark');
       await page.keyboard.press('Space');
@@ -115,8 +115,8 @@ test.describe('Landing page', () => {
     test('the chosen mode survives a reload, under the site key', async ({ page }) => {
       await open(page);
       // light → dark → high contrast
-      await page.click('.site-header .cai-theme-cycle');
-      await page.click('.site-header .cai-theme-cycle');
+      await page.click('footer .cai-mode-cycle');
+      await page.click('footer .cai-mode-cycle');
 
       expect(await page.evaluate(() => localStorage.getItem('cai-site-mode'))).toBe('high-contrast');
       // cai.js (core's theme module) reads cai-theme: the site must not touch it
@@ -164,7 +164,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       const boxes = await page
-        .locator('.site-header .cai-theme-cycle')
+        .locator('footer .cai-mode-cycle')
         .evaluateAll((buttons) => buttons.map((el) => el.getBoundingClientRect()));
       expect(boxes).toHaveLength(1);
       for (const box of boxes) {
@@ -173,27 +173,53 @@ test.describe('Landing page', () => {
       }
     });
 
+    test('footer: the cycle button ships in the markup and shows only the icon of the checked mode', async ({ page }) => {
+      await open(page);
+      const button = page.locator('footer .cai-mode-cycle');
+      for (const mode of ['light', 'dark', 'high-contrast']) {
+        await expect(page.locator(`footer input[value="${mode}"]`)).toBeChecked();
+        await expect(button.locator(`[data-mode-icon="${mode}"]`)).toBeVisible();
+        await expect(button.locator('[data-mode-icon]:visible')).toHaveCount(1);
+        await button.click();
+      }
+    });
+
+    for (const width of [320, 360, 768, 1280]) {
+      test(`footer: the color mode switcher sits bottom-right and overlaps nothing at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page);
+        const footer = page.locator('footer .cai-platform-footer');
+        const box = (el) => el.evaluate((node) => node.getBoundingClientRect().toJSON());
+        const parent = await box(footer);
+        const modes = await box(page.locator('footer .cai-mode-switcher'));
+        expect(parent.right - modes.right).toBeLessThanOrEqual(1);
+        const siblings = await footer.locator('> p, > nav').evaluateAll((els) => els.map((el) => el.getBoundingClientRect().toJSON()));
+        for (const other of siblings) {
+          const apart = modes.left >= other.right - 1 || modes.right <= other.left + 1 || modes.top >= other.bottom - 1 || modes.bottom <= other.top + 1;
+          expect(apart).toBe(true);
+        }
+      });
+    }
+
     for (const width of [320, 360, 1280]) {
       test(`header: the visual order follows the DOM order at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
         await open(page);
 
-        const [menu, brand, nav, modes] = await Promise.all(
-          ['.site-header__menu', '.site-header__brand', '.site-header__nav', '.site-header .cai-theme-switcher'].map((selector) =>
+        const [menu, brand, nav] = await Promise.all(
+          ['.site-header__menu', '.site-header__brand', '.site-header__nav'].map((selector) =>
             page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON()),
           ),
         );
         const before = (a, b) => a.bottom <= b.top + 1 || (Math.abs(a.top - b.top) < a.height && a.left < b.left);
-        // At 768px and below: menu button, brand, color mode (the site links
-        // are in the drawer). Above: brand, site links, color mode.
+        // At 768px and below: menu button, brand (the site links are in the
+        // drawer). Above: brand, site links.
         if (width <= 768) {
           expect(before(menu, brand)).toBe(true);
           expect(nav.width).toBe(0);
-          expect(before(brand, modes)).toBe(true);
         } else {
           expect(menu.width).toBe(0);
           expect(before(brand, nav)).toBe(true);
-          expect(before(nav, modes)).toBe(true);
         }
       });
     }
@@ -520,9 +546,9 @@ test.describe('Landing page', () => {
       await page.setViewportSize({ width: 360, height: 800 });
       await page.goto('/');
 
-      await expect(page.locator('.site-header .cai-theme-cycle')).toHaveCount(0);
+      await expect(page.locator('footer .cai-mode-cycle')).toBeHidden();
       const boxes = await page
-        .locator('.site-header .cai-theme-btn')
+        .locator('footer .cai-mode-btn')
         .evaluateAll((labels) => labels.map((el) => el.getBoundingClientRect()));
       expect(boxes).toHaveLength(3);
       for (const box of boxes) {
@@ -536,9 +562,9 @@ test.describe('Landing page', () => {
       const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       const light = await background();
 
-      await page.focus('.site-header input[value="light"]');
+      await page.focus('.cai-mode-switcher input[value="light"]');
       await page.keyboard.press('ArrowRight');
-      await expect(page.locator('.site-header input[value="dark"]')).toBeChecked();
+      await expect(page.locator('.cai-mode-switcher input[value="dark"]')).toBeChecked();
       await expect.poll(background).not.toBe(light);
     });
 
@@ -546,7 +572,7 @@ test.describe('Landing page', () => {
       await page.goto('/');
       const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       const light = await background();
-      await page.click('.site-header .cai-theme-btn:has(input[value="dark"])');
+      await page.click('footer .cai-mode-btn:has(input[value="dark"])');
       await expect.poll(background).not.toBe(light);
 
       await page.click('form.landing-try button');

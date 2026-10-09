@@ -65,7 +65,7 @@ JS is the last layer, never the foundation. A page built with CAI must be usable
 - **Three layers, in this order:** HTML that works alone → CSS that improves it → JS that enhances it. Design and document the no-JS state first.
 - **If the standard does it, JS does not.** Opening a `dialog`, toggling `details`, showing a `popover`, validating a `required` field, scrolling to an anchor: none of these get custom JS.
 - **JS never conflicts with native behaviour.** No `preventDefault()` on native actions unless you replace them with something strictly better and documented. No re-implementing `Tab` order, `Escape`, form submission or link navigation.
-- **JS is an enhancement, never a requirement.** Each use must degrade: tabs become stacked sections, the theme switcher becomes radios, the copy button becomes selectable text.
+- **JS is an enhancement, never a requirement.** Each use must degrade: tabs become stacked sections, the mode switcher becomes radios, the copy button becomes selectable text.
 - **Feature-detect, never user-agent-sniff.** `if ("showPopover" in HTMLElement.prototype)`, `CSS.supports()`, `@supports`.
 - **Importing a module has no side effects.** Only `init*()` touches the DOM. `init*()` is idempotent and scoped (accepts a root element).
 - **Hooks are `data-*` attributes, not classes.** `.cai-*` classes are for styling; JS binds to `data-cai-*` or ARIA attributes.

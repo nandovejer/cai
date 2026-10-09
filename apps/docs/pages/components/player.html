@@ -1,0 +1,100 @@
+<!-- cai:page
+title: Player
+description: Audio, video and MIDI playback with accessible controls.
+area: components
+group: media
+files: components/player.css
+module: player.js
+-->
+    <div class="docs-component" id="c-player">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage o-grid docs-cols-2">
+            <div class="cai-player" data-type="video" role="group" aria-label="Video player">
+              <div class="cai-player-media-wrap is-paused">
+                <video class="cai-player-video" preload="metadata" controls playsinline aria-label="A sun rises behind an arched window on a whitewashed wall. No sound.">
+                  <source src="/apps/docs/assets/video.mp4" type="video/mp4">
+                </video>
+                <div class="cai-player-overlay" aria-hidden="true">
+                  <svg class="cai-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+                </div>
+              </div>
+              <div class="cai-player-controls">
+                <div class="cai-player-progress-row">
+                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                  </button>
+                  <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek video">
+                </div>
+                <div class="cai-player-btns">
+                  <span class="cai-player-time cai-player-current">0:00</span>
+                  <span class="cai-player-spacer"></span>
+                  <span class="cai-player-time cai-player-duration">0:00</span>
+                  <div class="cai-player-vol-wrap">
+                    <button class="cai-player-btn cai-player-mute" type="button" aria-label="Mute">
+                      <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                      <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+                    </button>
+                    <input class="cai-player-seekbar cai-player-volbar" type="range" min="0" max="1000" step="1" value="1000" style="--cai-seek: 100%" aria-label="Video volume">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="docs-demo__stage">
+              <div class="cai-player" data-type="audio" role="group" aria-label="Audio player">
+                <audio class="cai-player-audio" preload="none" controls>
+                  <source src="/apps/docs/assets/audio.mp3" type="audio/mpeg">
+                </audio>
+                <div class="cai-player-controls cai-player-controls--audio">
+                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                  </button>
+                  <div class="cai-player-progress-row cai-player-progress-row--audio">
+                    <span class="cai-player-time cai-player-current">0:00</span>
+                    <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek audio">
+                    <span class="cai-player-time cai-player-duration">0:00</span>
+                  </div>
+                </div>
+              </div>
+              <p class="docs-demo__note">Audio, MP3. Nothing is downloaded until you press play.</p>
+
+              <!-- data-src is set by landing.js (the build does not rewrite data-* URLs) -->
+              <div class="cai-player" data-type="midi" role="group" aria-label="MIDI player">
+                <p class="cai-player-fallback">MIDI playback needs JavaScript.</p>
+                <div class="cai-player-controls cai-player-controls--audio">
+                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play" disabled>
+                    <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+                  </button>
+                  <div class="cai-player-progress-row cai-player-progress-row--audio">
+                    <span class="cai-player-time cai-player-current">0:00</span>
+                    <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek MIDI">
+                    <span class="cai-player-time cai-player-duration">0:00</span>
+                  </div>
+                  <span class="cai-player-midi-status"></span>
+                </div>
+              </div>
+              <p class="docs-demo__note">MIDI, parsed and played with Web Audio by <code class="cai-code-inline">midi.js</code>, which loads only when a MIDI player is on the page.</p>
+            </div>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-player-issues">Known issues</h2>
+            <p>Captions and audio description depend on the media you provide. MIDI has no equivalent without JavaScript.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-player-when">When to use</h2>
+            <p>To play video, audio or a MIDI file in the page.</p>
+            <h2 class="docs-guide__title" id="h-c-player-when-not">When not to use</h2>
+            <p>Do not autoplay. Do not use it for background media.</p>
+            <h2 class="docs-guide__title" id="h-c-player-how">How it works</h2>
+            <p>Without JavaScript the native controls of the audio and video element are shown. The script replaces them with the CAI controls; seek and volume are native range inputs. MIDI needs JavaScript and Web Audio.</p>
+            <h2 class="docs-guide__title" id="h-c-player-content">Content guidance</h2>
+            <p>Name each player with aria-label and give video a text alternative or a transcript.</p>
+            <h2 class="docs-guide__title" id="h-c-player-keyboard">Keyboard and ARIA</h2>
+            <p>Space or K plays and pauses, M mutes, F goes full screen on video. The sliders take arrow keys, Home, End and Page Up and Down.</p>
+          </div>
+    </div>

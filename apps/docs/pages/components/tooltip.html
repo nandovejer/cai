@@ -1,0 +1,34 @@
+<!-- cai:page
+title: Tooltip
+description: A short hint on hover or focus, never essential content.
+area: components
+group: feedback
+files: components/tooltip.css
+-->
+    <div class="docs-component" id="c-tooltip">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage docs-demo__stage--tooltip">
+            <div class="cai-tooltip">
+              <button class="cai-btn cai-btn--outline cai-btn--sm" type="button" aria-describedby="tooltip-demo">Hover or focus me</button>
+              <div class="cai-tooltip__text" role="tooltip" id="tooltip-demo">Tooltip content</div>
+            </div>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-tooltip-issues">Known issues</h2>
+            <p>Partial WCAG 1.4.13: the tooltip cannot be dismissed with Escape without moving focus or the pointer. Keep tooltips non-essential.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-tooltip-when">When to use</h2>
+            <p>To explain a control whose label is not enough, in a sentence at most.</p>
+            <h2 class="docs-guide__title" id="h-c-tooltip-when-not">When not to use</h2>
+            <p>For anything essential, long or interactive. On touch devices there is no hover: put important text on the page.</p>
+            <h2 class="docs-guide__title" id="h-c-tooltip-how">How it works</h2>
+            <p>CSS only: it opens on hover and on keyboard focus, and stays open while the pointer is over it (WCAG 1.4.13, hoverable).</p>
+            <h2 class="docs-guide__title" id="h-c-tooltip-content">Content guidance</h2>
+            <p>One short sentence, no links. The control keeps its own accessible name.</p>
+            <h2 class="docs-guide__title" id="h-c-tooltip-keyboard">Keyboard and ARIA</h2>
+            <p>Opens when the control receives focus, closes when it loses focus. The Escape key does not close it.</p>
+          </div>
+    </div>

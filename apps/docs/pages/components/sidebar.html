@@ -1,0 +1,64 @@
+<!-- cai:page
+title: Sidebar
+description: Site navigation that becomes a drawer on small screens.
+area: components
+group: navigation
+files: components/sidebar.css
+-->
+    <div class="docs-component" id="c-sidebar">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage docs-sidebar-demo">
+            <nav class="cai-sidebar" aria-label="Sidebar specimen">
+              <div class="cai-sidebar__brand">
+                <div class="cai-sidebar__brand-name">
+                  <span class="cai-sidebar__logo" aria-hidden="true"><svg viewBox="8 8 32 32" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span>
+                  CAI
+                </div>
+                <div class="cai-sidebar__version">v3.0.0</div>
+              </div>
+              <div class="cai-sidebar__section">
+                <div class="cai-sidebar__section-label">System</div>
+                <a class="cai-sidebar__link is-active" href="/docs/tokens/" aria-current="true">Tokens</a>
+                <a class="cai-sidebar__link" href="/docs/components/">Core</a>
+                <a class="cai-sidebar__link" href="/docs/platform/">Platform</a>
+              </div>
+              <div class="cai-sidebar__footer">
+                <fieldset class="cai-mode-switcher" disabled>
+                  <legend class="cai-mode-switcher__label">Color mode (specimen)</legend>
+                  <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="light" checked>Light</label>
+                  <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="dark">Dark</label>
+                  <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="high-contrast">High contrast</label>
+                </fieldset>
+              </div>
+            </nav>
+            <div class="docs-demo__stage">
+              <div class="o-row">
+                <button class="cai-nav-toggle" type="button" aria-label="Navigation toggle (specimen)" disabled>
+                  <span class="cai-nav-toggle__bar"></span>
+                  <span class="cai-nav-toggle__bar"></span>
+                  <span class="cai-nav-toggle__bar"></span>
+                </button>
+                <code class="docs-demo__file">.cai-nav-toggle</code>
+              </div>
+              <p class="docs-demo__note">On small screens the sidebar becomes a drawer. <a href="#page-nav">This page's navigation uses it live</a>.</p>
+            </div>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-sidebar-issues">Known issues</h2>
+            <p>Without the popover API the navigation stays visible above the content.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-sidebar-when">When to use</h2>
+            <p>For the main navigation of a documentation or app shell with many sections.</p>
+            <h2 class="docs-guide__title" id="h-c-sidebar-when-not">When not to use</h2>
+            <p>For a short list of pages: a header navigation is simpler.</p>
+            <h2 class="docs-guide__title" id="h-c-sidebar-how">How it works</h2>
+            <p>A nav landmark. On small screens it is a native popover drawer opened by a button with popovertarget, <code class="cai-code-inline">.cai-nav-toggle</code>. Put that button first in your header row, so the focus order follows the screen; <code class="cai-code-inline">.cai-nav-toggle--fixed</code> pins it to the top start corner instead, for a page with no header.</p>
+            <h2 class="docs-guide__title" id="h-c-sidebar-content">Content guidance</h2>
+            <p>Section labels are nouns.</p>
+            <h2 class="docs-guide__title" id="h-c-sidebar-keyboard">Keyboard and ARIA</h2>
+            <p>Escape and a click outside close the drawer; focus returns to the button.</p>
+          </div>
+    </div>

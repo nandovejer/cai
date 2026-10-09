@@ -1,0 +1,59 @@
+<!-- cai:page
+title: Color mode switcher
+description: Lets people choose light, dark or high contrast; radios without JS, one cycling button with JS.
+area: components
+group: navigation
+files: components/mode-switcher.css
+module: theme.js
+-->
+    <div class="docs-component" id="c-mode-switcher">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <fieldset class="cai-mode-switcher" disabled>
+                  <legend class="cai-mode-switcher__label">Color mode (specimen)</legend>
+                  <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="light" checked>Light</label>
+                  <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="dark">Dark</label>
+                  <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="high-contrast">High contrast</label>
+                </fieldset>
+          </div>
+          <p class="docs-demo__note">A native radio group for the color mode. This specimen is disabled. The working one, in the cycle variant, is in <a href="#site-footer">this page's footer</a>: one button with the icon of the current mode.</p>
+              <h3 class="docs-subhead" id="cycle-variant">Cycle variant</h3>
+              <p class="docs-demo__note">Add <code class="cai-code-inline">cai-mode-switcher--cycle</code>, an icon to each label and a <code class="cai-code-inline">cai-mode-cycle</code> button with one icon per mode (<code class="cai-code-inline">data-mode-icon</code>). With scripting on, the button shows the icon of the checked mode and the radios hide, with no flash while the script loads; without scripting the three radios show and the button hides. <code class="cai-code-inline">initThemeCycle()</code> from <code class="cai-code-inline">@cai-ds/core/theme</code> (run by <code class="cai-code-inline">cai.js</code>) makes the button step through the modes, and adds the button if the markup has none.</p>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cycle variant markup"><code>&lt;fieldset class=&quot;cai-mode-switcher cai-mode-switcher--cycle&quot;&gt;
+  &lt;legend class=&quot;cai-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
+  &lt;button class=&quot;cai-mode-cycle&quot; type=&quot;button&quot; aria-label=&quot;Change color mode&quot;&gt;
+    &lt;svg class=&quot;cai-mode-btn__icon&quot; data-mode-icon=&quot;light&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;!-- the same for data-mode-icon=&quot;dark&quot; and &quot;high-contrast&quot; --&gt;
+  &lt;/button&gt;
+  &lt;span class=&quot;cai-mode-cycle__status&quot; role=&quot;status&quot;&gt;&lt;/span&gt;
+  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;light&quot;&gt;
+    &lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;light&quot; checked&gt;
+    &lt;svg class=&quot;cai-mode-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;…&lt;/svg&gt;
+    Light
+  &lt;/label&gt;
+  &lt;!-- the same for dark and high-contrast --&gt;
+&lt;/fieldset&gt;
+
+&lt;script type=&quot;module&quot;&gt;
+  import { initThemeCycle } from &quot;@cai-ds/core/theme&quot;;
+  initThemeCycle();
+&lt;/script&gt;</code></pre>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-mode-switcher-issues">Known issues</h2>
+            <p>A stored color mode can flash once on load, because no inline script sets it.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-mode-switcher-when">When to use</h2>
+            <p>Use the cycle variant of the color mode switcher where space is short, such as a page footer or header.</p>
+            <h2 class="docs-guide__title" id="h-c-mode-switcher-when-not">When not to use</h2>
+            <p>Do not use the cycle variant where people compare the modes side by side: the radio group shows them all at once.</p>
+            <h2 class="docs-guide__title" id="h-c-mode-switcher-how">How it works</h2>
+            <p>The color-mode switcher is a native radio group; checking a radio sets the mode, even without JavaScript. In the cycle variant, <code class="cai-code-inline">initThemeCycle()</code> hides the radios and adds one button: each press checks the next mode and fires its change event, so the script that sets the mode applies it. The radios stay the source of truth.</p>
+            <h2 class="docs-guide__title" id="h-c-mode-switcher-content">Content guidance</h2>
+            <p>The switcher is called "Color mode", and each mode keeps its visible name next to its icon, so the radios read without the icons.</p>
+            <h2 class="docs-guide__title" id="h-c-mode-switcher-keyboard">Keyboard and ARIA</h2>
+            <p>Arrow keys move between the mode radios. The cycle button is a native button: Tab reaches it, Enter or Space changes the mode. Its name says what it does and the current mode, "Change color mode. Current: Dark", and a polite status announces the new mode.</p>
+          </div>
+    </div>

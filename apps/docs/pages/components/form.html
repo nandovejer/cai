@@ -1,0 +1,182 @@
+<!-- cai:page
+title: Form fields
+description: Text fields, choices, pickers and their labels, hints and errors.
+area: components
+group: actions
+files: components/form.css
+-->
+    <div class="docs-component" id="c-form">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="o-grid docs-cols-3">
+              <div>
+                <h3 class="docs-subhead">Text</h3>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-name">Project name</label>
+                  <input class="cai-input" id="f-name" type="text" placeholder="My project" aria-describedby="f-name-help">
+                  <div class="cai-field__helper" id="f-name-help">Shown on the dashboard.</div>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label cai-field__label--required" for="f-email">Email</label>
+                  <input class="cai-input" id="f-email" type="email" placeholder="jane@example.com" required autocomplete="off">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-slug">Slug</label>
+                  <input class="cai-input cai-input--error" id="f-slug" type="text" value="my project" aria-invalid="true" aria-describedby="f-slug-error">
+                  <div class="cai-field__error" id="f-slug-error">Use letters, numbers and dashes only.</div>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-disabled">Disabled</label>
+                  <input class="cai-input" id="f-disabled" type="text" value="Not editable" disabled>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-readonly">Read-only</label>
+                  <input class="cai-input" id="f-readonly" type="text" value="cai-7f3a" readonly>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-notes">Notes</label>
+                  <textarea class="cai-input cai-input--textarea" id="f-notes" rows="3" placeholder="Anything else?"></textarea>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="docs-subhead">Choice</h3>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-role">Role</label>
+                  <div class="cai-select-wrap">
+                    <select class="cai-input" id="f-role">
+                      <option value="">Select a role</option>
+                      <option value="dev">Developer</option>
+                      <option value="design">Designer</option>
+                      <option value="pm">Product manager</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="cai-field">
+                  <div class="cai-field__label" id="f-notify-label">Notifications</div>
+                  <div class="cai-check-group" role="group" aria-labelledby="f-notify-label">
+                    <div class="cai-check-item"><input type="checkbox" id="f-check-1" checked><label for="f-check-1">Email</label></div>
+                    <div class="cai-check-item"><input type="checkbox" id="f-check-2"><label for="f-check-2">Push</label></div>
+                    <div class="cai-check-item"><input type="checkbox" id="f-check-3" disabled><label for="f-check-3">SMS (disabled)</label></div>
+                  </div>
+                </div>
+                <div class="cai-field">
+                  <fieldset class="cai-fieldset">
+                    <legend>Plan</legend>
+                    <div class="cai-check-group">
+                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-1" checked><label for="f-radio-1">Free</label></div>
+                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-2"><label for="f-radio-2">Team</label></div>
+                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-3"><label for="f-radio-3">Enterprise</label></div>
+                    </div>
+                  </fieldset>
+                </div>
+                <div class="o-stack">
+                  <label class="cai-toggle">
+                    <input class="cai-toggle__input" type="checkbox" role="switch" checked>
+                    <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+                    <span class="cai-toggle__label">Public profile</span>
+                  </label>
+                  <label class="cai-toggle">
+                    <input class="cai-toggle__input" type="checkbox" role="switch">
+                    <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
+                    <span class="cai-toggle__label">Weekly digest</span>
+                  </label>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="docs-subhead">Pickers and values</h3>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-date">Date</label>
+                  <input class="cai-input" id="f-date" type="date">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-time">Time</label>
+                  <input class="cai-input" id="f-time" type="time">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-color">Color</label>
+                  <input class="cai-input" id="f-color" type="color" value="#0066cf">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-file">File</label>
+                  <input class="cai-input" id="f-file" type="file">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-range">Volume <output class="cai-output" id="f-range-out" for="f-range">50</output></label>
+                  <input class="cai-input" id="f-range" type="range" min="0" max="100" value="50" data-output="f-range-out">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-meter">Storage used, 6 of 10 GB</label>
+                  <meter class="cai-meter" id="f-meter" min="0" max="10" low="3" high="8" optimum="2" value="6">6 of 10 GB</meter>
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-list">Browser</label>
+                  <input class="cai-input" id="f-list" list="f-browsers" placeholder="Start typing">
+                  <datalist id="f-browsers">
+                    <option value="Chrome"></option>
+                    <option value="Edge"></option>
+                    <option value="Firefox"></option>
+                    <option value="Safari"></option>
+                  </datalist>
+                </div>
+              </div>
+            </div>
+
+            <details>
+              <summary>More input types (8)</summary>
+              <div class="o-grid docs-cols-4">
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-number">number</label>
+                  <input class="cai-input" id="f-number" type="number" value="3" min="0" max="10">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-password">password</label>
+                  <input class="cai-input" id="f-password" type="password" value="secret" autocomplete="off">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-tel">tel</label>
+                  <input class="cai-input" id="f-tel" type="tel" placeholder="+34 600 000 000" autocomplete="off">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-url">url</label>
+                  <input class="cai-input" id="f-url" type="url" placeholder="https://example.com" autocomplete="off">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-search">search</label>
+                  <input class="cai-input" id="f-search" type="search" placeholder="Search">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-datetime">datetime-local</label>
+                  <input class="cai-input" id="f-datetime" type="datetime-local">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-month">month</label>
+                  <input class="cai-input" id="f-month" type="month">
+                </div>
+                <div class="cai-field">
+                  <label class="cai-field__label" for="f-week">week</label>
+                  <input class="cai-input" id="f-week" type="week">
+                </div>
+              </div>
+            </details>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-form-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-form-when">When to use</h2>
+            <p>To collect input. Use the native control that fits the data: text, email, date, range, select, checkbox, radio, switch.</p>
+            <h2 class="docs-guide__title" id="h-c-form-when-not">When not to use</h2>
+            <p>Do not rebuild a native control from divs. Do not use a placeholder as the label.</p>
+            <h2 class="docs-guide__title" id="h-c-form-how">How it works</h2>
+            <p>Native inputs with the field, label, helper and error classes. The switch is a checkbox with role="switch"; all of it works without JavaScript and submits with the form.</p>
+            <h2 class="docs-guide__title" id="h-c-form-content">Content guidance</h2>
+            <p>Every control has a visible label. Hints go in a helper linked with aria-describedby. An error says what is wrong and how to fix it, next to the field, prefixed with "Error:".</p>
+            <h2 class="docs-guide__title" id="h-c-form-keyboard">Keyboard and ARIA</h2>
+            <p>Tab between fields, Space toggles checkboxes and switches, arrow keys move inside radio groups and sliders. Group related controls with fieldset and legend.</p>
+          </div>
+    </div>

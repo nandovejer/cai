@@ -1,0 +1,39 @@
+<!-- cai:page
+title: Toast
+description: A brief confirmation that does not interrupt.
+area: components
+group: feedback
+files: components/toast.css
+-->
+    <div class="docs-component" id="c-toast">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-toast" role="status">
+              <div class="cai-toast__content">
+                <div class="cai-toast__kind">SUCCESS</div>
+                <div class="cai-toast__msg">File exported successfully.</div>
+              </div>
+              <button class="cai-toast__close" type="button" aria-label="Dismiss notification">×</button>
+            </div>
+          </div>
+
+          <p class="docs-demo__note">A static specimen: CAI styles the toast and leaves placement and timing to you.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-toast-issues">Known issues</h2>
+            <p>CAI ships the look only: the live region and the timer are the consumer's job.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-toast-when">When to use</h2>
+            <p>To confirm a low-stakes result that needs no reply, such as "Draft saved".</p>
+            <h2 class="docs-guide__title" id="h-c-toast-when-not">When not to use</h2>
+            <p>For errors the reader must act on, or anything they might miss: toasts disappear.</p>
+            <h2 class="docs-guide__title" id="h-c-toast-how">How it works</h2>
+            <p>A styled block with a close button. CAI leaves placement and timing to you; if it fades, give it at least 5 seconds and let it be paused.</p>
+            <h2 class="docs-guide__title" id="h-c-toast-content">Content guidance</h2>
+            <p>Past tense, one short line. No actions inside it.</p>
+            <h2 class="docs-guide__title" id="h-c-toast-keyboard">Keyboard and ARIA</h2>
+            <p>The close button is reachable with Tab. Announce the toast in a polite live region.</p>
+          </div>
+    </div>

@@ -1,0 +1,46 @@
+<!-- cai:page
+title: Button
+description: Starts an action on the current page.
+area: components
+group: actions
+files: components/button.css
+-->
+    <div class="docs-component" id="c-button">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="o-row">
+              <button class="cai-btn cai-btn--primary" type="button">Primary</button>
+              <button class="cai-btn cai-btn--secondary" type="button">Secondary</button>
+              <button class="cai-btn cai-btn--outline" type="button">Outline</button>
+              <button class="cai-btn cai-btn--ghost" type="button">Ghost</button>
+              <button class="cai-btn cai-btn--danger" type="button">Danger</button>
+            </div>
+            <div class="o-row">
+              <button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Small</button>
+              <button class="cai-btn cai-btn--primary" type="button">Default</button>
+              <button class="cai-btn cai-btn--primary cai-btn--lg" type="button">Large</button>
+            </div>
+            <div class="o-row">
+              <button class="cai-btn cai-btn--primary" type="button" disabled>Disabled</button>
+              <a class="cai-btn cai-btn--outline" href="#c-button">Link as button</a>
+            </div>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-button-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-button-when">When to use</h2>
+            <p>To start an action on the current page: save, send, open a dialog. Use the primary variant once per view.</p>
+            <h2 class="docs-guide__title" id="h-c-button-when-not">When not to use</h2>
+            <p>To go to another page. Use a link, or a link styled with the button class. Do not use a disabled button to hide an action.</p>
+            <h2 class="docs-guide__title" id="h-c-button-how">How it works</h2>
+            <p>A native button element with a variant and a size modifier. Without JavaScript it works as any button; inside a form, set the type.</p>
+            <h2 class="docs-guide__title" id="h-c-button-content">Content guidance</h2>
+            <p>Start with a verb and say the result: "Save changes", "Delete draft". Never "OK", "Submit" or "Click here". Sentence case.</p>
+            <h2 class="docs-guide__title" id="h-c-button-keyboard">Keyboard and ARIA</h2>
+            <p>Tab to reach it, Enter or Space to press it. The focus ring is the shared 2px ring. No ARIA is needed; add an aria-label only to an icon-only button.</p>
+          </div>
+    </div>

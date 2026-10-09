@@ -1,0 +1,37 @@
+<!-- cai:page
+title: Copy button
+description: Copies a command or value, and says it did.
+area: components
+group: actions
+files: components/copy-btn.css
+module: clipboard.js
+-->
+    <div class="docs-component" id="c-copy">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="o-row">
+              <code class="cai-code-inline">var(--cai-brand-primary)</code>
+              <button class="cai-copy-btn" type="button" data-copy="var(--cai-brand-primary)" aria-label="Copy the brand token reference">Copy</button>
+            </div>
+          </div>
+
+          <p class="docs-demo__note">The button copies the text in its <code class="cai-code-inline">data-copy</code> attribute.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-copy-issues">Known issues</h2>
+            <p>Needs a secure context (https or localhost) for the Clipboard API; the failure is announced and the text can still be selected.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-copy-when">When to use</h2>
+            <p>To copy a short string the reader will paste elsewhere, such as a command or a token name.</p>
+            <h2 class="docs-guide__title" id="h-c-copy-when-not">When not to use</h2>
+            <p>For long text, or where selecting the text is enough. Never as the only way to get the content.</p>
+            <h2 class="docs-guide__title" id="h-c-copy-how">How it works</h2>
+            <p>A button with data-copy. It needs JavaScript and the Clipboard API, so it is hidden until the script runs; the text it copies is always on the page, selectable.</p>
+            <h2 class="docs-guide__title" id="h-c-copy-content">Content guidance</h2>
+            <p>Name what is copied in the accessible name: "Copy the install command". The visible label is "Copy"; the result is announced in a polite live region.</p>
+            <h2 class="docs-guide__title" id="h-c-copy-keyboard">Keyboard and ARIA</h2>
+            <p>Tab, then Enter or Space. A polite status message announces "Copied to clipboard" or the failure.</p>
+          </div>
+    </div>

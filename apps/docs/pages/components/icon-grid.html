@@ -1,0 +1,55 @@
+<!-- cai:page
+title: Icon grid
+description: A grid of icons with their names, to browse and copy.
+area: components
+group: content
+files: components/icon-grid.css
+module: clipboard.js
+-->
+    <div class="docs-component" id="c-icons">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <ul class="cai-icon-grid">
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-plus">Plus</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-plus-copy" aria-labelledby="c-icons-plus-copy c-icons-plus" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-check">Check</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-check-copy" aria-labelledby="c-icons-check-copy c-icons-check" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12l5 5 9-10&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-arrow">Arrow</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-arrow-copy" aria-labelledby="c-icons-arrow-copy c-icons-arrow" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-close">Close</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-close-copy" aria-labelledby="c-icons-close-copy c-icons-close" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+            </ul>
+          </div>
+
+          <p class="docs-demo__note">Each icon has a button that copies its SVG. CAI ships the grid, not an icon set: these four are local to this page.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-icons-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-icons-when">When to use</h2>
+            <p>To let readers browse and copy a set of icons.</p>
+            <h2 class="docs-guide__title" id="h-c-icons-when-not">When not to use</h2>
+            <p>Do not use icons as the only label of an action.</p>
+            <h2 class="docs-guide__title" id="h-c-icons-how">How it works</h2>
+            <p>A list of icons. Each item shows the icon, its name and a native copy button with the SVG in data-copy. Without JavaScript the copy buttons are hidden and the list still shows every icon and name. CAI ships the grid, not an icon set.</p>
+            <h2 class="docs-guide__title" id="h-c-icons-content">Content guidance</h2>
+            <p>Each item shows the icon name in text. Decorative icons are aria-hidden.</p>
+            <h2 class="docs-guide__title" id="h-c-icons-keyboard">Keyboard and ARIA</h2>
+            <p>Tab to a copy button, Enter or Space to copy. Each button is named by its own text and the icon name (aria-labelledby), for example "Copy SVG Plus". The result is announced in a polite live region.</p>
+          </div>
+    </div>

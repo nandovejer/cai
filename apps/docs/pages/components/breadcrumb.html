@@ -1,0 +1,39 @@
+<!-- cai:page
+title: Breadcrumb
+description: Where the page sits in the site, as a trail of links.
+area: components
+group: navigation
+files: components/breadcrumb.css
+-->
+    <div class="docs-component" id="c-breadcrumb">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <nav aria-label="Breadcrumb demo">
+              <div class="cai-breadcrumb">
+                <a class="cai-breadcrumb__item" href="/docs/components/">Core</a>
+                <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
+                <a class="cai-breadcrumb__item" href="/docs/components/">Core</a>
+                <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
+                <span class="cai-breadcrumb__item" aria-current="page">Breadcrumb</span>
+              </div>
+            </nav>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-breadcrumb-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-breadcrumb-when">When to use</h2>
+            <p>To show where the page sits in a hierarchy of three or more levels.</p>
+            <h2 class="docs-guide__title" id="h-c-breadcrumb-when-not">When not to use</h2>
+            <p>On a flat site, or as the only way to navigate.</p>
+            <h2 class="docs-guide__title" id="h-c-breadcrumb-how">How it works</h2>
+            <p>A nav landmark with links and separators. The last item is the current page with aria-current="page".</p>
+            <h2 class="docs-guide__title" id="h-c-breadcrumb-content">Content guidance</h2>
+            <p>Use the page titles. Do not repeat the current page as a link.</p>
+            <h2 class="docs-guide__title" id="h-c-breadcrumb-keyboard">Keyboard and ARIA</h2>
+            <p>Each ancestor is a normal link in the tab order.</p>
+          </div>
+    </div>

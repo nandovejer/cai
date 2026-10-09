@@ -1,0 +1,45 @@
+<!-- cai:page
+title: Table
+description: Rows and columns of data that stay readable at 320 px.
+area: components
+group: content
+files: components/table.css
+-->
+    <div class="docs-component" id="c-table">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-table-wrap" role="region" aria-label="Service status" tabindex="0">
+              <table class="cai-table cai-table--sticky-col">
+                <caption>Service status</caption>
+                <thead>
+                  <tr><th scope="col">Service</th><th scope="col">Status</th><th scope="col">CPU</th><th scope="col">Region</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Service">api-gateway</td><td data-label="Status"><span class="cai-tag cai-tag--green cai-tag--dot">Running</span></td><td data-label="CPU">12%</td><td data-label="Region">eu-west-1</td></tr>
+                  <tr><td data-label="Service">data-pipeline</td><td data-label="Status"><span class="cai-tag cai-tag--yellow cai-tag--dot">Degraded</span></td><td data-label="CPU">78%</td><td data-label="Region">us-east-1</td></tr>
+                  <tr><td data-label="Service">mailer</td><td data-label="Status"><span class="cai-tag cai-tag--red cai-tag--dot">Stopped</span></td><td data-label="CPU">0%</td><td data-label="Region">eu-west-1</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p class="docs-demo__note">Below 480px of container width each row becomes a card.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-table-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-table-when">When to use</h2>
+            <p>To compare records across several attributes.</p>
+            <h2 class="docs-guide__title" id="h-c-table-when-not">When not to use</h2>
+            <p>For layout. For a short list of one attribute, use a list.</p>
+            <h2 class="docs-guide__title" id="h-c-table-how">How it works</h2>
+            <p>A native table with caption, thead and th scope. In a wrapper that scrolls and can take focus. Below 480px of container width each row becomes a card, using data-label.</p>
+            <h2 class="docs-guide__title" id="h-c-table-content">Content guidance</h2>
+            <p>Column headings are short nouns. The caption names the table. Put units in the heading, not in every cell.</p>
+            <h2 class="docs-guide__title" id="h-c-table-keyboard">Keyboard and ARIA</h2>
+            <p>The scroll region is focusable so keyboard users can scroll it with the arrow keys. Sticky first column keeps the row name in view.</p>
+          </div>
+    </div>

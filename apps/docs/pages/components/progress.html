@@ -1,0 +1,32 @@
+<!-- cai:page
+title: Progress
+description: How far a task has got, with the native progress element.
+area: components
+group: feedback
+files: components/progress.css
+-->
+    <div class="docs-component" id="c-progress">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <progress class="cai-progress" value="25" max="100" aria-label="Upload, 25%"></progress>
+            <progress class="cai-progress" value="67" max="100" aria-label="Build, 67%"></progress>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-progress-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-progress-when">When to use</h2>
+            <p>To show how far a task that takes time has got.</p>
+            <h2 class="docs-guide__title" id="h-c-progress-when-not">When not to use</h2>
+            <p>For a score or a measure within a known range: use a meter. Do not use it as a decorative bar.</p>
+            <h2 class="docs-guide__title" id="h-c-progress-how">How it works</h2>
+            <p>The native progress element. The browser exposes the role and the value. No value attribute means indeterminate.</p>
+            <h2 class="docs-guide__title" id="h-c-progress-content">Content guidance</h2>
+            <p>Name it with the figure: "Upload, 25%". Say what is happening, not just the number.</p>
+            <h2 class="docs-guide__title" id="h-c-progress-keyboard">Keyboard and ARIA</h2>
+            <p>Not interactive. Announce completion in a polite live region.</p>
+          </div>
+    </div>

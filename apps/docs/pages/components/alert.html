@@ -1,0 +1,58 @@
+<!-- cai:page
+title: Alert
+description: A message about the page or a task, in four status colours with an icon and a title.
+area: components
+group: feedback
+files: components/alert.css
+-->
+    <div class="docs-component" id="c-alert">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage docs-demo__stage--flush">
+            <div class="cai-alert cai-alert--info">
+              <div class="cai-alert__icon" aria-hidden="true">i</div>
+              <div>
+                <div class="cai-alert__title">Information</div>
+                <div class="cai-alert__body">A new version is available.</div>
+              </div>
+            </div>
+            <div class="cai-alert cai-alert--success">
+              <div class="cai-alert__icon" aria-hidden="true">✓</div>
+              <div>
+                <div class="cai-alert__title">Success</div>
+                <div class="cai-alert__body">Deployment completed.</div>
+              </div>
+            </div>
+            <div class="cai-alert cai-alert--warning">
+              <div class="cai-alert__icon" aria-hidden="true">!</div>
+              <div>
+                <div class="cai-alert__title">Warning</div>
+                <div class="cai-alert__body">Storage is almost full.</div>
+              </div>
+            </div>
+            <div class="cai-alert cai-alert--error">
+              <div class="cai-alert__icon" aria-hidden="true">×</div>
+              <div>
+                <div class="cai-alert__title">Error</div>
+                <div class="cai-alert__body">The build failed.</div>
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-alert-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-alert-when">When to use</h2>
+            <p>To tell the reader about a state that matters on the page: information, success, warning, error.</p>
+            <h2 class="docs-guide__title" id="h-c-alert-when-not">When not to use</h2>
+            <p>For a message that must interrupt: use a dialog. Do not stack more than one or two alerts.</p>
+            <h2 class="docs-guide__title" id="h-c-alert-how">How it works</h2>
+            <p>A block with an icon, a title and a body. The type is written in the title, not only in the colour.</p>
+            <h2 class="docs-guide__title" id="h-c-alert-content">Content guidance</h2>
+            <p>Say what happened and what to do next. "The build failed. Check the log and run it again."</p>
+            <h2 class="docs-guide__title" id="h-c-alert-keyboard">Keyboard and ARIA</h2>
+            <p>Not interactive. If it appears after an action, put it in a live region (role="status" or role="alert") so it is announced.</p>
+          </div>
+    </div>

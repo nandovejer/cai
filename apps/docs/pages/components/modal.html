@@ -1,0 +1,49 @@
+<!-- cai:page
+title: Modal
+description: A native dialog that asks for a decision before going on.
+area: components
+group: feedback
+files: components/modal.css
+module: modal.js
+-->
+    <div class="docs-component" id="c-modal">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="o-row">
+              <button class="cai-btn cai-btn--primary" type="button" commandfor="docs-modal" command="show-modal">Open modal</button>
+            </div>
+            <dialog class="cai-modal" id="docs-modal" aria-labelledby="docs-modal-title">
+              <div class="cai-modal__header">
+                <button class="cai-modal__close" commandfor="docs-modal" command="close" aria-label="Close dialog" type="button">×</button>
+                <h2 class="cai-modal__title" id="docs-modal-title">Confirm action</h2>
+              </div>
+              <div class="cai-modal__body">
+                <p>This action cannot be undone. Continue?</p>
+              </div>
+              <div class="cai-modal__footer">
+                <button class="cai-btn cai-btn--ghost" commandfor="docs-modal" command="close" type="button">Cancel</button>
+                <button class="cai-btn cai-btn--primary" commandfor="docs-modal" command="close" type="button">Confirm</button>
+              </div>
+            </dialog>
+          </div>
+
+          <p class="docs-demo__note">A native <code class="cai-code-inline">&lt;dialog&gt;</code>: Esc closes it and focus returns to the button.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-modal-issues">Known issues</h2>
+            <p>command and commandfor are not yet in every supported browser: without them and without JavaScript the open button does nothing.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-modal-when">When to use</h2>
+            <p>To ask for a decision or short input that must be settled before the reader continues.</p>
+            <h2 class="docs-guide__title" id="h-c-modal-when-not">When not to use</h2>
+            <p>For information the reader can ignore: use an alert. Do not open one on page load.</p>
+            <h2 class="docs-guide__title" id="h-c-modal-how">How it works</h2>
+            <p>A native dialog opened with showModal(). Buttons use command="show-modal" and command="close" with commandfor; a small script supplies those in browsers without them.</p>
+            <h2 class="docs-guide__title" id="h-c-modal-content">Content guidance</h2>
+            <p>The title names the decision: "Delete this draft". Buttons repeat the action: "Delete draft" and "Cancel", never "OK".</p>
+            <h2 class="docs-guide__title" id="h-c-modal-keyboard">Keyboard and ARIA</h2>
+            <p>The browser traps focus, Escape closes it and focus returns to the opener. Give the dialog aria-labelledby.</p>
+          </div>
+    </div>

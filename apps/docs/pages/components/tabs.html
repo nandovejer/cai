@@ -1,0 +1,41 @@
+<!-- cai:page
+title: Tabs
+description: Switch between panels of related content; stacked sections without JS.
+area: components
+group: navigation
+files: components/tabs.css
+module: tabs.js
+-->
+    <div class="docs-component" id="c-tabs">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage docs-demo__stage--flush">
+            <nav class="cai-tabs" aria-label="Tabs demo">
+              <a class="cai-tab is-active" id="tab-summary" href="#panel-summary">Summary</a>
+              <a class="cai-tab" id="tab-settings" href="#panel-settings">Settings</a>
+              <a class="cai-tab" id="tab-logs" href="#panel-logs">Logs</a>
+            </nav>
+            <div class="cai-tabpanel" id="panel-summary"><p>Three services are running.</p></div>
+            <div class="cai-tabpanel" id="panel-settings"><p>Deploys run on every push.</p></div>
+            <div class="cai-tabpanel" id="panel-logs"><p>No errors in the last hour.</p></div>
+          </div>
+
+          <p class="docs-demo__note">Arrow keys, Home and End move between tabs.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-tabs-issues">Known issues</h2>
+            <p>None known.</p>
+          </div>
+          <div class="docs-guide">
+            <h2 class="docs-guide__title" id="h-c-tabs-when">When to use</h2>
+            <p>To switch between panels of the same level that the reader will not compare side by side.</p>
+            <h2 class="docs-guide__title" id="h-c-tabs-when-not">When not to use</h2>
+            <p>For navigation between pages, or for content the reader needs all at once.</p>
+            <h2 class="docs-guide__title" id="h-c-tabs-how">How it works</h2>
+            <p>Without JavaScript: links to panels that are all visible. With it: the ARIA tabs pattern, added by the script, with roving tabindex.</p>
+            <h2 class="docs-guide__title" id="h-c-tabs-content">Content guidance</h2>
+            <p>Labels are one or two words that name the panel.</p>
+            <h2 class="docs-guide__title" id="h-c-tabs-keyboard">Keyboard and ARIA</h2>
+            <p>Tab moves into the tab list; arrow keys move between tabs; Home and End go to the first and last; Tab leaves to the panel.</p>
+          </div>
+    </div>

@@ -271,37 +271,9 @@ test.describe('Landing page', () => {
 
       await expect(page.locator('h1')).toHaveText('Build accessible websites with plain HTML and CSS');
       const hero = page.locator('.landing-hero');
-      await expect(hero.locator('.cai-btn--primary')).toHaveCount(2); // the CTA, and the example form's button
+      await expect(hero.locator('.cai-btn--primary')).toHaveCount(1);
       await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toHaveText('Get started');
       await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toBeInViewport();
-    });
-
-    test('the example form is real, sends nothing and says so', async ({ page }) => {
-      await open(page);
-
-      const form = page.locator('form.landing-try');
-      await expect(form).toHaveAttribute('aria-labelledby', 'try-title');
-      await expect(page.locator('#try-title')).toHaveText('Example form (nothing is sent)');
-      // Real controls: typed into and toggled, never inert
-      await page.fill('#try-name', 'my-site');
-      await page.check('#try-platform');
-      await expect(page.locator('#try-platform')).toBeChecked();
-      // No personal data is asked for or remembered
-      await expect(form.locator('#try-name')).toHaveAttribute('autocomplete', 'off');
-      // The button does not submit: it opens a native popover that says nothing was sent
-      const button = form.locator('button');
-      await expect(button).toHaveAttribute('type', 'button');
-      await expect(page.locator('#try-status')).toHaveText('');
-      await expect(page.locator('#try-status')).toHaveAttribute('role', 'status');
-      await button.click();
-      await expect(page.locator('#try-note')).toBeVisible();
-      // Repeated in the status region; the popover has no role of its own
-      await expect(page.locator('#try-status')).toHaveText('This is an example: nothing was created or sent.');
-      expect(await page.locator('#try-note').getAttribute('role')).toBeNull();
-      await expect(page.locator('#try-note')).toContainText('nothing was created or sent');
-      await page.keyboard.press('Escape');
-      await expect(page.locator('#try-note')).toBeHidden();
-      expect(new URL(page.url()).search).toBe('');
     });
   });
 
@@ -568,15 +540,12 @@ test.describe('Landing page', () => {
       await expect.poll(background).not.toBe(light);
     });
 
-    test('the color mode switcher and the example form work', async ({ page }) => {
+    test('the color mode switcher works', async ({ page }) => {
       await page.goto('/');
       const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       const light = await background();
       await page.click('footer .cai-mode-btn:has(input[value="dark"])');
       await expect.poll(background).not.toBe(light);
-
-      await page.click('form.landing-try button');
-      await expect(page.locator('#try-note')).toBeVisible();
     });
   });
 

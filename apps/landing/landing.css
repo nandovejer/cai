@@ -59,10 +59,6 @@
    -------------------------------------------------------------------------- */
 
 .landing-hero {
-  display: grid;
-  grid-template-columns: 7fr 5fr;
-  gap: var(--cai-space-2xl);
-  align-items: center;
   padding-block: var(--cai-space-3xl) 0;
 }
 
@@ -287,39 +283,8 @@
 }
 
 /* --------------------------------------------------------------------------
-   Example form, guidance links, fit lists
+   Guidance links, fit lists
    -------------------------------------------------------------------------- */
-
-/* On surface-muted, so the fields (input-bg, a raised layer) read as fields */
-.landing-try {
-  padding: var(--cai-space-lg);
-  background: var(--cai-surface-muted);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-lg);
-  box-shadow: var(--cai-shadow-sm);
-}
-
-.landing-try__title {
-  font-size: var(--cai-text-xl);
-}
-
-.landing-try__intro {
-  margin-block: var(--cai-space-2xs) var(--cai-space-md);
-  color: var(--cai-text-secondary);
-}
-
-/* A native popover: opened by the button without JavaScript, closed with
-   Escape or a click outside */
-.landing-try__note {
-  max-inline-size: min(90vw, 32rem);
-  margin: auto;
-  padding: var(--cai-space-md) var(--cai-space-lg);
-  background: var(--cai-surface);
-  color: var(--cai-text-primary);
-  border: 2px solid var(--cai-outline);
-  border-radius: var(--cai-radius-md);
-  box-shadow: var(--cai-shadow-lg);
-}
 
 .landing-subtitle {
   font-size: var(--cai-text-lg);
@@ -392,8 +357,6 @@
 
 @media (max-width: 1023px) {
   .landing-hero {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--cai-space-xl);
     padding-block: calc(var(--cai-space-xl) + var(--cai-space-xs)) 0;
   }
 
@@ -446,10 +409,6 @@
 
   .landing-level .cai-platform-command-block {
     padding: var(--cai-space-sm);
-  }
-
-  .landing-try {
-    padding: var(--cai-space-md);
   }
 
   /* Page footer: three short links fit on one row */

@@ -14,8 +14,8 @@
 
 :where(output) {
   display: inline-block;
-  padding: var(--cai-space-02) var(--cai-space-03);
-  background: var(--cai-bg-ui);
+  padding: var(--cai-space-2xs) var(--cai-space-xs);
+  background: var(--cai-surface);
   border-radius: var(--cai-radius-sm);
   font-family: var(--cai-font-mono);
   font-size: max(0.9em, var(--cai-text-xs));
@@ -44,12 +44,12 @@
   border: none;
   border-radius: var(--cai-radius-sm);
   overflow: hidden;
-  background: var(--cai-border-subtle);
+  background: var(--cai-divider);
   color: var(--cai-brand-primary);
 }
 
 :where(progress)::-webkit-progress-bar {
-  background: var(--cai-border-subtle);
+  background: var(--cai-divider);
 }
 
 :where(progress)::-webkit-progress-value {

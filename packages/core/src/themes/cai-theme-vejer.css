@@ -25,7 +25,7 @@
 /* -------------------------------------------------------------------------
    VEJER — LIGHT (the default mode): whitewash and sandstone by day.
    Contrast measured by scripts/check-contrast.js on every surface,
-   layer-03 and the hovered-row tint included.
+   surface-strong and the hovered-row tint included.
    -------------------------------------------------------------------------- */
 
 [data-theme="vejer"],
@@ -60,25 +60,24 @@
   --cai-shadow-lg: 0 14px 28px rgba(35, 28, 22, 0.14), 0 6px 12px rgba(35, 28, 22, 0.08);
 
   /* Backgrounds */
-  --cai-bg-page: var(--vej-whitewash);
-  --cai-bg-ui: var(--vej-lime);
-  --cai-bg-ui-hover: var(--vej-sand);
-  --cai-bg-ui-active: var(--vej-stone-shade);
-  --cai-bg-overlay: rgba(35, 28, 22, 0.5);
-  --cai-bg-media: #000;
+  --cai-surface-page: var(--vej-whitewash);
+  --cai-surface: var(--vej-lime);
+  --cai-surface-hover: var(--vej-sand);
+  --cai-surface-pressed: var(--vej-stone-shade);
+  --cai-scrim: rgba(35, 28, 22, 0.5);
+  --cai-surface-media: #000;
 
   /* Text */
   --cai-text-primary: var(--vej-iron);
   --cai-text-secondary: var(--vej-wood);
-  --cai-text-placeholder: #7a6a58; /* 5.1:1 on the input */
-  --cai-text-disabled: #8f8172; /* 3:1 on layer-03, the worst surface */
-  --cai-text-on-color: #fff;
-  --cai-text-inverse: #fff;
+  --cai-text-muted: #7a6a58; /* 5.1:1 on the input */
+  --cai-text-disabled: #8f8172; /* 3:1 on surface-strong, the worst surface */
+  --cai-text-on-fill: #fff;
 
   /* Borders */
-  --cai-border-subtle: var(--vej-ochre-line);
-  --cai-border-strong: #807366; /* 4.6:1 under the white text of .cai-badge--gray; 3:1 or more as a border */
-  --cai-border-interactive: var(--vej-sky);
+  --cai-divider: var(--vej-ochre-line);
+  --cai-outline: #807366; /* 4.6:1 under the white text of .cai-badge--gray; 3:1 or more as a border */
+  --cai-focus-ring: var(--vej-sky);
 
   /* Brand: the sky */
   --cai-brand-primary: var(--vej-sky);
@@ -90,14 +89,10 @@
   --cai-brand-fill-active: #143d69;
 
   /* Icons */
-  --cai-icon-primary: var(--vej-iron);
-  --cai-icon-secondary: var(--vej-wood);
-  --cai-icon-inverse: #fff;
 
   /* Layers */
-  --cai-layer-01: var(--vej-lime);
-  --cai-layer-02: var(--vej-whitewash);
-  --cai-layer-03: var(--vej-stone);
+  --cai-surface-muted: var(--vej-whitewash);
+  --cai-surface-strong: var(--vej-stone);
 
   /* Sidebar: a dark wooden door with sandstone lettering */
   --cai-sidebar-bg: #2a211a;
@@ -155,18 +150,16 @@
   --cai-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --cai-shadow-md: 0 4px 10px rgba(0, 0, 0, 0.5);
   --cai-shadow-lg: 0 14px 28px rgba(0, 0, 0, 0.6);
-  --cai-bg-overlay: rgba(10, 8, 6, 0.7);
-  --cai-text-placeholder: #a08f7a; /* 5.3:1 on the input */
-  --cai-text-disabled: #877a69; /* 3:1 on layer-03 */
-  --cai-border-strong: #7d7062; /* white badge text 4.8:1; 3:1 or more on page, surface and hover */
-  --cai-text-inverse: var(--vej-whitewash);
+  --cai-scrim: rgba(10, 8, 6, 0.7);
+  --cai-text-muted: #a08f7a; /* 5.3:1 on the input */
+  --cai-text-disabled: #877a69; /* 3:1 on surface-strong */
+  --cai-outline: #7d7062; /* white badge text 4.8:1; 3:1 or more on page, surface and hover */
   --cai-brand-hover: #9ccaf2;
   --cai-brand-active: #c8e1f8;
   --cai-brand-subtle: rgba(140, 196, 245, 0.12);
   --cai-brand-fill: #1d63a8; /* white text 6.2:1: the light sky is for text */
   --cai-brand-fill-hover: #18548f;
   --cai-brand-fill-active: #134577;
-  --cai-icon-inverse: var(--vej-whitewash);
   --cai-sidebar-bg: #14100c;
   --cai-sidebar-text: #cbbba5; /* 10.1:1 */
   --cai-sidebar-hover: #241e18;
@@ -176,20 +169,20 @@
   --cai-sidebar-label: #a8977f; /* 6.7:1 */
   --cai-sidebar-logo-bg: #8cc4f5;
   --cai-color-success: var(--cai-green-30);
-  --cai-color-success-bg: rgba(66, 190, 101, 0.12);
+  --cai-color-success-bg: rgba(82, 207, 146, 0.12);
   --cai-color-danger: var(--cai-red-30);
-  --cai-color-danger-bg: rgba(250, 77, 86, 0.12);
+  --cai-color-danger-bg: rgba(239, 79, 81, 0.12);
   --cai-color-danger-fill: var(--cai-red-60); /* white text 4.8:1 */
   --cai-color-warning: var(--cai-yellow-30);
   --cai-color-warning-accent: var(--cai-yellow-20);
-  --cai-color-warning-bg: rgba(241, 194, 27, 0.12);
+  --cai-color-warning-bg: rgba(255, 205, 81, 0.12);
   --cai-color-info: var(--cai-blue-30);
-  --cai-color-info-bg: rgba(120, 169, 255, 0.12);
+  --cai-color-info-bg: rgba(119, 185, 255, 0.12);
   --cai-color-teal: var(--cai-teal-40);
-  --cai-color-teal-bg: rgba(61, 219, 217, 0.12);
+  --cai-color-teal-bg: rgba(98, 201, 181, 0.12);
   --cai-color-purple: var(--cai-purple-20);
-  --cai-color-purple-bg: rgba(190, 149, 255, 0.12);
-  --cai-color-code: var(--cai-purple-40); /* 5.5:1 on layer-03 */
+  --cai-color-purple-bg: rgba(202, 154, 255, 0.12);
+  --cai-color-code: var(--cai-purple-40); /* 5.5:1 on surface-strong */
 }
 
 /* -------------------------------------------------------------------------
@@ -213,16 +206,16 @@
   --cai-shadow-sm: none;
   --cai-shadow-md: 0 0 0 1px #000;
   --cai-shadow-lg: 0 0 0 2px #000;
-  --cai-text-placeholder: var(--cai-gray-70);
-  --cai-text-disabled: var(--cai-gray-60); /* 3.8:1 on layer-03 */
-  --cai-border-strong: #000;
-  --cai-border-interactive: #000;
+  --cai-text-muted: var(--cai-gray-70);
+  --cai-text-disabled: var(--cai-gray-60); /* 3.8:1 on surface-strong */
+  --cai-outline: #000;
+  --cai-focus-ring: #000;
   --cai-brand-hover: var(--cai-blue-90);
   --cai-brand-active: var(--cai-blue-100);
   --cai-brand-subtle: var(--cai-blue-10);
   --cai-brand-fill-hover: var(--cai-blue-90);
   --cai-brand-fill-active: var(--cai-blue-100);
-  --cai-layer-02: var(--cai-gray-10);
+  --cai-surface-muted: var(--cai-gray-10);
   --cai-sidebar-bg: #000;
   --cai-sidebar-text: var(--cai-gray-30);
   --cai-sidebar-hover: var(--cai-gray-90);

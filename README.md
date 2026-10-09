@@ -197,7 +197,7 @@ For the complete workflow see [DIST-RULES.md](./.claude/DIST-RULES.md). The shor
 
 Outputs: `cai-tokens.css` (fonts + tokens), `tokens.css` (no `@font-face`, bring your own fonts), `fonts.css`, `tokens.json`, and `fonts/`.
 
-To add a primitive, edit `tokens.json`; to add a semantic token, edit all three blocks of `semantic.css`. Then:
+The colour primitives are CAI's own palette, computed in OKLCH by `scripts/build-palette.js` (one lightness curve shared by every family, a chroma curve and a hue per family): to change a colour, edit the numbers there and run `node scripts/build-palette.js`, which rewrites the `color` block of `tokens.json`. To add another primitive, edit `tokens.json`; to add a semantic token, edit all three blocks of `semantic.css`. Then:
 
 ```bash
 pnpm tokens:build
@@ -282,12 +282,12 @@ Components must use semantic tokens:
 /* Correct */
 color: var(--cai-text-primary);
 background: var(--cai-brand-primary);
-border-color: var(--cai-border-subtle);
+border-color: var(--cai-divider);
 
 /* Incorrect — breaks theming */
 color: var(--cai-gray-100);
 background: var(--cai-blue-60);
-color: #161616;
+color: #0d0e11;
 ```
 
 Primitive tokens (`--cai-blue-*`, `--cai-gray-*`, etc.) are only used inside the tokens layer to define semantic tokens.

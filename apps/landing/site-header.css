@@ -12,24 +12,24 @@
 
 /* Sticky: the site links and the color mode stay at hand while reading.
    --site-header-h is the header's measured height (site-header.js), with a
-   one-row value before it runs or without JavaScript (40px controls, two
-   8px paddings and the 1px border). Anchored targets stop below the header
+   one-row value before it runs or without JavaScript (44px controls, two
+   4px paddings and the 1px border). Anchored targets stop below the header
    instead of under it. */
 :root {
-  --site-header-h: 3.5625rem;
-  scroll-padding-block-start: calc(var(--site-header-h) + var(--cai-space-04));
+  --site-header-h: 3.3125rem;
+  scroll-padding-block-start: calc(var(--site-header-h) + var(--cai-space-sm));
 }
 
 .site-header {
   position: sticky;
   inset-block-start: 0;
   z-index: var(--cai-z-overlay);
-  background: var(--cai-bg-page);
-  border-bottom: 1px solid var(--cai-border-subtle);
+  background: var(--cai-surface-page);
+  border-bottom: 1px solid var(--cai-divider);
 }
 
-/* One row at every width: 40px controls (2.5.8 with room to spare) and a
-   short sticky band, 57px. Full width with the same gutter on every page,
+/* One row at every width: 44px controls (the 2.5.5 target size) and a
+   short sticky band, 53px. Full width with the same gutter on every page,
    so the controls never move when you go from one page to another. It may
    wrap only where the row cannot hold it: without JavaScript (below), or
    in a browser without the popover API, where the links stay in the row. */
@@ -37,17 +37,17 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--cai-space-03) var(--cai-space-05);
-  padding-block: var(--cai-space-03);
-  padding-inline: var(--cai-space-05);
+  gap: var(--cai-space-xs) var(--cai-space-md);
+  padding-block: var(--cai-space-2xs);
+  padding-inline: var(--cai-space-md);
 }
 
 .site-header__brand {
   display: inline-flex;
   align-items: center;
   flex-shrink: 0;
-  min-block-size: var(--cai-size-height-lg);
-  gap: var(--cai-space-03);
+  min-block-size: var(--cai-control-lg);
+  gap: var(--cai-space-xs);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-md);
   font-weight: 500;
@@ -69,13 +69,13 @@
 
 .site-header__nav {
   display: flex;
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
 }
 
 .site-header__nav a {
   display: inline-flex;
   align-items: center;
-  min-block-size: var(--cai-size-height-lg);
+  min-block-size: var(--cai-control-lg);
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
 }
@@ -91,7 +91,7 @@
   color: var(--cai-text-primary);
   text-decoration: underline;
   text-decoration-thickness: 2px;
-  text-underline-offset: var(--cai-space-02);
+  text-underline-offset: var(--cai-space-2xs);
 }
 
 /* The color mode switcher: core's cycle variant. Without JavaScript it is
@@ -100,26 +100,26 @@
 .site-modes {
   flex-shrink: 0;
   align-items: center;
-  gap: var(--cai-space-02) var(--cai-space-03);
+  gap: var(--cai-space-2xs) var(--cai-space-xs);
 }
 
 .site-modes .cai-theme-switcher__label {
   float: inline-start;
   margin-block: 0;
-  margin-inline: 0 var(--cai-space-02);
+  margin-inline: 0 var(--cai-space-2xs);
 }
 
 .site-modes .cai-theme-btn {
   flex: none;
-  min-block-size: var(--cai-size-height-sm);
-  padding-inline: var(--cai-space-03);
+  min-block-size: var(--cai-control-sm);
+  padding-inline: var(--cai-space-xs);
   border-radius: var(--cai-radius-md);
 }
 
 /* The cycle button matches the other header controls */
 .site-modes .cai-theme-cycle {
-  inline-size: var(--cai-size-height-lg);
-  block-size: var(--cai-size-height-lg);
+  inline-size: var(--cai-control-lg);
+  block-size: var(--cai-control-lg);
 }
 
 /* The narrowest screens: the version tag goes (it is also in the install
@@ -132,17 +132,17 @@
 
 /* Without JavaScript the color mode is the three radios, too wide for the
    row at 768px and below: they take a second row of their own, at the end,
-   so the header has a known height (57px + one 24px row + the gap) for the
+   so the header has a known height (53px + one 28px row + the gap) for the
    drawer offset. Below 480px the legend is read, not shown, to keep the
    radios on one line. */
 @media (scripting: none) and (max-width: 768px) {
   :root {
-    --site-header-h: calc(3.5625rem + var(--cai-size-height-sm) + var(--cai-space-03));
+    --site-header-h: calc(3.3125rem + var(--cai-control-sm) + var(--cai-space-xs));
   }
 
   .site-header__inner {
     flex-wrap: wrap;
-    row-gap: var(--cai-space-03);
+    row-gap: var(--cai-space-xs);
   }
 
   .site-modes {
@@ -189,7 +189,7 @@
   color: var(--cai-sidebar-text-hover);
   text-decoration: underline;
   text-decoration-thickness: 2px;
-  text-underline-offset: var(--cai-space-02);
+  text-underline-offset: var(--cai-space-2xs);
 }
 
 @supports selector(:popover-open) {

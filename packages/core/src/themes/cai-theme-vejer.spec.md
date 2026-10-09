@@ -59,7 +59,7 @@ The theme is colour and type only. It ships no photograph, image or font file.
 
 ## 5. Contrast
 
-`pnpm check:contrast` measures every pair in every mode. Some pairs are measured only on the custom themes for now: status and code colours on `layer-03` and as plain text, and the field border on every surface. These are the weakest measured pairs.
+`pnpm check:contrast` measures every pair in every mode. Some pairs are measured only on the custom themes for now: status and code colours on `surface-strong` and as plain text, and the field border on every surface. These are the weakest measured pairs.
 
 | Pair | Light | Dark | High contrast |
 | --- | --- | --- | --- |
@@ -73,7 +73,7 @@ The theme is colour and type only. It ships no photograph, image or font file.
 | Field border, worst surface (needs 3) | 3.2 | 3.1 | 15.9 |
 | Sidebar text | 6.8 | 6.7 | 6.3 |
 | Status text, worst surface | 4.6 | 5.8 | 7.1 |
-| Code on `layer-03` | 4.6 | 5.5 | 7.1 |
+| Code on `surface-strong` | 4.6 | 5.5 | 7.1 |
 
 ## 6. Changing the theme
 

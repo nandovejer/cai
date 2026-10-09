@@ -10,12 +10,12 @@
 
 .cai-platform-skip-link {
 	position: fixed;
-	inset-block-start: var(--cai-space-04);
-	inset-inline-start: var(--cai-space-04);
+	inset-block-start: var(--cai-space-sm);
+	inset-inline-start: var(--cai-space-sm);
 	z-index: var(--cai-z-toast);
 	background: var(--cai-brand-fill);
-	color: var(--cai-text-on-color);
-	padding: var(--cai-space-03) var(--cai-space-04);
+	color: var(--cai-text-on-fill);
+	padding: var(--cai-space-xs) var(--cai-space-sm);
 	text-decoration: none;
 	transform: translateY(-200%);
 	transition: transform var(--cai-duration-fast) var(--cai-easing-enter);
@@ -28,29 +28,29 @@
 .cai-platform-page--gradient {
 	background:
 		radial-gradient(circle at top left, var(--cai-brand-subtle), transparent 28%),
-		linear-gradient(180deg, var(--cai-bg-page) 0%, var(--cai-layer-02) 100%);
+		linear-gradient(180deg, var(--cai-surface-page) 0%, var(--cai-surface-muted) 100%);
 }
 
 .cai-platform-main {
 	display: grid;
-	gap: var(--cai-space-10);
-	padding-bottom: var(--cai-space-10);
+	gap: var(--cai-space-3xl);
+	padding-bottom: var(--cai-space-3xl);
 }
 
 .cai-platform-content {
-	padding: var(--cai-space-07);
-	padding-bottom: var(--cai-space-11);
+	padding: var(--cai-space-xl);
+	padding-bottom: var(--cai-space-3xl);
 	max-width: var(--cai-content-max);
 	width: 100%;
 }
 
 .cai-platform-section {
 	display: grid;
-	gap: var(--cai-space-05);
+	gap: var(--cai-space-md);
 }
 
 .cai-platform-page-header {
-	margin-bottom: var(--cai-space-07);
+	margin-bottom: var(--cai-space-xl);
 }
 
 .cai-platform-page-header__title {
@@ -58,7 +58,7 @@
 	font-size: var(--cai-text-3xl);
 	font-weight: 300;
 	letter-spacing: -1px;
-	margin-bottom: var(--cai-space-02);
+	margin-bottom: var(--cai-space-2xs);
 	color: var(--cai-text-primary);
 }
 
@@ -71,39 +71,39 @@
 .cai-platform-actions {
 	display: flex;
 	flex-wrap: wrap;
-	gap: var(--cai-space-03);
+	gap: var(--cai-space-xs);
 }
 
 .cai-platform-feature-grid {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: var(--cai-space-04);
+	gap: var(--cai-space-sm);
 }
 
 .cai-platform-footer {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: var(--cai-space-05);
+	gap: var(--cai-space-md);
 	flex-wrap: wrap;
-	border-top: 1px solid var(--cai-border-subtle);
-	padding-top: var(--cai-space-06);
-	padding-bottom: var(--cai-space-08);
+	border-top: 1px solid var(--cai-divider);
+	padding-top: var(--cai-space-lg);
+	padding-bottom: var(--cai-space-xl);
 }
 
 .cai-platform-command-block {
-	background: var(--cai-layer-03);
-	border: 1px solid var(--cai-border-subtle);
-	padding: var(--cai-space-05) var(--cai-space-06);
-	margin-bottom: var(--cai-space-06);
+	background: var(--cai-surface-strong);
+	border: 1px solid var(--cai-divider);
+	padding: var(--cai-space-md) var(--cai-space-lg);
+	margin-bottom: var(--cai-space-lg);
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	gap: var(--cai-space-05);
+	gap: var(--cai-space-md);
 	flex-wrap: wrap;
 }
 
-/* --cai-border-interactive falls to 2.3:1 on --cai-layer-03 in dark mode */
+/* --cai-focus-ring falls to 2.3:1 on --cai-surface-strong in dark mode */
 .cai-platform-command-block .cai-copy-btn:focus-visible {
 	outline-color: var(--cai-text-primary);
 }
@@ -129,7 +129,7 @@
 	display: block;
 	aspect-ratio: 16 / 9;
 	overflow: hidden;
-	background-color: var(--cai-layer-03);
+	background-color: var(--cai-surface-strong);
 	background-image: image-set(
 		url("../placeholders/placeholder-16x9-1920.avif") type("image/avif"),
 		url("../placeholders/placeholder-16x9-1920.webp") type("image/webp"),
@@ -244,11 +244,11 @@
 }
 
 /* A flat surface behind the image: if it fails, the browser draws the alt
-   text here, at the contrast of text on --cai-layer-03 (red line 7). A
+   text here, at the contrast of text on --cai-surface-strong (red line 7). A
    transparent PNG or SVG shows on this surface too. */
 .cai-platform-image :where(img) {
 	object-fit: cover;
-	background-color: var(--cai-layer-03);
+	background-color: var(--cai-surface-strong);
 	color: var(--cai-text-primary);
 }
 
@@ -269,7 +269,7 @@
 
 @media (max-width: 768px) {
 	.cai-platform-content {
-		padding-top: calc(var(--cai-space-07) + var(--cai-space-06));
+		padding-top: calc(var(--cai-space-xl) + var(--cai-space-lg));
 	}
 
 	.cai-platform-feature-grid {
@@ -284,9 +284,9 @@
 
 @media (max-width: 480px) {
 	.cai-platform-content {
-		padding: var(--cai-space-05);
-		padding-top: calc(var(--cai-space-07) + var(--cai-space-05));
-		padding-bottom: var(--cai-space-09);
+		padding: var(--cai-space-md);
+		padding-top: calc(var(--cai-space-xl) + var(--cai-space-md));
+		padding-bottom: var(--cai-space-2xl);
 	}
 
 	.cai-platform-actions {

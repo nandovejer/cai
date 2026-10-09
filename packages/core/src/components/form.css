@@ -8,7 +8,7 @@
 
 .cai-field {
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
-  margin-bottom: var(--cai-space-05);
+  margin-bottom: var(--cai-space-md);
 }
 
 .cai-field__label {
@@ -16,7 +16,7 @@
   font-size: var(--cai-text-md);
   font-weight: 400;
   color: var(--cai-text-secondary);
-  margin-bottom: var(--cai-space-02);
+  margin-bottom: var(--cai-space-2xs);
 }
 
 .cai-field__label--required::after {
@@ -27,41 +27,41 @@
 .cai-field__helper {
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
-  margin-top: var(--cai-space-02);
+  margin-top: var(--cai-space-2xs);
 }
 
 .cai-field__error {
   font-size: var(--cai-text-sm);
   color: var(--cai-color-danger);
-  margin-top: var(--cai-space-02);
+  margin-top: var(--cai-space-2xs);
 }
 
 .cai-input {
   display: block;
   width: 100%;
-  height: var(--cai-size-height-lg);
+  height: var(--cai-control-lg);
   background: var(--cai-input-bg);
   border: none;
   border-bottom: 1px solid var(--cai-input-border);
   color: var(--cai-text-primary);
   font-family: var(--cai-font-sans);
   font-size: var(--cai-text-control);
-  padding: 0 var(--cai-space-04);
+  padding: 0 var(--cai-space-sm);
   transition: border-color var(--cai-duration-fast),
     background var(--cai-duration-base);
 }
 
 .cai-input::placeholder {
-  color: var(--cai-text-placeholder);
+  color: var(--cai-text-muted);
 }
 
 .cai-input:focus {
-  border-bottom: 2px solid var(--cai-border-interactive);
+  border-bottom: 2px solid var(--cai-focus-ring);
 }
 
 /* Same ring as buttons and links: one focus appearance everywhere */
 .cai-input:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -71,7 +71,7 @@
 
 .cai-input--textarea {
   height: auto;
-  padding: var(--cai-space-03) var(--cai-space-04);
+  padding: var(--cai-space-xs) var(--cai-space-sm);
   min-height: 80px;
   resize: vertical;
 }
@@ -93,18 +93,18 @@
 .cai-select-wrap::after {
   content: "▾";
   position: absolute;
-  inset-inline-end: var(--cai-space-04);
+  inset-inline-end: var(--cai-space-sm);
   top: 50%;
   transform: translateY(-50%);
   pointer-events: none;
-  color: var(--cai-icon-secondary);
+  color: var(--cai-text-secondary);
   font-size: var(--cai-text-xs);
 }
 
 .cai-select-wrap .cai-input {
   appearance: none;
   cursor: pointer;
-  padding-inline-end: var(--cai-space-07);
+  padding-inline-end: var(--cai-space-xl);
 }
 
 /* --------------------------------------------------------------------------
@@ -113,7 +113,7 @@
 
 .cai-input[type="range"] {
   height: auto;
-  padding: var(--cai-space-02) 0;
+  padding: var(--cai-space-2xs) 0;
   border-bottom: none;
   background: transparent;
   accent-color: var(--cai-brand-primary);
@@ -122,7 +122,7 @@
 
 .cai-input[type="range"]:focus {
   border-bottom: none;
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 4px;
 }
 
@@ -131,8 +131,8 @@
    -------------------------------------------------------------------------- */
 
 .cai-input[type="color"] {
-  height: var(--cai-size-height-md);
-  padding: var(--cai-space-01) var(--cai-space-02);
+  height: var(--cai-control-md);
+  padding: var(--cai-space-3xs) var(--cai-space-2xs);
   cursor: pointer;
   width: 64px;
   border-bottom: 1px solid var(--cai-input-border);
@@ -145,26 +145,26 @@
 
 .cai-input[type="file"] {
   height: auto;
-  padding: var(--cai-space-03) var(--cai-space-04);
+  padding: var(--cai-space-xs) var(--cai-space-sm);
   cursor: pointer;
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
 }
 
 .cai-input[type="file"]::file-selector-button {
-  background: var(--cai-layer-03);
+  background: var(--cai-surface-strong);
   color: var(--cai-text-primary);
   border: none;
-  padding: var(--cai-space-02) var(--cai-space-04);
+  padding: var(--cai-space-2xs) var(--cai-space-sm);
   font-size: var(--cai-text-sm);
   font-family: var(--cai-font-sans);
   cursor: pointer;
-  margin-inline-end: var(--cai-space-04);
+  margin-inline-end: var(--cai-space-sm);
   transition: background var(--cai-duration-fast);
 }
 
 .cai-input[type="file"]::file-selector-button:hover {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
 }
 
 /* --------------------------------------------------------------------------
@@ -203,8 +203,8 @@
 
 .cai-fieldset {
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
-  border: 1px solid var(--cai-border-subtle);
-  padding: var(--cai-space-05) var(--cai-space-06);
+  border: 1px solid var(--cai-divider);
+  padding: var(--cai-space-md) var(--cai-space-lg);
   margin: 0;
   background: var(--cai-input-bg);
 }
@@ -214,7 +214,7 @@
   font-size: var(--cai-text-sm);
   font-weight: 500;
   color: var(--cai-text-secondary);
-  padding: 0 var(--cai-space-03);
+  padding: 0 var(--cai-space-xs);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -228,14 +228,14 @@
   width: 100%;
   height: 8px;
   border: none;
-  background: var(--cai-layer-03);
+  background: var(--cai-surface-strong);
   appearance: none;
   border-radius: var(--cai-radius-sm);
   overflow: hidden;
 }
 
 .cai-meter::-webkit-meter-bar {
-  background: var(--cai-layer-03);
+  background: var(--cai-surface-strong);
   border: none;
   border-radius: var(--cai-radius-sm);
 }
@@ -279,13 +279,13 @@
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
   display: flex;
   flex-direction: column;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
 }
 
 .cai-check-item {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   cursor: pointer;
   user-select: none;
 }
@@ -295,7 +295,7 @@
   appearance: none;
   width: 18px;
   height: 18px;
-  border: 2px solid var(--cai-border-strong);
+  border: 2px solid var(--cai-outline);
   background: transparent;
   cursor: pointer;
   position: relative;
@@ -308,7 +308,7 @@
   border-radius: 50%;
 }
 
-/* Solid surface under the --cai-text-on-color check mark */
+/* Solid surface under the --cai-text-on-fill check mark */
 .cai-check-item input[type="checkbox"]:checked {
   background: var(--cai-brand-fill);
   border-color: var(--cai-brand-fill);
@@ -322,7 +322,7 @@
   width: 6px;
   height: 10px;
   /* Check glyph drawn with two borders, then rotated: physical on purpose */
-  border: solid var(--cai-text-on-color);
+  border: solid var(--cai-text-on-fill);
   border-width: 0 2px 2px 0;
   transform: rotate(40deg);
 }
@@ -343,7 +343,7 @@
 }
 
 .cai-check-item input:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -363,7 +363,7 @@
 .cai-toggle {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   cursor: pointer;
   user-select: none;
   position: relative;
@@ -384,18 +384,18 @@
   flex: none;
   inline-size: 48px;
   block-size: 24px;
-  background: var(--cai-border-strong);
+  background: var(--cai-outline);
   border-radius: 12px;
   position: relative;
   transition: background var(--cai-duration-fast);
 }
 
 .cai-toggle__input:focus-visible + .cai-toggle__track {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
-/* Solid surface under the --cai-text-on-color thumb */
+/* Solid surface under the --cai-text-on-fill thumb */
 .cai-toggle__input:checked + .cai-toggle__track {
   background: var(--cai-brand-fill);
 }
@@ -412,7 +412,7 @@
   position: absolute;
   inline-size: 18px;
   block-size: 18px;
-  background: var(--cai-text-on-color);
+  background: var(--cai-text-on-fill);
   border-radius: 50%;
   inset-block-start: 3px;
   inset-inline-start: 3px;

@@ -27,7 +27,7 @@
 }
 
 .cai-sidebar__brand {
-  padding: var(--cai-space-05) var(--cai-space-05) var(--cai-space-04);
+  padding: var(--cai-space-md) var(--cai-space-md) var(--cai-space-sm);
   border-bottom: 1px solid var(--cai-sidebar-border);
 }
 
@@ -35,11 +35,10 @@
   font-size: var(--cai-text-xl);
   font-weight: 600;
   letter-spacing: -0.5px;
-  /* --cai-text-inverse turns dark in dark mode: 1.1:1 on the sidebar */
   color: var(--cai-sidebar-text-hover);
   display: flex;
   align-items: center;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
 }
 
 .cai-sidebar__logo {
@@ -53,7 +52,7 @@
   font-family: var(--cai-font-mono);
   font-weight: 500;
   /* The logo shares its background with the active link in every theme;
-     --cai-text-on-color was white on white in high contrast */
+     --cai-text-on-fill was white on white in high contrast */
   color: var(--cai-sidebar-active-text);
   flex-shrink: 0;
 }
@@ -62,11 +61,11 @@
   font-size: var(--cai-text-xs);
   font-family: var(--cai-font-mono);
   color: var(--cai-sidebar-label);
-  margin-top: var(--cai-space-02);
+  margin-top: var(--cai-space-2xs);
 }
 
 .cai-sidebar__section {
-  padding: var(--cai-space-05) 0 var(--cai-space-04);
+  padding: var(--cai-space-md) 0 var(--cai-space-sm);
 }
 
 .cai-sidebar__section-label {
@@ -75,20 +74,20 @@
   letter-spacing: 1px;
   text-transform: uppercase;
   color: var(--cai-sidebar-label);
-  padding: 0 var(--cai-space-05) var(--cai-space-03);
-  margin-bottom: var(--cai-space-02);
+  padding: 0 var(--cai-space-md) var(--cai-space-xs);
+  margin-bottom: var(--cai-space-2xs);
 }
 
 .cai-sidebar__link {
   display: block;
-  padding: var(--cai-space-03) var(--cai-space-05);
+  padding: var(--cai-space-xs) var(--cai-space-md);
   font-size: var(--cai-text-md);
   color: var(--cai-sidebar-text);
   text-decoration: none;
   transition: background var(--cai-duration-fast),
     color var(--cai-duration-fast);
   cursor: pointer;
-  scroll-margin-top: var(--cai-space-07);
+  scroll-margin-top: var(--cai-space-xl);
   position: relative;
 }
 
@@ -103,7 +102,7 @@
   font-weight: 500;
 }
 
-/* Focus rings on the sidebar surface: --cai-border-interactive is black on
+/* Focus rings on the sidebar surface: --cai-focus-ring is black on
    the black sidebar in high contrast. Links draw the ring inside themselves,
    in their own text color, which contrasts with their background in every
    state (default, hover, active). */
@@ -129,7 +128,7 @@
 
 .cai-sidebar__footer {
   margin-top: auto;
-  padding: var(--cai-space-04) var(--cai-space-05);
+  padding: var(--cai-space-sm) var(--cai-space-md);
   border-top: 1px solid var(--cai-sidebar-border);
 }
 
@@ -149,35 +148,35 @@
 .cai-nav-toggle {
   display: none;
   flex-shrink: 0;
-  inline-size: var(--cai-size-height-lg);
-  block-size: var(--cai-size-height-lg);
+  inline-size: var(--cai-control-lg);
+  block-size: var(--cai-control-lg);
   background: transparent;
-  border: 1px solid var(--cai-border-strong);
+  border: 1px solid var(--cai-outline);
   border-radius: var(--cai-radius-md);
   color: var(--cai-text-primary);
   cursor: pointer;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: var(--cai-space-02);
-  padding: var(--cai-space-03);
+  gap: var(--cai-space-2xs);
+  padding: var(--cai-space-xs);
   transition: background var(--cai-duration-fast);
 }
 
 .cai-nav-toggle:hover {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
 }
 
 .cai-nav-toggle--fixed {
   position: fixed;
-  inset-block-start: var(--cai-space-04);
-  inset-inline-start: var(--cai-space-04);
+  inset-block-start: var(--cai-space-sm);
+  inset-inline-start: var(--cai-space-sm);
   z-index: var(--cai-z-modal);
-  background: var(--cai-bg-page);
+  background: var(--cai-surface-page);
 }
 
 .cai-nav-toggle:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -213,7 +212,7 @@
     }
 
     .cai-sidebar[popover]::backdrop {
-      background: var(--cai-bg-overlay);
+      background: var(--cai-scrim);
     }
   }
 }

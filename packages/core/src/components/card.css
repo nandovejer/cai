@@ -7,27 +7,27 @@
 
 
 .cai-card {
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
-  padding: var(--cai-space-05);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
+  padding: var(--cai-space-md);
   transition: box-shadow var(--cai-duration-fast) var(--cai-easing-enter),
     border-color var(--cai-duration-fast), background var(--cai-duration-base);
 }
 
 .cai-card:hover {
   box-shadow: var(--cai-shadow-sm);
-  border-color: var(--cai-border-strong);
+  border-color: var(--cai-outline);
 }
 
 .cai-card__title {
   font-size: var(--cai-text-base);
   font-weight: 600;
-  margin-bottom: var(--cai-space-02);
+  margin-bottom: var(--cai-space-2xs);
   color: var(--cai-text-primary);
 }
 
 .cai-card__body {
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
-  margin-bottom: var(--cai-space-04);
+  margin-bottom: var(--cai-space-sm);
 }

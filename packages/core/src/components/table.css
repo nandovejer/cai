@@ -16,7 +16,7 @@
 
 /* The wrapper is a focusable scroll region (tabindex="0") */
 .cai-table-wrap:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
@@ -31,7 +31,7 @@
   text-align: start;
   font-size: var(--cai-text-sm);
   color: var(--cai-text-secondary);
-  padding: var(--cai-space-03) var(--cai-space-05);
+  padding: var(--cai-space-xs) var(--cai-space-md);
   caption-side: top;
 }
 
@@ -42,10 +42,10 @@
 }
 
 .cai-table th {
-  background: var(--cai-layer-03);
+  background: var(--cai-surface-strong);
   color: var(--cai-text-primary);
   text-align: start;
-  padding: var(--cai-space-03) var(--cai-space-05);
+  padding: var(--cai-space-xs) var(--cai-space-md);
   font-weight: 500;
   font-size: var(--cai-text-sm);
   letter-spacing: 0.5px;
@@ -54,14 +54,14 @@
 }
 
 .cai-table td {
-  padding: var(--cai-space-04) var(--cai-space-05);
-  border-bottom: 1px solid var(--cai-border-subtle);
+  padding: var(--cai-space-sm) var(--cai-space-md);
+  border-bottom: 1px solid var(--cai-divider);
   color: var(--cai-text-primary);
   transition: background var(--cai-duration-fast);
 }
 
 .cai-table tr:hover td {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
 }
 
 .cai-table tr:last-child td {
@@ -82,16 +82,16 @@
 
 .cai-table--sticky-col th:first-child {
   z-index: 2;
-  background: var(--cai-layer-03);
+  background: var(--cai-surface-strong);
 }
 
 .cai-table--sticky-col td:first-child {
   z-index: 1;
-  background: var(--cai-bg-page);
+  background: var(--cai-surface-page);
 }
 
 .cai-table--sticky-col tr:hover td:first-child {
-  background: var(--cai-bg-ui-hover);
+  background: var(--cai-surface-hover);
 }
 
 /* ---- Container-query card stacking ---------------------------------
@@ -122,9 +122,9 @@
 
   /* Each row becomes a card */
   .cai-table tr {
-    border: 1px solid var(--cai-border-subtle);
+    border: 1px solid var(--cai-divider);
     border-radius: var(--cai-radius-md);
-    margin-bottom: var(--cai-space-04);
+    margin-bottom: var(--cai-space-sm);
     overflow: hidden;
   }
 
@@ -133,9 +133,9 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: var(--cai-space-05);
-    padding: var(--cai-space-03) var(--cai-space-04);
-    border-bottom: 1px solid var(--cai-border-subtle);
+    gap: var(--cai-space-md);
+    padding: var(--cai-space-xs) var(--cai-space-sm);
+    border-bottom: 1px solid var(--cai-divider);
   }
 
   .cai-table tr:last-child td:last-child {
@@ -168,10 +168,10 @@
 @media (max-width: 480px) {
   /* Tables — reduce cell padding on small screens */
   .cai-table th {
-    padding: var(--cai-space-02) var(--cai-space-03);
+    padding: var(--cai-space-2xs) var(--cai-space-xs);
   }
 
   .cai-table td {
-    padding: var(--cai-space-03) var(--cai-space-03);
+    padding: var(--cai-space-xs) var(--cai-space-xs);
   }
 }

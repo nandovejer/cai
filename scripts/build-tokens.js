@@ -48,17 +48,14 @@ function generatePrimitives(tokens) {
     lines.push("");
   }
 
-  lines.push("  /* Spacing (base 4px) */");
-  const spacingKeys = Object.keys(tokens.spacing).sort((a, b) =>
-    a.localeCompare(b),
-  );
-  for (const key of spacingKeys) {
-    lines.push(`  --cai-space-${key}: ${tokens.spacing[key].value};`);
+  lines.push("  /* Spacing (4px base, smallest to largest) */");
+  for (const [key, token] of Object.entries(tokens.spacing)) {
+    lines.push(`  --cai-space-${key}: ${token.value};`);
   }
 
-  lines.push("\n  /* Sizing */");
-  for (const [key, token] of Object.entries(tokens.sizing)) {
-    lines.push(`  --cai-size-${key}: ${token.value};`);
+  lines.push("\n  /* Control heights */");
+  for (const [key, token] of Object.entries(tokens.control)) {
+    lines.push(`  --cai-control-${key}: ${token.value};`);
   }
 
   lines.push("\n  /* Typography */");

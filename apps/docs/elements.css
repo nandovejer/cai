@@ -24,16 +24,16 @@
 
 .elements-legend {
   display: grid;
-  gap: var(--cai-space-03);
-  margin-bottom: var(--cai-space-07);
-  padding: var(--cai-space-05);
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  gap: var(--cai-space-xs);
+  margin-bottom: var(--cai-space-xl);
+  padding: var(--cai-space-md);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
 }
 
 .elements-legend ul {
   display: grid;
-  gap: var(--cai-space-02);
+  gap: var(--cai-space-2xs);
 }
 
 .elements-index__title,
@@ -46,7 +46,7 @@
 
 .elements-index__lead,
 .elements-section__lead {
-  margin-block: var(--cai-space-02) var(--cai-space-05);
+  margin-block: var(--cai-space-2xs) var(--cai-space-md);
   color: var(--cai-text-secondary);
   max-width: 70ch;
 }
@@ -57,14 +57,14 @@
 
 /* The page grid spaces the sections; the rule marks where a category starts */
 .elements-section {
-  padding-top: var(--cai-space-07);
-  border-top: 1px solid var(--cai-border-subtle);
+  padding-top: var(--cai-space-xl);
+  border-top: 1px solid var(--cai-divider);
 }
 
 .elements-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
 }
 
 /* Tables stack into cards under 480px of container width: give them room */
@@ -74,18 +74,18 @@
 
 .elements-card {
   display: grid;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   align-content: start;
-  padding: var(--cai-space-05);
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  padding: var(--cai-space-md);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
 }
 
 .elements-card__head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--cai-space-02) var(--cai-space-04);
+  gap: var(--cai-space-2xs) var(--cai-space-sm);
 }
 
 .elements-card__title {
@@ -112,11 +112,11 @@
 /* The live example. Dashed edge: this is a specimen, not page content. */
 .elements-stage {
   display: grid;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   align-content: start;
-  padding: var(--cai-space-05);
-  background: var(--cai-bg-page);
-  border: 1px dashed var(--cai-border-strong);
+  padding: var(--cai-space-md);
+  background: var(--cai-surface-page);
+  border: 1px dashed var(--cai-outline);
   /* No scroll here: a scrolling region would need keyboard focus. Media is
      capped to the width by core, tables and code scroll in their own region. */
   overflow-wrap: anywhere;
@@ -129,14 +129,14 @@
 /* Snippet: label bar + code block */
 .elements-snippet {
   display: grid;
-  gap: var(--cai-space-02);
+  gap: var(--cai-space-2xs);
 }
 
 .elements-snippet__bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
 }
 
 /* The bar carries the label; the absolute language badge would sit on top of
@@ -147,13 +147,13 @@
 
 /* No width jump when the label becomes "✓ Copied" */
 .elements-snippet .cai-copy-btn {
-  min-width: calc(var(--cai-space-11) + var(--cai-space-03));
+  min-width: calc(var(--cai-space-3xl) + var(--cai-space-md) + var(--cai-space-xs));
   justify-content: center;
 }
 
 .elements-snippet .cai-copy-btn:not(:hover, .is-copied) {
-  background: var(--cai-layer-01);
-  border-color: var(--cai-border-strong);
+  background: var(--cai-surface);
+  border-color: var(--cai-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -163,7 +163,7 @@
 /* A fixed-size box for the demos that resize or clip their content */
 .elements-stage canvas,
 .elements-stage iframe {
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
 }
 
 /* <demo-card> is the custom element the slot and template demos define */
@@ -178,7 +178,7 @@ demo-card {
 @media (max-width: 768px) {
   .elements-card,
   .elements-stage {
-    padding: var(--cai-space-04);
+    padding: var(--cai-space-sm);
   }
 
   .elements-section__title,

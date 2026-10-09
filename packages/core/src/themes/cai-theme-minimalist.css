@@ -90,24 +90,23 @@
   --cai-font-heading: var(--cai-font-sans);
 
   /* Backgrounds */
-  --cai-bg-page: var(--min-bg);
-  --cai-bg-ui: var(--min-surface);
-  --cai-bg-ui-hover: var(--min-elevated);
-  --cai-bg-ui-active: var(--min-active);
-  --cai-bg-overlay: var(--min-overlay);
+  --cai-surface-page: var(--min-bg);
+  --cai-surface: var(--min-surface);
+  --cai-surface-hover: var(--min-elevated);
+  --cai-surface-pressed: var(--min-active);
+  --cai-scrim: var(--min-overlay);
 
   /* Text */
   --cai-text-primary: var(--min-text);
   --cai-text-secondary: var(--min-muted);
-  --cai-text-placeholder: var(--min-placeholder);
+  --cai-text-muted: var(--min-placeholder);
   --cai-text-disabled: var(--min-disabled);
-  --cai-text-on-color: #fff;
-  --cai-text-inverse: #fff;
+  --cai-text-on-fill: #fff;
 
   /* Borders */
-  --cai-border-subtle: var(--min-border-subtle);
-  --cai-border-strong: var(--min-border-strong);
-  --cai-border-interactive: var(--min-border-focus);
+  --cai-divider: var(--min-border-subtle);
+  --cai-outline: var(--min-border-strong);
+  --cai-focus-ring: var(--min-border-focus);
 
   /* Brand — muted slate */
   --cai-brand-primary: var(--min-brand);
@@ -116,14 +115,10 @@
   --cai-brand-subtle: var(--min-brand-subtle);
 
   /* Icons */
-  --cai-icon-primary: var(--min-text);
-  --cai-icon-secondary: var(--min-muted);
-  --cai-icon-inverse: #fff;
 
   /* Layers */
-  --cai-layer-01: var(--min-surface);
-  --cai-layer-02: var(--min-bg);
-  --cai-layer-03: var(--min-elevated);
+  --cai-surface-muted: var(--min-bg);
+  --cai-surface-strong: var(--min-elevated);
 
   /* Sidebar — light, minimal */
   --cai-sidebar-bg: var(--min-sidebar-bg);
@@ -193,30 +188,25 @@
    -------------------------------------------------------------------------- */
 
 [data-theme="minimalist"][data-mode="light"] {
-  --cai-bg-page: var(--min-bg);
-  --cai-bg-ui: var(--min-surface);
-  --cai-bg-ui-hover: var(--min-elevated);
-  --cai-bg-ui-active: var(--min-active);
-  --cai-bg-overlay: var(--min-overlay);
+  --cai-surface-page: var(--min-bg);
+  --cai-surface: var(--min-surface);
+  --cai-surface-hover: var(--min-elevated);
+  --cai-surface-pressed: var(--min-active);
+  --cai-scrim: var(--min-overlay);
   --cai-text-primary: var(--min-text);
   --cai-text-secondary: var(--min-muted);
-  --cai-text-placeholder: var(--min-placeholder);
+  --cai-text-muted: var(--min-placeholder);
   --cai-text-disabled: var(--min-disabled);
-  --cai-text-on-color: #fff;
-  --cai-text-inverse: #fff;
-  --cai-border-subtle: var(--min-border-subtle);
-  --cai-border-strong: var(--min-border-strong);
-  --cai-border-interactive: var(--min-border-focus);
+  --cai-text-on-fill: #fff;
+  --cai-divider: var(--min-border-subtle);
+  --cai-outline: var(--min-border-strong);
+  --cai-focus-ring: var(--min-border-focus);
   --cai-brand-primary: var(--min-brand);
   --cai-brand-hover: var(--min-brand-hover);
   --cai-brand-active: var(--min-brand-active);
   --cai-brand-subtle: var(--min-brand-subtle);
-  --cai-icon-primary: var(--min-text);
-  --cai-icon-secondary: var(--min-muted);
-  --cai-icon-inverse: #fff;
-  --cai-layer-01: var(--min-surface);
-  --cai-layer-02: var(--min-bg);
-  --cai-layer-03: var(--min-elevated);
+  --cai-surface-muted: var(--min-bg);
+  --cai-surface-strong: var(--min-elevated);
   --cai-sidebar-bg: var(--min-sidebar-bg);
   --cai-sidebar-text: var(--min-sidebar-text);
   --cai-sidebar-text-hover: var(--min-sidebar-text-hover);
@@ -251,20 +241,19 @@
    -------------------------------------------------------------------------- */
 
 [data-theme="minimalist"][data-mode="dark"] {
-  --cai-bg-page: #1a1a18;
-  --cai-bg-ui: #222220;
-  --cai-bg-ui-hover: #2a2a28;
-  --cai-bg-ui-active: #323230;
-  --cai-bg-overlay: rgba(10, 10, 8, 0.7);
+  --cai-surface-page: #1a1a18;
+  --cai-surface: #222220;
+  --cai-surface-hover: #2a2a28;
+  --cai-surface-pressed: #323230;
+  --cai-scrim: rgba(10, 10, 8, 0.7);
   --cai-text-primary: #f0f0ee;
   --cai-text-secondary: #94a3b8;
-  --cai-text-placeholder: #7d8ba0; /* 4.6:1 on the input (was 3.4:1) */
+  --cai-text-muted: #7d8ba0; /* 4.6:1 on the input (was 3.4:1) */
   --cai-text-disabled: #626e7f; /* 3:1 on every surface (#475569 gave 2.1:1) */
-  --cai-text-on-color: #fff;
-  --cai-text-inverse: #1e1e1e;
-  --cai-border-subtle: #2e2e2c;
-  --cai-border-strong: #747473; /* 3:1 on every surface (#424240 gave 1.6:1) */
-  --cai-border-interactive: #94a3b8;
+  --cai-text-on-fill: #fff;
+  --cai-divider: #2e2e2c;
+  --cai-outline: #747473; /* 3:1 on every surface (#424240 gave 1.6:1) */
+  --cai-focus-ring: #94a3b8;
   --cai-brand-primary: #94a3b8;
   --cai-brand-hover: #b8c4d4;
   --cai-brand-active: #e2e8f0;
@@ -273,12 +262,8 @@
   --cai-brand-fill: #475569;
   --cai-brand-fill-hover: #334155;
   --cai-brand-fill-active: #1e293b;
-  --cai-icon-primary: #f0f0ee;
-  --cai-icon-secondary: #94a3b8;
-  --cai-icon-inverse: #1e1e1e;
-  --cai-layer-01: #222220;
-  --cai-layer-02: #1a1a18;
-  --cai-layer-03: #111110;
+  --cai-surface-muted: #1a1a18;
+  --cai-surface-strong: #111110;
   --cai-sidebar-bg: #111110;
   --cai-sidebar-text: #8090a8; /* 5.7:1 (was 4.0:1) */
   --cai-sidebar-text-hover: #f0f0ee;
@@ -314,30 +299,25 @@
    -------------------------------------------------------------------------- */
 
 [data-theme="minimalist"][data-mode="high-contrast"] {
-  --cai-bg-page: #fff;
-  --cai-bg-ui: #fff;
-  --cai-bg-ui-hover: #f0f0ee;
-  --cai-bg-ui-active: #e0e0de;
-  --cai-bg-overlay: rgba(0, 0, 0, 0.5);
+  --cai-surface-page: #fff;
+  --cai-surface: #fff;
+  --cai-surface-hover: #f0f0ee;
+  --cai-surface-pressed: #e0e0de;
+  --cai-scrim: rgba(0, 0, 0, 0.5);
   --cai-text-primary: #000;
   --cai-text-secondary: #1e1e1e;
-  --cai-text-placeholder: #424242;
+  --cai-text-muted: #424242;
   --cai-text-disabled: #757575;
-  --cai-text-on-color: #fff;
-  --cai-text-inverse: #fff;
-  --cai-border-subtle: #424242;
-  --cai-border-strong: #000;
-  --cai-border-interactive: #000;
+  --cai-text-on-fill: #fff;
+  --cai-divider: #424242;
+  --cai-outline: #000;
+  --cai-focus-ring: #000;
   --cai-brand-primary: #000;
   --cai-brand-hover: #1a1a1a;
   --cai-brand-active: #333;
   --cai-brand-subtle: rgba(0, 0, 0, 0.08);
-  --cai-icon-primary: #000;
-  --cai-icon-secondary: #1e1e1e;
-  --cai-icon-inverse: #fff;
-  --cai-layer-01: #fff;
-  --cai-layer-02: #f8f8f6;
-  --cai-layer-03: #f0f0ee;
+  --cai-surface-muted: #f8f8f6;
+  --cai-surface-strong: #f0f0ee;
   --cai-sidebar-bg: #000;
   --cai-sidebar-text: #bdbdbd;
   --cai-sidebar-text-hover: #fff;

@@ -5,7 +5,7 @@
 
 :where(hr) {
   border: none;
-  border-top: 1px solid var(--cai-border-subtle);
+  border-top: 1px solid var(--cai-divider);
 }
 
 
@@ -14,16 +14,16 @@
 /* ========================================================================== */
 
 :where(figure) {
-  margin: var(--cai-space-06) 0;
-  padding: var(--cai-space-04);
-  background: var(--cai-bg-ui);
+  margin: var(--cai-space-lg) 0;
+  padding: var(--cai-space-sm);
+  background: var(--cai-surface);
   border-radius: var(--cai-radius-md);
 }
 
 :where(figcaption) {
   font-size: max(0.875em, var(--cai-text-sm));
   color: var(--cai-text-secondary);
-  margin-top: var(--cai-space-03);
+  margin-top: var(--cai-space-xs);
   font-style: italic;
 }
 
@@ -41,9 +41,9 @@
 /* ========================================================================== */
 
 :where(blockquote) {
-  padding-block: var(--cai-space-02);
-  padding-inline: var(--cai-space-05);
-  border-inline-start: 3px solid var(--cai-border-strong);
+  padding-block: var(--cai-space-2xs);
+  padding-inline: var(--cai-space-md);
+  border-inline-start: 3px solid var(--cai-outline);
   color: var(--cai-text-secondary);
 }
 
@@ -56,12 +56,12 @@
 }
 
 :where(dd) {
-  padding-inline-start: var(--cai-space-05);
+  padding-inline-start: var(--cai-space-md);
   color: var(--cai-text-secondary);
 }
 
 :where(dl > dd + dt) {
-  margin-block-start: var(--cai-space-03);
+  margin-block-start: var(--cai-space-xs);
 }
 
 /* The reset removes the list padding, which leaves the markers outside the
@@ -74,7 +74,7 @@
 :where(menu) {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   list-style: none;
 }
 
@@ -89,8 +89,8 @@
   white-space: pre;
   tab-size: 2;
   overflow-x: auto;
-  padding: var(--cai-space-04) var(--cai-space-05);
-  background: var(--cai-layer-02);
-  border: 1px solid var(--cai-border-subtle);
+  padding: var(--cai-space-sm) var(--cai-space-md);
+  background: var(--cai-surface-muted);
+  border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-sm);
 }

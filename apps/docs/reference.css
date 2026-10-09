@@ -40,7 +40,7 @@
   width: 100%;
   max-width: var(--cai-content-max);
   margin-inline: auto;
-  padding-inline: var(--cai-space-07);
+  padding-inline: var(--cai-space-xl);
 }
 
 /* Grid and flex items default to min-width: auto, which lets a long <pre> or
@@ -62,7 +62,7 @@
 }
 
 .docs-subhead {
-  margin-bottom: var(--cai-space-02);
+  margin-bottom: var(--cai-space-2xs);
 }
 
 /* Core gives headings a family and a weight, and leaves the size to the page */
@@ -82,14 +82,14 @@
 
 .docs-main {
   display: grid;
-  gap: var(--cai-space-10);
+  gap: var(--cai-space-3xl);
   align-content: start;
-  padding-block: var(--cai-space-06) var(--cai-space-10);
+  padding-block: var(--cai-space-lg) var(--cai-space-3xl);
 }
 
 /* Every anchor target clears the top edge when it is jumped to */
 .docs-main [id] {
-  scroll-margin-top: var(--cai-space-06);
+  scroll-margin-top: var(--cai-space-lg);
 }
 
 /* The sections already carry their own width and gutter */
@@ -97,12 +97,12 @@
   width: 100%;
   max-width: var(--cai-content-max);
   margin-inline: auto;
-  padding-inline: var(--cai-space-07);
+  padding-inline: var(--cai-space-xl);
 }
 
 .docs-header {
   display: grid;
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
 }
 
 .docs-header__title {
@@ -118,7 +118,7 @@
 
 .docs-chapter {
   display: grid;
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
   align-content: start;
 }
 
@@ -138,40 +138,40 @@
 .docs-prose ul,
 .docs-prose ol {
   display: grid;
-  gap: var(--cai-space-02);
-  padding-inline-start: var(--cai-space-06);
+  gap: var(--cai-space-2xs);
+  padding-inline-start: var(--cai-space-lg);
 }
 
 .docs-prose {
   display: grid;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   align-content: start;
 }
 
 .docs-prose__title {
   font-size: var(--cai-text-lg);
-  margin-block-start: var(--cai-space-04);
+  margin-block-start: var(--cai-space-sm);
 }
 
 .docs-prose-chapter h3 {
   font-size: var(--cai-text-xl);
-  margin-block-start: var(--cai-space-05);
+  margin-block-start: var(--cai-space-md);
 }
 
 /* A link that stands alone at the end of each component */
 .docs-top {
-  margin-block-start: var(--cai-space-02);
+  margin-block-start: var(--cai-space-2xs);
   font-size: var(--cai-text-md);
 }
 
 .docs-top a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cai-size-height-sm);
+  min-height: var(--cai-control-sm);
 }
 
 .docs-footer {
-  padding-inline: var(--cai-space-07);
+  padding-inline: var(--cai-space-xl);
 }
 
 /* --------------------------------------------------------------------------
@@ -188,7 +188,7 @@
 
 .docs-nav-group > summary {
   margin: 0;
-  padding-block: var(--cai-space-02);
+  padding-block: var(--cai-space-2xs);
   border-radius: 0;
 }
 
@@ -207,17 +207,17 @@
    -------------------------------------------------------------------------- */
 
 .cai-code-block:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
 /* .cai-copy-btn has a subtle border and no fill: on the command block
-   (--cai-layer-03) it reads as plain text. Give it a surface and a boundary;
+   (--cai-surface-strong) it reads as plain text. Give it a surface and a boundary;
    hover and .is-copied keep the component's own colors. */
 .docs-snippet .cai-copy-btn:not(:hover, .is-copied),
 .cai-platform-command-block .cai-copy-btn:not(:hover, .is-copied) {
-  background: var(--cai-layer-01);
-  border-color: var(--cai-border-strong);
+  background: var(--cai-surface);
+  border-color: var(--cai-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -226,11 +226,11 @@
 
 .docs-demo {
   display: grid;
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
   align-content: start;
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
-  padding: var(--cai-space-05);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
+  padding: var(--cai-space-md);
 }
 
 /* --------------------------------------------------------------------------
@@ -238,7 +238,7 @@
    -------------------------------------------------------------------------- */
 
 .docs-ref {
-  margin-top: var(--cai-space-04);
+  margin-top: var(--cai-space-sm);
   font-size: var(--cai-text-md);
 }
 
@@ -247,22 +247,22 @@
 .docs-toc a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cai-size-height-sm);
+  min-height: var(--cai-control-sm);
 }
 
 .docs-toc {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--cai-space-05);
-  padding: var(--cai-space-05);
-  border: 1px solid var(--cai-border-subtle);
+  gap: var(--cai-space-md);
+  padding: var(--cai-space-md);
+  border: 1px solid var(--cai-divider);
 }
 
 .docs-toc ul {
   list-style: none;
   display: grid;
-  gap: var(--cai-space-02);
-  margin-top: var(--cai-space-03);
+  gap: var(--cai-space-2xs);
+  margin-top: var(--cai-space-xs);
   font-size: var(--cai-text-md);
 }
 
@@ -274,19 +274,19 @@
 .docs-toc--inline ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-02) var(--cai-space-06);
+  gap: var(--cai-space-2xs) var(--cai-space-lg);
 }
 
 .docs-toc a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cai-size-height-sm);
+  min-height: var(--cai-control-sm);
 }
 
 .docs-demo-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
 }
 
 .docs-demo--wide {
@@ -297,7 +297,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--cai-space-02) var(--cai-space-04);
+  gap: var(--cai-space-2xs) var(--cai-space-sm);
 }
 
 .docs-demo__title {
@@ -325,7 +325,7 @@ h2.docs-demo__title {
 
 .docs-demo__stage {
   display: grid;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   align-content: start;
 }
 
@@ -337,7 +337,7 @@ h2.docs-demo__title {
 /* Room above the button for the tooltip */
 .docs-demo__stage--tooltip {
   justify-items: start;
-  padding-top: var(--cai-space-08);
+  padding-top: calc(var(--cai-space-xl) + var(--cai-space-xs));
 }
 
 .docs-demo__stage > figure {
@@ -353,13 +353,13 @@ h2.docs-demo__title {
    it works, content, keyboard and ARIA, known issues (PRINCIPLES.md §9) */
 .docs-guide {
   display: grid;
-  gap: var(--cai-space-02);
-  border-top: 1px solid var(--cai-border-subtle);
-  padding-block-start: var(--cai-space-04);
+  gap: var(--cai-space-2xs);
+  border-top: 1px solid var(--cai-divider);
+  padding-block-start: var(--cai-space-sm);
 }
 
 .docs-guide__title {
-  margin-block: var(--cai-space-04) 0;
+  margin-block: var(--cai-space-sm) 0;
   font-family: var(--cai-font-sans);
   font-size: var(--cai-text-base);
   font-weight: 600;
@@ -401,14 +401,14 @@ h2.docs-demo__title {
 
 .docs-fold > summary {
   margin: 0;
-  padding: var(--cai-space-02) var(--cai-space-03);
+  padding: var(--cai-space-2xs) var(--cai-space-xs);
   font-size: var(--cai-text-md);
   font-weight: 500;
-  background: var(--cai-layer-02);
+  background: var(--cai-surface-muted);
 }
 
 .docs-fold[open] > summary {
-  margin-bottom: var(--cai-space-05);
+  margin-bottom: var(--cai-space-md);
 }
 
 /* --------------------------------------------------------------------------
@@ -418,15 +418,15 @@ h2.docs-demo__title {
 /* The layered background shows alpha tokens over the page color */
 .docs-swatch {
   display: block;
-  height: var(--cai-size-height-xl);
-  background: linear-gradient(var(--v), var(--v)), var(--cai-bg-page);
-  border: 1px solid var(--cai-border-subtle);
+  height: var(--cai-control-xl);
+  background: linear-gradient(var(--v), var(--v)), var(--cai-surface-page);
+  border: 1px solid var(--cai-divider);
 }
 
 .docs-ramp {
   display: grid;
-  grid-template-columns: var(--cai-space-11) minmax(0, 1fr);
-  gap: var(--cai-space-04);
+  grid-template-columns: calc(var(--cai-space-3xl) + var(--cai-space-md)) minmax(0, 1fr);
+  gap: var(--cai-space-sm);
   align-items: center;
 }
 
@@ -454,14 +454,14 @@ h2.docs-demo__title {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--cai-space-03) var(--cai-space-05);
-  margin-bottom: var(--cai-space-04);
+  gap: var(--cai-space-xs) var(--cai-space-md);
+  margin-bottom: var(--cai-space-sm);
 }
 
 .docs-token {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-sm);
   overflow-wrap: anywhere;
@@ -473,9 +473,9 @@ h2.docs-demo__title {
 }
 
 .docs-token__modes .docs-swatch {
-  width: var(--cai-space-06);
-  height: var(--cai-space-06);
-  border-color: var(--cai-border-strong);
+  width: var(--cai-space-lg);
+  height: var(--cai-space-lg);
+  border-color: var(--cai-outline);
 }
 
 .docs-scopes {
@@ -486,12 +486,12 @@ h2.docs-demo__title {
    on this element, but nothing repaints it unless it asks for them. */
 .docs-scope {
   display: grid;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   align-content: start;
-  padding: var(--cai-space-05);
-  background: var(--cai-bg-page);
+  padding: var(--cai-space-md);
+  background: var(--cai-surface-page);
   color: var(--cai-text-primary);
-  border: 1px solid var(--cai-border-strong);
+  border: 1px solid var(--cai-outline);
 }
 
 .docs-scope .cai-alert {
@@ -507,13 +507,13 @@ h2.docs-demo__title {
 
 .docs-scale-list {
   display: grid;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
 }
 
 .docs-scale {
   display: grid;
-  grid-template-columns: calc(var(--cai-space-12) * 2) var(--cai-space-09) minmax(0, 1fr);
-  gap: var(--cai-space-04);
+  grid-template-columns: calc(var(--cai-space-4xl) * 2) var(--cai-space-2xl) minmax(0, 1fr);
+  gap: var(--cai-space-sm);
   align-items: center;
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
@@ -522,7 +522,7 @@ h2.docs-demo__title {
 }
 
 .docs-scale--easing {
-  grid-template-columns: calc(var(--cai-space-12) * 2) minmax(0, 1fr);
+  grid-template-columns: calc(var(--cai-space-4xl) * 2) minmax(0, 1fr);
 }
 
 .docs-scale--easing > :last-child {
@@ -531,7 +531,7 @@ h2.docs-demo__title {
 
 /* name, value, what it is used for */
 .docs-scale--note {
-  grid-template-columns: calc(var(--cai-space-12) * 1.5) calc(var(--cai-space-12) * 1.5) minmax(0, 1fr);
+  grid-template-columns: calc(var(--cai-space-4xl) * 1.5) calc(var(--cai-space-4xl) * 1.5) minmax(0, 1fr);
 }
 
 .docs-scale--note code {
@@ -547,7 +547,7 @@ h2.docs-demo__title {
   display: block;
   width: var(--v);
   max-width: 100%;
-  height: var(--cai-space-04);
+  height: var(--cai-space-sm);
   background: var(--cai-brand-primary);
 }
 
@@ -560,7 +560,7 @@ h2.docs-demo__title {
 
 .docs-font {
   display: grid;
-  gap: var(--cai-space-02);
+  gap: var(--cai-space-2xs);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
@@ -584,27 +584,27 @@ h2.docs-demo__title {
 .docs-specimens {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
 }
 
 .docs-specimens li {
   display: grid;
-  gap: var(--cai-space-02);
+  gap: var(--cai-space-2xs);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
 }
 
 .docs-shadows {
-  gap: var(--cai-space-06);
-  padding: var(--cai-space-05);
-  background: var(--cai-layer-02);
+  gap: var(--cai-space-lg);
+  padding: var(--cai-space-md);
+  background: var(--cai-surface-muted);
 }
 
 .docs-box {
-  padding: var(--cai-space-04);
-  background: var(--cai-layer-02);
-  border: 1px dashed var(--cai-border-strong);
+  padding: var(--cai-space-sm);
+  background: var(--cai-surface-muted);
+  border: 1px dashed var(--cai-outline);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
@@ -621,15 +621,15 @@ h2.docs-demo__title {
 
 .docs-box--radius {
   display: block;
-  width: var(--cai-space-10);
-  height: var(--cai-space-10);
+  width: var(--cai-space-3xl);
+  height: var(--cai-space-3xl);
   border-style: solid;
   border-radius: var(--v);
 }
 
 .docs-box--shadow {
-  padding: var(--cai-space-06);
-  background: var(--cai-layer-01);
+  padding: var(--cai-space-lg);
+  background: var(--cai-surface);
   border: 0;
   box-shadow: var(--v);
 }
@@ -641,15 +641,15 @@ h2.docs-demo__title {
 .docs-motion__track {
   display: block;
   position: relative;
-  height: var(--cai-space-05);
-  background: var(--cai-layer-02);
+  height: var(--cai-space-md);
+  background: var(--cai-surface-muted);
 }
 
 .docs-motion__dot {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
-  width: var(--cai-space-05);
+  width: var(--cai-space-md);
   background: var(--cai-brand-primary);
   transition: inset-inline-start var(--cai-duration-lazy) var(--cai-easing-standard);
 }
@@ -663,7 +663,7 @@ h2.docs-demo__title {
 }
 
 .docs-motion:has(.cai-toggle__input:checked) .docs-motion__dot {
-  inset-inline-start: calc(100% - var(--cai-space-05));
+  inset-inline-start: calc(100% - var(--cai-space-md));
 }
 
 .docs-motion__reduced {
@@ -672,7 +672,7 @@ h2.docs-demo__title {
 
 .docs-anim__tile {
   display: grid;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   justify-items: center;
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
@@ -684,28 +684,28 @@ h2.docs-demo__title {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: var(--cai-space-11);
-  background: var(--cai-layer-02);
+  height: calc(var(--cai-space-3xl) + var(--cai-space-md));
+  background: var(--cai-surface-muted);
 }
 
 .docs-anim__spin {
-  width: var(--cai-space-07);
-  height: var(--cai-space-07);
-  border: 2px solid var(--cai-border-subtle);
+  width: var(--cai-space-xl);
+  height: var(--cai-space-xl);
+  border: 2px solid var(--cai-divider);
   border-top-color: var(--cai-brand-primary);
   border-radius: var(--cai-radius-full);
 }
 
 .docs-anim__shimmer {
   width: 70%;
-  height: var(--cai-space-05);
-  background: linear-gradient(90deg, var(--cai-layer-03) 25%, var(--cai-layer-01) 50%, var(--cai-layer-03) 75%);
+  height: var(--cai-space-md);
+  background: linear-gradient(90deg, var(--cai-surface-strong) 25%, var(--cai-surface) 50%, var(--cai-surface-strong) 75%);
   background-size: 200% 100%;
 }
 
 .docs-anim__pulse {
-  width: var(--cai-space-04);
-  height: var(--cai-space-04);
+  width: var(--cai-space-sm);
+  height: var(--cai-space-sm);
   border-radius: var(--cai-radius-full);
   background: var(--cai-color-success);
 }
@@ -739,16 +739,16 @@ h2.docs-demo__title {
 .docs-decision-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-05);
+  gap: var(--cai-space-md);
 }
 
 .docs-decision-card {
   display: grid;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
   align-content: start;
-  padding: var(--cai-space-05);
-  background: var(--cai-layer-01);
-  border: 1px solid var(--cai-border-subtle);
+  padding: var(--cai-space-md);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
 }
 
 .docs-decision-card__title {
@@ -759,8 +759,8 @@ h2.docs-demo__title {
 
 .docs-decision-card ul {
   display: grid;
-  gap: var(--cai-space-02);
-  padding-inline-start: var(--cai-space-06);
+  gap: var(--cai-space-2xs);
+  padding-inline-start: var(--cai-space-lg);
 }
 
 .docs-ref-table td:first-child {
@@ -776,17 +776,17 @@ h2.docs-demo__title {
 .docs-anatomy,
 .docs-anatomy .docs-box {
   display: grid;
-  gap: var(--cai-space-03);
+  gap: var(--cai-space-xs);
 }
 
 /* The page modifier on a small box: enough height to see both gradients */
 .docs-gradient-sample {
   display: flex;
   align-items: flex-end;
-  min-height: calc(var(--cai-space-12) * 1.5);
-  margin-top: var(--cai-space-03);
-  padding: var(--cai-space-04);
-  border: 1px dashed var(--cai-border-strong);
+  min-height: calc(var(--cai-space-4xl) * 1.5);
+  margin-top: var(--cai-space-xs);
+  padding: var(--cai-space-sm);
+  border: 1px dashed var(--cai-outline);
   font-family: var(--cai-font-mono);
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
@@ -794,7 +794,7 @@ h2.docs-demo__title {
 
 .docs-sidebar-demo {
   grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--cai-space-06);
+  gap: var(--cai-space-lg);
 }
 
 /* The sidebar is a full-height sticky column, and a fixed drawer at 768px and
@@ -802,7 +802,7 @@ h2.docs-demo__title {
    rules inside their media query too. */
 .docs-demo__stage .cai-sidebar {
   position: relative;
-  height: calc(var(--cai-space-12) * 4);
+  height: calc(var(--cai-space-4xl) * 4);
   max-width: 100%;
   transform: none;
   z-index: var(--cai-z-base);
@@ -815,18 +815,18 @@ h2.docs-demo__title {
 
 .docs-util-narrow {
   display: block;
-  max-width: calc(var(--cai-space-12) * 1.5);
+  max-width: calc(var(--cai-space-4xl) * 1.5);
 }
 
 .docs-util-frame {
-  width: calc(var(--cai-space-12) * 2);
+  width: calc(var(--cai-space-4xl) * 2);
   max-width: 100%;
-  border: 1px dashed var(--cai-border-strong);
+  border: 1px dashed var(--cai-outline);
 }
 
 .docs-util-margins {
   display: inline-block;
-  border: 1px dashed var(--cai-border-strong);
+  border: 1px dashed var(--cai-outline);
 }
 
 .docs-util-margins .docs-box {
@@ -843,16 +843,16 @@ h2.docs-demo__title {
   cursor: default;
 }
 
-/* A sticky first column paints itself with --cai-bg-page: a grey band on any
+/* A sticky first column paints itself with --cai-surface-page: a grey band on any
    other surface. Hover keeps the component's own color (higher specificity). */
 .docs-demo__stage .cai-table--sticky-col td:first-child {
-  background: var(--cai-layer-01);
+  background: var(--cai-surface);
 }
 
 /* A closed <details> keeps the bottom margin of its summary: empty space
    under the label. */
 .docs-demo__stage details:not([open]) > summary {
-  margin-bottom: calc(-1 * var(--cai-space-04));
+  margin-bottom: calc(-1 * var(--cai-space-sm));
 }
 
 /* When a table stacks into cards its <caption> stays a table-caption inside
@@ -918,24 +918,24 @@ h2.docs-demo__title {
   /* Table of contents: each group becomes one wrapping row of links */
   .docs-toc {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--cai-space-04);
+    gap: var(--cai-space-sm);
   }
 
   .docs-toc ul {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--cai-space-02) var(--cai-space-05);
-    margin-top: var(--cai-space-02);
+    gap: var(--cai-space-2xs) var(--cai-space-md);
+    margin-top: var(--cai-space-2xs);
   }
 }
 
 @media (max-width: 480px) {
   .docs-wrap {
-    padding-inline: var(--cai-space-05);
+    padding-inline: var(--cai-space-md);
   }
 
   .docs-main > :not(.docs-wrap) {
-    padding-inline: var(--cai-space-05);
+    padding-inline: var(--cai-space-md);
   }
 
   .docs-header__title {
@@ -953,12 +953,12 @@ h2.docs-demo__title {
 
   .docs-ramp {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--cai-space-02);
+    gap: var(--cai-space-2xs);
   }
 
   .docs-scale {
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--cai-space-02) var(--cai-space-04);
+    gap: var(--cai-space-2xs) var(--cai-space-sm);
   }
 
   .docs-scale > :last-child {
@@ -971,12 +971,12 @@ h2.docs-demo__title {
 
   /* Denser token chips */
   .docs-token-grid {
-    gap: var(--cai-space-02);
+    gap: var(--cai-space-2xs);
   }
 
   .docs-token__modes .docs-swatch {
-    width: var(--cai-space-05);
-    height: var(--cai-space-05);
+    width: var(--cai-space-md);
+    height: var(--cai-space-md);
   }
 
   /* Page footer: three short links fit on one row */
@@ -993,6 +993,6 @@ h2.docs-demo__title {
 /* Stacked footer: line the ghost links' text up with the line above */
 @media (max-width: 768px) {
   body > footer .cai-platform-actions {
-    margin-inline-start: calc(-1 * var(--cai-space-04));
+    margin-inline-start: calc(-1 * var(--cai-space-sm));
   }
 }

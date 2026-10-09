@@ -38,7 +38,7 @@ test.describe('Theme switcher, cycle variant', () => {
 
   test('the checked radio re-scopes the page tokens', async ({ page }) => {
     await page.goto(FIXTURE);
-    const bg = () => page.evaluate(() => getComputedStyle(document.body).getPropertyValue('--cai-bg-page').trim());
+    const bg = () => page.evaluate(() => getComputedStyle(document.body).getPropertyValue('--cai-surface-page').trim());
     const light = await bg();
     await page.locator('.cai-theme-cycle').click();
     expect(await bg()).not.toBe(light);

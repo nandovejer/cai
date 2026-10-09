@@ -166,7 +166,7 @@ describe("check-dist sentinel (BUG-01)", () => {
 describe.skipIf(!distBuilt)("tokens semantic layer (regression: lost Layer 2)", () => {
   it("dist/cai-tokens.css contains the semantic layer for all base modes", () => {
     const content = readFileSync(tokensDist, "utf-8");
-    expect(content).toContain("--cai-bg-page");
+    expect(content).toContain("--cai-surface-page");
     expect(content).toContain("--cai-text-primary");
     expect(content).toContain('[data-theme="light"]');
     expect(content).toContain('[data-theme="dark"]');

@@ -10,12 +10,12 @@
    layer, the centering (margin: auto), the inert page behind it, the focus
    trap, Escape and focus restoration. CSS only draws the surface. */
 .cai-modal {
-  background: var(--cai-bg-ui);
+  background: var(--cai-surface);
   color: var(--cai-text-primary);
-  border: 1px solid var(--cai-border-subtle);
+  border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-lg);
   box-shadow: var(--cai-shadow-lg);
-  padding: var(--cai-space-08);
+  padding: var(--cai-space-xl);
   max-inline-size: min(90vw, 600px);
   max-block-size: 90vh;
   overflow-y: auto;
@@ -26,16 +26,16 @@
 }
 
 .cai-modal::backdrop {
-  background: var(--cai-bg-overlay);
+  background: var(--cai-scrim);
   backdrop-filter: blur(2px);
   animation: cai-fade-in var(--cai-duration-fast) ease-out;
 }
 
 /* Modal content structure */
 .cai-modal__header {
-  margin-bottom: var(--cai-space-06);
-  padding-bottom: var(--cai-space-04);
-  border-bottom: 1px solid var(--cai-border-subtle);
+  margin-bottom: var(--cai-space-lg);
+  padding-bottom: var(--cai-space-sm);
+  border-bottom: 1px solid var(--cai-divider);
 }
 
 .cai-modal__title {
@@ -51,12 +51,12 @@
   align-items: center;
   justify-content: center;
   /* 24×24 minimum target (WCAG 2.5.8) */
-  min-width: var(--cai-size-height-sm);
-  min-height: var(--cai-size-height-sm);
+  min-width: var(--cai-control-sm);
+  min-height: var(--cai-control-sm);
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--cai-space-02);
+  padding: var(--cai-space-2xs);
   color: var(--cai-text-secondary);
   transition: color var(--cai-duration-fast);
 }
@@ -66,22 +66,22 @@
 }
 
 .cai-modal__close:focus-visible {
-  outline: 2px solid var(--cai-border-interactive);
+  outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
 }
 
 .cai-modal__body {
-  margin-bottom: var(--cai-space-06);
+  margin-bottom: var(--cai-space-lg);
   color: var(--cai-text-primary);
   line-height: 1.6;
 }
 
 .cai-modal__footer {
   display: flex;
-  gap: var(--cai-space-04);
+  gap: var(--cai-space-sm);
   justify-content: flex-end;
-  padding-top: var(--cai-space-04);
-  border-top: 1px solid var(--cai-border-subtle);
+  padding-top: var(--cai-space-sm);
+  border-top: 1px solid var(--cai-divider);
 }
 
 @keyframes cai-fade-in {

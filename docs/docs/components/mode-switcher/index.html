@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Color mode switcher – Components – CAI documentation</title>
-  <meta name="description" content="Lets people choose light, dark or high contrast; radios without JS, one cycling button with JS.">
+  <meta name="description" content="Lets readers choose light, dark or high contrast: radios that work without JavaScript, or one button that cycles.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../../">Home</a>
-        <a href="../../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -143,7 +145,7 @@
       <code class="docs-demo__file">components/mode-switcher.css</code>
       <span class="cai-tag cai-tag--purple">JS: theme.js</span>
     </div>
-    <p class="docs-lead">Lets people choose light, dark or high contrast; radios without JS, one cycling button with JS.</p>
+    <p class="docs-lead">Lets readers choose light, dark or high contrast: radios that work without JavaScript, or one button that cycles.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -153,7 +155,10 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
           <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
           </ul>
         </li>
@@ -179,10 +184,36 @@
                   <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="high-contrast">High contrast</label>
                 </fieldset>
           </div>
-          <p class="docs-demo__note">A native radio group for the color mode. This specimen is disabled. The working one, in the cycle variant, is in <a href="#site-footer">this page's footer</a>: one button with the icon of the current mode.</p>
-              <h3 class="docs-subhead" id="cycle-variant">Cycle variant</h3>
-              <p class="docs-demo__note">Add <code class="cai-code-inline">cai-mode-switcher--cycle</code>, an icon to each label and a <code class="cai-code-inline">cai-mode-cycle</code> button with one icon per mode (<code class="cai-code-inline">data-mode-icon</code>). With scripting on, the button shows the icon of the checked mode and the radios hide, with no flash while the script loads; without scripting the three radios show and the button hides. <code class="cai-code-inline">initThemeCycle()</code> from <code class="cai-code-inline">@cai-ds/core/theme</code> (run by <code class="cai-code-inline">cai.js</code>) makes the button step through the modes, and adds the button if the markup has none.</p>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cycle variant markup"><code>&lt;fieldset class=&quot;cai-mode-switcher cai-mode-switcher--cycle&quot;&gt;
+          <p class="docs-demo__note">The radio group, disabled here so it does not change this page. The working switcher, in the cycle variant, is in <a href="#site-footer">this page's footer</a>: one button with the icon of the current mode.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>A stored color mode can flash once on load: no inline script sets it before the page is drawn, by design.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Color mode switcher documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-mode-radios" aria-label="Copy the radio group markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Radio group markup"><code id="code-mode-radios">&lt;fieldset class=&quot;cai-mode-switcher&quot;&gt;
+  &lt;legend class=&quot;cai-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
+  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;light&quot;&gt;&lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;light&quot; checked&gt;Light&lt;/label&gt;
+  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;dark&quot;&gt;&lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;dark&quot;&gt;Dark&lt;/label&gt;
+  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;high-contrast&quot;&gt;&lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;high-contrast&quot;&gt;High contrast&lt;/label&gt;
+&lt;/fieldset&gt;</code></pre>
+            </div>
+            <p id="cycle-variant">The cycle variant: the same radios, an icon in each label, and a button with one icon per mode.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-mode-cycle" aria-label="Copy the cycle variant markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cycle variant markup"><code id="code-mode-cycle">&lt;fieldset class=&quot;cai-mode-switcher cai-mode-switcher--cycle&quot;&gt;
   &lt;legend class=&quot;cai-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
   &lt;button class=&quot;cai-mode-cycle&quot; type=&quot;button&quot; aria-label=&quot;Change color mode&quot;&gt;
     &lt;svg class=&quot;cai-mode-btn__icon&quot; data-mode-icon=&quot;light&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
@@ -195,35 +226,69 @@
     Light
   &lt;/label&gt;
   &lt;!-- the same for dark and high-contrast --&gt;
-&lt;/fieldset&gt;
-
-&lt;script type=&quot;module&quot;&gt;
-  import { initThemeCycle } from &quot;@cai-ds/core/theme&quot;;
-  initThemeCycle();
-&lt;/script&gt;</code></pre>
-          </div>
-          <h2 id="known-issues">Known issues</h2>
-          <p>A stored color mode can flash once on load, because no inline script sets it.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Color mode switcher documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
-          </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
-            <h2 class="docs-view__title" id="code">Code</h2>
+&lt;/fieldset&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-mode-js" aria-label="Copy the mode script code">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Mode script code"><code id="code-mode-js">import { initThemeSystem, initThemeCycle } from &quot;@cai-ds/core/theme&quot;;
+initThemeSystem();
+initThemeCycle();</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <div class="cai-table-wrap" role="region" aria-label="Color mode switcher options" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-mode-switcher</code></div></td><td data-label="Effect"><div>The radio group, as a row of buttons; the checked one is filled</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-mode-switcher--cycle</code></div></td><td data-label="Effect"><div>One button instead of the radios, when scripting is on</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-mode-cycle</code></div></td><td data-label="Effect"><div>The cycle button; shows the icon whose <code>data-mode-icon</code> matches the checked radio</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-mode-cycle__status</code></div></td><td data-label="Effect"><div>A hidden live region for the new mode; added by the script if missing</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>name="cai-theme"</code></div></td><td data-label="Effect"><div>The radio name the tokens and <code>theme.js</code> listen to</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>The color-mode switcher is a native radio group; checking a radio sets the mode, even without JavaScript. In the cycle variant, <code class="cai-code-inline">initThemeCycle()</code> hides the radios and adds one button: each press checks the next mode and fires its change event, so the script that sets the mode applies it. The radios stay the source of truth.</p>
+            <p>A native radio group, styled by <code>components/mode-switcher.css</code>. The radios are the control and the source of truth.</p>
+            <ul>
+              <li>The tokens re-scope the page from the checked radio with <code>:root:has()</code>, so choosing a mode works with no script.</li>
+              <li><code>initThemeSystem()</code> from <code>theme.js</code> sets <code>data-theme</code> on <code>&lt;html&gt;</code>, stores the choice under <code>cai-theme</code> in <code>localStorage</code>, and follows the system's dark setting until the reader picks a mode.</li>
+              <li><code>initThemeCycle()</code> turns each <code>--cycle</code> group into one button. Each press checks the next mode and fires its <code>change</code> event, so whatever listens to the radios applies it. It adds the button if the markup has none.</li>
+              <li><code>cai.js</code> runs both.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The three radios show, even in the cycle variant, and choosing one changes the mode of the page. The choice is not remembered on the next page.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Arrow keys move between the mode radios. The cycle button is a native button: Tab reaches it, Enter or Space changes the mode. Its name says what it does and the current mode, "Change color mode. Current: Dark", and a polite status announces the new mode.</p>
+            <p>Radios: Tab reaches the group, the arrow keys choose a mode.</p>
+            <ul>
+              <li>The cycle button: Tab reaches it, Enter or Space moves to the next mode.</li>
+              <li>Its name says what it does and the current mode: "Change color mode. Current: Dark".</li>
+              <li>A polite status announces the new mode: "Color mode: Dark".</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>Use the cycle variant of the color mode switcher where space is short, such as a page footer or header.</p>
+            <p>Offer a color mode switcher on every page of a site, in the same place, so readers can pick the mode they read best in.</p>
+            <ul>
+              <li>The radio group where there is room, such as a settings page or a sidebar footer.</li>
+              <li>The cycle variant where space is short, such as a header or a page footer.</li>
+            </ul>
             <h3 id="when-not">When not to use</h3>
-            <p>Do not use the cycle variant where people compare the modes side by side: the radio group shows them all at once.</p>
+            <p>Do not use the cycle variant where readers compare the modes: the radio group shows all three at once.</p>
+            <ul>
+              <li>Do not hide it on a settings page only: a reader who cannot read the page cannot find the setting.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>The switcher is called "Color mode", and each mode keeps its visible name next to its icon, so the radios read without the icons.</p>
+            <p>Call the group "Color mode" and the modes "Light", "Dark" and "High contrast".</p>
+            <ul>
+              <li>Each mode keeps its visible name next to its icon, so the radios read without the icons.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

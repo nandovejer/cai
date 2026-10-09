@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sidebar – Components – CAI documentation</title>
-  <meta name="description" content="Site navigation that becomes a drawer on small screens.">
+  <meta name="description" content="Holds the main navigation of a site or an app, and becomes a drawer on small screens.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../../">Home</a>
-        <a href="../../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -141,8 +143,9 @@
     <div class="docs-page-head__title">
       <h1 class="docs-title">Sidebar</h1>
       <code class="docs-demo__file">components/sidebar.css</code>
+      <span class="cai-tag cai-tag--purple">JS: sidebar.js</span>
     </div>
-    <p class="docs-lead">Site navigation that becomes a drawer on small screens.</p>
+    <p class="docs-lead">Holds the main navigation of a site or an app, and becomes a drawer on small screens.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -152,7 +155,10 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
           <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
           </ul>
         </li>
@@ -182,7 +188,7 @@
               <div class="cai-sidebar__section">
                 <div class="cai-sidebar__section-label">System</div>
                 <a class="cai-sidebar__link is-active" href="../../../docs/tokens/" aria-current="true">Tokens</a>
-                <a class="cai-sidebar__link" href="../../../docs/components/">Core</a>
+                <a class="cai-sidebar__link" href="../../../docs/components/">Components</a>
                 <a class="cai-sidebar__link" href="../../../docs/platform/">Platform</a>
               </div>
               <div class="cai-sidebar__footer">
@@ -208,27 +214,95 @@
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Without the popover API the navigation stays visible above the content.</p>
+          <p>In a browser without the popover API the navigation does not become a drawer: it stays visible above the content on small screens.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Sidebar documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-sidebar" aria-label="Copy the sidebar with its drawer button markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Sidebar with its drawer button markup"><code id="code-sidebar">&lt;header&gt;
+  &lt;button class=&quot;cai-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;site-nav&quot; aria-label=&quot;Menu&quot;&gt;
+    &lt;span class=&quot;cai-nav-toggle__bar&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;cai-nav-toggle__bar&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;cai-nav-toggle__bar&quot;&gt;&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/header&gt;
+
+&lt;nav class=&quot;cai-sidebar&quot; id=&quot;site-nav&quot; popover aria-label=&quot;Main&quot;&gt;
+  &lt;div class=&quot;cai-sidebar__section&quot;&gt;
+    &lt;div class=&quot;cai-sidebar__section-label&quot;&gt;Account&lt;/div&gt;
+    &lt;a class=&quot;cai-sidebar__link is-active&quot; href=&quot;/profile/&quot; aria-current=&quot;page&quot;&gt;Profile&lt;/a&gt;
+    &lt;a class=&quot;cai-sidebar__link&quot; href=&quot;/billing/&quot;&gt;Billing&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-sidebar-js" aria-label="Copy the sidebar script code">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Sidebar script code"><code id="code-sidebar-js">import { initSidebar } from &quot;@cai-ds/core/sidebar&quot;;
+initSidebar();</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <div class="cai-table-wrap" role="region" aria-label="Sidebar parts and options" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar</code></div></td><td data-label="What it does"><div>The navigation column, in the sidebar colours</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>popover</code> on <code>.cai-sidebar</code></div></td><td data-label="What it does"><div>Makes it a drawer at 768 px and below</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__brand</code>, <code>__brand-name</code>, <code>__logo</code>, <code>__version</code></div></td><td data-label="What it does"><div>An optional brand block at the top</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__section</code>, <code>__section-label</code></div></td><td data-label="What it does"><div>A group of links and its label</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__link</code></div></td><td data-label="What it does"><div>A link</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.is-active</code> on a link</div></td><td data-label="What it does"><div>Marks the current link with weight and colour; pair it with <code>aria-current="page"</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__footer</code></div></td><td data-label="What it does"><div>Pinned to the bottom, for example for the <a href="../../../docs/components/mode-switcher/">color mode switcher</a></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-nav-toggle</code></div></td><td data-label="What it does"><div>The menu button, shown at 768 px and below; put it first in your header row</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-nav-toggle--fixed</code></div></td><td data-label="What it does"><div>Pins the menu button to the top start corner, for a page with no header</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A nav landmark. On small screens it is a native popover drawer opened by a button with popovertarget, <code class="cai-code-inline">.cai-nav-toggle</code>. Put that button first in your header row, so the focus order follows the screen; <code class="cai-code-inline">.cai-nav-toggle--fixed</code> pins it to the top start corner instead, for a page with no header.</p>
+            <p>A <code>&lt;nav&gt;</code> landmark, styled by <code>components/sidebar.css</code>. On small screens it is a native popover drawer.</p>
+            <ul>
+              <li>The menu button opens it with <code>popovertarget</code>, with no script. The browser gives Escape, a click outside to close, the top layer and the expanded state.</li>
+              <li><code>initSidebar()</code> from <code>sidebar.js</code> is optional: it marks the link of the section in view on a long page (<code>aria-current="true"</code>) and closes the drawer when a link is followed. <code>cai.js</code> runs it.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The sidebar and the drawer work. The current link is the one your markup marks; it does not follow the scroll.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Escape and a click outside close the drawer; focus returns to the button.</p>
+            <p>Tab moves through the links in order. On small screens, the menu button opens the drawer; Escape or a click outside closes it, and focus goes back to the button.</p>
+            <ul>
+              <li>Name the <code>&lt;nav&gt;</code> with <code>aria-label</code> when the page has more than one.</li>
+              <li>Mark the current page with <code>aria-current="page"</code> as well as <code>.is-active</code>: the class is only the look.</li>
+              <li>The menu button keeps the name "Menu" whether the drawer is open or closed; the popover exposes the state.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>For the main navigation of a documentation or app shell with many sections.</p>
+            <p>Use a sidebar for the main navigation of an app or a documentation site with many sections.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For a short list of pages: a header navigation is simpler.</p>
+            <p>Do not use a sidebar for a site with a few pages: a header navigation is simpler.</p>
+            <ul>
+              <li>For the trail to the current page, use a <a href="../../../docs/components/breadcrumb/">breadcrumb</a>.</li>
+              <li>For panels of one page, use <a href="../../../docs/components/tabs/">tabs</a>.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Section labels are nouns.</p>
+            <p>Name each link after the page it opens, in a word or two.</p>
+            <ul>
+              <li>Section labels are nouns: "Account", "Billing".</li>
+              <li>Order the links by how often people need them.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

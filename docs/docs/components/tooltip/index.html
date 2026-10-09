@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tooltip – Components – CAI documentation</title>
-  <meta name="description" content="A short hint on hover or focus, never essential content.">
+  <meta name="description" content="Adds a short hint to a control on hover or focus; never essential content.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../../">Home</a>
-        <a href="../../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -142,7 +144,7 @@
       <h1 class="docs-title">Tooltip</h1>
       <code class="docs-demo__file">components/tooltip.css</code>
     </div>
-    <p class="docs-lead">A short hint on hover or focus, never essential content.</p>
+    <p class="docs-lead">Adds a short hint to a control on hover or focus; never essential content.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -152,7 +154,10 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
           <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
           </ul>
         </li>
@@ -172,33 +177,79 @@
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage docs-demo__stage--tooltip">
             <div class="cai-tooltip">
-              <button class="cai-btn cai-btn--outline cai-btn--sm" type="button" aria-describedby="tooltip-demo">Hover or focus me</button>
-              <div class="cai-tooltip__text" role="tooltip" id="tooltip-demo">Tooltip content</div>
+              <button class="cai-btn cai-btn--outline cai-btn--sm" type="button" aria-describedby="tooltip-demo">Archive</button>
+              <div class="cai-tooltip__text" role="tooltip" id="tooltip-demo">Hides the project from the list</div>
             </div>
           </div>
+          <p class="docs-demo__note">Point at the button, or focus it with Tab.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Partial WCAG 1.4.13: the tooltip cannot be dismissed with Escape without moving focus or the pointer. Keep tooltips non-essential.</p>
+          <p>Partly fails WCAG 1.4.13 (content on hover or focus): Escape does not close the tooltip, so the reader has to move the pointer or the focus away. Keep tooltips short and non-essential. Listed in the <a href="../../../docs/accessibility/">accessibility statement</a>.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Tooltip documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tooltip" aria-label="Copy the tooltip markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Tooltip markup"><code id="code-tooltip">&lt;div class=&quot;cai-tooltip&quot;&gt;
+  &lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; aria-describedby=&quot;archive-tip&quot;&gt;Archive&lt;/button&gt;
+  &lt;div class=&quot;cai-tooltip__text&quot; role=&quot;tooltip&quot; id=&quot;archive-tip&quot;&gt;Hides the project from the list&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One position: above the control, centred. There are no modifiers.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Tooltip parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-tooltip</code></div></td><td data-label="What it does"><div>Wraps the control and the tip, and opens the tip on hover and on focus inside</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-tooltip__text</code></div></td><td data-label="What it does"><div>The tip: one line, on the strong surface, with a shadow</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>CSS only: it opens on hover and on keyboard focus, and stays open while the pointer is over it (WCAG 1.4.13, hoverable).</p>
+            <p>CSS only, from <code>components/tooltip.css</code>: the tip shows while the wrapper is hovered or holds focus.</p>
+            <ul>
+              <li>It stays open while the pointer moves from the control onto the tip.</li>
+              <li>It fades in and out over <code>--cai-duration-fast</code>, and appears at once under reduced motion.</li>
+              <li>The tip does not wrap: keep it short, or it can overflow a narrow screen.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the tooltip has no script.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Opens when the control receives focus, closes when it loses focus. The Escape key does not close it.</p>
+            <p>Focus the control with Tab and the tip shows; move the focus away and it hides.</p>
+            <ul>
+              <li><code>aria-describedby</code> on the control points at the tip, so screen readers read it after the control's name.</li>
+              <li>The tip has <code>role="tooltip"</code> and never takes focus.</li>
+              <li>The control keeps its own name: the tip is a description, not a label.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To explain a control whose label is not enough, in a sentence at most.</p>
+            <p>Use a tooltip to add a short explanation to a control whose label is clear but brief.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For anything essential, long or interactive. On touch devices there is no hover: put important text on the page.</p>
+            <p>Do not put anything essential, long or interactive in a tooltip.</p>
+            <ul>
+              <li>Touch screens have no hover: put information people need on the page, as a hint (<a href="../../../docs/components/form/">form fields</a>).</li>
+              <li>Never use a tooltip as the only name of an icon button.</li>
+              <li>No links or buttons inside it.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>One short sentence, no links. The control keeps its own accessible name.</p>
+            <p>One short phrase that says what the control does or why: "Hides the project from the list".</p>
+            <ul>
+              <li>Do not repeat the control's label.</li>
+              <li>No full stop on a fragment.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

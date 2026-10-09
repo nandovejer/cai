@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Components – CAI documentation</title>
-  <meta name="description" content="Every core component, with a live example and its guidance.">
+  <meta name="description" content="Every core component, grouped by task, with a live example, the markup to copy and when to use it.">
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../">Home</a>
-        <a href="../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../docs/components/" aria-current="page">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../docs/components/" aria-current="page">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -137,7 +139,7 @@
       </div>
     </nav>
     <h1 class="docs-title">Components</h1>
-    <p class="docs-lead">Every core component, with a live example and its guidance.</p>
+    <p class="docs-lead">Every core component, grouped by task, with a live example, the markup to copy and when to use it.</p>
   </div>
 
   <div class="docs-body">
@@ -151,7 +153,7 @@
           <span class="cai-btn cai-btn--outline cai-btn--sm">Cancel</span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/button/">Button</a></h3>
-        <p class="docs-card__desc">Starts an action on the current page.</p>
+        <p class="docs-card__desc">Starts an action on the current page, such as saving, sending or opening a dialog.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
@@ -159,14 +161,14 @@
           <span class="cai-btn cai-btn--outline cai-btn--sm">Copy</span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/copy-button/">Copy button</a></h3>
-        <p class="docs-card__desc">Copies a command or value, and says it did.</p>
+        <p class="docs-card__desc">Copies a command or a value to the clipboard, and says it did.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="docs-thumb__field"><span class="docs-thumb__label">Email</span><span class="cai-input">ana@example.com</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/form/">Form fields</a></h3>
-        <p class="docs-card__desc">Text fields, choices, pickers and their labels, hints and errors.</p>
+        <p class="docs-card__desc">Collect input with native fields, choices and pickers, each with a visible label, a hint and an error.</p>
       </li>
     </ul>
   </section>
@@ -180,28 +182,28 @@
           <span class="cai-avatar cai-avatar--lg">EF</span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/avatar/">Avatar</a></h3>
-        <p class="docs-card__desc">A person&#39;s or a team&#39;s initials or picture, in three sizes.</p>
+        <p class="docs-card__desc">Shows who a person or a team is, with their initials, in three sizes.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="cai-card docs-thumb__card"><span class="cai-card__title">Card title</span><span>Text about one thing.</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/card/">Card</a></h3>
-        <p class="docs-card__desc">Groups content about one thing on a raised surface.</p>
+        <p class="docs-card__desc">Groups a few facts about one thing on a bordered surface.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <code class="cai-code-inline">pnpm add @cai-ds/core</code>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/code/">Code</a></h3>
-        <p class="docs-card__desc">Inline code and highlighted code blocks with a copy button.</p>
+        <p class="docs-card__desc">Shows code inside a sentence, or in a block with syntax colours in every mode.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="docs-thumb__figure"><span class="docs-box">Chart</span><span class="docs-thumb__caption">Figure 1. Sales</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/figure/">Figure</a></h3>
-        <p class="docs-card__desc">An image, chart or code with its caption.</p>
+        <p class="docs-card__desc">Shows an image, a chart or a diagram with a caption that says what it is.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
@@ -211,14 +213,14 @@
           <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M12 4v16"/></svg>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/icon-grid/">Icon grid</a></h3>
-        <p class="docs-card__desc">A grid of icons with their names, to browse and copy.</p>
+        <p class="docs-card__desc">Lets readers browse a set of icons by name and copy the SVG of each one.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="docs-thumb__table"><span>Name</span><span>Size</span><span>Button</span><span>2 kB</span><span>Card</span><span>1 kB</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/table/">Table</a></h3>
-        <p class="docs-card__desc">Rows and columns of data that stay readable at 320 px.</p>
+        <p class="docs-card__desc">Compares records across several attributes, in rows and columns that stay readable at 320 px.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
@@ -227,7 +229,7 @@
           <span class="cai-badge cai-badge--primary">3</span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/tag/">Tag and badge</a></h3>
-        <p class="docs-card__desc">A short label for status, category or count.</p>
+        <p class="docs-card__desc">Labels an item with a short status or category (tag), or shows a count (badge).</p>
       </li>
     </ul>
   </section>
@@ -239,35 +241,35 @@
           <div class="cai-alert cai-alert--success"><div class="cai-alert__icon">✓</div><div><div class="cai-alert__title">Changes saved</div></div></div>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/alert/">Alert</a></h3>
-        <p class="docs-card__desc">A message about the page or a task, in four status colours with an icon and a title.</p>
+        <p class="docs-card__desc">Tells the reader about the page or a task: information, success, a warning or an error.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="cai-card docs-thumb__card docs-thumb__dialog"><span class="cai-card__title">Delete the draft?</span><span class="docs-thumb__row"><span class="cai-btn cai-btn--danger cai-btn--sm">Delete</span><span class="cai-btn cai-btn--ghost cai-btn--sm">Keep it</span></span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/modal/">Modal</a></h3>
-        <p class="docs-card__desc">A native dialog that asks for a decision before going on.</p>
+        <p class="docs-card__desc">Asks for a decision that must be made before the reader goes on, in a native dialog.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <progress class="cai-progress" max="100" value="60"></progress>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/progress/">Progress</a></h3>
-        <p class="docs-card__desc">How far a task has got, with the native progress element.</p>
+        <p class="docs-card__desc">Shows how far a task that takes time has got, with the native progress element.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="cai-toast docs-thumb__toast"><span class="cai-toast__content"><span class="cai-toast__msg">Link copied</span></span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/toast/">Toast</a></h3>
-        <p class="docs-card__desc">A brief confirmation that does not interrupt.</p>
+        <p class="docs-card__desc">Confirms a small result, such as &quot;Draft saved&quot;, without interrupting the reader.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="docs-thumb__tip"><span class="docs-thumb__bubble">Opens in a dialog</span><span class="cai-btn cai-btn--outline cai-btn--sm">Share</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/tooltip/">Tooltip</a></h3>
-        <p class="docs-card__desc">A short hint on hover or focus, never essential content.</p>
+        <p class="docs-card__desc">Adds a short hint to a control on hover or focus; never essential content.</p>
       </li>
     </ul>
   </section>
@@ -279,7 +281,7 @@
           <span class="cai-breadcrumb"><span class="cai-breadcrumb__item">Docs</span><span class="cai-breadcrumb__sep">›</span><span class="cai-breadcrumb__item">Components</span><span class="cai-breadcrumb__sep">›</span><span class="cai-breadcrumb__item">Card</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/breadcrumb/">Breadcrumb</a></h3>
-        <p class="docs-card__desc">Where the page sits in the site, as a trail of links.</p>
+        <p class="docs-card__desc">Shows where the page sits in the site, as a trail of links to its parents.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
@@ -288,21 +290,21 @@
           <span class="cai-mode-btn">High contrast</span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/mode-switcher/">Color mode switcher</a></h3>
-        <p class="docs-card__desc">Lets people choose light, dark or high contrast; radios without JS, one cycling button with JS.</p>
+        <p class="docs-card__desc">Lets readers choose light, dark or high contrast: radios that work without JavaScript, or one button that cycles.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="docs-thumb__sidebar"><span>Get started</span><span>Components</span><span>Tokens</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/sidebar/">Sidebar</a></h3>
-        <p class="docs-card__desc">Site navigation that becomes a drawer on small screens.</p>
+        <p class="docs-card__desc">Holds the main navigation of a site or an app, and becomes a drawer on small screens.</p>
       </li>
       <li class="docs-card">
         <div class="docs-card__thumb" inert aria-hidden="true">
           <span class="docs-thumb__tabs"><span class="docs-thumb__tab docs-thumb__tab--on">Summary</span><span class="docs-thumb__tab">Settings</span><span class="docs-thumb__tab">Logs</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/tabs/">Tabs</a></h3>
-        <p class="docs-card__desc">Switch between panels of related content; stacked sections without JS.</p>
+        <p class="docs-card__desc">Switches between panels of related content in one place; without JavaScript the panels are stacked sections.</p>
       </li>
     </ul>
   </section>
@@ -314,16 +316,16 @@
           <span class="docs-thumb__row"><span class="cai-btn cai-btn--secondary cai-btn--sm">Play</span><progress class="cai-progress" max="100" value="40"></progress><span>1:12</span></span>
         </div>
         <h3 class="docs-card__title"><a href="../../docs/components/player/">Player</a></h3>
-        <p class="docs-card__desc">Audio, video and MIDI playback with accessible controls.</p>
+        <p class="docs-card__desc">Plays a video, a sound or a MIDI file in the page, with the same controls for all three.</p>
       </li>
     </ul>
   </section>
   <section class="docs-gallery" aria-labelledby="group-helpers">
     <h2 id="group-helpers">Helpers</h2>
     <ul class="docs-gallery__rows">
-      <li><a href="../../docs/components/layout/">Layout objects</a> <span class="docs-gallery__desc">Stack, row, grid and media layouts, and the page-level objects.</span></li>
-      <li><a href="../../docs/components/utilities/">Utility classes</a> <span class="docs-gallery__desc">The single-purpose u-* classes.</span></li>
-      <li><a href="../../docs/components/keyframes/">Keyframes</a> <span class="docs-gallery__desc">The shared animations, and how reduced motion stops them.</span></li>
+      <li><a href="../../docs/components/layout/">Layout objects</a> <span class="docs-gallery__desc">Lay out blocks in a stack, a row, a grid or beside an image, and the page itself, with the o-* classes.</span></li>
+      <li><a href="../../docs/components/utilities/">Utility classes</a> <span class="docs-gallery__desc">Small u-* classes that do one thing each, for the cases a component does not cover.</span></li>
+      <li><a href="../../docs/components/keyframes/">Keyframes</a> <span class="docs-gallery__desc">Five shared animations for your own components, which stop when the reader asks for reduced motion.</span></li>
     </ul>
   </section>
   </div>

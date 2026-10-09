@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tokens – CAI documentation</title>
-  <meta name="description" content="Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.">
+  <meta name="description" content="CSS custom properties for every colour, space, size and type value. Use the semantic ones: they change with the color mode.">
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../">Home</a>
-        <a href="../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../docs/components/">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../docs/components/">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -124,9 +126,9 @@
     <details class="docs-onpage__fold">
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#layer-model">Layer model</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#component-token-rule">Component token rule</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#solid-fills">Solid fills</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#layer-model">Two layers</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#component-token-rule">Use semantic colours, never primitive ones</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#solid-fills">Text on a solid fill</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#group-families">Token families</a></li>
       </ul>
     </details>
@@ -134,72 +136,86 @@
   <div class="docs-body">
     <p class="docs-eyebrow">Level 1 · @cai-ds/tokens</p>
 
-    <p class="docs-lead">Two layers of CSS custom properties. Primitives hold raw values. Semantic tokens give them a role and change with the color mode. Components only ever use semantic tokens.</p>
+    <p class="docs-lead">CSS custom properties for every colour, space, size and type value. Use the semantic ones: they change with the color mode.</p>
 
     <div class="docs-prose">
-            <h2 id="layer-model" class="docs-prose__title">Layer model</h2>
-            <pre class="cai-code-block" data-lang="text"><code>packages/tokens/tokens.json
-      -> source of primitives (blue-10..100, gray-10..100, spacing, radius...)
-
-    packages/tokens/dist/cai-tokens.css
-      Layer 1: generated primitives
-      Layer 2: handwritten semantics per theme (light/dark/high-contrast)</code></pre>
+            <h2 id="layer-model" class="docs-prose__title">Two layers</h2>
+            <ul>
+              <li><strong>Primitives</strong> hold raw values: <code class="cai-code-inline">--cai-blue-60</code>, <code class="cai-code-inline">--cai-space-md</code>. They are the same in every mode.</li>
+              <li><strong>Semantic tokens</strong> give a colour a job: <code class="cai-code-inline">--cai-text-primary</code>, <code class="cai-code-inline">--cai-surface-page</code>. Each mode points them at different primitives.</li>
+              <li>Space, size, radius, shadow and type scales are primitives that components use directly: they do not change with the mode.</li>
+            </ul>
+            <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Where the tokens come from"><code>packages/tokens/tokens.json        the source of the primitives
+packages/tokens/src/semantic.css   the semantic colours, per mode
+dist/cai-tokens.css                both layers, and the ET Book font
+dist/tokens.css                    both layers, no font</code></pre>
           </div>
 
     <div class="docs-prose">
-            <h2 id="component-token-rule" class="docs-prose__title">Component token rule</h2>
-            <pre class="cai-code-block" data-lang="css"><code>/* Correct: semantic tokens */
-    color: var(--cai-text-primary);
-    background: var(--cai-brand-primary);
-    border-color: var(--cai-divider);
+            <h2 id="component-token-rule" class="docs-prose__title">Use semantic colours, never primitive ones</h2>
+            <p>A component that uses a primitive colour looks right in one mode and wrong in the others.</p>
+            <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Semantic and primitive colour tokens"><code>/* Do: semantic tokens follow the mode */
+.panel {
+  color: var(--cai-text-primary);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
+  padding: var(--cai-space-md);
+}
 
-    /* Incorrect: primitive scales */
-    color: var(--cai-gray-100);
-    background: var(--cai-blue-60);</code></pre>
+/* Don't: a primitive colour stays the same in dark mode */
+.panel {
+  color: var(--cai-gray-100);
+  background: var(--cai-blue-10);
+}</code></pre>
           </div>
 
     <div class="docs-prose" id="tokens-fills">
-            <h2 id="solid-fills" class="docs-prose__title">Solid fills</h2>
-            <p>Surfaces that carry <code class="cai-code-inline">--cai-text-on-fill</code> use the fill tokens, not the brand or status color directly: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>. In light and high contrast they equal the brand and danger colors; in dark mode they are a step darker, because the dark brand is light enough to be read as text and white on it falls below 4.5:1.</p>
+            <h2 id="solid-fills" class="docs-prose__title">Text on a solid fill</h2>
+            <p>Behind <code class="cai-code-inline">--cai-text-on-fill</code>, use a fill token, not the brand or status colour.</p>
+            <ul>
+              <li>The fills: <code class="cai-code-inline">--cai-brand-fill</code>, <code class="cai-code-inline">--cai-brand-fill-hover</code>, <code class="cai-code-inline">--cai-brand-fill-active</code> and <code class="cai-code-inline">--cai-color-danger-fill</code>.</li>
+              <li>In light and high contrast they equal the brand and danger colours. In dark mode they are a step darker: the dark brand colour is light enough to read as text, and white on it falls below 4.5:1.</li>
+            </ul>
           </div>
+
   <section class="docs-gallery" aria-labelledby="group-families">
     <h2 id="group-families">Token families</h2>
     <ul class="docs-gallery__cards">
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/color/">Color</a></h3>
-        <p class="docs-card__desc">The semantic colour tokens, each in light, dark and high contrast side by side.</p>
+        <p class="docs-card__desc">Every colour a component may use, named by its job, with its value in light, dark and high contrast side by side.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/spacing/">Spacing and sizing</a></h3>
-        <p class="docs-card__desc">The space scale and the control heights.</p>
+        <p class="docs-card__desc">The space scale for gaps and padding, and the heights of buttons and fields.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/typography/">Typography</a></h3>
-        <p class="docs-card__desc">Font stacks, the type scale and the minimum sizes.</p>
+        <p class="docs-card__desc">The three font stacks, the type scale in rem, and the smallest size each kind of text may use.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/modes/">Color modes and themes</a></h3>
-        <p class="docs-card__desc">Switch light, dark and high contrast, use the shipped themes, or make your own.</p>
+        <p class="docs-card__desc">Switch between light, dark and high contrast with one attribute, use a shipped theme, or make your own.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/radius/">Radius</a></h3>
-        <p class="docs-card__desc">The corner radius scale.</p>
+        <p class="docs-card__desc">The corner radius scale, from square to round.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/shadows/">Shadows</a></h3>
-        <p class="docs-card__desc">The elevation scale.</p>
+        <p class="docs-card__desc">The elevation scale: how far a surface seems to float above the page.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/motion/">Motion</a></h3>
-        <p class="docs-card__desc">Durations and easings, and how reduced motion stops them. Ships with @cai-ds/core.</p>
+        <p class="docs-card__desc">The durations and easings of every transition, which drop to zero when the reader asks for reduced motion. Ships with @cai-ds/core.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/layout/">Layers and breakpoints</a></h3>
-        <p class="docs-card__desc">The z-index scale, content widths and breakpoints. Ships with @cai-ds/core.</p>
+        <p class="docs-card__desc">Which layer sits on top, how wide content gets, and where the layout changes. Ships with @cai-ds/core.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/tokens/palette/">Color palette</a></h3>
-        <p class="docs-card__desc">The primitive colour scales, for theme authors: components never use them.</p>
+        <p class="docs-card__desc">The primitive colour scales. For theme authors only: components never use them.</p>
       </li>
     </ul>
   </section>

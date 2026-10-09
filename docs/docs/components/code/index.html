@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code – Components – CAI documentation</title>
-  <meta name="description" content="Inline code and highlighted code blocks with a copy button.">
+  <meta name="description" content="Shows code inside a sentence, or in a block with syntax colours in every mode.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../../">Home</a>
-        <a href="../../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -143,7 +145,7 @@
       <code class="docs-demo__file">components/code.css</code>
       <span class="cai-tag cai-tag--purple">JS: highlight.js</span>
     </div>
-    <p class="docs-lead">Inline code and highlighted code blocks with a copy button.</p>
+    <p class="docs-lead">Shows code inside a sentence, or in a block with syntax colours in every mode.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -153,7 +155,10 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
           <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
           </ul>
         </li>
@@ -299,27 +304,87 @@ npx playwright test \
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Syntax colours are decoration; the code is not read differently by assistive technology. The highlighter is a set of patterns, not a parser: JSX tags, the contents of HTML <code>style</code> and <code>script</code> elements and unquoted attribute values stay plain.</p>
+          <p>The highlighter is a set of patterns, not a parser: JSX tags, the contents of HTML <code>style</code> and <code>script</code> elements and unquoted attribute values stay plain. The colours are decoration only: assistive technology reads the code the same way.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Code documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-code-block" aria-label="Copy the code block markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Code block markup"><code id="code-code-block">&lt;pre class=&quot;cai-code-block&quot; data-lang=&quot;css&quot; tabindex=&quot;0&quot; role=&quot;region&quot; aria-label=&quot;Panel styles&quot;&gt;&lt;code&gt;.panel {
+  color: var(--cai-text-primary);
+}&lt;/code&gt;&lt;/pre&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-code-inline" aria-label="Copy the inline code markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Inline code markup"><code id="code-code-inline">&lt;p&gt;Set the colour with &lt;code class=&quot;cai-code-inline&quot;&gt;--cai-text-primary&lt;/code&gt;.&lt;/p&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-code-js" aria-label="Copy the highlighting script code">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Highlighting script code"><code id="code-code-js">import { initHighlight } from &quot;@cai-ds/core/highlight&quot;;
+initHighlight();</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>Two classes, and the language in an attribute.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Code options" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-code-block</code></div></td><td data-label="Effect"><div>A block on the muted surface, mono font, scrolls sideways when a line is long</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-code-inline</code></div></td><td data-label="Effect"><div>Code inside a sentence, in the code colour</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-lang</code></div></td><td data-label="Effect"><div>The language: <code>html</code>, <code>css</code>, <code>js</code>, <code>jsx</code>, <code>json</code>, <code>bash</code>, <code>sh</code> or <code>shell</code>. Shown as a badge in the corner. Any other value is shown, not highlighted</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>A pre with a code element. Highlighting is an enhancement: without JavaScript the block is plain, readable text. With it, <code>highlight.js</code> wraps HTML, CSS, JavaScript (<code>js</code>, <code>jsx</code>), JSON and shell (<code>bash</code>, <code>sh</code>, <code>shell</code>) in six <code>.tok-*</code> classes, one per <code>--cai-code-*</code> token. In forced colors every colour becomes the system text colour; bold keywords and italic comments remain.</p>
+            <p>A <code>&lt;pre&gt;</code> with a <code>&lt;code&gt;</code> inside, styled by <code>components/code.css</code>. Highlighting is optional, from <code>highlight.js</code>.</p>
+            <ul>
+              <li><code>highlightBlock(pre)</code> colours one block: it wraps the code in six <code>.tok-*</code> classes, one per <code>--cai-code-*</code> token.</li>
+              <li><code>initHighlight()</code> does it for every <code>pre.cai-code-block</code>, adds an <code>aria-label</code> to a block that has none ("CSS example"), and adds a copy button inside each block. Core gives that button no position: place it with your own CSS, or call <code>highlightBlock()</code> alone. <code>cai.js</code> runs <code>initHighlight()</code>.</li>
+              <li>In forced colors every colour becomes the system text colour; bold keywords and italic comments stay.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The block is plain, readable text in one colour. Nothing is lost but the colours.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>The block is focusable (tabindex 0) so it can be scrolled with the keyboard.</p>
+            <p>A block can be wider than the screen, so it must take focus: Tab reaches it and the arrow keys scroll it.</p>
+            <ul>
+              <li><code>tabindex="0"</code>, <code>role="region"</code> and an <code>aria-label</code> that names the code, so the focus stop has a name.</li>
+              <li>Inline code needs nothing.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To show code or terminal output the reader may copy.</p>
+            <p>Use a code block for code or terminal output the reader may read or copy, and inline code for names inside a sentence.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>For long files; link to the source instead.</p>
+            <p>Do not use a code block for a long file or for text that is not code.</p>
+            <ul>
+              <li>For one command the reader runs, use a <a href="../../../docs/platform/command-block/">command block</a>, which has a copy button.</li>
+              <li>For a whole file, link to the source.</li>
+              <li>For a key the reader presses, use <code>&lt;kbd&gt;</code>.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Label the language with data-lang (<code>html</code>, <code>css</code>, <code>js</code>, <code>json</code>, <code>bash</code>; anything else, such as <code>text</code>, stays plain) and name the block with aria-label.</p>
+            <p>Show code that works when it is pasted.</p>
+            <ul>
+              <li>Name each block in its <code>aria-label</code>: what the code is, not "Code".</li>
+              <li>Set <code>data-lang</code>; use <code>text</code> for output that is not code.</li>
+              <li>Keep lines short: a long line makes the reader scroll sideways.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

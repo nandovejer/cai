@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>How CAI is organised – Get started – CAI documentation</title>
-  <meta name="description" content="The three packages, the CSS layers and the JavaScript entry point.">
+  <meta name="description" content="Three packages that depend in one direction, CSS in six cascade layers, and one optional script.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../../">Home</a>
-        <a href="../../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../../docs/components/">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/components/">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -114,68 +116,80 @@
       </div>
     </nav>
     <h1 class="docs-title">How CAI is organised</h1>
-    <p class="docs-lead">The three packages, the CSS layers and the JavaScript entry point.</p>
+    <p class="docs-lead">Three packages that depend in one direction, CSS in six cascade layers, and one optional script.</p>
   </div>
-
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#packages-title">Package boundaries</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#core-architecture-title">CSS layers</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#core-js-title">The script</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#core-skeleton-title">Minimal page</a></li>
+      </ul>
+    </details>
+  </nav>
   <div class="docs-body">
     <section class="docs-block" id="packages" aria-labelledby="packages-title">
       <h2 class="docs-chapter__title" id="packages-title">Package boundaries</h2>
-      <p class="docs-lead">One direction only: each package depends on the ones above it in this list.</p>
-      <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Package dependency chain"><code>@cai-ds/tokens   -> primitives + semantic token contracts (standalone)
+      <p class="docs-lead">Each package depends on the ones above it in this list, never on the ones below.</p>
+      <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Package dependency chain"><code>@cai-ds/tokens   -> primitive and semantic tokens (standalone)
       ↓ required by
-@cai-ds/core     -> reusable CSS components + optional JS behaviors
+@cai-ds/core     -> components, bare-element styles, optional JS
       ↓ required by
-@cai-ds/platform -> page and app-shell patterns</code></pre>
-      <p>Platform can use core and tokens; core can use tokens; nothing in tokens or core may use platform. The packages declare this as required peer dependencies, and a console warning tells you when a layer is loaded without the one below it.</p>
-    
+@cai-ds/platform -> page patterns and the site search</code></pre>
+      <ul>
+        <li>Platform can use core and tokens; core can use tokens; tokens uses nothing.</li>
+        <li>The packages say so as required peer dependencies, and the core and platform scripts warn in the console when a level is missing.</li>
+      </ul>
     </section>
 
-    <p class="docs-block">Settings, base styles, layout objects, <span data-count="components">20</span> components and utilities, layered in ITCSS order. Interactive components name the optional JS module that drives them.</p>
-
     <section class="docs-block" id="core-architecture" aria-labelledby="core-architecture-title">
-          <div class="docs-demo__head">
-            <h2 class="docs-demo__title" id="core-architecture-title">Architecture</h2>
-            <code class="docs-demo__file">packages/core/src</code>
-          </div>
-          <div class="docs-prose">
-            <h3 class="docs-prose__title">CSS architecture (ITCSS)</h3>
-            <pre class="cai-code-block" data-lang="text"><code>packages/core/src/
-      settings/_settings.css
-      generic/_reset.css
-      elements/_elements.css
-      objects/_objects.css
-      components/_components.css
-      utilities/_utilities.css</code></pre>
-          </div>
+          <h2 class="docs-chapter__title" id="core-architecture-title">CSS layers</h2>
+          <p>Core's CSS comes in six native cascade layers (<code>@layer</code>), in ITCSS order. A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of core, with no <code>!important</code>.</p>
+          <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Core cascade layers"><code>packages/core/src/
+  settings/_settings.css      1. settings    motion, z-index, breakpoints
+  generic/_reset.css          2. generic     the reset
+  elements/*.css              3. elements    bare HTML elements, zero specificity
+  objects/_objects.css        4. objects     layout: .o-*
+  components/*.css            5. components  the components: .cai-*
+  utilities/_utilities.css    6. utilities   single-purpose helpers: .u-*</code></pre>
+          <ul>
+            <li>The components layer holds <span data-count="components">20</span> components.</li>
+            <li><code>dist/cai.css</code> holds all six layers. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
+            <li>Rules for bare elements are wrapped in <code>:where()</code>, so any class wins over them.</li>
+          </ul>
+    </section>
 
-          <div class="docs-prose">
-            <h3 class="docs-prose__title">JS behavior entrypoint</h3>
-            <pre class="cai-code-block" data-lang="js"><code>import "/packages/core/dist/cai.js";
+    <section class="docs-block" id="core-js" aria-labelledby="core-js-title">
+          <h2 class="docs-chapter__title" id="core-js-title">The script</h2>
+          <p>One optional entry point, <code>cai.js</code>, starts every behaviour on the page: color mode, copy buttons, dialogs, highlighting, players, tabs and the sidebar.</p>
+          <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Load the core script"><code>&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+          <p>To load less, import one module and call its <code>init</code> function. See <a href="../../../docs/get-started/javascript/">JavaScript modules</a>.</p>
+    </section>
 
-    // Includes helpers for:
-    // - theme persistence
-    // - copy buttons
-    // - tabs and media player bindings
-    // - syntax-highlight utility for code blocks</code></pre>
-          </div>
-
-          <div class="docs-prose">
-            <h3 class="docs-prose__title">Minimal page skeleton</h3>
-            <pre class="cai-code-block" data-lang="html"><code>&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
-    &lt;head&gt;
-      &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/tokens/dist/cai-tokens.css&quot;&gt;
-      &lt;link rel=&quot;stylesheet&quot; href=&quot;/packages/core/dist/cai.css&quot;&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-      &lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Run action&lt;/button&gt;
-      &lt;div class=&quot;cai-field&quot;&gt;
-        &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
-        &lt;input id=&quot;email&quot; class=&quot;cai-input&quot; type=&quot;email&quot;&gt;
-      &lt;/div&gt;
-    &lt;/body&gt;
-    &lt;/html&gt;</code></pre>
-          </div>
-        
+    <section class="docs-block" id="core-skeleton" aria-labelledby="core-skeleton-title">
+          <h2 class="docs-chapter__title" id="core-skeleton-title">Minimal page</h2>
+          <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Minimal page skeleton"><code>&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;Sign up – Acme&lt;/title&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;main class=&quot;o-container&quot;&gt;
+    &lt;h1&gt;Sign up&lt;/h1&gt;
+    &lt;div class=&quot;cai-field&quot;&gt;
+      &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
+      &lt;input class=&quot;cai-input&quot; id=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot;&gt;
+    &lt;/div&gt;
+    &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Create account&lt;/button&gt;
+  &lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
     </section>
 
   </div>

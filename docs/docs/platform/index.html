@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Platform – CAI documentation</title>
-  <meta name="description" content="Page patterns built on core: shell, header, sections, footer and more, and when to use platform at all.">
+  <meta name="description" content="Page patterns built on core, from the page shell to the site search, and how to tell whether you need them.">
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../">Home</a>
-        <a href="../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../docs/components/">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../docs/components/">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -138,7 +140,11 @@
   <div class="docs-body">
     <p class="docs-eyebrow">Level 3 · @cai-ds/platform</p>
 
-    <p class="docs-lead">Page-level patterns built on core: the page shell, skip link, page header, sections, action groups, feature grids, command blocks, the footer and an image frame. <a href="../../">The home page</a> is built with them. Every class starts with <code class="cai-code-inline">.cai-platform-</code> and uses semantic tokens only.</p>
+    <p class="docs-lead">Page patterns built on core, from the page shell to the site search, and how to tell whether you need them.</p>
+    <ul>
+      <li>Every class starts with <code class="cai-code-inline">.cai-platform-</code> and uses semantic tokens only.</li>
+      <li><a href="../../">The CAI home page</a> and these docs are built with them.</li>
+    </ul>
 
     <div class="docs-decision-grid">
         <div class="docs-decision-card">
@@ -146,7 +152,7 @@
           <ul>
             <li>You build a site or an app with a header, a main area and a footer on every page.</li>
             <li>You want the same spacing and layout across many pages.</li>
-            <li>You want a skip link, feature grids and action groups without writing the layout yourself.</li>
+            <li>You want a skip link, a page header, feature grids and a site search without writing them yourself.</li>
           </ul>
         </div>
         <div class="docs-decision-card">
@@ -161,7 +167,7 @@
 
     <div class="docs-prose">
         <h2 id="your-own-components-on-top" class="docs-prose__title">Your own components on top</h2>
-        <p>Style what you add with semantic tokens too, never with the primitive scales, so it follows the color mode and any <a href="../../docs/tokens/modes/">custom theme</a>.</p>
+        <p>Style what you add with semantic tokens too, so it follows the color mode and any <a href="../../docs/tokens/modes/">custom theme</a>.</p>
         <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Semantic tokens in an app-level component"><code>.my-panel {
   background: var(--cai-surface);
   border: 1px solid var(--cai-divider);
@@ -173,47 +179,47 @@
   border-color: var(--cai-outline);
 }
 
-/* Avoid primitive scales in app-level components */
-/* bad: color: var(--cai-gray-100); */</code></pre>
+/* Not a primitive colour: it would stay the same in dark mode */
+/* color: var(--cai-gray-100); */</code></pre>
       </div>
   <section class="docs-gallery" aria-labelledby="group-patterns">
     <h2 id="group-patterns">Patterns</h2>
     <ul class="docs-gallery__cards">
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/shell/">Page shell</a></h3>
-        <p class="docs-card__desc">Header, main and footer layout for every page.</p>
+        <p class="docs-card__desc">Lays out a whole page: header, a main area that grows, and a footer that stays at the bottom.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/page-header/">Page header</a></h3>
-        <p class="docs-card__desc">Title, lead and eyebrow at the top of a page.</p>
+        <p class="docs-card__desc">Gives a page its title and one sentence about what it is for.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/section/">Section</a></h3>
-        <p class="docs-card__desc">A titled band of content with consistent spacing.</p>
+        <p class="docs-card__desc">Groups the blocks of one part of a page, with the same space between them everywhere.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/footer/">Footer</a></h3>
-        <p class="docs-card__desc">Site footer with project links.</p>
+        <p class="docs-card__desc">Ends every page with who made the site, its licence and a few secondary links.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/skip-link/">Skip link</a></h3>
-        <p class="docs-card__desc">Lets keyboard users jump to the main content.</p>
+        <p class="docs-card__desc">Lets keyboard users jump past the header to the main content.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/actions/">Action group</a></h3>
-        <p class="docs-card__desc">A row of related buttons and links.</p>
+        <p class="docs-card__desc">Keeps two or three related buttons and links together in one row.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/command-block/">Command block</a></h3>
-        <p class="docs-card__desc">A shell command with a copy button.</p>
+        <p class="docs-card__desc">Shows one shell command with a button that copies it.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/feature-grid/">Feature grid</a></h3>
-        <p class="docs-card__desc">A grid of short feature descriptions.</p>
+        <p class="docs-card__desc">Lays out a short set of features or options of equal weight in two columns.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/image/">Image</a></h3>
-        <p class="docs-card__desc">Responsive image frame with placeholders.</p>
+        <p class="docs-card__desc">Shows a picture in a frame of fixed shape, with a placeholder when the picture is missing.</p>
       </li>
       <li class="docs-card">
         <h3 class="docs-card__title"><a href="../../docs/platform/search/">Search</a></h3>
@@ -224,8 +230,8 @@
   <section class="docs-gallery" aria-labelledby="group-reference">
     <h2 id="group-reference">Reference</h2>
     <ul class="docs-gallery__rows">
-      <li><a href="../../docs/platform/templates/">Page templates</a> <span class="docs-gallery__desc">Whole-page markup to start from.</span></li>
-      <li><a href="../../docs/platform/classes/">Class reference</a> <span class="docs-gallery__desc">Every cai-platform class in one table.</span></li>
+      <li><a href="../../docs/platform/templates/">Page templates</a> <span class="docs-gallery__desc">Whole pages and blocks to paste in and adapt, built from the platform patterns.</span></li>
+      <li><a href="../../docs/platform/classes/">Class reference</a> <span class="docs-gallery__desc">Every cai-platform class, what element it goes on and what it does, in one place.</span></li>
     </ul>
   </section>
   </div>

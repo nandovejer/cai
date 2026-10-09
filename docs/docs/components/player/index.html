@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Player – Components – CAI documentation</title>
-  <meta name="description" content="Audio, video and MIDI playback with accessible controls.">
+  <meta name="description" content="Plays a video, a sound or a MIDI file in the page, with the same controls for all three.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../../">Home</a>
-        <a href="../../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/components/" aria-current="true">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -143,7 +145,7 @@
       <code class="docs-demo__file">components/player.css</code>
       <span class="cai-tag cai-tag--purple">JS: player.js</span>
     </div>
-    <p class="docs-lead">Audio, video and MIDI playback with accessible controls.</p>
+    <p class="docs-lead">Plays a video, a sound or a MIDI file in the page, with the same controls for all three.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -153,7 +155,10 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
           <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
             <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
           </ul>
         </li>
@@ -223,7 +228,7 @@
               </div>
               <p class="docs-demo__note">Audio, MP3. Nothing is downloaded until you press play.</p>
 
-              <!-- data-src is set by landing.js (the build does not rewrite data-* URLs) -->
+              <!-- data-src is set by reference.js (the build does not rewrite data-* URLs) -->
               <div class="cai-player" data-type="midi" role="group" aria-label="MIDI player">
                 <p class="cai-player-fallback">MIDI playback needs JavaScript.</p>
                 <div class="cai-player-controls cai-player-controls--audio">
@@ -244,27 +249,98 @@
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Captions and audio description depend on the media you provide. MIDI has no equivalent without JavaScript.</p>
+          <p>Captions, transcripts and audio description depend on the media you provide. A MIDI file has no player without JavaScript: offer a download link in the fallback text.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Player documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="cai-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>An audio player. The video player adds a <code>.cai-player-media-wrap</code> around the <code>&lt;video&gt;</code> and a mute button and volume slider: copy it from the example above.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-player-audio" aria-label="Copy the audio player markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Audio player markup"><code id="code-player-audio">&lt;div class=&quot;cai-player&quot; data-type=&quot;audio&quot; role=&quot;group&quot; aria-label=&quot;Episode 12 player&quot;&gt;
+  &lt;audio class=&quot;cai-player-audio&quot; preload=&quot;none&quot; controls&gt;
+    &lt;source src=&quot;episode-12.mp3&quot; type=&quot;audio/mpeg&quot;&gt;
+  &lt;/audio&gt;
+  &lt;div class=&quot;cai-player-controls cai-player-controls--audio&quot;&gt;
+    &lt;button class=&quot;cai-player-btn cai-player-playpause&quot; type=&quot;button&quot; aria-label=&quot;Play&quot;&gt;
+      &lt;svg class=&quot;icon-play&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;polygon points=&quot;6,3 20,12 6,21&quot;/&gt;&lt;/svg&gt;
+      &lt;svg class=&quot;icon-pause&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot; style=&quot;display:none&quot;&gt;&lt;rect x=&quot;5&quot; y=&quot;3&quot; width=&quot;4&quot; height=&quot;18&quot;/&gt;&lt;rect x=&quot;15&quot; y=&quot;3&quot; width=&quot;4&quot; height=&quot;18&quot;/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;div class=&quot;cai-player-progress-row cai-player-progress-row--audio&quot;&gt;
+      &lt;span class=&quot;cai-player-time cai-player-current&quot;&gt;0:00&lt;/span&gt;
+      &lt;input class=&quot;cai-player-seekbar&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;1000&quot; step=&quot;1&quot; value=&quot;0&quot; aria-label=&quot;Seek audio&quot;&gt;
+      &lt;span class=&quot;cai-player-time cai-player-duration&quot;&gt;0:00&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-player-js" aria-label="Copy the player script code">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Player script code"><code id="code-player-js">import { initPlayers } from &quot;@cai-ds/core/player&quot;;
+initPlayers();</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <div class="cai-table-wrap" role="region" aria-label="Player options" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>data-type="video"</code></div></td><td data-label="Effect"><div>A <code>&lt;video class="cai-player-video"&gt;</code>; a click on the picture plays or pauses</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-type="audio"</code></div></td><td data-label="Effect"><div>An <code>&lt;audio class="cai-player-audio"&gt;</code> with a compact control row (<code>.cai-player-controls--audio</code>)</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-type="midi"</code> and <code>data-src</code></div></td><td data-label="Effect"><div>A MIDI file, played with Web Audio by <code>midi.js</code>, loaded only when needed</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-player-mute</code>, <code>.cai-player-volbar</code></div></td><td data-label="Effect"><div>A mute button and a volume slider</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-player-fullscreen</code>, <code>.cai-player-pip</code></div></td><td data-label="Effect"><div>Optional full-screen and picture-in-picture buttons for video</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-player-fallback</code></div></td><td data-label="Effect"><div>Text shown only when the script does not run</div></td></tr>
+                </tbody>
+              </table>
+            </div>
             <h3 id="how">How it works</h3>
-            <p>Without JavaScript the native controls of the audio and video element are shown. The script replaces them with the CAI controls; seek and volume are native range inputs. MIDI needs JavaScript and Web Audio.</p>
+            <p>The native media element plays the file; <code>player.js</code> drives the CAI controls, styled by <code>components/player.css</code>.</p>
+            <ul>
+              <li><code>initPlayers()</code> mounts every <code>.cai-player</code> on the page. <code>cai.js</code> runs it.</li>
+              <li>On mount, the script removes the native <code>controls</code> and binds the CAI ones: play and pause, time, seek and volume.</li>
+              <li>Seek and volume are native <code>&lt;input type="range"&gt;</code> sliders.</li>
+              <li><code>mountPlayer(root)</code> and <code>mountMidiPlayer(root)</code> mount one player.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Audio and video show the browser's own controls, and the CAI controls stay hidden. A MIDI player shows its fallback text instead.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Space or K plays and pauses, M mutes, F goes full screen on video. The sliders take arrow keys, Home, End and Page Up and Down.</p>
+            <p>Tab moves through the controls; each one keeps its native keys.</p>
+            <ul>
+              <li>Buttons: Enter or Space. Their names change with the state: "Play" or "Pause", "Mute" or "Unmute".</li>
+              <li>Sliders: arrow keys, Home, End, Page Up and Page Down. The seek slider says the time as text.</li>
+              <li>When the player itself has focus, not one of its controls (after a click on the video, for example): Space or K plays and pauses, and M mutes. F goes full screen when the player has a full-screen button.</li>
+              <li>The player is a <code>role="group"</code> named by its <code>aria-label</code>.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>To play video, audio or a MIDI file in the page.</p>
+            <p>Use a player to play a video, a sound or a MIDI file inside the page, when the reader starts it.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>Do not autoplay. Do not use it for background media.</p>
+            <p>Do not use a player for media that starts on its own or plays in the background.</p>
+            <ul>
+              <li>Never autoplay.</li>
+              <li>For a short animated illustration with no sound, use an image or a <a href="../../../docs/components/figure/">figure</a>.</li>
+            </ul>
             <h3 id="content">Writing the content</h3>
-            <p>Name each player with aria-label and give video a text alternative or a transcript.</p>
+            <p>Name each player by what it plays: "Episode 12 player", not "Audio player".</p>
+            <ul>
+              <li>Give video captions (<code>&lt;track kind="captions"&gt;</code>) and a transcript when it has speech.</li>
+              <li>Describe a silent video in its <code>aria-label</code> or next to it.</li>
+              <li>Say the length and the format next to the player when it is large.</li>
+            </ul>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

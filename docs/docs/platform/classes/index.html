@@ -5,48 +5,24 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class reference – Platform – CAI documentation</title>
-  <meta name="description" content="Every cai-platform class in one table.">
+  <meta name="description" content="Every cai-platform class, what element it goes on and what it does, in one place.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DBHN-t3i.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DbshRHeD.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
+  <script type="module" crossorigin src="../../../assets/site-header-Bn7RBuEV.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJd93DW6.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DzSLovBy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfACLTM_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-x43G0g9k.css">
 </head>
 <body class="o-shell docs-page">
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
-
-  <header class="site-header" id="site-header">
-    <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
-        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
-          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
-        </svg>
-      </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
-      <nav class="site-header__nav" aria-label="Site">
-        <a href="../../../">Home</a>
-        <a href="../../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__components" href="../../../docs/components/">Components</a>
-        <a href="https://github.com/nandovejer/cai">GitHub</a>
-      </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
-    </div>
-  </header>
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../../docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow them."
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
           data-cai-label-none="No results for “{query}”."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
@@ -77,6 +53,32 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__components" href="../../../docs/components/">Components</a>
+        <a href="https://github.com/nandovejer/cai">GitHub</a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z index</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
 
   <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
     <div class="cai-sidebar__section page-nav__site">
@@ -128,7 +130,7 @@
       <code class="docs-demo__file">components/_components.css</code>
       <code class="docs-demo__file">components/search.css</code>
     </div>
-    <p class="docs-lead">Every cai-platform class in one table.</p>
+    <p class="docs-lead">Every cai-platform class, what element it goes on and what it does, in one place.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -143,6 +145,7 @@
   </nav>
   <div class="docs-body">
     <div class="docs-block" id="p-reference">
+          <p>Look up a class by name. Each pattern's own page has its markup and guidance.</p>
           <div class="docs-prose">
             <h2 id="page-structure" class="docs-prose__title">Page structure</h2>
             <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Platform classes: page structure">
@@ -158,22 +161,22 @@
               <tr>
                 <td data-label="Class"><div>.cai-platform-page</div></td>
                 <td data-label="Element"><div>&lt;body&gt;</div></td>
-                <td data-label="Description"><div>Root grid (header / 1fr / footer). Sets <code class="cai-code-inline">min-height: 100vh</code>.</div></td>
+                <td data-label="Description"><div>Three rows: header, main (takes the free space), footer. At least the height of the screen.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-page--gradient</div></td>
                 <td data-label="Element"><div>&lt;body&gt;</div></td>
-                <td data-label="Description"><div>Modifier. Adds a radial brand-subtle gradient at the top-left corner. Use on marketing or landing pages.</div></td>
+                <td data-label="Description"><div>Modifier. A soft brand tint in the top corner. For short pages such as a landing page.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-skip-link</div></td>
                 <td data-label="Element"><div>&lt;a&gt;</div></td>
-                <td data-label="Description"><div>Visually hidden until focused. Jumps to <code class="cai-code-inline">#main-content</code>. Required for keyboard accessibility.</div></td>
+                <td data-label="Description"><div>Off screen until it has focus. Links to the <code class="cai-code-inline">id</code> of <code class="cai-code-inline">&lt;main&gt;</code>. First in <code class="cai-code-inline">&lt;body&gt;</code> on every page.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-main</div></td>
                 <td data-label="Element"><div>&lt;main&gt;</div></td>
-                <td data-label="Description"><div>Main content area. Grid with <code class="cai-code-inline">gap: --cai-space-3xl</code> between sections. Combine with <code class="cai-code-inline">.o-container</code> for horizontal centering.</div></td>
+                <td data-label="Description"><div>Main content area. Grid with <code class="cai-code-inline">gap: --cai-space-3xl</code> between sections. Combine with <code class="cai-code-inline">.o-container</code> for the content width and padding.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-content</div></td>
@@ -219,7 +222,7 @@
               <tr>
                 <td data-label="Class"><div>.cai-platform-footer</div></td>
                 <td data-label="Element"><div>&lt;footer&gt;</div></td>
-                <td data-label="Description"><div>Flex row (space-between). Includes a top border and vertical padding. Collapses to column on mobile. Combine with <code class="cai-code-inline">.o-container</code>.</div></td>
+                <td data-label="Description"><div>Flex row (space-between). Includes a top border and vertical padding. Stacks at 768 px and below. Combine with <code class="cai-code-inline">.o-container</code>.</div></td>
               </tr>
             </tbody>
           </table>
@@ -240,17 +243,17 @@
               <tr>
                 <td data-label="Class"><div>.cai-platform-actions</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>Flex row with wrapping and gap for CTA button groups. Collapses to column on mobile &lt;480px.</div></td>
+                <td data-label="Description"><div>Flex row with wrapping and gap for CTA button groups. One per line, full width, at 480 px and below.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-feature-grid</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>2-column grid for feature cards. Collapses to 1 column on mobile. Place <code class="cai-code-inline">.cai-card</code> elements as direct children.</div></td>
+                <td data-label="Description"><div>2-column grid for feature cards. One column at 768 px and below. Place <code class="cai-code-inline">.cai-card</code> elements as direct children.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-command-block</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>Installation/CLI command display. Dark background, mono font. Flex row: command on left, copy button on right.</div></td>
+                <td data-label="Description"><div>One shell command on the strong surface: the command, then a copy button, in a row that wraps.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-command-block__cmd</div></td>
@@ -260,7 +263,7 @@
               <tr>
                 <td data-label="Class"><div>.cai-platform-command-block__prefix</div></td>
                 <td data-label="Element"><div>&lt;span&gt;</div></td>
-                <td data-label="Description"><div>Shell prefix character (<code class="cai-code-inline">$</code>, <code class="cai-code-inline">pnpm</code>, etc.). Secondary color, non-selectable.</div></td>
+                <td data-label="Description"><div>The prompt sign, such as <code class="cai-code-inline">$</code>. Secondary colour; it cannot be selected.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-image</div></td>

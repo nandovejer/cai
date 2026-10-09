@@ -171,7 +171,9 @@ test.describe('Code and Design tabs on a component page', () => {
     const y = await page.evaluate(() => window.scrollY);
     await page.keyboard.press('Space');
     await expect(tab(page, 'Code')).toHaveAttribute('aria-selected', 'true');
-    expect(await page.evaluate(() => window.scrollY)).toBe(y);
+    // Space must not scroll the page (a link's default). Focusing the tab may
+    // round its position under the sticky header by a pixel: not a scroll.
+    expect(Math.abs((await page.evaluate(() => window.scrollY)) - y)).toBeLessThanOrEqual(1);
   });
 });
 

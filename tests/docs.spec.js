@@ -278,7 +278,7 @@ test.describe('Documentation site', () => {
 
       const toc = page.getByRole('navigation', { name: 'On this page' });
       // Both tabs' sections, each h3 under its tab's h2 (NAV-13)
-      await expect(toc.getByRole('link')).toHaveText(['Example', 'Known issues', 'Code', 'How it works', 'Keyboard and ARIA', 'Design', 'When to use', 'When not to use', 'Writing the content']);
+      await expect(toc.getByRole('link')).toHaveText(['Example', 'Known issues', 'Code', 'Copy the markup', 'Variants and options', 'How it works', 'Without JavaScript', 'Keyboard and ARIA', 'Design', 'When to use', 'When not to use', 'Writing the content']);
       await expect(toc.locator('li:has(> a[href="#design"]) > ul a')).toHaveText(['When to use', 'When not to use', 'Writing the content']);
       await page.locator('#how').scrollIntoViewIfNeeded();
       await expect(toc.locator('[aria-current="true"]')).toHaveCount(1);
@@ -531,7 +531,7 @@ test.describe('Documentation site', () => {
       await expect(guide).toContainText('cai-mode-switcher--cycle');
       await expect(guide).toContainText('initThemeCycle()');
       await expect(guide.locator('pre')).toContainText(['cai-mode-btn__icon']);
-      await expect(page.locator('#keyboard + p')).toContainText('Change color mode. Current:');
+      await expect(page.locator('#keyboard ~ ul').first()).toContainText('Change color mode. Current:');
       await gotoId(page, 'h-a11y-checked');
       await expect(page.locator('#accessibility')).toContainText('three radio buttons');
     });

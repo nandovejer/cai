@@ -201,7 +201,9 @@ export function parseFrontMatter(source, file, areas = null) {
 
 /**
  * Read a file only if it is a regular file (not a symlink) whose real path is
- * inside one of `roots` (SEC-PLG-1, SEC-PLG-2).
+ * inside one of `roots` (SEC-PLG-1, SEC-PLG-2). A root that is itself a
+ * symlink is refused: its real path would follow the link, and anything
+ * behind it would count as inside.
  */
 export function readInside(path, roots) {
   const stat = lstatSync(path, { throwIfNoEntry: false });
@@ -210,6 +212,7 @@ export function readInside(path, roots) {
   if (!stat.isFile()) throw new Error(`${path}: not a file`);
   const real = realpathSync(path);
   const inside = roots.some((root) => {
+    if (lstatSync(root).isSymbolicLink()) throw new Error(`${root}: symlinks are not allowed in the docs sources`);
     const realRoot = realpathSync(root);
     return real === realRoot || real.startsWith(realRoot + sep);
   });
@@ -446,7 +449,8 @@ export function assertThumbSafe(html, file) {
     if (tag.type !== "start") continue;
     if (banned.has(tag.name)) throw new HtmlError(file, tag.line, `<${tag.name}> is not allowed in a gallery thumbnail`);
     for (const [name, value] of tag.attrs) {
-      if (name === "id" || name === "autofocus" || name.startsWith("on") || /^\s*javascript:/i.test(value)) {
+      // Values are entity-decoded; the URL parser also drops tabs and newlines anywhere ("java\tscript:")
+      if (name === "id" || name === "autofocus" || name.startsWith("on") || /^javascript:/i.test(value.replace(/[\s\p{Cc}]/gu, ""))) {
         throw new HtmlError(file, tag.line, `${name}="${value}" is not allowed in a gallery thumbnail`);
       }
     }
@@ -610,13 +614,17 @@ export function expand(template, ctx) {
   });
 }
 
-/** A reader of partials and layouts inside apps/docs (SEC-PLG-1/2/3). */
+/**
+ * A reader of partials and layouts inside apps/docs (SEC-PLG-1/2/3). The root
+ * is apps/docs itself, never _partials/ or _layouts/: if one of those folders
+ * were a symlink, a root there would follow it out of the repository.
+ */
 export function sourceReader(site) {
   const rel = (p) => relative(site.repoRoot, p).split(sep).join("/");
   const read = (folder, name) => {
     if (!NAME.test(name)) throw new Error(`"${name}" is not a valid ${folder.slice(1, -1)} name`);
     const abs = join(site.docsDir, folder, `${name}.html`);
-    return { text: readInside(abs, [join(site.docsDir, folder)]), file: rel(abs) };
+    return { text: readInside(abs, [site.docsDir]), file: rel(abs) };
   };
   return { partial: (name) => read("_partials", name), layout: (name) => read("_layouts", name) };
 }

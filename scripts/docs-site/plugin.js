@@ -28,8 +28,11 @@ const LANDING = { route: "/", file: "apps/landing/index.html" };
 /** Output file of a route: "/" → "index.html", "/docs/a/" → "docs/a/index.html", "/404.html" → "404.html". */
 const outFileOf = (route) => (route.endsWith(".html") ? route.slice(1) : `${route.slice(1)}index.html`);
 
-/** The path of the site on GitHub Pages: where the not-found page's URLs start. */
-export const BASE_PATH = /^\/([A-Za-z0-9._-]+\/)?$/;
+/**
+ * The path of the site on GitHub Pages: where the not-found page's URLs start.
+ * "/" or one folder; a folder never starts with "." (no "/./" or "/../").
+ */
+export const BASE_PATH = /^\/([A-Za-z0-9_-][A-Za-z0-9._-]*\/)?$/;
 
 /**
  * @param {object} options

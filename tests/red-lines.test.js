@@ -9,6 +9,8 @@ import { readFileSync, readdirSync, statSync, existsSync } from "node:fs";
 import { basename, dirname, extname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { homedir } from "node:os";
+import { execFileSync } from "node:child_process";
+import { BASE_PATH } from "../scripts/docs-site/plugin.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path) => readFileSync(resolve(root, path), "utf-8");
@@ -252,8 +254,16 @@ describe("Pages site: the not-found page (docs-redesign SEC-MISC-3/4/5)", () => 
   const html = read("docs/404.html");
   const base = /export const PAGES_BASE = "([^"]*)";/.exec(read("vite.config.js"))[1];
 
+  it("accepts only \"/\" or one folder as the site's path, never another host or a dot segment", () => {
+    expect(base).toMatch(BASE_PATH);
+    for (const ok of ["/", "/cai/", "/my.site_1/"]) expect(ok, ok).toMatch(BASE_PATH);
+    for (const bad of ["", "cai/", "//evil.example/", "https://evil.example/", "/../", "/./", "/.git/", "/a/b/", "/cai", "/c ai/"]) {
+      expect(bad, bad).not.toMatch(BASE_PATH);
+    }
+  });
+
   it("starts every URL at the site's path (root-relative, never another host), with the CSP first", () => {
-    expect(base).toMatch(/^\/([A-Za-z0-9._-]+\/)?$/);
+    expect(base).toMatch(BASE_PATH);
     const charset = html.indexOf("<meta charset");
     const csp = html.indexOf("Content-Security-Policy");
     expect(charset).toBeGreaterThan(-1);
@@ -261,12 +271,23 @@ describe("Pages site: the not-found page (docs-redesign SEC-MISC-3/4/5)", () => 
     expect(html.search(/(href|src)="/)).toBeGreaterThan(csp);
     // No <base>: it would send the skip link's #main-content to the home page
     expect(html).not.toMatch(/<base\b/);
-    const urls = [...html.matchAll(/(?:href|src)="([^"]*)"/g)].map((m) => m[1]);
+    const urls = [...html.matchAll(/(?:href|src|action|poster)="([^"]*)"/g)].map((m) => m[1]);
     for (const url of urls) expect(url.startsWith(base) || url.startsWith("#") || url.startsWith("https://github.com/"), url).toBe(true);
+    // Nothing else that loads or sends to a URL, and no path that climbs out of the base
+    expect(html).not.toMatch(/\s(srcset|imagesrcset|data|formaction|ping)="|url\(|@import/i);
+    expect(html).not.toMatch(/["'(\s]\.\.?\//);
   });
 
   it("runs no script", () => {
     expect(html).not.toMatch(/<script/i);
+  });
+});
+
+describe("No symlinks in the repository (docs-redesign SEC-PLG-2)", () => {
+  it("git tracks no symlink (mode 120000): a link could publish a file from outside the repo", () => {
+    const entries = execFileSync("git", ["ls-files", "-s"], { cwd: root, encoding: "utf-8", maxBuffer: 64 * 1024 * 1024 });
+    const links = entries.split("\n").filter((line) => line.startsWith("120000 ")).map((line) => line.split("\t")[1]);
+    expect(links).toEqual([]);
   });
 });
 

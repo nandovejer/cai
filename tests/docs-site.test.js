@@ -19,6 +19,7 @@ import {
   expand,
   markCurrent,
   parseFrontMatter,
+  readInside,
   relativizeLinks,
   renderPage,
   renderToc,
@@ -352,6 +353,28 @@ describe("scanning and building a site", () => {
     }
   });
 
+  it("refuses a partials or layouts folder that is a symlink out of the docs (SEC-PLG-1)", () => {
+    // The folder's own real path follows the link: the root must be apps/docs
+    const outside = mkdtempSync(join(tmpdir(), "cai-docs-site-outside-"));
+    temps.push(outside);
+    writeFileSync(join(outside, "header.html"), "<p>secret</p>");
+    writeFileSync(join(outside, "page.html"), LAYOUT);
+    for (const folder of ["_partials", "_layouts"]) {
+      const { repoRoot, docsDir } = fixture();
+      rmSync(join(docsDir, folder), { recursive: true });
+      symlinkSync(outside, join(docsDir, folder));
+      const site = scanSite(docsDir, repoRoot);
+      expect(() => renderPage(site.pages[0], site), folder).toThrow(/outside the docs sources|symlinks are not allowed/);
+    }
+  });
+
+  it("refuses a root that is itself a symlink (SEC-PLG-1)", () => {
+    const { docsDir } = fixture();
+    const link = join(dirname(docsDir), "docs-link");
+    symlinkSync(docsDir, link);
+    expect(() => readInside(join(docsDir, "site.json"), [link])).toThrow(/symlinks are not allowed/);
+  });
+
   it("fails on a bad file name or a stray file in pages/ (SEC-PLG-4)", () => {
     const one = fixture({ "pages/Bad.html": PAGE("Bad") });
     expect(() => scanSite(one.docsDir, one.repoRoot)).toThrow(/not a valid route segment/);
@@ -520,6 +543,8 @@ describe("the CAI docs site", () => {
     expect(() => assertThumbSafe('<span onclick="x()">a</span>', "t.html")).toThrow(/onclick/);
     expect(() => assertThumbSafe("<video></video>", "t.html")).toThrow(/video/);
     expect(() => assertThumbSafe('<a href="javascript:x">a</a>', "t.html")).toThrow(/javascript/);
+    expect(() => assertThumbSafe('<a href="java&#9;script:x">a</a>', "t.html")).toThrow(/script/);
+    expect(() => assertThumbSafe('<a href=" JaVa\nScRiPt:x">a</a>', "t.html")).toThrow(/ScRiPt/);
     const gallery = rendered.get("/docs/components/");
     expect(gallery.match(/<div class="docs-card__thumb" inert aria-hidden="true">/g)).toHaveLength(20);
   });

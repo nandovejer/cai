@@ -10,10 +10,10 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-T8jVbU25.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CzKDnCsw.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BazDvnI8.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWg7wXWy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-E92lhrMX.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D3HhxxF5.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-2s0JDuqQ.css">
 </head>
 <body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -97,13 +97,21 @@
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
         <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-issues">Known issues</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-when">When to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-when-not">When not to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-how">How it works</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-content">Content guidance</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-image-keyboard">Keyboard and ARIA</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#show-the-placeholder-on-purpose">Show the placeholder on purpose</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#show-the-placeholder-on-purpose">Show the placeholder on purpose</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#design">Design</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+          </ul>
+        </li>
       </ul>
     </details>
   </nav>
@@ -131,24 +139,17 @@
             <p class="docs-demo__note">Ratios: 16:9, <code class="cai-code-inline">--4x3</code>, <code class="cai-code-inline">--3x2</code>, <code class="cai-code-inline">--1x1</code>, <code class="cai-code-inline">--21x9</code>, <code class="cai-code-inline">--9x16</code>.</p>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-image-issues">Known issues</h2>
-            <p>In forced-colors mode browsers drop the placeholder, and the frame shows a thin border instead. If an image fails to load, some browsers add a broken-image icon next to its alt text. The night version follows a dark mode set on a page or a section, but not a light section inside a dark one.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-image-when">When to use</h2>
-            <p>To show an image in a box of fixed shape, such as a card cover or an article header, when the image may be missing: content from people or a content system, or a page built before its images exist.</p>
-            <h2 class="docs-guide__title" id="h-p-image-when-not">When not to use</h2>
-            <p>For an image that must keep its own shape, such as a chart or a screenshot: the frame crops it. For icons and logos: use an <code>&lt;img&gt;</code> or an SVG at its own size. Never to stand in for an image that carries information: if it is missing, say so in text.</p>
-            <h2 class="docs-guide__title" id="h-p-image-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>In forced-colors mode browsers drop the placeholder, and the frame shows a thin border instead. If an image fails to load, some browsers add a broken-image icon next to its alt text. The night version follows a dark mode set on a page or a section, but not a light section inside a dark one.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Image documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>A <code>&lt;div&gt;</code> of fixed aspect ratio, 16:9 unless a modifier sets another, around a native <code>&lt;picture&gt;</code> with AVIF and WebP sources and a JPEG <code>&lt;img&gt;</code>. The image fills the frame and is cropped to it. A frame with no image shows an abstract placeholder in the colours of the <a href="../../../docs/tokens/modes/">vejer theme</a>, chosen in AVIF, WebP or JPEG with <code>image-set()</code>. In dark mode it shows a night version; high contrast keeps the day version. No JavaScript is involved. While an image loads, or if it fails, the frame shows a flat surface, and a failed image's alt text is drawn on it. Transparent PNG and SVG images sit on that surface too. Without CSS the image shows at its own size. The placeholder files ship in <code>dist/placeholders/</code>: every ratio at 640, 1280 and 1920 pixels on the long side in AVIF and WebP, at 640 and 1280 in JPEG, and two SVGs, day and night, that fit any size. Point your own <code>&lt;picture&gt;</code> at them to show the placeholder on purpose.</p>
-            <h2 class="docs-guide__title" id="h-p-image-content">Content guidance</h2>
-            <p>Give every real image an alt text that says what it shows, in one plain sentence. If the image is decorative or the text next to it already says the same, use <code>alt=""</code>. Never describe the placeholder: it is a background and nothing reads it out. The frame crops the image to its ratio, so keep text and essential detail away from the edges, and describe what stays visible. Set <code>width</code> and <code>height</code> on the <code>&lt;img&gt;</code> to the image's own size so the page does not jump while it loads. Add <code>loading="lazy"</code> only to images below the fold; leave it off a hero or any image visible when the page opens, so it loads at once. Do not put text in images.</p>
-            <h2 class="docs-guide__title" id="h-p-image-keyboard">Keyboard and ARIA</h2>
-            <p>No interaction of its own. Screen readers announce the <code>&lt;img&gt;</code> by its alt text and skip the placeholder; an empty frame announces nothing. Do not add a role or an <code>aria-label</code> to the frame. If the image is a link, the link takes its name from the alt text, so the alt text must then say where it goes.</p>
-          </div>
-          <div class="docs-prose">
-            <h2 id="show-the-placeholder-on-purpose" class="docs-prose__title">Show the placeholder on purpose</h2>
+            <h3 id="show-the-placeholder-on-purpose">Show the placeholder on purpose</h3>
             <p>Point a <code class="cai-code-inline">&lt;picture&gt;</code> at the files in <code class="cai-code-inline">dist/placeholders/</code>, named <code class="cai-code-inline">placeholder-&lt;ratio&gt;-&lt;width&gt;</code>. It is decorative, so its alt text is empty.</p>
             <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Placeholder image markup"><code>&lt;div class="cai-platform-image"&gt;
   &lt;picture&gt;
@@ -170,6 +171,19 @@
   &lt;/picture&gt;
 &lt;/div&gt;</code></pre>
             <p>Replace <code class="cai-code-inline">placeholders/</code> with <code class="cai-code-inline">https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/placeholders/</code>, or with the path where your bundler serves the package. Ratios: <code class="cai-code-inline">16x9</code>, <code class="cai-code-inline">4x3</code>, <code class="cai-code-inline">3x2</code>, <code class="cai-code-inline">1x1</code>, <code class="cai-code-inline">21x9</code> and <code class="cai-code-inline">9x16</code> (widths 360, 720 and 1080). JPEG stops at 1280 (720 for 9x16). For the night version, use <code class="cai-code-inline">placeholder-night-</code> instead. <code class="cai-code-inline">placeholder.svg</code> and <code class="cai-code-inline">placeholder-night.svg</code> fit any size. Add <code class="cai-code-inline">loading="lazy"</code> when the frame is below the fold.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>No interaction of its own. Screen readers announce the <code>&lt;img&gt;</code> by its alt text and skip the placeholder; an empty frame announces nothing. Do not add a role or an <code>aria-label</code> to the frame. If the image is a link, the link takes its name from the alt text, so the alt text must then say where it goes.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To show an image in a box of fixed shape, such as a card cover or an article header, when the image may be missing: content from people or a content system, or a page built before its images exist.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For an image that must keep its own shape, such as a chart or a screenshot: the frame crops it. For icons and logos: use an <code>&lt;img&gt;</code> or an SVG at its own size. Never to stand in for an image that carries information: if it is missing, say so in text.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Give every real image an alt text that says what it shows, in one plain sentence. If the image is decorative or the text next to it already says the same, use <code>alt=""</code>. Never describe the placeholder: it is a background and nothing reads it out. The frame crops the image to its ratio, so keep text and essential detail away from the edges, and describe what stays visible. Set <code>width</code> and <code>height</code> on the <code>&lt;img&gt;</code> to the image's own size so the page does not jump while it loads. Add <code>loading="lazy"</code> only to images below the fold; leave it off a hero or any image visible when the page opens, so it loads at once. Do not put text in images.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>
 

@@ -10,10 +10,10 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-T8jVbU25.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CzKDnCsw.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BazDvnI8.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWg7wXWy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-E92lhrMX.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D3HhxxF5.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-2s0JDuqQ.css">
 </head>
 <body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -109,12 +109,20 @@
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
         <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-icons-issues">Known issues</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-icons-when">When to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-icons-when-not">When not to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-icons-how">How it works</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-icons-content">Content guidance</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-icons-keyboard">Keyboard and ARIA</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#design">Design</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+          </ul>
+        </li>
       </ul>
     </details>
   </nav>
@@ -149,21 +157,29 @@
 
           <p class="docs-demo__note">Each icon has a button that copies its SVG. CAI ships the grid, not an icon set: these four are local to this page.</p>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-icons-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-icons-when">When to use</h2>
-            <p>To let readers browse and copy a set of icons.</p>
-            <h2 class="docs-guide__title" id="h-c-icons-when-not">When not to use</h2>
-            <p>Do not use icons as the only label of an action.</p>
-            <h2 class="docs-guide__title" id="h-c-icons-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Icon grid documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>A list of icons. Each item shows the icon, its name and a native copy button with the SVG in data-copy. Without JavaScript the copy buttons are hidden and the list still shows every icon and name. CAI ships the grid, not an icon set.</p>
-            <h2 class="docs-guide__title" id="h-c-icons-content">Content guidance</h2>
-            <p>Each item shows the icon name in text. Decorative icons are aria-hidden.</p>
-            <h2 class="docs-guide__title" id="h-c-icons-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab to a copy button, Enter or Space to copy. Each button is named by its own text and the icon name (aria-labelledby), for example "Copy SVG Plus". The result is announced in a polite live region.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To let readers browse and copy a set of icons.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use icons as the only label of an action.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Each item shows the icon name in text. Decorative icons are aria-hidden.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>
 

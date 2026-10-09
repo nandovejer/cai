@@ -10,10 +10,10 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-T8jVbU25.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CzKDnCsw.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BazDvnI8.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWg7wXWy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-E92lhrMX.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D3HhxxF5.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-2s0JDuqQ.css">
 </head>
 <body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -108,12 +108,20 @@
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
         <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-tooltip-issues">Known issues</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-tooltip-when">When to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-tooltip-when-not">When not to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-tooltip-how">How it works</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-tooltip-content">Content guidance</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-tooltip-keyboard">Keyboard and ARIA</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#design">Design</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+          </ul>
+        </li>
       </ul>
     </details>
   </nav>
@@ -128,21 +136,29 @@
             </div>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-tooltip-issues">Known issues</h2>
-            <p>Partial WCAG 1.4.13: the tooltip cannot be dismissed with Escape without moving focus or the pointer. Keep tooltips non-essential.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-tooltip-when">When to use</h2>
-            <p>To explain a control whose label is not enough, in a sentence at most.</p>
-            <h2 class="docs-guide__title" id="h-c-tooltip-when-not">When not to use</h2>
-            <p>For anything essential, long or interactive. On touch devices there is no hover: put important text on the page.</p>
-            <h2 class="docs-guide__title" id="h-c-tooltip-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>Partial WCAG 1.4.13: the tooltip cannot be dismissed with Escape without moving focus or the pointer. Keep tooltips non-essential.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Tooltip documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>CSS only: it opens on hover and on keyboard focus, and stays open while the pointer is over it (WCAG 1.4.13, hoverable).</p>
-            <h2 class="docs-guide__title" id="h-c-tooltip-content">Content guidance</h2>
-            <p>One short sentence, no links. The control keeps its own accessible name.</p>
-            <h2 class="docs-guide__title" id="h-c-tooltip-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Opens when the control receives focus, closes when it loses focus. The Escape key does not close it.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To explain a control whose label is not enough, in a sentence at most.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For anything essential, long or interactive. On touch devices there is no hover: put important text on the page.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>One short sentence, no links. The control keeps its own accessible name.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>
 

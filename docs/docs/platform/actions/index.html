@@ -10,10 +10,10 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-T8jVbU25.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CzKDnCsw.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BazDvnI8.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWg7wXWy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-E92lhrMX.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D3HhxxF5.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-2s0JDuqQ.css">
 </head>
 <body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -92,13 +92,21 @@
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
         <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-actions-issues">Known issues</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-actions-when">When to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-actions-when-not">When not to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-actions-how">How it works</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-actions-content">Content guidance</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-p-actions-keyboard">Keyboard and ARIA</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#design">Design</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+          </ul>
+        </li>
       </ul>
     </details>
   </nav>
@@ -115,28 +123,34 @@
             <p class="docs-demo__note">Stacks full-width at 480px and below.</p>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-actions-issues">Known issues</h2>
-            <p>None known.</p>
-          </div>
-          <div class="docs-prose">
-            <h2 id="markup">Copy the markup</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Action group documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
             <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Action group markup"><code>&lt;div class=&quot;cai-platform-actions&quot;&gt;
   &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;/docs/&quot;&gt;Get started&lt;/a&gt;
   &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#reference&quot;&gt;Read the class reference&lt;/a&gt;
 &lt;/div&gt;</code></pre>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-p-actions-when">When to use</h2>
-            <p>For two or three related actions together, such as a primary and a secondary button after a form or in a hero.</p>
-            <h2 class="docs-guide__title" id="h-p-actions-when-not">When not to use</h2>
-            <p>For navigation menus or long lists of links: use a <code>&lt;nav&gt;</code> with a list. Not for more than three actions: the reader cannot tell which one matters.</p>
-            <h2 class="docs-guide__title" id="h-p-actions-how">How it works</h2>
+            <h3 id="how">How it works</h3>
             <p>A wrapping row with a fixed gap. Below 480 px the actions stack and take the full width, so each one stays an easy target.</p>
-            <h2 class="docs-guide__title" id="h-p-actions-content">Content guidance</h2>
-            <p>Put the main action first. Each label starts with a verb and makes sense on its own: "Save details", "Browse the components". Use <code>&lt;a&gt;</code> to go somewhere and <code>&lt;button&gt;</code> to do something.</p>
-            <h2 class="docs-guide__title" id="h-p-actions-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab moves through the actions in source order, which is also the visual order. Each control keeps its native keyboard behaviour.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>For two or three related actions together, such as a primary and a secondary button after a form or in a hero.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For navigation menus or long lists of links: use a <code>&lt;nav&gt;</code> with a list. Not for more than three actions: the reader cannot tell which one matters.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Put the main action first. Each label starts with a verb and makes sense on its own: "Save details", "Browse the components". Use <code>&lt;a&gt;</code> to go somewhere and <code>&lt;button&gt;</code> to do something.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>
 

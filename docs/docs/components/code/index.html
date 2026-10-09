@@ -10,10 +10,10 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-T8jVbU25.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CzKDnCsw.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BazDvnI8.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DZj7GSWV.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWg7wXWy.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-E92lhrMX.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D3HhxxF5.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-2s0JDuqQ.css">
 </head>
 <body class="o-shell docs-page">
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
@@ -109,12 +109,20 @@
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
         <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-code-issues">Known issues</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-code-when">When to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-code-when-not">When not to use</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-code-how">How it works</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-code-content">Content guidance</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#h-c-code-keyboard">Keyboard and ARIA</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#design">Design</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+          </ul>
+        </li>
       </ul>
     </details>
   </nav>
@@ -249,21 +257,29 @@ npx playwright test \
             </div>
           </div>
           </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-code-issues">Known issues</h2>
-            <p>Syntax colours are decoration; the code is not read differently by assistive technology. The highlighter is a set of patterns, not a parser: JSX tags, the contents of HTML <code>style</code> and <code>script</code> elements and unquoted attribute values stay plain.</p>
-          </div>
-          <div class="docs-guide">
-            <h2 class="docs-guide__title" id="h-c-code-when">When to use</h2>
-            <p>To show code or terminal output the reader may copy.</p>
-            <h2 class="docs-guide__title" id="h-c-code-when-not">When not to use</h2>
-            <p>For long files; link to the source instead.</p>
-            <h2 class="docs-guide__title" id="h-c-code-how">How it works</h2>
+          <h2 id="known-issues">Known issues</h2>
+          <p>Syntax colours are decoration; the code is not read differently by assistive technology. The highlighter is a set of patterns, not a parser: JSX tags, the contents of HTML <code>style</code> and <code>script</code> elements and unquoted attribute values stay plain.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Code documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="how">How it works</h3>
             <p>A pre with a code element. Highlighting is an enhancement: without JavaScript the block is plain, readable text. With it, <code>highlight.js</code> wraps HTML, CSS, JavaScript (<code>js</code>, <code>jsx</code>), JSON and shell (<code>bash</code>, <code>sh</code>, <code>shell</code>) in six <code>.tok-*</code> classes, one per <code>--cai-code-*</code> token. In forced colors every colour becomes the system text colour; bold keywords and italic comments remain.</p>
-            <h2 class="docs-guide__title" id="h-c-code-content">Content guidance</h2>
-            <p>Label the language with data-lang (<code>html</code>, <code>css</code>, <code>js</code>, <code>json</code>, <code>bash</code>; anything else, such as <code>text</code>, stays plain) and name the block with aria-label.</p>
-            <h2 class="docs-guide__title" id="h-c-code-keyboard">Keyboard and ARIA</h2>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>The block is focusable (tabindex 0) so it can be scrolled with the keyboard.</p>
+            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>To show code or terminal output the reader may copy.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>For long files; link to the source instead.</p>
+            <h3 id="content">Writing the content</h3>
+            <p>Label the language with data-lang (<code>html</code>, <code>css</code>, <code>js</code>, <code>json</code>, <code>bash</code>; anything else, such as <code>text</code>, stays plain) and name the block with aria-label.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>
 

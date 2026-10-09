@@ -9,10 +9,10 @@
   <link rel="icon" href="../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../assets/docs/index-CKGEc2Ug.js"></script>
-  <link rel="modulepreload" crossorigin href="../assets/site-header-yccVMEBO.js">
-  <link rel="modulepreload" crossorigin href="../assets/site-header-CTnvSIHl.js">
-  <link rel="stylesheet" crossorigin href="../assets/site-header-BrLhxNQh.css">
+  <script type="module" crossorigin src="../assets/docs/index-oSI_cilw.js"></script>
+  <link rel="modulepreload" crossorigin href="../assets/site-header-D5uxikVw.js">
+  <link rel="modulepreload" crossorigin href="../assets/site-header-BYtdkXSo.js">
+  <link rel="stylesheet" crossorigin href="../assets/site-header-52bjFEbY.css">
   <link rel="stylesheet" crossorigin href="../assets/index-DgwIOsZi.css">
 </head>
 <body class="o-shell docs-page">
@@ -33,12 +33,6 @@
         <a href="../docs/" aria-current="page">Docs</a>
         <a href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
-      <fieldset class="cai-theme-switcher cai-theme-switcher--cycle site-modes">
-        <legend class="cai-theme-switcher__label">Color mode</legend>
-        <label class="cai-theme-btn" data-theme="light"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-theme-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
-        <label class="cai-theme-btn" data-theme="dark"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-theme-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
-        <label class="cai-theme-btn" data-theme="high-contrast"><input class="cai-theme-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-theme-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
-      </fieldset>
     </div>
   </header>
 
@@ -1161,8 +1155,8 @@ pnpm test:unit</code></pre>
       <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Theme and mode examples"><code>&lt;html data-theme=&quot;dark&quot;&gt;
 
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/themes/cai-theme-vejer.min.css&quot;&gt;
-&lt;html data-theme=&quot;vejer&quot; data-mode=&quot;dark&quot;&gt;
-&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
+&lt;html data-theme=&quot;vejer&quot; data-mode-icon=&quot;dark&quot;&gt;
+&lt;html data-theme=&quot;minimalist&quot; data-mode-icon=&quot;high-contrast&quot;&gt;</code></pre>
       <p>Every theme is measured by <code class="cai-code-inline">pnpm check:contrast</code> in every mode: 4.5:1 for text, 3:1 for disabled text, borders and focus rings.</p>
       <h3 class="docs-prose__title" id="themes-custom">Make your own theme</h3>
       <p>A theme overrides semantic tokens, never the primitive scales and never component CSS. Check it against the same contrast minimums: CAI guarantees only the themes it ships.</p>
@@ -1234,7 +1228,7 @@ pnpm test:unit</code></pre>
             <li><a href="#c-tabs">Tabs</a></li>
             <li><a href="#c-breadcrumb">Breadcrumb</a></li>
             <li><a href="#c-sidebar">Sidebar</a></li>
-            <li><a href="#c-theme-switcher">Color mode switcher</a></li>
+            <li><a href="#c-mode-switcher">Color mode switcher</a></li>
           </ul>
         </div>
         <div>
@@ -2304,12 +2298,12 @@ player.play();</code></pre>
                 <a class="cai-sidebar__link" href="#core">Core</a>
                 <a class="cai-sidebar__link" href="#platform">Platform</a>
               </div>
-              <div class="cai-sidebar__footer" id="c-theme-switcher">
-                <fieldset class="cai-theme-switcher" disabled>
-                  <legend class="cai-theme-switcher__label">Color mode (specimen)</legend>
-                  <label class="cai-theme-btn" data-theme="light"><input class="cai-theme-btn__input" type="radio" name="cai-theme-specimen" value="light" checked>Light</label>
-                  <label class="cai-theme-btn" data-theme="dark"><input class="cai-theme-btn__input" type="radio" name="cai-theme-specimen" value="dark">Dark</label>
-                  <label class="cai-theme-btn" data-theme="high-contrast"><input class="cai-theme-btn__input" type="radio" name="cai-theme-specimen" value="high-contrast">High contrast</label>
+              <div class="cai-sidebar__footer" id="c-mode-switcher">
+                <fieldset class="cai-mode-switcher" disabled>
+                  <legend class="cai-mode-switcher__label">Color mode (specimen)</legend>
+                  <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="light" checked>Light</label>
+                  <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="dark">Dark</label>
+                  <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="high-contrast">High contrast</label>
                 </fieldset>
               </div>
             </nav>
@@ -2324,15 +2318,20 @@ player.play();</code></pre>
               </div>
               <p class="docs-demo__note">On small screens the sidebar becomes a drawer. <a href="#page-nav">This page's navigation uses it live</a>.</p>
               <h3 class="docs-demo__title">Color mode switcher</h3>
-              <code class="docs-demo__file">components/theme-switcher.css</code>
-              <p class="docs-demo__note">A native radio group for the color mode. This specimen is disabled. The working one, in the cycle variant, is in <a href="#site-header">this page's header</a>: one button with the icon of the current mode.</p>
+              <code class="docs-demo__file">components/mode-switcher.css</code>
+              <p class="docs-demo__note">A native radio group for the color mode. This specimen is disabled. The working one, in the cycle variant, is in <a href="#site-footer">this page's footer</a>: one button with the icon of the current mode.</p>
               <h4 class="docs-subhead">Cycle variant</h4>
-              <p class="docs-demo__note">Add <code class="cai-code-inline">cai-theme-switcher--cycle</code> and an icon to each label. <code class="cai-code-inline">initThemeCycle()</code> from <code class="cai-code-inline">@cai-ds/core/theme</code> (run by <code class="cai-code-inline">cai.js</code>) shows one button in place of the radios. Without JavaScript the three radios show, with their icons, and still set the mode.</p>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cycle variant markup"><code>&lt;fieldset class=&quot;cai-theme-switcher cai-theme-switcher--cycle&quot;&gt;
-  &lt;legend class=&quot;cai-theme-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
-  &lt;label class=&quot;cai-theme-btn&quot; data-theme=&quot;light&quot;&gt;
-    &lt;input class=&quot;cai-theme-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;light&quot; checked&gt;
-    &lt;svg class=&quot;cai-theme-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;…&lt;/svg&gt;
+              <p class="docs-demo__note">Add <code class="cai-code-inline">cai-mode-switcher--cycle</code>, an icon to each label and a <code class="cai-code-inline">cai-mode-cycle</code> button with one icon per mode (<code class="cai-code-inline">data-mode-icon</code>). With scripting on, the button shows the icon of the checked mode and the radios hide, with no flash while the script loads; without scripting the three radios show and the button hides. <code class="cai-code-inline">initThemeCycle()</code> from <code class="cai-code-inline">@cai-ds/core/theme</code> (run by <code class="cai-code-inline">cai.js</code>) makes the button step through the modes, and adds the button if the markup has none.</p>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cycle variant markup"><code>&lt;fieldset class=&quot;cai-mode-switcher cai-mode-switcher--cycle&quot;&gt;
+  &lt;legend class=&quot;cai-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
+  &lt;button class=&quot;cai-mode-cycle&quot; type=&quot;button&quot; aria-label=&quot;Change color mode&quot;&gt;
+    &lt;svg class=&quot;cai-mode-btn__icon&quot; data-mode-icon=&quot;light&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+    &lt;!-- the same for data-mode-icon=&quot;dark&quot; and &quot;high-contrast&quot; --&gt;
+  &lt;/button&gt;
+  &lt;span class=&quot;cai-mode-cycle__status&quot; role=&quot;status&quot;&gt;&lt;/span&gt;
+  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;light&quot;&gt;
+    &lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;light&quot; checked&gt;
+    &lt;svg class=&quot;cai-mode-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;…&lt;/svg&gt;
     Light
   &lt;/label&gt;
   &lt;!-- the same for dark and high-contrast --&gt;
@@ -2346,7 +2345,7 @@ player.play();</code></pre>
           </div>
           <div class="docs-guide">
               <h3 class="docs-guide__title" id="h-c-sidebar-when">When to use</h3>
-              <p>For the main navigation of a documentation or app shell with many sections. Use the cycle variant of the color mode switcher where space is short, such as a page header.</p>
+              <p>For the main navigation of a documentation or app shell with many sections. Use the cycle variant of the color mode switcher where space is short, such as a page footer or header.</p>
               <h3 class="docs-guide__title" id="h-c-sidebar-when-not">When not to use</h3>
               <p>For a short list of pages: a header navigation is simpler. Do not use the cycle variant where people compare the modes side by side: the radio group shows them all at once.</p>
               <h3 class="docs-guide__title" id="h-c-sidebar-how">How it works</h3>
@@ -6949,13 +6948,21 @@ $ pnpm add @cai-ds/core&lt;/pre&gt;</code></pre>
     </section>
   </main>
 
-  <footer class="docs-footer">
+  <footer class="docs-footer" id="site-footer">
     <div class="cai-platform-footer">
       <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
       <nav class="cai-platform-actions" aria-label="Project links">
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../">Home</a>
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
       </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
     </div>
   </footer>
 

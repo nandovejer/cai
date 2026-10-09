@@ -1,13 +1,14 @@
 <!-- cai:page
 title: Accessibility statement
-description: What CAI aims for, what is checked on every change, and what has not been tested. Last reviewed on 9 October 2026.
+description: CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 9 October 2026.
 area: accessibility
 lead: false
 -->
     <div class="docs-block docs-prose-chapter" id="accessibility">
-      <p class="docs-lead">What CAI aims for, what is checked on every change, and what has not been tested. Last reviewed on 9 October 2026.</p>
+      <p class="docs-lead">CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 9 October 2026.</p>
       <h2 id="h-a11y-target">Target</h2>
-      <p>CAI aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to. A design system cannot make a service accessible by itself: how you use the components decides the result.</p>
+      <p>CAI aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to.</p>
+      <p>A design system cannot make a service accessible by itself: how you use the components decides the result. Each component page says what is yours to do, under <em>Keyboard and ARIA</em> and <em>Writing the content</em>.</p>
 
       <h2 id="h-a11y-checked">What is checked on every change</h2>
       <ul>
@@ -31,16 +32,16 @@ lead: false
 
       <h2 id="h-a11y-known">Known issues</h2>
       <ul>
-        <li>The tooltip cannot be dismissed with the Escape key. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
-        <li>The modal buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
-        <li>The MIDI player needs JavaScript and Web Audio. Without them it shows a message.</li>
-        <li>On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
-        <li>On component pages, the Design or Code tab you chose last is opened after the page has loaded, so the content below the tabs can move once.</li>
-        <li>In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code>, find in page (Ctrl+F) does not find text in the tab that is not open. Open the other tab, or turn JavaScript off to see both.</li>
-        <li>Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there.</li>
-        <li>The search has not been tested with a screen reader. The number of results is announced once you stop typing.</li>
-        <li>At 400 percent zoom the whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.</li>
-        <li>The button of the example form on the home page opens a popover that says nothing was sent; a status region repeats it for screen readers when JavaScript runs. This has not been tested with a screen reader.</li>
+        <li><strong>Tooltip.</strong> Escape does not close it. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
+        <li><strong>Modal.</strong> Its buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
+        <li><strong>Player.</strong> MIDI needs JavaScript and Web Audio. Without them the player shows a message.</li>
+        <li><strong>Color mode.</strong> On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
+        <li><strong>Code and Design tabs.</strong> The tab you chose last opens after the page has loaded, so the content below the tabs can move once.</li>
+        <li><strong>Find in page.</strong> In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code>, find in page (Ctrl+F) does not find text in the tab that is not open. Open the other tab, or turn JavaScript off to see both.</li>
+        <li><strong>Search shortcut.</strong> Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there.</li>
+        <li><strong>Search.</strong> It has not been tested with a screen reader. The number of results is announced once you stop typing.</li>
+        <li><strong>Search at 400 percent zoom.</strong> The whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.</li>
+        <li><strong>Home page form.</strong> The button of the example form opens a popover that says nothing was sent; a status region repeats it for screen readers when JavaScript runs. This has not been tested with a screen reader.</li>
       </ul>
 
       <h2 id="h-a11y-report">Report a problem</h2>

@@ -74,8 +74,16 @@ export async function copyToClipboard(text, el, type = "btn") {
   }
 }
 
+// One function for every call: addEventListener ignores a listener that is
+// already registered, so initCopyButtons() is idempotent at no cost.
+async function onCopyClick(e) {
+  const copyBtn = e.target.closest(".cai-copy-btn");
+  if (copyBtn?.dataset.copy) await copyToClipboard(copyBtn.dataset.copy, copyBtn);
+}
+
 /**
- * Wire up delegated click handling for all copy buttons.
+ * Wire up delegated click handling for all copy buttons. Idempotent: a
+ * second call adds no second listener, so one click copies once.
  */
 export function initCopyButtons() {
   enableJs();
@@ -83,8 +91,5 @@ export function initCopyButtons() {
   // that is inserted and filled at the same time.
   getLiveRegion();
 
-  document.body.addEventListener("click", async (e) => {
-    const copyBtn = e.target.closest(".cai-copy-btn");
-    if (copyBtn?.dataset.copy) await copyToClipboard(copyBtn.dataset.copy, copyBtn);
-  });
+  document.body.addEventListener("click", onCopyClick);
 }

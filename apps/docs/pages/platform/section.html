@@ -65,7 +65,7 @@ toc: h2,h3
               <li>A <code>&lt;section&gt;</code> named with <code>aria-labelledby</code> becomes a region landmark; one without a name does not.</li>
               <li>Name only the sections people would jump to, or the landmark list gets long.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -76,11 +76,36 @@ toc: h2,h3
             <ul>
               <li>For blocks side by side, use the <a href="/docs/components/layout/">grid object</a> or the <a href="/docs/platform/feature-grid/">feature grid</a>.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Blocks of different kinds, spaced as one group: a heading, a lead, the content.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-section"><div class="docs-box">Heading</div><div class="docs-box">Lead</div><div class="docs-box">Content</div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Running text in a section: every paragraph gets the section's gap, and the text reads as separate blocks.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-section"><p class="u-mb-0">The plan renews on the first of the month.</p><p class="u-mb-0">You can cancel before then.</p><p class="u-mb-0">Unused days are not refunded.</p></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Start each section with a heading that says what the section is for.</p>
             <ul>
               <li>Use the next heading level after the page title: <code>&lt;h2&gt;</code> under the <code>&lt;h1&gt;</code>.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The section is spacing only: it adds no colour.</p>
+            <ul>
+              <li><strong>Focus:</strong> the section takes none; what is inside keeps its own ring.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 1 tokens that the <code>.cai-platform-section</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-md</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

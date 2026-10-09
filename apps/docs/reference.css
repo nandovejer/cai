@@ -223,6 +223,164 @@
   color: var(--cai-text-secondary);
 }
 
+/* Do and don't (Design tab): two figures side by side when there is room.
+   The verdict is a word at the start of the caption; the mark before it and
+   the solid or dashed frame are extra cues, never the only one (a11y.md
+   TAB-20). The examples are real CAI markup, inert and hidden from assistive
+   technology: the caption says what each one shows. */
+.docs-dodont {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: var(--cai-space-md);
+}
+
+.docs-dodont__item {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--cai-space-sm);
+  min-width: 0;
+  margin: 0;
+  padding: var(--cai-space-sm);
+  border: 2px solid var(--cai-color-success);
+  background: var(--cai-surface);
+  color: var(--cai-text-primary);
+}
+
+.docs-dodont__item--dont {
+  border-style: dashed;
+  border-color: var(--cai-color-danger);
+}
+
+.docs-dodont__item > figcaption {
+  font-style: normal;
+}
+
+.docs-dodont__verdict {
+  display: block;
+  color: var(--cai-color-success);
+  font-family: var(--cai-font-sans);
+}
+
+.docs-dodont__item--dont .docs-dodont__verdict {
+  color: var(--cai-color-danger);
+}
+
+.docs-dodont__verdict::before {
+  content: "✓ " / "";
+}
+
+.docs-dodont__item--dont .docs-dodont__verdict::before {
+  content: "✕ " / "";
+}
+
+.docs-dodont__stage {
+  display: grid;
+  gap: var(--cai-space-sm);
+  align-content: center;
+  min-width: 0;
+  padding: var(--cai-space-md);
+  border: 1px solid var(--cai-divider);
+  background: var(--cai-surface-page);
+  color: var(--cai-text-primary);
+  overflow-wrap: anywhere;
+}
+
+.docs-dodont__stage > :where(*) {
+  margin-block: 0;
+}
+
+/* Stand-ins: the component's own classes, held still for a picture */
+.docs-dodont__stage > .cai-platform-search-trigger {
+  justify-self: start;
+}
+
+
+.docs-dodont__stage .docs-dodont__modal {
+  max-inline-size: none;
+  padding: var(--cai-space-md);
+  box-shadow: none;
+}
+
+.docs-dodont__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  border-block-end: 2px solid var(--cai-divider);
+  font-family: var(--cai-font-sans);
+}
+
+.docs-dodont__sidebar {
+  display: grid;
+  gap: var(--cai-space-3xs);
+  padding: var(--cai-space-sm);
+  background: var(--cai-sidebar-bg);
+  color: var(--cai-sidebar-text);
+  font-family: var(--cai-font-sans);
+}
+
+.docs-dodont__tip {
+  display: grid;
+  justify-items: start;
+  gap: var(--cai-space-xs);
+}
+
+.docs-dodont__tip .cai-tooltip__text {
+  position: static;
+  transform: none;
+  visibility: visible;
+  opacity: 1;
+  white-space: normal;
+}
+
+.docs-dodont__stage .docs-dodont__skip {
+  position: static;
+  display: inline-block;
+  justify-self: start;
+  transform: none;
+}
+
+.docs-dodont__shell {
+  display: grid;
+  gap: var(--cai-space-xs);
+  padding: var(--cai-space-md);
+  border: 1px solid var(--cai-divider);
+}
+
+.docs-dodont__label {
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-secondary);
+}
+
+/* Contrast tables: the ratios line up */
+.docs-contrast td:nth-child(n + 3) {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Tokens it uses: the family, then its tokens, wrapping under it when narrow */
+.docs-uses {
+  display: grid;
+  gap: var(--cai-space-xs);
+}
+
+.docs-uses > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--cai-space-sm);
+}
+
+.docs-uses dt {
+  flex: 0 0 11rem;
+  font-weight: 600;
+}
+
+.docs-uses dd {
+  flex: 1 1 20rem;
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
 /* --------------------------------------------------------------------------
    "On this page": a closed <details> under the page head; from 1280px a
    rail at the end of the row, opened by the docs script, with the section
@@ -877,12 +1035,15 @@ h2.docs-demo__title {
    Token specimens
    -------------------------------------------------------------------------- */
 
-/* The layered background shows alpha tokens over the page color */
+/* The layered background shows alpha tokens over the page color. The colour
+   is the content of a swatch, so forced colors keep it (a11y.md HUB-8); the
+   token name and its value are always written next to it as text. */
 .docs-swatch {
   display: block;
   height: var(--cai-control-xl);
   background: linear-gradient(var(--v), var(--v)), var(--cai-surface-page);
   border: 1px solid var(--cai-divider);
+  forced-color-adjust: none;
 }
 
 .docs-ramp {
@@ -912,32 +1073,58 @@ h2.docs-demo__title {
   color: var(--cai-text-secondary);
 }
 
+/* The colour gallery: one card per token, its name, its job, then its value
+   in light, dark and high contrast, each a swatch and the value as text */
 .docs-token-grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--cai-space-xs) var(--cai-space-md);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  gap: var(--cai-space-sm) var(--cai-space-md);
   margin-bottom: var(--cai-space-sm);
 }
 
 .docs-token {
-  display: flex;
-  align-items: center;
-  gap: var(--cai-space-xs);
-  font-family: var(--cai-font-mono);
+  display: grid;
+  gap: var(--cai-space-2xs);
+  align-content: start;
+  padding: var(--cai-space-sm);
+  border: 1px solid var(--cai-divider);
+  background: var(--cai-surface);
+  font-family: var(--cai-font-sans);
   font-size: var(--cai-text-sm);
   overflow-wrap: anywhere;
 }
 
-.docs-token__modes {
-  display: flex;
-  flex-shrink: 0;
+.docs-token > code {
+  font-family: var(--cai-font-mono);
+  font-weight: 600;
+  color: var(--cai-text-primary);
 }
 
-.docs-token__modes .docs-swatch {
+.docs-token__role {
+  margin-block-end: var(--cai-space-2xs);
+  color: var(--cai-text-secondary);
+}
+
+.docs-token__mode {
+  display: flex;
+  align-items: center;
+  gap: var(--cai-space-xs);
+  color: var(--cai-text-secondary);
+}
+
+.docs-token__mode .docs-swatch {
+  flex-shrink: 0;
   width: var(--cai-space-lg);
   height: var(--cai-space-lg);
   border-color: var(--cai-outline);
+}
+
+.docs-token__mode code {
+  margin-inline-start: auto;
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-xs);
+  color: var(--cai-text-primary);
 }
 
 .docs-scopes {

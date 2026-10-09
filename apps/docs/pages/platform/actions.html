@@ -64,7 +64,7 @@ toc: h2,h3
               <li>Each control keeps its own keys: Enter for a link, Enter or Space for a button.</li>
               <li>No role is needed. Add <code>role="group"</code> and a name only if the group needs a label of its own.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -75,12 +75,37 @@ toc: h2,h3
             <ul>
               <li>No more than three actions: with more, the reader cannot tell which one matters.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> The main action first, as the only primary button, and no more than three.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-actions"><button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Save details</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Cancel</button></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Five buttons of the same weight: the reader cannot tell which one matters.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-actions"><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Save</button><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Save as</button><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Export</button><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Share</button><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Print</button></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Put the main action first, as the only primary button.</p>
             <ul>
               <li>Each label starts with a verb and makes sense on its own: "Save details", "Browse the components".</li>
               <li>Use <code>&lt;a&gt;</code> to go somewhere and <code>&lt;button&gt;</code> to do something.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The action group adds no colour of its own: each button keeps the pairs on the <a href="/docs/components/button/#contrast">button page</a>.</p>
+            <ul>
+              <li><strong>Focus:</strong> each button keeps its own ring; the group's gap keeps the rings of neighbours apart.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 1 tokens that the <code>.cai-platform-actions</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-xs</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

@@ -82,7 +82,7 @@ toc: h2,h3
               <li>To link a card, put the link on its title text and keep the rest plain: one tab stop per card.</li>
               <li>Give each card a heading, so screen reader users can move from card to card.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -94,11 +94,36 @@ toc: h2,h3
               <li>For items with an order, use a numbered list.</li>
               <li>For a single item, use a card on its own.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Parallel cards: the same kind of title and one sentence each.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-feature-grid"><div class="cai-card"><p class="cai-card__title">Usage</p><p class="cai-card__body u-mb-0">1.2 million requests this month.</p></div><div class="cai-card"><p class="cai-card__title">Team</p><p class="cai-card__body u-mb-0">Eight members.</p></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Plans the reader compares, value by value, in cards: use a table, with one column per plan.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-feature-grid"><div class="cai-card"><p class="cai-card__title">Team</p><p class="cai-card__body u-mb-0">€20 a month, 10 users, 50 GB.</p></div><div class="cai-card"><p class="cai-card__title">Business</p><p class="cai-card__body u-mb-0">50 GB more, €45 a month and 25 users.</p></div></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Keep the cards parallel: the same heading level and one or two sentences each.</p>
             <ul>
               <li>An even number of items fills the two columns.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The grid adds no colour of its own: the cards in it keep the pairs on the <a href="/docs/components/card/#contrast">card page</a>.</p>
+            <ul>
+              <li><strong>Focus:</strong> the grid takes none; what is inside keeps its own ring.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 1 tokens that the <code>.cai-platform-feature-grid</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-sm</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

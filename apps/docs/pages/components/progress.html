@@ -15,7 +15,7 @@ toc: h2,h3
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>None known.</p>
+          <p>In high contrast the done part and the track are only 1.5:1 apart, under the 3:1 of WCAG 1.4.11 (Non-text contrast) when the bar alone gives the value. Write the figure in words next to the bar, as in the example. Listed in the <a href="/docs/accessibility/">accessibility statement</a>.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Progress documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -59,7 +59,7 @@ toc: h2,h3
               <li>Name it with a <code>&lt;label&gt;</code>, or an <code>aria-label</code> when no label is shown.</li>
               <li>Screen readers do not announce every change. Announce the start and the end in a polite live region (<code>role="status"</code>).</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -71,12 +71,52 @@ toc: h2,h3
               <li>For a measure in a known range, such as storage used, use a <code>&lt;meter&gt;</code> (<a href="/docs/components/form/">form fields</a>).</li>
               <li>Do not use it as decoration.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A task with an end, named with the figure: “Uploading report.pdf, 25%”.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <p class="docs-dodont__label">Uploading report.pdf, 25%</p><progress class="cai-progress" value="25" max="100"></progress>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Storage used is a measure, not a task: a progress bar suggests it will finish. Use a meter.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <p class="docs-dodont__label">Storage used, 80%</p><progress class="cai-progress" value="80" max="100"></progress>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Say what is happening, not just the number: "Uploading report.pdf".</p>
             <ul>
               <li>Put the figure in the name or next to the bar: "Upload, 25%".</li>
               <li>When it ends, say so: "Upload complete".</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The done part is the brand colour on a track of the divider colour.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Progress contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Done part against the track</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-divider</code></div></td><td data-label="Light"><div>4.7:1</div></td><td data-label="Dark"><div>6.7:1</div></td><td data-label="High contrast"><div><strong>1.5:1, fails</strong></div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Done part against the page</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the bar takes none.</li>
+              <li><strong>Not colour alone:</strong> put the figure in words next to the bar or in its name, so the value never depends on telling the two parts of the bar apart.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 5 tokens that <code>components/progress.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-slow</code>, <code>--cai-easing-enter</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

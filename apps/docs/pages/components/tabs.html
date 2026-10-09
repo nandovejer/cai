@@ -84,7 +84,7 @@ initTabs();</code></pre>
               <li>In right-to-left text, Left and Right follow the reading direction.</li>
               <li>Name the tab row with <code>aria-label</code>; the name stays when it becomes a tab list.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -97,12 +97,55 @@ initTabs();</code></pre>
               <li>For steps in order, use separate pages.</li>
               <li>More than five or six tabs do not fit a phone: use sections with headings.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Tabs named after their panels, in a word or two.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="docs-dodont__tabs"><span class="cai-tab is-active">Summary</span><span class="cai-tab">Settings</span><span class="cai-tab">Logs</span></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Numbered steps as tabs: a process in order belongs on separate pages, and nothing stops the reader from skipping a step.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="docs-dodont__tabs"><span class="cai-tab is-active">1. Account</span><span class="cai-tab">2. Billing</span><span class="cai-tab">3. Confirm</span></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Name each tab after its panel, in one or two words.</p>
             <ul>
               <li>Sentence case, no verbs: "Summary", "Settings".</li>
               <li>Use the same name for the panel's heading.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Tabs are secondary text; the current one is brand text over a brand underline.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Tabs contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Tab</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Tab, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current tab and its underline</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> a 2 px <code>--cai-focus-ring</code> outline drawn inside the tab, so the scrolling row never cuts it.</li>
+              <li><strong>Not colour alone:</strong> the current tab has a 2 px underline; the row's line under the others is <code>--cai-divider</code>.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 10 tokens that <code>components/tabs.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-md</code>, <code>--cai-space-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

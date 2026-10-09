@@ -87,7 +87,7 @@ toc: h2,h3
               <li>Landmarks come from the native elements: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>. Do not add <code>role</code> to them.</li>
               <li>Put a <a href="/docs/platform/skip-link/">skip link</a> first in <code>&lt;body&gt;</code>.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -99,11 +99,52 @@ toc: h2,h3
               <li>Do not nest one page shell in another.</li>
               <li>Do not use the gradient behind long text: a flat surface is easier to read.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> The gradient behind a short page: a title, a line and an action.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-page--gradient docs-dodont__shell"><p class="cai-platform-page-header__title">Welcome back</p><p class="u-mb-0">Pick up where you left off.</p></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The gradient behind long text: the background changes under every line, and a flat surface is easier to read.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-page--gradient docs-dodont__shell"><p class="u-mb-0">The plan renews on the first of the month. You can cancel before then, from the billing page. Unused days are not refunded, and invoices stay available for seven years. Your projects and their history are kept for thirty days after the plan ends.</p></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>One <code>&lt;main&gt;</code> per page, with the <code>id</code> the skip link points to.</p>
             <ul>
               <li>Start <code>&lt;main&gt;</code> with the <a href="/docs/platform/page-header/">page header</a>, so the first heading is the <code>&lt;h1&gt;</code>.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Text on the gradient keeps its contrast at both ends: the brand tint at the top start and the muted surface at the bottom.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Page shell contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Text, top of the gradient</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>18.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text, bottom of the gradient</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>18.4:1</div></td><td data-label="Dark"><div>13.2:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary text, top</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>8.7:1</div></td><td data-label="Dark"><div>9.9:1</div></td><td data-label="High contrast"><div>18.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary text, bottom</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>8.7:1</div></td><td data-label="Dark"><div>9.3:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the shell takes none; its skip link is the first thing Tab reaches.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 9 tokens that the <code>.cai-platform-page</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-subtle"><code>--cai-brand-subtle</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="/docs/tokens/color/#cai-surface-page"><code>--cai-surface-page</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xl</code>, <code>--cai-space-3xl</code>, <code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-xl</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layers and breakpoints</a></dt><dd><code>--cai-content-max</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

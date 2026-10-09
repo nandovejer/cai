@@ -65,7 +65,7 @@ toc: h2,h3
               <li>The result is announced in a polite live region.</li>
               <li>The focus ring on the button uses the primary text colour, for contrast on the strong surface.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -77,11 +77,52 @@ toc: h2,h3
               <li>For code or output, use a <a href="/docs/components/code/">code block</a>.</li>
               <li>For a command the reader must change before running it, say what to change, next to it.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Say what to change, next to a command the reader must edit.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <p class="docs-dodont__label">Replace &lt;token&gt; with your access token.</p><div class="cai-platform-command-block u-mb-0"><code class="cai-platform-command-block__cmd"><span class="cai-platform-command-block__prefix">$ </span>npm config set _authToken &lt;token&gt;</code><button class="cai-copy-btn" type="button">Copy</button></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The same command with no word about the placeholder: the reader copies, pastes and runs it as it is.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-command-block u-mb-0"><code class="cai-platform-command-block__cmd"><span class="cai-platform-command-block__prefix">$ </span>npm config set _authToken &lt;token&gt;</code><button class="cai-copy-btn" type="button">Copy</button></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Show the command exactly as it should run.</p>
             <ul>
               <li>Name the copy button by what it copies: "Copy the install command".</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The command is primary text on the strong surface; the prompt sign is secondary text.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Command block contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Command</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>8.7:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Prompt sign</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>7.7:1</div></td><td data-label="Dark"><div>6.1:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Copy button focus ring</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>8.7:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the copy button's ring takes <code>--cai-text-primary</code> here, so it stays clear on the strong surface.</li>
+              <li><strong>Not colour alone:</strong> the prompt sign is hidden from screen readers and is not copied.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 8 tokens that the <code>.cai-platform-command-block</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-lg</code>, <code>--cai-space-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-md</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

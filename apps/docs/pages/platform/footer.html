@@ -68,7 +68,7 @@ toc: h2,h3
               <li>A <code>&lt;footer&gt;</code> that is a direct child of <code>&lt;body&gt;</code> is the contentinfo landmark.</li>
               <li>Keep the links in the same order on every page.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -79,11 +79,37 @@ toc: h2,h3
             <ul>
               <li>Main navigation goes in the header or a <a href="/docs/components/sidebar/">sidebar</a>.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Two to four links that say where they go.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-footer"><p class="u-text-muted">Acme Inc.</p><div class="cai-platform-actions"><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Accessibility statement</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Status</button></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The main navigation in the footer: the reader has to reach the end of the page to move around.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-platform-footer"><p class="u-text-muted">Acme Inc.</p><div class="cai-platform-actions"><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Dashboard</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Projects</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Billing</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Settings</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Team</button></div></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Keep it short: who made it, the licence, and two to four links.</p>
             <ul>
               <li>Each link says where it goes: "Accessibility statement", not "Legal".</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The footer adds only a top rule (<code>--cai-divider</code>), which is decorative; its text and links keep their own colours.</p>
+            <ul>
+              <li><strong>Focus:</strong> links and buttons in it keep their own ring.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 4 tokens that the <code>.cai-platform-footer</code> rules of platform's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-xl</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

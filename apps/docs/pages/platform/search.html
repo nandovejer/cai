@@ -119,6 +119,21 @@ toc: h2,h3
               <li>Search needs typing, and a name the reader may not know.</li>
               <li>It matches titles and headings only: it cannot search inside long texts or across many sites.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Say what is searched, in a short label that fits every language.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <span class="cai-platform-search-trigger"><svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="cai-platform-search-trigger__label">Search docs…</span><kbd class="cai-platform-search-trigger__key">Ctrl K</kbd></span>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The magnifier alone on a wide screen: the reader has to guess what it searches, and the shortcut hint is gone. Keep the icon-only trigger for narrow screens.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <span class="cai-platform-search-trigger"><svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></span>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Every text is in the markup, so it is yours to write, in the page's language.</p>
             <ul>
@@ -127,7 +142,36 @@ toc: h2,h3
               <li>Point the fallback link and the line under the results at the same index page.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
-            <p>The trigger’s text is full-contrast text, not placeholder grey, inside a field-like border. The focused result has the same focus ring as every link; in forced colors the dialog keeps a border.</p>
+            <p>The trigger's text is secondary text on the field colour, not placeholder grey; results sit on the dialog's surface.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Search contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Trigger text</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Trigger text, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Trigger border</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Result title</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Result title, hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.2:1</div></td><td data-label="Dark"><div>6.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Group heading and result page</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the trigger has a 2 px <code>--cai-focus-ring</code> outline, 2 px outside; the focused result has the ring every link has.</li>
+              <li><strong>Edges:</strong> in forced colors the dialog keeps a real border.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 20 tokens that <code>components/search.css</code> of platform reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-input-bg"><code>--cai-input-bg</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-control-sm</code>, <code>--cai-space-2xs</code>, <code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-lg</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code>, <code>--cai-radius-sm</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

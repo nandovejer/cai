@@ -75,7 +75,7 @@ toc: h2,h3
               <li>Name the <code>&lt;nav&gt;</code> "Breadcrumb" with <code>aria-label</code>, so it differs from the main navigation.</li>
               <li><code>aria-current="page"</code> tells screen readers which item is the current page.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -87,12 +87,54 @@ toc: h2,h3
               <li>For the main sections of a site, use a <a href="/docs/components/sidebar/">sidebar</a> or a header navigation.</li>
               <li>For steps in a process, show the step number in the page heading instead.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Use the titles of the pages, and end with the current page as text.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-breadcrumb"><span class="cai-breadcrumb__item">Docs</span><span class="cai-breadcrumb__sep">/</span><span class="cai-breadcrumb__item">Components</span><span class="cai-breadcrumb__sep">/</span><span class="cai-breadcrumb__item" aria-current="page">Button</span></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Internal names (“UI kit”, “cai-btn”) instead of the titles the reader saw on the way.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-breadcrumb"><span class="cai-breadcrumb__item">Home</span><span class="cai-breadcrumb__sep">/</span><span class="cai-breadcrumb__item">UI kit</span><span class="cai-breadcrumb__sep">/</span><span class="cai-breadcrumb__item" aria-current="page">cai-btn</span></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Use the title of each page, shortened if it is long.</p>
             <ul>
               <li>Start at the home or the top of the section.</li>
               <li>End with the current page, as text, not as a link.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Links are secondary text; the current page is primary text.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Breadcrumb contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current page</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Separator</div></td><td data-label="Colour on background"><div><code>--cai-text-muted</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> each link has the shared link ring, a 2 px <code>--cai-focus-ring</code> outline 2 px outside the text.</li>
+              <li><strong>Not colour alone:</strong> the current page is not a link, and it is heavier (weight 500).</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 6 tokens that <code>components/breadcrumb.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-text-muted"><code>--cai-text-muted</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-sm</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

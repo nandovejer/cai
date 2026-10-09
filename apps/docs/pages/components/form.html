@@ -261,7 +261,7 @@ toc: h2,h3
               <li>Group related controls in a <code>&lt;fieldset&gt;</code> with a <code>&lt;legend&gt;</code>, or a <code>role="group"</code> named with <code>aria-labelledby</code>.</li>
               <li>Write "Error: " before the error text, hidden visually with <code>.u-sr-only</code> if you like.</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -279,6 +279,23 @@ toc: h2,h3
               <li>Do not use a switch inside a form that is sent with a button: use a checkbox.</li>
               <li>To show how far a task has got, use <a href="/docs/components/progress/">progress</a>, not a meter.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A checkbox in a form that is sent with a button: nothing changes until “Save preferences”.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-check-item"><input type="checkbox" id="dd-form-do" checked><label for="dd-form-do">Email me about new releases</label></div>
+                  <div class="o-row"><button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Save preferences</button></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A switch in the same form: a switch promises an instant change, so the reader does not know the button is still needed.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <label class="cai-toggle"><input class="cai-toggle__input" type="checkbox" role="switch" checked><span class="cai-toggle__track"><span class="cai-toggle__thumb"></span></span><span class="cai-toggle__label">Email me about new releases</span></label>
+                  <div class="o-row"><button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Save preferences</button></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Every control has a visible label that names what to enter.</p>
             <ul>
@@ -287,6 +304,42 @@ toc: h2,h3
               <li>An error says what is wrong and how to fix it: "Use letters, numbers and dashes only."</li>
               <li>If you mark required fields with "*", say once, above the form, what it means.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Labels and hints are secondary text on the page; what the reader types is primary text on the field.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Form fields contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Label and hint</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Typed text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Placeholder</div></td><td data-label="Colour on background"><div><code>--cai-text-muted</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Error message</div></td><td data-label="Colour on background"><div><code>--cai-color-danger</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.9:1</div></td><td data-label="Dark"><div>14.9:1</div></td><td data-label="High contrast"><div>9.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Field bottom border</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checkbox and radio border</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>3.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checked box and switch on</div></td><td data-label="Colour on background"><div><code>--cai-brand-fill</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>3.1:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Switch track, off</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>3.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Switch thumb, on</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>5.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> a 2 px <code>--cai-focus-ring</code> outline, 2 px outside the field; the bottom border of a text field also turns to the ring colour, 2 px thick. Checkboxes, radios and the switch track get the same outline.</li>
+              <li><strong>Not colour alone:</strong> an invalid field has a 2 px bottom border and an error message in words; a read-only field has a dashed bottom border; the switch thumb moves.</li>
+              <li><strong>Target:</strong> text fields are 44 px high.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 33 tokens that <code>components/form.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-fill"><code>--cai-brand-fill</code></a>, <a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-color-danger"><code>--cai-color-danger</code></a>, <a href="/docs/tokens/color/#cai-color-success"><code>--cai-color-success</code></a>, <a href="/docs/tokens/color/#cai-color-warning"><code>--cai-color-warning</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-input-bg"><code>--cai-input-bg</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="/docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="/docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="/docs/tokens/color/#cai-text-muted"><code>--cai-text-muted</code></a>, <a href="/docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-control-md</code>, <code>--cai-space-2xs</code>, <code>--cai-space-3xs</code>, <code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xl</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-control</code>, <code>--cai-text-md</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-base</code>, <code>--cai-duration-fast</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

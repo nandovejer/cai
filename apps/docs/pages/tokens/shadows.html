@@ -7,7 +7,7 @@ group: families
 files: tokens.json → shadow
 -->
     <div class="docs-block" id="t-shadow">
-          <p>The higher the surface, the larger the shadow. Never use a shadow as the only edge of a surface: pair it with a border, because shadows disappear in forced colors.</p>
+          <p>The higher the surface, the larger the shadow. Never use a shadow as the only edge of a surface: pair it with a border, because shadows disappear in forced colors. Shadows are the same in every mode.</p>
           <ul>
             <li><code class="cai-code-inline">--cai-shadow-sm</code>: a card under the pointer.</li>
             <li><code class="cai-code-inline">--cai-shadow-md</code>: tooltips and toasts.</li>
@@ -16,10 +16,10 @@ files: tokens.json → shadow
           </ul>
           <div class="docs-demo__stage">
             <div class="o-grid docs-shadows">
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-sm)">--cai-shadow-sm</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-md)">--cai-shadow-md</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-lg)">--cai-shadow-lg</div>
-              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-icon)">--cai-shadow-icon</div>
+              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-sm)"><code>--cai-shadow-sm</code><br>0 1px 2px rgba(0,0,0,.15), 0 0 1px rgba(0,0,0,.1)</div>
+              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-md)"><code>--cai-shadow-md</code><br>0 4px 8px rgba(0,0,0,.2), 0 2px 4px rgba(0,0,0,.12)</div>
+              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-lg)"><code>--cai-shadow-lg</code><br>0 12px 24px rgba(0,0,0,.24), 0 6px 12px rgba(0,0,0,.12)</div>
+              <div class="docs-box docs-box--shadow" style="--v: var(--cai-shadow-icon)"><code>--cai-shadow-icon</code><br>0 2px 8px rgba(0,0,0,.5)</div>
             </div>
           </div>
         

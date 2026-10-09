@@ -84,7 +84,7 @@ toc: h2,h3
               <li>The text carries the meaning; the colour adds nothing a screen reader needs.</li>
               <li>A count needs context: put the badge inside the link or heading it counts, and add the unit as visually hidden text if it is not on screen ("3 unread").</li>
             </ul>
-            <p class="docs-view__xref"><a href="#content">Writing the content</a> is in the Design tab.</p>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="cai-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
@@ -97,12 +97,61 @@ toc: h2,h3
               <li>For a sentence, use an <a href="/docs/components/alert/">alert</a>.</li>
               <li>Do not give teal or purple a status meaning: they are for categories.</li>
             </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Status colours for status: green running, yellow degraded, red stopped, each with its word.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-row"><span class="cai-tag cai-tag--green cai-tag--dot">Running</span><span class="cai-tag cai-tag--yellow cai-tag--dot">Degraded</span><span class="cai-tag cai-tag--red cai-tag--dot">Stopped</span></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Teal and purple as statuses: they are for categories, so the reader cannot guess that teal means running.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-row"><span class="cai-tag cai-tag--teal cai-tag--dot">Running</span><span class="cai-tag cai-tag--purple cai-tag--dot">Stopped</span></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>One or two words, in sentence case: "Running", "Degraded".</p>
             <ul>
               <li>Never only a colour name: the reader may not see the colour.</li>
               <li>Badges hold numbers; cap them ("99+") so they keep their size.</li>
             </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Each tag puts its text colour on its own tint; badges put white text on a fill.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Tag and badge contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Gray tag</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>7.7:1</div></td><td data-label="Dark"><div>6.1:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Blue tag</div></td><td data-label="Colour on background"><div><code>--cai-color-info</code> on <code>--cai-color-info-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.6:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Green tag</div></td><td data-label="Colour on background"><div><code>--cai-color-success</code> on <code>--cai-color-success-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>8.4:1</div></td><td data-label="Dark"><div>11.8:1</div></td><td data-label="High contrast"><div>8.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Red tag</div></td><td data-label="Colour on background"><div><code>--cai-color-danger</code> on <code>--cai-color-danger-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.4:1</div></td><td data-label="Dark"><div>12.8:1</div></td><td data-label="High contrast"><div>9.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Yellow tag</div></td><td data-label="Colour on background"><div><code>--cai-color-warning</code> on <code>--cai-color-warning-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.8:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>6.8:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Teal tag</div></td><td data-label="Colour on background"><div><code>--cai-color-teal</code> on <code>--cai-color-teal-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>8.4:1</div></td><td data-label="Dark"><div>11.7:1</div></td><td data-label="High contrast"><div>8.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Purple tag</div></td><td data-label="Colour on background"><div><code>--cai-color-purple</code> on <code>--cai-color-purple-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.7:1</div></td><td data-label="Dark"><div>11.5:1</div></td><td data-label="High contrast"><div>9.7:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Primary badge</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>5.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Gray badge</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-outline</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.3:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Danger badge</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-color-danger-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>6.0:1</div></td><td data-label="High contrast"><div>9.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> tags and badges take none: they are not controls.</li>
+              <li><strong>Not colour alone:</strong> the word carries the status; <code>.cai-tag--dot</code> adds a shape for the status tags.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 23 tokens that <code>components/tag.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-fill"><code>--cai-brand-fill</code></a>, <a href="/docs/tokens/color/#cai-color-danger"><code>--cai-color-danger</code></a>, <a href="/docs/tokens/color/#cai-color-danger-bg"><code>--cai-color-danger-bg</code></a>, <a href="/docs/tokens/color/#cai-color-danger-fill"><code>--cai-color-danger-fill</code></a>, <a href="/docs/tokens/color/#cai-color-info"><code>--cai-color-info</code></a>, <a href="/docs/tokens/color/#cai-color-info-bg"><code>--cai-color-info-bg</code></a>, <a href="/docs/tokens/color/#cai-color-purple"><code>--cai-color-purple</code></a>, <a href="/docs/tokens/color/#cai-color-purple-bg"><code>--cai-color-purple-bg</code></a>, <a href="/docs/tokens/color/#cai-color-success"><code>--cai-color-success</code></a>, <a href="/docs/tokens/color/#cai-color-success-bg"><code>--cai-color-success-bg</code></a>, <a href="/docs/tokens/color/#cai-color-teal"><code>--cai-color-teal</code></a>, <a href="/docs/tokens/color/#cai-color-teal-bg"><code>--cai-color-teal-bg</code></a>, <a href="/docs/tokens/color/#cai-color-warning"><code>--cai-color-warning</code></a>, <a href="/docs/tokens/color/#cai-color-warning-bg"><code>--cai-color-warning-bg</code></a>, <a href="/docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="/docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="/docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
+            </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
     </div>

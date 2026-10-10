@@ -1,0 +1,182 @@
+/* --------------------------------------------------------------------------
+   CAI Component: select
+   The native <select>, closed box styled with tokens; the open list is the
+   system's. Where `appearance: base-select` exists, the list is styled too.
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+/* Layer 1, every browser: the closed box. No wrapper and no pseudo-element
+   (a select cannot have one): the arrow is two gradients in currentcolor, so
+   it follows the text colour, the disabled state and forced colors. */
+.cai-select {
+  appearance: none;
+  display: block;
+  inline-size: 100%;
+  min-block-size: var(--cai-control-lg); /* well above the 24px of WCAG 2.5.8 */
+  margin: 0;
+  padding-block: var(--cai-space-2xs);
+  padding-inline: var(--cai-space-sm) var(--cai-space-xl);
+  border: none;
+  border-block-end: 1px solid var(--cai-input-border);
+  border-radius: 0;
+  background-color: var(--cai-input-bg);
+  background-image:
+    linear-gradient(to top right, transparent 50%, currentcolor 50%),
+    linear-gradient(to top left, transparent 50%, currentcolor 50%);
+  background-position: calc(100% - 1.2em) 50%, calc(100% - 0.75em) 50%;
+  background-size: 0.45em 0.45em;
+  background-repeat: no-repeat;
+  color: var(--cai-text-primary);
+  color-scheme: light; /* the native list follows the mode */
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-control);
+  cursor: pointer;
+}
+
+[data-theme="dark"] .cai-select {
+  color-scheme: dark;
+}
+
+/* The arrow sits at the inline end: mirrored in right-to-left text */
+.cai-select:dir(rtl) {
+  background-position: 0.75em 50%, 1.2em 50%;
+}
+
+/* A list box (multiple, or size above 1) has no arrow and needs a full border
+   to be seen */
+.cai-select[multiple],
+.cai-select[size]:not([size="1"]) {
+  background-image: none;
+  padding-inline-end: var(--cai-space-sm);
+  border: 1px solid var(--cai-input-border);
+}
+
+.cai-select[multiple] option,
+.cai-select[size]:not([size="1"]) option {
+  padding: var(--cai-space-2xs) var(--cai-space-xs);
+  min-block-size: 1.5rem;
+}
+
+.cai-select:hover {
+  border-color: var(--cai-text-primary);
+}
+
+/* Same ring as buttons, links and inputs: one focus appearance everywhere */
+.cai-select:focus-visible {
+  border-block-end: 2px solid var(--cai-focus-ring);
+  outline: 2px solid var(--cai-focus-ring);
+  outline-offset: 2px;
+}
+
+/* A thicker border, as well as the colour, and the error text of the field */
+.cai-select[aria-invalid="true"],
+.cai-select:user-invalid {
+  border-block-end: 2px solid var(--cai-color-danger);
+}
+
+/* Text keeps 3:1, and the dashed border tells the state apart without colour */
+.cai-select:disabled {
+  color: var(--cai-text-disabled);
+  border-block-end-style: dashed;
+  cursor: not-allowed;
+}
+
+/* Forced colors drops gradients, and the arrow is one: the box takes the
+   adjustment into its own hands, with system colors only */
+@media (forced-colors: active) {
+  .cai-select {
+    forced-color-adjust: none;
+    border: 1px solid ButtonText;
+    background-color: Field;
+    color: FieldText;
+  }
+
+  .cai-select:disabled {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  .cai-select:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* Layer 2, where the browser can style the open list. Everything that is not
+   in the browser's own list lives here; nothing above depends on it. */
+@supports (appearance: base-select) {
+  .cai-select:not([multiple], [size]:not([size="1"])),
+  .cai-select::picker(select) {
+    appearance: base-select;
+  }
+
+  /* The picker icon of the browser takes the place of the gradient arrow, and
+     sits at the inline end of a flex row with the chosen text */
+  .cai-select:not([multiple], [size]:not([size="1"])) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-image: none;
+    padding-inline-end: var(--cai-space-sm);
+  }
+
+  .cai-select::picker-icon {
+    color: currentcolor;
+  }
+
+  .cai-select::picker(select) {
+    padding: var(--cai-space-3xs);
+    border: 1px solid var(--cai-input-border);
+    border-radius: var(--cai-radius-sm);
+    background-color: var(--cai-surface);
+    color: var(--cai-text-primary);
+    box-shadow: var(--cai-shadow-md);
+  }
+
+  /* Every option keeps its text: an icon or a swatch never replaces it */
+  .cai-select:not([multiple], [size]:not([size="1"])) option {
+    display: flex;
+    align-items: center;
+    gap: var(--cai-space-xs);
+    min-block-size: var(--cai-control-md);
+    padding: var(--cai-space-2xs) var(--cai-space-sm);
+    border-radius: var(--cai-radius-sm);
+  }
+
+  .cai-select:not([multiple], [size]:not([size="1"])) option:hover {
+    background-color: var(--cai-surface-muted);
+  }
+
+  .cai-select:not([multiple], [size]:not([size="1"])) option:focus-visible {
+    outline: 2px solid var(--cai-focus-ring);
+    outline-offset: -2px;
+  }
+
+  /* The chosen option is heavier and has a check mark: not colour alone */
+  .cai-select:not([multiple], [size]:not([size="1"])) option:checked {
+    font-weight: 600;
+  }
+
+  .cai-select:not([multiple], [size]:not([size="1"])) option::checkmark {
+    color: currentcolor;
+  }
+
+  .cai-select:not([multiple], [size]:not([size="1"])) option:disabled {
+    color: var(--cai-text-disabled);
+    cursor: not-allowed;
+  }
+
+  @media (forced-colors: active) {
+    .cai-select::picker(select) {
+      border-color: CanvasText;
+      background-color: Canvas;
+      color: CanvasText;
+    }
+
+    .cai-select:not([multiple], [size]:not([size="1"])) option:hover,
+    .cai-select:not([multiple], [size]:not([size="1"])) option:checked {
+      background-color: Highlight;
+      color: HighlightText;
+    }
+  }
+}

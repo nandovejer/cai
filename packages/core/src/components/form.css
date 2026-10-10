@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
    CAI Component: form
-   Form controls: field, input, select, textarea, range, color, file, date, fieldset, meter, output, checkbox, radio, toggle
+   Form controls: field, input, textarea, range, color, file, date, fieldset, meter, output, checkbox, radio, toggle
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
@@ -84,27 +84,6 @@
 .cai-input[readonly] {
   opacity: 0.7;
   border-bottom-style: dashed;
-}
-
-.cai-select-wrap {
-  position: relative;
-}
-
-.cai-select-wrap::after {
-  content: "▾";
-  position: absolute;
-  inset-inline-end: var(--cai-space-sm);
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
-  color: var(--cai-text-secondary);
-  font-size: var(--cai-text-xs);
-}
-
-.cai-select-wrap .cai-input {
-  appearance: none;
-  cursor: pointer;
-  padding-inline-end: var(--cai-space-xl);
 }
 
 /* --------------------------------------------------------------------------

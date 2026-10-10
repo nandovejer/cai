@@ -1,0 +1,198 @@
+<!-- cai:page
+title: Select
+description: A native drop-down list for choosing one option from a long list, with the closed box styled by tokens.
+area: components
+group: actions
+files: components/select.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-select">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-field">
+              <label class="cai-field__label" for="s-country">Country</label>
+              <select class="cai-select" id="s-country" name="country">
+                <option value="">Select a country</option>
+                <option value="de">Germany</option>
+                <option value="es">Spain</option>
+                <option value="fr">France</option>
+                <option value="it">Italy</option>
+                <option value="pt">Portugal</option>
+                <option value="se">Sweden</option>
+                <option value="gb">United Kingdom</option>
+              </select>
+              <p class="cai-field__helper" id="s-country-help">Choose where you live.</p>
+            </div>
+            <div class="cai-field">
+              <label class="cai-field__label" for="s-error">Country of birth</label>
+              <select class="cai-select" id="s-error" name="birth" aria-invalid="true" aria-describedby="s-error-text">
+                <option value="" selected>Select a country</option>
+                <option value="es">Spain</option>
+                <option value="fr">France</option>
+              </select>
+              <p class="cai-field__error" id="s-error-text"><span class="u-sr-only">Error: </span>Select a country of birth.</p>
+            </div>
+            <div class="cai-field">
+              <label class="cai-field__label" for="s-disabled">Region</label>
+              <select class="cai-select" id="s-disabled" name="region" disabled>
+                <option>Choose a country first</option>
+              </select>
+            </div>
+            <div class="cai-field">
+              <label class="cai-field__label" for="s-multiple">Languages</label>
+              <select class="cai-select" id="s-multiple" name="languages" multiple size="4">
+                <option value="de">German</option>
+                <option value="en">English</option>
+                <option value="es">Spanish</option>
+                <option value="fr">French</option>
+                <option value="it">Italian</option>
+              </select>
+            </div>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>The open list looks different in each browser and system. This is intended.</p>
+          <ul>
+            <li>The closed box is the same everywhere. The list that opens from it is drawn by the browser or the operating system, and it is the one the reader already knows.</li>
+            <li>Browsers that support <code>appearance: base-select</code> (Chrome and Edge 135 and later, Safari 27 and later) also get the list in CAI's colors, shape and spacing. Firefox shows its own list.</li>
+            <li>On phones, the system's own picker opens, and CAI cannot style it.</li>
+          </ul>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Select documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-select" aria-label="Copy the select markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Select markup"><code id="code-select">&lt;div class=&quot;cai-field&quot;&gt;
+  &lt;label class=&quot;cai-field__label&quot; for=&quot;country&quot;&gt;Country&lt;/label&gt;
+  &lt;select class=&quot;cai-select&quot; id=&quot;country&quot; name=&quot;country&quot;&gt;
+    &lt;option value=&quot;&quot;&gt;Select a country&lt;/option&gt;
+    &lt;option value=&quot;de&quot;&gt;Germany&lt;/option&gt;
+    &lt;option value=&quot;es&quot;&gt;Spain&lt;/option&gt;
+    &lt;option value=&quot;fr&quot;&gt;France&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One class, on the <code>&lt;select&gt;</code> itself. There is no wrapper and no modifier: the state comes from the native attributes.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Select classes and attributes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-select</code></div></td><td data-label="What it does"><div>The closed box: 44 px high, a bottom border and an arrow at the end of the line</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>aria-invalid="true"</code></div></td><td data-label="What it does"><div>The error state: a thicker border in the danger color. Pair it with the error text</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>disabled</code></div></td><td data-label="What it does"><div>Disabled text and a dashed border</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>multiple</code>, <code>size</code></div></td><td data-label="What it does"><div>A list that stays open, with a full border and no arrow</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>&lt;optgroup label&gt;</code></div></td><td data-label="What it does"><div>A labelled set of options</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>A native <code>&lt;select&gt;</code> styled by <code>components/select.css</code>, in two layers. No JavaScript.</p>
+            <ul>
+              <li><strong>The closed box, in every browser.</strong> Border, height, type and colors come from tokens. The arrow is two gradients in <code>currentcolor</code>, so it follows the text color, the disabled state and forced colors. It sits at the inline end, so it moves to the left in right-to-left text.</li>
+              <li><strong>The open list, where the browser can.</strong> Inside <code>@supports (appearance: base-select)</code> the list, its options and the check mark are styled too. Outside it nothing changes.</li>
+              <li><code>color-scheme</code> is set from the theme, so the system's own list opens in the right mode.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the select is a native element and CAI adds no script to it.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The native keys apply, and which ones open the list differs a little between systems.</p>
+            <ul>
+              <li>Tab moves to the select. Enter or Space opens the list, and Escape closes it without a change.</li>
+              <li>Up and Down move through the options, and typing the first letters jumps to a match.</li>
+              <li>Give it a visible <code>&lt;label for&gt;</code>. Add no role: the element already has its semantics.</li>
+              <li>For an error, set <code>aria-invalid="true"</code> and point <code>aria-describedby</code> at the error text.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a select when the reader must choose one option from a long list they already know the answer to.</p>
+            <ul>
+              <li>A country, a year, a time zone: more than six options, one answer.</li>
+              <li>The options are short and the reader can scan them in order.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>A select hides the options until the reader opens it, and some people find that hard. The <a href="https://design-system.service.gov.uk/components/select/">GOV.UK Design System</a> says to use it as a last resort. The rule of six is CAI's own: that guide gives no number.</p>
+            <ul>
+              <li>With six options or fewer, use <a href="/docs/components/form/">radio buttons</a>: every option stays in view.</li>
+              <li>To choose several, use <a href="/docs/components/form/">checkboxes</a>.</li>
+              <li>Before you use a long list, ask a question that cuts it down.</li>
+              <li>Never build your own listbox from <code>&lt;div&gt;</code> elements, or hide the select behind a copy of it.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Use a select for a long list, with a visible label that says what to choose.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-field">
+                    <div class="cai-field__label">Country</div>
+                    <select class="cai-select"><option>Select a country</option><option>Germany</option><option>Spain</option></select>
+                  </div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Hide three options in a select. Radio buttons show them all at once.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-field">
+                    <div class="cai-field__label">Delivery</div>
+                    <select class="cai-select"><option>Standard</option><option>Express</option><option>Collect</option></select>
+                  </div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <ul>
+              <li>The label says what to choose, as a noun: "Country", not "Please select".</li>
+              <li>The first option is a prompt such as "Select a country", with an empty value, so a required field is not answered by default.</li>
+              <li>Write each option in sentence case and put them in an order the reader can predict, such as alphabetical.</li>
+              <li>Give every option text. An icon or a color swatch can go with it, never instead of it.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The box and its list use the same input and surface colors as the other form fields.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Select contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Text and arrow</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Disabled text</div></td><td data-label="Colour on background"><div><code>--cai-text-disabled</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.4:1</div></td><td data-label="High contrast"><div>5.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Error border</div></td><td data-label="Colour on background"><div><code>--cai-color-danger</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>9.9:1</div></td><td data-label="Dark"><div>14.9:1</div></td><td data-label="High contrast"><div>9.9:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Open list text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Option under the pointer</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>18.4:1</div></td><td data-label="Dark"><div>13.2:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Disabled option</div></td><td data-label="Colour on background"><div><code>--cai-text-disabled</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.4:1</div></td><td data-label="High contrast"><div>5.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the select has the shared 2 px <code>--cai-focus-ring</code> outline, 2 px outside the box, and a thicker bottom border.</li>
+              <li><strong>Not colour alone:</strong> an error has a thicker border and the error text; a disabled select has a dashed border; the chosen option in the open list is bold and has a check mark.</li>
+              <li><strong>Forced colors:</strong> the border, the arrow and the text take the system colors, so they stay visible.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 19 tokens that <code>components/select.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-color-danger"><code>--cai-color-danger</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-input-bg"><code>--cai-input-bg</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface"><code>--cai-surface</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="/docs/tokens/color/#cai-text-disabled"><code>--cai-text-disabled</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-control-md</code>, <code>--cai-space-2xs</code>, <code>--cai-space-3xs</code>, <code>--cai-space-sm</code>, <code>--cai-space-xl</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-control</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-md</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

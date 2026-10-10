@@ -419,7 +419,11 @@ export function renderNav(site, page) {
   return `    <ul class="docs-nav">\n${items.join("\n")}\n    </ul>`;
 }
 
-/** The breadcrumb: Docs › Area › Page. None on the hub and the not-found page. */
+/**
+ * The breadcrumb: Docs › Area › Page, as the APG pattern has it (a labelled
+ * nav, an ordered list, aria-current="page" on the last item). None on the
+ * hub and the not-found page.
+ */
 export function renderBreadcrumb(site, page) {
   if (page.route === DOCS_ROUTE || page.route === NOT_FOUND_ROUTE) return "";
   const area = areaOf(site, page);
@@ -428,8 +432,8 @@ export function renderBreadcrumb(site, page) {
     trail.push(link(areaRoute(area), area.label, ' class="cai-breadcrumb__item"'));
   }
   trail.push(`<span class="cai-breadcrumb__item" aria-current="page">${escapeHtml(page.meta.title)}</span>`);
-  const sep = '\n        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>\n        ';
-  return `    <nav class="docs-breadcrumb" aria-label="Breadcrumb">\n      <div class="cai-breadcrumb">\n        ${trail.join(sep)}\n      </div>\n    </nav>`;
+  const items = trail.map((item) => `        <li>${item}</li>`).join("\n");
+  return `    <nav class="docs-breadcrumb" aria-label="Breadcrumb">\n      <ol class="cai-breadcrumb">\n${items}\n      </ol>\n    </nav>`;
 }
 
 /** Breadcrumb, h1 (with the component's files and JS module), and the lead. */

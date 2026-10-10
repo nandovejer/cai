@@ -52,7 +52,7 @@ lead: false
   This text fills the default slot.
 &lt;/demo-card&gt;</code></pre>
           </div>
-          <p class="elements-card__style">CAI adds no style: the browser look is kept. The custom element takes a few lines of script. Design tokens cross the shadow boundary, so the card follows the color mode.</p>
+          <p class="elements-card__style">CAI adds no style: a slot has no box of its own, and what fills it keeps its own styles. The custom element takes a few lines of script. Design tokens cross the shadow boundary, so the card follows the color mode.</p>
         </article>
 
         <article class="elements-card" id="el-template" data-element="template" aria-labelledby="el-template-title">
@@ -81,7 +81,7 @@ lead: false
 &lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; id=&quot;d-template-add&quot;&gt;Add an item&lt;/button&gt;
 &lt;ul id=&quot;d-template-list&quot;&gt;&lt;/ul&gt;</code></pre>
           </div>
-          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+          <p class="elements-card__style">CAI adds no style: it is never rendered. The copies that script puts in the page take the page styles.</p>
         </article>
         </div>
       

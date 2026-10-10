@@ -6,13 +6,33 @@
    -------------------------------------------------------------------------- */
 
 
+/* The APG breadcrumb pattern: nav[aria-label] > ol.cai-breadcrumb > li, the
+   current page last, with aria-current="page". The separator is drawn by CSS
+   with no content, so screen readers do not read it out. */
 .cai-breadcrumb {
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: var(--cai-space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
   font-size: var(--cai-text-sm);
+}
+
+.cai-breadcrumb > li {
+  display: flex;
+  align-items: center;
+  gap: var(--cai-space-xs);
+}
+
+/* A slash, drawn with a border: empty content, nothing to announce */
+.cai-breadcrumb > li + li::before {
+  content: "";
+  block-size: 0.9em;
+  border-inline-end: 0.1em solid var(--cai-text-muted);
+  transform: rotate(15deg);
 }
 
 .cai-breadcrumb__item {
@@ -29,7 +49,3 @@
   color: var(--cai-text-primary);
   font-weight: 500;
 }
-.cai-breadcrumb__sep {
-  color: var(--cai-text-muted);
-}
-

@@ -490,15 +490,13 @@ describe("the CAI docs site", () => {
   });
 
   it("reaches every component in two links from any page, without opening anything (ia.md §14)", () => {
-    // Links shown at every width: the header row (Home and Docs) and the
-    // content of main; the drawer and "On this page" are closed.
+    // Links shown at every width: the content of main (the header's site
+    // links are in the closed drawer on a phone, "On this page" is closed).
     const components = site.pages.filter((p) => p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers");
     expect(components).toHaveLength(20);
     const visible = (html) => {
-      const header = html.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0];
       const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<nav class="docs-onpage"[\s\S]*?<\/nav>/, "");
-      const row = [...header.matchAll(/href="(\/docs\/[^"#]*)"/g)].map((m) => m[1]);
-      return new Set([...row, ...[...main.matchAll(/href="(\/docs\/[^"#]*)/g)].map((m) => m[1])]);
+      return new Set([...[...main.matchAll(/href="(\/docs\/[^"#]*)/g)].map((m) => m[1])]);
     };
     const links = new Map([...rendered].map(([route, html]) => [route, visible(html)]));
     for (const [route] of rendered) {

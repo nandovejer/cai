@@ -2,8 +2,10 @@
    CAI — SITE HEADER
    One header for every page of the site (home and docs), from one partial
    (apps/docs/_partials/header.html): the menu button, the brand, the site
-   links (Home, Docs, GitHub) and the search button. They stay in the row at
-   every width.
+   links (Home, Docs, GitHub) and the search button. At 768px and below the
+   site links move into the drawer the menu button opens (#page-nav, see
+   "Menu button and drawer"); the search button stays in the row at every
+   width.
    This file is the only source of the header's layout: the pages add none.
    Consumer-side styles on top of tokens + core.
    Rules: semantic tokens only; no literal colors.
@@ -115,6 +117,15 @@
 .site-header__search {
   justify-content: center;
   padding-inline: 0;
+  /* No frame: an icon button like the menu button. Hover fills it; the
+     focus ring stays (core's outline) */
+  border-color: transparent;
+  background: transparent;
+}
+
+.site-header__search:hover {
+  border-color: transparent;
+  background: var(--cai-surface-muted);
 }
 
 .site-header__search .cai-platform-search-trigger__label {
@@ -160,29 +171,6 @@
   .site-header__inner,
   .site-header__nav {
     column-gap: var(--cai-space-sm);
-  }
-}
-
-/* The narrowest phones (below 380px): the mark alone, its name "CAI"
-   clipped but still the link's name, and tighter gaps, so the row of six
-   targets stays one 53px row at 320px */
-@media (max-width: 379px) {
-  .site-header__inner {
-    padding-inline: var(--cai-space-sm);
-  }
-
-  .site-header__inner,
-  .site-header__nav {
-    column-gap: var(--cai-space-xs);
-  }
-
-  .site-header__name {
-    position: absolute;
-    inline-size: 1px;
-    block-size: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
   }
 }
 
@@ -283,15 +271,35 @@
 /* --------------------------------------------------------------------------
    Menu button and drawer. The button is core's .cai-nav-toggle and opens
    #page-nav, core's .cai-sidebar as a native popover drawer with the page's
-   own sections. On the documentation pages the same nav is the sidebar
-   column on wider screens; elsewhere it is a drawer only (--drawer),
-   hidden unless it is open. One breakpoint, 768px (--cai-bp-md, where core
-   turns the sidebar into a drawer and shows the button). The site links
-   never move: they stay in the header row at every width.
+   own sections, after the site links (.page-nav__site). On the
+   documentation pages the same nav is the sidebar column on wider screens;
+   elsewhere it is a drawer only (--drawer), hidden unless it is open. One
+   breakpoint, 768px (--cai-bp-md, where core turns the sidebar into a
+   drawer and shows the button): at 768px and below the site links live in
+   the drawer, above it in the header row. Exactly one copy of each link is
+   displayed at any width. Both moves depend on the popover API: without it
+   there is no drawer, and the links stay in the row.
    -------------------------------------------------------------------------- */
 
-.page-nav--drawer {
+.page-nav--drawer,
+.page-nav__site {
   display: none;
+}
+
+/* The current page in the drawer: the same underline as in the row, in the
+   sidebar's text color (never color alone, RL-6). Not the filled "active"
+   style, which marks the section in view. */
+.page-nav__site ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-nav__site .cai-sidebar__link[aria-current] {
+  color: var(--cai-sidebar-text-hover);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: var(--cai-space-2xs);
 }
 
 @supports selector(:popover-open) {
@@ -311,6 +319,15 @@
 
     .page-nav--drawer:popover-open {
       display: flex;
+    }
+
+    .site-header__nav {
+      display: none;
+    }
+
+    .page-nav__site {
+      display: block;
+      border-block-end: 1px solid var(--cai-sidebar-border);
     }
 
   }

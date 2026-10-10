@@ -220,7 +220,7 @@ test.describe('Documentation site', () => {
 
         const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
         const toggle = await box('.cai-nav-toggle[popovertarget="page-nav"]');
-        for (const selector of ['.site-header__brand', '.site-header__nav']) {
+        for (const selector of ['.site-header__brand', '.site-header__search']) {
           const b = await box(selector);
           const overlaps = !(b.right <= toggle.left || b.left >= toggle.right || b.bottom <= toggle.top || b.top >= toggle.bottom);
           expect(overlaps, selector).toBe(false);
@@ -882,10 +882,11 @@ test.describe('Site header and navigation toggle', () => {
   // generator marks the current link.
   const read = (file) => readFileSync(fromRepo(file), 'utf-8');
   const HEADER = read('apps/docs/_partials/header.html');
+  const SITE_LINKS = read('apps/docs/_partials/site-links.html');
   const INCLUDERS = {
-    'apps/landing/index.html': ['header'],
-    'apps/docs/_layouts/page.html': ['header'],
-    'apps/docs/_layouts/not-found.html': ['header'],
+    'apps/landing/index.html': ['header', 'site-links'],
+    'apps/docs/_layouts/page.html': ['header', 'site-links'],
+    'apps/docs/_layouts/not-found.html': ['header', 'site-links'],
   };
 
   test('every page has the same header markup: Home, Docs, GitHub and the search', () => {
@@ -894,6 +895,11 @@ test.describe('Site header and navigation toggle', () => {
     const row = HEADER.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0];
     expect([...row.matchAll(/href="([^"]+)"/g)].map((m) => m[1])).toEqual(['/', '/docs/', 'https://github.com/nandovejer/cai']);
     expect(HEADER).toContain('data-cai-search-open');
+    // The drawer's site links are the header's, in the same order: a labelled
+    // list inside the drawer's nav, not a nav in a nav (a11y.md F4)
+    expect(SITE_LINKS).toContain('<ul aria-labelledby="nav-site">');
+    expect(SITE_LINKS).not.toContain('<nav');
+    expect([...SITE_LINKS.matchAll(/href="([^"]+)"/g)].map((m) => m[1])).toEqual(['/', '/docs/', 'https://github.com/nandovejer/cai']);
     for (const [file, partials] of Object.entries(INCLUDERS)) {
       for (const name of partials) expect(read(file), file).toContain(`<!-- cai:include ${name} -->`);
       expect(read(file), file).toMatch(/<nav class="cai-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+">/);
@@ -954,7 +960,7 @@ test.describe('Site header and navigation toggle', () => {
     });
 
     for (const [width, order] of [
-      [360, ['.cai-platform-skip-link', '.site-header__menu', '.site-header__brand', '.site-header__nav a >> nth=0', '.site-header__nav a >> nth=1', '.site-header__nav a >> nth=2']],
+      [360, ['.cai-platform-skip-link', '.site-header__menu', '.site-header__brand', '.site-header__search']],
       [1440, [
         '.cai-platform-skip-link',
         '.site-header__brand',
@@ -973,19 +979,28 @@ test.describe('Site header and navigation toggle', () => {
       });
     }
 
-    test(`on a phone Home, Docs and GitHub stay in the header row; the drawer has no site list: ${path}`, async ({ page }) => {
+    test(`on a phone Home, Docs and GitHub are in the drawer, first; the search stays in the row: ${path}`, async ({ page }) => {
       await page.setViewportSize({ width: 360, height: 640 });
       await page.goto(path);
-      await expect(page.locator('.site-header__nav a:visible')).toHaveText(['Home', 'Docs', 'GitHub']);
-      await expect(page.locator('.site-header__nav a[aria-current]')).toHaveText(current);
+      await expect(page.locator('.site-header__nav a:visible')).toHaveCount(0);
+      await expect(page.locator('.site-header__search')).toBeVisible();
+
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
-      await expect(page.getByRole('list', { name: 'Site' })).toHaveCount(0);
+      const site = page.getByRole('list', { name: 'Site' });
+      await expect(site.getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
+      await expect(site.locator('[aria-current]')).toHaveText(current);
+      // first in the drawer: the first Tab from the button lands on Home
+      await page.keyboard.press('Tab');
+      await expect(site.getByRole('link', { name: 'Home' })).toBeFocused();
+      const underline = await site.locator('[aria-current]').evaluate((el) => getComputedStyle(el).textDecorationLine);
+      expect(underline).toBe('underline');
     });
 
     test(`on a wide screen the site links are in the header row only: ${path}`, async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 800 });
       await page.goto(path);
       await expect(page.getByRole('navigation', { name: 'Site' })).toHaveCount(1);
+      await expect(page.locator('.page-nav__site')).toBeHidden();
     });
 
     test(`the header stays at the top while scrolling: ${path}`, async ({ page }) => {

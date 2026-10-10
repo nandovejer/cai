@@ -72,7 +72,7 @@ const PLACEHOLDERS = new Set(["title", "doctitle", "description", "root", "conte
 const RAW_VALUES = new Set(["content", "nav", "pagehead", "toc", "endnav", "generated"]);
 
 /** Partials whose links to the current page and its parents get aria-current. */
-const CURRENT_PARTIALS = new Set(["header"]);
+const CURRENT_PARTIALS = new Set(["header", "site-links"]);
 
 /** The area id of the documentation home page and the A–Z index (not a sidebar area). */
 export const HUB_AREA = "hub";

@@ -163,8 +163,9 @@ for (const app of APPS) {
     await expect(drawer).toBeHidden();
     await toggle.click();
     await expect(drawer).toBeVisible();
-    // Home, Docs and GitHub stay in the header row; the drawer holds the page's own links
-    await expect(page.locator('.site-header__nav a:visible')).toHaveText(['Home', 'Docs', 'GitHub']);
+    // the site links are in the drawer, first; none stays in the header row
+    await expect(page.locator('.site-header__nav a:visible')).toHaveCount(0);
+    await expect(drawer.getByRole('list', { name: 'Site' }).getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
     // With no script to measure it, the header's height is the CSS value:
     // the drawer opens right below the header, never over its button
     const header = await page.locator('.site-header').boundingBox();

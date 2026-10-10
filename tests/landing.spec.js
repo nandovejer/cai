@@ -205,21 +205,22 @@ test.describe('Landing page', () => {
         await page.setViewportSize({ width, height: 800 });
         await open(page);
 
-        const [menu, brand, nav] = await Promise.all(
-          ['.site-header__menu', '.site-header__brand', '.site-header__nav'].map((selector) =>
+        const [menu, brand, nav, search] = await Promise.all(
+          ['.site-header__menu', '.site-header__brand', '.site-header__nav', '.site-header__search'].map((selector) =>
             page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON()),
           ),
         );
         const before = (a, b) => a.bottom <= b.top + 1 || (Math.abs(a.top - b.top) < a.height && a.left < b.left);
-        // At 768px and below: menu button, brand, then Components, the one
-        // site link left in the row (the others are in the drawer). Above:
-        // brand, site links.
+        // At 768px and below: menu button, brand, then the search (the site
+        // links are in the drawer). Above: brand, site links, search.
         if (width <= 768) {
           expect(before(menu, brand)).toBe(true);
-          expect(before(brand, nav)).toBe(true);
+          expect(nav.width).toBe(0);
+          expect(before(brand, search)).toBe(true);
         } else {
           expect(menu.width).toBe(0);
           expect(before(brand, nav)).toBe(true);
+          expect(before(nav, search)).toBe(true);
         }
       });
     }

@@ -1,0 +1,107 @@
+<!-- cai:page
+title: Contrast check
+description: Check your own color overrides against the contrast CAI promises, with one command or in the page, before they reach a user.
+area: tokens
+order: 11
+group: families
+files: bin/cai-tokens.js
+-->
+    <div class="docs-block" id="t-contrast">
+      <h2 id="run">Run it</h2>
+      <p>CAI keeps its own colors readable in light, dark and high contrast. The moment you override a token, that promise is yours. <code>check-contrast</code> reads the <code>--cai-*</code> declarations of your stylesheet, puts them over CAI's tokens as the browser would, and measures the same pairs the component pages list. It needs Node 18 or later and nothing else.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Shell</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-contrast-run" aria-label="Copy the command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="The command"><code id="code-contrast-run">npx @cai-ds/tokens check-contrast my-theme.css</code></pre>
+      </div>
+      <p>Name your files in the order the page loads them. Use <code>--json</code> for a machine-readable report, and <code>--strict</code> to make the warnings fail too.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Output</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-contrast-out" aria-label="Copy the example output">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Example output"><code id="code-contrast-out">✗ light, high-contrast: --cai-text-secondary on surface-page is 2.8:1, needs 4.5:1 (text)
+    --cai-text-secondary: #999 is set in my-theme.css:2
+✗ contrast: 5 pairs fail (9 of 378 measurements) in light, dark, high-contrast</code></pre>
+      </div>
+
+      <h2 id="checks">What it checks</h2>
+      <p>WCAG 2.x relative luminance, the contrast of WCAG 2.2 level AA. APCA is not used, because it is not part of the standard.</p>
+      <div class="cai-table-wrap" role="region" aria-label="Contrast minimums" tabindex="0">
+        <table class="cai-table">
+          <thead>
+            <tr><th scope="col">Kind</th><th scope="col">Minimum</th><th scope="col">What it protects</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Kind"><div><code>text</code></div></td><td data-label="Minimum"><div>4.5:1</div></td><td data-label="What it protects"><div>Text and links on every surface they sit on, status text on its tint, text on a filled button, syntax colors on a code block</div></td></tr>
+            <tr><td data-label="Kind"><div><code>disabled-text</code></div></td><td data-label="Minimum"><div>3:1</div></td><td data-label="What it protects"><div>Disabled text. CAI's own rule: it stays readable, and the state has a cue besides color</div></td></tr>
+            <tr><td data-label="Kind"><div><code>ui</code></div></td><td data-label="Minimum"><div>3:1</div></td><td data-label="What it protects"><div>The focus ring, field borders, outlines and the played part of a progress bar</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Pairs are checked in light, dark and high contrast, and in each <code>[data-theme="name"]</code> your file defines, as <code>name</code> and <code>name/light</code>, <code>name/dark</code> and <code>name/high-contrast</code>. Translucent colors are placed over the surface below them, as in the page. A <em>warning</em> is an aim CAI sets itself, stricter than WCAG, such as the fill of a checked box against the page: it is shown and never fails the check unless you pass <code>--strict</code>.</p>
+
+      <h2 id="reads">What it reads</h2>
+      <ul>
+        <li><strong>Selectors:</strong> <code>:root</code>, <code>html</code>, <code>[data-theme="x"]</code> and <code>[data-mode="y"]</code>, alone or together. A later rule wins over an earlier one of the same specificity, and a more specific selector wins over a later one. A <code>:root</code> override, loaded after CAI, also reaches dark and high contrast unless that mode sets the token again: set a token per mode.</li>
+        <li><strong>At-rules:</strong> <code>@media (prefers-color-scheme: dark)</code> and <code>light</code>, and <code>@layer</code> and <code>@supports</code>, taken as true. The order of layers is not modeled.</li>
+        <li><strong>Values:</strong> <code>#rgb</code>, <code>#rrggbb</code> with or without alpha, <code>rgb()</code> and <code>hsl()</code> in either syntax, <code>white</code>, <code>black</code>, <code>transparent</code>, and <code>var()</code> chains.</li>
+        <li><strong>Everything else is reported, not skipped:</strong> a class selector, another media query or a rule it did not understand is listed as ignored. A color it cannot read, such as <code>color-mix()</code> or <code>oklch()</code>, counts as a failure, because a pair that was not measured is not a pair that passed.</li>
+      </ul>
+
+      <h2 id="exit">Exit codes</h2>
+      <div class="cai-table-wrap" role="region" aria-label="Exit codes" tabindex="0">
+        <table class="cai-table">
+          <thead>
+            <tr><th scope="col">Code</th><th scope="col">Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Code"><div><code>0</code></div></td><td data-label="Meaning"><div>Every pair meets its minimum</div></td></tr>
+            <tr><td data-label="Code"><div><code>1</code></div></td><td data-label="Meaning"><div>A pair fails, or a color could not be read</div></td></tr>
+            <tr><td data-label="Code"><div><code>2</code></div></td><td data-label="Meaning"><div>The command was used wrongly, or a file could not be read</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="ci">In your build</h2>
+      <p>The command fails the step on a failure, so one line is enough.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">package.json</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-contrast-ci" aria-label="Copy the package.json script">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="json" tabindex="0" role="region" aria-label="A package.json script"><code id="code-contrast-ci">{
+  "scripts": {
+    "check:contrast": "cai-tokens check-contrast src/theme.css"
+  }
+}</code></pre>
+      </div>
+
+      <h2 id="try">Try it in the page</h2>
+      <p>With JavaScript on, you can paste your overrides here and run the same check. Nothing leaves the page. Without it, use the command above: it does the same.</p>
+      <div data-contrast-tool hidden>
+        <div class="cai-field">
+          <label class="cai-field__label" for="contrast-css">Your CSS</label>
+          <textarea class="cai-input cai-input--textarea" id="contrast-css" rows="7" spellcheck="false" autocomplete="off" aria-describedby="contrast-css-help">:root {
+  --cai-text-secondary: #999;
+}
+[data-theme="dark"] {
+  --cai-focus-ring: #334;
+}</textarea>
+          <p class="cai-field__helper" id="contrast-css-help">Paste the <code>--cai-*</code> tokens you override.</p>
+        </div>
+        <button class="cai-btn cai-btn--primary" type="button">Check contrast</button>
+        <div data-contrast-result role="status" aria-live="polite"
+          data-file="your CSS"
+          data-pass="All {checked} pairs meet their minimum in {modes}."
+          data-fail="{failures} pairs fail or could not be measured, out of {checked}."
+          data-item="{modes}: {foreground} on {background} is {ratio}, needs {minimum}:1."
+          data-set="{token} is {value} (line {line})."
+          data-unreadable="{foreground} on {background} was not measured: {reason}"
+          data-warning="Warning, {modes}: {foreground} on {background} is {ratio}. CAI aims for {minimum}:1."
+          data-ignored="Not read: {selector} (line {line})."
+          data-error="Could not read the CSS:"></div>
+      </div>
+    </div>

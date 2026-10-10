@@ -4,6 +4,9 @@
   "description": "CAI Design System — design tokens (CSS custom properties) and self-hosted MIT-licensed web fonts",
   "license": "MIT",
   "type": "module",
+  "bin": {
+    "cai-tokens": "./bin/cai-tokens.js"
+  },
   "style": "./dist/cai-tokens.css",
   "exports": {
     ".": {
@@ -21,6 +24,8 @@
   },
   "files": [
     "dist",
+    "bin",
+    "lib",
     "LICENSE"
   ],
   "repository": {
@@ -38,7 +43,9 @@
     "design-tokens",
     "web-fonts",
     "vanilla",
-    "css-custom-properties"
+    "css-custom-properties",
+    "wcag",
+    "contrast"
   ],
   "sideEffects": [
     "*.css"

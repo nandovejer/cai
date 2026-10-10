@@ -12,6 +12,7 @@
  */
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import { formatRatio as format, over, parseColor as parse, ratio } from "../../packages/tokens/lib/contrast.js";
 
 const repo = fileURLToPath(new URL("../../", import.meta.url));
 const read = (path) => readFileSync(`${repo}${path}`, "utf-8");
@@ -59,31 +60,6 @@ export function aliasOf(mode, token) {
 /** Every semantic colour token, in source order. */
 export const colorTokens = () => Object.keys(declared.light);
 
-function parse(value) {
-  const hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)?.[1];
-  if (hex) {
-    const full = hex.length === 3 ? [...hex].map((c) => c + c).join("") : hex;
-    return { r: parseInt(full.slice(0, 2), 16), g: parseInt(full.slice(2, 4), 16), b: parseInt(full.slice(4, 6), 16), a: 1 };
-  }
-  const rgb = value.match(/^rgba?\(([^)]+)\)$/)?.[1];
-  if (rgb) {
-    const [r, g, b, a = 1] = rgb.split(/[\s,/]+/).filter(Boolean).map(Number);
-    return { r, g, b, a };
-  }
-  throw new Error(`cannot read the colour "${value}"`);
-}
-
-const over = (top, bottom) => ({
-  r: top.r * top.a + bottom.r * (1 - top.a),
-  g: top.g * top.a + bottom.g * (1 - top.a),
-  b: top.b * top.a + bottom.b * (1 - top.a),
-  a: 1,
-});
-const luminance = ({ r, g, b }) => {
-  const c = (v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
-  return 0.2126 * c(r) + 0.7152 * c(g) + 0.0722 * c(b);
-};
-
 /** A background written "a > b" (token a over token b), opaque, over the page. */
 function surface(mode, spec) {
   let result = parse(resolveColor(mode, "surface-page"));
@@ -94,12 +70,11 @@ function surface(mode, spec) {
 /** The contrast ratio of a foreground token on a background spec, in a mode. */
 export function contrast(mode, fg, bg) {
   const back = surface(mode, bg);
-  const [a, b] = [luminance(over(parse(resolveColor(mode, fg)), back)), luminance(back)];
-  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+  return ratio(over(parse(resolveColor(mode, fg)), back), back);
 }
 
 /** A ratio as the pages print it: rounded down to one decimal, so a printed "4.5" always passes 4.5. */
-export const formatRatio = (value) => `${(Math.floor(value * 10 + 1e-9) / 10).toFixed(1)}:1`;
+export const formatRatio = format;
 
 /* ---- The tokens a component reads ---------------------------------------- */
 

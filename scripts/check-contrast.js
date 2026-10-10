@@ -16,63 +16,15 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createResolver, measure, pairsFor } from "../packages/tokens/lib/contrast.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (path) => readFileSync(resolve(root, path), "utf-8");
 
 const BASE = ["light", "dark", "high-contrast"];
 
-/* ---- Pairs: [foreground tokens, background tokens, minimum] --------------
-   A background written "a > b" is token a composited over token b. */
-const SURFACES = ["surface-page", "surface", "surface-hover", "surface-muted", "input-bg"];
-const STATUS = ["success", "danger", "warning", "info", "teal", "purple"];
-const CODE = ["comment", "keyword", "name", "property", "string", "literal"].map((t) => `code-${t}`);
-const PAIRS = [
-  // Text and links on the surfaces they sit on
-  [["text-primary", "text-secondary", "brand-primary", "brand-hover"], SURFACES, 4.5],
-  [["text-primary", "text-secondary"], ["surface-strong", "surface-pressed"], 4.5],
-  [["text-muted"], ["input-bg", "surface-page", "surface"], 4.5],
-  [["text-disabled"], ["surface-page", "surface", "input-bg", "surface-muted", "surface-strong"], 3],
-  // Text on solid fills
-  [["text-on-fill"], ["brand-fill", "brand-fill-hover", "brand-fill-active", "color-danger-fill"], 4.5],
-  // Sidebar
-  [["sidebar-text", "sidebar-label", "sidebar-text-hover"], ["sidebar-bg"], 4.5],
-  [["sidebar-text-hover"], ["sidebar-hover"], 4.5],
-  [["sidebar-active-text"], ["sidebar-active-bg"], 4.5],
-  // Status text on its tint (alerts, tags), also on a hovered row
-  ...STATUS.map((s) => [
-    [`color-${s}`],
-    [`color-${s}-bg > surface-page`, `color-${s}-bg > surface`, `color-${s}-bg > surface-hover`],
-    4.5,
-  ]),
-  [["color-code"], ["surface-page", "surface", "surface-muted"], 4.5],
-  // Non-text: focus ring, field boundaries, outlines (WCAG 1.4.11)
-  [["focus-ring"], [...SURFACES, "surface-strong"], 3],
-  [["input-border"], ["input-bg"], 3],
-  [["outline"], ["surface-page", "surface"], 3],
-  // Progress and player seek bars: the fill on the track (surface-muted) and the
-  // played part on the buffered part (surface-pressed); the track's edge is
-  // input-border, measured on every surface in THEME_PAIRS
-  [["brand-primary"], ["surface-muted", "surface-pressed"], 3],
-];
-
-/* Also on the strong surface (tooltip, toast, table header) and as plain text on
-   every surface: status and code colours and their tints keep 4.5:1 there too.
-   Measured for every theme and mode. */
-const THEME_PAIRS = [
-  ...STATUS.map((s) => [[`color-${s}`], [`color-${s}-bg > surface-strong`, "surface-page", "surface", "surface-hover", "surface-muted", "surface-strong"], 4.5]),
-  [["color-code"], ["surface-strong"], 4.5],
-  // Syntax colours on the code block (.cai-code-block sits on surface-muted)
-  [CODE, ["surface-muted"], 4.5],
-  // The field border on every surface a field can sit on (WCAG 1.4.11)
-  [["input-border"], [...SURFACES, "surface-strong"], 3],
-  // .cai-badge--gray: white text on the outline colour
-  [["text-on-fill"], ["outline"], 4.5],
-];
-
-/* CAI's own high-contrast mode goes beyond AA where it can: the syntax
-   colours keep 7:1 (WCAG 1.4.6, AAA) on the code block. */
-const HC_PAIRS = [[CODE, ["surface-muted"], 7]];
+/* The pairs and the maths are in packages/tokens/lib/contrast.js, shared with
+   the consumer's `cai-tokens check-contrast` and the docs pages. */
 
 /* ---- Token values ------------------------------------------------------- */
 
@@ -130,52 +82,6 @@ for (const file of readdirSync(themesDir).filter((f) => /^cai-theme-.+\.css$/.te
 }
 const THEMES = Object.keys(themes);
 
-function parse(value) {
-  const hex = value.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i)?.[1];
-  if (hex) {
-    const full = hex.length === 3 ? [...hex].map((c) => c + c).join("") : hex;
-    return { r: parseInt(full.slice(0, 2), 16), g: parseInt(full.slice(2, 4), 16), b: parseInt(full.slice(4, 6), 16), a: 1 };
-  }
-  const rgb = value.match(/^rgba?\(([^)]+)\)$/)?.[1];
-  if (rgb) {
-    const [r, g, b, a = 1] = rgb.split(/[\s,/]+/).filter(Boolean).map(Number);
-    return { r, g, b, a };
-  }
-  throw new Error(`cannot read the colour "${value}"`);
-}
-
-function value(theme, name) {
-  // Each theme map already holds the :root (light) defaults under its own
-  // values, so a var() resolves in the theme that uses it, as in the page
-  const raw = themes[theme][name] ?? primitives[name];
-  if (raw === undefined) throw new Error(`${theme}: ${name} is not defined`);
-  const ref = raw.match(/^var\((--[\w-]+)\)$/)?.[1];
-  return ref ? value(theme, ref) : raw;
-}
-
-const over = (top, bottom) => ({
-  r: top.r * top.a + bottom.r * (1 - top.a),
-  g: top.g * top.a + bottom.g * (1 - top.a),
-  b: top.b * top.a + bottom.b * (1 - top.a),
-  a: 1,
-});
-const luminance = ({ r, g, b }) => {
-  const c = (v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
-  return 0.2126 * c(r) + 0.7152 * c(g) + 0.0722 * c(b);
-};
-const ratio = (x, y) => {
-  const [a, b] = [luminance(x), luminance(y)];
-  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
-};
-
-/** A background spec ("a > b > …") as an opaque colour, over the page. */
-function surface(theme, spec) {
-  const layers = spec.split(">").map((s) => parse(value(theme, `--cai-${s.trim()}`)));
-  let result = parse(value(theme, "--cai-surface-page"));
-  for (const layer of layers.reverse()) result = over(layer, result);
-  return result;
-}
-
 /* ---- Run ------------------------------------------------------------------ */
 
 const { debt } = JSON.parse(read("tests/fixtures/red-line-debt.json"));
@@ -183,22 +89,25 @@ const registered = (text) => debt.some((e) => e.check === "token-contrast" && te
 
 const failures = [];
 const known = [];
+const advisory = [];
 let measured = 0;
 for (const theme of THEMES) {
-  for (const [foregrounds, backgrounds, minimum] of [...PAIRS, ...THEME_PAIRS, ...(theme === "high-contrast" ? HC_PAIRS : [])]) {
-    for (const fg of foregrounds) {
-      for (const bg of backgrounds) {
-        const back = surface(theme, bg);
-        const result = ratio(over(parse(value(theme, `--cai-${fg}`)), back), back);
-        measured += 1;
-        if (result + 1e-9 >= minimum) continue;
-        const line = `${theme}: --cai-${fg} on ${bg} is ${result.toFixed(2)}:1 (needs ${minimum}:1)`;
-        (registered(line) ? known : failures).push(line);
-      }
+  const resolver = createResolver({ ...primitives, ...themes[theme] });
+  const { results, unreadable } = measure(resolver, pairsFor(theme));
+  for (const u of unreadable) failures.push(`${theme}: ${u.foreground} on ${u.background} was not measured: ${u.reason}`);
+  for (const r of results) {
+    measured += 1;
+    if (r.ok) continue;
+    if (r.advisory) {
+      advisory.push(`${theme}: ${r.foreground} on ${r.background} is ${r.ratio.toFixed(2)}:1 (CAI aims for ${r.minimum}:1)`);
+      continue;
     }
+    const line = `${theme}: ${r.foreground} on ${r.background} is ${r.ratio.toFixed(2)}:1 (needs ${r.minimum}:1)`;
+    (registered(line) ? known : failures).push(line);
   }
 }
 
+for (const line of advisory) console.warn(`! ${line}`);
 for (const line of known) console.warn(`! ${line} — registered in tests/fixtures/red-line-debt.json`);
 if (failures.length) {
   console.error(failures.map((f) => `✗ ${f}`).join("\n"));

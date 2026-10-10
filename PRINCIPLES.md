@@ -29,7 +29,7 @@ Accessibility is the baseline, not a feature, a phase or a ticket.
 - **Focus is always visible.** Never `outline: none` without an equivalent `:focus-visible` style with 3:1 contrast against adjacent colours.
 - **Colour is never the only signal.** Error, success, selected, disabled and current states need a second cue: text, icon, border, underline or weight.
 - **Contrast minimums:** 4.5:1 for text, 3:1 for large text, UI borders, icons and focus rings, in the three shipped themes (`light`, `dark`, `high-contrast`).
-- **Custom themes are the consumer's responsibility.** CAI guarantees its shipped themes and provides a tool to check a custom theme against the same minimums (backlog).
+- **Custom themes are the consumer's responsibility.** CAI guarantees its shipped themes and provides a tool to check a custom theme against the same minimums: `npx @cai-ds/tokens check-contrast <file.css>`, also in the page at `/docs/tokens/contrast/`.
 - **Motion is opt-in.** Any animation longer than 150 ms or that moves content is disabled under `prefers-reduced-motion: reduce`. No auto-playing media, no parallax, no infinite loops.
 - **Disabled controls are a last resort.** Prefer leaving the control enabled and explaining the error. If you must disable, keep the label readable (≥ 3:1, red line 7) and mark the state with something other than colour.
 - **Names come from the DOM.** Use `<label>`, visible text, `aria-labelledby`. `aria-label` is the fallback, never the default.

@@ -138,5 +138,4 @@ Edit `packages/core/src/settings/_settings.css` only, then regenerate `dist/cai.
 - Dropdown / context menu
 - Pagination
 - Documented grid system
-- A contrast checker that consumers run against their own theme (PRINCIPLES.md §1)
 - HTML elements page: a table of the deprecated elements with their modern replacement, and a grid of the 22 `input` types

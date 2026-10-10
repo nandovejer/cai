@@ -180,3 +180,5 @@ initPlayers();
 initDemoGuards();
 initTemplateDemo();
 initSlotDemo();
+// Only the contrast page has the tool: its script is a separate chunk
+if (document.querySelector("[data-contrast-tool]")) import("./contrast-check.js").then((m) => m.initContrastTool());

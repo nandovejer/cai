@@ -35,6 +35,17 @@ import '@cai-ds/tokens'
 - **`./dtcg`** → `cai-tokens.dtcg.json` — primitives and semantic tokens in the W3C Design Tokens (DTCG) format, for Figma and other design tools. Two groups, one per collection: `primitives` (one mode) and `semantic` (modes Light, Dark and High contrast in `$extensions.mode`, `$value` is Light). Semantic tokens are aliases of primitives where the CSS uses a primitive. Names: drop `--cai-`; the first segment is the group, the rest is the name (`--cai-surface-page` ↔ `surface/page`; `--cai-surface` is `surface/$root`)
 - **`./fonts/*`** → the woff2 files
 
+## Check your own colors
+
+`cai-tokens check-contrast` reads the `--cai-*` overrides of your stylesheet, puts them over CAI's tokens as the browser would, and measures the pairs CAI promises to keep readable (WCAG 2.x: 4.5:1 for text, 3:1 for disabled text, focus rings, field borders and icons) in light, dark, high contrast and every `[data-theme]` you define. It needs Node 18 or later and has no dependencies.
+
+```bash
+npx @cai-ds/tokens check-contrast my-theme.css
+npx @cai-ds/tokens check-contrast base.css my-theme.css --json
+```
+
+Exit code `0` when every pair passes, `1` when one fails or a color could not be read, `2` for a usage or file error. What it reads, and what it reports as not read, is on [the contrast page of the docs](https://nandovejer.github.io/cai/docs/tokens/contrast/).
+
 ## What's included
 
 - **Primitives** (Layer 1): Color scales, spacing, typography, shadows, radius tokens — generated from `tokens.json`. The colour scales are CAI's own palette, computed in OKLCH (one lightness curve for every family, so a step number means the same contrast in every colour)

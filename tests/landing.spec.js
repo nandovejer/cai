@@ -237,22 +237,29 @@ test.describe('Landing page', () => {
       await expect(drawer.locator('a[href^="/docs/"]:not([href="/docs/"])')).toHaveCount(6);
     });
 
-    test('content is centred at 1440px', async ({ page }) => {
+    test('content is centred at 1440px, in the site frame with the header', async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 });
       await open(page);
 
+      // The wraps pad by the site frame's free space: measure their content box
       const boxes = await page.locator('.landing-wrap').evaluateAll((wraps) =>
         wraps
           .filter((el) => el.checkVisibility())
           .map((el) => {
             const rect = el.getBoundingClientRect();
-            return { left: rect.left, right: document.documentElement.clientWidth - rect.right };
+            const cs = getComputedStyle(el);
+            return {
+              left: rect.left + parseFloat(cs.paddingLeft),
+              right: document.documentElement.clientWidth - rect.right + parseFloat(cs.paddingRight),
+            };
           }),
       );
+      const brand = await page.locator('.site-header__brand').evaluate((el) => el.getBoundingClientRect().left);
       expect(boxes.length).toBeGreaterThan(5);
       for (const { left, right } of boxes) {
         expect(left).toBeGreaterThan(100);
         expect(Math.abs(left - right)).toBeLessThanOrEqual(1);
+        expect(Math.abs(left - brand), 'content starts under the brand').toBeLessThanOrEqual(1);
       }
     });
 

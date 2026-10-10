@@ -84,7 +84,7 @@ test.describe('search: opening and closing', () => {
   test('Escape closes it in one press with text in the field, and the focus goes back (SRCH-13, W9)', async ({ page }) => {
     await open(page);
     // After Ctrl+K the focus returns to what had it, not to the button
-    const link = page.getByRole('banner').getByRole('link', { name: 'Components' });
+    const link = page.getByRole('banner').getByRole('link', { name: 'GitHub' });
     await link.focus();
     await page.keyboard.press('Control+k');
     await field(page).fill('tabs');

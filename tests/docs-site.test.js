@@ -448,7 +448,8 @@ describe("the CAI docs site", () => {
     for (const [route, html] of rendered) {
       expect(flat(header(html)), route).toBe(flat(partial));
       const marked = [...header(html).matchAll(/<a[^>]* href="([^"]*)" aria-current="(page|true)">/g)].map(([, href, value]) => [href, value]);
-      expect(marked, route).toEqual([...currentOf(route)]);
+      // Only the links the header has (Home and Docs); currentOf() also marks section links elsewhere
+      expect(marked, route).toEqual([...currentOf(route)].filter(([href]) => partial.includes(`href="${href}"`)));
     }
   });
 
@@ -489,14 +490,14 @@ describe("the CAI docs site", () => {
   });
 
   it("reaches every component in two links from any page, without opening anything (ia.md §14)", () => {
-    // Links shown at every width: the header row (Components stays in it on a
-    // phone) and the content of main; the drawer and "On this page" are closed.
+    // Links shown at every width: the header row (Home and Docs) and the
+    // content of main; the drawer and "On this page" are closed.
     const components = site.pages.filter((p) => p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers");
     expect(components).toHaveLength(20);
     const visible = (html) => {
       const header = html.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0];
       const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<nav class="docs-onpage"[\s\S]*?<\/nav>/, "");
-      const row = [...header.matchAll(/<a([^>]*) href="([^"]*)"/g)].filter(([, attrs]) => attrs.includes("site-header__components")).map((m) => m[2]);
+      const row = [...header.matchAll(/href="(\/docs\/[^"#]*)"/g)].map((m) => m[1]);
       return new Set([...row, ...[...main.matchAll(/href="(\/docs\/[^"#]*)/g)].map((m) => m[1])]);
     };
     const links = new Map([...rendered].map(([route, html]) => [route, visible(html)]));
@@ -609,7 +610,7 @@ describe("the CAI docs site", () => {
       const area = site.areas.find((a) => a.id === site.byRoute.get(route).meta.area);
       expect(order.indexOf(route), route).toBeGreaterThanOrEqual(order.indexOf(`/docs/${area.slug}/`));
     }
-    expect(order.slice(0, 4)).toEqual(["/docs/get-started/", "/docs/get-started/structure/", "/docs/get-started/javascript/", "/docs/components/"]);
+    expect(order.slice(0, 4)).toEqual(["/docs/get-started/", "/docs/get-started/structure/", "/docs/get-started/javascript/", "/docs/tokens/"]);
     expect(order.at(-1)).toBe("/docs/accessibility/");
   });
 
@@ -632,9 +633,13 @@ describe("the CAI docs site", () => {
         if (link) expect(link[1], route).toBe(`${kind}: ${site.byRoute.get(link[0]).meta.title.replace(/&/g, "&amp;")}`);
       }
     }
-    expect(endOf(rendered.get("/docs/tokens/")).prev?.[0]).toBe("/docs/components/keyframes/");
+    // Get started → Tokens → HTML elements → Components → Platform → Accessibility
+    expect(endOf(rendered.get("/docs/tokens/")).prev?.[0]).toBe("/docs/get-started/javascript/");
     expect(endOf(rendered.get("/docs/tokens/")).next?.[0]).toBe("/docs/tokens/color/");
-    expect(endOf(rendered.get("/docs/get-started/javascript/")).next?.[0]).toBe("/docs/components/");
+    expect(endOf(rendered.get("/docs/get-started/javascript/")).next?.[0]).toBe("/docs/tokens/");
+    expect(endOf(rendered.get("/docs/html/")).prev?.[0]).toMatch(/^\/docs\/tokens\//);
+    expect(endOf(rendered.get("/docs/components/")).prev?.[0]).toMatch(/^\/docs\/html\//);
+    expect(endOf(rendered.get("/docs/platform/")).prev?.[0]).toMatch(/^\/docs\/components\//);
   });
 
   it("lists up to three essentials per area (site.json), never the page itself nor its Previous / Next, all existing pages", () => {

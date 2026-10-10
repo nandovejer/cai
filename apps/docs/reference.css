@@ -32,6 +32,32 @@
   grid-row: 2;
 }
 
+/* The site frame (--site-max, --site-edge: apps/landing/site-header.css),
+   the same as the header's and the home page's. Wider than 768px the
+   sidebar's dark column still reaches the window's edge, but grows by the
+   free space and pads by it, so its links start where the header's brand
+   does (the gutter less the link's own padding and 3px border); main pads
+   its end by the same space, so the content ends under the search. */
+@media (min-width: 769px) {
+  .docs-page {
+    grid-template-columns: calc(var(--cai-sidebar-width) + var(--site-edge)) minmax(0, 1fr);
+  }
+
+  .docs-page > .cai-sidebar {
+    width: calc(var(--cai-sidebar-width) + var(--site-edge));
+    min-width: 0;
+    padding-inline-start: calc(var(--site-edge) + var(--cai-space-xl) - var(--cai-space-md) - 3px);
+  }
+
+  .docs-main {
+    padding-inline-end: var(--site-edge);
+  }
+
+  .docs-page > .docs-footer {
+    padding-inline-end: calc(var(--site-edge) + var(--cai-space-xl));
+  }
+}
+
 /* The footer stays in main's column: the sticky sidebar, as tall as the
    viewport, reaches into the last row at the end of the page */
 .docs-page > footer {
@@ -439,7 +465,9 @@
 
 @media (min-width: 1280px) {
   .docs-main:has(> .docs-onpage) {
-    grid-template-columns: minmax(0, 1fr) 13rem;
+    /* The rail keeps 13rem for its links plus the page gutter at its end,
+       so it ends where the header's search does (the site frame) */
+    grid-template-columns: minmax(0, 1fr) calc(13rem + var(--cai-space-xl));
     column-gap: 0;
   }
 
@@ -455,7 +483,7 @@
     inset-block-start: calc(var(--site-header-h) + var(--cai-space-lg));
     max-block-size: calc(100vh - var(--site-header-h) - var(--cai-space-2xl));
     overflow-y: auto;
-    padding-inline: 0 var(--cai-space-md);
+    padding-inline: 0 var(--cai-space-xl);
   }
 
   /* A rail, not a box */

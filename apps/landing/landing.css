@@ -14,11 +14,11 @@
    Layout
    -------------------------------------------------------------------------- */
 
+/* The site frame (--site-max, --site-edge: apps/landing/site-header.css),
+   the same as the header's and the documentation's */
 .landing-wrap {
   width: 100%;
-  max-width: var(--cai-content-max);
-  margin-inline: auto;
-  padding-inline: var(--cai-space-xl);
+  padding-inline: calc(var(--site-edge) + var(--cai-space-xl));
 }
 
 /* Grid and flex items default to min-width: auto, which lets a long <pre> or

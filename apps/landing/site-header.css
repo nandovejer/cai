@@ -1,11 +1,9 @@
 /* ==========================================================================
    CAI — SITE HEADER
    One header for every page of the site (home and docs), from one partial
-   (apps/docs/_partials/header.html): the menu button, the brand and the
-   site links. At 768px and below Home, Docs and GitHub move into the drawer
-   the menu button opens (#page-nav, see "Menu button and drawer");
-   Components stays in the row at every width, so any component is two
-   links away from any page.
+   (apps/docs/_partials/header.html): the menu button, the brand, the site
+   links (Home, Docs, GitHub) and the search button. They stay in the row at
+   every width.
    This file is the only source of the header's layout: the pages add none.
    Consumer-side styles on top of tokens + core.
    Rules: semantic tokens only; no literal colors.
@@ -18,6 +16,12 @@
    instead of under it. */
 :root {
   --site-header-h: 3.3125rem;
+  /* One frame for the whole site, the same on the home page and in the
+     documentation: 1280px, centred. --site-edge is the free space on each
+     side of it; the header, the home sections and the docs shell all pad by
+     it, from the same formula, so they line up on every page. */
+  --site-max: 1280px;
+  --site-edge: max(0px, calc((100vw - var(--site-max)) / 2));
   scroll-padding-block-start: calc(var(--site-header-h) + var(--cai-space-sm));
 }
 
@@ -105,13 +109,105 @@
   font-size: var(--cai-text-md);
 }
 
+/* The search is one icon button at every width (the platform's compact
+   trigger): "Search docs" stays its accessible name, clipped, not removed,
+   and the title shows the shortcut on hover. */
 .site-header__search {
-  min-inline-size: 13rem;
+  justify-content: center;
+  padding-inline: 0;
 }
 
-@media (max-width: 768px) {
-  .site-header__search {
+.site-header__search .cai-platform-search-trigger__label {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.site-header__search .cai-platform-search-trigger__key {
+  display: none;
+}
+
+/* GitHub: the mark and its name; below 480px the mark alone, the name
+   clipped, so the row keeps Home, Docs and GitHub on a phone */
+.site-header__github {
+  gap: var(--cai-space-2xs);
+}
+
+.site-header__github-icon {
+  flex: none;
+  inline-size: 1.125rem;
+  block-size: 1.125rem;
+}
+
+@media (max-width: 479px) {
+  .site-header__github {
+    justify-content: center;
     min-inline-size: var(--cai-control-lg);
+  }
+
+  .site-header__github-label {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .site-header__inner,
+  .site-header__nav {
+    column-gap: var(--cai-space-sm);
+  }
+}
+
+/* The narrowest phones (below 380px): the mark alone, its name "CAI"
+   clipped but still the link's name, and tighter gaps, so the row of six
+   targets stays one 53px row at 320px */
+@media (max-width: 379px) {
+  .site-header__inner {
+    padding-inline: var(--cai-space-sm);
+  }
+
+  .site-header__inner,
+  .site-header__nav {
+    column-gap: var(--cai-space-xs);
+  }
+
+  .site-header__name {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+/* The row sits in the site frame, with the page's gutter (--cai-space-xl
+   above 480px, like the home sections), so the brand starts where the
+   content starts. Wider than 768px, three groups: the brand, the site links
+   next to it, then free space and the search at the end. */
+@media (min-width: 481px) {
+  .site-header__inner {
+    padding-inline: calc(var(--site-edge) + var(--cai-space-xl));
+  }
+}
+
+@media (min-width: 769px) {
+  .site-header__inner {
+    column-gap: var(--cai-space-lg);
+  }
+
+  .site-header__brand {
+    margin-inline-end: var(--cai-space-md);
+  }
+
+  .site-header__nav {
+    gap: var(--cai-space-lg);
+    margin-inline-end: auto;
   }
 }
 
@@ -191,37 +287,16 @@
 
 /* --------------------------------------------------------------------------
    Menu button and drawer. The button is core's .cai-nav-toggle and opens
-   #page-nav, core's .cai-sidebar as a native popover drawer: the site
-   links first (.page-nav__site), then the page's own sections. On the
-   documentation page the same nav is the sidebar column on wider screens;
-   elsewhere it is a drawer only (--drawer), hidden unless it is open.
-
-   One breakpoint, 768px (--cai-bp-md, where core turns the sidebar into a
-   drawer and shows the button): at 768px and below the site links live in
-   the drawer, above it in the header row (Components stays in the row).
-   Exactly one copy of each link is displayed at any width. Both moves depend on the popover API: without it there is no
-   drawer, and the links stay in the row.
+   #page-nav, core's .cai-sidebar as a native popover drawer with the page's
+   own sections. On the documentation pages the same nav is the sidebar
+   column on wider screens; elsewhere it is a drawer only (--drawer),
+   hidden unless it is open. One breakpoint, 768px (--cai-bp-md, where core
+   turns the sidebar into a drawer and shows the button). The site links
+   never move: they stay in the header row at every width.
    -------------------------------------------------------------------------- */
 
-.page-nav--drawer,
-.page-nav__site {
+.page-nav--drawer {
   display: none;
-}
-
-/* The current page in the drawer: the same underline as in the row, in the
-   sidebar's text color (never color alone, RL-6). Not the filled "active"
-   style, which marks the section in view. */
-.page-nav__site ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.page-nav__site .cai-sidebar__link[aria-current] {
-  color: var(--cai-sidebar-text-hover);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: var(--cai-space-2xs);
 }
 
 @supports selector(:popover-open) {
@@ -243,14 +318,6 @@
       display: flex;
     }
 
-    .site-header__nav a:not(.site-header__components) {
-      display: none;
-    }
-
-    .page-nav__site {
-      display: block;
-      border-block-end: 1px solid var(--cai-sidebar-border);
-    }
   }
 }
 

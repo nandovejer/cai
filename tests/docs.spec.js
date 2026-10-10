@@ -153,7 +153,7 @@ test.describe('Documentation site', () => {
     test('the header has the site links, with Docs current on the hub', async ({ page }) => {
       await open(page);
 
-      await expect(page.locator('.site-header__nav a')).toHaveText(['Home', 'Docs', 'Components', 'GitHub']);
+      await expect(page.locator('.site-header__nav a')).toHaveText(['Home', 'Docs', 'GitHub']);
       await expect(page.locator('.site-header__nav a[aria-current="page"]')).toHaveText('Docs');
       // Exactly one radio group drives the tokens on this page
       await expect(page.locator('fieldset:has(input[name="cai-theme"])')).toHaveCount(1);
@@ -161,12 +161,10 @@ test.describe('Documentation site', () => {
       await expect(page.locator('#page-nav fieldset')).toHaveCount(0);
     });
 
-    test('on a component page, Docs and Components are the current section', async ({ page }) => {
+    test('on a component page, Docs is the current section', async ({ page }) => {
       await gotoId(page, 'c-button');
-      await expect(page.locator('.site-header__nav a[aria-current="true"]')).toHaveText(['Docs', 'Components']);
+      await expect(page.locator('.site-header__nav a[aria-current="true"]')).toHaveText(['Docs']);
       await expect(page.locator('.site-header__nav a[aria-current="page"]')).toHaveCount(0);
-      await page.goto('/docs/components/');
-      await expect(page.locator('.site-header__nav a[aria-current="page"]')).toHaveText('Components');
     });
 
     test('the cycle button in the footer sets the mode, under the site key', async ({ page }) => {
@@ -222,7 +220,7 @@ test.describe('Documentation site', () => {
 
         const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
         const toggle = await box('.cai-nav-toggle[popovertarget="page-nav"]');
-        for (const selector of ['.site-header__brand', '.site-header__components']) {
+        for (const selector of ['.site-header__brand', '.site-header__nav']) {
           const b = await box(selector);
           const overlaps = !(b.right <= toggle.left || b.left >= toggle.right || b.bottom <= toggle.top || b.top >= toggle.bottom);
           expect(overlaps, selector).toBe(false);
@@ -248,7 +246,7 @@ test.describe('Documentation site', () => {
     test('the sidebar shows the six areas and expands only the current one', async ({ page }) => {
       await gotoId(page, 'c-button');
       const areas = page.locator('.docs-nav > li > a');
-      await expect(areas).toHaveText(['Get started', 'Components', 'Tokens', 'Platform', 'HTML elements', 'Accessibility']);
+      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Platform', 'Accessibility']);
       await expect(page.locator('.docs-nav > li > ul')).toHaveCount(1);
       await expect(page.locator('.docs-nav a[aria-current="true"]')).toHaveText('Components');
       await expect(page.locator('.docs-nav a[aria-current="page"]')).toHaveText('Button');
@@ -278,7 +276,7 @@ test.describe('Documentation site', () => {
     test('an area index leads on to its first page, and the last page of an area to the next area', async ({ page }) => {
       await page.goto('/docs/tokens/');
       const end = page.getByRole('navigation', { name: 'Keep going' });
-      await expect(end.getByRole('link', { name: 'Previous: Keyframes', exact: true })).toHaveAttribute('href', /\/docs\/components\/keyframes\/$/);
+      await expect(end.getByRole('link', { name: 'Previous: JavaScript modules', exact: true })).toHaveAttribute('href', /\/docs\/get-started\/javascript\/$/);
       await expect(end.getByRole('link', { name: 'Next: Color', exact: true })).toHaveAttribute('href', /\/docs\/tokens\/color\/$/);
       await expect(end.locator('.docs-end__links a')).toHaveText(['Color modes and themes', 'Components', 'Tokens in Figma']);
     });
@@ -374,13 +372,14 @@ test.describe('Documentation site', () => {
 
     for (const width of [360, 1280]) {
       test(`every component is two links away from every page at ${width}px (ia.md §14)`, async ({ page }) => {
-        // Only links visible without opening anything: the header's
-        // Components, then a card of the gallery
+        // Only links visible without opening anything (not the drawer, not
+        // "On this page"): a link to the gallery on the page, then its card
         test.slow();
         await page.setViewportSize({ width, height: 800 });
-        for (const route of [...ALL, '/']) {
+        for (const route of [...ALL, '/'].filter((r) => r !== '/docs/components/')) {
           await page.goto(route);
-          await expect(page.locator('.site-header__nav a[href="/docs/components/"]'), route).toBeVisible();
+          const toGallery = page.locator('a[href="/docs/components/"]:visible').filter({ hasNot: page.locator('xpath=ancestor::*[@id="page-nav" or contains(@class,"docs-onpage")]') });
+          expect(await toGallery.count(), route).toBeGreaterThan(0);
         }
         await page.goto('/docs/components/');
         for (const id of guideIds) {
@@ -883,28 +882,22 @@ test.describe('Site header and navigation toggle', () => {
   // generator marks the current link.
   const read = (file) => readFileSync(fromRepo(file), 'utf-8');
   const HEADER = read('apps/docs/_partials/header.html');
-  const SITE_LINKS = read('apps/docs/_partials/site-links.html');
   const INCLUDERS = {
-    'apps/landing/index.html': ['header', 'site-links'],
-    'apps/docs/_layouts/page.html': ['header', 'site-links'],
-    'apps/docs/_layouts/not-found.html': ['header', 'site-links'],
+    'apps/landing/index.html': ['header'],
+    'apps/docs/_layouts/page.html': ['header'],
+    'apps/docs/_layouts/not-found.html': ['header'],
   };
 
-  test('every page has the same header markup, and the same site links in its drawer', () => {
+  test('every page has the same header markup: Home, Docs, GitHub and the search', () => {
     expect(HEADER).toContain('popovertarget="page-nav"');
     expect(HEADER).not.toContain('aria-current');
-    // A labelled list inside the drawer's nav, not a nav in a nav (a11y.md F4)
-    expect(SITE_LINKS).toContain('<ul aria-labelledby="nav-site">');
-    expect(SITE_LINKS).not.toContain('<nav');
+    const row = HEADER.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0];
+    expect([...row.matchAll(/href="([^"]+)"/g)].map((m) => m[1])).toEqual(['/', '/docs/', 'https://github.com/nandovejer/cai']);
+    expect(HEADER).toContain('data-cai-search-open');
     for (const [file, partials] of Object.entries(INCLUDERS)) {
       for (const name of partials) expect(read(file), file).toContain(`<!-- cai:include ${name} -->`);
       expect(read(file), file).toMatch(/<nav class="cai-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+">/);
     }
-    // The drawer's site links are the header's, in the same order, less
-    // Components, which stays in the header row at every width
-    const hrefs = (html) => [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]);
-    const row = HEADER.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0].replace(/<a class="site-header__components"[^>]*>[^<]*<\/a>/, '');
-    expect(hrefs(SITE_LINKS)).toEqual(hrefs(row));
     for (const file of ['apps/landing/index.html', 'apps/docs/_layouts/page.html']) {
       expect(read(file), file).toContain('href="/apps/landing/site-header.css"');
     }
@@ -961,14 +954,13 @@ test.describe('Site header and navigation toggle', () => {
     });
 
     for (const [width, order] of [
-      [360, ['.cai-platform-skip-link', '.site-header__menu', '.site-header__brand', '.site-header__components']],
+      [360, ['.cai-platform-skip-link', '.site-header__menu', '.site-header__brand', '.site-header__nav a >> nth=0', '.site-header__nav a >> nth=1', '.site-header__nav a >> nth=2']],
       [1440, [
         '.cai-platform-skip-link',
         '.site-header__brand',
         '.site-header__nav a >> nth=0',
         '.site-header__nav a >> nth=1',
         '.site-header__nav a >> nth=2',
-        '.site-header__nav a >> nth=3',
       ]],
     ]) {
       test(`the focus order follows the header row at ${width}px: ${path}`, async ({ page }) => {
@@ -981,27 +973,19 @@ test.describe('Site header and navigation toggle', () => {
       });
     }
 
-    test(`on a phone Home, Docs and GitHub are in the drawer, first; Components stays in the row: ${path}`, async ({ page }) => {
+    test(`on a phone Home, Docs and GitHub stay in the header row; the drawer has no site list: ${path}`, async ({ page }) => {
       await page.setViewportSize({ width: 360, height: 640 });
       await page.goto(path);
-      await expect(page.locator('.site-header__nav a:visible')).toHaveText(['Components']);
-
+      await expect(page.locator('.site-header__nav a:visible')).toHaveText(['Home', 'Docs', 'GitHub']);
+      await expect(page.locator('.site-header__nav a[aria-current]')).toHaveText(current);
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
-      const site = page.getByRole('list', { name: 'Site' });
-      await expect(site.getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
-      await expect(site.locator('[aria-current]')).toHaveText(current);
-      // first in the drawer: the first Tab from the button lands on Home
-      await page.keyboard.press('Tab');
-      await expect(site.getByRole('link', { name: 'Home' })).toBeFocused();
-      const underline = await site.locator('[aria-current]').evaluate((el) => getComputedStyle(el).textDecorationLine);
-      expect(underline).toBe('underline');
+      await expect(page.getByRole('list', { name: 'Site' })).toHaveCount(0);
     });
 
     test(`on a wide screen the site links are in the header row only: ${path}`, async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 800 });
       await page.goto(path);
       await expect(page.getByRole('navigation', { name: 'Site' })).toHaveCount(1);
-      await expect(page.locator('.page-nav__site')).toBeHidden();
     });
 
     test(`the header stays at the top while scrolling: ${path}`, async ({ page }) => {

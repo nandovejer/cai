@@ -22,6 +22,19 @@ Every font file shipped by a package must have the repository's licence (MIT) as
 
 PRINCIPLES.md has red lines (`RL-n`, absolute, never excepted) and strong rules (`SR-n`). A strong rule may be broken only with a `cai-exception: EX-nnn` comment next to the code and a row in [EXCEPTIONS.md](./EXCEPTIONS.md); `pnpm check:exceptions` keeps them in step. Size ceilings in `budgets.json` are a red line: never raise one.
 
+### 5. Safari and Firefox reviews run only with the owner's permission
+
+The `front-safari` and `front-firefox` agents are consulted only on behalf of `frontend`, and never without the owner's say-so. When `frontend` ends its output with a **Questions for `front-safari` and `front-firefox`** section, the orchestrator does not launch them: it asks the owner whether to run them **now or later**.
+
+- **Now:** run both in parallel on the same files, with that section as their brief, and hand their findings back to `frontend` before delivering. They may apply fixes; if both touch the same file, run them in turn instead.
+- **Later:** add a row to the review ledger, `.claude/BROWSER-REVIEWS.md` (what was not reviewed: components, files, commits, date), and carry on. A row is closed only when both agents have reviewed it.
+
+Test runs use `--project=chromium --project=chromium-nojs`. The `firefox` and `webkit` Playwright projects run only with the owner's permission, through these two agents. Do not launch them for work that does not come from `frontend`.
+
+### 6. The security audit's OK needs both browser reviews
+
+`npm-security-auditor` never gives its OK while the review ledger, the git history or the session memory shows a component, file or change that `front-safari` and `front-firefox` have not both reviewed. It lists those items as blocking and asks the orchestrator to request the owner's permission to run both agents on them. Its OK comes only after both reviews are done and their must-fix findings are fixed or listed as known issues.
+
 ---
 
 ## JS in `packages/core/src/`
@@ -49,7 +62,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 
 - Every file under `apps/docs/pages/` is a page: `pages/index.html` → `/docs/`, `pages/a/b.html` → `/docs/a/b/`, `pages/a/index.html` → `/docs/a/` (an area index). Names starting with `_` are not pages (`pages/components/_thumbs/<slug>.html` holds the gallery thumbnails). A page is a fragment: its content, under the generated h1. Front matter in a leading `<!-- cai:page -->` comment, one `key: value` per line: `title` (the h1, the start of `<title>`, the sidebar label), `description` (the lead under the h1 and the gallery line), `area` (an id of `site.json`, or `hub`) are required; optional `order`, `group` (a group of the area in `site.json`: a gallery heading, or the labelled "Helpers" sub-list), `files` (`;`-separated, shown next to the h1), `module` (the JS module), `lead: false` (the content brings its own lead), `toc` (`h2` default, `h2,h3` — each h3 nested under its h2, used by component pages —, `false`), `generate` (`gallery` on an area index, `a-z`).
 - What the generator writes around the content, from the front matter of every page: the sidebar (the six areas of `site.json`, only the current one expanded; `aria-current="page"` on the page, `"true"` on its area), the breadcrumb, the h1 and lead, "On this page" (with three or more h2 that have an id; a rail from 1280 px), Previous / Next, the galleries and the A–Z index (`/docs/a-z/`). `apps/docs/404.html` becomes `/404.html`, with `<base href>` = `PAGES_BASE` (`vite.config.js`) and no script.
-- The layout `apps/docs/_layouts/<layout>.html` wraps it. Templates know two things only: `<!-- cai:include <name> -->` (a file of `apps/docs/_partials/`) and a fixed set of `{{…}}` values (layouts and partials only). The landing includes the same `header` and `site-links` partials. The generator marks the current site links (`aria-current`).
+- The layout `apps/docs/_layouts/<layout>.html` wraps it. Templates know two things only: `<!-- cai:include <name> -->` (a file of `apps/docs/_partials/`) and a fixed set of `{{…}}` values (layouts and partials only). The landing includes the same `header` partial (Home, Docs, GitHub and the search button, at every width). The generator marks the current site links (`aria-current`).
 - Dev server: route → file lookup table; a route without its trailing slash answers 301. Editing a layout, partial, page or `site.json` reloads the browser.
 - Build: one entry per route (plus the landing at `/`); each HTML file is moved to `<route>/index.html`, and in the pages build its asset URLs and links between pages are relative to its depth.
 - Search: the generator also writes `/docs/search-index.json` (`buildSearchIndex()`, from the same `indexData()` as the A–Z page, so the two never disagree), served by the dev middleware and emitted by the build. Every page gets the header's search button and the dialog partial `_partials/search.html`, with `data-cai-search-src="/docs/search-index.json"` made relative in the pages build. The component is `@cai-ds/platform/search` (`initSearch()`); its fixed text is in the partial and the strings it writes are the dialog's `data-cai-label-*` (EX-005).

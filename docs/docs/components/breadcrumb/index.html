@@ -9,10 +9,10 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-Dap66mJ8.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CYaSoqcv.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-ZASmjKN2.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Jj7LSfUV.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CTNmniHS.css">
 </head>
 <body class="o-shell docs-page">
@@ -131,13 +131,11 @@
   <main class="o-main docs-main" id="main-content" tabindex="-1">
   <div class="docs-page-head">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
-      <div class="cai-breadcrumb">
-        <a class="cai-breadcrumb__item" href="../../../docs/">Docs</a>
-        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <a class="cai-breadcrumb__item" href="../../../docs/components/">Components</a>
-        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Breadcrumb</span>
-      </div>
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="cai-breadcrumb__item" href="../../../docs/components/">Components</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Breadcrumb</span></li>
+      </ol>
     </nav>
     <div class="docs-page-head__title">
       <h1 class="docs-title">Breadcrumb</h1>
@@ -179,15 +177,13 @@
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <nav aria-label="Example breadcrumb">
-              <div class="cai-breadcrumb">
-                <a class="cai-breadcrumb__item" href="../../../docs/">Docs</a>
-                <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
-                <a class="cai-breadcrumb__item" href="../../../docs/components/">Components</a>
-                <span class="cai-breadcrumb__sep" aria-hidden="true">/</span>
-                <span class="cai-breadcrumb__item" aria-current="page">Breadcrumb</span>
-              </div>
+              <ol class="cai-breadcrumb">
+                <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
+                <li><a class="cai-breadcrumb__item" href="../../../docs/components/">Components</a></li>
+                <li><span class="cai-breadcrumb__item" aria-current="page">Breadcrumb</span></li>
+              </ol>
             </nav>
-            <p class="docs-demo__note">The trail at the top of this page is the same component, with a › separator.</p>
+            <p class="docs-demo__note">The trail at the top of this page is the same component.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
@@ -205,38 +201,36 @@
                 <button class="cai-copy-btn" type="button" data-copy-from="code-breadcrumb" aria-label="Copy the breadcrumb markup">Copy</button>
               </div>
               <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Breadcrumb markup"><code id="code-breadcrumb">&lt;nav aria-label=&quot;Breadcrumb&quot;&gt;
-  &lt;div class=&quot;cai-breadcrumb&quot;&gt;
-    &lt;a class=&quot;cai-breadcrumb__item&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;
-    &lt;span class=&quot;cai-breadcrumb__sep&quot; aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;
-    &lt;a class=&quot;cai-breadcrumb__item&quot; href=&quot;/settings/&quot;&gt;Settings&lt;/a&gt;
-    &lt;span class=&quot;cai-breadcrumb__sep&quot; aria-hidden=&quot;true&quot;&gt;/&lt;/span&gt;
-    &lt;span class=&quot;cai-breadcrumb__item&quot; aria-current=&quot;page&quot;&gt;Billing&lt;/span&gt;
-  &lt;/div&gt;
+  &lt;ol class=&quot;cai-breadcrumb&quot;&gt;
+    &lt;li&gt;&lt;a class=&quot;cai-breadcrumb__item&quot; href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;cai-breadcrumb__item&quot; href=&quot;/settings/&quot;&gt;Settings&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;span class=&quot;cai-breadcrumb__item&quot; aria-current=&quot;page&quot;&gt;Billing&lt;/span&gt;&lt;/li&gt;
+  &lt;/ol&gt;
 &lt;/nav&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>There are no modifiers. The separator is your character: "/" and "›" are common.</p>
+            <p>There are no modifiers. The separator is drawn by the CSS between two items: there is nothing to write for it.</p>
             <div class="cai-table-wrap" role="region" aria-label="Breadcrumb parts" tabindex="0">
               <table class="cai-table">
                 <thead>
                   <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-breadcrumb</code></div></td><td data-label="What it does"><div>The row: wraps onto more lines when it is narrow</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-breadcrumb</code></div></td><td data-label="What it does"><div>The ordered list: one row of items, which wraps onto more lines when it is narrow. Each <code>&lt;li&gt;</code> after the first starts with a slash</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-breadcrumb__item</code></div></td><td data-label="What it does"><div>A parent link, or the current page as text</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>aria-current="page"</code></div></td><td data-label="What it does"><div>Marks the current page: primary text colour and medium weight</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-breadcrumb__sep</code></div></td><td data-label="What it does"><div>The separator, in the muted text colour</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>A <code>&lt;nav&gt;</code> landmark around a wrapping row of links, styled by <code>components/breadcrumb.css</code>. No JavaScript.</p>
+            <p>The <a href="https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/">APG breadcrumb pattern</a>: a <code>&lt;nav&gt;</code> landmark around an ordered list of links, styled by <code>components/breadcrumb.css</code>. No JavaScript.</p>
             <ul>
-              <li>The current page is a <code>&lt;span&gt;</code>, not a link to itself.</li>
-              <li>The separators are hidden from assistive technology.</li>
+              <li>The list is ordered because the order is the meaning: screen readers announce a list and its number of items.</li>
+              <li>The current page is the last item, a <code>&lt;span&gt;</code> with <code>aria-current="page"</code>, not a link to itself.</li>
+              <li>The separator is a border drawn by <code>::before</code> with empty content, so assistive technology has nothing to read.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Nothing changes: the breadcrumb is links and CSS.</p>
+            <p>Nothing changes: the breadcrumb is a list of links and CSS. Without CSS it reads as a numbered list.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab reaches each parent link in order; Enter follows it. The current page is not in the tab order.</p>
             <ul>
@@ -260,13 +254,13 @@
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Use the titles of the pages, and end with the current page as text.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-breadcrumb"><span class="cai-breadcrumb__item">Docs</span><span class="cai-breadcrumb__sep">/</span><span class="cai-breadcrumb__item">Components</span><span class="cai-breadcrumb__sep">/</span><span class="cai-breadcrumb__item" aria-current="page">Button</span></div>
+                  <ol class="cai-breadcrumb"><li><span class="cai-breadcrumb__item">Docs</span></li><li><span class="cai-breadcrumb__item">Components</span></li><li><span class="cai-breadcrumb__item" aria-current="page">Button</span></li></ol>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Internal names (“UI kit”, “cai-btn”) instead of the titles the reader saw on the way.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-breadcrumb"><span class="cai-breadcrumb__item">Home</span><span class="cai-breadcrumb__sep">/</span><span class="cai-breadcrumb__item">UI kit</span><span class="cai-breadcrumb__sep">/</span><span class="cai-breadcrumb__item" aria-current="page">cai-btn</span></div>
+                  <ol class="cai-breadcrumb"><li><span class="cai-breadcrumb__item">Home</span></li><li><span class="cai-breadcrumb__item">UI kit</span></li><li><span class="cai-breadcrumb__item" aria-current="page">cai-btn</span></li></ol>
                 </div>
               </figure>
             </div>
@@ -286,7 +280,7 @@
                 <tbody>
                   <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Current page</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Separator</div></td><td data-label="Colour on background"><div><code>--cai-text-muted</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Separator</div></td><td data-label="Colour on background"><div><code>--cai-text-muted</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>

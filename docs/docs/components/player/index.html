@@ -9,10 +9,10 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DpSKJi6x.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-BkIUUak7.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-Dap66mJ8.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CYaSoqcv.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-ZASmjKN2.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Jj7LSfUV.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CTNmniHS.css">
 </head>
 <body class="o-shell docs-page">
@@ -131,13 +131,11 @@
   <main class="o-main docs-main" id="main-content" tabindex="-1">
   <div class="docs-page-head">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
-      <div class="cai-breadcrumb">
-        <a class="cai-breadcrumb__item" href="../../../docs/">Docs</a>
-        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <a class="cai-breadcrumb__item" href="../../../docs/components/">Components</a>
-        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Player</span>
-      </div>
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="cai-breadcrumb__item" href="../../../docs/components/">Components</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Player</span></li>
+      </ol>
     </nav>
     <div class="docs-page-head__title">
       <h1 class="docs-title">Player</h1>
@@ -179,10 +177,14 @@
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage o-grid docs-cols-2">
-            <div class="cai-player" data-type="video" role="group" aria-label="Video player">
+            <div class="docs-demo__stage">
+            <!-- Public domain: NASA, "Earth Views from the ISS - No Music", NASA ID NHQ_2020_1221_Earth Views, 15 s from 6:35, no audio -->
+            <div class="cai-player" data-type="video" role="group" aria-label="Earth from the space station">
               <div class="cai-player-media-wrap is-paused">
-                <video class="cai-player-video" preload="metadata" controls playsinline aria-label="A sun rises behind an arched window on a whitewashed wall. No sound.">
-                  <source src="../../../assets/video-JTZ8D57M.mp4" type="video/mp4">
+                <video class="cai-player-video" preload="metadata" controls playsinline aria-label="The curved edge of the Earth seen from the International Space Station: brown land under thin cloud, below black space. No sound.">
+                  <source src="../../../assets/nasa-earth-CFzsLRAb.mp4" type="video/mp4">
+                  <track kind="captions" srclang="en" label="English" data-asset="nasa-captions" default>
+                  <track kind="subtitles" srclang="es" label="Español" data-asset="nasa-captions-es">
                 </video>
                 <div class="cai-player-overlay" aria-hidden="true">
                   <svg class="cai-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
@@ -194,7 +196,7 @@
                     <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
                     <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
                   </button>
-                  <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek video">
+                  <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek Earth video">
                 </div>
                 <div class="cai-player-btns">
                   <span class="cai-player-time cai-player-current">0:00</span>
@@ -205,16 +207,20 @@
                       <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                       <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                     </button>
-                    <input class="cai-player-seekbar cai-player-volbar" type="range" min="0" max="1000" step="1" value="1000" style="--cai-seek: 100%" aria-label="Video volume">
+                    <input class="cai-player-seekbar cai-player-volbar" type="range" min="0" max="100" step="5" value="100" style="--cai-seek: 100%" aria-label="Earth video volume">
                   </div>
+                  <select class="cai-input cai-player-tracks" aria-label="Captions"></select>
                 </div>
               </div>
             </div>
+            <p class="docs-demo__note">Video, MP4, 15 seconds, with English captions shown by default and Spanish subtitles. It has no sound: both tracks describe the picture. Video: <a href="https://images.nasa.gov/details/NHQ_2020_1221_Earth%20Views">NASA, Earth Views from the ISS</a>, in the public domain.</p>
+            </div>
 
             <div class="docs-demo__stage">
-              <div class="cai-player" data-type="audio" role="group" aria-label="Audio player">
+              <!-- Public domain: NASA, Apollo 11 launch countdown and lift-off, 16 July 1969, 25 s (nasa.gov/historical-sounds); ID3/XMP metadata stripped -->
+              <div class="cai-player" data-type="audio" role="group" aria-label="Apollo 11 countdown player">
                 <audio class="cai-player-audio" preload="none" controls>
-                  <source src="../../../assets/audio-DmbUd6yk.mp3" type="audio/mpeg">
+                  <source src="../../../assets/nasa-apollo11-countdown-xbRouWOh.mp3" type="audio/mpeg">
                 </audio>
                 <div class="cai-player-controls cai-player-controls--audio">
                   <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
@@ -228,7 +234,7 @@
                   </div>
                 </div>
               </div>
-              <p class="docs-demo__note">Audio, MP3. Nothing is downloaded until you press play.</p>
+              <p class="docs-demo__note">Audio, MP3, 25 seconds. Nothing is downloaded until you press play. Recording: <a href="https://www.nasa.gov/historical-sounds/">NASA, Apollo 11 launch countdown and lift-off</a>, in the public domain.</p>
 
               <!-- data-src is set by reference.js (the build does not rewrite data-* URLs) -->
               <div class="cai-player" data-type="midi" role="group" aria-label="MIDI player">
@@ -251,7 +257,7 @@
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Captions, transcripts and audio description depend on the media you provide. A MIDI file has no player without JavaScript: offer a download link in the fallback text.</p>
+          <p>Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example. A MIDI file has no player without JavaScript: offer a download link in the fallback text.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Player documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -282,6 +288,26 @@
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
             </div>
+            <p>Captions and subtitles: one <code>&lt;track&gt;</code> per file inside the <code>&lt;video&gt;</code>, and one control in <code>.cai-player-btns</code>. Use the button for one track and the select for several; the script fills the select.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-player-captions" aria-label="Copy the captions markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Captions markup"><code id="code-player-captions">&lt;video class=&quot;cai-player-video&quot; preload=&quot;metadata&quot; controls playsinline&gt;
+  &lt;source src=&quot;interview.mp4&quot; type=&quot;video/mp4&quot;&gt;
+  &lt;track kind=&quot;captions&quot; srclang=&quot;en&quot; label=&quot;English&quot; src=&quot;interview-en.vtt&quot; default&gt;
+  &lt;track kind=&quot;subtitles&quot; srclang=&quot;es&quot; label=&quot;Español&quot; src=&quot;interview-es.vtt&quot;&gt;
+&lt;/video&gt;
+
+&lt;!-- One track: a button that turns it on and off --&gt;
+&lt;button class=&quot;cai-player-btn cai-player-captions&quot; type=&quot;button&quot; aria-pressed=&quot;false&quot; aria-label=&quot;Captions&quot;&gt;
+  &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect x=&quot;2&quot; y=&quot;5&quot; width=&quot;20&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M6 11h12M6 15h7&quot;/&gt;&lt;/svg&gt;
+&lt;/button&gt;
+
+&lt;!-- Several tracks: a select, filled by the script --&gt;
+&lt;select class=&quot;cai-input cai-player-tracks&quot; aria-label=&quot;Captions&quot;&gt;&lt;/select&gt;</code></pre>
+            </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">JS</span>
@@ -302,6 +328,9 @@ initPlayers();</code></pre>
                   <tr><td data-label="Class or attribute"><div><code>data-type="midi"</code> and <code>data-src</code></div></td><td data-label="Effect"><div>A MIDI file, played with Web Audio by <code>midi.js</code>, loaded only when needed</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-player-mute</code>, <code>.cai-player-volbar</code></div></td><td data-label="Effect"><div>A mute button and a volume slider</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-player-fullscreen</code>, <code>.cai-player-pip</code></div></td><td data-label="Effect"><div>Optional full-screen and picture-in-picture buttons for video</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>&lt;track kind="captions"&gt;</code>, <code>kind="subtitles"</code></div></td><td data-label="Effect"><div>A WebVTT file with <code>srclang</code> and <code>label</code>; <code>default</code> shows it from the start</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-player-captions</code></div></td><td data-label="Effect"><div>A button that turns captions on and off: the default track, else the first</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-player-tracks</code></div></td><td data-label="Effect"><div>A select, with <code>.cai-input</code>, to pick one track or none</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-player-fallback</code></div></td><td data-label="Effect"><div>Text shown only when the script does not run</div></td></tr>
                 </tbody>
               </table>
@@ -309,19 +338,22 @@ initPlayers();</code></pre>
             <h3 id="how">How it works</h3>
             <p>The native media element plays the file; <code>player.js</code> drives the CAI controls, styled by <code>components/player.css</code>.</p>
             <ul>
-              <li><code>initPlayers()</code> mounts every <code>.cai-player</code> on the page. <code>cai.js</code> runs it.</li>
-              <li>On mount, the script removes the native <code>controls</code> and binds the CAI ones: play and pause, time, seek and volume.</li>
-              <li>Seek and volume are native <code>&lt;input type="range"&gt;</code> sliders.</li>
+              <li><code>initPlayers()</code> mounts every <code>.cai-player</code> on the page, or inside the element you pass it. <code>cai.js</code> runs it. A player already mounted is left as it is, so running it again is safe.</li>
+              <li>On mount, the script removes the native <code>controls</code> and binds the CAI ones: play and pause, time, seek and volume. They start from the media's own state: a <code>muted</code> video shows as muted, and a length the browser already knows shows at once.</li>
+              <li>Seek and volume are native <code>&lt;input type="range"&gt;</code> sliders. Once the length is known, the seek slider has one step per second, whatever its <code>max</code> in the markup.</li>
+              <li>A full-screen or picture-in-picture button is hidden where the browser cannot do it.</li>
+              <li>Captions and subtitles are the browser's: each <code>&lt;track&gt;</code> is a text track, and the browser draws its cues. The CAI controls only set which track shows, so a choice made in the browser's own menu shows in them too. <code>::cue</code> gives the cues light text on the media surface. Nothing is stored. A control with no track to show is hidden.</li>
               <li><code>mountPlayer(root)</code> and <code>mountMidiPlayer(root)</code> mount one player.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Audio and video show the browser's own controls, and the CAI controls stay hidden. A MIDI player shows its fallback text instead.</p>
+            <p>Audio and video show the browser's own controls, and the CAI controls stay hidden. The browser's controls offer the captions and subtitles, and a track with <code>default</code> shows from the start. A MIDI player shows its fallback text instead.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab moves through the controls; each one keeps its native keys.</p>
             <ul>
-              <li>Buttons: Enter or Space. Their names change with the state: "Play" or "Pause", "Mute" or "Unmute".</li>
-              <li>Sliders: arrow keys, Home, End, Page Up and Page Down. The seek slider says the time as text.</li>
-              <li>When the player itself has focus, not one of its controls (after a click on the video, for example): Space or K plays and pauses, and M mutes. F goes full screen when the player has a full-screen button.</li>
+              <li>Buttons: Enter or Space. Their names change with the state: "Play" or "Pause", "Mute" or "Unmute". The captions button keeps its name, "Captions", and says whether it is pressed (<code>aria-pressed</code>).</li>
+              <li>Track select: the browser's own keys; each option is in the language of its track.</li>
+              <li>Sliders: arrow keys, Home, End, Page Up and Page Down. An arrow key moves the seek slider one second, and the volume slider one step (5 % in the example). The seek slider says the time as text.</li>
+              <li>When the player itself has focus, not one of its controls (after a click on the video, for example): Space or K plays and pauses, and M mutes. F goes full screen and C turns captions on or off when the player has those buttons. With Ctrl, Alt or Cmd held, these keys do nothing.</li>
               <li>The player is a <code>role="group"</code> named by its <code>aria-label</code>.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
@@ -350,7 +382,8 @@ initPlayers();</code></pre>
             <h3 id="content">Writing the content</h3>
             <p>Name each player by what it plays: "Episode 12 player", not "Audio player".</p>
             <ul>
-              <li>Give video captions (<code>&lt;track kind="captions"&gt;</code>) and a transcript when it has speech.</li>
+              <li>Give video captions (<code>&lt;track kind="captions"&gt;</code>) and a transcript when it has speech. Captions include the sounds as well as the words; subtitles (<code>kind="subtitles"</code>) translate the words.</li>
+              <li>Label each track in its own language: "English", "Español".</li>
               <li>Describe a silent video in its <code>aria-label</code> or next to it.</li>
               <li>Say the length and the format next to the player when it is large.</li>
             </ul>
@@ -365,25 +398,28 @@ initPlayers();</code></pre>
                   <tr><td data-label="Part"><div>Time and status</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>7.7:1</div></td><td data-label="Dark"><div>6.1:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Button icon</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>8.7:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Button icon, hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.2:1</div></td><td data-label="Dark"><div>6.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Captions button when on: icon and underline</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>4.7:1</div></td><td data-label="Dark"><div>4.4:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Seek bar thumb</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>4.7:1</div></td><td data-label="Dark"><div>4.4:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Played part against the loaded part</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-pressed</code></div></td><td data-label="Light"><div>4.7:1</div></td><td data-label="Dark"><div>4.4:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Played part against the part not loaded yet</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.2:1</div></td><td data-label="Dark"><div>6.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Edge of the seek bar</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>4.6:1</div></td><td data-label="Dark"><div>4.3:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Caption text</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-surface-media</code></div></td><td data-label="Light"><div>21.0:1</div></td><td data-label="Dark"><div>21.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>4.7:1</div></td><td data-label="Dark"><div>4.4:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> buttons get a 2 px <code>--cai-focus-ring</code> outline 1 px outside; the seek bar, 2 px outside.</li>
-              <li><strong>Not colour alone:</strong> play and pause swap their icon and their name; the seek bar's thumb shows the position.</li>
+              <li><strong>Focus:</strong> buttons, sliders and the track select get a 2 px <code>--cai-focus-ring</code> outline 2 px outside, as every CAI control.</li>
+              <li><strong>Not colour alone:</strong> play and pause swap their icon and their name; the seek bar's thumb shows the position; the captions button, when on, gets an underline as well as the brand colour.</li>
+              <li><strong>Track select:</strong> the form field's colours, from <a href="../../../docs/components/form/#contrast">Form</a>.</li>
               <li><strong>Target:</strong> the buttons are 32 px square.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 23 tokens that <code>components/player.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 24 tokens that <code>components/player.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="../../../docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="../../../docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="../../../docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="../../../docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="../../../docs/tokens/color/#cai-surface-media"><code>--cai-surface-media</code></a>, <a href="../../../docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="../../../docs/tokens/color/#cai-surface-pressed"><code>--cai-surface-pressed</code></a>, <a href="../../../docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="../../../docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="../../../docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-3xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-md</code>, <code>--cai-space-2xs</code>, <code>--cai-space-3xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
               <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
               <div><dt><a href="../../../docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
               <div><dt><a href="../../../docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-icon</code></dd></div>

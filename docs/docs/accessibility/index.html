@@ -9,10 +9,10 @@
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../assets/site-header-DpSKJi6x.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-BkIUUak7.js"></script>
+  <script type="module" crossorigin src="../../assets/site-header-Dap66mJ8.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-CYaSoqcv.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/reference-CA-xPcPZ.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-ZASmjKN2.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-Jj7LSfUV.css">
   <link rel="stylesheet" crossorigin href="../../assets/reference-CTNmniHS.css">
 </head>
 <body class="o-shell docs-page">
@@ -101,11 +101,10 @@
   <main class="o-main docs-main" id="main-content" tabindex="-1">
   <div class="docs-page-head">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
-      <div class="cai-breadcrumb">
-        <a class="cai-breadcrumb__item" href="../../docs/">Docs</a>
-        <span class="cai-breadcrumb__sep" aria-hidden="true">›</span>
-        <span class="cai-breadcrumb__item" aria-current="page">Accessibility statement</span>
-      </div>
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../docs/">Docs</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Accessibility statement</span></li>
+      </ol>
     </nav>
     <h1 class="docs-title">Accessibility statement</h1>
   </div>
@@ -152,7 +151,7 @@
       <ul>
         <li><strong>Tooltip.</strong> Escape does not close it. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
         <li><strong>Modal.</strong> Its buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
-        <li><strong>Player.</strong> MIDI needs JavaScript and Web Audio. Without them the player shows a message.</li>
+        <li><strong>Player.</strong> MIDI needs JavaScript and Web Audio. Without them the player shows a message. On this documentation site, the example video's caption files load only with JavaScript; without it the browser lists the tracks but shows no text.</li>
         <li><strong>Color mode.</strong> On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
         <li><strong>Code and Design tabs.</strong> The tab you chose last opens after the page has loaded, so the content below the tabs can move once.</li>
         <li><strong>Find in page.</strong> In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code>, find in page (Ctrl+F) does not find text in the tab that is not open. Open the other tab, or turn JavaScript off to see both.</li>

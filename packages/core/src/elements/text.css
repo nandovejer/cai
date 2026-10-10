@@ -64,6 +64,11 @@
   margin-block-start: var(--cai-space-xs);
 }
 
+/* Pairs grouped in a div, as HTML allows: the same space between groups */
+:where(dl > div + div) {
+  margin-block-start: var(--cai-space-xs);
+}
+
 /* The reset removes the list padding, which leaves the markers outside the
    box. Only for lists without a class, so any component list is untouched. */
 :where(ul:not([class]), ol:not([class])) {

@@ -1,0 +1,155 @@
+<!-- cai:page
+title: Accordion
+description: Shows and hides sections of content with the native details and summary elements, one at a time if you name the group.
+area: components
+group: content
+files: components/accordion.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-accordion">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-accordion">
+              <details name="acc-demo" open>
+                <summary>What is a design token?</summary>
+                <p>A named value, such as a color or a space, that components read instead of a literal.</p>
+              </details>
+              <details name="acc-demo">
+                <summary>Why only one open at a time?</summary>
+                <p>The same <code>name</code> on each details connects them: opening one closes the other.</p>
+              </details>
+              <details name="acc-demo">
+                <summary>Does it need JavaScript?</summary>
+                <p>No. The browser opens, closes and groups them.</p>
+              </details>
+            </div>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>Two points to know before you rely on a named group.</p>
+          <p><strong>Exclusive group.</strong> The <code>name</code> attribute works in Chrome and Edge 120, Safari 17.2 and Firefox 130, all from September 2024 or earlier, so it is not yet Baseline widely available. In an older browser each panel opens on its own: nothing is lost.</p>
+          <p><strong>Screen readers.</strong> How NVDA, JAWS, VoiceOver, TalkBack and Orca announce an exclusive group has not been tested for CAI, and no support data was checked. The grouping of an exclusive set is not described to assistive technology: the HTML accessibility mapping for it is still an open issue (see the <a href="https://open-ui.org/components/accordion.explainer">Open UI explainer</a>).</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Accordion documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-accordion" aria-label="Copy the accordion markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Accordion markup"><code id="code-accordion">&lt;div class=&quot;cai-accordion&quot;&gt;
+  &lt;details name=&quot;faq&quot; open&gt;
+    &lt;summary&gt;What is a design token?&lt;/summary&gt;
+    &lt;p&gt;A named value that components read.&lt;/p&gt;
+  &lt;/details&gt;
+  &lt;details name=&quot;faq&quot;&gt;
+    &lt;summary&gt;Does it need JavaScript?&lt;/summary&gt;
+    &lt;p&gt;No.&lt;/p&gt;
+  &lt;/details&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>A single <code>&lt;details&gt;</code> needs no class: the elements layer styles it. The class only joins a stack.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Accordion classes and attributes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-accordion</code></div></td><td data-label="What it does"><div>Joins the <code>&lt;details&gt;</code> inside it into one block: one edge between them, rounded corners only on the block</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>name="…"</code></div></td><td data-label="What it does"><div>Connects the details with the same name: only one is open at a time. They need not be adjacent</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>open</code></div></td><td data-label="What it does"><div>Starts a panel open. In a named group, only the first <code>open</code> one in the source stays open</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>Native <code>&lt;details&gt;</code> and <code>&lt;summary&gt;</code>, styled by <code>elements/interactive.css</code> with no class. <code>components/accordion.css</code> adds only the joined block. No JavaScript.</p>
+            <ul>
+              <li>The summary is the label of the panel; the rest of the details is its content.</li>
+              <li>Closed content is not shown and is out of the reading order until the panel opens.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: opening, closing and grouping are the browser's. The accordion is complete without a script.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>Tab reaches each summary in order. Enter or Space opens or closes it. There are no arrow-key shortcuts between panels.</p>
+            <ul>
+              <li>Add no role: a <code>&lt;details&gt;</code> already has its semantics, and no ARIA role is allowed on it.</li>
+              <li>Keep links and buttons out of the summary: it is itself the control.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use an accordion for content that most readers can skip, grouped under short titles.</p>
+            <ul>
+              <li>Frequently asked questions and long reference lists.</li>
+              <li>Optional detail under a short answer.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not hide what every reader needs, and do not use it to move around the site.</p>
+            <ul>
+              <li>For the main sections of a site, use a <a href="/docs/components/sidebar/">sidebar</a>. For content a reader switches between, use <a href="/docs/components/tabs/">tabs</a>.</li>
+              <li>Do not put an error, a warning or a required step inside a closed panel.</li>
+              <li>With only one or two short answers, show them as plain text.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Give each summary a short title that says what the panel answers.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-accordion">
+                    <details><summary>How do I reset my password?</summary><p>Use the link on the sign-in page.</p></details>
+                    <details><summary>Where are my invoices?</summary><p>Under Billing.</p></details>
+                  </div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Use a whole sentence of context as the title: it hides the point and wraps.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-accordion">
+                    <details><summary>In case you have forgotten the password you chose when you signed up, here is what to do</summary><p>Use the link on the sign-in page.</p></details>
+                  </div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <ul>
+              <li>Write the summary as the question or the topic, in sentence case, in a few words.</li>
+              <li>Put the answer first in the panel. Keep it short; link to a page for more.</li>
+              <li>Order the panels as readers ask: most common first.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The text and the marker use the primary text color on the surface.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Accordion contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Summary text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Summary under the pointer</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>18.4:1</div></td><td data-label="Dark"><div>13.2:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the summary has the shared 2 px <code>--cai-focus-ring</code> outline, 2 px outside the box.</li>
+              <li><strong>Not colour alone:</strong> open and closed are told apart by the marker, which turns, and not by the border or the background.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 2 tokens that <code>components/accordion.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
+            </dl>
+            <p>The look of one details and its summary, with its own tokens, comes from <code>elements/interactive.css</code>.</p>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

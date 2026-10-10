@@ -1,0 +1,28 @@
+/* --------------------------------------------------------------------------
+   CAI Component: accordion
+   A stack of native <details> that reads as one block. The look of a single
+   details and summary is in elements/interactive.css.
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+/* One edge between neighbours, and the radius only on the block's corners */
+.cai-accordion > details {
+  margin-block: 0;
+  border-color: var(--cai-divider);
+  border-radius: 0;
+}
+
+.cai-accordion > details + details {
+  border-block-start: 0;
+}
+
+.cai-accordion > details:first-child {
+  border-start-start-radius: var(--cai-radius-md);
+  border-start-end-radius: var(--cai-radius-md);
+}
+
+.cai-accordion > details:last-child {
+  border-end-start-radius: var(--cai-radius-md);
+  border-end-end-radius: var(--cai-radius-md);
+}

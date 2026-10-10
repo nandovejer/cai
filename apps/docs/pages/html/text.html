@@ -358,3 +358,133 @@ $ pnpm add @cai-ds/core&lt;/pre&gt;</code></pre>
         </div>
       
     </div>
+
+    <div class="docs-block elements-section" id="dl-patterns">
+        <h2 class="docs-subhead" id="dl-patterns-title">Description list patterns</h2>
+        <p class="elements-section__lead">Three ways to use <code>&lt;dl&gt;</code>, built on the styles above. You may group each <code>&lt;dt&gt;</code> with its <code>&lt;dd&gt;</code> in a <code>&lt;div&gt;</code>: it is valid HTML and CAI keeps the same space between groups.</p>
+        <div class="elements-grid">
+        <section class="elements-card" id="dl-metadata" aria-labelledby="dl-metadata-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="dl-metadata-title">Metadata</h2>
+          </div>
+          <p class="elements-card__desc">Facts about one thing, such as a file or an order. One name, one value, each pair in its own div so a script or a style can reach the pair.</p>
+          <div class="elements-stage">
+            <dl>
+              <div>
+                <dt>File</dt>
+                <dd>annual-report.pdf</dd>
+              </div>
+              <div>
+                <dt>Size</dt>
+                <dd>2.4 MB</dd>
+              </div>
+              <div>
+                <dt>Last changed</dt>
+                <dd><time datetime="2026-10-09">9 October 2026</time></dd>
+              </div>
+            </dl>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dl-metadata" aria-label="Copy the metadata markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="metadata markup"><code id="code-dl-metadata">&lt;dl&gt;
+  &lt;div&gt;
+    &lt;dt&gt;File&lt;/dt&gt;
+    &lt;dd&gt;annual-report.pdf&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;dt&gt;Size&lt;/dt&gt;
+    &lt;dd&gt;2.4 MB&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;dt&gt;Last changed&lt;/dt&gt;
+    &lt;dd&gt;&lt;time datetime=&quot;2026-10-09&quot;&gt;9 October 2026&lt;/time&gt;&lt;/dd&gt;
+  &lt;/div&gt;
+&lt;/dl&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Use a <code>&lt;time&gt;</code> with <code>datetime</code> for a date. Names are short nouns, values are plain text.</p>
+        </section>
+        <section class="elements-card" id="dl-keyvalue" aria-labelledby="dl-keyvalue-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="dl-keyvalue-title">Key and value pairs</h2>
+          </div>
+          <p class="elements-card__desc">A summary of settings or details. A name may have several values: repeat the dd, one per value.</p>
+          <div class="elements-stage">
+            <dl>
+              <div>
+                <dt>Plan</dt>
+                <dd>Team</dd>
+              </div>
+              <div>
+                <dt>Members</dt>
+                <dd>Ana Ruiz</dd>
+                <dd>Luis Pérez</dd>
+              </div>
+              <div>
+                <dt>Billing email</dt>
+                <dd><a href="mailto:billing@example.com">billing@example.com</a></dd>
+              </div>
+            </dl>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dl-keyvalue" aria-label="Copy the key and value markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="key and value markup"><code id="code-dl-keyvalue">&lt;dl&gt;
+  &lt;div&gt;
+    &lt;dt&gt;Plan&lt;/dt&gt;
+    &lt;dd&gt;Team&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;dt&gt;Members&lt;/dt&gt;
+    &lt;dd&gt;Ana Ruiz&lt;/dd&gt;
+    &lt;dd&gt;Luis Pérez&lt;/dd&gt;
+  &lt;/div&gt;
+  &lt;div&gt;
+    &lt;dt&gt;Billing email&lt;/dt&gt;
+    &lt;dd&gt;&lt;a href=&quot;mailto:billing@example.com&quot;&gt;billing@example.com&lt;/a&gt;&lt;/dd&gt;
+  &lt;/div&gt;
+&lt;/dl&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">A name with more than one value stays one group: the screen reader announces each value in turn.</p>
+        </section>
+        <section class="elements-card" id="dl-glossary" aria-labelledby="dl-glossary-title">
+          <div class="elements-card__head">
+            <h2 class="elements-card__title" id="dl-glossary-title">Glossary</h2>
+          </div>
+          <p class="elements-card__desc">Terms and their meanings. Each term is a dt with a dfn inside, and gets an id so other pages can link to its entry.</p>
+          <div class="elements-stage">
+            <dl>
+              <dt id="term-token"><dfn>Design token</dfn></dt>
+              <dd>A named value, such as a color or a space, that components read.</dd>
+              <dt id="term-theme"><dfn>Theme</dfn></dt>
+              <dd>A set of token values for one look.</dd>
+              <dd>Light, dark and high contrast are the three base ones.</dd>
+            </dl>
+          </div>
+          <div class="elements-snippet">
+            <div class="elements-snippet__bar">
+              <span class="elements-eyebrow">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dl-glossary" aria-label="Copy the glossary markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="glossary markup"><code id="code-dl-glossary">&lt;dl&gt;
+  &lt;dt id=&quot;term-token&quot;&gt;&lt;dfn&gt;Design token&lt;/dfn&gt;&lt;/dt&gt;
+  &lt;dd&gt;A named value, such as a color or a space, that components read.&lt;/dd&gt;
+  &lt;dt id=&quot;term-theme&quot;&gt;&lt;dfn&gt;Theme&lt;/dfn&gt;&lt;/dt&gt;
+  &lt;dd&gt;A set of token values for one look.&lt;/dd&gt;
+  &lt;dd&gt;Light, dark and high contrast are the three base ones.&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+          </div>
+          <p class="elements-card__style">Link to a term with <code>#term-token</code>. A term may have more than one meaning: repeat the dd.</p>
+        </section>
+        </div>
+        <h3 id="dl-notes" class="docs-subhead">Before you rely on it</h3>
+        <ul>
+          <li>Keep the default <code>display</code> of the <code>&lt;dl&gt;</code> and of its groups. Setting <code>flex</code> or <code>grid</code> on list elements has made some browser and screen reader pairs drop the list semantics; see <a href="https://adrianroselli.com/2020/03/csun-2020-css-display-properties-versus-html-semantics.html">CSS display properties versus HTML semantics</a>. Lay the pairs out on a wrapper you control, and test the result.</li>
+          <li>HTML allows a <code>&lt;div&gt;</code> inside a <code>&lt;dl&gt;</code> only around a name and its values. A source that tested a plain div wrapper found it can cause trouble for screen readers in some browsers ( <a href="https://s.codepen.io/stevef/debug/GxwaoP">Use of div in dl</a>, no results given there). CAI has not tested the grouped markup with NVDA, JAWS, VoiceOver, TalkBack or Orca.</li>
+          <li>For a table of many values per row, use a <a href="/docs/components/table/">table</a>, not a description list.</li>
+        </ul>
+    </div>

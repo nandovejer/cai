@@ -493,7 +493,7 @@ describe("the CAI docs site", () => {
     // Links shown at every width: the content of main (the header's site
     // links are in the closed drawer on a phone, "On this page" is closed).
     const components = site.pages.filter((p) => p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers");
-    expect(components).toHaveLength(21);
+    expect(components).toHaveLength(22);
     const visible = (html) => {
       const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<nav class="docs-onpage"[\s\S]*?<\/nav>/, "");
       return new Set([...[...main.matchAll(/href="(\/docs\/[^"#]*)/g)].map((m) => m[1])]);
@@ -512,7 +512,7 @@ describe("the CAI docs site", () => {
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "platform" && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(31);
+    expect(viewPages).toHaveLength(32);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {
@@ -677,6 +677,6 @@ describe("the CAI docs site", () => {
     expect(() => assertThumbSafe('<a href="java&#9;script:x">a</a>', "t.html")).toThrow(/script/);
     expect(() => assertThumbSafe('<a href=" JaVa\nScRiPt:x">a</a>', "t.html")).toThrow(/ScRiPt/);
     const gallery = rendered.get("/docs/components/");
-    expect(gallery.match(/<div class="docs-card__thumb" inert aria-hidden="true">/g)).toHaveLength(21);
+    expect(gallery.match(/<div class="docs-card__thumb" inert aria-hidden="true">/g)).toHaveLength(22);
   });
 });

@@ -188,8 +188,8 @@
 
 /* The row sits in the site frame, with the page's gutter (--cai-space-xl
    above 480px, like the home sections), so the brand starts where the
-   content starts. Wider than 768px, three groups: the brand, the site links
-   next to it, then free space and the search at the end. */
+   content starts. The brand's auto margin sends the site links and the
+   search to the end of the row, at every width. */
 @media (min-width: 481px) {
   .site-header__inner {
     padding-inline: calc(var(--site-edge) + var(--cai-space-xl));
@@ -201,13 +201,8 @@
     column-gap: var(--cai-space-lg);
   }
 
-  .site-header__brand {
-    margin-inline-end: var(--cai-space-md);
-  }
-
   .site-header__nav {
     gap: var(--cai-space-lg);
-    margin-inline-end: auto;
   }
 }
 

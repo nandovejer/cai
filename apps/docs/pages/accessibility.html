@@ -34,7 +34,7 @@ lead: false
       <ul>
         <li><strong>Tooltip.</strong> Escape does not close it. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
         <li><strong>Modal.</strong> Its buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
-        <li><strong>Player.</strong> MIDI needs JavaScript and Web Audio. Without them the player shows a message.</li>
+        <li><strong>Player.</strong> MIDI needs JavaScript and Web Audio. Without them the player shows a message. On this documentation site, the example video's caption files load only with JavaScript; without it the browser lists the tracks but shows no text.</li>
         <li><strong>Color mode.</strong> On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
         <li><strong>Code and Design tabs.</strong> The tab you chose last opens after the page has loaded, so the content below the tabs can move once.</li>
         <li><strong>Find in page.</strong> In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code>, find in page (Ctrl+F) does not find text in the tab that is not open. Open the other tab, or turn JavaScript off to see both.</li>

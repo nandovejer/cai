@@ -569,7 +569,9 @@ test.describe('Documentation site', () => {
 
       // Players: the video knows its duration, the MIDI file was found and parsed
       await gotoId(page, 'c-player');
-      await expect(page.locator('.cai-player[data-type="video"] .cai-player-duration')).not.toHaveText('0:00');
+      for (const duration of await page.locator('.cai-player[data-type="video"] .cai-player-duration').all()) {
+        await expect(duration).not.toHaveText('0:00');
+      }
       await expect(page.locator('.cai-player[data-type="midi"] .cai-player-duration')).not.toHaveText('0:00');
       await expect(page.locator('.cai-player[data-type="midi"] .cai-player-playpause')).toBeEnabled();
     });

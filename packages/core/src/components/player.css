@@ -14,15 +14,15 @@
 
 .cai-player-media-wrap {
   position: relative;
-  width: 100%;
+  inline-size: 100%;
   background: var(--cai-surface-media);
   cursor: pointer;
   line-height: 0;
 }
 
 .cai-player-video {
-  width: 100%;
-  max-height: 360px;
+  inline-size: 100%;
+  max-block-size: 360px;
   display: block;
   object-fit: contain;
 }
@@ -43,8 +43,8 @@
 }
 
 .cai-play-icon {
-  width: 56px;
-  height: 56px;
+  inline-size: 56px;
+  block-size: 56px;
   color: var(--cai-text-on-fill);
   filter: drop-shadow(var(--cai-shadow-icon));
   opacity: 0.9;
@@ -56,7 +56,7 @@
   gap: var(--cai-space-2xs);
   padding: var(--cai-space-xs) var(--cai-space-sm);
   background: var(--cai-surface-strong);
-  border-top: 1px solid var(--cai-divider);
+  border-block-start: 1px solid var(--cai-divider);
 }
 
 .cai-player-controls--audio {
@@ -82,11 +82,12 @@
   font-size: var(--cai-text-xs);
   color: var(--cai-text-secondary);
   white-space: nowrap;
-  min-width: 32px;
+  min-inline-size: 32px;
 }
 
 .cai-player-btns {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--cai-space-2xs);
 }
@@ -99,8 +100,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  inline-size: 32px;
+  block-size: 32px;
   padding: 0;
   background: transparent;
   border: none;
@@ -119,13 +120,55 @@
 
 .cai-player-btn:focus-visible {
   outline: 2px solid var(--cai-focus-ring);
-  outline-offset: 1px;
+  outline-offset: 2px;
 }
 
 .cai-player-btn svg {
-  width: 16px;
-  height: 16px;
+  inline-size: 16px;
+  block-size: 16px;
   pointer-events: none;
+}
+
+/* Captions button: aria-pressed is the state; when on, it takes the brand
+   colour and an underline, as the selected tab does (not colour alone) */
+.cai-player-captions[aria-pressed="true"] {
+  color: var(--cai-brand-primary);
+  border-block-end: 2px solid var(--cai-brand-primary);
+}
+
+/* Track select: the form field, sized to sit in the control row */
+.cai-player-tracks {
+  inline-size: auto;
+  block-size: var(--cai-control-md);
+}
+
+/* A captions control is hidden while the media has no track to show */
+.cai-player [hidden] {
+  display: none;
+}
+
+/* Cues are drawn by the browser: light text on the media surface, as the
+   play icon on the video. The reader's own caption settings still win. */
+.cai-player-video::cue {
+  color: var(--cai-text-on-fill);
+  background-color: var(--cai-surface-media);
+}
+
+/* Full screen (the .cai-player-fullscreen button): the picture takes the
+   height the controls leave, instead of its 360px cap */
+.cai-player:fullscreen {
+  display: flex;
+  flex-direction: column;
+}
+
+.cai-player:fullscreen .cai-player-media-wrap {
+  flex: 1;
+  min-block-size: 0;
+}
+
+.cai-player:fullscreen .cai-player-video {
+  block-size: 100%;
+  max-block-size: none;
 }
 
 .cai-player-vol-wrap {
@@ -140,10 +183,13 @@
    (buffered share), both percentages. The element is 24px tall (WCAG 2.5.8);
    the visible track is 4px inside a 1px edge of the field border colour, 3:1
    on the controls; the played part keeps 3:1 on the buffered (surface-pressed)
-   and unbuffered (surface-muted) parts in every mode (WCAG 1.4.11). */
+   and unbuffered (surface-muted) parts in every mode (WCAG 1.4.11).
+   --cai-seek-to is the side the bar fills towards: a range input runs right
+   to left in RTL, and the gradient (forced colours included) runs with it. */
 .cai-player-seekbar {
   --cai-seek: 0%;
   --cai-buf: 0%;
+  --cai-seek-to: right;
 
   appearance: none;
   flex: 1;
@@ -160,7 +206,7 @@
   border: 1px solid var(--cai-input-border);
   border-radius: var(--cai-radius-sm);
   background: linear-gradient(
-    to right,
+    to var(--cai-seek-to),
     var(--cai-brand-primary) var(--cai-seek),
     var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
     var(--cai-surface-muted) var(--cai-buf)
@@ -172,30 +218,15 @@
   border: 1px solid var(--cai-input-border);
   border-radius: var(--cai-radius-sm);
   background: linear-gradient(
-    to right,
+    to var(--cai-seek-to),
     var(--cai-brand-primary) var(--cai-seek),
     var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
     var(--cai-surface-muted) var(--cai-buf)
   );
 }
 
-/* A range input runs right to left in RTL: flip the gradient with it */
-.cai-player-seekbar:dir(rtl)::-webkit-slider-runnable-track {
-  background: linear-gradient(
-    to left,
-    var(--cai-brand-primary) var(--cai-seek),
-    var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
-    var(--cai-surface-muted) var(--cai-buf)
-  );
-}
-
-.cai-player-seekbar:dir(rtl)::-moz-range-track {
-  background: linear-gradient(
-    to left,
-    var(--cai-brand-primary) var(--cai-seek),
-    var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
-    var(--cai-surface-muted) var(--cai-buf)
-  );
+.cai-player-seekbar:dir(rtl) {
+  --cai-seek-to: left;
 }
 
 .cai-player-seekbar::-webkit-slider-thumb {
@@ -242,7 +273,7 @@
 
 .cai-player-volbar {
   flex: none;
-  width: 72px;
+  inline-size: 72px;
 }
 
 .cai-player-midi-status {
@@ -275,16 +306,20 @@
    One rule per engine: a selector list with a pseudo-element the browser
    does not know is dropped whole. */
 @media (forced-colors: active) {
+  .cai-player-captions[aria-pressed="true"] {
+    border-block-end-color: Highlight;
+  }
+
   .cai-player-seekbar::-webkit-slider-runnable-track {
     border-color: CanvasText;
     forced-color-adjust: none;
-    background: linear-gradient(to right, Highlight var(--cai-seek), Canvas var(--cai-seek));
+    background: linear-gradient(to var(--cai-seek-to), Highlight var(--cai-seek), Canvas var(--cai-seek));
   }
 
   .cai-player-seekbar::-moz-range-track {
     border-color: CanvasText;
     forced-color-adjust: none;
-    background: linear-gradient(to right, Highlight var(--cai-seek), Canvas var(--cai-seek));
+    background: linear-gradient(to var(--cai-seek-to), Highlight var(--cai-seek), Canvas var(--cai-seek));
   }
 
   .cai-player-seekbar::-webkit-slider-thumb {

@@ -67,7 +67,7 @@ Text that CAI's JavaScript writes (button names such as "Pause" or "Copy", statu
 
 - **Language** comes from the nearest `lang` attribute of the element, then `<html lang>`. A regional tag falls back to its primary subtag (`es-MX` → `es`), and a language without strings falls back to English. A fragment with its own `lang` (WCAG 3.1.2) gets its own strings.
 - **No `lang` at all:** English, and one console warning. Set `<html lang="…">` (WCAG 2.2 SC 3.1.1).
-- **Override one string** with `data-cai-label-<key>` on the element or any ancestor, such as the component root: `<div class="cai-player" data-cai-label-pause="Pausar">`. Text and `aria-label`s you write in the HTML are kept.
+- **Override one string** with `data-cai-label-<key>` on the element or any ancestor, such as the component root: `<div class="cai-player" data-cai-label-pause="Pausar">`. Text and `aria-label`s you write in the HTML are kept, except the names that change with the state (play or pause, mute or unmute, full screen): set those with `data-cai-label-*`.
 - **Add a language:**
 
 ```js
@@ -76,7 +76,7 @@ import { registerLocale } from "@cai-ds/core/i18n";
 registerLocale("fr", { play: "Lire", pause: "Pause", copy: "Copier" });
 ```
 
-Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `loading`, `midiError`, `timeOf` (`{current}`, `{total}`), `copy`, `copied`, `copiedStatus`, `copyFailed`, `codeExample` (`{lang}`), `copyCode` (`{n}`), `applyTheme`, `themeApplied`. A key in camelCase becomes kebab-case in the attribute: `data-cai-label-exit-fullscreen`. Missing keys fall back to English.
+Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captions`, `captionsOff`, `loading`, `midiError`, `timeOf` (`{current}`, `{total}`), `copy`, `copied`, `copiedStatus`, `copyFailed`, `codeExample` (`{lang}`), `copyCode` (`{n}`), `applyTheme`, `themeApplied`. A key in camelCase becomes kebab-case in the attribute: `data-cai-label-exit-fullscreen`. Missing keys fall back to English.
 
 `registerLocale()` must reach the same module instance the components use: with the auto-initializing entry import it from `@cai-ds/core`, with the individual modules from `@cai-ds/core/i18n`. Strings written later (play/pause, copied, status messages) use it right away; the ones written when a component initializes (code block names) need it registered before the `init*()` call.
 

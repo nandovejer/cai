@@ -67,6 +67,8 @@ function initRangeOutputs() {
 const ASSETS = {
   shapes: new URL("./assets/shapes.svg", import.meta.url).href,
   captions: new URL("./assets/captions.vtt", import.meta.url).href,
+  "nasa-captions": new URL("./assets/nasa-earth.vtt", import.meta.url).href,
+  "nasa-captions-es": new URL("./assets/nasa-earth-es.vtt", import.meta.url).href,
   midi: new URL("./assets/sample.mid", import.meta.url).href,
 };
 
@@ -76,6 +78,12 @@ function initAssets() {
   document.querySelectorAll("[data-asset]").forEach((el) => {
     const href = ASSETS[el.dataset.asset];
     if (href) el.setAttribute(el.matches("object") ? "data" : "src", href);
+    // A default track is already showing, without a file: Firefox loads the
+    // new src only when the mode is set again
+    if (href && el.track?.mode === "showing") {
+      el.track.mode = "disabled";
+      el.track.mode = "showing";
+    }
   });
 }
 
@@ -148,14 +156,6 @@ function initSlotDemo() {
   );
 }
 
-function syncLoadedMedia() {
-  // mountPlayer() reads the duration on "loadedmetadata" only, and a video
-  // with preload="metadata" can have it before this module runs.
-  document.querySelectorAll(".cai-player video, .cai-player audio").forEach((media) => {
-    if (media.readyState >= 1) media.dispatchEvent(new window.Event("loadedmetadata"));
-  });
-}
-
 /* ---- Boot -------------------------------------------------------------- */
 
 // Color mode, menu drawer and header height (shared with the home
@@ -177,7 +177,6 @@ initTabs();
 initModals();
 initRangeOutputs();
 initPlayers();
-syncLoadedMedia();
 initDemoGuards();
 initTemplateDemo();
 initSlotDemo();

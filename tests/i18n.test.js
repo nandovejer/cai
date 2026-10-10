@@ -145,7 +145,7 @@ describe("i18n — dictionaries", () => {
   it("es translates every key (none falls back to English)", () => {
     const keys = [
       "play", "pause", "mute", "unmute", "fullscreen", "exitFullscreen",
-      "loading", "midiError", "timeOf", "copy", "copied", "copiedStatus",
+      "captions", "captionsOff", "loading", "midiError", "timeOf", "copy", "copied", "copiedStatus",
       "copyFailed", "codeExample", "copyCode", "applyTheme", "themeApplied",
     ];
     for (const key of keys) {

@@ -1,6 +1,6 @@
 /**
  * CAI Design System — Media players
- * Video & audio (native HTMLMediaElement API) and MIDI (midi.js, loaded
+ * Video & audio (native HTMLMediaElement API, captions from <track>) and MIDI (midi.js, loaded
  * lazily) sharing the same UI: seekbar, volume, keyboard shortcuts.
  *
  * Importing this module has no side effects; call initPlayers() to mount
@@ -8,8 +8,13 @@
  * for a single one.
  */
 
+/* global Option */
 import { enableJs, formatTime } from "./utils.js";
 import { t } from "./i18n.js";
+
+// Players already mounted: mounting twice would bind every control twice
+// (one click would play, then pause). Same guard as modal.js and theme.js.
+const mounted = new WeakSet();
 
 /** Share (0-1) a range input currently stands at. */
 function rangeShare(bar) {
@@ -21,7 +26,8 @@ function rangeShare(bar) {
 function setRange(bar, share, valueText) {
   const clamped = Math.max(0, Math.min(1, share));
   bar.value = String(clamped * (Number(bar.max) || 1));
-  bar.style.setProperty("--cai-seek", clamped * 100 + "%");
+  // The value the browser kept (it snaps to the step): fill and thumb agree
+  bar.style.setProperty("--cai-seek", rangeShare(bar) * 100 + "%");
   if (valueText) bar.setAttribute("aria-valuetext", valueText);
 }
 
@@ -90,7 +96,7 @@ export function wrapHTMLMedia(el) {
 /**
  * Binds shared player UI controls to a media-like object.
  * Handles: play/pause, mute, seek, volume, keyboard shortcuts.
- * Video-only controls (PiP, fullscreen, mediaWrap click) are handled
+ * Video-only controls (PiP, fullscreen, captions, mediaWrap click) are handled
  * separately in mountPlayer since MidiPlayer has no video element.
  *
  * @param {HTMLElement} root         - .cai-player element
@@ -125,20 +131,29 @@ export function bindPlayerUI(root, controls, mediaLike) {
     muteBtn?.setAttribute("aria-label", t(muted ? "unmute" : "mute", root));
   }
 
-  function updateSeekUI() {
+  function updateSeekUI(time = mediaLike.currentTime) {
     if (!mediaLike.duration) return;
-    const share = mediaLike.currentTime / mediaLike.duration;
     if (seekbar) {
       setRange(
         seekbar,
-        share,
+        time / mediaLike.duration,
         t("timeOf", root, {
-          current: formatTime(mediaLike.currentTime),
+          current: formatTime(time),
           total: formatTime(mediaLike.duration),
         }),
       );
     }
-    if (currentEl) currentEl.textContent = formatTime(mediaLike.currentTime);
+    if (currentEl) currentEl.textContent = formatTime(time);
+  }
+
+  function updateDuration() {
+    // One step a second: an arrow key moves the seek bar by one second,
+    // whatever the length (a fixed max made it 0.1 % of it)
+    if (seekbar && isFinite(mediaLike.duration)) {
+      seekbar.max = Math.ceil(mediaLike.duration);
+    }
+    if (durationEl) durationEl.textContent = formatTime(mediaLike.duration);
+    updateSeekUI();
   }
 
   function updateVolumeUI(v) {
@@ -147,17 +162,14 @@ export function bindPlayerUI(root, controls, mediaLike) {
 
   // ---- Wire media events to UI ----
 
-  mediaLike.on("loadedmetadata", () => {
-    if (durationEl) durationEl.textContent = formatTime(mediaLike.duration);
-  });
-
-  mediaLike.on("timeupdate", updateSeekUI);
+  mediaLike.on("loadedmetadata", updateDuration);
+  mediaLike.on("timeupdate", () => updateSeekUI());
   mediaLike.on("play", () => setPlayState(true));
   mediaLike.on("pause", () => setPlayState(false));
   mediaLike.on("ended", () => {
     setPlayState(false);
-    if (seekbar) setRange(seekbar, 0, "");
-    if (currentEl) currentEl.textContent = "0:00";
+    // Back to the start, value text included (the media may still be at its end)
+    updateSeekUI(0);
   });
   mediaLike.on("volumechange", () => {
     setMuteState(mediaLike.muted);
@@ -189,11 +201,11 @@ export function bindPlayerUI(root, controls, mediaLike) {
     });
   }
 
-  // Keyboard shortcuts
+  // Keyboard shortcuts: only when the player itself has focus (after a click
+  // on it), never from one of its controls (WCAG 2.1.4, active only on focus)
   root.setAttribute("tabindex", "-1");
   root.addEventListener("keydown", (e) => {
-    if (["INPUT", "BUTTON", "SELECT", "TEXTAREA"].includes(e.target.tagName))
-      return;
+    if (e.target !== root || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.key === " " || e.key === "k") {
       // eslint-disable-next-line no-restricted-syntax -- RL-3: Space plays or pauses the focused player, as native media controls do, instead of scrolling the page
       e.preventDefault();
@@ -202,10 +214,11 @@ export function bindPlayerUI(root, controls, mediaLike) {
     if (e.key === "m") mediaLike.setMute(!mediaLike.muted);
   });
 
-  // ---- Init state ----
-  setPlayState(false);
-  setMuteState(false);
-  updateVolumeUI(1);
+  // ---- Init state: from the media, which may be muted or already loaded ----
+  setPlayState(!mediaLike.paused);
+  setMuteState(mediaLike.muted);
+  updateVolumeUI(mediaLike.muted ? 0 : mediaLike.volume);
+  if (mediaLike.duration) updateDuration();
 
   return {
     setPlayState,
@@ -221,11 +234,16 @@ export function bindPlayerUI(root, controls, mediaLike) {
  * @param {HTMLElement} root - .cai-player element
  */
 export function mountPlayer(root) {
+  if (mounted.has(root)) return;
   const isVideo = root.dataset.type === "video";
   const media = root.querySelector(
     isVideo ? ".cai-player-video" : ".cai-player-audio",
   );
   if (!media) return;
+  mounted.add(root);
+  // The CAI controls show only under data-cai-js: mounting one player
+  // without initPlayers() must not leave it with no controls at all
+  enableJs();
 
   const controls = root.querySelector(".cai-player-controls");
   const mediaWrap = root.querySelector(".cai-player-media-wrap"); // video only
@@ -292,7 +310,7 @@ export function mountPlayer(root) {
   // ---- PiP (video only) ----
   if (pipBtn) {
     if (!document.pictureInPictureEnabled) {
-      pipBtn.style.display = "none";
+      pipBtn.hidden = true;
     } else {
       pipBtn.addEventListener("click", async () => {
         try {
@@ -308,11 +326,64 @@ export function mountPlayer(root) {
     }
   }
 
+  // ---- Captions and subtitles: the TextTracks of the <track> elements ----
+  // A track's mode is the state and the browser draws the cues. The button
+  // turns them on (the default track, else the first) or off; the select
+  // picks one track or none.
+  const ccBtn = root.querySelector(".cai-player-captions");
+  const ccMenu = root.querySelector(".cai-player-tracks");
+  const tracks = [...(media.textTracks || [])].filter((tk) =>
+    /^(captions|subtitles)$/.test(tk.kind),
+  );
+  const showing = () => tracks.find((tk) => tk.mode === "showing");
+  const show = (track) =>
+    tracks.forEach((tk) => {
+      if (tk === track) tk.mode = "showing";
+      else if (tk.mode === "showing") tk.mode = "disabled";
+    });
+  const sync = () => {
+    ccBtn?.setAttribute("aria-pressed", !!showing());
+    if (ccMenu) ccMenu.value = tracks.indexOf(showing());
+  };
+  for (const el of [ccBtn, ccMenu]) {
+    if (!el) continue;
+    el.hidden = !tracks.length;
+    // A name written in the HTML wins (the README's promise)
+    if (!el.getAttribute("aria-label")) el.setAttribute("aria-label", t("captions", root));
+  }
+  ccBtn?.addEventListener("click", () => {
+    const def = root.querySelector("track[default]")?.track;
+    show(showing() ? null : tracks.includes(def) ? def : tracks[0]);
+  });
+  if (ccMenu) {
+    ccMenu.replaceChildren(
+      new Option(t("captionsOff", root), -1),
+      ...tracks.map((tk, i) => {
+        const option = new Option(tk.label || tk.language, i);
+        if (tk.language) option.lang = tk.language;
+        return option;
+      }),
+    );
+    ccMenu.addEventListener("change", () => show(tracks[ccMenu.value]));
+  }
+  media.textTracks?.addEventListener("change", sync);
+  sync();
+
+  // Shortcuts when the player itself has focus, not one of its controls
+  root.addEventListener("keydown", (e) => {
+    if (e.target !== root || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.key === "c") ccBtn?.click();
+    if (e.key === "f") fsBtn?.click();
+  });
+
   // ---- Fullscreen (video only) ----
   if (fsBtn) {
     const iconExpand = fsBtn.querySelector(".icon-expand");
     const iconCompress = fsBtn.querySelector(".icon-compress");
 
+    // Hidden where the player cannot go full screen (an iPhone, an iframe
+    // without allowfullscreen), as the picture-in-picture button is
+    fsBtn.hidden = !document.fullscreenEnabled;
     fsBtn.addEventListener("click", async () => {
       try {
         if (!document.fullscreenElement) {
@@ -334,11 +405,6 @@ export function mountPlayer(root) {
         t(isFs ? "exitFullscreen" : "fullscreen", root),
       );
     });
-
-    // f = fullscreen shortcut (video-specific)
-    root.addEventListener("keydown", (e) => {
-      if (e.key === "f") fsBtn.click();
-    });
   }
 }
 
@@ -350,12 +416,14 @@ export function mountPlayer(root) {
  */
 export async function mountMidiPlayer(root) {
   const src = root.dataset.src;
+  if (mounted.has(root)) return;
   if (!src) {
     console.warn(
       '[CAI] .cai-player[data-type="midi"] missing data-src attribute',
     );
     return;
   }
+  mounted.add(root);
 
   const controls = root.querySelector(".cai-player-controls");
   const playPauseBtn = root.querySelector(".cai-player-playpause");
@@ -367,11 +435,12 @@ export async function mountMidiPlayer(root) {
     statusEl.setAttribute("aria-live", "polite"); // Bug 1.11: screen reader support
   }
   if (playPauseBtn) playPauseBtn.disabled = true;
-
-  const { MidiPlayer } = await import("./midi.js");
+  enableJs();
 
   let player;
   try {
+    // The chunk itself can fail to load: same message as a bad file
+    const { MidiPlayer } = await import("./midi.js");
     player = await MidiPlayer.load(src);
   } catch (err) {
     if (statusEl) statusEl.textContent = t("midiError", root);
@@ -382,27 +451,23 @@ export async function mountMidiPlayer(root) {
   if (statusEl) statusEl.textContent = "";
   if (playPauseBtn) playPauseBtn.disabled = false;
 
-  // Bind shared UI (play/pause, mute, seek, volume, keyboard)
-  const { durationEl } = bindPlayerUI(root, controls, player);
-
-  // Bug 1.9 fix: loadedmetadata fires before listeners register because
-  // MidiPlayer.load() resolves after emitting the event synchronously.
-  // Seed the duration display directly after load resolves.
-  if (durationEl && player.duration) {
-    durationEl.textContent = formatTime(player.duration);
-  }
+  // Bind shared UI (play/pause, mute, seek, volume, keyboard). The file is
+  // loaded already: bindPlayerUI() reads its duration on the spot.
+  bindPlayerUI(root, controls, player);
 }
 
 /**
- * Mount every .cai-player on the page (video, audio, and MIDI).
+ * Mount every .cai-player in `root` (video, audio, and MIDI). Idempotent:
+ * a player already mounted is left as it is.
+ * @param {ParentNode} [root=document]
  */
-export function initPlayers() {
+export function initPlayers(root = document) {
   enableJs();
-  document.querySelectorAll(".cai-player").forEach((root) => {
-    if (root.dataset.type === "midi") {
-      mountMidiPlayer(root);
+  root.querySelectorAll(".cai-player").forEach((player) => {
+    if (player.dataset.type === "midi") {
+      mountMidiPlayer(player);
     } else {
-      mountPlayer(root);
+      mountPlayer(player);
     }
   });
 }

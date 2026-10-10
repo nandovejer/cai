@@ -243,7 +243,9 @@ export function buildTimeline(midi) {
     }
   }
 
-  timeline.sort((a, b) => a.time - b.time || (a.type === 'noteOff' ? -1 : 1));
+  // Same time: note-offs first, so a repeated note is released, then struck
+  // again. A consistent comparator: equal pairs keep file order.
+  timeline.sort((a, b) => a.time - b.time || (a.type === 'noteOn') - (b.type === 'noteOn'));
 
   const duration = ticksToSeconds(maxTick);
   return { timeline, duration };
@@ -264,6 +266,7 @@ const midiToFreq = note => 440 * Math.pow(2, (note - 69) / 12);
    ============================================================ */
 
 const LOOKAHEAD_SEC  = 0.25;  // schedule notes this far ahead of AudioContext time
+const LATE_SEC       = 0.1;   // a note-on later than this is dropped, not played
 
 export class MidiPlayer {
   constructor() {
@@ -279,7 +282,8 @@ export class MidiPlayer {
 
     // Scheduling
     this._nextEventIdx  = 0;       // index into _timeline of next event to schedule
-    this._activeNotes   = new Map(); // note → { osc, gain, stopTime }
+    this._activeNotes   = new Map(); // channel * 128 + note → { osc, gain }
+    this._bus           = null;      // gain node of the current run: pause and seek silence it
     this._rafId         = null;
 
     // Public state
@@ -357,15 +361,21 @@ export class MidiPlayer {
   play() {
     if (!this._loaded || this._playing) return;
     this._ensureCtx();
+    this._start();
+    this._emit('play');
+  }
+
+  // Run from _pauseOffset: a fresh bus, the first event at or after it
+  _start() {
     this._playing       = true;
     this._ctxTimeAtPlay = this._ctx.currentTime;
+    this._bus = this._ctx.createGain();
+    this._bus.connect(this._masterGain);
 
-    // Find index of first event at or after pauseOffset
     this._nextEventIdx = this._timeline.findIndex(ev => ev.time >= this._pauseOffset);
     if (this._nextEventIdx === -1) this._nextEventIdx = this._timeline.length;
 
     this._scheduleLoop();
-    this._emit('play');
   }
 
   /* ---- Pause ---- */
@@ -401,13 +411,7 @@ export class MidiPlayer {
       this._stopRaf();
     }
     this._pauseOffset = Math.max(0, Math.min(1, ratio)) * this._duration;
-    if (wasPlaying) {
-      this._ctxTimeAtPlay = this._ctx.currentTime;
-      this._playing       = true;
-      this._nextEventIdx  = this._timeline.findIndex(ev => ev.time >= this._pauseOffset);
-      if (this._nextEventIdx === -1) this._nextEventIdx = this._timeline.length;
-      this._scheduleLoop();
-    }
+    if (wasPlaying) this._start();
     this._emit('timeupdate');
   }
 
@@ -455,10 +459,13 @@ export class MidiPlayer {
 
       if (absTime > horizon) break; // beyond lookahead window — stop for now
 
-      if (ev.type === 'noteOn') {
-        this._scheduleNoteOn(ev.note, ev.velocity, Math.max(absTime, now));
-      } else if (ev.type === 'noteOff') {
-        this._scheduleNoteOff(ev.note, Math.max(absTime, now));
+      // A late note-on (the tab was hidden and rAF stopped) is dropped:
+      // never a burst of every missed note at once
+      const key = ev.channel * 128 + ev.note;
+      if (ev.type === 'noteOff') {
+        this._scheduleNoteOff(key, Math.max(absTime, now));
+      } else if (absTime > now - LATE_SEC) {
+        this._scheduleNoteOn(key, ev.note, ev.velocity, Math.max(absTime, now));
       }
 
       this._nextEventIdx++;
@@ -469,6 +476,7 @@ export class MidiPlayer {
     if (now >= trackEnd - 0.05) {
       this._playing     = false;
       this._pauseOffset = 0;
+      this._stopAllNotes(); // a note with no note-off would sound for ever
       this._stopRaf();
       this._emit('ended');
       this._emit('pause');
@@ -486,9 +494,9 @@ export class MidiPlayer {
 
   /* ---- Note synthesis ---- */
 
-  _scheduleNoteOn(note, velocity, absTime) {
+  _scheduleNoteOn(key, note, velocity, absTime) {
     // If note is already playing (missing noteOff), stop it first
-    const existing = this._activeNotes.get(note);
+    const existing = this._activeNotes.get(key);
     if (existing) this._releaseNote(existing, absTime);
 
     const freq    = midiToFreq(note);
@@ -505,17 +513,17 @@ export class MidiPlayer {
     gain.gain.linearRampToValueAtTime(gainVal, absTime + 0.006);
 
     osc.connect(gain);
-    gain.connect(this._masterGain);
+    gain.connect(this._bus);
     osc.start(absTime);
 
-    this._activeNotes.set(note, { osc, gain });
+    this._activeNotes.set(key, { osc, gain });
   }
 
-  _scheduleNoteOff(note, absTime) {
-    const node = this._activeNotes.get(note);
+  _scheduleNoteOff(key, absTime) {
+    const node = this._activeNotes.get(key);
     if (!node) return;
     this._releaseNote(node, absTime);
-    this._activeNotes.delete(note);
+    this._activeNotes.delete(key);
   }
 
   _releaseNote(node, absTime) {
@@ -530,6 +538,14 @@ export class MidiPlayer {
     const now = this._ctx?.currentTime ?? 0;
     for (const node of this._activeNotes.values()) this._releaseNote(node, now);
     this._activeNotes.clear();
+    // Notes scheduled inside the lookahead window have left the map already:
+    // fade their bus out, then let it go
+    const bus = this._bus;
+    this._bus = null;
+    if (bus) {
+      bus.gain.setTargetAtTime(0, now, 0.02);
+      setTimeout(() => bus.disconnect(), (LOOKAHEAD_SEC + 0.1) * 1000);
+    }
   }
 
   /* ---- Static factory ---- */

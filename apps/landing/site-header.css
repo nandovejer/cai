@@ -111,6 +111,20 @@
   font-size: var(--cai-text-md);
 }
 
+/* With scripting on, the button shows from the first paint and the A–Z link
+   never does, so a reload does not flash "A–Z" before search.js swaps them
+   (the same approach as the mode switcher). A browser without the
+   `scripting` media feature keeps the swap done by the script. */
+@media (scripting: enabled) {
+  .site-header__az:not([hidden]) {
+    display: none;
+  }
+
+  .site-header__search[hidden] {
+    display: inline-flex;
+  }
+}
+
 /* The search is one icon button at every width (the platform's compact
    trigger): "Search docs" stays its accessible name, clipped, not removed,
    and the title shows the shortcut on hover. */

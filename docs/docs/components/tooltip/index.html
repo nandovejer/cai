@@ -10,10 +10,10 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-Dap66mJ8.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CYaSoqcv.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Jj7LSfUV.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CTNmniHS.css">
+  <script type="module" crossorigin src="../../../assets/reference-CQMj0WOs.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-5FYkplHc.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-B3wyr-zr.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -94,6 +94,7 @@
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/components/">Components</a>
         <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../../docs/components/accordion/">Accordion</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/alert/">Alert</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/avatar/">Avatar</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/breadcrumb/">Breadcrumb</a></li>
@@ -108,6 +109,7 @@
           <li><a class="cai-sidebar__link" href="../../../docs/components/modal/">Modal</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/player/">Player</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/progress/">Progress</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/components/select/">Select</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/sidebar/">Sidebar</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/table/">Table</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/tabs/">Tabs</a></li>
@@ -203,7 +205,7 @@
 &lt;/div&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>One position: above the control, centred. There are no modifiers.</p>
+            <p>One position: above the control, centred. Where the browser has CSS anchor positioning, the tip moves below the control when there is no room above. There are no modifiers.</p>
             <div class="cai-table-wrap" role="region" aria-label="Tooltip parts" tabindex="0">
               <table class="cai-table">
                 <thead>
@@ -221,6 +223,7 @@
               <li>It stays open while the pointer moves from the control onto the tip.</li>
               <li>It fades in and out over <code>--cai-duration-fast</code>, and appears at once under reduced motion.</li>
               <li>The tip does not wrap: keep it short, or it can overflow a narrow screen.</li>
+              <li><strong>Enhancement:</strong> in browsers with CSS anchor positioning (Chrome and Edge 125, Safari 26, Firefox 147: Newly available, not yet Widely available), the tip is anchored to the control with <code>position-area</code> and flips below it when there is no room above. It is also no longer clipped by an ancestor that hides overflow. In other browsers it stays above, as before: the rules sit inside <code>@supports</code>, with no script.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: the tooltip has no script.</p>

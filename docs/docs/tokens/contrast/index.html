@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contrast check – Tokens – CAI documentation</title>
+  <meta name="description" content="Check your own color overrides against the contrast CAI promises, with one command or in the page, before they reach a user.">
+  <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <script type="module" crossorigin src="../../../assets/site-header-Dap66mJ8.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CQMj0WOs.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-5FYkplHc.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-B3wyr-zr.css">
+</head>
+<body class="o-shell docs-page">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../../../docs/search-index.json"
+          data-cai-label-results="{n} results"
+          data-cai-label-result="1 result"
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
+          data-cai-label-none="No results for “{query}”."
+          data-cai-label-loading="Loading the search index…"
+          data-cai-label-error="Search is not available right now.">
+    <search class="cai-platform-search__body">
+      <div class="cai-platform-search__head">
+        <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Close search</button></form>
+      </div>
+      <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Use the arrow keys to move through them.</p>
+      <p class="cai-platform-search__status" role="status"></p>
+      <p data-cai-search-show="none" hidden>Check the spelling or try a shorter word.</p>
+      <div class="cai-platform-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Popular</h3>
+          <ul>
+            <li><a href="../../../docs/get-started/">Install CAI <span>Get started</span></a></li>
+            <li><a href="../../../docs/components/button/">Button <span>Components</span></a></li>
+            <li><a href="../../../docs/components/form/">Form fields <span>Components</span></a></li>
+            <li><a href="../../../docs/tokens/color/">Color <span>Tokens</span></a></li>
+            <li><a href="../../../docs/tokens/modes/">Color modes and themes <span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements"></ul></div>
+      </div>
+      <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
+    </search>
+  </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="cai-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/tokens/">Tokens</a>
+        <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/color/">Color</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/spacing/">Spacing and sizing</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/typography/">Typography</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/modes/">Color modes and themes</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/radius/">Radius</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/shadows/">Shadows</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/motion/">Motion</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/layout/">Layers and breakpoints</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/contrast/">Contrast check</a></li>
+        </ul>
+      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/platform/">Platform</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="cai-breadcrumb__item" href="../../../docs/tokens/">Tokens</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Contrast check</span></li>
+      </ol>
+    </nav>
+    <div class="docs-page-head__title">
+      <h1 class="docs-title">Contrast check</h1>
+      <code class="docs-demo__file">bin/cai-tokens.js</code>
+    </div>
+    <p class="docs-lead">Check your own color overrides against the contrast CAI promises, with one command or in the page, before they reach a user.</p>
+  </div>
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#run">Run it</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#checks">What it checks</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#reads">What it reads</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#exit">Exit codes</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#ci">In your build</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#try">Try it in the page</a></li>
+      </ul>
+    </details>
+  </nav>
+  <div class="docs-body">
+    <div class="docs-block" id="t-contrast">
+      <h2 id="run">Run it</h2>
+      <p>CAI keeps its own colors readable in light, dark and high contrast. The moment you override a token, that promise is yours. <code>check-contrast</code> reads the <code>--cai-*</code> declarations of your stylesheet, puts them over CAI's tokens as the browser would, and measures the same pairs the component pages list. It needs Node 18 or later and nothing else.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Shell</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-contrast-run" aria-label="Copy the command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="The command"><code id="code-contrast-run">npx @cai-ds/tokens check-contrast my-theme.css</code></pre>
+      </div>
+      <p>Name your files in the order the page loads them. Use <code>--json</code> for a machine-readable report, and <code>--strict</code> to make the warnings fail too.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Output</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-contrast-out" aria-label="Copy the example output">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Example output"><code id="code-contrast-out">✗ light, high-contrast: --cai-text-secondary on surface-page is 2.8:1, needs 4.5:1 (text)
+    --cai-text-secondary: #999 is set in my-theme.css:2
+✗ contrast: 5 pairs fail (9 of 378 measurements) in light, dark, high-contrast</code></pre>
+      </div>
+
+      <h2 id="checks">What it checks</h2>
+      <p>WCAG 2.x relative luminance, the contrast of WCAG 2.2 level AA. APCA is not used, because it is not part of the standard.</p>
+      <div class="cai-table-wrap" role="region" aria-label="Contrast minimums" tabindex="0">
+        <table class="cai-table">
+          <thead>
+            <tr><th scope="col">Kind</th><th scope="col">Minimum</th><th scope="col">What it protects</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Kind"><div><code>text</code></div></td><td data-label="Minimum"><div>4.5:1</div></td><td data-label="What it protects"><div>Text and links on every surface they sit on, status text on its tint, text on a filled button, syntax colors on a code block</div></td></tr>
+            <tr><td data-label="Kind"><div><code>disabled-text</code></div></td><td data-label="Minimum"><div>3:1</div></td><td data-label="What it protects"><div>Disabled text. CAI's own rule: it stays readable, and the state has a cue besides color</div></td></tr>
+            <tr><td data-label="Kind"><div><code>ui</code></div></td><td data-label="Minimum"><div>3:1</div></td><td data-label="What it protects"><div>The focus ring, field borders, outlines and the played part of a progress bar</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Pairs are checked in light, dark and high contrast, and in each <code>[data-theme="name"]</code> your file defines, as <code>name</code> and <code>name/light</code>, <code>name/dark</code> and <code>name/high-contrast</code>. Translucent colors are placed over the surface below them, as in the page. A <em>warning</em> is an aim CAI sets itself, stricter than WCAG, such as the fill of a checked box against the page: it is shown and never fails the check unless you pass <code>--strict</code>.</p>
+
+      <h2 id="reads">What it reads</h2>
+      <ul>
+        <li><strong>Selectors:</strong> <code>:root</code>, <code>html</code>, <code>[data-theme="x"]</code> and <code>[data-mode="y"]</code>, alone or together. A later rule wins over an earlier one of the same specificity, and a more specific selector wins over a later one. A <code>:root</code> override, loaded after CAI, also reaches dark and high contrast unless that mode sets the token again: set a token per mode.</li>
+        <li><strong>At-rules:</strong> <code>@media (prefers-color-scheme: dark)</code> and <code>light</code>, and <code>@layer</code> and <code>@supports</code>, taken as true. The order of layers is not modeled.</li>
+        <li><strong>Values:</strong> <code>#rgb</code>, <code>#rrggbb</code> with or without alpha, <code>rgb()</code> and <code>hsl()</code> in either syntax, <code>white</code>, <code>black</code>, <code>transparent</code>, and <code>var()</code> chains.</li>
+        <li><strong>Everything else is reported, not skipped:</strong> a class selector, another media query or a rule it did not understand is listed as ignored. A color it cannot read, such as <code>color-mix()</code> or <code>oklch()</code>, counts as a failure, because a pair that was not measured is not a pair that passed.</li>
+      </ul>
+
+      <h2 id="exit">Exit codes</h2>
+      <div class="cai-table-wrap" role="region" aria-label="Exit codes" tabindex="0">
+        <table class="cai-table">
+          <thead>
+            <tr><th scope="col">Code</th><th scope="col">Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Code"><div><code>0</code></div></td><td data-label="Meaning"><div>Every pair meets its minimum</div></td></tr>
+            <tr><td data-label="Code"><div><code>1</code></div></td><td data-label="Meaning"><div>A pair fails, or a color could not be read</div></td></tr>
+            <tr><td data-label="Code"><div><code>2</code></div></td><td data-label="Meaning"><div>The command was used wrongly, or a file could not be read</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="ci">In your build</h2>
+      <p>The command fails the step on a failure, so one line is enough.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">package.json</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-contrast-ci" aria-label="Copy the package.json script">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="json" tabindex="0" role="region" aria-label="A package.json script"><code id="code-contrast-ci">{
+  "scripts": {
+    "check:contrast": "cai-tokens check-contrast src/theme.css"
+  }
+}</code></pre>
+      </div>
+
+      <h2 id="try">Try it in the page</h2>
+      <p>With JavaScript on, you can paste your overrides here and run the same check. Nothing leaves the page. Without it, use the command above: it does the same.</p>
+      <div data-contrast-tool>
+        <div class="cai-field">
+          <label class="cai-field__label" for="contrast-css">Your CSS</label>
+          <textarea class="cai-input cai-input--textarea" id="contrast-css" rows="7" spellcheck="false" autocomplete="off" aria-describedby="contrast-css-help">:root {
+  --cai-text-secondary: #999;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cai-focus-ring: #334;
+  }
+}</textarea>
+          <p class="cai-field__helper" id="contrast-css-help">Paste the <code>--cai-*</code> tokens you override.</p>
+        </div>
+        <button class="cai-btn cai-btn--primary" type="button">Check contrast</button>
+        <div data-contrast-result role="status" aria-live="polite"
+          data-file="your CSS"
+          data-pass="All {checked} pairs meet their minimum in {modes}."
+          data-fail="{failures} pairs fail or could not be measured, out of {checked}."
+          data-item="{modes}: {foreground} on {background} is {ratio}, needs {minimum}:1."
+          data-set="{token} is {value} (line {line})."
+          data-unreadable="{foreground} on {background} was not measured: {reason}"
+          data-warning="Warning, {modes}: {foreground} on {background} is {ratio}. CAI aims for {minimum}:1."
+          data-ignored="Not read: {selector} (line {line})."
+          data-error="Could not read the CSS:"></div>
+      </div>
+    </div>
+
+  </div>
+  <nav class="docs-end" aria-labelledby="docs-end-title">
+    <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
+    <ul class="docs-end__links">
+      <li><a href="../../../docs/tokens/modes/">Color modes and themes</a></li>
+      <li><a href="../../../docs/components/">Components</a></li>
+    </ul>
+    <ul class="docs-pager">
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/tokens/figma/" aria-label="Previous: Tokens in Figma"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Tokens in Figma</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/html/" aria-label="Next: HTML elements"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">HTML elements</span></a></li>
+    </ul>
+  </nav>
+  </main>
+
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-platform-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-platform-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

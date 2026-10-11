@@ -10,10 +10,10 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-Dap66mJ8.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CYaSoqcv.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CA-xPcPZ.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Jj7LSfUV.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CTNmniHS.css">
+  <script type="module" crossorigin src="../../../assets/reference-CQMj0WOs.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-5FYkplHc.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-B3wyr-zr.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -102,6 +102,7 @@
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/layout/">Layers and breakpoints</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
           <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/contrast/">Contrast check</a></li>
         </ul>
       </li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
@@ -122,7 +123,7 @@
     </nav>
     <div class="docs-page-head__title">
       <h1 class="docs-title">Tokens in Figma</h1>
-      <code class="docs-demo__file">dist/cai-tokens.dtcg.json</code>
+      <code class="docs-demo__file">dist/cai-tokens.dtcg.json; dist/cai-tokens.resolver.json</code>
     </div>
     <p class="docs-lead">The tokens as one design-tokens file for Figma variables and other design tools, with the same names and the three modes.</p>
   </div>
@@ -134,6 +135,7 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#names">One rule for every name</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#modes">Figma modes and color modes</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#import">Import it</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#spec">The specification, and where modes live in it</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#limits">Known limits</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#keep-in-step">Keep Figma and the code in step</a></li>
       </ul>
@@ -225,6 +227,25 @@
           </ol>
           <p>Files ready for each mode may ship in the package later, once an import has been checked in a real Figma file.</p>
 
+          <h2 id="spec">The specification, and where modes live in it</h2>
+          <p>Both files follow the <a href="https://www.designtokens.org/TR/2025.10/">Design Tokens specification 2025.10</a>, a Final Community Group Report of 28 October 2025. It is stable, and it is not a W3C Standard or on the W3C Standards Track.</p>
+          <ul>
+            <li><strong>The format module</strong> describes tokens, groups, types and aliases, and has <strong>no modes</strong>: a token file holds one value for each token. <code>cai-tokens.dtcg.json</code> is in this format. The <code>$value</code> of a semantic token is its light value, and the other two modes are in <code>$extensions.mode</code>, a convention that Tokens Studio and Terrazzo read. It is an extension, not part of the specification.</li>
+            <li><strong>The resolver module</strong> is where the specification puts modes, as a <em>modifier</em>: a set of contexts, each listing the token sources to apply after the base. <code>cai-tokens.resolver.json</code> (the <code>./dtcg/resolver</code> export) is in this format: the base set is the token file, and the modifier <code>mode</code> has the contexts <code>light</code>, <code>dark</code> and <code>high-contrast</code>, each with the whole semantic group for that mode. The default is <code>light</code>, as <code>:root</code> is.</li>
+          </ul>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">Path</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-dtcg-resolver" aria-label="Copy the path of the resolver file">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Where the resolver file is"><code id="code-dtcg-resolver">node_modules/@cai-ds/tokens/dist/cai-tokens.resolver.json</code></pre>
+          </div>
+          <ul>
+            <li><strong>Checked against the official schemas.</strong> A test validates both files against the JSON Schemas the Community Group publishes for 2025.10 (copied into the repository, no network needed), and that every context gives each token the value the token file keeps for that mode.</li>
+            <li><strong>Not checked with a tool.</strong> No resolver implementation has loaded the resolver file, and neither Figma nor Tokens Studio has been tried with it. The validation says the file is well formed, not that a given tool understands it.</li>
+            <li><strong>The two looks that ship with core</strong> are in neither file, as explained above.</li>
+          </ul>
+
           <h2 id="limits">Known limits</h2>
           <p>From <a href="https://help.figma.com/hc/en-us/articles/15343816063383">Figma's help on modes and import</a> (read on 9 October 2026) or from other users' reports, and not checked against this file:</p>
           <ul>
@@ -252,7 +273,7 @@
     </ul>
     <ul class="docs-pager">
       <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/tokens/palette/" aria-label="Previous: Color palette"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Color palette</span></a></li>
-      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/html/" aria-label="Next: HTML elements"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">HTML elements</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/tokens/contrast/" aria-label="Next: Contrast check"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Contrast check</span></a></li>
     </ul>
   </nav>
   </main>

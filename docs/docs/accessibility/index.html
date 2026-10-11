@@ -10,10 +10,10 @@
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../assets/site-header-Dap66mJ8.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-CYaSoqcv.js"></script>
-  <link rel="stylesheet" crossorigin href="../../assets/reference-CA-xPcPZ.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-Jj7LSfUV.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-CTNmniHS.css">
+  <script type="module" crossorigin src="../../assets/reference-CQMj0WOs.js"></script>
+  <link rel="stylesheet" crossorigin href="../../assets/reference-DRScSSK_.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-5FYkplHc.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-B3wyr-zr.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -134,6 +134,7 @@
         <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, the search button is a link to the A–Z index, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode.</li>
         <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
         <li>Forced colors: a focused button and a focused search result keep a visible outline, the selected tab keeps its underline, and the search dialog keeps its border.</li>
+        <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="cai-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
         <li>Contrast of every token pair a component draws, by a script, in the three base modes and in each mode of the shipped custom themes (minimalist and vejer).</li>
       </ul>
@@ -142,6 +143,7 @@
       <ul>
         <li>Screen readers. No assistive technology has been used to test this release: NVDA, JAWS, VoiceOver, TalkBack and Orca have not been tried. Nothing here says a component works with them.</li>
         <li>Speech recognition and screen magnifier software.</li>
+        <li>Right-to-left text by a person who reads it, or with a screen reader. Only the layout is measured by a script, and the player's controls are not part of that measurement.</li>
         <li>Zoom to 400 percent by hand. Only the 320 pixel width is measured.</li>
         <li>Research with disabled people.</li>
       </ul>
@@ -152,6 +154,7 @@
         <li><strong>Tooltip.</strong> Escape does not close it. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
         <li><strong>Modal.</strong> Its buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
         <li><strong>Player.</strong> MIDI needs JavaScript and Web Audio. Without them the player shows a message. On this documentation site, the example video's caption files load only with JavaScript; without it the browser lists the tracks but shows no text.</li>
+        <li><strong>Select.</strong> The open list is the browser’s or the system’s, so it looks and sounds different in each. Where the browser supports <code class="cai-code-inline">appearance: base-select</code> (Chrome and Edge 135, Safari 27), CAI styles the list too, and that list has not been tested with a screen reader yet. It works without JavaScript.</li>
         <li><strong>Color mode.</strong> On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
         <li><strong>Code and Design tabs.</strong> The tab you chose last opens after the page has loaded, so the content below the tabs can move once.</li>
         <li><strong>Find in page.</strong> In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code>, find in page (Ctrl+F) does not find text in the tab that is not open. Open the other tab, or turn JavaScript off to see both.</li>

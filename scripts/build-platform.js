@@ -9,6 +9,7 @@ import { cpSync, existsSync, mkdirSync, rmSync, readFileSync, writeFileSync } fr
 import { dirname, relative, resolve } from "path";
 import { fileURLToPath } from "url";
 import * as esbuild from "esbuild";
+import { inCaiLayer } from "./cai-layers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -44,7 +45,9 @@ function inlineCssImports(filePath, seen = new Set()) {
     );
 }
 
-const platformCss = inlineCssImports(resolve(srcRoot, "index.css"));
+// In the cai.platform layer, after cai.utilities, as unlayered platform CSS
+// won over core before; now a consumer's `app` layer wins over it
+const platformCss = inCaiLayer("platform", inlineCssImports(resolve(srcRoot, "index.css")));
 // JS modules: platform.js (the entry, which wires them) and one per concern
 const jsModules = ["platform.js", "search.js"];
 

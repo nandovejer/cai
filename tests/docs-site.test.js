@@ -608,7 +608,7 @@ describe("the CAI docs site", () => {
       const area = site.areas.find((a) => a.id === site.byRoute.get(route).meta.area);
       expect(order.indexOf(route), route).toBeGreaterThanOrEqual(order.indexOf(`/docs/${area.slug}/`));
     }
-    expect(order.slice(0, 4)).toEqual(["/docs/get-started/", "/docs/get-started/structure/", "/docs/get-started/javascript/", "/docs/tokens/"]);
+    expect(order.slice(0, 5)).toEqual(["/docs/get-started/", "/docs/get-started/structure/", "/docs/get-started/javascript/", "/docs/get-started/layers/", "/docs/tokens/"]);
     expect(order.at(-1)).toBe("/docs/accessibility/");
   });
 
@@ -632,9 +632,9 @@ describe("the CAI docs site", () => {
       }
     }
     // Get started → Tokens → HTML elements → Components → Platform → Accessibility
-    expect(endOf(rendered.get("/docs/tokens/")).prev?.[0]).toBe("/docs/get-started/javascript/");
+    expect(endOf(rendered.get("/docs/tokens/")).prev?.[0]).toBe("/docs/get-started/layers/");
     expect(endOf(rendered.get("/docs/tokens/")).next?.[0]).toBe("/docs/tokens/color/");
-    expect(endOf(rendered.get("/docs/get-started/javascript/")).next?.[0]).toBe("/docs/tokens/");
+    expect(endOf(rendered.get("/docs/get-started/layers/")).next?.[0]).toBe("/docs/tokens/");
     expect(endOf(rendered.get("/docs/html/")).prev?.[0]).toMatch(/^\/docs\/tokens\//);
     expect(endOf(rendered.get("/docs/components/")).prev?.[0]).toMatch(/^\/docs\/html\//);
     expect(endOf(rendered.get("/docs/platform/")).prev?.[0]).toMatch(/^\/docs\/components\//);

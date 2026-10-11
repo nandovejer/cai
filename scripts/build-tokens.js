@@ -28,6 +28,7 @@ import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as esbuild from "esbuild";
 import { buildDtcg } from "./tokens-dtcg.js";
+import { inCaiLayer } from "./cai-layers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const tokensPath = resolve(__dirname, "../packages/tokens/tokens.json");
@@ -124,10 +125,13 @@ async function writeCssWithMin(outPath, css) {
   writeFileSync(outPath.replace(/\.css$/, ".min.css"), code, "utf-8");
 }
 
-await writeCssWithMin(outputPath, `${header}\n${fontFaces}\n\n${layers}`);
+// The custom properties are in the cai.tokens layer, so a consumer's `app`
+// layer can override them; @font-face is not a cascade matter and stays out
+const layered = inCaiLayer("tokens", layers);
+await writeCssWithMin(outputPath, `${header}\n${fontFaces}\n\n${layered}`);
 console.log(`✓ Tokens built (fonts + primitives + semantic) → ${outputPath} (+ min)`);
 
-await writeCssWithMin(resolve(distRoot, "tokens.css"), `${tokensHeader}\n\n${layers}`);
+await writeCssWithMin(resolve(distRoot, "tokens.css"), `${tokensHeader}\n\n${layered}`);
 await writeCssWithMin(resolve(distRoot, "fonts.css"), fontFaces);
 console.log("✓ Split entries built → tokens.css, fonts.css (+ min)");
 

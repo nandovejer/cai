@@ -26,6 +26,7 @@ import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { rollup } from "rollup";
 import * as esbuild from "esbuild";
+import { LAYER_ORDER, inCaiLayer } from "./cai-layers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -54,14 +55,8 @@ function inlineCssImports(filePath, seen = new Set()) {
   );
 }
 
-/** Same order as src/index.css: every standalone file declares it first. */
-const LAYER_ORDER =
-  "@layer settings, generic, elements, objects, components, utilities;\n";
-
-/** Wrap a standalone source file in its cascade layer. */
-function inLayer(layer, css) {
-  return `${LAYER_ORDER}@layer ${layer} {\n${css}\n}\n`;
-}
+// The public layers live in scripts/cai-layers.js (container layer `cai`).
+// src/index.css is the single source of layer order for the full bundle.
 
 async function writeCssWithMin(outPath, css) {
   writeFileSync(outPath, css, "utf-8");
@@ -78,9 +73,9 @@ console.log(`✓ Core CSS built → ${resolve(distRoot, "cai.css")} (+ min)`);
 const baseCss =
   LAYER_ORDER +
   [
-    ["settings/_settings.css", "settings"],
-    ["generic/_reset.css", "generic"],
-    ["elements/index.css", "elements"],
+    ["settings/_settings.css", "cai.settings"],
+    ["generic/_reset.css", "cai.generic"],
+    ["elements/index.css", "cai.elements"],
   ]
     .map(([f, layer]) => `@layer ${layer} {\n${inlineCssImports(resolve(srcRoot, f))}\n}\n`)
     .join("\n");
@@ -97,7 +92,7 @@ const componentFiles = readdirSync(componentsSrcDir).filter(
 for (const f of componentFiles) {
   await writeCssWithMin(
     resolve(componentsDistDir, f),
-    inLayer("components", readFileSync(resolve(componentsSrcDir, f), "utf-8")),
+    inCaiLayer("components", readFileSync(resolve(componentsSrcDir, f), "utf-8")),
   );
 }
 console.log(`✓ ${componentFiles.length} component CSS files → ${componentsDistDir} (+ min)`);
@@ -169,9 +164,11 @@ const themesDistDir = resolve(distRoot, "themes");
 if (existsSync(themesSrcDir)) {
   mkdirSync(themesDistDir, { recursive: true });
   for (const f of readdirSync(themesSrcDir).filter((f) => f.endsWith(".css"))) {
-    copyFileSync(resolve(themesSrcDir, f), resolve(themesDistDir, f));
+    // The source stays plain (check:contrast reads it); the published file
+    // is in the cai.themes layer, so a consumer's `app` layer wins over it
+    const src = inCaiLayer("themes", readFileSync(resolve(themesSrcDir, f), "utf-8"));
+    writeFileSync(resolve(themesDistDir, f), src, "utf-8");
     console.log(`✓ Theme synced → ${resolve(themesDistDir, f)}`);
-    const src = readFileSync(resolve(themesSrcDir, f), "utf-8");
     const { code: minCss } = await esbuild.transform(src, { loader: "css", minify: true });
     writeFileSync(resolve(themesDistDir, f.replace(".css", ".min.css")), minCss, "utf-8");
     console.log(`✓ Theme minified → ${f.replace(".css", ".min.css")}`);

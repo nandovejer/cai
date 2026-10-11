@@ -1,6 +1,6 @@
 <!-- cai:page
 title: How CAI is organised
-description: Three packages that depend in one direction, CSS in six cascade layers, and one optional script.
+description: Three packages that depend in one direction, CSS in cascade layers inside one called cai, and one optional script.
 area: get-started
 order: 2
 -->
@@ -20,17 +20,17 @@ order: 2
 
     <section class="docs-block" id="core-architecture" aria-labelledby="core-architecture-title">
           <h2 class="docs-chapter__title" id="core-architecture-title">CSS layers</h2>
-          <p>Core's CSS comes in six native cascade layers (<code>@layer</code>), in ITCSS order. A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of core, with no <code>!important</code>.</p>
+          <p>Core's CSS comes in six native cascade layers (<code>@layer</code>), in ITCSS order, inside one container layer called <code>cai</code>. A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of CAI, with no <code>!important</code>. <a href="/docs/get-started/layers/">How to order and override them</a>.</p>
           <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Core cascade layers"><code>packages/core/src/
-  settings/_settings.css      1. settings    motion, z-index, breakpoints
-  generic/_reset.css          2. generic     the reset
-  elements/*.css              3. elements    bare HTML elements, zero specificity
-  objects/_objects.css        4. objects     layout: .o-*
-  components/*.css            5. components  the components: .cai-*
-  utilities/_utilities.css    6. utilities   single-purpose helpers: .u-*</code></pre>
+  settings/_settings.css      cai.settings    motion, z-index, breakpoints
+  generic/_reset.css          cai.generic     the reset
+  elements/*.css              cai.elements    bare HTML elements, zero specificity
+  objects/_objects.css        cai.objects     layout: .o-*
+  components/*.css            cai.components  the components: .cai-*
+  utilities/_utilities.css    cai.utilities   single-purpose helpers: .u-*</code></pre>
           <ul>
             <li>The components layer holds <span data-count="components">22</span> components.</li>
-            <li><code>dist/cai.css</code> holds all six layers. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
+            <li><code>dist/cai.css</code> holds all six layers. Tokens are in <code>cai.tokens</code>, the shipped themes in <code>cai.themes</code> and platform in <code>cai.platform</code>. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
             <li>Rules for bare elements are wrapped in <code>:where()</code>, so any class wins over them.</li>
           </ul>
     </section>

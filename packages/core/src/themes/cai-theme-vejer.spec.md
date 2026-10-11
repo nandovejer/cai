@@ -50,7 +50,7 @@ The theme is colour and type only. It ships no photograph, image or font file.
 | — | Field border | `#8b7d6f` | `#877a69` | `#000` |
 | — | Strong border, gray badge fill (white text 4.6 / 4.8) | `#807366` | `#7d7062` | `#000` |
 | Sky | Links, focus, brand | `#2365a6` | `#6fb1ec` | `blue-80` / focus `#000` |
-| Sky | Button fill (white text) | `#2365a6` | `#1d63a8` | `blue-80` |
+| Sky | Button fill (white text) | `#2365a6` | `#2172c1` | `blue-80` |
 | Wooden door | Sidebar | `#2a211a`, text `#e3d5bf` | `#14100c`, text `#cbbba5` | `#000`, text `gray-30` |
 | Terracotta | Quotation rule only | `#b8613f` | `#c9785a` | `#000` |
 | — | Success / danger | `#177734` / `#ca1c25` | `green-30` / `red-30` | `#105224` / `#8d131a` |

@@ -241,6 +241,7 @@
                 <li><span data-count="semantic">55</span> semantic tokens, each defined for light, dark and high contrast</li>
                 <li>Spacing (12), control heights (4), type sizes (9), radii (6) and shadows (3)</li>
                 <li>ET Book for headings, self-hosted and MIT licensed; system fonts for text and code</li>
+                <li>A <a href="./docs/tokens/contrast/">contrast check</a> for your own colors, as a command (<code class="cai-code-inline">npx @cai-ds/tokens check-contrast</code>) or in the browser</li>
               </ul>
             </div>
             <div>
@@ -288,6 +289,8 @@
                 <li><span data-count="objects">7</span> layout objects and a small set of utilities</li>
                 <li>Motion, z-index and breakpoint settings</li>
                 <li>Optional <code class="cai-code-inline">cai.min.js</code>: one ES module that wires tabs, modals, copy buttons and players</li>
+                <li>Print styles and right-to-left layouts, with no extra file</li>
+                <li>Everything in one <a href="./docs/get-started/layers/">cascade layer</a>, <code class="cai-code-inline">cai</code>: your own CSS wins without <code class="cai-code-inline">!important</code></li>
               </ul>
             </div>
             <div>
@@ -313,7 +316,7 @@
 &lt;!-- Optional: JavaScript behaviors --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
             </div>
-            <p class="landing-level__note u-text-muted">Need a single component? Load <code class="cai-code-inline">dist/base.min.css</code> plus the file you want, for example <code class="cai-code-inline">dist/components/button.min.css</code>.</p>
+            <p class="landing-level__note u-text-muted">Need a single component? Load <code class="cai-code-inline">dist/base.min.css</code> plus the file you want, for example <code class="cai-code-inline">dist/components/button.min.css</code>. Markup you cannot add classes to, such as Markdown or a CMS? Load <a href="./docs/get-started/classless/"><code class="cai-code-inline">classless.css</code></a> and mark the zone with <code class="cai-code-inline">data-cai-classless</code>.</p>
           </div>
         </article>
 

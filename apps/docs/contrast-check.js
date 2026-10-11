@@ -5,7 +5,8 @@
  * installed tokens. Everything stays in the page: nothing is sent anywhere.
  *
  * An enhancement: the page explains the command without it, and the tool's
- * markup is `hidden` until this script has wired it. Its words are in the
+ * markup stays out of the page (CSS, `[data-contrast-tool]:not([data-ready])`)
+ * until this script has wired it. Its words are in the
  * page (data-* attributes of the result), not in this file.
  */
 import { analyze } from "/packages/tokens/lib/check.js";
@@ -57,5 +58,4 @@ export function initContrastTool(root = document) {
   });
 
   tool.dataset.ready = "";
-  tool.hidden = false;
 }

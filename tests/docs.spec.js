@@ -393,7 +393,7 @@ test.describe('Documentation site', () => {
     test('a gallery card is one link, named like its heading, with an inert thumbnail (HUB-1, HUB-2)', async ({ page }) => {
       await open(page, '/docs/components/');
       const cards = page.locator('.docs-card');
-      await expect(cards).toHaveCount(20);
+      await expect(cards).toHaveCount(22);
       for (const card of await cards.all()) {
         await expect(card.getByRole('link')).toHaveCount(1);
         await expect(card.locator('.docs-card__thumb[inert][aria-hidden="true"]')).toHaveCount(1);
@@ -497,7 +497,7 @@ test.describe('Documentation site', () => {
         // The same two tabs on every page, Code first and selected by default (TAB-16)
         const tablist = page.getByRole('tablist', { name: /documentation$/ });
         await expect(tablist.getByRole('tab'), id).toHaveText(['Code', 'Design']);
-        await expect(tablist.getByRole('tab', { name: 'Code' })).toHaveAttribute('aria-selected', 'true');
+        await expect(tablist.getByRole('tab', { name: 'Code' }), id).toHaveAttribute('aria-selected', 'true');
         await expect(page.locator('#code-panel')).toBeVisible();
         await expect(page.locator('#design-panel')).toBeHidden();
         // RL-18: When to use and When not to use are on the page, in the Design tab
@@ -510,6 +510,9 @@ test.describe('Documentation site', () => {
           const text = await page.locator(`#${section} + p`).textContent();
           expect(text.trim().length, `${id} ${section} has content`).toBeGreaterThan(20);
         }
+        // The remembered tab is written a moment after the click (view.js):
+        // wait for it, or it lands after the clear and opens the next page on Design
+        await expect.poll(() => page.evaluate(() => localStorage.getItem('cai-docs-view')), id).toBe('design');
         await page.evaluate(() => localStorage.clear());
       }
     });

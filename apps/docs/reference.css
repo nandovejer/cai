@@ -1735,3 +1735,9 @@ h2.docs-demo__title {
     margin-inline-start: calc(-1 * var(--cai-space-sm));
   }
 }
+
+/* The contrast check in the page works with JavaScript only: until the script
+   has wired it (data-ready), without JavaScript, nothing of it is shown */
+[data-contrast-tool]:not([data-ready]) {
+  display: none;
+}

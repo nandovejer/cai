@@ -101,7 +101,7 @@ toc: h2,h3
             <ul>
               <li><strong>The closed box, in every browser.</strong> Border, height, type and colors come from tokens. The arrow is two gradients in <code>currentcolor</code>, so it follows the text color, the disabled state and forced colors. It sits at the inline end, so it moves to the left in right-to-left text.</li>
               <li><strong>The open list, where the browser can.</strong> Inside <code>@supports (appearance: base-select)</code> the list, its options and the check mark are styled too. Outside it nothing changes.</li>
-              <li><code>color-scheme</code> is set from the theme, so the system's own list opens in the right mode.</li>
+              <li><code>color-scheme</code> follows the color mode, so the system's own list opens in the right mode.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: the select is a native element and CAI adds no script to it.</p>

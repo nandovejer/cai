@@ -81,14 +81,16 @@ files: bin/cai-tokens.js
 
       <h2 id="try">Try it in the page</h2>
       <p>With JavaScript on, you can paste your overrides here and run the same check. Nothing leaves the page. Without it, use the command above: it does the same.</p>
-      <div data-contrast-tool hidden>
+      <div data-contrast-tool>
         <div class="cai-field">
           <label class="cai-field__label" for="contrast-css">Your CSS</label>
           <textarea class="cai-input cai-input--textarea" id="contrast-css" rows="7" spellcheck="false" autocomplete="off" aria-describedby="contrast-css-help">:root {
   --cai-text-secondary: #999;
 }
-[data-theme="dark"] {
-  --cai-focus-ring: #334;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cai-focus-ring: #334;
+  }
 }</textarea>
           <p class="cai-field__helper" id="contrast-css-help">Paste the <code>--cai-*</code> tokens you override.</p>
         </div>

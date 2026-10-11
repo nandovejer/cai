@@ -64,8 +64,9 @@
   margin-block-start: var(--cai-space-xs);
 }
 
-/* Pairs grouped in a div, as HTML allows: the same space between groups */
-:where(dl > div + div) {
+/* Pairs grouped in a wrapper (a div, as HTML allows): the same space between
+   groups. No type selector: the wrapper stays unstyled. */
+:where(dl > :not(dt, dd) + :not(dt, dd)) {
   margin-block-start: var(--cai-space-xs);
 }
 

@@ -1,0 +1,146 @@
+/* ==========================================================================
+   CAI — PRINT
+   What changes on paper. One block, in its own layer (cai.print, the last of
+   all) so it wins over screen styles of core and platform by order.
+   Element rules are in :where() (specificity 0), so any rule of yours wins.
+   To opt out, restyle in your own layer or in no layer at all.
+   ========================================================================== */
+
+@media print {
+  /* Paper is white and ink is black, in any color mode. The tokens a page is
+     built from are set for the light scheme, with system colors: Canvas is
+     white and CanvasText black when color-scheme is light. A status or a
+     syntax color has an icon, a title or a weight besides its color (red
+     line 6), so black on white loses nothing. */
+  :root {
+    color-scheme: light;
+
+    --cai-surface-page: Canvas;
+    --cai-surface: Canvas;
+    --cai-surface-hover: Canvas;
+    --cai-surface-pressed: Canvas;
+    --cai-surface-muted: Canvas;
+    --cai-surface-strong: Canvas;
+    --cai-input-bg: Canvas;
+    --cai-text-primary: CanvasText;
+    --cai-text-secondary: CanvasText;
+    --cai-text-muted: CanvasText;
+    --cai-text-disabled: GrayText;
+    --cai-text-on-fill: CanvasText;
+    --cai-divider: GrayText;
+    --cai-outline: GrayText;
+    --cai-input-border: GrayText;
+    --cai-focus-ring: CanvasText;
+    --cai-brand-primary: LinkText;
+    --cai-brand-hover: LinkText;
+    --cai-brand-active: LinkText;
+    --cai-brand-subtle: Canvas;
+    --cai-brand-fill: Canvas;
+    --cai-brand-fill-hover: Canvas;
+    --cai-brand-fill-active: Canvas;
+    --cai-color-success: CanvasText;
+    --cai-color-success-bg: Canvas;
+    --cai-color-danger: CanvasText;
+    --cai-color-danger-bg: Canvas;
+    --cai-color-danger-fill: Canvas;
+    --cai-color-warning: CanvasText;
+    --cai-color-warning-bg: Canvas;
+    --cai-color-warning-accent: CanvasText;
+    --cai-color-info: CanvasText;
+    --cai-color-info-bg: Canvas;
+    --cai-color-teal: CanvasText;
+    --cai-color-teal-bg: Canvas;
+    --cai-color-purple: CanvasText;
+    --cai-color-purple-bg: Canvas;
+    --cai-color-code: CanvasText;
+    --cai-code-comment: GrayText;
+    --cai-code-keyword: CanvasText;
+    --cai-code-name: CanvasText;
+    --cai-code-property: CanvasText;
+    --cai-code-string: CanvasText;
+    --cai-code-literal: CanvasText;
+  }
+
+  :where(html, body) {
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  /* Nothing moves on paper, and a theme change must not be in mid-transition */
+  :where(*, *::before, *::after) {
+    box-shadow: none;
+    text-shadow: none;
+    transition: none;
+    animation: none;
+  }
+
+  /* The shell is a grid with a column for the sidebar: with the sidebar not
+     printed, one column is the page */
+  .o-shell {
+    display: block;
+  }
+
+  /* Navigation, controls that only work on a screen, and the player */
+  :where(nav, audio),
+  .cai-sidebar,
+  .cai-tabs,
+  .cai-copy-btn,
+  .cai-mode-switcher,
+  .cai-mode-cycle,
+  .cai-player,
+  .cai-toast,
+  .cai-tooltip__text {
+    display: none;
+  }
+
+  /* Every tab panel prints, one after the other. An inactive panel is
+     hidden="until-found", which skips its content on a screen */
+  .cai-tabpanel[hidden="until-found"] {
+    content-visibility: visible;
+  }
+
+  /* Nothing scrolls on paper: show what would scroll, and wrap what would not fit */
+  .cai-table-wrap {
+    overflow: visible;
+  }
+
+  .cai-code-block {
+    overflow: visible;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  /* The address of a link, where the reader cannot click it. A button-like
+     link is an action, not a reference, and shows no address.
+     cai-exception: EX-006 — content-bearing pseudo-element, print only */
+  :where(a[href^="http"]:not(.cai-btn))::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    overflow-wrap: anywhere;
+  }
+
+  /* No break inside a block that is read as one thing */
+  :where(figure, pre, table, tr, blockquote, img),
+  .cai-card,
+  .cai-alert {
+    break-inside: avoid;
+  }
+
+  :where(h1, h2, h3, h4, h5, h6) {
+    break-after: avoid;
+  }
+
+  :where(p, li) {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* The header row repeats on every page of a table that spans pages */
+  :where(thead) {
+    display: table-header-group;
+  }
+
+  :where(tfoot) {
+    display: table-footer-group;
+  }
+}

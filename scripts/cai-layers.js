@@ -17,11 +17,13 @@
  *   cai.components  .cai-* components
  *   cai.utilities   .u-* helpers: they win over components by order
  *   cai.platform    .cai-platform-* patterns of @cai-ds/platform
+ *   cai.print       what changes on paper (@media print): last, so it wins over
+ *                   the screen styles of core and platform by order
  *
  * Every file repeats the statement first, so the order is the same whichever
  * file a page loads first.
  */
-export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "platform"];
+export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "platform", "print"];
 
 export const LAYER_ORDER = `@layer ${LAYERS.map((l) => `cai.${l}`).join(", ")};\n`;
 

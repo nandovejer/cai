@@ -19,7 +19,7 @@ order: 4
 
     <section class="docs-block" id="inside" aria-labelledby="inside-title">
       <h2 class="docs-chapter__title" id="inside-title">What is inside cai</h2>
-      <p>Each package puts its rules in its own layer inside <code>cai</code>. They are listed here from first to last: a layer lower in the table wins over the ones above it.</p>
+      <p>Core and the other packages put their rules in their own layers inside <code>cai</code>. They are listed here from first to last: a layer lower in the table wins over the ones above it.</p>
       <div class="cai-table-wrap" role="region" aria-label="The layers inside cai" tabindex="0">
         <table class="cai-table">
           <thead>
@@ -35,6 +35,7 @@ order: 4
             <tr><td data-label="Layer"><div><code>cai.components</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The components: <code>.cai-*</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>cai.utilities</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Single-purpose helpers: <code>.u-*</code>. They win over components by order, not by <code>!important</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>cai.platform</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="What it holds"><div>The page patterns: <code>.cai-platform-*</code></div></td></tr>
+            <tr><td data-label="Layer"><div><code>cai.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="/docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of core and platform</div></td></tr>
           </tbody>
         </table>
       </div>

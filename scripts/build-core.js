@@ -97,6 +97,13 @@ for (const f of componentFiles) {
 }
 console.log(`✓ ${componentFiles.length} component CSS files → ${componentsDistDir} (+ min)`);
 
+// --- CSS: print styles on their own, for pages that load components one by one ---
+await writeCssWithMin(
+  resolve(distRoot, "print.css"),
+  inCaiLayer("print", readFileSync(resolve(srcRoot, "print/_print.css"), "utf-8")),
+);
+console.log("✓ Print CSS built → dist/print.css (+ min)");
+
 // --- JS: bundle with Rollup ---
 async function buildJS() {
   try {

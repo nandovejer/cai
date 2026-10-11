@@ -1741,3 +1741,27 @@ h2.docs-demo__title {
 [data-contrast-tool]:not([data-ready]) {
   display: none;
 }
+
+/* --------------------------------------------------------------------------
+   Print
+   Core's cai.print layer sets the colors, the breaks and hides the generic
+   controls. This file's rules are not in a layer, so they win over it: the
+   docs shell hides what only works on a screen.
+   -------------------------------------------------------------------------- */
+
+@media print {
+  .site-header,
+  .docs-footer,
+  .docs-onpage,
+  .docs-end,
+  .docs-view-tabs,
+  .docs-breadcrumb,
+  .docs-demo__note {
+    display: none;
+  }
+
+  .docs-main {
+    max-inline-size: none;
+    padding: 0;
+  }
+}

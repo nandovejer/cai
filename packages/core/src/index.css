@@ -7,6 +7,7 @@
      4. Objects    — layout abstractions (.o-)
      5. Components — UI components (.cai-)
      6. Utilities  — single-purpose helpers (.u-)
+     7. Print      — @media print, the last layer
    Every layer is a native CSS cascade layer (@layer) inside one container
    layer, `cai` (cai.settings … cai.utilities; the full list is in
    scripts/cai-layers.js). Utilities win over components by order, not by
@@ -15,7 +16,7 @@
    Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
    ========================================================================== */
 
-@layer cai.tokens, cai.themes, cai.settings, cai.generic, cai.elements, cai.objects, cai.components, cai.utilities, cai.platform;
+@layer cai.tokens, cai.themes, cai.settings, cai.generic, cai.elements, cai.objects, cai.components, cai.utilities, cai.platform, cai.print;
 
 @import url("./settings/_settings.css") layer(cai.settings);
 @import url("./generic/_reset.css") layer(cai.generic);
@@ -23,3 +24,4 @@
 @import url("./objects/_objects.css") layer(cai.objects);
 @import url("./components/index.css") layer(cai.components);
 @import url("./utilities/_utilities.css") layer(cai.utilities);
+@import url("./print/_print.css") layer(cai.print);

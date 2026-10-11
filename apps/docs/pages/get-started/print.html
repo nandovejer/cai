@@ -1,0 +1,64 @@
+<!-- cai:page
+title: Print styles
+description: What CAI changes on paper, and how to keep or change any of it, with one layer and no extra file when you load cai.css.
+area: get-started
+order: 5
+-->
+    <section class="docs-block" id="what" aria-labelledby="what-title">
+      <h2 class="docs-chapter__title" id="what-title">What changes on paper</h2>
+      <p class="docs-lead">A page printed from CAI is black text on white, without the parts that only work on a screen. It is one block of CSS in its own layer, <code>cai.print</code>, which loads with <code>cai.css</code>.</p>
+      <ul>
+        <li><strong>Colors.</strong> Surfaces are white and text is black, whichever color mode the page was in. The tokens are set again for print, so every component follows, with no rule of its own. Status colors and code colors become black: each has an icon, a title or a weight besides its color.</li>
+        <li><strong>Hidden.</strong> Navigation (<code>nav</code>), the sidebar, the tab row, copy buttons, the color mode switch, the player, toasts and tooltips. Platform also hides its skip link and search.</li>
+        <li><strong>Links.</strong> An external link prints its address after its text, in brackets. A link that looks like a button does not.</li>
+        <li><strong>Breaks.</strong> No page break inside a figure, a code block, a table, a table row, a quotation, an image, a card or an alert. A heading stays with the text after it.</li>
+        <li><strong>Tables.</strong> The header row repeats on every page of a table that spans pages. A wide table is not clipped.</li>
+        <li><strong>Code.</strong> A long line wraps, as paper cannot scroll.</li>
+        <li><strong>Tabs.</strong> Every panel prints, one after the other, not only the open one.</li>
+        <li><strong>Motion.</strong> No transition or animation, and no shadows.</li>
+      </ul>
+    </section>
+
+    <section class="docs-block" id="load" aria-labelledby="load-title">
+      <h2 class="docs-chapter__title" id="load-title">Loading it</h2>
+      <ul>
+        <li><code>cai.css</code> includes it. Nothing to add.</li>
+        <li>If you load <code>base.css</code> and components one by one, add <code>@cai-ds/core/print.css</code> (<code>dist/print.css</code>). It declares the layer order itself, as every file does.</li>
+        <li>A platform page also gets its own print rules, in <code>cai.platform</code>.</li>
+        <li>On a screen nothing changes: the whole block is inside <code>@media print</code>.</li>
+      </ul>
+    </section>
+
+    <section class="docs-block" id="change" aria-labelledby="change-title">
+      <h2 class="docs-chapter__title" id="change-title">Keep or change something</h2>
+      <p>Your CSS wins over <code>cai.print</code>, as it wins over the rest of CAI: a rule in your <code>app</code> layer, or in no layer at all. Put it in <code>@media print</code>.</p>
+      <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Changing the print styles"><code>@layer reset, cai, app;
+
+@layer app {
+  @media print {
+    /* Print the breadcrumb of this site */
+    .site-breadcrumb {
+      display: block;
+    }
+
+    /* Keep the page margins your own */
+    @page {
+      margin: 2cm;
+    }
+  }
+}</code></pre>
+      <ul>
+        <li>CAI sets no <code>@page</code> margin and no paper size: they are yours.</li>
+        <li>To drop CAI's print styles altogether, do not load <code>print.css</code>, or restyle in your layer. There is no switch.</li>
+      </ul>
+    </section>
+
+    <section class="docs-block" id="limits" aria-labelledby="limits-title">
+      <h2 class="docs-chapter__title" id="limits-title">What is not covered</h2>
+      <ul>
+        <li><strong>Checked in Chromium only.</strong> The test renders a docs page with print media and reads the styles. No one has looked at a printed sheet, or at a PDF made by Firefox or Safari.</li>
+        <li><strong>The address of a link is drawn by CSS.</strong> It is on paper and in a PDF's text, but not in the page, so a screen reader does not read it.</li>
+        <li><strong>Backgrounds.</strong> Browsers drop background colors and images when they print unless the reader turns "background graphics" on. CAI relies on text, borders and weight, not on a filled background, to tell things apart.</li>
+        <li><strong>Long tables and breaks.</strong> A table taller than a page breaks anyway: the browser ignores "no break" when it cannot keep it.</li>
+      </ul>
+    </section>

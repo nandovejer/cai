@@ -19,6 +19,7 @@ const files = [
   "packages/core/dist/cai.css",
   "packages/core/dist/base.css",
   "packages/platform/dist/platform.css",
+  "packages/core/dist/print.css",
   ...listed("packages/core/dist/components").filter((f) => !f.endsWith(".min.css")),
   ...listed("packages/core/dist/themes").filter((f) => !f.endsWith(".min.css")),
 ].filter((f) => existsSync(dist(f)));
@@ -73,6 +74,6 @@ describe.skipIf(files.length === 0)("published stylesheets and the cai layers", 
   it("the full bundle has the layers in the documented order", () => {
     const css = readFileSync(dist("packages/core/dist/cai.css"), "utf-8");
     const order = [...css.matchAll(/^@layer (cai\.[\w-]+) \{/gm)].map((m) => m[1]);
-    expect(order).toEqual(["cai.settings", "cai.generic", "cai.elements", "cai.objects", "cai.components", "cai.utilities"]);
+    expect(order).toEqual(["cai.settings", "cai.generic", "cai.elements", "cai.objects", "cai.components", "cai.utilities", "cai.print"]);
   });
 });

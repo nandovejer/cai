@@ -201,3 +201,59 @@ export function buildDtcg(tokens, semanticCss) {
     ...tree,
   };
 }
+
+/** The version of the DTCG specification the files follow (a Final Community Group Report, 28 October 2025). */
+export const DTCG_VERSION = "2025.10";
+
+/**
+ * The same tokens as a DTCG Resolver document (Resolver Module 2025.10).
+ *
+ * The Format Module has no modes: a token file holds one value per token.
+ * The Resolver Module is where the specification puts them, as a modifier
+ * whose contexts each list token sources, applied after the base set. Here:
+ *   - set `base`: cai-tokens.dtcg.json (primitives, and semantic as Light);
+ *   - modifier `mode`: contexts `light`, `dark` and `high-contrast`, each
+ *     the semantic group with that mode's values, aliases to primitives kept;
+ *   - `default: "light"`, as :root is.
+ * The `$extensions.mode` of the token file stays: Figma and Tokens Studio
+ * read it, and it is not part of the specification.
+ */
+export function buildResolver(tokens, semanticCss, { tokensFile = "cai-tokens.dtcg.json" } = {}) {
+  const { semantic } = buildDtcg(tokens, semanticCss);
+  const contexts = {};
+  for (const [name, theme] of MODES) {
+    const group = JSON.parse(JSON.stringify(semantic));
+    const walk = (node) => {
+      for (const [key, child] of Object.entries(node)) {
+        if (key.startsWith("$") && key !== "$root") continue;
+        if (child?.$extensions?.mode) {
+          child.$value = child.$extensions.mode[name];
+          delete child.$extensions;
+        } else if (child && typeof child === "object") walk(child);
+      }
+    };
+    walk(group);
+    group.$description = `CAI semantic tokens, ${name} mode (data-theme="${theme}").`;
+    contexts[theme] = [{ semantic: group }];
+  }
+  return {
+    $schema: `https://www.designtokens.org/schemas/${DTCG_VERSION}/resolver.json`,
+    name: "CAI tokens",
+    version: DTCG_VERSION,
+    description: "CAI Design System tokens with their three color modes, for tools that read the DTCG Resolver Module. Generated from @cai-ds/tokens. Do not edit.",
+    sets: {
+      base: {
+        description: "Primitives, and the semantic tokens as the light mode has them.",
+        sources: [{ $ref: tokensFile }],
+      },
+    },
+    modifiers: {
+      mode: {
+        description: "The color mode: the data-theme value of the page.",
+        default: "light",
+        contexts,
+      },
+    },
+    resolutionOrder: [{ $ref: "#/sets/base" }, { $ref: "#/modifiers/mode" }],
+  };
+}

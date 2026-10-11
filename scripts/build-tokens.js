@@ -27,7 +27,7 @@ import {
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as esbuild from "esbuild";
-import { buildDtcg } from "./tokens-dtcg.js";
+import { buildDtcg, buildResolver } from "./tokens-dtcg.js";
 import { inCaiLayer } from "./cai-layers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -140,6 +140,9 @@ console.log("✓ tokens.json copied → dist/");
 
 writeFileSync(resolve(distRoot, "cai-tokens.dtcg.json"), `${JSON.stringify(buildDtcg(tokens, semanticCss), null, 2)}\n`, "utf-8");
 console.log("✓ DTCG tokens → dist/cai-tokens.dtcg.json");
+
+writeFileSync(resolve(distRoot, "cai-tokens.resolver.json"), `${JSON.stringify(buildResolver(tokens, semanticCss), null, 2)}\n`, "utf-8");
+console.log("✓ DTCG resolver (the three color modes) → dist/cai-tokens.resolver.json");
 
 // Copy font files and their licence texts
 function copyFontDir(fontName) {

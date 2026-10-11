@@ -10,7 +10,8 @@ import { describe, it, expect } from "vitest";
 import { existsSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { buildDtcg } from "../scripts/tokens-dtcg.js";
+import Ajv from "ajv";
+import { DTCG_VERSION, buildDtcg, buildResolver } from "../scripts/tokens-dtcg.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = resolve(root, "packages/tokens/dist");
@@ -163,5 +164,67 @@ describe.skipIf(!built)("DTCG export (packages/tokens/dist/cai-tokens.dtcg.json)
   it("is published as @cai-ds/tokens/dtcg", () => {
     const pkg = JSON.parse(readFileSync(resolve(root, "packages/tokens/package.json"), "utf-8"));
     expect(pkg.exports["./dtcg"]).toBe("./dist/cai-tokens.dtcg.json");
+  });
+});
+
+/* ---- Against the specification --------------------------------------------- */
+
+const schema = (name) => JSON.parse(readFileSync(resolve(root, `tests/fixtures/dtcg/${DTCG_VERSION}/${name}.json`), "utf-8"));
+const validator = (name) => {
+  // The schemas use two string formats that Ajv does not know: they are
+  // checked as plain strings, which is what Ajv does with an unknown format
+  const ajv = new Ajv({ strict: false, logger: false });
+  return ajv.compile(schema(name));
+};
+
+describe.skipIf(!built)("DTCG files against the official schemas (version 2025.10)", () => {
+  const dtcg = built ? JSON.parse(readFileSync(resolve(dist, "cai-tokens.dtcg.json"), "utf-8")) : {};
+  const resolverPath = resolve(dist, "cai-tokens.resolver.json");
+  const resolver = existsSync(resolverPath) ? JSON.parse(readFileSync(resolverPath, "utf-8")) : null;
+
+  it("the token file is valid against the Format Module schema", () => {
+    const validate = validator("format");
+    expect(validate(dtcg), JSON.stringify(validate.errors?.slice(0, 3))).toBe(true);
+  });
+
+  it("the resolver file exists and is valid against the Resolver Module schema", () => {
+    expect(resolver, "run pnpm tokens:build").toBeTruthy();
+    const validate = validator("resolver");
+    expect(validate(resolver), JSON.stringify(validate.errors?.slice(0, 3))).toBe(true);
+    expect(resolver.version).toBe(DTCG_VERSION);
+  });
+
+  it("the resolver is what the generator makes from the sources", () => {
+    const tokens = JSON.parse(readFileSync(resolve(root, "packages/tokens/tokens.json"), "utf-8"));
+    const semantic = readFileSync(resolve(root, "packages/tokens/src/semantic.css"), "utf-8");
+    expect(resolver).toEqual(buildResolver(tokens, semantic));
+  });
+
+  it("the resolver's base set is the token file next to it, and its default mode is a context", () => {
+    expect(resolver.sets.base.sources).toEqual([{ $ref: "cai-tokens.dtcg.json" }]);
+    expect(existsSync(resolve(dist, resolver.sets.base.sources[0].$ref))).toBe(true);
+    const { default: fallback, contexts } = resolver.modifiers.mode;
+    expect(Object.keys(contexts)).toEqual(["light", "dark", "high-contrast"]);
+    expect(fallback).toBe("light");
+    expect(resolver.resolutionOrder).toEqual([{ $ref: "#/sets/base" }, { $ref: "#/modifiers/mode" }]);
+  });
+
+  it("each context gives every semantic token the value the token file keeps for that mode", () => {
+    const walk = (node, path = []) =>
+      Object.entries(node).flatMap(([key, child]) => {
+        if (key.startsWith("$") && key !== "$root") return [];
+        if (child?.$type) return [[[...path, key], child]];
+        return child && typeof child === "object" ? walk(child, [...path, key]) : [];
+      });
+    const tokens = walk(dtcg.semantic);
+    expect(tokens.length).toBeGreaterThan(40);
+    for (const [mode, name] of [["light", "Light"], ["dark", "Dark"], ["high-contrast", "High contrast"]]) {
+      const group = resolver.modifiers.mode.contexts[mode][0].semantic;
+      for (const [path, token] of tokens) {
+        const there = path.reduce((n, k) => n?.[k], group);
+        expect(there?.$value, `${path.join(".")} in ${mode}`).toEqual(token.$extensions.mode[name]);
+        expect(there?.$extensions, `${path.join(".")} keeps no mode table in a context`).toBeUndefined();
+      }
+    }
   });
 });

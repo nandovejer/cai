@@ -57,30 +57,46 @@
 
 /* Enhancement, where the browser has CSS anchor positioning (Chrome and Edge
    125, Safari 26, Firefox 147: Newly available, not yet Widely available).
-   The tooltip is anchored to its trigger, above it, and flips below when
-   there is no room above (a trigger at the top of the screen). Nothing here
-   changes a browser without it: the rules above are the whole component.
-   Only anchor-name, position-anchor, position-area and
+   The tooltip is anchored to its trigger, above it and centred, and flips
+   below when there is no room above (a trigger at the top of the screen).
+   Nothing here changes a browser without it: the rules above are the whole
+   component. Only anchor-name, anchor-scope, position-anchor, anchor() and
    position-try-fallbacks are used; anchor-size() and position-visibility,
-   the parts that are not interoperable yet, are not. */
-@supports (anchor-name: --cai-tooltip) and (position-area: block-start) {
+   the parts that are not interoperable yet, are not. The tip is placed with
+   anchor() insets and not with position-area, which Firefox 155 misplaces in
+   right-to-left text. */
+@supports (anchor-name: --cai-tooltip) and (inset-block-end: anchor(start)) {
+  /* Each tooltip sees only its own trigger: with one shared name Firefox
+     anchors every tip to the last trigger of the page */
+  .cai-tooltip {
+    anchor-scope: --cai-tooltip;
+  }
+
   .cai-tooltip > :not(.cai-tooltip__text) {
     anchor-name: --cai-tooltip;
   }
 
   /* Fixed, so the room it is placed in is the viewport and not the box of
      the trigger (an absolute tooltip has a zero-height space above it, and
-     would always flip): the tooltip is also no longer clipped by an
-     ancestor that scrolls or hides overflow */
+     would always flip). Outside a size container it is not clipped by an
+     ancestor that scrolls or hides overflow; inside one (the table wrap, the
+     player) it is placed and clipped by that box, as an absolute one is. */
   .cai-tooltip__text,
   .cai-tooltip__text:dir(rtl) {
     position: fixed;
     position-anchor: --cai-tooltip;
-    position-area: block-start;
-    position-try-fallbacks: flip-block;
     inset: auto;
+    inset-block-end: anchor(start);
+    inset-inline-start: anchor(center);
     margin-block: var(--cai-space-2xs);
+    translate: -50% 0;
     transform: none;
+    position-try-fallbacks: flip-block;
+  }
+
+  /* inset-inline-start is the right edge in right-to-left text */
+  .cai-tooltip__text:dir(rtl) {
+    translate: 50% 0;
   }
 
   /* The gap to the trigger can be on either side once it flips: bridge both */

@@ -99,6 +99,18 @@
     content-visibility: visible;
   }
 
+  /* A browser without until-found (Safari before 26.2, Firefox before 139)
+     reads the attribute as plain hidden */
+  .cai-tabpanel[hidden]:not([hidden="until-found"]) {
+    display: block;
+  }
+
+  /* A control that sets its own color-scheme (select, date and time fields)
+     would keep the dark mode's system colors on paper */
+  :where(.cai-select, .cai-input, select, input, textarea) {
+    color-scheme: light;
+  }
+
   /* Nothing scrolls on paper: show what would scroll, and wrap what would not fit */
   .cai-table-wrap {
     overflow: visible;

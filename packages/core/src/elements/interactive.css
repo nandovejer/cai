@@ -24,6 +24,8 @@
   cursor: pointer;
   font-weight: 600;
   color: var(--cai-text-primary);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
+  -webkit-user-select: none;
   user-select: none;
   padding: var(--cai-space-2xs);
   margin: calc(-1 * var(--cai-space-sm));
@@ -56,6 +58,7 @@
   box-shadow: var(--cai-shadow-lg);
   max-width: min(90vw, 600px);
   max-height: 90vh;
+  max-height: 90dvh;
   overflow-y: auto;
 }
 

@@ -11,6 +11,14 @@
   padding: 0;
 }
 
+/* iOS Safari inflates text in landscape without this, and has only the
+   prefixed name */
+:where(html) {
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 ::-webkit-scrollbar {
   width: var(--cai-scrollbar-size);
   height: var(--cai-scrollbar-size);

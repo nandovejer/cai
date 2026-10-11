@@ -329,6 +329,8 @@ test.describe('Documentation site', () => {
     for (const width of [1024, 1280, 1440]) {
       test(`the sidebar never covers the footer at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
+        // Smooth scrolling makes scrollTo() asynchronous in Gecko and WebKit
+        await page.emulateMedia({ reducedMotion: 'reduce' });
         await gotoId(page, 'c-button');
         await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
         const box = (selector) => page.locator(selector).evaluate((el) => el.getBoundingClientRect().toJSON());
@@ -907,7 +909,8 @@ test.describe('Site header and navigation toggle', () => {
     expect([...SITE_LINKS.matchAll(/href="([^"]+)"/g)].map((m) => m[1])).toEqual(['/', '/docs/', 'https://github.com/nandovejer/cai']);
     for (const [file, partials] of Object.entries(INCLUDERS)) {
       for (const name of partials) expect(read(file), file).toContain(`<!-- cai:include ${name} -->`);
-      expect(read(file), file).toMatch(/<nav class="cai-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+">/);
+      // tabindex="-1": a scrollable nav is a Tab stop of its own in Firefox
+      expect(read(file), file).toMatch(/<nav class="cai-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+" tabindex="-1">/);
     }
     for (const file of ['apps/landing/index.html', 'apps/docs/_layouts/page.html']) {
       expect(read(file), file).toContain('href="/apps/landing/site-header.css"');

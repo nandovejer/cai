@@ -120,6 +120,8 @@
 
 .cai-platform-command-block__prefix {
 	color: var(--cai-text-secondary);
+	/* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
+	-webkit-user-select: none;
 	user-select: none;
 }
 

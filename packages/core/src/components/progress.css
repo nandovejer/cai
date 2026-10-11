@@ -40,11 +40,40 @@
   border-radius: var(--cai-radius-sm);
 }
 
+/* No value: the stripes of the bare element, which the shorthand above resets.
+   One rule per engine: a pseudo-element the browser does not know drops a
+   whole selector list. */
+.cai-progress:indeterminate {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--cai-brand-primary) 0 8px,
+    transparent 8px 16px
+  );
+}
+
+.cai-progress:indeterminate::-webkit-progress-bar {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--cai-brand-primary) 0 8px,
+    transparent 8px 16px
+  );
+}
+
+/* Gecko draws the bar across the whole track when there is no value */
+.cai-progress:indeterminate::-moz-progress-bar {
+  background: transparent;
+}
+
 /* Forced colors flatten backgrounds to Canvas: keep the bar and its fill.
    One rule per engine: a selector list with a pseudo-element the browser
    does not know is dropped whole. */
 @media (forced-colors: active) {
-  .cai-progress,
+  .cai-progress {
+    border-color: CanvasText;
+    background: Canvas;
+    forced-color-adjust: none;
+  }
+
   .cai-progress::-webkit-progress-bar {
     border-color: CanvasText;
     background: Canvas;
@@ -57,5 +86,13 @@
 
   .cai-progress::-moz-progress-bar {
     background: Highlight;
+  }
+
+  .cai-progress:indeterminate {
+    background-image: repeating-linear-gradient(45deg, Highlight 0 8px, Canvas 8px 16px);
+  }
+
+  .cai-progress:indeterminate::-webkit-progress-bar {
+    background-image: repeating-linear-gradient(45deg, Highlight 0 8px, Canvas 8px 16px);
   }
 }

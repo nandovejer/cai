@@ -28,7 +28,8 @@ function initFolds() {
   // read without JS. On a narrow screen they start closed, to keep the page a
   // reasonable length; opening one is the browser's own behavior.
   if (!window.matchMedia("(max-width: 768px)").matches) return;
-  const target = document.getElementById(window.location.hash.slice(1));
+  const id = window.location.hash.slice(1);
+  const target = id ? document.getElementById(id) : null;
   document.querySelectorAll("details[data-fold-narrow]").forEach((details) => {
     // eslint-disable-next-line no-restricted-syntax -- RL-3: sets the initial state only; opening and closing stay native
     if (!details.contains(target)) details.open = false;

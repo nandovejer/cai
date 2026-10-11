@@ -9,11 +9,11 @@
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../assets/site-header-Dap66mJ8.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-CQMj0WOs.js"></script>
+  <script type="module" crossorigin src="../../assets/site-header-imKMB4x4.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-DxUYOj_d.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/reference-DRScSSK_.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-CCQ_vZ9r.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-B3wyr-zr.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-BRHyuQ-Z.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-v6-EqpOV.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -31,7 +31,7 @@
         <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
         <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Close search</button></form>
       </div>
-      <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
       <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Use the arrow keys to move through them.</p>
       <p class="cai-platform-search__status" role="status"></p>
       <p data-cai-search-show="none" hidden>Check the spelling or try a shorter word.</p>
@@ -79,7 +79,7 @@
     </div>
   </header>
 
-  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
     <div class="cai-sidebar__section page-nav__site">
       <span class="cai-sidebar__section-label" id="nav-site">Site</span>
       <ul aria-labelledby="nav-site">
@@ -157,7 +157,7 @@
         <li><strong>Select.</strong> The open list is the browser’s or the system’s, so it looks and sounds different in each. Where the browser supports <code class="cai-code-inline">appearance: base-select</code> (Chrome and Edge 135, Safari 27), CAI styles the list too, and that list has not been tested with a screen reader yet. It works without JavaScript.</li>
         <li><strong>Color mode.</strong> On the home and documentation pages, a stored color mode can flash once on load, because no inline script sets it before the first paint.</li>
         <li><strong>Code and Design tabs.</strong> The tab you chose last opens after the page has loaded, so the content below the tabs can move once.</li>
-        <li><strong>Find in page.</strong> In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code>, find in page (Ctrl+F) does not find text in the tab that is not open. Open the other tab, or turn JavaScript off to see both.</li>
+        <li><strong>Find in page.</strong> In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code> (Safari before 26.2, Firefox before 139), find in page (Ctrl+F) does not find text in the tab that is not open. In Safari 26.2 and later it opens the tab but does not scroll to the match. Open the other tab, or turn JavaScript off to see both.</li>
         <li><strong>Search shortcut.</strong> Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there.</li>
         <li><strong>Search.</strong> It has not been tested with a screen reader. The number of results is announced once you stop typing.</li>
         <li><strong>Search at 400 percent zoom.</strong> The whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.</li>

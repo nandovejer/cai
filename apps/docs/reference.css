@@ -214,6 +214,18 @@
   align-content: start;
 }
 
+/* WebKit keeps the row gaps of a grid whose content is skipped (until-found):
+   an empty band of 18 gaps on every component page */
+.docs-view[hidden="until-found"] {
+  row-gap: 0;
+}
+
+/* No until-found (Safari before 26.2, Firefox before 139): the attribute is
+   plain hidden. This file is unlayered, so its display would show the panel */
+.docs-view[hidden]:not([hidden="until-found"]) {
+  display: none;
+}
+
 .docs-view p,
 .docs-view li {
   max-width: 70ch;

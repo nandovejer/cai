@@ -33,6 +33,8 @@
   transition: color var(--cai-duration-fast),
     border-color var(--cai-duration-fast);
   white-space: nowrap;
+  /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
+  -webkit-user-select: none;
   user-select: none;
 }
 

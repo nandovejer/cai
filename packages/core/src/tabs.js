@@ -38,7 +38,8 @@ const TAB_KEYS = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1, Home
 /** The element a fragment ("#id") names, or null. */
 function byHash(hash) {
   try {
-    return document.getElementById(decodeURIComponent(hash.slice(1)));
+    const id = decodeURIComponent(hash.slice(1));
+    return id ? document.getElementById(id) : null;
   } catch {
     return null; // a malformed escape in the fragment
   }

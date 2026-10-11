@@ -105,14 +105,10 @@
 /* Layer 2, where the browser can style the open list. Everything that is not
    in the browser's own list lives here; nothing above depends on it. */
 @supports (appearance: base-select) {
-  .cai-select:not([multiple], [size]:not([size="1"])),
-  .cai-select::picker(select) {
-    appearance: base-select;
-  }
-
   /* The picker icon of the browser takes the place of the gradient arrow, and
      sits at the inline end of a flex row with the chosen text */
   .cai-select:not([multiple], [size]:not([size="1"])) {
+    appearance: base-select;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -124,7 +120,10 @@
     color: currentcolor;
   }
 
+  /* Its own rule: a browser with base-select and without ::picker() would
+     drop a selector list that held both */
   .cai-select::picker(select) {
+    appearance: base-select;
     padding: var(--cai-space-3xs);
     border: 1px solid var(--cai-input-border);
     border-radius: var(--cai-radius-sm);

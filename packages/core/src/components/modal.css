@@ -18,6 +18,7 @@
   padding: var(--cai-space-xl);
   max-inline-size: min(90vw, 600px);
   max-block-size: 90vh;
+  max-block-size: 90dvh;
   overflow-y: auto;
 }
 
@@ -27,6 +28,8 @@
 
 .cai-modal::backdrop {
   background: var(--cai-scrim);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari before 18 */
+  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
   animation: cai-fade-in var(--cai-duration-fast) ease-out;
 }

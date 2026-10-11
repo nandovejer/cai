@@ -236,6 +236,41 @@
   border-radius: var(--cai-radius-sm);
 }
 
+/* Gecko's states are pseudo-classes of the meter, not parts of it */
+.cai-meter:-moz-meter-sub-optimum::-moz-meter-bar {
+  background: var(--cai-color-warning);
+}
+
+.cai-meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
+  background: var(--cai-color-danger);
+}
+
+/* Forced colors flatten the track to Canvas: give it an edge, and draw the
+   value in the system highlight. One rule per engine. */
+@media (forced-colors: active) {
+  .cai-meter {
+    border: 1px solid CanvasText;
+    background: Canvas;
+    forced-color-adjust: none;
+  }
+
+  .cai-meter::-webkit-meter-optimum-value {
+    background: Highlight;
+  }
+
+  .cai-meter::-webkit-meter-suboptimum-value {
+    background: Highlight;
+  }
+
+  .cai-meter::-webkit-meter-even-less-good-value {
+    background: Highlight;
+  }
+
+  .cai-meter::-moz-meter-bar {
+    background: Highlight;
+  }
+}
+
 /* --------------------------------------------------------------------------
    FORM — Output element
    -------------------------------------------------------------------------- */
@@ -266,6 +301,8 @@
   align-items: center;
   gap: var(--cai-space-xs);
   cursor: pointer;
+  /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
+  -webkit-user-select: none;
   user-select: none;
 }
 
@@ -345,6 +382,8 @@
   align-items: center;
   gap: var(--cai-space-sm);
   cursor: pointer;
+  /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
+  -webkit-user-select: none;
   user-select: none;
   position: relative;
 }

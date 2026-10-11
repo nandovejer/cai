@@ -62,18 +62,22 @@ test.describe('tooltip anchor positioning', () => {
   });
 
   test('is supported here, or the other tests say nothing', async ({ page }) => {
-    expect(await page.evaluate(() => window.CSS.supports('anchor-name', '--x') && window.CSS.supports('position-area', 'block-start'))).toBe(true);
+    expect(await page.evaluate(() => window.CSS.supports('anchor-name', '--x') && window.CSS.supports('inset-block-end', 'anchor(start)'))).toBe(true);
   });
 
   test('with room above, the tooltip sits above its trigger, centred', async ({ page }) => {
     const { tip, trigger } = await open(page, 'middle');
     expect(tip.bottom).toBeLessThanOrEqual(trigger.top);
+    // Next to its own trigger, not to another one on the page (Firefox 147+
+    // anchored every tip to the last trigger before anchor-scope)
+    expect(trigger.top - tip.bottom).toBeLessThanOrEqual(12);
     expect(Math.abs(tip.center - trigger.center)).toBeLessThanOrEqual(1);
   });
 
   test('at the top of the screen, it flips below the trigger and stays in view', async ({ page }) => {
     const { tip, trigger } = await open(page, 'top');
     expect(tip.top).toBeGreaterThanOrEqual(trigger.bottom);
+    expect(tip.top - trigger.bottom).toBeLessThanOrEqual(12);
     expect(tip.top).toBeGreaterThanOrEqual(0);
     expect(Math.abs(tip.center - trigger.center)).toBeLessThanOrEqual(1);
   });
@@ -83,6 +87,15 @@ test.describe('tooltip anchor positioning', () => {
     for (const name of ['middle', 'top']) {
       const { tip, trigger } = await open(page, name);
       expect(Math.abs(tip.center - trigger.center), name).toBeLessThanOrEqual(1);
+    }
+  });
+
+  test('right-to-left on a container, not on the page: still beside its own trigger', async ({ page }) => {
+    await page.evaluate(() => document.querySelectorAll('.row').forEach((row) => row.setAttribute('dir', 'rtl')));
+    for (const name of ['middle', 'top']) {
+      const { tip, trigger } = await open(page, name);
+      expect(Math.abs(tip.center - trigger.center), name).toBeLessThanOrEqual(1);
+      expect(Math.min(Math.abs(tip.top - trigger.bottom), Math.abs(trigger.top - tip.bottom)), name).toBeLessThanOrEqual(12);
     }
   });
 

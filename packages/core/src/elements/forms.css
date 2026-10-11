@@ -71,10 +71,34 @@
   );
 }
 
+:where(progress:indeterminate)::-webkit-progress-bar {
+  background-image: repeating-linear-gradient(
+    45deg,
+    var(--cai-brand-primary) 0 8px,
+    transparent 8px 16px
+  );
+}
+
+/* Gecko draws the bar across the whole track when there is no value, which
+   hides the stripes of the element */
+:where(progress:indeterminate)::-moz-progress-bar {
+  background: transparent;
+}
+
 /* Forced colors flatten backgrounds to Canvas: keep the bar and its value */
 @media (forced-colors: active) {
   :where(progress) {
     border: 1px solid CanvasText;
+  }
+
+  :where(progress:indeterminate) {
+    forced-color-adjust: none;
+    background-image: repeating-linear-gradient(45deg, Highlight 0 8px, Canvas 8px 16px);
+  }
+
+  :where(progress:indeterminate)::-webkit-progress-bar {
+    forced-color-adjust: none;
+    background-image: repeating-linear-gradient(45deg, Highlight 0 8px, Canvas 8px 16px);
   }
 
   :where(progress)::-webkit-progress-value {

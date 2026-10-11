@@ -236,7 +236,7 @@ export function initSearch(root = document) {
       input.focus();
     }
     // Not the Enter that ends an IME composition
-    if (target === input && key === "Enter" && !e.isComposing && input.value.trim()) $("[data-cai-search-list] a")?.click();
+    if (target === input && key === "Enter" && !e.isComposing && e.keyCode !== 229 && input.value.trim()) $("[data-cai-search-list] a")?.click();
   });
 
   // A result on this page: close, let the link scroll (core's tabs.js opens
@@ -247,7 +247,8 @@ export function initSearch(root = document) {
     box.close();
     let target;
     try {
-      target = a.pathname === location.pathname && document.getElementById(decodeURIComponent(a.hash.slice(1)));
+      const id = decodeURIComponent(a.hash.slice(1));
+      target = id && a.pathname === location.pathname && document.getElementById(id);
     } catch {
       // A malformed escape in the hash: the link still navigates (SEC-MISC-11)
     }

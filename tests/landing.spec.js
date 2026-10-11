@@ -375,7 +375,9 @@ test.describe('Landing page', () => {
       expect(new Set(pairs.map((pair) => pair.label)).size).toBe(pairs.length);
     });
 
-    test('clicking a copy button puts the snippet on the clipboard', async ({ page, context }) => {
+    test('clicking a copy button puts the snippet on the clipboard', async ({ page, context, browserName }) => {
+      // Playwright's Firefox has no clipboard permissions to grant
+      test.skip(browserName === 'firefox', 'clipboard permissions are not available in Playwright Firefox');
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
       await open(page);
 

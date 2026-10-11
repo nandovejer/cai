@@ -176,7 +176,7 @@ const wire = (host) => {
       );
       shown += list.children.length;
       total += found[g].length;
-      list.parentElement.hidden = !list.children.length;
+      list.parentElement.hidden = !found[g].length;
     });
     // The state names the label of the status and what [data-cai-search-show] shows
     const state = q ? (total ? (shown < total ? "capped" : total > 1 ? "results" : "result") : "none") : "idle";
@@ -208,7 +208,7 @@ const wire = (host) => {
   // Every search starts afresh (not on "close": that event comes late, and
   // could empty a search opened again at once)
   const open = () => {
-    if (box.open) return;
+    if (!box.isConnected) return;
     input.value = "";
     update();
     box.showModal();
@@ -229,6 +229,8 @@ const wire = (host) => {
   // result, on a result it is the link's own (a11y.md SRCH-20)
   box.addEventListener("keydown", (e) => {
     const { key, target } = e;
+    // Not during IME composition: the keys drive its candidate list
+    if (e.keyCode === 229 || e.isComposing) return;
     const links = [...results.querySelectorAll("a:not([hidden] a)")];
     const at = links.indexOf(target);
     const to = { ArrowDown: at + 1, ArrowUp: at - 1, Home: 0, End: links.length - 1 }[key];
@@ -240,8 +242,7 @@ const wire = (host) => {
     } else if (at > -1 && (key.length === 1 || key === "Backspace") && !e.ctrlKey && !e.metaKey) {
       input.focus();
     }
-    // Not the Enter that ends an IME composition
-    if (target === input && key === "Enter" && !e.isComposing && e.keyCode !== 229 && input.value.trim()) $("[data-cai-search-list] a")?.click();
+    if (target === input && key === "Enter" && input.value.trim()) $("[data-cai-search-list] a")?.click();
   });
 
   // A result on this page: close, let the link scroll (core's tabs.js opens

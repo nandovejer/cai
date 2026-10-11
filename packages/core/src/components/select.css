@@ -34,7 +34,7 @@
   cursor: pointer;
 }
 
-[data-theme="dark"] .cai-select {
+:is([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-select {
   color-scheme: dark;
 }
 

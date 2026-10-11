@@ -5,6 +5,12 @@
 	 JavaScript the button stays hidden and a plain link to an index shows.
 	 ========================================================================== */
 
+/* The wrapper has no box of its own: the dialog is in the top layer, and
+   a box would take a cell of the page's grid or flex container */
+:where(cai-platform-search) {
+	display: contents;
+}
+
 /* The trigger: real text at full contrast, not placeholder grey, inside a
    field-like border; one row, at least 44px high */
 .cai-platform-search-trigger:not([hidden]) {

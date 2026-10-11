@@ -37,8 +37,8 @@ test.describe('print', () => {
     await expect.poll(() => style(page, 'body', '', 'color')).toBe('rgb(0, 0, 0)');
     expect(await style(page, 'body', '', 'background-color')).toBe('rgb(255, 255, 255)');
     // A component that reads tokens follows: the table header is not a dark surface
-    expect(await style(page, '.cai-table th', '', 'background-color')).toBe('rgb(255, 255, 255)');
-    expect(await style(page, '.cai-table td', '', 'color')).toBe('rgb(0, 0, 0)');
+    await expect.poll(() => style(page, '.cai-table th', '', 'background-color')).toBe('rgb(255, 255, 255)');
+    await expect.poll(() => style(page, '.cai-table td', '', 'color')).toBe('rgb(0, 0, 0)');
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('light');
   });
 

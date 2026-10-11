@@ -9,10 +9,10 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-DjzV6-wr.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-BdyfS7vR.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-D4tZNdhU.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CDdzoclL.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Btw45BHO.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-B_xSPELo.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-v6-EqpOV.css">
 </head>
 <body class="o-shell docs-page">
@@ -231,7 +231,7 @@
               <li>The texts the script writes are the <code>data-cai-label-*</code> attributes of the dialog: <code>results</code>, <code>result</code>, <code>capped</code>, <code>none</code>, <code>loading</code> and <code>error</code>, with <code>{n}</code>, <code>{shown}</code> and <code>{query}</code> in them. A missing label writes nothing.</li>
             </ul>
             <h3 id="how">How it works</h3>
-            <p>Load <code>platform.min.js</code>, or import <code>@cai-ds/platform/search</code>: either defines <code>&lt;cai-platform-search&gt;</code>, a custom element in the light DOM (no Shadow DOM) that wraps the dialog. It wires the dialog and the triggers of the page when it connects, so markup added later, by a router or a framework, works with no call.</p>
+            <p>Load <code>platform.min.js</code>, or import <code>@cai-ds/platform/search</code>: either defines <code>&lt;cai-platform-search&gt;</code>, a custom element in the light DOM (no Shadow DOM) that wraps the dialog. It wires the dialog and the triggers of the page when it connects, so markup added later, by a router or a framework, works with no call. Load the script as a module, which the browser defers, or after the markup: a classic script that defines the element before the parser has read the dialog finds the element empty and wires nothing.</p>
             <ul>
               <li>It shows the button and hides the link.</li>
               <li>The button opens the native <code>&lt;dialog&gt;</code> with <code>showModal()</code>: the browser keeps the focus inside, closes it with Escape and returns the focus.</li>

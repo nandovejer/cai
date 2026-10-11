@@ -142,7 +142,9 @@ test.describe('classless: the scope', () => {
     expect(inside['min-height']).not.toBe(outside['min-height']);
   });
 
-  test('forced colors: the select keeps its box and its arrow, in system colors', async ({ page }) => {
+  test('forced colors: the select keeps its box and its arrow, in system colors', async ({ page, browserName }) => {
+    // forced-color-adjust is not in Safari (MDN browser-compat-data): nothing to read there
+    test.skip(browserName === 'webkit', 'forced-color-adjust is not supported in WebKit');
     await page.emulateMedia({ forcedColors: 'active' });
     const sel = await read(page, 'select', ['border-top-width', 'forced-color-adjust', 'background-image', 'background-color']);
     expect(sel['border-top-width']).toBe('1px');

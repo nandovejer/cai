@@ -133,7 +133,7 @@
   color-scheme: light;
 }
 
-:where([data-theme="dark"] [data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {
+:where(:is([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) [data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {
   color-scheme: dark;
 }
 
@@ -163,7 +163,7 @@
   cursor: pointer;
 }
 
-:where([data-theme="dark"] [data-cai-classless] select:not([class*="cai-"])) {
+:where(:is([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) [data-cai-classless] select:not([class*="cai-"])) {
   color-scheme: dark;
 }
 

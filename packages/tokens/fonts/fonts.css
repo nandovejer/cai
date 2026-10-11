@@ -7,6 +7,10 @@
    is downloaded for body, UI or code text.
    ========================================================================== */
 
+/* U+2039 and U+203A are left out of every face (unicode-range): ET Book
+   draws them as the ligatures "ffi" and "ffl", so they fall back to the next
+   family of the stack. */
+
 /* --------------------------------------------------------------------------
    ET Book — Headings
    Roman covers 300–400 and semi-bold 500–600, so every heading weight the
@@ -18,6 +22,7 @@
   font-style: normal;
   font-weight: 300 400;
   font-display: swap;
+  unicode-range: U+0000-2038, U+203B-10FFFF;
   src: url("./serif/ETBook-Roman.woff2") format("woff2");
 }
 
@@ -26,6 +31,7 @@
   font-style: italic;
   font-weight: 300 400;
   font-display: swap;
+  unicode-range: U+0000-2038, U+203B-10FFFF;
   src: url("./serif/ETBook-Italic.woff2") format("woff2");
 }
 
@@ -34,6 +40,7 @@
   font-style: normal;
   font-weight: 500 600;
   font-display: swap;
+  unicode-range: U+0000-2038, U+203B-10FFFF;
   src: url("./serif/ETBook-SemiBold.woff2") format("woff2");
 }
 
@@ -42,5 +49,6 @@
   font-style: normal;
   font-weight: 700;
   font-display: swap;
+  unicode-range: U+0000-2038, U+203B-10FFFF;
   src: url("./serif/ETBook-Bold.woff2") format("woff2");
 }

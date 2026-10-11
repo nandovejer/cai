@@ -158,11 +158,7 @@
   color-scheme: light; /* the picker follows the mode: dark only in dark */
 }
 
-[data-theme="dark"] .cai-input[type="date"],
-[data-theme="dark"] .cai-input[type="time"],
-[data-theme="dark"] .cai-input[type="datetime-local"],
-[data-theme="dark"] .cai-input[type="month"],
-[data-theme="dark"] .cai-input[type="week"] {
+:is([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
   color-scheme: dark;
 }
 
@@ -267,6 +263,7 @@
 
 .cai-output {
   display: inline-block;
+  font-family: var(--cai-font-sans); /* UI text: never the body serif */
   font-size: var(--cai-text-md);
   font-weight: 500;
   color: var(--cai-brand-primary);
@@ -368,6 +365,7 @@
    -------------------------------------------------------------------------- */
 
 .cai-toggle {
+  font-family: var(--cai-font-sans); /* UI text: never the body serif */
   display: flex;
   align-items: center;
   gap: var(--cai-space-sm);

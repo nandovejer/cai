@@ -4,7 +4,7 @@
  * custom themes (data-theme="<name>") with per-theme data-mode variants.
  *
  * Importing this module has no side effects; call initThemeSystem() to
- * wire up persistence, OS preference syncing, and the initial theme.
+ * wire up persistence and the initial theme.
  *
  * The color-mode switcher is a native radio group and works without this
  * module (see components/mode-switcher.css); this module persists the
@@ -220,21 +220,12 @@ export function initThemeCycle(root = document) {
 }
 
 /**
- * Wire up theme buttons, OS preference syncing, and the initial theme.
+ * Wire up theme buttons and the initial theme.
  */
 export function initThemeSystem() {
   enableJs();
   // Apply initial theme without forcing persistence when it comes from the OS
   applyTheme(getInitialTheme(), { persist: !!getStoredTheme() });
-
-  // Follow OS preference changes while the user has no explicit choice
-  window
-    .matchMedia("(prefers-color-scheme: dark)")
-    .addEventListener("change", (e) => {
-      if (!getStoredTheme()) {
-        applyTheme(e.matches ? "dark" : "light", { persist: false });
-      }
-    });
 
   // --- Color mode switcher (footer): native radios ---
   document.addEventListener("change", (e) => {

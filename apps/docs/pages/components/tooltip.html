@@ -37,7 +37,7 @@ toc: h2,h3
 &lt;/div&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>One position: above the control, centred. There are no modifiers.</p>
+            <p>One position: above the control, centred. Where the browser has CSS anchor positioning, the tip moves below the control when there is no room above. There are no modifiers.</p>
             <div class="cai-table-wrap" role="region" aria-label="Tooltip parts" tabindex="0">
               <table class="cai-table">
                 <thead>
@@ -55,6 +55,7 @@ toc: h2,h3
               <li>It stays open while the pointer moves from the control onto the tip.</li>
               <li>It fades in and out over <code>--cai-duration-fast</code>, and appears at once under reduced motion.</li>
               <li>The tip does not wrap: keep it short, or it can overflow a narrow screen.</li>
+              <li><strong>Enhancement:</strong> in browsers with CSS anchor positioning (Chrome and Edge 125, Safari 26, Firefox 147: Newly available, not yet Widely available), the tip is anchored to the control with <code>position-area</code> and flips below it when there is no room above. It is also no longer clipped by an ancestor that hides overflow. In other browsers it stays above, as before: the rules sit inside <code>@supports</code>, with no script.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: the tooltip has no script.</p>

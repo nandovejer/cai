@@ -296,11 +296,12 @@
 .cai-check-item input[type="checkbox"]:checked::after {
   content: "";
   position: absolute;
-  left: 4px;
+  inset-inline-start: 4px;
   top: 1px;
   width: 6px;
   height: 10px;
-  /* Check glyph drawn with two borders, then rotated: physical on purpose */
+  /* Check glyph drawn with two borders, then rotated: physical on purpose, a
+     check mark is not mirrored in right-to-left text */
   border: solid var(--cai-text-on-fill);
   border-width: 0 2px 2px 0;
   transform: rotate(40deg);
@@ -313,7 +314,7 @@
 .cai-check-item input[type="radio"]:checked::after {
   content: "";
   position: absolute;
-  left: 3px;
+  inset-inline-start: 3px;
   top: 3px;
   width: 8px;
   height: 8px;
@@ -402,7 +403,7 @@
   transform: translateX(24px);
 }
 
-[dir="rtl"] .cai-toggle__input:checked + .cai-toggle__track .cai-toggle__thumb {
+.cai-toggle__input:checked + .cai-toggle__track .cai-toggle__thumb:dir(rtl) {
   transform: translateX(-24px);
 }
 

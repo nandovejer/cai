@@ -101,10 +101,13 @@ export default {
             "/^padding-(left|right)$/",
             "/^border-(left|right)(-.+)?$/",
             "/^scroll-(margin|padding)-(left|right)$/",
+            // Inset and the four corner radii on the inline axis
+            "/^(left|right)$/",
+            "/^border-(top|bottom)-(left|right)-radius$/",
           ],
           {
             message:
-              "Use logical properties (margin-inline-start, padding-inline-end, border-inline-start…) — PRINCIPLES.md, SR-4.",
+              "Use the logical property: margin-inline-start, padding-inline-end, border-inline-start, inset-inline-start, border-start-start-radius… (left and right break right-to-left text) — PRINCIPLES.md, SR-4.",
           },
         ],
         "cai/no-bare-element": true,

@@ -17,6 +17,7 @@ lead: false
         <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, the search button is a link to the A–Z index, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode.</li>
         <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
         <li>Forced colors: a focused button and a focused search result keep a visible outline, the selected tab keeps its underline, and the search dialog keeps its border.</li>
+        <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="cai-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
         <li>Contrast of every token pair a component draws, by a script, in the three base modes and in each mode of the shipped custom themes (minimalist and vejer).</li>
       </ul>
@@ -25,6 +26,7 @@ lead: false
       <ul>
         <li>Screen readers. No assistive technology has been used to test this release: NVDA, JAWS, VoiceOver, TalkBack and Orca have not been tried. Nothing here says a component works with them.</li>
         <li>Speech recognition and screen magnifier software.</li>
+        <li>Right-to-left text by a person who reads it, or with a screen reader. Only the layout is measured by a script, and the player's controls are not part of that measurement.</li>
         <li>Zoom to 400 percent by hand. Only the 320 pixel width is measured.</li>
         <li>Research with disabled people.</li>
       </ul>

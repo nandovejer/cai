@@ -35,6 +35,11 @@
   transform: rotate(15deg);
 }
 
+/* A slash leans the other way in right-to-left text */
+.cai-breadcrumb > li + li:dir(rtl)::before {
+  transform: rotate(-15deg);
+}
+
 .cai-breadcrumb__item {
   color: var(--cai-text-secondary);
   text-decoration: none;

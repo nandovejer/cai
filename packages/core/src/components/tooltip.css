@@ -14,7 +14,7 @@
 .cai-tooltip__text {
   position: absolute;
   bottom: calc(100% + 6px);
-  left: 50%;
+  inset-inline-start: 50%;
   transform: translateX(-50%);
   background: var(--cai-surface-strong);
   color: var(--cai-text-primary);
@@ -29,6 +29,12 @@
     visibility 0s linear var(--cai-duration-fast);
   box-shadow: var(--cai-shadow-md);
   z-index: var(--cai-z-raised);
+}
+
+/* The tooltip is centred on the trigger: inset-inline-start is the right edge
+   in right-to-left text, so the shift goes the other way */
+.cai-tooltip__text:dir(rtl) {
+  transform: translateX(50%);
 }
 
 /* Bridges the gap to the trigger so the pointer can move onto the tooltip

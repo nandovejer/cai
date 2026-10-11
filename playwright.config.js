@@ -8,6 +8,14 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
   reporter: 'html',
+  expect: {
+    // Visual regression (tests/visual.spec.js). threshold is the per-pixel
+    // colour distance (0 to 1; the default 0.2 lets a one-step token change
+    // through, 0.1 does not). maxDiffPixelRatio is the share of the image that
+    // may differ at all: 0.2 %, which leaves room for anti-aliasing and not
+    // for a moved border or a changed fill.
+    toHaveScreenshot: { threshold: 0.1, maxDiffPixelRatio: 0.002, animations: 'disabled', caret: 'hide' },
+  },
   use: {
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',

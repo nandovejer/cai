@@ -1,0 +1,56 @@
+name: Component or pattern proposal
+description: Propose something new for core or platform.
+labels: ["proposal"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A new component must be useful, unique, usable and consistent (PRINCIPLES.md section 6). "I needed it once" is not a reason. Read [PRINCIPLES.md](https://github.com/nandovejer/cai/blob/main/PRINCIPLES.md) first.
+  - type: dropdown
+    id: native
+    attributes:
+      label: Is there a native HTML element or browser API that already does this?
+      description: Check `dialog`, `details`, `popover`, `<input type="…">`, `<select>`, `<output>`, `<progress>`, `<meter>` and CSS such as `:has()` before you answer. This comes first.
+      options:
+        - "Yes: a native element does it, and the proposal is to style or document it"
+        - "Partly: a native element does most of it"
+        - "No: nothing native covers it"
+        - "I did not check"
+    validations:
+      required: true
+  - type: textarea
+    id: native-why
+    attributes:
+      label: Which native element or API, and what is missing
+      description: Name it. If none exists, say what you looked at.
+    validations:
+      required: true
+  - type: textarea
+    id: task
+    attributes:
+      label: The task a person is trying to do
+    validations:
+      required: true
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Where it belongs
+      description: Core is a piece useful on any website. Platform is a composition that solves a product task.
+      options:
+        - Core component
+        - Platform pattern
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: nojs
+    attributes:
+      label: What it does without JavaScript
+      description: The no-JavaScript state comes first. If it needs a script to be usable, it cannot be added (red line 2).
+    validations:
+      required: true
+  - type: textarea
+    id: obsolete
+    attributes:
+      label: What it makes obsolete
+      description: Prefer removing to adding.

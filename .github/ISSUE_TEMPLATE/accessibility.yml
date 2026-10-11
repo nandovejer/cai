@@ -1,0 +1,55 @@
+name: Accessibility problem
+description: A person cannot use, perceive or understand something in CAI.
+labels: ["accessibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        CAI aims for WCAG 2.2 level AA. Accessibility problems are fixed before new features.
+  - type: input
+    id: where
+    attributes:
+      label: Component or page
+      description: The component, or the URL of the docs page.
+    validations:
+      required: true
+  - type: dropdown
+    id: how
+    attributes:
+      label: How are you using it?
+      multiple: true
+      options:
+        - Keyboard only
+        - Screen reader
+        - Screen magnifier or 400 % zoom
+        - Forced colors or high contrast
+        - Reduced motion
+        - Voice control
+        - Switch or other input device
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: at
+    attributes:
+      label: Assistive technology, browser and system
+      description: Leave blank if none.
+      placeholder: "NVDA 2025.3 with Firefox 140 on Windows 11"
+  - type: textarea
+    id: problem
+    attributes:
+      label: What goes wrong
+      description: What you did, what you heard or saw, and what you expected.
+    validations:
+      required: true
+  - type: input
+    id: criterion
+    attributes:
+      label: WCAG success criterion
+      description: If you know it, such as 1.4.3 Contrast (Minimum).
+  - type: checkboxes
+    id: nojs
+    attributes:
+      label: With JavaScript turned off
+      options:
+        - label: It happens with JavaScript turned off too

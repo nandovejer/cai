@@ -1,0 +1,55 @@
+name: Bug
+description: Something in a CAI package or in the docs site does not work as documented.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If the problem is that someone cannot use a component with a keyboard, a screen reader, zoom or forced colors, use the **Accessibility problem** form instead.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      options:
+        - "@cai-ds/tokens"
+        - "@cai-ds/core"
+        - "@cai-ds/platform"
+        - Docs site
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: The version in your package.json, or the CDN URL you load.
+      placeholder: "3.0.0"
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Markup or steps that show it
+      description: The smallest HTML and CSS that shows the problem. Say whether it also happens with JavaScript turned off.
+      render: html
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and system
+      placeholder: "Firefox 140 on Windows 11"
+    validations:
+      required: true

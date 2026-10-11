@@ -150,7 +150,7 @@ const PAGE = (base, label) => `<!doctype html>
       [core + "/dist/theme.js"]: ["applyTheme"],
       [core + "/dist/i18n.js"]: ["t", "registerLocale"],
       [core + "/dist/clipboard.js"]: ["initCopyButtons"],
-      [platform + "/dist/search.js"]: ["initSearch"],
+      [platform + "/dist/search.js"]: ["search"],
       [platform + "/dist/platform.js"]: [],
     };
     const missing = [];

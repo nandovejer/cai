@@ -1,0 +1,108 @@
+<!-- cai:page
+title: Make your own theme
+description: CAI ships one look in three color modes. A theme of your own is a file of semantic tokens: start from the template, check it, load it.
+area: tokens
+order: 12
+group: families
+files: themes/_template.css
+-->
+    <div class="docs-block" id="t-themes">
+      <h2 id="what">What a theme is</h2>
+      <p>A <strong>color mode</strong> says how light or dark the page is: <code>light</code>, <code>dark</code> or <code>high-contrast</code>. A <strong>theme</strong> is a whole identity: colors, and optionally the fonts, radii and shadows. Every theme has the three modes.</p>
+      <ul>
+        <li>CAI ships <strong>one look</strong>, Vejer, in the three modes. It is the default: with no attribute you get its light mode.</li>
+        <li>A theme of your own overrides <strong>semantic tokens</strong> only. It never changes a primitive, and it never touches a component's CSS.</li>
+        <li>You name it with <code>data-theme</code> and pick its mode with <code>data-mode</code>.</li>
+      </ul>
+
+      <h2 id="steps">Make one, step by step</h2>
+      <ol>
+        <li><strong>Copy the template.</strong> It is <code>@cai-ds/core/themes/_template.css</code>. Every value in it is CAI's own, so it passes the contrast check before you change anything.</li>
+        <li><strong>Rename it.</strong> Replace <code>my-brand</code>, three times, by the name of your theme: lowercase letters, digits and hyphens.</li>
+        <li><strong>Change what you need.</strong> Start with the brand colors and the surfaces. Keep the three blocks complete: a token left out of the dark block takes its light value.</li>
+        <li><strong>Check it.</strong> Run the command in <a href="#check">Check it</a> until it passes.</li>
+        <li><strong>Load it</strong> after <code>cai-tokens.css</code> and <code>cai.css</code>, and set the attribute.</li>
+        <li><strong>List it</strong> in <code>data-cai-themes</code>, so the mode switcher remembers the visitor's choice.</li>
+      </ol>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">HTML</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-theme-load" aria-label="Copy the markup">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Loading a theme"><code id="code-theme-load">&lt;link rel=&quot;stylesheet&quot; href=&quot;cai-tokens.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;cai.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;my-brand.css&quot;&gt;
+
+&lt;html lang=&quot;en&quot; data-theme=&quot;my-brand&quot; data-cai-themes=&quot;my-brand&quot;&gt;
+&lt;!-- or, in its dark mode --&gt;
+&lt;html lang=&quot;en&quot; data-theme=&quot;my-brand&quot; data-mode=&quot;dark&quot; data-cai-themes=&quot;my-brand&quot;&gt;</code></pre>
+      </div>
+      <p>A small theme can be only the tokens that differ, in the first block: what you leave out takes CAI's value. Fill the dark and high-contrast blocks as well if you offer those modes.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-theme-min" aria-label="Copy the example theme">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="A minimal theme"><code id="code-theme-min">[data-theme=&quot;my-brand&quot;] {
+  --cai-brand-primary: #0057ff;
+  --cai-brand-hover: #0043c2;
+  --cai-brand-active: #003399;
+  --cai-brand-fill: #0057ff;
+  --cai-focus-ring: #0057ff;
+  --cai-surface-page: #f8faff;
+}</code></pre>
+      </div>
+
+      <h2 id="tokens">The tokens a theme sets</h2>
+      <p>The template names all of them, in each of its three blocks. They are the same tokens as the <a href="/docs/tokens/color/">color page</a>, with the job of each; this is the list, by group.</p>
+      <div class="cai-table-wrap" role="region" aria-label="Semantic tokens a theme sets" tabindex="0">
+        <table class="cai-table">
+          <caption>Semantic tokens in the template</caption>
+          <thead>
+            <tr><th scope="col">Group</th><th scope="col">Tokens</th><th scope="col">What it is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Group"><div><strong>Surfaces</strong></div></td><td data-label="Tokens"><div><code>--cai-surface-page</code> <code>--cai-surface</code> <code>--cai-surface-hover</code> <code>--cai-surface-pressed</code> <code>--cai-surface-muted</code> <code>--cai-surface-strong</code> <code>--cai-scrim</code> <code>--cai-surface-media</code></div></td><td data-label="What it is"><div>The page, the surfaces on it, hover and pressed, and the two tones that step away from it. Text on any of them keeps 4.5:1.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Text</strong></div></td><td data-label="Tokens"><div><code>--cai-text-primary</code> <code>--cai-text-secondary</code> <code>--cai-text-muted</code> <code>--cai-text-disabled</code> <code>--cai-text-on-fill</code></div></td><td data-label="What it is"><div>Primary and secondary text, placeholders and hints, disabled text (3:1), and the text on a solid fill.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Lines and focus</strong></div></td><td data-label="Tokens"><div><code>--cai-divider</code> <code>--cai-outline</code> <code>--cai-focus-ring</code></div></td><td data-label="What it is"><div>Hairlines, strong borders and the focus ring. Borders and the ring keep 3:1.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Brand</strong></div></td><td data-label="Tokens"><div><code>--cai-brand-primary</code> <code>--cai-brand-hover</code> <code>--cai-brand-active</code> <code>--cai-brand-subtle</code> <code>--cai-brand-fill</code> <code>--cai-brand-fill-hover</code> <code>--cai-brand-fill-active</code></div></td><td data-label="What it is"><div>Links and actions, their hover and active steps, a tint, and the solid fill that carries white text (4.5:1) and keeps 3:1 on the page.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Sidebar</strong></div></td><td data-label="Tokens"><div><code>--cai-sidebar-bg</code> <code>--cai-sidebar-text</code> <code>--cai-sidebar-text-hover</code> <code>--cai-sidebar-hover</code> <code>--cai-sidebar-active-bg</code> <code>--cai-sidebar-active-text</code> <code>--cai-sidebar-border</code> <code>--cai-sidebar-label</code> <code>--cai-sidebar-logo-bg</code></div></td><td data-label="What it is"><div>The navigation drawer has its own surface and text colors, so it can be dark in a light theme.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Status</strong></div></td><td data-label="Tokens"><div><code>--cai-color-success</code> <code>--cai-color-success-bg</code> <code>--cai-color-danger</code> <code>--cai-color-danger-bg</code> <code>--cai-color-danger-fill</code> <code>--cai-color-warning</code> <code>--cai-color-warning-accent</code> <code>--cai-color-warning-bg</code> <code>--cai-color-info</code> <code>--cai-color-info-bg</code></div></td><td data-label="What it is"><div>Success, danger, warning and info, each with a tint. A status color is never used for decoration.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Fields</strong></div></td><td data-label="Tokens"><div><code>--cai-input-bg</code> <code>--cai-input-border</code></div></td><td data-label="What it is"><div>The background and the border of a text field.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Extended colors and code syntax</strong></div></td><td data-label="Tokens"><div><code>--cai-color-teal</code> <code>--cai-color-teal-bg</code> <code>--cai-color-purple</code> <code>--cai-color-purple-bg</code> <code>--cai-color-code</code> <code>--cai-code-comment</code> <code>--cai-code-keyword</code> <code>--cai-code-name</code> <code>--cai-code-property</code> <code>--cai-code-string</code> <code>--cai-code-literal</code></div></td><td data-label="What it is"><div>Teal and purple with their tints, the inline code color and the six colors of highlighted code.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Optional, and not in the three blocks:</strong> <code>--cai-font-body</code>, <code>--cai-font-heading</code> and <code>--cai-font-serif</code> for the fonts, <code>--cai-radius-md</code>, <code>-lg</code> and <code>-xl</code>, and <code>--cai-shadow-sm</code>, <code>-md</code> and <code>-lg</code>. Set them in the first block.</p>
+
+      <h2 id="check">Check it</h2>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Shell</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-theme-check" aria-label="Copy the command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="The command"><code id="code-theme-check">npx @cai-ds/tokens check-contrast my-brand.css</code></pre>
+      </div>
+      <ul>
+        <li>It reads the theme as the browser would: the first block is the light mode, and each <code>data-mode</code> block lays on top of it.</li>
+        <li>The minimums are 4.5:1 for text, 3:1 for disabled text, borders, field borders and focus rings, in all three modes. Exit code <code>1</code> when a pair fails.</li>
+        <li>You can also paste the theme into <a href="/docs/tokens/contrast/">the contrast check</a> in the page.</li>
+        <li><strong>CAI guarantees only what it ships.</strong> Your theme is as accessible as this check says, and no more.</li>
+      </ul>
+
+      <h2 id="scope">Layers, modes and scope</h2>
+      <ul>
+        <li><strong>Layers.</strong> Put the theme in <code>@layer cai.themes</code> to keep it below your own CSS, or leave it unlayered to win over all of CAI. Either way it wins over <code>cai.tokens</code>. <a href="/docs/get-started/layers/">The layers page</a> has the order.</li>
+        <li><strong>One zone.</strong> <code>data-theme</code> works on any element: the theme applies to that element and what is inside it. A date or time picker and a select take their color scheme from an ancestor <code>data-theme</code>, so for those put the attribute on <code>&lt;html&gt;</code>.</li>
+        <li><strong>Forced colors.</strong> A reader who forces colors sees system colors, not your theme. Nothing to do: the components handle it.</li>
+        <li><strong>Print.</strong> The <code>cai.print</code> layer sets paper colors whatever the theme.</li>
+        <li><strong>The OS preference.</strong> With no stored choice and no attribute, the page is light. A page that wants to follow <code>prefers-color-scheme</code> sets <code>data-theme</code> itself.</li>
+      </ul>
+
+      <h2 id="limits">Limits</h2>
+      <ul>
+        <li>One theme at a time on an element. Mix a theme and a mode, not two themes.</li>
+        <li>The mode switcher knows only the names in <code>data-cai-themes</code>: a name that is not listed works as an attribute, and is not remembered.</li>
+        <li><code>light-dark()</code> is not used: it is not Baseline Widely available before 2026-11-13.</li>
+      </ul>
+    </div>

@@ -9,15 +9,16 @@
   <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../assets/site-header-imKMB4x4.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-DxUYOj_d.js"></script>
+  <script type="module" crossorigin src="../../assets/site-header-DjzV6-wr.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-BdyfS7vR.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/reference-DRScSSK_.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-BRHyuQ-Z.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-Btw45BHO.css">
   <link rel="stylesheet" crossorigin href="../../assets/reference-v6-EqpOV.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
        Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <cai-platform-search>
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../docs/search-index.json"
           data-cai-label-results="{n} results"
@@ -53,6 +54,7 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  </cai-platform-search>
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" id="site-header">
@@ -137,7 +139,7 @@
         <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="cai-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
         <li>Before this release, the same automated suites ran once in Firefox 155 and in WebKit 26.6 and 27.2 (the engine of Safari), on Linux, and their findings were fixed. They do not run on every change, and neither is a test on macOS or iOS.</li>
-        <li>Contrast of every token pair a component draws, by a script, in the three base modes and in each mode of the shipped custom themes (minimalist and vejer).</li>
+        <li>Contrast of every token pair a component draws, by a script, in the three base modes. A theme of your own is measured by the same script, as <a href="../../docs/tokens/themes/">the themes page</a> shows.</li>
       </ul>
 
       <h2 id="h-a11y-not-tested">What has not been tested</h2>

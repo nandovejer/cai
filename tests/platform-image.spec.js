@@ -34,11 +34,8 @@ const contrast = (a, b) => {
 };
 
 /** One frame per ratio, plus one whose image is missing. */
-async function mountFrames(page, { theme, mode, vejer } = {}) {
+async function mountFrames(page, { theme, mode } = {}) {
   await page.goto(FIXTURE);
-  if (vejer) {
-    await page.addStyleTag({ url: '/packages/core/dist/themes/cai-theme-vejer.css' });
-  }
   await page.evaluate(([t, m]) => {
     if (t) document.documentElement.dataset.theme = t;
     if (m) document.documentElement.dataset.mode = m;
@@ -110,9 +107,9 @@ test.describe('Platform image', () => {
     { label: 'light', theme: 'light' },
     { label: 'dark', theme: 'dark' },
     { label: 'high contrast', theme: 'high-contrast' },
-    { label: 'vejer light', theme: 'vejer', mode: 'light', vejer: true },
-    { label: 'vejer dark', theme: 'vejer', mode: 'dark', vejer: true },
-    { label: 'vejer high contrast', theme: 'vejer', mode: 'high-contrast', vejer: true },
+    { label: 'a custom theme, light', theme: 'brand', mode: 'light' },
+    { label: 'a custom theme, dark', theme: 'brand', mode: 'dark' },
+    { label: 'a custom theme, high contrast', theme: 'brand', mode: 'high-contrast' },
   ];
   for (const { label, ...scope } of MODES) {
     test(`a failed image keeps its alt text at 4.5:1 in ${label} (RL-7)`, async ({ page }) => {
@@ -135,7 +132,7 @@ test.describe('Platform image', () => {
 
   const DARK = [
     { label: 'data-theme="dark"', theme: 'dark' },
-    { label: 'a custom theme in data-mode="dark"', theme: 'vejer', mode: 'dark', vejer: true },
+    { label: 'a custom theme in data-mode="dark"', theme: 'brand', mode: 'dark' },
   ];
   for (const { label, ...scope } of DARK) {
     test(`dark mode shows the night placeholder: ${label}`, async ({ page }) => {

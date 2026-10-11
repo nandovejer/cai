@@ -141,6 +141,9 @@ export function parseSemantic(css) {
   for (const [, selector, body] of clean.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
     const themes = MODES.map(([, t]) => t).filter((t) => selector.includes(`[data-theme="${t}"]`));
     for (const [, prop, value] of body.matchAll(/(--cai-[\w-]+)\s*:\s*([^;]+);/g)) {
+      // Shadows are primitives (tokens.json); a mode may redraw them, but the
+      // semantic collection holds colors and the same names in every mode
+      if (prop.startsWith("--cai-shadow-")) continue;
       for (const t of themes) modes[t].set(prop, value.trim());
     }
   }

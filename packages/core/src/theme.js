@@ -16,14 +16,17 @@ import { t } from "./i18n.js";
 
 // Color modes: luminosity variants (light/dark/high-contrast)
 export const MODES = ["light", "dark", "high-contrast"];
-// Custom themes: complete visual identities
-export const CUSTOM_THEMES = ["vejer", "minimalist"];
-// Default color mode for each custom theme (used when no mode is stored)
-const CUSTOM_THEME_DEFAULT_MODE = {
-  vejer: "light",
-  minimalist: "light",
-};
-const ALL_THEMES = [...MODES, ...CUSTOM_THEMES];
+// Custom themes: your own visual identities. CAI ships none: the page lists
+// the names of the ones it has, <html data-cai-themes="brand other">, so the
+// stored choice is accepted and the mode switcher remembers it.
+const THEME_NAME = /^[a-z][a-z0-9-]{0,31}$/;
+
+export function getCustomThemes() {
+  const list = document.documentElement.dataset.caiThemes || "";
+  return list.split(/\s+/).filter((name) => THEME_NAME.test(name) && !MODES.includes(name));
+}
+
+const allThemes = () => [...MODES, ...getCustomThemes()];
 const STORAGE_KEY = "cai-theme";
 const STORAGE_KEY_MODE = "cai-mode";
 const STORAGE_KEY_LAST_MODE = "cai-last-mode";
@@ -52,7 +55,7 @@ const storage = {
 
 export function getStoredTheme() {
   const saved = storage.get(STORAGE_KEY);
-  return saved && ALL_THEMES.includes(saved) ? saved : null;
+  return saved && allThemes().includes(saved) ? saved : null;
 }
 
 export function getStoredMode() {
@@ -63,11 +66,13 @@ export function getStoredMode() {
 export function getInitialTheme() {
   const saved = getStoredTheme();
   if (saved) return saved;
-  return "minimalist";
+  // The theme the page sets in its markup, else light
+  const set = document.documentElement.dataset.theme;
+  return allThemes().includes(set) ? set : "light";
 }
 
 function syncButtons(theme) {
-  const isCustom = CUSTOM_THEMES.includes(theme);
+  const isCustom = getCustomThemes().includes(theme);
   const currentMode = document.documentElement.dataset.mode;
 
   // Mode radios (footer) — checked only when a base color mode is selected
@@ -96,14 +101,14 @@ function syncButtons(theme) {
 }
 
 export function applyTheme(theme, { persist = true } = {}) {
-  const isCustom = CUSTOM_THEMES.includes(theme);
+  const isCustom = getCustomThemes().includes(theme);
   document.documentElement.dataset.theme = theme;
   if (persist) storage.set(STORAGE_KEY, theme);
 
   if (isCustom) {
     // Restore saved mode, or fall back to the theme's default mode
     const savedMode = getStoredMode();
-    const mode = savedMode || CUSTOM_THEME_DEFAULT_MODE[theme] || "light";
+    const mode = savedMode || "light";
     document.documentElement.dataset.mode = mode;
     // Persist the resolved mode so it survives page reload
     if (persist) storage.set(STORAGE_KEY_MODE, mode);
@@ -234,7 +239,7 @@ export function initThemeSystem() {
   // --- Color mode switcher (footer): native radios ---
   document.addEventListener("change", (e) => {
     const radio = e.target.closest?.('input[name="cai-theme"]');
-    if (radio?.checked && ALL_THEMES.includes(radio.value)) applyTheme(radio.value);
+    if (radio?.checked && allThemes().includes(radio.value)) applyTheme(radio.value);
   });
 
   document.body.addEventListener("click", (e) => {
@@ -242,7 +247,7 @@ export function initThemeSystem() {
     const cardModeBtn = e.target.closest(".cai-theme-mode-btn");
     if (MODES.includes(cardModeBtn?.dataset.mode)) {
       const parentTheme = cardModeBtn.closest("[data-theme]")?.dataset.theme;
-      if (CUSTOM_THEMES.includes(parentTheme)) {
+      if (getCustomThemes().includes(parentTheme)) {
         applyMode(cardModeBtn.dataset.mode, parentTheme);
       }
       return;

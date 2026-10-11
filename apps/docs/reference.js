@@ -17,7 +17,8 @@ import { initTabs } from "/packages/core/dist/tabs.js";
 import { initModals } from "/packages/core/dist/modal.js";
 import { initPlayers } from "/packages/core/dist/player.js";
 import { initSidebar } from "/packages/core/dist/sidebar.js";
-import { initSearch } from "/packages/platform/dist/search.js";
+// Defines <cai-platform-search>: the search wires itself when it connects
+import "/packages/platform/dist/search.js";
 import { initSiteHeader } from "../landing/site-header.js";
 import { initDocsView } from "./view.js";
 
@@ -162,8 +163,6 @@ function initSlotDemo() {
 // Color mode, menu drawer and header height (shared with the home
 // page). The canvas demo paints with the token values: repaint it per mode.
 initSiteHeader({ onModeChange: drawCanvas });
-// The search button in the header (and the hub), Ctrl+K and ⌘K
-initSearch();
 initFolds();
 initOnThisPage();
 initAssets();

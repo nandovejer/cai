@@ -17,10 +17,11 @@
 
 :where(body) {
   font-family: var(--cai-font-body);
-  font-size: var(--cai-text-base);
+  /* ET Book has a small x-height: a size up and more leading */
+  font-size: 1.0625rem; /* 17px at a 16px root */
   background: var(--cai-surface-page);
   color: var(--cai-text-primary);
-  line-height: 1.5;
+  line-height: 1.6;
   /* App-shell layout (sidebar + main) is opt-in via class="o-shell" —
      see objects/_objects.css. The bare <body> stays layout-neutral. */
   transition:

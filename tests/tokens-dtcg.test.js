@@ -97,7 +97,11 @@ describe.skipIf(!built)("DTCG export (packages/tokens/dist/cai-tokens.dtcg.json)
   const json = built ? JSON.parse(readFileSync(resolve(dist, "cai-tokens.dtcg.json"), "utf-8")) : {};
   const css = built ? blocks(readFileSync(resolve(dist, "tokens.css"), "utf-8")) : [];
   const primitives = css.find((b) => b.selector === ":root")?.decls ?? new Map();
-  const modeDecls = (theme) => css.find((b) => b.selector.split(",").some((s) => s.trim() === `[data-theme="${theme}"]`))?.decls;
+  // Shadows are primitives that a mode may redraw; the semantic collection holds colors
+  const modeDecls = (theme) => {
+    const decls = css.find((b) => b.selector.split(",").some((s) => s.trim() === `[data-theme="${theme}"]`))?.decls;
+    return decls && new Map([...decls].filter(([prop]) => !prop.startsWith("--cai-shadow-")));
+  };
 
   /** Resolve var() chains: inside the mode first, then the primitives. */
   function resolveCss(value, decls) {

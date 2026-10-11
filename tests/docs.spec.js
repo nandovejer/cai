@@ -98,7 +98,7 @@ test.describe('Documentation site', () => {
         const { requests, failed, problems } = await open(page, route);
         expect(failed).toEqual([]);
         expect(problems).toEqual([]);
-        expect(requests.filter((url) => /themes\//.test(url))).toEqual([]);
+        expect(requests.filter((url) => /\/dist\/themes\/|cai-theme-/.test(url))).toEqual([]);
         // cai.js would apply its own default theme: the modules are imported one by one
         expect(requests.filter((url) => /\/cai(\.min)?\.js/.test(url))).toEqual([]);
         expect(MODES).toContain(await theme(page));
@@ -707,7 +707,8 @@ test.describe('Documentation site', () => {
       // The custom themes are the subject of their own page, the palette is
       // for theme authors, and the accessibility statement names the shipped themes
       const THEMES_PAGE = routeOf('themes');
-      const EXEMPT = [THEMES_PAGE, routeOf('t-primitives'), routeOf('h-a11y-checked')];
+      const MAKE_PAGE = '/docs/tokens/themes/';
+      const EXEMPT = [THEMES_PAGE, MAKE_PAGE, routeOf('t-primitives'), routeOf('h-a11y-checked')];
       for (const route of ALL.filter((r) => !EXEMPT.includes(r))) {
         await page.goto(route);
         const offenders = await page.evaluate(([themesPage, exempt]) => {
@@ -717,17 +718,17 @@ test.describe('Documentation site', () => {
             const node = walker.currentNode;
             if (!/theme/i.test(node.textContent)) continue;
             if (node.parentElement.closest('code, pre, script, style, #tokens-model')) continue;
-            if (node.parentElement.closest(`a[href^="${themesPage}"]`)) continue;
+            if (node.parentElement.closest(`a[href^="${themesPage}"], a[href^="/docs/tokens/themes/"]`)) continue;
             if (exempt.some((r) => node.parentElement.closest(`.docs-card:has(a[href="${r}"])`))) continue;
             // The name of that page, in the A–Z index
-            if (/^Section of Color modes and themes$/.test(node.textContent.trim())) continue;
+            if (/^Section of (Color modes and themes|Make your own theme)$/.test(node.textContent.trim())) continue;
             // A file name: the JS module tag of a component
             if (/^JS: [\w-]+\.js$/.test(node.textContent.trim())) continue;
             found.push(node.textContent.trim());
           }
           document.querySelectorAll('[aria-label], [title], [alt]').forEach((el) => {
             // "Previous: Color modes and themes" names a link to that page
-            if (el.closest(`a[href^="${themesPage}"]`)) return;
+            if (el.closest(`a[href^="${themesPage}"], a[href^="/docs/tokens/themes/"]`)) return;
             for (const name of ['aria-label', 'title', 'alt']) {
               if (/theme/i.test(el.getAttribute(name) ?? '')) found.push(el.getAttribute(name));
             }

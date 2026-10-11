@@ -33,9 +33,9 @@ import '@cai-ds/core'
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.js"></script>
 
-<!-- Custom theme (optional) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/themes/cai-theme-minimalist.css">
-<html data-theme="minimalist">
+<!-- A theme of your own (optional): start from themes/_template.css -->
+<link rel="stylesheet" href="/my-brand.css">
+<html data-theme="my-brand" data-cai-themes="my-brand">
 ```
 
 ### Using a single component (standalone CSS)
@@ -96,9 +96,7 @@ Every stylesheet puts its rules in a layer of one container layer, `cai`: `cai.t
 - **`./i18n`** → Strings for the JS-generated text (`t`, `getLang`, `registerLocale`)
 - **`./midi`** → `midi.js` — MIDI player (lazy-loaded)
 - **`./utils`** → Pure helper functions (`formatTime`, `escapeHtml`, …)
-- **`./themes/*`** → Custom theme stylesheets
-  - `cai-theme-minimalist.css`
-  - `cai-theme-vejer.css`
+- **`./themes/*`** → `_template.css`, the starting point for a theme of your own
 
 ## Components included
 
@@ -112,12 +110,9 @@ Every stylesheet puts its rules in a layer of one container layer, `cai`: `cai.t
 
 ## Themes
 
-Two built-in custom themes are available:
+CAI ships one look, Vejer, in three color modes (`light`, `dark`, `high-contrast`): ET Book for running text, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, every link underlined.
 
-- **Minimalist** (`data-theme="minimalist"`) — one system sans throughout, headings included, warm neutrals
-- **Vejer** (`data-theme="vejer"`) — a reading theme inspired by Vejer de la Frontera: ET Book for running text and headings, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, every link underlined
-
-All themes support light, dark, and high-contrast color modes via `data-mode`.
+A theme of your own overrides semantic tokens under `[data-theme="my-brand"]`, with `data-mode` for its light, dark and high-contrast variants. Copy `@cai-ds/core/themes/_template.css`, and check it with `npx @cai-ds/tokens check-contrast my-brand.css`. List its name in `<html data-cai-themes="my-brand">` so the mode switcher remembers the choice.
 
 ## Vanilla JS behaviors
 
@@ -131,4 +126,4 @@ The core JS (`cai.js`) provides no-dependency implementations of:
 
 ## License
 
-MIT. Core ships no fonts; the serif used by the `vejer` theme (ET Book, MIT) comes with `@cai-ds/tokens`.
+MIT. Core ships no fonts; the serif used for running text (ET Book, MIT) comes with `@cai-ds/tokens`.

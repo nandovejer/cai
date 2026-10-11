@@ -266,9 +266,7 @@ Published JS modules: `theme`, `sidebar`, `clipboard`, `modal`, `highlight`, `pl
 <html data-theme="dark"></html>
 ```
 
-**Custom themes** (`minimalist`, `vejer`) are complete visual identities shipped by `@cai-ds/core` under `dist/themes/`. They use `data-theme="<name>"` plus `data-mode` for their own light/dark/high-contrast variants.
-
-> **Under review.** Custom themes are being reconsidered and are deliberately left out of the landing and of the three-layer adoption story. They still ship in core. One consequence to know about: `cai.js` applies `minimalist` when the visitor has no stored choice, overriding a `data-theme` you set in markup. If you need a base mode as your default, import the individual modules (for example `@cai-ds/core/clipboard`) instead of `cai.js`, and set `data-theme` yourself.
+**Themes.** CAI ships one look, Vejer, in the three modes above. A theme of your own is a set of semantic tokens under its own `data-theme`, with `data-mode` for its light, dark and high-contrast variants. Start from `@cai-ds/core/themes/_template.css` and list the name in `<html data-cai-themes="my-brand">` so the mode switcher remembers it.
 
 ## Token Rules
 

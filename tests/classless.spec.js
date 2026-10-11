@@ -75,7 +75,7 @@ test.describe('classless: the same look as the component', () => {
   });
 
   test('the date picker follows the colour mode', async ({ page }) => {
-    for (const mode of ['light', 'high-contrast', 'minimalist', 'dark']) {
+    for (const mode of ['light', 'high-contrast', 'dark']) {
       await page.evaluate((m) => (document.documentElement.dataset.theme = m), mode);
       await expectParity(page, 'input-date', 'ref-input-date', ['color-scheme']);
     }

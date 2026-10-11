@@ -38,6 +38,7 @@ toc: h2,h3
   &lt;kbd class=&quot;cai-platform-search-trigger__key&quot; aria-hidden=&quot;true&quot;&gt;Ctrl K&lt;/kbd&gt;
 &lt;/button&gt;
 
+&lt;cai-platform-search&gt;
 &lt;dialog class=&quot;cai-modal cai-platform-search&quot; aria-labelledby=&quot;search-title&quot;
         data-cai-search data-cai-search-src=&quot;/search-index.json&quot;
         data-cai-label-results=&quot;{n} results&quot;
@@ -64,6 +65,7 @@ toc: h2,h3
     &lt;p class=&quot;cai-platform-search__foot&quot;&gt;Can’t find it? &lt;a href=&quot;/a-z/&quot;&gt;Browse the A–Z index&lt;/a&gt;&lt;/p&gt;
   &lt;/search&gt;
 &lt;/dialog&gt;
+&lt;/cai-platform-search&gt;
 
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.js&quot;&gt;&lt;/script&gt;</code></pre>
             <h3 id="variants">Variants and options</h3>
@@ -76,7 +78,7 @@ toc: h2,h3
               <li>The texts the script writes are the <code>data-cai-label-*</code> attributes of the dialog: <code>results</code>, <code>result</code>, <code>capped</code>, <code>none</code>, <code>loading</code> and <code>error</code>, with <code>{n}</code>, <code>{shown}</code> and <code>{query}</code> in them. A missing label writes nothing.</li>
             </ul>
             <h3 id="how">How it works</h3>
-            <p>Load <code>platform.min.js</code>, or import <code>initSearch</code> from <code>@cai-ds/platform/search</code> and call it.</p>
+            <p>Load <code>platform.min.js</code>, or import <code>@cai-ds/platform/search</code>: either defines <code>&lt;cai-platform-search&gt;</code>, a custom element in the light DOM (no Shadow DOM) that wraps the dialog. It wires the dialog and the triggers of the page when it connects, so markup added later, by a router or a framework, works with no call.</p>
             <ul>
               <li>It shows the button and hides the link.</li>
               <li>The button opens the native <code>&lt;dialog&gt;</code> with <code>showModal()</code>: the browser keeps the focus inside, closes it with Escape and returns the focus.</li>
@@ -149,13 +151,13 @@ toc: h2,h3
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Trigger text</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Trigger text, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>19.3:1</div></td><td data-label="Dark"><div>16.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Trigger border</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Result title</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Result title, hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.2:1</div></td><td data-label="Dark"><div>6.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Group heading and result page</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>11.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>8.5:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Trigger text</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Trigger text, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Trigger border</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Result title</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Result title, hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.4:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Group heading and result page</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>

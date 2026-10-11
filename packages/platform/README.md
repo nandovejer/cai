@@ -37,8 +37,8 @@ import '@cai-ds/platform'
 
 ## Package exports
 
-- **`.`** → `platform.js` — Warns when core is not loaded and wires the search (`initSearch()`) once the page is parsed. `platform.min.js` is one file with the search inside
-- **`./search`** → `search.js` — `initSearch(root = document)`, idempotent; importing it has no side effects
+- **`.`** → `platform.js` — Warns when core is not loaded and defines `<cai-platform-search>`. `platform.min.js` is one file with the search inside
+- **`./search`** → `search.js` — defines `<cai-platform-search>`, a custom element (light DOM) that wraps the search `<dialog>` and wires it when it connects; importing it in a page defines the element, importing it in Node does nothing
 - **`./css`** → `platform.css` — App shell and layout primitives (`./css/min` for the minified twin)
 - **`./placeholders/*`** → `dist/placeholders/` — The image placeholder: `placeholder[-night]-<ratio>-<width>.{avif,webp,jpg}`, `placeholder.svg` and `placeholder-night.svg`
 

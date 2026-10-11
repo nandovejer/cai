@@ -9,15 +9,16 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-imKMB4x4.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DxUYOj_d.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DjzV6-wr.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BdyfS7vR.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BRHyuQ-Z.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Btw45BHO.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-v6-EqpOV.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
        Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <cai-platform-search>
   <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="../../../docs/search-index.json"
           data-cai-label-results="{n} results"
@@ -53,6 +54,7 @@
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
+  </cai-platform-search>
   <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" id="site-header">
@@ -103,6 +105,7 @@
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/contrast/">Contrast check</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/themes/">Make your own theme</a></li>
         </ul>
       </li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
@@ -131,7 +134,7 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#light">Light</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#dark">Dark</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#high-contrast">High contrast</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#themes-title">Themes and modes</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#themes-title">Modes and themes</a></li>
       </ul>
     </details>
   </nav>
@@ -195,35 +198,17 @@
     </div>
 
     <section class="docs-block docs-chapter" id="themes" aria-labelledby="themes-title">
-      <h2 class="docs-chapter__title" id="themes-title">Themes and modes</h2>
-      <p class="docs-lead">A color mode changes how light or dark the page is; a theme changes its whole identity. You can combine them.</p>
+      <h2 class="docs-chapter__title" id="themes-title">Modes and themes</h2>
+      <p class="docs-lead">A color mode changes how light or dark the page is; a theme changes its whole identity. CAI ships one look, in three modes. A theme of your own sits on top of it.</p>
       <ul>
-        <li>The three modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>.</li>
-        <li>Two themes ship with core, each in a stylesheet of its own. Set the theme with <code class="cai-code-inline">data-theme</code> and its mode with <code class="cai-code-inline">data-mode</code>.</li>
+        <li>The three modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>. Light is the default.</li>
+        <li>The default look is Vejer, inspired by Vejer de la Frontera: ET Book for running text, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, and every link underlined.</li>
+        <li>CAI ships no other theme. <a href="../../../docs/tokens/themes/">Make your own</a>: copy the template, change what you need, and check it.</li>
       </ul>
-      <ul>
-        <li><strong>Minimalist</strong> (<code class="cai-code-inline">cai-theme-minimalist.css</code>): one system sans throughout, warm neutrals.</li>
-        <li><strong>Vejer</strong> (<code class="cai-code-inline">cai-theme-vejer.css</code>): a reading theme inspired by Vejer de la Frontera. ET Book for running text and headings, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, and every link underlined.</li>
-      </ul>
-      <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Theme and mode examples"><code>&lt;html data-theme=&quot;dark&quot;&gt;
-
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/themes/cai-theme-vejer.min.css&quot;&gt;
-&lt;html data-theme=&quot;vejer&quot; data-mode=&quot;dark&quot;&gt;
-&lt;html data-theme=&quot;minimalist&quot; data-mode=&quot;high-contrast&quot;&gt;</code></pre>
-      <p>Every theme is measured by <code class="cai-code-inline">pnpm check:contrast</code> in every mode: 4.5:1 for text, 3:1 for disabled text, borders and focus rings.</p>
-      <h3 class="docs-prose__title" id="themes-custom">Make your own theme</h3>
-      <p>A theme overrides semantic tokens, and may change the fonts, radii and shadows. It never changes the primitive colours or component CSS.</p>
-      <ul>
-        <li>Give it a <code class="cai-code-inline">data-theme</code> name of its own.</li>
-        <li>Check it against the same contrast minimums: CAI guarantees only the themes it ships.</li>
-      </ul>
-      <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Custom theme template"><code>[data-theme=&quot;my-brand&quot;] {
-  --cai-brand-primary: #0057ff;
-  --cai-brand-hover: #0043c2;
-  --cai-surface-page: #f8faff;
-  --cai-text-primary: #0d1320;
-  --cai-divider: #dbe3f2;
-}</code></pre>
+      <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Mode examples"><code>&lt;html data-theme=&quot;dark&quot;&gt;
+&lt;html data-theme=&quot;high-contrast&quot;&gt;
+&lt;html data-theme=&quot;my-brand&quot; data-mode=&quot;dark&quot;&gt;</code></pre>
+      <p>Every mode is measured by <code class="cai-code-inline">pnpm check:contrast</code>: 4.5:1 for text, 3:1 for disabled text, borders and focus rings. The same measure runs on a theme of your own with <a href="../../../docs/tokens/contrast/">the contrast check</a>.</p>
     </section>
 
   </div>

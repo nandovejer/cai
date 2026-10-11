@@ -5,15 +5,17 @@
 
 :where(a) {
   color: var(--cai-brand-primary);
-  text-decoration: none;
-}
-
-/* A link inside running text is underlined: colour alone never marks a link
-   (WCAG 1.4.1). Navigation chrome (lists of links, buttons, tabs) keeps its
-   own component styling. */
-:where(p, dd, dt, td, th, figcaption, blockquote) :where(a) {
+  /* Every link in content, cards and lists is underlined: the brand blue is
+     close in lightness to the text, so colour alone would not mark it
+     (WCAG 1.4.1, RL-6). */
   text-decoration: underline;
   text-underline-offset: 0.18em;
+}
+
+/* Links inside a <nav> are exempt: their position says they are links.
+   Button classes remove the underline themselves. */
+:where(nav a) {
+  text-decoration: none;
 }
 
 :where(a:hover) {

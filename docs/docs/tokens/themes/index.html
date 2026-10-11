@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Make your own theme – Tokens – CAI documentation</title>
+  <meta name="description" content="CAI ships one look in three color modes. A theme of your own is a file of semantic tokens: start from the template, check it, load it.">
+  <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <script type="module" crossorigin src="../../../assets/site-header-DjzV6-wr.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BdyfS7vR.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Btw45BHO.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-v6-EqpOV.css">
+</head>
+<body class="o-shell docs-page">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <cai-platform-search>
+  <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../../../docs/search-index.json"
+          data-cai-label-results="{n} results"
+          data-cai-label-result="1 result"
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
+          data-cai-label-none="No results for “{query}”."
+          data-cai-label-loading="Loading the search index…"
+          data-cai-label-error="Search is not available right now.">
+    <search class="cai-platform-search__body">
+      <div class="cai-platform-search__head">
+        <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Close search</button></form>
+      </div>
+      <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Use the arrow keys to move through them.</p>
+      <p class="cai-platform-search__status" role="status"></p>
+      <p data-cai-search-show="none" hidden>Check the spelling or try a shorter word.</p>
+      <div class="cai-platform-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Popular</h3>
+          <ul>
+            <li><a href="../../../docs/get-started/">Install CAI <span>Get started</span></a></li>
+            <li><a href="../../../docs/components/button/">Button <span>Components</span></a></li>
+            <li><a href="../../../docs/components/form/">Form fields <span>Components</span></a></li>
+            <li><a href="../../../docs/tokens/color/">Color <span>Tokens</span></a></li>
+            <li><a href="../../../docs/tokens/modes/">Color modes and themes <span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements"></ul></div>
+      </div>
+      <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
+    </search>
+  </dialog>
+  </cai-platform-search>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="cai-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/tokens/">Tokens</a>
+        <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/color/">Color</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/spacing/">Spacing and sizing</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/typography/">Typography</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/modes/">Color modes and themes</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/radius/">Radius</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/shadows/">Shadows</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/motion/">Motion</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/layout/">Layers and breakpoints</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/contrast/">Contrast check</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/themes/">Make your own theme</a></li>
+        </ul>
+      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/platform/">Platform</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="cai-breadcrumb__item" href="../../../docs/tokens/">Tokens</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Make your own theme</span></li>
+      </ol>
+    </nav>
+    <div class="docs-page-head__title">
+      <h1 class="docs-title">Make your own theme</h1>
+      <code class="docs-demo__file">themes/_template.css</code>
+    </div>
+    <p class="docs-lead">CAI ships one look in three color modes. A theme of your own is a file of semantic tokens: start from the template, check it, load it.</p>
+  </div>
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#what">What a theme is</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#steps">Make one, step by step</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">The tokens a theme sets</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#check">Check it</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#scope">Layers, modes and scope</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#limits">Limits</a></li>
+      </ul>
+    </details>
+  </nav>
+  <div class="docs-body">
+    <div class="docs-block" id="t-themes">
+      <h2 id="what">What a theme is</h2>
+      <p>A <strong>color mode</strong> says how light or dark the page is: <code>light</code>, <code>dark</code> or <code>high-contrast</code>. A <strong>theme</strong> is a whole identity: colors, and optionally the fonts, radii and shadows. Every theme has the three modes.</p>
+      <ul>
+        <li>CAI ships <strong>one look</strong>, Vejer, in the three modes. It is the default: with no attribute you get its light mode.</li>
+        <li>A theme of your own overrides <strong>semantic tokens</strong> only. It never changes a primitive, and it never touches a component's CSS.</li>
+        <li>You name it with <code>data-theme</code> and pick its mode with <code>data-mode</code>.</li>
+      </ul>
+
+      <h2 id="steps">Make one, step by step</h2>
+      <ol>
+        <li><strong>Copy the template.</strong> It is <code>@cai-ds/core/themes/_template.css</code>. Every value in it is CAI's own, so it passes the contrast check before you change anything.</li>
+        <li><strong>Rename it.</strong> Replace <code>my-brand</code>, three times, by the name of your theme: lowercase letters, digits and hyphens.</li>
+        <li><strong>Change what you need.</strong> Start with the brand colors and the surfaces. Keep the three blocks complete: a token left out of the dark block takes its light value.</li>
+        <li><strong>Check it.</strong> Run the command in <a href="#check">Check it</a> until it passes.</li>
+        <li><strong>Load it</strong> after <code>cai-tokens.css</code> and <code>cai.css</code>, and set the attribute.</li>
+        <li><strong>List it</strong> in <code>data-cai-themes</code>, so the mode switcher remembers the visitor's choice.</li>
+      </ol>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">HTML</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-theme-load" aria-label="Copy the markup">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Loading a theme"><code id="code-theme-load">&lt;link rel=&quot;stylesheet&quot; href=&quot;cai-tokens.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;cai.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;my-brand.css&quot;&gt;
+
+&lt;html lang=&quot;en&quot; data-theme=&quot;my-brand&quot; data-cai-themes=&quot;my-brand&quot;&gt;
+&lt;!-- or, in its dark mode --&gt;
+&lt;html lang=&quot;en&quot; data-theme=&quot;my-brand&quot; data-mode=&quot;dark&quot; data-cai-themes=&quot;my-brand&quot;&gt;</code></pre>
+      </div>
+      <p>A small theme can be only the tokens that differ, in the first block: what you leave out takes CAI's value. Fill the dark and high-contrast blocks as well if you offer those modes.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-theme-min" aria-label="Copy the example theme">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="A minimal theme"><code id="code-theme-min">[data-theme=&quot;my-brand&quot;] {
+  --cai-brand-primary: #0057ff;
+  --cai-brand-hover: #0043c2;
+  --cai-brand-active: #003399;
+  --cai-brand-fill: #0057ff;
+  --cai-focus-ring: #0057ff;
+  --cai-surface-page: #f8faff;
+}</code></pre>
+      </div>
+
+      <h2 id="tokens">The tokens a theme sets</h2>
+      <p>The template names all of them, in each of its three blocks. They are the same tokens as the <a href="../../../docs/tokens/color/">color page</a>, with the job of each; this is the list, by group.</p>
+      <div class="cai-table-wrap" role="region" aria-label="Semantic tokens a theme sets" tabindex="0">
+        <table class="cai-table">
+          <caption>Semantic tokens in the template</caption>
+          <thead>
+            <tr><th scope="col">Group</th><th scope="col">Tokens</th><th scope="col">What it is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Group"><div><strong>Surfaces</strong></div></td><td data-label="Tokens"><div><code>--cai-surface-page</code> <code>--cai-surface</code> <code>--cai-surface-hover</code> <code>--cai-surface-pressed</code> <code>--cai-surface-muted</code> <code>--cai-surface-strong</code> <code>--cai-scrim</code> <code>--cai-surface-media</code></div></td><td data-label="What it is"><div>The page, the surfaces on it, hover and pressed, and the two tones that step away from it. Text on any of them keeps 4.5:1.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Text</strong></div></td><td data-label="Tokens"><div><code>--cai-text-primary</code> <code>--cai-text-secondary</code> <code>--cai-text-muted</code> <code>--cai-text-disabled</code> <code>--cai-text-on-fill</code></div></td><td data-label="What it is"><div>Primary and secondary text, placeholders and hints, disabled text (3:1), and the text on a solid fill.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Lines and focus</strong></div></td><td data-label="Tokens"><div><code>--cai-divider</code> <code>--cai-outline</code> <code>--cai-focus-ring</code></div></td><td data-label="What it is"><div>Hairlines, strong borders and the focus ring. Borders and the ring keep 3:1.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Brand</strong></div></td><td data-label="Tokens"><div><code>--cai-brand-primary</code> <code>--cai-brand-hover</code> <code>--cai-brand-active</code> <code>--cai-brand-subtle</code> <code>--cai-brand-fill</code> <code>--cai-brand-fill-hover</code> <code>--cai-brand-fill-active</code></div></td><td data-label="What it is"><div>Links and actions, their hover and active steps, a tint, and the solid fill that carries white text (4.5:1) and keeps 3:1 on the page.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Sidebar</strong></div></td><td data-label="Tokens"><div><code>--cai-sidebar-bg</code> <code>--cai-sidebar-text</code> <code>--cai-sidebar-text-hover</code> <code>--cai-sidebar-hover</code> <code>--cai-sidebar-active-bg</code> <code>--cai-sidebar-active-text</code> <code>--cai-sidebar-border</code> <code>--cai-sidebar-label</code> <code>--cai-sidebar-logo-bg</code></div></td><td data-label="What it is"><div>The navigation drawer has its own surface and text colors, so it can be dark in a light theme.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Status</strong></div></td><td data-label="Tokens"><div><code>--cai-color-success</code> <code>--cai-color-success-bg</code> <code>--cai-color-danger</code> <code>--cai-color-danger-bg</code> <code>--cai-color-danger-fill</code> <code>--cai-color-warning</code> <code>--cai-color-warning-accent</code> <code>--cai-color-warning-bg</code> <code>--cai-color-info</code> <code>--cai-color-info-bg</code></div></td><td data-label="What it is"><div>Success, danger, warning and info, each with a tint. A status color is never used for decoration.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Fields</strong></div></td><td data-label="Tokens"><div><code>--cai-input-bg</code> <code>--cai-input-border</code></div></td><td data-label="What it is"><div>The background and the border of a text field.</div></td></tr>
+            <tr><td data-label="Group"><div><strong>Extended colors and code syntax</strong></div></td><td data-label="Tokens"><div><code>--cai-color-teal</code> <code>--cai-color-teal-bg</code> <code>--cai-color-purple</code> <code>--cai-color-purple-bg</code> <code>--cai-color-code</code> <code>--cai-code-comment</code> <code>--cai-code-keyword</code> <code>--cai-code-name</code> <code>--cai-code-property</code> <code>--cai-code-string</code> <code>--cai-code-literal</code></div></td><td data-label="What it is"><div>Teal and purple with their tints, the inline code color and the six colors of highlighted code.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><strong>Optional, and not in the three blocks:</strong> <code>--cai-font-body</code>, <code>--cai-font-heading</code> and <code>--cai-font-serif</code> for the fonts, <code>--cai-radius-md</code>, <code>-lg</code> and <code>-xl</code>, and <code>--cai-shadow-sm</code>, <code>-md</code> and <code>-lg</code>. Set them in the first block.</p>
+
+      <h2 id="check">Check it</h2>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Shell</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-theme-check" aria-label="Copy the command">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="The command"><code id="code-theme-check">npx @cai-ds/tokens check-contrast my-brand.css</code></pre>
+      </div>
+      <ul>
+        <li>It reads the theme as the browser would: the first block is the light mode, and each <code>data-mode</code> block lays on top of it.</li>
+        <li>The minimums are 4.5:1 for text, 3:1 for disabled text, borders, field borders and focus rings, in all three modes. Exit code <code>1</code> when a pair fails.</li>
+        <li>You can also paste the theme into <a href="../../../docs/tokens/contrast/">the contrast check</a> in the page.</li>
+        <li><strong>CAI guarantees only what it ships.</strong> Your theme is as accessible as this check says, and no more.</li>
+      </ul>
+
+      <h2 id="scope">Layers, modes and scope</h2>
+      <ul>
+        <li><strong>Layers.</strong> Put the theme in <code>@layer cai.themes</code> to keep it below your own CSS, or leave it unlayered to win over all of CAI. Either way it wins over <code>cai.tokens</code>. <a href="../../../docs/get-started/layers/">The layers page</a> has the order.</li>
+        <li><strong>One zone.</strong> <code>data-theme</code> works on any element: the theme applies to that element and what is inside it. A date or time picker and a select take their color scheme from an ancestor <code>data-theme</code>, so for those put the attribute on <code>&lt;html&gt;</code>.</li>
+        <li><strong>Forced colors.</strong> A reader who forces colors sees system colors, not your theme. Nothing to do: the components handle it.</li>
+        <li><strong>Print.</strong> The <code>cai.print</code> layer sets paper colors whatever the theme.</li>
+        <li><strong>The OS preference.</strong> With no stored choice and no attribute, the page is light. A page that wants to follow <code>prefers-color-scheme</code> sets <code>data-theme</code> itself.</li>
+      </ul>
+
+      <h2 id="limits">Limits</h2>
+      <ul>
+        <li>One theme at a time on an element. Mix a theme and a mode, not two themes.</li>
+        <li>The mode switcher knows only the names in <code>data-cai-themes</code>: a name that is not listed works as an attribute, and is not remembered.</li>
+        <li><code>light-dark()</code> is not used: it is not Baseline Widely available before 2026-11-13.</li>
+      </ul>
+    </div>
+
+  </div>
+  <nav class="docs-end" aria-labelledby="docs-end-title">
+    <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
+    <ul class="docs-end__links">
+      <li><a href="../../../docs/tokens/modes/">Color modes and themes</a></li>
+      <li><a href="../../../docs/components/">Components</a></li>
+      <li><a href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
+    </ul>
+    <ul class="docs-pager">
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/tokens/contrast/" aria-label="Previous: Contrast check"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Contrast check</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/html/" aria-label="Next: HTML elements"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">HTML elements</span></a></li>
+    </ul>
+  </nav>
+  </main>
+
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-platform-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-platform-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

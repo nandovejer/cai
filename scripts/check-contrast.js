@@ -13,7 +13,7 @@
  *
  * Usage: node scripts/check-contrast.js
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createResolver, measure, pairsFor } from "../packages/tokens/lib/contrast.js";
@@ -59,7 +59,7 @@ const themes = {};
 for (const name of BASE) themes[name] = { ...base.light, ...base[name] };
 const MODES = ["light", "dark", "high-contrast"];
 const themesDir = resolve(root, "packages/core/src/themes");
-for (const file of readdirSync(themesDir).filter((f) => /^cai-theme-.+\.css$/.test(f))) {
+for (const file of (existsSync(themesDir) ? readdirSync(themesDir) : []).filter((f) => /^(cai-theme-.+|_template)\.css$/.test(f))) {
   const custom = {};
   for (const { selectors, props } of blocks(read(`packages/core/src/themes/${file}`))) {
     for (const selector of selectors) {

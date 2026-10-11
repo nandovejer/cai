@@ -44,24 +44,22 @@ describe("formatTime", () => {
 });
 
 describe("isCustomTheme", () => {
-  const customThemes = ["vejer", "minimalist"];
+  const customThemes = ["brand", "docs"];
 
-  it("identifies custom themes", () => {
-    expect(isCustomTheme("vejer", customThemes)).toBe(true);
-    expect(isCustomTheme("minimalist", customThemes)).toBe(true);
+  it("identifies the themes it is given", () => {
+    expect(isCustomTheme("brand", customThemes)).toBe(true);
+    expect(isCustomTheme("docs", customThemes)).toBe(true);
   });
 
-  it("rejects non-custom themes", () => {
+  it("rejects the base modes and unknown names", () => {
     expect(isCustomTheme("light", customThemes)).toBe(false);
     expect(isCustomTheme("dark", customThemes)).toBe(false);
     expect(isCustomTheme("unknown", customThemes)).toBe(false);
   });
 
-  it("uses default custom themes if not provided", () => {
-    expect(isCustomTheme("vejer")).toBe(true);
-    expect(isCustomTheme("minimalist")).toBe(true);
-    // Removed in favour of vejer
-    expect(isCustomTheme("ricardoymortimer")).toBe(false);
+  it("CAI ships no theme: with no list nothing is a custom theme", () => {
+    expect(isCustomTheme("vejer")).toBe(false);
+    expect(isCustomTheme("minimalist")).toBe(false);
   });
 });
 
@@ -213,7 +211,7 @@ describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
   });
 
   it("core ships no docs-app selectors", () => {
-    for (const f of ["cai.js", "cai.css", "themes/cai-theme-minimalist.css", "themes/cai-theme-vejer.css"]) {
+    for (const f of ["cai.js", "cai.css", "classless.css", "print.css"]) {
       expect(readFileSync(resolve(coreDist, f), "utf-8")).not.toMatch(/\.docs-|#demo-form/);
     }
   });

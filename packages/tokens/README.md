@@ -77,10 +77,10 @@ Base color modes are activated via `data-theme` on `<html>`:
 <html data-theme="high-contrast">
 ```
 
-Custom themes (shipped with `@cai-ds/core`) set `data-theme="<theme-name>"` and use `data-mode` for their luminosity variants:
+The default look is Vejer. A theme of your own sets `data-theme="<theme-name>"` and uses `data-mode` for its luminosity variants (start from `@cai-ds/core/themes/_template.css`):
 
 ```html
-<html data-theme="minimalist" data-mode="dark">
+<html data-theme="my-brand" data-mode="dark">
 ```
 
 ## Fonts
@@ -94,7 +94,7 @@ ET Book ships roman, italic, semi-bold and bold. Sans and mono are system stacks
 - `--cai-font-sans`: `system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`
 - `--cai-font-mono`: `ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace`
 
-`@cai-ds/core` ships no fonts. Its `vejer` theme sets the serif for running text through `--cai-font-body`, using this ET Book.
+`@cai-ds/core` ships no fonts. It sets the serif for running text through `--cai-font-body`, using this ET Book.
 
 ## License
 

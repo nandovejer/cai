@@ -62,7 +62,7 @@ describe.skipIf(!built)("cai-tokens check-contrast", () => {
     const css = ":root {\n  --cai-text-secondary: #999;\n}\n";
     const result = check({ "my.css": css });
     expect(result.code).toBe(1);
-    expect(result.stdout).toMatch(/✗ .*light.*--cai-text-secondary on surface-page is 2\.8:1, needs 4\.5:1 \(text\)/);
+    expect(result.stdout).toMatch(/✗ .*light.*--cai-text-secondary on surface-page is 2\.6:1, needs 4\.5:1 \(text\)/);
     expect(result.stdout).toContain("--cai-text-secondary: #999 is set in my.css:2");
     const report = json({ "my.css": css });
     expect(report.ok).toBe(false);

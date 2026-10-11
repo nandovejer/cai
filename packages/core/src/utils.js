@@ -23,7 +23,7 @@ export function formatTime(seconds) {
  */
 export function isCustomTheme(
   theme,
-  customThemes = ["vejer", "minimalist"],
+  customThemes = [],
 ) {
   return customThemes.includes(theme);
 }

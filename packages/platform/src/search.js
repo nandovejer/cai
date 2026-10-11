@@ -1,5 +1,6 @@
 /**
- * CAI Platform — site search: a native <dialog> with grouped links.
+ * CAI Platform — site search: a native <dialog> with grouped links, in a
+ * custom element, <cai-platform-search> (light DOM, no Shadow DOM).
  *
  * Markup (every fixed text is authored in the HTML; the docs page,
  * /docs/platform/search/, has the full example):
@@ -7,34 +8,38 @@
  *   <a href="a-z/" data-cai-search-fallback>A–Z index</a>
  *   <button class="cai-platform-search-trigger" type="button" data-cai-search-open
  *           aria-keyshortcuts="Control+K Meta+K" hidden>…</button>
- *   <dialog class="cai-modal cai-platform-search" data-cai-search
- *           data-cai-search-src="search-index.json" aria-labelledby="…"
- *           data-cai-label-results="{n} results" …>
- *     … <input type="search" autofocus>
- *     <p role="status"></p>
- *     <div data-cai-search-results>
- *       <div data-cai-search-show="idle">…shown while the field is empty…</div>
- *       <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
- *       … "sections", "elements"
- *     </div>
- *     <p data-cai-search-show="none" hidden>…shown when nothing matches…</p>
- *   </dialog>
+ *   <cai-platform-search>
+ *     <dialog class="cai-modal cai-platform-search" data-cai-search
+ *             data-cai-search-src="search-index.json"
+ *             aria-labelledby="…" data-cai-label-results="{n} results" …>
+ *       … <input type="search" autofocus>
+ *       <p role="status"></p>
+ *       <div data-cai-search-results>
+ *         <div data-cai-search-show="idle">…shown while the field is empty…</div>
+ *         <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
+ *         … "sections", "elements"
+ *       </div>
+ *       <p data-cai-search-show="none" hidden>…shown when nothing matches…</p>
+ *     </dialog>
+ *   </cai-platform-search>
  *
  * The index is a JSON file on the same origin (data-cai-search-src),
  * format version 1: { "version": 1, "pages": [[text, url, meta?, lang?]],
  * "sections": [...], "elements": [...] }, URLs relative to the file.
  *
- * Without JavaScript the trigger stays hidden and the fallback link shows.
- * With it: the button and Ctrl+K or ⌘K open the dialog (showModal: focus
- * trap, Escape and focus return are the browser's); the index loads on the
- * first open; the results are real links, grouped under headings, at most
- * 8 per group; the arrows move between them, Enter follows one.
+ * Without JavaScript the element does nothing, the trigger stays hidden and
+ * the fallback link shows. With it: the button and Ctrl+K or ⌘K open the
+ * dialog (showModal: focus trap, Escape and focus return are the browser's);
+ * the index loads on the first open; the results are real links, grouped
+ * under headings, at most 8 per group; the arrows move between them, Enter
+ * follows one. An element added to the page later wires itself when it
+ * connects.
  *
  * Security (.claude/plans/docs-redesign/security.md, SEC-IDX, SEC-NET):
  * index text reaches the page through textContent only; a link is the URL
  * the index gives, resolved and checked (http or https), never the raw
  * string; the JSON comes from this origin, without redirects, and has size
- * limits. Importing this module has no side effects: call initSearch().
+ * limits.
  */
 
 /** Result groups, in their order on screen. */
@@ -130,9 +135,9 @@ const make = (tag, text) => {
 /** The dialog Ctrl+K opens: the last one wired. */
 let current;
 
-/** Wire the search dialog of `root` and its triggers. Idempotent. */
-export function initSearch(root = document) {
-  const box = root.querySelector("[data-cai-search]");
+/** Wire the dialog inside `host`, and the triggers of the page. Once per dialog. */
+const wire = (host) => {
+  const box = host.querySelector("dialog");
   if (!box || box === current?.box) return;
   const $ = (selector) => box.querySelector(selector);
   const input = $("input");
@@ -212,8 +217,8 @@ export function initSearch(root = document) {
 
   input.addEventListener("input", update);
 
-  for (const link of root.querySelectorAll("[data-cai-search-fallback]")) link.hidden = true;
-  for (const button of root.querySelectorAll("[data-cai-search-open]")) {
+  for (const link of document.querySelectorAll("[data-cai-search-fallback]")) link.hidden = true;
+  for (const button of document.querySelectorAll("[data-cai-search-open]")) {
     button.hidden = false;
     button.addEventListener("click", open);
   }
@@ -274,4 +279,14 @@ export function initSearch(root = document) {
     else open();
   });
   current = { box, input, open };
+};
+
+// <cai-platform-search> wraps the dialog. Defined once, and only where there
+// is a DOM, so importing this module in Node is harmless.
+if (typeof customElements < "u" && !customElements.get("cai-platform-search")) {
+  customElements.define("cai-platform-search", class extends HTMLElement {
+    connectedCallback() {
+      wire(this);
+    }
+  });
 }

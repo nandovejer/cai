@@ -130,11 +130,11 @@
 
 /* The date and time pickers follow the colour mode, as .cai-input does */
 :where([data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-:where(:is([data-theme="light"], [data-theme="high-contrast"], [data-theme="minimalist"]) [data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {
-  color-scheme: light;
+:where([data-theme="dark"] [data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {
+  color-scheme: dark;
 }
 
 /* ---- Select: the closed box of .cai-select ---------------------------- */

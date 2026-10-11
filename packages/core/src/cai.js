@@ -19,7 +19,7 @@ import { initTabs } from "./tabs.js";
 
 export {
   MODES,
-  CUSTOM_THEMES,
+  getCustomThemes,
   getStoredTheme,
   getStoredMode,
   getInitialTheme,

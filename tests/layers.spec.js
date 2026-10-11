@@ -2,7 +2,7 @@
 /**
  * The cascade layers a consumer orders (@layer reset, cai, app;): what the
  * docs page /docs/get-started/layers/ says is checked here in a real
- * browser, with tokens, core, a theme and platform loaded as published.
+ * browser, with tokens, core, a theme of the consumer's and platform loaded as published.
  */
 import { test, expect } from '@playwright/test';
 
@@ -16,7 +16,7 @@ test.describe('cascade layers', () => {
   });
 
   test('a consumer layer after cai overrides a token of tokens and a theme token', async ({ page }) => {
-    // --cai-brand-fill is declared by tokens (cai.tokens) and by the vejer theme (cai.themes)
+    // --cai-brand-fill is declared by tokens (cai.tokens) and by a consumer theme (cai.themes)
     await expect.poll(() => css(page, '#probe-component', 'background-color')).toBe('rgb(1, 2, 3)');
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--cai-surface-page').trim())).toBe('rgb(250, 251, 252)');
   });

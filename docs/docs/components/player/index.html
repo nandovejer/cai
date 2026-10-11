@@ -12,7 +12,7 @@
   <script type="module" crossorigin src="../../../assets/site-header-Dap66mJ8.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-CQMj0WOs.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-5FYkplHc.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CCQ_vZ9r.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-B3wyr-zr.css">
 </head>
 <body class="o-shell docs-page">
@@ -346,6 +346,7 @@ initPlayers();</code></pre>
               <li>A full-screen or picture-in-picture button is hidden where the browser cannot do it.</li>
               <li>Captions and subtitles are the browser's: each <code>&lt;track&gt;</code> is a text track, and the browser draws its cues. The CAI controls only set which track shows, so a choice made in the browser's own menu shows in them too. <code>::cue</code> gives the cues light text on the media surface. Nothing is stored. A control with no track to show is hidden.</li>
               <li><code>mountPlayer(root)</code> and <code>mountMidiPlayer(root)</code> mount one player.</li>
+              <li>The player is a size-query container: below 480 px of its own width the audio controls stack and the volume bar is hidden, wherever the player is placed. A parent that sizes it to its content (an inline-flex item, a float) needs a width of its own.</li>
               <li>In right-to-left text the timeline follows the reading direction: the seek bar starts at the right and fills towards the left, the controls row mirrors, and the slider's keys are the browser's own. The play, pause and volume icons are not mirrored: they do not point anywhere.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self' data:; object-src 'self' data:; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classless styles – Get started – CAI documentation</title>
+  <meta name="description" content="The look of a button, a text field, a select and a table on the bare element, inside one element you mark, for markup you cannot add classes to.">
+  <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <script type="module" crossorigin src="../../../assets/site-header-Dap66mJ8.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CQMj0WOs.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CCQ_vZ9r.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-B3wyr-zr.css">
+</head>
+<body class="o-shell docs-page">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../../../docs/search-index.json"
+          data-cai-label-results="{n} results"
+          data-cai-label-result="1 result"
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
+          data-cai-label-none="No results for “{query}”."
+          data-cai-label-loading="Loading the search index…"
+          data-cai-label-error="Search is not available right now.">
+    <search class="cai-platform-search__body">
+      <div class="cai-platform-search__head">
+        <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Close search</button></form>
+      </div>
+      <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Use the arrow keys to move through them.</p>
+      <p class="cai-platform-search__status" role="status"></p>
+      <p data-cai-search-show="none" hidden>Check the spelling or try a shorter word.</p>
+      <div class="cai-platform-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Popular</h3>
+          <ul>
+            <li><a href="../../../docs/get-started/">Install CAI <span>Get started</span></a></li>
+            <li><a href="../../../docs/components/button/">Button <span>Components</span></a></li>
+            <li><a href="../../../docs/components/form/">Form fields <span>Components</span></a></li>
+            <li><a href="../../../docs/tokens/color/">Color <span>Tokens</span></a></li>
+            <li><a href="../../../docs/tokens/modes/">Color modes and themes <span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements"></ul></div>
+      </div>
+      <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
+    </search>
+  </dialog>
+  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Search docs…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="cai-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/get-started/">Get started</a>
+        <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../../docs/get-started/structure/">How CAI is organised</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/get-started/javascript/">JavaScript modules</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/get-started/layers/">Cascade layers</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/get-started/print/">Print styles</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/get-started/classless/">Classless styles</a></li>
+        </ul>
+      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/tokens/">Tokens</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/platform/">Platform</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="cai-breadcrumb__item" href="../../../docs/get-started/">Get started</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Classless styles</span></li>
+      </ol>
+    </nav>
+    <div class="docs-page-head__title">
+      <h1 class="docs-title">Classless styles</h1>
+      <code class="docs-demo__file">classless.css</code>
+    </div>
+    <p class="docs-lead">The look of a button, a text field, a select and a table on the bare element, inside one element you mark, for markup you cannot add classes to.</p>
+  </div>
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#what-title">What it is</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#load-title">Loading it</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#what-changes-title">What each element becomes</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#rules-title">How it stays out of the way</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#limits-title">Limits</a></li>
+      </ul>
+    </details>
+  </nav>
+  <div class="docs-body">
+    <section class="docs-block" id="what" aria-labelledby="what-title">
+      <h2 class="docs-chapter__title" id="what-title">What it is</h2>
+      <p class="docs-lead">One extra file, <code>classless.css</code>, that gives a bare <code>button</code>, <code>input</code>, <code>textarea</code>, <code>select</code> and <code>table</code> the look of the CAI component, inside an element that has <code>data-cai-classless</code>. It is for markup you do not control: a Markdown file, a CMS, a form from a library.</p>
+      <p>It is not in <code>cai.css</code>, and it does nothing until you load it and mark a zone. A page that does not load it is exactly what it was.</p>
+    </section>
+
+    <section class="docs-block" id="load" aria-labelledby="load-title">
+      <h2 class="docs-chapter__title" id="load-title">Loading it</h2>
+      <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Loading classless.css"><code>&lt;link rel="stylesheet" href="@cai-ds/tokens/cai-tokens.css"&gt;
+&lt;link rel="stylesheet" href="@cai-ds/core/css"&gt;
+&lt;link rel="stylesheet" href="@cai-ds/core/classless.css"&gt;
+
+&lt;!-- the whole page --&gt;
+&lt;body data-cai-classless&gt;
+
+&lt;!-- or only the rendered content --&gt;
+&lt;article data-cai-classless&gt;…&lt;/article&gt;</code></pre>
+      <ul>
+        <li>It declares the layer order itself, as every file does, and writes in <code>cai.elements</code>. A <code>.cai-*</code> class is in <code>cai.components</code> and wins by order.</li>
+        <li>Put the attribute on <code>&lt;body&gt;</code> or an element inside it. The elements it styles are its <em>descendants</em>.</li>
+        <li>Size: about 1.5 kB min+gzip, with a budget of its own (3 kB).</li>
+      </ul>
+    </section>
+
+    <section class="docs-block" id="what-changes" aria-labelledby="what-changes-title">
+      <h2 class="docs-chapter__title" id="what-changes-title">What each element becomes</h2>
+      <div class="cai-table-wrap" role="region" aria-label="Elements classless styles" tabindex="0">
+        <table class="cai-table">
+          <caption>Bare element, and the component it copies</caption>
+          <thead>
+            <tr><th scope="col">Element</th><th scope="col">Looks like</th><th scope="col">Left out</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Element"><div><code>button</code>, <code>input</code> of type <code>button</code>, <code>reset</code></div></td><td data-label="Looks like"><div><code>.cai-btn .cai-btn--secondary</code></div></td><td data-label="Left out"><div>Sizes and the other variants: add the class</div></td></tr>
+            <tr><td data-label="Element"><div><code>button type="submit"</code>, <code>input type="submit"</code></div></td><td data-label="Looks like"><div><code>.cai-btn .cai-btn--primary</code></div></td><td data-label="Left out"><div>A button with no <code>type</code> is a submit button to the browser, but not here: say <code>type="submit"</code></div></td></tr>
+            <tr><td data-label="Element"><div><code>input</code> of type text, email, password, search, tel, url, number, date, time, datetime-local, month, week; <code>textarea</code></div></td><td data-label="Looks like"><div><code>.cai-input</code>, <code>.cai-input--textarea</code></div></td><td data-label="Left out"><div>The label, helper and error of <code>.cai-field</code></div></td></tr>
+            <tr><td data-label="Element"><div><code>select</code></div></td><td data-label="Looks like"><div>The closed box of <code>.cai-select</code></div></td><td data-label="Left out"><div>The styled open list, where the browser has <code>appearance: base-select</code>: that is <code>.cai-select</code></div></td></tr>
+            <tr><td data-label="Element"><div><code>table</code>, with its caption, <code>th</code> and <code>td</code></div></td><td data-label="Looks like"><div><code>.cai-table</code></div></td><td data-label="Left out"><div>Scrolling and stacking: they need a wrapper and <code>data-label</code></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Not styled, on purpose: <code>checkbox</code>, <code>radio</code>, <code>range</code>, <code>color</code>, <code>file</code> and <code>hidden</code> inputs have a native control of their own, and a <code>table</code> is never given <code>display: block</code> or a scroll box, which makes some screen readers lose its table semantics.</p>
+    </section>
+
+    <section class="docs-block" id="rules" aria-labelledby="rules-title">
+      <h2 class="docs-chapter__title" id="rules-title">How it stays out of the way</h2>
+      <ul>
+        <li><strong>Specificity zero.</strong> Every selector is inside <code>:where()</code>, so any class of yours, in any layer, wins.</li>
+        <li><strong>A CAI class is left alone.</strong> An element whose class contains <code>cai-</code> belongs to its component: a <code>.cai-copy-btn</code> inside the zone keeps its own look.</li>
+        <li><strong>A copy, kept honest.</strong> The declarations are those of the components. A test compares each bare element with its component, property by property, and fails when one drifts.</li>
+        <li><strong>Everything else about it is the same:</strong> the three color modes, focus ring, right-to-left text and forced colors work as in the component.</li>
+      </ul>
+    </section>
+
+    <section class="docs-block" id="limits" aria-labelledby="limits-title">
+      <h2 class="docs-chapter__title" id="limits-title">Limits</h2>
+      <ul>
+        <li><strong>A color mode on the same element.</strong> The date picker and the select take their color scheme from a <code>data-theme</code> on an ancestor of the zone, as the components do: set <code>data-theme</code> on <code>&lt;html&gt;</code>, not on the zone.</li>
+        <li><strong>Checked in Chromium only.</strong> The parity test runs in Chromium; Safari and Firefox have not reviewed it.</li>
+        <li><strong>Not a component.</strong> It has no page in the components gallery and no states of its own. If you can add a class, use the component: it has the variants, sizes and documentation.</li>
+      </ul>
+    </section>
+
+  </div>
+  <nav class="docs-end" aria-labelledby="docs-end-title">
+    <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
+    <ul class="docs-end__links">
+      <li><a href="../../../docs/components/">Components</a></li>
+      <li><a href="../../../docs/tokens/modes/">Color modes and themes</a></li>
+      <li><a href="../../../docs/tokens/color/">Color tokens</a></li>
+    </ul>
+    <ul class="docs-pager">
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/get-started/print/" aria-label="Previous: Print styles"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Print styles</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/tokens/" aria-label="Next: Tokens"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Tokens</span></a></li>
+    </ul>
+  </nav>
+  </main>
+
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-platform-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-platform-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

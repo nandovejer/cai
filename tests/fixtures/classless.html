@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAI classless fixture</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/core/dist/classless.css">
+  <style>
+    body { padding: 80px; }
+  </style>
+</head>
+<body>
+  <!-- Outside the scope: bare elements are the browser's, as before -->
+  <section id="outside">
+    <button id="out-button" type="button">Plain</button>
+    <input id="out-input" type="text" aria-label="Plain">
+    <select id="out-select" aria-label="Plain"><option>One</option></select>
+    <table id="out-table"><caption>Plain</caption><thead><tr><th scope="col">A</th></tr></thead><tbody><tr><td>1</td></tr></tbody></table>
+  </section>
+
+  <!-- The scope: bare elements and, next to each, the component that is its reference -->
+  <article id="scope" data-cai-classless>
+    <button id="button" type="button">Save</button>
+    <button id="submit" type="submit">Send</button>
+    <button id="button-disabled" type="button" disabled>Off</button>
+    <input id="input-button" type="reset" value="Reset">
+    <button id="ref-button" class="cai-btn cai-btn--secondary" type="button">Save</button>
+    <button id="ref-submit" class="cai-btn cai-btn--primary" type="submit">Send</button>
+    <button id="ref-button-disabled" class="cai-btn cai-btn--secondary" type="button" disabled>Off</button>
+
+    <input id="input" type="text" aria-label="Name">
+    <input id="input-email" type="email" aria-label="Email">
+    <input id="input-date" type="date" aria-label="Date">
+    <input id="input-readonly" type="text" aria-label="Read only" readonly value="x">
+    <input id="input-disabled" type="text" aria-label="Disabled" disabled>
+    <textarea id="textarea" aria-label="Notes"></textarea>
+    <input id="ref-input" class="cai-input" type="text" aria-label="Name">
+    <input id="ref-input-date" class="cai-input" type="date" aria-label="Date">
+    <input id="ref-input-readonly" class="cai-input" type="text" aria-label="Read only" readonly value="x">
+    <input id="ref-input-disabled" class="cai-input" type="text" aria-label="Disabled" disabled>
+    <textarea id="ref-textarea" class="cai-input cai-input--textarea" aria-label="Notes"></textarea>
+
+    <select id="select" aria-label="Pick"><option>One</option><option>Two</option></select>
+    <select id="select-multiple" aria-label="Pick many" multiple><option>One</option><option>Two</option></select>
+    <select id="ref-select" class="cai-select" aria-label="Pick"><option>One</option><option>Two</option></select>
+    <select id="ref-select-multiple" class="cai-select" aria-label="Pick many" multiple><option>One</option><option>Two</option></select>
+
+    <table id="table"><caption>Releases</caption><thead><tr><th scope="col">Name</th><th scope="col">Version</th></tr></thead><tbody><tr><td>Core</td><td>2.1.0</td></tr><tr><td>Tokens</td><td>2.1.0</td></tr></tbody></table>
+    <table id="ref-table" class="cai-table"><caption>Releases</caption><thead><tr><th scope="col">Name</th><th scope="col">Version</th></tr></thead><tbody><tr><td>Core</td><td>2.1.0</td></tr><tr><td>Tokens</td><td>2.1.0</td></tr></tbody></table>
+
+    <!-- A CAI component's own button inside the scope: left to its component -->
+    <button id="copy" class="cai-copy-btn" type="button">Copy</button>
+    <div id="field" class="cai-field"><input id="field-input" class="cai-input" type="text" aria-label="In a field"></div>
+  </article>
+</body>
+</html>

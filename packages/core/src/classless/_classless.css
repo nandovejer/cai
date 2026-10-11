@@ -1,0 +1,265 @@
+/* ==========================================================================
+   CAI — Classless
+   The look of a button, a text field, a select and a table, on the bare
+   element, inside an element that has data-cai-classless. For markup you do
+   not control (Markdown, a CMS), where no class can be added.
+   Load it as @cai-ds/core/classless.css, after @cai-ds/tokens. It is not part
+   of cai.css, and it does nothing outside [data-cai-classless].
+
+   - Every selector is inside :where() (specificity 0, RL-11): any .cai-*
+     class and any rule of yours wins without a fight.
+   - An element with a class that contains "cai-" is left to its component:
+     :not([class*="cai-"]).
+   - It copies the declarations of .cai-btn, .cai-input, .cai-select and
+     .cai-table; tests/classless.spec.js fails when one drifts.
+   - What a bare element cannot do stays in the component: the scroll of a
+     wide table and the stacking of its rows (a wrapper and data-label), the
+     styled open list of a select, checkbox, radio, range, color and file
+     inputs, and the field with its label, helper and error.
+   Layer: cai.elements. Prefix: none, the scope is the attribute.
+   ========================================================================== */
+
+/* ---- Button: .cai-btn.cai-btn--secondary; type="submit" is primary ----- */
+
+:where([data-cai-classless] :is(button, input:is([type="button"], [type="submit"], [type="reset"])):not([class*="cai-"])) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cai-space-xs);
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-md);
+  font-weight: 400;
+  border: 1px solid transparent;
+  cursor: pointer;
+  min-height: var(--cai-control-lg);
+  padding: 0 var(--cai-space-lg);
+  background: var(--cai-surface-strong);
+  color: var(--cai-text-primary);
+  text-decoration: none;
+  transition: background var(--cai-duration-fast), border-color var(--cai-duration-fast),
+    color var(--cai-duration-fast);
+  white-space: nowrap;
+}
+
+:where([data-cai-classless] :is(button, input:is([type="button"], [type="submit"], [type="reset"])):not([class*="cai-"]):hover) {
+  background: var(--cai-outline);
+  color: var(--cai-text-on-fill);
+}
+
+:where([data-cai-classless] :is(button, input:is([type="button"], [type="submit"], [type="reset"])):not([class*="cai-"]):focus-visible) {
+  outline: 2px solid var(--cai-focus-ring);
+  outline-offset: 2px;
+}
+
+:where([data-cai-classless] :is(button, input:is([type="button"], [type="submit"], [type="reset"])):not([class*="cai-"]):disabled) {
+  background: transparent;
+  color: var(--cai-text-disabled);
+  border-color: var(--cai-text-disabled);
+  border-style: dashed;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+:where([data-cai-classless] :is(button, input):is([type="submit"]):not([class*="cai-"])) {
+  background: var(--cai-brand-fill);
+  color: var(--cai-text-on-fill);
+}
+
+:where([data-cai-classless] :is(button, input):is([type="submit"]):not([class*="cai-"]):hover) {
+  background: var(--cai-brand-fill-hover);
+}
+
+:where([data-cai-classless] :is(button, input):is([type="submit"]):not([class*="cai-"]):active) {
+  background: var(--cai-brand-fill-active);
+}
+
+:where([data-cai-classless] :is(button, input):is([type="submit"]):not([class*="cai-"]):disabled) {
+  background: transparent;
+  color: var(--cai-text-disabled);
+}
+
+/* ---- Text field and textarea: .cai-input ------------------------------ */
+
+:where([data-cai-classless] :is(textarea, input:is(:not([type]), [type="text"], [type="email"], [type="password"], [type="search"], [type="tel"], [type="url"], [type="number"], [type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"])):not([class*="cai-"])) {
+  display: block;
+  width: 100%;
+  height: var(--cai-control-lg);
+  background: var(--cai-input-bg);
+  border: none;
+  border-bottom: 1px solid var(--cai-input-border);
+  color: var(--cai-text-primary);
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-control);
+  padding: 0 var(--cai-space-sm);
+  transition: border-color var(--cai-duration-fast), background var(--cai-duration-base);
+}
+
+:where([data-cai-classless] textarea:not([class*="cai-"])) {
+  height: auto;
+  padding: var(--cai-space-xs) var(--cai-space-sm);
+  min-height: 80px;
+  resize: vertical;
+}
+
+:where([data-cai-classless] :is(textarea, input):not([class*="cai-"])::placeholder) {
+  color: var(--cai-text-muted);
+}
+
+:where([data-cai-classless] :is(textarea, input:is(:not([type]), [type="text"], [type="email"], [type="password"], [type="search"], [type="tel"], [type="url"], [type="number"], [type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"])):not([class*="cai-"]):focus) {
+  border-bottom: 2px solid var(--cai-focus-ring);
+}
+
+:where([data-cai-classless] :is(textarea, input:is(:not([type]), [type="text"], [type="email"], [type="password"], [type="search"], [type="tel"], [type="url"], [type="number"], [type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"])):not([class*="cai-"]):focus-visible) {
+  outline: 2px solid var(--cai-focus-ring);
+  outline-offset: 2px;
+}
+
+:where([data-cai-classless] :is(textarea, input:is(:not([type]), [type="text"], [type="email"], [type="password"], [type="search"], [type="tel"], [type="url"], [type="number"], [type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"])):not([class*="cai-"])[aria-invalid="true"]) {
+  border-bottom: 2px solid var(--cai-color-danger);
+}
+
+:where([data-cai-classless] :is(textarea, input):not([class*="cai-"]):disabled) {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+:where([data-cai-classless] :is(textarea, input):not([class*="cai-"])[readonly]) {
+  opacity: 0.7;
+  border-bottom-style: dashed;
+}
+
+/* The date and time pickers follow the colour mode, as .cai-input does */
+:where([data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {
+  color-scheme: dark;
+}
+
+:where(:is([data-theme="light"], [data-theme="high-contrast"], [data-theme="minimalist"]) [data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {
+  color-scheme: light;
+}
+
+/* ---- Select: the closed box of .cai-select ---------------------------- */
+
+:where([data-cai-classless] select:not([class*="cai-"])) {
+  appearance: none;
+  display: block;
+  inline-size: 100%;
+  min-block-size: var(--cai-control-lg);
+  margin: 0;
+  padding-block: var(--cai-space-2xs);
+  padding-inline: var(--cai-space-sm) var(--cai-space-xl);
+  border: none;
+  border-block-end: 1px solid var(--cai-input-border);
+  border-radius: 0;
+  background-color: var(--cai-input-bg);
+  background-image: linear-gradient(to top right, transparent 50%, currentcolor 50%),
+    linear-gradient(to top left, transparent 50%, currentcolor 50%);
+  background-position: calc(100% - 1.2em) 50%, calc(100% - 0.75em) 50%;
+  background-size: 0.45em 0.45em;
+  background-repeat: no-repeat;
+  color: var(--cai-text-primary);
+  color-scheme: light;
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-control);
+  cursor: pointer;
+}
+
+:where([data-theme="dark"] [data-cai-classless] select:not([class*="cai-"])) {
+  color-scheme: dark;
+}
+
+:where([data-cai-classless] select:not([class*="cai-"]):dir(rtl)) {
+  background-position: 0.75em 50%, 1.2em 50%;
+}
+
+:where([data-cai-classless] select:not([class*="cai-"]):is([multiple], [size]:not([size="1"]))) {
+  background-image: none;
+  padding-inline-end: var(--cai-space-sm);
+  border: 1px solid var(--cai-input-border);
+}
+
+:where([data-cai-classless] select:not([class*="cai-"]):hover) {
+  border-color: var(--cai-text-primary);
+}
+
+:where([data-cai-classless] select:not([class*="cai-"]):focus-visible) {
+  border-block-end: 2px solid var(--cai-focus-ring);
+  outline: 2px solid var(--cai-focus-ring);
+  outline-offset: 2px;
+}
+
+:where([data-cai-classless] select:not([class*="cai-"])[aria-invalid="true"]) {
+  border-block-end: 2px solid var(--cai-color-danger);
+}
+
+:where([data-cai-classless] select:not([class*="cai-"]):disabled) {
+  color: var(--cai-text-disabled);
+  border-block-end-style: dashed;
+  cursor: not-allowed;
+}
+
+@media (forced-colors: active) {
+  :where([data-cai-classless] select:not([class*="cai-"])) {
+    forced-color-adjust: none;
+    border: 1px solid ButtonText;
+    background-color: Field;
+    color: FieldText;
+  }
+
+  :where([data-cai-classless] select:not([class*="cai-"]):disabled) {
+    border-color: GrayText;
+    color: GrayText;
+  }
+
+  :where([data-cai-classless] select:not([class*="cai-"]):focus-visible) {
+    outline-color: Highlight;
+  }
+}
+
+/* ---- Table: the look of .cai-table, with no wrapper and no stacking --- */
+
+:where([data-cai-classless] table:not([class*="cai-"])) {
+  font-family: var(--cai-font-sans);
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--cai-text-md);
+}
+
+:where([data-cai-classless] table:not([class*="cai-"]) caption) {
+  text-align: start;
+  font-size: var(--cai-text-sm);
+  color: var(--cai-text-secondary);
+  padding: var(--cai-space-xs) var(--cai-space-md);
+  caption-side: top;
+}
+
+:where([data-cai-classless] table:not([class*="cai-"]) th a) {
+  color: var(--cai-text-primary);
+  text-decoration: underline;
+}
+
+:where([data-cai-classless] table:not([class*="cai-"]) th) {
+  background: var(--cai-surface-strong);
+  color: var(--cai-text-primary);
+  text-align: start;
+  padding: var(--cai-space-xs) var(--cai-space-md);
+  font-weight: 500;
+  font-size: var(--cai-text-sm);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  transition: background var(--cai-duration-base);
+}
+
+:where([data-cai-classless] table:not([class*="cai-"]) td) {
+  padding: var(--cai-space-sm) var(--cai-space-md);
+  border-bottom: 1px solid var(--cai-divider);
+  color: var(--cai-text-primary);
+  transition: background var(--cai-duration-fast);
+}
+
+:where([data-cai-classless] table:not([class*="cai-"]) tr:hover td) {
+  background: var(--cai-surface-hover);
+}
+
+:where([data-cai-classless] table:not([class*="cai-"]) tr:last-child td) {
+  border-bottom: none;
+}

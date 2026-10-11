@@ -104,6 +104,13 @@ await writeCssWithMin(
 );
 console.log("✓ Print CSS built → dist/print.css (+ min)");
 
+// --- CSS: classless layer, a file of its own (scoped by [data-cai-classless]) ---
+await writeCssWithMin(
+  resolve(distRoot, "classless.css"),
+  inCaiLayer("elements", readFileSync(resolve(srcRoot, "classless/_classless.css"), "utf-8")),
+);
+console.log("✓ Classless CSS built → dist/classless.css (+ min)");
+
 // --- JS: bundle with Rollup ---
 async function buildJS() {
   try {

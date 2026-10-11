@@ -118,6 +118,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 | --- | --- | --- | --- | --- |
 | `tokens` CSS | 1 kB (a theme or scale is probably missing) | 1–3 kB | 3 kB | 5 kB |
 | `core` CSS | — | ≤ 12 kB | 12 kB | 15 kB |
+| `core` classless CSS (a file of its own, not in `cai.css`) | — | ≤ 2 kB | 2 kB | 3 kB |
 | `core` JS entry (lazy chunks excluded) | — | ≤ 5 kB | 5 kB | 8 kB |
 | Each lazy chunk (`midi`) | — | ≤ 3 kB | 3 kB | 4 kB |
 | `platform` CSS | — | ≤ 2 kB | 2 kB | 4 kB |

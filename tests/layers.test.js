@@ -20,6 +20,7 @@ const files = [
   "packages/core/dist/base.css",
   "packages/platform/dist/platform.css",
   "packages/core/dist/print.css",
+  "packages/core/dist/classless.css",
   ...listed("packages/core/dist/components").filter((f) => !f.endsWith(".min.css")),
   ...listed("packages/core/dist/themes").filter((f) => !f.endsWith(".min.css")),
 ].filter((f) => existsSync(dist(f)));

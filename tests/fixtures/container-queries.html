@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CAI container queries fixture</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
+  <style>
+    body { padding: 1rem; }
+    .slot { margin-block-end: 1rem; }
+    #narrow { inline-size: 400px; }
+    #wide { inline-size: 900px; }
+  </style>
+</head>
+<body>
+  <!-- the same components in a narrow and in a wide parent, in one viewport -->
+  <div id="narrow" class="slot">
+    <div class="cai-table-wrap" id="table-narrow" tabindex="0" role="region" aria-label="Narrow table">
+      <table class="cai-table">
+        <caption>Releases</caption>
+        <thead><tr><th scope="col">Name</th><th scope="col">Version</th></tr></thead>
+        <tbody><tr><td data-label="Name">Core</td><td data-label="Version">2.1.0</td></tr></tbody>
+      </table>
+    </div>
+    <div class="cai-player" data-type="audio" id="player-narrow" role="group" aria-label="Narrow player">
+      <div class="cai-player-controls cai-player-controls--audio" id="controls-narrow">
+        <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">Play</button>
+        <div class="cai-player-progress-row cai-player-progress-row--audio">
+          <input class="cai-player-seekbar" type="range" min="0" max="1000" value="0" aria-label="Seek">
+        </div>
+        <input class="cai-player-seekbar cai-player-volbar" id="volbar-narrow" type="range" min="0" max="100" value="100" aria-label="Volume">
+      </div>
+    </div>
+    <ul class="cai-platform-feature-grid" id="grid-narrow" style="list-style:none;padding:0">
+      <li>One</li><li>Two</li><li>Three</li><li>Four</li>
+    </ul>
+  </div>
+
+  <div id="wide" class="slot">
+    <div class="cai-table-wrap" id="table-wide" tabindex="0" role="region" aria-label="Wide table">
+      <table class="cai-table">
+        <caption>Releases</caption>
+        <thead><tr><th scope="col">Name</th><th scope="col">Version</th></tr></thead>
+        <tbody><tr><td data-label="Name">Core</td><td data-label="Version">2.1.0</td></tr></tbody>
+      </table>
+    </div>
+    <div class="cai-player" data-type="audio" id="player-wide" role="group" aria-label="Wide player">
+      <div class="cai-player-controls cai-player-controls--audio" id="controls-wide">
+        <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">Play</button>
+        <div class="cai-player-progress-row cai-player-progress-row--audio">
+          <input class="cai-player-seekbar" type="range" min="0" max="1000" value="0" aria-label="Seek">
+        </div>
+        <input class="cai-player-seekbar cai-player-volbar" id="volbar-wide" type="range" min="0" max="100" value="100" aria-label="Volume">
+      </div>
+    </div>
+    <ul class="cai-platform-feature-grid" id="grid-wide" style="list-style:none;padding:0">
+      <li>One</li><li>Two</li><li>Three</li><li>Four</li>
+    </ul>
+  </div>
+
+  <!-- the top layer and the tooltip, inside the containers the queries create -->
+  <div class="cai-table-wrap" id="host-table" style="inline-size:300px;block-size:80px">
+    <dialog id="dlg-table" aria-label="Dialog in a table wrap"><p>Hello</p><form method="dialog"><button class="cai-btn">Close</button></form></dialog>
+    <div id="pop-table" popover="manual" style="inset:auto;inset-block-start:200px;inset-inline-start:40px">Popover</div>
+  </div>
+  <div class="cai-player" id="host-player" style="inline-size:300px;block-size:80px">
+    <dialog id="dlg-player" aria-label="Dialog in a player"><p>Hello</p><form method="dialog"><button class="cai-btn">Close</button></form></dialog>
+    <div id="pop-player" popover="manual" style="inset:auto;inset-block-start:200px;inset-inline-start:40px">Popover</div>
+  </div>
+</body>
+</html>

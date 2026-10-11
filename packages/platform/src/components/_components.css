@@ -74,9 +74,11 @@
 	gap: var(--cai-space-xs);
 }
 
+/* Two columns at most; one when two do not fit 16rem each. Intrinsic: it
+   follows the room the grid has, not the window, and needs no query. */
 .cai-platform-feature-grid {
 	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, max(16rem, 45%)), 1fr));
 	gap: var(--cai-space-sm);
 }
 
@@ -270,10 +272,6 @@
 @media (max-width: 768px) {
 	.cai-platform-content {
 		padding-top: calc(var(--cai-space-xl) + var(--cai-space-lg));
-	}
-
-	.cai-platform-feature-grid {
-		grid-template-columns: minmax(0, 1fr);
 	}
 
 	.cai-platform-footer {

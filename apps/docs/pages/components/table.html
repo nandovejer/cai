@@ -70,7 +70,7 @@ toc: h2,h3
             <h3 id="how">How it works</h3>
             <p>A native <code>&lt;table&gt;</code> with <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code> and <code>&lt;th scope&gt;</code>, styled by <code>components/table.css</code>. No JavaScript.</p>
             <ul>
-              <li>The wrapper is a container: below 480 px of its own width, a container query turns each row into a card of label and value pairs.</li>
+              <li>The wrapper is a container: below 480 px of its own width, a container query turns each row into a card of label and value pairs and reduces the cell padding. It follows the width of the wrapper, not the window, so a narrow table in a wide page stacks too.</li>
               <li>The labels come from <code>data-label</code>; a cell without one shows its value only.</li>
               <li>A cell that holds more than one element needs a wrapper <code>&lt;div&gt;</code> inside it, so the value stays together.</li>
               <li>Cards change the <code>display</code> of the table elements, which can hide the table from some screen readers. The stylesheet recommends <code>role="table"</code>, <code>"row"</code> and <code>"cell"</code> on a table that stacks.</li>

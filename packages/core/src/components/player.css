@@ -6,10 +6,15 @@
    -------------------------------------------------------------------------- */
 
 
+/* Also a size-query container: the audio controls stack when the player
+   itself is narrow, wherever it is placed. Inline-size containment means the
+   player takes its width from its parent, so a parent that sizes it to its
+   content (an inline-flex item, a float) needs a width of its own. */
 .cai-player {
   background: var(--cai-surface-strong);
   border: 1px solid var(--cai-divider);
   overflow: hidden;
+  container-type: inline-size;
 }
 
 .cai-player-media-wrap {
@@ -284,7 +289,7 @@
   white-space: nowrap;
 }
 
-@media (max-width: 480px) {
+@container (max-width: 480px) {
   .cai-player:not([data-type="video"]) .cai-player-volbar {
     display: none;
   }

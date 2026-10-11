@@ -165,8 +165,9 @@
   }
 }
 
-@media (max-width: 480px) {
-  /* Tables — reduce cell padding on small screens */
+/* Cell padding follows the same container as the stacking above, not the
+   window: a narrow table in a wide page reduces its padding too */
+@container (max-width: 480px) {
   .cai-table th {
     padding: var(--cai-space-2xs) var(--cai-space-xs);
   }

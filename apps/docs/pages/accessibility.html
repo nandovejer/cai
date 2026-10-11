@@ -1,11 +1,11 @@
 <!-- cai:page
 title: Accessibility statement
-description: CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 9 October 2026.
+description: CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 11 October 2026.
 area: accessibility
 lead: false
 -->
     <div class="docs-block docs-prose-chapter" id="accessibility">
-      <p class="docs-lead">CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 9 October 2026.</p>
+      <p class="docs-lead">CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 11 October 2026.</p>
       <h2 id="h-a11y-target">Target</h2>
       <p>CAI aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to.</p>
       <p>A design system cannot make a service accessible by itself: how you use the components decides the result. Each component page says what is yours to do, under <em>Keyboard and ARIA</em> and <em>Writing the content</em>.</p>
@@ -19,6 +19,7 @@ lead: false
         <li>Forced colors: a focused button and a focused search result keep a visible outline, the selected tab keeps its underline, and the search dialog keeps its border.</li>
         <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="cai-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
+        <li>Before this release, the same automated suites ran once in Firefox 155 and in WebKit 26.6 and 27.2 (the engine of Safari), on Linux, and their findings were fixed. They do not run on every change, and neither is a test on macOS or iOS.</li>
         <li>Contrast of every token pair a component draws, by a script, in the three base modes and in each mode of the shipped custom themes (minimalist and vejer).</li>
       </ul>
 

@@ -56,7 +56,7 @@ order: 5
     <section class="docs-block" id="limits" aria-labelledby="limits-title">
       <h2 class="docs-chapter__title" id="limits-title">What is not covered</h2>
       <ul>
-        <li><strong>Checked in Chromium only.</strong> The test renders a docs page with print media and reads the styles. No one has looked at a printed sheet, or at a PDF made by Firefox or Safari.</li>
+        <li><strong>Emulated, not printed.</strong> The test renders a docs page with print media and reads the styles, in Chromium, Firefox and WebKit. No one has looked at a printed sheet, or at a PDF made by any browser.</li>
         <li><strong>The address of a link is drawn by CSS.</strong> It is on paper and in a PDF's text, but not in the page, so a screen reader does not read it.</li>
         <li><strong>Backgrounds.</strong> Browsers drop background colors and images when they print unless the reader turns "background graphics" on. CAI relies on text, borders and weight, not on a filled background, to tell things apart.</li>
         <li><strong>Long tables and breaks.</strong> A table taller than a page breaks anyway: the browser ignores "no break" when it cannot keep it. Safari does not honor <code>break-after: avoid</code>, so a heading may be left alone at the foot of a page there.</li>

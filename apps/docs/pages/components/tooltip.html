@@ -55,7 +55,7 @@ toc: h2,h3
               <li>It stays open while the pointer moves from the control onto the tip.</li>
               <li>It fades in and out over <code>--cai-duration-fast</code>, and appears at once under reduced motion.</li>
               <li>The tip does not wrap: keep it short, or it can overflow a narrow screen.</li>
-              <li><strong>Enhancement:</strong> in browsers with CSS anchor positioning (Chrome and Edge 125, Safari 26, Firefox 147: Newly available, not yet Widely available), the tip is anchored to the control with <code>position-area</code> and flips below it when there is no room above. It is also no longer clipped by an ancestor that hides overflow. In other browsers it stays above, as before: the rules sit inside <code>@supports</code>, with no script.</li>
+              <li><strong>Enhancement:</strong> in browsers with CSS anchor positioning (Chrome and Edge 125, Safari 26, Firefox 147: Newly available, not yet Widely available), the tip is anchored to its own control (<code>anchor-scope</code> and <code>anchor()</code> insets) and flips below it when there is no room above. Outside a size container it is no longer clipped by an ancestor that hides overflow; inside one, such as a table wrapper or a player, it is placed and clipped by that box, as before. In other browsers it stays above, as before: the rules sit inside <code>@supports</code>, with no script.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: the tooltip has no script.</p>

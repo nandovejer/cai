@@ -49,7 +49,7 @@ Every component also ships as its own file in `dist/components/` — load only w
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/components/card.css">
 ```
 
-Available: `alert`, `avatar`, `breadcrumb`, `button`, `card`, `code`, `copy-btn`, `figure`, `form`, `icon-grid`, `modal`, `mode-switcher`, `player`, `progress`, `sidebar`, `table`, `tabs`, `tag`, `toast`, `tooltip` (+ `_animations` for the shared keyframes). Each has a `.min.css` twin.
+Available: `accordion`, `alert`, `avatar`, `breadcrumb`, `button`, `card`, `code`, `copy-btn`, `figure`, `form`, `icon-grid`, `modal`, `mode-switcher`, `player`, `progress`, `select`, `sidebar`, `table`, `tabs`, `tag`, `toast`, `tooltip` (+ `_animations` for the shared keyframes). Each has a `.min.css` twin.
 
 ### Using a single JS behavior
 
@@ -80,12 +80,18 @@ Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captio
 
 `registerLocale()` must reach the same module instance the components use: with the auto-initializing entry import it from `@cai-ds/core`, with the individual modules from `@cai-ds/core/i18n`. Strings written later (play/pause, copied, status messages) use it right away; the ones written when a component initializes (code block names) need it registered before the `init*()` call.
 
+## Cascade layers
+
+Every stylesheet puts its rules in a layer of one container layer, `cai`: `cai.tokens`, `cai.themes`, `cai.settings`, `cai.generic`, `cai.elements`, `cai.objects`, `cai.components`, `cai.utilities`, `cai.platform`, `cai.print`. Your unlayered CSS wins over all of them; to order CAI as one unit, declare `@layer reset, cai, app;` first. The names are public API.
+
 ## Package exports
 
 - **`.`** → `cai.js` — Entry: re-exports the full API + auto-initializes everything
 - **`./css`** → `cai.css` — Full CSS bundle (`./css/min` for the minified twin)
 - **`./base.css`** → Settings + reset + elements: the prerequisite for per-component CSS
 - **`./components/*`** → Per-component CSS files (standalone use)
+- **`./print.css`** → Print styles alone, for pages that load components one by one (`cai.css` already includes them)
+- **`./classless.css`** → The look of a bare button, field, select and table inside `[data-cai-classless]`; not part of `cai.css`
 - **`./theme`**, **`./sidebar`**, **`./clipboard`**, **`./modal`**, **`./highlight`**, **`./player`**, **`./tabs`** → Individual JS behavior modules (no side effects on import)
 - **`./i18n`** → Strings for the JS-generated text (`t`, `getLang`, `registerLocale`)
 - **`./midi`** → `midi.js` — MIDI player (lazy-loaded)

@@ -192,7 +192,7 @@
       <h2 class="docs-chapter__title" id="limits-title">Limits</h2>
       <ul>
         <li><strong>A color mode on the same element.</strong> The date picker and the select take their color scheme from a <code>data-theme</code> on an ancestor of the zone, as the components do: set <code>data-theme</code> on <code>&lt;html&gt;</code>, not on the zone.</li>
-        <li><strong>Checked in Chromium only.</strong> The parity test runs in Chromium; Safari and Firefox have not reviewed it.</li>
+        <li><strong>Checked by script, not by hand.</strong> The parity test passes in Chromium, Firefox 155 and WebKit 26.6, on Linux. Forced colors do not exist in Safari, so that case is checked in Chromium and Firefox only.</li>
         <li><strong>Not a component.</strong> It has no page in the components gallery and no states of its own. If you can add a class, use the component: it has the variants, sizes and documentation.</li>
       </ul>
     </section>

@@ -160,6 +160,31 @@ Absolute. A PR that crosses one is closed, not reviewed.
 17. **No artifact over its size ceiling** in budgets.json. Ceilings are never raised: optimise or remove instead.
 18. **No component or pattern merged without its docs page, and that page says *When to use* and *When not to use*.**
 
+### Which check covers which red line
+
+Each red line has at least one check that fails when it is broken. The table is kept in step by `tests/red-line-map.test.js`: every line `RL-1` to `RL-18` appears once, and every file it names exists. The last column says what the check does not see.
+
+| Line | Checked by | Not seen by the check |
+| --- | --- | --- |
+| RL-1 | `eslint.config.js`, `tests/red-lines.test.js` | A dependency loaded from a URL at run time (RL-12 covers the URL) |
+| RL-2 | `tests/nojs.spec.js` | Components the spec does not open: it covers every docs page, not every state |
+| RL-3 | `eslint.config.js` | A behaviour reimplemented under another name |
+| RL-4 | `tests/red-lines.spec.js` | Markup a consumer writes; the check runs on every docs page and the landing page |
+| RL-5 | `stylelint.config.js`, `tests/red-lines.spec.js` | A focus ring that is there but drawn too faintly on an unusual surface |
+| RL-6 | `tests/red-lines.spec.js` | A state the spec does not list (selected, current, pressed, invalid, disabled are) |
+| RL-7 | `scripts/check-contrast.js`, `tests/red-lines.spec.js` | Text over an image or a gradient |
+| RL-8 | `stylelint.config.js`, `tests/red-lines.test.js`, `tests/media.spec.js` | An animation started from script |
+| RL-9 | `tests/red-lines.spec.js` | Whether a name is *good*: it checks that one exists |
+| RL-10 | `stylelint.config.js` | Apps and docs CSS (the rule covers `packages/`) |
+| RL-11 | `scripts/stylelint/no-bare-element.js` | Nothing known |
+| RL-12 | `eslint.config.js`, `tests/red-lines.test.js`, `tests/red-lines.spec.js` | A request made by a browser extension, or by an embedded `iframe` a consumer adds |
+| RL-13 | `scripts/check-pack.js`, `tests/red-lines.test.js` | The licence text being correct for the file: it checks that one is there |
+| RL-14 | `scripts/check-generated.js` | A hand edit to `dist/`: it is ignored by git and a later build overwrites it, so only `docs/` can be committed edited, and that is what the check compares |
+| RL-15 | `tests/red-lines.test.js` | Whether a *new use* of a status colour has the right meaning |
+| RL-16 | `eslint.config.js` | Sniffing written through a library: there are none (RL-1) |
+| RL-17 | `scripts/check-size.js` | Anything that is not in `budgets.json` |
+| RL-18 | `tests/docs-site.test.js`, `tests/docs.spec.js` | Whether the text of *When to use* is true |
+
 ## Strong rules
 
 Mandatory unless an exception is registered in [EXCEPTIONS.md](./EXCEPTIONS.md).

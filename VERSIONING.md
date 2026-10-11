@@ -78,7 +78,7 @@ CAI leaves beta when every line is ticked and the maintainer says it is stable. 
 
 | # | Criterion | Status | How it is checked |
 | --- | --- | --- | --- |
-| 1 | Every red line (RL-1 to RL-18) has a check that fails when it is broken, and the list of which check covers which line is written down | **Open**: checks exist for most (stylelint, ESLint, `check:size`, `check:strings`, the red-line suites), but the table RL-n → check has not been made | A table in this file or in PRINCIPLES.md that a test keeps in step |
+| 1 | Every red line (RL-1 to RL-18) has a check that fails when it is broken, and the list of which check covers which line is written down | **Done, with limits**: the table is in PRINCIPLES.md ("Which check covers which red line"), kept in step by `tests/red-line-map.test.js`, and each row says what its check does not see | The table and the test |
 | 2 | SR-6 done for every component: tested by hand with NVDA + Firefox, VoiceOver + Safari, TalkBack + Chrome and Orca + Firefox, with the evidence kept | **Open**: no assistive technology has been used on any release (the accessibility statement says so) | One filled `tests/manual/SR-6-evidence-template.md` per component |
 | 3 | The EN 301 549 mapping is published, clause by clause | **Open**: the statement names the standard and the WCAG 2.2 target; there is no clause table | A page of the docs |
 | 4 | The browser review ledger is empty: Safari and Firefox have both reviewed every component and file | **Open**: several rows are open | `.claude/BROWSER-REVIEWS.md`, and the security audit's OK (AGENTS.md section 6) |
@@ -89,7 +89,7 @@ CAI leaves beta when every line is ticked and the maintainer says it is stable. 
 | 9 | The backlog of AGENTS.md is done or removed on purpose | **Open**: dropdown or context menu, pagination, grid system, deprecated-elements table, `input` types grid | AGENTS.md |
 | 10 | `docs/` is the build of the sources, and the full QA run passes (`pnpm qa:release`) | **Open**: `check:generated` fails until `docs/` is rebuilt | The QA report |
 | 11 | The consumer smoke test passes against the packed tarballs, from a CDN-style path too | **Passes** today (`pnpm smoke:consumer`) | The script |
-| 12 | Known issues of the accessibility statement are each registered in EXCEPTIONS.md with the WCAG criterion, or fixed | **Open**: Escape does not close the tooltip, the modal needs `command` support or JavaScript, and others | The statement and EXCEPTIONS.md |
+| 12 | Known issues of the accessibility statement are each registered in EXCEPTIONS.md with the WCAG criterion, or fixed | **Partly**: EX-003 (tooltip, SC 1.4.13), EX-007 (no screen reader testing, SR-6) and EX-008 (docs captions need JavaScript, SC 1.2.2) are registered. Not registrable, because they touch red lines: the modal's open button does nothing without JavaScript in a browser with no `command` support (RL-2), and a MIDI player needs JavaScript (RL-2). Those two are a decision, not an exception | The statement and EXCEPTIONS.md |
 
 When the table is all ticked, the next major is the stable release, and from it the sections above apply.
 

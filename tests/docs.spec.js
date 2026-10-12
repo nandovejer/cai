@@ -392,13 +392,12 @@ test.describe('Documentation site', () => {
   });
 
   test.describe('galleries and the A–Z index', () => {
-    test('a gallery card is one link, named like its heading, with an inert thumbnail (HUB-1, HUB-2)', async ({ page }) => {
+    test('a gallery card is one link, named like its heading (HUB-1)', async ({ page }) => {
       await open(page, '/docs/components/');
       const cards = page.locator('.docs-card');
       await expect(cards).toHaveCount(24);
       for (const card of await cards.all()) {
         await expect(card.getByRole('link')).toHaveCount(1);
-        await expect(card.locator('.docs-card__thumb[inert][aria-hidden="true"]')).toHaveCount(1);
       }
       // The whole card takes the click
       await page.locator('.docs-card', { hasText: 'Tooltip' }).locator('.docs-card__desc').click({ force: true });

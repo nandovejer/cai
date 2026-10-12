@@ -16,7 +16,6 @@ import {
   buildSite,
   checkLinks,
   currentOf,
-  assertThumbSafe,
   MAX_ESSENTIALS,
   essentialsOf,
   readingOrder,
@@ -319,7 +318,7 @@ describe("scanning and building a site", () => {
     const { repoRoot, docsDir } = fixture({
       "pages/components/index.html": PAGE("Components"),
       "pages/components/button.html": PAGE("Button", '<p><a href="/docs/#main-content">Up</a></p>'),
-      "pages/components/_thumbs/button.html": "<p>not a page</p>",
+      "pages/components/_draft/button.html": "<p>not a page</p>",
     });
     const site = scanSite(docsDir, repoRoot);
     expect(site.pages.map((p) => [p.file, p.route, p.depth])).toEqual([
@@ -667,16 +666,5 @@ describe("the CAI docs site", () => {
     expect(html).not.toMatch(/<base\b/);
     expect(html).not.toMatch(/<script/i);
     expect(html).toContain("<h1 class=\"docs-title\">Page not found</h1>");
-  });
-
-  it("keeps gallery thumbnails inert: no id, script, media, form or handler (HUB-2, SEC-PLG-12)", () => {
-    expect(() => assertThumbSafe('<span id="x">a</span>', "t.html")).toThrow(/id/);
-    expect(() => assertThumbSafe('<span onclick="x()">a</span>', "t.html")).toThrow(/onclick/);
-    expect(() => assertThumbSafe("<video></video>", "t.html")).toThrow(/video/);
-    expect(() => assertThumbSafe('<a href="javascript:x">a</a>', "t.html")).toThrow(/javascript/);
-    expect(() => assertThumbSafe('<a href="java&#9;script:x">a</a>', "t.html")).toThrow(/script/);
-    expect(() => assertThumbSafe('<a href=" JaVa\nScRiPt:x">a</a>', "t.html")).toThrow(/ScRiPt/);
-    const gallery = rendered.get("/docs/components/");
-    expect(gallery.match(/<div class="docs-card__thumb" inert aria-hidden="true">/g)).toHaveLength(24);
   });
 });

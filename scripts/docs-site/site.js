@@ -25,8 +25,8 @@
  * path; no symlinks; route segments use a strict alphabet; expansion is a
  * single pass, so text a substitution produced is never expanded again.
  */
-import { existsSync, lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
-import { dirname, join, relative, resolve, sep } from "node:path";
+import { lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
+import { join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
 
 /** Where the docs pages are published. */
@@ -513,36 +513,10 @@ export function renderEndNav(site, page) {
   return lines.join("\n");
 }
 
-/** Markup a gallery thumbnail must never carry: it is decorative and inert (HUB-2, SEC-PLG-12). */
-export function assertThumbSafe(html, file) {
-  const banned = new Set(["script", "audio", "video", "iframe", "object", "embed", "base", "meta", "link", "form", "style"]);
-  for (const tag of tags(html, file)) {
-    if (tag.type !== "start") continue;
-    if (banned.has(tag.name)) throw new HtmlError(file, tag.line, `<${tag.name}> is not allowed in a gallery thumbnail`);
-    for (const [name, value] of tag.attrs) {
-      // Values are entity-decoded; the URL parser also drops tabs and newlines anywhere ("java\tscript:")
-      if (name === "id" || name === "autofocus" || name.startsWith("on") || /^javascript:/i.test(value.replace(/[\s\p{Cc}]/gu, ""))) {
-        throw new HtmlError(file, tag.line, `${name}="${value}" is not allowed in a gallery thumbnail`);
-      }
-    }
-  }
-  readHtml(html, file);
-}
-
-/** The thumbnail of a page, from pages/<area>/_thumbs/<slug>.html, or "". */
-function thumbOf(site, page) {
-  const slug = page.route.split("/").filter(Boolean).at(-1);
-  const abs = join(dirname(page.abs), "_thumbs", `${slug}.html`);
-  if (!existsSync(abs)) return "";
-  const html = readInside(abs, [site.docsDir]).trim();
-  assertThumbSafe(html, relative(site.repoRoot, abs).split(sep).join("/"));
-  return html;
-}
-
 /**
  * The gallery of an area index: one h2 per group of site.json (in its
- * order), a card per page with its inert thumbnail, its name as the one link
- * and its description; a group marked `list: true` is a plain list.
+ * order), a card per page with its name as the one link and its
+ * description; a group marked `list: true` is a plain list.
  */
 export function renderGallery(site, page) {
   const area = areaOf(site, page);
@@ -551,10 +525,8 @@ export function renderGallery(site, page) {
     .filter((p) => p.meta.area === area.id && p.route !== areaRoute(area) && p.meta.nav !== "false")
     .sort(byOrder);
   const groups = [...(area.groups ?? []), { id: "", label: "" }];
-  const card = (p) => {
-    const thumb = thumbOf(site, p);
-    return `      <li class="cai-card docs-card">\n${thumb ? `        <div class="docs-card__thumb" inert aria-hidden="true">\n          ${thumb.replace(/\n/g, "\n          ")}\n        </div>\n` : ""}        <h3 class="cai-card__title docs-card__title">${link(p.route, p.meta.title)}</h3>\n        <p class="cai-card__body docs-card__desc">${escapeHtml(p.meta.description)}</p>\n      </li>`;
-  };
+  const card = (p) =>
+    `      <li class="cai-card docs-card">\n        <h3 class="cai-card__title docs-card__title">${link(p.route, p.meta.title)}</h3>\n        <p class="cai-card__body docs-card__desc">${escapeHtml(p.meta.description)}</p>\n      </li>`;
   const row = (p) => `      <li>${link(p.route, p.meta.title)} <span class="docs-gallery__desc">${escapeHtml(p.meta.description)}</span></li>`;
   return groups
     .map((group) => {

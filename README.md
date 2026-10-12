@@ -293,7 +293,7 @@ Primitive tokens (`--cai-blue-*`, `--cai-gray-*`, etc.) are only used inside the
 - **Actions:** buttons (primary, secondary, ghost, outline, danger, sizes), copy button
 - **Display:** tags, badges, avatars, progress bars, tooltips, figures, icon grid
 - **Feedback:** alerts, toasts, modal
-- **Content:** cards, tables, tabs, breadcrumbs, code blocks
+- **Content:** cards, tables, tabs, breadcrumbs, pagination, code blocks
 - **Navigation:** sidebar, color mode switcher
 - **Media:** video player, audio player, MIDI player
 - **Utilities:** visibility, SR-only, text helpers, flex shortcuts

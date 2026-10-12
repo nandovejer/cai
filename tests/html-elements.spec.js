@@ -190,6 +190,39 @@ test.describe('HTML elements reference, in the documentation', () => {
     }
   });
 
+  test('lists each deprecated element once, with its replacement and a source', async ({ page }) => {
+    await open(page, OVERVIEW);
+    const rows = page.locator('#html-deprecated tbody tr');
+    await expect(rows).toHaveCount(deprecated.length);
+    const names = await rows.locator('th a').allTextContents();
+    expect([...names].sort()).toEqual([...deprecated].sort());
+    for (let i = 0; i < deprecated.length; i++) {
+      const row = rows.nth(i);
+      await expect(row.locator('td').nth(0), names[i]).not.toBeEmpty();
+      await expect(row.locator('td a[href^="https://"]'), names[i]).toHaveCount(1);
+    }
+  });
+
+  test('shows the 22 input types, each with a name, what it is and a control or a note', async ({ page }) => {
+    await open(page, routeOf('el-input'));
+    const items = page.locator('#input-types .elements-type');
+    await expect(items).toHaveCount(22);
+    const types = (await items.locator('.elements-type__name code').allTextContents()).map((t) => t.replace(/type="|"/g, ''));
+    expect(new Set(types).size).toBe(22);
+    for (let i = 0; i < 22; i++) {
+      const item = items.nth(i);
+      const control = item.locator('input');
+      if (await control.count()) {
+        // The live control is of the type it names, and has a name for assistive technology
+        await expect(control, types[i]).toHaveAttribute('type', types[i]);
+        // A name: aria-label, or the value of a button
+        expect((await control.getAttribute('aria-label')) || (await control.getAttribute('value')), types[i]).toBeTruthy();
+      } else {
+        expect(['hidden', 'image'], types[i]).toContain(types[i]);
+      }
+    }
+  });
+
   test('is reachable from the landing and works in every color mode', async ({ page }) => {
     await page.goto('/');
     await expect(page.locator('.site-header__nav a[href="/docs/"]')).toHaveCount(1);

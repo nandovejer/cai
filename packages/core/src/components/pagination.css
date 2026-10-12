@@ -1,0 +1,80 @@
+/* --------------------------------------------------------------------------
+   CAI Component: pagination
+   Page links of a list that goes on over several pages
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+
+/* nav[aria-label] > ul.cai-pagination > li > a|span: plain links, so it works
+   with no JavaScript and every page is a real address. The current page is
+   text with aria-current="page"; Previous and Next are links, or text with
+   aria-disabled="true" at either end. */
+.cai-pagination {
+  font-family: var(--cai-font-sans); /* UI text: never the body serif */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--cai-space-xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--cai-text-md);
+}
+
+.cai-pagination__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* A target of at least 44 px, whatever the number of digits */
+  min-block-size: var(--cai-control-lg);
+  min-inline-size: var(--cai-control-lg);
+  padding-inline: var(--cai-space-sm);
+  border-radius: var(--cai-radius-md);
+  color: var(--cai-text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--cai-duration-fast),
+    color var(--cai-duration-fast);
+}
+
+.cai-pagination__link[href]:hover {
+  background: var(--cai-surface-hover);
+  color: var(--cai-text-primary);
+}
+
+.cai-pagination__link[href]:active {
+  background: var(--cai-surface-pressed);
+}
+
+/* The current page: a solid fill and a heavier weight, so it is not colour
+   alone */
+.cai-pagination__link[aria-current="page"] {
+  background: var(--cai-brand-fill);
+  color: var(--cai-text-on-fill);
+  font-weight: 600;
+}
+
+/* Previous or Next at the end of the list: text, not a link */
+.cai-pagination__link[aria-disabled="true"] {
+  color: var(--cai-text-disabled);
+  cursor: not-allowed;
+}
+
+/* The gap in a long list ("1 … 8 9 10 … 40"): a mark, not a control */
+.cai-pagination__gap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--cai-space-lg);
+  color: var(--cai-text-muted);
+}
+
+/* Forced colors: the fill is dropped, so the current page takes the system
+   selection colors */
+@media (forced-colors: active) {
+  .cai-pagination__link[aria-current="page"] {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

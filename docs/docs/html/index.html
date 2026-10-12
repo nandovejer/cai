@@ -10,9 +10,9 @@
   <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../assets/site-header-D4tZNdhU.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-CDdzoclL.js"></script>
-  <link rel="stylesheet" crossorigin href="../../assets/reference-DRScSSK_.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-B_xSPELo.css">
+  <script type="module" crossorigin src="../../assets/reference-_j7RD7dJ.js"></script>
+  <link rel="stylesheet" crossorigin href="../../assets/reference-CfGJ0-Px.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-CdbELxFJ.css">
   <link rel="stylesheet" crossorigin href="../../assets/reference-v6-EqpOV.css">
 </head>
 <body class="o-shell docs-page">
@@ -127,12 +127,21 @@
     </nav>
     <h1 class="docs-title">HTML elements</h1>
   </div>
-
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#html-index-title">All elements, A to Z</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#html-deprecated-title">Deprecated elements, and what to use</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#c-elements-title">Base elements</a></li>
+      </ul>
+    </details>
+  </nav>
   <div class="docs-body">
     <p class="docs-eyebrow">Reference · HTML</p>
 
     <p class="docs-lead">How CAI styles each of the <span data-elements-count>116</span> current HTML elements, in <span data-categories-count>14</span> categories, with a live example and the markup to copy.</p>
-    <p>The list follows <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements">MDN</a>. Deprecated elements are left out on purpose.</p>
+    <p>The list follows <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements">MDN</a>. Deprecated elements are left out on purpose: <a href="#html-deprecated">here is what to use instead</a>.</p>
 
     <nav class="docs-toc docs-toc--inline" aria-label="HTML elements contents">
         <div>
@@ -875,6 +884,159 @@
         </table>
       </div>
     </section>
+
+    <section class="elements-index" id="html-deprecated" aria-labelledby="html-deprecated-title">
+      <h2 class="elements-index__title" id="html-deprecated-title">Deprecated elements, and what to use</h2>
+      <p class="elements-index__lead">The 23 elements below are left out of the reference on purpose: they are obsolete or removed, and CAI styles none of them. Use the replacement.</p>
+      <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Deprecated HTML elements and their replacement">
+        <table class="cai-table">
+          <thead>
+            <tr><th scope="col">Element</th><th scope="col">Use instead</th><th scope="col">Why</th><th scope="col">Source</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/acronym"><code>acronym</code></a></th>
+              <td><code>abbr</code></td>
+              <td>The same job with the name that stayed.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: acronym</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/big"><code>big</code></a></th>
+              <td>CSS: <code>font-size</code>, or <code>strong</code> or <code>em</code> when it carries emphasis</td>
+              <td>Size is a presentation matter.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: big</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/center"><code>center</code></a></th>
+              <td>CSS: <code>text-align: center</code> for text, <code>margin-inline: auto</code> for a block</td>
+              <td>Alignment is a presentation matter.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: center</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/content"><code>content</code></a></th>
+              <td><code>slot</code>, with Shadow DOM version 1</td>
+              <td>Part of the first Shadow DOM, which browsers removed.</td>
+              <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/content">MDN<span class="u-sr-only">: content</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dir"><code>dir</code></a></th>
+              <td><code>ul</code></td>
+              <td>A list of files is a list.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: dir</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/fencedframe"><code>fencedframe</code></a></th>
+              <td><code>iframe</code></td>
+              <td>A Privacy Sandbox experiment that is deprecated.</td>
+              <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/fencedframe">MDN<span class="u-sr-only">: fencedframe</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/font"><code>font</code></a></th>
+              <td>CSS: <code>font-family</code>, <code>font-size</code> and <code>color</code></td>
+              <td>Fonts and colors are presentation.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: font</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/frame"><code>frame</code></a></th>
+              <td><code>iframe</code> and CSS, or server-side includes</td>
+              <td>Frames split a window into documents; a layout does it with CSS.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: frame</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/frameset"><code>frameset</code></a></th>
+              <td><code>iframe</code> and CSS, or server-side includes</td>
+              <td>As for <code>frame</code>.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: frameset</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/image"><code>image</code></a></th>
+              <td><code>img</code></td>
+              <td>Never part of a standard: browsers only kept it for old pages.</td>
+              <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/image">MDN<span class="u-sr-only">: image</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/marquee"><code>marquee</code></a></th>
+              <td>CSS animation, with <code>prefers-reduced-motion</code> respected</td>
+              <td>Moving text that cannot be paused fails WCAG 2.2.2.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: marquee</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/menuitem"><code>menuitem</code></a></th>
+              <td>A script on the <code>contextmenu</code> event, or a <code>popover</code> with buttons</td>
+              <td>The context-menu markup was never implemented widely and was removed.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: menuitem</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/nobr"><code>nobr</code></a></th>
+              <td>CSS: <code>white-space: nowrap</code></td>
+              <td>Line breaking is a presentation matter.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: nobr</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/noembed"><code>noembed</code></a></th>
+              <td><code>object</code> instead of <code>embed</code>, with fallback content inside</td>
+              <td><code>embed</code> has no fallback of its own.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: noembed</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/noframes"><code>noframes</code></a></th>
+              <td><code>iframe</code> and CSS, or server-side includes</td>
+              <td>As for <code>frame</code>.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: noframes</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/param"><code>param</code></a></th>
+              <td>The <code>data</code> attribute of <code>object</code>, which sets the URL of the resource</td>
+              <td>Parameters of a plug-in that no browser runs.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: param</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/plaintext"><code>plaintext</code></a></th>
+              <td>The <code>text/plain</code> type of the response</td>
+              <td>It could not be closed: the rest of the page became text.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: plaintext</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/rb"><code>rb</code></a></th>
+              <td>The base text directly inside <code>ruby</code></td>
+              <td>The ruby base needs no wrapper.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: rb</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/rtc"><code>rtc</code></a></th>
+              <td>Nested <code>ruby</code> elements</td>
+              <td>As for <code>rb</code>.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: rtc</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/shadow"><code>shadow</code></a></th>
+              <td><code>slot</code>, with Shadow DOM version 1</td>
+              <td>Part of the first Shadow DOM, which browsers removed.</td>
+              <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/shadow">MDN<span class="u-sr-only">: shadow</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/strike"><code>strike</code></a></th>
+              <td><code>del</code> for an edit, <code>s</code> for text that no longer applies</td>
+              <td>The element says what the text means, not how it is drawn.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: strike</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/tt"><code>tt</code></a></th>
+              <td><code>code</code>, <code>kbd</code>, <code>samp</code> or <code>var</code> by meaning, or CSS <code>font-family: monospace</code></td>
+              <td>Fixed width is a presentation matter.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: tt</span></a></td>
+            </tr>
+            <tr>
+              <th scope="row"><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/xmp"><code>xmp</code></a></th>
+              <td><code>pre</code> with <code>code</code>, with <code>&lt;</code> and <code>&amp;</code> escaped</td>
+              <td>It could not hold its own end tag.</td>
+              <td><a href="https://html.spec.whatwg.org/multipage/obsolete.html#non-conforming-features">HTML Standard<span class="u-sr-only">: xmp</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
 
     <section class="docs-block" id="c-elements" aria-labelledby="c-elements-title">
           <div class="docs-demo__head">

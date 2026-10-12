@@ -191,6 +191,62 @@
   background: var(--cai-surface-muted);
 }
 
+/* --------------------------------------------------------------------------
+   The 22 input types: a grid of small cards, one live control each
+   -------------------------------------------------------------------------- */
+
+.elements-section__extra {
+  display: grid;
+  gap: var(--cai-space-sm);
+  margin-block-start: var(--cai-space-xl);
+  padding-block-start: var(--cai-space-xl);
+  border-block-start: 1px solid var(--cai-divider);
+}
+
+.elements-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--cai-space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.elements-type {
+  display: grid;
+  gap: var(--cai-space-xs);
+  align-content: start;
+  padding: var(--cai-space-md);
+  background: var(--cai-surface);
+  border: 1px solid var(--cai-divider);
+}
+
+.elements-type__name {
+  font-weight: 600;
+}
+
+.elements-type__desc {
+  color: var(--cai-text-secondary);
+  font-size: var(--cai-text-sm);
+}
+
+.elements-type__stage {
+  display: grid;
+  align-content: end;
+  padding: var(--cai-space-sm);
+  background: var(--cai-surface-page);
+  border: 1px dashed var(--cai-outline);
+}
+
+.elements-type__stage > * {
+  min-width: 0;
+}
+
+.elements-type__none {
+  color: var(--cai-text-secondary);
+  font-size: var(--cai-text-sm);
+}
+
 /* <demo-card> is the custom element the slot and template demos define */
 demo-card {
   display: block;

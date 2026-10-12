@@ -139,7 +139,6 @@ Edit `packages/core/src/settings/_settings.css` only, then regenerate `dist/cai.
 ## Not yet implemented (P2 backlog)
 
 - Dropdown / context menu
-- Pagination
 - Documented grid system
 - `light-dark()` in `packages/tokens/src/semantic.css`: not before 2026-11-13, when it is expected to be Baseline Widely available (Newly since 2024-05-13). High contrast stays a block of its own, and `parseSemantic`, `check-contrast` and the consumer check must read it first. Decide the default (light, or the OS) before folding the blocks.
 - HTML elements page: a table of the deprecated elements with their modern replacement, and a grid of the 22 `input` types

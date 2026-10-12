@@ -10,9 +10,9 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-D4tZNdhU.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CDdzoclL.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DRScSSK_.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-B_xSPELo.css">
+  <script type="module" crossorigin src="../../../assets/reference-_j7RD7dJ.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfGJ0-Px.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CdbELxFJ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-v6-EqpOV.css">
 </head>
 <body class="o-shell docs-page">
@@ -147,6 +147,7 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#el-select-title">&lt;select&gt;</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#el-selectedcontent-title">&lt;selectedcontent&gt;</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#el-textarea-title">&lt;textarea&gt;</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#input-types-title">The 22 input types</a></li>
       </ul>
     </details>
   </nav>
@@ -584,6 +585,123 @@
           <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class.</p>
         </article>
         </div>
+
+        <section class="elements-section__extra" id="input-types" aria-labelledby="input-types-title">
+          <h2 class="elements-index__title" id="input-types-title">The 22 input types</h2>
+          <p class="elements-index__lead">One element, <code>&lt;input&gt;</code>, becomes a different control with its <code>type</code>. Each has a live example, with CAI’s class where there is one; <code>hidden</code> and <code>image</code> have nothing to show. The browser validates and offers the right keyboard on its own: pick the most specific type before reaching for a script.</p>
+          <ul class="elements-types">
+            <li class="elements-type" id="it-button">
+              <p class="elements-type__name"><code>type=&quot;button&quot;</code></p>
+              <p class="elements-type__desc">A push button with no behaviour of its own: a script gives it one. Prefer the <code>button</code> element, which can hold markup.</p>
+              <div class="elements-type__stage"><input class="cai-btn cai-btn--secondary" type="button" value="Button"></div>
+            </li>
+            <li class="elements-type" id="it-checkbox">
+              <p class="elements-type__name"><code>type=&quot;checkbox&quot;</code></p>
+              <p class="elements-type__desc">On or off, or one of several choices that can all be on.</p>
+              <div class="elements-type__stage"><input type="checkbox" aria-label="Checkbox" checked></div>
+            </li>
+            <li class="elements-type" id="it-color">
+              <p class="elements-type__name"><code>type=&quot;color&quot;</code></p>
+              <p class="elements-type__desc">Opens the browser’s color picker. The value is always <code>#rrggbb</code>.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="color" value="#2365a6" aria-label="Color"></div>
+            </li>
+            <li class="elements-type" id="it-date">
+              <p class="elements-type__name"><code>type=&quot;date&quot;</code></p>
+              <p class="elements-type__desc">A day: year, month and day. The value is <code>YYYY-MM-DD</code> whatever the display language.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="date" value="2026-10-12" aria-label="Date"></div>
+            </li>
+            <li class="elements-type" id="it-datetime-local">
+              <p class="elements-type__name"><code>type=&quot;datetime-local&quot;</code></p>
+              <p class="elements-type__desc">A day and a time with no time zone.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="datetime-local" value="2026-10-12T09:30" aria-label="Date and time"></div>
+            </li>
+            <li class="elements-type" id="it-email">
+              <p class="elements-type__name"><code>type=&quot;email&quot;</code></p>
+              <p class="elements-type__desc">One address, or several with <code>multiple</code>. The browser checks the shape and shows an <code>@</code> on a phone keyboard.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="email" value="jane@example.com" autocomplete="off" aria-label="Email address"></div>
+            </li>
+            <li class="elements-type" id="it-file">
+              <p class="elements-type__name"><code>type=&quot;file&quot;</code></p>
+              <p class="elements-type__desc">Chooses files from the device. <code>accept</code> filters them, <code>multiple</code> allows several.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="file" aria-label="File"></div>
+            </li>
+            <li class="elements-type" id="it-hidden">
+              <p class="elements-type__name"><code>type=&quot;hidden&quot;</code></p>
+              <p class="elements-type__desc">Not shown: its value travels with the form. Never put anything secret in it, the reader can read it.</p>
+              <div class="elements-type__stage"><p class="elements-type__none">Nothing to show here.</p></div>
+            </li>
+            <li class="elements-type" id="it-image">
+              <p class="elements-type__name"><code>type=&quot;image&quot;</code></p>
+              <p class="elements-type__desc">A submit button drawn as an image. It needs <code>src</code> and <code>alt</code>. Prefer a <code>button</code> that holds an <code>img</code>.</p>
+              <div class="elements-type__stage"><p class="elements-type__none">Nothing to show here.</p></div>
+            </li>
+            <li class="elements-type" id="it-month">
+              <p class="elements-type__name"><code>type=&quot;month&quot;</code></p>
+              <p class="elements-type__desc">A year and a month.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="month" value="2026-10" aria-label="Month"></div>
+            </li>
+            <li class="elements-type" id="it-number">
+              <p class="elements-type__name"><code>type=&quot;number&quot;</code></p>
+              <p class="elements-type__desc">A number with steps: <code>min</code>, <code>max</code> and <code>step</code>. For a postal code or a card number use <code>inputmode=&quot;numeric&quot;</code> on a text field instead.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="number" min="0" max="10" value="3" aria-label="Number"></div>
+            </li>
+            <li class="elements-type" id="it-password">
+              <p class="elements-type__name"><code>type=&quot;password&quot;</code></p>
+              <p class="elements-type__desc">Hides the characters. Set <code>autocomplete</code> to <code>current-password</code> or <code>new-password</code> so a password manager can help.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="password" value="secret" autocomplete="off" aria-label="Password"></div>
+            </li>
+            <li class="elements-type" id="it-radio">
+              <p class="elements-type__name"><code>type=&quot;radio&quot;</code></p>
+              <p class="elements-type__desc">One choice among several that share a <code>name</code>.</p>
+              <div class="elements-type__stage"><input type="radio" name="it-radio" aria-label="Radio" checked></div>
+            </li>
+            <li class="elements-type" id="it-range">
+              <p class="elements-type__name"><code>type=&quot;range&quot;</code></p>
+              <p class="elements-type__desc">A slider between <code>min</code> and <code>max</code>. It does not show its value: pair it with an <code>output</code>.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="range" min="0" max="100" value="40" aria-label="Range"></div>
+            </li>
+            <li class="elements-type" id="it-reset">
+              <p class="elements-type__name"><code>type=&quot;reset&quot;</code></p>
+              <p class="elements-type__desc">Puts the fields of its form back to their first values. Rarely wanted: it is easy to press by mistake.</p>
+              <div class="elements-type__stage"><input class="cai-btn cai-btn--outline" type="reset" value="Reset"></div>
+            </li>
+            <li class="elements-type" id="it-search">
+              <p class="elements-type__name"><code>type=&quot;search&quot;</code></p>
+              <p class="elements-type__desc">A search term. Some browsers add a button to clear it.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="search" value="Search" autocomplete="off" aria-label="Search"></div>
+            </li>
+            <li class="elements-type" id="it-submit">
+              <p class="elements-type__name"><code>type=&quot;submit&quot;</code></p>
+              <p class="elements-type__desc">Sends its form. Without a form it does nothing.</p>
+              <div class="elements-type__stage"><input class="cai-btn cai-btn--primary" type="submit" value="Submit"></div>
+            </li>
+            <li class="elements-type" id="it-tel">
+              <p class="elements-type__name"><code>type=&quot;tel&quot;</code></p>
+              <p class="elements-type__desc">A phone number. The browser checks no format, and shows a keypad on a phone.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="tel" value="+34 600 000 000" autocomplete="off" aria-label="Telephone number"></div>
+            </li>
+            <li class="elements-type" id="it-text">
+              <p class="elements-type__name"><code>type=&quot;text&quot;</code></p>
+              <p class="elements-type__desc">The default: one line of free text.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="text" value="Anything" autocomplete="off" aria-label="Text"></div>
+            </li>
+            <li class="elements-type" id="it-time">
+              <p class="elements-type__name"><code>type=&quot;time&quot;</code></p>
+              <p class="elements-type__desc">A time of day with no date.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="time" value="09:30" aria-label="Time"></div>
+            </li>
+            <li class="elements-type" id="it-url">
+              <p class="elements-type__name"><code>type=&quot;url&quot;</code></p>
+              <p class="elements-type__desc">One absolute address, checked by the browser.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="url" value="https://example.com" autocomplete="off" aria-label="Web address"></div>
+            </li>
+            <li class="elements-type" id="it-week">
+              <p class="elements-type__name"><code>type=&quot;week&quot;</code></p>
+              <p class="elements-type__desc">A year and an ISO week.</p>
+              <div class="elements-type__stage"><input class="cai-input" type="week" value="2026-W42" aria-label="Week"></div>
+            </li>
+          </ul>
+        </section>
       
     </div>
 

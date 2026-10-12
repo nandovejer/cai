@@ -24,16 +24,16 @@ PRINCIPLES.md has red lines (`RL-n`, absolute, never excepted) and strong rules 
 
 ### 5. Safari and Firefox reviews run only with the owner's permission
 
-The `front-safari` and `front-firefox` agents are consulted only on behalf of `frontend`, and never without the owner's say-so. When `frontend` ends its output with a **Questions for `front-safari` and `front-firefox`** section, the orchestrator does not launch them: it asks the owner whether to run them **now or later**.
+The `front-safari` and `front-firefox` agents are consulted only on behalf of `frontend`, and never without the owner's say-so. `frontend` does not ask for them and does not interrupt the work: when it changes CSS, HTML or JS it adds what Safari and Firefox have not seen to the pending list in Claude's memory, `cai-browser-review-pending.md` (the `memory/` folder of this repo's Claude project), and carries on. The orchestrator asks the owner only when `npm-security-auditor` reports rows of that list as blocking (§6), or when the owner asks for the review.
 
-- **Now:** run both in parallel on the same files, with that section as their brief, and hand their findings back to `frontend` before delivering. They may apply fixes; if both touch the same file, run them in turn instead.
-- **Later:** add a row to the review ledger, `.claude/BROWSER-REVIEWS.md` (what was not reviewed: components, files, commits, date), and carry on. A row is closed only when both agents have reviewed it.
+- **Now:** run both in parallel on the rows concerned, with the row as their brief, and hand their findings back to `frontend`. They may apply fixes; if both touch the same file, run them in turn instead. A row is closed only when both have reviewed it: remove it from the list and add it to "Closed" in the ledger, `.claude/BROWSER-REVIEWS.md` (history, in the repo).
+- **Later:** nothing to write; the rows stay in the pending list.
 
 Test runs use `--project=chromium --project=chromium-nojs`. The `firefox` and `webkit` Playwright projects run only with the owner's permission, through these two agents. Do not launch them for work that does not come from `frontend`.
 
 ### 6. The security audit's OK needs both browser reviews
 
-`npm-security-auditor` never gives its OK while the review ledger, the git history or the session memory shows a component, file or change that `front-safari` and `front-firefox` have not both reviewed. It lists those items as blocking and asks the orchestrator to request the owner's permission to run both agents on them. Its OK comes only after both reviews are done and their must-fix findings are fixed or listed as known issues.
+`npm-security-auditor` is the only agent that reads the pending list. It never gives its OK while that list, the git history or the ledger shows a component, file or change that `front-safari` and `front-firefox` have not both reviewed. It lists those items as blocking and asks the orchestrator to request the owner's permission to run both agents on them. Its OK comes only after both reviews are done and their must-fix findings are fixed or listed as known issues.
 
 ---
 

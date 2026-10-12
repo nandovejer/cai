@@ -44,4 +44,4 @@ Tick every line. An unticked line needs an `EXCEPTIONS.md` row or blocks the mer
 
 ## Browsers
 
-- [ ] Safari and Firefox reviews: run now, or recorded for later in `.claude/BROWSER-REVIEWS.md` (AGENTS.md section 5)
+- [ ] Safari and Firefox reviews: done, or the change is in the pending list in Claude's memory (`cai-browser-review-pending.md`; AGENTS.md section 5)

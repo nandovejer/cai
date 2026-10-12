@@ -106,44 +106,6 @@
 }
 
 /* --------------------------------------------------------------------------
-   Layer stack (hero) and mini stack (level cards)
-   -------------------------------------------------------------------------- */
-
-.landing-stack {
-  list-style: none;
-  display: grid;
-  gap: var(--cai-space-xs);
-}
-
-.landing-stack--mini {
-  gap: var(--cai-space-xs);
-}
-
-.landing-stack--mini li {
-  padding: var(--cai-space-2xs) var(--cai-space-sm);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-sm);
-}
-
-.landing-stack--mini .is-included {
-  background: var(--cai-brand-subtle);
-  border: 1px solid var(--cai-brand-primary);
-  border-radius: var(--cai-radius-sm);
-  color: var(--cai-text-primary);
-}
-
-.landing-stack--mini .is-included::before {
-  content: "✓ ";
-}
-
-.landing-stack--mini .is-excluded {
-  background: transparent;
-  border: 1px dashed var(--cai-outline);
-  border-radius: var(--cai-radius-sm);
-  color: var(--cai-text-secondary);
-}
-
-/* --------------------------------------------------------------------------
    What CAI is
    -------------------------------------------------------------------------- */
 
@@ -215,39 +177,23 @@
    Adoption level cards
    -------------------------------------------------------------------------- */
 
-/* A pricing-style row: three columns from 1024px. Each card spans four rows
-   of the parent grid and takes them as a subgrid, so the layer chips, the
-   intro, the list and the actions line up across the cards whatever the
-   length of each. No highlighted card: no level is the recommended one. */
+/* A pricing-style row: three columns from 1024px. Each card spans three rows
+   of the parent grid and takes them as a subgrid, so the intro, the list and
+   the actions line up across the cards whatever the length of each. No
+   highlighted card: no level is the recommended one. */
 .landing-levels {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .landing-level {
   display: grid;
-  grid-row: span 4;
+  grid-row: span 3;
   grid-template-rows: subgrid;
   row-gap: 0;
   background: var(--cai-surface);
   border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-md);
   overflow: clip;
-}
-
-/* The layers band across the top of the card */
-.landing-level > .landing-stack--mini {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  padding: var(--cai-space-md);
-  background: var(--cai-surface-muted);
-  border-block-end: 1px solid var(--cai-divider);
-  text-align: center;
-}
-
-/* "✓ platform" stays on one line in a 300px card */
-.landing-level > .landing-stack--mini li {
-  padding-inline: var(--cai-space-2xs);
-  font-size: var(--cai-text-xs);
-  white-space: nowrap;
 }
 
 .landing-level__intro {
@@ -402,11 +348,6 @@
     grid-template-rows: none;
   }
 
-  .landing-level > .landing-stack--mini {
-    grid-template-columns: repeat(3, minmax(0, calc(var(--cai-space-4xl) * 2)));
-    padding-inline: var(--cai-space-lg);
-  }
-
   .landing-level__actions {
     justify-items: start;
   }
@@ -442,11 +383,6 @@
 
   .landing-hero__title {
     font-size: var(--cai-text-2xl);
-  }
-
-  .landing-level > .landing-stack--mini {
-    gap: var(--cai-space-2xs);
-    padding: var(--cai-space-sm) var(--cai-space-md);
   }
 
   .landing-level__intro,

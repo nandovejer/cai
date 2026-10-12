@@ -329,13 +329,13 @@ test.describe('Landing page', () => {
       }
     });
 
-    test('the three levels are layered: 1, 2, then 3 layers included', async ({ page }) => {
+    test('the three levels are layered: standalone, then each requires the ones below', async ({ page }) => {
       await open(page);
 
-      const included = await page
-        .locator('#adopt .landing-stack--mini')
-        .evaluateAll((stacks) => stacks.map((el) => el.querySelectorAll('.is-included').length));
-      expect(included).toEqual([1, 2, 3]);
+      const tags = await page
+        .locator('#adopt .landing-level .cai-tag')
+        .evaluateAll((els) => els.map((el) => el.textContent.trim()));
+      expect(tags).toEqual(['Standalone', 'Requires tokens', 'Requires core + tokens']);
     });
 
     test('three columns from 1024px with aligned actions; one column below', async ({ page }) => {

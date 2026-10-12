@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="{{lang}}" dir="{{dir}}" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAI: accessible websites from plain HTML and CSS</title>
-  <meta name="description" content="CAI (Consistent Adaptive Identity) is a design system of tokens, components and page layouts in plain CSS and HTML. It works without JavaScript, has three color modes and needs no build step.">
+  <title>{{t:meta.title}}</title>
+  <meta name="description" content="{{t:meta.description}}">
+  {{alternates}}
   <link rel="icon" href="/apps/landing/assets/favicon.ico" sizes="32x32">
   <link rel="icon" href="/apps/landing/assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/apps/landing/assets/apple-touch-icon.png">
@@ -16,34 +17,42 @@
   <script src="/apps/landing/theme-boot.js"></script>
   <link rel="stylesheet" href="/apps/landing/landing.css">
 </head>
-<body class="cai-platform-page">
+<!-- The strings core's scripts write (the color mode button, the copy
+     buttons), in the page's language: authored labels win over core's
+     dictionary, which has no Arabic -->
+<body class="cai-platform-page"
+      data-cai-label-change-mode="{{t:js.change-mode}}"
+      data-cai-label-mode-changed="{{t:js.mode-changed}}"
+      data-cai-label-copied="{{t:js.copied}}"
+      data-cai-label-copied-status="{{t:js.copied-status}}"
+      data-cai-label-copy-failed="{{t:js.copy-failed}}">
   <!-- The search dialog comes first: closed, it is not focusable; after
        Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <!-- cai:include search -->
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+  <a class="cai-platform-skip-link" href="#main-content">{{t:skip}}</a>
 
   <!-- cai:include header -->
 
-  <nav class="cai-sidebar page-nav page-nav--drawer" id="page-nav" popover aria-label="Home page" tabindex="-1">
+  <nav class="cai-sidebar page-nav page-nav--drawer" id="page-nav" popover aria-label="{{t:nav.label}}" tabindex="-1">
     <!-- cai:include site-links -->
 
     <div class="cai-sidebar__section">
-      <div class="cai-sidebar__section-label">On this page</div>
-      <a class="cai-sidebar__link" href="#what">Why teams use CAI</a>
-      <a class="cai-sidebar__link" href="#see">See it working</a>
-      <a class="cai-sidebar__link" href="#adopt">Adopt it one layer at a time</a>
-      <a class="cai-sidebar__link" href="#fit">When CAI fits</a>
-      <a class="cai-sidebar__link" href="#start">Start with one link tag</a>
+      <div class="cai-sidebar__section-label">{{t:nav.on-page}}</div>
+      <a class="cai-sidebar__link" href="#what">{{t:what.title}}</a>
+      <a class="cai-sidebar__link" href="#see">{{t:see.title}}</a>
+      <a class="cai-sidebar__link" href="#adopt">{{t:adopt.title}}</a>
+      <a class="cai-sidebar__link" href="#fit">{{t:fit.title}}</a>
+      <a class="cai-sidebar__link" href="#start">{{t:start.title}}</a>
     </div>
 
     <div class="cai-sidebar__section">
-      <div class="cai-sidebar__section-label">Documentation</div>
-      <a class="cai-sidebar__link" href="/docs/get-started/">Get started</a>
-      <a class="cai-sidebar__link" href="/docs/tokens/">Tokens</a>
-      <a class="cai-sidebar__link" href="/docs/components/">Core</a>
-      <a class="cai-sidebar__link" href="/docs/platform/">Platform</a>
-      <a class="cai-sidebar__link" href="/docs/html/">HTML elements</a>
-      <a class="cai-sidebar__link" href="/docs/accessibility/">Accessibility</a>
+      <div class="cai-sidebar__section-label">{{t:nav.docs}}</div>
+      <a class="cai-sidebar__link" href="/docs/get-started/">{{t:nav.get-started}}</a>
+      <a class="cai-sidebar__link" href="/docs/tokens/">{{t:nav.tokens}}</a>
+      <a class="cai-sidebar__link" href="/docs/components/">{{t:nav.core}}</a>
+      <a class="cai-sidebar__link" href="/docs/platform/">{{t:nav.platform}}</a>
+      <a class="cai-sidebar__link" href="/docs/html/">{{t:nav.html}}</a>
+      <a class="cai-sidebar__link" href="/docs/accessibility/">{{t:nav.accessibility}}</a>
     </div>
   </nav>
 
@@ -52,33 +61,33 @@
     <!-- ====================== HERO ====================== -->
     <section class="landing-hero landing-wrap" aria-labelledby="hero-title">
       <div class="landing-hero__copy">
-        <p class="landing-eyebrow">Consistent Adaptive Identity</p>
-        <h1 class="landing-hero__title" id="hero-title">Build accessible websites with plain HTML and CSS</h1>
-        <p class="landing-hero__lead">CAI is a design system of tokens, components and page layouts. Add two <code class="cai-code-inline">&lt;link&gt;</code> tags and you get forms, dialogs, tables and three color modes. No framework, no build step, and every component works without JavaScript.</p>
+        <p class="landing-eyebrow" lang="en">Consistent Adaptive Identity</p>
+        <h1 class="landing-hero__title" id="hero-title">{{t:hero.title}}</h1>
+        <p class="landing-hero__lead">{{html:hero.lead}}</p>
         <div class="cai-platform-actions">
-          <a class="cai-btn cai-btn--primary cai-btn--lg" href="#adopt">Get started</a>
-          <a class="cai-btn cai-btn--outline cai-btn--lg" href="/docs/components/">Browse the components</a>
+          <a class="cai-btn cai-btn--primary cai-btn--lg" href="#adopt">{{t:hero.start}}</a>
+          <a class="cai-btn cai-btn--outline cai-btn--lg" href="/docs/components/">{{t:hero.browse}}</a>
         </div>
       </div>
     </section>
 
     <section class="landing-wrap" aria-labelledby="facts-title">
-      <h2 class="u-sr-only" id="facts-title">CAI in numbers</h2>
+      <h2 class="u-sr-only" id="facts-title">{{t:facts.title}}</h2>
       <dl class="landing-facts">
         <div class="landing-facts__item">
-          <dt class="landing-facts__label">runtime dependencies</dt>
+          <dt class="landing-facts__label">{{t:facts.dependencies}}</dt>
           <dd class="landing-facts__value">0</dd>
         </div>
         <div class="landing-facts__item">
-          <dt class="landing-facts__label">build steps to use it</dt>
+          <dt class="landing-facts__label">{{t:facts.builds}}</dt>
           <dd class="landing-facts__value">0</dd>
         </div>
         <div class="landing-facts__item">
-          <dt class="landing-facts__label">layers, adopt one at a time</dt>
+          <dt class="landing-facts__label">{{t:facts.layers}}</dt>
           <dd class="landing-facts__value">3</dd>
         </div>
         <div class="landing-facts__item">
-          <dt class="landing-facts__label">color modes built in</dt>
+          <dt class="landing-facts__label">{{t:facts.modes}}</dt>
           <dd class="landing-facts__value">3</dd>
         </div>
       </dl>
@@ -86,29 +95,29 @@
 
     <!-- ====================== WHY ====================== -->
     <section class="cai-platform-section landing-wrap" id="what" aria-labelledby="what-title">
-      <h2 class="landing-h2" id="what-title">Why teams use CAI</h2>
-      <p class="landing-lead">For sites and tools that should work for everyone, on any device, for years, without a framework to keep up with.</p>
+      <h2 class="landing-h2" id="what-title">{{t:what.title}}</h2>
+      <p class="landing-lead">{{t:what.lead}}</p>
 
       <ul class="cai-platform-feature-grid landing-points">
         <li class="o-media">
           <span class="cai-avatar cai-avatar--md" aria-hidden="true">01</span>
           <div class="o-media__body">
-            <h3 class="landing-point__title">Works without JavaScript</h3>
-            <p class="u-text-muted">Components are native HTML elements: <code class="cai-code-inline">&lt;dialog&gt;</code>, <code class="cai-code-inline">&lt;details&gt;</code>, form controls, popovers. JavaScript only adds polish, so pages keep working when a script fails.</p>
+            <h3 class="landing-point__title">{{t:what.nojs.title}}</h3>
+            <p class="u-text-muted">{{html:what.nojs.text}}</p>
           </div>
         </li>
         <li class="o-media">
           <span class="cai-avatar cai-avatar--md" aria-hidden="true">02</span>
           <div class="o-media__body">
-            <h3 class="landing-point__title">Accessible by default</h3>
-            <p class="u-text-muted">Keyboard support, visible focus, 4.5:1 text contrast and a high-contrast mode are part of every component. Each one comes with guidance on when to use it and when not to.</p>
+            <h3 class="landing-point__title">{{t:what.a11y.title}}</h3>
+            <p class="u-text-muted">{{t:what.a11y.text}}</p>
           </div>
         </li>
         <li class="o-media">
           <span class="cai-avatar cai-avatar--md" aria-hidden="true">03</span>
           <div class="o-media__body">
-            <h3 class="landing-point__title">Nothing to install to try it</h3>
-            <p class="u-text-muted">Plain CSS and small ES modules from a CDN or npm. No preprocessor, no compiler, zero dependencies: what you read in the files is what the browser runs.</p>
+            <h3 class="landing-point__title">{{t:what.install.title}}</h3>
+            <p class="u-text-muted">{{t:what.install.text}}</p>
           </div>
         </li>
       </ul>
@@ -116,125 +125,110 @@
 
     <!-- ====================== SEE IT ====================== -->
     <section class="cai-platform-section landing-wrap" id="see" aria-labelledby="see-title">
-      <h2 class="landing-h2" id="see-title">See it working</h2>
-      <p class="landing-lead">This is the whole setup. The result below is rendered by the same CSS.</p>
+      <h2 class="landing-h2" id="see-title">{{t:see.title}}</h2>
+      <p class="landing-lead">{{t:see.lead}}</p>
 
       <div class="landing-snippet">
         <div class="landing-snippet__bar">
-          <span class="landing-eyebrow">The whole setup</span>
-          <button class="cai-copy-btn" type="button" data-copy-from="snip-what" aria-label="Copy the whole setup snippet">Copy</button>
+          <span class="landing-eyebrow">{{t:see.snippet}}</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="snip-what" aria-label="{{t:see.copy-label}}">{{t:see.copy}}</button>
         </div>
-        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="The whole setup snippet"><code id="snip-what">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="{{t:see.snippet-label}}"><code id="snip-what">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
 
-&lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Save changes&lt;/button&gt;
-&lt;span class=&quot;cai-tag cai-tag--green cai-tag--dot&quot;&gt;Published&lt;/span&gt;</code></pre>
+&lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;{{t:see.save}}&lt;/button&gt;
+&lt;span class=&quot;cai-tag cai-tag--green cai-tag--dot&quot;&gt;{{t:see.published}}&lt;/span&gt;</code></pre>
       </div>
 
       <div class="landing-render">
-        <p class="landing-eyebrow">Renders as</p>
+        <p class="landing-eyebrow">{{t:see.renders}}</p>
         <div class="o-row">
-          <button class="cai-btn cai-btn--primary" type="button">Save changes</button>
-          <span class="cai-tag cai-tag--green cai-tag--dot">Published</span>
+          <button class="cai-btn cai-btn--primary" type="button">{{t:see.save}}</button>
+          <span class="cai-tag cai-tag--green cai-tag--dot">{{t:see.published}}</span>
         </div>
       </div>
 
-      <h3 class="landing-subtitle">Read the guidance for</h3>
+      <h3 class="landing-subtitle">{{t:see.guides}}</h3>
       <ul class="landing-guides">
-        <li><a href="/docs/components/button/">Buttons</a></li>
-        <li><a href="/docs/components/form/">Forms and fields</a></li>
-        <li><a href="/docs/components/table/">Tables</a></li>
-        <li><a href="/docs/components/modal/">Modal dialogs</a></li>
-        <li><a href="/docs/components/tabs/">Tabs</a></li>
-        <li><a href="/docs/components/player/">Media players</a></li>
-        <li><a href="/docs/components/">All the components</a></li>
+        <li><a href="/docs/components/button/">{{t:see.buttons}}</a></li>
+        <li><a href="/docs/components/form/">{{t:see.forms}}</a></li>
+        <li><a href="/docs/components/table/">{{t:see.tables}}</a></li>
+        <li><a href="/docs/components/modal/">{{t:see.modals}}</a></li>
+        <li><a href="/docs/components/tabs/">{{t:see.tabs}}</a></li>
+        <li><a href="/docs/components/player/">{{t:see.players}}</a></li>
+        <li><a href="/docs/components/">{{t:see.all}}</a></li>
       </ul>
     </section>
 
     <!-- ====================== ADOPT ====================== -->
     <section class="cai-platform-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
-      <h2 class="landing-h2" id="adopt-title">Adopt it one layer at a time</h2>
-      <p class="landing-lead">Three packages, one direction. Each layer needs the ones below it and nothing above it, so pick the level you need and stop there.</p>
+      <h2 class="landing-h2" id="adopt-title">{{t:adopt.title}}</h2>
+      <p class="landing-lead">{{t:adopt.lead}}</p>
 
       <div class="landing-levels">
 
         <article class="landing-level" aria-labelledby="level-1-title">
-          <ol class="landing-stack landing-stack--mini" aria-label="Layers in level 1">
-            <li class="is-included">tokens</li>
-            <li class="is-excluded">core<span class="u-sr-only"> (not included)</span></li>
-            <li class="is-excluded">platform<span class="u-sr-only"> (not included)</span></li>
-          </ol>
           <div class="landing-level__intro">
-            <h3 class="landing-level__title" id="level-1-title"><span class="landing-eyebrow">Level 1</span> Tokens only</h3>
-            <span class="cai-tag cai-tag--gray">Standalone</span>
-            <p>Choose this if you already have components or a framework and only want consistent values and color modes.</p>
+            <h3 class="landing-level__title" id="level-1-title"><span class="landing-eyebrow">{{t:adopt.level1.eyebrow}}</span> {{t:adopt.level1.title}}</h3>
+            <span class="cai-tag cai-tag--gray">{{t:adopt.level1.tag}}</span>
+            <p>{{t:adopt.level1.when}}</p>
           </div>
           <div class="landing-level__body">
-            <h4 class="landing-eyebrow">You get</h4>
+            <h4 class="landing-eyebrow">{{t:adopt.level1.get}}</h4>
             <ul class="landing-level__get">
-              <li><span data-count="primitives">53</span> color primitives in <span data-count="families">7</span> families</li>
-              <li><span data-count="semantic">55</span> semantic tokens, each defined for light, dark and high contrast</li>
-              <li>Spacing (12), control heights (4), type sizes (9), radii (6) and shadows (3)</li>
-              <li>ET Book for headings, self-hosted and MIT licensed; system fonts for text and code</li>
-              <li>A <a href="/docs/tokens/contrast/">contrast check</a> for your own colors, as a command or in the browser</li>
+              <li>{{html:adopt.level1.colors}}</li>
+              <li>{{html:adopt.level1.semantic}}</li>
+              <li>{{t:adopt.level1.scales}}</li>
+              <li>{{t:adopt.level1.fonts}}</li>
+              <li>{{html:adopt.level1.contrast}}</li>
             </ul>
           </div>
           <div class="landing-level__actions">
-            <a class="cai-btn cai-btn--outline" href="/docs/get-started/#level-1-tokens-only">Install level 1</a>
-            <a href="/docs/tokens/">See the tokens</a>
+            <a class="cai-btn cai-btn--outline" href="/docs/get-started/#level-1-tokens-only">{{t:adopt.level1.install}}</a>
+            <a href="/docs/tokens/">{{t:adopt.level1.see}}</a>
           </div>
         </article>
 
         <article class="landing-level" aria-labelledby="level-2-title">
-          <ol class="landing-stack landing-stack--mini" aria-label="Layers in level 2">
-            <li class="is-included">tokens</li>
-            <li class="is-included">core</li>
-            <li class="is-excluded">platform<span class="u-sr-only"> (not included)</span></li>
-          </ol>
           <div class="landing-level__intro">
-            <h3 class="landing-level__title" id="level-2-title"><span class="landing-eyebrow">Level 2</span> Tokens + Core</h3>
-            <span class="cai-tag cai-tag--gray">Requires tokens</span>
-            <p>Choose this if you are building pages or an app and bring your own page layout.</p>
+            <h3 class="landing-level__title" id="level-2-title"><span class="landing-eyebrow">{{t:adopt.level2.eyebrow}}</span> {{t:adopt.level2.title}}</h3>
+            <span class="cai-tag cai-tag--gray">{{t:adopt.level2.tag}}</span>
+            <p>{{t:adopt.level2.when}}</p>
           </div>
           <div class="landing-level__body">
-            <h4 class="landing-eyebrow">Adds to level 1</h4>
+            <h4 class="landing-eyebrow">{{t:adopt.level2.get}}</h4>
             <ul class="landing-level__get">
-              <li><span data-count="components">24</span> components: buttons, forms, tables, tabs, modal, media player and more</li>
-              <li><span data-count="objects">7</span> layout objects, a small set of utilities and the styles of bare HTML elements</li>
-              <li>Optional JavaScript for tabs, modals, copy buttons and players; every page works without it</li>
-              <li>Print styles and right-to-left layouts, with no extra file</li>
-              <li>Everything in one <a href="/docs/get-started/layers/">cascade layer</a>, <code class="cai-code-inline">cai</code>: your own CSS wins without <code class="cai-code-inline">!important</code></li>
+              <li>{{html:adopt.level2.components}}</li>
+              <li>{{html:adopt.level2.objects}}</li>
+              <li>{{t:adopt.level2.js}}</li>
+              <li>{{t:adopt.level2.print}}</li>
+              <li>{{html:adopt.level2.layer}}</li>
             </ul>
           </div>
           <div class="landing-level__actions">
-            <a class="cai-btn cai-btn--outline" href="/docs/get-started/#level-2-tokens-and-core">Install level 2</a>
-            <a href="/docs/components/">See the components</a>
+            <a class="cai-btn cai-btn--outline" href="/docs/get-started/#level-2-tokens-and-core">{{t:adopt.level2.install}}</a>
+            <a href="/docs/components/">{{t:adopt.level2.see}}</a>
           </div>
         </article>
 
         <article class="landing-level" aria-labelledby="level-3-title">
-          <ol class="landing-stack landing-stack--mini" aria-label="Layers in level 3">
-            <li class="is-included">tokens</li>
-            <li class="is-included">core</li>
-            <li class="is-included">platform</li>
-          </ol>
           <div class="landing-level__intro">
-            <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">Level 3</span> Tokens + Core + Platform</h3>
-            <span class="cai-tag cai-tag--gray">Requires core + tokens</span>
-            <p>Choose this if you build whole sites and want the page shell, header, footer and search. This landing is built at this level.</p>
+            <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">{{t:adopt.level3.eyebrow}}</span> {{t:adopt.level3.title}}</h3>
+            <span class="cai-tag cai-tag--gray">{{t:adopt.level3.tag}}</span>
+            <p>{{t:adopt.level3.when}}</p>
           </div>
           <div class="landing-level__body">
-            <h4 class="landing-eyebrow">Adds to level 2</h4>
+            <h4 class="landing-eyebrow">{{t:adopt.level3.get}}</h4>
             <ul class="landing-level__get">
-              <li>Page, main, content and section wrappers with a consistent vertical rhythm</li>
-              <li>Page header, action group, feature grid, image frame and footer</li>
-              <li>Skip link and command block</li>
-              <li>Site search, with optional JavaScript</li>
+              <li>{{t:adopt.level3.shell}}</li>
+              <li>{{t:adopt.level3.parts}}</li>
+              <li>{{t:adopt.level3.skip}}</li>
+              <li>{{t:adopt.level3.search}}</li>
             </ul>
           </div>
           <div class="landing-level__actions">
-            <a class="cai-btn cai-btn--outline" href="/docs/get-started/#level-3-tokens-core-and-platform">Install level 3</a>
-            <a href="/docs/platform/">See the patterns</a>
+            <a class="cai-btn cai-btn--outline" href="/docs/get-started/#level-3-tokens-core-and-platform">{{t:adopt.level3.install}}</a>
+            <a href="/docs/platform/">{{t:adopt.level3.see}}</a>
           </div>
         </article>
 
@@ -243,22 +237,22 @@
 
     <!-- ====================== FIT ====================== -->
     <section class="cai-platform-section landing-wrap" id="fit" aria-labelledby="fit-title">
-      <h2 class="landing-h2" id="fit-title">When CAI fits</h2>
+      <h2 class="landing-h2" id="fit-title">{{t:fit.title}}</h2>
       <div class="landing-fit">
         <div>
-          <h3 class="landing-subtitle">A good fit</h3>
+          <h3 class="landing-subtitle">{{t:fit.good}}</h3>
           <ul class="landing-fit__list">
-            <li>Content sites, documentation and public services that must meet WCAG 2.2 AA.</li>
-            <li>Server-rendered pages and static sites, in any back-end language.</li>
-            <li>Teams that want to read and own their CSS.</li>
+            <li>{{t:fit.good.public}}</li>
+            <li>{{t:fit.good.server}}</li>
+            <li>{{t:fit.good.own}}</li>
           </ul>
         </div>
         <div>
-          <h3 class="landing-subtitle">Not a good fit</h3>
+          <h3 class="landing-subtitle">{{t:fit.bad}}</h3>
           <ul class="landing-fit__list">
-            <li>You need ready-made React or Vue components.</li>
-            <li>You need a data grid, charts or a date-range picker: CAI has none.</li>
-            <li>You need a stable API today: CAI is in beta, and names can still change.</li>
+            <li>{{t:fit.bad.react}}</li>
+            <li>{{t:fit.bad.grid}}</li>
+            <li>{{t:fit.bad.beta}}</li>
           </ul>
         </div>
       </div>
@@ -266,30 +260,30 @@
 
     <!-- ====================== CLOSING CTA ====================== -->
     <section class="cai-platform-section landing-wrap" id="start" aria-labelledby="cta-title">
-      <h2 class="landing-h2" id="cta-title">Start with one link tag</h2>
-      <p class="landing-lead">Pick a level, copy the snippet, ship. Pin an exact version while CAI is in beta.</p>
+      <h2 class="landing-h2" id="cta-title">{{t:start.title}}</h2>
+      <p class="landing-lead">{{t:start.lead}}</p>
       <div class="cai-platform-actions">
-        <a class="cai-btn cai-btn--primary" href="#adopt">Get started</a>
-        <a class="cai-btn cai-btn--outline" href="/docs/">Read the documentation</a>
+        <a class="cai-btn cai-btn--primary" href="#adopt">{{t:hero.start}}</a>
+        <a class="cai-btn cai-btn--outline" href="/docs/">{{t:start.docs}}</a>
       </div>
     </section>
   </main>
 
   <footer class="landing-wrap">
     <div class="cai-platform-footer">
-      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
-      <nav class="cai-platform-actions" aria-label="Project links">
+      <p class="u-text-muted">{{t:footer.note}}</p>
+      <nav class="cai-platform-actions" aria-label="{{t:footer.links}}">
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/">Docs</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/platform/">Platform</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/">{{t:site.docs}}</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/platform/">{{t:nav.platform}}</a>
       </nav>
       <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
-        <legend class="cai-mode-switcher__label">Color mode</legend>
-        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <legend class="cai-mode-switcher__label">{{t:footer.mode}}</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="{{t:footer.mode-change}}"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
         <span class="cai-mode-cycle__status" role="status"></span>
-        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
-        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
-        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>{{t:footer.light}}</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>{{t:footer.dark}}</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>{{t:footer.contrast}}</label>
       </fieldset>
     </div>
   </footer>

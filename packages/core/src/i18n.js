@@ -127,6 +127,6 @@ export function t(key, el, vars) {
     locales.en[key] ??
     key;
   return vars
-    ? text.replace(/\{(\w+)\}/g, (m, name) => (name in vars ? vars[name] : m))
+    ? text.replace(/\{(\w+)\}/g, (m, name) => (Object.hasOwn(vars, name) ? vars[name] : m))
     : text;
 }

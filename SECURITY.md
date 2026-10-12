@@ -115,6 +115,7 @@ git diff pnpm-lock.yaml
 **Publishing:**
 - Packages are published only by `.github/workflows/publish.yml`, through npm trusted publishing (OIDC). No npm token is stored in GitHub or on any machine, and every release carries a provenance attestation.
 - The publish job runs in the `release` environment, which requires a reviewer's approval.
+- The publish job installs with `--ignore-scripts`: no dependency lifecycle script runs while it can mint an OIDC token.
 - A release happens only when the changesets "version packages" PR is merged, and only after lint, audit, build, unit tests and the tarball contract check (`pnpm check:pack`) pass.
 - Nobody publishes from a laptop.
 
@@ -126,6 +127,10 @@ git diff pnpm-lock.yaml
 - Published packages have zero runtime dependencies.
 - Dev dependencies are audited in CI (`pnpm audit --audit-level=high`); only allow-listed packages may run install scripts (`pnpm.onlyBuiltDependencies`).
 - GitHub Actions are pinned to commit SHAs and kept current by Dependabot.
+- Dependabot waits 7 days (`cooldown`) before proposing a new version, so a compromised release is usually pulled before it reaches a PR.
+
+**Docs site (GitHub Pages):**
+- Every page carries a Content Security Policy (`PAGES_CSP` in `vite.config.js`): scripts only from the site, and no `data:` URLs in frames or objects.
 
 ---
 
@@ -140,6 +145,9 @@ git diff pnpm-lock.yaml
 | 2026-09-30 | Publishing used a long-lived npm token, hid failures and skipped CI | ✅ Resolved | OIDC trusted publishing, changesets release PR, CI gate (requires the npm and GitHub settings above) |
 | 2026-09-30 | MIDI parser could hang the page on malformed files | ✅ Resolved | Bounds and length validation, size and event limits, regression tests |
 | 2026-09-30 | 40 advisories in dev dependencies | ✅ Resolved | vitest upgraded, unused dependencies and stale overrides removed |
+| 2026-10-12 | `release` environment missing (GitHub would create it unprotected) and `main` still unprotected | ⚠️ Open | Create `release` with a required reviewer and main-only deployments; add the `main` ruleset; npm trusted publishers point at `publish.yml` + `release` |
+| 2026-10-12 | The two token commits are still served by SHA on GitHub | ⚠️ Open | Revoke the token, ask GitHub Support to purge `9669d54` and `9df4341`, then delete `NPM_TOKEN` and disallow tokens on npm |
+| 2026-10-12 | `escapeHtml` did not escape `'`; publish job ran install scripts with `id-token: write`; Pages CSP allowed `data:` frames and objects; no Dependabot cooldown | ✅ Resolved | `&#39;` escaped; `--ignore-scripts` in the publish job; `data:` dropped; 7-day cooldown |
 | 2026-09-30 | Tarballs shipped without licence texts | ✅ Resolved | LICENSE per package, licence text next to every font (all fonts MIT since 2026-09-30) |
 
 ---

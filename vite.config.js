@@ -40,9 +40,10 @@ export const PAGES_CSP = [
   "media-src 'self'",
   "font-src 'self'",
   "connect-src 'self'",
-  "frame-src 'self' data:",
+  // srcdoc frames need no data:; the pages build never inlines assets
+  "frame-src 'self'",
   // The HTML elements page demonstrates <object> and <embed> with its own files
-  "object-src 'self' data:",
+  "object-src 'self'",
   "base-uri 'self'",
   "form-action 'self'",
 ].join("; ");

@@ -80,8 +80,10 @@ jobs:
           node-version: 24
           registry-url: "https://registry.npmjs.org"
 
+      # No lifecycle scripts while this job can mint an OIDC token: the build
+      # (esbuild included) works without them
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Build all packages
         run: pnpm build

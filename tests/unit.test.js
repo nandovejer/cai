@@ -118,6 +118,7 @@ describe("escapeHtml", () => {
     expect(escapeHtml("<div>")).toBe("&lt;div&gt;");
     expect(escapeHtml("&")).toBe("&amp;");
     expect(escapeHtml('"hello"')).toBe("&quot;hello&quot;");
+    expect(escapeHtml("it's")).toBe("it&#39;s");
   });
 
   it("handles complex HTML", () => {

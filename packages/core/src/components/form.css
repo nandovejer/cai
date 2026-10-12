@@ -134,6 +134,7 @@
   background: var(--cai-surface-strong);
   color: var(--cai-text-primary);
   border: none;
+  border-radius: var(--cai-radius-md);
   padding: var(--cai-space-2xs) var(--cai-space-sm);
   font-size: var(--cai-text-sm);
   font-family: var(--cai-font-sans);
@@ -174,6 +175,7 @@
 .cai-fieldset {
   font-family: var(--cai-font-sans); /* UI text: never the body serif */
   border: 1px solid var(--cai-divider);
+  border-radius: var(--cai-radius-md);
   padding: var(--cai-space-md) var(--cai-space-lg);
   margin: 0;
   background: var(--cai-input-bg);
@@ -304,6 +306,7 @@
   width: 18px;
   height: 18px;
   border: 2px solid var(--cai-outline);
+  border-radius: var(--cai-radius-sm);
   background: transparent;
   cursor: pointer;
   position: relative;
@@ -397,7 +400,7 @@
   inline-size: 48px;
   block-size: 24px;
   background: var(--cai-outline);
-  border-radius: 12px;
+  border-radius: var(--cai-radius-full); /* a pill: a switch track, round by nature */
   position: relative;
   transition: background var(--cai-duration-fast);
 }

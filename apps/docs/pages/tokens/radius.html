@@ -1,13 +1,14 @@
 <!-- cai:page
 title: Radius
-description: The corner radius scale, from square to round.
+description: The corner radius scale: square, 2px, 4px at most, and round.
 area: tokens
 order: 5
 group: families
 files: tokens.json → radius
 -->
     <div class="docs-block" id="t-radius">
-          <p>Core uses three steps: <code class="cai-code-inline">--cai-radius-sm</code> for small controls and tags, <code class="cai-code-inline">--cai-radius-md</code> for cards and frames, and <code class="cai-code-inline">--cai-radius-lg</code> for dialogs.</p>
+          <p>Every box has the same corner, <code class="cai-code-inline">--cai-radius-md</code> (4px): buttons, fields with a full border, cards, alerts, menus, dialogs. It is the ceiling: no rectangle is rounder. <code class="cai-code-inline">--cai-radius-sm</code> is for small marks (inline code, <code class="cai-code-inline">kbd</code>, a checkbox, a thin bar) and for a row inside a rounded box, so the two corners stay concentric. <code class="cai-code-inline">--cai-radius-none</code> is for a box that joins a neighbour, or a field drawn by its bottom edge only, such as the select and the text field.</p>
+          <p><code class="cai-code-inline">--cai-radius-full</code> is not a corner: it makes a pill or a circle, for shapes that are round by nature, such as the switch track and the count badge. A dot, a radio button or a slider thumb is a circle with <code class="cai-code-inline">50%</code>.</p>
           <div class="docs-demo__stage">
             <ul class="docs-specimens">
               <li>
@@ -24,16 +25,6 @@ files: tokens.json → radius
                 <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-md)" aria-hidden="true"></span>
                 <code>--cai-radius-md</code>
                 <span>4px</span>
-              </li>
-              <li>
-                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-lg)" aria-hidden="true"></span>
-                <code>--cai-radius-lg</code>
-                <span>8px</span>
-              </li>
-              <li>
-                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-xl)" aria-hidden="true"></span>
-                <code>--cai-radius-xl</code>
-                <span>12px</span>
               </li>
               <li>
                 <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-full)" aria-hidden="true"></span>

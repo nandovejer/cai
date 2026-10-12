@@ -12,8 +12,8 @@
   <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-C0at8LUP.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-dzKKr0m0.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-C_4RGLs6.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-iHWlewiB.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D4vvVrCr.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DBtNI4eA.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -185,17 +185,17 @@
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage o-grid docs-cols-2">
             <div class="cai-card">
-              <p class="cai-card__title">API gateway</p>
+              <h3 class="cai-card__title">API gateway</h3>
               <p class="cai-card__body">1,204 requests per minute.</p>
             </div>
             <div class="cai-card">
-              <p class="cai-card__title">Database</p>
+              <h3 class="cai-card__title">Database</h3>
               <p class="cai-card__body">48 active connections.</p>
             </div>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>None known.</p>
+          <p>In a linked card, the body text cannot be selected with a mouse: the title link covers the whole card, so a drag follows or moves the link. Find in page, keyboard selection and screen readers reach the text as usual.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Card documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -214,33 +214,81 @@
 &lt;/article&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>There are no modifiers: one card, three classes.</p>
+            <p>There are no modifiers: one card, three classes. A link in the title makes the whole card one link.</p>
             <div class="cai-table-wrap" role="region" aria-label="Card parts" tabindex="0">
               <table class="cai-table">
                 <thead>
-                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                  <tr><th scope="col">Class or markup</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-card</code></div></td><td data-label="What it does"><div>The surface: border, padding, a shadow on hover</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-card__title</code></div></td><td data-label="What it does"><div>Base size, semibold, primary text colour</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-card__body</code></div></td><td data-label="What it does"><div>Medium size, secondary text colour</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.cai-card</code></div></td><td data-label="What it does"><div>The surface: border and padding</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.cai-card__title</code></div></td><td data-label="What it does"><div>Base size, semibold, primary text colour</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.cai-card__body</code></div></td><td data-label="What it does"><div>Medium size, secondary text colour</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>&lt;a&gt;</code> in <code>.cai-card__title</code></div></td><td data-label="What it does"><div>A linked card: the link covers the card, a darker border and a shadow on hover, a focus ring round the card</div></td></tr>
                 </tbody>
               </table>
             </div>
+            <p>Compose a card with the layout objects and the other components, with no new class: a linked card, an avatar or an icon beside the text with <code>.o-media</code>, an image on top, and a row of actions with <code>.o-row</code>.</p>
+            <div class="docs-example" data-docs-specimen>
+            <div class="docs-demo__stage o-grid docs-cols-2">
+              <article class="cai-card">
+                <h4 class="cai-card__title"><a href="../../../docs/components/table/">Table</a></h4>
+                <p class="cai-card__body">Rows of records that share the same attributes.</p>
+              </article>
+              <article class="cai-card">
+                <div class="o-media">
+                  <span class="cai-avatar cai-avatar--md" aria-hidden="true">CD</span>
+                  <div class="o-media__body">
+                    <h4 class="cai-card__title">Carlos Díaz</h4>
+                    <p class="cai-card__body">Looks after billing and invoices.</p>
+                  </div>
+                </div>
+              </article>
+              <article class="cai-card">
+                <div class="cai-platform-image u-mb-sm">
+                  <picture>
+                    <source type="image/avif" srcset="../../../assets/desert-640-7S-Gq-k8.avif">
+                    <source type="image/webp" srcset="../../../assets/desert-640-3pzpTNhG.webp">
+                    <img src="../../../assets/desert-640-BOV7mApg.jpg" width="640" height="360" alt="Soft dunes in warm light under a clear blue sky" loading="lazy" decoding="async">
+                  </picture>
+                </div>
+                <h4 class="cai-card__title">Dunes at sunset</h4>
+                <p class="cai-card__body">A two-hour walk from the car park.</p>
+              </article>
+              <article class="cai-card">
+                <h4 class="cai-card__title">Database</h4>
+                <p class="cai-card__body">48 active connections.</p>
+                <div class="o-row">
+                  <span class="cai-tag cai-tag--green cai-tag--dot">Running</span>
+                  <button class="cai-btn cai-btn--secondary cai-btn--sm" type="button">Restart the database</button>
+                </div>
+              </article>
+            </div>
+            </div>
+            <ul>
+              <li><strong>Linked card:</strong> the <code>&lt;a&gt;</code> goes inside the heading, round its text. The rest of the card stays text.</li>
+              <li><strong>Avatar or icon:</strong> <code>.o-media</code> puts it beside <code>.o-media__body</code>, which holds the title and the body. Next to a name, hide the avatar with <code>aria-hidden="true"</code>: it repeats the name.</li>
+              <li><strong>Image on top:</strong> the image frame of <code>@cai-ds/platform</code> (<code>.cai-platform-image</code>), inside the padding, with <code>.u-mb-sm</code> under it. Its alt text says what the picture shows; if it only repeats the title, leave it empty (<code>alt=""</code>). With core alone, use an <code>&lt;img&gt;</code> and your own size rules.</li>
+              <li><strong>Actions:</strong> <code>.o-row</code> with small buttons (<code>.cai-btn--sm</code>) or tags (<code>.cai-tag</code>), last in the card. Only in a card that is not linked.</li>
+            </ul>
             <h3 id="how">How it works</h3>
             <p>A container styled by <code>components/card.css</code>. No JavaScript.</p>
             <ul>
               <li>Use any element: <code>&lt;article&gt;</code> for a self-contained item, <code>&lt;div&gt;</code> for a group of facts, <code>&lt;li&gt;</code> inside a list of cards.</li>
               <li>The title class goes on the heading level that fits the page outline.</li>
+              <li>The last title or body has no space under it: the padding is the card's last space.</li>
+              <li>A linked card: the link's <code>::after</code> is stretched over the card (<code>position: absolute; inset: 0</code>), so a click anywhere in it follows the link. The card is <code>position: relative</code> to hold it. On hover the border turns <code>--cai-input-border</code> and a small shadow shows; on keyboard focus a ring goes round the card. The hover is found with <code>:has()</code>; a card without a link does not change on hover.</li>
               <li>To lay cards out, use the <a href="../../../docs/components/layout/">grid object</a> or the <a href="../../../docs/platform/feature-grid/">feature grid</a>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Nothing changes: a card is HTML and CSS.</p>
+            <p>Nothing changes: a card, linked or not, is HTML and CSS.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>A card is not interactive and takes no focus.</p>
             <ul>
               <li>Links and buttons inside it keep their own behaviour.</li>
-              <li>To link a whole card, put the link on the title text, not around the card: one tab stop, and a name that is the title.</li>
+              <li>A linked card has one tab stop, its title link. Enter follows it. The focus ring shows round the link and round the whole card.</li>
+              <li>A screen reader names the link with the title, then reads the body as text. Add no <code>role</code>, <code>tabindex</code> or <code>aria-label</code> to the card.</li>
+              <li>Put the link on the title text, never round the card: a link round the card takes every word in it as its name.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
@@ -253,20 +301,32 @@
             <ul>
               <li>For rows of records with the same attributes, use a <a href="../../../docs/components/table/">table</a>.</li>
               <li>For a message about the page, use an <a href="../../../docs/components/alert/">alert</a>.</li>
+              <li>For a list of links, each with one line of description, use a plain list (<code>&lt;ul&gt;</code>): a card per link adds borders and nothing else.</li>
               <li>Do not put a card inside a card.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
-                <figcaption><strong class="docs-dodont__verdict">Do</strong> Cards side by side that say the same kind of thing: a noun, then one line.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Put the link on the title: the whole card takes the click, the link is named by the title, and there is one tab stop.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="o-grid docs-cols-2"><div class="cai-card"><p class="cai-card__title">API gateway</p><p class="cai-card__body">1,204 requests per minute.</p></div><div class="cai-card"><p class="cai-card__title">Database</p><p class="cai-card__body">48 active connections.</p></div></div>
+                  <div class="cai-card"><h4 class="cai-card__title"><a href="../../../docs/components/table/">Table</a></h4><p class="cai-card__body">Rows of records that share the same attributes.</p></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
-                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A card inside a card: two borders for one thing, and less room for the content.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A link round the whole card, or a “Read more” link in it: the first takes every word of the card as its name, the second is a link whose name says nothing out of context.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-card"><p class="cai-card__title">Services</p><div class="cai-card"><p class="cai-card__title">API gateway</p><p class="cai-card__body">1,204 requests per minute.</p></div></div>
+                  <pre class="cai-code-block" data-lang="html"><code>&lt;a href="/table/"&gt;
+  &lt;div class="cai-card"&gt;
+    &lt;h4 class="cai-card__title"&gt;Table&lt;/h4&gt;
+    &lt;p class="cai-card__body"&gt;Rows of records…&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/a&gt;
+
+&lt;div class="cai-card"&gt;
+  &lt;h4 class="cai-card__title"&gt;Table&lt;/h4&gt;
+  &lt;p class="cai-card__body"&gt;Rows of records…&lt;/p&gt;
+  &lt;a href="/table/"&gt;Read more&lt;/a&gt;
+&lt;/div&gt;</code></pre>
                 </div>
               </figure>
             </div>
@@ -275,9 +335,10 @@
             <ul>
               <li>No full stop on the title.</li>
               <li>Keep cards in one group parallel: the same kind of title, the same length of body.</li>
+              <li>In a linked card, the title is the link text: it says where the link goes, so the card needs no “Read more”.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
-            <p>The title is primary text and the body secondary text, on the card surface.</p>
+            <p>The title is primary text and the body secondary text, on the card surface. In a linked card the title is a link, and the border on hover and the focus ring sit between the card and the page.</p>
             <div class="cai-table-wrap" role="region" aria-label="Card contrast in each mode" tabindex="0">
               <table class="cai-table docs-contrast">
                 <thead>
@@ -286,18 +347,22 @@
                 <tbody>
                   <tr><td data-label="Part"><div>Title</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Body</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title link</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border of a linked card, on hover</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border of a linked card, on hover, against the page</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring round a linked card</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> the card takes none; the links and buttons inside keep their own ring.</li>
-              <li><strong>Edges:</strong> the border (<code>--cai-divider</code>) is decorative and has no minimum: the content and the space around it group the card.</li>
+              <li><strong>Focus:</strong> a plain card takes none; the links and buttons inside keep their own ring. In a linked card the title link keeps its ring, and a second one, 2 px of <code>--cai-focus-ring</code>, goes round the card, 2 px outside its border. Both are outlines, so they stay in forced-colors mode.</li>
+              <li><strong>Edges:</strong> the border (<code>--cai-divider</code>) is decorative and has no minimum: the content and the space around it group the card. On a linked card the hover border is <code>--cai-input-border</code>, 3:1 or more, with a shadow.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 14 tokens that <code>components/card.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 15 tokens that <code>components/card.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="../../../docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="../../../docs/tokens/color/#cai-surface"><code>--cai-surface</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="../../../docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="../../../docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="../../../docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="../../../docs/tokens/color/#cai-surface"><code>--cai-surface</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="../../../docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
               <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code></dd></div>
               <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-text-base</code>, <code>--cai-text-md</code></dd></div>
               <div><dt><a href="../../../docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-sm</code></dd></div>

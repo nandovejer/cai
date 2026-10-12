@@ -9,10 +9,10 @@
   <link rel="icon" href="./assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="./assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="./assets/index-DbvPCDwi.js"></script>
+  <script type="module" crossorigin src="./assets/index-BZft3OYK.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/site-header-KKpdGfOz.js">
-  <link rel="stylesheet" crossorigin href="./assets/index-C1vS7P04.css">
-  <link rel="stylesheet" crossorigin href="./assets/site-header-C_4RGLs6.css">
+  <link rel="stylesheet" crossorigin href="./assets/index-CkxwMlrl.css">
+  <link rel="stylesheet" crossorigin href="./assets/site-header-D4vvVrCr.css">
 </head>
 <body class="cai-platform-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -226,165 +226,90 @@
         <article class="landing-level" aria-labelledby="level-1-title">
           <div class="landing-level__head">
             <div class="landing-level__intro">
-              <p class="landing-eyebrow">Level 1</p>
-              <h3 class="landing-level__title" id="level-1-title">Tokens only</h3>
-              <span class="cai-tag cai-tag--green">Standalone</span>
-              <p class="u-text-muted">Your CSS, your components, CAI's values. One stylesheet of custom properties plus one MIT-licensed font.</p>
+              <h3 class="landing-level__title" id="level-1-title"><span class="landing-eyebrow">Level 1</span> Tokens only</h3>
+              <span class="cai-tag cai-tag--gray">Standalone</span>
+              <p>Choose this if you already have components or a framework and only want consistent values and color modes.</p>
             </div>
-            <ol class="landing-stack landing-stack--mini" aria-label="Layers included in level 1">
+            <ol class="landing-stack landing-stack--mini" aria-label="Layers in level 1">
               <li class="is-included">tokens</li>
               <li class="is-excluded">core<span class="u-sr-only"> (not included)</span></li>
               <li class="is-excluded">platform<span class="u-sr-only"> (not included)</span></li>
             </ol>
           </div>
           <div class="landing-level__body">
-            <div>
-              <p class="landing-eyebrow">You get</p>
-              <ul class="landing-level__get">
-                <li><span data-count="primitives">53</span> color primitives in <span data-count="families">7</span> families</li>
-                <li><span data-count="semantic">55</span> semantic tokens, each defined for light, dark and high contrast</li>
-                <li>Spacing (12), control heights (4), type sizes (9), radii (6) and shadows (3)</li>
-                <li>ET Book for headings, self-hosted and MIT licensed; system fonts for text and code</li>
-                <li>A <a href="./docs/tokens/contrast/">contrast check</a> for your own colors, as a command (<code class="cai-code-inline">npx @cai-ds/tokens check-contrast</code>) or in the browser</li>
-              </ul>
-            </div>
-            <div>
-              <p class="landing-eyebrow">Stop here if</p>
-              <p>you already have components or a framework and only want consistent values and color modes.</p>
+            <h4 class="landing-eyebrow">You get</h4>
+            <ul class="landing-level__get">
+              <li><span data-count="primitives">53</span> color primitives in <span data-count="families">7</span> families</li>
+              <li><span data-count="semantic">55</span> semantic tokens, each defined for light, dark and high contrast</li>
+              <li>Spacing (12), control heights (4), type sizes (9), radii (6) and shadows (3)</li>
+              <li>ET Book for headings, self-hosted and MIT licensed; system fonts for text and code</li>
+              <li>A <a href="./docs/tokens/contrast/">contrast check</a> for your own colors, as a command or in the browser</li>
+            </ul>
+            <div class="landing-level__links">
+              <a href="./docs/get-started/#level-1-tokens-only">Install level 1</a>
               <a href="./docs/tokens/">See the tokens</a>
             </div>
-          </div>
-          <div class="landing-level__snippets">
-            <p class="landing-eyebrow">Install</p>
-            <div class="cai-platform-command-block">
-              <code class="cai-platform-command-block__cmd u-select-all"><span class="cai-platform-command-block__prefix" aria-hidden="true">$ </span><span id="cmd-l1">npm install @cai-ds/tokens</span></code>
-              <button class="cai-copy-btn" type="button" data-copy-from="cmd-l1" aria-label="Copy level 1 install command">Copy</button>
-            </div>
-            <div class="landing-snippet">
-              <div class="landing-snippet__bar">
-                <span class="landing-eyebrow">CDN</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="snip-l1" aria-label="Copy level 1 CDN snippet">Copy</button>
-              </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Level 1 CDN snippet"><code id="snip-l1">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;</code></pre>
-            </div>
-            <p class="landing-level__note u-text-muted">Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens with no <code class="cai-code-inline">@font-face</code>.</p>
           </div>
         </article>
 
         <article class="landing-level" aria-labelledby="level-2-title">
           <div class="landing-level__head">
             <div class="landing-level__intro">
-              <p class="landing-eyebrow">Level 2</p>
-              <h3 class="landing-level__title" id="level-2-title">Tokens + Core</h3>
+              <h3 class="landing-level__title" id="level-2-title"><span class="landing-eyebrow">Level 2</span> Tokens + Core</h3>
               <span class="cai-tag cai-tag--gray">Requires tokens</span>
-              <p class="u-text-muted">Ready-made components and layout objects that consume the tokens, plus optional JavaScript for the interactive ones.</p>
+              <p>Choose this if you are building pages or an app and bring your own page layout.</p>
             </div>
-            <ol class="landing-stack landing-stack--mini" aria-label="Layers included in level 2">
+            <ol class="landing-stack landing-stack--mini" aria-label="Layers in level 2">
               <li class="is-included">tokens</li>
               <li class="is-included">core</li>
               <li class="is-excluded">platform<span class="u-sr-only"> (not included)</span></li>
             </ol>
           </div>
           <div class="landing-level__body">
-            <div>
-              <p class="landing-eyebrow">You get</p>
-              <ul class="landing-level__get">
-                <li><span data-count="components">24</span> components: buttons, forms, tables, tabs, modal, media player and more</li>
-                <li><span data-count="objects">7</span> layout objects and a small set of utilities</li>
-                <li>Motion, z-index and breakpoint settings</li>
-                <li>Optional <code class="cai-code-inline">cai.min.js</code>: one ES module that wires tabs, modals, copy buttons and players</li>
-                <li>Print styles and right-to-left layouts, with no extra file</li>
-                <li>Everything in one <a href="./docs/get-started/layers/">cascade layer</a>, <code class="cai-code-inline">cai</code>: your own CSS wins without <code class="cai-code-inline">!important</code></li>
-              </ul>
-            </div>
-            <div>
-              <p class="landing-eyebrow">Stop here if</p>
-              <p>you are building pages or an app and bring your own page layout.</p>
+            <h4 class="landing-eyebrow">Adds to level 1</h4>
+            <ul class="landing-level__get">
+              <li><span data-count="components">24</span> components: buttons, forms, tables, tabs, modal, media player and more</li>
+              <li><span data-count="objects">7</span> layout objects, a small set of utilities and the styles of bare HTML elements</li>
+              <li>Optional JavaScript for tabs, modals, copy buttons and players; every page works without it</li>
+              <li>Print styles and right-to-left layouts, with no extra file</li>
+              <li>Everything in one <a href="./docs/get-started/layers/">cascade layer</a>, <code class="cai-code-inline">cai</code>: your own CSS wins without <code class="cai-code-inline">!important</code></li>
+            </ul>
+            <div class="landing-level__links">
+              <a href="./docs/get-started/#level-2-tokens-and-core">Install level 2</a>
               <a href="./docs/components/">See the components</a>
             </div>
-          </div>
-          <div class="landing-level__snippets">
-            <p class="landing-eyebrow">Install</p>
-            <div class="cai-platform-command-block">
-              <code class="cai-platform-command-block__cmd u-select-all"><span class="cai-platform-command-block__prefix" aria-hidden="true">$ </span><span id="cmd-l2">npm install @cai-ds/tokens @cai-ds/core</span></code>
-              <button class="cai-copy-btn" type="button" data-copy-from="cmd-l2" aria-label="Copy level 2 install command">Copy</button>
-            </div>
-            <div class="landing-snippet">
-              <div class="landing-snippet__bar">
-                <span class="landing-eyebrow">CDN</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="snip-l2" aria-label="Copy level 2 CDN snippet">Copy</button>
-              </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Level 2 CDN snippet"><code id="snip-l2">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
-
-&lt;!-- Optional: JavaScript behaviors --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-            </div>
-            <p class="landing-level__note u-text-muted">Need a single component? Load <code class="cai-code-inline">dist/base.min.css</code> plus the file you want, for example <code class="cai-code-inline">dist/components/button.min.css</code>. Markup you cannot add classes to, such as Markdown or a CMS? Load <a href="./docs/get-started/classless/"><code class="cai-code-inline">classless.css</code></a> and mark the zone with <code class="cai-code-inline">data-cai-classless</code>.</p>
           </div>
         </article>
 
         <article class="landing-level" aria-labelledby="level-3-title">
           <div class="landing-level__head">
             <div class="landing-level__intro">
-              <p class="landing-eyebrow">Level 3</p>
-              <h3 class="landing-level__title" id="level-3-title">Tokens + Core + Platform</h3>
+              <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">Level 3</span> Tokens + Core + Platform</h3>
               <span class="cai-tag cai-tag--gray">Requires core + tokens</span>
-              <p class="u-text-muted">The full stack: app-shell patterns for whole pages. This landing is built at this level.</p>
+              <p>Choose this if you build whole sites and want the page shell, header, footer and search. This landing is built at this level.</p>
             </div>
-            <ol class="landing-stack landing-stack--mini" aria-label="Layers included in level 3">
+            <ol class="landing-stack landing-stack--mini" aria-label="Layers in level 3">
               <li class="is-included">tokens</li>
               <li class="is-included">core</li>
               <li class="is-included">platform</li>
             </ol>
           </div>
           <div class="landing-level__body">
-            <div>
-              <p class="landing-eyebrow">You get</p>
-              <ul class="landing-level__get">
-                <li>Page, main, content and section wrappers with a consistent vertical rhythm</li>
-                <li>Page header, action group, feature grid and footer</li>
-                <li>Skip link and command block</li>
-                <li>CSS only: no extra JavaScript</li>
-              </ul>
-            </div>
-            <div>
-              <p class="landing-eyebrow">That is everything</p>
-              <p>There is no level 4.</p>
+            <h4 class="landing-eyebrow">Adds to level 2</h4>
+            <ul class="landing-level__get">
+              <li>Page, main, content and section wrappers with a consistent vertical rhythm</li>
+              <li>Page header, action group, feature grid, image frame and footer</li>
+              <li>Skip link and command block</li>
+              <li>Site search, with optional JavaScript</li>
+            </ul>
+            <div class="landing-level__links">
+              <a href="./docs/get-started/#level-3-tokens-core-and-platform">Install level 3</a>
               <a href="./docs/platform/">See the patterns</a>
-            </div>
-          </div>
-          <div class="landing-level__snippets">
-            <p class="landing-eyebrow">Install</p>
-            <div class="cai-platform-command-block">
-              <code class="cai-platform-command-block__cmd u-select-all"><span class="cai-platform-command-block__prefix" aria-hidden="true">$ </span><span id="cmd-l3">npm install @cai-ds/tokens @cai-ds/core @cai-ds/platform</span></code>
-              <button class="cai-copy-btn" type="button" data-copy-from="cmd-l3" aria-label="Copy level 3 install command">Copy</button>
-            </div>
-            <div class="landing-snippet">
-              <div class="landing-snippet__bar">
-                <span class="landing-eyebrow">CDN</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="snip-l3" aria-label="Copy level 3 CDN snippet">Copy</button>
-              </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Level 3 CDN snippet"><code id="snip-l3">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.css&quot;&gt;
-
-&lt;!-- Optional: JavaScript behaviors --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
             </div>
           </div>
         </article>
 
       </div>
-
-      <div class="cai-alert cai-alert--info" role="note">
-        <div class="cai-alert__icon" aria-hidden="true">i</div>
-        <div>
-          <div class="cai-alert__title">Installing with Yarn or pnpm?</div>
-          <div class="cai-alert__body"><code class="cai-code-inline">pnpm add</code> and <code class="cai-code-inline">yarn add</code> take the same package lists. npm and pnpm install the required lower layers for you; Yarn only warns, so always list every package as shown.</div>
-        </div>
-      </div>
-      <p class="u-text-muted">On a CDN, pin the exact version and add an integrity hash in production.</p>
     </section>
 
     <!-- ====================== FIT ====================== -->

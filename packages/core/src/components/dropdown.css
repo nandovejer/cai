@@ -1,0 +1,145 @@
+/* --------------------------------------------------------------------------
+   CAI Component: dropdown
+   A button that opens a short list of actions or links
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+
+/* A native popover opened by a <button popovertarget>. The browser gives
+   Escape, light dismiss (a click outside), the top layer, focus return to the
+   button and the expanded state for assistive technology: there is no
+   JavaScript. The list is plain links and buttons in the tab order, a
+   disclosure of actions and not an ARIA menu, so it needs no arrow keys.
+   In a browser without the popover API the list simply stays in the flow,
+   under the button. */
+.cai-dropdown {
+  display: inline-block;
+}
+
+.cai-dropdown__list {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cai-dropdown__item {
+  display: flex;
+  align-items: center;
+  inline-size: 100%;
+  min-block-size: var(--cai-control-lg);
+  margin: 0;
+  padding-inline: var(--cai-space-sm);
+  border: 0;
+  border-radius: var(--cai-radius-md);
+  background: transparent;
+  color: var(--cai-text-primary);
+  font: inherit;
+  font-family: var(--cai-font-sans); /* UI text: never the body serif */
+  font-size: var(--cai-text-md);
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--cai-duration-fast);
+}
+
+.cai-dropdown__item:hover {
+  background: var(--cai-surface-hover);
+  text-decoration: none;
+}
+
+.cai-dropdown__item:active {
+  background: var(--cai-surface-pressed);
+}
+
+/* Inside the panel, so the ring is not clipped by its edge */
+.cai-dropdown__item:focus-visible {
+  outline: 2px solid var(--cai-focus-ring);
+  outline-offset: -2px;
+}
+
+/* Danger is said in words as well as in color: the label names the action */
+.cai-dropdown__item--danger {
+  color: var(--cai-color-danger);
+}
+
+.cai-dropdown__item[aria-disabled="true"],
+.cai-dropdown__item:disabled {
+  color: var(--cai-text-disabled);
+  cursor: not-allowed;
+}
+
+.cai-dropdown__item[aria-disabled="true"]:hover,
+.cai-dropdown__item:disabled:hover {
+  background: transparent;
+}
+
+/* A rule between groups of actions */
+.cai-dropdown__separator {
+  margin-block: var(--cai-space-2xs);
+  border: 0;
+  border-block-start: 1px solid var(--cai-divider);
+}
+
+/* The panel. Where there is no popover API it is a plain block in the flow,
+   so these rules wait for it. */
+@supports selector(:popover-open) {
+  .cai-dropdown__menu {
+    inline-size: auto;
+    min-inline-size: 12rem;
+    max-block-size: min(24rem, 70dvb);
+    margin: 0;
+    padding: var(--cai-space-2xs);
+    border: 1px solid var(--cai-outline);
+    border-radius: var(--cai-radius-lg);
+    background: var(--cai-surface);
+    color: var(--cai-text-primary);
+    box-shadow: var(--cai-shadow-md);
+    overflow: auto;
+  }
+
+  /* Without anchor positioning it is a sheet at the bottom of the screen: the
+     whole width, always in reach of a thumb */
+  .cai-dropdown__menu:popover-open {
+    position: fixed;
+    inset: auto var(--cai-space-md) var(--cai-space-md);
+  }
+}
+
+/* Enhancement, where the browser has CSS anchor positioning (Chrome and Edge
+   125, Safari 26, Firefox 147: Newly available, not yet Widely available):
+   the panel opens under its button, at its start edge, and flips above when
+   there is no room below. Same parts as the tooltip: anchor-name,
+   anchor-scope, position-anchor, anchor() and position-try-fallbacks. */
+@supports selector(:popover-open) and (anchor-name: --cai-dropdown) and (inset-block-start: anchor(end)) {
+  /* Each dropdown sees only its own button */
+  .cai-dropdown {
+    anchor-scope: --cai-dropdown;
+  }
+
+  .cai-dropdown > :not(.cai-dropdown__menu) {
+    anchor-name: --cai-dropdown;
+  }
+
+  .cai-dropdown__menu:popover-open {
+    position-anchor: --cai-dropdown;
+    inset: auto;
+    inset-block-start: anchor(end);
+    inset-inline-start: anchor(start);
+    margin-block: var(--cai-space-2xs);
+    position-try-fallbacks: flip-block;
+  }
+}
+
+/* Forced colors: the hover fill is dropped, so say it with an underline */
+@media (forced-colors: active) {
+  .cai-dropdown__item:hover {
+    text-decoration: underline;
+  }
+
+  .cai-dropdown__item[aria-disabled="true"],
+  .cai-dropdown__item:disabled {
+    color: GrayText;
+  }
+}

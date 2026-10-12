@@ -49,7 +49,7 @@ Every component also ships as its own file in `dist/components/` — load only w
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/components/card.css">
 ```
 
-Available: `accordion`, `alert`, `avatar`, `breadcrumb`, `button`, `card`, `code`, `copy-btn`, `figure`, `form`, `icon-grid`, `modal`, `mode-switcher`, `pagination`, `player`, `progress`, `select`, `sidebar`, `table`, `tabs`, `tag`, `toast`, `tooltip` (+ `_animations` for the shared keyframes). Each has a `.min.css` twin.
+Available: `accordion`, `alert`, `avatar`, `breadcrumb`, `button`, `card`, `code`, `copy-btn`, `dropdown`, `figure`, `form`, `icon-grid`, `modal`, `mode-switcher`, `pagination`, `player`, `progress`, `select`, `sidebar`, `table`, `tabs`, `tag`, `toast`, `tooltip` (+ `_animations` for the shared keyframes). Each has a `.min.css` twin.
 
 ### Using a single JS behavior
 
@@ -102,7 +102,7 @@ Every stylesheet puts its rules in a layer of one container layer, `cai`: `cai.t
 
 - Buttons (primary, secondary, ghost, outline, danger)
 - Forms (inputs, selects, checkboxes, toggles, file upload)
-- Cards, tables, tabs, breadcrumbs, pagination, code blocks
+- Cards, tables, tabs, breadcrumbs, pagination, dropdowns, code blocks
 - Players (video, audio, MIDI)
 - Sidebar navigation
 - Alerts, toasts, badges, avatars

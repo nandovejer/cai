@@ -1,0 +1,161 @@
+<!-- cai:page
+title: Dropdown
+description: A button that opens a short list of actions or links, anchored under it.
+area: components
+group: actions
+files: components/dropdown.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-dropdown">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-dropdown">
+              <button class="cai-btn cai-btn--secondary" type="button" popovertarget="demo-dropdown">Actions</button>
+              <div class="cai-dropdown__menu" id="demo-dropdown" popover>
+                <ul class="cai-dropdown__list">
+                  <li><a class="cai-dropdown__item" href="#example">Edit</a></li>
+                  <li><button class="cai-dropdown__item" type="button">Duplicate</button></li>
+                  <li><button class="cai-dropdown__item" type="button" aria-disabled="true">Move</button></li>
+                  <li><hr class="cai-dropdown__separator"></li>
+                  <li><button class="cai-dropdown__item cai-dropdown__item--danger" type="button">Delete project</button></li>
+                </ul>
+              </div>
+            </div>
+            <p class="docs-demo__note">Press Escape or click outside to close it.</p>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>There are no arrow keys: Tab moves between the actions, as in any list of buttons. A browser without CSS anchor positioning opens the list as a sheet at the bottom of the screen instead of under the button.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Dropdown documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-dropdown" aria-label="Copy the dropdown markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Dropdown markup"><code id="code-dropdown">&lt;div class=&quot;cai-dropdown&quot;&gt;
+  &lt;button class=&quot;cai-btn cai-btn--secondary&quot; type=&quot;button&quot; popovertarget=&quot;project-actions&quot;&gt;Actions&lt;/button&gt;
+  &lt;div class=&quot;cai-dropdown__menu&quot; id=&quot;project-actions&quot; popover&gt;
+    &lt;ul class=&quot;cai-dropdown__list&quot;&gt;
+      &lt;li&gt;&lt;a class=&quot;cai-dropdown__item&quot; href=&quot;/project/edit/&quot;&gt;Edit&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;button class=&quot;cai-dropdown__item&quot; type=&quot;button&quot;&gt;Duplicate&lt;/button&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;hr class=&quot;cai-dropdown__separator&quot;&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;button class=&quot;cai-dropdown__item cai-dropdown__item--danger&quot; type=&quot;button&quot;&gt;Delete project&lt;/button&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <div class="cai-table-wrap" role="region" aria-label="Dropdown parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-dropdown</code></div></td><td data-label="What it does"><div>The wrapper: the button and its panel, side by side in the source. It scopes the anchor, so several dropdowns on a page each open under their own button</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>popovertarget</code> and <code>popover</code></div></td><td data-label="What it does"><div>The button names the panel by its <code>id</code>; the panel is the popover. The browser does the rest</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-dropdown__menu</code></div></td><td data-label="What it does"><div>The panel: a surface with an edge and a shadow, at least 12 rem wide, scrolling when it is taller than 24 rem</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-dropdown__list</code></div></td><td data-label="What it does"><div>The <code>&lt;ul&gt;</code> of actions</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-dropdown__item</code></div></td><td data-label="What it does"><div>A link or a button, at least 44 px high and the width of the panel</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-dropdown__item--danger</code></div></td><td data-label="What it does"><div>A destructive action, in the danger color</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>aria-disabled="true"</code></div></td><td data-label="What it does"><div>An action that is not available now: disabled text color, and it keeps its place in the tab order so a reader can find out it exists</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-dropdown__separator</code></div></td><td data-label="What it does"><div>A rule between two groups of actions, an <code>&lt;hr&gt;</code> in its own <code>&lt;li&gt;</code></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>A native <a href="https://developer.mozilla.org/en-US/docs/Web/API/Popover_API">popover</a> opened by a button with <code>popovertarget</code>, styled by <code>components/dropdown.css</code>. There is no JavaScript.</p>
+            <ul>
+              <li>The browser puts the panel in the top layer, closes it on Escape or a click outside, returns the focus to the button and tells assistive technology whether it is expanded.</li>
+              <li>Where the browser has CSS anchor positioning (Chrome and Edge 125, Safari 26, Firefox 147) the panel opens under the button at its start edge, and flips above when there is no room. Without it the panel is a sheet at the bottom of the screen.</li>
+              <li>In a browser without the popover API the list stays in the page, under the button, and every action still works.</li>
+              <li>It is a list of actions, not an ARIA <code>menu</code>: that role promises arrow keys, a roving tabindex and typeahead, which CAI does not script. Plain links and buttons keep every behaviour the browser gives them.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the popover is HTML. The actions that are buttons need your own script to do something, as any button does; the ones that are links work as they are.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>Enter or Space on the button opens the panel and moves the focus to the first action. Tab and Shift+Tab move between the actions. Escape closes the panel and returns the focus to the button.</p>
+            <ul>
+              <li>Give the button a name that says what is inside: “Actions”, “More options for Ana”, not a bare “…”.</li>
+              <li>An unavailable action uses <code>aria-disabled="true"</code> and no <code>disabled</code>, so it stays reachable and a screen reader says it exists. Do not run its action when it is activated.</li>
+              <li>The panel is not a dialog and holds no form: for a decision or a form, use the <a href="/docs/components/modal/">modal</a>.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a dropdown for three to seven related actions on one thing, when showing them all would crowd the page: the actions of a row in a table, of a card, of a project.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use a dropdown to pick a value, or to hide the main action.</p>
+            <ul>
+              <li>To pick one value of a form, use a <a href="/docs/components/select/">select</a>.</li>
+              <li>For the main action of a page, use a visible <a href="/docs/components/button/">button</a>.</li>
+              <li>For the sections of a site, use a <a href="/docs/components/sidebar/">sidebar</a> or a navigation list.</li>
+              <li>CAI has no context menu on right click. The browser's own menu is the reader's, and replacing it breaks copy, paste and spelling help; give the same actions in a dropdown.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Name the actions with verbs and put the destructive one last, apart.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <ul class="cai-dropdown__list"><li><span class="cai-dropdown__item">Edit</span></li><li><span class="cai-dropdown__item">Duplicate</span></li><li><hr class="cai-dropdown__separator"></li><li><span class="cai-dropdown__item cai-dropdown__item--danger">Delete project</span></li></ul>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Nouns that do not say what happens, and a dangerous action in the middle.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <ul class="cai-dropdown__list"><li><span class="cai-dropdown__item">Project</span></li><li><span class="cai-dropdown__item cai-dropdown__item--danger">Project data</span></li><li><span class="cai-dropdown__item">Options</span></li></ul>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Start each action with a verb, in the order a reader would look for it.</p>
+            <ul>
+              <li>Two or three words: “Duplicate”, “Move to archive”.</li>
+              <li>Say what the destructive action destroys: “Delete project”, not “Delete”.</li>
+              <li>Group with a separator, not with headings.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Actions are primary text on the surface of the panel; the panel has an edge and a shadow.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Dropdown contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Action</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Action on hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>14.4:1</div></td><td data-label="Dark"><div>12.6:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Action pressed</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-pressed</code></div></td><td data-label="Light"><div>12.8:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Danger action</div></td><td data-label="Colour on background"><div><code>--cai-color-danger</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>10.8:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Disabled action</div></td><td data-label="Colour on background"><div><code>--cai-text-disabled</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>5.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Panel edge</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders, icons and the disabled state.</p>
+            <ul>
+              <li><strong>Focus:</strong> each action has a 2 px <code>--cai-focus-ring</code> outline drawn inside its row, so the panel's edge does not clip it.</li>
+              <li><strong>Not colour alone:</strong> the danger action is named for what it destroys, and the unavailable one is announced as disabled.</li>
+              <li><strong>Forced colors:</strong> a hovered action is underlined and an unavailable one is <code>GrayText</code>.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 19 tokens that <code>components/dropdown.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-color-danger"><code>--cai-color-danger</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="/docs/tokens/color/#cai-surface"><code>--cai-surface</code></a>, <a href="/docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="/docs/tokens/color/#cai-surface-pressed"><code>--cai-surface-pressed</code></a>, <a href="/docs/tokens/color/#cai-text-disabled"><code>--cai-text-disabled</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-space-2xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-lg</code>, <code>--cai-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

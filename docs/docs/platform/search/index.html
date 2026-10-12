@@ -9,10 +9,10 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
-  <script type="module" crossorigin src="../../../assets/site-header-C9WTAGPR.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-D-fy6SUL.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-C0at8LUP.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-dzKKr0m0.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BuIg-laz.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-C_4RGLs6.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-iHWlewiB.css">
 </head>
 <body class="o-shell docs-page">
@@ -24,7 +24,7 @@
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
           data-cai-label-capped="{shown} of {n} results. Type more to narrow."
-          data-cai-label-none="No results for “{query}”."
+          data-cai-label-none="No results for “{query}”. Check the spelling or try a shorter word."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
     <search class="cai-platform-search__body">
@@ -32,19 +32,21 @@
         <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
         <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Close search</button></form>
       </div>
-      <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
-      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Use the arrow keys to move through them.</p>
+      <div class="cai-platform-search__field">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      </div>
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Arrow keys move through them.</p>
       <p class="cai-platform-search__status" role="status"></p>
-      <p data-cai-search-show="none" hidden>Check the spelling or try a shorter word.</p>
       <div class="cai-platform-search__results" data-cai-search-results>
         <div data-cai-search-show="idle">
           <h3>Popular</h3>
           <ul>
-            <li><a href="../../../docs/get-started/">Install CAI <span>Get started</span></a></li>
-            <li><a href="../../../docs/components/button/">Button <span>Components</span></a></li>
-            <li><a href="../../../docs/components/form/">Form fields <span>Components</span></a></li>
-            <li><a href="../../../docs/tokens/color/">Color <span>Tokens</span></a></li>
-            <li><a href="../../../docs/tokens/modes/">Color modes and themes <span>Tokens</span></a></li>
+            <li><a href="../../../docs/get-started/"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
+            <li><a href="../../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
+            <li><a href="../../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
           </ul>
         </div>
         <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
@@ -197,7 +199,7 @@
         data-cai-label-results=&quot;{n} results&quot;
         data-cai-label-result=&quot;1 result&quot;
         data-cai-label-capped=&quot;{shown} of {n} results. Type more to narrow.&quot;
-        data-cai-label-none=&quot;No results for “{query}”.&quot;
+        data-cai-label-none=&quot;No results for “{query}”. Check the spelling or try a shorter word.&quot;
         data-cai-label-loading=&quot;Loading the search index…&quot;
         data-cai-label-error=&quot;Search is not available right now.&quot;&gt;
   &lt;search class=&quot;cai-platform-search__body&quot;&gt;
@@ -205,11 +207,13 @@
       &lt;h2 class=&quot;cai-platform-search__title&quot; id=&quot;search-title&quot;&gt;&lt;label for=&quot;search-q&quot;&gt;Search the documentation&lt;/label&gt;&lt;/h2&gt;
       &lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;cai-btn cai-btn--ghost cai-platform-search__close&quot;&gt;Close search&lt;/button&gt;&lt;/form&gt;
     &lt;/div&gt;
-    &lt;input class=&quot;cai-input&quot; id=&quot;search-q&quot; type=&quot;text&quot; maxlength=&quot;100&quot; autocomplete=&quot;off&quot;
-           spellcheck=&quot;false&quot; enterkeyhint=&quot;go&quot; autofocus aria-describedby=&quot;search-hint&quot;&gt;
-    &lt;p class=&quot;cai-field__helper&quot; id=&quot;search-hint&quot;&gt;Results update as you type. Use the arrow keys to move through them.&lt;/p&gt;
-    &lt;p role=&quot;status&quot;&gt;&lt;/p&gt;
-    &lt;p data-cai-search-show=&quot;none&quot; hidden&gt;Check the spelling or try a shorter word.&lt;/p&gt;
+    &lt;div class=&quot;cai-platform-search__field&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;path d=&quot;m20 20-4-4&quot;/&gt;&lt;/svg&gt;
+      &lt;input class=&quot;cai-input&quot; id=&quot;search-q&quot; type=&quot;text&quot; maxlength=&quot;100&quot; autocomplete=&quot;off&quot;
+             spellcheck=&quot;false&quot; enterkeyhint=&quot;go&quot; autofocus aria-describedby=&quot;search-hint&quot;&gt;
+    &lt;/div&gt;
+    &lt;p class=&quot;cai-field__helper&quot; id=&quot;search-hint&quot;&gt;Results update as you type. Arrow keys move through them.&lt;/p&gt;
+    &lt;p class=&quot;cai-platform-search__status&quot; role=&quot;status&quot;&gt;&lt;/p&gt;
     &lt;div class=&quot;cai-platform-search__results&quot; data-cai-search-results&gt;
       &lt;div hidden&gt;&lt;h3&gt;Pages&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;pages&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
       &lt;div hidden&gt;&lt;h3&gt;Sections&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;sections&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
@@ -241,10 +245,10 @@
             <pre class="cai-code-block" data-lang="json" tabindex="0" role="region" aria-label="Search index format"><code>{
   &quot;version&quot;: 1,
   &quot;pages&quot;: [[&quot;Button&quot;, &quot;components/button/&quot;, &quot;Components&quot;]],
-  &quot;sections&quot;: [[&quot;When to use, Button › Design&quot;, &quot;components/button/#when&quot;]],
+  &quot;sections&quot;: [[&quot;When to use&quot;, &quot;components/button/#when&quot;, &quot;Button › Design&quot;]],
   &quot;elements&quot;: [[&quot;&lt;table&gt; element, Tables&quot;, &quot;html/tables/#el-table&quot;]]
 }</code></pre>
-            <p>A result matches when its text contains every word typed, without regard to case or accents; the ones that start with the words come first. Each group shows 8 results at most, and the status line says how many there are.</p>
+            <p>A result matches when its text and meta together contain every word typed, without regard to case or accents; the ones that start with the words come first. Each group shows 8 results at most, and the status line says how many there are.</p>
             <p>What the component accepts, so that an index built from a CMS cannot harm the page:</p>
             <ul>
               <li>The JSON comes only from the page’s own origin, over http or https, and a redirect fails the request. Your Content-Security-Policy needs <code>connect-src 'self'</code>; to use an index from another site, host a copy on yours. The browser caches it like any file.</li>
@@ -293,7 +297,8 @@
             <p>Every text is in the markup, so it is yours to write, in the page's language.</p>
             <ul>
               <li>The trigger says what is searched: “Search docs…”. Keep it short in every language (“Buscar…”) rather than cutting it off.</li>
-              <li>Give section results their page: “When to use, Button › Design”, so a result makes sense on its own.</li>
+              <li>Give section results their page in the meta: “When to use” with “Button › Design”, so a result makes sense on its own and is found by the page’s name.</li>
+              <li>Say what to try next in the <code>none</code> label, which the status line announces: “Check the spelling or try a shorter word.” after the query.</li>
               <li>Point the fallback link and the line under the results at the same index page.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
@@ -309,7 +314,9 @@
                   <tr><td data-label="Part"><div>Trigger border</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Result title</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Result title, hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.4:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Group heading and result page</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Group heading, result page, count and hint</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Result page, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.2:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Field magnifier</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
@@ -317,14 +324,14 @@
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
               <li><strong>Focus:</strong> the trigger has a 2 px <code>--cai-focus-ring</code> outline, 2 px outside; the focused result has the ring every link has.</li>
-              <li><strong>Edges:</strong> in forced colors the dialog keeps a real border.</li>
+              <li><strong>Edges:</strong> in forced colors the dialog keeps a real border, and the magnifier is drawn in the system's text colour.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 20 tokens that <code>components/search.css</code> of platform reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 22 tokens that <code>components/search.css</code> of platform reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="../../../docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="../../../docs/tokens/color/#cai-input-bg"><code>--cai-input-bg</code></a>, <a href="../../../docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="../../../docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="../../../docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
               <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-control-sm</code>, <code>--cai-space-2xs</code>, <code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-lg</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-heading</code>, <code>--cai-font-mono</code>, <code>--cai-font-sans</code>, <code>--cai-text-lg</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
               <div><dt><a href="../../../docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code>, <code>--cai-radius-sm</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>

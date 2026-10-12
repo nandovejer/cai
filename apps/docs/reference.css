@@ -1682,6 +1682,11 @@ h2.docs-demo__title {
     padding-inline: var(--cai-space-md);
   }
 
+  /* Two columns of a 320px page are 106px: a datetime-local does not fit */
+  .docs-cols-4 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .docs-pager {
     grid-template-columns: minmax(0, 1fr);
   }

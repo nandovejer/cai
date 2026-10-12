@@ -272,3 +272,11 @@ demo-card {
     font-size: var(--cai-text-xl);
   }
 }
+
+/* A native datetime-local needs about 248px: on a phone the stage gives up
+   its side padding so the value is not clipped */
+@media (max-width: 480px) {
+  .elements-type__stage {
+    padding-inline: 0;
+  }
+}

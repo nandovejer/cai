@@ -389,7 +389,8 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
     await searchFor(page, 'evil');
     await expect(results(page)).toHaveCount(3);
     await expect(dialog(page).locator('img, b')).toHaveCount(0);
-    await expect(results(page).filter({ hasText: 'onerror' })).toHaveText('<img src=x onerror=alert(1)> evil <b>meta</b>');
+    await expect(results(page).filter({ hasText: 'onerror' })).toHaveText('<img src=x onerror=alert(1)> evil, <b>meta</b>');
+    await expect(results(page).filter({ hasText: 'español' })).toHaveAccessibleName(/^evil español ?, Componentes$/);
     for (const href of await results(page).evaluateAll((links) => links.map((a) => a.href))) expect(href).toMatch(/^http:\/\/localhost:5173\//);
     await expect(results(page).filter({ hasText: 'español' })).toHaveAttribute('lang', 'es');
     expect(await results(page).filter({ hasText: 'evil lang' }).evaluate((a) => [a.getAttribute('lang'), a.getAttribute('onfocus')])).toEqual([null, null]);

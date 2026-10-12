@@ -112,6 +112,8 @@
 	flex-direction: column;
 	gap: var(--cai-space-xs);
 	min-block-size: 0;
+	/* Controls and navigation: the sans, not the running-text serif */
+	font-family: var(--cai-font-sans);
 }
 
 .cai-platform-search__head {
@@ -124,7 +126,39 @@
 
 .cai-platform-search__title {
 	margin: 0;
+	font-family: var(--cai-font-heading);
 	font-size: var(--cai-text-lg);
+}
+
+/* The field with a magnifier at its start. The icon is decorative (the
+   heading labels the field) and lets clicks through to the field. */
+.cai-platform-search__field {
+	position: relative;
+}
+
+.cai-platform-search__field :where(svg) {
+	position: absolute;
+	inset-block: 0;
+	inset-inline-start: var(--cai-space-sm);
+	margin-block: auto;
+	inline-size: 1.125rem;
+	block-size: 1.125rem;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 2;
+	color: var(--cai-text-secondary);
+	pointer-events: none;
+}
+
+.cai-platform-search__field :where(input) {
+	/* The icon's inset, a 24px slot for it, and a gap before the text */
+	padding-inline-start: calc(var(--cai-space-sm) + var(--cai-space-lg) + var(--cai-space-2xs));
+}
+
+/* The count: small and muted, below the group headings in weight */
+.cai-platform-search__status {
+	font-size: var(--cai-text-sm);
+	color: var(--cai-text-secondary);
 }
 
 /* At the end of the row, also when it wraps below the title */
@@ -172,15 +206,33 @@
 	min-block-size: var(--cai-control-sm);
 	padding: var(--cai-space-2xs) var(--cai-space-xs);
 	border-radius: var(--cai-radius-sm);
+	text-decoration: none;
+}
+
+/* Only the title is underlined (it is the link text); the page after it is not */
+.cai-platform-search__results :where(a > :first-child) {
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
 }
 
 .cai-platform-search__results :where(a):hover {
 	background: var(--cai-surface-hover);
 }
 
-.cai-platform-search__results :where(a span) {
+.cai-platform-search__results :where(a > span + span) {
 	color: var(--cai-text-secondary);
 	font-size: var(--cai-text-sm);
+}
+
+/* The ", " between the title and the page: read, not shown ("Button,
+   Components"); here and not a class the script writes, for the JS budget */
+.cai-platform-search__results :where(a > span:nth-child(2):not(:last-child)) {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
 }
 
 @media (pointer: coarse) {

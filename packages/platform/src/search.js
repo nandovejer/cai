@@ -12,8 +12,9 @@
  *     <dialog class="cai-modal cai-platform-search" data-cai-search
  *             data-cai-search-src="search-index.json"
  *             aria-labelledby="…" data-cai-label-results="{n} results" …>
- *       … <input type="search" autofocus>
- *       <p role="status"></p>
+ *       <div class="cai-platform-search__field"><svg aria-hidden="true" …>…</svg>
+ *         <input type="text" autofocus aria-describedby="…"></div>
+ *       <p class="cai-platform-search__status" role="status"></p>
  *       <div data-cai-search-results>
  *         <div data-cai-search-show="idle">…shown while the field is empty…</div>
  *         <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
@@ -29,10 +30,13 @@
  *
  * Without JavaScript the element does nothing, the trigger stays hidden and
  * the fallback link shows. With it: the button and Ctrl+K or ⌘K open the
- * dialog (showModal: focus trap, Escape and focus return are the browser's);
+ * dialog (showModal: focus trap, Escape and focus return are the browser's;
+ * the field is type="text" because in a type="search" field the first
+ * Escape clears the text instead of closing the dialog);
  * the index loads on the first open; the results are real links, grouped
- * under headings, at most 8 per group; the arrows move between them, Enter
- * follows one. An element added to the page later wires itself when it
+ * under headings, at most 8 per group (each a span with the title, then a
+ * visually hidden ", " and a span with the page, if any); the arrows move
+ * between them, Enter follows one. An element added to the page later wires itself when it
  * connects.
  *
  * Security (.claude/plans/docs-redesign/security.md, SEC-IDX, SEC-NET):
@@ -128,17 +132,18 @@ export const isShortcut = (e) =>
 
 const make = (tag, text) => {
   const el = document.createElement(tag);
-  if (text) el.textContent = text;
+  el.textContent = text ?? "";
   return el;
 };
 
 /** The dialog Ctrl+K opens: the last one wired. */
 let current;
+let wired;
 
 /** Wire the dialog inside `host`, and the triggers of the page. Once per dialog. */
 const wire = (host) => {
   const box = host.querySelector("dialog");
-  if (!box || box === current?.box) return;
+  if (!box || box === wired) return;
   const $ = (selector) => box.querySelector(selector);
   const input = $("input");
   const status = $("[role=status]");
@@ -158,25 +163,24 @@ const wire = (host) => {
   const update = () => {
     if (!index) return;
     const q = input.value.trim();
-    const found = search(index, q);
     let shown = 0;
     let total = 0;
-    GROUPS.forEach((group, g) => {
-      const list = $(`[data-cai-search-list="${group}"]`);
+    search(index, q).forEach((hits, g) => {
+      const list = $(`[data-cai-search-list="${GROUPS[g]}"]`);
       if (!list) return;
-      list.replaceChildren(
-        ...found[g].slice(0, 8).map((r) => {
-          const li = make("li");
-          const a = li.appendChild(make("a", r.text));
-          a.href = r.href;
-          if (r.lang) a.lang = r.lang;
-          if (r.meta) a.append(" ", make("span", r.meta));
-          return li;
-        }),
-      );
-      shown += list.children.length;
-      total += found[g].length;
-      list.parentElement.hidden = !found[g].length;
+      list.replaceChildren();
+      for (const r of hits.slice(0, 8)) {
+        shown++;
+        // The title, then the page: "Button, Components" to a screen
+        // reader; search.css hides the comma on screen, underlines the title
+        const a = list.appendChild(make("li")).appendChild(make("a"));
+        a.href = r.href;
+        if (r.lang) a.lang = r.lang;
+        a.append(make("span", r.text));
+        if (r.meta) a.append(make("span", ", "), make("span", r.meta));
+      }
+      total += hits.length;
+      list.parentElement.hidden = !hits.length;
     });
     // The state names the label of the status and what [data-cai-search-show] shows
     const state = q ? (total ? (shown < total ? "capped" : total > 1 ? "results" : "result") : "none") : "idle";
@@ -187,23 +191,26 @@ const wire = (host) => {
     timer = setTimeout(() => say(state, { n: total, shown, query: q }), q && 300);
   };
 
-  const load = () =>
-    (loading ??= (async () => {
-      say("loading");
+  const load = async () => {
+    if (loading) return;
+    loading = true;
+    say("loading");
+    try {
       // This origin only, over http(s), and no redirect away from it
       // (SEC-NET-1/2); credentials stay the default, "same-origin"
       const url = safeUrl(box.dataset.caiSearchSrc, document.baseURI);
-      if (url.origin !== location.origin) return;
-      const res = await fetch(url, { redirect: "error" });
-      return res.ok && parseIndex(await res.text(), url);
-    })()
-      .catch(() => {})
-      .then((list) => {
-        if ((index = list)) return update();
-        say("error");
-        // The next open tries again: no loop, no timer
-        loading = null;
-      }));
+      if (url.origin === location.origin) {
+        const res = await fetch(url, { redirect: "error" });
+        index = res.ok && parseIndex(await res.text(), url);
+      }
+    } catch {
+      // Offline, a redirect, not an index: the error below
+    }
+    if (index) return update();
+    say("error");
+    // The next open tries again: no loop, no timer
+    loading = false;
+  };
 
   // Every search starts afresh (not on "close": that event comes late, and
   // could empty a search opened again at once)
@@ -231,18 +238,20 @@ const wire = (host) => {
     const { key, target } = e;
     // Not during IME composition: the keys drive its candidate list
     if (e.keyCode === 229 || e.isComposing) return;
-    const links = [...results.querySelectorAll("a:not([hidden] a)")];
-    const at = links.indexOf(target);
-    const to = { ArrowDown: at + 1, ArrowUp: at - 1, Home: 0, End: links.length - 1 }[key];
-    const next = target === input ? key === "ArrowDown" && links[0] : at > -1 && to !== undefined && (links[to] ?? (to < 0 ? input : target));
+    // The field, then the results: 0 is the field, -1 neither
+    const items = [input, ...results.querySelectorAll("a:not([hidden] a)")];
+    const at = items.indexOf(target);
+    // From the field, Down only
+    const to = at ? { ArrowDown: at + 1, ArrowUp: at - 1, Home: 1, End: items.length - 1 }[key] : key === "ArrowDown" ? 1 : -1;
+    const next = at > -1 && to > -1 && (items[to] ?? (at && target));
     if (next) {
       // eslint-disable-next-line no-restricted-syntax -- RL-3: the arrows, Home and End move between the results instead of the caret or the scroll (a11y.md SRCH-20)
       e.preventDefault();
       next.focus();
-    } else if (at > -1 && (key.length === 1 || key === "Backspace") && !e.ctrlKey && !e.metaKey) {
+    } else if (at > 0 && (key.length === 1 || key === "Backspace") && !(e.ctrlKey || e.metaKey)) {
       input.focus();
     }
-    if (target === input && key === "Enter" && input.value.trim()) $("[data-cai-search-list] a")?.click();
+    if (!at && key === "Enter" && input.value.trim()) $("[data-cai-search-list] a")?.click();
   });
 
   // A result on this page: close, let the link scroll (core's tabs.js opens
@@ -251,25 +260,22 @@ const wire = (host) => {
     const a = e.target.closest("a");
     if (!a) return;
     box.close();
-    let target;
     try {
       const id = decodeURIComponent(a.hash.slice(1));
-      target = id && a.pathname === location.pathname && document.getElementById(id);
+      const target = id && a.pathname === location.pathname && document.getElementById(id);
+      if (target) {
+        setTimeout(() => {
+          // A heading takes focus from script only; a control keeps its own tabindex
+          if (target.tabIndex < 0) target.tabIndex = -1;
+          target.focus({ preventScroll: true });
+        });
+      }
     } catch {
       // A malformed escape in the hash: the link still navigates (SEC-MISC-11)
     }
-    if (target) {
-      setTimeout(() => {
-        // A heading takes focus from script only; a control keeps its own tabindex
-        if (target.tabIndex < 0) target.tabIndex = -1;
-        target.focus({ preventScroll: true });
-      });
-    }
   });
 
-  // One listener for the page, whatever the number of calls (SEC-MISC-6)
-  if (!current) document.addEventListener("keydown", (e) => {
-    const { box, input, open } = current;
+  const shortcut = (e) => {
     const inside = document.activeElement?.closest("dialog[open]");
     // Never over another modal dialog (SEC-MISC-7)
     if (!isShortcut(e) || !box.isConnected || (inside && inside !== box)) return;
@@ -278,8 +284,11 @@ const wire = (host) => {
     // Open, or back to the field with its text selected (a11y.md SRCH-8)
     if (box.open) input.select(input.focus());
     else open();
-  });
-  current = { box, input, open };
+  };
+  // One listener for the page, whatever the number of calls (SEC-MISC-6)
+  if (!current) document.addEventListener("keydown", (e) => current(e));
+  current = shortcut;
+  wired = box;
 };
 
 // <cai-platform-search> wraps the dialog. Defined once, and only where there

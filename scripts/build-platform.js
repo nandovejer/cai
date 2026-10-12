@@ -83,6 +83,10 @@ for (const file of jsModules) {
     // instead of being inlined silently into a published file (RL-1;
     // security.md, phase 4 review, answer 5a)
     packages: "external",
+    // The sideEffects field of package.json lists dist/ only (src/ is not
+    // published), so esbuild would read src/search.js as pure and drop the
+    // import that defines <cai-platform-search>, leaving platform.min.js empty
+    ignoreAnnotations: true,
     format: "esm",
     minify: true,
     target: "es2022",

@@ -111,7 +111,8 @@ const FAMILIES = [
   ["Radius", "/docs/tokens/radius/", (t) => t.startsWith("--cai-radius-")],
   ["Shadows", "/docs/tokens/shadows/", (t) => t.startsWith("--cai-shadow-")],
   ["Motion", "/docs/tokens/motion/", (t) => /^--cai-(duration|easing)-/.test(t)],
-  ["Layers and breakpoints", "/docs/tokens/layout/", (t) => /^--cai-(z-|mq-|content-max|sidebar-width|scrollbar-size)/.test(t)],
+  ["Layers", "/docs/tokens/layers/", (t) => t.startsWith("--cai-z-")],
+  ["Layout and breakpoints", "/docs/tokens/layout/", (t) => /^--cai-(mq-|content-max|sidebar-width|scrollbar-size)/.test(t)],
 ];
 
 /** The family of a token: [label, route] of the token page that documents it. */

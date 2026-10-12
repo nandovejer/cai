@@ -75,6 +75,16 @@ group: families
         
     </div>
 
+    <div class="docs-block" id="t-roles">
+          <h2 id="font-roles" class="docs-subhead">Font roles</h2>
+          <ul class="docs-scale-list">
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-font-body</code><span>var(--cai-font-serif)</span><span class="docs-scale__note">Running text: the serif. Controls, labels, tables and navigation keep the sans</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-font-heading</code><span>var(--cai-font-serif)</span><span class="docs-scale__note">Heading font family</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-text-control</code><span>var(--cai-text-md)</span><span class="docs-scale__note">Form field text; --cai-text-base (16px) at 768px and below and on touch screens</span></li>
+          </ul>
+          <p class="docs-demo__note">These three ship with core, not with tokens.</p>
+    </div>
+
     <div class="docs-prose" id="tokens-typography">
             <h2 id="type-scale-and-minimum-sizes" class="docs-prose__title">Type scale and minimum sizes</h2>
             <p>Every size is in <code class="cai-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller. Above the 16px base each step is the one before times 1.25, rounded to whole pixels; below it are the readability floors.</p>

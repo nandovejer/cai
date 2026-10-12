@@ -1,0 +1,23 @@
+<!-- cai:page
+title: Layers
+description: Which layer sits on top: the z-index of every overlay, in order. Ships with @cai-ds/core.
+area: tokens
+order: 8
+group: families
+files: settings/_settings.css
+-->
+    <div class="docs-block" id="c-layers">
+          <h2 id="z-index-scale" class="docs-subhead">Z-index scale</h2>
+          <ul class="docs-scale-list">
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-base</code><span>0</span><span class="docs-scale__note">Default layer</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-raised</code><span>10</span><span class="docs-scale__note">Tooltips, sticky bars</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-overlay</code><span>90</span><span class="docs-scale__note">Drawer backdrop</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-sidebar</code><span>100</span><span class="docs-scale__note">Sidebar</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-modal</code><span>200</span><span class="docs-scale__note">Modal, navigation toggle</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-toast</code><span>300</span><span class="docs-scale__note">Skip link, toasts</span></li>
+          </ul>
+          <p class="docs-demo__note">Ships with core, not with tokens.</p>
+          <ul>
+            <li>Use the z-index tokens instead of numbers, so layers stay in this order.</li>
+          </ul>
+    </div>

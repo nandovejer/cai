@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Layers and breakpoints – Tokens – CAI documentation</title>
-  <meta name="description" content="Which layer sits on top, how wide content gets, and where the layout changes. Ships with @cai-ds/core.">
+  <title>Layout and breakpoints – Tokens – CAI documentation</title>
+  <meta name="description" content="How wide content gets, and where the layout changes. Ships with @cai-ds/core.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
@@ -14,7 +14,7 @@
   <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-BZi6z4hl.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-BzpR2raI.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-b1F-baYW.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-B3uqOlzY.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-BS8bGUjY.css">
 </head>
 <body class="o-shell docs-page">
@@ -105,7 +105,8 @@
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/radius/">Radius</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/shadows/">Shadows</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/motion/">Motion</a></li>
-          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/layout/">Layers and breakpoints</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/tokens/layers/">Layers</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/tokens/layout/">Layout and breakpoints</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/palette/">Color palette</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/tokens/contrast/">Contrast check</a></li>
@@ -125,50 +126,40 @@
       <ol class="cai-breadcrumb">
         <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
         <li><a class="cai-breadcrumb__item" href="../../../docs/tokens/">Tokens</a></li>
-        <li><span class="cai-breadcrumb__item" aria-current="page">Layers and breakpoints</span></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Layout and breakpoints</span></li>
       </ol>
     </nav>
     <div class="docs-page-head__title">
-      <h1 class="docs-title">Layers and breakpoints</h1>
+      <h1 class="docs-title">Layout and breakpoints</h1>
       <code class="docs-demo__file">settings/_settings.css</code>
     </div>
-    <p class="docs-lead">Which layer sits on top, how wide content gets, and where the layout changes. Ships with @cai-ds/core.</p>
+    <p class="docs-lead">How wide content gets, and where the layout changes. Ships with @cai-ds/core.</p>
   </div>
 
   <div class="docs-body">
     <div class="docs-block" id="c-settings">
-          <div class="docs-demo__stage o-grid docs-cols-2">
+          <div class="docs-demo__stage">
             <div>
-              <h2 id="z-index-scale" class="docs-subhead">Z-index scale</h2>
-              <ul class="docs-scale-list">
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-base</code><span>0</span><span class="docs-scale__note">Default layer</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-raised</code><span>10</span><span class="docs-scale__note">Tooltips, sticky bars</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-overlay</code><span>90</span><span class="docs-scale__note">Drawer backdrop</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-sidebar</code><span>100</span><span class="docs-scale__note">Sidebar</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-modal</code><span>200</span><span class="docs-scale__note">Modal, navigation toggle</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-z-toast</code><span>300</span><span class="docs-scale__note">Skip link, toasts</span></li>
-              </ul>
-            </div>
-            <div>
-              <h2 id="layout-breakpoints-and-type" class="docs-subhead">Layout, breakpoints and type</h2>
+              <h2 id="widths" class="docs-subhead">Widths</h2>
               <ul class="docs-scale-list">
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-sidebar-width</code><span>256px</span><span class="docs-scale__note">Sidebar and app-shell column</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-content-max</code><span>1100px</span><span class="docs-scale__note">Maximum content width</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-scrollbar-size</code><span>4px</span><span class="docs-scale__note">Scrollbar thickness</span></li>
+              </ul>
+            </div>
+            <div>
+              <h2 id="breakpoints" class="docs-subhead">Breakpoints</h2>
+              <ul class="docs-scale-list">
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-sm</code><span>480px</span><span class="docs-scale__note">Small mobile</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-md</code><span>768px</span><span class="docs-scale__note">Tablet, sidebar collapse</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-lg</code><span>1024px</span><span class="docs-scale__note">Narrow desktop</span></li>
                 <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-xl</code><span>1280px</span><span class="docs-scale__note">Standard desktop</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-2xl</code><span>1440px</span><span class="docs-scale__note">Wide screen</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-font-body</code><span>var(--cai-font-serif)</span><span class="docs-scale__note">Running text: the serif. Controls, labels, tables and navigation keep the sans</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-font-heading</code><span>var(--cai-font-serif)</span><span class="docs-scale__note">Heading font family</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-text-control</code><span>var(--cai-text-md)</span><span class="docs-scale__note">Form field text; --cai-text-base (16px) at 768px and below and on touch screens</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-scrollbar-size</code><span>4px</span><span class="docs-scale__note">Scrollbar thickness</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-xxl</code><span>1440px</span><span class="docs-scale__note">Wide screen</span></li>
               </ul>
             </div>
           </div>
           <p class="docs-demo__note">Ships with core, not with tokens.</p>
           <ul>
-            <li>Use the z-index tokens instead of numbers, so layers stay in this order.</li>
             <li>Breakpoints are reference values: media queries cannot read custom properties, so write the number, such as <code class="cai-code-inline">@media (max-width: 768px)</code>.</li>
           </ul>
         
@@ -183,7 +174,7 @@
       <li><a href="../../../docs/tokens/figma/">Tokens in Figma</a></li>
     </ul>
     <ul class="docs-pager">
-      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/tokens/motion/" aria-label="Previous: Motion"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Motion</span></a></li>
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/tokens/layers/" aria-label="Previous: Layers"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Layers</span></a></li>
       <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/tokens/palette/" aria-label="Next: Color palette"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Color palette</span></a></li>
     </ul>
   </nav>

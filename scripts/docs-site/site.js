@@ -553,7 +553,7 @@ export function renderGallery(site, page) {
   const groups = [...(area.groups ?? []), { id: "", label: "" }];
   const card = (p) => {
     const thumb = thumbOf(site, p);
-    return `      <li class="docs-card">\n${thumb ? `        <div class="docs-card__thumb" inert aria-hidden="true">\n          ${thumb.replace(/\n/g, "\n          ")}\n        </div>\n` : ""}        <h3 class="docs-card__title">${link(p.route, p.meta.title)}</h3>\n        <p class="docs-card__desc">${escapeHtml(p.meta.description)}</p>\n      </li>`;
+    return `      <li class="cai-card docs-card">\n${thumb ? `        <div class="docs-card__thumb" inert aria-hidden="true">\n          ${thumb.replace(/\n/g, "\n          ")}\n        </div>\n` : ""}        <h3 class="cai-card__title docs-card__title">${link(p.route, p.meta.title)}</h3>\n        <p class="cai-card__body docs-card__desc">${escapeHtml(p.meta.description)}</p>\n      </li>`;
   };
   const row = (p) => `      <li>${link(p.route, p.meta.title)} <span class="docs-gallery__desc">${escapeHtml(p.meta.description)}</span></li>`;
   return groups

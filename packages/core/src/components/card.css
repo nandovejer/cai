@@ -1,12 +1,17 @@
 /* --------------------------------------------------------------------------
    CAI Component: card
-   Card surface
+   Card surface. A link in the title makes the whole card one link: the
+   link's ::after is stretched over the card, which takes the hover and the
+   focus ring. No modifier, no JavaScript.
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
+/* Positioned always, so a stretched link never escapes the card, even in a
+   browser without :has() */
 .cai-card {
+  position: relative;
   background: var(--cai-surface);
   border: 1px solid var(--cai-divider);
   padding: var(--cai-space-md);
@@ -14,20 +19,42 @@
     border-color var(--cai-duration-fast), background var(--cai-duration-base);
 }
 
-.cai-card:hover {
+/* Only a linked card answers the pointer: --cai-input-border is 3:1 or more
+   on the surface and the page in every mode (WCAG 1.4.11) */
+.cai-card:has(.cai-card__title a):hover {
   box-shadow: var(--cai-shadow-sm);
-  border-color: var(--cai-outline);
+  border-color: var(--cai-input-border);
 }
 
 .cai-card__title {
   font-size: var(--cai-text-base);
   font-weight: 600;
-  margin-bottom: var(--cai-space-2xs);
+  margin-block-end: var(--cai-space-2xs);
   color: var(--cai-text-primary);
 }
 
 .cai-card__body {
   font-size: var(--cai-text-md);
   color: var(--cai-text-secondary);
-  margin-bottom: var(--cai-space-sm);
+  margin-block-end: var(--cai-space-sm);
+}
+
+/* The padding is the card's last space */
+.cai-card__title:last-child,
+.cai-card__body:last-child {
+  margin-block-end: 0;
+}
+
+/* The title link covers the card: one tab stop, named by the title */
+.cai-card__title a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+/* The link keeps its own ring; the card gets one too. An outline, so it
+   stays in forced-colors mode */
+.cai-card__title a:focus-visible::after {
+  outline: 2px solid var(--cai-focus-ring);
+  outline-offset: 2px;
 }

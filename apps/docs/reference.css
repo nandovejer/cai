@@ -647,49 +647,12 @@
   color: var(--cai-text-secondary);
 }
 
-/* A card is one link: its name, stretched over the card (HUB-1), with a
-   focus ring round the whole card (HUB-4). */
-.docs-card,
-.docs-hub-card {
-  position: relative;
-  display: grid;
-  gap: var(--cai-space-xs);
-  align-content: start;
-  padding: var(--cai-space-md);
-  border: 1px solid var(--cai-divider);
-  background: var(--cai-surface);
-}
-
-.docs-card:hover,
-.docs-hub-card:hover {
-  border-color: var(--cai-outline);
-  box-shadow: var(--cai-shadow-sm);
-}
-
-.docs-card__title,
-.docs-hub-card__title {
+/* A gallery or hub card is a linked core card: a link in .cai-card__title,
+   stretched over the card (HUB-1), with a focus ring round the whole card
+   (HUB-4). Here only its layout, and the sans title of the gallery. */
+.docs-card__title {
   font-family: var(--cai-font-sans);
   font-size: var(--cai-text-lg);
-  font-weight: 600;
-}
-
-.docs-card__title a::after,
-.docs-hub-card__title a::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-
-/* The link keeps its own ring; the card gets one too */
-.docs-card__title a:focus-visible::after,
-.docs-hub-card__title a:focus-visible::after {
-  outline: 2px solid var(--cai-focus-ring);
-  outline-offset: 2px;
-}
-
-.docs-card__desc {
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
 }
 
 /* The thumbnail: a reduced, inert specimen (HUB-2) */
@@ -700,6 +663,7 @@
   justify-content: center;
   gap: var(--cai-space-xs);
   min-block-size: 6rem;
+  margin-block-end: var(--cai-space-sm);
   padding: var(--cai-space-sm);
   background: var(--cai-surface-muted);
 }

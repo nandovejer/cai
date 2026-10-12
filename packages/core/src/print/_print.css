@@ -126,6 +126,7 @@
      link is an action, not a reference, and shows no address.
      cai-exception: EX-006 — content-bearing pseudo-element, print only */
   :where(a[href^="http"]:not(.cai-btn))::after {
+    position: static; /* in the flow, also in a linked card's title */
     content: " (" attr(href) ")";
     font-size: 0.85em;
     overflow-wrap: anywhere;

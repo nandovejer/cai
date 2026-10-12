@@ -338,6 +338,30 @@ test.describe('Landing page', () => {
       expect(included).toEqual([1, 2, 3]);
     });
 
+    test('three columns from 1024px with aligned actions; one column below', async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 800 });
+      await open(page);
+
+      const tops = (selector) =>
+        page
+          .locator(selector)
+          .evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().top)));
+      const cards = await tops('#adopt .landing-level');
+      expect(new Set(cards).size).toBe(1);
+      const installs = await tops('#adopt .landing-level__actions .cai-btn');
+      expect(installs).toHaveLength(3);
+      expect(new Set(installs).size).toBe(1);
+
+      await page.setViewportSize({ width: 390, height: 800 });
+      const stacked = await tops('#adopt .landing-level');
+      expect(stacked[0]).toBeLessThan(stacked[1]);
+      expect(stacked[1]).toBeLessThan(stacked[2]);
+      const overflow = await page.evaluate(
+        () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      );
+      expect(overflow).toBe(0);
+    });
+
     test('copy buttons carry exactly the visible text', async ({ page }) => {
       await open(page);
 
@@ -611,7 +635,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       const heights = await page
-        .locator('.landing-level__body a, .landing-guides a, .site-header__nav a')
+        .locator('.landing-level__body a, .landing-level__actions a, .landing-guides a, .site-header__nav a')
         .evaluateAll((links) => links.map((el) => el.getBoundingClientRect().height));
       expect(heights.length).toBeGreaterThan(10);
       for (const height of heights) expect(height).toBeGreaterThanOrEqual(24);

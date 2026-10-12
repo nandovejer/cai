@@ -116,8 +116,7 @@
 }
 
 .landing-stack--mini {
-  gap: var(--cai-space-2xs);
-  min-width: calc(var(--cai-space-4xl) * 2);
+  gap: var(--cai-space-xs);
 }
 
 .landing-stack--mini li {
@@ -216,31 +215,52 @@
    Adoption level cards
    -------------------------------------------------------------------------- */
 
+/* A pricing-style row: three columns from 1024px. Each card spans four rows
+   of the parent grid and takes them as a subgrid, so the layer chips, the
+   intro, the list and the actions line up across the cards whatever the
+   length of each. No highlighted card: no level is the recommended one. */
+.landing-levels {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .landing-level {
   display: grid;
-  gap: var(--cai-space-md);
-  align-content: start;
+  grid-row: span 4;
+  grid-template-rows: subgrid;
+  row-gap: 0;
   background: var(--cai-surface);
   border: 1px solid var(--cai-divider);
   border-radius: var(--cai-radius-md);
-  padding: var(--cai-space-lg);
+  overflow: clip;
 }
 
-.landing-level__head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--cai-space-md);
-  align-items: start;
+/* The layers band across the top of the card */
+.landing-level > .landing-stack--mini {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  padding: var(--cai-space-md);
+  background: var(--cai-surface-muted);
+  border-block-end: 1px solid var(--cai-divider);
+  text-align: center;
+}
+
+/* "✓ platform" stays on one line in a 300px card */
+.landing-level > .landing-stack--mini li {
+  padding-inline: var(--cai-space-2xs);
+  font-size: var(--cai-text-xs);
+  white-space: nowrap;
 }
 
 .landing-level__intro {
   display: grid;
   gap: var(--cai-space-xs);
+  align-content: start;
   justify-items: start;
+  padding: var(--cai-space-lg) var(--cai-space-lg) 0;
 }
 
 .landing-level__title {
-  font-size: var(--cai-text-xl);
+  font-size: var(--cai-text-2xl);
+  text-wrap: balance;
 }
 
 /* "Level N" is part of the heading, on a line of its own */
@@ -250,35 +270,59 @@
 }
 
 .landing-level__intro p {
+  max-inline-size: 65ch;
   font-size: var(--cai-text-md);
+  color: var(--cai-text-secondary);
 }
 
 .landing-level__body {
   display: grid;
-  gap: var(--cai-space-xs);
-  justify-items: start;
+  gap: var(--cai-space-sm);
+  align-content: start;
+  padding: var(--cai-space-lg) var(--cai-space-lg) 0;
   font-size: var(--cai-text-md);
 }
 
+/* The rule above the list sits at the same height in the three cards */
 .landing-level__body h4 {
   margin: 0;
-}
-
-.landing-level__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--cai-space-2xs) var(--cai-space-lg);
+  padding-block-start: var(--cai-space-md);
+  border-block-start: 1px solid var(--cai-divider);
 }
 
 .landing-level__get {
-  padding-inline-start: var(--cai-space-md);
   display: grid;
-  gap: var(--cai-space-2xs);
-  font-size: var(--cai-text-md);
+  gap: var(--cai-space-xs);
+  max-inline-size: 65ch;
+  margin: 0;
+  padding-inline-start: var(--cai-space-md);
+  list-style: "✓";
+}
+
+.landing-level__get li {
+  padding-inline-start: var(--cai-space-xs);
+}
+
+.landing-level__get li::marker {
+  color: var(--cai-text-secondary);
+}
+
+.landing-level__actions {
+  display: grid;
+  gap: var(--cai-space-xs);
+  align-self: end;
+  justify-items: center;
+  padding: var(--cai-space-lg);
+}
+
+.landing-level__actions .cai-btn {
+  inline-size: 100%;
+  justify-content: center;
 }
 
 /* Links that stand alone (not inside a sentence) are targets of 24px or more */
 .landing-level__body a,
+.landing-level__actions a,
 .landing-guides a {
   display: inline-flex;
   align-items: center;
@@ -347,6 +391,29 @@
   .landing-hero__title {
     font-size: var(--cai-text-3xl);
   }
+
+  /* One card per row: stacked rows, and a button as wide as its label */
+  .landing-levels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .landing-level {
+    grid-row: auto;
+    grid-template-rows: none;
+  }
+
+  .landing-level > .landing-stack--mini {
+    grid-template-columns: repeat(3, minmax(0, calc(var(--cai-space-4xl) * 2)));
+    padding-inline: var(--cai-space-lg);
+  }
+
+  .landing-level__actions {
+    justify-items: start;
+  }
+
+  .landing-level__actions .cai-btn {
+    inline-size: auto;
+  }
 }
 
 @media (max-width: 768px) {
@@ -354,13 +421,8 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .landing-level__head,
   .landing-fit {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .landing-stack--mini {
-    min-width: 0;
   }
 }
 
@@ -382,8 +444,23 @@
     font-size: var(--cai-text-2xl);
   }
 
-  .landing-level {
+  .landing-level > .landing-stack--mini {
+    gap: var(--cai-space-2xs);
+    padding: var(--cai-space-sm) var(--cai-space-md);
+  }
+
+  .landing-level__intro,
+  .landing-level__body {
+    padding: var(--cai-space-md) var(--cai-space-md) 0;
+  }
+
+  .landing-level__actions {
+    justify-items: center;
     padding: var(--cai-space-md);
+  }
+
+  .landing-level__actions .cai-btn {
+    inline-size: 100%;
   }
 
   /* Page footer: three short links fit on one row */

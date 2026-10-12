@@ -17,6 +17,9 @@
  * - The search index (@cai-ds/platform search, format version 1) is
  *   generated from the same scan as the A–Z page: served at
  *   /docs/search-index.json in dev, written there by the build.
+ * - The color-mode boot script (apps/landing/theme-boot.js, EX-009) is a
+ *   classic script, which Vite does not bundle: the build copies it to
+ *   /theme-boot.js and points every page at it.
  * - Every internal link is checked: an error in a build, a warning in dev.
  * - Editing a layout, a partial, a page or site.json reloads the browser.
  *
@@ -39,6 +42,9 @@ import {
 } from "./site.js";
 
 const LANDING = { route: "/", file: "apps/landing/index.html" };
+
+/** The render-blocking color-mode script: its source and its file in the build. */
+const THEME_BOOT = { src: "/apps/landing/theme-boot.js", out: "theme-boot.js" };
 
 /** Output file of a route: "/" → "index.html", "/docs/a/" → "docs/a/index.html", "/404.html" → "404.html". */
 const outFileOf = (route) => (route.endsWith(".html") ? route.slice(1) : `${route.slice(1)}index.html`);
@@ -226,6 +232,11 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
         } else if (doc.kind === "landing") {
           out = renderDocument(html, file, doc.route, scan());
         }
+        if (command === "build") {
+          const root = relativeUrls ? rootFor(doc.route) : "/";
+          // vite-ignore: Vite drops the attribute and does not warn about a classic script
+          out = out.replaceAll(`src="${THEME_BOOT.src}"`, `src="${root}${THEME_BOOT.out}" vite-ignore`);
+        }
         return relativeUrls ? relativizeLinks(out, doc.route, routes(), rootFor(doc.route)) : out;
       },
     },
@@ -233,6 +244,12 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
     generateBundle() {
       // Unhashed, next to the pages: every page points at it from its depth
       this.emitFile({ type: "asset", fileName: SEARCH_INDEX_ROUTE.slice(1), source: searchIndex() });
+      // Unhashed too: a classic script, which Vite leaves alone (EX-009)
+      this.emitFile({
+        type: "asset",
+        fileName: THEME_BOOT.out,
+        source: readFileSync(resolve(repoRoot, THEME_BOOT.src.slice(1)), "utf-8"),
+      });
     },
 
     closeBundle() {

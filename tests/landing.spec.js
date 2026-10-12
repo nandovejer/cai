@@ -138,7 +138,26 @@ test.describe('Landing page', () => {
         await page.emulateMedia({ colorScheme: 'light' });
         await expect.poll(() => theme(page)).toBe('light');
       });
+
+      // EX-009: theme-boot.js sets the mode before the first paint. The
+      // pages' modules are blocked, so only the boot script can have set it.
+      for (const path of ['/', '/docs/']) {
+        test(`${path} is dark before any module runs`, async ({ page }) => {
+          await page.route(/\/apps\/(landing\/landing|docs\/reference)\.js/, (route) => route.abort());
+          await page.goto(path);
+          expect(await theme(page)).toBe('dark');
+        });
+      }
     });
+
+    for (const path of ['/', '/docs/']) {
+      test(`${path} applies the stored mode before any module runs`, async ({ page }) => {
+        await page.addInitScript(() => localStorage.setItem('cai-site-mode', 'high-contrast'));
+        await page.route(/\/apps\/(landing\/landing|docs\/reference)\.js/, (route) => route.abort());
+        await page.goto(path);
+        expect(await theme(page)).toBe('high-contrast');
+      });
+    }
   });
 
   test.describe('layout', () => {

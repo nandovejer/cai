@@ -21,7 +21,7 @@ toc: h2,h3
           <p class="docs-demo__note">The radio group, disabled here so it does not change this page. The working switcher, in the cycle variant, is in <a href="#site-footer">this page's footer</a>: one button with the icon of the current mode.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>A stored color mode can flash once on load: no inline script sets it before the page is drawn, by design.</p>
+          <p>A stored color mode can flash once on load: <code>initThemeSystem()</code> is a deferred module and runs after the first paint, and CAI ships no script for the <code>&lt;head&gt;</code>, by design. This site sets the mode before the first paint with a small script of its own.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Color mode switcher documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>

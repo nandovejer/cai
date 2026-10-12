@@ -53,6 +53,13 @@
   transition: background var(--cai-duration-base);
 }
 
+/* Spacing between letters breaks the joins of Arabic script (the card
+   labels of narrow screens too) */
+.cai-table th:lang(ar),
+.cai-table td[data-label]:lang(ar)::before {
+  letter-spacing: 0;
+}
+
 .cai-table td {
   padding: var(--cai-space-sm) var(--cai-space-md);
   border-bottom: 1px solid var(--cai-divider);

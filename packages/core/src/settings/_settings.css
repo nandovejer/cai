@@ -56,6 +56,14 @@
   --cai-scrollbar-size: 4px;
 }
 
+/* Arabic: ET Book has no Arabic letters, so running text and headings take
+   the system sans, which has them on every platform (no bundled font, red
+   line 13). Zero specificity: your own rule, outside CAI's layers, still wins. */
+:where(:lang(ar)) {
+  --cai-font-heading: var(--cai-font-sans);
+  --cai-font-body: var(--cai-font-sans);
+}
+
 /* Reduced motion: one switch. Every transition and animation in core takes
    its duration from these tokens, so zeroing them removes the motion
    everywhere without !important. Never hard-code a duration in a component. */

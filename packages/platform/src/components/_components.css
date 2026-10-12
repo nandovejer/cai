@@ -32,6 +32,14 @@
 		linear-gradient(180deg, var(--cai-surface-page) 0%, var(--cai-surface-muted) 100%);
 }
 
+/* The tint sits in the corner where reading starts: top right in
+   right-to-left text (a gradient's position is physical) */
+.cai-platform-page--gradient:dir(rtl) {
+	background:
+		radial-gradient(circle at top right, var(--cai-brand-subtle), transparent 28%),
+		linear-gradient(180deg, var(--cai-surface-page) 0%, var(--cai-surface-muted) 100%);
+}
+
 .cai-platform-main {
 	display: grid;
 	gap: var(--cai-space-3xl);
@@ -61,6 +69,11 @@
 	letter-spacing: -1px;
 	margin-bottom: var(--cai-space-2xs);
 	color: var(--cai-text-primary);
+}
+
+/* Spacing between letters breaks the joins of Arabic script */
+.cai-platform-page-header__title:lang(ar) {
+	letter-spacing: 0;
 }
 
 .cai-platform-page-header__lead {

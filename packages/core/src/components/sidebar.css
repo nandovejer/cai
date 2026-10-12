@@ -80,6 +80,12 @@
   margin-bottom: var(--cai-space-2xs);
 }
 
+/* Spacing between letters breaks the joins of Arabic script */
+.cai-sidebar__brand-name:lang(ar),
+.cai-sidebar__section-label:lang(ar) {
+  letter-spacing: 0;
+}
+
 .cai-sidebar__link {
   display: block;
   padding: var(--cai-space-xs) var(--cai-space-md);

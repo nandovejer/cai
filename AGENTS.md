@@ -67,6 +67,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 - Build: one entry per route (plus the landing at `/`); each HTML file is moved to `<route>/index.html`, and in the pages build its asset URLs and links between pages are relative to its depth.
 - Search: the generator also writes `/docs/search-index.json` (`buildSearchIndex()`, from the same `indexData()` as the A–Z page, so the two never disagree), served by the dev middleware and emitted by the build. Every page gets the header's search button and the dialog partial `_partials/search.html`, with `data-cai-search-src="/docs/search-index.json"` made relative in the pages build. The component is `@cai-ds/platform/search` (`initSearch()`); its fixed text is in the partial and the strings it writes are the dialog's `data-cai-label-*` (EX-005).
 - Links: write internal links root-absolute with a trailing slash (`/docs/components/button/#how`). The build fails, with `file:line`, on a mis-nested tag, a duplicate id, an unknown route, a missing trailing slash or a `#fragment` that is not an id on the target page (a warning in dev).
+- Languages: the home page (and only it: the docs and the 404 are English) is one template rendered once per language, `/` (English, the default), `/es/`, `/ar/`, each a static page with its own `lang`, `dir`, title, description and `<link rel="alternate" hreflang>` (plus `x-default`). See "Adding a language to the home page".
 
 ---
 
@@ -133,6 +134,16 @@ Edit `packages/core/src/settings/_settings.css` only, then regenerate `dist/cai.
 2. Wrap the whole selector in `:where()` (specificity 0), so any `.cai-*` class or the consumer's own rule wins. A pseudo-element goes outside: `:where(dialog)::backdrop`. There is no exception (red line 11): stylelint's `cai/no-bare-element` rule fails on any bare type selector in `packages/`.
 3. Elements that already have a component (`table`, `input`, `select`, `button`) are styled through its class, not here.
 4. Update the element's `styledBy` in `tests/fixtures/html-elements.json` and its card on the page of its category, `apps/docs/pages/html/<category>.html` (the A–Z table is on `html/index.html`), then run `pnpm core:build` and `pnpm test:ui`.
+
+### Adding a language to the home page
+
+The home page's text is not in `apps/landing/index.html`: the template says `{{t:key}}` (escaped text) or `{{html:key}}` (trusted inline HTML: only `<a href>`, `<code>`, `<span>`, `<strong>`, `<em>`, with `class`, `href`, `lang`, `data-count`), and the strings live in one flat catalog per language, `apps/landing/i18n/<code>.json`. The shared partials it includes (`header`, `site-links`, `search`) use the same keys; the docs pages render them with the English catalog. `{{lang}}`, `{{dir}}`, `{{home}}`, `{{alternates}}` and `{{langswitch}}` are written by the generator (`scripts/docs-site/i18n.js`).
+
+1. Add a row to `apps/landing/i18n/locales.json`: `{ "code": "fr", "name": "Français", "dir": "ltr", "route": "/fr/" }` (the name in that language; `route` is `/<code>/`; the first row is the default, at `/`).
+2. Copy `en.json` to `fr.json` and translate every value. Keep `{n}`, `{mode}`… as they are, and the markup of the HTML keys.
+3. Run `pnpm test:unit` and `pnpm check:strings`, then `pnpm pages:build`. Nothing else: the route, the build entry, the switcher, the alternates and the link check follow the registry.
+
+The build fails with `file:line` on a key a template uses that a catalog lacks, on a catalog that misses a key of `en.json` or has one it does not, and on a key no template uses. Links from another language into the docs get `hreflang="en"` automatically; the search results are English (`lang="en"` on their lists). A language core's i18n does not ship (Arabic) still gets the scripts' strings in its own language: the landing's `<body>` carries `data-cai-label-*` from the catalog. For a right-to-left language check the page at 320 px; for a script ET Book lacks, add its `:lang()` font switch to `packages/core/src/settings/_settings.css`, as Arabic has.
 
 ---
 

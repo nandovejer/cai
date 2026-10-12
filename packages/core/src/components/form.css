@@ -191,6 +191,12 @@
   text-transform: uppercase;
 }
 
+/* Spacing between letters breaks the joins of Arabic script */
+.cai-fieldset legend:lang(ar),
+.cai-legend:lang(ar) {
+  letter-spacing: 0;
+}
+
 /* --------------------------------------------------------------------------
    FORM — Meter
    -------------------------------------------------------------------------- */

@@ -41,6 +41,11 @@
   padding: 0;
 }
 
+/* Spacing between letters breaks the joins of Arabic script */
+.cai-mode-switcher__label:lang(ar) {
+  letter-spacing: 0;
+}
+
 .cai-mode-btn {
   position: relative;
   flex: 1;

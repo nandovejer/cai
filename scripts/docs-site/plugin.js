@@ -9,6 +9,11 @@
  *   shows up in dev too. Anything else falls through to Vite.
  * - transformIndexHtml (pre): wraps each page in its layout and expands the
  *   partials (also in the landing, which shares the header).
+ * - The landing is one template rendered once per language of
+ *   apps/landing/i18n/locales.json: "/" from apps/landing/index.html, and
+ *   "/es/", "/ar/"… from virtual files (apps/landing/<code>/index.html,
+ *   which never exist on disk) whose source is the same template. Editing a
+ *   catalog reloads the browser.
  * - Pages build: asset URLs and links between pages are relative to each
  *   page's own depth, so the site works under /<repo>/; each HTML file is
  *   moved to <route>/index.html. The not-found page (apps/docs/404.html)
@@ -28,10 +33,12 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import {
+  I18N_DIR,
   NOT_FOUND_ROUTE,
   SEARCH_INDEX_ROUTE,
   buildSearchIndex,
   buildSite,
+  landingDocuments,
   parseFrontMatter,
   readInside,
   relativizeLinks,
@@ -40,6 +47,7 @@ import {
   rootOf,
   scanSite,
 } from "./site.js";
+import { SITE_URL } from "./i18n.js";
 
 const LANDING = { route: "/", file: "apps/landing/index.html" };
 
@@ -61,10 +69,15 @@ export const BASE_PATH = /^\/([A-Za-z0-9_-][A-Za-z0-9._-]*\/)?$/;
  * @param {boolean} options.relative  pages build: relative URLs at any depth
  * @param {string} options.outRoot    build output folder
  * @param {string} [options.pagesBase] pages build: the site's path, "/<repo>/"
+ * @param {string} [options.siteUrl]   pages build: the published site's root URL,
+ *   for the home pages' absolute canonical and hreflang alternates
  */
-export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase = "/" }) {
+export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase = "/", siteUrl = "" }) {
   // An absolute URL here would make every asset of the 404 page a third-party request (SEC-MISC-3)
   if (!BASE_PATH.test(pagesBase)) throw new Error(`pagesBase must be "/" or "/<name>/", got ${pagesBase}`);
+  if (siteUrl && !(SITE_URL.test(siteUrl) && new URL(siteUrl).pathname === pagesBase)) {
+    throw new Error(`siteUrl must be an https URL whose path is pagesBase (${pagesBase}), got ${siteUrl}`);
+  }
   const docsDir = resolve(repoRoot, "apps/docs");
   const landingAbs = resolve(repoRoot, LANDING.file);
   const toRepo = (abs) => relative(repoRoot, abs).split(sep).join("/");
@@ -73,14 +86,30 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
   let logger = console;
   let warn = () => {};
 
+  const i18nAbs = resolve(repoRoot, I18N_DIR);
   const scan = () => (site ??= scanSite(docsDir, repoRoot));
+
+  /**
+   * The landing in each language: "/" is the template itself; any other
+   * language a virtual file next to it (apps/landing/<code>/index.html),
+   * which the build and the dev server render from the template.
+   */
+  const landings = () =>
+    landingDocuments(scan(), LANDING.file, "").map(({ route, locale }) => {
+      const file = route === LANDING.route ? LANDING.file : `apps/landing${route}index.html`;
+      return { route, file, kind: "landing", locale, virtual: file !== LANDING.file };
+    });
 
   /** Every HTML document of the site: route, source file (repo-relative), kind. */
   const documents = () => [
-    { ...LANDING, kind: "landing" },
+    ...landings(),
     ...scan().pages.map((p) => ({ route: p.route, file: p.file, kind: "page" })),
     ...(scan().notFound ? [{ route: NOT_FOUND_ROUTE, file: scan().notFound.file, kind: "page" }] : []),
   ];
+  /** The virtual landing whose absolute path is `id`, if any. */
+  const virtualOf = (id) => landings().find((d) => d.virtual && resolve(repoRoot, d.file) === id);
+  /** The template, read inside apps/landing (SEC-PLG-1/2). */
+  const landingSource = () => readInside(landingAbs, [dirname(landingAbs)]);
   /** {{root}} of a document in the pages build: relative to its depth; the site's path on the 404. */
   const rootFor = (route) => (route === NOT_FOUND_ROUTE ? pagesBase : rootOf(route));
   const routes = () => new Set(documents().map((d) => d.route));
@@ -91,7 +120,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
   /** Render everything and check it; returns the link problems. */
   const check = () =>
     buildSite(scan(), {
-      extra: [{ ...LANDING, html: readInside(landingAbs, [dirname(landingAbs)]) }],
+      extra: landingDocuments(scan(), LANDING.file, landingSource()),
     }).problems;
 
   return {
@@ -124,6 +153,19 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
     configResolved(config) {
       command = config.command;
       logger = config.logger;
+    },
+
+    // The landing of another language: an entry of the build with no file of
+    // its own; its source is the template
+    resolveId(id) {
+      return virtualOf(id) ? id : undefined;
+    },
+
+    load(id) {
+      const doc = virtualOf(id);
+      if (!doc) return undefined;
+      if (existsSync(id)) throw new Error(`${doc.file}: the landing of /${doc.locale.code}/ is generated; remove this file`);
+      return landingSource();
     },
 
     buildStart() {
@@ -184,6 +226,21 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
           }
         }
         const file = map.get(path);
+        // Another language of the landing: rendered from the template, as Vite would a file
+        const virtual = file && landings().find((d) => d.virtual && `/${d.file}` === file);
+        if (virtual) {
+          Promise.resolve()
+            .then(() => server.transformIndexHtml(file, landingSource(), req.originalUrl))
+            .then((html) => {
+              res.setHeader("Content-Type", "text/html; charset=utf-8");
+              res.end(html);
+            })
+            .catch((error) => {
+              logger.error(`[cai-docs-site] ${error.message}`);
+              next(error);
+            });
+          return undefined;
+        }
         if (file) {
           req.url = query ? `${file}?${query}` : file;
           return next();
@@ -204,6 +261,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
       const rel = inDocs ? relative(docsDir, file).split(sep).join("/") : null;
       const generated =
         file === landingAbs ||
+        file.startsWith(i18nAbs + sep) ||
         (rel !== null && (rel === "site.json" || /^(_layouts|_partials|pages)\//.test(rel)));
       if (!generated) return undefined;
       // A page's front matter can change every page (later: the sidebar)
@@ -230,12 +288,15 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
           const page = { ...scanned, ...parseFrontMatter(html, file, scan().areas) };
           out = renderPage(page, scan(), { root: relativeUrls ? rootFor(doc.route) : "/" });
         } else if (doc.kind === "landing") {
-          out = renderDocument(html, file, doc.route, scan());
+          // Errors and line numbers point at the template, for every language
+          out = renderDocument(html, LANDING.file, doc.route, scan(), { locale: doc.locale, siteUrl: relativeUrls ? siteUrl : "" });
         }
         if (command === "build") {
           const root = relativeUrls ? rootFor(doc.route) : "/";
           // vite-ignore: Vite drops the attribute and does not warn about a classic script
           out = out.replaceAll(`src="${THEME_BOOT.src}"`, `src="${root}${THEME_BOOT.out}" vite-ignore`);
+          // The languages' alternates point at pages, not assets: Vite must not resolve them
+          out = out.replaceAll('<link rel="alternate" ', '<link rel="alternate" vite-ignore ').replaceAll('<link rel="canonical" ', '<link rel="canonical" vite-ignore ');
         }
         return relativeUrls ? relativizeLinks(out, doc.route, routes(), rootFor(doc.route)) : out;
       },

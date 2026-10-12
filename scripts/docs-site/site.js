@@ -15,10 +15,16 @@
  * the A–Z index. apps/docs/404.html is the not-found page: its URLs start at
  * the site's path, because GitHub Pages serves it at any URL.
  *
- * Template syntax, on purpose only two things:
+ * Template syntax, on purpose only these:
  *   <!-- cai:include name -->   a file of _partials/ (name: [a-z0-9-]+)
- *   {{key}}                      a fixed set of values (layouts and partials only)
+ *   {{key}}                      a fixed set of values (the landing, layouts and partials)
+ *   {{t:key}} / {{html:key}}     a string of the page's language catalog
+ *                                (apps/landing/i18n/, see i18n.js)
  * No loops, no conditionals. Anything unknown fails the build.
+ *
+ * The home page is one template rendered once per language of
+ * apps/landing/i18n/locales.json ("/", "/es/", "/ar/"); the documentation
+ * is English only and renders the shared partials with the default catalog.
  *
  * Security (.claude/plans/docs-redesign/security.md, SEC-PLG-*): files are
  * read only inside apps/docs/ (and the landing page), after checking the real
@@ -28,6 +34,7 @@
 import { lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
+import { assertInlineHtml, loadLocales, lookup, markDocsLinks, renderAlternates, renderSwitcher, unusedKeys } from "./i18n.js";
 
 /** Where the docs pages are published. */
 export const DOCS_ROUTE = "/docs/";
@@ -67,9 +74,17 @@ const FRONT_MATTER = {
 };
 
 /** The values a layout or partial may use as {{key}}. */
-const PLACEHOLDERS = new Set(["title", "doctitle", "description", "root", "content", "nav", "pagehead", "toc", "endnav", "generated"]);
+const PLACEHOLDERS = new Set([
+  "title", "doctitle", "description", "root", "content", "nav", "pagehead", "toc", "endnav", "generated",
+  // The page's language (i18n.js): its code and direction, its home page, the
+  // <link rel="alternate"> of every language, the language switcher
+  "lang", "dir", "home", "alternates", "langswitch",
+]);
 /** Values inserted as HTML, not escaped. Only the generator produces them. */
-const RAW_VALUES = new Set(["content", "nav", "pagehead", "toc", "endnav", "generated"]);
+const RAW_VALUES = new Set(["content", "nav", "pagehead", "toc", "endnav", "generated", "alternates", "langswitch"]);
+
+/** Where the home page's languages live, from the repository root. */
+export const I18N_DIR = "apps/landing/i18n";
 
 /** Partials whose links to the current page and its parents get aria-current. */
 const CURRENT_PARTIALS = new Set(["header", "site-links"]);
@@ -137,12 +152,13 @@ export function routeOfPage(path, file = path) {
 /**
  * The site links that are current on a route, with their aria-current
  * value: "page" for the link to the route itself, "true" for its parents.
- * Home on "/"; Docs on every docs page ("page" only on the hub); Components
- * on the gallery ("page") and on every page of the Components area ("true").
+ * Home on "/" (and on each home page of `homes`, "/es/"…); Docs on every
+ * docs page ("page" only on the hub); Components on the gallery ("page") and
+ * on every page of the Components area ("true").
  */
-export function currentOf(route) {
+export function currentOf(route, homes = ["/"]) {
   const marks = new Map();
-  if (route === "/") marks.set("/", "page");
+  if (route === "/" || homes.includes(route)) marks.set(route, "page");
   if (route.startsWith(DOCS_ROUTE)) {
     marks.set(DOCS_ROUTE, route === DOCS_ROUTE ? "page" : "true");
     const components = `${DOCS_ROUTE}components/`;
@@ -292,9 +308,16 @@ export function scanSite(docsDir, repoRoot = resolve(docsDir, "../..")) {
     notFound = { file, abs: notFoundAbs, route: NOT_FOUND_ROUTE, depth: 0, meta, body, bodyLine };
   }
 
+  // The home page's languages (i18n.js), read only inside their folder
+  const i18nDir = join(repoRoot, I18N_DIR);
+  const i18n = loadLocales(i18nDir, repoRoot, (abs) => readInside(abs, [i18nDir]));
+
   const all = notFound ? [...pages, notFound] : pages;
-  return { docsDir, repoRoot, areas, pages, notFound, byRoute, byFile: new Map(all.map((p) => [p.abs, p])) };
+  return { docsDir, repoRoot, areas, pages, notFound, byRoute, byFile: new Map(all.map((p) => [p.abs, p])), i18n };
 }
+
+/** The routes of the home page, one per language ("/" alone without a registry). */
+export const homesOf = (site) => site.i18n?.locales.map((l) => l.route) ?? ["/"];
 
 /* ---- The site's structure, from the front matter ------------------------ */
 
@@ -691,21 +714,36 @@ export function assertFragmentSafe(html, file) {
  * cycle check (SEC-PLG-3). An include on a line of its own is indented to
  * that line, so partials are written without a base indentation.
  *
- * ctx: { file, partial(name) → { text, file }, values, current, placeholders, stack }
+ * ctx: { file, partial(name) → { text, file }, values, current, placeholders,
+ * stack, locale (a language of i18n.js, for {{t:…}} and {{html:…}}), used (a
+ * Set of the catalog keys used), firstLine (the line of the file `template`
+ * starts at) }
  */
 export function expand(template, ctx) {
   const stack = ctx.stack ?? [];
-  return template.replace(/^([ \t]*)<!-- cai:include ([^\s>]*) -->|<!-- cai:include ([^\s>]*) -->|\{\{([^{}]*)\}\}/gm, (whole, indent, lineName, inlineName, key) => {
+  const lineAt = (offset) => (ctx.firstLine ?? 1) + (template.slice(0, offset).match(/\n/g)?.length ?? 0);
+  return template.replace(/^([ \t]*)<!-- cai:include ([^\s>]*) -->|<!-- cai:include ([^\s>]*) -->|\{\{([^{}]*)\}\}/gm, (whole, indent, lineName, inlineName, key, offset) => {
     const name = lineName ?? inlineName;
     if (name !== undefined) {
       if (!NAME.test(name)) throw new Error(`${ctx.file}: include name "${name}" is not valid ([a-z0-9-]+)`);
       if (stack.includes(name)) throw new Error(`${ctx.file}: include cycle ${[...stack, name].join(" → ")}`);
       if (stack.length >= MAX_INCLUDE_DEPTH) throw new Error(`${ctx.file}: includes nest deeper than ${MAX_INCLUDE_DEPTH}`);
       const partial = ctx.partial(name);
-      let text = expand(partial.text.replace(/\s+$/, ""), { ...ctx, file: partial.file, stack: [...stack, name] });
+      let text = expand(partial.text.replace(/\s+$/, ""), { ...ctx, file: partial.file, firstLine: 1, stack: [...stack, name] });
       if (CURRENT_PARTIALS.has(name)) text = markCurrent(text, ctx.current);
       if (indent) text = indent + text.replace(/\n(?=[^\n])/g, `\n${indent}`);
       return text;
+    }
+    // A string of the catalog: escaped text, or trusted inline HTML
+    const string = /^(t|html):(.*)$/.exec(key);
+    if (string) {
+      const where = `${ctx.file}:${lineAt(offset)}`;
+      if (!ctx.locale) {
+        if (!ctx.placeholders) return whole;
+        throw new Error(`${where}: {{${key}}} needs a language catalog (${I18N_DIR}/locales.json)`);
+      }
+      const text = lookup(ctx.locale, string[2], where, ctx.used);
+      return string[1] === "t" ? escapeHtml(text) : assertInlineHtml(text, `${ctx.locale.file} "${string[2]}"`);
     }
     if (!ctx.placeholders) return whole;
     if (!PLACEHOLDERS.has(key)) throw new Error(`${ctx.file}: unknown placeholder {{${key}}}`);
@@ -737,7 +775,10 @@ export function sourceReader(site) {
 export function renderPage(page, site, options = {}) {
   const reader = options.reader ?? sourceReader(site);
   const current = currentOf(page.route);
-  const content = expand(page.body, { file: page.file, partial: reader.partial, current, placeholders: false });
+  // The documentation is English only: the default catalog, no switcher
+  const locale = site.i18n?.default;
+  const strings = { locale, used: options.used };
+  const content = expand(page.body, { file: page.file, firstLine: page.bodyLine, partial: reader.partial, current, placeholders: false, ...strings });
   const generated =
     page.meta.generate === "gallery" ? renderGallery(site, page) : page.meta.generate === "a-z" ? renderAZ(site) : "";
   const layout = reader.layout(page.meta.layout);
@@ -746,7 +787,9 @@ export function renderPage(page, site, options = {}) {
     partial: reader.partial,
     current,
     placeholders: true,
+    ...strings,
     values: {
+      ...languageValues(site, locale),
       title: page.meta.title,
       doctitle: docTitleOf(site, page),
       description: page.meta.description,
@@ -761,10 +804,54 @@ export function renderPage(page, site, options = {}) {
   });
 }
 
-/** Render a full document that is not a page (the landing): includes only. */
+/**
+ * The language values of a template: {{lang}}, {{dir}}, {{home}} and, on a
+ * home page (`home: true`), {{alternates}} and {{langswitch}}; both are
+ * empty on the documentation, which has one language.
+ */
+function languageValues(site, locale, { home = false, siteUrl = "" } = {}) {
+  const i18n = site.i18n;
+  const translated = home && i18n && locale;
+  return {
+    lang: locale?.code ?? "en",
+    dir: locale?.dir ?? "ltr",
+    home: locale?.route ?? "/",
+    alternates: translated ? renderAlternates(i18n, locale, siteUrl) : "",
+    langswitch: translated ? renderSwitcher(i18n, locale, lookup(locale, "lang.label", `${I18N_DIR}/${locale.code}.json`, null)) : "",
+  };
+}
+
+/**
+ * Render a full document that is not a page (the landing): includes, the
+ * language values and the strings of `options.locale` (a language of
+ * site.i18n; the default one when not given). Links to the documentation
+ * from a page in another language say hreflang="en". `options.siteUrl`
+ * (the pages build) makes the canonical and alternate URLs absolute.
+ */
 export function renderDocument(html, file, route, site, options = {}) {
   const reader = options.reader ?? sourceReader(site);
-  return expand(html, { file, partial: reader.partial, current: currentOf(route), placeholders: false });
+  const locale = options.locale ?? site.i18n?.default;
+  // The switcher's label is a catalog key like any other
+  if (site.i18n && locale) options.used?.add("lang.label");
+  const out = expand(html, {
+    file,
+    partial: reader.partial,
+    current: currentOf(route, homesOf(site)),
+    placeholders: true,
+    locale,
+    used: options.used,
+    values: languageValues(site, locale, { home: true, siteUrl: options.siteUrl }),
+  });
+  return locale && site.i18n && locale !== site.i18n.default ? markDocsLinks(out, DOCS_ROUTE, site.i18n.default.code) : out;
+}
+
+/**
+ * The home page in every language of the registry, as `extra` documents of
+ * buildSite(): [{ route, file, html, locale }]; one, at "/", without one.
+ */
+export function landingDocuments(site, file, html) {
+  if (!site.i18n) return [{ route: "/", file, html }];
+  return site.i18n.locales.map((locale) => ({ route: locale.route, file, html, locale }));
 }
 
 /**
@@ -833,13 +920,17 @@ function readSourceHtml(text, file, firstLine = 1) {
  * Render and check the whole site: the nesting of every source, the fragments'
  * safety, duplicate ids on each rendered page, and every internal link
  * (the generated ones too: sidebar, breadcrumb, end of page, galleries, A–Z).
- * `extra` are full documents outside apps/docs/pages (the landing):
- * [{ route, file, html }]. `unchecked` are routes known to exist whose ids are not checked.
+ * `extra` are full documents outside apps/docs/pages (the landing, once per
+ * language: landingDocuments()): [{ route, file, html, locale? }].
+ * `unchecked` are routes known to exist whose ids are not checked.
+ * When the landing is rendered in every language, a catalog key that no
+ * template used is a problem too.
  * Returns { rendered: Map route → html, problems: [string] }. Throws on a
- * malformed source (that is never a warning).
+ * malformed source and on a missing catalog key (never a warning).
  */
 export function buildSite(site, { extra = [], unchecked = [], root } = {}) {
   const reader = sourceReader(site);
+  const used = new Set();
   const sourceLinks = (text, file, firstLine, fragment) => {
     if (fragment) assertFragmentSafe(text, file);
     return readSourceHtml(text, file, firstLine).links.map((l) => ({ ...l, file }));
@@ -859,7 +950,7 @@ export function buildSite(site, { extra = [], unchecked = [], root } = {}) {
   const rendered = new Map();
   const docs = [];
   for (const page of site.notFound ? [...site.pages, site.notFound] : site.pages) {
-    const html = renderPage(page, site, { reader, root });
+    const html = renderPage(page, site, { reader, root, used });
     const layout = reader.layout(page.meta.layout);
     const { ids, links: renderedLinks } = readHtml(html, `${page.file} (rendered as ${page.route})`);
     // Links the generator wrote (sidebar, breadcrumb, end of page, galleries, A–Z)
@@ -876,9 +967,12 @@ export function buildSite(site, { extra = [], unchecked = [], root } = {}) {
     docs.push({ route: page.route, ids: new Set(ids.keys()), links });
   }
   for (const doc of extra) {
-    const html = renderDocument(doc.html, doc.file, doc.route, site, { reader });
+    const html = renderDocument(doc.html, doc.file, doc.route, site, { reader, locale: doc.locale, used });
     const links = [...sourceLinks(doc.html, doc.file, 1, false), ...partialLinks(doc.html)];
-    const { ids } = readHtml(html, `${doc.file} (rendered as ${doc.route})`);
+    const { ids, links: renderedLinks } = readHtml(html, `${doc.file} (rendered as ${doc.route})`);
+    // Links written by the generator or a catalog: the language's home, the switcher, links inside a string
+    const sourceHrefs = new Set(links.map((l) => l.href));
+    for (const l of renderedLinks) if (!sourceHrefs.has(l.href)) links.push({ ...l, file: `${doc.file} (rendered as ${doc.route})`, line: l.line });
     rendered.set(doc.route, html);
     docs.push({ route: doc.route, ids: new Set(ids.keys()), links });
   }
@@ -886,5 +980,8 @@ export function buildSite(site, { extra = [], unchecked = [], root } = {}) {
   const known = new Map([...docs.map((d) => [d.route, d.ids]), ...unchecked.map((route) => [route, null])]);
   const seen = new Set();
   const problems = checkLinks(docs, known).filter((p) => !seen.has(p) && seen.add(p));
+  // Every key is used somewhere, once the home page has been rendered in every language
+  const everyLanguage = site.i18n && site.i18n.locales.every((l) => extra.some((d) => d.locale === l));
+  if (everyLanguage) problems.push(...unusedKeys(site.i18n, used));
   return { rendered, problems };
 }

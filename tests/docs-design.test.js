@@ -19,8 +19,8 @@ const section = (page, id) => page.body.split(`<h3 id="${id}">`)[1].split(/<h3 |
 const text = (html) => html.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 
 describe("Design tab of every component and pattern page", () => {
-  it("covers the 34 pages", () => {
-    expect(viewPages).toHaveLength(34);
+  it("covers the 35 pages", () => {
+    expect(viewPages).toHaveLength(35);
   });
 
   it("Do and don't: a Do then a Don't, labelled with a word, never a live barrier (a11y.md TAB-20)", () => {

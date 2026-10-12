@@ -85,7 +85,9 @@ function sourceOf(page) {
   }
   if (page.meta.module === "search.js") return { css: read("packages/platform/src/components/search.css"), classes: null };
   const classes = page.meta.files.split(",").map((f) => f.trim()).filter((f) => f.startsWith(".")).map((f) => f.slice(1));
-  return { css: read("packages/platform/src/components/_components.css"), classes };
+  // The shell patterns, and the patterns with a file of their own (the language switcher)
+  const files = ["_components.css", "lang-switcher.css"].map((f) => read(`packages/platform/src/components/${f}`));
+  return { css: files.join("\n"), classes };
 }
 
 /** The --cai-* tokens the component's CSS reads with var(), minus the ones it declares itself. */

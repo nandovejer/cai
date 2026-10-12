@@ -6,7 +6,8 @@
 import { test, expect } from '@playwright/test';
 import { gotoId, notFoundRoute, routes, routesWith } from './helpers/docs-site.js';
 
-const APPS = ['/', ...routes(), notFoundRoute];
+// The home page in each of its languages (apps/landing/i18n)
+const APPS = ['/', '/es/', '/ar/', ...routes(), notFoundRoute];
 
 for (const app of APPS) {
   test(`${app}: content is readable without JavaScript`, async ({ page }) => {
@@ -153,11 +154,18 @@ test('docs: the color mode switcher is three radios that set the mode', async ({
   await expect.poll(background).not.toBe(light);
 });
 
+// The drawer's names on the home page in another language (apps/landing/i18n)
+const DRAWER = {
+  '/es/': { menu: 'Menú', site: 'Sitio', links: ['Inicio', 'Documentación', 'GitHub'] },
+  '/ar/': { menu: 'القائمة', site: 'الموقع', links: ['الرئيسية', 'التوثيق', 'GitHub'] },
+};
+
 for (const app of APPS) {
   test(`${app}: the menu drawer opens and closes without JavaScript`, async ({ page }) => {
+    const names = DRAWER[app] ?? { menu: 'Menu', site: 'Site', links: ['Home', 'Docs', 'GitHub'] };
     await page.setViewportSize({ width: 360, height: 640 });
     await page.goto(app);
-    const toggle = page.getByRole('button', { name: 'Menu', exact: true });
+    const toggle = page.getByRole('button', { name: names.menu, exact: true });
     const drawer = page.locator('#page-nav');
     await expect(toggle).toBeVisible();
     await expect(drawer).toBeHidden();
@@ -165,7 +173,7 @@ for (const app of APPS) {
     await expect(drawer).toBeVisible();
     // the site links are in the drawer, first; none stays in the header row
     await expect(page.locator('.site-header__nav a:visible')).toHaveCount(0);
-    await expect(drawer.getByRole('list', { name: 'Site' }).getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
+    await expect(drawer.getByRole('list', { name: names.site }).getByRole('link')).toHaveText(names.links);
     // With no script to measure it, the header's height is the CSS value:
     // the drawer opens right below the header, never over its button
     const header = await page.locator('.site-header').boundingBox();

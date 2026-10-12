@@ -42,7 +42,7 @@ export default defineConfig({
     {
       name: 'chromium-nojs',
       use: { ...devices['Desktop Chrome'], javaScriptEnabled: false },
-      testMatch: ['**/nojs.spec.js', '**/rtl.spec.js'],
+      testMatch: ['**/nojs.spec.js', '**/rtl.spec.js', '**/landing-i18n.spec.js'],
     },
   ],
 

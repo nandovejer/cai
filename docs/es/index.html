@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAI: sitios web accesibles con HTML y CSS sin más</title>
+  <meta name="description" content="CAI (Consistent Adaptive Identity) es un sistema de diseño de tokens, componentes y plantillas de página en CSS y HTML puros. Funciona sin JavaScript, tiene tres modos de color y no necesita compilación.">
+  <link rel="canonical"  href="https://nandovejer.github.io/cai/es/">
+  <link rel="alternate"  hreflang="en" href="https://nandovejer.github.io/cai/">
+  <link rel="alternate"  hreflang="es" href="https://nandovejer.github.io/cai/es/">
+  <link rel="alternate"  hreflang="ar" href="https://nandovejer.github.io/cai/ar/">
+  <link rel="alternate"  hreflang="x-default" href="https://nandovejer.github.io/cai/">
+  <link rel="icon" href="../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon-CU59whWG.png">
+  <!-- Before the first paint: the visitor's color mode (EX-009) -->
+  <script src="../theme-boot.js" ></script>
+  <script type="module" crossorigin src="../assets/site-header-KKpdGfOz.js"></script>
+  <script type="module" crossorigin src="../assets/landing-CmNsnNdY.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/landing-BUM3NnyE.css">
+  <link rel="stylesheet" crossorigin href="../assets/site-header-Bqg-gir3.css">
+</head>
+<!-- The strings core's scripts write (the color mode button, the copy
+     buttons), in the page's language: authored labels win over core's
+     dictionary, which has no Arabic -->
+<body class="cai-platform-page"
+      data-cai-label-change-mode="Cambiar el modo de color. Actual: {mode}"
+      data-cai-label-mode-changed="Modo de color: {mode}"
+      data-cai-label-copied="Copiado"
+      data-cai-label-copied-status="Copiado al portapapeles"
+      data-cai-label-copy-failed="No se pudo copiar. Selecciona el texto y cópialo a mano.">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <cai-platform-search>
+  <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../docs/search-index.json"
+          data-cai-label-results="{n} resultados"
+          data-cai-label-result="1 resultado"
+          data-cai-label-capped="{shown} de {n} resultados. Escribe más para acotar."
+          data-cai-label-none="No hay resultados para «{query}». Revisa la ortografía o prueba con una palabra más corta."
+          data-cai-label-loading="Cargando el índice de búsqueda…"
+          data-cai-label-error="La búsqueda no está disponible ahora mismo.">
+    <search class="cai-platform-search__body">
+      <div class="cai-platform-search__head">
+        <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Buscar en la documentación (en inglés)</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Cerrar la búsqueda</button></form>
+      </div>
+      <div class="cai-platform-search__field">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      </div>
+      <p class="cai-field__helper" id="cai-search-hint">Los resultados cambian mientras escribes. Muévete por ellos con las flechas.</p>
+      <p class="cai-platform-search__status" role="status"></p>
+      <div class="cai-platform-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Lo más consultado</h3>
+          <ul lang="en">
+            <li><a href="../docs/get-started/" hreflang="en"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
+            <li><a href="../docs/components/button/" hreflang="en"><span>Button</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../docs/components/form/" hreflang="en"><span>Form fields</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../docs/tokens/color/" hreflang="en"><span>Color</span><span>, </span><span>Tokens</span></a></li>
+            <li><a href="../docs/tokens/modes/" hreflang="en"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Páginas</h3><ul data-cai-search-list="pages" lang="en"></ul></div>
+        <div hidden><h3>Secciones</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
+        <div hidden><h3>Elementos HTML</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
+      </div>
+      <p class="cai-platform-search__foot">¿No lo encuentras? <a href="../docs/a-z/" hreflang="en">Consulta el índice de la A a la Z</a></p>
+    </search>
+  </dialog>
+  </cai-platform-search>
+  <a class="cai-platform-skip-link" href="#main-content">Saltar al contenido principal</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menú" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../es/"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Sitio">
+        <a href="../es/" aria-current="page">Inicio</a>
+        <a href="../docs/" hreflang="en">Documentación</a>
+        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+      </nav>
+      <a class="site-header__az" href="../docs/a-z/" hreflang="en" data-cai-search-fallback><span class="u-sr-only">Índice </span>A–Z</a>
+      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Buscar en la documentación (Ctrl K)" hidden>
+        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-platform-search-trigger__label">Buscar en la documentación…</span>
+        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+      <div class="cai-platform-lang-switcher">
+    <button class="cai-platform-lang-switcher__button" type="button" popovertarget="cai-lang-menu"><svg class="cai-platform-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">Idioma: </span><span class="cai-platform-lang-switcher__name">Español</span></button>
+    <nav class="cai-platform-lang-switcher__menu" id="cai-lang-menu" popover aria-labelledby="cai-lang-title">
+      <p class="cai-platform-lang-switcher__title" id="cai-lang-title">Idioma</p>
+      <ul class="cai-platform-lang-switcher__list">
+        <li><a class="cai-platform-lang-switcher__link" href="../" hreflang="en" lang="en">English</a></li>
+        <li><a class="cai-platform-lang-switcher__link" href="../es/" hreflang="es" lang="es" aria-current="page">Español</a></li>
+        <li><a class="cai-platform-lang-switcher__link" href="../ar/" hreflang="ar" lang="ar">العربية</a></li>
+      </ul>
+    </nav>
+  </div>
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav page-nav--drawer" id="page-nav" popover aria-label="Página de inicio" tabindex="-1">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Sitio</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../es/" aria-current="page">Inicio</a></li>
+        <li><a class="cai-sidebar__link" href="../docs/" hreflang="en">Documentación</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+
+    <div class="cai-sidebar__section">
+      <div class="cai-sidebar__section-label">En esta página</div>
+      <a class="cai-sidebar__link" href="#what">Por qué los equipos usan CAI</a>
+      <a class="cai-sidebar__link" href="#see">Míralo funcionar</a>
+      <a class="cai-sidebar__link" href="#adopt">Adóptalo capa a capa</a>
+      <a class="cai-sidebar__link" href="#fit">Cuándo encaja CAI</a>
+      <a class="cai-sidebar__link" href="#start">Empieza con una etiqueta link</a>
+    </div>
+
+    <div class="cai-sidebar__section">
+      <div class="cai-sidebar__section-label">Documentación, en inglés</div>
+      <a class="cai-sidebar__link" href="../docs/get-started/" hreflang="en">Primeros pasos</a>
+      <a class="cai-sidebar__link" href="../docs/tokens/" hreflang="en">Tokens</a>
+      <a class="cai-sidebar__link" href="../docs/components/" hreflang="en">Core</a>
+      <a class="cai-sidebar__link" href="../docs/platform/" hreflang="en">Platform</a>
+      <a class="cai-sidebar__link" href="../docs/html/" hreflang="en">Elementos HTML</a>
+      <a class="cai-sidebar__link" href="../docs/accessibility/" hreflang="en">Accesibilidad</a>
+    </div>
+  </nav>
+
+  <main id="main-content" class="cai-platform-main" tabindex="-1">
+
+    <!-- ====================== HERO ====================== -->
+    <section class="landing-hero landing-wrap" aria-labelledby="hero-title">
+      <div class="landing-hero__copy">
+        <p class="landing-eyebrow" lang="en">Consistent Adaptive Identity</p>
+        <h1 class="landing-hero__title" id="hero-title">Crea sitios web accesibles con HTML y CSS sin más</h1>
+        <p class="landing-hero__lead">CAI es un sistema de diseño de tokens, componentes y plantillas de página. Añade dos etiquetas <code class="cai-code-inline">&lt;link&gt;</code> y tendrás formularios, diálogos, tablas y tres modos de color. Sin framework, sin compilación, y cada componente funciona sin JavaScript.</p>
+        <div class="cai-platform-actions">
+          <a class="cai-btn cai-btn--primary cai-btn--lg" href="#adopt">Empezar</a>
+          <a class="cai-btn cai-btn--outline cai-btn--lg" href="../docs/components/" hreflang="en">Ver los componentes</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-wrap" aria-labelledby="facts-title">
+      <h2 class="u-sr-only" id="facts-title">CAI en cifras</h2>
+      <dl class="landing-facts">
+        <div class="landing-facts__item">
+          <dt class="landing-facts__label">dependencias en ejecución</dt>
+          <dd class="landing-facts__value">0</dd>
+        </div>
+        <div class="landing-facts__item">
+          <dt class="landing-facts__label">pasos de compilación para usarlo</dt>
+          <dd class="landing-facts__value">0</dd>
+        </div>
+        <div class="landing-facts__item">
+          <dt class="landing-facts__label">capas, adopta una cada vez</dt>
+          <dd class="landing-facts__value">3</dd>
+        </div>
+        <div class="landing-facts__item">
+          <dt class="landing-facts__label">modos de color incluidos</dt>
+          <dd class="landing-facts__value">3</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- ====================== WHY ====================== -->
+    <section class="cai-platform-section landing-wrap" id="what" aria-labelledby="what-title">
+      <h2 class="landing-h2" id="what-title">Por qué los equipos usan CAI</h2>
+      <p class="landing-lead">Para sitios y herramientas que deben funcionar para todo el mundo, en cualquier dispositivo, durante años, sin un framework al que seguir el ritmo.</p>
+
+      <ul class="cai-platform-feature-grid landing-points">
+        <li class="o-media">
+          <span class="cai-avatar cai-avatar--md" aria-hidden="true">01</span>
+          <div class="o-media__body">
+            <h3 class="landing-point__title">Funciona sin JavaScript</h3>
+            <p class="u-text-muted">Los componentes son elementos HTML nativos: <code class="cai-code-inline">&lt;dialog&gt;</code>, <code class="cai-code-inline">&lt;details&gt;</code>, controles de formulario, popovers. JavaScript solo añade detalles, así que las páginas siguen funcionando cuando falla un script.</p>
+          </div>
+        </li>
+        <li class="o-media">
+          <span class="cai-avatar cai-avatar--md" aria-hidden="true">02</span>
+          <div class="o-media__body">
+            <h3 class="landing-point__title">Accesible de serie</h3>
+            <p class="u-text-muted">Uso con teclado, foco visible, un contraste de texto de 4,5:1 y un modo de alto contraste forman parte de cada componente. Cada uno trae una guía de cuándo usarlo y cuándo no.</p>
+          </div>
+        </li>
+        <li class="o-media">
+          <span class="cai-avatar cai-avatar--md" aria-hidden="true">03</span>
+          <div class="o-media__body">
+            <h3 class="landing-point__title">Nada que instalar para probarlo</h3>
+            <p class="u-text-muted">CSS sin más y módulos ES pequeños desde un CDN o npm. Sin preprocesador, sin compilador, sin dependencias: lo que lees en los archivos es lo que ejecuta el navegador.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ====================== SEE IT ====================== -->
+    <section class="cai-platform-section landing-wrap" id="see" aria-labelledby="see-title">
+      <h2 class="landing-h2" id="see-title">Míralo funcionar</h2>
+      <p class="landing-lead">Esta es toda la configuración. El resultado de abajo lo dibuja el mismo CSS.</p>
+
+      <div class="landing-snippet">
+        <div class="landing-snippet__bar">
+          <span class="landing-eyebrow">Toda la configuración</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="snip-what" aria-label="Copiar el fragmento de toda la configuración">Copiar</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Fragmento de toda la configuración"><code id="snip-what">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+
+&lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;Guardar los cambios&lt;/button&gt;
+&lt;span class=&quot;cai-tag cai-tag--green cai-tag--dot&quot;&gt;Publicado&lt;/span&gt;</code></pre>
+      </div>
+
+      <div class="landing-render">
+        <p class="landing-eyebrow">Se ve así</p>
+        <div class="o-row">
+          <button class="cai-btn cai-btn--primary" type="button">Guardar los cambios</button>
+          <span class="cai-tag cai-tag--green cai-tag--dot">Publicado</span>
+        </div>
+      </div>
+
+      <h3 class="landing-subtitle">Lee la guía, en inglés, de</h3>
+      <ul class="landing-guides">
+        <li><a href="../docs/components/button/" hreflang="en">Botones</a></li>
+        <li><a href="../docs/components/form/" hreflang="en">Formularios y campos</a></li>
+        <li><a href="../docs/components/table/" hreflang="en">Tablas</a></li>
+        <li><a href="../docs/components/modal/" hreflang="en">Diálogos modales</a></li>
+        <li><a href="../docs/components/tabs/" hreflang="en">Pestañas</a></li>
+        <li><a href="../docs/components/player/" hreflang="en">Reproductores multimedia</a></li>
+        <li><a href="../docs/components/" hreflang="en">Todos los componentes</a></li>
+      </ul>
+    </section>
+
+    <!-- ====================== ADOPT ====================== -->
+    <section class="cai-platform-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
+      <h2 class="landing-h2" id="adopt-title">Adóptalo capa a capa</h2>
+      <p class="landing-lead">Tres paquetes, una sola dirección. Cada capa necesita las de debajo y nada de las de encima, así que elige el nivel que necesitas y quédate ahí.</p>
+
+      <div class="landing-levels">
+
+        <article class="landing-level" aria-labelledby="level-1-title">
+          <div class="landing-level__intro">
+            <h3 class="landing-level__title" id="level-1-title"><span class="landing-eyebrow">Nivel 1</span> Solo tokens</h3>
+            <span class="cai-tag cai-tag--gray">Independiente</span>
+            <p>Elígelo si ya tienes componentes o un framework y solo quieres valores coherentes y modos de color.</p>
+          </div>
+          <div class="landing-level__body">
+            <h4 class="landing-eyebrow">Incluye</h4>
+            <ul class="landing-level__get">
+              <li><span data-count="primitives">53</span> colores primitivos en <span data-count="families">7</span> familias</li>
+              <li><span data-count="semantic">55</span> tokens semánticos, cada uno definido para claro, oscuro y alto contraste</li>
+              <li>Espaciado (12), alturas de control (4), tamaños de texto (9), radios (6) y sombras (3)</li>
+              <li>ET Book para los títulos, alojada en el propio paquete y con licencia MIT; fuentes del sistema para el texto y el código</li>
+              <li>Una <a href="../docs/tokens/contrast/" hreflang="en">comprobación de contraste</a> para tus propios colores, como comando o en el navegador</li>
+            </ul>
+          </div>
+          <div class="landing-level__actions">
+            <a class="cai-btn cai-btn--outline" href="../docs/get-started/#level-1-tokens-only" hreflang="en">Instalar el nivel 1</a>
+            <a href="../docs/tokens/" hreflang="en">Ver los tokens</a>
+          </div>
+        </article>
+
+        <article class="landing-level" aria-labelledby="level-2-title">
+          <div class="landing-level__intro">
+            <h3 class="landing-level__title" id="level-2-title"><span class="landing-eyebrow">Nivel 2</span> Tokens + Core</h3>
+            <span class="cai-tag cai-tag--gray">Necesita tokens</span>
+            <p>Elígelo si construyes páginas o una aplicación y pones tu propia plantilla de página.</p>
+          </div>
+          <div class="landing-level__body">
+            <h4 class="landing-eyebrow">Añade al nivel 1</h4>
+            <ul class="landing-level__get">
+              <li><span data-count="components">24</span> componentes: botones, formularios, tablas, pestañas, diálogo modal, reproductor multimedia y más</li>
+              <li><span data-count="objects">7</span> objetos de maquetación, unas pocas utilidades y los estilos de los elementos HTML sin clase</li>
+              <li>JavaScript opcional para pestañas, diálogos, botones de copiar y reproductores; todas las páginas funcionan sin él</li>
+              <li>Estilos de impresión y maquetación de derecha a izquierda, sin ningún archivo más</li>
+              <li>Todo en una sola <a href="../docs/get-started/layers/" hreflang="en">capa de cascada</a>, <code class="cai-code-inline">cai</code>: tu propio CSS gana sin <code class="cai-code-inline">!important</code></li>
+            </ul>
+          </div>
+          <div class="landing-level__actions">
+            <a class="cai-btn cai-btn--outline" href="../docs/get-started/#level-2-tokens-and-core" hreflang="en">Instalar el nivel 2</a>
+            <a href="../docs/components/" hreflang="en">Ver los componentes</a>
+          </div>
+        </article>
+
+        <article class="landing-level" aria-labelledby="level-3-title">
+          <div class="landing-level__intro">
+            <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">Nivel 3</span> Tokens + Core + Platform</h3>
+            <span class="cai-tag cai-tag--gray">Necesita core + tokens</span>
+            <p>Elígelo si construyes sitios completos y quieres la estructura de página, la cabecera, el pie y la búsqueda. Esta página está hecha con este nivel.</p>
+          </div>
+          <div class="landing-level__body">
+            <h4 class="landing-eyebrow">Añade al nivel 2</h4>
+            <ul class="landing-level__get">
+              <li>Contenedores de página, principal, contenido y sección con un ritmo vertical coherente</li>
+              <li>Cabecera de página, grupo de acciones, rejilla de ventajas, marco de imagen y pie</li>
+              <li>Enlace para saltar al contenido, bloque de comando y selector de idioma</li>
+              <li>Búsqueda en el sitio, con JavaScript opcional</li>
+            </ul>
+          </div>
+          <div class="landing-level__actions">
+            <a class="cai-btn cai-btn--outline" href="../docs/get-started/#level-3-tokens-core-and-platform" hreflang="en">Instalar el nivel 3</a>
+            <a href="../docs/platform/" hreflang="en">Ver los patrones</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ====================== FIT ====================== -->
+    <section class="cai-platform-section landing-wrap" id="fit" aria-labelledby="fit-title">
+      <h2 class="landing-h2" id="fit-title">Cuándo encaja CAI</h2>
+      <div class="landing-fit">
+        <div>
+          <h3 class="landing-subtitle">Encaja bien</h3>
+          <ul class="landing-fit__list">
+            <li>Sitios de contenido, documentación y servicios públicos que deben cumplir WCAG 2.2 AA.</li>
+            <li>Páginas generadas en el servidor y sitios estáticos, en cualquier lenguaje de back-end.</li>
+            <li>Equipos que quieren leer su CSS y que sea suyo.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="landing-subtitle">No encaja</h3>
+          <ul class="landing-fit__list">
+            <li>Necesitas componentes de React o Vue ya hechos.</li>
+            <li>Necesitas una tabla de datos avanzada, gráficos o un selector de rango de fechas: CAI no tiene.</li>
+            <li>Necesitas una API estable hoy: CAI está en beta y los nombres aún pueden cambiar.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== CLOSING CTA ====================== -->
+    <section class="cai-platform-section landing-wrap" id="start" aria-labelledby="cta-title">
+      <h2 class="landing-h2" id="cta-title">Empieza con una etiqueta link</h2>
+      <p class="landing-lead">Elige un nivel, copia el fragmento y publica. Fija una versión exacta mientras CAI esté en beta.</p>
+      <div class="cai-platform-actions">
+        <a class="cai-btn cai-btn--primary" href="#adopt">Empezar</a>
+        <a class="cai-btn cai-btn--outline" href="../docs/" hreflang="en">Leer la documentación, en inglés</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="landing-wrap">
+    <div class="cai-platform-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · Licencia MIT</p>
+      <nav class="cai-platform-actions" aria-label="Enlaces del proyecto">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../docs/" hreflang="en">Documentación</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../docs/platform/" hreflang="en">Platform</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Modo de color</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Cambiar el modo de color"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Claro</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Oscuro</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>Alto contraste</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

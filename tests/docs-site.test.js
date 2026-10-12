@@ -16,6 +16,7 @@ import {
   buildSite,
   checkLinks,
   currentOf,
+  landingDocuments,
   MAX_ESSENTIALS,
   essentialsOf,
   readingOrder,
@@ -431,24 +432,34 @@ describe("scanning and building a site", () => {
 
 describe("the CAI docs site", () => {
   const site = scanSite(join(repo, "apps/docs"), repo);
-  const landing = { route: "/", file: "apps/landing/index.html", html: readFileSync(join(repo, "apps/landing/index.html"), "utf-8") };
-  const { rendered, problems } = buildSite(site, { extra: [landing] });
-  const pages = [...rendered].filter(([route]) => route !== "/");
+  const landing = landingDocuments(site, "apps/landing/index.html", readFileSync(join(repo, "apps/landing/index.html"), "utf-8"));
+  const homes = landing.map((d) => d.route);
+  const { rendered, problems } = buildSite(site, { extra: landing });
+  const pages = [...rendered].filter(([route]) => !homes.includes(route));
 
-  it("builds with every source well nested and every internal link resolving", () => {
+  it("builds with every source well nested, every internal link resolving and every catalog key used", () => {
     expect(problems).toEqual([]);
-    expect([...rendered.keys()].sort()).toEqual(["/", "/404.html", ...site.pages.map((p) => p.route)].sort());
+    expect(homes).toEqual(["/", "/es/", "/ar/"]);
+    expect([...rendered.keys()].sort()).toEqual([...homes, "/404.html", ...site.pages.map((p) => p.route)].sort());
   });
 
   it("renders one header for every page from the shared partial, with the current links marked", () => {
     const header = (html) => html.match(/<header class="site-header"[\s\S]*?<\/header>/)[0];
-    const partial = readFileSync(join(repo, "apps/docs/_partials/header.html"), "utf-8").trim();
-    const flat = (html) => html.replace(/ aria-current="(page|true)"/g, "").replace(/\s+/g, " ");
+    // The English docs header: the home page adds its language switcher, in its language
+    const flat = (html) =>
+      html
+        .replace(/ aria-current="(page|true)"/g, "")
+        .replace(/<div class="cai-platform-lang-switcher">[\s\S]*?<\/nav>\s*<\/div>/, "")
+        .replace(/\s+/g, " ");
+    const docsHeader = flat(header(rendered.get("/docs/")));
     for (const [route, html] of rendered) {
-      expect(flat(header(html)), route).toBe(flat(partial));
-      const marked = [...header(html).matchAll(/<a[^>]* href="([^"]*)" aria-current="(page|true)">/g)].map(([, href, value]) => [href, value]);
-      // Only the links the header has (Home and Docs); currentOf() also marks section links elsewhere
-      expect(marked, route).toEqual([...currentOf(route)].filter(([href]) => partial.includes(`href="${href}"`)));
+      const own = header(html);
+      if (route === "/" || !homes.includes(route)) expect(flat(own), route).toBe(docsHeader);
+      expect(own.includes("cai-platform-lang-switcher"), route).toBe(homes.includes(route));
+      // The site links (Home and Docs; the brand is not a navigation item) and the switcher's current language
+      const marked = [...own.matchAll(/<a[^>]* href="([^"]*)"[^>]* aria-current="(page|true)">/g)].map(([, href, value]) => [href, value]);
+      const expected = [...currentOf(route, homes)].filter(([href]) => href === "/docs/" || homes.includes(href));
+      expect(marked, route).toEqual(homes.includes(route) ? [...expected, [route, "page"]] : expected);
     }
   });
 
@@ -511,7 +522,7 @@ describe("the CAI docs site", () => {
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "platform" && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(34);
+    expect(viewPages).toHaveLength(35);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {

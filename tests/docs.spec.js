@@ -481,7 +481,10 @@ test.describe('Documentation site', () => {
       expectAll(await text('t-radius'), Object.keys(tokens.radius).map((k) => `--cai-radius-${k}`));
       expectAll(await text('t-shadow'), Object.keys(tokens.shadow).map((k) => `--cai-shadow-${k}`));
       expectAll(await text('c-motion'), [...settingNames('duration'), ...settingNames('easing')]);
-      expectAll(await text('c-settings'), [...settingNames('z'), ...settingNames('bp')]);
+      // The z-index scale has its own page (Layers) since 9d5aab4; widths and breakpoints are on Layout
+      expectAll(await text('c-layers'), settingNames('z'));
+      expect(settingNames('mq').length).toBeGreaterThan(0);
+      expectAll(await text('c-settings'), [...settingNames('mq'), '--cai-sidebar-width', '--cai-content-max', '--cai-scrollbar-size']);
     });
 
     test('every component has its page: example, known issues, then the Code and Design tabs (RL-18, SR-5)', async ({ page }) => {
@@ -900,13 +903,14 @@ test.describe('Site header and navigation toggle', () => {
     expect(HEADER).toContain('popovertarget="page-nav"');
     expect(HEADER).not.toContain('aria-current');
     const row = HEADER.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0];
-    expect([...row.matchAll(/href="([^"]+)"/g)].map((m) => m[1])).toEqual(['/', '/docs/', 'https://github.com/nandovejer/cai']);
+    // {{home}}: the home page in the page's language ("/" on the docs, "/es/" on the Spanish home page)
+    expect([...row.matchAll(/href="([^"]+)"/g)].map((m) => m[1])).toEqual(['{{home}}', '/docs/', 'https://github.com/nandovejer/cai']);
     expect(HEADER).toContain('data-cai-search-open');
     // The drawer's site links are the header's, in the same order: a labelled
     // list inside the drawer's nav, not a nav in a nav (a11y.md F4)
     expect(SITE_LINKS).toContain('<ul aria-labelledby="nav-site">');
     expect(SITE_LINKS).not.toContain('<nav');
-    expect([...SITE_LINKS.matchAll(/href="([^"]+)"/g)].map((m) => m[1])).toEqual(['/', '/docs/', 'https://github.com/nandovejer/cai']);
+    expect([...SITE_LINKS.matchAll(/href="([^"]+)"/g)].map((m) => m[1])).toEqual(['{{home}}', '/docs/', 'https://github.com/nandovejer/cai']);
     for (const [file, partials] of Object.entries(INCLUDERS)) {
       for (const name of partials) expect(read(file), file).toContain(`<!-- cai:include ${name} -->`);
       // tabindex="-1": a scrollable nav is a Tab stop of its own in Firefox
@@ -923,10 +927,12 @@ test.describe('Site header and navigation toggle', () => {
     { path: routeOf('c-button'), current: 'Docs' },
   ].filter((p, i, all) => all.findIndex((q) => q.path === p.path) === i);
   const PARTS = ['.site-header', '.site-header__menu', '.site-header__brand', '.site-header__nav'];
+  // The site links' x is left out: on the home page the language switcher
+  // (home page only) ends the row, so above 768px the links sit further in
   const layout = (page) =>
     page.evaluate((parts) => parts.map((selector) => {
       const r = document.querySelector(selector).getBoundingClientRect();
-      return [r.x, r.y, r.width, r.height].map(Math.round).join(',');
+      return [selector === '.site-header__nav' ? 'x' : r.x, r.y, r.width, r.height].map((v) => (typeof v === 'number' ? Math.round(v) : v)).join(',');
     }), PARTS);
 
   for (const width of [320, 360, 768, 1440]) {

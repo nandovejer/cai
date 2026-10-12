@@ -14,7 +14,7 @@
   <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-C79FCUxT.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-D2TK8zV2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Bgvk08Pf.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Bqg-gir3.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-Cx_QiyYh.css">
 </head>
 <body class="o-shell docs-page">
@@ -43,7 +43,7 @@
       <div class="cai-platform-search__results" data-cai-search-results>
         <div data-cai-search-show="idle">
           <h3>Popular</h3>
-          <ul>
+          <ul lang="en">
             <li><a href="../../../docs/get-started/"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
             <li><a href="../../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
             <li><a href="../../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
@@ -51,9 +51,9 @@
             <li><a href="../../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
           </ul>
         </div>
-        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
-        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections"></ul></div>
-        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements"></ul></div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages" lang="en"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
       </div>
       <p class="cai-platform-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
@@ -82,6 +82,7 @@
         <span class="cai-platform-search-trigger__label">Search docs…</span>
         <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
       </button>
+      
     </div>
   </header>
 
@@ -110,6 +111,7 @@
           <li><a class="cai-sidebar__link" href="../../../docs/platform/command-block/">Command block</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/feature-grid/">Feature grid</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/image/">Image</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/platform/lang-switcher/">Language switcher</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/search/">Search</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/platform/templates/">Page templates</a></li>
           <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/platform/classes/">Class reference</a></li>
@@ -132,6 +134,7 @@
       <h1 class="docs-title">Class reference</h1>
       <code class="docs-demo__file">components/_components.css</code>
       <code class="docs-demo__file">components/search.css</code>
+      <code class="docs-demo__file">components/lang-switcher.css</code>
     </div>
     <p class="docs-lead">Every cai-platform class, what element it goes on and what it does, in one place.</p>
   </div>
@@ -143,6 +146,7 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#header-and-footer">Header and footer</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#content-patterns">Content patterns</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#search">Search</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#language-switcher">Language switcher</a></li>
       </ul>
     </details>
   </nav>
@@ -363,6 +367,62 @@
                 <td data-label="Class"><div>.cai-platform-search__foot</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>The last line, with the link to the index page.</div></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="language-switcher" class="docs-prose__title">Language switcher</h2>
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Platform classes: language switcher">
+          <table class="cai-table docs-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Element</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>The wrapper of the button and the list. Sets <code class="cai-code-inline">--cai-platform-lang-switcher-top</code>, how far down the list opens.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__button</div></td>
+                <td data-label="Element"><div>&lt;button&gt;</div></td>
+                <td data-label="Description"><div>Opens the list with <code class="cai-code-inline">popovertarget</code>. Shows the current language; its name starts with the label, hidden.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__icon</div></td>
+                <td data-label="Element"><div>&lt;svg&gt;</div></td>
+                <td data-label="Description"><div>The globe, decorative, in the text color.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__name</div></td>
+                <td data-label="Element"><div>&lt;span&gt;</div></td>
+                <td data-label="Description"><div>The current language’s name in the button. Clipped below 360 pixels, where the globe shows alone; it stays in the button’s name.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__menu</div></td>
+                <td data-label="Element"><div>&lt;nav&gt;</div></td>
+                <td data-label="Description"><div>The popover with the list, fixed under the header at the end of the row.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__title</div></td>
+                <td data-label="Element"><div>&lt;p&gt;</div></td>
+                <td data-label="Description"><div>The visible name of the list, which labels the nav.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__list</div></td>
+                <td data-label="Element"><div>&lt;ul&gt;</div></td>
+                <td data-label="Description"><div>The languages, one per row, without bullets.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__link</div></td>
+                <td data-label="Element"><div>&lt;a&gt;</div></td>
+                <td data-label="Description"><div>A language, named in itself, with <code class="cai-code-inline">lang</code> and <code class="cai-code-inline">hreflang</code>; bold and underlined with <code class="cai-code-inline">aria-current</code>.</div></td>
               </tr>
             </tbody>
           </table>

@@ -48,6 +48,14 @@
   color: var(--cai-text-secondary);
 }
 
+/* Arabic: the mono has no Arabic letters, and spacing between letters
+   breaks the joins of the script */
+.landing-eyebrow:lang(ar),
+.landing-subhead:lang(ar) {
+  font-family: var(--cai-font-sans);
+  letter-spacing: 0;
+}
+
 .landing-lead {
   font-size: var(--cai-text-lg);
   color: var(--cai-text-secondary);
@@ -399,10 +407,15 @@
     inline-size: 100%;
   }
 
-  /* Page footer: three short links fit on one row */
+  /* Page footer: three short links on one row; a row may wrap (a longer
+     name in another language, larger text), only a wrapping column freezes */
   body > footer .cai-platform-actions {
     flex-direction: row;
     align-items: center;
+  }
+
+  .cai-platform-page > footer .cai-platform-actions {
+    flex-wrap: wrap;
   }
 
   body > footer .cai-platform-actions > * {

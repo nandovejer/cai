@@ -1,22 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" dir="ltr" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CAI: accessible websites from plain HTML and CSS</title>
   <meta name="description" content="CAI (Consistent Adaptive Identity) is a design system of tokens, components and page layouts in plain CSS and HTML. It works without JavaScript, has three color modes and needs no build step.">
+  <link rel="canonical"  href="https://nandovejer.github.io/cai/">
+  <link rel="alternate"  hreflang="en" href="https://nandovejer.github.io/cai/">
+  <link rel="alternate"  hreflang="es" href="https://nandovejer.github.io/cai/es/">
+  <link rel="alternate"  hreflang="ar" href="https://nandovejer.github.io/cai/ar/">
+  <link rel="alternate"  hreflang="x-default" href="https://nandovejer.github.io/cai/">
   <link rel="icon" href="./assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="./assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="./theme-boot.js" ></script>
-  <script type="module" crossorigin src="./assets/index-BDQ9GLg3.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/site-header-KKpdGfOz.js">
-  <link rel="stylesheet" crossorigin href="./assets/index-BcylBbgJ.css">
-  <link rel="stylesheet" crossorigin href="./assets/site-header-Bgvk08Pf.css">
+  <script type="module" crossorigin src="./assets/site-header-KKpdGfOz.js"></script>
+  <script type="module" crossorigin src="./assets/landing-CmNsnNdY.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/landing-BUM3NnyE.css">
+  <link rel="stylesheet" crossorigin href="./assets/site-header-Bqg-gir3.css">
 </head>
-<body class="cai-platform-page">
+<!-- The strings core's scripts write (the color mode button, the copy
+     buttons), in the page's language: authored labels win over core's
+     dictionary, which has no Arabic -->
+<body class="cai-platform-page"
+      data-cai-label-change-mode="Change color mode. Current: {mode}"
+      data-cai-label-mode-changed="Color mode: {mode}"
+      data-cai-label-copied="Copied"
+      data-cai-label-copied-status="Copied to clipboard"
+      data-cai-label-copy-failed="Copy failed. Select the text and copy it manually.">
   <!-- The search dialog comes first: closed, it is not focusable; after
        Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <cai-platform-search>
@@ -42,7 +55,7 @@
       <div class="cai-platform-search__results" data-cai-search-results>
         <div data-cai-search-show="idle">
           <h3>Popular</h3>
-          <ul>
+          <ul lang="en">
             <li><a href="./docs/get-started/"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
             <li><a href="./docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
             <li><a href="./docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
@@ -50,9 +63,9 @@
             <li><a href="./docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
           </ul>
         </div>
-        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
-        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections"></ul></div>
-        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements"></ul></div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages" lang="en"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
       </div>
       <p class="cai-platform-search__foot">Can’t find it? <a href="./docs/a-z/">Browse the A–Z index</a></p>
     </search>
@@ -81,6 +94,17 @@
         <span class="cai-platform-search-trigger__label">Search docs…</span>
         <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
       </button>
+      <div class="cai-platform-lang-switcher">
+    <button class="cai-platform-lang-switcher__button" type="button" popovertarget="cai-lang-menu"><svg class="cai-platform-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">Language: </span><span class="cai-platform-lang-switcher__name">English</span></button>
+    <nav class="cai-platform-lang-switcher__menu" id="cai-lang-menu" popover aria-labelledby="cai-lang-title">
+      <p class="cai-platform-lang-switcher__title" id="cai-lang-title">Language</p>
+      <ul class="cai-platform-lang-switcher__list">
+        <li><a class="cai-platform-lang-switcher__link" href="./" hreflang="en" lang="en" aria-current="page">English</a></li>
+        <li><a class="cai-platform-lang-switcher__link" href="./es/" hreflang="es" lang="es">Español</a></li>
+        <li><a class="cai-platform-lang-switcher__link" href="./ar/" hreflang="ar" lang="ar">العربية</a></li>
+      </ul>
+    </nav>
+  </div>
     </div>
   </header>
 
@@ -119,7 +143,7 @@
     <!-- ====================== HERO ====================== -->
     <section class="landing-hero landing-wrap" aria-labelledby="hero-title">
       <div class="landing-hero__copy">
-        <p class="landing-eyebrow">Consistent Adaptive Identity</p>
+        <p class="landing-eyebrow" lang="en">Consistent Adaptive Identity</p>
         <h1 class="landing-hero__title" id="hero-title">Build accessible websites with plain HTML and CSS</h1>
         <p class="landing-hero__lead">CAI is a design system of tokens, components and page layouts. Add two <code class="cai-code-inline">&lt;link&gt;</code> tags and you get forms, dialogs, tables and three color modes. No framework, no build step, and every component works without JavaScript.</p>
         <div class="cai-platform-actions">
@@ -280,7 +304,7 @@
             <ul class="landing-level__get">
               <li>Page, main, content and section wrappers with a consistent vertical rhythm</li>
               <li>Page header, action group, feature grid, image frame and footer</li>
-              <li>Skip link and command block</li>
+              <li>Skip link, command block and language switcher</li>
               <li>Site search, with optional JavaScript</li>
             </ul>
           </div>

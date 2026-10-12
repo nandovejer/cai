@@ -13,7 +13,7 @@ import { readFileSync } from 'node:fs';
 import { notFoundRoute, routeOf, routes } from './helpers/docs-site.js';
 
 // The landing and every page of the docs site (a11y.md TEST-7)
-const APPS = ['/', ...routes(), notFoundRoute];
+const APPS = ['/', '/es/', '/ar/', ...routes(), notFoundRoute];
 const THEMES = ['light', 'dark', 'high-contrast'];
 const FIXTURES = ['level-1-tokens.html', 'level-2-core.html', 'level-3-platform.html', 'core-without-tokens.html'];
 

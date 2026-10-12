@@ -4,7 +4,7 @@ description: Every cai-platform class, what element it goes on and what it does,
 area: platform
 order: 11
 group: reference
-files: components/_components.css, components/search.css
+files: components/_components.css, components/search.css, components/lang-switcher.css
 -->
     <div class="docs-block" id="p-reference">
           <p>Look up a class by name. Each pattern's own page has its markup and guidance.</p>
@@ -222,6 +222,62 @@ files: components/_components.css, components/search.css
                 <td data-label="Class"><div>.cai-platform-search__foot</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>The last line, with the link to the index page.</div></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="language-switcher" class="docs-prose__title">Language switcher</h2>
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Platform classes: language switcher">
+          <table class="cai-table docs-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Element</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>The wrapper of the button and the list. Sets <code class="cai-code-inline">--cai-platform-lang-switcher-top</code>, how far down the list opens.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__button</div></td>
+                <td data-label="Element"><div>&lt;button&gt;</div></td>
+                <td data-label="Description"><div>Opens the list with <code class="cai-code-inline">popovertarget</code>. Shows the current language; its name starts with the label, hidden.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__icon</div></td>
+                <td data-label="Element"><div>&lt;svg&gt;</div></td>
+                <td data-label="Description"><div>The globe, decorative, in the text color.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__name</div></td>
+                <td data-label="Element"><div>&lt;span&gt;</div></td>
+                <td data-label="Description"><div>The current language’s name in the button. Clipped below 360 pixels, where the globe shows alone; it stays in the button’s name.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__menu</div></td>
+                <td data-label="Element"><div>&lt;nav&gt;</div></td>
+                <td data-label="Description"><div>The popover with the list, fixed under the header at the end of the row.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__title</div></td>
+                <td data-label="Element"><div>&lt;p&gt;</div></td>
+                <td data-label="Description"><div>The visible name of the list, which labels the nav.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__list</div></td>
+                <td data-label="Element"><div>&lt;ul&gt;</div></td>
+                <td data-label="Description"><div>The languages, one per row, without bullets.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-lang-switcher__link</div></td>
+                <td data-label="Element"><div>&lt;a&gt;</div></td>
+                <td data-label="Description"><div>A language, named in itself, with <code class="cai-code-inline">lang</code> and <code class="cai-code-inline">hreflang</code>; bold and underlined with <code class="cai-code-inline">aria-current</code>.</div></td>
               </tr>
             </tbody>
           </table>

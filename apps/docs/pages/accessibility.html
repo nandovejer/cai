@@ -12,11 +12,12 @@ lead: false
 
       <h2 id="h-a11y-checked">What is checked on every change</h2>
       <ul>
-        <li>An automated scan with axe-core of the home page and of every page of the documentation, in the light, dark and high-contrast modes. On component and pattern pages the scan runs once with each tab open, and on a sample of pages once with the search dialog open, with results and with none. A serious or critical finding fails the build.</li>
+        <li>An automated scan with axe-core of the home page, in English, Spanish and Arabic, and of every page of the documentation, in the light, dark and high-contrast modes. On component and pattern pages the scan runs once with each tab open, and on a sample of pages once with the search dialog open, with results and with none. A serious or critical finding fails the build.</li>
         <li>Keyboard use of the sidebar drawer, the modal dialog, the tabs, the Code and Design tabs of the component pages, the "On this page" index, whose links open the tab of the section they point at, and the search: Ctrl+K, the arrow keys through the results, Enter and Escape.</li>
-        <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, the search button is a link to the A–Z index, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode.</li>
+        <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, the search button is a link to the A–Z index, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode. The language switcher of the home page opens its list of languages, which are links, with the popover API and no script.</li>
         <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
         <li>Forced colors: a focused button and a focused search result keep a visible outline, the selected tab keeps its underline, and the search dialog keeps its border.</li>
+        <li>The home page in Arabic, right to left: it must not overflow at 320 pixels wide, with JavaScript or without it.</li>
         <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="cai-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
         <li>Before this release, the same automated suites ran once in Firefox 155 and in WebKit 26.6 and 27.2 (the engine of Safari), on Linux, and their findings were fixed. They do not run on every change, and neither is a test on macOS or iOS.</li>
@@ -45,6 +46,7 @@ lead: false
         <li><strong>Search shortcut.</strong> Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there.</li>
         <li><strong>Search.</strong> It has not been tested with a screen reader. The number of results is announced once you stop typing.</li>
         <li><strong>Search at 400 percent zoom.</strong> The whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.</li>
+        <li><strong>Language switcher.</strong> The list of languages opens at a fixed place under the header, not next to its button. Below 360 pixels wide its button shows a globe only; the language’s name is still the button’s accessible name. It has not been tested with a screen reader.</li>
         <li><strong>Home page form.</strong> The button of the example form opens a popover that says nothing was sent; a status region repeats it for screen readers when JavaScript runs. This has not been tested with a screen reader.</li>
       </ul>
 

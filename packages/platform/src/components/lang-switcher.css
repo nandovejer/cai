@@ -1,0 +1,157 @@
+/* ==========================================================================
+	 CAI Platform: language switcher.
+	 A button that opens a native popover with one link per language, each
+	 language named in itself; the current one is aria-current="page". The
+	 links are the switcher: going to the page in another language is
+	 navigation, so it needs no script. The popover is fixed under the
+	 header, at its inline end (no anchor positioning: not Baseline yet).
+	 A browser without the popover API shows the links in a row instead.
+	 ========================================================================== */
+
+/* How far from the top of the screen the list opens: under a one-row
+   header of 44px controls by default. A site with a header of another
+   height sets it on this element. */
+.cai-platform-lang-switcher {
+	--cai-platform-lang-switcher-top: calc(var(--cai-control-lg) + var(--cai-space-xs));
+}
+
+/* An icon button with its text, like the site's other header controls:
+   44px high at least (WCAG 2.5.5), the sans */
+.cai-platform-lang-switcher__button {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cai-space-2xs);
+	min-block-size: var(--cai-control-lg);
+	min-inline-size: var(--cai-control-lg);
+	padding-inline: var(--cai-space-xs);
+	border: 1px solid transparent;
+	border-radius: var(--cai-radius-md);
+	background: transparent;
+	color: var(--cai-text-secondary);
+	font: inherit;
+	font-family: var(--cai-font-sans);
+	font-size: var(--cai-text-md);
+	cursor: pointer;
+}
+
+/* Below 360px (a phone with larger text) the globe shows alone, so the
+   header keeps one row; the name is clipped, not removed: it stays in the
+   button's accessible name */
+@media (max-width: 359px) {
+	.cai-platform-lang-switcher__button {
+		justify-content: center;
+		padding-inline: 0;
+	}
+
+	.cai-platform-lang-switcher__name {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+}
+
+/* Hover, and open: the button's fill says the list belongs to it */
+.cai-platform-lang-switcher__button:hover,
+.cai-platform-lang-switcher:has(:popover-open) .cai-platform-lang-switcher__button {
+	background: var(--cai-surface-muted);
+	color: var(--cai-text-primary);
+}
+
+.cai-platform-lang-switcher__button:focus-visible {
+	outline: 2px solid var(--cai-focus-ring);
+	outline-offset: 2px;
+}
+
+.cai-platform-lang-switcher__icon {
+	flex: none;
+	inline-size: 1.125rem;
+	block-size: 1.125rem;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 1.75;
+}
+
+/* The list: the browser's popover box (fixed, in the top layer) moved from
+   the middle of the screen to the inline end, under the header */
+.cai-platform-lang-switcher__menu {
+	inset: auto;
+	inset-block-start: var(--cai-platform-lang-switcher-top);
+	inset-inline-end: var(--cai-space-md);
+	margin: 0;
+	min-inline-size: 12rem;
+	max-inline-size: calc(100vw - 2 * var(--cai-space-md));
+	padding: var(--cai-space-xs);
+	border: 1px solid var(--cai-divider);
+	border-radius: var(--cai-radius-lg);
+	background: var(--cai-surface);
+	color: var(--cai-text-primary);
+	box-shadow: var(--cai-shadow-md);
+	font-family: var(--cai-font-sans);
+}
+
+.cai-platform-lang-switcher__title {
+	margin: 0;
+	padding: var(--cai-space-2xs) var(--cai-space-sm);
+	color: var(--cai-text-secondary);
+	font-size: var(--cai-text-sm);
+}
+
+.cai-platform-lang-switcher__list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* One row per language, a 44px target */
+.cai-platform-lang-switcher__link {
+	display: flex;
+	align-items: center;
+	min-block-size: var(--cai-control-lg);
+	padding-inline: var(--cai-space-sm);
+	border-radius: var(--cai-radius-md);
+	color: var(--cai-text-primary);
+	font-size: var(--cai-text-md);
+	text-decoration: none;
+}
+
+.cai-platform-lang-switcher__link:hover {
+	background: var(--cai-surface-muted);
+	text-decoration: underline;
+}
+
+/* Inside the list's padding, so the rounded box never clips it */
+.cai-platform-lang-switcher__link:focus-visible {
+	outline: 2px solid var(--cai-focus-ring);
+	outline-offset: -2px;
+}
+
+/* The current language: weight and an underline, never colour alone (RL-6) */
+.cai-platform-lang-switcher__link[aria-current] {
+	font-weight: 600;
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	text-underline-offset: var(--cai-space-2xs);
+}
+
+/* Without the popover API the button would do nothing: the links show in a
+   row where the button was */
+@supports not selector(:popover-open) {
+	.cai-platform-lang-switcher__button,
+	.cai-platform-lang-switcher__title {
+		display: none;
+	}
+
+	.cai-platform-lang-switcher__menu {
+		padding: 0;
+		border: 0;
+		box-shadow: none;
+	}
+
+	.cai-platform-lang-switcher__list {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}

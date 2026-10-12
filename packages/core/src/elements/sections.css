@@ -12,6 +12,11 @@
   color: var(--cai-text-primary);
 }
 
+/* Spacing between letters breaks the joins of Arabic script */
+:where(h1, h2, h3, h4, h5, h6):where(:lang(ar)) {
+  letter-spacing: 0;
+}
+
 
 /* ========================================================================== */
 /* Address & hgroup — contact block and heading with a subtitle              */

@@ -16,7 +16,7 @@ import { gotoId, routeOf } from './helpers/docs-site.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
-// Every CSS file of the package: the shell patterns and the search
+// Every CSS file of the package: the shell patterns, the search and the language switcher
 const platformDir = fromRepo('packages/platform/src/components');
 const platformCss = readdirSync(platformDir)
   .filter((file) => file.endsWith('.css'))
@@ -41,6 +41,7 @@ const patternOf = {
   image: 'image',
   search: 'search',
   'search-trigger': 'search',
+  'lang-switcher': 'lang',
 };
 
 // Code tab, then Design tab; Known issues is above them (ia.md §6)

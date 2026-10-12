@@ -155,6 +155,12 @@
   display: none;
 }
 
+/* The language switcher (@cai-ds/platform, home page only): last in the
+   row, at every width, like the search; its list opens under the header */
+.site-header .cai-platform-lang-switcher {
+  --cai-platform-lang-switcher-top: var(--site-header-h);
+}
+
 /* GitHub: the mark and its name; below 640px the mark alone, the name
    clipped, so the row keeps Home, Docs and GitHub on a phone */
 .site-header__github {

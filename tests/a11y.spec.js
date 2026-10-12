@@ -8,7 +8,8 @@ import AxeBuilder from '@axe-core/playwright';
 import { notFoundRoute, routeOf, routes, routesWith } from './helpers/docs-site.js';
 
 // Every page in Chromium; a sample of layouts in Firefox and WebKit (a11y.md TEST-1)
-const APPS = ['/', ...routes(), notFoundRoute];
+// The home page in each of its languages (apps/landing/i18n)
+const APPS = ['/', '/es/', '/ar/', ...routes(), notFoundRoute];
 const SAMPLE = ['/', '/docs/', '/docs/components/', routeOf('c-button'), '/docs/a-z/', routeOf('h-a11y-target')];
 const THEMES = ['light', 'dark', 'high-contrast'];
 const BLOCKING = ['serious', 'critical'];

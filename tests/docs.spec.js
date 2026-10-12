@@ -298,8 +298,8 @@ test.describe('Documentation site', () => {
         expect(outline).not.toBe('none');
         const [prev, next] = await page.locator('.docs-pager a').evaluateAll((links) => links.map((a) => a.getBoundingClientRect().toJSON()));
         for (const box of [prev, next]) expect(box.height).toBeGreaterThanOrEqual(24);
-        // Side by side, or stacked full width at 480px and below
-        if (width <= 480) {
+        // Side by side, or stacked full width at 640px and below
+        if (width <= 640) {
           expect(next.top).toBeGreaterThanOrEqual(prev.bottom);
           expect(Math.round(next.width)).toBe(Math.round(prev.width));
         } else {

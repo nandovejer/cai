@@ -155,7 +155,7 @@
   display: none;
 }
 
-/* GitHub: the mark and its name; below 480px the mark alone, the name
+/* GitHub: the mark and its name; below 640px the mark alone, the name
    clipped, so the row keeps Home, Docs and GitHub on a phone */
 .site-header__github {
   gap: var(--cai-space-2xs);
@@ -167,7 +167,7 @@
   block-size: 1.125rem;
 }
 
-@media (max-width: 479px) {
+@media (max-width: 639px) {
   .site-header__github {
     justify-content: center;
     min-inline-size: var(--cai-control-lg);
@@ -189,10 +189,10 @@
 }
 
 /* The row sits in the site frame, with the page's gutter (--cai-space-xl
-   above 480px, like the home sections), so the brand starts where the
+   above 640px, like the home sections), so the brand starts where the
    content starts. The brand's auto margin sends the site links and the
    search to the end of the row, at every width. */
-@media (min-width: 481px) {
+@media (min-width: 641px) {
   .site-header__inner {
     padding-inline: calc(var(--site-edge) + var(--cai-space-xl));
   }
@@ -276,7 +276,7 @@
 /* Small screens: the version tag goes (it is also in the install
    snippets), the name stays beside the mark, and the row keeps room for
    Components */
-@media (max-width: 479px) {
+@media (max-width: 639px) {
   .site-header__tag {
     display: none;
   }

@@ -5,7 +5,7 @@
    package. The page layout and the snippet bars come from reference.css.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
-     - media queries use the literal values of --cai-mq-* (768, 480).
+     - media queries use the literal values of --cai-mq-* (768, 640).
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -280,7 +280,7 @@ demo-card {
 
 /* A native datetime-local needs about 248px: on a phone the stage gives up
    its side padding so the value is not clipped */
-@media (max-width: 480px) {
+@media (max-width: 640px) {
   .elements-type__stage {
     padding-inline: 0;
   }

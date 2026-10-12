@@ -36,6 +36,7 @@ lead: false
         <ul>
           <li>Headings use ET Book, an MIT-licensed font that ships with the tokens; text and code use the system fonts.</li>
           <li>Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens without any <code class="cai-code-inline">@font-face</code>.</li>
+          <li>Check your own colours against the WCAG ratios with <code class="cai-code-inline">npx @cai-ds/tokens check-contrast</code>, or <a href="/docs/tokens/contrast/">in the browser</a>.</li>
         </ul>
       </div>
 
@@ -54,7 +55,11 @@ lead: false
 
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
-        <p>Every page works without the script. See <a href="/docs/get-started/javascript/">what each JavaScript module adds</a>.</p>
+        <ul>
+          <li>Every page works without the script. See <a href="/docs/get-started/javascript/">what each JavaScript module adds</a>.</li>
+          <li>Need a single component? Load <code class="cai-code-inline">dist/base.min.css</code> plus the file you want, for example <code class="cai-code-inline">dist/components/button.min.css</code>.</li>
+          <li>Markup you cannot add classes to, such as Markdown or a CMS? Load <a href="/docs/get-started/classless/"><code class="cai-code-inline">classless.css</code></a> and mark the zone with <code class="cai-code-inline">data-cai-classless</code>.</li>
+        </ul>
       </div>
 
       <div class="docs-prose">

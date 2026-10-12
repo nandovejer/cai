@@ -286,63 +286,27 @@ test.describe('Landing page', () => {
   });
 
   test.describe('adoption levels', () => {
-    const levels = [
-      {
-        install: 'npm install @cai-ds/tokens',
-        files: ['@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css'],
-        absent: ['@cai-ds/core', '@cai-ds/platform'],
-      },
-      {
-        install: 'npm install @cai-ds/tokens @cai-ds/core',
-        files: [
-          '@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css',
-          '@cai-ds/core@3.0.0/dist/cai.min.css',
-          '@cai-ds/core@3.0.0/dist/cai.min.js',
-        ],
-        absent: ['@cai-ds/platform'],
-      },
-      {
-        install: 'npm install @cai-ds/tokens @cai-ds/core @cai-ds/platform',
-        files: [
-          '@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css',
-          '@cai-ds/core@3.0.0/dist/cai.min.css',
-          '@cai-ds/platform@3.0.0/dist/platform.min.css',
-          '@cai-ds/core@3.0.0/dist/cai.min.js',
-        ],
-        absent: [],
-      },
+    const anchors = [
+      '/docs/get-started/#level-1-tokens-only',
+      '/docs/get-started/#level-2-tokens-and-core',
+      '/docs/get-started/#level-3-tokens-core-and-platform',
     ];
 
-    test('each level has one install command and one CDN snippet', async ({ page }) => {
+    test('each level says when to choose it and links to its install section', async ({ page }) => {
       await open(page);
 
       const cards = page.locator('#adopt .landing-level');
       await expect(cards).toHaveCount(3);
 
-      for (const [index, level] of levels.entries()) {
+      for (const [index, anchor] of anchors.entries()) {
         const card = cards.nth(index);
-        await expect(card.locator('.cai-platform-command-block')).toHaveCount(1);
-        await expect(card.locator('pre.cai-code-block')).toHaveCount(1);
-
-        const command = await card.locator('.cai-platform-command-block__cmd').textContent();
-        expect(command.replace(/^\$\s*/, '').trim()).toBe(level.install);
-
-        const snippet = await card.locator('pre.cai-code-block code').textContent();
-        let position = -1;
-        for (const file of level.files) {
-          // Present, and in load order
-          const found = snippet.indexOf(file);
-          expect(found, `${file} in level ${index + 1}`).toBeGreaterThan(position);
-          position = found;
-        }
-        for (const name of level.absent) expect(snippet).not.toContain(name);
-        // Every CDN URL pins the exact version
-        const urls = snippet.match(/https:\/\/cdn\.jsdelivr\.net\/npm\/\S+?(?=")/g);
-        expect(urls).toHaveLength(level.files.length);
-        for (const url of urls) expect(url).toMatch(/@cai-ds\/(tokens|core|platform)@3\.0\.0\//);
-        if (snippet.includes('cai.min.js')) {
-          expect(snippet).toMatch(/<script type="module" src="[^"]+cai\.min\.js"><\/script>/);
-        }
+        await expect(card.locator('h3')).toContainText(`Level ${index + 1}`);
+        await expect(card.locator('.landing-level__intro p')).toContainText(/^Choose this if /);
+        await expect(card.locator('h4')).toHaveCount(1);
+        // The install commands live in one place: the guide
+        await expect(card.locator('pre, .cai-platform-command-block, .cai-copy-btn')).toHaveCount(0);
+        const install = card.getByRole('link', { name: `Install level ${index + 1}` });
+        await expect(install).toHaveAttribute('href', new RegExp(`${anchor}$`));
       }
     });
 
@@ -365,14 +329,12 @@ test.describe('Landing page', () => {
           visible: document.getElementById(button.dataset.copyFrom)?.textContent.trim(),
         })),
       );
-      // 3 install commands + 3 CDN snippets + "the whole setup"
-      expect(pairs).toHaveLength(7);
+      // "The whole setup"
+      expect(pairs).toHaveLength(1);
       for (const { copy, visible, label } of pairs) {
         expect(visible, label).toBeTruthy();
         expect(copy, label).toBe(visible);
       }
-      // Each button says what it copies
-      expect(new Set(pairs.map((pair) => pair.label)).size).toBe(pairs.length);
     });
 
     test('clicking a copy button puts the snippet on the clipboard', async ({ page, context, browserName }) => {
@@ -381,13 +343,77 @@ test.describe('Landing page', () => {
       await context.grantPermissions(['clipboard-read', 'clipboard-write']);
       await open(page);
 
-      const button = page.locator('[data-copy-from="snip-l2"]');
+      const button = page.locator('[data-copy-from="snip-what"]');
       await button.click();
 
       await expect(button).toHaveClass(/is-copied/);
       await expect(page.locator('#cai-live-region')).toHaveText('Copied to clipboard');
-      const expected = (await page.locator('#snip-l2').textContent()).trim();
+      const expected = (await page.locator('#snip-what').textContent()).trim();
       expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(expected);
+    });
+  });
+
+  test.describe('install guide', () => {
+    const levels = [
+      {
+        id: 'level-1-tokens-only',
+        install: 'pnpm add @cai-ds/tokens',
+        files: ['@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css'],
+        absent: ['@cai-ds/core', '@cai-ds/platform'],
+      },
+      {
+        id: 'level-2-tokens-and-core',
+        install: 'pnpm add @cai-ds/tokens @cai-ds/core',
+        files: [
+          '@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css',
+          '@cai-ds/core@3.0.0/dist/cai.min.css',
+          '@cai-ds/core@3.0.0/dist/cai.min.js',
+        ],
+        absent: ['@cai-ds/platform'],
+      },
+      {
+        id: 'level-3-tokens-core-and-platform',
+        install: 'pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform',
+        files: [
+          '@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css',
+          '@cai-ds/core@3.0.0/dist/cai.min.css',
+          '@cai-ds/platform@3.0.0/dist/platform.min.css',
+          '@cai-ds/core@3.0.0/dist/cai.min.js',
+          '@cai-ds/platform@3.0.0/dist/platform.min.js',
+        ],
+        absent: [],
+      },
+    ];
+
+    test('each level has one install command and one CDN snippet', async ({ page }) => {
+      await page.goto('/docs/get-started/');
+
+      for (const [index, level] of levels.entries()) {
+        const section = page.locator('.docs-prose').filter({ has: page.locator(`#${level.id}`) });
+        await expect(section.locator('.cai-platform-command-block')).toHaveCount(1);
+        await expect(section.locator('pre.cai-code-block')).toHaveCount(1);
+
+        const command = await section.locator('.cai-platform-command-block__cmd').textContent();
+        expect(command.replace(/\s+/g, ' ').replace(/^\s*\$\s*/, '').trim()).toBe(level.install);
+        await expect(section.locator('.cai-copy-btn')).toHaveAttribute('data-copy', level.install);
+
+        const snippet = await section.locator('pre.cai-code-block code').textContent();
+        let position = -1;
+        for (const file of level.files) {
+          // Present, and in load order
+          const found = snippet.indexOf(file);
+          expect(found, `${file} in level ${index + 1}`).toBeGreaterThan(position);
+          position = found;
+        }
+        for (const name of level.absent) expect(snippet).not.toContain(name);
+        // Every CDN URL pins the exact version
+        const urls = snippet.match(/https:\/\/cdn\.jsdelivr\.net\/npm\/\S+?(?=")/g);
+        expect(urls).toHaveLength(level.files.length);
+        for (const url of urls) expect(url).toMatch(/@cai-ds\/(tokens|core|platform)@3\.0\.0\//);
+        for (const script of snippet.match(/<script[^>]*>/g) ?? []) {
+          expect(script).toMatch(/^<script type="module" src="[^"]+\.min\.js">$/);
+        }
+      }
     });
   });
 
@@ -478,9 +504,8 @@ test.describe('Landing page', () => {
         await expect(page.locator('main [hidden]')).toHaveCount(0);
         // The adoption message does not depend on a script
         await expect(page.locator('#adopt .landing-level')).toHaveCount(3);
-        for (const id of ['snip-l1', 'snip-l2', 'snip-l3']) {
-          await expect(page.locator(`#${id}`)).toBeVisible();
-          await expect(page.locator(`#${id}`)).toContainText('cai-tokens.min.css');
+        for (const level of [1, 2, 3]) {
+          await expect(page.getByRole('link', { name: `Install level ${level}` })).toBeVisible();
         }
         expect(
           await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth),

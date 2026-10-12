@@ -195,8 +195,7 @@
 }
 
 /* No width jump when the label becomes "✓ Copied" */
-.landing-snippet .cai-copy-btn,
-.landing-level .cai-copy-btn {
+.landing-snippet .cai-copy-btn {
   min-width: calc(var(--cai-space-3xl) + var(--cai-space-md) + var(--cai-space-xs));
   justify-content: center;
 }
@@ -240,18 +239,31 @@
   font-size: var(--cai-text-xl);
 }
 
-.landing-level__body {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-xl);
+/* "Level N" is part of the heading, on a line of its own */
+.landing-level__title .landing-eyebrow {
+  display: block;
+  margin-block-end: var(--cai-space-2xs);
 }
 
-.landing-level__body > div {
+.landing-level__intro p {
+  font-size: var(--cai-text-md);
+}
+
+.landing-level__body {
   display: grid;
   gap: var(--cai-space-xs);
-  align-content: start;
   justify-items: start;
   font-size: var(--cai-text-md);
+}
+
+.landing-level__body h4 {
+  margin: 0;
+}
+
+.landing-level__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cai-space-2xs) var(--cai-space-lg);
 }
 
 .landing-level__get {
@@ -259,19 +271,6 @@
   display: grid;
   gap: var(--cai-space-2xs);
   font-size: var(--cai-text-md);
-}
-
-.landing-level__snippets {
-  display: grid;
-  gap: var(--cai-space-sm);
-}
-
-.landing-level .cai-platform-command-block {
-  margin-bottom: 0;
-}
-
-.landing-level__note {
-  font-size: var(--cai-text-sm);
 }
 
 /* Links that stand alone (not inside a sentence) are targets of 24px or more */
@@ -352,13 +351,8 @@
   }
 
   .landing-level__head,
-  .landing-level__body,
   .landing-fit {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .landing-level__body {
-    gap: var(--cai-space-md);
   }
 
   .landing-stack--mini {
@@ -386,10 +380,6 @@
 
   .landing-level {
     padding: var(--cai-space-md);
-  }
-
-  .landing-level .cai-platform-command-block {
-    padding: var(--cai-space-sm);
   }
 
   /* Page footer: three short links fit on one row */

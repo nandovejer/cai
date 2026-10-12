@@ -5,15 +5,17 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Radius – Tokens – CAI documentation</title>
-  <meta name="description" content="The corner radius scale, from square to round.">
+  <meta name="description" content="The corner radius scale: square, 2px, 4px at most, and round.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <!-- Before the first paint: the visitor's color mode (EX-009) -->
+  <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-C0at8LUP.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-dzKKr0m0.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D4vvVrCr.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DBtNI4eA.css">
+  <script type="module" crossorigin src="../../../assets/reference-BZi6z4hl.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BzpR2raI.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CiJobr7V.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BS8bGUjY.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -130,12 +132,13 @@
       <h1 class="docs-title">Radius</h1>
       <code class="docs-demo__file">tokens.json → radius</code>
     </div>
-    <p class="docs-lead">The corner radius scale, from square to round.</p>
+    <p class="docs-lead">The corner radius scale: square, 2px, 4px at most, and round.</p>
   </div>
 
   <div class="docs-body">
     <div class="docs-block" id="t-radius">
-          <p>Core uses three steps: <code class="cai-code-inline">--cai-radius-sm</code> for small controls and tags, <code class="cai-code-inline">--cai-radius-md</code> for cards and frames, and <code class="cai-code-inline">--cai-radius-lg</code> for dialogs.</p>
+          <p>Every box has the same corner, <code class="cai-code-inline">--cai-radius-md</code> (4px): buttons, fields with a full border, cards, alerts, menus, dialogs. It is the ceiling: no rectangle is rounder. <code class="cai-code-inline">--cai-radius-sm</code> is for small marks (inline code, <code class="cai-code-inline">kbd</code>, a checkbox, a thin bar) and for a row inside a rounded box, so the two corners stay concentric. <code class="cai-code-inline">--cai-radius-none</code> is for a box that joins a neighbour, or a field drawn by its bottom edge only, such as the select and the text field.</p>
+          <p><code class="cai-code-inline">--cai-radius-full</code> is not a corner: it makes a pill or a circle, for shapes that are round by nature, such as the switch track and the count badge. A dot, a radio button or a slider thumb is a circle with <code class="cai-code-inline">50%</code>.</p>
           <div class="docs-demo__stage">
             <ul class="docs-specimens">
               <li>
@@ -152,16 +155,6 @@
                 <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-md)" aria-hidden="true"></span>
                 <code>--cai-radius-md</code>
                 <span>4px</span>
-              </li>
-              <li>
-                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-lg)" aria-hidden="true"></span>
-                <code>--cai-radius-lg</code>
-                <span>8px</span>
-              </li>
-              <li>
-                <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-xl)" aria-hidden="true"></span>
-                <code>--cai-radius-xl</code>
-                <span>12px</span>
               </li>
               <li>
                 <span class="docs-box docs-box--radius" style="--v: var(--cai-radius-full)" aria-hidden="true"></span>

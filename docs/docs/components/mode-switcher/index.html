@@ -9,11 +9,13 @@
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <!-- Before the first paint: the visitor's color mode (EX-009) -->
+  <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-C0at8LUP.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-dzKKr0m0.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D4vvVrCr.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DBtNI4eA.css">
+  <script type="module" crossorigin src="../../../assets/reference-BZi6z4hl.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BzpR2raI.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CiJobr7V.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BS8bGUjY.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -195,7 +197,7 @@
           <p class="docs-demo__note">The radio group, disabled here so it does not change this page. The working switcher, in the cycle variant, is in <a href="#site-footer">this page's footer</a>: one button with the icon of the current mode.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>A stored color mode can flash once on load: no inline script sets it before the page is drawn, by design.</p>
+          <p>A stored color mode can flash once on load: <code>initThemeSystem()</code> is a deferred module and runs after the first paint, and CAI ships no script for the <code>&lt;head&gt;</code>, by design. This site sets the mode before the first paint with a small script of its own.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Color mode switcher documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>

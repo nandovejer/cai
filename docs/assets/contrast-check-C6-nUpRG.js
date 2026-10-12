@@ -115,9 +115,7 @@ const C={transparent:[0,0,0,0],white:[255,255,255,1],black:[0,0,0,1]},v=(a,r,n)=
   /* Radius */
   --cai-radius-none: 0px;
   --cai-radius-sm: 2px;
-  --cai-radius-md: 6px;
-  --cai-radius-lg: 14px;
-  --cai-radius-xl: 22px;
+  --cai-radius-md: 4px;
   --cai-radius-full: 9999px;
 
   /* Shadows */

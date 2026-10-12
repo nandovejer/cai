@@ -636,11 +636,12 @@ const NOT_SEARCHED = new Set(["example", "code", "design"]);
  * public contract documented on /docs/platform/search/), from the same data
  * as the A–Z index: three lists of [text, url, meta?]. URLs are relative to
  * the JSON file, so the site works under any path; a section's URL carries
- * its page and its fragment, since "#how" exists on many pages. A section or
- * element names its page (and tab) in its text, "When to use, Button ›
- * Design", so it makes sense alone (a11y.md SRCH-19) and is found by the
- * page's name; that is why template headings are kept here. Plain data for
- * JSON.stringify (SEC-PLG-9).
+ * its page and its fragment, since "#how" exists on many pages. A section
+ * names its page (and tab) in its meta, ["When to use", url, "Button ›
+ * Design"], read after it, so it makes sense alone (a11y.md SRCH-19) and is
+ * found by the page's name (the search reads the meta too); that is why
+ * template headings are kept here. An element names its page in its text.
+ * Plain data for JSON.stringify (SEC-PLG-9).
  */
 export function buildSearchIndex(site) {
   const url = (route, id = "") => (route.slice(DOCS_ROUTE.length) || "./") + (id && `#${id}`);
@@ -648,7 +649,7 @@ export function buildSearchIndex(site) {
   for (const { title, route, area, sections, elements } of indexData(site)) {
     index.pages.push(area ? [title, url(route), area] : [title, url(route)]);
     for (const s of sections) {
-      if (!NOT_SEARCHED.has(s.id)) index.sections.push([`${s.text}, ${title}${s.tab ? ` › ${s.tab}` : ""}`, url(route, s.id)]);
+      if (!NOT_SEARCHED.has(s.id)) index.sections.push([s.text, url(route, s.id), `${title}${s.tab ? ` › ${s.tab}` : ""}`]);
     }
     for (const e of elements) index.elements.push([`${e.text}, ${title}`, url(route, e.id)]);
   }

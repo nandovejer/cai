@@ -578,10 +578,10 @@ describe("the CAI docs site", () => {
     expect(index.pages).toContainEqual(["Button", "components/button/", "Components"]);
     expect(index.pages).toContainEqual(["CAI documentation", "./"]);
     expect(index.pages.find(([title]) => title === "A–Z index")).toBeUndefined();
-    // Template headings are kept, named after their page and tab; the tab row is not
-    expect(index.sections).toContainEqual(["When to use, Button › Design", "components/button/#when"]);
-    expect(index.sections).toContainEqual(["Keyboard and ARIA, Button › Code", "components/button/#keyboard"]);
-    expect(index.sections).toContainEqual(["Known issues, Button", "components/button/#known-issues"]);
+    // Template headings are kept, their page and tab in the meta; the tab row is not
+    expect(index.sections).toContainEqual(["When to use", "components/button/#when", "Button › Design"]);
+    expect(index.sections).toContainEqual(["Keyboard and ARIA", "components/button/#keyboard", "Button › Code"]);
+    expect(index.sections).toContainEqual(["Known issues", "components/button/#known-issues", "Button"]);
     expect(index.sections.filter(([, url]) => /#(example|code|design)$/.test(url))).toEqual([]);
     expect(index.elements).toContainEqual(["<table> element, Tables", "html/tables/#el-table"]);
     // Plain JSON, small enough to fetch on the first open

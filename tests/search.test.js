@@ -46,14 +46,14 @@ describe("reading the index (SEC-IDX-6, SEC-IDX-7, SEC-IDX-8)", () => {
     const results = readIndex(
       index({
         pages: [["Button", "components/button/", "Components"]],
-        sections: [["When to use, Button › Design", "components/button/#when"]],
+        sections: [["When to use", "components/button/#when", "Button › Design"]],
         elements: [["<table> element, Tables", "html/tables/#el-table", null, "en"]],
       }),
       BASE,
     );
     expect(results.map((r) => [r.g, r.text, r.meta, r.href, r.lang])).toEqual([
       [0, "Button", "Components", "https://example.org/docs/components/button/", false],
-      [1, "When to use, Button › Design", false, "https://example.org/docs/components/button/#when", false],
+      [1, "When to use", "Button › Design", "https://example.org/docs/components/button/#when", false],
       [2, "<table> element, Tables", false, "https://example.org/docs/html/tables/#el-table", "en"],
     ]);
   });
@@ -106,7 +106,7 @@ describe("matching", () => {
   const results = readIndex(
     index({
       pages: [["Tables", "html/tables/"], ["Tabs", "components/tabs/"], ["Table", "components/table/"], ["Écran d’accueil", "fr/"], ["Data table", "data/"]],
-      sections: [["When to use, Tabs › Design", "components/tabs/#when"], ["Keyboard and ARIA, Button › Code", "components/button/#keyboard"]],
+      sections: [["When to use", "components/tabs/#when", "Tabs › Design"], ["Keyboard and ARIA", "components/button/#keyboard", "Button › Code"]],
       elements: [["<table> element, Tables", "html/tables/#el-table"]],
     }),
     BASE,
@@ -119,10 +119,12 @@ describe("matching", () => {
     expect(names(search(results, "<table>"))[2]).toEqual(["<table> element, Tables"]);
   });
 
-  it("needs every word, in any order, and finds a section by its page", () => {
-    expect(names(search(results, "button keyboard"))).toEqual([[], ["Keyboard and ARIA, Button › Code"], []]);
-    expect(names(search(results, "aria button"))[1]).toEqual(["Keyboard and ARIA, Button › Code"]);
+  it("needs every word, in any order, and finds a section by its page (the meta)", () => {
+    expect(names(search(results, "button keyboard"))).toEqual([[], ["Keyboard and ARIA"], []]);
+    expect(names(search(results, "aria button"))[1]).toEqual(["Keyboard and ARIA"]);
+    expect(names(search(results, "tabs design"))[1]).toEqual(["When to use"]);
     expect(names(search(results, "button zebra"))).toEqual([[], [], []]);
+    expect(names(search(results, "undefined"))).toEqual([[], [], []]);
   });
 
   it("puts the exact name first, then the names that start with the query", () => {

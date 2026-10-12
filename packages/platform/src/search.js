@@ -72,18 +72,20 @@ export function safeUrl(raw, base) {
  * The results of an index (format version 1), checked item by item; null
  * when it is not an index. The index has three lists, `pages`, `sections`
  * and `elements`, of [text, url, meta?, lang?]; URLs are relative to `base`,
- * the URL of the index. A result: { g (its group), name (folded text),
- * text, meta, href, lang }. At most 10,000 results, 300 characters a string.
+ * the URL of the index. A result: { g (its group), name (folded text and
+ * meta), text, meta, href, lang }. At most 10,000 results, 300 characters a string.
  */
 export function readIndex(data, base) {
   if (data?.version !== 1 || !Array.isArray(data.pages)) return null;
   const out = [];
   GROUPS.forEach((group, g) => {
     for (const item of Array.isArray(data[group]) ? data[group] : []) {
-      const [text, raw, meta, lang] = Array.isArray(item) ? item : [];
+      const [text, raw, m, lang] = Array.isArray(item) ? item : [];
+      const meta = str(m) && cut(m);
       const url = out.length < 1e4 && str(text) && str(raw) && safeUrl(raw, base);
       if (url) {
-        out.push({ g, name: fold(cut(text)), text: cut(text), meta: str(meta) && cut(meta), href: url.href, lang: str(lang) && LANG.test(lang) && lang });
+        // The meta is searched too: a section is found by its page's name
+        out.push({ g, name: fold(`${cut(text)} ${meta || ""}`), text: cut(text), meta, href: url.href, lang: str(lang) && LANG.test(lang) && lang });
       }
     }
   });

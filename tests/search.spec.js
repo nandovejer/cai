@@ -150,8 +150,7 @@ test.describe('search: results', () => {
   test('no results: the query, a hint and the A–Z link; the query is text, never a pattern (SRCH-26, SEC-IDX-10)', async ({ page }) => {
     await open(page);
     await searchFor(page, "zz$&$'$`{n}");
-    await expect(status(page)).toHaveText("No results for “zz$&$'$`{n}”.");
-    await expect(dialog(page).getByText('Check the spelling or try a shorter word.')).toBeVisible();
+    await expect(status(page)).toHaveText("No results for “zz$&$'$`{n}”. Check the spelling or try a shorter word.");
     await expect(dialog(page).getByRole('heading', { name: 'Popular' })).toBeHidden();
     await expect(dialog(page).getByRole('link', { name: 'Browse the A–Z index' })).toBeVisible();
   });

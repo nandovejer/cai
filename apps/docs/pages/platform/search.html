@@ -44,7 +44,7 @@ toc: h2,h3
         data-cai-label-results=&quot;{n} results&quot;
         data-cai-label-result=&quot;1 result&quot;
         data-cai-label-capped=&quot;{shown} of {n} results. Type more to narrow.&quot;
-        data-cai-label-none=&quot;No results for “{query}”.&quot;
+        data-cai-label-none=&quot;No results for “{query}”. Check the spelling or try a shorter word.&quot;
         data-cai-label-loading=&quot;Loading the search index…&quot;
         data-cai-label-error=&quot;Search is not available right now.&quot;&gt;
   &lt;search class=&quot;cai-platform-search__body&quot;&gt;
@@ -59,7 +59,6 @@ toc: h2,h3
     &lt;/div&gt;
     &lt;p class=&quot;cai-field__helper&quot; id=&quot;search-hint&quot;&gt;Results update as you type. Arrow keys move through them.&lt;/p&gt;
     &lt;p class=&quot;cai-platform-search__status&quot; role=&quot;status&quot;&gt;&lt;/p&gt;
-    &lt;p data-cai-search-show=&quot;none&quot; hidden&gt;Check the spelling or try a shorter word.&lt;/p&gt;
     &lt;div class=&quot;cai-platform-search__results&quot; data-cai-search-results&gt;
       &lt;div hidden&gt;&lt;h3&gt;Pages&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;pages&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
       &lt;div hidden&gt;&lt;h3&gt;Sections&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;sections&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
@@ -91,10 +90,10 @@ toc: h2,h3
             <pre class="cai-code-block" data-lang="json" tabindex="0" role="region" aria-label="Search index format"><code>{
   &quot;version&quot;: 1,
   &quot;pages&quot;: [[&quot;Button&quot;, &quot;components/button/&quot;, &quot;Components&quot;]],
-  &quot;sections&quot;: [[&quot;When to use, Button › Design&quot;, &quot;components/button/#when&quot;]],
+  &quot;sections&quot;: [[&quot;When to use&quot;, &quot;components/button/#when&quot;, &quot;Button › Design&quot;]],
   &quot;elements&quot;: [[&quot;&lt;table&gt; element, Tables&quot;, &quot;html/tables/#el-table&quot;]]
 }</code></pre>
-            <p>A result matches when its text contains every word typed, without regard to case or accents; the ones that start with the words come first. Each group shows 8 results at most, and the status line says how many there are.</p>
+            <p>A result matches when its text and meta together contain every word typed, without regard to case or accents; the ones that start with the words come first. Each group shows 8 results at most, and the status line says how many there are.</p>
             <p>What the component accepts, so that an index built from a CMS cannot harm the page:</p>
             <ul>
               <li>The JSON comes only from the page’s own origin, over http or https, and a redirect fails the request. Your Content-Security-Policy needs <code>connect-src 'self'</code>; to use an index from another site, host a copy on yours. The browser caches it like any file.</li>
@@ -143,7 +142,8 @@ toc: h2,h3
             <p>Every text is in the markup, so it is yours to write, in the page's language.</p>
             <ul>
               <li>The trigger says what is searched: “Search docs…”. Keep it short in every language (“Buscar…”) rather than cutting it off.</li>
-              <li>Give section results their page: “When to use, Button › Design”, so a result makes sense on its own.</li>
+              <li>Give section results their page in the meta: “When to use” with “Button › Design”, so a result makes sense on its own and is found by the page’s name.</li>
+              <li>Say what to try next in the <code>none</code> label, which the status line announces: “Check the spelling or try a shorter word.” after the query.</li>
               <li>Point the fallback link and the line under the results at the same index page.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>

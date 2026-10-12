@@ -10,9 +10,9 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-D4tZNdhU.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-_j7RD7dJ.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfGJ0-Px.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CdbELxFJ.css">
+  <script type="module" crossorigin src="../../../assets/reference-BYkIuEQk.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BTlUEIq1.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-PScEvJvU.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-v6-EqpOV.css">
 </head>
 <body class="o-shell docs-page">
@@ -187,7 +187,7 @@
                 <li><a class="cai-pagination__link" href="#example" aria-label="Page 1">1</a></li>
                 <li class="cai-pagination__gap" aria-hidden="true">…</li>
                 <li><a class="cai-pagination__link" href="#example" aria-label="Page 7">7</a></li>
-                <li><a class="cai-pagination__link" href="#example" aria-label="Page 8, current page" aria-current="page">8</a></li>
+                <li><a class="cai-pagination__link" href="#example" aria-label="Page 8" aria-current="page">8</a></li>
                 <li><a class="cai-pagination__link" href="#example" aria-label="Page 9">9</a></li>
                 <li class="cai-pagination__gap" aria-hidden="true">…</li>
                 <li><a class="cai-pagination__link" href="#example" aria-label="Page 40">40</a></li>
@@ -214,7 +214,7 @@
   &lt;ul class=&quot;cai-pagination&quot;&gt;
     &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=1&quot; rel=&quot;prev&quot;&gt;Previous&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=1&quot; aria-label=&quot;Page 1&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=2&quot; aria-label=&quot;Page 2, current page&quot; aria-current=&quot;page&quot;&gt;2&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=2&quot; aria-label=&quot;Page 2&quot; aria-current=&quot;page&quot;&gt;2&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=3&quot; aria-label=&quot;Page 3&quot;&gt;3&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=3&quot; rel=&quot;next&quot;&gt;Next&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
@@ -243,6 +243,7 @@
               <li><code>rel="prev"</code> and <code>rel="next"</code> say which links go to the neighbours.</li>
               <li>The current page is a link with <code>aria-current="page"</code>, so it is still announced as a link and keeps its place in the order.</li>
               <li>At the first or last page, Previous or Next is a <code>&lt;span&gt;</code> with <code>aria-disabled="true"</code>: text, with no focus stop.</li>
+              <li>Keep the <code>&lt;nav&gt;</code>. Some browsers drop the list semantics of a <code>&lt;ul&gt;</code> without bullets, and the landmark is what keeps it announced as a list; without a <code>&lt;nav&gt;</code>, add <code>role="list"</code> to the <code>&lt;ul&gt;</code>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: it is a list of links and CSS. Without CSS it reads as a list of links.</p>
@@ -250,7 +251,7 @@
             <p>Tab reaches each link in order; Enter follows it.</p>
             <ul>
               <li>Name the <code>&lt;nav&gt;</code> “Pagination” with <code>aria-label</code>, so it differs from the main navigation.</li>
-              <li>Give a number the name “Page 3” with <code>aria-label</code>, and say “current page” on the current one. The visible number stays in the name.</li>
+              <li>Give a number the name “Page 3” with <code>aria-label</code>. The visible number stays in the name. <code>aria-current="page"</code> makes the screen reader say which one is current, so the name does not need to.</li>
               <li>A gap is <code>aria-hidden="true"</code>: the screen reader hears the pages, not the dots.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
@@ -310,13 +311,13 @@
             <ul>
               <li><strong>Focus:</strong> each link has the shared link ring, a 2 px <code>--cai-focus-ring</code> outline 2 px outside the item.</li>
               <li><strong>Not colour alone:</strong> the current page has a solid fill and a heavier weight (600), and carries <code>aria-current</code>.</li>
-              <li><strong>Forced colors:</strong> the current page takes the system selection colors (<code>Highlight</code> and <code>HighlightText</code>).</li>
+              <li><strong>Forced colors:</strong> the current page takes the system selection colors (<code>Highlight</code> and <code>HighlightText</code>) and a focus ring in <code>CanvasText</code>; an end that is not a link is <code>GrayText</code>.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 16 tokens that <code>components/pagination.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 15 tokens that <code>components/pagination.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-brand-fill"><code>--cai-brand-fill</code></a>, <a href="../../../docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="../../../docs/tokens/color/#cai-surface-pressed"><code>--cai-surface-pressed</code></a>, <a href="../../../docs/tokens/color/#cai-text-disabled"><code>--cai-text-disabled</code></a>, <a href="../../../docs/tokens/color/#cai-text-muted"><code>--cai-text-muted</code></a>, <a href="../../../docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="../../../docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-space-lg</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
               <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-md</code></dd></div>
               <div><dt><a href="../../../docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
               <div><dt><a href="../../../docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>

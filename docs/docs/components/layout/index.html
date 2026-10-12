@@ -10,9 +10,9 @@
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <script type="module" crossorigin src="../../../assets/site-header-D4tZNdhU.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-_j7RD7dJ.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CfGJ0-Px.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CdbELxFJ.css">
+  <script type="module" crossorigin src="../../../assets/reference-BYkIuEQk.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BTlUEIq1.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-PScEvJvU.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-v6-EqpOV.css">
 </head>
 <body class="o-shell docs-page">
@@ -154,6 +154,7 @@
       <ul class="docs-onpage__list">
         <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-examples">Examples</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-reference">Pick an object</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-grid">The grid</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-markup">Copy the markup</a></li>
       </ul>
     </details>
@@ -212,7 +213,9 @@
               <tbody>
                 <tr><td data-label="Class"><div><code>.o-stack</code></div></td><td data-label="What it does"><div>A column, 12 px between items</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-row</code></div></td><td data-label="What it does"><div>A row that wraps, items centred vertically, 12 px between them</div></td></tr>
-                <tr><td data-label="Class"><div><code>.o-grid</code></div></td><td data-label="What it does"><div>A grid with 16 px gaps; set the columns with your own <code>grid-template-columns</code></div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-grid</code></div></td><td data-label="What it does"><div>A grid with 16 px gaps; set the columns with your own <code>grid-template-columns</code>, or with one of the modifiers below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-grid--auto</code></div></td><td data-label="What it does"><div>As many equal columns as fit, none narrower than <code>--cai-grid-min</code> (16 rem by default): the grid reflows by itself and needs no breakpoint</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-grid--2</code>, <code>.o-grid--3</code>, <code>.o-grid--4</code></div></td><td data-label="What it does"><div>That many equal columns above 768 px; one column at 768 px and below</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-media</code>, <code>.o-media__body</code></div></td><td data-label="What it does"><div>A fixed item, such as an avatar, beside content that takes the remaining width</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-container</code></div></td><td data-label="What it does"><div>The content width (<code>--cai-content-max</code>, 1100 px) and page padding; less padding at 480 px and below</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-shell</code></div></td><td data-label="What it does"><div>The app layout: a sidebar column (<code>--cai-sidebar-width</code>) beside the main area, a footer across the bottom; one column at 768 px and below</div></td></tr>
@@ -220,6 +223,28 @@
               </tbody>
             </table>
           </div>
+          <h2 id="objects-grid">The grid</h2>
+          <p>CAI has no 12-column system: a content grid is a handful of equal columns, and <code>.o-grid</code> draws them. Use <code>.o-grid--auto</code> when the items decide how many fit, such as cards; use <code>.o-grid--2</code> to <code>--4</code> when the number is part of the design.</p>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-objects-grid" aria-label="Copy the grid markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Grid markup"><code id="code-objects-grid">&lt;!-- as many columns as fit, each at least 16 rem --&gt;
+&lt;div class=&quot;o-grid o-grid--auto&quot;&gt;…cards…&lt;/div&gt;
+
+&lt;!-- at least 12 rem: set the property in your own CSS --&gt;
+&lt;div class=&quot;o-grid o-grid--auto gallery&quot;&gt;…&lt;/div&gt;
+&lt;style&gt;.gallery { --cai-grid-min: 12rem; }&lt;/style&gt;
+
+&lt;!-- three columns above 768 px, one below --&gt;
+&lt;div class=&quot;o-grid o-grid--3&quot;&gt;…&lt;/div&gt;</code></pre>
+          </div>
+          <ul>
+            <li>Items keep their source order: the grid reorders nothing, so reading order and tab order are the page's.</li>
+            <li>Columns are <code>minmax(0, 1fr)</code>, so a long word or a wide table inside an item cannot push the grid wider than its container.</li>
+            <li>For a layout that depends on the width of a card and not of the window, put the grid in a container and size the items there; the objects do not read the container.</li>
+          </ul>
           <h2 id="objects-markup">Copy the markup</h2>
           <div class="docs-snippet">
             <div class="docs-snippet__bar">

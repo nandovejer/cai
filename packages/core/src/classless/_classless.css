@@ -128,9 +128,12 @@
   border-bottom-style: dashed;
 }
 
-/* The date and time pickers follow the colour mode, as .cai-input does */
+/* The date and time pickers follow the colour mode, as .cai-input does, and
+   centre their value the same way */
 :where([data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {
   color-scheme: light;
+  display: flex;
+  align-items: center;
 }
 
 :where(:is([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) [data-cai-classless] input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]):not([class*="cai-"])) {

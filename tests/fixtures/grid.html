@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Layout grid</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <style>.narrow { --cai-grid-min: 8rem; }</style>
+</head>
+<body>
+  <div class="o-grid o-grid--auto" id="auto"><p>1</p><p>2</p><p>3</p><p>4</p></div>
+  <div class="o-grid o-grid--auto narrow" id="auto-narrow"><p>1</p><p>2</p><p>3</p><p>4</p></div>
+  <div class="o-grid o-grid--2" id="two"><p>1</p><p>2</p><p>3</p><p>4</p></div>
+  <div class="o-grid o-grid--3" id="three"><p>1</p><p>2</p><p>3</p><p>4</p></div>
+  <div class="o-grid o-grid--4" id="four"><p>1</p><p>2</p><p>3</p><p>4</p></div>
+  <div class="o-grid o-grid--2" id="wide"><p><span style="display:block;inline-size:900px">wide</span></p><p>2</p></div>
+</body>
+</html>

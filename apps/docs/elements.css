@@ -233,13 +233,18 @@
 .elements-type__stage {
   display: grid;
   align-content: end;
-  padding: var(--cai-space-sm);
+  padding: var(--cai-space-xs);
   background: var(--cai-surface-page);
   border: 1px dashed var(--cai-outline);
 }
 
 .elements-type__stage > * {
   min-width: 0;
+}
+
+/* A checkbox or a radio is its box, not the width of the stage */
+.elements-type__stage > :is([type="checkbox"], [type="radio"]) {
+  justify-self: start;
 }
 
 .elements-type__none {

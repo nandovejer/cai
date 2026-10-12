@@ -38,12 +38,12 @@
     color var(--cai-duration-fast);
 }
 
-.cai-pagination__link[href]:hover {
+.cai-pagination__link[href]:not([aria-current="page"]):hover {
   background: var(--cai-surface-hover);
   color: var(--cai-text-primary);
 }
 
-.cai-pagination__link[href]:active {
+.cai-pagination__link[href]:not([aria-current="page"]):active {
   background: var(--cai-surface-pressed);
 }
 
@@ -66,15 +66,26 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-inline-size: var(--cai-space-lg);
+  padding-inline: var(--cai-space-xs);
   color: var(--cai-text-muted);
 }
 
 /* Forced colors: the fill is dropped, so the current page takes the system
-   selection colors */
+   selection colors. Its focus ring would take HighlightText, which is the
+   page's own color, so it is drawn in CanvasText. An end that is not a link
+   reads as disabled text, and a hovered link is underlined. */
 @media (forced-colors: active) {
   .cai-pagination__link[aria-current="page"] {
     background: Highlight;
     color: HighlightText;
+    outline-color: CanvasText;
+  }
+
+  .cai-pagination__link[aria-disabled="true"] {
+    color: GrayText;
+  }
+
+  .cai-pagination__link[href]:hover {
+    text-decoration: underline;
   }
 }

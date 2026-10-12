@@ -156,6 +156,11 @@
 .cai-input[type="month"],
 .cai-input[type="week"] {
   color-scheme: light; /* the picker follows the mode: dark only in dark */
+  /* WebKit's own sheet centres the value with inline-flex, which the block
+     display of .cai-input removes: do it here, so the value is at the middle
+     of the field in every engine */
+  display: flex;
+  align-items: center;
 }
 
 :is([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {

@@ -77,10 +77,33 @@
   }
 }
 
-/* Generic auto-fill grid */
+/* Generic grid: the columns are yours (grid-template-columns), or a
+   modifier's below */
 .o-grid {
   display: grid;
   gap: var(--cai-space-md);
+}
+
+/* As many equal columns as fit, none narrower than --cai-grid-min (16rem by
+   default; set it on the grid or on an ancestor) */
+.o-grid--auto {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--cai-grid-min, 16rem)), 1fr));
+}
+
+/* A fixed number of equal columns above 768px; one column at 768px and below,
+   as .o-shell */
+@media (min-width: 769px) {
+  .o-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .o-grid--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .o-grid--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 /* Horizontal row with wrap */

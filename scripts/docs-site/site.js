@@ -591,10 +591,21 @@ function namesOf(page, byId) {
     // A card with the name for its id (a token), or the cell of a table of classes
     const own = code.own === code.text.replace(/^[.-]+/, "");
     const id = own ? code.own : code.heading;
-    const where = found.get(code.text) ?? found.set(code.text, { token, targets: new Map() }).get(code.text);
+    const where = found.get(code.text) ?? found.set(code.text, { token, named: true, targets: new Map() }).get(code.text);
     const target = where.targets.get(id) ?? where.targets.set(id, { id, tab: byId.get(code.heading)?.tab ?? null, count: 0, defined: false }).get(id);
     target.count++;
     target.defined ||= own || /^class/i.test(code.cell ?? "");
+  }
+  // A colour drawn as a swatch and named nowhere in a <code> (a primitive of the palette): the
+  // label of its scale, where the page defines it
+  const { swatches, ids } = contentOf(page);
+  for (const { token: text, heading, own } of swatches) {
+    if (!TOKEN_NAME.test(text)) continue;
+    const id = ids.has(own) ? own : heading;
+    const where = found.get(text) ?? found.set(text, { token: true, targets: new Map() }).get(text);
+    if (where.named) continue;
+    const target = where.targets.get(id) ?? where.targets.set(id, { id, tab: byId.get(heading)?.tab ?? null, count: 0, defined: true }).get(id);
+    target.count++;
   }
   return [...found].map(([text, { token, targets }]) => {
     const all = [...targets.values()];

@@ -135,6 +135,7 @@ export function* tags(html, file = "<html>") {
  *   links: [{ href, line }],            every <a href> and <area href>
  *   headings: [{ level, id, text, line, specimen }],
  *   codes: [{ text, line, heading, own, cell, specimen }],
+ *   swatches: [{ token, line, heading, own }],
  *   elements: Set<tag name>,            every element used
  * }
  * `specimen` is true for a heading inside a demo: [data-docs-specimen],
@@ -142,6 +143,11 @@ export function* tags(html, file = "<html>") {
  * `codes` are the short <code> texts outside <pre> (a class, a token): the
  * id of the last heading before it (outside demos), of its nearest ancestor
  * that has one, and the data-label of the table cell it is in.
+ * `swatches` are the colours a page draws without naming them in a <code>:
+ * an element of class `docs-swatch` whose style says `--v: var(--cai-…)` (the
+ * primitive scales of the palette). `own` is where to link: the id of the
+ * label the swatch's list is named by (`aria-labelledby`), else of its
+ * nearest ancestor that has one.
  */
 export function readHtml(html, file = "<html>") {
   const stack = [];
@@ -149,6 +155,7 @@ export function readHtml(html, file = "<html>") {
   const links = [];
   const headings = [];
   const codes = [];
+  const swatches = [];
   const elements = new Set();
   let heading = null;
   let section = null;
@@ -178,13 +185,19 @@ export function readHtml(html, file = "<html>") {
         code = { line, heading: section, own: stack.findLast((t) => t.id)?.id ?? null, cell: stack.findLast((t) => t.label !== undefined)?.label ?? null, specimen: specimen > 0, start: tag.end };
       }
 
+      const swatch = /(?:^|;)\s*--v\s*:\s*var\(\s*(--cai-[\w-]+)\s*\)/.exec(attrs.get("style") ?? "");
+      if (swatch && /(?:^|\s)docs-swatch(?:\s|$)/.test(attrs.get("class") ?? "")) {
+        const labelled = stack.findLast((t) => t.labelledby)?.labelledby;
+        swatches.push({ token: swatch[1], line, heading: section, own: labelled ?? stack.findLast((t) => t.id)?.id ?? null });
+      }
+
       if (VOID.has(name)) continue;
       if (tag.selfClosing) {
         if (foreign) continue;
         throw new HtmlError(file, line, `<${name}/> is not a void element: write <${name}></${name}>`);
       }
       const isSpecimen = attrs.has("data-docs-specimen") || attrs.get("aria-hidden") === "true" || attrs.has("inert") || name === "dialog";
-      stack.push({ name, line, id, label: attrs.get("data-label"), foreign: FOREIGN.has(name), specimen: isSpecimen });
+      stack.push({ name, line, id, label: attrs.get("data-label"), labelledby: attrs.get("aria-labelledby"), foreign: FOREIGN.has(name), specimen: isSpecimen });
       if (FOREIGN.has(name)) foreign++;
       if (isSpecimen) specimen++;
     } else {
@@ -216,5 +229,5 @@ export function readHtml(html, file = "<html>") {
     const top = stack.at(-1);
     throw new HtmlError(file, top.line, `<${top.name}> is never closed`);
   }
-  return { ids, links, headings, codes, elements };
+  return { ids, links, headings, codes, swatches, elements };
 }

@@ -7,7 +7,7 @@ group: reference
 -->
     <div class="docs-block" id="p-templates">
           <p>Each template is complete markup. Change the words and the links; keep the skip link, the single <code>&lt;h1&gt;</code> and the landmarks. The header is the <a href="/docs/platform/site-header/">site header</a>.</p>
-          <p>Two whole pages come first. Then come the blocks of an event landing page, one after another in the order a visitor reads them: hero, programme, tickets, call to action and registration. They use only the classes of core and platform: where CAI has nothing for a part, <a href="#not-here">the last section</a> says so.</p>
+          <p>Two whole pages come first. Then come the blocks of an event landing page, one after another in the order a visitor reads them: hero, programme, speakers, tickets, call to action and registration. They use only the classes of core and platform: where CAI has nothing for a part, <a href="#not-here">the last section</a> says so.</p>
           <div class="docs-prose">
             <h2 id="landing-page-shell" class="docs-prose__title">Landing page shell</h2>
             <p>The page of a product or an event: skip link, site header, one section with the page header and its actions, and a footer. The blocks below go inside <code>&lt;main&gt;</code>.</p>
@@ -154,6 +154,56 @@ group: reference
             </div>
           </div>
           <div class="docs-prose">
+            <h2 id="speakers" class="docs-prose__title">Speakers</h2>
+            <p>A list of people: a photo, the name and what they do. Each speaker is a <a href="/docs/components/card/">card</a> with an <a href="/docs/platform/image/">image frame</a> of ratio 1:1, in a list that fits as many columns as there is room for.</p>
+            <ul>
+              <li>The photo has <code>alt=""</code>: the name is in the heading beside it and says the same. If a photo shows something the name does not carry, give it an <code>alt</code> that says that, never the name again.</li>
+              <li>The name is an <code>&lt;h3&gt;</code>, one level under the section's <code>&lt;h2&gt;</code>, so people can move through the speakers by headings. The role is the card's body: "Role, Organisation", one line.</li>
+              <li>The <code>&lt;ul&gt;</code> tells a screen reader how many people there are. Core styles no list: take off the bullets and the indent with the one rule of your own in the snippet. Safari can drop the list role from a list whose markers you remove; the headings still lead through the speakers.</li>
+              <li><code>.o-grid--auto</code> puts as many columns as fit, none narrower than 16rem. Set <code>--cai-grid-min</code> on the list for narrower cards: <code>12rem</code> gives five across a 1100 px container, and one column below 336 px stays one column.</li>
+              <li>No photo yet: leave the frame empty (<code>&lt;div class="cai-platform-image cai-platform-image--1x1 u-mb-sm"&gt;&lt;/div&gt;</code>) and it draws the placeholder. To link a speaker to a page of their own, put a link in the heading, <code>&lt;h3 class="cai-card__title"&gt;&lt;a href="/speakers/luis-ortega/"&gt;Luis Ortega&lt;/a&gt;&lt;/h3&gt;</code>: the whole card becomes the link. Link all the speakers or none, and do not add a second link or a button.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-speakers" aria-label="Copy the speakers markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Speakers markup"><code id="code-tpl-speakers">&lt;style&gt;
+  /* Your own rule: core styles no list */
+  .speakers { list-style: none; margin: 0; padding: 0; }
+&lt;/style&gt;
+
+&lt;section class=&quot;cai-platform-section&quot; id=&quot;speakers&quot; aria-labelledby=&quot;speakers-title&quot;&gt;
+  &lt;h2 id=&quot;speakers-title&quot;&gt;Speakers&lt;/h2&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto speakers&quot;&gt;
+    &lt;li class=&quot;cai-card&quot;&gt;
+      &lt;div class=&quot;cai-platform-image cai-platform-image--1x1 u-mb-sm&quot;&gt;
+        &lt;picture&gt;
+          &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/marta-320.avif 320w, /img/marta-640.avif 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
+          &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/marta-320.webp 320w, /img/marta-640.webp 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
+          &lt;img src=&quot;/img/marta-640.jpg&quot; width=&quot;640&quot; height=&quot;640&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+        &lt;/picture&gt;
+      &lt;/div&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;Marta Ríos&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Head of logistics, Grupo Lumen&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;cai-card&quot;&gt;
+      &lt;div class=&quot;cai-platform-image cai-platform-image--1x1 u-mb-sm&quot;&gt;
+        &lt;picture&gt;
+          &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/luis-320.avif 320w, /img/luis-640.avif 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
+          &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/luis-320.webp 320w, /img/luis-640.webp 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
+          &lt;img src=&quot;/img/luis-640.jpg&quot; width=&quot;640&quot; height=&quot;640&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+        &lt;/picture&gt;
+      &lt;/div&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;Luis Ortega&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Founder, Taller Norte&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;!-- one li for each speaker --&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
             <h2 id="ticket-plans" class="docs-prose__title">Ticket plans</h2>
             <p>Three plans side by side above 768 px, one under another below it. Each plan is a <a href="/docs/components/card/">card</a> with its name, its price, what is included and one action.</p>
             <ul>
@@ -193,23 +243,22 @@ group: reference
           </div>
           <div class="docs-prose">
             <h2 id="call-to-action" class="docs-prose__title">Call to action</h2>
-            <p>A reason to act now and one action, repeated near the end of a long page. It is a card with a heading, one sentence and the action group.</p>
+            <p>A reason to act now and one action, repeated near the end of a long page. It is a <a href="/docs/platform/section/">section on a band</a>: the tint runs from edge to edge of the page, and the heading, one sentence and the action group keep the page's column.</p>
             <ul>
               <li>One primary button, and it points at the form or the page where the visitor acts (<code>#register</code>). The heading says why now, not "Register".</li>
               <li>Use a heading level that follows the page: <code>&lt;h2&gt;</code> here, because it sits beside the other sections.</li>
+              <li>One band for each screen height at most, and not inside a card. In forced colors the tint is removed and two thin rules mark the band.</li>
             </ul>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-cta" aria-label="Copy the call to action markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Call to action markup"><code id="code-tpl-cta">&lt;section class=&quot;cai-platform-section&quot; aria-labelledby=&quot;last-seats-title&quot;&gt;
-  &lt;div class=&quot;cai-card o-stack&quot;&gt;
-    &lt;h2 id=&quot;last-seats-title&quot;&gt;Registration closes on 30 April&lt;/h2&gt;
-    &lt;p&gt;The hall holds 400 people, and the Two days ticket sold out last year.&lt;/p&gt;
-    &lt;div class=&quot;cai-platform-actions&quot;&gt;
-      &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#register&quot;&gt;Register now&lt;/a&gt;
-    &lt;/div&gt;
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Call to action markup"><code id="code-tpl-cta">&lt;section class=&quot;cai-platform-section cai-platform-section--band&quot; aria-labelledby=&quot;last-seats-title&quot;&gt;
+  &lt;h2 id=&quot;last-seats-title&quot;&gt;Registration closes on 30 April&lt;/h2&gt;
+  &lt;p&gt;The hall holds 400 people, and the Two days ticket sold out last year.&lt;/p&gt;
+  &lt;div class=&quot;cai-platform-actions&quot;&gt;
+    &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#register&quot;&gt;Register now&lt;/a&gt;
   &lt;/div&gt;
 &lt;/section&gt;</code></pre>
             </div>
@@ -326,12 +375,10 @@ group: reference
           </div>
           <div class="docs-prose">
             <h2 id="not-here" class="docs-prose__title">What is not here</h2>
-            <p>An event page often asks for four things CAI does not have. They are not faked in the templates above.</p>
+            <p>An event page often asks for things CAI does not have. They are not faked in the templates above.</p>
             <ul>
-              <li><strong>A full-width band.</strong> There is no tinted strip that runs from edge to edge. The call to action is a card inside the content width. A band is one rule of your own, in your layer, with semantic tokens.</li>
               <li><strong>A featured card.</strong> A card has no highlighted variant. The tag and the primary button mark the recommended plan.</li>
-              <li><strong>Photos of speakers.</strong> <a href="/docs/components/avatar/">Avatar</a> shows initials only. For a photo, use the image frame with <code>.cai-platform-image--1x1</code> beside the name.</li>
-              <li><strong>A countdown, a map or icons.</strong> CAI draws none of them.</li>
+              <li><strong>A countdown or a map.</strong> CAI draws neither. For icons, <a href="/docs/components/icon-grid/">CAI has its own set</a> to copy.</li>
             </ul>
           </div>
     </div>

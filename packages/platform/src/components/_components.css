@@ -58,6 +58,17 @@
 	gap: var(--cai-space-md);
 }
 
+/* A tinted band from edge to edge of the page: the content keeps the
+   column, the tint bleeds past it. A spread shadow adds no scrollable
+   overflow (100vw would), and clip-path stops it at the band's top and
+   bottom. Anything that sticks out above or below is clipped too. */
+.cai-platform-section--band {
+	padding-block: var(--cai-space-2xl);
+	background: var(--cai-brand-subtle);
+	box-shadow: 0 0 0 100vmax var(--cai-brand-subtle);
+	clip-path: inset(0 -100vmax);
+}
+
 .cai-platform-page-header {
 	margin-bottom: var(--cai-space-xl);
 }
@@ -278,6 +289,11 @@
 	.cai-platform-image {
 		border: 1px solid CanvasText;
 	}
+
+	/* The tint and its bleed vanish: two rules keep the band's edges */
+	.cai-platform-section--band {
+		border-block: 1px solid CanvasText;
+	}
 }
 
 /* Save-Data, where a browser ever supports it: a flat surface instead */
@@ -313,6 +329,8 @@
 	.cai-platform-actions > * {
 		width: 100%;
 		justify-content: center;
+		white-space: normal;
+		overflow-wrap: anywhere;
 	}
 
 	.cai-platform-command-block {

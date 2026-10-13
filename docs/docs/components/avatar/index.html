@@ -5,17 +5,17 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Avatar – Components – CAI documentation</title>
-  <meta name="description" content="Shows who a person or a team is, with their initials, in three sizes.">
+  <meta name="description" content="Shows who a person or a team is, with their initials or a photo, in three sizes.">
   <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-C79FCUxT.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-Bk0esaS1.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-lT3-Lk3a.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-D2TK8zV2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Bl5i_Enn.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-De2-M0oh.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D3gqueyp.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DGhtkYHt.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -114,6 +114,7 @@
           <li><a class="cai-sidebar__link" href="../../../docs/components/figure/">Figure</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/form/">Form fields</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/icon-grid/">Icon grid</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/components/meter/">Meter</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/modal/">Modal</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/pagination/">Pagination</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/player/">Player</a></li>
@@ -152,7 +153,7 @@
       <h1 class="docs-title">Avatar</h1>
       <code class="docs-demo__file">components/avatar.css</code>
     </div>
-    <p class="docs-lead">Shows who a person or a team is, with their initials, in three sizes.</p>
+    <p class="docs-lead">Shows who a person or a team is, with their initials or a photo, in three sizes.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -192,10 +193,15 @@
               <span class="cai-avatar cai-avatar--md" role="img" aria-label="Carlos Díaz">CD</span>
               <span class="cai-avatar cai-avatar--lg" role="img" aria-label="Eva Flores">EF</span>
             </div>
+            <div class="o-row">
+              <span class="cai-avatar cai-avatar--sm"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="24" height="24" alt="Ana Belén"></span>
+              <span class="cai-avatar cai-avatar--md"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="36" height="36" alt="Carlos Díaz"></span>
+              <span class="cai-avatar cai-avatar--lg"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="48" height="48" alt="Eva Flores"></span>
+            </div>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>None known.</p>
+          <p>If a photo does not load, the browser draws its <code>alt</code> text in the box, in the avatar's capitals; a long name can spill past the box. The name is still there for a screen reader.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Avatar documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -218,17 +224,28 @@
               </div>
               <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar next to a name markup"><code id="code-avatar-named">&lt;span class=&quot;cai-avatar cai-avatar--sm&quot; aria-hidden=&quot;true&quot;&gt;CD&lt;/span&gt; Carlos Díaz</code></pre>
             </div>
+            <p>With a photo: the image fills the box, cropped to a square.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-avatar-photo" aria-label="Copy the avatar with a photo markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar with a photo markup"><code id="code-avatar-photo">&lt;span class=&quot;cai-avatar cai-avatar--md&quot;&gt;&lt;img src=&quot;/img/ana.jpg&quot; width=&quot;36&quot; height=&quot;36&quot; alt=&quot;Ana Belén&quot;&gt;&lt;/span&gt;
+
+&lt;span class=&quot;cai-avatar cai-avatar--lg&quot;&gt;&lt;img src=&quot;/img/ana.jpg&quot; width=&quot;48&quot; height=&quot;48&quot; alt=&quot;&quot;&gt;&lt;/span&gt; Ana Belén</code></pre>
+            </div>
             <h3 id="variants">Variants and options</h3>
-            <p>Pick one size modifier. Without one, the avatar has no size of its own.</p>
+            <p>Pick one size modifier. Without one, the avatar has no size of its own. The content is the initials or one <code>&lt;img&gt;</code>.</p>
             <div class="cai-table-wrap" role="region" aria-label="Avatar sizes" tabindex="0">
               <table class="cai-table">
                 <thead>
-                  <tr><th scope="col">Class</th><th scope="col">Size</th></tr>
+                  <tr><th scope="col">Class or content</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-avatar--sm</code></div></td><td data-label="Size"><div>24 × 24 px, extra-small text</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-avatar--md</code></div></td><td data-label="Size"><div>36 × 36 px, small text</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-avatar--lg</code></div></td><td data-label="Size"><div>48 × 48 px, base text</div></td></tr>
+                  <tr><td data-label="Class or content"><div><code>.cai-avatar--sm</code></div></td><td data-label="Effect"><div>24 × 24 px, extra-small text</div></td></tr>
+                  <tr><td data-label="Class or content"><div><code>.cai-avatar--md</code></div></td><td data-label="Effect"><div>36 × 36 px, small text</div></td></tr>
+                  <tr><td data-label="Class or content"><div><code>.cai-avatar--lg</code></div></td><td data-label="Effect"><div>48 × 48 px, base text</div></td></tr>
+                  <tr><td data-label="Class or content"><div><code>&lt;img&gt;</code> inside</div></td><td data-label="Effect"><div>A photo: fills the box, cropped to a square, with the avatar's corners</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -237,15 +254,17 @@
             <ul>
               <li>The initials are set in the mono font, in capitals (<code>text-transform: uppercase</code>).</li>
               <li>The colours are the brand tint and the brand text colour, in every mode.</li>
+              <li>A photo is an <code>&lt;img&gt;</code> at <code>100%</code> of the box with <code>object-fit: cover</code> and the corners of the avatar (<code>border-radius: inherit</code>). The box does not clip (no <code>overflow: hidden</code>), so initials that outgrow a small box at 200 % text stay readable.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: the avatar is HTML and CSS only.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>An avatar is not interactive and takes no focus.</p>
             <ul>
-              <li>On its own, it is an image: <code>role="img"</code> and an <code>aria-label</code> with the full name, so a screen reader does not spell out the initials.</li>
-              <li>Next to the name, it is decoration: <code>aria-hidden="true"</code>.</li>
-              <li>Inside a link or a button, the control's text names it; hide the avatar.</li>
+              <li>Initials on their own are an image: <code>role="img"</code> and an <code>aria-label</code> with the full name, so a screen reader does not spell out the initials.</li>
+              <li>A photo on its own is named by its <code>alt</code>, with the person's name: no role, no <code>aria-label</code>. When the photo is all there is in a link or a button, the <code>alt</code> names the control, so it says the action too: <code>alt="Ana Belén, your account"</code>.</li>
+              <li>Next to the name, an avatar is decoration: <code>aria-hidden="true"</code> on initials, <code>alt=""</code> on a photo.</li>
+              <li>Inside a link or a button with text, the control's text names it; hide the avatar.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
@@ -258,6 +277,7 @@
             <ul>
               <li>Two people can share initials: show the name as text nearby.</li>
               <li>For a status or a category, use a <a href="../../../docs/components/tag/">tag</a>.</li>
+              <li>For the portrait of a speaker or a product, a size of its own, use a card with the image frame: see <a href="../../../docs/platform/templates/">Page templates</a>. An avatar is 24 to 48 px.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
@@ -275,14 +295,28 @@
                 </div>
               </figure>
             </div>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Give every photo in a list the same framing: head and shoulders, the face away from the edges, because the box crops it to a square.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-row"><span class="cai-avatar cai-avatar--lg"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="48" height="48" alt=""></span><span class="cai-avatar cai-avatar--lg"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="48" height="48" alt=""></span><span class="cai-avatar cai-avatar--lg"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="48" height="48" alt=""></span></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Mix photos with initials in a list that could be all one or the other: the people without a photo look like a different kind of member.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-row"><span class="cai-avatar cai-avatar--lg"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="48" height="48" alt=""></span><span class="cai-avatar cai-avatar--lg">CD</span><span class="cai-avatar cai-avatar--lg"><img src="../../../assets/desert-640-BOV7mApg.jpg" width="48" height="48" alt=""></span><span class="cai-avatar cai-avatar--lg">EF</span></div>
+                </div>
+              </figure>
+            </div>
             <h3 id="content">Writing the content</h3>
             <p>Two initials, from the name the person uses.</p>
             <ul>
-              <li>The accessible name is the full name, never the initials.</li>
+              <li>The accessible name is the full name, never the initials. For a photo, that is its <code>alt</code>.</li>
               <li>Use the same size for every avatar in one list.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
-            <p>The initials are brand text on the subtle brand tint.</p>
+            <p>The initials are brand text on the subtle brand tint. A photo is content: the system does not measure it.</p>
             <div class="cai-table-wrap" role="region" aria-label="Avatar contrast in each mode" tabindex="0">
               <table class="cai-table docs-contrast">
                 <thead>

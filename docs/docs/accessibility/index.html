@@ -11,11 +11,11 @@
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../assets/site-header-KKpdGfOz.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-C79FCUxT.js"></script>
+  <script type="module" crossorigin src="../../assets/site-header-Bk0esaS1.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-lT3-Lk3a.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/reference-D2TK8zV2.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-Bl5i_Enn.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-De2-M0oh.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-D3gqueyp.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-DGhtkYHt.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -165,6 +165,8 @@
         <li><strong>Player.</strong> MIDI needs JavaScript and Web Audio. Without them the player shows a message. On this documentation site, the example video's caption files load only with JavaScript; without it the browser lists the tracks but shows no text.</li>
         <li><strong>Select.</strong> The open list is the browser’s or the system’s, so it looks and sounds different in each. Where the browser supports <code class="cai-code-inline">appearance: base-select</code> (Chrome and Edge 135, Safari 27), CAI styles the list too, and that list has not been tested with a screen reader yet. It works without JavaScript.</li>
         <li><strong>Linked card.</strong> The link in the title covers the whole card, so the body text cannot be selected with a mouse. Keyboard selection, find in page and screen readers reach it as usual.</li>
+        <li><strong>Table sorted in the browser.</strong> The sorted column is exposed with <code class="cai-code-inline">aria-sort</code> on its column header, and each sort is announced in a status message. Tabbing through the headings announces the column name; the sort state is read on the header cell and in the status message. Checked in the Chromium accessibility tree only; not yet tested with NVDA, JAWS, VoiceOver, TalkBack or Orca.</li>
+        <li><strong>Avatar with a photo.</strong> If the photo does not load, the browser draws its text alternative inside the box, in capitals, and a long name can spill past it.</li>
         <li><strong>Code and Design tabs.</strong> The tab you chose last opens after the page has loaded, so the content below the tabs can move once.</li>
         <li><strong>Find in page.</strong> In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code> (Safari before 26.2, Firefox before 139), find in page (Ctrl+F) does not find text in the tab that is not open. In Safari 26.2 and later it opens the tab but does not scroll to the match. Open the other tab, or turn JavaScript off to see both.</li>
         <li><strong>Search shortcut.</strong> Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there.</li>
@@ -173,6 +175,7 @@
         <li><strong>Language switcher.</strong> The list of languages opens at a fixed place under the header, not next to its button. Below 360 pixels wide its button shows a globe only; the language’s name is still the button’s accessible name. It has not been tested with a screen reader.</li>
         <li><strong>Site header menu.</strong> On narrow screens the site menu opens as a panel under the header. If you keep pressing Tab after its last link, focus moves into the page and the panel stays open over it. Press Escape to close it. (WCAG 2.2 success criterion 2.4.12, level AAA; level AA 2.4.11 is met.) The panel opens under the header's height at the default text size: with enlarged text and a header that wraps to a second row, it can cover that row.</li>
         <li><strong>Site header, enlarged text.</strong> A sticky header keeps a field reached with Tab clear of it by a minimum height. That works at 100 and 200 percent text. At 300 percent text, when the header wraps to several rows, Safari can still leave the field partly under it; Chrome, Edge and Firefox keep it clear. The Site header page says how to set the padding for your own header. In Firefox with forced colors the dim layer behind the open menu is not drawn; the panel keeps its border.</li>
+        <li><strong>Section band.</strong> A band cuts off whatever sticks out of it above or below, so a tooltip on the first control of a band is clipped at 200 percent text and larger; start the band with its heading. The hover of an outline or ghost button on a band shows no change. In forced colors the band has no tint, only two thin rules above and below it.</li>
         <li><strong>Copy button.</strong> When the browser refuses to copy, the failure is announced to screen readers, but the button shows no message.</li>
       </ul>
 

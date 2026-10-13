@@ -11,11 +11,11 @@
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-C79FCUxT.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-Bk0esaS1.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-lT3-Lk3a.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-D2TK8zV2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Bl5i_Enn.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-De2-M0oh.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D3gqueyp.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DGhtkYHt.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -114,6 +114,7 @@
           <li><a class="cai-sidebar__link" href="../../../docs/components/figure/">Figure</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/form/">Form fields</a></li>
           <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/components/icon-grid/">Icon grid</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/components/meter/">Meter</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/modal/">Modal</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/pagination/">Pagination</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/player/">Player</a></li>
@@ -190,29 +191,119 @@
           <div class="docs-demo__stage">
             <ul class="cai-icon-grid">
               <li class="cai-icon-item">
-                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></span>
-                <span class="cai-icon-name" id="c-icons-plus">Plus</span>
-                <button type="button" class="cai-copy-btn" id="c-icons-plus-copy" aria-labelledby="c-icons-plus-copy c-icons-plus" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 6h16M4 12h16M4 18h16"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-menu">Menu</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-menu-copy" aria-labelledby="c-icons-menu-copy c-icons-menu" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M4 6h16M4 12h16M4 18h16&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
               </li>
               <li class="cai-icon-item">
-                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
-                <span class="cai-icon-name" id="c-icons-check">Check</span>
-                <button type="button" class="cai-copy-btn" id="c-icons-check-copy" aria-labelledby="c-icons-check-copy c-icons-check" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12l5 5 9-10&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
-              </li>
-              <li class="cai-icon-item">
-                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-                <span class="cai-icon-name" id="c-icons-arrow">Arrow</span>
-                <button type="button" class="cai-copy-btn" id="c-icons-arrow-copy" aria-labelledby="c-icons-arrow-copy c-icons-arrow" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
-              </li>
-              <li class="cai-icon-item">
-                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></span>
                 <span class="cai-icon-name" id="c-icons-close">Close</span>
-                <button type="button" class="cai-copy-btn" id="c-icons-close-copy" aria-labelledby="c-icons-close-copy c-icons-close" data-copy="&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+                <button type="button" class="cai-copy-btn" id="c-icons-close-copy" aria-labelledby="c-icons-close-copy c-icons-close" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-search">Search</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-search-copy" aria-labelledby="c-icons-search-copy c-icons-search" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;6.5&quot;/&gt;&lt;path d=&quot;M16 16l4.5 4.5&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-check">Check</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-check-copy" aria-labelledby="c-icons-check-copy c-icons-check" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M5 12.5l4.5 4.5L19 7&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-plus">Plus</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-plus-copy" aria-labelledby="c-icons-plus-copy c-icons-plus" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-minus">Minus</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-minus-copy" aria-labelledby="c-icons-minus-copy c-icons-minus" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M5 12h14&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-chevron-down">Chevron down</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-chevron-down-copy" aria-labelledby="c-icons-chevron-down-copy c-icons-chevron-down" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M6 9l6 6 6-6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 15l6-6 6 6"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-chevron-up">Chevron up</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-chevron-up-copy" aria-labelledby="c-icons-chevron-up-copy c-icons-chevron-up" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M6 15l6-6 6 6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" data-cai-flip><path d="M9 6l6 6-6 6"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-chevron-end">Chevron end</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-chevron-end-copy" aria-labelledby="c-icons-chevron-end-copy c-icons-chevron-end" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot; data-cai-flip=&quot;&quot;&gt;&lt;path d=&quot;M9 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" data-cai-flip><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-arrow-end">Arrow end</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-arrow-end-copy" aria-labelledby="c-icons-arrow-end-copy c-icons-arrow-end" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot; data-cai-flip=&quot;&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 4h2.5l2.2 10.5h9.6L19.5 7H6.2"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-cart">Cart</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-cart-copy" aria-labelledby="c-icons-cart-copy c-icons-cart" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M3 4h2.5l2.2 10.5h9.6L19.5 7H6.2&quot;/&gt;&lt;circle cx=&quot;9&quot; cy=&quot;19&quot; r=&quot;1.4&quot;/&gt;&lt;circle cx=&quot;17&quot; cy=&quot;19&quot; r=&quot;1.4&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4.5 20.5c.6-4 3.6-6 7.5-6s6.9 2 7.5 6"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-user">User</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-user-copy" aria-labelledby="c-icons-user-copy c-icons-user" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;8&quot; r=&quot;4&quot;/&gt;&lt;path d=&quot;M4.5 20.5c.6-4 3.6-6 7.5-6s6.9 2 7.5 6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-mail">Mail</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-mail-copy" aria-labelledby="c-icons-mail-copy c-icons-mail" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M3.5 7.5l8.5 6 8.5-6&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8.5 3v4M15.5 3v4"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-calendar">Calendar</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-calendar-copy" aria-labelledby="c-icons-calendar-copy c-icons-calendar" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;rect x=&quot;4&quot; y=&quot;5&quot; width=&quot;16&quot; height=&quot;15&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M4 10h16M8.5 3v4M15.5 3v4&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-clock">Clock</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-clock-copy" aria-labelledby="c-icons-clock-copy c-icons-clock" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;8.5&quot;/&gt;&lt;path d=&quot;M12 7.5V12l3 2&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s7-5.8 7-11.5a7 7 0 0 0-14 0C5 15.2 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-map-pin">Map pin</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-map-pin-copy" aria-labelledby="c-icons-map-pin-copy c-icons-map-pin" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M12 21s7-5.8 7-11.5a7 7 0 0 0-14 0C5 15.2 12 21 12 21z&quot;/&gt;&lt;circle cx=&quot;12&quot; cy=&quot;9.5&quot; r=&quot;2.5&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4v11M7.5 11L12 15.5 16.5 11M5 20h14"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-download">Download</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-download-copy" aria-labelledby="c-icons-download-copy c-icons-download" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M12 4v11M7.5 11L12 15.5 16.5 11M5 20h14&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14 4h6v6M20 4l-9 9M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-external">External link</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-external-copy" aria-labelledby="c-icons-external-copy c-icons-external" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M14 4h6v6M20 4l-9 9M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5.5M12 7.5v.01"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-info">Info</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-info-copy" aria-labelledby="c-icons-info-copy c-icons-info" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;8.5&quot;/&gt;&lt;path d=&quot;M12 11v5.5M12 7.5v.01&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4l9 16H3z"/><path d="M12 10v4.5M12 17.5v.01"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-warning">Warning</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-warning-copy" aria-labelledby="c-icons-warning-copy c-icons-warning" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M12 4l9 16H3z&quot;/&gt;&lt;path d=&quot;M12 10v4.5M12 17.5v.01&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-heart">Heart</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-heart-copy" aria-labelledby="c-icons-heart-copy c-icons-heart" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
+              </li>
+              <li class="cai-icon-item">
+                <span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 5h16l-6 7.5V19l-4-2v-4.5z"/></svg></span>
+                <span class="cai-icon-name" id="c-icons-filter">Filter</span>
+                <button type="button" class="cai-copy-btn" id="c-icons-filter-copy" aria-labelledby="c-icons-filter-copy c-icons-filter" data-copy="&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M4 5h16l-6 7.5V19l-4-2v-4.5z&quot;/&gt;&lt;/svg&gt;">Copy SVG</button>
               </li>
             </ul>
           </div>
 
-          <p class="docs-demo__note">Each icon has a button that copies its SVG. CAI ships the grid, not an icon set: these four are local to this page.</p>
+          <p class="docs-demo__note">Each icon has a button that copies its SVG. These are CAI's own icons, drawn for it: copy the SVG or the sprite. They are not a package, so nothing is loaded for them.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
@@ -230,11 +321,72 @@
               </div>
               <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Icon grid markup"><code id="code-icon-grid">&lt;ul class=&quot;cai-icon-grid&quot;&gt;
   &lt;li class=&quot;cai-icon-item&quot;&gt;
-    &lt;span class=&quot;cai-icon-display&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
+    &lt;span class=&quot;cai-icon-display&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/svg&gt;&lt;/span&gt;
     &lt;span class=&quot;cai-icon-name&quot; id=&quot;icon-plus&quot;&gt;Plus&lt;/span&gt;
     &lt;button class=&quot;cai-copy-btn&quot; type=&quot;button&quot; id=&quot;icon-plus-copy&quot; aria-labelledby=&quot;icon-plus-copy icon-plus&quot; data-copy=&quot;&amp;lt;svg …&amp;gt;…&amp;lt;/svg&amp;gt;&quot;&gt;Copy SVG&lt;/button&gt;
   &lt;/li&gt;
 &lt;/ul&gt;</code></pre>
+            </div>
+            <p>The same icons as a sprite: paste it once in the page, then draw each one with <code>&lt;use&gt;</code>. The sprite works only in the same document (<code>href="#id"</code>); a <code>&lt;use&gt;</code> that points at a file on another origin, a CDN included, is blocked by browsers.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-icon-sprite" aria-label="Copy the icon sprite markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Icon sprite markup"><code id="code-icon-sprite">&lt;svg width=&quot;0&quot; height=&quot;0&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
+  &lt;symbol id=&quot;cai-icon-menu&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M4 6h16M4 12h16M4 18h16&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-close&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6L6 18&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-search&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;6.5&quot;/&gt;&lt;path d=&quot;M16 16l4.5 4.5&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-check&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M5 12.5l4.5 4.5L19 7&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-plus&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M12 5v14M5 12h14&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-minus&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M5 12h14&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-chevron-down&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M6 9l6 6 6-6&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-chevron-up&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M6 15l6-6 6 6&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-chevron-end&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M9 6l6 6-6 6&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-arrow-end&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M5 12h14M13 6l6 6-6 6&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-cart&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M3 4h2.5l2.2 10.5h9.6L19.5 7H6.2&quot;/&gt;&lt;circle cx=&quot;9&quot; cy=&quot;19&quot; r=&quot;1.4&quot;/&gt;&lt;circle cx=&quot;17&quot; cy=&quot;19&quot; r=&quot;1.4&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-user&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;8&quot; r=&quot;4&quot;/&gt;&lt;path d=&quot;M4.5 20.5c.6-4 3.6-6 7.5-6s6.9 2 7.5 6&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-mail&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;rect x=&quot;3&quot; y=&quot;5&quot; width=&quot;18&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M3.5 7.5l8.5 6 8.5-6&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-calendar&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;rect x=&quot;4&quot; y=&quot;5&quot; width=&quot;16&quot; height=&quot;15&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M4 10h16M8.5 3v4M15.5 3v4&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-clock&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;8.5&quot;/&gt;&lt;path d=&quot;M12 7.5V12l3 2&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-map-pin&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M12 21s7-5.8 7-11.5a7 7 0 0 0-14 0C5 15.2 12 21 12 21z&quot;/&gt;&lt;circle cx=&quot;12&quot; cy=&quot;9.5&quot; r=&quot;2.5&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-download&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M12 4v11M7.5 11L12 15.5 16.5 11M5 20h14&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-external&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M14 4h6v6M20 4l-9 9M18 14v4.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 4 18.5v-11A1.5 1.5 0 0 1 5.5 6H10&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-info&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;8.5&quot;/&gt;&lt;path d=&quot;M12 11v5.5M12 7.5v.01&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-warning&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M12 4l9 16H3z&quot;/&gt;&lt;path d=&quot;M12 10v4.5M12 17.5v.01&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-heart&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z&quot;/&gt;&lt;/symbol&gt;
+  &lt;symbol id=&quot;cai-icon-filter&quot; viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M4 5h16l-6 7.5V19l-4-2v-4.5z&quot;/&gt;&lt;/symbol&gt;
+&lt;/svg&gt;
+
+&lt;svg width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;use href=&quot;#cai-icon-cart&quot;/&gt;&lt;/svg&gt;</code></pre>
+            </div>
+            <p>An icon beside a label, and an icon alone. A button names itself from its text, so give an icon-only button a name in a <code>.u-sr-only</code> span, not an <code>aria-label</code>: the span is translated with the page.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-icon-button" aria-label="Copy the icon in a button markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Icon in a button markup"><code id="code-icon-button">&lt;!-- With a label: the icon is 16 px inside a button --&gt;
+&lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;
+  &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M3 4h2.5l2.2 10.5h9.6L19.5 7H6.2&quot;/&gt;&lt;circle cx=&quot;9&quot; cy=&quot;19&quot; r=&quot;1.4&quot;/&gt;&lt;circle cx=&quot;17&quot; cy=&quot;19&quot; r=&quot;1.4&quot;/&gt;&lt;/svg&gt;
+  Add to cart
+&lt;/button&gt;
+
+&lt;!-- Icon only: the name is real text, hidden from the eye --&gt;
+&lt;button class=&quot;cai-btn cai-btn--ghost&quot; type=&quot;button&quot;&gt;
+  &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; stroke-linecap=&quot;round&quot; stroke-linejoin=&quot;round&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M4 6h16M4 12h16M4 18h16&quot;/&gt;&lt;/svg&gt;
+  &lt;span class=&quot;u-sr-only&quot;&gt;Menu&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+            </div>
+            <p>Two icons point to the end of the line: <code>chevron-end</code> and <code>arrow-end</code>, marked with <code>data-cai-flip</code>. In right-to-left text, mirror them with one rule of your own; CAI ships none.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">CSS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-icon-rtl" aria-label="Copy the right-to-left rule markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Right-to-left rule markup"><code id="code-icon-rtl">:dir(rtl) svg[data-cai-flip] {
+  transform: scaleX(-1);
+}</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>There are no modifiers. The grid fits as many columns of at least 100 px as the width allows.</p>
@@ -255,7 +407,8 @@
             <p>A <code>&lt;ul&gt;</code> of icons, styled by <code>components/icon-grid.css</code>. The copy buttons are <a href="../../../docs/components/copy-button/">copy buttons</a>, wired by <code>clipboard.js</code>.</p>
             <ul>
               <li>Each button carries the icon's SVG, escaped, in <code>data-copy</code>.</li>
-              <li>CAI ships the grid, not an icon set: the four icons above belong to this page.</li>
+              <li>The 22 icons are CAI's own, drawn for it on a 24 × 24 grid with a 2 px round stroke in <code>currentColor</code>. They are not a package and no file is loaded: copy the SVG, or the sprite, into your page.</li>
+              <li>An icon is 24 × 24 px as written, and 16 px inside a <code>.cai-btn</code>. For an icon that must follow the text size, set <code>width="1.5em" height="1.5em"</code>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>The copy buttons are hidden. The grid still shows every icon and its name.</p>
@@ -263,7 +416,8 @@
             <p>Tab reaches each copy button; Enter or Space copies the SVG.</p>
             <ul>
               <li>Each button is named by its own text and the icon's name, with <code>aria-labelledby</code>: "Copy SVG Plus".</li>
-              <li>The icons are <code>aria-hidden="true"</code>: the name is the text under them.</li>
+              <li>The icons are <code>aria-hidden="true"</code> and <code>focusable="false"</code>: the name is the text under them, or the <code>.u-sr-only</code> text of the button that holds them.</li>
+              <li>Info and warning always come with words. A lone glyph says nothing to someone who cannot see its shape or its colour: put the words beside it, or give a stand-alone icon <code>role="img"</code> and a name.</li>
               <li>The result of each copy is announced in a polite live region.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
@@ -276,20 +430,22 @@
             <p>Do not use it to lay out icons that do something: it is a catalogue, not a toolbar.</p>
             <ul>
               <li>For a row of actions, use buttons with text in an <a href="../../../docs/platform/actions/">action group</a>.</li>
-              <li>Never use an icon as the only label of an action.</li>
+              <li>Never use an icon as the only label of an action: give it its name as text, visible or in a <code>.u-sr-only</code> span.</li>
+              <li>For a logo or an illustration, use an <code>&lt;img&gt;</code> or an SVG at its own size.</li>
+              <li>For hundreds of icons, bring your own set: CAI's has 22.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Name each icon by what it shows, in one word.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <ul class="cai-icon-grid"><li class="cai-icon-item"><span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span><span class="cai-icon-name">Plus</span></li><li class="cai-icon-item"><span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg></span><span class="cai-icon-name">Check</span></li></ul>
+                  <ul class="cai-icon-grid"><li class="cai-icon-item"><span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="cai-icon-name">Plus</span></li><li class="cai-icon-item"><span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span class="cai-icon-name">Check</span></li></ul>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> File names as labels: “ic_add_24” and “ic_ok_24” make the reader decode them, and “ok” is a use, not what the icon shows.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <ul class="cai-icon-grid"><li class="cai-icon-item"><span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span><span class="cai-icon-name">ic_add_24</span></li><li class="cai-icon-item"><span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5 9-10"/></svg></span><span class="cai-icon-name">ic_ok_24</span></li></ul>
+                  <ul class="cai-icon-grid"><li class="cai-icon-item"><span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></span><span class="cai-icon-name">ic_add_24</span></li><li class="cai-icon-item"><span class="cai-icon-display"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span><span class="cai-icon-name">ic_ok_24</span></li></ul>
                 </div>
               </figure>
             </div>
@@ -298,9 +454,10 @@
             <ul>
               <li>Keep names unique in one grid.</li>
               <li>Draw every icon on the same grid and stroke, with <code>currentColor</code>, so it follows the text colour in every mode.</li>
+              <li>Pair <strong>Info</strong> and <strong>Warning</strong> with words, in the same place. They are shapes, not status colours: an alert keeps its own.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
-            <p>Icons and names are secondary text on the page, so an icon drawn in <code>currentColor</code> keeps more than 3:1.</p>
+            <p>Icons and names are secondary text on the page, so an icon drawn in <code>currentColor</code> keeps more than 3:1. Elsewhere an icon takes the colour of its text, and so its contrast: a lone icon that carries meaning needs 3:1.</p>
             <div class="cai-table-wrap" role="region" aria-label="Icon grid contrast in each mode" tabindex="0">
               <table class="cai-table docs-contrast">
                 <thead>
@@ -339,7 +496,7 @@
     </ul>
     <ul class="docs-pager">
       <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/components/form/" aria-label="Previous: Form fields"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Form fields</span></a></li>
-      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/components/modal/" aria-label="Next: Modal"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Modal</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/components/meter/" aria-label="Next: Meter"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Meter</span></a></li>
     </ul>
   </nav>
   </main>

@@ -157,7 +157,7 @@ test.describe('search: results', () => {
 
   test('the first result is the page of that name', async ({ page }) => {
     await open(page);
-    const sample = site.pages.filter((p) => p.meta.search !== 'false' && ['components', 'tokens', 'site', 'html'].includes(p.meta.area));
+    const sample = site.pages.filter((p) => p.meta.search !== 'false' && ['components', 'tokens', 'site', 'landing', 'html'].includes(p.meta.area));
     const titles = sample.filter((_, i) => i % 4 === 0);
     expect(titles.length).toBeGreaterThan(10);
     await page.keyboard.press('Control+k');

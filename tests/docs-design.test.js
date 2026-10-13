@@ -12,7 +12,7 @@ import { site } from "./helpers/docs-site.js";
 import { MODES, colorTokens, contrast, familyOf, formatRatio, resolveColor, tokensUsedBy } from "./helpers/design-tokens.js";
 
 const viewPages = site.pages.filter(
-  (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "site" && p.meta.group === "patterns"),
+  (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", "landing"].includes(p.meta.area) && p.meta.group === "patterns"),
 );
 /** The HTML of a Design section: from its h3 to the next h3 or the panel's last line. */
 const section = (page, id) => page.body.split(`<h3 id="${id}">`)[1].split(/<h3 |<p class="docs-view__xref">/)[0];

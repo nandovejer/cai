@@ -35,7 +35,8 @@ order: 4
             <tr><td data-label="Layer"><div><code>cai.components</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The components: <code>.cai-*</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>cai.utilities</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Single-purpose helpers: <code>.u-*</code>. They win over components by order, not by <code>!important</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>cai.site</code></div></td><td data-label="Package"><div>site</div></td><td data-label="What it holds"><div>The page patterns: <code>.cai-site-*</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="/docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of core and site</div></td></tr>
+            <tr><td data-label="Layer"><div><code>cai.landing</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="What it holds"><div>The patterns of a landing page: <code>.cai-landing-*</code>. After site, so they can build on it</div></td></tr>
+            <tr><td data-label="Layer"><div><code>cai.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="/docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of every package</div></td></tr>
           </tbody>
         </table>
       </div>
@@ -98,6 +99,7 @@ order: 4
 
 @import url("@cai-ds/tokens/css");
 @import url("@cai-ds/core/css");
-@import url("@cai-ds/site/css");</code></pre>
+@import url("@cai-ds/site/css");
+@import url("@cai-ds/landing/css"); /* only for a landing page */</code></pre>
       <p>Your own stylesheet imports a file after the statement, so the order is set before CAI loads.</p>
     </section>

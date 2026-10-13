@@ -15,11 +15,11 @@ import { execFileSync } from "child_process";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
+import { PACKAGES } from "./cai-packages.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
 const update = process.argv.includes("--update");
-const PACKAGES = ["tokens", "core", "site"];
 
 let failed = false;
 const fail = (pkg, message) => {

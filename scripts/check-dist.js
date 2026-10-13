@@ -10,6 +10,7 @@ const sentinels = [
   "../packages/tokens/dist/cai-tokens.css",
   "../packages/core/dist/cai.css",
   "../packages/site/dist/site.css",
+  "../packages/landing/dist/landing.css",
 ].map((p) => resolve(__dirname, p));
 
 const missing = sentinels.filter((p) => !existsSync(p));

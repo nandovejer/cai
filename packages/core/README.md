@@ -86,7 +86,7 @@ Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captio
 
 ## Cascade layers
 
-Every stylesheet puts its rules in a layer of one container layer, `cai`: `cai.tokens`, `cai.themes`, `cai.settings`, `cai.generic`, `cai.elements`, `cai.objects`, `cai.components`, `cai.utilities`, `cai.site`, `cai.print`. Your unlayered CSS wins over all of them; to order CAI as one unit, declare `@layer reset, cai, app;` first. The names are public API.
+Every stylesheet puts its rules in a layer of one container layer, `cai`: `cai.tokens`, `cai.themes`, `cai.settings`, `cai.generic`, `cai.elements`, `cai.objects`, `cai.components`, `cai.utilities`, `cai.site`, `cai.landing`, `cai.print`. Your unlayered CSS wins over all of them; to order CAI as one unit, declare `@layer reset, cai, app;` first. The names are public API.
 
 ## Package exports
 

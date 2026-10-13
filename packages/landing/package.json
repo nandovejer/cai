@@ -1,0 +1,48 @@
+{
+  "name": "@cai-ds/landing",
+  "version": "0.0.0",
+  "description": "CAI Design System — patterns for a landing page (feature grid), built on @cai-ds/site",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./css": "./dist/landing.css",
+    "./css/min": "./dist/landing.min.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nandovejer/cai.git",
+    "directory": "packages/landing"
+  },
+  "homepage": "https://github.com/nandovejer/cai#readme",
+  "bugs": {
+    "url": "https://github.com/nandovejer/cai/issues"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "landing-page",
+    "patterns",
+    "vanilla"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@cai-ds/core": "^3.0.0",
+    "@cai-ds/site": "^3.0.0",
+    "@cai-ds/tokens": "^3.0.0"
+  },
+  "devDependencies": {
+    "@cai-ds/core": "workspace:*",
+    "@cai-ds/site": "workspace:*",
+    "@cai-ds/tokens": "workspace:*"
+  }
+}

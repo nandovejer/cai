@@ -1,5 +1,5 @@
 /**
- * CAI — the public cascade layers (one source for the three build scripts).
+ * CAI — the public cascade layers (one source for every build script).
  *
  * Every CAI stylesheet puts its rules in a layer inside one container layer,
  * `cai`, so a consumer orders CAI as a whole (`@layer reset, cai, app;`) and
@@ -16,14 +16,16 @@
  *   cai.objects     layout (.o-*)
  *   cai.components  .cai-* components
  *   cai.utilities   .u-* helpers: they win over components by order
- *   cai.site    .cai-site-* patterns of @cai-ds/site
+ *   cai.site        .cai-site-* patterns of @cai-ds/site
+ *   cai.landing     .cai-landing-* patterns of @cai-ds/landing (one kind of
+ *                   site, built on site: after it, so it can refine it)
  *   cai.print       what changes on paper (@media print): last, so it wins over
- *                   the screen styles of core and site by order
+ *                   the screen styles of every package by order
  *
  * Every file repeats the statement first, so the order is the same whichever
  * file a page loads first.
  */
-export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "print"];
+export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "landing", "print"];
 
 export const LAYER_ORDER = `@layer ${LAYERS.map((l) => `cai.${l}`).join(", ")};\n`;
 

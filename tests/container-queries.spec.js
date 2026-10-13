@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * Size queries on the component's own container (table cell padding, player
- * controls) and an intrinsic grid (site feature grid) replace window
+ * controls) and an intrinsic grid (the feature grid of landing) replace window
  * media queries: the same markup reacts to the room it has, in one viewport.
  * The second group proves containment did not break what escapes it: the top
  * layer (dialog, popover, ::backdrop) and the scroll of the table wrap.

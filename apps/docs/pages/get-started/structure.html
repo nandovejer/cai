@@ -1,6 +1,6 @@
 <!-- cai:page
 title: How CAI is organised
-description: Three packages that depend in one direction, CSS in cascade layers inside one called cai, and one optional script.
+description: Packages that depend in one direction, CSS in cascade layers inside one called cai, and one optional script.
 area: get-started
 order: 2
 -->
@@ -12,9 +12,12 @@ order: 2
       ↓ required by
 @cai-ds/core     -> components, bare-element styles, optional JS
       ↓ required by
-@cai-ds/site -> page patterns and the site search</code></pre>
+@cai-ds/site     -> page patterns and the site search
+      ↓ required by
+@cai-ds/landing  -> patterns for a landing page (own version, 0.x)</code></pre>
       <ul>
-        <li>Site can use core and tokens; core can use tokens; tokens uses nothing.</li>
+        <li>Landing can use site, core and tokens; site can use core and tokens; core can use tokens; tokens uses nothing.</li>
+        <li>Tokens, core and site share one version. A package for one kind of site, such as landing, has its own, and names the major of the others it needs.</li>
         <li>The packages say so as required peer dependencies, and the core and site scripts warn in the console when a level is missing.</li>
       </ul>
     </section>
@@ -36,7 +39,8 @@ order: 2
           <tr><td data-label="Piece"><div>Layout objects</div></td><td data-label="Classes or attributes"><div><code>.o-container</code>, <code>.o-grid</code>, <code>.o-stack</code>, <code>.o-media</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>Spacing comes from the space tokens</div></td></tr>
           <tr><td data-label="Piece"><div>An app layout with a sidebar</div></td><td data-label="Classes or attributes"><div><code>.o-shell</code>, <code>.o-main</code>, <code>.cai-sidebar</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>A plain <code>&lt;footer&gt;</code> as a direct child of <code>.o-shell</code> goes across the bottom; its look is yours, or site's footer</div></td></tr>
           <tr><td data-label="Piece"><div>A page with no sidebar</div></td><td data-label="Classes or attributes"><div><code>.cai-site-page</code>, <code>-main</code>, <code>-content</code>, <code>-section</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Instead of <code>.o-shell</code>, for a page with no sidebar</div></td></tr>
-          <tr><td data-label="Piece"><div>Hero, page header, action group, feature grid</div></td><td data-label="Classes or attributes"><div><code>.cai-site-hero</code>, <code>-page-header</code>, <code>-actions</code>, <code>-feature-grid</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>The buttons and cards inside them are core's</div></td></tr>
+          <tr><td data-label="Piece"><div>Hero, page header, action group</div></td><td data-label="Classes or attributes"><div><code>.cai-site-hero</code>, <code>-page-header</code>, <code>-actions</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>The buttons inside them are core's</div></td></tr>
+          <tr><td data-label="Piece"><div>Feature grid</div></td><td data-label="Classes or attributes"><div><code>.cai-landing-feature-grid</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="Notes"><div>The cards inside it are core's</div></td></tr>
           <tr><td data-label="Piece"><div>Site header</div></td><td data-label="Classes or attributes"><div><code>.cai-site-header</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Its menu button, <code>.cai-nav-toggle</code>, is core's</div></td></tr>
           <tr><td data-label="Piece"><div>Footer</div></td><td data-label="Classes or attributes"><div><code>.cai-site-footer</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Core already places it inside <code>.o-shell</code>, with or without site's look</div></td></tr>
           <tr><td data-label="Piece"><div>Skip link, language switcher</div></td><td data-label="Classes or attributes"><div><code>.cai-site-skip-link</code>, <code>.cai-site-lang-switcher</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>No script</div></td></tr>
@@ -50,7 +54,7 @@ order: 2
       </div>
       <ul>
         <li><strong>Two ways to lay out a page.</strong> <code>.o-shell</code> with <code>.o-main</code> is core's: a sidebar column beside the main area. <code>.cai-site-page</code> with <code>.cai-site-main</code> is site's: a header, the content and a footer in one column. Pick one for the grid of the page: the first when it has a sidebar, the second when it has none. The site header and the footer work with both; these docs use <code>.o-shell</code> with the site header.</li>
-        <li>Site needs core, and core needs tokens, so a row at a level also needs every package under it.</li>
+        <li>Landing needs site, site needs core, and core needs tokens, so a row at a level also needs every package under it.</li>
       </ul>
     </section>
 
@@ -66,7 +70,7 @@ order: 2
   utilities/_utilities.css    cai.utilities   single-purpose helpers: .u-*</code></pre>
           <ul>
             <li>The components layer holds <span data-count="components">25</span> components.</li>
-            <li><code>dist/cai.css</code> holds these six layers and <code>cai.print</code>. Tokens are in <code>cai.tokens</code> and site in <code>cai.site</code>; <code>cai.themes</code> is empty, kept for a look of your own. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
+            <li><code>dist/cai.css</code> holds these six layers and <code>cai.print</code>. Tokens are in <code>cai.tokens</code>, site in <code>cai.site</code> and landing in <code>cai.landing</code>; <code>cai.themes</code> is empty, kept for a look of your own. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
             <li>Rules for bare elements are wrapped in <code>:where()</code>, so any class wins over them.</li>
           </ul>
     </section>

@@ -9,7 +9,7 @@
  * and the tests read the same route table.
  *
  * What the generator writes around each page, from the front matter of all
- * of them (one data source, so they never disagree): the sidebar (six areas,
+ * of them (one data source, so they never disagree): the sidebar (the areas,
  * only the current one expanded), the breadcrumb, the page title and lead,
  * "On this page", "Keep going" and Previous / Next, the galleries of the area index pages and
  * the A–Z index. apps/docs/404.html is the not-found page: its URLs start at
@@ -104,12 +104,16 @@ const TEMPLATE_HEADINGS = new Set([
   "Writing the content", "Contrast and focus", "Tokens it uses",
 ]);
 
+/** The areas that document a package of patterns built on core: one per package. */
+const PACKAGE_AREAS = new Set(["site", "landing"]);
+
 /** What an A–Z entry is, by the area of its page. */
 const AREA_KIND = {
   "get-started": "Get started",
   components: "Component",
   tokens: "Token page",
   site: "Site pattern",
+  landing: "Landing pattern",
   html: "HTML elements",
   accessibility: "Accessibility",
   hub: "Documentation",
@@ -411,7 +415,7 @@ function contentOf(page) {
 const link = (href, text, attrs = "") => `<a${attrs} href="${escapeHtml(href)}">${escapeHtml(text)}</a>`;
 
 /**
- * The sidebar: the six areas, and the pages of the current area only.
+ * The sidebar: the areas of site.json, and the pages of the current area only.
  * aria-current="page" on the current page (the area link on an area index),
  * "true" on its area link. No .is-active: that is the scroll spy's mark.
  */
@@ -634,7 +638,8 @@ export function indexData(site) {
     .filter((page) => page.meta.search !== "false")
     .map((page) => {
       const area = areaOf(site, page);
-      const kind = area?.id === "site" && page.route === areaRoute(area) ? "Site" : AREA_KIND[page.meta.area] ?? "Page";
+      // The index of a package's area is the package ("Site", "Landing"), not one of its patterns
+      const kind = PACKAGE_AREAS.has(area?.id) && page.route === areaRoute(area) ? area.label : AREA_KIND[page.meta.area] ?? "Page";
       // The levels "On this page" lists: on a component page, the h3 of its tabs too
       const sectionLevels = page.meta.toc === "h2,h3" ? [2, 3] : [2];
       const sections = [];

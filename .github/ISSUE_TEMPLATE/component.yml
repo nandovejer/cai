@@ -1,5 +1,5 @@
 name: Component or pattern proposal
-description: Propose something new for core or site.
+description: Propose something new for core, site or landing.
 labels: ["proposal"]
 body:
   - type: markdown
@@ -35,10 +35,11 @@ body:
     id: layer
     attributes:
       label: Where it belongs
-      description: Core is a piece useful on any website. Site is a composition that solves a product task.
+      description: Core is a piece useful on any website. Site is what every site needs, above the components. Landing is what only a landing page uses.
       options:
         - Core component
         - Site pattern
+        - Landing pattern
         - Not sure
     validations:
       required: true

@@ -53,6 +53,9 @@ importers:
       '@cai-ds/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@cai-ds/landing':
+        specifier: workspace:*
+        version: link:../../packages/landing
       '@cai-ds/site':
         specifier: workspace:*
         version: link:../../packages/site
@@ -65,6 +68,9 @@ importers:
       '@cai-ds/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@cai-ds/landing':
+        specifier: workspace:*
+        version: link:../../packages/landing
       '@cai-ds/site':
         specifier: workspace:*
         version: link:../../packages/site
@@ -74,6 +80,18 @@ importers:
 
   packages/core:
     devDependencies:
+      '@cai-ds/tokens':
+        specifier: workspace:*
+        version: link:../tokens
+
+  packages/landing:
+    devDependencies:
+      '@cai-ds/core':
+        specifier: workspace:*
+        version: link:../core
+      '@cai-ds/site':
+        specifier: workspace:*
+        version: link:../site
       '@cai-ds/tokens':
         specifier: workspace:*
         version: link:../tokens

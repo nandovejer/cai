@@ -1,12 +1,16 @@
 /**
  * CAI — consumer smoke test.
- * Packs the three packages as `npm pack` would publish them, installs the
- * tarballs into an empty project, and checks what a consumer sees:
+ * Packs every published package (scripts/cai-packages.js) as `npm pack`
+ * would publish it, installs the tarballs into an empty project, and checks
+ * what a consumer sees. The versions are the ones the pending changesets
+ * will publish: `changeset version` runs on a copy of the manifests, so a
+ * package whose peers name the next major of the base (landing's ^3.0.0
+ * while the workspace is still at 2.x) installs as it will on npm.
  *   1. every entry of each package's `exports` resolves to a file
  *      (patterns such as ./components/* are expanded);
  *   2. a minimal page that links the installed files loads in Chromium with
  *      no failed request, no console error or warning, the tokens defined,
- *      core and site CSS applied, and the JS exports importable;
+ *      core, site and landing CSS applied, and the JS exports importable;
  *   3. the same page with jsDelivr-style URLs (/npm/@cai-ds/<pkg>@<version>/…),
  *      served from the same tarballs by a local server: no network is used;
  *   4. the `cai-tokens` command runs from the installed package.
@@ -19,16 +23,16 @@
  *   --keep   leave the temporary project in place and print its path
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { createServer } from "node:http";
 import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, extname, join, normalize, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { PACKAGES } from "./cai-packages.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const KEEP = process.argv.includes("--keep");
-const PACKAGES = ["tokens", "core", "site"];
 const TYPES = {
   ".css": "text/css",
   ".js": "text/javascript",
@@ -71,11 +75,30 @@ mkdirSync(packs);
 mkdirSync(project);
 const npm = process.platform === "win32" ? "npm.cmd" : "npm";
 
+// The release the pending changesets describe: run `changeset version` on
+// a copy of the manifests and changesets, never on the working tree
+const plan = join(work, "plan");
+cpSync(join(root, ".changeset"), join(plan, ".changeset"), { recursive: true });
+for (const file of ["package.json", "pnpm-workspace.yaml"]) cpSync(join(root, file), join(plan, file));
+for (const name of PACKAGES) {
+  for (const file of ["package.json", "CHANGELOG.md"]) {
+    if (existsSync(join(root, "packages", name, file))) cpSync(join(root, "packages", name, file), join(plan, "packages", name, file));
+  }
+}
+const changeset = join(root, "node_modules", ".bin", process.platform === "win32" ? "changeset.cmd" : "changeset");
+const versioned = spawnSync(changeset, ["version"], { cwd: plan, encoding: "utf-8" });
+check("ran changeset version on a copy of the manifests", versioned.status === 0, versioned.stderr || versioned.stdout);
+if (versioned.status !== 0) finish();
+
+// Each package is packed from a copy of its folder with the released manifest
 const tarballs = PACKAGES.map((name) => {
-  const out = execFileSync(npm, ["pack", "--json", "--pack-destination", packs], { cwd: join(root, "packages", name), encoding: "utf-8" });
+  const copy = join(work, "src", name);
+  cpSync(join(root, "packages", name), copy, { recursive: true, filter: (from) => !from.split(sep).includes("node_modules") });
+  cpSync(join(plan, "packages", name, "package.json"), join(copy, "package.json"));
+  const out = execFileSync(npm, ["pack", "--json", "--pack-destination", packs], { cwd: copy, encoding: "utf-8" });
   return join(packs, JSON.parse(out)[0].filename);
 });
-check(`packed ${PACKAGES.length} tarballs`, tarballs.every(existsSync));
+check(`packed ${PACKAGES.length} tarballs (${tarballs.map((t) => t.split(sep).pop().replace(/^cai-ds-|\.tgz$/g, "")).join(", ")})`, tarballs.every(existsSync));
 
 writeFileSync(join(project, "package.json"), JSON.stringify({ name: "cai-smoke", private: true, type: "module" }));
 const install = spawnSync(npm, ["install", "--offline", "--no-audit", "--no-fund", "--ignore-scripts", ...tarballs], { cwd: project, encoding: "utf-8" });
@@ -136,11 +159,14 @@ const PAGE = (base, label) => `<!doctype html>
   <link rel="stylesheet" href="${base.tokens}/dist/cai-tokens.css">
   <link rel="stylesheet" href="${base.core}/dist/cai.css">
   <link rel="stylesheet" href="${base.site}/dist/site.css">
+  <link rel="stylesheet" href="${base.landing}/dist/landing.css">
 </head>
 <body>
   <h1>Smoke test</h1>
   <button class="cai-btn cai-btn--primary" type="button" id="probe-button">Save changes</button>
   <div id="probe-fill" style="background: var(--cai-brand-fill)"></div>
+  <div class="cai-site-section" id="probe-section"></div>
+  <div class="cai-landing-feature-grid" id="probe-grid"></div>
   <script type="module">
     const core = ${JSON.stringify(base.core)};
     const site = ${JSON.stringify(base.site)};
@@ -172,6 +198,7 @@ const local = {
   tokens: "/node_modules/@cai-ds/tokens",
   core: "/node_modules/@cai-ds/core",
   site: "/node_modules/@cai-ds/site",
+  landing: "/node_modules/@cai-ds/landing",
 };
 const cdn = Object.fromEntries(PACKAGES.map((n) => [n, `/npm/@cai-ds/${n}@${versions[n]}`]));
 
@@ -225,6 +252,8 @@ if (browser) {
       const root = getComputedStyle(document.documentElement);
       const button = getComputedStyle(document.getElementById("probe-button"));
       const fill = getComputedStyle(document.getElementById("probe-fill"));
+      const section = getComputedStyle(document.getElementById("probe-section"));
+      const grid = getComputedStyle(document.getElementById("probe-grid"));
       const sheets = [...document.styleSheets].map((s) => {
         try {
           return s.cssRules.length;
@@ -237,6 +266,9 @@ if (browser) {
         buttonBackground: button.backgroundColor,
         tokenBackground: fill.backgroundColor,
         buttonHeight: parseFloat(button.height),
+        sectionDisplay: section.display,
+        gridDisplay: grid.display,
+        gridColumns: grid.gridTemplateColumns,
         sheets,
         missing: window.__smoke?.missing ?? ["no result"],
       };
@@ -245,7 +277,9 @@ if (browser) {
     check(`${label2} no failed request, console message or request off the machine`, problems.length === 0, problems.join("\n"));
     check(`${label2} tokens loaded (--cai-brand-fill is defined)`, state.token !== "", "the custom property is empty");
     check(`${label2} core CSS applied (.cai-btn--primary uses the token)`, state.buttonBackground === state.tokenBackground && state.buttonBackground !== "rgba(0, 0, 0, 0)", `${state.buttonBackground} vs ${state.tokenBackground}`);
-    check(`${label2} three stylesheets with rules`, state.sheets.length === 3 && state.sheets.every((n) => n > 0), JSON.stringify(state.sheets));
+    check(`${label2} site CSS applied (.cai-site-section is a grid)`, state.sectionDisplay === "grid", state.sectionDisplay);
+    check(`${label2} landing CSS applied (.cai-landing-feature-grid is a grid with columns)`, state.gridDisplay === "grid" && state.gridColumns !== "none", `${state.gridDisplay} / ${state.gridColumns}`);
+    check(`${label2} ${PACKAGES.length} stylesheets with rules`, state.sheets.length === PACKAGES.length && state.sheets.every((n) => n > 0), JSON.stringify(state.sheets));
     check(`${label2} JS entries import and export what the docs name`, state.missing.length === 0, state.missing.join("\n"));
     await page.close();
   }

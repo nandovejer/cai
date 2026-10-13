@@ -50,13 +50,17 @@ const settingsCss = readFileSync(fromRepo('packages/core/src/settings/_settings.
 const settingNames = (prefix) =>
   [...settingsCss.matchAll(new RegExp(`^\\s*(--cai-${prefix}-[\\w-]+):`, 'gm'))].map((m) => m[1]);
 
-// Every CSS file of the site package (the shell patterns and the search)
-const siteDir = fromRepo('packages/site/src/components');
-const siteCss = readdirSync(siteDir)
-  .filter((file) => file.endsWith('.css'))
-  .map((file) => readFileSync(`${siteDir}/${file}`, 'utf-8'))
-  .join('\n');
-const siteClasses = [...new Set(siteCss.match(/\.cai-site-[a-z_-]+/g))];
+// Every CSS file of a package of patterns (site: the shell patterns and the
+// search; landing: the patterns of a landing page), and its classes
+const classesOf = (name) => {
+  const dir = fromRepo(`packages/${name}/src/components`);
+  const css = readdirSync(dir)
+    .filter((file) => file.endsWith('.css'))
+    .map((file) => readFileSync(`${dir}/${file}`, 'utf-8'))
+    .join('\n');
+  return [...new Set(css.match(new RegExp(`\\.cai-${name}-[a-z_-]+`, 'g')))];
+};
+const PATTERN_PACKAGES = ['site', 'landing'];
 
 const MODES = ['light', 'dark', 'high-contrast'];
 
@@ -243,10 +247,10 @@ test.describe('Documentation site', () => {
   });
 
   test.describe('navigation', () => {
-    test('the sidebar shows the six areas and expands only the current one', async ({ page }) => {
+    test('the sidebar shows the seven areas and expands only the current one', async ({ page }) => {
       await gotoId(page, 'c-button');
       const areas = page.locator('.docs-nav > li > a');
-      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Accessibility']);
+      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Landing', 'Accessibility']);
       await expect(page.locator('.docs-nav > li > ul')).toHaveCount(1);
       await expect(page.locator('.docs-nav a[aria-current="true"]')).toHaveText('Components');
       await expect(page.locator('.docs-nav a[aria-current="page"]')).toHaveText('Button');
@@ -530,10 +534,14 @@ test.describe('Documentation site', () => {
       for (const file of componentFiles) expect(files, file).toContain(`components/${file}`);
     });
 
-    test('every site class is used or named on the site pages', () => {
-      const html = routesOf('site').map((route) => site.byRoute.get(route).body).join('\n');
-      for (const selector of siteClasses) expect(html, selector).toContain(selector.slice(1));
-    });
+    for (const name of PATTERN_PACKAGES) {
+      test(`every ${name} class is used or named on the ${name} pages`, () => {
+        const classes = classesOf(name);
+        expect(classes.length, name).toBeGreaterThan(0);
+        const html = routesOf(name).map((route) => site.byRoute.get(route).body).join('\n');
+        for (const selector of classes) expect(html, selector).toContain(selector.slice(1));
+      });
+    }
   });
 
   test.describe('demos', () => {
@@ -1000,7 +1008,7 @@ test.describe('Site header and navigation toggle', () => {
       await expect(page.locator('.site-header__search')).toBeVisible();
 
       await page.getByRole('button', { name: 'Menu', exact: true }).click();
-      const site = page.getByRole('list', { name: 'Site' });
+      const site = page.getByRole('list', { name: 'Site', exact: true });
       await expect(site.getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
       await expect(site.locator('[aria-current]')).toHaveText(current);
       // first in the drawer: the first Tab from the button lands on Home

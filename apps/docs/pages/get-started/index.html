@@ -21,6 +21,7 @@ keywords: npm, cdn
           <li><strong>Your own components, CAI's colours and spacing:</strong> level 1, tokens only.</li>
           <li><strong>Ready-made buttons, forms, tables and dialogs:</strong> level 2, tokens and core.</li>
           <li><strong>Whole pages: shell, page header, footer, search:</strong> level 3, all three packages.</li>
+          <li><strong>A landing page, with a feature grid and its blocks:</strong> level 3 and <a href="#site-kinds">a package for that kind of site</a>.</li>
         </ul>
       </div>
       <div class="docs-prose">
@@ -130,6 +131,33 @@ import &quot;@cai-ds/site/css&quot;;
 import &quot;@cai-ds/core&quot;;
 import &quot;@cai-ds/site&quot;;</code></pre>
         </div>
+      </div>
+
+      <div class="docs-prose">
+        <h2 id="site-kinds" class="docs-prose__title">Packages for one kind of site</h2>
+        <p>On top of level 3, a package can add what one kind of site needs. <a href="/docs/landing/">Landing</a> is the first: the feature grid, and blocks to copy for a landing page. It needs the three packages of level 3, loaded first.</p>
+        <div class="docs-command-block">
+          <code class="docs-command-block__cmd">
+            <span class="docs-command-block__prefix" aria-hidden="true">$</span>
+            pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/site @cai-ds/landing
+          </code>
+          <button class="cai-copy-btn" type="button" data-copy="pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/site @cai-ds/landing" aria-label="Copy the landing install command">Copy</button>
+        </div>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">HTML</span>
+            <button class="cai-copy-btn" type="button" data-copy-from="code-cdn-landing" aria-label="Copy the CDN tags for landing">Copy</button>
+          </div>
+          <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, landing"><code id="code-cdn-landing">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/landing@0.1.0/dist/landing.min.css&quot;&gt;</code></pre>
+        </div>
+        <ul>
+          <li>Landing has its own version, 0.1.0 now, and needs version 3 of the other three. Pin both numbers.</li>
+          <li>With a bundler, add <code class="cai-code-inline">import "@cai-ds/landing/css";</code> after the imports of level 3.</li>
+          <li>It has no script: add the ones of level 3 if you want them.</li>
+        </ul>
       </div>
 
       <div class="docs-prose">

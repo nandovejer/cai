@@ -1,6 +1,6 @@
 # @cai-ds/site
 
-What every site needs, above the components: page shell, site header, footer, sections, image frame, site search and language switcher. A piece is here when it needs data of the site or holds other pieces; everything else is in `@cai-ds/core`.
+What every site needs, above the components: page shell, site header, footer, sections, image frame, site search and language switcher. A piece is here when it needs data of the site or holds other pieces; everything else is in `@cai-ds/core`. Packages for one kind of site build on this one: [`@cai-ds/landing`](../landing) for a landing page.
 
 > **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
 
@@ -55,7 +55,6 @@ import '@cai-ds/site'    // only for the search
 - `.cai-site-section` — Semantic section divisions
 - `.cai-site-page-header`, `__title`, `__lead` — Page header block
 - `.cai-site-actions` — Action button group
-- `.cai-site-feature-grid` — Feature showcase grid
 - `.cai-site-header` (`--sticky`, `__inner`, `__brand`, `__nav`, `__actions`) — Site header: the name, the main links and a few controls; below 769 px the links are a native popover panel opened by core's `.cai-nav-toggle`, with no script
 - `.cai-site-footer` — Page footer
 - `.cai-site-lang-switcher` (`__button`, `__menu`, `__list`, `__link`, `__name`, `__title`, `__icon`) — Language switcher: a button that opens a native popover list of links, with no script

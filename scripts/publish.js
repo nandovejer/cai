@@ -18,13 +18,13 @@ import { mkdtempSync, readFileSync, readdirSync } from "fs";
 import { tmpdir } from "os";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
+// Order matters: a package is only published after the ones it depends on
+// (scripts/cai-packages.js lists them in that order)
+import { PACKAGES } from "./cai-packages.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
 const dryRun = process.argv.includes("--dry-run");
-
-// Order matters: a layer is only published after the one it depends on.
-const PACKAGES = ["tokens", "core", "site"];
 
 function checkTarball(tarball, pkgRoot, name) {
   const shipped = execFileSync("tar", ["-tzf", tarball], { encoding: "utf-8" })

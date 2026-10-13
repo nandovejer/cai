@@ -550,7 +550,7 @@ describe("the CAI docs site", () => {
     // ia.md §6 and a11y.md TAB-1/3/16/17. Every section of both tabs is
     // required; tests/docs-design.test.js checks what the Design sections say.
     const viewPages = site.pages.filter(
-      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "site" && p.meta.group === "patterns"),
+      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", "landing"].includes(p.meta.area) && p.meta.group === "patterns"),
     );
     expect(viewPages).toHaveLength(37);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];

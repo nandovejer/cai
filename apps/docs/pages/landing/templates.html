@@ -1,0 +1,276 @@
+<!-- cai:page
+title: Landing page templates
+description: The blocks of an event landing page to paste in and adapt, in the order a visitor reads them: hero, programme, speakers, tickets, call to action, registration and features.
+area: landing
+order: 10
+group: reference
+-->
+    <div class="docs-block" id="p-landing-templates">
+          <p>Each block is complete markup for the <code>&lt;main&gt;</code> of a page: start from the <a href="/docs/site/templates/#landing-page-shell">landing page shell</a>, then add the blocks one after another, in the order a visitor reads them. Change the words and the links; keep one <code>&lt;h1&gt;</code>, in the hero, and an <code>&lt;h2&gt;</code> for each block.</p>
+          <p>They use the classes of core, site and landing. Where CAI has nothing for a part, <a href="#not-here">the last section</a> says so.</p>
+          <div class="docs-prose">
+            <h2 id="hero-with-image" class="docs-prose__title">Hero with an image</h2>
+            <p>The first block of an event page: what it is, when and where, the main action and a picture. It is the <a href="/docs/site/hero/">hero</a> with its image. The text comes first in the source, so it comes first for a screen reader and when the columns stack.</p>
+            <ul>
+              <li>The hero gives two equal columns when each gets 24rem (the hero is 51rem wide or more: from about 900 px of window on a full-width page) and one column below. The picture is the <a href="/docs/site/image/">image frame</a>: it keeps its ratio, crops the picture to it and draws a placeholder until you have one.</li>
+              <li>Give the image its real <code>width</code> and <code>height</code> and an <code>alt</code> that says what it shows, or <code>alt=""</code> if it only decorates. Do not set <code>loading="lazy"</code> on it: it is the first thing on the page.</li>
+              <li>One primary button. The second action is an outline button.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-hero" aria-label="Copy the hero with an image markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Hero with an image markup"><code id="code-tpl-hero">&lt;section class=&quot;cai-site-hero&quot; aria-labelledby=&quot;event-title&quot;&gt;
+  &lt;div class=&quot;cai-site-hero__copy&quot;&gt;
+    &lt;p class=&quot;cai-site-hero__eyebrow&quot;&gt;12 and 13 May 2027 · Seville&lt;/p&gt;
+    &lt;h1 class=&quot;cai-site-hero__title&quot; id=&quot;event-title&quot;&gt;Acme Summit 2027&lt;/h1&gt;
+    &lt;p class=&quot;cai-site-hero__lead&quot;&gt;Two days of talks and workshops for retail teams.&lt;/p&gt;
+    &lt;div class=&quot;cai-site-actions&quot;&gt;
+      &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#register&quot;&gt;Register&lt;/a&gt;
+      &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#programme&quot;&gt;See the programme&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;cai-site-hero__media&quot;&gt;
+    &lt;div class=&quot;cai-site-image cai-site-image--4x3&quot;&gt;
+      &lt;picture&gt;
+        &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/venue-640.avif 640w, /img/venue-1280.avif 1280w&quot; sizes=&quot;(min-width: 1024px) 50vw, 100vw&quot;&gt;
+        &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/venue-640.webp 640w, /img/venue-1280.webp 1280w&quot; sizes=&quot;(min-width: 1024px) 50vw, 100vw&quot;&gt;
+        &lt;img src=&quot;/img/venue-1280.jpg&quot; width=&quot;1280&quot; height=&quot;960&quot; alt=&quot;The main hall, full, before the opening talk&quot; fetchpriority=&quot;high&quot; decoding=&quot;async&quot;&gt;
+      &lt;/picture&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="programme" class="docs-prose__title">Programme</h2>
+            <p>A schedule is a table: the reader compares times and rooms. Below 480 px of its own width each row becomes a card of label and value pairs, so it needs no sideways scrolling on a phone.</p>
+            <ul>
+              <li>One table for each day, with the day in the <code>&lt;caption&gt;</code> and in the wrapper's <code>aria-label</code>. For several days, repeat the table under an <code>&lt;h3&gt;</code> for each day.</li>
+              <li><code>data-label</code> on every <code>&lt;td&gt;</code> is the name shown before the value in the stacked layout. See <a href="/docs/components/table/">Table</a>.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-programme" aria-label="Copy the programme markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Programme markup"><code id="code-tpl-programme">&lt;section class=&quot;cai-site-section&quot; id=&quot;programme&quot; aria-labelledby=&quot;programme-title&quot;&gt;
+  &lt;h2 id=&quot;programme-title&quot;&gt;Programme&lt;/h2&gt;
+  &lt;div class=&quot;cai-table-wrap&quot; role=&quot;region&quot; aria-label=&quot;Programme, Wednesday 12 May&quot; tabindex=&quot;0&quot;&gt;
+    &lt;table class=&quot;cai-table&quot;&gt;
+      &lt;caption&gt;Wednesday 12 May&lt;/caption&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;Time&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Session&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;Room&lt;/th&gt;&lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;&lt;td data-label=&quot;Time&quot;&gt;&lt;time datetime=&quot;09:30&quot;&gt;09:30&lt;/time&gt;&lt;/td&gt;&lt;td data-label=&quot;Session&quot;&gt;Opening talk&lt;/td&gt;&lt;td data-label=&quot;Room&quot;&gt;Main hall&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td data-label=&quot;Time&quot;&gt;&lt;time datetime=&quot;11:00&quot;&gt;11:00&lt;/time&gt;&lt;/td&gt;&lt;td data-label=&quot;Session&quot;&gt;Workshop: stock in real time&lt;/td&gt;&lt;td data-label=&quot;Room&quot;&gt;Room 2&lt;/td&gt;&lt;/tr&gt;
+        &lt;tr&gt;&lt;td data-label=&quot;Time&quot;&gt;&lt;time datetime=&quot;14:30&quot;&gt;14:30&lt;/time&gt;&lt;/td&gt;&lt;td data-label=&quot;Session&quot;&gt;Panel: the shop in 2030&lt;/td&gt;&lt;td data-label=&quot;Room&quot;&gt;Main hall&lt;/td&gt;&lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="speakers" class="docs-prose__title">Speakers</h2>
+            <p>A list of people: a photo, the name and what they do. Each speaker is a <a href="/docs/components/card/">card</a> with an <a href="/docs/site/image/">image frame</a> of ratio 1:1, in a list that fits as many columns as there is room for.</p>
+            <ul>
+              <li>The photo has <code>alt=""</code>: the name is in the heading beside it and says the same. If a photo shows something the name does not carry, give it an <code>alt</code> that says that, never the name again.</li>
+              <li>The name is an <code>&lt;h3&gt;</code>, one level under the section's <code>&lt;h2&gt;</code>, so people can move through the speakers by headings. The role is the card's body: "Role, Organisation", one line.</li>
+              <li>The <code>&lt;ul&gt;</code> tells a screen reader how many people there are. Core styles no list: take off the bullets and the indent with the one rule of your own in the snippet. Safari can drop the list role from a list whose markers you remove; the headings still lead through the speakers.</li>
+              <li><code>.o-grid--auto</code> puts as many columns as fit, none narrower than 16rem. Set <code>--cai-grid-min</code> on the list for narrower cards: <code>12rem</code> gives five across a 1100 px container, and one column below 336 px stays one column.</li>
+              <li>No photo yet: leave the frame empty (<code>&lt;div class="cai-site-image cai-site-image--1x1 u-mb-sm"&gt;&lt;/div&gt;</code>) and it draws the placeholder. To link a speaker to a page of their own, put a link in the heading, <code>&lt;h3 class="cai-card__title"&gt;&lt;a href="/speakers/luis-ortega/"&gt;Luis Ortega&lt;/a&gt;&lt;/h3&gt;</code>: the whole card becomes the link. Link all the speakers or none, and do not add a second link or a button.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-speakers" aria-label="Copy the speakers markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Speakers markup"><code id="code-tpl-speakers">&lt;style&gt;
+  /* Your own rule: core styles no list */
+  .speakers { list-style: none; margin: 0; padding: 0; }
+&lt;/style&gt;
+
+&lt;section class=&quot;cai-site-section&quot; id=&quot;speakers&quot; aria-labelledby=&quot;speakers-title&quot;&gt;
+  &lt;h2 id=&quot;speakers-title&quot;&gt;Speakers&lt;/h2&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto speakers&quot;&gt;
+    &lt;li class=&quot;cai-card&quot;&gt;
+      &lt;div class=&quot;cai-site-image cai-site-image--1x1 u-mb-sm&quot;&gt;
+        &lt;picture&gt;
+          &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/marta-320.avif 320w, /img/marta-640.avif 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
+          &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/marta-320.webp 320w, /img/marta-640.webp 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
+          &lt;img src=&quot;/img/marta-640.jpg&quot; width=&quot;640&quot; height=&quot;640&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+        &lt;/picture&gt;
+      &lt;/div&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;Marta Ríos&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Head of logistics, Grupo Lumen&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;cai-card&quot;&gt;
+      &lt;div class=&quot;cai-site-image cai-site-image--1x1 u-mb-sm&quot;&gt;
+        &lt;picture&gt;
+          &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/luis-320.avif 320w, /img/luis-640.avif 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
+          &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/luis-320.webp 320w, /img/luis-640.webp 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
+          &lt;img src=&quot;/img/luis-640.jpg&quot; width=&quot;640&quot; height=&quot;640&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+        &lt;/picture&gt;
+      &lt;/div&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;Luis Ortega&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Founder, Taller Norte&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;!-- one li for each speaker --&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="ticket-plans" class="docs-prose__title">Ticket plans</h2>
+            <p>Three plans side by side above 768 px, one under another below it. Each plan is a <a href="/docs/components/card/">card</a> with its name, its price, what is included and one action.</p>
+            <ul>
+              <li><code>.o-grid--3</code> gives three equal columns above 768 px. For two or four plans use <code>.o-grid--2</code> or <code>.o-grid--4</code>, or <code>.o-grid--auto</code> to let the width decide.</li>
+              <li><code>.cai-card__price</code> sets the price in semibold figures of equal width; a previous price is an <code>&lt;s&gt;</code> with a <code>.u-sr-only</code> "Was" before it, so the line through it is not the only cue.</li>
+              <li>The button says which plan it chooses ("Choose Two days"), so a list of buttons makes sense out of context. The recommended plan is a <a href="/docs/components/card/#featured-card">featured card</a> with the primary button and a tag that says why, in its text; the others are outline buttons.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-tickets" aria-label="Copy the ticket plans markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Ticket plans markup"><code id="code-tpl-tickets">&lt;section class=&quot;cai-site-section&quot; id=&quot;tickets&quot; aria-labelledby=&quot;tickets-title&quot;&gt;
+  &lt;h2 id=&quot;tickets-title&quot;&gt;Tickets&lt;/h2&gt;
+  &lt;div class=&quot;o-grid o-grid--3&quot;&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;One day&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__price&quot;&gt;&lt;data value=&quot;99&quot;&gt;99 €&lt;/data&gt;&lt;/p&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Talks and lunch, on the day you choose.&lt;/p&gt;
+      &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;/register/?ticket=day&quot;&gt;Choose One day&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card cai-card--featured&quot;&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;Two days&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__price&quot;&gt;&lt;data value=&quot;149&quot;&gt;149 €&lt;/data&gt; &lt;s&gt;&lt;span class=&quot;u-sr-only&quot;&gt;Was &lt;/span&gt;180 €&lt;/s&gt;&lt;/p&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Both days, lunch and the recordings. &lt;span class=&quot;cai-tag cai-tag--blue&quot;&gt;Most chosen&lt;/span&gt;&lt;/p&gt;
+      &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;/register/?ticket=two-days&quot;&gt;Choose Two days&lt;/a&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;Team of five&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__price&quot;&gt;&lt;data value=&quot;599&quot;&gt;599 €&lt;/data&gt;&lt;/p&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Five tickets for both days, one invoice.&lt;/p&gt;
+      &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;/register/?ticket=team&quot;&gt;Choose Team of five&lt;/a&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="call-to-action" class="docs-prose__title">Call to action</h2>
+            <p>A reason to act now and one action, repeated near the end of a long page. It is a <a href="/docs/site/section/">section on a band</a>: the tint runs from edge to edge of the page, and the heading, one sentence and the action group keep the page's column.</p>
+            <ul>
+              <li>One primary button, and it points at the form or the page where the visitor acts (<code>#register</code>). The heading says why now, not "Register".</li>
+              <li>Use a heading level that follows the page: <code>&lt;h2&gt;</code> here, because it sits beside the other sections.</li>
+              <li>One band for each screen height at most, and not inside a card. In forced colors the tint is removed and two thin rules mark the band.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-cta" aria-label="Copy the call to action markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Call to action markup"><code id="code-tpl-cta">&lt;section class=&quot;cai-site-section cai-site-section--band&quot; aria-labelledby=&quot;last-seats-title&quot;&gt;
+  &lt;h2 id=&quot;last-seats-title&quot;&gt;Registration closes on 30 April&lt;/h2&gt;
+  &lt;p&gt;The hall holds 400 people, and the Two days ticket sold out last year.&lt;/p&gt;
+  &lt;div class=&quot;cai-site-actions&quot;&gt;
+    &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#register&quot;&gt;Register now&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="registration-form" class="docs-prose__title">Registration form</h2>
+            <p>The words on the left, the form on the right above 768 px; one column below. It is a native <code>&lt;form&gt;</code> that works without JavaScript, with the constraint validation of the browser.</p>
+            <ul>
+              <li>Every field has a visible label. Say once, above the form, what "*" means. The hint is linked with <code>aria-describedby</code>.</li>
+              <li>An error says what went wrong and how to fix it; the markup is on <a href="/docs/components/form/">Form fields</a>.</li>
+              <li>The consent is a checkbox with a label and a link to the notice, not a sentence under the button. The button says what happens: "Complete registration", not "Submit".</li>
+              <li><code>action</code> and the field names are yours: the form is sent to your server.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-register" aria-label="Copy the registration form markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Registration form markup"><code id="code-tpl-register">&lt;section class=&quot;cai-site-section&quot; id=&quot;register&quot; aria-labelledby=&quot;register-title&quot;&gt;
+  &lt;div class=&quot;o-grid o-grid--2&quot;&gt;
+    &lt;div class=&quot;o-stack&quot;&gt;
+      &lt;h2 id=&quot;register-title&quot;&gt;Register&lt;/h2&gt;
+      &lt;p&gt;Tell us who is coming. We email the ticket within one working day.&lt;/p&gt;
+      &lt;p&gt;Fields marked * are required.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;form class=&quot;o-stack&quot; action=&quot;/register/&quot; method=&quot;post&quot;&gt;
+      &lt;div class=&quot;cai-field&quot;&gt;
+        &lt;label class=&quot;cai-field__label cai-field__label--required&quot; for=&quot;reg-name&quot;&gt;Full name&lt;/label&gt;
+        &lt;input class=&quot;cai-input&quot; id=&quot;reg-name&quot; name=&quot;name&quot; type=&quot;text&quot; autocomplete=&quot;name&quot; required&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;cai-field&quot;&gt;
+        &lt;label class=&quot;cai-field__label cai-field__label--required&quot; for=&quot;reg-email&quot;&gt;Email&lt;/label&gt;
+        &lt;input class=&quot;cai-input&quot; id=&quot;reg-email&quot; name=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; required aria-describedby=&quot;reg-email-hint&quot;&gt;
+        &lt;div class=&quot;cai-field__helper&quot; id=&quot;reg-email-hint&quot;&gt;We send your ticket to this address.&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;cai-field&quot;&gt;
+        &lt;label class=&quot;cai-field__label cai-field__label--required&quot; for=&quot;reg-ticket&quot;&gt;Ticket&lt;/label&gt;
+        &lt;select class=&quot;cai-select&quot; id=&quot;reg-ticket&quot; name=&quot;ticket&quot; required&gt;
+          &lt;option value=&quot;&quot;&gt;Choose a ticket&lt;/option&gt;
+          &lt;option value=&quot;day&quot;&gt;One day, 99 €&lt;/option&gt;
+          &lt;option value=&quot;two-days&quot;&gt;Two days, 149 €&lt;/option&gt;
+          &lt;option value=&quot;team&quot;&gt;Team of five, 599 €&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;cai-check-item&quot;&gt;
+        &lt;input type=&quot;checkbox&quot; id=&quot;reg-privacy&quot; name=&quot;privacy&quot; required&gt;
+        &lt;label for=&quot;reg-privacy&quot;&gt;I have read the &lt;a href=&quot;/privacy/&quot;&gt;privacy notice&lt;/a&gt;&lt;/label&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;cai-site-actions&quot;&gt;
+        &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Complete registration&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="feature-grid-block" class="docs-prose__title">Feature grid block</h2>
+            <p>Features or benefits, two columns at most, one when two do not fit. See <a href="/docs/landing/feature-grid/">Feature grid</a>.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-features" aria-label="Copy the feature grid block markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Feature grid block markup"><code id="code-tpl-features">&lt;section class=&quot;cai-site-section&quot;&gt;
+  &lt;h2&gt;Key capabilities&lt;/h2&gt;
+  &lt;div class=&quot;cai-landing-feature-grid&quot;&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability one&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability two&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability three&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class=&quot;cai-card&quot;&gt;
+      &lt;h3&gt;Capability four&lt;/h3&gt;
+      &lt;p&gt;Short explanation.&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="not-here" class="docs-prose__title">What is not here</h2>
+            <p>An event page often asks for things CAI does not have. They are not faked in the templates above.</p>
+            <ul>
+              <li><strong>A countdown or a map.</strong> CAI draws neither. For icons, <a href="/docs/components/icon-grid/">CAI has its own set</a> to copy.</li>
+            </ul>
+          </div>
+    </div>

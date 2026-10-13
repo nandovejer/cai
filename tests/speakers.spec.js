@@ -15,7 +15,7 @@
  */
 import { test, expect } from '@playwright/test';
 
-const PAGE = '/docs/site/templates/';
+const PAGE = '/docs/landing/templates/';
 
 /** Add a rule to the page. addStyleTag needs script, and this test also runs without it. */
 const style = (page, css) => page.evaluate((text) => document.head.append(Object.assign(document.createElement('style'), { textContent: text })), css);

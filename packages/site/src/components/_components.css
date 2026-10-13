@@ -94,9 +94,9 @@
 }
 
 /* Hero: the first block of a home or a landing page. With an image, two
-   equal columns when each gets 24rem, one below: intrinsic, like the
-   feature grid, so it follows the room it has, stacks with larger text and
-   needs no query nor :has(). Copy first in the source; logical order in RTL. */
+   equal columns when each gets 24rem, one below: intrinsic, so it
+   follows the room it has, stacks with larger text and needs no query
+   nor :has(). Copy first in the source; logical order in RTL. */
 .cai-site-hero {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, max(24rem, 45%)), 1fr));
@@ -149,14 +149,6 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--cai-space-xs);
-}
-
-/* Two columns at most; one when two do not fit 16rem each. Intrinsic: it
-   follows the room the grid has, not the window, and needs no query. */
-.cai-site-feature-grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(100%, max(16rem, 45%)), 1fr));
-	gap: var(--cai-space-sm);
 }
 
 .cai-site-footer {

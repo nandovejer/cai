@@ -63,31 +63,6 @@
 }
 
 /* --------------------------------------------------------------------------
-   Hero
-   -------------------------------------------------------------------------- */
-
-.landing-hero {
-  padding-block: var(--cai-space-3xl) 0;
-}
-
-.landing-hero__title {
-  font-size: var(--cai-text-4xl);
-  line-height: 1.1;
-  text-wrap: balance;
-  margin-top: var(--cai-space-sm);
-}
-
-/* Two short sentences, so on a wide screen they are set larger */
-.landing-hero__lead {
-  font-size: var(--cai-text-xl);
-  line-height: 1.4;
-  color: var(--cai-text-secondary);
-  max-width: 70ch;
-  text-wrap: pretty;
-  margin-block: var(--cai-space-md) var(--cai-space-lg);
-}
-
-/* --------------------------------------------------------------------------
    What CAI is
    -------------------------------------------------------------------------- */
 
@@ -320,18 +295,6 @@
    -------------------------------------------------------------------------- */
 
 @media (max-width: 1023px) {
-  .landing-hero {
-    padding-block: calc(var(--cai-space-xl) + var(--cai-space-xs)) 0;
-  }
-
-  .landing-hero__lead {
-    font-size: var(--cai-text-lg);
-  }
-
-  .landing-hero__title {
-    font-size: var(--cai-text-3xl);
-  }
-
   /* One card per row: stacked rows, and a button as wide as its label */
   .landing-levels {
     grid-template-columns: minmax(0, 1fr);
@@ -366,13 +329,8 @@
     font-size: var(--cai-text-xl);
   }
 
-  .landing-lead,
-  .landing-hero__lead {
+  .landing-lead {
     font-size: var(--cai-text-base);
-  }
-
-  .landing-hero__title {
-    font-size: var(--cai-text-2xl);
   }
 
   .landing-level__intro,

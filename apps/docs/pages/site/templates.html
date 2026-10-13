@@ -88,9 +88,9 @@ group: reference
           </div>
           <div class="docs-prose">
             <h2 id="hero-with-image" class="docs-prose__title">Hero with an image</h2>
-            <p>The first block of an event page: what it is, when and where, the main action and a picture. The text comes first in the source, so it comes first for a screen reader and when the columns stack at 768 px and below.</p>
+            <p>The first block of an event page: what it is, when and where, the main action and a picture. It is the <a href="/docs/site/hero/">hero</a> with its image. The text comes first in the source, so it comes first for a screen reader and when the columns stack.</p>
             <ul>
-              <li><code>.o-grid--2</code> gives two equal columns above 768 px and one below. The picture is the <a href="/docs/site/image/">image frame</a>: it keeps its ratio, crops the picture to it and draws a placeholder until you have one.</li>
+              <li>The hero gives two equal columns when each gets 24rem (the hero is 51rem wide or more: from about 900 px of window on a full-width page) and one column below. The picture is the <a href="/docs/site/image/">image frame</a>: it keeps its ratio, crops the picture to it and draws a placeholder until you have one.</li>
               <li>Give the image its real <code>width</code> and <code>height</code> and an <code>alt</code> that says what it shows, or <code>alt=""</code> if it only decorates. Do not set <code>loading="lazy"</code> on it: it is the first thing on the page.</li>
               <li>One primary button. The second action is an outline button.</li>
             </ul>
@@ -99,23 +99,21 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-hero" aria-label="Copy the hero with an image markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Hero with an image markup"><code id="code-tpl-hero">&lt;section class=&quot;cai-site-section&quot; aria-labelledby=&quot;event-title&quot;&gt;
-  &lt;div class=&quot;o-grid o-grid--2&quot;&gt;
-    &lt;div class=&quot;o-stack&quot;&gt;
-      &lt;p&gt;&lt;span class=&quot;cai-tag cai-tag--blue&quot;&gt;12 and 13 May 2027 · Seville&lt;/span&gt;&lt;/p&gt;
-      &lt;div class=&quot;cai-site-page-header&quot;&gt;
-        &lt;h1 class=&quot;cai-site-page-header__title&quot; id=&quot;event-title&quot;&gt;Acme Summit 2027&lt;/h1&gt;
-        &lt;p class=&quot;cai-site-page-header__lead&quot;&gt;Two days of talks and workshops for retail teams.&lt;/p&gt;
-      &lt;/div&gt;
-      &lt;div class=&quot;cai-site-actions&quot;&gt;
-        &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#register&quot;&gt;Register&lt;/a&gt;
-        &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#programme&quot;&gt;See the programme&lt;/a&gt;
-      &lt;/div&gt;
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Hero with an image markup"><code id="code-tpl-hero">&lt;section class=&quot;cai-site-hero&quot; aria-labelledby=&quot;event-title&quot;&gt;
+  &lt;div class=&quot;cai-site-hero__copy&quot;&gt;
+    &lt;p class=&quot;cai-site-hero__eyebrow&quot;&gt;12 and 13 May 2027 · Seville&lt;/p&gt;
+    &lt;h1 class=&quot;cai-site-hero__title&quot; id=&quot;event-title&quot;&gt;Acme Summit 2027&lt;/h1&gt;
+    &lt;p class=&quot;cai-site-hero__lead&quot;&gt;Two days of talks and workshops for retail teams.&lt;/p&gt;
+    &lt;div class=&quot;cai-site-actions&quot;&gt;
+      &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#register&quot;&gt;Register&lt;/a&gt;
+      &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#programme&quot;&gt;See the programme&lt;/a&gt;
     &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;cai-site-hero__media&quot;&gt;
     &lt;div class=&quot;cai-site-image cai-site-image--4x3&quot;&gt;
       &lt;picture&gt;
-        &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/venue-640.avif 640w, /img/venue-1280.avif 1280w&quot; sizes=&quot;(min-width: 769px) 50vw, 100vw&quot;&gt;
-        &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/venue-640.webp 640w, /img/venue-1280.webp 1280w&quot; sizes=&quot;(min-width: 769px) 50vw, 100vw&quot;&gt;
+        &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/venue-640.avif 640w, /img/venue-1280.avif 1280w&quot; sizes=&quot;(min-width: 1024px) 50vw, 100vw&quot;&gt;
+        &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/venue-640.webp 640w, /img/venue-1280.webp 1280w&quot; sizes=&quot;(min-width: 1024px) 50vw, 100vw&quot;&gt;
         &lt;img src=&quot;/img/venue-1280.jpg&quot; width=&quot;1280&quot; height=&quot;960&quot; alt=&quot;The main hall, full, before the opening talk&quot; fetchpriority=&quot;high&quot; decoding=&quot;async&quot;&gt;
       &lt;/picture&gt;
     &lt;/div&gt;

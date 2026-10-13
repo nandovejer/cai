@@ -93,6 +93,58 @@
 	max-width: 600px;
 }
 
+/* Hero: the first block of a home or a landing page. With an image, two
+   equal columns when each gets 24rem, one below: intrinsic, like the
+   feature grid, so it follows the room it has, stacks with larger text and
+   needs no query nor :has(). Copy first in the source; logical order in RTL. */
+.cai-site-hero {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, max(24rem, 45%)), 1fr));
+	gap: var(--cai-space-xl) var(--cai-space-2xl);
+	align-items: center;
+	padding-block-start: var(--cai-space-3xl);
+}
+
+.cai-site-hero__eyebrow {
+	margin-block-end: var(--cai-space-sm);
+	font-family: var(--cai-font-mono);
+	font-size: var(--cai-text-xs);
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--cai-text-secondary);
+}
+
+.cai-site-hero__title {
+	font-family: var(--cai-font-heading);
+	font-size: var(--cai-text-4xl);
+	font-weight: 300;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+	text-wrap: balance;
+	color: var(--cai-text-primary);
+}
+
+/* The mono has no Arabic letters; spacing between letters breaks the joins */
+.cai-site-hero__eyebrow:lang(ar) {
+	font-family: var(--cai-font-sans);
+}
+
+.cai-site-hero__eyebrow:lang(ar),
+.cai-site-hero__title:lang(ar) {
+	letter-spacing: 0;
+}
+
+.cai-site-hero__lead {
+	margin-block: var(--cai-space-md) var(--cai-space-lg);
+	max-width: 70ch;
+	font-size: var(--cai-text-xl);
+	line-height: 1.4;
+	text-wrap: pretty;
+	color: var(--cai-text-secondary);
+}
+
 .cai-site-actions {
 	display: flex;
 	flex-wrap: wrap;
@@ -270,6 +322,20 @@
 	}
 }
 
+@media (max-width: 1023px) {
+	.cai-site-hero {
+		padding-block-start: calc(var(--cai-space-xl) + var(--cai-space-xs));
+	}
+
+	.cai-site-hero__title {
+		font-size: var(--cai-text-3xl);
+	}
+
+	.cai-site-hero__lead {
+		font-size: var(--cai-text-lg);
+	}
+}
+
 @media (max-width: 768px) {
 	.cai-site-content {
 		padding-top: calc(var(--cai-space-xl) + var(--cai-space-lg));
@@ -303,5 +369,13 @@
 	.cai-site-page-header__title {
 		font-size: var(--cai-text-2xl);
 		letter-spacing: -0.5px;
+	}
+
+	.cai-site-hero__title {
+		font-size: var(--cai-text-2xl);
+	}
+
+	.cai-site-hero__lead {
+		font-size: var(--cai-text-base);
 	}
 }

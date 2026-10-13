@@ -297,10 +297,10 @@ test.describe('Landing page', () => {
       await open(page);
 
       await expect(page.locator('h1')).toHaveText('CAI, a native, styled design system built for accessibility.');
-      const hero = page.locator('.landing-hero');
+      const hero = page.locator('.cai-site-hero');
       await expect(hero.locator('.cai-btn--primary')).toHaveCount(1);
-      await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toHaveText('Get started');
-      await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toBeInViewport();
+      await expect(hero.locator('.cai-site-hero__copy .cai-btn--primary')).toHaveText('Get started');
+      await expect(hero.locator('.cai-site-hero__copy .cai-btn--primary')).toBeInViewport();
     });
   });
 

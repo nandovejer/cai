@@ -188,7 +188,7 @@ test.describe('Arabic typography', () => {
       expect(['normal', '0px'], `${selector} letter-spacing`).toContain(spacing);
     }
     // English text on the same page keeps its own face
-    const { font } = await style('.landing-hero__copy > .landing-eyebrow[lang="en"]');
+    const { font } = await style('.cai-site-hero__copy > .cai-site-hero__eyebrow[lang="en"]');
     expect(font).toMatch(/mono/i);
   });
 

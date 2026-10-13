@@ -11,10 +11,11 @@
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-BRxE1cCR.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-C91BcvKN.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-DbGaIe90.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-_mrux8_7.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Ceovg1em.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-D2TK8zV2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BjucwKY3.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CE3oU_tl.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CGDw9oUc.css">
 </head>
 <body class="o-shell docs-page">
@@ -109,6 +110,7 @@
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/site/">Site</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/landing/">Landing</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
@@ -170,7 +172,8 @@
             <tr><td data-label="Layer"><div><code>cai.components</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The components: <code>.cai-*</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>cai.utilities</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Single-purpose helpers: <code>.u-*</code>. They win over components by order, not by <code>!important</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>cai.site</code></div></td><td data-label="Package"><div>site</div></td><td data-label="What it holds"><div>The page patterns: <code>.cai-site-*</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="../../../docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of core and site</div></td></tr>
+            <tr><td data-label="Layer"><div><code>cai.landing</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="What it holds"><div>The patterns of a landing page: <code>.cai-landing-*</code>. After site, so they can build on it</div></td></tr>
+            <tr><td data-label="Layer"><div><code>cai.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="../../../docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of every package</div></td></tr>
           </tbody>
         </table>
       </div>
@@ -233,7 +236,8 @@
 
 @import url("@cai-ds/tokens/css");
 @import url("@cai-ds/core/css");
-@import url("@cai-ds/site/css");</code></pre>
+@import url("@cai-ds/site/css");
+@import url("@cai-ds/landing/css"); /* only for a landing page */</code></pre>
       <p>Your own stylesheet imports a file after the statement, so the order is set before CAI loads.</p>
     </section>
 

@@ -19,18 +19,23 @@ npm install @cai-ds/tokens @cai-ds/core @cai-ds/platform
 ### Via npm/bundler
 
 ```js
-import '@cai-ds/tokens'
-import '@cai-ds/core'
-import '@cai-ds/platform'
+import '@cai-ds/tokens/css'
+import '@cai-ds/core/css'
+import '@cai-ds/platform/css'
+
+import '@cai-ds/core'        // optional: the core behaviors
+import '@cai-ds/platform'    // only for the search
 ```
+
+`@cai-ds/core` and `@cai-ds/platform` without `/css` are the scripts.
 
 ### Via CDN
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js"></script>
 <!-- Only for the search: it wires the dialog when the page loads -->
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.js"></script>
 ```
@@ -53,6 +58,7 @@ import '@cai-ds/platform'
 - `.cai-platform-feature-grid` — Feature showcase grid
 - `.cai-platform-site-header` (`--sticky`, `__inner`, `__brand`, `__nav`, `__actions`) — Site header: the name, the main links and a few controls; below 769 px the links are a native popover panel opened by core's `.cai-nav-toggle`, with no script
 - `.cai-platform-footer` — Page footer
+- `.cai-platform-lang-switcher` (`__button`, `__menu`, `__list`, `__link`, `__name`, `__title`, `__icon`) — Language switcher: a button that opens a native popover list of links, with no script
 - `.cai-platform-skip-link` — Accessibility skip link
 - `.cai-platform-command-block` — Command-line-style code snippet
 - `.cai-platform-image` — Fixed-ratio frame around a native `<picture>`; modifiers `--4x3`, `--3x2`, `--1x1`, `--21x9`, `--9x16`
@@ -92,7 +98,7 @@ Each item is `[text, url, meta?, lang?]`. The component fetches it only from the
 <div class="cai-platform-image cai-platform-image--1x1"></div>
 ```
 
-The placeholder files ship in `dist/placeholders/`, next to `platform.css`, which points at them with relative URLs, so they work from npm and from a CDN. Every ratio (`16x9`, `4x3`, `3x2`, `1x1`, `21x9`, `9x16`) comes at 640, 1280 and 1920 pixels on the long side in AVIF and WebP, and at 640 and 1280 in JPEG, by day (`placeholder-`) and by night (`placeholder-night-`). `placeholder.svg` and `placeholder-night.svg` fit any size. To show the placeholder on purpose, use them in your own `<picture>` with `alt=""`. They are generated from the SVGs with ImageMagick by `pnpm placeholders:build` in the repository.
+The placeholder files ship in `dist/placeholders/`, next to `platform.css`, which points at them with relative URLs, so they work from npm and from a CDN. Every ratio (`16x9`, `4x3`, `3x2`, `1x1`, `21x9`, `9x16`) comes in AVIF and WebP at three widths and in JPEG at the two smaller ones, by day (`placeholder-`) and by night (`placeholder-night-`). The number in the file name is the width in pixels: 640, 1280 and 1920 for the landscape and square ratios (JPEG at 640 and 1280), and 360, 720 and 1080 for `9x16` (JPEG at 360 and 720), so the long side is 640, 1280 and 1920 pixels in every case. `placeholder.svg` and `placeholder-night.svg` fit any size. To show the placeholder on purpose, use them in your own `<picture>` with `alt=""`. They are generated from the SVGs with ImageMagick by `pnpm placeholders:build` in the repository.
 
 ## License
 

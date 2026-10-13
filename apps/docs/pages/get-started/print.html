@@ -22,8 +22,8 @@ order: 5
     <section class="docs-block" id="load" aria-labelledby="load-title">
       <h2 class="docs-chapter__title" id="load-title">Loading it</h2>
       <ul>
-        <li><code>cai.css</code> includes it. Nothing to add.</li>
-        <li>If you load <code>base.css</code> and components one by one, add <code>@cai-ds/core/print.css</code> (<code>dist/print.css</code>). It declares the layer order itself, as every file does.</li>
+        <li><code>cai.css</code> includes it. Nothing to add, and nothing to remove: the block is inside the file.</li>
+        <li>If you load <code>base.css</code> and components one by one, print is not there. Add <code>@cai-ds/core/print.css</code> (<code>dist/print.css</code>) if you want it. It declares the layer order itself, as every file does.</li>
         <li>A platform page also gets its own print rules, in <code>cai.platform</code>.</li>
         <li>On a screen nothing changes: the whole block is inside <code>@media print</code>.</li>
       </ul>
@@ -49,7 +49,7 @@ order: 5
 }</code></pre>
       <ul>
         <li>CAI sets no <code>@page</code> margin and no paper size: they are yours.</li>
-        <li>To drop CAI's print styles altogether, do not load <code>print.css</code>, or restyle in your layer. There is no switch.</li>
+        <li>With <code>cai.css</code> there is no switch to turn them off: undo the rules you do not want in your own layer, as above. To have none of them, load <code>base.css</code> and the components one by one, and do not load <code>print.css</code>.</li>
       </ul>
     </section>
 

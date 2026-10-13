@@ -19,9 +19,13 @@ npm install @cai-ds/tokens @cai-ds/core
 ### Via npm/bundler
 
 ```js
-import '@cai-ds/tokens'
-import '@cai-ds/core'
+import '@cai-ds/tokens/css'
+import '@cai-ds/core/css'
+
+import '@cai-ds/core'   // optional: the JavaScript, starts every behavior
 ```
+
+`@cai-ds/core` without `/css` is the script, not the stylesheet.
 
 ### Via CDN (jsDelivr)
 

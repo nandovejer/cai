@@ -56,6 +56,8 @@ const FRONT_MATTER = {
   description: { required: true },
   area: { required: true },
   order: { default: "1000" },
+  // Other names for the page, comma-separated ("navbar" for Site header): the search finds the
+  // page by them, after its area, and the A–Z index lists them as "Another name for"
   keywords: { default: "" },
   layout: { default: "page" },
   nav: { default: "true" },
@@ -568,18 +570,56 @@ export function renderGallery(site, page) {
 /** The h2 of a component page's tab panels: its h3 belong to that tab. */
 const VIEW_HEADINGS = new Set(["code", "design"]);
 
+/** A class a page names in <code>, with its dot: `.cai-btn--primary`, `.o-container`, `.u-hidden`. */
+const CLASS_NAME = /^\.(?:cai|o|u)-[a-z0-9]+(?:(?:-{1,2}|__)[a-z0-9]+)*$/;
+/** A token a page names in <code>: `--cai-brand-primary`. */
+const TOKEN_NAME = /^--cai-[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+/**
+ * The classes and tokens a page names in its own text (not in a demo, not in
+ * a code sample), each with the section it is named in: the one that names
+ * it most, the first on a tie; or the element that carries its own id (a
+ * token card, `id="cai-brand-primary"`). `defined` says a card or a table of
+ * classes (a cell labelled "Class…") names it. [{ text, id, tab, count, defined, token }]
+ * in document order; `id` is null before the page's first heading.
+ */
+function namesOf(page, byId) {
+  const found = new Map();
+  for (const code of contentOf(page).codes) {
+    const token = TOKEN_NAME.test(code.text);
+    if (code.specimen || !(token || CLASS_NAME.test(code.text))) continue;
+    // A card with the name for its id (a token), or the cell of a table of classes
+    const own = code.own === code.text.replace(/^[.-]+/, "");
+    const id = own ? code.own : code.heading;
+    const where = found.get(code.text) ?? found.set(code.text, { token, targets: new Map() }).get(code.text);
+    const target = where.targets.get(id) ?? where.targets.set(id, { id, tab: byId.get(code.heading)?.tab ?? null, count: 0, defined: false }).get(id);
+    target.count++;
+    target.defined ||= own || /^class/i.test(code.cell ?? "");
+  }
+  return [...found].map(([text, { token, targets }]) => {
+    const all = [...targets.values()];
+    // Where it is defined, then where it is named most; Map keeps insertion order, so a tie is the first
+    const best = all.reduce((a, b) => (Number(b.defined) - Number(a.defined) || b.count - a.count) > 0 ? b : a);
+    return { text, id: best.id, tab: best.tab, count: all.reduce((n, t) => n + t.count, 0), defined: best.defined, token };
+  });
+}
+
 /**
  * What the A–Z index and the search index are both made of, so the two never
  * disagree: every page that is not marked `search: false`, with its headings
- * (the levels of its "On this page", outside demos) and its HTML element
- * cards (the h2 `el-<name>-title`).
+ * (the levels of its "On this page", outside demos), its HTML element
+ * cards (the h2 `el-<name>-title`), its keywords (other names for the page)
+ * and the classes and tokens it names.
  * Returns [{ page, title, route, area (label or null), kind, keywords,
  * sections: [{ text, id, tab (label of its tab or null), template }],
- * elements: [{ text, id }] }] in route order. `template` marks a heading
- * every component page has ("When to use"): it names nothing on its own.
+ * elements: [{ text, id }], names: [{ text, id, tab }] }] in route order.
+ * `template` marks a heading every component page has ("When to use"): it
+ * names nothing on its own. A class or a token is listed once, on the page
+ * that documents it: where a card or a table of classes defines it, then a
+ * page of the tokens area, then the one that names it most.
  */
 export function indexData(site) {
-  return site.pages
+  const data = site.pages
     .filter((page) => page.meta.search !== "false")
     .map((page) => {
       const area = areaOf(site, page);
@@ -600,25 +640,65 @@ export function indexData(site) {
         }
       }
       const keywords = page.meta.keywords.split(",").map((k) => k.trim()).filter(Boolean);
-      return { page, title: page.meta.title, route: page.route, area: area?.label ?? null, kind, keywords, sections, elements };
+      // An area index only introduces: what it names, a page of its area names for real
+      const candidates = area && page.route === areaRoute(area) ? [] : namesOf(page, new Map(sections.map((s) => [s.id, s])));
+      return { page, title: page.meta.title, route: page.route, area: area?.label ?? null, kind, keywords, sections, elements, names: [], candidates };
     });
+  // Each name goes to one page. Tokens: a page of the tokens area. Then the page that names most of
+  // its family (`.cai-btn` with `.cai-btn--primary`, `--cai-space` with `--cai-space-md`), where it
+  // is defined, the page named after it (`.cai-select`, Select), and the page that names it most.
+  const block = (c) => (c.token ? c.text.split("-").slice(0, 4).join("-") : c.text.split(/--|__/)[0]);
+  for (const entry of data) {
+    const family = new Map();
+    for (const c of entry.candidates) family.set(block(c), (family.get(block(c)) ?? 0) + 1);
+    entry.family = family;
+  }
+  const score = (entry, c) =>
+    [c.token && entry.page.meta.area === "tokens", entry.family.get(block(c)), c.defined, c.text.includes(entry.route.split("/").at(-2)), c.count].map(Number);
+  const beats = (a, b) => {
+    const i = a.findIndex((v, k) => v !== b[k]);
+    return i > -1 && a[i] > b[i];
+  };
+  const owner = new Map();
+  for (const entry of data) {
+    for (const c of entry.candidates) {
+      const best = owner.get(c.text);
+      if (!best || beats(score(entry, c), score(best.entry, best.c))) owner.set(c.text, { entry, c });
+    }
+  }
+  for (const entry of data) {
+    entry.names = entry.candidates.filter((c) => owner.get(c.text).entry === entry).map(({ text, id, tab }) => ({ text, id, tab }));
+    delete entry.candidates;
+    delete entry.family;
+  }
+  return data;
 }
 
 /**
- * Every entry of the A–Z index: each page, each heading specific to a page
- * (template headings left out), and each HTML element card.
+ * Every entry of the A–Z index: each page, each other name of a page (its
+ * `keywords`), each heading specific to a page (template headings left out),
+ * and each HTML element card. The search index has all of these and more:
+ * the template headings, and the classes and tokens (about 300 names, which
+ * would take the page past its size ceiling).
  * Returns [{ name, href, kind }] sorted by name.
  */
 export function indexEntries(site) {
   const entries = [];
-  for (const { title, route, kind, sections, elements } of indexData(site)) {
+  for (const { title, route, kind, keywords, sections, elements } of indexData(site)) {
     entries.push({ name: title, href: route, kind });
+    for (const k of aliasesOf(title, keywords)) entries.push({ name: k, href: route, kind: `Another name for ${title}` });
     for (const s of sections) if (!s.template) entries.push({ name: s.text, href: `${route}#${s.id}`, kind: `Section of ${title}` });
     for (const e of elements) entries.push({ name: e.text, href: `${route}#${e.id}`, kind: `HTML element, ${title}` });
   }
   const key = (e) => e.name.replace(/^[^\p{L}\p{N}]+/u, "");
   return entries.sort((a, b) => key(a).localeCompare(key(b), "en", { sensitivity: "base" }) || a.href.localeCompare(b.href));
 }
+
+/** The keywords of a page that its title does not already say. */
+const aliasesOf = (title, keywords) => {
+  const said = ` ${title.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ")} `;
+  return keywords.filter((k) => !said.includes(` ${k.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ")} `));
+};
 
 /** Where the search index is published, next to the pages it points at. */
 export const SEARCH_INDEX_ROUTE = `${DOCS_ROUTE}search-index.json`;
@@ -636,16 +716,21 @@ const NOT_SEARCHED = new Set(["example", "code", "design"]);
  * Design"], read after it, so it makes sense alone (a11y.md SRCH-19) and is
  * found by the page's name (the search reads the meta too); that is why
  * template headings are kept here. An element names its page in its text.
- * Plain data for JSON.stringify (SEC-PLG-9).
+ * A class or a token is a section too: [".cai-btn--primary", url, "Button ›
+ * Code"], at the part of the page that names it. A page's other names (its
+ * `keywords`) follow its area in the meta of the page. Plain data for
+ * JSON.stringify (SEC-PLG-9).
  */
 export function buildSearchIndex(site) {
   const url = (route, id = "") => (route.slice(DOCS_ROUTE.length) || "./") + (id && `#${id}`);
   const index = { version: 1, pages: [], sections: [], elements: [] };
-  for (const { title, route, area, sections, elements } of indexData(site)) {
-    index.pages.push(area ? [title, url(route), area] : [title, url(route)]);
+  for (const { title, route, area, keywords, sections, elements, names } of indexData(site)) {
+    const meta = [area, aliasesOf(title, keywords).join(", ")].filter(Boolean).join(" · ");
+    index.pages.push(meta ? [title, url(route), meta] : [title, url(route)]);
     for (const s of sections) {
       if (!NOT_SEARCHED.has(s.id)) index.sections.push([s.text, url(route, s.id), `${title}${s.tab ? ` › ${s.tab}` : ""}`]);
     }
+    for (const n of names) index.sections.push([n.text, url(route, n.id ?? ""), `${title}${n.tab ? ` › ${n.tab}` : ""}`]);
     for (const e of elements) index.elements.push([`${e.text}, ${title}`, url(route, e.id)]);
   }
   return index;

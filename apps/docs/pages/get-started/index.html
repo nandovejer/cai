@@ -4,6 +4,7 @@ description: Pick a level, then copy one install command or the CDN tags. Each l
 area: get-started
 order: 1
 lead: false
+keywords: npm, cdn
 -->
     <div class="docs-block" id="installation">
       <p class="docs-lead">Pick a level, then copy one install command or the CDN tags. Each level needs the ones below it and nothing above.</p>
@@ -39,6 +40,14 @@ lead: false
           </div>
           <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 1"><code id="code-cdn-level-1">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;</code></pre>
         </div>
+        <p>With a bundler such as Vite, import the files instead of adding tags. A <code class="cai-code-inline">href</code> cannot name a package: these paths are for <code class="cai-code-inline">import</code> only.</p>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">Bundler</span>
+            <button class="cai-copy-btn" type="button" data-copy-from="code-bundler-level-1" aria-label="Copy the bundler imports for level 1">Copy</button>
+          </div>
+          <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Bundler imports, level 1"><code id="code-bundler-level-1">import &quot;@cai-ds/tokens/css&quot;;</code></pre>
+        </div>
         <ul>
           <li>Running text and headings use ET Book, an MIT-licensed font that ships with the tokens. Controls, labels and tables use the system sans, and code the system mono.</li>
           <li>Bringing your own fonts? Load <code class="cai-code-inline">dist/tokens.min.css</code> instead: the same tokens without any <code class="cai-code-inline">@font-face</code>.</li>
@@ -66,6 +75,17 @@ lead: false
 
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+        </div>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">Bundler</span>
+            <button class="cai-copy-btn" type="button" data-copy-from="code-bundler-level-2" aria-label="Copy the bundler imports for level 2">Copy</button>
+          </div>
+          <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Bundler imports, level 2"><code id="code-bundler-level-2">import &quot;@cai-ds/tokens/css&quot;;
+import &quot;@cai-ds/core/css&quot;;
+
+// Optional: copy buttons, tabs, players, the color mode
+import &quot;@cai-ds/core&quot;;</code></pre>
         </div>
         <ul>
           <li>Every page works without the script. See <a href="/docs/get-started/javascript/">what each JavaScript module adds</a>.</li>
@@ -97,16 +117,37 @@ lead: false
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.js&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">Bundler</span>
+            <button class="cai-copy-btn" type="button" data-copy-from="code-bundler-level-3" aria-label="Copy the bundler imports for level 3">Copy</button>
+          </div>
+          <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Bundler imports, level 3"><code id="code-bundler-level-3">import &quot;@cai-ds/tokens/css&quot;;
+import &quot;@cai-ds/core/css&quot;;
+import &quot;@cai-ds/platform/css&quot;;
+
+// Optional: core behaviours, and the site search
+import &quot;@cai-ds/core&quot;;
+import &quot;@cai-ds/platform&quot;;</code></pre>
+        </div>
       </div>
 
       <div class="docs-prose">
         <h2 id="notes" class="docs-prose__title">Before you ship</h2>
         <ul>
           <li>npm and pnpm install the lower levels for you. Yarn only warns, so list every package, as above.</li>
-          <li>On a CDN, pin an exact version and add an <code class="cai-code-inline">integrity</code> hash.</li>
+          <li>On a CDN, pin an exact version and add an <code class="cai-code-inline">integrity</code> hash with <code class="cai-code-inline">crossorigin="anonymous"</code>. Compute the hash from the file you load, as below.</li>
           <li>The core and platform scripts warn in the console when the level below is missing.</li>
           <li>Set <code class="cai-code-inline">lang</code> on <code class="cai-code-inline">&lt;html&gt;</code>: core's scripts write their text in that language (English and Spanish ship).</li>
         </ul>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">Shell</span>
+            <button class="cai-copy-btn" type="button" data-copy-from="code-integrity" aria-label="Copy the integrity command">Copy</button>
+          </div>
+          <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Computing the integrity hash"><code id="code-integrity">curl -s https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css | openssl dgst -sha384 -binary | openssl base64 -A</code></pre>
+        </div>
+        <p>Write the result as <code class="cai-code-inline">integrity="sha384-…"</code> on the tag that loads that file, and repeat it for each file.</p>
       </div>
 
       <div class="docs-prose">

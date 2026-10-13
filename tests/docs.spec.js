@@ -723,7 +723,7 @@ test.describe('Documentation site', () => {
             if (node.parentElement.closest(`a[href^="${themesPage}"], a[href^="/docs/tokens/themes/"]`)) continue;
             if (exempt.some((r) => node.parentElement.closest(`.docs-card:has(a[href="${r}"])`))) continue;
             // The name of that page, in the A–Z index
-            if (/^Section of (Color modes and themes|Make your own theme)$/.test(node.textContent.trim())) continue;
+            if (/^(Section of|Another name for) (Color modes and themes|Make your own theme)$/.test(node.textContent.trim())) continue;
             // A file name: the JS module tag of a component
             if (/^JS: [\w-]+\.js$/.test(node.textContent.trim())) continue;
             found.push(node.textContent.trim());

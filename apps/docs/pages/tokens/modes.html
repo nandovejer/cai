@@ -4,6 +4,7 @@ description: Switch between light, dark and high contrast with one attribute, or
 area: tokens
 order: 4
 group: families
+keywords: dark mode, prefers-color-scheme
 -->
     <div class="docs-block" id="t-modes">
           <div class="docs-demo__stage docs-scopes">
@@ -67,7 +68,7 @@ group: families
       <h2 class="docs-chapter__title" id="themes-title">Modes and themes</h2>
       <p class="docs-lead">A color mode changes how light or dark the page is; a theme changes its whole identity. CAI ships one look, in three modes. A theme of your own sits on top of it.</p>
       <ul>
-        <li>The three modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>. Light is the default.</li>
+        <li>The three modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>. Light is the default, whatever the device's setting: <a href="#system">follow it with one script</a>.</li>
         <li>The default look is Vejer, inspired by Vejer de la Frontera. It is the value the tokens have, not a file you load: ET Book for running text and headings, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, and every link underlined.</li>
         <li>CAI ships no theme file. <a href="/docs/tokens/themes/">Make your own</a>: copy the template, change what you need, and check it.</li>
       </ul>
@@ -75,4 +76,33 @@ group: families
 &lt;html data-theme=&quot;high-contrast&quot;&gt;
 &lt;html data-theme=&quot;my-brand&quot; data-mode=&quot;dark&quot;&gt;</code></pre>
       <p>Every mode is measured against the same minimums: 4.5:1 for text, 3:1 for disabled text, borders and focus rings. The same measure runs on a theme of your own with <code class="cai-code-inline">npx @cai-ds/tokens check-contrast</code>, or in the browser with <a href="/docs/tokens/contrast/">the contrast check</a>.</p>
+    </section>
+
+    <section class="docs-block docs-chapter" id="system" aria-labelledby="system-title">
+      <h2 class="docs-chapter__title" id="system-title">Follow the system setting</h2>
+      <p class="docs-lead">A page is light until it says otherwise: CAI reads nothing of the visitor's device by itself. To start in dark when the device is in dark, set the attribute from a script in the head.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">HTML</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-system-mode" aria-label="Copy the script">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Following the system color mode"><code id="code-system-mode">&lt;script&gt;
+  (function () {
+    var mode;
+    try { mode = localStorage.getItem(&quot;cai-theme&quot;); } catch (e) {}
+    if ([&quot;light&quot;, &quot;dark&quot;, &quot;high-contrast&quot;].indexOf(mode) &lt; 0) {
+      mode = matchMedia(&quot;(prefers-contrast: more)&quot;).matches ? &quot;high-contrast&quot;
+        : matchMedia(&quot;(prefers-color-scheme: dark)&quot;).matches ? &quot;dark&quot; : &quot;light&quot;;
+    }
+    document.documentElement.dataset.theme = mode;
+  })();
+&lt;/script&gt;</code></pre>
+      </div>
+      <ul>
+        <li>Put it in <code class="cai-code-inline">&lt;head&gt;</code>. It runs before the first paint, so the page does not flash light. Make it <code class="cai-code-inline">&lt;script type=&quot;module&quot;&gt;</code> to keep it off the critical path: the page then paints light first, and switches.</li>
+        <li>A mode the reader chose wins. The color mode switcher stores it under <code class="cai-code-inline">cai-theme</code>, and the script reads that first. The system setting is never stored, so the page keeps following it until the reader chooses.</li>
+        <li>Without JavaScript the page stays light, and the radios of the switcher still change the mode for the session.</li>
+        <li>It reads the setting once, when the page loads. To follow a change while the page is open, listen to the <code class="cai-code-inline">change</code> event of <code class="cai-code-inline">matchMedia()</code> and call <code class="cai-code-inline">applyTheme(mode, { persist: false })</code> from <code class="cai-code-inline">@cai-ds/core/theme</code>, only while <code class="cai-code-inline">getStoredTheme()</code> is <code class="cai-code-inline">null</code>.</li>
+        <li>It sets the three modes. A theme of your own is set with <code class="cai-code-inline">data-theme</code> and <code class="cai-code-inline">data-mode</code>, as <a href="/docs/tokens/themes/">the themes page</a> says.</li>
+      </ul>
     </section>

@@ -10,6 +10,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { readHtml } from "../scripts/docs-site/html.js";
+import { readIndex, search } from "../packages/platform/src/search.js";
 import {
   SEARCH_INDEX_ROUTE,
   buildSearchIndex,
@@ -22,6 +23,7 @@ import {
   readingOrder,
   escapeHtml,
   expand,
+  indexData,
   indexEntries,
   markCurrent,
   parseFrontMatter,
@@ -179,6 +181,22 @@ describe("HTML reader", () => {
     expect(headings).toEqual([
       { level: 2, id: "t", text: "Title & more", line: 2, specimen: false },
       { level: 3, id: "demo", text: "Demo", line: 6, specimen: true },
+    ]);
+  });
+
+  it("collects the short <code> names: their section, their own id and their table cell, never a sample or a demo", () => {
+    const html = `<h2 id="v">Variants</h2>
+<table><tr><td data-label="Class"><div><code>.cai-btn</code></div></td></tr></table>
+<ul><li id="cai-brand-primary"><code>--cai-brand-primary</code></li></ul>
+<pre><code>.not-a-name</code></pre>
+<div data-docs-specimen><h3 id="demo">Demo</h3><code>.cai-demo</code></div>
+<p><code>a &amp; b</code></p>`;
+    const { codes } = readHtml(html, "f.html");
+    expect(codes).toEqual([
+      { text: ".cai-btn", line: 2, heading: "v", own: null, cell: "Class", specimen: false },
+      { text: "--cai-brand-primary", line: 3, heading: "v", own: "cai-brand-primary", cell: null, specimen: false },
+      { text: ".cai-demo", line: 5, heading: "v", own: null, cell: null, specimen: true },
+      { text: "a & b", line: 6, heading: "v", own: null, cell: null, specimen: false },
     ]);
   });
 
@@ -596,6 +614,46 @@ describe("the CAI docs site", () => {
     expect(index.elements).toContainEqual(["<table> element, Tables", "html/tables/#el-table"]);
     // Plain JSON, small enough to fetch on the first open
     expect(JSON.stringify(index).length).toBeLessThan(200_000);
+  });
+
+  it("lists each class and token once, at the part of the page that defines it, and a page's other names after its area", () => {
+    const index = buildSearchIndex(site);
+    // A class or a token is a section: its text, its page and tab, the id of the part that names it
+    expect(index.sections).toContainEqual([".cai-btn--primary", "components/button/#variants", "Button › Code"]);
+    expect(index.sections).toContainEqual([".o-container", "components/layout/#objects-reference", "Layout objects"]);
+    expect(index.sections).toContainEqual(["--cai-brand-primary", "tokens/color/#cai-brand-primary", "Color"]);
+    // A name a page only mentions goes to the page that documents it, never to an area index
+    expect(index.sections).toContainEqual([".cai-select", "components/select/#variants", "Select › Code"]);
+    expect(index.sections.filter(([text, url]) => /^(\.|--cai-)/.test(text) && url.startsWith("tokens/#"))).toEqual([]);
+    const names = indexData(site).flatMap((e) => e.names.map((n) => n.text));
+    expect(new Set(names).size).toBe(names.length);
+    expect(names.length).toBeGreaterThan(250);
+    // Keywords: after the area, not already in the title; the page keeps its place
+    expect(index.pages).toContainEqual(["Site header", "platform/site-header/", "Platform · navbar, nav bar"]);
+    expect(index.pages).toContainEqual(["Language switcher", "platform/lang-switcher/", "Platform · translation, locale, i18n, hreflang"]);
+    // A keyword is never the title of another page: that page would come second in its own search
+    const titles = new Set(site.pages.map((p) => p.meta.title.toLowerCase()));
+    for (const { keywords, title } of indexData(site)) for (const k of keywords) expect(titles.has(k.toLowerCase()), `${title}: ${k}`).toBe(false);
+    // The A–Z index lists them too, as "Another name for"
+    expect(indexEntries(site)).toContainEqual({ name: "navbar", href: "/docs/platform/site-header/", kind: "Another name for Site header" });
+  });
+
+  it("answers what a developer types: class names, tokens, other names, and a part of a title (the search of @cai-ds/platform)", () => {
+    const results = readIndex(buildSearchIndex(site), `https://example.org${SEARCH_INDEX_ROUTE}`);
+    const [PAGES, SECTIONS] = [0, 1];
+    const first = (query, group = SECTIONS) => search(results, query)[group].map((r) => r.text);
+    expect(first("btn-primary")).toEqual([".cai-btn--primary"]);
+    expect(first("--cai-brand-primary")).toEqual(["--cai-brand-primary"]);
+    expect(first("navbar", PAGES)).toEqual(["Site header"]);
+    expect(first("container")).toContain(".o-container");
+    expect(first("input", PAGES)).toEqual(["Form fields"]);
+    expect(first("input")).toContain(".cai-input");
+    // "grid" means the layout objects before it means the template headings of Icon grid
+    const grid = search(results, "grid")[SECTIONS].slice(0, 8);
+    expect(grid.map((r) => r.text)).toContain(".o-grid");
+    expect(grid.filter((r) => r.meta?.startsWith("Icon grid"))).toEqual([]);
+    // What was found by a page's name still is
+    expect(first("keyboard tooltip")).toEqual(["Keyboard and ARIA"]);
   });
 
   /** The Previous / Next targets, accessible names and "Keep going" links of a rendered page. */

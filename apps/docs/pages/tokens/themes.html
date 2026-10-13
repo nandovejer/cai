@@ -97,7 +97,7 @@ files: themes/_template.css
         <li><strong>One zone.</strong> <code>data-theme</code> works on any element: the theme applies to that element and what is inside it. A date or time picker and a select take their color scheme from an ancestor <code>data-theme</code>, so for those put the attribute on <code>&lt;html&gt;</code>.</li>
         <li><strong>Forced colors.</strong> A reader who forces colors sees system colors, not your theme. Nothing to do: the components handle it.</li>
         <li><strong>Print.</strong> The <code>cai.print</code> layer sets paper colors whatever the theme.</li>
-        <li><strong>The OS preference.</strong> With no stored choice and no attribute, the page is light. A page that wants to follow <code>prefers-color-scheme</code> sets <code>data-theme</code> itself.</li>
+        <li><strong>The OS preference.</strong> With no stored choice and no attribute, the page is light. To follow <code>prefers-color-scheme</code>, <a href="/docs/tokens/modes/#system">set <code>data-theme</code> from a short script</a>: it is on the color modes page.</li>
       </ul>
 
       <h2 id="limits">Limits</h2>

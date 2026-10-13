@@ -428,24 +428,25 @@ test.describe('Landing page', () => {
       },
     ];
 
-    test('each level has one install command and one CDN snippet', async ({ page }) => {
+    test('each level has one install command, one CDN snippet and one bundler snippet', async ({ page }) => {
       await page.goto('/docs/get-started/');
 
       for (const [index, level] of levels.entries()) {
         const section = page.locator('.docs-prose').filter({ has: page.locator(`#${level.id}`) });
         await expect(section.locator('.cai-platform-command-block')).toHaveCount(1);
-        await expect(section.locator('pre.cai-code-block')).toHaveCount(1);
+        await expect(section.locator('pre.cai-code-block')).toHaveCount(2);
 
         const command = await section.locator('.cai-platform-command-block__cmd').textContent();
         expect(command.replace(/\s+/g, ' ').replace(/^\s*\$\s*/, '').trim()).toBe(level.install);
         await expect(section.locator('.cai-platform-command-block .cai-copy-btn')).toHaveAttribute('data-copy', level.install);
-        // The CDN snippet has its own Copy button, pointing at its code
-        const cdnButton = section.locator('.docs-snippet .cai-copy-btn');
-        await expect(cdnButton).toHaveCount(1);
-        const from = await cdnButton.getAttribute('data-copy-from');
-        await expect(section.locator(`pre.cai-code-block code#${from}`)).toHaveCount(1);
+        // Each snippet has its own Copy button, pointing at its code
+        for (const kind of ['cdn', 'bundler']) {
+          const button = section.locator(`.docs-snippet .cai-copy-btn[data-copy-from="code-${kind}-level-${index + 1}"]`);
+          await expect(button).toHaveCount(1);
+          await expect(section.locator(`pre.cai-code-block code#code-${kind}-level-${index + 1}`)).toHaveCount(1);
+        }
 
-        const snippet = await section.locator('pre.cai-code-block code').textContent();
+        const snippet = await section.locator(`code#code-cdn-level-${index + 1}`).textContent();
         let position = -1;
         for (const file of level.files) {
           // Present, and in load order

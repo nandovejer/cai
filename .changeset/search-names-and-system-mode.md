@@ -1,0 +1,4 @@
+---
+---
+
+Documentation site and its generator, no package changes. The search index (`/docs/search-index.json`) now lists every class (`.cai-btn--primary`, `.o-container`) and every token (`--cai-brand-primary`) a page names in its own text, each once, at the part of the page that defines it, so `btn-primary`, `container` and `input` find their component. A page's `keywords` front matter (other names for it, such as `navbar` for Site header) follows its area in the page's result and is listed in the A–Z index as "Another name for". The A–Z index stays a subset of the search. The color modes page gains "Follow the system setting": a short script in the head that sets `data-theme` from `prefers-color-scheme`, `prefers-contrast` and the stored choice (core itself keeps the page light unless it says otherwise, as it did). Install CAI shows the `import` lines for a bundler at each level and how to compute an `integrity` hash.

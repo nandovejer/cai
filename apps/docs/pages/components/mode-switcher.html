@@ -6,6 +6,7 @@ group: navigation
 files: components/mode-switcher.css
 module: theme.js
 toc: h2,h3
+keywords: dark mode
 -->
     <div class="docs-component" id="c-mode-switcher">
           <h2 id="example">Example</h2>
@@ -90,7 +91,7 @@ initThemeCycle();</code></pre>
             <p>A native radio group, styled by <code>components/mode-switcher.css</code>. The radios are the control and the source of truth.</p>
             <ul>
               <li>The tokens re-scope the page from the checked radio with <code>:root:has()</code>, so choosing a mode works with no script.</li>
-              <li><code>initThemeSystem()</code> from <code>theme.js</code> sets <code>data-theme</code> on <code>&lt;html&gt;</code>, stores the choice under <code>cai-theme</code> in <code>localStorage</code>, and follows the system's dark setting until the reader picks a mode.</li>
+              <li><code>initThemeSystem()</code> from <code>theme.js</code> sets <code>data-theme</code> on <code>&lt;html&gt;</code>, and stores the choice under <code>cai-theme</code> in <code>localStorage</code>. It starts from the attribute on <code>&lt;html&gt;</code>, light if there is none: <a href="/docs/tokens/modes/#system">to start from the system's setting</a>, set the attribute before it runs.</li>
               <li><code>initThemeCycle()</code> turns each <code>--cycle</code> group into one button. Each press checks the next mode and fires its <code>change</code> event, so whatever listens to the radios applies it. It adds the button if the markup has none.</li>
               <li>A look of your own (<a href="/docs/tokens/themes/">make one</a>) joins the choice when its name is listed in <code>data-cai-themes</code> on <code>&lt;html&gt;</code>: a stored value is accepted only for the three modes and for those names.</li>
               <li><code>cai.js</code> runs both.</li>

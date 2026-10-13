@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAI: interfaces accesibles sobre HTML nativo, sin framework</title>
-  <meta name="description" content="CAI (Consistent Adaptive Identity) es un design system CSS-first y sin compilación para la web: tokens, componentes y plantillas de página sobre HTML nativo, tres modos de color, una capa de cascada que siempre puedes sobrescribir y JavaScript solo como mejora.">
+  <title>CAI: interfaces pensadas para la accesibilidad, sobre HTML nativo y sin framework</title>
+  <meta name="description" content="CAI (Consistent Adaptive Identity) es un design system para la web que parte del CSS y no necesita compilación: tokens, componentes y plantillas de página sobre HTML nativo, tres modos de color, una capa de cascada que siempre puedes sobrescribir y JavaScript solo como mejora.">
   <link rel="canonical"  href="https://nandovejer.github.io/cai/es/">
   <link rel="alternate"  hreflang="en" href="https://nandovejer.github.io/cai/">
   <link rel="alternate"  hreflang="es" href="https://nandovejer.github.io/cai/es/">
@@ -121,7 +121,7 @@
     <div class="cai-sidebar__section">
       <div class="cai-sidebar__section-label">En esta página</div>
       <a class="cai-sidebar__link" href="#what">Por qué los equipos usan CAI</a>
-      <a class="cai-sidebar__link" href="#see">Míralo funcionar</a>
+      <a class="cai-sidebar__link" href="#see">Así funciona</a>
       <a class="cai-sidebar__link" href="#adopt">Adóptalo capa a capa</a>
       <a class="cai-sidebar__link" href="#fit">Cuándo encaja CAI</a>
       <a class="cai-sidebar__link" href="#start">Empieza con una etiqueta link por capa</a>
@@ -144,8 +144,8 @@
     <section class="landing-hero landing-wrap" aria-labelledby="hero-title">
       <div class="landing-hero__copy">
         <p class="landing-eyebrow" lang="en">Consistent Adaptive Identity</p>
-        <h1 class="landing-hero__title" id="hero-title">CAI, un design system nativo, con estilo y accesible.</h1>
-        <p class="landing-hero__lead">Un design system CSS-first y sin compilación para la web. Tres modos de color, tu CSS siempre gana y JavaScript solo como mejora.</p>
+        <h1 class="landing-hero__title" id="hero-title">CAI, un design system nativo y cuidado, pensado para la accesibilidad.</h1>
+        <p class="landing-hero__lead">Un design system para la web que parte del CSS y no necesita compilación. Tres modos de color, tu CSS siempre gana y JavaScript solo mejora la experiencia.</p>
         <div class="cai-platform-actions">
           <a class="cai-btn cai-btn--primary cai-btn--lg" href="#adopt">Empezar</a>
           <a class="cai-btn cai-btn--outline cai-btn--lg" href="../docs/components/" hreflang="en">Ver los componentes</a>
@@ -156,28 +156,28 @@
     <!-- ====================== WHY ====================== -->
     <section class="cai-platform-section landing-wrap" id="what" aria-labelledby="what-title">
       <h2 class="landing-h2" id="what-title">Por qué los equipos usan CAI</h2>
-      <p class="landing-lead">Para sitios y herramientas que deben funcionar para todo el mundo, en cualquier dispositivo, durante años, sin un framework al que seguir el ritmo.</p>
+      <p class="landing-lead">Para sitios y herramientas que tienen que funcionar para todo el mundo, en cualquier dispositivo y durante años, sin depender de un framework que haya que ir actualizando.</p>
 
       <ul class="cai-platform-feature-grid landing-points">
         <li class="o-media">
           <span class="cai-avatar cai-avatar--md" aria-hidden="true">01</span>
           <div class="o-media__body">
             <h3 class="landing-point__title">Funciona sin JavaScript</h3>
-            <p class="u-text-muted">Los componentes son elementos HTML nativos: <code class="cai-code-inline">&lt;dialog&gt;</code>, <code class="cai-code-inline">&lt;details&gt;</code>, controles de formulario, popovers. JavaScript solo añade detalles, así que las páginas siguen funcionando cuando falla un script.</p>
+            <p class="u-text-muted">Los componentes son elementos HTML nativos: <code class="cai-code-inline">&lt;dialog&gt;</code>, <code class="cai-code-inline">&lt;details&gt;</code>, controles de formulario, popovers. JavaScript solo mejora la experiencia, así que las páginas siguen funcionando aunque falle un script.</p>
           </div>
         </li>
         <li class="o-media">
           <span class="cai-avatar cai-avatar--md" aria-hidden="true">02</span>
           <div class="o-media__body">
-            <h3 class="landing-point__title">Accesible de serie</h3>
-            <p class="u-text-muted">Uso con teclado, foco visible, un contraste de texto de 4,5:1 y un modo de alto contraste forman parte de cada componente. Cada uno trae una guía de cuándo usarlo y cuándo no.</p>
+            <h3 class="landing-point__title">Pensado para la accesibilidad</h3>
+            <p class="u-text-muted">El uso con teclado, el foco visible, un contraste de texto de 4,5:1 y un modo de alto contraste forman parte de cada componente, y cada cambio pasa por pruebas automáticas. La <a href="../docs/accessibility/" hreflang="en">declaración de accesibilidad</a>, en inglés, recoge lo que aún no se ha probado, lectores de pantalla incluidos.</p>
           </div>
         </li>
         <li class="o-media">
           <span class="cai-avatar cai-avatar--md" aria-hidden="true">03</span>
           <div class="o-media__body">
             <h3 class="landing-point__title">Nada que instalar para probarlo</h3>
-            <p class="u-text-muted">CSS sin más y módulos ES pequeños desde un CDN o npm. Sin preprocesador, sin compilador, sin dependencias: lo que lees en los archivos es lo que ejecuta el navegador.</p>
+            <p class="u-text-muted">CSS plano y pequeños módulos ES, desde un CDN o desde npm. Sin preprocesador, sin compilador y sin dependencias: lo que lees en los archivos es lo que ejecuta el navegador.</p>
           </div>
         </li>
       </ul>
@@ -185,7 +185,7 @@
 
     <!-- ====================== SEE IT ====================== -->
     <section class="cai-platform-section landing-wrap" id="see" aria-labelledby="see-title">
-      <h2 class="landing-h2" id="see-title">Míralo funcionar</h2>
+      <h2 class="landing-h2" id="see-title">Así funciona</h2>
       <p class="landing-lead">Esta es toda la configuración. El resultado de abajo lo dibuja el mismo CSS.</p>
 
       <div class="landing-snippet">
@@ -212,7 +212,7 @@
     <!-- ====================== ADOPT ====================== -->
     <section class="cai-platform-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
       <h2 class="landing-h2" id="adopt-title">Adóptalo capa a capa</h2>
-      <p class="landing-lead">Tres paquetes, una sola dirección. Cada capa necesita las de debajo y nada de las de encima, así que elige el nivel que necesitas y quédate ahí.</p>
+      <p class="landing-lead">Tres paquetes, una sola dirección. Cada capa necesita las de debajo y ninguna de las de encima: elige el nivel que necesitas y quédate ahí.</p>
 
       <div class="landing-levels">
 
@@ -242,15 +242,15 @@
           <div class="landing-level__intro">
             <h3 class="landing-level__title" id="level-2-title"><span class="landing-eyebrow">Nivel 2</span> Tokens + Core</h3>
             <span class="cai-tag cai-tag--gray">Necesita tokens</span>
-            <p>Elígelo si construyes páginas o una aplicación y pones tu propia plantilla de página.</p>
+            <p>Elígelo si construyes páginas o una aplicación y la maquetación de la página la pones tú.</p>
           </div>
           <div class="landing-level__body">
             <h4 class="landing-eyebrow">Añade al nivel 1</h4>
             <ul class="landing-level__get">
               <li><span data-count="components">24</span> componentes: botones, formularios, tablas, pestañas, diálogo modal, reproductor multimedia y más</li>
-              <li><span data-count="objects">7</span> objetos de maquetación, unas pocas utilidades y los estilos de los elementos HTML sin clase</li>
+              <li><span data-count="objects">7</span> objetos de maquetación, unas pocas utilidades y los estilos de los elementos HTML sin necesidad de clases</li>
               <li>JavaScript opcional para pestañas, diálogos, botones de copiar y reproductores; todas las páginas funcionan sin él</li>
-              <li>Estilos de impresión y maquetación de derecha a izquierda, sin ningún archivo más</li>
+              <li>Estilos de impresión y soporte para escritura de derecha a izquierda, sin archivos adicionales</li>
               <li>Todo en una sola <a href="../docs/get-started/layers/" hreflang="en">capa de cascada</a>, <code class="cai-code-inline">cai</code>: tu propio CSS gana sin <code class="cai-code-inline">!important</code></li>
             </ul>
           </div>
@@ -264,13 +264,13 @@
           <div class="landing-level__intro">
             <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">Nivel 3</span> Tokens + Core + Platform</h3>
             <span class="cai-tag cai-tag--gray">Necesita core + tokens</span>
-            <p>Elígelo si construyes sitios completos y quieres la estructura de página, la cabecera, el pie y la búsqueda. Esta página está hecha con este nivel.</p>
+            <p>Elígelo si construyes sitios completos y quieres la estructura de página, la cabecera, el pie y la búsqueda ya resueltos. Esta página usa este nivel.</p>
           </div>
           <div class="landing-level__body">
             <h4 class="landing-eyebrow">Añade al nivel 2</h4>
             <ul class="landing-level__get">
-              <li>Contenedores de página, principal, contenido y sección con un ritmo vertical coherente</li>
-              <li>Cabecera de página, grupo de acciones, rejilla de ventajas, marco de imagen y pie</li>
+              <li>Estructura de la página (contenedor, zona principal, contenido y secciones) con un ritmo vertical coherente</li>
+              <li>Cabecera de página, grupo de acciones, cuadrícula de características, marco de imagen y pie</li>
               <li>Enlace para saltar al contenido, bloque de comando y selector de idioma</li>
               <li>Búsqueda en el sitio, con JavaScript opcional</li>
             </ul>
@@ -292,15 +292,15 @@
           <h3 class="landing-subtitle">Encaja bien</h3>
           <ul class="landing-fit__list">
             <li>Sitios de contenido, documentación y servicios públicos que deben cumplir WCAG 2.2 AA.</li>
-            <li>Páginas generadas en el servidor y sitios estáticos, en cualquier lenguaje de back-end.</li>
-            <li>Equipos que quieren leer su CSS y que sea suyo.</li>
+            <li>Páginas generadas en el servidor y sitios estáticos, con cualquier lenguaje de servidor.</li>
+            <li>Equipos que quieren entender su CSS y controlarlo.</li>
           </ul>
         </div>
         <div>
           <h3 class="landing-subtitle">No encaja</h3>
           <ul class="landing-fit__list">
             <li>Necesitas componentes de React o Vue ya hechos.</li>
-            <li>Necesitas una tabla de datos avanzada, gráficos o un selector de rango de fechas: CAI no tiene.</li>
+            <li>Necesitas una tabla de datos avanzada, gráficos o un selector de rango de fechas: CAI no los incluye.</li>
             <li>Necesitas una API estable hoy: CAI está en beta y los nombres aún pueden cambiar.</li>
           </ul>
         </div>

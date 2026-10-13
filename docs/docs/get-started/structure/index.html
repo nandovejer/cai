@@ -130,6 +130,7 @@
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
         <li><a class="cai-sidebar__link docs-onpage__link" href="#packages-title">Package boundaries</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#needs-title">What each package needs</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#core-architecture-title">CSS layers</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#core-js-title">The script</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#core-skeleton-title">Minimal page</a></li>
@@ -140,6 +141,7 @@
     <section class="docs-block" id="packages" aria-labelledby="packages-title">
       <h2 class="docs-chapter__title" id="packages-title">Package boundaries</h2>
       <p class="docs-lead">Each package depends on the ones above it in this list, never on the ones below.</p>
+      <p>The name stands for Consistent Adaptive Identity: one set of tokens that every component reads (consistent), that switches between light, dark and high contrast and reflows with the screen (adaptive), and that your own tokens can replace to carry your brand (identity).</p>
       <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Package dependency chain"><code>@cai-ds/tokens   -> primitive and semantic tokens (standalone)
       ↓ required by
 @cai-ds/core     -> components, bare-element styles, optional JS
@@ -148,6 +150,42 @@
       <ul>
         <li>Platform can use core and tokens; core can use tokens; tokens uses nothing.</li>
         <li>The packages say so as required peer dependencies, and the core and platform scripts warn in the console when a level is missing.</li>
+      </ul>
+    </section>
+
+    <section class="docs-block" id="needs" aria-labelledby="needs-title">
+      <h2 class="docs-chapter__title" id="needs-title">What each package needs</h2>
+      <p class="docs-lead">Find the part you want, and install the package of its row and the ones below it.</p>
+      <div class="cai-table-wrap" role="region" aria-label="What each package needs" tabindex="0">
+        <table class="cai-table">
+          <caption>Which package holds each part of a page</caption>
+          <thead>
+            <tr><th scope="col">Piece</th><th scope="col">Classes or attributes</th><th scope="col">Package</th><th scope="col">Notes</th></tr>
+          </thead>
+          <tbody>
+          <tr><td data-label="Piece"><div>Color modes, semantic tokens, ET Book</div></td><td data-label="Classes or attributes"><div><code>--cai-*</code>, <code>data-theme</code></div></td><td data-label="Package"><div>tokens</div></td><td data-label="Notes"><div>Nothing else is needed</div></td></tr>
+          <tr><td data-label="Piece"><div>Reset and styles of bare HTML elements</div></td><td data-label="Classes or attributes"><div><code>h1</code>, <code>p</code>, <code>a</code>, <code>ul</code>…</div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>In <code>base.css</code> and <code>cai.css</code></div></td></tr>
+          <tr><td data-label="Piece"><div>Components</div></td><td data-label="Classes or attributes"><div><code>.cai-btn</code>, <code>.cai-field</code>, <code>.cai-card</code>, <code>.cai-table</code>, <code>.cai-tabs</code>…</div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>Also one file each, in <code>components/</code></div></td></tr>
+          <tr><td data-label="Piece"><div>Modal</div></td><td data-label="Classes or attributes"><div><code>.cai-modal</code> on a <code>&lt;dialog&gt;</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>The script is a fallback for browsers without <code>command</code> and <code>commandfor</code></div></td></tr>
+          <tr><td data-label="Piece"><div>Layout objects</div></td><td data-label="Classes or attributes"><div><code>.o-container</code>, <code>.o-grid</code>, <code>.o-stack</code>, <code>.o-media</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>Spacing comes from the space tokens</div></td></tr>
+          <tr><td data-label="Piece"><div>An app layout with a sidebar</div></td><td data-label="Classes or attributes"><div><code>.o-shell</code>, <code>.o-main</code>, <code>.cai-sidebar</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>A plain <code>&lt;footer&gt;</code> as a direct child of <code>.o-shell</code> goes across the bottom; its look is yours, or platform's footer</div></td></tr>
+          <tr><td data-label="Piece"><div>A page with no sidebar</div></td><td data-label="Classes or attributes"><div><code>.cai-platform-page</code>, <code>-main</code>, <code>-content</code>, <code>-section</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="Notes"><div>Instead of <code>.o-shell</code>, for a page with no sidebar</div></td></tr>
+          <tr><td data-label="Piece"><div>Page header, action group, feature grid</div></td><td data-label="Classes or attributes"><div><code>.cai-platform-page-header</code>, <code>-actions</code>, <code>-feature-grid</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="Notes"><div>The buttons and cards inside them are core's</div></td></tr>
+          <tr><td data-label="Piece"><div>Site header</div></td><td data-label="Classes or attributes"><div><code>.cai-platform-site-header</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="Notes"><div>Its menu button, <code>.cai-nav-toggle</code>, is core's</div></td></tr>
+          <tr><td data-label="Piece"><div>Footer</div></td><td data-label="Classes or attributes"><div><code>.cai-platform-footer</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="Notes"><div>Core already places it inside <code>.o-shell</code>, with or without platform's look</div></td></tr>
+          <tr><td data-label="Piece"><div>Skip link, language switcher</div></td><td data-label="Classes or attributes"><div><code>.cai-platform-skip-link</code>, <code>.cai-platform-lang-switcher</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="Notes"><div>No script</div></td></tr>
+          <tr><td data-label="Piece"><div>Image frame, with placeholders</div></td><td data-label="Classes or attributes"><div><code>.cai-platform-image</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="Notes"><div>With core alone, use an <code>&lt;img&gt;</code> and your own size rules</div></td></tr>
+          <tr><td data-label="Piece"><div>A card with an image</div></td><td data-label="Classes or attributes"><div><code>.cai-card</code> with <code>.cai-platform-image</code></div></td><td data-label="Package"><div>core and platform</div></td><td data-label="Notes"><div>The card is core's; only the frame is platform's</div></td></tr>
+          <tr><td data-label="Piece"><div>Command block</div></td><td data-label="Classes or attributes"><div><code>.cai-platform-command-block</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="Notes"><div>Its copy button and <code>data-copy</code> are core's</div></td></tr>
+          <tr><td data-label="Piece"><div>Site search</div></td><td data-label="Classes or attributes"><div><code>.cai-platform-search</code>, <code>&lt;cai-platform-search&gt;</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="Notes"><div>Needs the script (<code>platform.js</code> or <code>search.js</code>) and an index file; without them it is a link</div></td></tr>
+          <tr><td data-label="Piece"><div>Print styles</div></td><td data-label="Classes or attributes"><div>Nothing to add</div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>In <code>cai.css</code>; platform adds its own print rules</div></td></tr>
+          <tr><td data-label="Piece"><div>Markup you cannot add classes to</div></td><td data-label="Classes or attributes"><div><code>data-cai-classless</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div><code>classless.css</code>, a file of its own</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li><strong>Two ways to lay out a page.</strong> <code>.o-shell</code> with <code>.o-main</code> is core's: a sidebar column beside the main area. <code>.cai-platform-page</code> with <code>.cai-platform-main</code> is platform's: a header, the content and a footer in one column. Pick one for the grid of the page: the first when it has a sidebar, the second when it has none. The site header and the footer work with both; these docs use <code>.o-shell</code> with the site header.</li>
+        <li>Platform needs core, and core needs tokens, so a row at a level also needs every package under it.</li>
       </ul>
     </section>
 
@@ -200,11 +238,13 @@
 &lt;body&gt;
   &lt;main class=&quot;o-container&quot;&gt;
     &lt;h1&gt;Sign up&lt;/h1&gt;
-    &lt;div class=&quot;cai-field&quot;&gt;
-      &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
-      &lt;input class=&quot;cai-input&quot; id=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot;&gt;
-    &lt;/div&gt;
-    &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Create account&lt;/button&gt;
+    &lt;form action=&quot;/signup/&quot; method=&quot;post&quot;&gt;
+      &lt;div class=&quot;cai-field&quot;&gt;
+        &lt;label class=&quot;cai-field__label&quot; for=&quot;email&quot;&gt;Email&lt;/label&gt;
+        &lt;input class=&quot;cai-input&quot; id=&quot;email&quot; name=&quot;email&quot; type=&quot;email&quot; autocomplete=&quot;email&quot; required&gt;
+      &lt;/div&gt;
+      &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Create account&lt;/button&gt;
+    &lt;/form&gt;
   &lt;/main&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>

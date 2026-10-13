@@ -17,9 +17,9 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../theme-boot.js" ></script>
   <script type="module" crossorigin src="../assets/site-header-KKpdGfOz.js"></script>
-  <script type="module" crossorigin src="../assets/landing-BpckVBIM.js"></script>
-  <link rel="stylesheet" crossorigin href="../assets/landing-B8Kt6mAx.css">
-  <link rel="stylesheet" crossorigin href="../assets/site-header-Bqg-gir3.css">
+  <script type="module" crossorigin src="../assets/landing-WYpBnx1s.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/landing-C5-QqX2D.css">
+  <link rel="stylesheet" crossorigin href="../assets/site-header-BSGRINQ4.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
@@ -44,7 +44,7 @@
     <search class="cai-platform-search__body">
       <div class="cai-platform-search__head">
         <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Buscar en la documentación (en inglés)</label></h2>
-        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">Cerrar la búsqueda</button></form>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close" aria-label="Cerrar la búsqueda"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
       </div>
       <div class="cai-platform-search__field">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
@@ -124,7 +124,7 @@
       <a class="cai-sidebar__link" href="#see">Míralo funcionar</a>
       <a class="cai-sidebar__link" href="#adopt">Adóptalo capa a capa</a>
       <a class="cai-sidebar__link" href="#fit">Cuándo encaja CAI</a>
-      <a class="cai-sidebar__link" href="#start">Empieza con una etiqueta link</a>
+      <a class="cai-sidebar__link" href="#start">Empieza con una etiqueta link por capa</a>
     </div>
 
     <div class="cai-sidebar__section">
@@ -207,17 +207,6 @@
           <span class="cai-tag cai-tag--green cai-tag--dot">Publicado</span>
         </div>
       </div>
-
-      <h3 class="landing-subtitle">Lee la guía, en inglés, de</h3>
-      <ul class="landing-guides">
-        <li><a href="../docs/components/button/" hreflang="en">Botones</a></li>
-        <li><a href="../docs/components/form/" hreflang="en">Formularios y campos</a></li>
-        <li><a href="../docs/components/table/" hreflang="en">Tablas</a></li>
-        <li><a href="../docs/components/modal/" hreflang="en">Diálogos modales</a></li>
-        <li><a href="../docs/components/tabs/" hreflang="en">Pestañas</a></li>
-        <li><a href="../docs/components/player/" hreflang="en">Reproductores multimedia</a></li>
-        <li><a href="../docs/components/" hreflang="en">Todos los componentes</a></li>
-      </ul>
     </section>
 
     <!-- ====================== ADOPT ====================== -->
@@ -239,7 +228,7 @@
               <li><span data-count="primitives">53</span> colores primitivos en <span data-count="families">7</span> familias</li>
               <li><span data-count="semantic">55</span> tokens semánticos, cada uno definido para claro, oscuro y alto contraste</li>
               <li>Espaciado (12), alturas de control (4), tamaños de texto (9), radios (6) y sombras (3)</li>
-              <li>ET Book para los títulos, alojada en el propio paquete y con licencia MIT; fuentes del sistema para el texto y el código</li>
+              <li>ET Book para el texto corrido y los títulos, alojada en el propio paquete y con licencia MIT; fuentes del sistema para controles, etiquetas y código</li>
               <li>Una <a href="../docs/tokens/contrast/" hreflang="en">comprobación de contraste</a> para tus propios colores, como comando o en el navegador</li>
             </ul>
           </div>
@@ -320,7 +309,7 @@
 
     <!-- ====================== CLOSING CTA ====================== -->
     <section class="cai-platform-section landing-wrap" id="start" aria-labelledby="cta-title">
-      <h2 class="landing-h2" id="cta-title">Empieza con una etiqueta link</h2>
+      <h2 class="landing-h2" id="cta-title">Empieza con una etiqueta link por capa</h2>
       <p class="landing-lead">Elige un nivel, copia el fragmento y publica. Fija una versión exacta mientras CAI esté en beta.</p>
       <div class="cai-platform-actions">
         <a class="cai-btn cai-btn--primary" href="#adopt">Empezar</a>

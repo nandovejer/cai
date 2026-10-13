@@ -17,9 +17,9 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../theme-boot.js" ></script>
   <script type="module" crossorigin src="../assets/site-header-KKpdGfOz.js"></script>
-  <script type="module" crossorigin src="../assets/landing-BpckVBIM.js"></script>
-  <link rel="stylesheet" crossorigin href="../assets/landing-B8Kt6mAx.css">
-  <link rel="stylesheet" crossorigin href="../assets/site-header-Bqg-gir3.css">
+  <script type="module" crossorigin src="../assets/landing-WYpBnx1s.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/landing-C5-QqX2D.css">
+  <link rel="stylesheet" crossorigin href="../assets/site-header-BSGRINQ4.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
@@ -44,7 +44,7 @@
     <search class="cai-platform-search__body">
       <div class="cai-platform-search__head">
         <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">ابحث في التوثيق (باللغة الإنجليزية)</label></h2>
-        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close">إغلاق البحث</button></form>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close" aria-label="إغلاق البحث"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
       </div>
       <div class="cai-platform-search__field">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
@@ -124,7 +124,7 @@
       <a class="cai-sidebar__link" href="#see">شاهده وهو يعمل</a>
       <a class="cai-sidebar__link" href="#adopt">اعتمده طبقةً تلو الأخرى</a>
       <a class="cai-sidebar__link" href="#fit">متى يناسبك CAI</a>
-      <a class="cai-sidebar__link" href="#start">ابدأ بوسم link واحد</a>
+      <a class="cai-sidebar__link" href="#start">ابدأ بوسم link واحد لكل طبقة</a>
     </div>
 
     <div class="cai-sidebar__section">
@@ -207,17 +207,6 @@
           <span class="cai-tag cai-tag--green cai-tag--dot">منشور</span>
         </div>
       </div>
-
-      <h3 class="landing-subtitle">اقرأ الإرشادات، باللغة الإنجليزية، عن</h3>
-      <ul class="landing-guides">
-        <li><a href="../docs/components/button/" hreflang="en">الأزرار</a></li>
-        <li><a href="../docs/components/form/" hreflang="en">النماذج والحقول</a></li>
-        <li><a href="../docs/components/table/" hreflang="en">الجداول</a></li>
-        <li><a href="../docs/components/modal/" hreflang="en">مربعات الحوار</a></li>
-        <li><a href="../docs/components/tabs/" hreflang="en">علامات التبويب</a></li>
-        <li><a href="../docs/components/player/" hreflang="en">مشغلات الوسائط</a></li>
-        <li><a href="../docs/components/" hreflang="en">كل المكونات</a></li>
-      </ul>
     </section>
 
     <!-- ====================== ADOPT ====================== -->
@@ -239,7 +228,7 @@
               <li><span data-count="primitives">53</span> لونًا أساسيًا في <span data-count="families">7</span> عائلات</li>
               <li><span data-count="semantic">55</span> رمزًا دلاليًا، كلٌّ منها معرَّف للوضع الفاتح والداكن والتباين العالي</li>
               <li>المسافات (12)، وارتفاعات عناصر التحكم (4)، وأحجام الخط (9)، وأنصاف أقطار الزوايا (6)، والظلال (3)</li>
-              <li>خط ET Book للعناوين، مستضاف ذاتيًا ومرخَّص بترخيص MIT؛ وخطوط النظام للنص والشيفرة</li>
+              <li>خط ET Book للنص والعناوين اللاتينية، مستضاف ذاتيًا ومرخَّص بترخيص MIT؛ وخطوط النظام لعناصر التحكم والتسميات والشيفرة</li>
               <li><a href="../docs/tokens/contrast/" hreflang="en">أداة لفحص التباين</a> لألوانك الخاصة، كأمر أو في المتصفح</li>
             </ul>
           </div>
@@ -320,7 +309,7 @@
 
     <!-- ====================== CLOSING CTA ====================== -->
     <section class="cai-platform-section landing-wrap" id="start" aria-labelledby="cta-title">
-      <h2 class="landing-h2" id="cta-title">ابدأ بوسم link واحد</h2>
+      <h2 class="landing-h2" id="cta-title">ابدأ بوسم link واحد لكل طبقة</h2>
       <p class="landing-lead">اختر مستوى، وانسخ المقتطف، وانشر. ثبّت رقم إصدار محددًا ما دام CAI في مرحلة تجريبية.</p>
       <div class="cai-platform-actions">
         <a class="cai-btn cai-btn--primary" href="#adopt">ابدأ الآن</a>

@@ -19,13 +19,18 @@
  *   cai.site        .cai-site-* patterns of @cai-ds/site
  *   cai.landing     .cai-landing-* patterns of @cai-ds/landing (one kind of
  *                   site, built on site: after it, so it can refine it)
+ *   cai.cms         .cai-cms-* patterns of @cai-ds/cms (a blog, a newspaper,
+ *                   any CMS). Landing and cms never meet (no shared class),
+ *                   so their order decides nothing; cms comes after landing
+ *                   so adding it moved no existing layer, and wordpress,
+ *                   built on cms, can follow it with the branch in one run
  *   cai.print       what changes on paper (@media print): last, so it wins over
  *                   the screen styles of every package by order
  *
  * Every file repeats the statement first, so the order is the same whichever
  * file a page loads first.
  */
-export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "landing", "print"];
+export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "landing", "cms", "print"];
 
 export const LAYER_ORDER = `@layer ${LAYERS.map((l) => `cai.${l}`).join(", ")};\n`;
 

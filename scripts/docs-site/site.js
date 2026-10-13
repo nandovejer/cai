@@ -34,6 +34,7 @@
 import { lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
+import { SITE_KINDS } from "../cai-packages.js";
 import { assertInlineHtml, loadLocales, lookup, markDocsLinks, renderAlternates, renderSwitcher, unusedKeys } from "./i18n.js";
 
 /** Where the docs pages are published. */
@@ -105,7 +106,7 @@ const TEMPLATE_HEADINGS = new Set([
 ]);
 
 /** The areas that document a package of patterns built on core: one per package. */
-const PACKAGE_AREAS = new Set(["site", "landing"]);
+const PACKAGE_AREAS = new Set(["site", ...SITE_KINDS]);
 
 /** What an A–Z entry is, by the area of its page. */
 const AREA_KIND = {
@@ -114,6 +115,7 @@ const AREA_KIND = {
   tokens: "Token page",
   site: "Site pattern",
   landing: "Landing pattern",
+  cms: "CMS pattern",
   html: "HTML elements",
   accessibility: "Accessibility",
   hub: "Documentation",
@@ -638,7 +640,7 @@ export function indexData(site) {
     .filter((page) => page.meta.search !== "false")
     .map((page) => {
       const area = areaOf(site, page);
-      // The index of a package's area is the package ("Site", "Landing"), not one of its patterns
+      // The index of a package's area is the package ("Site", "Landing", "CMS"), not one of its patterns
       const kind = PACKAGE_AREAS.has(area?.id) && page.route === areaRoute(area) ? area.label : AREA_KIND[page.meta.area] ?? "Page";
       // The levels "On this page" lists: on a component page, the h3 of its tabs too
       const sectionLevels = page.meta.toc === "h2,h3" ? [2, 3] : [2];

@@ -10,7 +10,7 @@
  *      (patterns such as ./components/* are expanded);
  *   2. a minimal page that links the installed files loads in Chromium with
  *      no failed request, no console error or warning, the tokens defined,
- *      core, site and landing CSS applied, and the JS exports importable;
+ *      core, site, landing and cms CSS applied, and the JS exports importable;
  *   3. the same page with jsDelivr-style URLs (/npm/@cai-ds/<pkg>@<version>/…),
  *      served from the same tarballs by a local server: no network is used;
  *   4. the `cai-tokens` command runs from the installed package.
@@ -160,6 +160,7 @@ const PAGE = (base, label) => `<!doctype html>
   <link rel="stylesheet" href="${base.core}/dist/cai.css">
   <link rel="stylesheet" href="${base.site}/dist/site.css">
   <link rel="stylesheet" href="${base.landing}/dist/landing.css">
+  <link rel="stylesheet" href="${base.cms}/dist/cms.css">
 </head>
 <body>
   <h1>Smoke test</h1>
@@ -167,6 +168,7 @@ const PAGE = (base, label) => `<!doctype html>
   <div id="probe-fill" style="background: var(--cai-brand-fill)"></div>
   <div class="cai-site-section" id="probe-section"></div>
   <div class="cai-landing-feature-grid" id="probe-grid"></div>
+  <div class="cai-cms-article-header" id="probe-article"></div>
   <script type="module">
     const core = ${JSON.stringify(base.core)};
     const site = ${JSON.stringify(base.site)};
@@ -199,6 +201,7 @@ const local = {
   core: "/node_modules/@cai-ds/core",
   site: "/node_modules/@cai-ds/site",
   landing: "/node_modules/@cai-ds/landing",
+  cms: "/node_modules/@cai-ds/cms",
 };
 const cdn = Object.fromEntries(PACKAGES.map((n) => [n, `/npm/@cai-ds/${n}@${versions[n]}`]));
 
@@ -254,6 +257,7 @@ if (browser) {
       const fill = getComputedStyle(document.getElementById("probe-fill"));
       const section = getComputedStyle(document.getElementById("probe-section"));
       const grid = getComputedStyle(document.getElementById("probe-grid"));
+      const article = getComputedStyle(document.getElementById("probe-article"));
       const sheets = [...document.styleSheets].map((s) => {
         try {
           return s.cssRules.length;
@@ -269,6 +273,7 @@ if (browser) {
         sectionDisplay: section.display,
         gridDisplay: grid.display,
         gridColumns: grid.gridTemplateColumns,
+        articleDisplay: article.display,
         sheets,
         missing: window.__smoke?.missing ?? ["no result"],
       };
@@ -279,6 +284,7 @@ if (browser) {
     check(`${label2} core CSS applied (.cai-btn--primary uses the token)`, state.buttonBackground === state.tokenBackground && state.buttonBackground !== "rgba(0, 0, 0, 0)", `${state.buttonBackground} vs ${state.tokenBackground}`);
     check(`${label2} site CSS applied (.cai-site-section is a grid)`, state.sectionDisplay === "grid", state.sectionDisplay);
     check(`${label2} landing CSS applied (.cai-landing-feature-grid is a grid with columns)`, state.gridDisplay === "grid" && state.gridColumns !== "none", `${state.gridDisplay} / ${state.gridColumns}`);
+    check(`${label2} cms CSS applied (.cai-cms-article-header is a grid)`, state.articleDisplay === "grid", state.articleDisplay);
     check(`${label2} ${PACKAGES.length} stylesheets with rules`, state.sheets.length === PACKAGES.length && state.sheets.every((n) => n > 0), JSON.stringify(state.sheets));
     check(`${label2} JS entries import and export what the docs name`, state.missing.length === 0, state.missing.join("\n"));
     await page.close();

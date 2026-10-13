@@ -1,0 +1,36 @@
+<!-- cai:page
+title: CMS
+description: What a blog, a newspaper or any site of articles needs on top of site, from the article header to the post listing, and how to tell whether you need it.
+area: cms
+order: 0
+lead: false
+generate: gallery
+-->
+    <p class="docs-eyebrow">For one kind of site · @cai-ds/cms</p>
+
+    <p class="docs-lead">What a blog, a newspaper or any site of articles needs on top of site, from the article header to the post listing, and how to tell whether you need it.</p>
+    <p>A site of articles publishes many pages of the same shape: a story with its header, its text and its author, and lists that lead to them. This package holds the patterns only that kind of site uses. Everything every site needs, from the page shell to the site header, stays in <a href="/docs/site/">Site</a>.</p>
+    <ul>
+      <li>It works with any CMS and any stack. The classes go on any element, so a template of WordPress, Drupal, Ghost, Hugo or your own code can write them.</li>
+      <li>Every class starts with <code class="cai-code-inline">.cai-cms-</code>, uses semantic tokens only and sits in the cascade layer <code class="cai-code-inline">cai.cms</code>, after site's.</li>
+      <li>It has no script. Load <code class="cai-code-inline">cms.css</code> after the CSS of tokens, core and site: <a href="/docs/get-started/#site-kinds">Install CAI</a> has the command and the CDN tags. With core's script, the table of contents marks the section in view.</li>
+      <li>It has a version of its own, 0.x while it grows, and needs version 3 of tokens, core and site, declared as peer dependencies.</li>
+      <li>The post card, the post listing, related posts and the author box need no CSS of their own: they are core's card, avatar and pagination, put together on <a href="/docs/cms/templates/">CMS templates</a>.</li>
+    </ul>
+
+    <div class="docs-decision-grid">
+        <div class="docs-decision-card">
+          <h2 id="use-cms-when" class="docs-decision-card__title">Use cms when</h2>
+          <ul>
+            <li>You publish articles, posts or stories, each with a title, an author and a date.</li>
+            <li>Your articles are long enough to need a table of contents beside the text.</li>
+          </ul>
+        </div>
+        <div class="docs-decision-card">
+          <h2 id="use-site-alone-when" class="docs-decision-card__title">Use site alone when</h2>
+          <ul>
+            <li>Your pages are documentation, a landing page or an app.</li>
+            <li>You have a few pages with no author or date: the <a href="/docs/site/page-header/">page header</a> is enough.</li>
+          </ul>
+        </div>
+      </div>

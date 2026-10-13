@@ -25,7 +25,7 @@ Everything below is public from 1.0. Everything not in this list is internal and
 | **Attributes** | `data-theme`, `data-mode`, `data-cai-themes`, `data-cai-*`, `data-cai-label-*`, `data-copy`, `data-copy-from`, and the ARIA the docs require | Attributes the docs site's own scripts use (`data-docs-*`) |
 | **JS** | Every export of `@cai-ds/core` and `@cai-ds/site` named in the docs and in AGENTS.md: the module paths, the function names and their arguments and return values; the element `<cai-site-search>` and the markup it expects | Anything not exported, and any export the docs do not name |
 | **Events** | The `change` event, bubbling, that the color-mode cycle button dispatches on the radio it checks | Timing and order of internal updates |
-| **Layers** | The names `cai`, `cai.tokens`, `cai.themes`, `cai.settings`, `cai.generic`, `cai.elements`, `cai.objects`, `cai.components`, `cai.utilities`, `cai.site`, `cai.landing`, `cai.print`, and their order | The rules inside a layer |
+| **Layers** | The names `cai`, `cai.tokens`, `cai.themes`, `cai.settings`, `cai.generic`, `cai.elements`, `cai.objects`, `cai.components`, `cai.utilities`, `cai.site`, `cai.landing`, `cai.cms`, `cai.print`, and their order | The rules inside a layer |
 | **Text** | The i18n keys of `@cai-ds/core/i18n` and the `data-cai-label-*` attributes that override them | The wording of a string |
 | **Packages** | The `exports` map of each package, the paths of the files it publishes, and the `cai-tokens` command: its arguments, its exit codes and its `--json` shape | The files under `scripts/`, `tests/` and `apps/` |
 

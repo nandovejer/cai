@@ -1,0 +1,180 @@
+<!-- cai:page
+title: CMS templates
+description: The pieces of a blog or a newspaper that need no CSS of their own, to paste in and adapt: the article page, a post card, post listings, related posts and the author box.
+area: cms
+order: 10
+group: reference
+-->
+    <div class="docs-block" id="p-cms-templates">
+          <p>Each template is markup to copy into the template of your CMS, with your own fields in place of the example text. They use the classes of core, site and cms only: a piece that would need CSS of its own is a pattern, with its page, and <a href="#not-here">the last section</a> says what CAI does not have yet.</p>
+          <p>Lists of posts take one rule of your own, <code>.posts { list-style: none; margin: 0; padding: 0; }</code>: core styles no list. Safari can drop the list role from a list whose markers you remove; the headings still lead through the posts.</p>
+          <div class="docs-prose">
+            <h2 id="article-page" class="docs-prose__title">Article page</h2>
+            <p>The <code>&lt;main&gt;</code> of a story: the <a href="/docs/cms/article-header/">article header</a>, the <a href="/docs/cms/toc/">table of contents</a> beside the text, then the author and related posts. Start from the <a href="/docs/site/templates/">page shell of site</a>.</p>
+            <ul>
+              <li>The <code>&lt;article&gt;</code> holds the story only: the header and the text. The author box and the related posts come after it, inside <code>&lt;main&gt;</code>.</li>
+              <li>Core spaces the elements of long text only inside components, so <code>.o-stack</code> spaces the paragraphs here. Leave out the table of contents in a short post, and the layout is the text alone.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-article" aria-label="Copy the article page markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Article page markup"><code id="code-tpl-article">&lt;main id=&quot;main-content&quot; class=&quot;cai-site-main o-container&quot;&gt;
+  &lt;article class=&quot;cai-cms-article&quot;&gt;
+    &lt;header class=&quot;cai-cms-article-header&quot;&gt;
+      &lt;p class=&quot;cai-cms-article-header__kicker&quot;&gt;&lt;a href=&quot;/coast/&quot;&gt;Coast&lt;/a&gt;&lt;/p&gt;
+      &lt;h1 class=&quot;cai-cms-article-header__title&quot;&gt;What ten years of tide records say about the bay&lt;/h1&gt;
+      &lt;p class=&quot;cai-cms-article-header__standfirst&quot;&gt;Volunteers have read the gauge in the port twice a day since 2016.&lt;/p&gt;
+      &lt;div class=&quot;cai-cms-article-header__byline&quot;&gt;
+        &lt;span class=&quot;cai-avatar cai-avatar--lg&quot;&gt;&lt;img src=&quot;/authors/ana-ruiz-96.jpg&quot; width=&quot;48&quot; height=&quot;48&quot; alt=&quot;&quot;&gt;&lt;/span&gt;
+        &lt;div&gt;
+          &lt;p&gt;By &lt;a href=&quot;/authors/ana-ruiz/&quot;&gt;Ana Ruiz&lt;/a&gt;&lt;/p&gt;
+          &lt;p&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; · 6 min read&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;cai-cms-article__layout&quot;&gt;
+      &lt;nav class=&quot;cai-cms-toc&quot; aria-labelledby=&quot;toc-title&quot;&gt;
+        &lt;h2 class=&quot;cai-cms-toc__title&quot; id=&quot;toc-title&quot;&gt;Contents&lt;/h2&gt;
+        &lt;ol class=&quot;cai-cms-toc__list&quot;&gt;
+          &lt;li&gt;&lt;a class=&quot;cai-sidebar__link&quot; href=&quot;#method&quot;&gt;How the readings were taken&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a class=&quot;cai-sidebar__link&quot; href=&quot;#level&quot;&gt;Four centimetres in ten years&lt;/a&gt;&lt;/li&gt;
+        &lt;/ol&gt;
+      &lt;/nav&gt;
+      &lt;div class=&quot;o-stack&quot;&gt;
+        &lt;p&gt;Since March 2016, a group of volunteers has read the tide gauge…&lt;/p&gt;
+        &lt;h2 id=&quot;method&quot;&gt;How the readings were taken&lt;/h2&gt;
+        &lt;p&gt;…&lt;/p&gt;
+        &lt;h2 id=&quot;level&quot;&gt;Four centimetres in ten years&lt;/h2&gt;
+        &lt;p&gt;…&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/article&gt;
+  &lt;!-- The author box, then related posts (below) --&gt;
+&lt;/main&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="post-card" class="docs-prose__title">Post card</h2>
+            <p>One post in a list: a picture, its section, the title, a line of summary and the date. It is a <a href="/docs/components/card/">card</a> with an <a href="/docs/site/image/">image frame</a>; the link on the title makes the whole card one link, with one tab stop.</p>
+            <ul>
+              <li>The picture has <code>alt=""</code>: the title says what the card is. Give it <code>loading="lazy"</code>, except on cards at the top of the page.</li>
+              <li>The section is a <a href="/docs/components/tag/">tag</a>, not a link: a second link in the card would be a second tab stop with a small target. Link the section from the story's own header.</li>
+              <li>The title is a heading one level under the list's heading. In a list, the card is the <code>&lt;li&gt;</code> (below); on its own, an <code>&lt;article&gt;</code>.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-card" aria-label="Copy the post card markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Post card markup"><code id="code-tpl-card">&lt;article class=&quot;cai-card&quot;&gt;
+  &lt;div class=&quot;cai-site-image cai-site-image--3x2 u-mb-sm&quot;&gt;
+    &lt;img src=&quot;/img/tide-gauge-640.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;cai-tag cai-tag--gray u-mb-sm&quot;&gt;Coast&lt;/p&gt;
+  &lt;h3 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/2026/10/tide-records/&quot;&gt;What ten years of tide records say about the bay&lt;/a&gt;&lt;/h3&gt;
+  &lt;p class=&quot;cai-card__body&quot;&gt;Volunteers have read the gauge in the port twice a day since 2016.&lt;/p&gt;
+  &lt;p class=&quot;cai-card__body&quot;&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; · 6 min read&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="post-listing" class="docs-prose__title">Post listing</h2>
+            <p>The home page, a section or an archive: post cards in as many columns as fit, then <a href="/docs/components/pagination/">pagination</a> to the older posts. Every page of the list is a real address, so it works with no script.</p>
+            <ul>
+              <li><code>.o-grid--auto</code> fits columns of 16rem or more. Set <code>--cai-grid-min</code> on the list to change that width.</li>
+              <li>For a list without pictures (an archive, search results), drop the image frame and use <code>.o-stack</code> instead of <code>.o-grid</code>: one card under another.</li>
+              <li>Name the pagination ("Older stories") when the page has another <code>&lt;nav&gt;</code>.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-listing" aria-label="Copy the post listing markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Post listing markup"><code id="code-tpl-listing">&lt;section class=&quot;cai-site-section&quot; aria-labelledby=&quot;latest-title&quot;&gt;
+  &lt;h2 id=&quot;latest-title&quot;&gt;Latest stories&lt;/h2&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto posts&quot;&gt;
+    &lt;li class=&quot;cai-card&quot;&gt;
+      &lt;div class=&quot;cai-site-image cai-site-image--3x2 u-mb-sm&quot;&gt;
+        &lt;img src=&quot;/img/tide-gauge-640.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+      &lt;/div&gt;
+      &lt;p class=&quot;cai-tag cai-tag--gray u-mb-sm&quot;&gt;Coast&lt;/p&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/2026/10/tide-records/&quot;&gt;What ten years of tide records say about the bay&lt;/a&gt;&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Volunteers have read the gauge in the port twice a day since 2016.&lt;/p&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; · 6 min read&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;!-- One &lt;li&gt; for each post --&gt;
+  &lt;/ul&gt;
+  &lt;nav aria-label=&quot;Older stories&quot;&gt;
+    &lt;ul class=&quot;cai-pagination&quot;&gt;
+      &lt;li&gt;&lt;span class=&quot;cai-pagination__link&quot; aria-disabled=&quot;true&quot;&gt;Previous&lt;/span&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/&quot; aria-label=&quot;Page 1&quot; aria-current=&quot;page&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/page/2/&quot; aria-label=&quot;Page 2&quot;&gt;2&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/page/2/&quot; rel=&quot;next&quot;&gt;Next&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="related-posts" class="docs-prose__title">Related posts</h2>
+            <p>Three posts on the same subject, after the story: post cards without the summary or the section, under a heading that says what they have in common.</p>
+            <ul>
+              <li>Say what links them ("More on the coast"), not "Related posts" or "You may also like".</li>
+              <li>Three is enough: the reader has just finished a story.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-related" aria-label="Copy the related posts markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Related posts markup"><code id="code-tpl-related">&lt;section class=&quot;cai-site-section&quot; aria-labelledby=&quot;related-title&quot;&gt;
+  &lt;h2 id=&quot;related-title&quot;&gt;More on the coast&lt;/h2&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto posts&quot;&gt;
+    &lt;li class=&quot;cai-card&quot;&gt;
+      &lt;div class=&quot;cai-site-image cai-site-image--3x2 u-mb-sm&quot;&gt;
+        &lt;img src=&quot;/img/beach-road-640.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+      &lt;/div&gt;
+      &lt;h3 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/2026/09/beach-road/&quot;&gt;The beach road closes from May to September&lt;/a&gt;&lt;/h3&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;&lt;time datetime=&quot;2026-09-28&quot;&gt;28 September 2026&lt;/time&gt; · 3 min read&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;!-- Two more --&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="author-box" class="docs-prose__title">Author box</h2>
+            <p>Who wrote the story, after it: a photo, the name, two sentences about them and a link to their other stories. A <a href="/docs/components/card/">card</a> with core's media object and an <a href="/docs/components/avatar/">avatar</a>.</p>
+            <ul>
+              <li>The name is a heading with no link in it: a link in the title would make the whole box one link. The links go on their own line and say where they lead.</li>
+              <li>The photo is decorative next to the name: <code>alt=""</code>. With no photo, use the initials, with <code>aria-hidden="true"</code>.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-author" aria-label="Copy the author box markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Author box markup"><code id="code-tpl-author">&lt;div class=&quot;cai-card&quot;&gt;
+  &lt;div class=&quot;o-media&quot;&gt;
+    &lt;span class=&quot;cai-avatar cai-avatar--lg&quot;&gt;&lt;img src=&quot;/authors/ana-ruiz-96.jpg&quot; width=&quot;48&quot; height=&quot;48&quot; alt=&quot;&quot;&gt;&lt;/span&gt;
+    &lt;div class=&quot;o-media__body&quot;&gt;
+      &lt;h2 class=&quot;cai-card__title&quot;&gt;Ana Ruiz&lt;/h2&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Ana covers the coast and the climate. Before she joined the paper she studied the seagrass of the bay for six years.&lt;/p&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;&lt;a href=&quot;/authors/ana-ruiz/&quot;&gt;All stories by Ana Ruiz&lt;/a&gt;&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="not-here" class="docs-prose__title">What is not here</h2>
+            <p>A blog or a newspaper often asks for things CAI does not have yet. They are not faked in the templates above.</p>
+            <ul>
+              <li><strong>Spacing and line length for long text.</strong> Core styles each element of a story (headings, lists, quotes, figures, tables), but not the space between them nor the width of a line. <code>.o-stack</code> spaces the blocks evenly; set your own width for the text column until core has it.</li>
+              <li><strong>Comments, share buttons and a newsletter form.</strong> Build a form with <a href="/docs/components/form/">core's fields</a>. Share buttons from a social network load its scripts, which CAI never does: use plain links.</li>
+              <li><strong>A reading progress bar.</strong> It needs a script and tells the reader little the scroll bar does not.</li>
+            </ul>
+          </div>
+    </div>

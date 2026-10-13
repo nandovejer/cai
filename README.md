@@ -30,8 +30,9 @@ CAI is built with plain CSS, ES modules and native browser APIs. Adopt only the 
 
 ```text
 @cai-ds/tokens  ->  @cai-ds/core  ->  @cai-ds/site  ->  @cai-ds/landing
-   standalone        needs tokens      needs core +      needs site, core
-                                       tokens            and tokens
+   standalone        needs tokens      needs core +   \->  @cai-ds/cms
+                                       tokens             each needs site,
+                                                          core and tokens
 ```
 
 The name stands for Consistent Adaptive Identity: one set of tokens that every component reads (consistent), that switches between light, dark and high contrast and reflows with the screen (adaptive), and that your own tokens can replace to carry your brand (identity).
@@ -40,6 +41,7 @@ The name stands for Consistent Adaptive Identity: one set of tokens that every c
 - [`@cai-ds/core`](./packages/core): the components, the layout objects, the styles of bare HTML elements and optional JavaScript.
 - [`@cai-ds/site`](./packages/site): page patterns (page shell, site header, footer, image frame) and the site search.
 - [`@cai-ds/landing`](./packages/landing): patterns for a landing page (the feature grid). It has its own version, 0.x, and needs version 3 of the other three.
+- [`@cai-ds/cms`](./packages/cms): patterns for a blog, a newspaper or any CMS, with any stack (the article header and the table of contents). It has its own version, 0.x, and needs version 3 of tokens, core and site.
 
 ## Install and load
 
@@ -51,14 +53,16 @@ Each package needs the ones below it and nothing above it. Adopt one level and s
 | Tokens + components | `@cai-ds/tokens` `@cai-ds/core` | `cai-tokens.css`, `cai.css`, optionally `cai.js` |
 | Tokens + components + page patterns | `@cai-ds/tokens` `@cai-ds/core` `@cai-ds/site` | `cai-tokens.css`, `cai.css`, `site.css`, optionally `cai.js` and `site.js` |
 | A landing page | the three above and `@cai-ds/landing` | the files of the row above, then `landing.css` |
+| A blog or a newspaper | the three above and `@cai-ds/cms` | the files of level 3, then `cms.css` |
 
-`@cai-ds/core` declares `@cai-ds/tokens` as a required peer dependency; `@cai-ds/site` declares both, and `@cai-ds/landing` the three. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
+`@cai-ds/core` declares `@cai-ds/tokens` as a required peer dependency; `@cai-ds/site` declares both, and `@cai-ds/landing` and `@cai-ds/cms` the three. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
 
 ```bash
 npm install @cai-ds/tokens                                   # level 1
 npm install @cai-ds/tokens @cai-ds/core                      # level 2
 npm install @cai-ds/tokens @cai-ds/core @cai-ds/site         # level 3
 npm install @cai-ds/tokens @cai-ds/core @cai-ds/site @cai-ds/landing   # a landing page
+npm install @cai-ds/tokens @cai-ds/core @cai-ds/site @cai-ds/cms       # a blog or a newspaper
 ```
 
 ### With a bundler
@@ -68,6 +72,7 @@ import "@cai-ds/tokens/css";
 import "@cai-ds/core/css";
 import "@cai-ds/site/css"; // level 3 only
 import "@cai-ds/landing/css"; // a landing page only
+import "@cai-ds/cms/css"; // a blog or a newspaper only
 
 import "@cai-ds/core";         // optional: the JavaScript, starts every behavior
 import "@cai-ds/site";     // level 3, only if you use the search
@@ -84,13 +89,14 @@ Drop the lines for the levels you do not use:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/landing@0.1.0/dist/landing.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/cms@0.1.0/dist/cms.min.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js"></script>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.js"></script>
 ```
 
 Pin an exact version and add an `integrity` hash in production; see [SECURITY.md](./SECURITY.md). A console warning tells you when a layer is loaded without the one below it.
 
-> **Release status:** CAI is in beta. The `3.0.0` and `0.1.0` snippets above work once the release is published. Until then the packages in this repository are versioned `2.0.0` (landing `0.0.0`) with pending changesets.
+> **Release status:** CAI is in beta. The `3.0.0` and `0.1.0` snippets above work once the release is published. Until then the packages in this repository are versioned `2.0.0` (landing and cms `0.0.0`) with pending changesets.
 
 ### Other files you can load
 
@@ -202,7 +208,10 @@ cai-design-system/
 │   ├── site/                  # @cai-ds/site
 │   │   ├── src/
 │   │   └── dist/
-│   └── landing/               # @cai-ds/landing (its own version, 0.x)
+│   ├── landing/               # @cai-ds/landing (its own version, 0.x)
+│   │   ├── src/
+│   │   └── dist/
+│   └── cms/                   # @cai-ds/cms (its own version, 0.x)
 │       ├── src/
 │       └── dist/
 ├── docs/                      # Generated GitHub Pages site (pnpm pages:build): do not edit
@@ -231,19 +240,20 @@ pnpm dev
 | Landing | `http://localhost:5173/` | `apps/landing/` |
 | Documentation | `http://localhost:5173/docs/` | `apps/docs/` |
 
-Edits to files under `apps/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm site:build` / `pnpm landing:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
+Edits to files under `apps/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm site:build` / `pnpm landing:build` / `pnpm cms:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
 
-To load the packages from this repository in a page of your own, point at `dist/`: `/packages/tokens/dist/cai-tokens.css`, `/packages/core/dist/cai.css`, `/packages/site/dist/site.css`, `/packages/landing/dist/landing.css` and `/packages/core/dist/cai.js`.
+To load the packages from this repository in a page of your own, point at `dist/`: `/packages/tokens/dist/cai-tokens.css`, `/packages/core/dist/cai.css`, `/packages/site/dist/site.css`, `/packages/landing/dist/landing.css`, `/packages/cms/dist/cms.css` and `/packages/core/dist/cai.js`.
 
 ### Commands
 
 ```bash
 pnpm dev             # Vite dev server
-pnpm build           # tokens:build + core:build + site:build + landing:build
+pnpm build           # tokens:build + core:build + site:build + landing:build + cms:build
 pnpm tokens:build    # Regenerate packages/tokens/dist
 pnpm core:build      # Regenerate packages/core/dist
 pnpm site:build      # Regenerate packages/site/dist
 pnpm landing:build   # Regenerate packages/landing/dist
+pnpm cms:build       # Regenerate packages/cms/dist
 pnpm lint:css        # Stylelint over packages/**/*.css and apps/**/*.css
 pnpm lint:js         # ESLint over the JS of packages, apps, scripts and tests
 pnpm test:unit       # Vitest (run `pnpm build` first: some suites read dist/)
@@ -292,6 +302,12 @@ pnpm site:build
 
 ```bash
 pnpm landing:build
+```
+
+**CMS.** `@cai-ds/cms` holds the patterns of a blog, a newspaper or any CMS, on top of site, through the same builder. CSS only: `dist/cms.css` and `cms.min.css`, in the `cai.cms` layer. Landing and cms never depend on each other.
+
+```bash
+pnpm cms:build
 ```
 
 ### GitHub Pages

@@ -8,8 +8,8 @@
  *   BASE       share one version (changesets `fixed`): tokens → core → site
  *   SITE_KINDS packages for one kind of site, built on site, each with its
  *              own version (0.x while it grows) and literal peer ranges on
- *              the base's major: landing (later cms, then wordpress on cms)
+ *              the base's major: landing, cms (later wordpress, on cms)
  */
 export const BASE = ["tokens", "core", "site"];
-export const SITE_KINDS = ["landing"];
+export const SITE_KINDS = ["landing", "cms"];
 export const PACKAGES = [...BASE, ...SITE_KINDS];

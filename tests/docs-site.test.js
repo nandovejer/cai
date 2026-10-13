@@ -10,6 +10,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { readHtml } from "../scripts/docs-site/html.js";
+import { SITE_KINDS } from "../scripts/cai-packages.js";
 import { readIndex, search } from "../packages/site/src/search.js";
 import {
   SEARCH_INDEX_ROUTE,
@@ -550,9 +551,9 @@ describe("the CAI docs site", () => {
     // ia.md §6 and a11y.md TAB-1/3/16/17. Every section of both tabs is
     // required; tests/docs-design.test.js checks what the Design sections say.
     const viewPages = site.pages.filter(
-      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", "landing"].includes(p.meta.area) && p.meta.group === "patterns"),
+      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", ...SITE_KINDS].includes(p.meta.area) && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(37);
+    expect(viewPages).toHaveLength(39);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {

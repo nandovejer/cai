@@ -2,7 +2,7 @@
 
 Inspired by the [GOV.UK Design System](https://design-system.service.gov.uk/). These rules govern every change to `packages/`, `apps/` and the docs. They sit above [VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md) (which covers *how* we build) and tell you *what* we accept.
 
-CAI is npm packages for developers who install it without talking to us: `@cai-ds/tokens` (standalone), `@cai-ds/core` (needs tokens) and `@cai-ds/site` (needs core and tokens), which share one version, and packages for one kind of site on top of them, each with its own version: `@cai-ds/landing` (needs site, core and tokens).
+CAI is npm packages for developers who install it without talking to us: `@cai-ds/tokens` (standalone), `@cai-ds/core` (needs tokens) and `@cai-ds/site` (needs core and tokens), which share one version, and packages for one kind of site on top of them, each with its own version: `@cai-ds/landing` and `@cai-ds/cms` (each needs site, core and tokens).
 
 ---
 
@@ -125,6 +125,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `site` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | `site` JS | — | ≤ 1 kB | 1 kB | 2 kB |
 | `landing` CSS | — | ≤ 1 kB | 1 kB | 2 kB |
+| `cms` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |
 
 Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).

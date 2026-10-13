@@ -50,6 +50,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@cai-ds/cms':
+        specifier: workspace:*
+        version: link:../../packages/cms
       '@cai-ds/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -77,6 +80,18 @@ importers:
       '@cai-ds/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+
+  packages/cms:
+    devDependencies:
+      '@cai-ds/core':
+        specifier: workspace:*
+        version: link:../core
+      '@cai-ds/site':
+        specifier: workspace:*
+        version: link:../site
+      '@cai-ds/tokens':
+        specifier: workspace:*
+        version: link:../tokens
 
   packages/core:
     devDependencies:

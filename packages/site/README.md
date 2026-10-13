@@ -1,6 +1,6 @@
 # @cai-ds/site
 
-What every site needs, above the components: page shell, site header, footer, sections, image frame, site search and language switcher. A piece is here when it needs data of the site or holds other pieces; everything else is in `@cai-ds/core`. Packages for one kind of site build on this one: [`@cai-ds/landing`](../landing) for a landing page.
+What every site needs, above the components: page shell, site header, footer, sections, image frame, site search and language switcher. A piece is here when it needs data of the site or holds other pieces; everything else is in `@cai-ds/core`. Packages for one kind of site build on this one: [`@cai-ds/landing`](../landing) for a landing page, [`@cai-ds/cms`](../cms) for a blog, a newspaper or any CMS.
 
 > **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
 

@@ -20,6 +20,7 @@ const files = [
   "packages/core/dist/base.css",
   "packages/site/dist/site.css",
   "packages/landing/dist/landing.css",
+  "packages/cms/dist/cms.css",
   "packages/core/dist/print.css",
   "packages/core/dist/classless.css",
   ...listed("packages/core/dist/components").filter((f) => !f.endsWith(".min.css")),
@@ -54,6 +55,7 @@ describe.skipIf(files.length === 0)("published stylesheets and the cai layers", 
     expect(files.some((f) => f.endsWith("cai.css"))).toBe(true);
     expect(files.some((f) => f.endsWith("site.css"))).toBe(true);
     expect(files.some((f) => f.endsWith("landing.css"))).toBe(true);
+    expect(files.some((f) => f.endsWith("cms.css"))).toBe(true);
   });
 
   for (const file of files) {

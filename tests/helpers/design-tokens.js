@@ -13,6 +13,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { formatRatio as format, over, parseColor as parse, ratio } from "../../packages/tokens/lib/contrast.js";
+import { SITE_KINDS } from "../../scripts/cai-packages.js";
 
 const repo = fileURLToPath(new URL("../../", import.meta.url));
 const read = (path) => readFileSync(`${repo}${path}`, "utf-8");
@@ -78,7 +79,7 @@ export const formatRatio = format;
 
 /* ---- The tokens a component reads ---------------------------------------- */
 
-/** The CSS of a page and, for a site or landing pattern, the classes that are its own. */
+/** The CSS of a page and, for a pattern of site or of a package for one kind of site, the classes that are its own. */
 function sourceOf(page) {
   if (page.meta.area === "components") {
     return { css: page.meta.files.split(";").map((f) => read(`packages/core/src/${f.trim()}`)).join("\n"), classes: null };
@@ -86,8 +87,8 @@ function sourceOf(page) {
   if (page.meta.module === "search.js") return { css: read("packages/site/src/components/search.css"), classes: null };
   const classes = page.meta.files.split(",").map((f) => f.trim()).filter((f) => f.startsWith(".")).map((f) => f.slice(1));
   // A package for one kind of site: every file of its components folder
-  if (page.meta.area === "landing") {
-    const dir = "packages/landing/src/components";
+  if (SITE_KINDS.includes(page.meta.area)) {
+    const dir = `packages/${page.meta.area}/src/components`;
     return { css: readdirSync(`${repo}${dir}`).filter((f) => f.endsWith(".css")).sort().map((f) => read(`${dir}/${f}`)).join("\n"), classes };
   }
   // The shell patterns, and the patterns with a file of their own (the language switcher, the site header)
@@ -106,8 +107,9 @@ export function tokensUsedBy(page) {
     for (const [, name] of body.matchAll(/(--cai-[\w-]+)\s*:/g)) local.add(name);
     for (const [, name] of body.matchAll(/var\(\s*(--cai-[\w-]+)/g)) used.add(name);
   }
-  // --cai-site-* and --cai-landing-* are properties a pattern sets for its own parts, not design tokens
-  return [...used].filter((t) => !local.has(t) && !/^--cai-(?:site|landing)-/.test(t)).sort();
+  // --cai-site-* and --cai-<kind>-* (landing, cms…) are properties a pattern sets for its own parts, not design tokens
+  const patternProperty = new RegExp(`^--cai-(?:${["site", ...SITE_KINDS].join("|")})-`);
+  return [...used].filter((t) => !local.has(t) && !patternProperty.test(t)).sort();
 }
 
 /* ---- Token families and their pages --------------------------------------- */

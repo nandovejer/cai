@@ -1,9 +1,9 @@
 /**
  * CAI Design System — Pattern docs guidance, per package
  * Every block class that a package of patterns ships (@cai-ds/site,
- * @cai-ds/landing) belongs to a pattern, and every pattern has its page in
- * the documentation, in the area of its package (/docs/site/,
- * /docs/landing/), with the same structure as a component page: example,
+ * @cai-ds/landing, @cai-ds/cms) belongs to a pattern, and every pattern has
+ * its page in the documentation, in the area of its package (/docs/site/,
+ * /docs/landing/, /docs/cms/), with the same structure as a component page: example,
  * known issues, then the Code and Design tabs (PRINCIPLES.md red line 18 and
  * strong rule SR-5). The class list is read from each package's source, so
  * a new class without a pattern fails.
@@ -44,6 +44,14 @@ const PACKAGES = {
     label: 'Landing',
     patternOf: {
       'feature-grid': 'features',
+    },
+  },
+  cms: {
+    label: 'CMS',
+    patternOf: {
+      'article-header': 'article-header',
+      article: 'toc',
+      toc: 'toc',
     },
   },
 };

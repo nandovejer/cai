@@ -8,6 +8,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { routeOf, site } from './helpers/docs-site.js';
+import { SITE_KINDS } from '../scripts/cai-packages.js';
 
 const BUTTON = routeOf('c-button');
 const THEMES = ['light', 'dark', 'high-contrast'];
@@ -157,7 +158,7 @@ test.describe('search: results', () => {
 
   test('the first result is the page of that name', async ({ page }) => {
     await open(page);
-    const sample = site.pages.filter((p) => p.meta.search !== 'false' && ['components', 'tokens', 'site', 'landing', 'html'].includes(p.meta.area));
+    const sample = site.pages.filter((p) => p.meta.search !== 'false' && ['components', 'tokens', 'site', ...SITE_KINDS, 'html'].includes(p.meta.area));
     const titles = sample.filter((_, i) => i % 4 === 0);
     expect(titles.length).toBeGreaterThan(10);
     await page.keyboard.press('Control+k');

@@ -16,6 +16,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
+import { SITE_KINDS } from '../scripts/cai-packages.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -51,7 +52,8 @@ const settingNames = (prefix) =>
   [...settingsCss.matchAll(new RegExp(`^\\s*(--cai-${prefix}-[\\w-]+):`, 'gm'))].map((m) => m[1]);
 
 // Every CSS file of a package of patterns (site: the shell patterns and the
-// search; landing: the patterns of a landing page), and its classes
+// search; landing: the patterns of a landing page; cms: the patterns of a
+// blog or a newspaper), and its classes
 const classesOf = (name) => {
   const dir = fromRepo(`packages/${name}/src/components`);
   const css = readdirSync(dir)
@@ -60,7 +62,7 @@ const classesOf = (name) => {
     .join('\n');
   return [...new Set(css.match(new RegExp(`\\.cai-${name}-[a-z_-]+`, 'g')))];
 };
-const PATTERN_PACKAGES = ['site', 'landing'];
+const PATTERN_PACKAGES = ['site', ...SITE_KINDS];
 
 const MODES = ['light', 'dark', 'high-contrast'];
 
@@ -247,10 +249,10 @@ test.describe('Documentation site', () => {
   });
 
   test.describe('navigation', () => {
-    test('the sidebar shows the seven areas and expands only the current one', async ({ page }) => {
+    test('the sidebar shows the eight areas and expands only the current one', async ({ page }) => {
       await gotoId(page, 'c-button');
       const areas = page.locator('.docs-nav > li > a');
-      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Landing', 'Accessibility']);
+      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Landing', 'CMS', 'Accessibility']);
       await expect(page.locator('.docs-nav > li > ul')).toHaveCount(1);
       await expect(page.locator('.docs-nav a[aria-current="true"]')).toHaveText('Components');
       await expect(page.locator('.docs-nav a[aria-current="page"]')).toHaveText('Button');

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Section – Site – CAI documentation</title>
+  <meta name="description" content="Groups the blocks of one part of a page, with the same space between them everywhere, and sets one of them on a tinted band across the page.">
+  <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <!-- Before the first paint: the visitor's color mode (EX-009) -->
+  <script src="../../../theme-boot.js" ></script>
+  <script type="module" crossorigin src="../../../assets/site-header-BRxE1cCR.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-C91BcvKN.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-D2TK8zV2.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CNgej16e.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CGDw9oUc.css">
+</head>
+<body class="o-shell docs-page">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <cai-site-search>
+  <dialog class="cai-modal cai-site-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../../../docs/search-index.json"
+          data-cai-label-results="{n} results"
+          data-cai-label-result="1 result"
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
+          data-cai-label-none="No results for “{query}”. Check the spelling or try a shorter word."
+          data-cai-label-loading="Loading the search index…"
+          data-cai-label-error="Search is not available right now.">
+    <search class="cai-site-search__body">
+      <div class="cai-site-search__head">
+        <h2 class="cai-site-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-site-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+      </div>
+      <div class="cai-site-search__field">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      </div>
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Arrow keys move through them.</p>
+      <p class="cai-site-search__status" role="status"></p>
+      <div class="cai-site-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Popular</h3>
+          <ul lang="en">
+            <li><a href="../../../docs/get-started/"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
+            <li><a href="../../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
+            <li><a href="../../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages" lang="en"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
+      </div>
+      <p class="cai-site-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
+    </search>
+  </dialog>
+  </cai-site-search>
+  <a class="cai-site-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
+      <button class="cai-site-search-trigger cai-site-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+        <svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-site-search-trigger__label">Search docs…</span>
+        <kbd class="cai-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+      
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="cai-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/tokens/">Tokens</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/site/">Site</a>
+        <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../../docs/site/shell/">Page shell</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/site-header/">Site header</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/page-header/">Page header</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/site/section/">Section</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/footer/">Footer</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/skip-link/">Skip link</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/actions/">Action group</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/feature-grid/">Feature grid</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/image/">Image</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/lang-switcher/">Language switcher</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/search/">Search</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/templates/">Page templates</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/classes/">Class reference</a></li>
+        </ul>
+      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="cai-breadcrumb__item" href="../../../docs/site/">Site</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Section</span></li>
+      </ol>
+    </nav>
+    <div class="docs-page-head__title">
+      <h1 class="docs-title">Section</h1>
+      <code class="docs-demo__file">.cai-site-section</code>
+      <code class="docs-demo__file">--band</code>
+    </div>
+    <p class="docs-lead">Groups the blocks of one part of a page, with the same space between them everywhere, and sets one of them on a tinted band across the page.</p>
+  </div>
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#design">Design</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
+          </ul>
+        </li>
+      </ul>
+    </details>
+  </nav>
+  <div class="docs-body">
+    <div class="docs-component" id="p-section">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-site-section">
+              <div class="docs-box">Heading</div>
+              <div class="docs-box">Lead</div>
+              <div class="docs-box">Content</div>
+            </div>
+            <p class="docs-demo__note">Children are spaced by <code class="cai-code-inline">--cai-space-md</code>.</p>
+            <section class="cai-site-section cai-site-section--band" aria-labelledby="band-demo-title">
+              <h2 id="band-demo-title">Registration closes on 30 April</h2>
+              <p>The hall holds 400 people, and the Two days ticket sold out last year.</p>
+              <div class="cai-site-actions">
+                <a class="cai-btn cai-btn--primary" href="#band-demo-title">Register now</a>
+              </div>
+            </section>
+            <p class="docs-demo__note">With <code class="cai-code-inline">.cai-site-section--band</code> the tint runs to the edges of this frame; in a page, to the edges of the window. The content keeps the column.</p>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>The section has none. The band, its one modifier, has three.</p>
+          <ul>
+            <li><strong>Band: a tooltip at its top edge is clipped.</strong> The band cuts off whatever sticks out above or below it. A CSS tooltip on a control that is the first thing in a band is cut at 200 percent text and larger. Start the band with its heading, and keep tooltips off the first control. Dropdown menus and other popovers are not clipped.</li>
+            <li><strong>Band: outline and ghost buttons.</strong> Their hover colour is the band's own tint, so the hover shows no change. The label and the outline still identify them. Use one primary button, and an outline button for a second way.</li>
+            <li><strong>Band: forced colors.</strong> The tint is removed, so the section is its heading, text and buttons between two thin rules in the system text colour.</li>
+          </ul>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Section documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-section" aria-label="Copy the section markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Section markup"><code id="code-section">&lt;section class=&quot;cai-site-section&quot; aria-labelledby=&quot;team-title&quot;&gt;
+  &lt;h2 id=&quot;team-title&quot;&gt;Team&lt;/h2&gt;
+  &lt;p&gt;Eight members, two pending invites.&lt;/p&gt;
+  &lt;div class=&quot;cai-site-actions&quot;&gt;…&lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-section-band" aria-label="Copy the section on a band markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Section on a band markup"><code id="code-section-band">&lt;main id=&quot;main-content&quot; class=&quot;cai-site-main o-container&quot;&gt;
+  &lt;!-- other sections --&gt;
+  &lt;section class=&quot;cai-site-section cai-site-section--band&quot; aria-labelledby=&quot;last-seats-title&quot;&gt;
+    &lt;h2 id=&quot;last-seats-title&quot;&gt;Registration closes on 30 April&lt;/h2&gt;
+    &lt;p&gt;The hall holds 400 people, and the Two days ticket sold out last year.&lt;/p&gt;
+    &lt;div class=&quot;cai-site-actions&quot;&gt;
+      &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#register&quot;&gt;Register now&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One modifier, for a band of tint across the page.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Section class" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-site-section</code></div></td><td data-label="Effect"><div>A one-column grid with 16 px (<code>--cai-space-md</code>) between its children</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-site-section--band</code></div></td><td data-label="Effect"><div>The section on a <code>--cai-brand-subtle</code> band that runs from edge to edge of the page, with 48 px (<code>--cai-space-2xl</code>) above and below its content. The content keeps the page's column</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS grid from <code>@cai-ds/site</code>. No JavaScript.</p>
+            <ul>
+              <li>Inside <code>.cai-site-main</code>, sections are 64 px apart; inside a section, blocks are 16 px apart.</li>
+              <li>Use it on a <code>&lt;section&gt;</code> when the group has its own heading, or on a <code>&lt;div&gt;</code> when it does not.</li>
+              <li>The band stays inside the page's column, so its text keeps the column's left edge. The tint is a <code>box-shadow</code> that spreads past the section, cut off above and below by <code>clip-path</code>. A shadow adds no scrollable width; <code>100vw</code> would, whenever the page has a scrollbar. In an <code>.o-shell</code> the tint stops at <code>.o-main</code>.</li>
+              <li>Put it inside <code>.cai-site-main</code>, on the page itself. Inside a card or an element with its own background the tint is drawn over that surface, and it runs out of the element when that element is wider than the window.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the section is CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The section has no interaction, and the band adds none.</p>
+            <ul>
+              <li>A <code>&lt;section&gt;</code> named with <code>aria-labelledby</code> becomes a region landmark; one without a name does not.</li>
+              <li>Name only the sections people would jump to, or the landmark list gets long.</li>
+              <li>The tint is not what groups the band: the section and its heading are. Without the tint (forced colors, print) the grouping stays.</li>
+              <li>Controls inside the band keep their own focus ring. The 48 px above and below leaves room for it at 200 percent text and at 320 px wide.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a section to group related blocks in the main area, with the same space between them on every page.</p>
+            <ul>
+              <li>Use the band for a call to act near the end of a long page, or for one pause in the middle of it.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it to space the paragraphs of running text: the text styles already do.</p>
+            <ul>
+              <li>For blocks side by side, use the <a href="../../../docs/components/layout/">grid object</a> or the <a href="../../../docs/site/feature-grid/">feature grid</a>.</li>
+              <li>Do not band every section: when everything stands out, nothing does. One band for each screen height at most, and two in a row read as a new background, not as a call to act.</li>
+              <li>Do not put a band inside a card or on a <code>--cai-surface</code> area, or around the whole page. In dark mode the primary button falls to 2.7:1 against a tint laid over <code>--cai-surface</code>, under the 3:1 a control's edge needs.</li>
+              <li>Do not use it on a page whose background is already the brand tint: <code>.cai-site-page--gradient</code> starts with it in the top corner.</li>
+              <li>Do not put a <code>.cai-btn--secondary</code> on the band: its fill is the tint's own colour, and it reads as plain text.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Blocks of different kinds, spaced as one group: a heading, a lead, the content.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-section"><div class="docs-box">Heading</div><div class="docs-box">Lead</div><div class="docs-box">Content</div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Running text in a section: every paragraph gets the section's gap, and the text reads as separate blocks.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-section"><p class="u-mb-0">The plan renews on the first of the month.</p><p class="u-mb-0">You can cancel before then.</p><p class="u-mb-0">Unused days are not refunded.</p></div>
+                </div>
+              </figure>
+            </div>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> One band, with a heading that says why now and one primary button.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-section cai-site-section--band"><h2 class="u-mb-0">Registration closes on 30 April</h2><div class="cai-site-actions"><button class="cai-btn cai-btn--primary" type="button">Register now</button></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Two bands in a row: the second reads as a new background, and neither stands out as the call to act.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-section cai-site-section--band"><h2 class="u-mb-0">Registration closes on 30 April</h2></div>
+                  <div class="cai-site-section cai-site-section--band"><h2 class="u-mb-0">Questions?</h2></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Start each section with a heading that says what the section is for.</p>
+            <ul>
+              <li>Use the next heading level after the page title: <code>&lt;h2&gt;</code> under the <code>&lt;h1&gt;</code>.</li>
+              <li>On a band, the heading says why now, not the action: "Registration closes on 30 April", not "Register". Add one sentence of support, one primary button and, if you need a second way, one outline button.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The section is spacing only: it adds no colour. The band sets its content on <code>--cai-brand-subtle</code>, laid over the page.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Band contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Heading and text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>14.3:1</div></td><td data-label="Dark"><div>12.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary text</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.3:1</div></td><td data-label="High contrast"><div>18.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link, outline button label and border</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Primary button fill</div></td><td data-label="Colour on background"><div><code>--cai-brand-fill</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>3.0:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Primary button label</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings and the edges of controls.</p>
+            <ul>
+              <li><strong>Focus:</strong> the section takes none; what is inside keeps its own ring, <code>--cai-focus-ring</code>, drawn 4 px out. The band's 48 px of padding keeps it inside the tint.</li>
+              <li><strong>Thin pair:</strong> the primary button's fill is 3.0:1 against the tint in dark mode. Its label is 4.9:1 and names the control, so the control is still identified; keep the band on the page, never on a surface.</li>
+              <li><strong>Forced colors:</strong> the tint is removed and two 1 px <code>CanvasText</code> rules mark the band's top and bottom.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 3 tokens that the <code>.cai-site-section</code> rules of site's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-brand-subtle"><code>--cai-brand-subtle</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xl</code>, <code>--cai-space-md</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>
+
+  </div>
+  <nav class="docs-end" aria-labelledby="docs-end-title">
+    <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
+    <ul class="docs-end__links">
+      <li><a href="../../../docs/site/templates/">Page templates</a></li>
+      <li><a href="../../../docs/components/">Components</a></li>
+      <li><a href="../../../docs/get-started/">Install CAI</a></li>
+    </ul>
+    <ul class="docs-pager">
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/site/page-header/" aria-label="Previous: Page header"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Page header</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/site/footer/" aria-label="Next: Footer"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Footer</span></a></li>
+    </ul>
+  </nav>
+  </main>
+
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-site-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-site-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

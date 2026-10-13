@@ -16,15 +16,15 @@
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="./theme-boot.js" ></script>
-  <script type="module" crossorigin src="./assets/site-header-Bk0esaS1.js"></script>
-  <script type="module" crossorigin src="./assets/landing-C955Osud.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/landing-C5-QqX2D.css">
-  <link rel="stylesheet" crossorigin href="./assets/site-header-D3gqueyp.css">
+  <script type="module" crossorigin src="./assets/site-header-BRxE1cCR.js"></script>
+  <script type="module" crossorigin src="./assets/landing-DIhlxE9U.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/landing-DaNo8GXm.css">
+  <link rel="stylesheet" crossorigin href="./assets/site-header-CNgej16e.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
      dictionary, which has no Arabic -->
-<body class="cai-platform-page"
+<body class="cai-site-page"
       data-cai-label-change-mode="Change color mode. Current: {mode}"
       data-cai-label-mode-changed="Color mode: {mode}"
       data-cai-label-copied="Copied"
@@ -32,8 +32,8 @@
       data-cai-label-copy-failed="Copy failed. Select the text and copy it manually.">
   <!-- The search dialog comes first: closed, it is not focusable; after
        Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
-  <cai-platform-search>
-  <dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
+  <cai-site-search>
+  <dialog class="cai-modal cai-site-search" id="cai-search" aria-labelledby="cai-search-title"
           data-cai-search data-cai-search-src="./docs/search-index.json"
           data-cai-label-results="{n} results"
           data-cai-label-result="1 result"
@@ -41,18 +41,18 @@
           data-cai-label-none="No results for “{query}”. Check the spelling or try a shorter word."
           data-cai-label-loading="Loading the search index…"
           data-cai-label-error="Search is not available right now.">
-    <search class="cai-platform-search__body">
-      <div class="cai-platform-search__head">
-        <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
-        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+    <search class="cai-site-search__body">
+      <div class="cai-site-search__head">
+        <h2 class="cai-site-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-site-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
       </div>
-      <div class="cai-platform-search__field">
+      <div class="cai-site-search__field">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
         <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
       </div>
       <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Arrow keys move through them.</p>
-      <p class="cai-platform-search__status" role="status"></p>
-      <div class="cai-platform-search__results" data-cai-search-results>
+      <p class="cai-site-search__status" role="status"></p>
+      <div class="cai-site-search__results" data-cai-search-results>
         <div data-cai-search-show="idle">
           <h3>Popular</h3>
           <ul lang="en">
@@ -67,11 +67,11 @@
         <div hidden><h3>Sections</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
         <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
       </div>
-      <p class="cai-platform-search__foot">Can’t find it? <a href="./docs/a-z/">Browse the A–Z index</a></p>
+      <p class="cai-site-search__foot">Can’t find it? <a href="./docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
-  </cai-platform-search>
-  <a class="cai-platform-skip-link" href="#main-content">Skip to main content</a>
+  </cai-site-search>
+  <a class="cai-site-skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
@@ -89,19 +89,19 @@
         <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
       </nav>
       <a class="site-header__az" href="./docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
-      <button class="cai-platform-search-trigger cai-platform-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
-        <svg class="cai-platform-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-platform-search-trigger__label">Search docs…</span>
-        <kbd class="cai-platform-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      <button class="cai-site-search-trigger cai-site-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+        <svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-site-search-trigger__label">Search docs…</span>
+        <kbd class="cai-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
       </button>
-      <div class="cai-platform-lang-switcher">
-    <button class="cai-platform-lang-switcher__button" type="button" popovertarget="cai-lang-menu"><svg class="cai-platform-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">Language: </span><span class="cai-platform-lang-switcher__name">English</span></button>
-    <nav class="cai-platform-lang-switcher__menu" id="cai-lang-menu" popover aria-labelledby="cai-lang-title">
-      <p class="cai-platform-lang-switcher__title" id="cai-lang-title">Language</p>
-      <ul class="cai-platform-lang-switcher__list">
-        <li><a class="cai-platform-lang-switcher__link" href="./" hreflang="en" lang="en" aria-current="page">English</a></li>
-        <li><a class="cai-platform-lang-switcher__link" href="./es/" hreflang="es" lang="es">Español</a></li>
-        <li><a class="cai-platform-lang-switcher__link" href="./ar/" hreflang="ar" lang="ar">العربية</a></li>
+      <div class="cai-site-lang-switcher">
+    <button class="cai-site-lang-switcher__button" type="button" popovertarget="cai-lang-menu"><svg class="cai-site-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">Language: </span><span class="cai-site-lang-switcher__name">English</span></button>
+    <nav class="cai-site-lang-switcher__menu" id="cai-lang-menu" popover aria-labelledby="cai-lang-title">
+      <p class="cai-site-lang-switcher__title" id="cai-lang-title">Language</p>
+      <ul class="cai-site-lang-switcher__list">
+        <li><a class="cai-site-lang-switcher__link" href="./" hreflang="en" lang="en" aria-current="page">English</a></li>
+        <li><a class="cai-site-lang-switcher__link" href="./es/" hreflang="es" lang="es">Español</a></li>
+        <li><a class="cai-site-lang-switcher__link" href="./ar/" hreflang="ar" lang="ar">العربية</a></li>
       </ul>
     </nav>
   </div>
@@ -132,13 +132,13 @@
       <a class="cai-sidebar__link" href="./docs/get-started/">Get started</a>
       <a class="cai-sidebar__link" href="./docs/tokens/">Tokens</a>
       <a class="cai-sidebar__link" href="./docs/components/">Core</a>
-      <a class="cai-sidebar__link" href="./docs/platform/">Platform</a>
+      <a class="cai-sidebar__link" href="./docs/site/">Site</a>
       <a class="cai-sidebar__link" href="./docs/html/">HTML elements</a>
       <a class="cai-sidebar__link" href="./docs/accessibility/">Accessibility</a>
     </div>
   </nav>
 
-  <main id="main-content" class="cai-platform-main" tabindex="-1">
+  <main id="main-content" class="cai-site-main" tabindex="-1">
 
     <!-- ====================== HERO ====================== -->
     <section class="landing-hero landing-wrap" aria-labelledby="hero-title">
@@ -146,7 +146,7 @@
         <p class="landing-eyebrow" lang="en">Consistent Adaptive Identity</p>
         <h1 class="landing-hero__title" id="hero-title">CAI, a native, styled design system built for accessibility.</h1>
         <p class="landing-hero__lead">A CSS-first, zero-build design system for the web. Three color modes, your CSS always wins, JavaScript only as an enhancement.</p>
-        <div class="cai-platform-actions">
+        <div class="cai-site-actions">
           <a class="cai-btn cai-btn--primary cai-btn--lg" href="#adopt">Get started</a>
           <a class="cai-btn cai-btn--outline cai-btn--lg" href="./docs/components/">Browse the components</a>
         </div>
@@ -154,11 +154,11 @@
     </section>
 
     <!-- ====================== WHY ====================== -->
-    <section class="cai-platform-section landing-wrap" id="what" aria-labelledby="what-title">
+    <section class="cai-site-section landing-wrap" id="what" aria-labelledby="what-title">
       <h2 class="landing-h2" id="what-title">Why teams use CAI</h2>
       <p class="landing-lead">For sites and tools that should work for everyone, on any device, for years, without a framework to keep up with.</p>
 
-      <ul class="cai-platform-feature-grid landing-points">
+      <ul class="cai-site-feature-grid landing-points">
         <li class="o-media">
           <span class="cai-avatar cai-avatar--md" aria-hidden="true">01</span>
           <div class="o-media__body">
@@ -184,7 +184,7 @@
     </section>
 
     <!-- ====================== SEE IT ====================== -->
-    <section class="cai-platform-section landing-wrap" id="see" aria-labelledby="see-title">
+    <section class="cai-site-section landing-wrap" id="see" aria-labelledby="see-title">
       <h2 class="landing-h2" id="see-title">See it working</h2>
       <p class="landing-lead">This is the whole setup. The result below is rendered by the same CSS.</p>
 
@@ -210,9 +210,9 @@
     </section>
 
     <!-- ====================== ADOPT ====================== -->
-    <section class="cai-platform-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
+    <section class="cai-site-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
       <h2 class="landing-h2" id="adopt-title">Adopt it one layer at a time</h2>
-      <p class="landing-lead">Three packages, one direction. Each layer needs the ones below it and nothing above it, so pick the level you need and stop there.</p>
+      <p class="landing-lead">One direction: each package needs the ones below it and nothing above it, and installing it brings them in. Pick the level you need and stop there.</p>
 
       <div class="landing-levels">
 
@@ -262,7 +262,7 @@
 
         <article class="landing-level" aria-labelledby="level-3-title">
           <div class="landing-level__intro">
-            <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">Level 3</span> Tokens + Core + Platform</h3>
+            <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">Level 3</span> Tokens + Core + Site</h3>
             <span class="cai-tag cai-tag--gray">Requires core + tokens</span>
             <p>Choose this if you build whole sites and want the page shell, header, footer and search. This landing is built at this level.</p>
           </div>
@@ -271,21 +271,33 @@
             <ul class="landing-level__get">
               <li>Page, main, content and section wrappers with a consistent vertical rhythm</li>
               <li>Page header, action group, feature grid, image frame and footer</li>
-              <li>Skip link, command block and language switcher</li>
+              <li>Skip link and language switcher</li>
               <li>Site search, with optional JavaScript</li>
             </ul>
           </div>
           <div class="landing-level__actions">
-            <a class="cai-btn cai-btn--outline" href="./docs/get-started/#level-3-tokens-core-and-platform">Install level 3</a>
-            <a href="./docs/platform/">See the patterns</a>
+            <a class="cai-btn cai-btn--outline" href="./docs/get-started/#level-3-tokens-core-and-site">Install level 3</a>
+            <a href="./docs/site/">See the patterns</a>
           </div>
         </article>
 
       </div>
+
+      <div class="landing-next">
+        <h3 class="landing-next__title" id="next-title">Next: a package for your kind of site</h3>
+        <p>Packages for one kind of site will build on site. Install the one at the top: it brings everything below it.</p>
+        <ul class="landing-next__list" aria-labelledby="next-title">
+          <li><code class="cai-code-inline">cms</code>: a blog, a newspaper or any CMS, built with any stack. Article header, post lists, table of contents and author box. <span class="cai-tag cai-tag--gray">Coming</span></li>
+          <li><code class="cai-code-inline">landing</code>: a landing page. Feature grid, speakers and calls to action. <span class="cai-tag cai-tag--gray">Coming</span></li>
+          <li><code class="cai-code-inline">wordpress</code>: a WordPress site. The cms package fitted to the block editor, a <code class="cai-code-inline">theme.json</code> made from the tokens and base templates to copy. <span class="cai-tag cai-tag--gray">Coming</span></li>
+        </ul>
+        <pre class="cai-code-block landing-next__tree" dir="ltr" tabindex="0" role="region" aria-label="The package tree"><code>tokens → core → site ─┬─ cms ── wordpress
+                      └─ landing</code></pre>
+      </div>
     </section>
 
     <!-- ====================== FIT ====================== -->
-    <section class="cai-platform-section landing-wrap" id="fit" aria-labelledby="fit-title">
+    <section class="cai-site-section landing-wrap" id="fit" aria-labelledby="fit-title">
       <h2 class="landing-h2" id="fit-title">When CAI fits</h2>
       <div class="landing-fit">
         <div>
@@ -308,10 +320,10 @@
     </section>
 
     <!-- ====================== CLOSING CTA ====================== -->
-    <section class="cai-platform-section landing-wrap" id="start" aria-labelledby="cta-title">
+    <section class="cai-site-section landing-wrap" id="start" aria-labelledby="cta-title">
       <h2 class="landing-h2" id="cta-title">Start with one link tag per layer</h2>
       <p class="landing-lead">Pick a level, copy the snippet, ship. Pin an exact version while CAI is in beta.</p>
-      <div class="cai-platform-actions">
+      <div class="cai-site-actions">
         <a class="cai-btn cai-btn--primary" href="#adopt">Get started</a>
         <a class="cai-btn cai-btn--outline" href="./docs/">Read the documentation</a>
       </div>
@@ -319,12 +331,12 @@
   </main>
 
   <footer class="landing-wrap">
-    <div class="cai-platform-footer">
+    <div class="cai-site-footer">
       <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
-      <nav class="cai-platform-actions" aria-label="Project links">
+      <nav class="cai-site-actions" aria-label="Project links">
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="./docs/">Docs</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="./docs/platform/">Platform</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="./docs/site/">Site</a>
       </nav>
       <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
         <legend class="cai-mode-switcher__label">Color mode</legend>

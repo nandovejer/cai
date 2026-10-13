@@ -20,7 +20,7 @@ order: 2
 
     <section class="docs-block" id="core-architecture" aria-labelledby="core-architecture-title">
           <h2 class="docs-chapter__title" id="core-architecture-title">CSS layers</h2>
-          <p>Core's CSS comes in six native cascade layers (<code>@layer</code>), in ITCSS order, inside one container layer called <code>cai</code>. A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of CAI, with no <code>!important</code>. <a href="/docs/get-started/layers/">How to order and override them</a>.</p>
+          <p>Core's CSS comes in native cascade layers (<code>@layer</code>), in ITCSS order, inside one container layer called <code>cai</code>. The six below are the ones that hold its rules; <a href="/docs/get-started/layers/">the layers page</a> lists them all, with tokens, platform and print. A later layer wins over an earlier one, and any CSS of yours that is not in a layer wins over all of CAI, with no <code>!important</code>. <a href="/docs/get-started/layers/">How to order and override them</a>.</p>
           <pre class="cai-code-block" data-lang="text" tabindex="0" role="region" aria-label="Core cascade layers"><code>packages/core/src/
   settings/_settings.css      cai.settings    motion, z-index, breakpoints
   generic/_reset.css          cai.generic     the reset
@@ -30,7 +30,7 @@ order: 2
   utilities/_utilities.css    cai.utilities   single-purpose helpers: .u-*</code></pre>
           <ul>
             <li>The components layer holds <span data-count="components">24</span> components.</li>
-            <li><code>dist/cai.css</code> holds all six layers. Tokens are in <code>cai.tokens</code>, the ready-made looks in <code>cai.themes</code> and platform in <code>cai.platform</code>. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
+            <li><code>dist/cai.css</code> holds these six layers and <code>cai.print</code>. Tokens are in <code>cai.tokens</code> and platform in <code>cai.platform</code>; <code>cai.themes</code> is empty, kept for a look of your own. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
             <li>Rules for bare elements are wrapped in <code>:where()</code>, so any class wins over them.</li>
           </ul>
     </section>
@@ -38,13 +38,24 @@ order: 2
     <section class="docs-block" id="core-js" aria-labelledby="core-js-title">
           <h2 class="docs-chapter__title" id="core-js-title">The script</h2>
           <p>One optional entry point, <code>cai.js</code>, starts every behaviour on the page: color mode, copy buttons, dialogs, highlighting, players, tabs and the sidebar.</p>
-          <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Load the core script"><code>&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-core-script" aria-label="Copy the core script tag">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Load the core script"><code id="code-core-script">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+          </div>
           <p>To load less, import one module and call its <code>init</code> function. See <a href="/docs/get-started/javascript/">JavaScript modules</a>.</p>
     </section>
 
     <section class="docs-block" id="core-skeleton" aria-labelledby="core-skeleton-title">
           <h2 class="docs-chapter__title" id="core-skeleton-title">Minimal page</h2>
-          <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Minimal page skeleton"><code>&lt;!doctype html&gt;
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-minimal-page" aria-label="Copy the minimal page">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Minimal page skeleton"><code id="code-minimal-page">&lt;!doctype html&gt;
 &lt;html lang=&quot;en&quot; data-theme=&quot;light&quot;&gt;
 &lt;head&gt;
   &lt;meta charset=&quot;utf-8&quot;&gt;
@@ -64,4 +75,5 @@ order: 2
   &lt;/main&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
+          </div>
     </section>

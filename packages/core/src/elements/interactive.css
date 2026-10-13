@@ -48,8 +48,13 @@
 /* Dialog — native modal / non-modal dialog (.cai-modal overrides this)      */
 /* ========================================================================== */
 
-/* No display here: the browser shows a dialog only while it is open */
+/* No display here: the browser shows a dialog only while it is open.
+   margin: auto gives back what the reset removes, the browser's own centering
+   of a dialog in the top layer. It is on every dialog: .cai-modal is one, and
+   a component that places its dialog elsewhere (platform search) sets its own
+   margin and wins by layer. */
 :where(dialog) {
+  margin: auto;
   padding: var(--cai-space-lg);
   color: var(--cai-text-primary);
   background: var(--cai-surface);
@@ -65,13 +70,6 @@
 /* The reset zeroes every margin: space the dialog's own blocks */
 :where(dialog > * + *) {
   margin-block-start: var(--cai-space-sm);
-}
-
-/* The reset zeroes every margin, including the auto margin the browser uses
-   to center a dialog. .cai-modal centers itself with top / left / transform,
-   so only dialogs without a class get it back. */
-:where(dialog:not([class])) {
-  margin: auto;
 }
 
 /* A pseudo-element cannot go inside :where(), so this is (0,0,1) */

@@ -85,8 +85,8 @@ function sourceOf(page) {
   }
   if (page.meta.module === "search.js") return { css: read("packages/platform/src/components/search.css"), classes: null };
   const classes = page.meta.files.split(",").map((f) => f.trim()).filter((f) => f.startsWith(".")).map((f) => f.slice(1));
-  // The shell patterns, and the patterns with a file of their own (the language switcher)
-  const files = ["_components.css", "lang-switcher.css"].map((f) => read(`packages/platform/src/components/${f}`));
+  // The shell patterns, and the patterns with a file of their own (the language switcher, the site header)
+  const files = ["_components.css", "lang-switcher.css", "site-header.css"].map((f) => read(`packages/platform/src/components/${f}`));
   return { css: files.join("\n"), classes };
 }
 
@@ -101,7 +101,8 @@ export function tokensUsedBy(page) {
     for (const [, name] of body.matchAll(/(--cai-[\w-]+)\s*:/g)) local.add(name);
     for (const [, name] of body.matchAll(/var\(\s*(--cai-[\w-]+)/g)) used.add(name);
   }
-  return [...used].filter((t) => !local.has(t)).sort();
+  // --cai-platform-* are properties a pattern sets for its own parts, not design tokens
+  return [...used].filter((t) => !local.has(t) && !t.startsWith("--cai-platform-")).sort();
 }
 
 /* ---- Token families and their pages --------------------------------------- */

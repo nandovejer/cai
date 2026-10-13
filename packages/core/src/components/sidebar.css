@@ -197,6 +197,14 @@
     opacity var(--cai-duration-base);
 }
 
+/* The bars are backgrounds: forced colors drop them, and the button would
+   be an empty box. Paint them in a system color. */
+@media (forced-colors: active) {
+  .cai-nav-toggle__bar {
+    background: ButtonText;
+  }
+}
+
 @supports selector(:popover-open) {
   @media (max-width: 768px) {
     .cai-nav-toggle {

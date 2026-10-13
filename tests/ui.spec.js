@@ -149,6 +149,21 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       }
     });
 
+    test('opens in the middle of the window, not in the corner', async ({ page }) => {
+      // The reset zeroes margin; the dialog's own margin: auto centres it
+      const trigger = await page.$('[commandfor][command="show-modal"]');
+      if (!trigger) return;
+      const modalId = await trigger.getAttribute('commandfor');
+      await trigger.click();
+      const box = await page.evaluate((id) => {
+        const r = document.getElementById(id).getBoundingClientRect();
+        return { left: r.left, right: window.innerWidth - r.right, top: r.top, bottom: window.innerHeight - r.bottom };
+      }, modalId);
+      expect(Math.abs(box.left - box.right)).toBeLessThanOrEqual(1);
+      expect(Math.abs(box.top - box.bottom)).toBeLessThanOrEqual(1);
+      expect(box.left).toBeGreaterThan(0);
+    });
+
     test('should close modal with Escape key', async ({ page }) => {
       const trigger = await page.$('[commandfor][command="show-modal"]');
       if (!trigger) return;

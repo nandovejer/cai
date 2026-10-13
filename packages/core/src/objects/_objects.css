@@ -63,9 +63,13 @@
   }
 }
 
-/* Centered max-width container */
+/* Centered max-width container. The full width up to --cai-content-max, so
+   it also centers as a grid or flex item, where auto margins would shrink
+   it to its content. */
 .o-container {
+  inline-size: 100%;
   max-width: var(--cai-content-max);
+  margin-inline: auto;
   padding: var(--cai-space-xl);
   padding-bottom: var(--cai-space-3xl);
 }

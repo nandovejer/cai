@@ -6,11 +6,27 @@ order: 10
 group: reference
 -->
     <div class="docs-block" id="p-templates">
-          <p>Each template is complete markup. Change the words and the links; keep the skip link, the single <code>&lt;h1&gt;</code> and the landmarks.</p>
+          <p>Each template is complete markup. Change the words and the links; keep the skip link, the single <code>&lt;h1&gt;</code> and the landmarks. The header is the <a href="/docs/platform/site-header/">site header</a>.</p>
           <div class="docs-prose">
             <h2 id="landing-page-shell" class="docs-prose__title">Landing page shell</h2>
             <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Landing page shell markup"><code>&lt;body class=&quot;cai-platform-page cai-platform-page--gradient&quot;&gt;
   &lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+
+  &lt;header class=&quot;cai-platform-site-header&quot;&gt;
+    &lt;div class=&quot;cai-platform-site-header__inner&quot;&gt;
+      &lt;button class=&quot;cai-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;site-nav&quot; aria-label=&quot;Menu&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z&quot;/&gt;&lt;/svg&gt;
+      &lt;/button&gt;
+      &lt;a class=&quot;cai-platform-site-header__brand&quot; href=&quot;/&quot;&gt;Acme&lt;/a&gt;
+      &lt;nav class=&quot;cai-platform-site-header__nav&quot; id=&quot;site-nav&quot; aria-label=&quot;Main&quot; popover&gt;
+        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;/&quot; aria-current=&quot;page&quot;&gt;Product&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;/pricing/&quot;&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;/support/&quot;&gt;Support&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
 
   &lt;main id=&quot;main-content&quot; class=&quot;cai-platform-main o-container&quot;&gt;
     &lt;section class=&quot;cai-platform-section&quot;&gt;
@@ -23,6 +39,30 @@ group: reference
         &lt;a class=&quot;cai-btn cai-btn--primary&quot; href=&quot;#get-started&quot;&gt;Get started&lt;/a&gt;
         &lt;a class=&quot;cai-btn cai-btn--outline&quot; href=&quot;#learn-more&quot;&gt;Browse the components&lt;/a&gt;
       &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;cai-platform-footer o-container&quot;&gt;
+    &lt;p&gt;Footer text&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+          </div>
+          <div class="docs-prose">
+            <h2 id="content-page" class="docs-prose__title">Content page</h2>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Content page markup"><code>&lt;body class=&quot;cai-platform-page&quot;&gt;
+  &lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+
+  &lt;header class=&quot;cai-platform-site-header cai-platform-site-header--sticky&quot;&gt;…&lt;/header&gt;
+
+  &lt;main id=&quot;main-content&quot; class=&quot;cai-platform-main o-container&quot;&gt;
+    &lt;div class=&quot;cai-platform-page-header&quot;&gt;
+      &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Title of the article&lt;/h1&gt;
+      &lt;p class=&quot;cai-platform-page-header__lead&quot;&gt;One sentence about what it covers.&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;section class=&quot;cai-platform-section&quot; aria-labelledby=&quot;first-title&quot;&gt;
+      &lt;h2 id=&quot;first-title&quot;&gt;First section&lt;/h2&gt;
+      &lt;p&gt;The text.&lt;/p&gt;
     &lt;/section&gt;
   &lt;/main&gt;
 

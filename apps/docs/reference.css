@@ -721,6 +721,17 @@
   gap: var(--cai-space-sm);
 }
 
+/* The not-found page loads no script, so the header's search button would
+   show and do nothing (the header assumes scripting means search.js runs).
+   Here the plain link to the A–Z index stays, as it does without JavaScript. */
+.docs-page--static .site-header__search[hidden] {
+  display: none;
+}
+
+.docs-page--static .site-header__az:not([hidden]) {
+  display: inline-flex;
+}
+
 .docs-chapter {
   display: grid;
   gap: var(--cai-space-md);
@@ -954,6 +965,14 @@ h2.docs-demo__title {
 
 .docs-cols-2 {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* A list of cards: no bullets and no indent. Core styles no list; the
+   markup to copy says to write this rule in your own CSS. */
+.docs-list-plain {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .docs-cols-3 {
@@ -1417,7 +1436,9 @@ h2.docs-demo__title {
   z-index: var(--cai-z-base);
 }
 
-.docs-demo__stage .cai-nav-toggle {
+/* Not in a site header specimen: there the toggle shows only where the
+   header collapses its links, as it does in a page */
+.docs-demo__stage .cai-nav-toggle:not(.cai-platform-site-header *) {
   position: static;
   display: flex;
 }

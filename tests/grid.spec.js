@@ -54,3 +54,30 @@ test.describe('layout grid', () => {
     expect(grid).toBeLessThanOrEqual(doc);
   });
 });
+
+test.describe('layout container', () => {
+  test('.o-container is centred, also as a grid item', async ({ page }) => {
+    await page.setViewportSize({ width: 1600, height: 800 });
+    await page.goto(FIXTURE);
+    const boxes = await page.evaluate(() => {
+      const make = (parent) => {
+        const el = document.createElement('div');
+        el.className = 'o-container';
+        el.textContent = 'x';
+        parent.append(el);
+        const r = el.getBoundingClientRect();
+        return { left: r.left, right: window.innerWidth - r.right, width: r.width };
+      };
+      const grid = document.createElement('div');
+      grid.style.display = 'grid';
+      document.body.append(grid);
+      return { block: make(document.body), grid: make(grid) };
+    });
+    for (const [name, box] of Object.entries(boxes)) {
+      expect(box.width, name).toBeLessThan(1600);
+      expect(Math.abs(box.left - box.right), name).toBeLessThanOrEqual(1);
+      expect(box.left, name).toBeGreaterThan(0);
+    }
+    expect(boxes.grid.width).toBeCloseTo(boxes.block.width, 0);
+  });
+});

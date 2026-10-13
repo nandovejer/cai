@@ -1,6 +1,6 @@
 <!-- cai:page
 title: Color modes and themes
-description: Switch between light, dark and high contrast with one attribute, use a shipped theme, or make your own.
+description: Switch between light, dark and high contrast with one attribute, or make a look of your own.
 area: tokens
 order: 4
 group: families
@@ -68,11 +68,11 @@ group: families
       <p class="docs-lead">A color mode changes how light or dark the page is; a theme changes its whole identity. CAI ships one look, in three modes. A theme of your own sits on top of it.</p>
       <ul>
         <li>The three modes ship with the tokens: <code class="cai-code-inline">data-theme="light"</code>, <code class="cai-code-inline">"dark"</code> and <code class="cai-code-inline">"high-contrast"</code>. Light is the default.</li>
-        <li>The default look is Vejer, inspired by Vejer de la Frontera: ET Book for running text, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, and every link underlined.</li>
-        <li>CAI ships no other theme. <a href="/docs/tokens/themes/">Make your own</a>: copy the template, change what you need, and check it.</li>
+        <li>The default look is Vejer, inspired by Vejer de la Frontera. It is the value the tokens have, not a file you load: ET Book for running text and headings, whitewash and sandstone surfaces, iron-black text, sky-blue links and actions, and every link underlined.</li>
+        <li>CAI ships no theme file. <a href="/docs/tokens/themes/">Make your own</a>: copy the template, change what you need, and check it.</li>
       </ul>
       <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Mode examples"><code>&lt;html data-theme=&quot;dark&quot;&gt;
 &lt;html data-theme=&quot;high-contrast&quot;&gt;
 &lt;html data-theme=&quot;my-brand&quot; data-mode=&quot;dark&quot;&gt;</code></pre>
-      <p>Every mode is measured by <code class="cai-code-inline">pnpm check:contrast</code>: 4.5:1 for text, 3:1 for disabled text, borders and focus rings. The same measure runs on a theme of your own with <a href="/docs/tokens/contrast/">the contrast check</a>.</p>
+      <p>Every mode is measured against the same minimums: 4.5:1 for text, 3:1 for disabled text, borders and focus rings. The same measure runs on a theme of your own with <code class="cai-code-inline">npx @cai-ds/tokens check-contrast</code>, or in the browser with <a href="/docs/tokens/contrast/">the contrast check</a>.</p>
     </section>

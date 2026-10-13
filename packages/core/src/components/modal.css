@@ -7,8 +7,10 @@
 
 
 /* Native <dialog> opened with showModal(): the browser supplies the top
-   layer, the centering (margin: auto), the inert page behind it, the focus
-   trap, Escape and focus restoration. CSS only draws the surface. */
+   layer, the inert page behind it, the focus trap, Escape and focus
+   restoration. It centers the dialog with `margin: auto`, which the reset
+   removes and the `dialog` rule of elements/interactive.css gives back, so
+   the modal needs base.css (as the header says). CSS only draws the surface. */
 .cai-modal {
   background: var(--cai-surface);
   color: var(--cai-text-primary);

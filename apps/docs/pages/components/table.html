@@ -63,9 +63,29 @@ toc: h2,h3
                   <tr><td data-label="Class or attribute"><div><code>.cai-table</code></div></td><td data-label="Effect"><div>Full width, header row on the strong surface, a rule between rows, a highlight on the row under the pointer</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-table-wrap</code></div></td><td data-label="Effect"><div>Scrolls the table sideways when it is wider than its container</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-table--sticky-col</code></div></td><td data-label="Effect"><div>Keeps the first column in view while the table scrolls sideways</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-table--compact</code></div></td><td data-label="Effect"><div>Less space above and below each row (about 33 px for a line of text, not 49 px) and a narrower gutter between columns; the type size does not change</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-table__numeric</code> on a <code>&lt;th&gt;</code> and its <code>&lt;td&gt;</code></div></td><td data-label="Effect"><div>Aligns a column of numbers to the end of the cell, in figures of equal width</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>data-label</code> on each <code>&lt;td&gt;</code></div></td><td data-label="Effect"><div>The column name shown before the value when rows become cards</div></td></tr>
                 </tbody>
               </table>
+            </div>
+            <p>Numbers and dense data take a class each. Put the numeric class on the heading as well as on every cell of the column.</p>
+            <div class="docs-example" data-docs-specimen>
+            <div class="docs-demo__stage">
+              <div class="cai-table-wrap" role="region" aria-label="Shipments this week" tabindex="0">
+                <table class="cai-table cai-table--compact">
+                  <caption>Shipments this week</caption>
+                  <thead>
+                    <tr><th scope="col">Route</th><th scope="col" class="cai-table__numeric">Parcels</th><th scope="col" class="cai-table__numeric">Weight (kg)</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="Route">Sevilla to Madrid</td><td class="cai-table__numeric" data-label="Parcels">1,204</td><td class="cai-table__numeric" data-label="Weight (kg)">8,430.5</td></tr>
+                    <tr><td data-label="Route">Cádiz to Málaga</td><td class="cai-table__numeric" data-label="Parcels">312</td><td class="cai-table__numeric" data-label="Weight (kg)">1,912.0</td></tr>
+                    <tr><td data-label="Route">Huelva to Faro</td><td class="cai-table__numeric" data-label="Parcels">58</td><td class="cai-table__numeric" data-label="Weight (kg)">406.3</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
             </div>
             <h3 id="how">How it works</h3>
             <p>A native <code>&lt;table&gt;</code> with <code>&lt;caption&gt;</code>, <code>&lt;thead&gt;</code> and <code>&lt;th scope&gt;</code>, styled by <code>components/table.css</code>. No JavaScript.</p>
@@ -73,6 +93,11 @@ toc: h2,h3
               <li>The wrapper is a container: below 480 px of its own width, a container query turns each row into a card of label and value pairs and reduces the cell padding. It follows the width of the wrapper, not the window, so a narrow table in a wide page stacks too.</li>
               <li>The labels come from <code>data-label</code>; a cell without one shows its value only.</li>
               <li>A cell that holds more than one element needs a wrapper <code>&lt;div&gt;</code> inside it, so the value stays together.</li>
+              <li><code>.cai-table__numeric</code> sets <code>text-align: end</code> and <code>font-variant-numeric: tabular-nums</code>, so the digits of a column line up whatever the language. In the stacked card layout the value is already at the end of its row.</li>
+              <li><code>.cai-table--compact</code> changes only the padding of the cells: the type keeps its size, so the table is denser but no harder to read.</li>
+              <li><strong>Sorting is not part of the table.</strong> CAI styles a link or a button in a heading, and no script sorts rows. A table sorted by the server works without JavaScript: each heading is a link to the same page sorted by that column, and only the sorted column's <code>&lt;th scope="col"&gt;</code> carries <code>aria-sort="ascending"</code> or <code>"descending"</code>.</li>
+              <li>For a sortable table, say the direction in the visible text of the link too, for example “Amount (€), ascending”; make the link's text start with the heading's own words; end its <code>href</code> with the table's <code>id</code> (<code>?sort=amount&amp;dir=desc#invoices</code>) so the next Tab starts at the table after the page reloads; and state the sort in the caption (“Invoices, sorted by amount, ascending”).</li>
+              <li>Below 480 px a heading row that holds a link or a button stays visible: its headings show as a row above the cards, and wrap, so the controls can be seen and reached. A heading row of plain text is hidden there, as before, because each card carries its labels.</li>
               <li>Cards change the <code>display</code> of the table elements, which can hide the table from some screen readers. The stylesheet recommends <code>role="table"</code>, <code>"row"</code> and <code>"cell"</code> on a table that stacks.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
@@ -94,17 +119,18 @@ toc: h2,h3
             <ul>
               <li>For one attribute per item, use a list.</li>
               <li>For a few items of equal weight, use <a href="/docs/components/card/">cards</a>.</li>
+              <li>For a data grid (sorting in the browser, filters, selecting rows, editing cells or thousands of rows), use a library built for it. CAI's table shows rows; it does not manage them.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
-                <figcaption><strong class="docs-dodont__verdict">Do</strong> The unit in the heading, and the same decimals down the column.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> The unit in the heading, the same decimals, and the column aligned to the end, heading included.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-table-wrap"><table class="cai-table"><thead><tr><th>Service</th><th>CPU (%)</th></tr></thead><tbody><tr><td data-label="Service">api-gateway</td><td data-label="CPU (%)">12.0</td></tr><tr><td data-label="Service">mailer</td><td data-label="CPU (%)">0.5</td></tr></tbody></table></div>
+                  <div class="cai-table-wrap"><table class="cai-table"><thead><tr><th>Service</th><th class="cai-table__numeric">CPU (%)</th></tr></thead><tbody><tr><td data-label="Service">api-gateway</td><td class="cai-table__numeric" data-label="CPU (%)">12.0</td></tr><tr><td data-label="Service">mailer</td><td class="cai-table__numeric" data-label="CPU (%)">0.5</td></tr></tbody></table></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
-                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A vague heading and the unit in every cell, with mixed decimals: the column is hard to compare.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A vague heading, the unit in every cell, mixed decimals and no alignment: the column is hard to compare.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
                   <div class="cai-table-wrap"><table class="cai-table"><thead><tr><th>Service</th><th>Value</th></tr></thead><tbody><tr><td data-label="Service">api-gateway</td><td data-label="Value">12 %</td></tr><tr><td data-label="Service">mailer</td><td data-label="Value">0.48 %</td></tr></tbody></table></div>
                 </div>
@@ -115,7 +141,7 @@ toc: h2,h3
             <ul>
               <li>Put units in the heading, not in every cell: "Amount (€)".</li>
               <li>Put the column that identifies the row first.</li>
-              <li>Align numbers the same way in a column, with the same number of decimals.</li>
+              <li>Align numbers to the end with <code>.cai-table__numeric</code>, on the heading and on every cell of the column, with the same number of decimals. Text stays at the start.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>Headings sit on the strong surface; cells on the page, and on the hover surface under the pointer.</p>

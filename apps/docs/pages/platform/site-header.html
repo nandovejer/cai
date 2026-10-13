@@ -1,0 +1,173 @@
+<!-- cai:page
+title: Site header
+description: Starts every page with the site's name, its main links and a few controls; the page header under it says what this page is.
+area: platform
+order: 1
+group: patterns
+files: .cai-platform-site-header, __inner, __brand, __nav, __actions, --sticky
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-site-header">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <header class="cai-platform-site-header">
+              <div class="cai-platform-site-header__inner">
+                <button class="cai-nav-toggle" type="button" popovertarget="demo-site-nav" aria-label="Menu of the example site">
+                  <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+                </button>
+                <a class="cai-platform-site-header__brand" href="#"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32Z"/></svg>Acme</a>
+                <nav class="cai-platform-site-header__nav" id="demo-site-nav" aria-label="Example site" popover>
+                  <ul>
+                    <li><a href="#" aria-current="page">Products</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Support</a></li>
+                  </ul>
+                </nav>
+                <div class="cai-platform-site-header__actions">
+                  <a class="cai-btn cai-btn--ghost" href="#">Log in</a>
+                </div>
+              </div>
+            </header>
+          </div>
+          <p class="docs-demo__note">At 768 px of window width and below the links collapse into a menu. Its panel opens under the top of the window, where a header sits, not under this example.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it. This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA). The panel opens under the header's height at the default text size: with enlarged text and a header that wraps to a second row, it can cover that row.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Site header documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-site-header" aria-label="Copy the site header markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Site header markup"><code id="code-site-header">&lt;header class=&quot;cai-platform-site-header&quot;&gt;
+  &lt;div class=&quot;cai-platform-site-header__inner&quot;&gt;
+    &lt;button class=&quot;cai-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;site-nav&quot; aria-label=&quot;Menu&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z&quot;/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;a class=&quot;cai-platform-site-header__brand&quot; href=&quot;/&quot;&gt;
+      &lt;svg viewBox=&quot;8 8 32 32&quot; width=&quot;22&quot; height=&quot;22&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;…&lt;/svg&gt;Acme
+    &lt;/a&gt;
+    &lt;nav class=&quot;cai-platform-site-header__nav&quot; id=&quot;site-nav&quot; aria-label=&quot;Main&quot; popover&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;/products/&quot; aria-current=&quot;page&quot;&gt;Products&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;/pricing/&quot;&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;/support/&quot;&gt;Support&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+    &lt;div class=&quot;cai-platform-site-header__actions&quot;&gt;
+      &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/account/&quot;&gt;Log in&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <div class="cai-table-wrap" role="region" aria-label="Site header classes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-platform-site-header</code></div></td><td data-label="Effect"><div>On <code>&lt;header&gt;</code>: the page surface and a rule underneath</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-site-header--sticky</code></div></td><td data-label="Effect"><div>Keeps the header at the top while the page scrolls, in a window at least 30 rem tall; anchored targets and focused fields stop under it</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-site-header__inner</code></div></td><td data-label="Effect"><div>The row: wraps rather than overflow, centred, with the gutters of <code>.o-container</code></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-site-header__brand</code></div></td><td data-label="Effect"><div>The site's name as a link to the home page, not underlined; takes the free space of the row</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-site-header__nav</code></div></td><td data-label="Effect"><div>On <code>&lt;nav popover&gt;</code>: the links, in a row from 769 px and in a panel under the header below it</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-platform-site-header__actions</code></div></td><td data-label="Effect"><div>The controls at the end of the row: a <a href="/docs/platform/search/">search</a> trigger, a <a href="/docs/platform/lang-switcher/">language switcher</a>, a button</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-nav-toggle</code> (core)</div></td><td data-label="Effect"><div>The menu button; it shows at 768 px and below, only where the browser has the popover API</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@cai-ds/platform</code> and a native popover. No JavaScript.</p>
+            <ul>
+              <li>The <code>&lt;nav&gt;</code> is a <code>popover</code> and the menu button its <code>popovertarget</code>. At 769 px and above CSS shows it as a row, and the button is hidden; at 768 px and below it is a panel as wide as the window, under the header. The browser gives Escape, light dismiss (a click outside), focus return to the button and the expanded state.</li>
+              <li>The icon in the button is an inline SVG painted with <code>currentcolor</code>, so it stays visible in forced-colors mode. Core's <code>.cai-nav-toggle__bar</code> spans work too, since core paints them in <code>ButtonText</code> there.</li>
+              <li>The panel and the language list open under <code>--cai-platform-site-header-h</code>: a one-row header of 44 px controls. It is exact at the default text size. If your header is taller (enlarged text wraps the row, or you add a second row), set the variable on the header yourself.</li>
+              <li><code>--sticky</code> applies only to windows at least <code>30rem</code> tall, and sets <code>scroll-padding-block-start</code> on the page to at least <code>3.5rem</code> or the header's height, so a field reached with Tab is never left under it. On a short window, such as a phone turned sideways, a sticky header would take too much of the screen.</li>
+              <li>The scrim of the open panel starts under the header, so the header's controls keep their contrast.</li>
+              <li>Without the popover API there is no panel: the links stay in the row and wrap.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the popover is opened by the button's <code>popovertarget</code>, with no script, and the links are plain links.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the menu button, the brand, the links, then the controls. With the menu open, the next Tab after the button goes into the panel's first link, then the others, then the brand and the controls: the browser places an open popover right after its button.</li>
+              <li><strong>Keys:</strong> Enter or Space on the button opens and closes the panel. Escape closes it from anywhere and, from a link in it, returns focus to the button. Tab and Shift+Tab move through the links as usual.</li>
+              <li><strong>Names:</strong> the <code>&lt;nav&gt;</code> has an <code>aria-label</code> ("Main") so it is told apart from a footer navigation. The button's name is "Menu" (its icon is decorative); the browser exposes its expanded state, so write no <code>aria-expanded</code>. The current link has <code>aria-current="page"</code> and an underline.</li>
+              <li><strong>Landmarks:</strong> a <code>&lt;header&gt;</code> that is a direct child of <code>&lt;body&gt;</code> is the banner. Put the <a href="/docs/platform/skip-link/">skip link</a> before it.</li>
+              <li><strong>Open panel and focus:</strong> pressing Tab past the last link of the open panel moves focus on, and the panel stays open. See Known issues.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a site header at the top of every page of a site with more than one section: the visitor sees which site this is and reaches its main sections from any page.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it on a single page that fits one screen: a heading and a skip link are enough.</p>
+            <ul>
+              <li>For an app whose main navigation is a column of sections, use the <a href="/docs/components/sidebar/">sidebar</a> and keep the header to the name and the account.</li>
+              <li>Do not put two headers on a page, and do not put it inside a component: it is the page's banner.</li>
+              <li>For the title of the page, use the <a href="/docs/platform/page-header/">page header</a> under it.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Three to six links, each a noun that names its section, with the current one marked.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <header class="cai-platform-site-header"><div class="cai-platform-site-header__inner"><a class="cai-platform-site-header__brand" href="#">Acme</a><nav class="cai-platform-site-header__nav" aria-label="Main"><ul><li><a href="#" aria-current="page">Products</a></li><li><a href="#">Pricing</a></li><li><a href="#">Support</a></li></ul></nav></div></header>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A dozen links, some of them vague: the row wraps into a wall and the visitor reads every word to choose. Group the rest on a page of their own.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <header class="cai-platform-site-header"><div class="cai-platform-site-header__inner"><a class="cai-platform-site-header__brand" href="#">Acme</a><nav class="cai-platform-site-header__nav" aria-label="Main"><ul><li><a href="#" aria-current="page">Products</a></li><li><a href="#">Pricing</a></li><li><a href="#">Plans</a></li><li><a href="#">Offers</a></li><li><a href="#">Blog</a></li><li><a href="#">News</a></li><li><a href="#">About us</a></li><li><a href="#">Team</a></li><li><a href="#">Jobs</a></li><li><a href="#">Press</a></li><li><a href="#">Misc</a></li><li><a href="#">Home</a></li></ul></nav></div></header>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The brand is the site's name; the links are the names of its main sections.</p>
+            <ul>
+              <li>Brand: the name as people say it, one to three words. The logo is decorative: the name stays as text in the link.</li>
+              <li>Links: three to six, one or two words each, the same words as the titles of the pages they go to. No "Home" beside a brand that already goes home.</li>
+              <li>Menu button: "Menu". Translate it like the rest of the page.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Text sits on the page surface, in the row and in the open panel. The scrim starts under the header, so the header is never dimmed.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Site header contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Brand and current link</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Links</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> every link and button in the header keeps core's ring, 2 px of <code>--cai-focus-ring</code>. The current link has an underline as well as its colour, so the mark does not depend on colour.</li>
+              <li><strong>Edges:</strong> the rule under the header (<code>--cai-divider</code>) is decorative and has no minimum.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 17 tokens that the <code>.cai-platform-site-header</code> rules of platform's <code>components/site-header.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-scrim"><code>--cai-scrim</code></a>, <a href="/docs/tokens/color/#cai-surface-page"><code>--cai-surface-page</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-space-2xs</code>, <code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-xl</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-base</code>, <code>--cai-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-lg</code></dd></div>
+              <div><dt><a href="/docs/tokens/layers/">Layers</a></dt><dd><code>--cai-z-overlay</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--cai-content-max</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

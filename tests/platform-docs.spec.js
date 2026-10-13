@@ -33,6 +33,7 @@ const patternOf = {
   content: 'shell',
   'skip-link': 'skip',
   'page-header': 'header',
+  'site-header': 'site-header',
   section: 'section',
   actions: 'actions',
   'feature-grid': 'features',

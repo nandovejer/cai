@@ -165,6 +165,50 @@ for (const app of APPS) {
       expect(nameless, 'controls without an accessible name').toEqual([]);
     });
 
+    // WCAG 2.5.3 Label in Name (EN 301 549 9.2.5.3): when a control shows text, its
+    // accessible name, as the browser computes it, contains that text, so a
+    // person who says what they see is understood. Starting with it is better
+    // and the product card test asks for it; this one asks for what the
+    // criterion requires, so "Page 9" for a link that shows "9" and "Language:
+    // English" for a button that shows "English" pass. Only a control whose
+    // name can differ from its text is asked of the browser: one with
+    // aria-label, aria-labelledby, or hidden-or-screen-reader-only words inside.
+    test('2.5.3: the accessible name of a control contains its visible text', async ({ page }) => {
+      await open(page, app);
+      const candidates = await page.evaluate(() => {
+        const sel = 'button, a[href], summary, input[type="button"], input[type="submit"], input[type="reset"]';
+        const out = [];
+        for (const el of document.querySelectorAll(sel)) {
+          if (el.closest('template, [hidden], [inert]')) continue;
+          const differs = el.matches('[aria-label], [aria-labelledby]') || el.querySelector('.u-sr-only, [aria-hidden="true"]');
+          if (!differs) continue;
+          // What is seen: the text without screen-reader-only and aria-hidden parts
+          const clone = el.cloneNode(true);
+          clone.querySelectorAll('.u-sr-only, [aria-hidden="true"], script, style').forEach((n) => n.remove());
+          const visible = (el.matches('input') ? el.value : clone.textContent).replace(/\s+/g, ' ').trim();
+          // A symbol drawn as text ("×", "?") is a picture of a word, not a word
+          if (!/[\p{L}\p{N}]/u.test(visible)) continue;
+          el.setAttribute('data-lin', String(out.length));
+          out.push({ index: out.length, visible, tag: `${el.tagName.toLowerCase()}${el.id ? `#${el.id}` : ''}.${el.className}` });
+        }
+        return out;
+      });
+      const client = await page.context().newCDPSession(page);
+      await client.send('DOM.enable');
+      const { root } = await client.send('DOM.getDocument', { depth: 0 });
+      const offenders = [];
+      for (const { index, visible, tag } of candidates) {
+        const { nodeId } = await client.send('DOM.querySelector', { nodeId: root.nodeId, selector: `[data-lin="${index}"]` });
+        if (!nodeId) continue;
+        const { nodes } = await client.send('Accessibility.getPartialAXTree', { nodeId, fetchRelatives: false });
+        // Punctuation and spacing do not count: "Previous: Class" matches "Previous Class"
+        const plain = (text) => ` ${text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim()} `;
+        const name = String(nodes[0]?.name?.value ?? '').replace(/\s+/g, ' ').trim();
+        if (!plain(name).includes(plain(visible))) offenders.push(`${tag}: "${visible}" is not in "${name}"`);
+      }
+      expect(unregistered('label-in-name', offenders)).toEqual([]);
+    });
+
     /* ---- RL-5, RL-6, RL-7: per theme -------------------------------------- */
 
     for (const theme of THEMES) {

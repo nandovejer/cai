@@ -103,6 +103,15 @@
   font-size: max(0.6em, var(--cai-text-xs));
 }
 
+/* Code is read left to right, also in a right-to-left page: tags, operators
+   and punctuation are not Arabic or Hebrew text, and mirrored they read as
+   `important!`. isolate keeps the words around it from reordering it. A dir
+   attribute of your own wins. */
+:where(:is(pre, code, kbd, samp):not([dir])) {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
 /* Computer output and variables. Not code inside <pre>: .cai-code-block
    and pre set their own type. */
 :where(:not(pre) > code, samp, var) {

@@ -1,31 +1,54 @@
 <!-- cai:page
 title: Classless styles
-description: The look of a button, a text field, a select and a table on the bare element, inside one element you mark, for markup you cannot add classes to.
+description: The look of a button, a text field, a select and a table, and the space between paragraphs, headings and lists, on the bare element, inside one element you mark, for markup you cannot add classes to.
 area: get-started
 order: 6
 files: classless.css
 -->
     <section class="docs-block" id="what" aria-labelledby="what-title">
       <h2 class="docs-chapter__title" id="what-title">What it is</h2>
-      <p class="docs-lead">One extra file, <code>classless.css</code>, that gives a bare <code>button</code>, <code>input</code>, <code>textarea</code>, <code>select</code> and <code>table</code> the look of the CAI component, inside an element that has <code>data-cai-classless</code>. It is for markup you do not control: a Markdown file, a CMS, a form from a library.</p>
+      <p class="docs-lead">One extra file, <code>classless.css</code>, that gives a bare <code>button</code>, <code>input</code>, <code>textarea</code>, <code>select</code> and <code>table</code> the look of the CAI component, and the blocks of long text the space between them, inside an element that has <code>data-cai-classless</code>. It is for markup you do not control: a Markdown file, a CMS, a form from a library.</p>
       <p>It is not in <code>cai.css</code>, and it does nothing until you load it and mark a zone. A page that does not load it is exactly what it was.</p>
     </section>
 
     <section class="docs-block" id="load" aria-labelledby="load-title">
       <h2 class="docs-chapter__title" id="load-title">Loading it</h2>
-      <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Loading classless.css"><code>&lt;link rel="stylesheet" href="@cai-ds/tokens/cai-tokens.css"&gt;
-&lt;link rel="stylesheet" href="@cai-ds/core/css"&gt;
-&lt;link rel="stylesheet" href="@cai-ds/core/classless.css"&gt;
-
-&lt;!-- the whole page --&gt;
+      <p>From a CDN, with a <code>&lt;link&gt;</code> for each file, in this order:</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">HTML</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-classless-cdn" aria-label="Copy the CDN tags">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Loading classless.css from a CDN"><code id="code-classless-cdn">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css"&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css"&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/classless.min.css"&gt;</code></pre>
+      </div>
+      <p>With a bundler, import the packages' CSS entry points. A <code>href</code> cannot name a package: these paths are for <code>import</code> only.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">JS</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-classless-import" aria-label="Copy the imports">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Importing classless.css"><code id="code-classless-import">import "@cai-ds/tokens/css";
+import "@cai-ds/core/css";
+import "@cai-ds/core/classless.css";</code></pre>
+      </div>
+      <p>Then mark the zone:</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">HTML</span>
+          <button class="cai-copy-btn" type="button" data-copy-from="code-classless-zone" aria-label="Copy the zone markup">Copy</button>
+        </div>
+        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Marking the zone"><code id="code-classless-zone">&lt;!-- the whole page --&gt;
 &lt;body data-cai-classless&gt;
 
 &lt;!-- or only the rendered content --&gt;
 &lt;article data-cai-classless&gt;…&lt;/article&gt;</code></pre>
+      </div>
       <ul>
         <li>It declares the layer order itself, as every file does, and writes in <code>cai.elements</code>. A <code>.cai-*</code> class is in <code>cai.components</code> and wins by order.</li>
         <li>Put the attribute on <code>&lt;body&gt;</code> or an element inside it. The elements it styles are its <em>descendants</em>.</li>
-        <li>Size: about 1.5 kB min+gzip, with a budget of its own (3 kB).</li>
+        <li>Size: about 1.7 kB min+gzip, with a budget of its own (3 kB).</li>
       </ul>
     </section>
 
@@ -49,12 +72,23 @@ files: classless.css
       <p>Not styled, on purpose: <code>checkbox</code>, <code>radio</code>, <code>range</code>, <code>color</code>, <code>file</code> and <code>hidden</code> inputs have a native control of their own, and a <code>table</code> is never given <code>display: block</code> or a scroll box, which makes some screen readers lose its table semantics.</p>
     </section>
 
+    <section class="docs-block" id="flow" aria-labelledby="flow-title">
+      <h2 class="docs-chapter__title" id="flow-title">Space between blocks</h2>
+      <p>CAI's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, <code>details</code>, <code>fieldset</code>, <code>form</code> or address starts one step (<code>--cai-space-md</code>) below the block before it. A heading starts further down (<code>--cai-space-xl</code>), and the block that follows it sits closer (<code>--cai-space-sm</code>), so each heading belongs to what it introduces.</p>
+      <ul>
+        <li>The first child of its parent has no margin above it, so the zone does not push itself away from its container.</li>
+        <li><code>div</code>, <code>span</code> and inline elements are left alone: their layout is yours. For a column of blocks you build yourself, use <a href="/docs/components/layout/"><code>.o-stack</code></a>.</li>
+        <li>A button that follows a field gets the same step, so it does not touch it. Buttons side by side stay together.</li>
+        <li>It is a margin at specificity zero: any class of yours wins, and a CAI component that sets its own margin keeps it.</li>
+      </ul>
+    </section>
+
     <section class="docs-block" id="rules" aria-labelledby="rules-title">
       <h2 class="docs-chapter__title" id="rules-title">How it stays out of the way</h2>
       <ul>
         <li><strong>Specificity zero.</strong> Every selector is inside <code>:where()</code>, so any class of yours, in any layer, wins.</li>
         <li><strong>A CAI class is left alone.</strong> An element whose class contains <code>cai-</code> belongs to its component: a <code>.cai-copy-btn</code> inside the zone keeps its own look.</li>
-        <li><strong>A copy, kept honest.</strong> The declarations are those of the components. A test compares each bare element with its component, property by property, and fails when one drifts.</li>
+        <li><strong>A copy, kept honest.</strong> The declarations of the button, field, select and table are those of the components. A test compares each bare element with its component, property by property, and fails when one drifts. The space between blocks is not a copy: no component has it.</li>
         <li><strong>Everything else about it is the same:</strong> the three color modes, focus ring, right-to-left text and forced colors work as in the component.</li>
       </ul>
     </section>

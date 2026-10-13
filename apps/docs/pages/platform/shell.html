@@ -16,7 +16,7 @@ toc: h2,h3
                 <div class="docs-box">
                   .cai-platform-page
                   <div class="docs-box">.cai-platform-skip-link</div>
-                  <div class="docs-box">header</div>
+                  <div class="docs-box">.cai-platform-site-header</div>
                   <div class="docs-box">
                     .cai-platform-main
                     <div class="docs-box">.cai-platform-section</div>
@@ -46,7 +46,7 @@ toc: h2,h3
               </div>
               <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page shell markup"><code id="code-shell">&lt;body class=&quot;cai-platform-page&quot;&gt;
   &lt;a class=&quot;cai-platform-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
-  &lt;header&gt;…&lt;/header&gt;
+  &lt;header class=&quot;cai-platform-site-header&quot;&gt;…&lt;/header&gt;
   &lt;main class=&quot;cai-platform-main o-container&quot; id=&quot;main-content&quot;&gt;
     &lt;div class=&quot;cai-platform-page-header&quot;&gt;
       &lt;h1 class=&quot;cai-platform-page-header__title&quot;&gt;Billing&lt;/h1&gt;
@@ -86,6 +86,7 @@ toc: h2,h3
             <ul>
               <li>Landmarks come from the native elements: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>. Do not add <code>role</code> to them.</li>
               <li>Put a <a href="/docs/platform/skip-link/">skip link</a> first in <code>&lt;body&gt;</code>.</li>
+              <li>The <code>&lt;header&gt;</code> is the <a href="/docs/platform/site-header/">site header</a>: the name, the main links and the controls. The page's own title is the <a href="/docs/platform/page-header/">page header</a> at the start of <code>&lt;main&gt;</code>.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>

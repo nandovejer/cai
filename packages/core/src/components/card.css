@@ -2,7 +2,8 @@
    CAI Component: card
    Card surface. A link in the title makes the whole card one link: the
    link's ::after is stretched over the card, which takes the hover and the
-   focus ring. No modifier, no JavaScript.
+   focus ring; other links and controls in it are raised above that link.
+   No modifier, no JavaScript.
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
@@ -46,20 +47,54 @@
   font-family: var(--cai-font-sans);
 }
 
+/* The price outranks the description: primary text, semibold, figures of
+   equal width so a column of cards lines up. A previous price is <s>, in
+   the secondary color (the line through it is not color alone). */
+.cai-card__price {
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-base);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  margin-block-end: var(--cai-space-sm);
+  color: var(--cai-text-primary);
+}
+
+.cai-card__price s {
+  font-weight: 400;
+  color: var(--cai-text-secondary);
+}
+
 /* The padding is the card's last space */
 .cai-card__title:last-child,
-.cai-card__body:last-child {
+.cai-card__body:last-child,
+.cai-card__price:last-child {
   margin-block-end: 0;
 }
 
-/* The title link covers the card: one tab stop, named by the title. It is
-   the card's only link or button: nothing else in it could be reached by
-   the pointer */
+/* The title link covers the card: one tab stop, named by the title. Other
+   links and controls are raised above it (below) */
 .cai-card__title a::after {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: var(--cai-radius-md);
+}
+
+/* A link or control in the card, other than the title link, sits above the
+   stretched link, so the pointer reaches it. One after the title in the
+   source already paints over the overlay; the z-index covers one before it
+   (a "save" button over the image). The title link is never raised: that
+   would take the card's click from it. Each has its own tab stop, in
+   source order. */
+.cai-card :where(a, button, input, select, textarea, summary):not(.cai-card__title a) {
+  position: relative;
+  z-index: 1;
+}
+
+/* A button's label wraps in a card, which can be narrow (WCAG 1.4.4, 1.4.10) */
+.cai-card .cai-btn {
+  white-space: normal;
+  text-align: center;
 }
 
 /* The link keeps its own ring; the card gets one too. An outline, so it

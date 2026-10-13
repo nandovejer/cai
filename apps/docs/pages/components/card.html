@@ -21,7 +21,7 @@ toc: h2,h3
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>In a linked card, the body text cannot be selected with a mouse: the title link covers the whole card, so a drag follows or moves the link. Find in page, keyboard selection and screen readers reach the text as usual.</p>
+          <p>In a linked card, the body text, the price included, cannot be selected with a mouse: the title link covers the whole card, so a drag follows or moves the link. Find in page, keyboard selection and screen readers reach the text as usual.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Card documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -40,7 +40,7 @@ toc: h2,h3
 &lt;/article&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>There are no modifiers: one card, three classes. A link in the title makes the whole card one link.</p>
+            <p>There are no modifiers: one card, four classes. A link in the title makes the whole card one link; any other link or button in it is raised above that link.</p>
             <div class="cai-table-wrap" role="region" aria-label="Card parts" tabindex="0">
               <table class="cai-table">
                 <thead>
@@ -50,6 +50,7 @@ toc: h2,h3
                   <tr><td data-label="Class or markup"><div><code>.cai-card</code></div></td><td data-label="What it does"><div>The surface: border, rounded corners and padding</div></td></tr>
                   <tr><td data-label="Class or markup"><div><code>.cai-card__title</code></div></td><td data-label="What it does"><div>Base size, semibold, primary text colour</div></td></tr>
                   <tr><td data-label="Class or markup"><div><code>.cai-card__body</code></div></td><td data-label="What it does"><div>Medium size, secondary text colour</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.cai-card__price</code></div></td><td data-label="What it does"><div>The price: base size, semibold, primary text colour, figures of equal width. A previous price goes in <code>&lt;s&gt;</code></div></td></tr>
                   <tr><td data-label="Class or markup"><div><code>&lt;a&gt;</code> in <code>.cai-card__title</code></div></td><td data-label="What it does"><div>A linked card: the link covers the card, the title turns sans, a darker border and a shadow on hover, a focus ring round the card</div></td></tr>
                 </tbody>
               </table>
@@ -92,10 +93,85 @@ toc: h2,h3
             </div>
             </div>
             <ul>
-              <li><strong>Linked card:</strong> the <code>&lt;a&gt;</code> goes inside the heading, round its text. The rest of the card stays text: no other link or button in it.</li>
+              <li><strong>Linked card:</strong> the <code>&lt;a&gt;</code> goes inside the heading, round its text. A second link or a button in it is allowed, and sits above the title link: see Product card below.</li>
               <li><strong>Avatar or icon:</strong> <code>.o-media</code> puts it beside <code>.o-media__body</code>, which holds the title and the body. Next to a name, hide the avatar with <code>aria-hidden="true"</code>: it repeats the name.</li>
               <li><strong>Image on top:</strong> the image frame of <code>@cai-ds/platform</code> (<code>.cai-platform-image</code>), inside the padding, with <code>.u-mb-sm</code> under it. Its alt text says what the picture shows; if it only repeats the title, leave it empty (<code>alt=""</code>). With core alone, use an <code>&lt;img&gt;</code> and your own size rules.</li>
-              <li><strong>Actions:</strong> <code>.o-row</code> with small buttons (<code>.cai-btn--sm</code>) or tags (<code>.cai-tag</code>), last in the card. Only in a card that is not linked.</li>
+              <li><strong>Actions:</strong> <code>.o-row</code> with small buttons (<code>.cai-btn--sm</code>) or tags (<code>.cai-tag</code>), last in the card. In a linked card, one action at most, as a button after the title.</li>
+            </ul>
+            <h4 id="product-card">Product card</h4>
+            <p>A card for a shop is the card with an image, a linked title, a price and one action. The action is a button in a form, so it works without JavaScript; it is raised above the title link, so it takes its own click.</p>
+            <div class="docs-example" data-docs-specimen>
+            <div class="docs-demo__stage">
+              <h5 id="red-wines">Red wines</h5>
+              <ul class="o-grid docs-cols-2 docs-list-plain" aria-labelledby="red-wines">
+                <li class="cai-card">
+                  <div class="cai-platform-image cai-platform-image--4x3 u-mb-sm">
+                    <picture>
+                      <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
+                      <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
+                      <img src="/apps/docs/assets/desert-640.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+                    </picture>
+                  </div>
+                  <h6 class="cai-card__title"><a href="#product-card">Malbec 2021</a></h6>
+                  <p class="cai-card__body">Bodega Albar · 75 cl</p>
+                  <p class="cai-card__price"><data value="12.50">12,50 €</data></p>
+                  <form action="#product-card" method="get">
+                    <input type="hidden" name="product" value="malbec-2021">
+                    <button class="cai-btn cai-btn--primary" type="submit">Add to cart<span class="u-sr-only"> Malbec 2021</span></button>
+                  </form>
+                </li>
+                <li class="cai-card">
+                  <div class="cai-platform-image cai-platform-image--4x3 u-mb-sm">
+                    <picture>
+                      <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
+                      <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
+                      <img src="/apps/docs/assets/desert-640.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
+                    </picture>
+                  </div>
+                  <h6 class="cai-card__title"><a href="#product-card">Tempranillo reserva 2019</a></h6>
+                  <p class="cai-card__body">Bodega Albar · 75 cl</p>
+                  <p class="cai-card__price"><span class="u-sr-only">Now </span><data value="9.90">9,90 €</data> <s><span class="u-sr-only">Was </span>12,50 €</s></p>
+                  <form action="#product-card" method="get">
+                    <input type="hidden" name="product" value="tempranillo-reserva-2019">
+                    <button class="cai-btn cai-btn--primary" type="submit">Add to cart<span class="u-sr-only"> Tempranillo reserva 2019</span></button>
+                  </form>
+                </li>
+              </ul>
+              <output class="u-sr-only" id="cart-status"></output>
+            </div>
+            </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-product-card" aria-label="Copy the product card markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Product card markup"><code id="code-product-card">&lt;article&gt;
+  &lt;h4 id=&quot;red-wines&quot;&gt;Red wines&lt;/h4&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto&quot; aria-labelledby=&quot;red-wines&quot;&gt;
+    &lt;li class=&quot;cai-card&quot;&gt;
+      &lt;div class=&quot;cai-platform-image cai-platform-image--4x3 u-mb-sm&quot;&gt;
+        &lt;picture&gt;…&lt;img src=&quot;malbec.jpg&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/picture&gt;
+      &lt;/div&gt;
+      &lt;h5 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/wines/malbec-2021/&quot;&gt;Malbec 2021&lt;/a&gt;&lt;/h5&gt;
+      &lt;p class=&quot;cai-card__body&quot;&gt;Bodega Albar · 75 cl&lt;/p&gt;
+      &lt;p class=&quot;cai-card__price&quot;&gt;&lt;data value=&quot;12.50&quot;&gt;12,50 €&lt;/data&gt;&lt;/p&gt;
+      &lt;form action=&quot;/cart/add&quot; method=&quot;post&quot;&gt;
+        &lt;input type=&quot;hidden&quot; name=&quot;product&quot; value=&quot;malbec-2021&quot;&gt;
+        &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Add to cart&lt;span class=&quot;u-sr-only&quot;&gt; Malbec 2021&lt;/span&gt;&lt;/button&gt;
+      &lt;/form&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;output class=&quot;u-sr-only&quot; id=&quot;cart-status&quot;&gt;&lt;/output&gt;
+&lt;/article&gt;</code></pre>
+            </div>
+            <ul>
+              <li><strong>One action, one link.</strong> The name is the link; the button is the action. A card with a second action (a wish list, a comparison) has outgrown a card: send the reader to the product's own page.</li>
+              <li><strong>The button's name is unique.</strong> The visible words come first, then the product's name in <code>.u-sr-only</code>, repeating the link's text exactly (keep the space before it). A list of twelve buttons all called “Add to cart” says nothing to someone who lists the buttons of a page, or says them by voice.</li>
+              <li><strong>The list is named by its heading:</strong> <code>aria-labelledby</code> points at the <code>&lt;h4&gt;</code> above it, and the cards use the next level. Core styles no list: remove the bullets and the indent with your own rule (<code>list-style: none; margin: 0; padding: 0</code>).</li>
+              <li><strong>The old price is <code>&lt;s&gt;</code>,</strong> with the words “Now” and “Was” hidden visually so the order is clear to a screen reader; the line through it is not colour.</li>
+              <li><strong>Feedback after a script adds the item:</strong> keep an empty <code>&lt;output&gt;</code> (it has the role <code>status</code>) in the page from the start and write “Malbec 2021 added to the cart” into it; focus stays on the button. A status region that is created together with its text is often not announced. Without a script the form posts and the cart page is the feedback.</li>
+              <li><strong>Sold out:</strong> replace the form with <code>&lt;span class="cai-tag"&gt;Sold out&lt;/span&gt;</code>; do not disable the button.</li>
+              <li>With core alone there is no image frame: use an <code>&lt;img&gt;</code> with your own size rules.</li>
             </ul>
             <h3 id="how">How it works</h3>
             <p>A container styled by <code>components/card.css</code>. No JavaScript.</p>
@@ -104,7 +180,7 @@ toc: h2,h3
               <li>The title class goes on the heading level that fits the page outline.</li>
               <li>The corners are rounded with <code>--cai-radius-md</code>, like a figure or a dropdown.</li>
               <li>The last title or body has no space under it: the padding is the card's last space.</li>
-              <li>A linked card: the link's <code>::after</code> is stretched over the card (<code>position: absolute; inset: 0</code>), so a click anywhere in it follows the link. The card is <code>position: relative</code> to hold it. On hover the border turns <code>--cai-input-border</code> and a small shadow shows; on keyboard focus a ring goes round the card. The title of a linked card is in sans, as a nav or a list of links is; a card without a link keeps the heading face. Both are found with <code>:has()</code>; a card without a link does not change on hover.</li>
+              <li>A linked card: the link's <code>::after</code> is stretched over the card (<code>position: absolute; inset: 0</code>), so a click anywhere in it follows the link. The card is <code>position: relative</code> to hold it. Any other link or control inside the card (<code>a</code>, <code>button</code>, <code>input</code>, <code>select</code>, <code>textarea</code>, <code>summary</code>) is <code>position: relative</code> with <code>z-index: 1</code>, so it paints above that overlay and takes its own click; the title link is the one thing never raised. A button's label wraps in a card (<code>white-space: normal</code>), so a long label or enlarged text stays inside it. On hover the border turns <code>--cai-input-border</code> and a small shadow shows; on keyboard focus a ring goes round the card. The title of a linked card is in sans, as a nav or a list of links is; a card without a link keeps the heading face. Both are found with <code>:has()</code>; a card without a link does not change on hover.</li>
               <li>To lay cards out, use the <a href="/docs/components/layout/">grid object</a> or the <a href="/docs/platform/feature-grid/">feature grid</a>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
@@ -113,8 +189,8 @@ toc: h2,h3
             <p>A card is not interactive and takes no focus.</p>
             <ul>
               <li>In a card that is not linked, links and buttons inside keep their own behaviour.</li>
-              <li>A linked card holds no other link or button: the stretched title link lies over them, so a click on them would follow the title link instead.</li>
-              <li>A linked card has one tab stop, its title link. Enter follows it. The focus ring shows round the link and round the whole card.</li>
+              <li>A link or a button in a linked card is raised above the title link, so the pointer reaches it. It has its own tab stop, in source order, and its own ring; give each a name that is unique on the page (see Product card).</li>
+              <li>A linked card has a tab stop for its title link and one for each other link or button. Enter follows the title link; Enter or Space presses a button. The ring shows round the title link and round the whole card; a button shows its own ring only.</li>
               <li>A screen reader names the link with the title, then reads the body as text. Add no <code>role</code>, <code>tabindex</code> or <code>aria-label</code> to the card.</li>
               <li>Put the link on the title text, never round the card: a link round the card takes every word in it as its name.</li>
             </ul>
@@ -130,15 +206,15 @@ toc: h2,h3
               <li>For rows of records with the same attributes, use a <a href="/docs/components/table/">table</a>.</li>
               <li>For a message about the page, use an <a href="/docs/components/alert/">alert</a>.</li>
               <li>For a list of links, each with one line of description, use a plain list (<code>&lt;ul&gt;</code>): a card per link adds borders and nothing else.</li>
-              <li>For a card with actions, do not link its title: keep it a plain card with a row of buttons.</li>
+              <li>A card with more than one action besides its title link is a form or a page: use the page of the thing, not a card.</li>
               <li>Do not put a card inside a card.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
-                <figcaption><strong class="docs-dodont__verdict">Do</strong> Put the link on the title: the whole card takes the click, the link is named by the title, and there is one tab stop.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Put the link on the title: the whole card takes the click and the link is named by the title. An action goes after it as a button, with a name of its own.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-card"><h4 class="cai-card__title"><a href="/docs/components/table/">Table</a></h4><p class="cai-card__body">Rows of records that share the same attributes.</p></div>
+                  <div class="cai-card"><h4 class="cai-card__title"><a href="/docs/components/table/">Table</a></h4><p class="cai-card__body">Rows of records that share the same attributes.</p><button class="cai-btn cai-btn--secondary cai-btn--sm" type="button">Add to the page</button></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
@@ -165,6 +241,7 @@ toc: h2,h3
               <li>No full stop on the title.</li>
               <li>Keep cards in one group parallel: the same kind of title, the same length of body.</li>
               <li>In a linked card, the title is the link text: it says where the link goes, so the card needs no “Read more”.</li>
+              <li>A price with its currency, in the format of the page's language. A button says what it does and for what: “Add to cart”, then the product's name for assistive technology.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The title is primary text and the body secondary text, on the card surface. In a linked card the title is a link, and the border on hover and the focus ring sit between the card and the page.</p>
@@ -175,6 +252,7 @@ toc: h2,h3
                 </thead>
                 <tbody>
                   <tr><td data-label="Part"><div>Title</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Price</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Body</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Title link</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Border of a linked card, on hover</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>

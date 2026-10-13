@@ -75,6 +75,38 @@
   border-bottom: none;
 }
 
+/* ---- Numbers -------------------------------------------------------
+   .cai-table__numeric on the <th> and on every <td> of a column of
+   numbers, amounts or counts: aligned to the end of the cell, so the
+   digits of a column share their right edge, and in tabular figures, so
+   every digit has the same width. Put it on the heading too, or the
+   heading sits over the wrong edge. Logical: in right-to-left text the
+   end is the left edge. In the stacked card layout the value is already
+   at the end of its row; only the figures stay tabular.
+--------------------------------------------------------------------- */
+.cai-table th.cai-table__numeric,
+.cai-table td.cai-table__numeric {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- Compact density -----------------------------------------------
+   For tables read by scanning, such as a dashboard: less space above and
+   below each row (a row of one line is about 33px, not 49px) and a
+   narrower gutter between columns. Only the space changes: the type size
+   stays, so the text is no harder to read. Placed before the container
+   query below on purpose, so a stacked card keeps its own padding.
+--------------------------------------------------------------------- */
+.cai-table--compact th {
+  padding-block: var(--cai-space-2xs);
+  padding-inline: var(--cai-space-sm);
+}
+
+.cai-table--compact td {
+  padding-block: var(--cai-space-2xs);
+  padding-inline: var(--cai-space-sm);
+}
+
 /* ---- Sticky first column modifier ----------------------------------
    Use .cai-table--sticky-col when the table scrolls horizontally and
    the first column identifies the row (name, ID, label…).
@@ -121,10 +153,43 @@
     border: 0;
   }
 
+  /* A heading that holds a link or a button, such as a column you sort,
+     is a control, and a control is not hidden: it would keep the focus with
+     no ring in sight (WCAG 2.4.7). The headings show, as a row above the
+     cards, and wrap. */
+  .cai-table thead:has(a, button) {
+    display: block;
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    margin: 0 0 var(--cai-space-sm);
+    overflow: visible;
+    white-space: normal;
+  }
+
   .cai-table,
   .cai-table tbody,
   .cai-table tr {
     display: block;
+  }
+
+  /* A caption of a table that is a block would shrink to a narrow column */
+  .cai-table caption {
+    display: block;
+  }
+
+  .cai-table thead:has(a, button) tr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--cai-space-2xs);
+    margin: 0;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+
+  .cai-table thead:has(a, button) th {
+    border-radius: var(--cai-radius-md);
   }
 
   /* Each row becomes a card */

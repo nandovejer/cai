@@ -1,8 +1,9 @@
 /* ==========================================================================
    CAI — Classless
-   The look of a button, a text field, a select and a table, on the bare
-   element, inside an element that has data-cai-classless. For markup you do
-   not control (Markdown, a CMS), where no class can be added.
+   The look of a button, a text field, a select and a table, and the space
+   between blocks of running text, on the bare element, inside an element that
+   has data-cai-classless. For markup you do not control (Markdown, a CMS),
+   where no class can be added.
    Load it as @cai-ds/core/classless.css, after @cai-ds/tokens. It is not part
    of cai.css, and it does nothing outside [data-cai-classless].
 
@@ -12,6 +13,9 @@
      :not([class*="cai-"]).
    - It copies the declarations of .cai-btn, .cai-input, .cai-select and
      .cai-table; tests/classless.spec.js fails when one drifts.
+   - The flow is not a copy of a component: it is the vertical rhythm that the
+     reset removes (margin: 0 on everything), so an article does not run
+     together. One step between blocks, more before a heading, less after it.
    - What a bare element cannot do stays in the component: the scroll of a
      wide table and the stacking of its rows (a wrapper and data-label), the
      styled open list of a select, checkbox, radio, range, color and file
@@ -267,4 +271,30 @@
 
 :where([data-cai-classless] table:not([class*="cai-"]) tr:last-child td) {
   border-bottom: none;
+}
+
+/* ---- Flow: the space between the blocks of long running text ----------
+   The reset zeroes every margin. Here a block, unless it is the first of its
+   parent, starts one step below the one before it; a heading starts further
+   down and its first line of text sits closer. Blocks only (not inline
+   elements, not div or span, whose layout is yours); every selector at
+   specificity 0, in cai.elements, so a component's margin (cai.components)
+   and any rule of yours wins. Logical, so it follows the writing mode. */
+
+:where([data-cai-classless] :is(p, ul, ol, dl, blockquote, figure, pre, table, hr, details, fieldset, form, address, h1, h2, h3, h4, h5, h6):not(:first-child)) {
+  margin-block-start: var(--cai-space-md);
+}
+
+:where([data-cai-classless] :is(h1, h2, h3, h4, h5, h6):not(:first-child)) {
+  margin-block-start: var(--cai-space-xl);
+}
+
+:where([data-cai-classless] :is(h1, h2, h3, h4, h5, h6) + :is(p, ul, ol, dl, blockquote, figure, pre, table, details, form, h1, h2, h3, h4, h5, h6)) {
+  margin-block-start: var(--cai-space-sm);
+}
+
+/* A button under a field: the fields are blocks, the button is not, so it
+   would touch them. Buttons in a row beside each other are left as they are. */
+:where([data-cai-classless] :is(textarea, select, input:not([type="button"], [type="submit"], [type="reset"], [type="checkbox"], [type="radio"], [type="file"], [type="range"], [type="color"], [type="hidden"])) + :is(button, input:is([type="button"], [type="submit"], [type="reset"]))) {
+  margin-block-start: var(--cai-space-md);
 }

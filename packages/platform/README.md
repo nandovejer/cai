@@ -51,6 +51,7 @@ import '@cai-ds/platform'
 - `.cai-platform-page-header`, `__title`, `__lead` — Page header block
 - `.cai-platform-actions` — Action button group
 - `.cai-platform-feature-grid` — Feature showcase grid
+- `.cai-platform-site-header` (`--sticky`, `__inner`, `__brand`, `__nav`, `__actions`) — Site header: the name, the main links and a few controls; below 769 px the links are a native popover panel opened by core's `.cai-nav-toggle`, with no script
 - `.cai-platform-footer` — Page footer
 - `.cai-platform-skip-link` — Accessibility skip link
 - `.cai-platform-command-block` — Command-line-style code snippet
@@ -74,7 +75,7 @@ Each item is `[text, url, meta?, lang?]`. The component fetches it only from the
 
 ## Image and placeholder
 
-`.cai-platform-image` is a 16:9 frame (or the ratio of its modifier) around a native `<picture>`. The image fills the frame and is cropped to it, so keep text and essential detail away from the edges. When the frame has no image, CSS draws an abstract placeholder in the colours of the vejer theme with `image-set()` (AVIF, then WebP, then JPEG), with no JavaScript. In dark mode (`data-theme="dark"`, a custom theme's `data-mode="dark"`, or the colour-mode switcher's dark radio) it draws a night version. The placeholder is decorative: it is a background and screen readers skip it. While an image loads or if it fails, the frame is a flat `--cai-surface-strong` surface, so a failed image's alt text stays readable; transparent images sit on it too. Give your real image an `alt` that says what stays visible in the frame, or `alt=""` if it is decorative. Use `loading="lazy"` only below the fold.
+`.cai-platform-image` is a 16:9 frame (or the ratio of its modifier) around a native `<picture>`. The image fills the frame and is cropped to it, so keep text and essential detail away from the edges. When the frame has no image, CSS draws an abstract placeholder in the colours of CAI's default look (Vejer) with `image-set()` (AVIF, then WebP, then JPEG), with no JavaScript. In dark mode (`data-theme="dark"`, a custom theme's `data-mode="dark"`, or the colour-mode switcher's dark radio) it draws a night version. The placeholder is decorative: it is a background and screen readers skip it. While an image loads or if it fails, the frame is a flat `--cai-surface-strong` surface, so a failed image's alt text stays readable; transparent images sit on it too. Give your real image an `alt` that says what stays visible in the frame, or `alt=""` if it is decorative. Use `loading="lazy"` only below the fold.
 
 ```html
 <!-- With an image -->

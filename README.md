@@ -356,4 +356,4 @@ Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 ## License
 
-MIT, including the fonts. Every bundled font is under the MIT License only: ET Book, in `@cai-ds/tokens`. Its notice ships next to the font files (`LICENSE-ETBook.txt`). Body, UI and code text use the system fonts, so nothing else is bundled; `@cai-ds/core` ships no fonts.
+MIT, including the fonts. Every bundled font is under the MIT License only: ET Book, in `@cai-ds/tokens`. Its notice ships next to the font files (`LICENSE-ETBook.txt`). Controls, labels, tables and code use the system fonts, so nothing else is bundled; `@cai-ds/core` ships no fonts.

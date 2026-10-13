@@ -59,16 +59,18 @@
   color: var(--cai-code-literal);
 }
 
-/* lang badge */
+/* lang badge: a line of its own above the code, at the end edge. In the flow
+   and not on top of the block, so a long first line is never under it. A
+   wrapper that carries the label itself (a bar with a copy button) turns it
+   off with `content: none`. */
 .cai-code-block::before {
   content: attr(data-lang);
-  position: absolute;
-  inset-block-start: var(--cai-space-xs);
-  inset-inline-end: var(--cai-space-sm);
+  display: block;
+  margin-block-end: var(--cai-space-2xs);
+  text-align: end;
   font-size: var(--cai-text-xs);
   font-family: var(--cai-font-mono);
   color: var(--cai-text-secondary);
-  pointer-events: none;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }

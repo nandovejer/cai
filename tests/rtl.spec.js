@@ -85,3 +85,19 @@ for (const route of pages) {
     }
   });
 }
+
+test('code stays left to right in a right-to-left page', async ({ page }) => {
+  // /ar/ is right to left on <html>; a snippet in it must not be mirrored
+  await page.goto('/ar/');
+  const dirs = await page.evaluate(() => [...document.querySelectorAll('pre, code')].map((el) => getComputedStyle(el).direction));
+  expect(dirs.length).toBeGreaterThan(0);
+  expect([...new Set(dirs)]).toEqual(['ltr']);
+  // A dir of your own wins
+  const own = await page.evaluate(() => {
+    const code = document.createElement('code');
+    code.dir = 'rtl';
+    document.body.append(code);
+    return getComputedStyle(code).direction;
+  });
+  expect(own).toBe('rtl');
+});

@@ -28,8 +28,8 @@ import '@cai-ds/tokens'
 
 ## Package exports
 
-- **`.`**, **`./css`** → `cai-tokens.css` — fonts + primitives + semantic themes (`./css/min` for the minified twin)
-- **`./tokens.css`** → primitives + semantic themes, without any `@font-face` (bring your own fonts)
+- **`.`**, **`./css`** → `cai-tokens.css` — fonts + primitives + semantic tokens (`./css/min` for the minified twin)
+- **`./tokens.css`** → primitives + semantic tokens, without any `@font-face` (bring your own fonts)
 - **`./fonts.css`** → the `@font-face` declarations only
 - **`./tokens.json`** → the primitives source, for tooling
 - **`./dtcg`** → `cai-tokens.dtcg.json` — primitives and semantic tokens in the W3C Design Tokens (DTCG) format, for Figma and other design tools. Two groups, one per collection: `primitives` (one mode) and `semantic` (modes Light, Dark and High contrast in `$extensions.mode`, `$value` is Light). Semantic tokens are aliases of primitives where the CSS uses a primitive. Names: drop `--cai-`; the first segment is the group, the rest is the name (`--cai-surface-page` ↔ `surface/page`; `--cai-surface` is `surface/$root`)
@@ -49,9 +49,9 @@ Exit code `0` when every pair passes, `1` when one fails or a color could not be
 ## What's included
 
 - **Primitives** (Layer 1): Color scales, spacing, typography, shadows, radius tokens — generated from `tokens.json`. The colour scales are CAI's own palette, computed in OKLCH (one lightness curve for every family, so a step number means the same contrast in every colour)
-- **Semantic themes** (Layer 2): Light, dark, and high-contrast color modes — source in `src/semantic.css`
-- **One self-hosted font**, MIT licensed: ET Book (serif, for headings), included in `cai-tokens.css`
-- **System font stacks** for sans and mono, so body, UI and code text download nothing
+- **Semantic tokens** (Layer 2): the default look, Vejer, in the light, dark and high-contrast color modes — source in `src/semantic.css`
+- **One self-hosted font**, MIT licensed: ET Book (serif, for running text and headings), included in `cai-tokens.css`
+- **System font stacks** for sans and mono, so controls, labels, tables and code download nothing
 
 ## CSS Custom Properties
 

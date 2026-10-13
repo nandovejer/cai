@@ -26,6 +26,44 @@ test.describe('component size queries', () => {
     expect(await css(page, '#table-wide tbody tr', 'display')).toBe('table-row');
   });
 
+  test('table: a heading row with sort links stays visible and focusable when stacked (H7, WCAG 2.4.7)', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.evaluate(() => {
+      document.body.innerHTML = `<div style="padding:16px"><div class="cai-table-wrap"><table class="cai-table" id="sortable">
+        <caption>Wines, sorted by price, ascending</caption>
+        <thead><tr><th scope="col"><a href="#sortable">Name</a></th><th scope="col" aria-sort="ascending"><a href="#sortable">Price (EUR), ascending</a></th></tr></thead>
+        <tbody><tr><td data-label="Name">Malbec</td><td data-label="Price (EUR)">12.50</td></tr></tbody>
+      </table></div></div>
+      <div style="padding:16px"><div class="cai-table-wrap"><table class="cai-table" id="plain">
+        <thead><tr><th scope="col">Name</th><th scope="col">Price</th></tr></thead>
+        <tbody><tr><td data-label="Name">Malbec</td><td data-label="Price">12.50</td></tr></tbody>
+      </table></div></div>`;
+    });
+    // The links are on screen, with a size, and the caption is not squeezed into a narrow column
+    const box = await page.locator('#sortable thead a').first().evaluate((a) => {
+      const r = a.getBoundingClientRect();
+      const t = a.closest('thead').getBoundingClientRect();
+      return { w: r.width, h: r.height, thead: [t.width, t.height], inside: r.left >= 0 && r.right <= window.innerWidth };
+    });
+    expect(box.w).toBeGreaterThan(20);
+    expect(box.h).toBeGreaterThan(10);
+    expect(box.thead[0]).toBeGreaterThan(100);
+    expect(box.inside).toBe(true);
+    expect(await page.locator('#sortable caption').evaluate((c) => c.getBoundingClientRect().width)).toBeGreaterThan(300);
+    // Focus is visible: an outline on the link, drawn inside the window
+    await page.locator('#sortable thead a').first().focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    const ring = await page.evaluate(() => {
+      const a = document.activeElement;
+      return { style: getComputedStyle(a).outlineStyle, width: parseFloat(getComputedStyle(a).outlineWidth) };
+    });
+    expect(ring.style).toBe('solid');
+    expect(ring.width).toBeGreaterThanOrEqual(2);
+    // A heading row of plain text is still hidden: each card carries its labels
+    expect(await page.locator('#plain thead').evaluate((t) => t.getBoundingClientRect().width)).toBeLessThanOrEqual(2);
+  });
+
   test('player: controls stack and the volume bar goes in a narrow player only', async ({ page }) => {
     expect(await css(page, '#controls-narrow', 'flex-direction')).toBe('column');
     expect(await css(page, '#volbar-narrow', 'display')).toBe('none');

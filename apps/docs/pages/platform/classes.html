@@ -4,7 +4,7 @@ description: Every cai-platform class, what element it goes on and what it does,
 area: platform
 order: 11
 group: reference
-files: components/_components.css, components/search.css, components/lang-switcher.css
+files: components/_components.css, components/search.css, components/lang-switcher.css, components/site-header.css
 -->
     <div class="docs-block" id="p-reference">
           <p>Look up a class by name. Each pattern's own page has its markup and guidance.</p>
@@ -66,6 +66,31 @@ files: components/_components.css, components/search.css, components/lang-switch
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-site-header</div></td>
+                <td data-label="Element"><div>&lt;header&gt;</div></td>
+                <td data-label="Description"><div>The site's banner: page surface and a rule underneath. <code class="cai-code-inline">--sticky</code> keeps it at the top in a window at least 30 rem tall. Sets <code class="cai-code-inline">--cai-platform-site-header-h</code>, where the menu panel and the language list open.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-site-header__inner</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>The row: wraps, centred, with the gutters of <code class="cai-code-inline">.o-container</code>.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-site-header__brand</div></td>
+                <td data-label="Element"><div>&lt;a&gt;</div></td>
+                <td data-label="Description"><div>The site's name, linked to the home page, not underlined; takes the free space of the row.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-site-header__nav</div></td>
+                <td data-label="Element"><div>&lt;nav popover&gt;</div></td>
+                <td data-label="Description"><div>The links: a row from 769 px, a panel under the header below it, opened by <code class="cai-code-inline">.cai-nav-toggle</code>.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-platform-site-header__actions</div></td>
+                <td data-label="Element"><div>&lt;div&gt;</div></td>
+                <td data-label="Description"><div>The controls at the end of the row: search, language switcher, a button.</div></td>
+              </tr>
               <tr>
                 <td data-label="Class"><div>.cai-platform-page-header</div></td>
                 <td data-label="Element"><div>&lt;div&gt; / &lt;header&gt;</div></td>

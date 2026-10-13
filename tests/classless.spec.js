@@ -104,6 +104,40 @@ test.describe('classless: the same look as the component', () => {
   });
 });
 
+test.describe('classless: the space between blocks', () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto(FIXTURE);
+  });
+
+  const top = async (page, id) => (await read(page, id, ['margin-top']))['margin-top'];
+  const px = (value) => Number.parseFloat(value);
+
+  test('a block starts one step below the one before it; the first has no margin above', async ({ page }) => {
+    expect(await top(page, 'flow-h')).toBe('0px');
+    expect(px(await top(page, 'flow-p2'))).toBeGreaterThan(0);
+    expect(px(await top(page, 'flow-ul'))).toBe(px(await top(page, 'flow-p2')));
+    // A nested list, first element of its item, does not add a step
+    expect(await top(page, 'flow-nested')).toBe('0px');
+  });
+
+  test('a heading starts further down, and what follows it sits closer', async ({ page }) => {
+    const step = px(await top(page, 'flow-p2'));
+    expect(px(await top(page, 'flow-h3'))).toBeGreaterThan(step);
+    expect(px(await top(page, 'flow-p1'))).toBeLessThan(step);
+    // A heading under a heading is the close step too
+    expect(px(await top(page, 'flow-h4'))).toBeLessThan(step);
+  });
+
+  test('a button under a field is spaced; no other inline control is', async ({ page }) => {
+    expect(px(await top(page, 'flow-button'))).toBeGreaterThan(0);
+    expect(await top(page, 'button')).toBe('0px');
+  });
+
+  test('outside the scope, nothing changes', async ({ page }) => {
+    expect(await top(page, 'out-p2')).toBe('0px');
+  });
+});
+
 test.describe('classless: the scope', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(FIXTURE);

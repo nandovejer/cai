@@ -54,6 +54,15 @@ test.describe('dropdown', () => {
     }
   });
 
+  test('Enter opens it with the focus still on the button; the first Tab enters the panel', async ({ page }) => {
+    await page.locator('#btn-one').focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('#menu-one')).toBeVisible();
+    await expect(page.locator('#btn-one')).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(page.getByRole('link', { name: 'Edit' })).toBeFocused();
+  });
+
   test('each panel opens under its own button, at its start edge', async ({ page }) => {
     for (const id of ['one', 'two']) {
       await open(page, id);

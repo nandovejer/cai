@@ -438,7 +438,12 @@ test.describe('Landing page', () => {
 
         const command = await section.locator('.cai-platform-command-block__cmd').textContent();
         expect(command.replace(/\s+/g, ' ').replace(/^\s*\$\s*/, '').trim()).toBe(level.install);
-        await expect(section.locator('.cai-copy-btn')).toHaveAttribute('data-copy', level.install);
+        await expect(section.locator('.cai-platform-command-block .cai-copy-btn')).toHaveAttribute('data-copy', level.install);
+        // The CDN snippet has its own Copy button, pointing at its code
+        const cdnButton = section.locator('.docs-snippet .cai-copy-btn');
+        await expect(cdnButton).toHaveCount(1);
+        const from = await cdnButton.getAttribute('data-copy-from');
+        await expect(section.locator(`pre.cai-code-block code#${from}`)).toHaveCount(1);
 
         const snippet = await section.locator('pre.cai-code-block code').textContent();
         let position = -1;

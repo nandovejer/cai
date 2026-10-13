@@ -38,7 +38,7 @@ Thank you for helping keep CAI secure!
 
 ### When Using CAI Design System from CDN
 
-1. **Pin an exact version and use Subresource Integrity (SRI)** so a file cannot change under you. Load the layers in order — tokens, core, platform:
+1. **Pin an exact version and use Subresource Integrity (SRI)** so a file cannot change under you. Load the layers in order — tokens, core, site:
 
 ```html
 <link

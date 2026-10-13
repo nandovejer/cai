@@ -29,7 +29,7 @@ No framework. No build step for consumers.
 CAI is built with plain CSS, ES modules and native browser APIs. Adopt only the tokens, add the components, or take whole-page patterns: the three layers are independent packages that stack in one direction.
 
 ```text
-@cai-ds/tokens  ->  @cai-ds/core  ->  @cai-ds/platform
+@cai-ds/tokens  ->  @cai-ds/core  ->  @cai-ds/site
    standalone        needs tokens      needs core + tokens
 ```
 
@@ -37,7 +37,7 @@ The name stands for Consistent Adaptive Identity: one set of tokens that every c
 
 - [`@cai-ds/tokens`](./packages/tokens): design tokens (CSS custom properties), the three color modes and the font.
 - [`@cai-ds/core`](./packages/core): the components, the layout objects, the styles of bare HTML elements and optional JavaScript.
-- [`@cai-ds/platform`](./packages/platform): page patterns (page shell, site header, footer, image frame) and the site search.
+- [`@cai-ds/site`](./packages/site): page patterns (page shell, site header, footer, image frame) and the site search.
 
 ## Install and load
 
@@ -47,14 +47,14 @@ Each package needs the ones below it and nothing above it. Adopt one level and s
 | --- | --- | --- |
 | Tokens only | `@cai-ds/tokens` | `cai-tokens.css` |
 | Tokens + components | `@cai-ds/tokens` `@cai-ds/core` | `cai-tokens.css`, `cai.css`, optionally `cai.js` |
-| Tokens + components + page patterns | `@cai-ds/tokens` `@cai-ds/core` `@cai-ds/platform` | `cai-tokens.css`, `cai.css`, `platform.css`, optionally `cai.js` and `platform.js` |
+| Tokens + components + page patterns | `@cai-ds/tokens` `@cai-ds/core` `@cai-ds/site` | `cai-tokens.css`, `cai.css`, `site.css`, optionally `cai.js` and `site.js` |
 
-`@cai-ds/core` declares `@cai-ds/tokens` as a required peer dependency; `@cai-ds/platform` declares both. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
+`@cai-ds/core` declares `@cai-ds/tokens` as a required peer dependency; `@cai-ds/site` declares both. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
 
 ```bash
 npm install @cai-ds/tokens                                   # level 1
 npm install @cai-ds/tokens @cai-ds/core                      # level 2
-npm install @cai-ds/tokens @cai-ds/core @cai-ds/platform     # level 3
+npm install @cai-ds/tokens @cai-ds/core @cai-ds/site     # level 3
 ```
 
 ### With a bundler
@@ -62,13 +62,13 @@ npm install @cai-ds/tokens @cai-ds/core @cai-ds/platform     # level 3
 ```js
 import "@cai-ds/tokens/css";
 import "@cai-ds/core/css";
-import "@cai-ds/platform/css"; // level 3 only
+import "@cai-ds/site/css"; // level 3 only
 
 import "@cai-ds/core";         // optional: the JavaScript, starts every behavior
-import "@cai-ds/platform";     // level 3, only if you use the search
+import "@cai-ds/site";     // level 3, only if you use the search
 ```
 
-`@cai-ds/core` and `@cai-ds/platform` without `/css` are the scripts, not the stylesheets.
+`@cai-ds/core` and `@cai-ds/site` without `/css` are the scripts, not the stylesheets.
 
 ### From a CDN
 
@@ -77,9 +77,9 @@ Drop the lines for the levels you do not use:
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js"></script>
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/platform@3.0.0/dist/platform.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.js"></script>
 ```
 
 Pin an exact version and add an `integrity` hash in production; see [SECURITY.md](./SECURITY.md). A console warning tells you when a layer is loaded without the one below it.
@@ -95,8 +95,8 @@ Pin an exact version and add an `integrity` hash in production; see [SECURITY.md
 | `print.css` | core | The print styles on their own; `cai.css` already contains them |
 | `themes/_template.css` | core | The starting point of a theme of your own |
 | `tokens.css`, `fonts.css` | tokens | The tokens without `@font-face`, or the `@font-face` only |
-| `search.js` | platform | The search element on its own (`@cai-ds/platform/search`) |
-| `placeholders/*` | platform | The images the image frame shows when it has no picture |
+| `search.js` | site | The search element on its own (`@cai-ds/site/search`) |
+| `placeholders/*` | site | The images the image frame shows when it has no picture |
 
 ### JavaScript modules
 
@@ -111,7 +111,7 @@ Published modules: `theme`, `sidebar`, `clipboard`, `modal`, `highlight`, `playe
 
 ## What each package needs
 
-The page shell of a whole page is platform; the layout objects of an app with a sidebar are core. The full table, checked against the CSS, is on [How CAI is organised](https://nandovejer.github.io/cai/docs/get-started/structure/#needs).
+The page shell of a whole page is site; the layout objects of an app with a sidebar are core. The full table, checked against the CSS, is on [How CAI is organised](https://nandovejer.github.io/cai/docs/get-started/structure/#needs).
 
 ## Color modes and themes
 
@@ -178,7 +178,7 @@ See [STRUCTURE.md](./.claude/STRUCTURE.md) for the full annotated directory layo
 cai-design-system/
 ├── apps/                      # Internal apps (not publishable)
 │   ├── landing/               # Home page: what CAI is for, why, and how to adopt it
-│   └── docs/                  # The documentation: install, tokens, components, platform patterns, HTML elements
+│   └── docs/                  # The documentation: install, tokens, components, site patterns, HTML elements
 ├── packages/
 │   ├── tokens/                # @cai-ds/tokens
 │   │   ├── tokens.json        # Source of truth for primitives
@@ -193,7 +193,7 @@ cai-design-system/
 │   │   │   ├── themes/        # _template.css, the starting point of a theme of your own
 │   │   │   └── *.js           # One module per behavior
 │   │   └── dist/              # Generated: do not edit directly
-│   └── platform/              # @cai-ds/platform
+│   └── site/              # @cai-ds/site
 │       ├── src/
 │       └── dist/
 ├── docs/                      # Generated GitHub Pages site (pnpm pages:build): do not edit
@@ -222,18 +222,18 @@ pnpm dev
 | Landing | `http://localhost:5173/` | `apps/landing/` |
 | Documentation | `http://localhost:5173/docs/` | `apps/docs/` |
 
-Edits to files under `apps/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm platform:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
+Edits to files under `apps/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm site:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
 
-To load the packages from this repository in a page of your own, point at `dist/`: `/packages/tokens/dist/cai-tokens.css`, `/packages/core/dist/cai.css`, `/packages/platform/dist/platform.css` and `/packages/core/dist/cai.js`.
+To load the packages from this repository in a page of your own, point at `dist/`: `/packages/tokens/dist/cai-tokens.css`, `/packages/core/dist/cai.css`, `/packages/site/dist/site.css` and `/packages/core/dist/cai.js`.
 
 ### Commands
 
 ```bash
 pnpm dev             # Vite dev server
-pnpm build           # tokens:build + core:build + platform:build
+pnpm build           # tokens:build + core:build + site:build
 pnpm tokens:build    # Regenerate packages/tokens/dist
 pnpm core:build      # Regenerate packages/core/dist
-pnpm platform:build  # Regenerate packages/platform/dist
+pnpm site:build  # Regenerate packages/site/dist
 pnpm lint:css        # Stylelint over packages/**/*.css and apps/**/*.css
 pnpm lint:js         # ESLint over the JS of packages, apps, scripts and tests
 pnpm test:unit       # Vitest (run `pnpm build` first: some suites read dist/)
@@ -272,10 +272,10 @@ pnpm core:build
 
 This regenerates `dist/cai.css`, `dist/base.css` (settings + reset + elements, the prerequisite for per-component CSS), `dist/components/*.css`, `dist/classless.css`, `dist/print.css`, the JS modules, the lazy `midi.js` and `table-sort.js` chunks and `dist/themes/*.css`. Core settings (z-index scale, motion, breakpoints, `--cai-font-heading`) ship with core, not with tokens.
 
-**Platform.** `@cai-ds/platform` holds page patterns that are too opinionated for core. It is CSS first; `dist/platform.js` defines the search element and warns when core is not loaded.
+**Site.** `@cai-ds/site` holds page patterns that are too opinionated for core. It is CSS first; `dist/site.js` defines the search element and warns when core is not loaded.
 
 ```bash
-pnpm platform:build
+pnpm site:build
 ```
 
 ### GitHub Pages

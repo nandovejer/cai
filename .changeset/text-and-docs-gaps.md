@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": patch
 "@cai-ds/core": patch
-"@cai-ds/platform": patch
+"@cai-ds/site": patch
 ---
 
 **Docs and text (no change to CSS or JavaScript)**

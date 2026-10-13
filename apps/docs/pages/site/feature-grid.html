@@ -1,0 +1,129 @@
+<!-- cai:page
+title: Feature grid
+description: Lays out a short set of features or options of equal weight in two columns.
+area: site
+order: 8
+group: patterns
+files: .cai-site-feature-grid
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-features">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-site-feature-grid">
+              <div class="cai-card">
+                <h3 class="cai-card__title">Usage</h3>
+                <p class="cai-card__body">1.2 million requests this month.</p>
+              </div>
+              <div class="cai-card">
+                <h3 class="cai-card__title">Team</h3>
+                <p class="cai-card__body">Eight members, two pending invites.</p>
+              </div>
+              <div class="cai-card">
+                <h3 class="cai-card__title">Billing</h3>
+                <p class="cai-card__body">Next invoice on the first of the month.</p>
+              </div>
+              <div class="cai-card">
+                <h3 class="cai-card__title">Security</h3>
+                <p class="cai-card__body">Two-factor sign-in is on for everyone.</p>
+              </div>
+            </div>
+            <p class="docs-demo__note">Two columns; one when two do not fit 16rem each.</p>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Feature grid documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-feature-grid" aria-label="Copy the feature grid markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Feature grid markup"><code id="code-feature-grid">&lt;div class=&quot;cai-site-feature-grid&quot;&gt;
+  &lt;article class=&quot;cai-card&quot;&gt;
+    &lt;h3 class=&quot;cai-card__title&quot;&gt;Usage&lt;/h3&gt;
+    &lt;p class=&quot;cai-card__body&quot;&gt;1.2 million requests this month.&lt;/p&gt;
+  &lt;/article&gt;
+  &lt;article class=&quot;cai-card&quot;&gt;
+    &lt;h3 class=&quot;cai-card__title&quot;&gt;Team&lt;/h3&gt;
+    &lt;p class=&quot;cai-card__body&quot;&gt;Eight members, two pending invites.&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Feature grid class" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-site-feature-grid</code></div></td><td data-label="Effect"><div>Two equal columns with 12 px between cells; one column when two do not fit 16rem each (it follows the room the grid has, not the window)</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS grid from <code>@cai-ds/site</code>. No JavaScript.</p>
+            <ul>
+              <li>Each cell is usually a <a href="/docs/components/card/">card</a>.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the grid is CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The grid has no interaction of its own.</p>
+            <ul>
+              <li>To link a card, put the link on its title text and keep the rest plain: one tab stop per card.</li>
+              <li>Give each card a heading, so screen reader users can move from card to card.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a feature grid for a short set of features or options of equal weight, each in its own card.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it for data that readers compare across rows: use a <a href="/docs/components/table/">table</a>.</p>
+            <ul>
+              <li>For items with an order, use a numbered list.</li>
+              <li>For a single item, use a card on its own.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Parallel cards: the same kind of title and one sentence each.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-feature-grid"><div class="cai-card"><h4 class="cai-card__title">Usage</h4><p class="cai-card__body">1.2 million requests this month.</p></div><div class="cai-card"><h4 class="cai-card__title">Team</h4><p class="cai-card__body">Eight members.</p></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Plans the reader compares, value by value, in cards: use a table, with one column per plan.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-feature-grid"><div class="cai-card"><h4 class="cai-card__title">Team</h4><p class="cai-card__body">€20 a month, 10 users, 50 GB.</p></div><div class="cai-card"><h4 class="cai-card__title">Business</h4><p class="cai-card__body">50 GB more, €45 a month and 25 users.</p></div></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Keep the cards parallel: the same heading level and one or two sentences each.</p>
+            <ul>
+              <li>An even number of items fills the two columns.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The grid adds no colour of its own: the cards in it keep the pairs on the <a href="/docs/components/card/#contrast">card page</a>.</p>
+            <ul>
+              <li><strong>Focus:</strong> the grid takes none; what is inside keeps its own ring.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 1 tokens that the <code>.cai-site-feature-grid</code> rules of site's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-sm</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

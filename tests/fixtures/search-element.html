@@ -6,27 +6,27 @@
   <title>CAI search element fixture</title>
   <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
   <link rel="stylesheet" href="/packages/core/dist/cai.css">
-  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
 </head>
 <body>
   <a href="/a-z/" data-cai-search-fallback id="fallback">A–Z index</a>
   <button type="button" data-cai-search-open id="trigger" hidden>Search</button>
   <div id="slot"></div>
   <template id="markup">
-    <cai-platform-search>
-      <dialog class="cai-modal cai-platform-search" data-cai-search data-cai-search-src="/tests/fixtures/search-index.json" aria-label="Search" data-cai-label-loading="Loading" data-cai-label-error="Error">
+    <cai-site-search>
+      <dialog class="cai-modal cai-site-search" data-cai-search data-cai-search-src="/tests/fixtures/search-index.json" aria-label="Search" data-cai-label-loading="Loading" data-cai-label-error="Error">
         <input type="search" aria-label="Query">
         <p role="status"></p>
         <div data-cai-search-results>
           <div hidden><ul data-cai-search-list="pages"></ul></div>
         </div>
       </dialog>
-    </cai-platform-search>
+    </cai-site-search>
   </template>
   <script>
     // The element is added by script, as a router or a framework would
     window.addSearch = () => document.getElementById('slot').append(document.getElementById('markup').content.cloneNode(true));
   </script>
-  <script type="module" src="/packages/platform/dist/search.js"></script>
+  <script type="module" src="/packages/site/dist/search.js"></script>
 </body>
 </html>

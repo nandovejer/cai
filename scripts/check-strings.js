@@ -34,7 +34,7 @@ const VAGUE = {
 const CASED = new Set(["en", "es"]);
 
 // Words that may be capitalised inside a sentence-case heading
-const ALLOWED_CAPS = /^(CAI|CSS|HTML|JS|JavaScript|JSON|ARIA|WCAG|MIDI|API|npm|pnpm|URL|UI|UX|ITCSS|BEM|CDN|ES|SVG|MDN|DOM|OK|Tokens|Core|Platform|Level|Components)$/;
+const ALLOWED_CAPS = /^(CAI|CSS|HTML|JS|JavaScript|JSON|ARIA|WCAG|MIDI|API|npm|pnpm|URL|UI|UX|ITCSS|BEM|CDN|ES|SVG|MDN|DOM|OK|Tokens|Core|Site|Level|Components)$/;
 
 // Removed parts keep their line breaks, so the reported line numbers stay right
 const blank = (text) => text.replace(/[^\n]/g, "");

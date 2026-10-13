@@ -1,5 +1,5 @@
-<cai-platform-search>
-<dialog class="cai-modal cai-platform-search" id="cai-search" aria-labelledby="cai-search-title"
+<cai-site-search>
+<dialog class="cai-modal cai-site-search" id="cai-search" aria-labelledby="cai-search-title"
         data-cai-search data-cai-search-src="/docs/search-index.json"
         data-cai-label-results="{{t:search.results}}"
         data-cai-label-result="{{t:search.result}}"
@@ -7,18 +7,18 @@
         data-cai-label-none="{{t:search.none}}"
         data-cai-label-loading="{{t:search.loading}}"
         data-cai-label-error="{{t:search.error}}">
-  <search class="cai-platform-search__body">
-    <div class="cai-platform-search__head">
-      <h2 class="cai-platform-search__title" id="cai-search-title"><label for="cai-search-q">{{t:search.title}}</label></h2>
-      <form method="dialog"><button class="cai-btn cai-btn--ghost cai-platform-search__close" aria-label="{{t:search.close}}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+  <search class="cai-site-search__body">
+    <div class="cai-site-search__head">
+      <h2 class="cai-site-search__title" id="cai-search-title"><label for="cai-search-q">{{t:search.title}}</label></h2>
+      <form method="dialog"><button class="cai-btn cai-btn--ghost cai-site-search__close" aria-label="{{t:search.close}}"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
     </div>
-    <div class="cai-platform-search__field">
+    <div class="cai-site-search__field">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
       <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
     </div>
     <p class="cai-field__helper" id="cai-search-hint">{{t:search.hint}}</p>
-    <p class="cai-platform-search__status" role="status"></p>
-    <div class="cai-platform-search__results" data-cai-search-results>
+    <p class="cai-site-search__status" role="status"></p>
+    <div class="cai-site-search__results" data-cai-search-results>
       <div data-cai-search-show="idle">
         <h3>{{t:search.popular}}</h3>
         <ul lang="en">
@@ -33,7 +33,7 @@
       <div hidden><h3>{{t:search.sections}}</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
       <div hidden><h3>{{t:search.elements}}</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
     </div>
-    <p class="cai-platform-search__foot">{{t:search.not-found}} <a href="/docs/a-z/">{{t:search.az}}</a></p>
+    <p class="cai-site-search__foot">{{t:search.not-found}} <a href="/docs/a-z/">{{t:search.az}}</a></p>
   </search>
 </dialog>
-</cai-platform-search>
+</cai-site-search>

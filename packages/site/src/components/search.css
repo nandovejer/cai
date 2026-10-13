@@ -1,0 +1,293 @@
+/* ==========================================================================
+	 CAI Site: search.
+	 A button shaped like a field that opens a native <dialog> (core's
+	 .cai-modal surface) with a field and grouped lists of links. Without
+	 JavaScript the button stays hidden and a plain link to an index shows.
+	 ========================================================================== */
+
+/* The wrapper has no box of its own: the dialog is in the top layer, and
+   a box would take a cell of the page's grid or flex container */
+:where(cai-site-search) {
+	display: contents;
+}
+
+/* The trigger: real text at full contrast, not placeholder grey, inside a
+   field-like border; one row, at least 44px high */
+.cai-site-search-trigger:not([hidden]) {
+	display: inline-flex;
+}
+
+.cai-site-search-trigger {
+	align-items: center;
+	gap: var(--cai-space-xs);
+	min-block-size: var(--cai-control-lg);
+	min-inline-size: var(--cai-control-lg);
+	padding-inline: var(--cai-space-sm);
+	border: 1px solid var(--cai-input-border);
+	border-radius: var(--cai-radius-md);
+	background: var(--cai-input-bg);
+	color: var(--cai-text-secondary);
+	font: inherit;
+	font-size: var(--cai-text-sm);
+	cursor: pointer;
+}
+
+.cai-site-search-trigger:hover {
+	color: var(--cai-text-primary);
+	border-color: var(--cai-text-secondary);
+}
+
+.cai-site-search-trigger:focus-visible {
+	outline: 2px solid var(--cai-focus-ring);
+	outline-offset: 2px;
+}
+
+.cai-site-search-trigger__icon {
+	flex: none;
+	inline-size: 1.125rem;
+	block-size: 1.125rem;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 2;
+}
+
+.cai-site-search-trigger__key {
+	margin-inline-start: auto;
+	padding-inline: var(--cai-space-2xs);
+	border: 1px solid var(--cai-divider);
+	border-radius: var(--cai-radius-sm);
+	font-family: var(--cai-font-mono);
+	font-size: var(--cai-text-xs);
+	white-space: nowrap;
+}
+
+/* The shortcut needs a keyboard */
+@media (pointer: coarse) and (hover: none) {
+	.cai-site-search-trigger__key {
+		display: none;
+	}
+}
+
+/* Narrow screens: the magnifier only. The label stays in the accessible
+   name ("Search docs"), clipped, not removed. */
+@media (max-width: 768px) {
+	.cai-site-search-trigger--compact {
+		justify-content: center;
+		padding-inline: 0;
+	}
+
+	.cai-site-search-trigger--compact .cai-site-search-trigger__label {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.cai-site-search-trigger--compact .cai-site-search-trigger__key {
+		display: none;
+	}
+}
+
+/* The dialog: a column whose list of results scrolls between the field and
+   the footer line; the whole dialog scrolls when the screen is too short
+   for both (400 % zoom). Full screen on narrow screens. */
+.cai-site-search {
+	inline-size: min(100%, 40rem);
+	max-inline-size: 100%;
+	max-block-size: min(80dvb, 40rem);
+	/* core's reset zeroes the auto margins that centre a dialog */
+	margin: 10dvb auto auto;
+	padding: var(--cai-space-lg);
+}
+
+.cai-site-search[open] {
+	display: flex;
+	flex-direction: column;
+}
+
+.cai-site-search__body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--cai-space-xs);
+	min-block-size: 0;
+	/* Controls and navigation: the sans, not the running-text serif */
+	font-family: var(--cai-font-sans);
+}
+
+.cai-site-search__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--cai-space-xs) var(--cai-space-md);
+}
+
+.cai-site-search__title {
+	margin: 0;
+	font-family: var(--cai-font-heading);
+	font-size: var(--cai-text-lg);
+}
+
+/* The field with a magnifier at its start. The icon is decorative (the
+   heading labels the field) and lets clicks through to the field. */
+.cai-site-search__field {
+	position: relative;
+}
+
+.cai-site-search__field :where(svg) {
+	position: absolute;
+	inset-block: 0;
+	inset-inline-start: var(--cai-space-sm);
+	margin-block: auto;
+	inline-size: 1.125rem;
+	block-size: 1.125rem;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 2;
+	color: var(--cai-text-secondary);
+	pointer-events: none;
+}
+
+.cai-site-search__field :where(input) {
+	/* The icon's inset, a 24px slot for it, and a gap before the text */
+	padding-inline-start: calc(var(--cai-space-sm) + var(--cai-space-lg) + var(--cai-space-2xs));
+}
+
+/* The count: small and muted, below the group headings in weight */
+.cai-site-search__status {
+	font-size: var(--cai-text-sm);
+	color: var(--cai-text-secondary);
+}
+
+/* At the end of the row, also when it wraps below the title */
+.cai-site-search__head > :last-child {
+	margin-inline-start: auto;
+}
+
+/* An icon button: a square target as tall as the large controls. The × is
+   decorative; the button's name is its aria-label. */
+.cai-site-search__close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: var(--cai-control-lg);
+	min-block-size: var(--cai-control-lg);
+	padding: 0;
+	/* The × is a quiet control, like the magnifier: secondary text, primary
+	   on hover. The ghost button's brand blue is for actions. currentcolor
+	   follows the system colours in forced colours. */
+	color: var(--cai-text-secondary);
+}
+
+.cai-site-search__close:hover {
+	color: var(--cai-text-primary);
+	background: var(--cai-surface-hover);
+}
+
+.cai-site-search__close :where(svg) {
+	flex: none;
+	inline-size: 1.25rem;
+	block-size: 1.25rem;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 2;
+	stroke-linecap: round;
+}
+
+.cai-site-search__results {
+	flex: 0 1 auto;
+	overflow-y: auto;
+	/* Room for the focus ring of the first and last result */
+	padding: var(--cai-space-2xs);
+	margin-inline: calc(-1 * var(--cai-space-2xs));
+}
+
+/* With results, the list keeps a few rows in view when the dialog is short */
+.cai-site-search__results:has(> :not([hidden]) li) {
+	min-block-size: 5rem;
+}
+
+.cai-site-search__results :where(h3) {
+	margin-block: var(--cai-space-sm) var(--cai-space-2xs);
+	font-size: var(--cai-text-sm);
+	color: var(--cai-text-secondary);
+}
+
+.cai-site-search__results :where(ul) {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+/* A result: the whole row is the link, at least 24px high (44px on touch);
+   the focused one has the shared focus ring of every link */
+.cai-site-search__results :where(a) {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0 var(--cai-space-md);
+	min-block-size: var(--cai-control-sm);
+	padding: var(--cai-space-2xs) var(--cai-space-xs);
+	border-radius: var(--cai-radius-sm);
+	text-decoration: none;
+}
+
+/* Only the title is underlined (it is the link text); the page after it is not */
+.cai-site-search__results :where(a > :first-child) {
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+}
+
+.cai-site-search__results :where(a):hover {
+	background: var(--cai-surface-hover);
+}
+
+.cai-site-search__results :where(a > span + span) {
+	color: var(--cai-text-secondary);
+	font-size: var(--cai-text-sm);
+}
+
+/* The ", " between the title and the page: read, not shown ("Button,
+   Components"); here and not a class the script writes, for the JS budget */
+.cai-site-search__results :where(a > span:nth-child(2):not(:last-child)) {
+	position: absolute;
+	inline-size: 1px;
+	block-size: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+@media (pointer: coarse) {
+	.cai-site-search__results :where(a) {
+		min-block-size: var(--cai-control-lg);
+	}
+}
+
+.cai-site-search__foot {
+	margin: 0;
+	padding-block-start: var(--cai-space-sm);
+	border-block-start: 1px solid var(--cai-divider);
+}
+
+@media (max-width: 768px), (max-height: 30rem) {
+	.cai-site-search {
+		inline-size: 100%;
+		max-block-size: 100dvb;
+		block-size: 100dvb;
+		margin: 0;
+		border-radius: 0;
+		padding: var(--cai-space-md);
+	}
+}
+
+/* Forced colours: the edge of the dialog is a real border, in the system's
+   text colour (a shadow alone disappears) */
+@media (forced-colors: active) {
+	.cai-site-search {
+		border-color: CanvasText;
+	}
+}

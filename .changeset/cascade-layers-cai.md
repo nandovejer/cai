@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": major
 "@cai-ds/core": major
-"@cai-ds/platform": major
+"@cai-ds/site": major
 ---
 
 **Breaking:** all of CAI's CSS is now inside one cascade layer, `cai`, and the three packages put their rules in layers of it.

@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": minor
 "@cai-ds/core": major
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 Native elements first, JavaScript as an enhancement (see PRINCIPLES.md).

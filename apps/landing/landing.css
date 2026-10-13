@@ -1,11 +1,11 @@
 /* ==========================================================================
    CAI — LANDING PAGE
    Consumer-side styles for apps/landing, written the way any level-3 consumer
-   would: on top of tokens + core + platform.
+   would: on top of tokens + core + site.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
      - media queries use the literal values of --cai-mq-* (640, 768, 1024),
-       max-width like core and platform, so both collapse at the same widths;
+       max-width like core and site, so both collapse at the same widths;
      - the token a specimen illustrates arrives as an inline custom property,
        style="--v: var(--cai-…)", and is consumed here as var(--v).
    ========================================================================== */
@@ -23,7 +23,7 @@
 
 /* Grid and flex items default to min-width: auto, which lets a long <pre> or
    a table widen the whole page. Zero specificity: any core rule still wins. */
-:where(.cai-platform-page)
+:where(.cai-site-page)
   :where(main, section, article, header, footer, nav, div, figure, fieldset, form, ul, ol, li, dl) {
   min-width: 0;
 }
@@ -146,11 +146,10 @@
   justify-content: center;
 }
 
-/* .cai-copy-btn has a subtle border and no fill: on the command block
+/* .cai-copy-btn has a subtle border and no fill: on a snippet bar
    (--cai-surface-strong) it reads as plain text. Give it a surface and a boundary;
    hover and .is-copied keep the component's own colors. */
-.landing-snippet .cai-copy-btn:not(:hover, .is-copied),
-.cai-platform-command-block .cai-copy-btn:not(:hover, .is-copied) {
+.landing-snippet .cai-copy-btn:not(:hover, .is-copied) {
   background: var(--cai-surface);
   border-color: var(--cai-outline);
 }
@@ -256,6 +255,24 @@
   min-height: var(--cai-control-sm);
 }
 
+/* The packages for one kind of site, under the level cards: a short list
+   and the package tree. Not cards, since none of them is published yet. */
+.landing-next {
+  margin-top: var(--cai-space-2xl);
+  max-width: 48rem;
+}
+
+.landing-next__title {
+  font-size: var(--cai-text-xl);
+  margin-bottom: var(--cai-space-sm);
+}
+
+.landing-next__list {
+  display: grid;
+  gap: var(--cai-space-sm);
+  margin-bottom: var(--cai-space-lg);
+}
+
 /* --------------------------------------------------------------------------
    Fit lists
    -------------------------------------------------------------------------- */
@@ -282,18 +299,18 @@
    Local patches for gaps in core. Remove each one when core fixes it.
    -------------------------------------------------------------------------- */
 
-/* .cai-platform-footer (768px and below) and .cai-platform-actions (640px and
+/* .cai-site-footer (768px and below) and .cai-site-actions (640px and
    below) become columns but keep flex-wrap: wrap. A wrapping column nested in
    grids makes Chromium's layout take tens of seconds: the page freezes while
    it loads. */
 @media (max-width: 768px) {
-  .cai-platform-page .cai-platform-footer {
+  .cai-site-page .cai-site-footer {
     flex-wrap: nowrap;
   }
 }
 
 @media (max-width: 640px) {
-  .cai-platform-page .cai-platform-actions {
+  .cai-site-page .cai-site-actions {
     flex-wrap: nowrap;
   }
 }
@@ -374,23 +391,23 @@
 
   /* Page footer: three short links on one row; a row may wrap (a longer
      name in another language, larger text), only a wrapping column freezes */
-  body > footer .cai-platform-actions {
+  body > footer .cai-site-actions {
     flex-direction: row;
     align-items: center;
   }
 
-  .cai-platform-page > footer .cai-platform-actions {
+  .cai-site-page > footer .cai-site-actions {
     flex-wrap: wrap;
   }
 
-  body > footer .cai-platform-actions > * {
+  body > footer .cai-site-actions > * {
     width: auto;
   }
 }
 
 /* Stacked footer: line the ghost links' text up with the line above */
 @media (max-width: 768px) {
-  body > footer .cai-platform-actions {
+  body > footer .cai-site-actions {
     margin-inline-start: calc(-1 * var(--cai-space-sm));
   }
 }

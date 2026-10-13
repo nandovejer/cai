@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": major
 "@cai-ds/core": major
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 Every red line now has a machine check, and the breaches those checks found are fixed.

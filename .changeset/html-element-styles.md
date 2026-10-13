@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": minor
 "@cai-ds/core": minor
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 Style the HTML elements that had no look of their own, without classes: `address`, `hgroup`, `p`, `blockquote`, `dl`/`dt`/`dd`, unclassed `ul`/`ol`, `menu`, `pre`, `abbr`, `b`/`strong`/`dfn`, `s`, `u`, `small`, `sub`/`sup`, `rt`, `code`/`samp`/`var`, `del`, `ins`, the native `progress`, and the media elements (`img`, `picture`, `video`, `audio`, `canvas`, `svg`, `iframe`, `embed`, `object`) plus a bare `dialog`.

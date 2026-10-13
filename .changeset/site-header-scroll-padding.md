@@ -1,5 +1,5 @@
 ---
-"@cai-ds/platform": patch
+"@cai-ds/site": patch
 ---
 
 Site header: a field reached with Tab under a sticky header is no longer left under it in Safari (WebKit review, 2026-10-13).

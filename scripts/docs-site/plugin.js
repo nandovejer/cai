@@ -19,7 +19,7 @@
  *   moved to <route>/index.html. The not-found page (apps/docs/404.html)
  *   becomes /404.html, with every URL starting at the site's path on GitHub
  *   Pages ("/<repo>/"), because it is served at any URL.
- * - The search index (@cai-ds/platform search, format version 1) is
+ * - The search index (@cai-ds/site search, format version 1) is
  *   generated from the same scan as the A–Z page: served at
  *   /docs/search-index.json in dev, written there by the build.
  * - The color-mode boot script (apps/landing/theme-boot.js, EX-009) is a

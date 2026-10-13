@@ -50,13 +50,13 @@ const settingsCss = readFileSync(fromRepo('packages/core/src/settings/_settings.
 const settingNames = (prefix) =>
   [...settingsCss.matchAll(new RegExp(`^\\s*(--cai-${prefix}-[\\w-]+):`, 'gm'))].map((m) => m[1]);
 
-// Every CSS file of the platform package (the shell patterns and the search)
-const platformDir = fromRepo('packages/platform/src/components');
-const platformCss = readdirSync(platformDir)
+// Every CSS file of the site package (the shell patterns and the search)
+const siteDir = fromRepo('packages/site/src/components');
+const siteCss = readdirSync(siteDir)
   .filter((file) => file.endsWith('.css'))
-  .map((file) => readFileSync(`${platformDir}/${file}`, 'utf-8'))
+  .map((file) => readFileSync(`${siteDir}/${file}`, 'utf-8'))
   .join('\n');
-const platformClasses = [...new Set(platformCss.match(/\.cai-platform-[a-z_-]+/g))];
+const siteClasses = [...new Set(siteCss.match(/\.cai-site-[a-z_-]+/g))];
 
 const MODES = ['light', 'dark', 'high-contrast'];
 
@@ -246,7 +246,7 @@ test.describe('Documentation site', () => {
     test('the sidebar shows the six areas and expands only the current one', async ({ page }) => {
       await gotoId(page, 'c-button');
       const areas = page.locator('.docs-nav > li > a');
-      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Platform', 'Accessibility']);
+      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Accessibility']);
       await expect(page.locator('.docs-nav > li > ul')).toHaveCount(1);
       await expect(page.locator('.docs-nav a[aria-current="true"]')).toHaveText('Components');
       await expect(page.locator('.docs-nav a[aria-current="page"]')).toHaveText('Button');
@@ -530,9 +530,9 @@ test.describe('Documentation site', () => {
       for (const file of componentFiles) expect(files, file).toContain(`components/${file}`);
     });
 
-    test('every platform class is used or named on the platform pages', () => {
-      const html = routesOf('platform').map((route) => site.byRoute.get(route).body).join('\n');
-      for (const selector of platformClasses) expect(html, selector).toContain(selector.slice(1));
+    test('every site class is used or named on the site pages', () => {
+      const html = routesOf('site').map((route) => site.byRoute.get(route).body).join('\n');
+      for (const selector of siteClasses) expect(html, selector).toContain(selector.slice(1));
     });
   });
 
@@ -742,7 +742,7 @@ test.describe('Documentation site', () => {
     });
 
     test('standalone links are targets of 24px or more', async ({ page }) => {
-      for (const route of ['/docs/', '/docs/components/', routeOf('c-button'), '/docs/a-z/', '/docs/platform/']) {
+      for (const route of ['/docs/', '/docs/components/', routeOf('c-button'), '/docs/a-z/', '/docs/site/']) {
         await page.goto(route);
         const heights = await page
           .locator('.docs-nav a, .docs-end a, .docs-gallery__rows a, .docs-hub__more a, .docs-az__list a, .site-header__nav a')
@@ -831,7 +831,7 @@ test.describe('Documentation site', () => {
       await open(page, routeOf('docs-modal'));
 
       await page.keyboard.press('Tab');
-      await expect(page.locator('.cai-platform-skip-link')).toBeFocused();
+      await expect(page.locator('.cai-site-skip-link')).toBeFocused();
       await page.keyboard.press('Enter');
       await expect(page.locator('#main-content')).toBeFocused();
 
@@ -974,9 +974,9 @@ test.describe('Site header and navigation toggle', () => {
     });
 
     for (const [width, order] of [
-      [360, ['.cai-platform-skip-link', '.site-header__menu', '.site-header__brand', '.site-header__search']],
+      [360, ['.cai-site-skip-link', '.site-header__menu', '.site-header__brand', '.site-header__search']],
       [1440, [
-        '.cai-platform-skip-link',
+        '.cai-site-skip-link',
         '.site-header__brand',
         '.site-header__nav a >> nth=0',
         '.site-header__nav a >> nth=1',

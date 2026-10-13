@@ -2,13 +2,13 @@
    CAI — DOCUMENTATION PAGE
    Consumer-side styles for apps/docs (the pages of the documentation site),
    written the way any level-3 consumer would: on top of tokens + core +
-   platform. The page shell is core's .o-shell with a .cai-sidebar, under
+   site. The page shell is core's .o-shell with a .cai-sidebar, under
    the site header shared with the home page (apps/landing/site-header.css).
    The HTML elements reference has its own file, elements.css.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
      - media queries use the literal values of --cai-mq-* (640, 768, 1024),
-       max-width like core and platform, so both collapse at the same widths;
+       max-width like core and site, so both collapse at the same widths;
      - the token a specimen illustrates arrives as an inline custom property,
        style="--v: var(--cai-…)", and is consumed here as var(--v).
    ========================================================================== */
@@ -201,8 +201,8 @@
 }
 
 /* A band bleeds to the edge of the frame it is shown in, not of the page */
-.docs-example:has(.cai-platform-section--band),
-.docs-dodont__stage:has(.cai-platform-section--band) {
+.docs-example:has(.cai-site-section--band),
+.docs-dodont__stage:has(.cai-site-section--band) {
   overflow: clip;
 }
 
@@ -340,7 +340,7 @@
 }
 
 /* Stand-ins: the component's own classes, held still for a picture */
-.docs-dodont__stage > .cai-platform-search-trigger {
+.docs-dodont__stage > .cai-site-search-trigger {
   justify-self: start;
 }
 
@@ -854,10 +854,57 @@
   outline-offset: 2px;
 }
 
+/* The command block of the docs (get-started): one shell command on the
+   strong surface, then a copy button, in a row that wraps. Docs-only since
+   the site package dropped it. */
+.docs-command-block {
+  background: var(--cai-surface-strong);
+  border: 1px solid var(--cai-divider);
+  border-radius: var(--cai-radius-md);
+  padding: var(--cai-space-md) var(--cai-space-lg);
+  margin-bottom: var(--cai-space-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cai-space-md);
+  flex-wrap: wrap;
+}
+
+/* --cai-focus-ring falls to 2.3:1 on --cai-surface-strong in dark mode */
+.docs-command-block .cai-copy-btn:focus-visible {
+  outline-color: var(--cai-text-primary);
+}
+
+.docs-command-block__cmd {
+  font-family: var(--cai-font-mono);
+  font-size: var(--cai-text-md);
+  color: var(--cai-text-primary);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.docs-command-block__prefix {
+  color: var(--cai-text-secondary);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .docs-command-block {
+    align-items: stretch;
+  }
+
+  .docs-command-block .cai-copy-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* .cai-copy-btn has a subtle border and no fill: on the command block
    (--cai-surface-strong) it reads as plain text. Give it a surface and a boundary;
    hover and .is-copied keep the component's own colors. */
-.cai-platform-command-block .cai-copy-btn:not(:hover, .is-copied) {
+.docs-command-block .cai-copy-btn:not(:hover, .is-copied) {
   background: var(--cai-surface);
   border-color: var(--cai-outline);
 }
@@ -1366,7 +1413,7 @@ h2.docs-demo__title {
 }
 
 /* --------------------------------------------------------------------------
-   Platform: when to use it, class reference
+   Site: when to use it, class reference
    -------------------------------------------------------------------------- */
 
 .docs-decision-grid {
@@ -1404,7 +1451,7 @@ h2.docs-demo__title {
 }
 
 /* --------------------------------------------------------------------------
-   Platform anatomy, sidebar specimen, utilities examples
+   Site anatomy, sidebar specimen, utilities examples
    -------------------------------------------------------------------------- */
 
 .docs-anatomy,
@@ -1444,7 +1491,7 @@ h2.docs-demo__title {
 
 /* Not in a site header specimen: there the toggle shows only where the
    header collapses its links, as it does in a page */
-.docs-demo__stage .cai-nav-toggle:not(.cai-platform-site-header *) {
+.docs-demo__stage .cai-nav-toggle:not(.cai-site-header *) {
   position: static;
   display: flex;
 }
@@ -1630,19 +1677,19 @@ h2.docs-demo__title {
   }
 
   /* Page footer: three short links fit on one row */
-  body > footer .cai-platform-actions {
+  body > footer .cai-site-actions {
     flex-direction: row;
     align-items: center;
   }
 
-  body > footer .cai-platform-actions > * {
+  body > footer .cai-site-actions > * {
     width: auto;
   }
 }
 
 /* Stacked footer: line the ghost links' text up with the line above */
 @media (max-width: 768px) {
-  body > footer .cai-platform-actions {
+  body > footer .cai-site-actions {
     margin-inline-start: calc(-1 * var(--cai-space-sm));
   }
 }

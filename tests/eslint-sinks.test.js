@@ -47,7 +47,7 @@ const sinkMessages = async (code, filePath) => {
 };
 
 describe("no-HTML-sinks rule", () => {
-  for (const file of ["packages/core/src/x.js", "packages/platform/src/x.js", "packages/tokens/src/x.js", "apps/docs/x.js"]) {
+  for (const file of ["packages/core/src/x.js", "packages/site/src/x.js", "packages/tokens/src/x.js", "apps/docs/x.js"]) {
     it(`reports each sink once in ${file}`, async () => {
       const messages = await sinkMessages(SINKS.join("\n"), file);
       expect(messages.map((m) => m.line)).toEqual(SINKS.map((_, i) => i + 1));

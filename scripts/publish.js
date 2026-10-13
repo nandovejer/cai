@@ -24,7 +24,7 @@ const repoRoot = resolve(__dirname, "..");
 const dryRun = process.argv.includes("--dry-run");
 
 // Order matters: a layer is only published after the one it depends on.
-const PACKAGES = ["tokens", "core", "platform"];
+const PACKAGES = ["tokens", "core", "site"];
 
 function checkTarball(tarball, pkgRoot, name) {
   const shipped = execFileSync("tar", ["-tzf", tarball], { encoding: "utf-8" })

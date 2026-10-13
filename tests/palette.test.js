@@ -45,7 +45,7 @@ function* walk(dir) {
     else yield path;
   }
 }
-const SOURCES = ["packages/tokens/src", "packages/core/src", "packages/platform/src", "apps", "scripts"]
+const SOURCES = ["packages/tokens/src", "packages/core/src", "packages/site/src", "apps", "scripts"]
   .flatMap((dir) => [...walk(resolve(root, dir))])
   .filter((path) => [".css", ".html", ".svg", ".js", ".json"].includes(extname(path)))
   .concat([resolve(root, "README.md"), resolve(root, "packages/tokens/tokens.json")]);

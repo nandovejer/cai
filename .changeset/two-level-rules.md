@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": major
 "@cai-ds/core": major
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 Two levels of rules, MIT-only fonts, a language dictionary and size ceilings (see PRINCIPLES.md and EXCEPTIONS.md).

@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": minor
 "@cai-ds/core": minor
-"@cai-ds/platform": patch
+"@cai-ds/site": patch
 ---
 
 Readable minimum text sizes and WCAG 2.2 AA fixes.

@@ -1,0 +1,56 @@
+{
+  "name": "@cai-ds/site",
+  "version": "2.0.0",
+  "description": "CAI Design System — site-level patterns (shell, header, footer, search, language switcher) built on @cai-ds/core",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/site.js",
+  "exports": {
+    ".": "./dist/site.js",
+    "./search": "./dist/search.js",
+    "./css": "./dist/site.css",
+    "./css/min": "./dist/site.min.css",
+    "./placeholders/*": "./dist/placeholders/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nandovejer/cai.git",
+    "directory": "packages/site"
+  },
+  "homepage": "https://github.com/nandovejer/cai#readme",
+  "bugs": {
+    "url": "https://github.com/nandovejer/cai/issues"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "site",
+    "patterns",
+    "shell",
+    "layout",
+    "vanilla"
+  ],
+  "sideEffects": [
+    "*.css",
+    "./dist/site.js",
+    "./dist/site.min.js",
+    "./dist/search.js",
+    "./dist/search.min.js"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@cai-ds/core": "^2.0.0",
+    "@cai-ds/tokens": "^2.0.0"
+  },
+  "devDependencies": {
+    "@cai-ds/core": "workspace:*",
+    "@cai-ds/tokens": "workspace:*"
+  }
+}

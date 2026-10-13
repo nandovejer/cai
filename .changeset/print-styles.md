@@ -1,6 +1,6 @@
 ---
 "@cai-ds/core": minor
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 **New (`@cai-ds/core`, `@cai-ds/platform`)**

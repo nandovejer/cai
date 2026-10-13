@@ -31,7 +31,7 @@ for (const app of APPS) {
       '.cai-theme-apply-btn',
       '.cai-theme-mode-btn',
       '.cai-player button',
-      '.cai-platform-search-trigger',
+      '.cai-site-search-trigger',
       '[role="switch"]:not(input)',
       '[role="slider"]:not(input)',
     ].join(', ');

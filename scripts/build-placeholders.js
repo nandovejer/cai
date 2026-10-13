@@ -1,11 +1,11 @@
 /**
- * CAI Platform — image placeholders
- * Renders the two masters in packages/platform/src/placeholders/ (day:
+ * CAI Site — image placeholders
+ * Renders the two masters in packages/site/src/placeholders/ (day:
  * placeholder.svg, night: placeholder-night.svg) to every aspect ratio and
- * width that .cai-platform-image uses, in AVIF and WebP, and in JPEG at the
+ * width that .cai-site-image uses, in AVIF and WebP, and in JPEG at the
  * smaller widths only (the fallback for browsers without either), next to
  * the masters. The rasters are committed: CI and the
- * release only copy them (scripts/build-platform.js), so a build never needs
+ * release only copy them (scripts/build-site.js), so a build never needs
  * ImageMagick. Run this after editing the master and commit the result.
  *
  * Needs ImageMagick 7 (`magick`) with AVIF and WebP write support. No npm
@@ -21,7 +21,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const dir = resolve(repoRoot, "packages/platform/src/placeholders");
+const dir = resolve(repoRoot, "packages/site/src/placeholders");
 /** Variant → file prefix. The night variant is used in dark mode. */
 export const VARIANTS = { day: "placeholder", night: "placeholder-night" };
 

@@ -11,7 +11,7 @@
   <link rel="apple-touch-icon" href="/apps/landing/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
   <link rel="stylesheet" href="/packages/core/dist/cai.css">
-  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
   <link rel="stylesheet" href="/apps/landing/site-header.css">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="/apps/landing/theme-boot.js"></script>
@@ -20,7 +20,7 @@
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
      dictionary, which has no Arabic -->
-<body class="cai-platform-page"
+<body class="cai-site-page"
       data-cai-label-change-mode="{{t:js.change-mode}}"
       data-cai-label-mode-changed="{{t:js.mode-changed}}"
       data-cai-label-copied="{{t:js.copied}}"
@@ -29,7 +29,7 @@
   <!-- The search dialog comes first: closed, it is not focusable; after
        Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
   <!-- cai:include search -->
-  <a class="cai-platform-skip-link" href="#main-content">{{t:skip}}</a>
+  <a class="cai-site-skip-link" href="#main-content">{{t:skip}}</a>
 
   <!-- cai:include header -->
 
@@ -50,13 +50,13 @@
       <a class="cai-sidebar__link" href="/docs/get-started/">{{t:nav.get-started}}</a>
       <a class="cai-sidebar__link" href="/docs/tokens/">{{t:nav.tokens}}</a>
       <a class="cai-sidebar__link" href="/docs/components/">{{t:nav.core}}</a>
-      <a class="cai-sidebar__link" href="/docs/platform/">{{t:nav.platform}}</a>
+      <a class="cai-sidebar__link" href="/docs/site/">{{t:nav.site}}</a>
       <a class="cai-sidebar__link" href="/docs/html/">{{t:nav.html}}</a>
       <a class="cai-sidebar__link" href="/docs/accessibility/">{{t:nav.accessibility}}</a>
     </div>
   </nav>
 
-  <main id="main-content" class="cai-platform-main" tabindex="-1">
+  <main id="main-content" class="cai-site-main" tabindex="-1">
 
     <!-- ====================== HERO ====================== -->
     <section class="landing-hero landing-wrap" aria-labelledby="hero-title">
@@ -64,7 +64,7 @@
         <p class="landing-eyebrow" lang="en">Consistent Adaptive Identity</p>
         <h1 class="landing-hero__title" id="hero-title">{{t:hero.title}}</h1>
         <p class="landing-hero__lead">{{html:hero.lead}}</p>
-        <div class="cai-platform-actions">
+        <div class="cai-site-actions">
           <a class="cai-btn cai-btn--primary cai-btn--lg" href="#adopt">{{t:hero.start}}</a>
           <a class="cai-btn cai-btn--outline cai-btn--lg" href="/docs/components/">{{t:hero.browse}}</a>
         </div>
@@ -72,11 +72,11 @@
     </section>
 
     <!-- ====================== WHY ====================== -->
-    <section class="cai-platform-section landing-wrap" id="what" aria-labelledby="what-title">
+    <section class="cai-site-section landing-wrap" id="what" aria-labelledby="what-title">
       <h2 class="landing-h2" id="what-title">{{t:what.title}}</h2>
       <p class="landing-lead">{{t:what.lead}}</p>
 
-      <ul class="cai-platform-feature-grid landing-points">
+      <ul class="cai-site-feature-grid landing-points">
         <li class="o-media">
           <span class="cai-avatar cai-avatar--md" aria-hidden="true">01</span>
           <div class="o-media__body">
@@ -102,7 +102,7 @@
     </section>
 
     <!-- ====================== SEE IT ====================== -->
-    <section class="cai-platform-section landing-wrap" id="see" aria-labelledby="see-title">
+    <section class="cai-site-section landing-wrap" id="see" aria-labelledby="see-title">
       <h2 class="landing-h2" id="see-title">{{t:see.title}}</h2>
       <p class="landing-lead">{{t:see.lead}}</p>
 
@@ -128,7 +128,7 @@
     </section>
 
     <!-- ====================== ADOPT ====================== -->
-    <section class="cai-platform-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
+    <section class="cai-site-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
       <h2 class="landing-h2" id="adopt-title">{{t:adopt.title}}</h2>
       <p class="landing-lead">{{t:adopt.lead}}</p>
 
@@ -194,16 +194,28 @@
             </ul>
           </div>
           <div class="landing-level__actions">
-            <a class="cai-btn cai-btn--outline" href="/docs/get-started/#level-3-tokens-core-and-platform">{{t:adopt.level3.install}}</a>
-            <a href="/docs/platform/">{{t:adopt.level3.see}}</a>
+            <a class="cai-btn cai-btn--outline" href="/docs/get-started/#level-3-tokens-core-and-site">{{t:adopt.level3.install}}</a>
+            <a href="/docs/site/">{{t:adopt.level3.see}}</a>
           </div>
         </article>
 
       </div>
+
+      <div class="landing-next">
+        <h3 class="landing-next__title" id="next-title">{{t:adopt.next.title}}</h3>
+        <p>{{t:adopt.next.lead}}</p>
+        <ul class="landing-next__list" aria-labelledby="next-title">
+          <li>{{html:adopt.next.cms}} <span class="cai-tag cai-tag--gray">{{t:adopt.next.coming}}</span></li>
+          <li>{{html:adopt.next.landing}} <span class="cai-tag cai-tag--gray">{{t:adopt.next.coming}}</span></li>
+          <li>{{html:adopt.next.wordpress}} <span class="cai-tag cai-tag--gray">{{t:adopt.next.coming}}</span></li>
+        </ul>
+        <pre class="cai-code-block landing-next__tree" dir="ltr" tabindex="0" role="region" aria-label="{{t:adopt.next.tree}}"><code>tokens → core → site ─┬─ cms ── wordpress
+                      └─ landing</code></pre>
+      </div>
     </section>
 
     <!-- ====================== FIT ====================== -->
-    <section class="cai-platform-section landing-wrap" id="fit" aria-labelledby="fit-title">
+    <section class="cai-site-section landing-wrap" id="fit" aria-labelledby="fit-title">
       <h2 class="landing-h2" id="fit-title">{{t:fit.title}}</h2>
       <div class="landing-fit">
         <div>
@@ -226,10 +238,10 @@
     </section>
 
     <!-- ====================== CLOSING CTA ====================== -->
-    <section class="cai-platform-section landing-wrap" id="start" aria-labelledby="cta-title">
+    <section class="cai-site-section landing-wrap" id="start" aria-labelledby="cta-title">
       <h2 class="landing-h2" id="cta-title">{{t:start.title}}</h2>
       <p class="landing-lead">{{t:start.lead}}</p>
-      <div class="cai-platform-actions">
+      <div class="cai-site-actions">
         <a class="cai-btn cai-btn--primary" href="#adopt">{{t:hero.start}}</a>
         <a class="cai-btn cai-btn--outline" href="/docs/">{{t:start.docs}}</a>
       </div>
@@ -237,12 +249,12 @@
   </main>
 
   <footer class="landing-wrap">
-    <div class="cai-platform-footer">
+    <div class="cai-site-footer">
       <p class="u-text-muted">{{t:footer.note}}</p>
-      <nav class="cai-platform-actions" aria-label="{{t:footer.links}}">
+      <nav class="cai-site-actions" aria-label="{{t:footer.links}}">
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
         <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/">{{t:site.docs}}</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/platform/">{{t:nav.platform}}</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="/docs/site/">{{t:nav.site}}</a>
       </nav>
       <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
         <legend class="cai-mode-switcher__label">{{t:footer.mode}}</legend>

@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": major
 "@cai-ds/core": major
-"@cai-ds/platform": major
+"@cai-ds/site": major
 ---
 
 Layered, independently installable packages.

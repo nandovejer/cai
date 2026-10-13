@@ -1,5 +1,5 @@
 ---
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 New `.cai-platform-section--band`: a section on a tinted band that runs from edge to edge of the page, for one call to act or one pause in a long page.

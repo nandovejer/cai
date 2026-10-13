@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": patch
 "@cai-ds/core": patch
-"@cai-ds/platform": patch
+"@cai-ds/site": patch
 ---
 
 Safari and Firefox review of the Vejer look and `<cai-platform-search>`:

@@ -15,7 +15,7 @@ import { notFoundRoute, routeOf, routes } from './helpers/docs-site.js';
 // The landing and every page of the docs site (a11y.md TEST-7)
 const APPS = ['/', '/es/', '/ar/', ...routes(), notFoundRoute];
 const THEMES = ['light', 'dark', 'high-contrast'];
-const FIXTURES = ['level-1-tokens.html', 'level-2-core.html', 'level-3-platform.html', 'core-without-tokens.html'];
+const FIXTURES = ['level-1-tokens.html', 'level-2-core.html', 'level-3-site.html', 'core-without-tokens.html'];
 
 const { debt } = JSON.parse(readFileSync(new URL('./fixtures/red-line-debt.json', import.meta.url), 'utf-8'));
 /** Offenders of one check, minus the breaches already registered as debt. */

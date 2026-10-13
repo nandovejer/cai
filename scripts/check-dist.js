@@ -9,7 +9,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const sentinels = [
   "../packages/tokens/dist/cai-tokens.css",
   "../packages/core/dist/cai.css",
-  "../packages/platform/dist/platform.css",
+  "../packages/site/dist/site.css",
 ].map((p) => resolve(__dirname, p));
 
 const missing = sentinels.filter((p) => !existsSync(p));

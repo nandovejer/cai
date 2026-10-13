@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": major
 "@cai-ds/core": major
-"@cai-ds/platform": major
+"@cai-ds/site": major
 ---
 
 Spacing, control heights, the type ramp and the easing curves are CAI's own, each built by a stated rule. They used to be IBM Carbon's spacing and size scales and Material's easing curves.

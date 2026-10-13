@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * <cai-platform-search> (packages/platform/src/search.js): a light-DOM custom
+ * <cai-site-search> (packages/site/src/search.js): a light-DOM custom
  * element that wraps the search dialog and wires it, and the triggers of the
  * page, when it connects. The behaviour of the dialog itself is in
  * tests/search.spec.js, on the docs site; this file is the element.
@@ -9,20 +9,20 @@ import { test, expect } from '@playwright/test';
 
 const FIXTURE = '/tests/fixtures/search-element.html';
 
-test.describe('<cai-platform-search>', () => {
+test.describe('<cai-site-search>', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(FIXTURE);
-    await page.waitForFunction(() => customElements.get('cai-platform-search'));
+    await page.waitForFunction(() => customElements.get('cai-site-search'));
   });
 
   test('is defined once, as a plain HTMLElement, with no Shadow DOM', async ({ page }) => {
     const info = await page.evaluate(async () => {
-      const before = customElements.get('cai-platform-search');
+      const before = customElements.get('cai-site-search');
       // Importing the module again does not define it twice (and does not throw)
-      await import('/packages/platform/dist/search.js?again');
+      await import('/packages/site/dist/search.js?again');
       window.addSearch();
-      const el = document.querySelector('cai-platform-search');
-      return { same: before === customElements.get('cai-platform-search'), shadow: !!el.shadowRoot, isHtml: el instanceof HTMLElement };
+      const el = document.querySelector('cai-site-search');
+      return { same: before === customElements.get('cai-site-search'), shadow: !!el.shadowRoot, isHtml: el instanceof HTMLElement };
     });
     expect(info).toEqual({ same: true, shadow: false, isHtml: true });
   });
@@ -46,7 +46,7 @@ test.describe('<cai-platform-search>', () => {
     await page.evaluate(() => {
       window.addSearch();
       // Moving the element disconnects and connects it again
-      const el = document.querySelector('cai-platform-search');
+      const el = document.querySelector('cai-site-search');
       document.body.append(el);
     });
     await page.keyboard.press('Control+k');
@@ -59,7 +59,7 @@ test.describe('<cai-platform-search>', () => {
   test('an element with no dialog inside does nothing and throws nothing', async ({ page }) => {
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
-    await page.evaluate(() => document.body.append(document.createElement('cai-platform-search')));
+    await page.evaluate(() => document.body.append(document.createElement('cai-site-search')));
     expect(errors).toEqual([]);
     await expect(page.locator('#trigger')).toBeHidden();
   });

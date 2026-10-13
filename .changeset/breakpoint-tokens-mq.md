@@ -1,6 +1,6 @@
 ---
 "@cai-ds/core": minor
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 **Breaking (`@cai-ds/core`)**: the breakpoint tokens are renamed from `--cai-bp-*` to `--cai-mq-*` (`mq` for media query), and the scale changes:

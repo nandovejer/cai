@@ -10,7 +10,7 @@
  * playwright.config.js (expect.toHaveScreenshot).
  *
  * The player is left out: its video frame and its controls depend on media
- * loading. Platform patterns are not covered yet.
+ * loading. Site patterns are not covered yet.
  *
  * Update after an intended change:
  *   pnpm exec playwright test tests/visual.spec.js --project=chromium --update-snapshots

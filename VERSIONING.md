@@ -10,7 +10,7 @@
 
 ## One version for three packages
 
-`@cai-ds/tokens`, `@cai-ds/core` and `@cai-ds/platform` always share one version (changesets `fixed`), and the peer ranges are literal (`^X.0.0`). A breaking change in one is a major for all three, so a consumer never mixes a tokens `3` with a core `4`.
+`@cai-ds/tokens`, `@cai-ds/core` and `@cai-ds/site` always share one version (changesets `fixed`), and the peer ranges are literal (`^X.0.0`). A breaking change in one is a major for all three, so a consumer never mixes a tokens `3` with a core `4`.
 
 ---
 
@@ -21,11 +21,11 @@ Everything below is public from 1.0. Everything not in this list is internal and
 | Surface | Public | Not public |
 | --- | --- | --- |
 | **Tokens** | Every `--cai-*` custom property in `dist/tokens.css`: names, meaning and the roles they play (semantic tokens in the three base modes, primitives, space, type, radius, shadow). The DTCG file's group and token names | Custom properties a component declares for itself (`--cai-seek`, `--cai-seek-to`) |
-| **Classes** | `.cai-*`, `.o-*`, `.u-*`, `.cai-platform-*`, in the markup the docs show, with their elements and modifiers (`--`, `__`) | `.is-*` state mirrors, selectors inside a component's CSS, descendant selectors the docs do not show |
+| **Classes** | `.cai-*`, `.o-*`, `.u-*`, `.cai-site-*`, in the markup the docs show, with their elements and modifiers (`--`, `__`) | `.is-*` state mirrors, selectors inside a component's CSS, descendant selectors the docs do not show |
 | **Attributes** | `data-theme`, `data-mode`, `data-cai-themes`, `data-cai-*`, `data-cai-label-*`, `data-copy`, `data-copy-from`, and the ARIA the docs require | Attributes the docs site's own scripts use (`data-docs-*`) |
-| **JS** | Every export of `@cai-ds/core` and `@cai-ds/platform` named in the docs and in AGENTS.md: the module paths, the function names and their arguments and return values; the element `<cai-platform-search>` and the markup it expects | Anything not exported, and any export the docs do not name |
+| **JS** | Every export of `@cai-ds/core` and `@cai-ds/site` named in the docs and in AGENTS.md: the module paths, the function names and their arguments and return values; the element `<cai-site-search>` and the markup it expects | Anything not exported, and any export the docs do not name |
 | **Events** | The `change` event, bubbling, that the color-mode cycle button dispatches on the radio it checks | Timing and order of internal updates |
-| **Layers** | The names `cai`, `cai.tokens`, `cai.themes`, `cai.settings`, `cai.generic`, `cai.elements`, `cai.objects`, `cai.components`, `cai.utilities`, `cai.platform`, `cai.print`, and their order | The rules inside a layer |
+| **Layers** | The names `cai`, `cai.tokens`, `cai.themes`, `cai.settings`, `cai.generic`, `cai.elements`, `cai.objects`, `cai.components`, `cai.utilities`, `cai.site`, `cai.print`, and their order | The rules inside a layer |
 | **Text** | The i18n keys of `@cai-ds/core/i18n` and the `data-cai-label-*` attributes that override them | The wording of a string |
 | **Packages** | The `exports` map of each package, the paths of the files it publishes, and the `cai-tokens` command: its arguments, its exit codes and its `--json` shape | The files under `scripts/`, `tests/` and `apps/` |
 

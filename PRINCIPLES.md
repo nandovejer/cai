@@ -2,7 +2,7 @@
 
 Inspired by the [GOV.UK Design System](https://design-system.service.gov.uk/). These rules govern every change to `packages/`, `apps/` and the docs. They sit above [VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md) (which covers *how* we build) and tell you *what* we accept.
 
-CAI is three npm packages for developers who install it without talking to us: `@cai-ds/tokens` (standalone), `@cai-ds/core` (needs tokens) and `@cai-ds/platform` (needs core and tokens).
+CAI is three npm packages for developers who install it without talking to us: `@cai-ds/tokens` (standalone), `@cai-ds/core` (needs tokens) and `@cai-ds/site` (needs core and tokens).
 
 ---
 
@@ -96,7 +96,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 - **Do not invent new meanings.** Blue is interactive. Red is error or danger. Green is success. Yellow is warning.
 - **Do not restyle the primitives per app.** Buttons, inputs, links and focus rings look the same in every app and consumer. Apps add layout, not new skins.
 - **One component, one job.** No `.cai-card--as-button`. If you need both, you need two components.
-- **Core or platform.** `core` holds pieces useful on any website (button, form, dialog). `platform` holds composed application patterns (app shell, layouts). If in doubt, it belongs in the consumer's app.
+- **Core or site.** `core` holds pieces that know nothing about the site and fit inside anything (button, form, dialog). `site` holds what needs data of the site (its languages, its index, its menu, its cookie policy) or is page structure that holds other pieces (header, footer, shell, sections). If in doubt, it belongs in the consumer's app. Packages for one kind of site (`cms`, `landing`) and for one CMS (`wordpress`) build on `site`: `tokens → core → site → cms → wordpress`, and `site → landing`.
 - **A component must be useful, unique, usable and consistent** (the GOV.UK contribution criteria). "I needed it once" is not a reason to add it.
 - **Prefer removing to adding.** Every new component lists what it makes obsolete.
 
@@ -122,8 +122,8 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `core` JS entry (lazy chunks excluded) | — | ≤ 5 kB | 5 kB | 8 kB |
 | `core` JS lazy chunk: `midi` | — | ≤ 3 kB | 3 kB | 4 kB |
 | `core` JS lazy chunk: `table-sort` | — | ≤ 1 kB | 1 kB | 2 kB |
-| `platform` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
-| `platform` JS | — | ≤ 1 kB | 1 kB | 2 kB |
+| `site` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
+| `site` JS | — | ≤ 1 kB | 1 kB | 2 kB |
 | Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |
 
 Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).
@@ -133,7 +133,7 @@ Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without
 - **Decisions are written down.** A new component, a removed one, a changed default: each gets a changeset entry.
 - **Accessibility statement.** The docs app publishes which WCAG 2.2 criteria and EN 301 549 clauses are met, which are not, and which assistive technologies were tested for the current release. Update it on every release.
 - **Tests encode the rules.** Every rule here that a machine can check has a check in `tests/`, stylelint, ESLint or `scripts/check-*.js`.
-- **Docs per component (`SR-5`).** Every core component and platform pattern has its own page with, in this order: a one-line summary, a live example, *Known issues* (always visible; "None known." when empty), and two tabs, **Code** and **Design**, that stack as plain sections without JavaScript. **Code**: *Copy the markup* · *Variants and options* · *How it works* · *Without JavaScript* · *Keyboard and ARIA*. **Design**: *When to use* · *When not to use* · *Do and don't* · *Writing the content* · *Contrast and focus* · *Tokens it uses*. Plus an axe and a keyboard test. *When to use* and *When not to use* are red line 18.
+- **Docs per component (`SR-5`).** Every core component and site pattern has its own page with, in this order: a one-line summary, a live example, *Known issues* (always visible; "None known." when empty), and two tabs, **Code** and **Design**, that stack as plain sections without JavaScript. **Code**: *Copy the markup* · *Variants and options* · *How it works* · *Without JavaScript* · *Keyboard and ARIA*. **Design**: *When to use* · *When not to use* · *Do and don't* · *Writing the content* · *Contrast and focus* · *Tokens it uses*. Plus an axe and a keyboard test. *When to use* and *When not to use* are red line 18.
 - **Beta.** CAI is in beta: any release may break anything, always with a changeset that explains how to migrate. It leaves beta when every red line is checked by a tool, the EN 301 549 mapping is published, the public API (`.cai-*` classes, `data-cai-*` hooks, semantic tokens, JS exports) is frozen, the backlog in AGENTS.md is done, and the maintainer considers it stable. From then on, semantic versioning applies strictly: [VERSIONING.md](./VERSIONING.md) says what the public API is, how a deprecation runs, and the checklist for leaving beta.
 
 ---

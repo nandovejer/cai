@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": major
 "@cai-ds/core": major
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 One corner for every box: 4px, and never more.

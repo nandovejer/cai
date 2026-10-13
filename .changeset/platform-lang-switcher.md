@@ -1,5 +1,5 @@
 ---
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 New language switcher in `@cai-ds/platform`: a button in the header opens a native popover with one link per language, so a reader goes to the same page in another language. CSS only: no script, no new export.

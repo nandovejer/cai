@@ -206,7 +206,7 @@ test.describe('Landing page', () => {
       test(`footer: the color mode switcher sits bottom-right and overlaps nothing at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
         await open(page);
-        const footer = page.locator('footer .cai-platform-footer');
+        const footer = page.locator('footer .cai-site-footer');
         const box = (el) => el.evaluate((node) => node.getBoundingClientRect().toJSON());
         const parent = await box(footer);
         const modes = await box(page.locator('footer .cai-mode-switcher'));
@@ -308,7 +308,7 @@ test.describe('Landing page', () => {
     const anchors = [
       '/docs/get-started/#level-1-tokens-only',
       '/docs/get-started/#level-2-tokens-and-core',
-      '/docs/get-started/#level-3-tokens-core-and-platform',
+      '/docs/get-started/#level-3-tokens-core-and-site',
     ];
 
     test('each level says when to choose it and links to its install section', async ({ page }) => {
@@ -323,7 +323,7 @@ test.describe('Landing page', () => {
         await expect(card.locator('.landing-level__intro p')).toContainText(/^Choose this if /);
         await expect(card.locator('h4')).toHaveCount(1);
         // The install commands live in one place: the guide
-        await expect(card.locator('pre, .cai-platform-command-block, .cai-copy-btn')).toHaveCount(0);
+        await expect(card.locator('pre, .docs-command-block, .cai-copy-btn')).toHaveCount(0);
         const install = card.getByRole('link', { name: `Install level ${index + 1}` });
         await expect(install).toHaveAttribute('href', new RegExp(`${anchor}$`));
       }
@@ -402,7 +402,7 @@ test.describe('Landing page', () => {
         id: 'level-1-tokens-only',
         install: 'pnpm add @cai-ds/tokens',
         files: ['@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css'],
-        absent: ['@cai-ds/core', '@cai-ds/platform'],
+        absent: ['@cai-ds/core', '@cai-ds/site'],
       },
       {
         id: 'level-2-tokens-and-core',
@@ -412,17 +412,17 @@ test.describe('Landing page', () => {
           '@cai-ds/core@3.0.0/dist/cai.min.css',
           '@cai-ds/core@3.0.0/dist/cai.min.js',
         ],
-        absent: ['@cai-ds/platform'],
+        absent: ['@cai-ds/site'],
       },
       {
-        id: 'level-3-tokens-core-and-platform',
-        install: 'pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/platform',
+        id: 'level-3-tokens-core-and-site',
+        install: 'pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/site',
         files: [
           '@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css',
           '@cai-ds/core@3.0.0/dist/cai.min.css',
-          '@cai-ds/platform@3.0.0/dist/platform.min.css',
+          '@cai-ds/site@3.0.0/dist/site.min.css',
           '@cai-ds/core@3.0.0/dist/cai.min.js',
-          '@cai-ds/platform@3.0.0/dist/platform.min.js',
+          '@cai-ds/site@3.0.0/dist/site.min.js',
         ],
         absent: [],
       },
@@ -433,12 +433,12 @@ test.describe('Landing page', () => {
 
       for (const [index, level] of levels.entries()) {
         const section = page.locator('.docs-prose').filter({ has: page.locator(`#${level.id}`) });
-        await expect(section.locator('.cai-platform-command-block')).toHaveCount(1);
+        await expect(section.locator('.docs-command-block')).toHaveCount(1);
         await expect(section.locator('pre.cai-code-block')).toHaveCount(2);
 
-        const command = await section.locator('.cai-platform-command-block__cmd').textContent();
+        const command = await section.locator('.docs-command-block__cmd').textContent();
         expect(command.replace(/\s+/g, ' ').replace(/^\s*\$\s*/, '').trim()).toBe(level.install);
-        await expect(section.locator('.cai-platform-command-block .cai-copy-btn')).toHaveAttribute('data-copy', level.install);
+        await expect(section.locator('.docs-command-block .cai-copy-btn')).toHaveAttribute('data-copy', level.install);
         // Each snippet has its own Copy button, pointing at its code
         for (const kind of ['cdn', 'bundler']) {
           const button = section.locator(`.docs-snippet .cai-copy-btn[data-copy-from="code-${kind}-level-${index + 1}"]`);
@@ -458,7 +458,7 @@ test.describe('Landing page', () => {
         // Every CDN URL pins the exact version
         const urls = snippet.match(/https:\/\/cdn\.jsdelivr\.net\/npm\/\S+?(?=")/g);
         expect(urls).toHaveLength(level.files.length);
-        for (const url of urls) expect(url).toMatch(/@cai-ds\/(tokens|core|platform)@3\.0\.0\//);
+        for (const url of urls) expect(url).toMatch(/@cai-ds\/(tokens|core|site)@3\.0\.0\//);
         for (const script of snippet.match(/<script[^>]*>/g) ?? []) {
           expect(script).toMatch(/^<script type="module" src="[^"]+\.min\.js">$/);
         }
@@ -719,7 +719,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       await page.keyboard.press('Tab');
-      await expect(page.locator('.cai-platform-skip-link')).toBeFocused();
+      await expect(page.locator('.cai-site-skip-link')).toBeFocused();
       await page.keyboard.press('Enter');
       await expect(page.locator('#main-content')).toBeFocused();
     });

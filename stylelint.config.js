@@ -118,7 +118,7 @@ export default {
         "packages/core/src/components/**/*.css",
         "packages/core/src/elements/**/*.css",
         "packages/core/src/objects/**/*.css",
-        "packages/platform/src/**/*.css",
+        "packages/site/src/**/*.css",
       ],
       rules: {
         "color-no-hex": [true, { message: RL10 }],

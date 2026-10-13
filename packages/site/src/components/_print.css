@@ -1,0 +1,20 @@
+/* ==========================================================================
+   CAI Site — print
+   What a page shell, its search and its skip link do on paper. Core's print
+   layer (cai.print) sets the colors and the breaks; this hides what only
+   works on a screen. In the cai.site layer, after the screen rules.
+   ========================================================================== */
+
+@media print {
+  .cai-site-skip-link,
+  .cai-site-search-trigger,
+  .cai-site-search,
+  [data-cai-search-fallback] {
+    display: none;
+  }
+
+  /* The soft glow of the shell is a screen decoration */
+  .cai-site-page--gradient {
+    background-image: none;
+  }
+}

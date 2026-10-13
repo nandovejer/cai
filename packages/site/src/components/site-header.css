@@ -1,0 +1,182 @@
+/* ==========================================================================
+	 CAI Site: site header.
+	 The band at the top of every page: the site's name, its main links and a
+	 few controls (search, language). One row; the links collapse into a
+	 native popover panel at 768px and below, opened by core's
+	 .cai-nav-toggle. No JavaScript: the popover gives Escape, light dismiss
+	 and the expanded state. Without the popover API the links stay in the
+	 row and wrap.
+	 ========================================================================== */
+
+/* On :root, so the sticky scroll padding (on <html>) and the panel can both
+   read it. A one-row header of 44px controls, two 4px paddings and the 1px
+   border. Exact at the default text size only: when text is enlarged and
+   the row wraps, the header is taller (WCAG 2.4.11 is why the scroll
+   padding below is a minimum, not this value). */
+:root {
+	--cai-site-header-h: calc(var(--cai-control-lg) + var(--cai-space-xs) + 1px);
+}
+
+.cai-site-header {
+	background: var(--cai-surface-page);
+	border-block-end: 1px solid var(--cai-divider);
+}
+
+/* Opt in: a sticky band covers content and the focused field. Only on a
+   window tall enough to keep a fifth of it for the page, and the scroll
+   padding keeps what Tab reaches out from under it. It is a minimum in em
+   of the root, 56px at the default size and growing with enlarged text,
+   because the header grows with the text and the height token does not.
+   Half a control is added: Chromium centres a field it scrolls to, WebKit
+   puts its top at the padding minus half its height (about 11px for a 44px
+   control), which left the field under the header. */
+@media (min-height: 30rem) {
+	.cai-site-header--sticky {
+		position: sticky;
+		inset-block-start: 0;
+		z-index: var(--cai-z-overlay);
+	}
+
+	:root:has(.cai-site-header--sticky) {
+		scroll-padding-block-start: calc(max(var(--cai-site-header-h), 3.5em) + var(--cai-control-lg) / 2);
+	}
+}
+
+/* The row wraps rather than overflow when text is enlarged or a name is
+   long (WCAG 1.4.4, 1.4.10). The brand wraps too: it is never cut. Same
+   gutters as .o-container, so the brand starts where the content starts. */
+.cai-site-header__inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--cai-space-xs) var(--cai-space-md);
+	inline-size: 100%;
+	max-inline-size: var(--cai-content-max);
+	margin-inline: auto;
+	padding-block: var(--cai-space-2xs);
+	padding-inline: var(--cai-space-md);
+}
+
+@media (min-width: 641px) {
+	.cai-site-header__inner {
+		padding-inline: var(--cai-space-xl);
+	}
+}
+
+/* The brand is a link outside a <nav>, so core would underline it */
+.cai-site-header__brand {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--cai-space-xs);
+	min-block-size: var(--cai-control-lg);
+	margin-inline-end: auto;
+	color: var(--cai-text-primary);
+	font-family: var(--cai-font-sans);
+	font-size: var(--cai-text-base);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.cai-site-header__nav ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--cai-space-md);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cai-site-header__nav a {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: var(--cai-control-lg);
+	color: var(--cai-text-secondary);
+	font-family: var(--cai-font-sans);
+	font-size: var(--cai-text-md);
+}
+
+.cai-site-header__nav a:hover {
+	color: var(--cai-text-primary);
+}
+
+/* The current page: an underline as well as colour (RL-6), and the weight
+   unchanged, so the links do not move from one page to the next */
+.cai-site-header__nav a[aria-current] {
+	color: var(--cai-text-primary);
+	text-decoration: underline;
+	text-decoration-thickness: 2px;
+	text-underline-offset: var(--cai-space-2xs);
+}
+
+.cai-site-header__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: var(--cai-space-xs);
+}
+
+/* The language list opens under the header */
+.cai-site-header .cai-site-lang-switcher {
+	--cai-site-lang-switcher-top: var(--cai-site-header-h);
+}
+
+/* 769px and up the links are a row of the header. A closed popover is
+   display: none to the browser, so this wins by being author CSS; the open
+   state is styled below at every width, so a panel left open when the
+   window grows keeps its place under the header. */
+@media (min-width: 769px) {
+	.cai-site-header__inner {
+		column-gap: var(--cai-space-lg);
+	}
+
+	.cai-site-header__nav ul {
+		gap: var(--cai-space-lg);
+	}
+
+	.cai-site-header__nav[popover]:not(:popover-open) {
+		display: flex;
+		position: static;
+		inset: auto;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: none;
+		overflow: visible;
+		inline-size: auto;
+		block-size: auto;
+	}
+}
+
+@supports selector(:popover-open) {
+	/* The open panel, under the header, the width of the window */
+	.cai-site-header__nav[popover]:popover-open {
+		position: fixed;
+		inset-block: var(--cai-site-header-h) auto;
+		inset-inline: 0;
+		inline-size: auto;
+		block-size: auto;
+		max-block-size: calc(100dvh - var(--cai-site-header-h));
+		margin: 0;
+		padding: var(--cai-space-xs) var(--cai-space-md);
+		border: 0;
+		border-block-end: 1px solid var(--cai-divider);
+		background: var(--cai-surface-page);
+		box-shadow: var(--cai-shadow-lg);
+		/* The shadow falls downward only: upward it would dim the header */
+		clip-path: inset(0 -100vw -100vh);
+	}
+
+	/* The scrim starts under the header: its controls stay at full contrast
+	   (WCAG 1.4.3, 1.4.11), and in forced colours nothing washes them out */
+	.cai-site-header__nav[popover]::backdrop {
+		background: linear-gradient(
+			transparent var(--cai-site-header-h),
+			var(--cai-scrim) var(--cai-site-header-h)
+		);
+	}
+
+	.cai-site-header__nav[popover]:popover-open ul {
+		flex-flow: column nowrap;
+		gap: 0;
+	}
+}

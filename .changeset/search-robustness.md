@@ -1,5 +1,5 @@
 ---
-"@cai-ds/platform": patch
+"@cai-ds/site": patch
 ---
 
 Site search fixes:

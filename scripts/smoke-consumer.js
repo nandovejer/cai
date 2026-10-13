@@ -6,7 +6,7 @@
  *      (patterns such as ./components/* are expanded);
  *   2. a minimal page that links the installed files loads in Chromium with
  *      no failed request, no console error or warning, the tokens defined,
- *      core and platform CSS applied, and the JS exports importable;
+ *      core and site CSS applied, and the JS exports importable;
  *   3. the same page with jsDelivr-style URLs (/npm/@cai-ds/<pkg>@<version>/…),
  *      served from the same tarballs by a local server: no network is used;
  *   4. the `cai-tokens` command runs from the installed package.
@@ -28,7 +28,7 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const KEEP = process.argv.includes("--keep");
-const PACKAGES = ["tokens", "core", "platform"];
+const PACKAGES = ["tokens", "core", "site"];
 const TYPES = {
   ".css": "text/css",
   ".js": "text/javascript",
@@ -135,7 +135,7 @@ const PAGE = (base, label) => `<!doctype html>
   <title>CAI smoke test: ${label}</title>
   <link rel="stylesheet" href="${base.tokens}/dist/cai-tokens.css">
   <link rel="stylesheet" href="${base.core}/dist/cai.css">
-  <link rel="stylesheet" href="${base.platform}/dist/platform.css">
+  <link rel="stylesheet" href="${base.site}/dist/site.css">
 </head>
 <body>
   <h1>Smoke test</h1>
@@ -143,15 +143,15 @@ const PAGE = (base, label) => `<!doctype html>
   <div id="probe-fill" style="background: var(--cai-brand-fill)"></div>
   <script type="module">
     const core = ${JSON.stringify(base.core)};
-    const platform = ${JSON.stringify(base.platform)};
+    const site = ${JSON.stringify(base.site)};
     const wanted = {
       [core + "/dist/cai.js"]: [],
       [core + "/dist/tabs.js"]: ["initTabs"],
       [core + "/dist/theme.js"]: ["applyTheme"],
       [core + "/dist/i18n.js"]: ["t", "registerLocale"],
       [core + "/dist/clipboard.js"]: ["initCopyButtons"],
-      [platform + "/dist/search.js"]: ["search"],
-      [platform + "/dist/platform.js"]: [],
+      [site + "/dist/search.js"]: ["search"],
+      [site + "/dist/site.js"]: [],
     };
     const missing = [];
     for (const [url, names] of Object.entries(wanted)) {
@@ -171,7 +171,7 @@ const PAGE = (base, label) => `<!doctype html>
 const local = {
   tokens: "/node_modules/@cai-ds/tokens",
   core: "/node_modules/@cai-ds/core",
-  platform: "/node_modules/@cai-ds/platform",
+  site: "/node_modules/@cai-ds/site",
 };
 const cdn = Object.fromEntries(PACKAGES.map((n) => [n, `/npm/@cai-ds/${n}@${versions[n]}`]));
 

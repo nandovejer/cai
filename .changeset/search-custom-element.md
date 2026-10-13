@@ -1,5 +1,5 @@
 ---
-"@cai-ds/platform": major
+"@cai-ds/site": major
 ---
 
 The search is a custom element, `<cai-platform-search>`, and `initSearch()` is gone.

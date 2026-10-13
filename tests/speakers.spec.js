@@ -15,7 +15,7 @@
  */
 import { test, expect } from '@playwright/test';
 
-const PAGE = '/docs/platform/templates/';
+const PAGE = '/docs/site/templates/';
 
 /** Add a rule to the page. addStyleTag needs script, and this test also runs without it. */
 const style = (page, css) => page.evaluate((text) => document.head.append(Object.assign(document.createElement('style'), { textContent: text })), css);
@@ -71,7 +71,7 @@ test.describe('speakers block', () => {
   for (const width of [320, 1280]) {
     test(`at ${width} px the frames are square and the page does not scroll sideways`, async ({ page }) => {
       await render(page, width);
-      const frames = page.locator('#speakers-test .cai-platform-image--1x1');
+      const frames = page.locator('#speakers-test .cai-site-image--1x1');
       const boxes = await frames.evaluateAll((list) => list.map((el) => el.getBoundingClientRect()).map((r) => [r.width, r.height]));
       expect(boxes.length).toBeGreaterThanOrEqual(2);
       for (const [w, h] of boxes) {

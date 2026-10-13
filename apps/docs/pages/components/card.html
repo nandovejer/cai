@@ -73,7 +73,7 @@ toc: h2,h3
                 </div>
               </article>
               <article class="cai-card">
-                <div class="cai-platform-image u-mb-sm">
+                <div class="cai-site-image u-mb-sm">
                   <picture>
                     <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                     <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
@@ -96,7 +96,7 @@ toc: h2,h3
             <ul>
               <li><strong>Linked card:</strong> the <code>&lt;a&gt;</code> goes inside the heading, round its text. A second link or a button in it is allowed, and sits above the title link: see Product card below.</li>
               <li><strong>Avatar or icon:</strong> <code>.o-media</code> puts it beside <code>.o-media__body</code>, which holds the title and the body. Next to a name, hide the avatar with <code>aria-hidden="true"</code>: it repeats the name.</li>
-              <li><strong>Image on top:</strong> the image frame of <code>@cai-ds/platform</code> (<code>.cai-platform-image</code>), inside the padding, with <code>.u-mb-sm</code> under it. Its alt text says what the picture shows; if it only repeats the title, leave it empty (<code>alt=""</code>). With core alone, use an <code>&lt;img&gt;</code> and your own size rules.</li>
+              <li><strong>Image on top:</strong> the image frame of <code>@cai-ds/site</code> (<code>.cai-site-image</code>), inside the padding, with <code>.u-mb-sm</code> under it. Its alt text says what the picture shows; if it only repeats the title, leave it empty (<code>alt=""</code>). With core alone, use an <code>&lt;img&gt;</code> and your own size rules.</li>
               <li><strong>Actions:</strong> <code>.o-row</code> with small buttons (<code>.cai-btn--sm</code>) or tags (<code>.cai-tag</code>), last in the card. In a linked card, one action at most, as a button after the title.</li>
             </ul>
             <h4 id="product-card">Product card</h4>
@@ -106,7 +106,7 @@ toc: h2,h3
               <h5 id="red-wines">Red wines</h5>
               <ul class="o-grid docs-cols-2 docs-list-plain" aria-labelledby="red-wines">
                 <li class="cai-card">
-                  <div class="cai-platform-image cai-platform-image--4x3 u-mb-sm">
+                  <div class="cai-site-image cai-site-image--4x3 u-mb-sm">
                     <picture>
                       <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                       <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
@@ -122,7 +122,7 @@ toc: h2,h3
                   </form>
                 </li>
                 <li class="cai-card">
-                  <div class="cai-platform-image cai-platform-image--4x3 u-mb-sm">
+                  <div class="cai-site-image cai-site-image--4x3 u-mb-sm">
                     <picture>
                       <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                       <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
@@ -150,7 +150,7 @@ toc: h2,h3
   &lt;h4 id=&quot;red-wines&quot;&gt;Red wines&lt;/h4&gt;
   &lt;ul class=&quot;o-grid o-grid--auto&quot; aria-labelledby=&quot;red-wines&quot;&gt;
     &lt;li class=&quot;cai-card&quot;&gt;
-      &lt;div class=&quot;cai-platform-image cai-platform-image--4x3 u-mb-sm&quot;&gt;
+      &lt;div class=&quot;cai-site-image cai-site-image--4x3 u-mb-sm&quot;&gt;
         &lt;picture&gt;…&lt;img src=&quot;malbec.jpg&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/picture&gt;
       &lt;/div&gt;
       &lt;h5 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/wines/malbec-2021/&quot;&gt;Malbec 2021&lt;/a&gt;&lt;/h5&gt;
@@ -226,7 +226,7 @@ toc: h2,h3
               <li>The last title or body has no space under it: the padding is the card's last space.</li>
               <li>A linked card: the link's <code>::after</code> is stretched over the card (<code>position: absolute; inset: 0</code>), so a click anywhere in it follows the link. The card is <code>position: relative</code> to hold it. Any other link or control inside the card (<code>a</code>, <code>button</code>, <code>input</code>, <code>select</code>, <code>textarea</code>, <code>summary</code>) is <code>position: relative</code> with <code>z-index: 1</code>, so it paints above that overlay and takes its own click; the title link is the one thing never raised. A button's label wraps in a card (<code>white-space: normal</code>), so a long label or enlarged text stays inside it. On hover the border turns <code>--cai-input-border</code> and a small shadow shows; on keyboard focus a ring goes round the card. The title of a linked card is in sans, as a nav or a list of links is; a card without a link keeps the heading face. Both are found with <code>:has()</code>; a card without a link does not change on hover.</li>
               <li><code>.cai-card--featured</code> sets <code>border-width: 2px</code> in <code>--cai-brand-primary</code> and takes the extra pixel from the padding, so the card keeps the height of its neighbours. In a linked card the border turns <code>--cai-brand-hover</code> on hover, and the keyboard ring stands 4 px off the border, so it does not read as a thicker border.</li>
-              <li>To lay cards out, use the <a href="/docs/components/layout/">grid object</a> or the <a href="/docs/platform/feature-grid/">feature grid</a>.</li>
+              <li>To lay cards out, use the <a href="/docs/components/layout/">grid object</a> or the <a href="/docs/site/feature-grid/">feature grid</a>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: a card, linked or not, is HTML and CSS.</p>

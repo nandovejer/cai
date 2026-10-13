@@ -1,13 +1,13 @@
 // @ts-check
 /**
- * `.cai-platform-section--band`: a section on a tint that runs from edge to
+ * `.cai-site-section--band`: a section on a tint that runs from edge to
  * edge of the page (.claude/plans/specs/band-and-featured-card.md and its
  * accessibility review, B2 and B3). The band is a spread `box-shadow` cut off
  * above and below by `clip-path`, so it adds no scrollable width and does not
  * clip the controls inside.
  *
  * The page is a synthetic one, served at /__band__ with the three stylesheets
- * of the packages, built like a consumer's page (`.cai-platform-main`,
+ * of the packages, built like a consumer's page (`.cai-site-main`,
  * `.o-container`): the docs' own frame would answer for the docs.
  * Runs in `chromium` and `chromium-nojs` (it is CSS only).
  */
@@ -21,23 +21,23 @@ const PAGE = `<!doctype html>
 <title>Band</title>
 <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
 <link rel="stylesheet" href="/packages/core/dist/cai.css">
-<link rel="stylesheet" href="/packages/platform/dist/platform.css">
+<link rel="stylesheet" href="/packages/site/dist/site.css">
 </head>
-<body class="cai-platform-page">
-<main id="main-content" class="cai-platform-main o-container">
-  <section class="cai-platform-section" aria-labelledby="before-title">
+<body class="cai-site-page">
+<main id="main-content" class="cai-site-main o-container">
+  <section class="cai-site-section" aria-labelledby="before-title">
     <h2 id="before-title">Programme</h2>
     <p>Two days of talks and workshops for retail teams.</p>
   </section>
-  <section class="cai-platform-section cai-platform-section--band" aria-labelledby="last-seats-title" id="band">
+  <section class="cai-site-section cai-site-section--band" aria-labelledby="last-seats-title" id="band">
     <h2 id="last-seats-title">Registration closes on 30 April</h2>
     <p>The hall holds 400 people, and the Two days ticket sold out last year.</p>
-    <div class="cai-platform-actions">
+    <div class="cai-site-actions">
       <a class="cai-btn cai-btn--primary" href="#after-title">Register now</a>
       <a class="cai-btn cai-btn--outline" href="#after-title">Programme</a>
     </div>
   </section>
-  <section class="cai-platform-section" aria-labelledby="after-title">
+  <section class="cai-site-section" aria-labelledby="after-title">
     <h2 id="after-title">Venue</h2>
     <p>The main hall, in Seville.</p>
   </section>

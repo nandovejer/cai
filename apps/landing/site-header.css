@@ -101,7 +101,7 @@
   text-underline-offset: var(--cai-space-2xs);
 }
 
-/* Search: with JavaScript, @cai-ds/platform's button (magnifier only at
+/* Search: with JavaScript, @cai-ds/site's button (magnifier only at
    768px and below); without it, a plain link to the A–Z index, like the
    site links. Both sit at the end of the row. */
 .site-header__az:not([hidden]) {
@@ -125,7 +125,7 @@
   }
 }
 
-/* The search is one icon button at every width (the platform's compact
+/* The search is one icon button at every width (the site's compact
    trigger): "Search docs" stays its accessible name, clipped, not removed,
    and the title shows the shortcut on hover. */
 .site-header__search {
@@ -142,7 +142,7 @@
   background: var(--cai-surface-muted);
 }
 
-.site-header__search .cai-platform-search-trigger__label {
+.site-header__search .cai-site-search-trigger__label {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -151,14 +151,14 @@
   white-space: nowrap;
 }
 
-.site-header__search .cai-platform-search-trigger__key {
+.site-header__search .cai-site-search-trigger__key {
   display: none;
 }
 
-/* The language switcher (@cai-ds/platform, home page only): last in the
+/* The language switcher (@cai-ds/site, home page only): last in the
    row, at every width, like the search; its list opens under the header */
-.site-header .cai-platform-lang-switcher {
-  --cai-platform-lang-switcher-top: var(--site-header-h);
+.site-header .cai-site-lang-switcher {
+  --cai-site-lang-switcher-top: var(--site-header-h);
 }
 
 /* GitHub: the mark and its name; below 640px the mark alone, the name
@@ -226,7 +226,7 @@
 /* Bottom-right corner of the footer. The auto margin takes the free space
    (the footer wraps, and is a column on small screens), so the switcher
    never overlaps the text or the links. */
-.cai-platform-footer > .site-modes {
+.cai-site-footer > .site-modes {
   justify-content: flex-end;
   margin-inline-start: auto;
 }
@@ -236,17 +236,17 @@
    footer is two rows, never three. Without JavaScript the radios are too
    wide for a column: they take a row of their own, at the end. */
 @media (max-width: 768px) {
-  .cai-platform-footer:has(> .site-modes) {
+  .cai-site-footer:has(> .site-modes) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
   }
 
-  .cai-platform-footer:has(> .site-modes) > :not(.site-modes) {
+  .cai-site-footer:has(> .site-modes) > :not(.site-modes) {
     grid-column: 1;
   }
 
-  .cai-platform-footer > .site-modes {
+  .cai-site-footer > .site-modes {
     grid-column: 2;
     grid-row: 1 / span 2;
     align-self: end;
@@ -254,7 +254,7 @@
 }
 
 @media (scripting: none) and (max-width: 768px) {
-  .cai-platform-footer > .site-modes {
+  .cai-site-footer > .site-modes {
     grid-column: 1 / -1;
     grid-row: auto;
   }

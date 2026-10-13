@@ -13,11 +13,11 @@
  *     which changes only with its own changeset, so budgets.json cannot be
  *     raised quietly;
  *   - every chunk a budgeted JS file imports lazily is budgeted too, and it
- *     imports no other file statically (platform.min.js bundles search.js,
+ *     imports no other file statically (site.min.js bundles search.js,
  *     so its budget measures everything a <script> of it loads);
  *   - no published packages/*\/dist/*.min.js imports a bare specifier (an
  *     inlined or missing dependency would escape its budget), and the
- *     platform bundles import nothing.
+ *     site bundles import nothing.
  *
  * Usage: node scripts/check-size.js
  */
@@ -77,14 +77,14 @@ for (const { file } of budgets.filter((b) => b.file?.endsWith(".js"))) {
 // --- No published .min.js imports another package (RL-1) ---
 // A bare specifier ("@cai-ds/core/…", "lit") in a file a CDN serves would
 // fail there, or pull in a dependency. Every packages/*/dist/*.min.js may
-// import only its own relative files, and the platform bundles (one
+// import only its own relative files, and the site bundles (one
 // <script> each, security.md phase 4 review 5b) import nothing at all.
 const SPECIFIERS = [
   /(?:^|[;}\s])(?:import|export)\b[^"'();]*?\bfrom\s*["']([^"']+)["']/g,
   /(?:^|[;}\s])import\s*["']([^"']+)["']/g,
   /\bimport\(\s*["']([^"']+)["']\s*\)/g,
 ];
-const SELF_CONTAINED = new Set(["packages/platform/dist/platform.min.js", "packages/platform/dist/search.min.js"]);
+const SELF_CONTAINED = new Set(["packages/site/dist/site.min.js", "packages/site/dist/search.min.js"]);
 for (const pkg of readdirSync(resolve(root, "packages"))) {
   const dist = resolve(root, "packages", pkg, "dist");
   if (!existsSync(dist)) continue;

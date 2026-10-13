@@ -192,7 +192,7 @@ describe("RL-15: status colours keep their set and their meaning", () => {
     info: "info", blue: "info",
     teal: "teal", purple: "purple",
   };
-  const STATUS_BLOCKS = /\.cai-(alert|tag|badge|toast|btn|input|progress|meter|platform-[\w-]+)--([a-z]+)\b/g;
+  const STATUS_BLOCKS = /\.cai-(alert|tag|badge|toast|btn|input|progress|meter|site-[\w-]+)--([a-z]+)\b/g;
 
   const css = filesIn(["packages"], [".css"]).map((p) => [rel(p), readFileSync(p, "utf-8").replace(/\/\*[\s\S]*?\*\//g, "")]);
 

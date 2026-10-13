@@ -10,7 +10,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { readHtml } from "../scripts/docs-site/html.js";
-import { readIndex, search } from "../packages/platform/src/search.js";
+import { readIndex, search } from "../packages/site/src/search.js";
 import {
   SEARCH_INDEX_ROUTE,
   buildSearchIndex,
@@ -321,7 +321,7 @@ describe("link check", () => {
         { href: "/docs/components/button/#gone", file: "a.html", line: 7 },
         { href: "/packages/core/dist/cai.css", file: "a.html", line: 8 },
         { href: "https://example.com/docs/", file: "a.html", line: 9 },
-        { href: "/platform/#anything", file: "a.html", line: 10 },
+        { href: "/site/#anything", file: "a.html", line: 10 },
         { href: "//evil.example/", file: "a.html", line: 11 },
       ],
     },
@@ -329,7 +329,7 @@ describe("link check", () => {
   const known = new Map([
     ["/docs/", new Set(["top", "c-button"])],
     ["/docs/components/button/", new Set(["how"])],
-    ["/platform/", null],
+    ["/site/", null],
   ]);
 
   it("reports a missing id, a missing trailing slash, an unknown route and a missing fragment", () => {
@@ -479,13 +479,13 @@ describe("the CAI docs site", () => {
     const flat = (html) =>
       html
         .replace(/ aria-current="(page|true)"/g, "")
-        .replace(/<div class="cai-platform-lang-switcher">[\s\S]*?<\/nav>\s*<\/div>/, "")
+        .replace(/<div class="cai-site-lang-switcher">[\s\S]*?<\/nav>\s*<\/div>/, "")
         .replace(/\s+/g, " ");
     const docsHeader = flat(header(rendered.get("/docs/")));
     for (const [route, html] of rendered) {
       const own = header(html);
       if (route === "/" || !homes.includes(route)) expect(flat(own), route).toBe(docsHeader);
-      expect(own.includes("cai-platform-lang-switcher"), route).toBe(homes.includes(route));
+      expect(own.includes("cai-site-lang-switcher"), route).toBe(homes.includes(route));
       // The site links (Home and Docs; the brand is not a navigation item) and the switcher's current language
       const marked = [...own.matchAll(/<a[^>]* href="([^"]*)"[^>]* aria-current="(page|true)">/g)].map(([, href, value]) => [href, value]);
       const expected = [...currentOf(route, homes)].filter(([href]) => href === "/docs/" || homes.includes(href));
@@ -550,9 +550,9 @@ describe("the CAI docs site", () => {
     // ia.md §6 and a11y.md TAB-1/3/16/17. Every section of both tabs is
     // required; tests/docs-design.test.js checks what the Design sections say.
     const viewPages = site.pages.filter(
-      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "platform" && p.meta.group === "patterns"),
+      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "site" && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(37);
+    expect(viewPages).toHaveLength(36);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {
@@ -648,16 +648,16 @@ describe("the CAI docs site", () => {
     expect(new Set(names).size).toBe(names.length);
     expect(names.length).toBeGreaterThan(250);
     // Keywords: after the area, not already in the title; the page keeps its place
-    expect(index.pages).toContainEqual(["Site header", "platform/site-header/", "Platform · navbar, nav bar"]);
-    expect(index.pages).toContainEqual(["Language switcher", "platform/lang-switcher/", "Platform · translation, locale, i18n, hreflang"]);
+    expect(index.pages).toContainEqual(["Site header", "site/site-header/", "Site · navbar, nav bar"]);
+    expect(index.pages).toContainEqual(["Language switcher", "site/lang-switcher/", "Site · translation, locale, i18n, hreflang"]);
     // A keyword is never the title of another page: that page would come second in its own search
     const titles = new Set(site.pages.map((p) => p.meta.title.toLowerCase()));
     for (const { keywords, title } of indexData(site)) for (const k of keywords) expect(titles.has(k.toLowerCase()), `${title}: ${k}`).toBe(false);
     // The A–Z index lists them too, as "Another name for"
-    expect(indexEntries(site)).toContainEqual({ name: "navbar", href: "/docs/platform/site-header/", kind: "Another name for Site header" });
+    expect(indexEntries(site)).toContainEqual({ name: "navbar", href: "/docs/site/site-header/", kind: "Another name for Site header" });
   });
 
-  it("answers what a developer types: class names, tokens, other names, and a part of a title (the search of @cai-ds/platform)", () => {
+  it("answers what a developer types: class names, tokens, other names, and a part of a title (the search of @cai-ds/site)", () => {
     const results = readIndex(buildSearchIndex(site), `https://example.org${SEARCH_INDEX_ROUTE}`);
     const [PAGES, SECTIONS] = [0, 1];
     const first = (query, group = SECTIONS) => search(results, query)[group].map((r) => r.text);
@@ -720,13 +720,13 @@ describe("the CAI docs site", () => {
         if (link) expect(link[1], route).toBe(`${kind}: ${site.byRoute.get(link[0]).meta.title.replace(/&/g, "&amp;")}`);
       }
     }
-    // Get started → Tokens → HTML elements → Components → Platform → Accessibility
+    // Get started → Tokens → HTML elements → Components → Site → Accessibility
     expect(endOf(rendered.get("/docs/tokens/")).prev?.[0]).toBe("/docs/get-started/classless/");
     expect(endOf(rendered.get("/docs/tokens/")).next?.[0]).toBe("/docs/tokens/color/");
     expect(endOf(rendered.get("/docs/get-started/classless/")).next?.[0]).toBe("/docs/tokens/");
     expect(endOf(rendered.get("/docs/html/")).prev?.[0]).toMatch(/^\/docs\/tokens\//);
     expect(endOf(rendered.get("/docs/components/")).prev?.[0]).toMatch(/^\/docs\/html\//);
-    expect(endOf(rendered.get("/docs/platform/")).prev?.[0]).toMatch(/^\/docs\/components\//);
+    expect(endOf(rendered.get("/docs/site/")).prev?.[0]).toMatch(/^\/docs\/components\//);
   });
 
   it("lists up to three essentials per area (site.json), never the page itself nor its Previous / Next, all existing pages", () => {

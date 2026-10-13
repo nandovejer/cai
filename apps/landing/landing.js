@@ -10,8 +10,8 @@
 
 import { initCopyButtons } from "/packages/core/dist/clipboard.js";
 import { highlightBlock } from "/packages/core/dist/highlight.js";
-// Defines <cai-platform-search>: the search wires itself when it connects
-import "/packages/platform/dist/search.js";
+// Defines <cai-site-search>: the search wires itself when it connects
+import "/packages/site/dist/search.js";
 import { initSiteHeader } from "./site-header.js";
 
 /* ---- Copy buttons ----------------------------------------------------- */

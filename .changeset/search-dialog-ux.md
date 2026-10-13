@@ -1,5 +1,5 @@
 ---
-"@cai-ds/platform": patch
+"@cai-ds/site": patch
 ---
 
 The search dialog (`<cai-platform-search>`) is easier to scan, after a UX and accessibility review.

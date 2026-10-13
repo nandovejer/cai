@@ -1,6 +1,6 @@
 ---
 "@cai-ds/core": minor
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 Table cell padding, the audio player controls and the platform feature grid follow the room they have, not the window.

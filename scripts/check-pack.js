@@ -19,7 +19,7 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
 const update = process.argv.includes("--update");
-const PACKAGES = ["tokens", "core", "platform"];
+const PACKAGES = ["tokens", "core", "site"];
 
 let failed = false;
 const fail = (pkg, message) => {

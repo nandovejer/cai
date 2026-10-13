@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * The home page in English (/), Spanish (/es/) and Arabic (/ar/), and the
- * language switcher of @cai-ds/platform in its header. Each language is a
+ * language switcher of @cai-ds/site in its header. Each language is a
  * static page: its own lang, dir, title and alternates, no redirect and no
  * text swapped by a script. The switcher is links in a native popover, so
  * it is checked with JavaScript and, in chromium-nojs, without it.
@@ -33,7 +33,7 @@ async function open(page, path) {
   return { failed, problems };
 }
 
-const switcher = (page) => page.locator('.site-header .cai-platform-lang-switcher');
+const switcher = (page) => page.locator('.site-header .cai-site-lang-switcher');
 
 for (const { route, lang, dir, name, label } of LANGUAGES) {
   test.describe(`home page ${route}`, () => {
@@ -143,7 +143,7 @@ test.describe('the language switcher', () => {
       const button = switcher(page).getByRole('button');
       await expect(button).toHaveAccessibleName(`${label}: ${name}`);
       // No visible text: the name is clipped to 1px
-      const shown = await button.locator('.cai-platform-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width);
+      const shown = await button.locator('.cai-site-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width);
       expect(shown).toBeLessThanOrEqual(1);
       expect((await button.boundingBox())?.width).toBeGreaterThanOrEqual(44);
     });
@@ -152,8 +152,8 @@ test.describe('the language switcher', () => {
   test('from 360px the button shows the language\'s name', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 700 });
     await open(page, '/es/');
-    await expect(switcher(page).locator('.cai-platform-lang-switcher__name')).toBeVisible();
-    expect(await switcher(page).locator('.cai-platform-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width)).toBeGreaterThan(20);
+    await expect(switcher(page).locator('.cai-site-lang-switcher__name')).toBeVisible();
+    expect(await switcher(page).locator('.cai-site-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width)).toBeGreaterThan(20);
   });
 
   test('a browser without the popover API gets the languages as a row of links', async ({ page }) => {
@@ -195,7 +195,7 @@ test.describe('Arabic typography', () => {
   test('the page tint sits in the top right corner', async ({ page }) => {
     await open(page, '/ar/');
     const background = await page.evaluate(() => {
-      document.body.classList.add('cai-platform-page--gradient');
+      document.body.classList.add('cai-site-page--gradient');
       return getComputedStyle(document.body).backgroundImage;
     });
     expect(background).toMatch(/at right top|at top right|at 100% 0%/);

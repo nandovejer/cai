@@ -1,5 +1,5 @@
 ---
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 New `.cai-platform-image`: a frame of fixed ratio around a native `<picture>`, with an abstract placeholder for when there is no image.

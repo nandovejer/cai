@@ -193,16 +193,16 @@ describe("languages of the home page: generated markup", () => {
 
   it("builds the switcher from the registry: links named in their own language, the current one marked, no flags, no script", () => {
     const html = renderSwitcher(i18n, i18n.byCode.get("es"), "Idioma");
-    const links = [...html.matchAll(/<a class="cai-platform-lang-switcher__link" href="([^"]*)" hreflang="([^"]*)" lang="([^"]*)"( aria-current="page")?>([^<]*)<\/a>/g)].map((m) => [m[1], m[2], m[3], Boolean(m[4]), m[5]]);
+    const links = [...html.matchAll(/<a class="cai-site-lang-switcher__link" href="([^"]*)" hreflang="([^"]*)" lang="([^"]*)"( aria-current="page")?>([^<]*)<\/a>/g)].map((m) => [m[1], m[2], m[3], Boolean(m[4]), m[5]]);
     expect(links).toEqual([
       ["/", "en", "en", false, "English"],
       ["/es/", "es", "es", true, "Español"],
       ["/ar/", "ar", "ar", false, "العربية"],
     ]);
     // A native popover: the button names it, says what it is and shows the current language
-    expect(html).toContain('<button class="cai-platform-lang-switcher__button" type="button" popovertarget="cai-lang-menu">');
-    expect(html).toContain('<span class="u-sr-only">Idioma: </span><span class="cai-platform-lang-switcher__name">Español</span></button>');
-    expect(html).toContain('<nav class="cai-platform-lang-switcher__menu" id="cai-lang-menu" popover aria-labelledby="cai-lang-title">');
+    expect(html).toContain('<button class="cai-site-lang-switcher__button" type="button" popovertarget="cai-lang-menu">');
+    expect(html).toContain('<span class="u-sr-only">Idioma: </span><span class="cai-site-lang-switcher__name">Español</span></button>');
+    expect(html).toContain('<nav class="cai-site-lang-switcher__menu" id="cai-lang-menu" popover aria-labelledby="cai-lang-title">');
     expect(html).not.toMatch(/<script|onclick|🇪|flag/i);
   });
 

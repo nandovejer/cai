@@ -78,15 +78,15 @@ export const formatRatio = format;
 
 /* ---- The tokens a component reads ---------------------------------------- */
 
-/** The CSS of a page and, for a platform pattern, the classes that are its own. */
+/** The CSS of a page and, for a site pattern, the classes that are its own. */
 function sourceOf(page) {
   if (page.meta.area === "components") {
     return { css: page.meta.files.split(";").map((f) => read(`packages/core/src/${f.trim()}`)).join("\n"), classes: null };
   }
-  if (page.meta.module === "search.js") return { css: read("packages/platform/src/components/search.css"), classes: null };
+  if (page.meta.module === "search.js") return { css: read("packages/site/src/components/search.css"), classes: null };
   const classes = page.meta.files.split(",").map((f) => f.trim()).filter((f) => f.startsWith(".")).map((f) => f.slice(1));
   // The shell patterns, and the patterns with a file of their own (the language switcher, the site header)
-  const files = ["_components.css", "lang-switcher.css", "site-header.css"].map((f) => read(`packages/platform/src/components/${f}`));
+  const files = ["_components.css", "lang-switcher.css", "site-header.css"].map((f) => read(`packages/site/src/components/${f}`));
   return { css: files.join("\n"), classes };
 }
 
@@ -101,8 +101,8 @@ export function tokensUsedBy(page) {
     for (const [, name] of body.matchAll(/(--cai-[\w-]+)\s*:/g)) local.add(name);
     for (const [, name] of body.matchAll(/var\(\s*(--cai-[\w-]+)/g)) used.add(name);
   }
-  // --cai-platform-* are properties a pattern sets for its own parts, not design tokens
-  return [...used].filter((t) => !local.has(t) && !t.startsWith("--cai-platform-")).sort();
+  // --cai-site-* are properties a pattern sets for its own parts, not design tokens
+  return [...used].filter((t) => !local.has(t) && !t.startsWith("--cai-site-")).sort();
 }
 
 /* ---- Token families and their pages --------------------------------------- */

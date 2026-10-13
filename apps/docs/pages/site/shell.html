@@ -1,0 +1,151 @@
+<!-- cai:page
+title: Page shell
+description: Lays out a whole page: header, a main area that grows, and a footer that stays at the bottom.
+area: site
+order: 1
+group: patterns
+files: .cai-site-page, --gradient, .cai-site-main, .cai-site-content
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-shell">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <figure class="docs-figure">
+              <div class="docs-anatomy">
+                <div class="docs-box">
+                  .cai-site-page
+                  <div class="docs-box">.cai-site-skip-link</div>
+                  <div class="docs-box">.cai-site-header</div>
+                  <div class="docs-box">
+                    .cai-site-main
+                    <div class="docs-box">.cai-site-section</div>
+                    <div class="docs-box">.cai-site-section</div>
+                  </div>
+                  <div class="docs-box">.cai-site-footer</div>
+                </div>
+              </div>
+              <div class="cai-site-page--gradient docs-gradient-sample">.cai-site-page--gradient</div>
+              <figcaption>The anatomy of a page. The gradient modifier, shown above, is meant for short pages. In an app shell, <code class="cai-code-inline">.cai-site-content</code> pads the main column beside the sidebar.</figcaption>
+            </figure>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Page shell documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-shell" aria-label="Copy the page shell markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page shell markup"><code id="code-shell">&lt;body class=&quot;cai-site-page&quot;&gt;
+  &lt;a class=&quot;cai-site-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+  &lt;header class=&quot;cai-site-header&quot;&gt;…&lt;/header&gt;
+  &lt;main class=&quot;cai-site-main o-container&quot; id=&quot;main-content&quot;&gt;
+    &lt;div class=&quot;cai-site-page-header&quot;&gt;
+      &lt;h1 class=&quot;cai-site-page-header__title&quot;&gt;Billing&lt;/h1&gt;
+    &lt;/div&gt;
+    &lt;section class=&quot;cai-site-section&quot; aria-labelledby=&quot;invoices-title&quot;&gt;
+      &lt;h2 id=&quot;invoices-title&quot;&gt;Invoices&lt;/h2&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;footer class=&quot;cai-site-footer o-container&quot;&gt;…&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <div class="cai-table-wrap" role="region" aria-label="Page shell classes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.cai-site-page</code></div></td><td data-label="Effect"><div>On <code>&lt;body&gt;</code>: three rows (header, main, footer), at least the height of the screen</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-site-page--gradient</code></div></td><td data-label="Effect"><div>A soft brand tint in the top corner fading into the page surface, for short pages</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-site-main</code></div></td><td data-label="Effect"><div>On <code>&lt;main&gt;</code> of a page without a sidebar: stacks sections with a 64 px gap</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.cai-site-content</code></div></td><td data-label="Effect"><div>On the column next to a sidebar: padding and the maximum content width</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS grid from <code>@cai-ds/site</code>. No JavaScript.</p>
+            <ul>
+              <li>The middle row takes the free space, so the footer stays at the bottom of short pages.</li>
+              <li>Use the <a href="/docs/components/layout/">layout objects</a> of core, such as <code>.o-container</code>, for the width.</li>
+              <li><code>.cai-site-content</code> reduces its padding at 768 px and again at 640 px.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the shell is CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The shell has no interaction of its own.</p>
+            <ul>
+              <li>Landmarks come from the native elements: <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code>. Do not add <code>role</code> to them.</li>
+              <li>Put a <a href="/docs/site/skip-link/">skip link</a> first in <code>&lt;body&gt;</code>.</li>
+              <li>The <code>&lt;header&gt;</code> is the <a href="/docs/site/site-header/">site header</a>: the name, the main links and the controls. The page's own title is the <a href="/docs/site/page-header/">page header</a> at the start of <code>&lt;main&gt;</code>.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the page shell for the whole page of an app or a product site: a header, a main area that grows, and a footer at the bottom.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it inside a component or a card: it sets a full-height grid on its element.</p>
+            <ul>
+              <li>Do not nest one page shell in another.</li>
+              <li>Do not use the gradient behind long text: a flat surface is easier to read.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> The gradient behind a short page: a title, a line and an action.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-page--gradient docs-dodont__shell"><p class="cai-site-page-header__title">Welcome back</p><p class="u-mb-0">Pick up where you left off.</p></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The gradient behind long text: the background changes under every line, and a flat surface is easier to read.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-page--gradient docs-dodont__shell"><p class="u-mb-0">The plan renews on the first of the month. You can cancel before then, from the billing page. Unused days are not refunded, and invoices stay available for seven years. Your projects and their history are kept for thirty days after the plan ends.</p></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>One <code>&lt;main&gt;</code> per page, with the <code>id</code> the skip link points to.</p>
+            <ul>
+              <li>Start <code>&lt;main&gt;</code> with the <a href="/docs/site/page-header/">page header</a>, so the first heading is the <code>&lt;h1&gt;</code>.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Text on the gradient keeps its contrast at both ends: the brand tint at the top start and the muted surface at the bottom.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Page shell contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Text, top of the gradient</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>14.3:1</div></td><td data-label="Dark"><div>12.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text, bottom of the gradient</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary text, top</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.3:1</div></td><td data-label="High contrast"><div>18.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary text, bottom</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the shell takes none; its skip link is the first thing Tab reaches.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 9 tokens that the <code>.cai-site-page</code> rules of site's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-subtle"><code>--cai-brand-subtle</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="/docs/tokens/color/#cai-surface-page"><code>--cai-surface-page</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xl</code>, <code>--cai-space-3xl</code>, <code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-xl</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--cai-content-max</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

@@ -1,7 +1,7 @@
 /**
  * CAI Design System — Adoption level smoke tests
  * Each fixture loads only the dist/ files a consumer of that level would:
- * tokens only, tokens + core, tokens + core + platform.
+ * tokens only, tokens + core, tokens + core + site.
  * Run with: pnpm test:ui
  */
 
@@ -66,8 +66,8 @@ test.describe('Adoption levels', () => {
     expect(await page.locator('details').evaluate((el) => el.open)).toBe(true);
   });
 
-  test('level 3: tokens + core + platform', async ({ page }) => {
-    const { failed, warnings } = await open(page, 'level-3-platform.html');
+  test('level 3: tokens + core + site', async ({ page }) => {
+    const { failed, warnings } = await open(page, 'level-3-site.html');
 
     expect(failed).toEqual([]);
     expect(warnings).toEqual([]);

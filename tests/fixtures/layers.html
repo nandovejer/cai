@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
   <link rel="stylesheet" href="/packages/core/dist/cai.css">
   <link rel="stylesheet" href="/tests/fixtures/theme-brand.css">
-  <link rel="stylesheet" href="/packages/platform/dist/platform.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
   <style>
     /* Away from (0,0), where the test pointer rests: a hovered probe changes colour */
     body { padding: 80px; }
@@ -29,7 +29,7 @@
       :root { --cai-brand-fill: rgb(1, 2, 3); --cai-surface-page: rgb(250, 251, 252); }
       .cai-btn { padding-inline-start: 7px; }
       .cai-btn.probe-unlayered { min-height: 99px; }
-      .cai-platform-section.probe-platform { padding-block-start: 13px; }
+      .cai-site-section.probe-site { padding-block-start: 13px; }
     }
   </style>
 </head>
@@ -37,7 +37,7 @@
   <p><button class="cai-btn cai-btn--primary" id="probe-component" type="button">Save changes</button></p>
   <p><button class="cai-btn cai-btn--primary probe-unlayered" id="probe-unlayered" type="button">Save changes</button></p>
   <p><button class="cai-btn cai-btn--primary probe-own-layer" id="probe-own-layer" type="button">Save changes</button></p>
-  <div class="cai-platform-section probe-platform" id="probe-platform"><p>Platform pattern</p></div>
+  <div class="cai-site-section probe-site" id="probe-site"><p>Site pattern</p></div>
   <p class="u-sr-only" id="probe-utility">Hidden text</p>
 </body>
 </html>

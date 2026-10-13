@@ -1,5 +1,5 @@
 ---
-"@cai-ds/platform": minor
+"@cai-ds/site": minor
 ---
 
 New site search in `@cai-ds/platform`: a button shaped like a field opens a native `<dialog>` where a reader finds a page, a section or an HTML element by name.

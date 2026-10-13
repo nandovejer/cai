@@ -34,8 +34,8 @@ order: 4
             <tr><td data-label="Layer"><div><code>cai.objects</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Layout objects: <code>.o-*</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>cai.components</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The components: <code>.cai-*</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>cai.utilities</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Single-purpose helpers: <code>.u-*</code>. They win over components by order, not by <code>!important</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.platform</code></div></td><td data-label="Package"><div>platform</div></td><td data-label="What it holds"><div>The page patterns: <code>.cai-platform-*</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="/docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of core and platform</div></td></tr>
+            <tr><td data-label="Layer"><div><code>cai.site</code></div></td><td data-label="Package"><div>site</div></td><td data-label="What it holds"><div>The page patterns: <code>.cai-site-*</code></div></td></tr>
+            <tr><td data-label="Layer"><div><code>cai.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="/docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of core and site</div></td></tr>
           </tbody>
         </table>
       </div>
@@ -68,8 +68,8 @@ order: 4
     min-height: 3rem;
   }
 
-  /* A platform pattern */
-  .cai-platform-section {
+  /* A site pattern */
+  .cai-site-section {
     padding-block: 4rem;
   }
 }</code></pre>
@@ -98,6 +98,6 @@ order: 4
 
 @import url("@cai-ds/tokens/css");
 @import url("@cai-ds/core/css");
-@import url("@cai-ds/platform/css");</code></pre>
+@import url("@cai-ds/site/css");</code></pre>
       <p>Your own stylesheet imports a file after the statement, so the order is set before CAI loads.</p>
     </section>

@@ -9,7 +9,7 @@ order: 5
       <p class="docs-lead">A page printed from CAI is black text on white, without the parts that only work on a screen. It is one block of CSS in its own layer, <code>cai.print</code>, which loads with <code>cai.css</code>.</p>
       <ul>
         <li><strong>Colors.</strong> Surfaces are white and text is black, whichever color mode the page was in. The tokens are set again for print, so every component follows, with no rule of its own. Status colors and code colors become black: each has an icon, a title or a weight besides its color.</li>
-        <li><strong>Hidden.</strong> Navigation (<code>nav</code>), the sidebar, the tab row, copy buttons, the color mode switch, the player, toasts and tooltips. Platform also hides its skip link and search.</li>
+        <li><strong>Hidden.</strong> Navigation (<code>nav</code>), the sidebar, the tab row, copy buttons, the color mode switch, the player, toasts and tooltips. Site also hides its skip link and search.</li>
         <li><strong>Links.</strong> An external link prints its address after its text, in brackets. A link that looks like a button does not.</li>
         <li><strong>Breaks.</strong> No page break inside a figure, a code block, a table, a table row, a quotation, an image, a card or an alert. A heading stays with the text after it.</li>
         <li><strong>Tables.</strong> The header row repeats on every page of a table that spans pages. A wide table is not clipped.</li>
@@ -24,7 +24,7 @@ order: 5
       <ul>
         <li><code>cai.css</code> includes it. Nothing to add, and nothing to remove: the block is inside the file.</li>
         <li>If you load <code>base.css</code> and components one by one, print is not there. Add <code>@cai-ds/core/print.css</code> (<code>dist/print.css</code>) if you want it. It declares the layer order itself, as every file does.</li>
-        <li>A platform page also gets its own print rules, in <code>cai.platform</code>.</li>
+        <li>A site page also gets its own print rules, in <code>cai.site</code>.</li>
         <li>On a screen nothing changes: the whole block is inside <code>@media print</code>.</li>
       </ul>
     </section>

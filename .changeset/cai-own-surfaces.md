@@ -1,7 +1,7 @@
 ---
 "@cai-ds/tokens": major
 "@cai-ds/core": major
-"@cai-ds/platform": major
+"@cai-ds/site": major
 ---
 
 Semantic tokens get CAI's own names and surface model. The names and the light/dark layering came from IBM Carbon (layers 01–03, `$overlay`, its icon and border roles); they are replaced.

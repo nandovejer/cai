@@ -2,7 +2,7 @@
 /**
  * The cascade layers a consumer orders (@layer reset, cai, app;): what the
  * docs page /docs/get-started/layers/ says is checked here in a real
- * browser, with tokens, core, a theme of the consumer's and platform loaded as published.
+ * browser, with tokens, core, a theme of the consumer's and site loaded as published.
  */
 import { test, expect } from '@playwright/test';
 
@@ -25,8 +25,8 @@ test.describe('cascade layers', () => {
     expect(await css(page, '#probe-component', 'padding-inline-start')).toBe('7px');
   });
 
-  test('a consumer layer after cai overrides a platform pattern', async ({ page }) => {
-    expect(await css(page, '#probe-platform', 'padding-block-start')).toBe('13px');
+  test('a consumer layer after cai overrides a site pattern', async ({ page }) => {
+    expect(await css(page, '#probe-site', 'padding-block-start')).toBe('13px');
   });
 
   test('unlayered CSS wins over any layer, whatever its order in the source', async ({ page }) => {

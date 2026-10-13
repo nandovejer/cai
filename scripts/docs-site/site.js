@@ -109,7 +109,7 @@ const AREA_KIND = {
   "get-started": "Get started",
   components: "Component",
   tokens: "Token page",
-  platform: "Platform pattern",
+  site: "Site pattern",
   html: "HTML elements",
   accessibility: "Accessibility",
   hub: "Documentation",
@@ -634,7 +634,7 @@ export function indexData(site) {
     .filter((page) => page.meta.search !== "false")
     .map((page) => {
       const area = areaOf(site, page);
-      const kind = area?.id === "platform" && page.route === areaRoute(area) ? "Platform" : AREA_KIND[page.meta.area] ?? "Page";
+      const kind = area?.id === "site" && page.route === areaRoute(area) ? "Site" : AREA_KIND[page.meta.area] ?? "Page";
       // The levels "On this page" lists: on a component page, the h3 of its tabs too
       const sectionLevels = page.meta.toc === "h2,h3" ? [2, 3] : [2];
       const sections = [];
@@ -718,8 +718,8 @@ export const SEARCH_INDEX_ROUTE = `${DOCS_ROUTE}search-index.json`;
 const NOT_SEARCHED = new Set(["example", "code", "design"]);
 
 /**
- * The search index of @cai-ds/platform's search (format version 1, the
- * public contract documented on /docs/platform/search/), from the same data
+ * The search index of @cai-ds/site's search (format version 1, the
+ * public contract documented on /docs/site/search/), from the same data
  * as the A–Z index: three lists of [text, url, meta?]. URLs are relative to
  * the JSON file, so the site works under any path; a section's URL carries
  * its page and its fragment, since "#how" exists on many pages. A section

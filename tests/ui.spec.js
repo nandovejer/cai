@@ -45,7 +45,7 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     // cai.js (initThemeSystem) and its own storage key: no site page loads
-    // cai.js since the platform reference moved into /docs/, so a fixture does
+    // cai.js since the site reference moved into /docs/, so a fixture does
     test('should persist a theme chosen with the switcher', async ({ page }) => {
       await page.goto('/tests/fixtures/mode-switcher.html');
       await page.waitForLoadState('networkidle');

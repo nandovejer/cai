@@ -18,7 +18,7 @@ const files = [
   "packages/tokens/dist/tokens.css",
   "packages/core/dist/cai.css",
   "packages/core/dist/base.css",
-  "packages/platform/dist/platform.css",
+  "packages/site/dist/site.css",
   "packages/core/dist/print.css",
   "packages/core/dist/classless.css",
   ...listed("packages/core/dist/components").filter((f) => !f.endsWith(".min.css")),
@@ -51,7 +51,7 @@ describe.skipIf(files.length === 0)("published stylesheets and the cai layers", 
   it("covers every package's CSS", () => {
     expect(files.some((f) => f.includes("tokens/dist"))).toBe(true);
     expect(files.some((f) => f.endsWith("cai.css"))).toBe(true);
-    expect(files.some((f) => f.endsWith("platform.css"))).toBe(true);
+    expect(files.some((f) => f.endsWith("site.css"))).toBe(true);
   });
 
   for (const file of files) {

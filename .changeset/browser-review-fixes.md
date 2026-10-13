@@ -1,6 +1,6 @@
 ---
 "@cai-ds/core": patch
-"@cai-ds/platform": patch
+"@cai-ds/site": patch
 ---
 
 Fixes from the Safari and Firefox reviews of the beta CSS and JS (WebKit 26.6 and 27.2, Firefox 155, review only, on Linux).

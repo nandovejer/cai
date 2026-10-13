@@ -1,12 +1,12 @@
 /**
- * Unit tests for packages/platform/src/search.js: reading and checking the
+ * Unit tests for packages/site/src/search.js: reading and checking the
  * index, matching, and the shortcut filter. The DOM half (rendering, keys,
  * focus, fetch) is tests/search.spec.js.
  * Security: .claude/plans/docs-redesign/security.md SEC-IDX-3/4/6/7/8/12.
  * Run with: pnpm test:unit
  */
 import { describe, it, expect } from "vitest";
-import { fold, isShortcut, parseIndex, readIndex, safeUrl, search } from "../packages/platform/src/search.js";
+import { fold, isShortcut, parseIndex, readIndex, safeUrl, search } from "../packages/site/src/search.js";
 
 const BASE = "https://example.org/docs/search-index.json";
 const index = (lists) => ({ version: 1, pages: [], ...lists });

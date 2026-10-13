@@ -11,11 +11,11 @@
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../assets/site-header-DbGaIe90.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-_mrux8_7.js"></script>
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-Ceovg1em.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-D2TK8zV2.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-CE3oU_tl.css">
+  <script type="module" crossorigin src="../../assets/site-header-C0xG4dRb.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-DoKJvCcB.js"></script>
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-DL44kyQO.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-3fvlZ3H2.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-DuWysHha.css">
   <link rel="stylesheet" crossorigin href="../../assets/reference-CGDw9oUc.css">
 </head>
 <body class="o-shell docs-page">
@@ -111,6 +111,7 @@
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/components/">Components</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/site/">Site</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/landing/">Landing</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/cms/">CMS</a></li>
       <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
@@ -269,7 +270,7 @@ import &quot;@cai-ds/site&quot;;</code></pre>
 
       <div class="docs-prose">
         <h2 id="site-kinds" class="docs-prose__title">Packages for one kind of site</h2>
-        <p>On top of level 3, a package can add what one kind of site needs. <a href="../../docs/landing/">Landing</a> is the first: the feature grid, and blocks to copy for a landing page. It needs the three packages of level 3, loaded first.</p>
+        <p>On top of level 3, a package can add what one kind of site needs: <a href="../../docs/landing/">Landing</a>, the feature grid and blocks to copy for a landing page, and <a href="../../docs/cms/">CMS</a>, the article header and table of contents of a blog or a newspaper, with any CMS. Each needs the three packages of level 3, loaded first; install the one you need, or both.</p>
         <div class="docs-command-block">
           <code class="docs-command-block__cmd">
             <span class="docs-command-block__prefix" aria-hidden="true">$</span>
@@ -287,10 +288,28 @@ import &quot;@cai-ds/site&quot;;</code></pre>
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.css&quot;&gt;
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/landing@0.1.0/dist/landing.min.css&quot;&gt;</code></pre>
         </div>
+        <div class="docs-command-block">
+          <code class="docs-command-block__cmd">
+            <span class="docs-command-block__prefix" aria-hidden="true">$</span>
+            pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/site @cai-ds/cms
+          </code>
+          <button class="cai-copy-btn" type="button" data-copy="pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/site @cai-ds/cms" aria-label="Copy the cms install command">Copy</button>
+        </div>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">HTML</span>
+            <button class="cai-copy-btn" type="button" data-copy-from="code-cdn-cms" aria-label="Copy the CDN tags for cms">Copy</button>
+          </div>
+          <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, cms"><code id="code-cdn-cms">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/cms@0.1.0/dist/cms.min.css&quot;&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+        </div>
         <ul>
-          <li>Landing has its own version, 0.1.0 now, and needs version 3 of the other three. Pin both numbers.</li>
-          <li>With a bundler, add <code class="cai-code-inline">import "@cai-ds/landing/css";</code> after the imports of level 3.</li>
-          <li>It has no script: add the ones of level 3 if you want them.</li>
+          <li>Landing and cms each have their own version, 0.1.0 now, and need version 3 of the other three. Pin both numbers.</li>
+          <li>With a bundler, add <code class="cai-code-inline">import "@cai-ds/landing/css";</code> or <code class="cai-code-inline">import "@cai-ds/cms/css";</code> after the imports of level 3.</li>
+          <li>Neither has a script. Core's script is optional: with cms, it marks the section in view in the table of contents.</li>
         </ul>
       </div>
 

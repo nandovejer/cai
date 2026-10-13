@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS – CAI documentation</title>
+  <meta name="description" content="What a blog, a newspaper or any site of articles needs on top of site, from the article header to the post listing, and how to tell whether you need it.">
+  <link rel="icon" href="../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
+  <!-- Before the first paint: the visitor's color mode (EX-009) -->
+  <script src="../../theme-boot.js" ></script>
+  <script type="module" crossorigin src="../../assets/site-header-C0xG4dRb.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-DoKJvCcB.js"></script>
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-DL44kyQO.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-3fvlZ3H2.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-DuWysHha.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-CGDw9oUc.css">
+</head>
+<body class="o-shell docs-page">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <cai-site-search>
+  <dialog class="cai-modal cai-site-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../../docs/search-index.json"
+          data-cai-label-results="{n} results"
+          data-cai-label-result="1 result"
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
+          data-cai-label-none="No results for “{query}”. Check the spelling or try a shorter word."
+          data-cai-label-loading="Loading the search index…"
+          data-cai-label-error="Search is not available right now.">
+    <search class="cai-site-search__body">
+      <div class="cai-site-search__head">
+        <h2 class="cai-site-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-site-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+      </div>
+      <div class="cai-site-search__field">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      </div>
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Arrow keys move through them.</p>
+      <p class="cai-site-search__status" role="status"></p>
+      <div class="cai-site-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Popular</h3>
+          <ul lang="en">
+            <li><a href="../../docs/get-started/"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
+            <li><a href="../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
+            <li><a href="../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages" lang="en"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
+      </div>
+      <p class="cai-site-search__foot">Can’t find it? <a href="../../docs/a-z/">Browse the A–Z index</a></p>
+    </search>
+  </dialog>
+  </cai-site-search>
+  <a class="cai-site-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../">Home</a>
+        <a href="../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+      </nav>
+      <a class="site-header__az" href="../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
+      <button class="cai-site-search-trigger cai-site-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+        <svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-site-search-trigger__label">Search docs…</span>
+        <kbd class="cai-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+      
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../../">Home</a></li>
+        <li><a class="cai-sidebar__link" href="../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/get-started/">Get started</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/tokens/">Tokens</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/html/">HTML elements</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/site/">Site</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/landing/">Landing</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="page" href="../../docs/cms/">CMS</a>
+        <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../docs/cms/article-header/">Article header</a></li>
+          <li><a class="cai-sidebar__link" href="../../docs/cms/toc/">Table of contents</a></li>
+          <li><a class="cai-sidebar__link" href="../../docs/cms/templates/">CMS templates</a></li>
+        </ul>
+      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../docs/accessibility/">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../docs/">Docs</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">CMS</span></li>
+      </ol>
+    </nav>
+    <h1 class="docs-title">CMS</h1>
+  </div>
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#use-cms-when">Use cms when</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#use-site-alone-when">Use site alone when</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#group-patterns">Patterns</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#group-reference">Reference</a></li>
+      </ul>
+    </details>
+  </nav>
+  <div class="docs-body">
+    <p class="docs-eyebrow">For one kind of site · @cai-ds/cms</p>
+
+    <p class="docs-lead">What a blog, a newspaper or any site of articles needs on top of site, from the article header to the post listing, and how to tell whether you need it.</p>
+    <p>A site of articles publishes many pages of the same shape: a story with its header, its text and its author, and lists that lead to them. This package holds the patterns only that kind of site uses. Everything every site needs, from the page shell to the site header, stays in <a href="../../docs/site/">Site</a>.</p>
+    <ul>
+      <li>It works with any CMS and any stack. The classes go on any element, so a template of WordPress, Drupal, Ghost, Hugo or your own code can write them.</li>
+      <li>Every class starts with <code class="cai-code-inline">.cai-cms-</code>, uses semantic tokens only and sits in the cascade layer <code class="cai-code-inline">cai.cms</code>, after site's.</li>
+      <li>It has no script. Load <code class="cai-code-inline">cms.css</code> after the CSS of tokens, core and site: <a href="../../docs/get-started/#site-kinds">Install CAI</a> has the command and the CDN tags. With core's script, the table of contents marks the section in view.</li>
+      <li>It has a version of its own, 0.x while it grows, and needs version 3 of tokens, core and site, declared as peer dependencies.</li>
+      <li>The post card, the post listing, related posts and the author box need no CSS of their own: they are core's card, avatar and pagination, put together on <a href="../../docs/cms/templates/">CMS templates</a>.</li>
+    </ul>
+
+    <div class="docs-decision-grid">
+        <div class="docs-decision-card">
+          <h2 id="use-cms-when" class="docs-decision-card__title">Use cms when</h2>
+          <ul>
+            <li>You publish articles, posts or stories, each with a title, an author and a date.</li>
+            <li>Your articles are long enough to need a table of contents beside the text.</li>
+          </ul>
+        </div>
+        <div class="docs-decision-card">
+          <h2 id="use-site-alone-when" class="docs-decision-card__title">Use site alone when</h2>
+          <ul>
+            <li>Your pages are documentation, a landing page or an app.</li>
+            <li>You have a few pages with no author or date: the <a href="../../docs/site/page-header/">page header</a> is enough.</li>
+          </ul>
+        </div>
+      </div>
+  <section class="docs-gallery" aria-labelledby="group-patterns">
+    <h2 id="group-patterns">Patterns</h2>
+    <ul class="docs-gallery__cards">
+      <li class="cai-card docs-card">
+        <h3 class="cai-card__title docs-card__title"><a href="../../docs/cms/article-header/">Article header</a></h3>
+        <p class="cai-card__body docs-card__desc">Opens a story with its section, its title, a standfirst, who wrote it and when, and an optional lead picture.</p>
+      </li>
+      <li class="cai-card docs-card">
+        <h3 class="cai-card__title docs-card__title"><a href="../../docs/cms/toc/">Table of contents</a></h3>
+        <p class="cai-card__body docs-card__desc">Lists the sections of a long article, beside the text when there is room and above it when there is not.</p>
+      </li>
+    </ul>
+  </section>
+  <section class="docs-gallery" aria-labelledby="group-reference">
+    <h2 id="group-reference">Reference</h2>
+    <ul class="docs-gallery__rows">
+      <li><a href="../../docs/cms/templates/">CMS templates</a> <span class="docs-gallery__desc">The pieces of a blog or a newspaper that need no CSS of their own, to paste in and adapt: the article page, a post card, post listings, related posts and the author box.</span></li>
+    </ul>
+  </section>
+  </div>
+  <nav class="docs-end" aria-labelledby="docs-end-title">
+    <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
+    <ul class="docs-end__links">
+      <li><a href="../../docs/cms/templates/">CMS templates</a></li>
+      <li><a href="../../docs/components/">Components</a></li>
+      <li><a href="../../docs/site/">Site</a></li>
+    </ul>
+    <ul class="docs-pager">
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../docs/landing/templates/" aria-label="Previous: Landing page templates"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Landing page templates</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../docs/cms/article-header/" aria-label="Next: Article header"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Article header</span></a></li>
+    </ul>
+  </nav>
+  </main>
+
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-site-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-site-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../docs/a-z/">A–Z index</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../docs/accessibility/">Accessibility statement</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

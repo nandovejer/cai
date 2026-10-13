@@ -77,40 +77,14 @@
   margin-top: var(--cai-space-sm);
 }
 
+/* Two short sentences, so on a wide screen they are set larger */
 .landing-hero__lead {
-  font-size: var(--cai-text-lg);
+  font-size: var(--cai-text-xl);
+  line-height: 1.4;
   color: var(--cai-text-secondary);
-  max-width: 65ch;
+  max-width: 70ch;
+  text-wrap: pretty;
   margin-block: var(--cai-space-md) var(--cai-space-lg);
-}
-
-.landing-facts {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--cai-space-md);
-  border-top: 1px solid var(--cai-divider);
-  padding-top: var(--cai-space-lg);
-}
-
-.landing-facts__item {
-  display: flex;
-  flex-direction: column;
-  gap: var(--cai-space-2xs);
-}
-
-.landing-facts__value {
-  order: -1;
-  font-family: var(--cai-font-heading);
-  font-weight: 300;
-  font-size: var(--cai-text-3xl);
-  line-height: 1;
-  color: var(--cai-text-primary);
-}
-
-.landing-facts__label {
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
 }
 
 /* --------------------------------------------------------------------------
@@ -342,6 +316,10 @@
     padding-block: calc(var(--cai-space-xl) + var(--cai-space-xs)) 0;
   }
 
+  .landing-hero__lead {
+    font-size: var(--cai-text-lg);
+  }
+
   .landing-hero__title {
     font-size: var(--cai-text-3xl);
   }
@@ -366,10 +344,6 @@
 }
 
 @media (max-width: 768px) {
-  .landing-facts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .landing-fit {
     grid-template-columns: minmax(0, 1fr);
   }

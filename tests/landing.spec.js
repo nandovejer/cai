@@ -296,7 +296,7 @@ test.describe('Landing page', () => {
       await page.setViewportSize({ width: 1280, height: 900 });
       await open(page);
 
-      await expect(page.locator('h1')).toHaveText('Build accessible websites with plain HTML and CSS');
+      await expect(page.locator('h1')).toHaveText('CAI, a native, styled and accessible design system.');
       const hero = page.locator('.landing-hero');
       await expect(hero.locator('.cai-btn--primary')).toHaveCount(1);
       await expect(hero.locator('.landing-hero__copy .cai-btn--primary')).toHaveText('Get started');
@@ -704,7 +704,7 @@ test.describe('Landing page', () => {
           }
           return { checked, failures: [...new Set(failures)] };
         });
-        expect(checked).toBeGreaterThan(60);
+        expect(checked).toBeGreaterThan(50);
         expect(failures).toEqual([]);
       });
     }

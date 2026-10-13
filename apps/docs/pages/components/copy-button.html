@@ -20,7 +20,7 @@ toc: h2,h3
           <p class="docs-demo__note">The button copies the text of its <code class="cai-code-inline">data-copy</code> attribute.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>The Clipboard API needs a secure context (https, or localhost while you develop). Elsewhere the copy fails: the failure is announced, and the text can still be selected and copied by hand.</p>
+          <p>The Clipboard API needs a secure context (https, or localhost while you develop). Elsewhere the copy fails. The failure is announced to screen readers only: the button shows no message, so a sighted reader sees nothing happen. The text can still be selected and copied by hand.</p>
           <nav class="cai-tabs docs-view-tabs" aria-label="Copy button documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>

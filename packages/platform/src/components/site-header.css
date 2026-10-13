@@ -26,7 +26,10 @@
    window tall enough to keep a fifth of it for the page, and the scroll
    padding keeps what Tab reaches out from under it. It is a minimum in em
    of the root, 56px at the default size and growing with enlarged text,
-   because the header grows with the text and the height token does not. */
+   because the header grows with the text and the height token does not.
+   Half a control is added: Chromium centres a field it scrolls to, WebKit
+   puts its top at the padding minus half its height (about 11px for a 44px
+   control), which left the field under the header. */
 @media (min-height: 30rem) {
 	.cai-platform-site-header--sticky {
 		position: sticky;
@@ -35,7 +38,7 @@
 	}
 
 	:root:has(.cai-platform-site-header--sticky) {
-		scroll-padding-block-start: max(var(--cai-platform-site-header-h), 3.5em);
+		scroll-padding-block-start: calc(max(var(--cai-platform-site-header-h), 3.5em) + var(--cai-control-lg) / 2);
 	}
 }
 

@@ -1,11 +1,11 @@
 <!-- cai:page
 title: Accessibility statement
-description: CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 11 October 2026.
+description: CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 13 October 2026.
 area: accessibility
 lead: false
 -->
     <div class="docs-block docs-prose-chapter" id="accessibility">
-      <p class="docs-lead">CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 11 October 2026.</p>
+      <p class="docs-lead">CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 13 October 2026.</p>
       <h2 id="h-a11y-target">Target</h2>
       <p>CAI aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to.</p>
       <p>A design system cannot make a service accessible by itself: how you use the components decides the result. Each component page says what is yours to do, under <em>Keyboard and ARIA</em> and <em>Writing the content</em>.</p>
@@ -48,6 +48,8 @@ lead: false
         <li><strong>Search at 400 percent zoom.</strong> The whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.</li>
         <li><strong>Language switcher.</strong> The list of languages opens at a fixed place under the header, not next to its button. Below 360 pixels wide its button shows a globe only; the language’s name is still the button’s accessible name. It has not been tested with a screen reader.</li>
         <li><strong>Site header menu.</strong> On narrow screens the site menu opens as a panel under the header. If you keep pressing Tab after its last link, focus moves into the page and the panel stays open over it. Press Escape to close it. (WCAG 2.2 success criterion 2.4.12, level AAA; level AA 2.4.11 is met.) The panel opens under the header's height at the default text size: with enlarged text and a header that wraps to a second row, it can cover that row.</li>
+        <li><strong>Site header, enlarged text.</strong> A sticky header keeps a field reached with Tab clear of it by a minimum height. At 300 percent text, when the header wraps to several rows, Safari can still leave the field partly under it. In Firefox with forced colors the dim layer behind the open menu is not drawn; the panel keeps its border.</li>
+        <li><strong>Copy button.</strong> When the browser refuses to copy, the failure is announced to screen readers, but the button shows no message.</li>
         <li><strong>Home page form.</strong> The button of the example form opens a popover that says nothing was sent; a status region repeats it for screen readers when JavaScript runs. This has not been tested with a screen reader.</li>
       </ul>
 

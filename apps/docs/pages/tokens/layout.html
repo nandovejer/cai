@@ -31,6 +31,7 @@ files: settings/_settings.css
           <p class="docs-demo__note">Ships with core, not with tokens.</p>
           <ul>
             <li>Breakpoints are reference values: media queries cannot read custom properties, so write the number, such as <code class="cai-code-inline">@media (max-width: 768px)</code>.</li>
+            <li>Safari on a Mac with always-visible scrollbars does not count the scrollbar in width media queries (WebKit bug 52653), so a breakpoint is crossed when the window is up to about 15 px wider than its value.</li>
           </ul>
         
     </div>

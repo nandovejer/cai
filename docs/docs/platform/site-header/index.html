@@ -14,7 +14,7 @@
   <script type="module" crossorigin src="../../../assets/site-header-KKpdGfOz.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-C79FCUxT.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-D2TK8zV2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BSGRINQ4.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Di7VBuWl.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-De2-M0oh.css">
 </head>
 <body class="o-shell docs-page">
@@ -198,6 +198,11 @@
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it. This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA). The panel opens under the header's height at the default text size: with enlarged text and a header that wraps to a second row, it can cover that row.</p>
+          <ul>
+            <li><strong>Sticky header and enlarged text.</strong> The scroll padding is a minimum, so when text is enlarged to 300% and the header wraps to several rows, Safari can still leave a field reached with Tab partly under the header. Chrome and Edge keep it clear. Scroll up a little, or turn <code>--sticky</code> off if your header wraps at large text.</li>
+            <li><strong>Forced colors in Firefox.</strong> The dim layer behind the open menu is not drawn, so the page is not dimmed. The panel keeps its border, so it is still set apart.</li>
+            <li><strong>Breakpoints in Safari on a Mac.</strong> With always-visible scrollbars, Safari does not count the scrollbar in width media queries (WebKit bug 52653), so the menu collapses, or the links return to the row, when the window is up to about 15 px wider than 768 px.</li>
+          </ul>
           <nav class="cai-tabs docs-view-tabs" aria-label="Site header documentation">
             <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -254,7 +259,7 @@
               <li>The <code>&lt;nav&gt;</code> is a <code>popover</code> and the menu button its <code>popovertarget</code>. At 769 px and above CSS shows it as a row, and the button is hidden; at 768 px and below it is a panel as wide as the window, under the header. The browser gives Escape, light dismiss (a click outside), focus return to the button and the expanded state.</li>
               <li>The icon in the button is an inline SVG painted with <code>currentcolor</code>, so it stays visible in forced-colors mode. Core's <code>.cai-nav-toggle__bar</code> spans work too, since core paints them in <code>ButtonText</code> there.</li>
               <li>The panel and the language list open under <code>--cai-platform-site-header-h</code>: a one-row header of 44 px controls. It is exact at the default text size. If your header is taller (enlarged text wraps the row, or you add a second row), set the variable on the header yourself.</li>
-              <li><code>--sticky</code> applies only to windows at least <code>30rem</code> tall, and sets <code>scroll-padding-block-start</code> on the page to at least <code>3.5rem</code> or the header's height, so a field reached with Tab is never left under it. On a short window, such as a phone turned sideways, a sticky header would take too much of the screen.</li>
+              <li><code>--sticky</code> applies only to windows at least <code>30rem</code> tall, and sets <code>scroll-padding-block-start</code> on the page to at least <code>3.5rem</code> or the header's height, plus half a control (<code>--cai-control-lg</code>), so a field reached with Tab is not left under it. See Known issues for enlarged text. On a short window, such as a phone turned sideways, a sticky header would take too much of the screen.</li>
               <li>The scrim of the open panel starts under the header, so the header's controls keep their contrast.</li>
               <li>Without the popover API there is no panel: the links stay in the row and wrap.</li>
             </ul>

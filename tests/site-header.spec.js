@@ -82,7 +82,8 @@ test.describe('site header', () => {
   test('H1, H2: the scroll padding of the page is a length, at least 3.5em, and a field under the header is scrolled clear', async ({ page }) => {
     await page.setViewportSize({ width: 1000, height: 700 });
     const padding = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop));
-    expect(padding, 'not auto').toBeGreaterThanOrEqual(53);
+    // 3.5em (56px) + half a 44px control: WebKit puts a focused field at the padding minus half its height
+    expect(padding, 'not auto, with half a control added').toBeGreaterThanOrEqual(78);
 
     for (const scale of ['100%', '300%']) {
       // No smooth scrolling: the test reads the place where the browser leaves the field

@@ -8,7 +8,7 @@
  * - CSS: inline the @import graph of src/index.css (single source of truth)
  *   into dist/cai.css, plus one dist/components/<name>.css per component
  *   and dist/base.css (settings + reset + elements) as their prerequisite
- * - JS: bundle with Rollup — utils.js inlined, midi.js as lazy chunk;
+ * - JS: bundle with Rollup — utils.js inlined, midi.js and table-sort.js as lazy chunks;
  *   individual modules copied verbatim (browser-native ESM)
  * - Themes: copy src/themes/*.css → dist/themes/
  */
@@ -132,7 +132,8 @@ async function buildJS() {
 
     // Individual modules: the source IS the artifact (browser-native ESM
     // with relative imports only) — copy verbatim next to the bundle.
-    // midi.js is NOT copied: rollup already emits it as the lazy chunk.
+    // midi.js and table-sort.js are NOT copied: rollup already emits them as
+    // the lazy chunks.
     const jsModules = [
       "utils.js",
       "i18n.js",
@@ -150,9 +151,9 @@ async function buildJS() {
     console.log(`✓ ${jsModules.length} JS modules copied → dist/`);
 
     // Minify JS outputs with esbuild. A minified file imports the minified
-    // siblings, so cai.min.js lazy-loads midi.min.js, not the unminified
-    // chunk (red line 17: the chunk a page loads is the one budgeted).
-    const minified = ["cai.js", "midi.js", ...jsModules];
+    // siblings, so cai.min.js lazy-loads midi.min.js and table-sort.min.js,
+    // not the unminified chunks (red line 17: the chunk a page loads is the one budgeted).
+    const minified = ["cai.js", "midi.js", "table-sort.js", ...jsModules];
     for (const jsFile of minified) {
       const jsPath = resolve(distRoot, jsFile);
       if (!existsSync(jsPath)) continue;

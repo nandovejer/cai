@@ -53,6 +53,45 @@
   transition: background var(--cai-duration-base);
 }
 
+/* ---- Sortable headings ---------------------------------------------
+   A heading that holds a link (sorted by the server) or a button (sorted in
+   the browser by table-sort.js) and carries aria-sort gets a triangle drawn
+   by CSS: a shape, never text, so there is nothing to read or copy. It
+   follows the state in ARIA, so there is nothing to keep in step. A border,
+   not a background, so it stays visible in forced colors. The button is at
+   least 24px high on its own (WCAG 2.5.8), whatever the padding of the cell.
+--------------------------------------------------------------------- */
+.cai-table th > button {
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--cai-text-primary);
+  background: none;
+  border: 0;
+  padding: 0;
+  min-block-size: 1.5rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cai-table th > button:focus-visible {
+  outline: 2px solid var(--cai-focus-ring);
+  outline-offset: 2px;
+}
+
+.cai-table th[aria-sort] > :where(a, button)::after {
+  content: "";
+  display: inline-block;
+  inline-size: 0.65em;
+  block-size: 0;
+  margin-inline-start: var(--cai-space-2xs);
+  border-block-end: 0.5em solid currentcolor;
+  clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.cai-table th[aria-sort="descending"] > :where(a, button)::after {
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
 /* Spacing between letters breaks the joins of Arabic script (the card
    labels of narrow screens too) */
 .cai-table th:lang(ar),

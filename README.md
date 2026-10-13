@@ -107,7 +107,7 @@ import { initTabs } from "@cai-ds/core/tabs";
 import { copyToClipboard } from "@cai-ds/core/clipboard";
 ```
 
-Published modules: `theme`, `sidebar`, `clipboard`, `modal`, `highlight`, `player`, `tabs`, `utils`, `i18n`, `midi`. Importing one has no side effects until you call its `init*()`. Every page works without JavaScript.
+Published modules: `theme`, `sidebar`, `clipboard`, `modal`, `highlight`, `player`, `tabs`, `utils`, `i18n`, `midi`, `table-sort`. Importing one has no side effects until you call its `init*()`. Every page works without JavaScript.
 
 ## What each package needs
 
@@ -270,7 +270,7 @@ pnpm tokens:build
 pnpm core:build
 ```
 
-This regenerates `dist/cai.css`, `dist/base.css` (settings + reset + elements, the prerequisite for per-component CSS), `dist/components/*.css`, `dist/classless.css`, `dist/print.css`, the JS modules, the lazy `midi.js` chunk and `dist/themes/*.css`. Core settings (z-index scale, motion, breakpoints, `--cai-font-heading`) ship with core, not with tokens.
+This regenerates `dist/cai.css`, `dist/base.css` (settings + reset + elements, the prerequisite for per-component CSS), `dist/components/*.css`, `dist/classless.css`, `dist/print.css`, the JS modules, the lazy `midi.js` and `table-sort.js` chunks and `dist/themes/*.css`. Core settings (z-index scale, motion, breakpoints, `--cai-font-heading`) ship with core, not with tokens.
 
 **Platform.** `@cai-ds/platform` holds page patterns that are too opinionated for core. It is CSS first; `dist/platform.js` defines the search element and warns when core is not loaded.
 

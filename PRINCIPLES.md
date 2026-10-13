@@ -69,7 +69,7 @@ JS is the last layer, never the foundation. A page built with CAI must be usable
 - **Feature-detect, never user-agent-sniff.** `if ("showPopover" in HTMLElement.prototype)`, `CSS.supports()`, `@supports`.
 - **Importing a module has no side effects.** Only `init*()` touches the DOM. `init*()` is idempotent and scoped (accepts a root element).
 - **Hooks are `data-*` attributes, not classes.** `.cai-*` classes are for styling; JS binds to `data-cai-*` or ARIA attributes.
-- **No JS on the critical rendering path and no inline scripts.** Everything is `type="module"`, deferred, and heavy modules (`midi.js`) are lazy-loaded.
+- **No JS on the critical rendering path and no inline scripts.** Everything is `type="module"`, deferred, and heavy modules (`midi.js`) and modules few pages need (`table-sort.js`) are lazy-loaded.
 - **State lives in the DOM and in ARIA**, not in JS variables: `aria-expanded`, `aria-selected`, `open`, `hidden`, `checked`. `.is-*` classes are a mirror for styling, never the source of truth.
 - A component that needs more than 2 kB of JS needs a written justification in its PR.
 
@@ -120,7 +120,8 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `core` CSS | — | ≤ 12 kB | 12 kB | 15 kB |
 | `core` classless CSS (a file of its own, not in `cai.css`) | — | ≤ 2 kB | 2 kB | 3 kB |
 | `core` JS entry (lazy chunks excluded) | — | ≤ 5 kB | 5 kB | 8 kB |
-| Each lazy chunk (`midi`) | — | ≤ 3 kB | 3 kB | 4 kB |
+| `core` JS lazy chunk: `midi` | — | ≤ 3 kB | 3 kB | 4 kB |
+| `core` JS lazy chunk: `table-sort` | — | ≤ 1 kB | 1 kB | 2 kB |
 | `platform` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | `platform` JS | — | ≤ 1 kB | 1 kB | 2 kB |
 | Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |

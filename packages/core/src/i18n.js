@@ -35,6 +35,8 @@ const locales = {
     themeApplied: "Applied",
     changeMode: "Change color mode. Current: {mode}",
     modeChanged: "Color mode: {mode}",
+    sortedAsc: "Sorted by {column}, ascending",
+    sortedDesc: "Sorted by {column}, descending",
   },
   es: {
     play: "Reproducir",
@@ -58,6 +60,8 @@ const locales = {
     themeApplied: "Aplicado",
     changeMode: "Cambiar el modo de color. Actual: {mode}",
     modeChanged: "Modo de color: {mode}",
+    sortedAsc: "Ordenado por {column}, ascendente",
+    sortedDesc: "Ordenado por {column}, descendente",
   },
 };
 

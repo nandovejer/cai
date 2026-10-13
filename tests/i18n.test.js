@@ -146,11 +146,26 @@ describe("i18n — dictionaries", () => {
     const keys = [
       "play", "pause", "mute", "unmute", "fullscreen", "exitFullscreen",
       "captions", "captionsOff", "loading", "midiError", "timeOf", "copy", "copied", "copiedStatus",
-      "copyFailed", "codeExample", "copyCode", "applyTheme", "themeApplied",
+      "copyFailed", "codeExample", "copyCode", "applyTheme", "themeApplied", "sortedAsc", "sortedDesc",
     ];
     for (const key of keys) {
       expect(i18n.t(key, el({ lang: "es" })), key).not.toBe(i18n.t(key, el({ lang: "en" })));
     }
+  });
+});
+
+describe("i18n — table sort", () => {
+  it("names the column in both directions, in English and Spanish, with {column}", () => {
+    const column = { column: "Parcels" };
+    expect(i18n.t("sortedAsc", el({ lang: "en" }), column)).toBe("Sorted by Parcels, ascending");
+    expect(i18n.t("sortedDesc", el({ lang: "en" }), column)).toBe("Sorted by Parcels, descending");
+    expect(i18n.t("sortedAsc", el({ lang: "es" }), column)).toBe("Ordenado por Parcels, ascendente");
+    expect(i18n.t("sortedDesc", el({ lang: "es" }), column)).toBe("Ordenado por Parcels, descendente");
+  });
+
+  it("the key becomes the attribute that overrides it", () => {
+    const table = el({ lang: "en", attrs: { "data-cai-label-sorted-asc": "Par {column}, croissant" } });
+    expect(i18n.t("sortedAsc", table, { column: "Colis" })).toBe("Par Colis, croissant");
   });
 });
 

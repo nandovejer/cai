@@ -200,6 +200,12 @@
   background: var(--cai-surface);
 }
 
+/* A band bleeds to the edge of the frame it is shown in, not of the page */
+.docs-example:has(.cai-platform-section--band),
+.docs-dodont__stage:has(.cai-platform-section--band) {
+  overflow: clip;
+}
+
 /* The Code and Design tabs (core .cai-tabs). Without JavaScript the tab row
    is two in-page links and both panels follow, stacked, each under its own
    visible h2. With it, tabs.js shows one panel; the h2 stays for screen
@@ -1446,6 +1452,11 @@ h2.docs-demo__title {
 .docs-util-narrow {
   display: block;
   max-width: calc(var(--cai-space-4xl) * 1.5);
+}
+
+/* A narrow box for a full-width button: the width of a card in a three-up grid */
+.docs-narrow-frame {
+  max-inline-size: calc(var(--cai-space-4xl) * 3);
 }
 
 .docs-util-frame {

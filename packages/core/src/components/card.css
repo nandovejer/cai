@@ -3,7 +3,8 @@
    Card surface. A link in the title makes the whole card one link: the
    link's ::after is stretched over the card, which takes the hover and the
    focus ring; other links and controls in it are raised above that link.
-   No modifier, no JavaScript.
+   One modifier, --featured, for the one card to look at first in a group.
+   No JavaScript.
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
@@ -21,11 +22,27 @@
     border-color var(--cai-duration-fast), background var(--cai-duration-base);
 }
 
+/* One card to look at first in a group. The weight of the border is the cue
+   besides colour, and it holds in forced colors (the colour goes, the 2px
+   stay); the padding gives back the extra pixel, so it is as tall as its
+   neighbours. Say it in words too (a tag, "Most chosen"): the class tells
+   assistive technology nothing. */
+.cai-card--featured {
+  border-width: 2px;
+  border-color: var(--cai-brand-primary);
+  padding: calc(var(--cai-space-md) - 1px);
+}
+
 /* Only a linked card answers the pointer: --cai-input-border is 3:1 or more
    on the surface and the page in every mode (WCAG 1.4.11) */
 .cai-card:has(.cai-card__title a):hover {
   box-shadow: var(--cai-shadow-sm);
   border-color: var(--cai-input-border);
+}
+
+/* A linked featured card keeps the brand colour, a step darker, on hover */
+.cai-card--featured:has(.cai-card__title a):hover {
+  border-color: var(--cai-brand-hover);
 }
 
 .cai-card__title {
@@ -91,9 +108,11 @@
   z-index: 1;
 }
 
-/* A button's label wraps in a card, which can be narrow (WCAG 1.4.4, 1.4.10) */
+/* A button's label wraps in a card, which can be narrow, and a long word
+   breaks (WCAG 1.4.4, 1.4.10) */
 .cai-card .cai-btn {
   white-space: normal;
+  overflow-wrap: anywhere;
   text-align: center;
 }
 
@@ -102,4 +121,10 @@
 .cai-card__title a:focus-visible::after {
   outline: 2px solid var(--cai-focus-ring);
   outline-offset: 2px;
+}
+
+/* On a 2px border the ring would touch it and read as a thicker border: it
+   stands off by the border's width and a little more */
+.cai-card--featured .cai-card__title a:focus-visible::after {
+  outline-offset: var(--cai-space-2xs);
 }

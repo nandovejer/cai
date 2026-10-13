@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
    CAI Component: avatar
-   Avatar
+   Avatar: initials, or a photo (an <img>) that fills the box.
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
@@ -33,4 +33,14 @@
   width: 48px;
   height: 48px;
   font-size: var(--cai-text-base);
+}
+
+/* A photo fills the box and is cropped to it. The corners are the avatar's:
+   the image is rounded, the box does not clip (overflow: hidden would cut
+   initials that outgrow a small box at 200% text, WCAG 1.4.4) */
+.cai-avatar :where(img) {
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  border-radius: inherit;
 }

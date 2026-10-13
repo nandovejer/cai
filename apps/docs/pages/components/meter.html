@@ -1,0 +1,151 @@
+<!-- cai:page
+title: Meter
+description: Draws a value in a known range as a bar, next to its figure, with the native meter element.
+area: components
+group: content
+files: components/meter.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-meter">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-table-wrap" role="region" aria-label="Parcels per route" tabindex="0">
+              <table class="cai-table">
+                <caption>Parcels per route, this week</caption>
+                <thead>
+                  <tr><th scope="col">Route</th><th scope="col" class="cai-table__numeric">Parcels</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Route">Sevilla to Madrid</td><td class="cai-table__numeric" data-label="Parcels">1,204<meter class="cai-meter" value="1204" min="0" max="1500" aria-hidden="true">1,204 of 1,500</meter></td></tr>
+                  <tr><td data-label="Route">Cádiz to Málaga</td><td class="cai-table__numeric" data-label="Parcels">312<meter class="cai-meter" value="312" min="0" max="1500" aria-hidden="true">312 of 1,500</meter></td></tr>
+                  <tr><td data-label="Route">Huelva to Faro</td><td class="cai-table__numeric" data-label="Parcels">58<meter class="cai-meter" value="58" min="0" max="1500" aria-hidden="true">58 of 1,500</meter></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Meter documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>A bar in the cell of its figure, in a table. The figure is text, so the bar is a picture of it and is hidden from assistive technology:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-meter-table" aria-label="Copy the meter in a table cell markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Meter in a table cell markup"><code id="code-meter-table">&lt;td class=&quot;cai-table__numeric&quot; data-label=&quot;Parcels&quot;&gt;1,204&lt;meter class=&quot;cai-meter&quot; value=&quot;1204&quot; min=&quot;0&quot; max=&quot;1500&quot; aria-hidden=&quot;true&quot;&gt;1,204 of 1,500&lt;/meter&gt;&lt;/td&gt;</code></pre>
+            </div>
+            <p>A bar on its own, with a visible name and the figure in it:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-meter" aria-label="Copy the meter with a visible label markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Meter with a visible label markup"><code id="code-meter">&lt;label for=&quot;storage&quot;&gt;Storage used, 6 of 10 GB&lt;/label&gt;
+&lt;meter class=&quot;cai-meter&quot; id=&quot;storage&quot; value=&quot;6&quot; min=&quot;0&quot; max=&quot;10&quot;&gt;6 of 10 GB&lt;/meter&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One class. The bar comes from the native attributes.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Meter attributes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Attribute"><div><code>value</code>, <code>min</code> and <code>max</code></div></td><td data-label="Effect"><div>The value and its range: <code>min</code> is 0 and <code>max</code> is 1 if you leave them out. A value outside the range is clamped to it</div></td></tr>
+                  <tr><td data-label="Attribute"><div><code>aria-hidden="true"</code></div></td><td data-label="Effect"><div>For a bar next to its figure: the figure is read, the picture is not</div></td></tr>
+                  <tr><td data-label="Attribute"><div><code>low</code>, <code>high</code>, <code>optimum</code></div></td><td data-label="Effect"><div>Do not set them: they would only change the colour the browser chooses, and every state is drawn in the brand colour</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>The native <code>&lt;meter&gt;</code> element, styled by <code>components/meter.css</code>: an 8 px bar, full width of its box and at least 8rem long, with the brand colour as the fill and a 1 px edge in the field border colour, so the whole length shows on any surface.</p>
+            <ul>
+              <li>The browser draws the fill as <code>value</code> between <code>min</code> and <code>max</code>.</li>
+              <li>Every state is the same colour. The figure and the scale say what the value means, not a green or a red: status colours keep their own meanings (alerts, tags).</li>
+              <li>Use the same <code>max</code> in every row of a table, or the bars lie.</li>
+              <li>In forced colors the bar keeps a border and draws the fill in the system highlight colour.</li>
+              <li>The text inside the element is the fallback for a browser that does not draw it. Say the figure there too.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The bar shows the value in the markup. Moving it needs your script, which sets <code>value</code>.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>A meter is not interactive and takes no focus.</p>
+            <ul>
+              <li>Next to its figure, in the same cell or the same line, hide the bar with <code>aria-hidden="true"</code>: the figure is text, and the table is the accessible chart. A reader hears the figure once.</li>
+              <li>Put the bar in the cell of its figure, not in a column of its own: a column of bars would read as a column of empty cells. If you do want a column for the bar, each cell carries visible text of its own, such as “80 %”, under a heading that says what it is.</li>
+              <li>A meter that is not hidden needs a name: a <code>&lt;label for&gt;</code> or <code>aria-labelledby</code>. It is then read as “value, minimum, maximum”, so it repeats a figure that is already there: hide it unless it stands alone.</li>
+              <li>The bar is a picture of the figure in the same cell: assistive technology reads the figure.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a meter for a value in a known range, next to its figure, in a few to a few dozen rows that share a scale: a share of a total, a count against a quota.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use a meter for a task that is running: use <a href="/docs/components/progress/">progress</a>.</p>
+            <ul>
+              <li>For a trend over time, use a chart library; keep the <a href="/docs/components/table/">table</a> as its text alternative. CAI draws no line, area or pie chart.</li>
+              <li>When exact values matter more than the shape, leave the bar out: the figure is already there.</li>
+              <li>Do not use the bar's colour to say good or bad: it is always the brand colour.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> One scale for every row, and the figure beside each bar: the length compares, the number says how much.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <p class="docs-dodont__label">Sevilla to Madrid, 1,204</p><meter class="cai-meter" value="1204" min="0" max="1500"></meter>
+                  <p class="docs-dodont__label">Cádiz to Málaga, 312</p><meter class="cai-meter" value="312" min="0" max="1500"></meter>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A scale of its own in each row: 312 of 400 looks longer than 1,204 of 1,500, and the figure is nowhere to check it.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <meter class="cai-meter" value="1204" min="0" max="1500"></meter>
+                  <meter class="cai-meter" value="312" min="0" max="400"></meter>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The figure is the content; the bar only shows how it compares.</p>
+            <ul>
+              <li>Put the figure in text in the same cell or line, with its unit in the column heading: “Parcels”.</li>
+              <li>Say the scale in the caption or the heading when it is not obvious: “Parcels per route, this week”.</li>
+              <li>Inside the element, write the figure and its range as a fallback: “1,204 of 1,500”.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The fill is the brand colour on a muted track. The track has an edge in the field border colour, so you can see where the bar ends.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Meter contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Fill against the track</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of the track against the page</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of the track against a card</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the bar takes none.</li>
+              <li><strong>Not colour alone:</strong> the figure is text beside the bar, so the value never depends on telling the two parts of the bar apart.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 4 tokens that <code>components/meter.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

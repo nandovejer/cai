@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
    CAI Component: form
-   Form controls: field, input, textarea, range, color, file, date, fieldset, meter, output, checkbox, radio, toggle
+   Form controls: field, input, textarea, range, color, file, date, fieldset, output, checkbox, radio, toggle
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
@@ -195,79 +195,6 @@
 .cai-fieldset legend:lang(ar),
 .cai-legend:lang(ar) {
   letter-spacing: 0;
-}
-
-/* --------------------------------------------------------------------------
-   FORM — Meter
-   -------------------------------------------------------------------------- */
-
-.cai-meter {
-  display: block;
-  width: 100%;
-  height: 8px;
-  border: none;
-  background: var(--cai-surface-strong);
-  appearance: none;
-  border-radius: var(--cai-radius-sm);
-  overflow: hidden;
-}
-
-.cai-meter::-webkit-meter-bar {
-  background: var(--cai-surface-strong);
-  border: none;
-  border-radius: var(--cai-radius-sm);
-}
-
-.cai-meter::-webkit-meter-optimum-value {
-  background: var(--cai-color-success);
-}
-
-.cai-meter::-webkit-meter-suboptimum-value {
-  background: var(--cai-color-warning);
-}
-
-.cai-meter::-webkit-meter-even-less-good-value {
-  background: var(--cai-color-danger);
-}
-
-.cai-meter::-moz-meter-bar {
-  background: var(--cai-color-success);
-  border-radius: var(--cai-radius-sm);
-}
-
-/* Gecko's states are pseudo-classes of the meter, not parts of it */
-.cai-meter:-moz-meter-sub-optimum::-moz-meter-bar {
-  background: var(--cai-color-warning);
-}
-
-.cai-meter:-moz-meter-sub-sub-optimum::-moz-meter-bar {
-  background: var(--cai-color-danger);
-}
-
-/* Forced colors flatten the track to Canvas: give it an edge, and draw the
-   value in the system highlight. One rule per engine. */
-@media (forced-colors: active) {
-  .cai-meter {
-    border: 1px solid CanvasText;
-    background: Canvas;
-    forced-color-adjust: none;
-  }
-
-  .cai-meter::-webkit-meter-optimum-value {
-    background: Highlight;
-  }
-
-  .cai-meter::-webkit-meter-suboptimum-value {
-    background: Highlight;
-  }
-
-  .cai-meter::-webkit-meter-even-less-good-value {
-    background: Highlight;
-  }
-
-  .cai-meter::-moz-meter-bar {
-    background: Highlight;
-  }
 }
 
 /* --------------------------------------------------------------------------

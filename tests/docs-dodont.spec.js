@@ -18,8 +18,11 @@ for (const route of DESIGN) {
   test(`${route}: the Do and don't examples are captioned pictures`, async ({ page }) => {
     await page.goto(`${route}#design`);
     await expect(page.locator('#design-panel')).toBeVisible();
-    const figures = page.locator('#do-dont + .docs-dodont > figure');
-    await expect(figures).toHaveCount(2);
+    // One pair for each lesson of the page: a Do, then its Don't
+    const figures = page.locator('#do-dont ~ .docs-dodont > figure');
+    const count = await figures.count();
+    expect(count, route).toBeGreaterThanOrEqual(2);
+    expect(count % 2, route).toBe(0);
 
     // Every stage is inert and hidden; an id in it (a label's for) is used
     // inside that stage only, so nothing outside points into a picture
@@ -37,7 +40,7 @@ for (const route of DESIGN) {
 
     // In the accessibility tree the figure holds its caption and nothing else:
     // the verdict first, as a word (the ✓ / ✕ is CSS with empty alt text)
-    for (const [i, verdict] of [[0, 'Do'], [1, "Don't"]]) {
+    for (const [i, verdict] of Array.from({ length: count }, (_, i) => [i, i % 2 ? "Don't" : 'Do'])) {
       const figure = figures.nth(i);
       const [head, ...inside] = (await figure.ariaSnapshot()).split('\n');
       expect(head, route).toMatch(/^- '?figure\b/);

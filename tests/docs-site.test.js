@@ -200,6 +200,18 @@ describe("HTML reader", () => {
     ]);
   });
 
+  it("collects the swatches: a colour drawn without a <code>, linked to the label of its scale", () => {
+    const html = `<h2 id="r">Ramps</h2>
+<span id="ramp-blue">blue</span>
+<ul aria-labelledby="ramp-blue"><li><span class="docs-swatch" style="--v: var(--cai-blue-60)" aria-hidden="true"></span>60</li></ul>
+<div id="box"><span class="docs-swatch u-x" style="--v: var(--cai-gray-10)"></span><span class="docs-box" style="--v: var(--cai-space-md)"></span></div>`;
+    const { swatches } = readHtml(html, "f.html");
+    expect(swatches).toEqual([
+      { token: "--cai-blue-60", line: 3, heading: "r", own: "ramp-blue" },
+      { token: "--cai-gray-10", line: 4, heading: "r", own: "box" },
+    ]);
+  });
+
   it("fails with file:line on bad nesting", () => {
     expect(() => readHtml("<div>\n<span></div></span>", "f.html")).toThrow("f.html:2: </div> closes <span>");
     expect(() => readHtml("<div>\n<p>", "f.html")).toThrow("f.html:2: <p> is never closed");
@@ -521,7 +533,7 @@ describe("the CAI docs site", () => {
     // Links shown at every width: the content of main (the header's site
     // links are in the closed drawer on a phone, "On this page" is closed).
     const components = site.pages.filter((p) => p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers");
-    expect(components).toHaveLength(24);
+    expect(components).toHaveLength(25);
     const visible = (html) => {
       const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<nav class="docs-onpage"[\s\S]*?<\/nav>/, "");
       return new Set([...[...main.matchAll(/href="(\/docs\/[^"#]*)/g)].map((m) => m[1])]);
@@ -540,7 +552,7 @@ describe("the CAI docs site", () => {
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (p.meta.area === "platform" && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(36);
+    expect(viewPages).toHaveLength(37);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {
@@ -622,6 +634,13 @@ describe("the CAI docs site", () => {
     expect(index.sections).toContainEqual([".cai-btn--primary", "components/button/#variants", "Button › Code"]);
     expect(index.sections).toContainEqual([".o-container", "components/layout/#objects-reference", "Layout objects"]);
     expect(index.sections).toContainEqual(["--cai-brand-primary", "tokens/color/#cai-brand-primary", "Color"]);
+    // A primitive is drawn as a swatch, with no <code>: it is listed at the label of its scale on the palette page
+    const { color } = JSON.parse(readFileSync(new URL("../packages/tokens/tokens.json", import.meta.url), "utf-8"));
+    for (const [family, steps] of Object.entries(color)) {
+      for (const step of Object.keys(steps)) {
+        expect(index.sections, `--cai-${family}-${step}`).toContainEqual([`--cai-${family}-${step}`, `tokens/palette/#ramp-${family}`, "Color palette"]);
+      }
+    }
     // A name a page only mentions goes to the page that documents it, never to an area index
     expect(index.sections).toContainEqual([".cai-select", "components/select/#variants", "Select › Code"]);
     expect(index.sections.filter(([text, url]) => /^(\.|--cai-)/.test(text) && url.startsWith("tokens/#"))).toEqual([]);
@@ -644,6 +663,8 @@ describe("the CAI docs site", () => {
     const first = (query, group = SECTIONS) => search(results, query)[group].map((r) => r.text);
     expect(first("btn-primary")).toEqual([".cai-btn--primary"]);
     expect(first("--cai-brand-primary")).toEqual(["--cai-brand-primary"]);
+    expect(first("--cai-blue-60")).toEqual(["--cai-blue-60"]);
+    expect(first("blue-60")).toEqual(["--cai-blue-60"]);
     expect(first("navbar", PAGES)).toEqual(["Site header"]);
     expect(first("container")).toContain(".o-container");
     expect(first("input", PAGES)).toEqual(["Form fields"]);

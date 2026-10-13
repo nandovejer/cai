@@ -142,6 +142,10 @@ export const PAIRS = [
   // box and the active sidebar entry as shapes, text on a video
   { fg: ["text-primary", "text-secondary"], bg: STATUS.map((s) => `color-${s}-bg > surface-page`), min: 4.5, kind: "text" },
   { fg: ["text-primary", "text-secondary", "brand-primary"], bg: ["brand-subtle > surface-page"], min: 4.5, kind: "text" },
+  // A primary button and a focus ring on the brand tint (a band, a hovered
+  // outline button): 1.4.11, strict. In dark mode the fill is the thinnest
+  // pair of the system, so a change to the tint or the fill fails here first
+  { fg: ["brand-fill", "focus-ring"], bg: ["brand-subtle > surface-page"], min: 3, kind: "ui" },
   // A checked box and a switch track are told apart by their mark and their
   // border, so their fill on the page is a stricter aim than WCAG 1.4.11
   // needs: reported, never failing

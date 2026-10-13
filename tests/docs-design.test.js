@@ -19,15 +19,18 @@ const section = (page, id) => page.body.split(`<h3 id="${id}">`)[1].split(/<h3 |
 const text = (html) => html.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 
 describe("Design tab of every component and pattern page", () => {
-  it("covers the 36 pages", () => {
-    expect(viewPages).toHaveLength(36);
+  it("covers the 37 pages", () => {
+    expect(viewPages).toHaveLength(37);
   });
 
   it("Do and don't: a Do then a Don't, labelled with a word, never a live barrier (a11y.md TAB-20)", () => {
     for (const page of viewPages) {
       const html = section(page, "do-dont");
       const items = [...html.matchAll(/<figure class="docs-dodont__item docs-dodont__item--(do|dont)">\s*<figcaption><strong class="docs-dodont__verdict">([^<]+)<\/strong>([^<]|<(?!\/figcaption>))+<\/figcaption>\s*(<div class="docs-dodont__stage"[^>]*>|<pre class="cai-code-block")/g)];
-      expect(items.map((m) => [m[1], m[2]]), page.file).toEqual([["do", "Do"], ["dont", "Don't"]]);
+      // One pair for each lesson of the page: a Do, then its Don't
+      const verdicts = items.map((m) => [m[1], m[2]]);
+      expect(verdicts.length, page.file).toBeGreaterThanOrEqual(2);
+      expect(verdicts, page.file).toEqual(Array.from({ length: verdicts.length / 2 }, () => [["do", "Do"], ["dont", "Don't"]]).flat());
       for (const m of items) {
         // The caption says why, in words a screen reader gets
         expect(text(m[0]).length, `${page.file} ${m[1]}`).toBeGreaterThan(30);

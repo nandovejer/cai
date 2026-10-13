@@ -39,7 +39,7 @@ Test runs use `--project=chromium --project=chromium-nojs`. The `firefox` and `w
 
 ## JS in `packages/core/src/`
 
-Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/i18n`, `/midi`.
+Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `cai.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@cai-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/i18n`, `/midi`, `/table-sort`.
 
 | Module         | Key exports                                                    |
 | -------------- | -------------------------------------------------------------- |
@@ -53,6 +53,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 | `utils.js`     | `formatTime(seconds)` (`mm:ss`), `escapeHtml`, `calculateProgress`, `enableJs()` (sets `data-cai-js` on `<html>`), … |
 | `i18n.js`      | `t(key, el, vars?)` — string for the language of `el` (nearest `lang`, then subtag, then English; `data-cai-label-<key>` overrides), `getLang(el)`, `registerLocale(lang, messages)`; ships `en` and `es` |
 | `midi.js`      | `MidiPlayer` — MIDI Format 0/1 parser + Web Audio scheduler (lazy-loaded chunk) |
+| `table-sort.js` | `initTableSort(root, translate)` — sorts a table with `th[data-cai-sort]` in the browser (lazy-loaded chunk, no imports: `cai.js` passes its `t`) |
 
 ---
 

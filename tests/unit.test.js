@@ -184,8 +184,20 @@ describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
     expect(content).not.toContain("MidiParser");
   });
 
+  it("dist/table-sort.js is a chunk of its own with no import, and cai.js does not contain its code", () => {
+    const chunk = readFileSync(resolve(coreDist, "table-sort.js"), "utf-8");
+    expect(chunk).toContain("initTableSort");
+    expect(chunk).not.toMatch(/^\s*import\b/m);
+    const entry = readFileSync(resolve(coreDist, "cai.js"), "utf-8");
+    expect(entry).not.toContain("Intl.Collator");
+    expect(entry).toMatch(/import\(["']\.\/table-sort\.js["']\)/);
+    // The minified entry loads the minified chunk, the one that is budgeted
+    expect(readFileSync(resolve(coreDist, "cai.min.js"), "utf-8")).toContain("./table-sort.min.js");
+    expect(existsSync(resolve(coreDist, "table-sort.min.js"))).toBe(true);
+  });
+
   it("per-component CSS files are emitted for standalone use", () => {
-    for (const f of ["button.css", "form.css", "modal.css", "player.css"]) {
+    for (const f of ["button.css", "form.css", "meter.css", "modal.css", "player.css"]) {
       expect(existsSync(resolve(coreDist, "components", f))).toBe(true);
     }
   });

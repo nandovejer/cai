@@ -68,7 +68,7 @@ Compute each hash from the file you are pinning:
 curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A
 ```
 
-`cai.js` is an ES module and must be loaded with `type="module"`. SRI on the entry file does not cover the MIDI chunk it imports on demand (`midi.js`); pages that play MIDI and need full integrity coverage should self-host the files or install from npm.
+`cai.js` is an ES module and must be loaded with `type="module"`. SRI on the entry file does not cover the MIDI and table-sort chunks it imports on demand (`midi.js`, `table-sort.js`); pages that play MIDI or sort a table in the browser and need full integrity coverage should self-host the files or install from npm.
 
 Range URLs such as `@cai-ds/core@3` are fine for prototypes, but they cannot carry an SRI hash and pick up new releases automatically.
 

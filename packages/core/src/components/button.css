@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
    CAI Component: button
-   Button and its variants (primary, secondary, danger, ghost, outline, sm, lg)
+   Button and its variants (primary, secondary, danger, ghost, outline, sm, lg, block)
    Layer: components (ITCSS 5) · Prefix: .cai-
    Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
@@ -106,4 +106,16 @@
   min-height: var(--cai-control-xl);
   font-size: var(--cai-text-base);
   padding: 0 var(--cai-space-xl);
+}
+
+/* Full width of the container: a form's submit, a button in a card or a drawer.
+   The label wraps and a long word breaks, so the box can be narrow (WCAG 1.4.4,
+   1.4.10); a wrapped label keeps a little air above and below. After the sizes,
+   so its block padding wins over theirs. */
+.cai-btn--block {
+  inline-size: 100%;
+  padding-block: var(--cai-space-2xs);
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: center;
 }

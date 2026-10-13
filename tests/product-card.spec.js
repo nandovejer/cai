@@ -151,6 +151,111 @@ test.describe('product card', () => {
     });
   }
 
+  // .claude/plans/specs/button-block.md and its accessibility review (K1, K2)
+  for (const width of [320, 1280]) {
+    test(`block: each .cai-btn--block is as wide as its container at ${width} px`, async ({ page }) => {
+      await open(page, width);
+      const widths = await page.evaluate((sel) =>
+        [...document.querySelectorAll(`${sel} .cai-btn--block`)].map((b) => {
+          const box = b.parentElement.getBoundingClientRect();
+          return [b.getBoundingClientRect().width, box.width];
+        }), CARDS);
+      expect(widths.length).toBe(2);
+      for (const [button, container] of widths) expect(Math.abs(button - container)).toBeLessThanOrEqual(1);
+    });
+  }
+
+  for (const scale of ['100%', '200%']) {
+    test(`K1: one long word breaks inside a block button at 320 px with ${scale} text`, async ({ page }) => {
+      await open(page, 320);
+      await page.evaluate((s) => { document.documentElement.style.fontSize = s; }, scale);
+      const { button, right, viewport } = await page.evaluate((sel) => {
+        const b = document.querySelector(`${sel} .cai-btn--block`);
+        b.firstChild.textContent = 'Handschuhaufbewahrungsbox';
+        const card = b.closest('.cai-card');
+        return {
+          button: b.scrollWidth - b.clientWidth,
+          right: card.getBoundingClientRect().right,
+          viewport: document.documentElement.clientWidth,
+        };
+      }, CARDS);
+      expect(button, 'label inside its button').toBeLessThanOrEqual(0);
+      expect(right, 'card inside the window').toBeLessThanOrEqual(viewport + 0.5);
+    });
+  }
+
+  test('K1: a button without the modifier in a card breaks a long word too', async ({ page }) => {
+    await open(page, 320);
+    await page.evaluate((s) => { document.documentElement.style.fontSize = s; }, '200%');
+    const overflow = await page.evaluate((sel) => {
+      const b = document.querySelector(`${sel} .cai-btn--block`);
+      b.classList.remove('cai-btn--block');
+      b.firstChild.textContent = 'Handschuhaufbewahrungsbox';
+      return b.scrollWidth - b.clientWidth;
+    }, CARDS);
+    expect(overflow).toBeLessThanOrEqual(0);
+  });
+
+  test('--sm with the full width is at least 24 px high, and the name still starts with its visible text', async ({ page }) => {
+    await open(page, 320);
+    const { height, name, text } = await page.evaluate((sel) => {
+      const b = document.querySelector(`${sel} .cai-btn--block`);
+      b.classList.add('cai-btn--sm');
+      return { height: b.getBoundingClientRect().height, name: b.textContent.trim(), text: b.firstChild.textContent.trim() };
+    }, CARDS);
+    expect(height).toBeGreaterThanOrEqual(24);
+    expect(name.startsWith(text)).toBe(true);
+  });
+
+  // .claude/plans/specs/band-and-featured-card.md (B5, B6) on the Card page
+  test('featured: a featured card is as tall as its neighbour and has the 2 px border', async ({ page }) => {
+    await open(page, 1100);
+    const sizes = await page.evaluate(() => {
+      const host = document.createElement('div');
+      host.className = 'o-grid o-grid--2';
+      host.innerHTML = ['', ' cai-card--featured'].map((m) => `<article class="cai-card${m}"><h4 class="cai-card__title">Two days</h4><p class="cai-card__body">One line.</p></article>`).join('');
+      document.querySelector('#red-wines').after(host);
+      const [plain, featured] = [...host.children];
+      const border = parseFloat(getComputedStyle(featured).borderTopWidth);
+      const out = { plain: plain.getBoundingClientRect().height, featured: featured.getBoundingClientRect().height, border, plainBorder: parseFloat(getComputedStyle(plain).borderTopWidth) };
+      host.remove();
+      return out;
+    });
+    expect(sizes.border).toBe(2);
+    expect(sizes.plainBorder).toBe(1);
+    expect(Math.abs(sizes.plain - sizes.featured)).toBeLessThanOrEqual(0.5);
+  });
+
+  test('featured: the ring of a linked featured card stands off by at least the border width (B6)', async ({ page }) => {
+    await open(page, 1100);
+    await page.evaluate((sel) => document.querySelector(sel).classList.add('cai-card--featured'), CARDS);
+    await page.locator(`${CARDS} a`).first().focus();
+    await page.keyboard.press('Shift+Tab');
+    await page.keyboard.press('Tab');
+    const ring = await page.evaluate(() => {
+      const after = getComputedStyle(document.activeElement, '::after');
+      const card = document.activeElement.closest('.cai-card');
+      return { offset: parseFloat(after.outlineOffset), border: parseFloat(getComputedStyle(card).borderTopWidth), style: after.outlineStyle };
+    });
+    expect(ring.style).toBe('solid');
+    expect(ring.border).toBe(2);
+    expect(ring.offset).toBeGreaterThanOrEqual(ring.border);
+  });
+
+  test('featured: forced colors keep the 2 px border of a featured card', async ({ page }) => {
+    await open(page, 1100);
+    await page.evaluate((sel) => document.querySelector(sel).classList.add('cai-card--featured'), CARDS);
+    await page.emulateMedia({ forcedColors: 'active' });
+    const border = await page.locator(CARDS).first().evaluate((c) => {
+      const s = getComputedStyle(c);
+      return { width: s.borderTopWidth, style: s.borderTopStyle, color: s.borderTopColor, text: getComputedStyle(document.body).color };
+    });
+    expect(border.width).toBe('2px');
+    expect(border.style).toBe('solid');
+    // The system colour, not the brand colour: forced colors replaced it
+    expect(border.color).not.toBe('rgb(35, 101, 166)');
+  });
+
   test('forced colors: the button keeps a border and the link its ring', async ({ page }) => {
     await open(page);
     await page.emulateMedia({ forcedColors: 'active' });

@@ -16,6 +16,7 @@ import { initModals } from "./modal.js";
 import { initHighlight } from "./highlight.js";
 import { initPlayers } from "./player.js";
 import { initTabs } from "./tabs.js";
+import { t } from "./i18n.js";
 
 export {
   MODES,
@@ -76,6 +77,10 @@ function boot() {
   initHighlight();
   initPlayers();
   initTabs();
+  // A sortable heading loads its module on demand: its own chunk, its own budget
+  if (document.querySelector("th[data-cai-sort]")) {
+    import("./table-sort.js").then((m) => m.initTableSort(document, t));
+  }
 }
 
 if (typeof document !== "undefined") {

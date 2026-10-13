@@ -182,3 +182,10 @@ initTemplateDemo();
 initSlotDemo();
 // Only the contrast page has the tool: its script is a separate chunk
 if (document.querySelector("[data-contrast-tool]")) import("./contrast-check.js").then((m) => m.initContrastTool());
+// The Table page sorts its example in the browser, as cai.js would: the module
+// loads on demand, with the strings of core's dictionary
+if (document.querySelector("th[data-cai-sort]")) {
+  Promise.all([import("/packages/core/dist/table-sort.js"), import("/packages/core/dist/i18n.js")]).then(([sort, i18n]) =>
+    sort.initTableSort(document, i18n.t),
+  );
+}

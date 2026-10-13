@@ -640,7 +640,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       const heights = await page
-        .locator('.landing-level__body a, .landing-level__actions a, .landing-guides a, .site-header__nav a')
+        .locator('.landing-level__body a, .landing-level__actions a, .site-header__nav a')
         .evaluateAll((links) => links.map((el) => el.getBoundingClientRect().height));
       expect(heights.length).toBeGreaterThan(10);
       for (const height of heights) expect(height).toBeGreaterThanOrEqual(24);

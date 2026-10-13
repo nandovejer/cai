@@ -50,7 +50,9 @@ toc: h2,h3
   &lt;search class=&quot;cai-platform-search__body&quot;&gt;
     &lt;div class=&quot;cai-platform-search__head&quot;&gt;
       &lt;h2 class=&quot;cai-platform-search__title&quot; id=&quot;search-title&quot;&gt;&lt;label for=&quot;search-q&quot;&gt;Search the documentation&lt;/label&gt;&lt;/h2&gt;
-      &lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;cai-btn cai-btn--ghost cai-platform-search__close&quot;&gt;Close search&lt;/button&gt;&lt;/form&gt;
+      &lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;cai-btn cai-btn--ghost cai-platform-search__close&quot; aria-label=&quot;Close search&quot;&gt;
+        &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6 6 18&quot;/&gt;&lt;/svg&gt;
+      &lt;/button&gt;&lt;/form&gt;
     &lt;/div&gt;
     &lt;div class=&quot;cai-platform-search__field&quot;&gt;
       &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;path d=&quot;m20 20-4-4&quot;/&gt;&lt;/svg&gt;
@@ -108,7 +110,7 @@ toc: h2,h3
               <li><kbd>Ctrl</kbd> + <kbd>K</kbd> or <kbd>⌘</kbd> + <kbd>K</kbd> opens the search from anywhere on the page, except while typing in a text area or an editable region, or while another dialog is open. Pressed again, it selects the text in the field.</li>
               <li>Down arrow moves from the field to the first result; Down and Up move between results, across groups; Home and End go to the first and last. Up on the first result goes back to the field.</li>
               <li>Enter in the field opens the first result; on a result it follows the link. Typing on a result goes back to the field.</li>
-              <li>Escape or <em>Close search</em> closes the dialog, whatever the field holds, and the focus returns to where it was. The field is <code>type=&quot;text&quot;</code> for that reason: in a <code>type=&quot;search&quot;</code> field, Chrome and Safari use the first Escape to clear the text. A result on the same page closes it and moves the focus to that section’s heading.</li>
+              <li>Escape or the close button (an × icon named <em>Close search</em> by its <code>aria-label</code>) closes the dialog, whatever the field holds, and the focus returns to where it was. The field is <code>type=&quot;text&quot;</code> for that reason: in a <code>type=&quot;search&quot;</code> field, Chrome and Safari use the first Escape to clear the text. A result on the same page closes it and moves the focus to that section’s heading.</li>
               <li>The heading names the dialog and labels the field. The count is announced once the reader stops typing (<code>role=&quot;status&quot;</code>). Results are links in lists under headings, not a combobox.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
@@ -162,6 +164,8 @@ toc: h2,h3
                   <tr><td data-label="Part"><div>Group heading, result page, count and hint</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Result page, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.2:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Field magnifier</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Close icon</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Close icon, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>14.4:1</div></td><td data-label="Dark"><div>12.6:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                   <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
@@ -169,7 +173,7 @@ toc: h2,h3
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
               <li><strong>Focus:</strong> the trigger has a 2 px <code>--cai-focus-ring</code> outline, 2 px outside; the focused result has the ring every link has.</li>
-              <li><strong>Edges:</strong> in forced colors the dialog keeps a real border, and the magnifier is drawn in the system's text colour.</li>
+              <li><strong>Edges:</strong> in forced colors the dialog keeps a real border, and the magnifier and the close icon are drawn in the system's text colour.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 22 tokens that <code>components/search.css</code> of platform reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>

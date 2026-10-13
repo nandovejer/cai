@@ -166,8 +166,34 @@
 	margin-inline-start: auto;
 }
 
+/* An icon button: a square target as tall as the large controls. The × is
+   decorative; the button's name is its aria-label. */
 .cai-platform-search__close {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	inline-size: var(--cai-control-lg);
 	min-block-size: var(--cai-control-lg);
+	padding: 0;
+	/* The × is a quiet control, like the magnifier: secondary text, primary
+	   on hover. The ghost button's brand blue is for actions. currentcolor
+	   follows the system colours in forced colours. */
+	color: var(--cai-text-secondary);
+}
+
+.cai-platform-search__close:hover {
+	color: var(--cai-text-primary);
+	background: var(--cai-surface-hover);
+}
+
+.cai-platform-search__close :where(svg) {
+	flex: none;
+	inline-size: 1.25rem;
+	block-size: 1.25rem;
+	fill: none;
+	stroke: currentcolor;
+	stroke-width: 2;
+	stroke-linecap: round;
 }
 
 .cai-platform-search__results {

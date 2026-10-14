@@ -44,8 +44,15 @@
     </section>
   </luz-consent>
 
+  <header class="luz-fixture-header">
+    <!-- Shown by core at 768px and below, where the sidebar becomes a popover drawer -->
+    <button class="luz-nav-toggle" id="nav-toggle" type="button" popovertarget="page-nav" aria-label="Menu">
+      <span class="luz-nav-toggle__bar"></span><span class="luz-nav-toggle__bar"></span><span class="luz-nav-toggle__bar"></span>
+    </button>
+  </header>
+
   <div class="o-shell">
-    <nav class="luz-sidebar" aria-label="Sections">
+    <nav class="luz-sidebar" id="page-nav" popover aria-label="Sections" tabindex="-1">
       <a class="luz-sidebar__link" href="#s1" id="side-1">Section 1</a>
       <a class="luz-sidebar__link" href="#s2" id="side-2">Section 2</a>
       <a class="luz-sidebar__link" href="#s3" id="side-3">Section 3</a>

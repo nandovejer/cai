@@ -82,27 +82,36 @@ export const formatRatio = format;
 /** The CSS of a page and, for a pattern of site or of a package for one kind of site, the classes that are its own. */
 function sourceOf(page) {
   if (page.meta.area === "components") {
-    return { css: page.meta.files.split(";").map((f) => read(`packages/core/src/${f.trim()}`)).join("\n"), classes: null };
+    return { css: page.meta.files.split(";").map((f) => read(`packages/core/src/${f.trim()}`)).join("\n"), classes: null, tags: [] };
   }
-  if (page.meta.module === "search.js") return { css: read("packages/site/src/components/search.css"), classes: null };
-  const classes = page.meta.files.split(",").map((f) => f.trim()).filter((f) => f.startsWith(".")).map((f) => f.slice(1));
+  if (page.meta.module === "search.js") return { css: read("packages/site/src/components/search.css"), classes: null, tags: [] };
+  const entries = page.meta.files.split(",").map((f) => f.trim());
+  const classes = entries.filter((f) => f.startsWith(".")).map((f) => f.slice(1));
+  // A CSS-only tag (<luz-banner>) is styled by :where(luz-banner …) selectors, not by a class
+  const tags = entries.map((f) => f.match(/^<(luz-[\w-]+)>$/)?.[1]).filter(Boolean);
   // A package for one kind of site: every file of its components folder
   if (SITE_KINDS.includes(page.meta.area)) {
     const dir = `packages/${page.meta.area}/src/components`;
-    return { css: readdirSync(`${repo}${dir}`).filter((f) => f.endsWith(".css")).sort().map((f) => read(`${dir}/${f}`)).join("\n"), classes };
+    return { css: readdirSync(`${repo}${dir}`).filter((f) => f.endsWith(".css")).sort().map((f) => read(`${dir}/${f}`)).join("\n"), classes, tags };
   }
   // The shell patterns, and the patterns with a file of their own (the language switcher, the site header, the submenu, the notice and the cookie banner)
   // (renamed in F3: lang-switcher.css to lang-switch.css, banners.css split into banner.css and consent.css; whichever exist)
   const files = ["_components.css", "lang-switcher.css", "lang-switch.css", "site-header.css", "submenu.css", "banners.css", "banner.css", "consent.css"]
     .filter((f) => existsSync(`${repo}packages/site/src/components/${f}`))
     .map((f) => read(`packages/site/src/components/${f}`));
-  return { css: files.join("\n"), classes };
+  return { css: files.join("\n"), classes, tags };
 }
 
 /** The --luz-* tokens the component's CSS reads with var(), minus the ones it declares itself. */
 export function tokensUsedBy(page) {
-  const { css, classes } = sourceOf(page);
-  const own = classes && new RegExp(`\\.(?:${classes.join("|")})(?:(?:--|__)[\\w-]+)?(?![\\w-])`);
+  const { css, classes, tags = [] } = sourceOf(page);
+  const byClass = classes?.length ? `\\.(?:${classes.join("|")})(?:(?:--|__)[\\w-]+)?(?![\\w-])` : null;
+  // The tag as a type selector: not after a dot, a dash or a word character (.luz-banner__x, [data-luz-banner])
+  const byTag = tags.length ? `(?<![\\w.-])(?:${tags.join("|")})(?![\\w-])` : null;
+  const own = classes && new RegExp([byClass, byTag].filter(Boolean).join("|"));
+  // The properties a component sets for its own parts: --luz-<name>-*, from <luz-name> and .luz-name
+  const names = [...tags, ...classes ?? []].map((n) => n.replace(/^luz-/, "").replace(/^\.?/, ""));
+  const ownProperty = names.length ? new RegExp(`^--luz-(?:${names.join("|")})-`) : null;
   const used = new Set();
   const local = new Set();
   for (const { selector, body } of rules(css)) {
@@ -112,7 +121,7 @@ export function tokensUsedBy(page) {
   }
   // --luz-site-* and --luz-<kind>-* (landing, cms…) are properties a pattern sets for its own parts, not design tokens
   const patternProperty = new RegExp(`^--luz-(?:${["site", ...SITE_KINDS].join("|")})-`);
-  return [...used].filter((t) => !local.has(t) && !patternProperty.test(t)).sort();
+  return [...used].filter((t) => !local.has(t) && !patternProperty.test(t) && !ownProperty?.test(t)).sort();
 }
 
 /* ---- Token families and their pages --------------------------------------- */

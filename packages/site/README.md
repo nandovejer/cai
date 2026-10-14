@@ -68,11 +68,11 @@ With Subresource Integrity, an `integrity` on the `<script>` covers `site.min.js
 - `.luz-site-page-header`, `__title`, `__lead` — Page header block
 - `.luz-site-actions` — Action button group
 - `.luz-site-header` (`--sticky`, `__inner`, `__brand`, `__nav`, `__actions`) — Site header: the name, the main links and a few controls; below 769 px the links are a native popover panel opened by core's `.luz-nav-toggle`, with no script
-- `.luz-site-submenu` — An item of the header's links that holds more links: a native `<details name>`, in the flow in the menu panel and a box under its button from 769 px; no script
-- `.luz-site-notice` (`--warning`) — A band above the header with one short announcement and one link; no script, no close button
-- `<luz-consent>` and `.luz-consent` (`__title`, `__choices`) — The cookie banner, above the header, hidden until `consent.js` shows it
+- `<luz-submenu>` — An item of the header's links that holds more links: a tag (no class, no script, `display: contents`) around a native `<details name>`, in the flow in the menu panel and a box under its button from 769 px
+- `<luz-banner>` (`tone="warning"`) — A tag (no class, no script) around one `<section aria-labelledby>`: a band above the header with one short announcement and one link; no close button
+- `<luz-consent>` and `.luz-consent` (`__title`, `__choices`) — The cookie banner, first after the skip link in the markup and shown as a band fixed at the bottom of the window (in the flow under 30rem tall), hidden until `consent.js` shows it; its confirmation has a `[data-luz-consent-close]` button, and while it shows `consent.js` sets `--luz-consent-h` on `:root` so the page keeps room for it
 - `.luz-site-footer` — Page footer
-- `.luz-site-lang-switcher` (`__button`, `__menu`, `__list`, `__link`, `__name`, `__title`, `__icon`) — Language switcher: a button that opens a native popover list of links, with no script
+- `<luz-lang-switch>` with `.luz-lang-switch__button`, `__menu`, `__list`, `__link`, `__name`, `__title`, `__icon` — Language switch: a tag (no script) around a button that opens a native popover list of links; `--luz-lang-switch-top` (default `--luz-bar-h`) places the list
 - `.luz-site-skip-link` — Accessibility skip link
 - `.luz-site-image` — Fixed-ratio frame around a native `<picture>`; modifiers `--4x3`, `--3x2`, `--1x1`, `--21x9`, `--9x16`
 - `<luz-search>` with `.luz-search__fallback` (`__fallback-label`), `.luz-search__trigger` (`--compact`, `__trigger-icon`, `__trigger-label`, `__trigger-key`) and `.luz-search` (`__body`, `__head`, `__title`, `__field`, `__status`, `__close`, `__results`, `__foot`) — Site search: a link to your index that a button replaces, in the same space, and a native `<dialog>` of grouped links

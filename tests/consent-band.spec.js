@@ -87,14 +87,24 @@ test.describe('where it sits', () => {
 
   for (const width of [320, 1440]) {
     test(`${width} px: showing it shifts nothing, and moves nothing that was there`, async ({ page }) => {
+      // Count the shifts from the moment the band shows: the web font swapping in (a pixel of
+      // text, with the band still hidden) is not the band, and document.fonts.ready is too early to tell
       await page.addInitScript(() => {
         window.__shift = 0;
+        window.__shownAt = null;
+        new window.MutationObserver(() => {
+          const band = document.getElementById('consent');
+          if (band && !band.hidden && window.__shownAt === null) window.__shownAt = performance.now();
+        }).observe(document, { subtree: true, attributes: true, attributeFilter: ['hidden'], childList: true });
         new window.PerformanceObserver((list) => {
-          for (const entry of list.getEntries()) if (!entry.hadRecentInput) window.__shift += entry.value;
+          for (const entry of list.getEntries()) {
+            if (!entry.hadRecentInput && window.__shownAt !== null && entry.startTime >= window.__shownAt) window.__shift += entry.value;
+          }
         }).observe({ type: 'layout-shift', buffered: true });
       });
       await open(page, { width, height: 800 });
       await page.waitForTimeout(500);
+      expect(await page.evaluate(() => window.__shownAt), 'the band showed').not.toBeNull();
       expect(await page.evaluate(() => window.__shift)).toBe(0);
       // The same page without the band: the first things of it are where they were
       const before = await rect(page, '#top');
@@ -174,6 +184,8 @@ test.describe('C1 and C7: its place in the page, and what it is', () => {
 test.describe('C4: nothing that Tab reaches is under the band (WCAG 2.4.11)', () => {
   for (const [width, height] of [[1280, 800], [320, 640]]) {
     test(`${width}x${height}: every Tab stop, the sidebar's and the footer's last links included, ends above the band`, async ({ page }) => {
+      // Core sets smooth scrolling; the walk reads where the browser leaves each stop
+      await page.emulateMedia({ reducedMotion: 'reduce' });
       await open(page, { width, height });
       const visited = new Set();
       const under = [];
@@ -189,7 +201,10 @@ test.describe('C4: nothing that Tab reaches is under the band (WCAG 2.4.11)', ()
         if (!stop.inBand && stop.bottom > stop.band + 0.5) under.push(`${stop.id}: bottom ${Math.round(stop.bottom)} > band ${Math.round(stop.band)}`);
         if (!stop.inBand && stop.id !== 'skip' && stop.top < -0.5) under.push(`${stop.id}: above the window`);
       }
-      expect([...visited]).toEqual(expect.arrayContaining(['side-1', 'side-last', 'main-last', 'field', 'settings', 'settings-2', 'foot-last']));
+      // At 768px and below the sidebar is a closed popover drawer: Tab does not reach its links
+      const sidebar = width > 768 ? ['side-1', 'side-last'] : [];
+      expect([...visited]).toEqual(expect.arrayContaining([...sidebar, 'main-last', 'field', 'settings', 'settings-2', 'foot-last']));
+      if (width <= 768) expect(visited.has('side-last')).toBe(false);
       expect(under).toEqual([]);
     });
   }

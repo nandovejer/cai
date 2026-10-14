@@ -23,7 +23,10 @@
  *             <div class="o-actions"><button …>Save my choices</button></div></form>
  *         </details>
  *       </div>
- *       <p data-luz-consent-done tabindex="-1" hidden>Your choice is saved. …</p>
+ *       <div data-luz-consent-done tabindex="-1" hidden>
+ *         <p>Your choice is saved. …</p>
+ *         <button class="luz-btn luz-btn--secondary" type="button" data-luz-consent-close>Close</button>
+ *       </div>
  *     </section>
  *   </luz-consent>
  *   <button type="button" data-luz-consent-open hidden>Change cookie settings</button>
@@ -33,14 +36,22 @@
  * ever shown that does nothing. The cookie policy, linked from every page,
  * is the way in.
  *
- * With it, the banner shows, in the flow and without taking focus, when no
+ * With it, the banner shows, as a band fixed at the bottom of the window
+ * (in the flow in a window under 30rem tall) and without taking focus, when no
  * valid choice is stored, the stored one has expired, or the form offers a
  * category the stored choice was not asked about. Accept grants every
- * category, Reject none, Save the ones ticked; Escape grants nothing. The
+ * category, Reject none, Save the ones ticked; Escape does nothing. The
  * choice is stored, `luz:consent` is dispatched on document with
  * { asked, granted, expires }, and the confirmation takes the place of the
- * question and takes focus. A [data-luz-consent-open] button, hidden until
- * now, shows the banner again with the stored choice ticked.
+ * question and takes focus. The confirmation goes away with its
+ * [data-luz-consent-close] button (focus goes back to the button that
+ * opened the banner, else the first [data-luz-consent-open], else <main>),
+ * or when focus leaves the band for the page (focus stays where it went).
+ * A [data-luz-consent-open] button, hidden until now (its space kept),
+ * shows the banner again with the stored choice ticked, and takes focus to it.
+ * While the banner shows, its height is on :root as --luz-consent-h (from
+ * a ResizeObserver, rounded up to px): the page keeps that much room at
+ * its end and scrolls what Tab reaches out from under it (WCAG 2.4.11).
  *
  * Stored in localStorage, under "luz-consent" or the section's
  * data-luz-consent-key (it must start with "luz-"), as JSON:
@@ -70,6 +81,8 @@ export function getConsent(key = "luz-consent") {
 }
 
 const wired = new WeakSet();
+const H = "--luz-consent-h";
+const unpublish = () => document.documentElement.style.removeProperty(H);
 
 /** Wire the banner inside `host`, and the page's open buttons. Once per banner. */
 const wire = (host) => {
@@ -91,7 +104,9 @@ const wire = (host) => {
   };
 
   const stored = getConsent(key);
-  if (!stored || offered.some((n) => !stored.asked.includes(n))) show(stored);
+  // In a frame of its own, so its height is published (below) before
+  // anything can see it shown
+  if (!stored || offered.some((n) => !stored.asked.includes(n))) requestAnimationFrame(() => show(stored));
 
   box.addEventListener("submit", (e) => {
     // eslint-disable-next-line no-restricted-syntax -- the forms have nowhere to send the choice: it is stored on this device instead (PRINCIPLES §3, §8)
@@ -110,9 +125,35 @@ const wire = (host) => {
     document.dispatchEvent(new CustomEvent("luz:consent", { detail }));
   });
 
+  // The saved state goes away (C3): with its Close button, focus going back
+  // to where the band was opened from (C2), and when focus leaves the band
+  // for the page, focus staying where it went. Escape does nothing (C8).
+  let opener;
+  const close = (focus) => {
+    if (box.hidden) return;
+    const to = focus && box.contains(document.activeElement) && ((opener?.isConnected && opener) || document.querySelector("[data-luz-consent-open]") || document.querySelector("main"));
+    box.hidden = true;
+    unpublish();
+    if (to) {
+      if (!to.hasAttribute("tabindex") && to.localName === "main") to.tabIndex = -1;
+      to.focus();
+    }
+  };
+  box.addEventListener("click", (e) => e.target.closest?.("[data-luz-consent-close]") && close(true));
+  box.addEventListener("focusout", (e) => !done.hidden && e.relatedTarget && !box.contains(e.relatedTarget) && close());
+
+  // Its height, for the room the page keeps while it shows (C4, C6):
+  // the border box, rounded up, from the observer's number only
+  new ResizeObserver(([entry]) => {
+    const h = entry.borderBoxSize?.[0]?.blockSize;
+    if (h > 0) document.documentElement.style.setProperty(H, `${Math.ceil(h)}px`);
+    else unpublish();
+  }).observe(box);
+
   for (const button of document.querySelectorAll("[data-luz-consent-open]")) {
     button.hidden = false;
     button.addEventListener("click", () => {
+      opener = button;
       show(getConsent(key));
       box.tabIndex = -1;
       box.focus();
@@ -127,6 +168,10 @@ if (typeof customElements < "u" && !customElements.get("luz-consent")) {
   customElements.define("luz-consent", class extends HTMLElement {
     connectedCallback() {
       wire(this);
+    }
+
+    disconnectedCallback() {
+      unpublish();
     }
   });
 }

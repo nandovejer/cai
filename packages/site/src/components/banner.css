@@ -1,0 +1,40 @@
+/* ==========================================================================
+	 LUZ Site: banner, <luz-banner>.
+	 A band above the site header with one short announcement and an
+	 optional link, around one section[aria-labelledby] (a region named by
+	 its visible label). A CSS-only tag: no script defines it, so it never
+	 becomes defined, and every selector that names it is wholly inside
+	 :where(). No close button: a dismissal that lasts needs a script and
+	 storage, and a banner is removed from the markup when it ends. Static:
+	 it scrolls away with the page. Its text starts where the header's row
+	 starts.
+	 ========================================================================== */
+
+:where(luz-banner) {
+	display: block;
+	border-block-end: 1px solid var(--luz-divider);
+	background: var(--luz-surface-muted);
+	color: var(--luz-text-primary);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-sm);
+}
+
+/* The section is the width of the window, its text in the header's column */
+:where(luz-banner > section) {
+	padding-block: var(--luz-space-xs);
+	padding-inline: max(var(--luz-space-md), (100% - var(--luz-content-max)) / 2 + var(--luz-space-md));
+}
+
+@media (min-width: 641px) {
+	:where(luz-banner > section) {
+		padding-inline: max(var(--luz-space-xl), (100% - var(--luz-content-max)) / 2 + var(--luz-space-xl));
+	}
+}
+
+/* tone="warning", the one tone: a yellow band and a darker rule. The words
+   say it too (RL-6), and in forced colours the rule stays (RL-15: no new
+   status colour) */
+:where(luz-banner)[tone="warning"] {
+	border-color: var(--luz-color-warning-accent);
+	background: var(--luz-color-warning-bg);
+}

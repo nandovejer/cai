@@ -1,15 +1,23 @@
 /* ==========================================================================
-	 LUZ Site: submenu.
+	 LUZ Site: submenu, <luz-submenu>.
 	 An item of the site header's links that holds more links: a native
-	 <details> in the list, its <summary> the button. No JavaScript: the
+	 <details> in the list, its <summary> the button, wrapped in a CSS-only
+	 tag (no script defines it; display: contents, so the li keeps its
+	 layout). No classes: the parts are selected by structure, each whole
+	 selector inside :where() (red line 11). No JavaScript: the
 	 browser opens and closes it and tells assistive technology whether it is
 	 open; with `name`, opening one closes the others where it is supported.
 	 Under its button, in the flow, in the header's narrow panel; from 769px a
 	 box under the button, over the page. Never on hover.
 	 ========================================================================== */
 
+/* The tag draws no box of its own: the details is the item */
+:where(luz-submenu) {
+	display: contents;
+}
+
 /* Core's bare details is a boxed accordion: here it is an item of the row */
-.luz-site-submenu {
+:where(luz-submenu > details) {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -18,7 +26,7 @@
 
 /* The button looks like the links beside it, a 44px target with a chevron
    that says it opens rather than goes somewhere */
-.luz-site-submenu > summary {
+:where(luz-submenu > details > summary) {
 	display: flex;
 	align-items: center;
 	gap: var(--luz-space-xs);
@@ -34,18 +42,18 @@
 }
 
 /* Safari draws its marker here, not with list-style */
-.luz-site-submenu > summary::-webkit-details-marker {
+:where(luz-submenu > details > summary)::-webkit-details-marker {
 	display: none;
 }
 
-.luz-site-submenu > summary:hover,
-.luz-site-submenu[open] > summary {
+:where(luz-submenu > details > summary):hover,
+:where(luz-submenu > details[open] > summary) {
 	color: var(--luz-text-primary);
 }
 
 /* Two borders turned to point down, then up when open: empty content,
    nothing to announce. Physical on purpose: the arrow does not mirror. */
-.luz-site-submenu > summary::after {
+:where(luz-submenu > details > summary)::after {
 	content: "";
 	inline-size: 0.4em;
 	block-size: 0.4em;
@@ -54,14 +62,13 @@
 	transform: translateY(-25%) rotate(45deg);
 }
 
-.luz-site-submenu[open] > summary::after {
+:where(luz-submenu > details[open] > summary)::after {
 	transform: translateY(25%) rotate(225deg);
 }
 
 /* The links, one under the other and indented under their button */
-.luz-site-submenu > ul {
+:where(luz-submenu > details > ul) {
 	display: grid;
-	gap: 0;
 	margin: 0;
 	padding: 0;
 	padding-inline-start: var(--luz-space-md);
@@ -71,11 +78,11 @@
 /* From 769px, where the header's links are a row: a box under the button.
    The last item's box opens toward the start, so it stays in the window. */
 @media (min-width: 769px) {
-	.luz-site-submenu {
+	:where(luz-submenu > details) {
 		position: relative;
 	}
 
-	.luz-site-submenu > ul {
+	:where(luz-submenu > details > ul) {
 		position: absolute;
 		inset-block-start: 100%;
 		inset-inline-start: calc(-1 * var(--luz-space-md));
@@ -89,7 +96,7 @@
 		box-shadow: var(--luz-shadow-md);
 	}
 
-	:last-child > .luz-site-submenu > ul {
+	:where(:last-child > luz-submenu > details > ul) {
 		inset-inline: auto calc(-1 * var(--luz-space-md));
 	}
 }

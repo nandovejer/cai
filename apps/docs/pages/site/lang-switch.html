@@ -1,34 +1,34 @@
 <!-- luz:page
-title: Language switcher
+title: Language switch
 description: Lets readers go to the same page in another language, from a button in the header.
 area: site
 order: 9
 group: patterns
-files: .luz-site-lang-switcher
+files: <luz-lang-switch>, .luz-lang-switch, __button, __menu, __link
 keywords: language, translation, locale, i18n, hreflang
 toc: h2,h3
 -->
-    <div class="docs-component" id="p-lang">
+    <div class="docs-component" id="p-lang-switch">
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <div class="luz-site-lang-switcher">
-              <button class="luz-site-lang-switcher__button" type="button" popovertarget="lang-demo-menu"><svg class="luz-site-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">Language: </span><span class="luz-site-lang-switcher__name">English</span></button>
-              <nav class="luz-site-lang-switcher__menu" id="lang-demo-menu" popover aria-labelledby="lang-demo-title">
-                <p class="luz-site-lang-switcher__title" id="lang-demo-title">Language</p>
-                <ul class="luz-site-lang-switcher__list">
-                  <li><a class="luz-site-lang-switcher__link" href="/" hreflang="en" lang="en" aria-current="true">English</a></li>
-                  <li><a class="luz-site-lang-switcher__link" href="/es/" hreflang="es" lang="es">Español</a></li>
-                  <li><a class="luz-site-lang-switcher__link" href="/ar/" hreflang="ar" lang="ar">العربية</a></li>
+            <luz-lang-switch>
+              <button class="luz-lang-switch__button" type="button" popovertarget="lang-demo-menu"><svg class="luz-lang-switch__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">Language: </span><span class="luz-lang-switch__name">English</span></button>
+              <nav class="luz-lang-switch__menu" id="lang-demo-menu" popover aria-labelledby="lang-demo-title">
+                <p class="luz-lang-switch__title" id="lang-demo-title">Language</p>
+                <ul class="luz-lang-switch__list">
+                  <li><a class="luz-lang-switch__link" href="/" hreflang="en" lang="en" aria-current="true">English</a></li>
+                  <li><a class="luz-lang-switch__link" href="/es/" hreflang="es" lang="es">Español</a></li>
+                  <li><a class="luz-lang-switch__link" href="/ar/" hreflang="ar" lang="ar">العربية</a></li>
                 </ul>
               </nav>
-            </div>
+            </luz-lang-switch>
             <p class="docs-demo__note">The links go to this site’s home page in each language. The list opens under the header, at the end of the row, as it does on the <a href="/">home page</a>; this documentation is in English only.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe. It has not been tested with a screen reader yet.</p>
-          <nav class="luz-tabs docs-view-tabs" aria-label="Language switcher documentation">
+          <nav class="luz-tabs docs-view-tabs" aria-label="Language switch documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
@@ -39,44 +39,44 @@ toc: h2,h3
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="luz-copy-btn" type="button" data-copy-from="code-lang-switcher" aria-label="Copy the language switcher markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-lang-switch" aria-label="Copy the language switch markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Language switcher markup"><code id="code-lang-switcher">&lt;div class=&quot;luz-site-lang-switcher&quot;&gt;
-  &lt;button class=&quot;luz-site-lang-switcher__button&quot; type=&quot;button&quot; popovertarget=&quot;lang-menu&quot;&gt;
-    &lt;span class=&quot;u-sr-only&quot;&gt;Language: &lt;/span&gt;&lt;span class=&quot;luz-site-lang-switcher__name&quot;&gt;English&lt;/span&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Language switch markup"><code id="code-lang-switch">&lt;luz-lang-switch&gt;
+  &lt;button class=&quot;luz-lang-switch__button&quot; type=&quot;button&quot; popovertarget=&quot;lang-menu&quot;&gt;
+    &lt;span class=&quot;u-sr-only&quot;&gt;Language: &lt;/span&gt;&lt;span class=&quot;luz-lang-switch__name&quot;&gt;English&lt;/span&gt;
   &lt;/button&gt;
-  &lt;nav class=&quot;luz-site-lang-switcher__menu&quot; id=&quot;lang-menu&quot; popover aria-labelledby=&quot;lang-title&quot;&gt;
-    &lt;p class=&quot;luz-site-lang-switcher__title&quot; id=&quot;lang-title&quot;&gt;Language&lt;/p&gt;
-    &lt;ul class=&quot;luz-site-lang-switcher__list&quot;&gt;
-      &lt;li&gt;&lt;a class=&quot;luz-site-lang-switcher__link&quot; href=&quot;/&quot; hreflang=&quot;en&quot; lang=&quot;en&quot; aria-current=&quot;page&quot;&gt;English&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a class=&quot;luz-site-lang-switcher__link&quot; href=&quot;/es/&quot; hreflang=&quot;es&quot; lang=&quot;es&quot;&gt;Español&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a class=&quot;luz-site-lang-switcher__link&quot; href=&quot;/ar/&quot; hreflang=&quot;ar&quot; lang=&quot;ar&quot;&gt;العربية&lt;/a&gt;&lt;/li&gt;
+  &lt;nav class=&quot;luz-lang-switch__menu&quot; id=&quot;lang-menu&quot; popover aria-labelledby=&quot;lang-title&quot;&gt;
+    &lt;p class=&quot;luz-lang-switch__title&quot; id=&quot;lang-title&quot;&gt;Language&lt;/p&gt;
+    &lt;ul class=&quot;luz-lang-switch__list&quot;&gt;
+      &lt;li&gt;&lt;a class=&quot;luz-lang-switch__link&quot; href=&quot;/&quot; hreflang=&quot;en&quot; lang=&quot;en&quot; aria-current=&quot;page&quot;&gt;English&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;luz-lang-switch__link&quot; href=&quot;/es/&quot; hreflang=&quot;es&quot; lang=&quot;es&quot;&gt;Español&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a class=&quot;luz-lang-switch__link&quot; href=&quot;/ar/&quot; hreflang=&quot;ar&quot; lang=&quot;ar&quot;&gt;العربية&lt;/a&gt;&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/nav&gt;
-&lt;/div&gt;</code></pre>
+&lt;/luz-lang-switch&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>There are no variants. One custom property places the list.</p>
-            <div class="luz-table-wrap" role="region" aria-label="Language switcher classes and properties" tabindex="0">
+            <div class="luz-table-wrap" role="region" aria-label="Language switch tag, classes and property" tabindex="0">
               <table class="luz-table">
                 <thead>
-                  <tr><th scope="col">Class or property</th><th scope="col">Effect</th></tr>
+                  <tr><th scope="col">Tag, class or property</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher</code></div></td><td data-label="Effect"><div>The wrapper. Holds the button and the list.</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__button</code></div></td><td data-label="Effect"><div>A 44 px button with the current language’s name; filled while the list is open</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__icon</code></div></td><td data-label="Effect"><div>An optional globe before the name, drawn in the text colour. Decorative: <code>aria-hidden="true"</code></div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__name</code></div></td><td data-label="Effect"><div>The current language’s name. Below 360 px it is clipped and the globe shows alone; it stays in the button’s name</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__menu</code></div></td><td data-label="Effect"><div>The popover: fixed under the header, at the end of the row (the left edge in right-to-left text)</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__title</code></div></td><td data-label="Effect"><div>The visible name of the list</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__list</code></div></td><td data-label="Effect"><div>The list of languages, without bullets</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__link</code></div></td><td data-label="Effect"><div>One 44 px row per language. With <code>aria-current</code>: bold and underlined</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>--luz-site-lang-switcher-top</code></div></td><td data-label="Effect"><div>How far from the top of the screen the list opens. Defaults to the height of a one-row header of 44 px controls; set it on the wrapper if your header is taller.</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>&lt;luz-lang-switch&gt;</code></div></td><td data-label="Effect"><div>The block: holds the button and the list. A tag that no script defines, with no class and no role of its own</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__button</code></div></td><td data-label="Effect"><div>A 44 px button with the current language’s name; filled while the list is open</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__icon</code></div></td><td data-label="Effect"><div>An optional globe before the name, drawn in the text colour. Decorative: <code>aria-hidden="true"</code></div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__name</code></div></td><td data-label="Effect"><div>The current language’s name. Below 360 px it is clipped and the globe shows alone; it stays in the button’s name</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__menu</code></div></td><td data-label="Effect"><div>The popover: fixed under the header, at the end of the row (the left edge in right-to-left text)</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__title</code></div></td><td data-label="Effect"><div>The visible name of the list</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__list</code></div></td><td data-label="Effect"><div>The list of languages, without bullets</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>.luz-lang-switch__link</code></div></td><td data-label="Effect"><div>One 44 px row per language. With <code>aria-current</code>: bold and underlined</div></td></tr>
+                  <tr><td data-label="Tag, class or property"><div><code>--luz-lang-switch-top</code></div></td><td data-label="Effect"><div>How far from the top of the screen the list opens. Defaults to <code>--luz-bar-h</code>, the height of a one-row bar of 44 px controls; set it on the tag if your header is taller.</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>Changing language is going to another page, so the switcher is a list of links. The button opens it with the native <code>popovertarget</code>, and <code>@luz-ds/site</code> only styles it: there is no script.</p>
+            <p>Changing language is going to another page, so the switch is a list of links. The button opens it with the native <code>popovertarget</code>, and <code>@luz-ds/site</code> only styles it: there is no script. <code>&lt;luz-lang-switch&gt;</code> is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the <code>nav</code> carry the meaning.</p>
             <ul>
               <li>Each language is named in that language, with <code>lang</code> so a screen reader pronounces it, and <code>hreflang</code> so the link says where it goes.</li>
               <li>The list is a popover in the top layer, fixed under the header at the inline end; it mirrors in right-to-left text.</li>
@@ -110,20 +110,20 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Name each language in that language, so a reader who does not understand the page still finds theirs.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <ul class="luz-site-lang-switcher__list">
-                    <li><span class="luz-site-lang-switcher__link">English</span></li>
-                    <li><span class="luz-site-lang-switcher__link">Español</span></li>
-                    <li><span class="luz-site-lang-switcher__link">العربية</span></li>
+                  <ul class="luz-lang-switch__list">
+                    <li><span class="luz-lang-switch__link">English</span></li>
+                    <li><span class="luz-lang-switch__link">Español</span></li>
+                    <li><span class="luz-lang-switch__link">العربية</span></li>
                   </ul>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Use flags, or name the languages in the page’s language: a flag is a country, not a language, and “Árabe” means nothing to a reader of Arabic.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <ul class="luz-site-lang-switcher__list">
-                    <li><span class="luz-site-lang-switcher__link">🇬🇧 Inglés</span></li>
-                    <li><span class="luz-site-lang-switcher__link">🇪🇸 Español</span></li>
-                    <li><span class="luz-site-lang-switcher__link">🇸🇦 Árabe</span></li>
+                  <ul class="luz-lang-switch__list">
+                    <li><span class="luz-lang-switch__link">🇬🇧 Inglés</span></li>
+                    <li><span class="luz-lang-switch__link">🇪🇸 Español</span></li>
+                    <li><span class="luz-lang-switch__link">🇸🇦 Árabe</span></li>
                   </ul>
                 </div>
               </figure>
@@ -137,7 +137,7 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The button sits on the page; the list is a raised surface with a border and a shadow.</p>
-            <div class="luz-table-wrap" role="region" aria-label="Language switcher contrast in each mode" tabindex="0">
+            <div class="luz-table-wrap" role="region" aria-label="Language switch contrast in each mode" tabindex="0">
               <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
@@ -159,13 +159,14 @@ toc: h2,h3
               <li>The current language is bold and underlined, not only a colour.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 16 tokens that the rules of site’s <code>components/lang-switcher.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 17 tokens that the rules of site’s <code>components/lang-switch.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-surface"><code>--luz-surface</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
               <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-xs</code>, <code>--luz-space-sm</code>, <code>--luz-space-md</code></dd></div>
               <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-sm</code>, <code>--luz-text-md</code></dd></div>
               <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
               <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--luz-shadow-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-bar-h</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

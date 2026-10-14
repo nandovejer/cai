@@ -14,7 +14,7 @@
    the row wraps, the header is taller (WCAG 2.4.11 is why the scroll
    padding below is a minimum, not this value). */
 :root {
-	--luz-site-header-h: calc(var(--luz-control-lg) + var(--luz-space-xs) + 1px);
+	--luz-site-header-h: var(--luz-bar-h);
 }
 
 .luz-site-header {
@@ -77,7 +77,7 @@
 	text-decoration: none;
 }
 
-.luz-site-header__nav ul {
+.luz-site-header__nav > ul {
 	display: flex;
 	flex-wrap: wrap;
 	gap: var(--luz-space-md);
@@ -115,10 +115,8 @@
 	gap: var(--luz-space-xs);
 }
 
-/* The language list opens under the header */
-.luz-site-header .luz-site-lang-switcher {
-	--luz-site-lang-switcher-top: var(--luz-site-header-h);
-}
+/* The language list opens under the header: <luz-lang-switch>'s default,
+   --luz-bar-h, is this header's height */
 
 /* 769px and up the links are a row of the header. A closed popover is
    display: none to the browser, so this wins by being author CSS; the open
@@ -129,7 +127,7 @@
 		column-gap: var(--luz-space-lg);
 	}
 
-	.luz-site-header__nav ul {
+	.luz-site-header__nav > ul {
 		gap: var(--luz-space-lg);
 	}
 
@@ -175,15 +173,15 @@
 		);
 	}
 
-	.luz-site-header__nav[popover]:popover-open ul {
+	.luz-site-header__nav[popover]:popover-open > ul {
 		flex-flow: column nowrap;
 		gap: 0;
 	}
 }
 
 /* Where anchor positioning is supported, the panel and the language list
-   open under the header wherever it is: below a notice or the cookie
-   banner, or on two rows with enlarged text. The area under the header is
+   open under the header wherever it is: below a banner, or on two rows
+   with enlarged text. The area under the header is
    their containing block, so the panel never runs past the window, and the
    scrim is the panel's own shadow, below it, so it never dims the header.
    Elsewhere they open at --luz-site-header-h from the top of the window. */
@@ -195,13 +193,13 @@
 	}
 
 	.luz-site-header__nav[popover]:popover-open,
-	.luz-site-header .luz-site-lang-switcher__menu {
+	.luz-site-header .luz-lang-switch__menu {
 		position-anchor: --luz-site-header;
 		position-area: block-end span-all;
 		inset-block-start: 0;
 	}
 
-	.luz-site-header .luz-site-lang-switcher__menu {
+	.luz-site-header .luz-lang-switch__menu {
 		justify-self: end;
 	}
 

@@ -171,12 +171,13 @@ export function renderAlternates(i18n, current = i18n.default, siteUrl = "") {
   ].join("\n  ");
 }
 
-/** The globe of the language switcher's button (decorative). */
+/** The globe of the language switch's button (decorative). */
 const GLOBE =
-  '<svg class="luz-site-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg>';
+  '<svg class="luz-lang-switch__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg>';
 
 /**
- * The language switcher of @luz-ds/site for the page in `current`: a
+ * The language switch of @luz-ds/site for the page in `current`
+ * (<luz-lang-switch>, a CSS-only tag: no script defines it): a
  * button that opens a native popover with one link per language, each name
  * in its own language (lang, hreflang), the current one marked
  * aria-current="page". No script. `label` is "Language" in the page's
@@ -188,18 +189,18 @@ const GLOBE =
 export function renderSwitcher(i18n, current, label) {
   const items = i18n.locales.map((l) => {
     const mark = l.code === current.code ? ' aria-current="page"' : "";
-    return `      <li><a class="luz-site-lang-switcher__link" href="${esc(l.route)}" hreflang="${esc(l.code)}" lang="${esc(l.code)}"${mark}>${esc(l.name)}</a></li>`;
+    return `      <li><a class="luz-lang-switch__link" href="${esc(l.route)}" hreflang="${esc(l.code)}" lang="${esc(l.code)}"${mark}>${esc(l.name)}</a></li>`;
   });
   return [
-    '<div class="luz-site-lang-switcher">',
-    `  <button class="luz-site-lang-switcher__button" type="button" popovertarget="luz-lang-menu">${GLOBE}<span class="u-sr-only">${esc(label)}: </span><span class="luz-site-lang-switcher__name">${esc(current.name)}</span></button>`,
-    '  <nav class="luz-site-lang-switcher__menu" id="luz-lang-menu" popover aria-labelledby="luz-lang-title">',
-    `    <p class="luz-site-lang-switcher__title" id="luz-lang-title">${esc(label)}</p>`,
-    '    <ul class="luz-site-lang-switcher__list">',
+    "<luz-lang-switch>",
+    `  <button class="luz-lang-switch__button" type="button" popovertarget="luz-lang-menu">${GLOBE}<span class="u-sr-only">${esc(label)}: </span><span class="luz-lang-switch__name">${esc(current.name)}</span></button>`,
+    '  <nav class="luz-lang-switch__menu" id="luz-lang-menu" popover aria-labelledby="luz-lang-title">',
+    `    <p class="luz-lang-switch__title" id="luz-lang-title">${esc(label)}</p>`,
+    '    <ul class="luz-lang-switch__list">',
     ...items,
     "    </ul>",
     "  </nav>",
-    "</div>",
+    "</luz-lang-switch>",
   ].join("\n");
 }
 

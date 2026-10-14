@@ -38,15 +38,18 @@ toc: h2,h3
                     </form>
                   </details>
                 </div>
-                <p data-luz-consent-done tabindex="-1" hidden>Your choice is saved. You can change it at any time on the <a href="#how">cookie policy</a> page.</p>
+                <div data-luz-consent-done tabindex="-1" hidden>
+                  <p>Your choice is saved. You can change it at any time on the <a href="#how">cookie policy</a> page.</p>
+                  <button class="luz-btn luz-btn--secondary" type="button" data-luz-consent-close>Close</button>
+                </div>
               </section>
             </luz-consent>
             <p class="luz-site-actions"><button class="luz-btn luz-btn--outline" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
-            <p class="docs-demo__note">The answer of this example is stored under its own key, <code>luz-consent-demo</code>, so it does not count as an answer for this site. Without JavaScript the banner and its button stay hidden.</p>
+            <p class="docs-demo__note">The example is live: until you answer it, it shows as a band at the bottom of this window, as it would on your site. Its answer is stored under its own key, <code>luz-consent-demo</code>, so it does not count as an answer for this site; the button above shows it again. Without JavaScript the banner and its button stay hidden.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way. The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the site header’s menu at 768 px and below opens at the top of the window, so while the banner is shown and before the page scrolls it covers part of the header; Escape or a click outside closes it. It has not been tested with a screen reader.</p>
+          <p>Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way. The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again. In a window less than 30 rem (480 px) tall the banner is not fixed: it is in the flow at the top of the page, where its markup is, so the page moves down when it appears. The saved state hides when focus leaves it for the page, but not when you click an empty part of the page: use its Close button. It has not been tested with a screen reader.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Cookie consent documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -54,7 +57,7 @@ toc: h2,h3
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>Right after the <a href="/docs/components/skip-link/">skip link</a>, before a <a href="/docs/site/notice/">notice</a> and the <a href="/docs/site/site-header/">site header</a>. One checkbox per category of optional cookies, its <code>value</code> the category’s name. <code>site.min.js</code> loads the banner’s own file, <code>consent.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
+            <p>Right after the <a href="/docs/components/skip-link/">skip link</a>, before a <a href="/docs/site/banner/">banner</a> and the <a href="/docs/site/site-header/">site header</a>: it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its <code>value</code> the category’s name. <code>site.min.js</code> loads the banner’s own file, <code>consent.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
@@ -89,8 +92,11 @@ toc: h2,h3
         &lt;/form&gt;
       &lt;/details&gt;
     &lt;/div&gt;
-    &lt;p data-luz-consent-done tabindex=&quot;-1&quot; hidden&gt;Your choice is saved. You can change it at any
-      time on the &lt;a href=&quot;/cookies/&quot;&gt;cookie policy&lt;/a&gt; page.&lt;/p&gt;
+    &lt;div data-luz-consent-done tabindex=&quot;-1&quot; hidden&gt;
+      &lt;p&gt;Your choice is saved. You can change it at any time on the
+        &lt;a href=&quot;/cookies/&quot;&gt;cookie policy&lt;/a&gt; page.&lt;/p&gt;
+      &lt;button class=&quot;luz-btn luz-btn--secondary&quot; type=&quot;button&quot; data-luz-consent-close&gt;Close&lt;/button&gt;
+    &lt;/div&gt;
   &lt;/section&gt;
 &lt;/luz-consent&gt;
 &lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;
@@ -123,22 +129,24 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-consent</code></div></td><td data-label="Effect"><div>The banner: a band as wide as its container, its text in the site header’s column, in the sans. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-consent</code></div></td><td data-label="Effect"><div>The banner: a band fixed at the bottom of the window, as wide as it, at most half its height and scrolling inside, its text in the site header’s column, in the sans. In a window less than 30 rem tall it is in the flow instead. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.luz-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.luz-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>&lt;luz-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>data-luz-consent</code></div></td><td data-label="Effect"><div>On the <code>&lt;section&gt;</code>: the banner. Optional <code>data-luz-consent-days</code>, how long an answer lasts (180 days by default, 395 at most), and <code>data-luz-consent-key</code>, the storage key (it must start with <code>luz-</code>)</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>data-luz-consent-ask</code>, <code>data-luz-consent-done</code></div></td><td data-label="Effect"><div>The question, and the confirmation that takes its place. The confirmation has <code>tabindex="-1"</code>: it takes focus</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-luz-consent-close</code></div></td><td data-label="Effect"><div>On a button inside the confirmation: hides the banner and returns focus to the button that opened it, or the first <code>data-luz-consent-open</code> button, or <code>&lt;main&gt;</code>. The confirmation also hides when focus leaves it for the page</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>value="all"</code>, <code>value="none"</code></div></td><td data-label="Effect"><div>On the submit buttons: Accept grants every category, Reject none. A submit button with another value, or none, grants the ticked ones of its form</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-luz-consent-open</code></div></td><td data-label="Effect"><div>On a button anywhere, with <code>hidden</code>: the script shows it, and it shows the banner again, with the stored answer ticked</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-luz-consent-open</code></div></td><td data-label="Effect"><div>On a button anywhere, with <code>hidden</code>: its space is kept, the script shows it, and it shows the banner again, with the stored answer ticked</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>--luz-consent-h</code></div></td><td data-label="Effect"><div>Set on <code>:root</code> by the script while the banner shows: its height. The page, <code>.o-main</code> and <code>.luz-sidebar</code> keep that much room at their end, and scroll what Tab reaches above the banner</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
             <p>CSS from <code>@luz-ds/site</code>, two native forms and a file of its own, <code>@luz-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed), which defines <code>&lt;luz-consent&gt;</code>. <code>site.min.js</code> loads it when the browser is idle, and only on a page with a <code>&lt;luz-consent&gt;</code>, so no other page pays for it. A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.</p>
             <ul>
-              <li><strong>When it asks:</strong> when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, in the flow above the header: it covers nothing, traps nothing and takes no focus, so the page can be read and used before answering.</li>
-              <li><strong>The answer:</strong> Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read.</li>
+              <li><strong>When it asks:</strong> when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, as a band at the bottom of the window, so nothing on the page moves: it traps nothing and takes no focus, and the page keeps room for it at its end and scrolls what Tab reaches above it, so the page can be read and used before answering.</li>
+              <li><strong>The answer:</strong> Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read. It goes away with its Close button, or when focus leaves the banner for the page; focus stays where it went.</li>
               <li><strong>Where it is kept:</strong> in the browser’s <code>localStorage</code>, under <code>luz-consent</code>, as JSON: <code>{"version":1,"expires":…,"asked":["analytics","marketing"],"granted":["analytics"]}</code>, with <code>expires</code> in milliseconds since 1970. Not in a cookie: a cookie would travel to the server with every request, and asking about cookies should not need one. No personal data, and nothing leaves the browser. A malformed value counts as no answer. If storage is blocked, the answer holds for the page and the next page asks again.</li>
               <li><strong>Your scripts:</strong> <code>getConsent()</code> returns the stored answer, <code>{ asked, granted, expires }</code>, or <code>null</code>. Each new answer dispatches <code>luz:consent</code> on <code>document</code>, with the same object as <code>detail</code>. Category names are a lowercase letter, then lowercase letters, digits or hyphens, 32 at most.</li>
               <li><strong>Changing the answer:</strong> as easy as giving it. A button with <code>data-luz-consent-open</code>, on the cookie policy page, shows the banner again. Put one banner on a page: every such button opens it.</li>
@@ -148,10 +156,10 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
             <p>The banner and the button that shows it again stay hidden, by their <code>hidden</code> attribute. Without a script none of the site’s own scripts run, so there is nothing to ask about, and buttons that would do nothing are never shown. Link the cookie policy from the footer of every page, so it can always be read.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
-              <li><strong>Order:</strong> the skip link stays first, so a returning visitor can still jump to the content. The banner comes next, before the header: the policy link, Accept, Reject, then the button that opens the categories.</li>
-              <li><strong>Keys:</strong> Enter or Space on a button; Space ticks a checkbox. Escape does nothing.</li>
+              <li><strong>Order:</strong> the skip link stays first, so a returning visitor can still jump to the content. The banner comes next, before the header, although it shows at the bottom: the policy link, Accept, Reject, then the button that opens the categories.</li>
+              <li><strong>Keys:</strong> Enter or Space on a button; Space ticks a checkbox. Escape does nothing: it does not hide the banner.</li>
               <li><strong>Landmark:</strong> a <code>&lt;section&gt;</code> named by its heading is a region, listed among the landmarks, before the banner landmark of the header. It is not a dialog: it does not block the page, so it needs no <code>role="dialog"</code>.</li>
-              <li><strong>Focus:</strong> none when the page loads. After an answer, the confirmation; after the button that shows it again, the banner.</li>
+              <li><strong>Focus:</strong> none when the page loads. After an answer, the confirmation; after the button that shows it again, the banner. Close returns it to that button, or to the first such button, or to <code>&lt;main&gt;</code>; never to the top of the page.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
@@ -163,7 +171,7 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
             <p>Do not use it when the site sets only the cookies it needs to work (a session, a basket, a language or colour choice): those need no consent. Say so in the cookie policy and show no banner.</p>
             <ul>
               <li>Do not use it as a wall that hides or blocks the page until the visitor answers.</li>
-              <li>Do not use it for news or a sale: that is a <a href="/docs/site/notice/">notice</a>.</li>
+              <li>Do not use it for news or a sale: that is a <a href="/docs/site/banner/">banner</a>.</li>
             </ul>
             <p>It replaces a third-party consent script. Nothing in LUZ is removed.</p>
             <h3 id="do-dont">Do and don't</h3>
@@ -219,11 +227,12 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
               <li>A ticked category shows a check mark, not only a fill.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 11 tokens that the rules of site’s <code>components/banners.css</code> read for the banner, by family; the buttons, the box of the categories and the checkboxes are core’s. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 11 tokens that the rules of site’s <code>components/consent.css</code> read for the banner, by family; the buttons, the box of the categories and the checkboxes are core’s. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
               <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-xs</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-sm</code>, <code>--luz-text-md</code>, <code>--luz-text-lg</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-md</code>, <code>--luz-text-lg</code></dd></div>
+              <div><dt><a href="/docs/tokens/layers/">Layers</a></dt><dd><code>--luz-z-toast</code></dd></div>
               <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-content-max</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>

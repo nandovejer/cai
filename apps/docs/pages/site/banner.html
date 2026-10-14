@@ -1,67 +1,73 @@
 <!-- luz:page
-title: Notice
+title: Banner
 description: Tells every visitor one short thing at the top of the page, such as a sale, an event or planned maintenance.
 area: site
 order: 5
 group: patterns
-files: .luz-site-notice, --warning
-keywords: announcement bar, banner, top bar, maintenance message
+files: <luz-banner>, tone="warning"
+keywords: notice, announcement bar, top bar, maintenance message
 toc: h2,h3
 -->
-    <div class="docs-component" id="p-notice">
+    <div class="docs-component" id="p-banner">
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <section class="luz-site-notice" aria-labelledby="notice-demo-label">
-              <p><strong id="notice-demo-label">Open day.</strong> Visit the winery on Saturday 25 October, from 11:00 to 18:00. <a href="#example">Book a visit</a></p>
-            </section>
-            <section class="luz-site-notice luz-site-notice--warning" aria-labelledby="notice-demo-warning">
-              <p><strong id="notice-demo-warning">Planned maintenance.</strong> The shop will be closed on Monday 3 November from 07:00 to 09:00. <a href="#example">See what still works</a></p>
-            </section>
+            <luz-banner>
+              <section aria-labelledby="banner-demo-label">
+                <p><strong id="banner-demo-label">Open day.</strong> Visit the winery on Saturday 25 October, from 11:00 to 18:00. <a href="#example">Book a visit</a></p>
+              </section>
+            </luz-banner>
+            <luz-banner tone="warning">
+              <section aria-labelledby="banner-demo-warning">
+                <p><strong id="banner-demo-warning">Planned maintenance.</strong> The shop will be closed on Monday 3 November from 07:00 to 09:00. <a href="#example">See what still works</a></p>
+              </section>
+            </luz-banner>
           </div>
-          <p class="docs-demo__note">On a site the notice goes above the site header, as wide as the window, and its text starts where the header’s row starts. Here it is as wide as the example.</p>
+          <p class="docs-demo__note">On a site the banner goes above the site header, as wide as the window, and its text starts where the header’s row starts. Here it is as wide as the example.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the notice short and remove it from the markup when it ends. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the site header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a notice; Escape or a click outside closes it.</p>
-          <nav class="luz-tabs docs-view-tabs" aria-label="Notice documentation">
+          <p>It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the banner short and remove it from the markup when it ends. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the site header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a banner; Escape or a click outside closes it.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Banner documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>A <code>&lt;section&gt;</code> named by its first words, right after the <a href="/docs/components/skip-link/">skip link</a> and before the <a href="/docs/site/site-header/">site header</a>.</p>
+            <p>A <code>&lt;luz-banner&gt;</code> around one <code>&lt;section&gt;</code> named by its first words, after the <a href="/docs/components/skip-link/">skip link</a> and the <a href="/docs/site/consent/">cookie consent</a>, before the <a href="/docs/site/site-header/">site header</a>.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="luz-copy-btn" type="button" data-copy-from="code-notice" aria-label="Copy the notice markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-banner" aria-label="Copy the banner markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Notice markup"><code id="code-notice">&lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
-&lt;section class=&quot;luz-site-notice&quot; aria-labelledby=&quot;notice-label&quot;&gt;
-  &lt;p&gt;&lt;strong id=&quot;notice-label&quot;&gt;Open day.&lt;/strong&gt; Visit the winery on Saturday 25 October,
-    from 11:00 to 18:00. &lt;a href=&quot;/visits/&quot;&gt;Book a visit&lt;/a&gt;&lt;/p&gt;
-&lt;/section&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Banner markup"><code id="code-banner">&lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+&lt;luz-banner&gt;
+  &lt;section aria-labelledby=&quot;banner-label&quot;&gt;
+    &lt;p&gt;&lt;strong id=&quot;banner-label&quot;&gt;Open day.&lt;/strong&gt; Visit the winery on Saturday 25 October,
+      from 11:00 to 18:00. &lt;a href=&quot;/visits/&quot;&gt;Book a visit&lt;/a&gt;&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/luz-banner&gt;
 &lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <div class="luz-table-wrap" role="region" aria-label="Notice classes" tabindex="0">
+            <div class="luz-table-wrap" role="region" aria-label="Banner tag and attribute" tabindex="0">
               <table class="luz-table">
                 <thead>
-                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                  <tr><th scope="col">Tag or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.luz-site-notice</code></div></td><td data-label="Effect"><div>A band as wide as its container, on a muted surface with a rule under it, in small sans text. Its text starts where the site header’s row starts</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.luz-site-notice--warning</code></div></td><td data-label="Effect"><div>The warning colours: for something that stops the visitor doing what they came to do, such as maintenance. Say it in the words too: “Planned maintenance.”</div></td></tr>
+                  <tr><td data-label="Tag or attribute"><div><code>&lt;luz-banner&gt;</code></div></td><td data-label="Effect"><div>Around one <code>&lt;section&gt;</code>, which becomes a band as wide as its container, on a muted surface with a rule under it, in small sans text. Its text starts where the site header’s row starts. A tag that no script defines: no class, no role of its own</div></td></tr>
+                  <tr><td data-label="Tag or attribute"><div><code>tone="warning"</code></div></td><td data-label="Effect"><div>On the tag, the one tone: The warning colours: for something that stops the visitor doing what they came to do, such as maintenance. Say it in the words too: “Planned maintenance.” Any other value leaves the plain band</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@luz-ds/site</code>. No JavaScript.</p>
+            <p>CSS from <code>@luz-ds/site</code>. No JavaScript: <code>&lt;luz-banner&gt;</code> is a tag that no script ever defines.</p>
             <ul>
               <li>It is a band of the page, in the flow: it scrolls away with the page, and a <code>--sticky</code> site header stays at the top under it. Nothing covers the page.</li>
               <li>Its inline padding lines its text up with the site header’s row, up to <code>--luz-content-max</code> wide, in either direction of text.</li>
-              <li>There is no close button. Closing it for good needs a script and a value stored in the browser, and a button that does nothing without a script is never shown. A notice is short-lived: remove it from the markup when the event is over.</li>
-              <li>There is no success or error variant: a notice is not the answer to something the visitor did. For that use an <a href="/docs/components/alert/">alert</a> in the page.</li>
+              <li>There is no close button. Closing it for good needs a script and a value stored in the browser, and a button that does nothing without a script is never shown. A banner is short-lived: remove it from the markup when the event is over.</li>
+              <li>There is no success or error tone: a banner is not the answer to something the visitor did. For that use an <a href="/docs/components/alert/">alert</a> in the page.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: there is no script.</p>
@@ -80,7 +86,7 @@ toc: h2,h3
             <h3 id="when-not">When not to use</h3>
             <p>Do not use it for something that belongs to one page or to one visitor: put that in the page, or answer with an <a href="/docs/components/alert/">alert</a> or a <a href="/docs/components/toast/">toast</a>.</p>
             <ul>
-              <li>Do not show two notices at once, and do not leave one up for months: a band that never changes is no longer read.</li>
+              <li>Do not show two banners at once, and do not leave one up for months: a band that never changes is no longer read.</li>
               <li>Do not use it to ask for cookies: use the <a href="/docs/site/consent/">cookie consent</a> banner.</li>
               <li>Do not put a form or more than one link in it.</li>
             </ul>
@@ -90,17 +96,21 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Start with what it is about, in bold, say when, and end with one link that says where it goes.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="luz-site-notice luz-site-notice--warning">
-                    <p><strong>Planned maintenance.</strong> The shop will be closed on Monday 3 November from 07:00 to 09:00. <a href="#example">See what still works</a></p>
-                  </div>
+                  <luz-banner tone="warning">
+                    <section>
+                      <p><strong>Planned maintenance.</strong> The shop will be closed on Monday 3 November from 07:00 to 09:00. <a href="#example">See what still works</a></p>
+                    </section>
+                  </luz-banner>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Rely on the yellow to say it is a warning, shout in capitals, or leave out the date: the words alone must carry the message, and “soon” is wrong a day later.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="luz-site-notice luz-site-notice--warning">
-                    <p>IMPORTANT!!! THE SHOP WILL BE CLOSED SOON.</p>
-                  </div>
+                  <luz-banner tone="warning">
+                    <section>
+                      <p>IMPORTANT!!! THE SHOP WILL BE CLOSED SOON.</p>
+                    </section>
+                  </luz-banner>
                 </div>
               </figure>
             </div>
@@ -113,7 +123,7 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The text and its link sit on the band’s surface.</p>
-            <div class="luz-table-wrap" role="region" aria-label="Notice contrast in each mode" tabindex="0">
+            <div class="luz-table-wrap" role="region" aria-label="Banner contrast in each mode" tabindex="0">
               <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
@@ -135,7 +145,7 @@ toc: h2,h3
               <li>The warning’s yellow is never the only signal: its first words say what it is.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 11 tokens that the rules of site’s <code>components/banners.css</code> read for the notice, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 11 tokens that the rules of site’s <code>components/banner.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-color-warning-accent"><code>--luz-color-warning-accent</code></a>, <a href="/docs/tokens/color/#luz-color-warning-bg"><code>--luz-color-warning-bg</code></a>, <a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
               <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-xs</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>

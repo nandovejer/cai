@@ -1,0 +1,72 @@
+/* ==========================================================================
+	 LUZ Site: cookie consent, <luz-consent>.
+	 The banner asks for cookies once: hidden in the markup, consent.js shows
+	 it when no choice is stored. A band fixed at the block end of the
+	 window, so showing it moves nothing (D7). It sits under the top layer:
+	 a modal dialog or a popover draws over it. At most half the window,
+	 scrolling inside; in a window under 30rem tall it is in the flow, where
+	 the markup puts it (first, after the skip link). consent.js publishes
+	 its height as --luz-consent-h on :root, and while it shows the page
+	 keeps that much room at its end and scrolls what Tab reaches out from
+	 under it (WCAG 2.4.11). No motion: it appears, it does not slide in.
+	 ========================================================================== */
+
+.luz-consent {
+	padding-block: var(--luz-space-md);
+	padding-inline: max(var(--luz-space-md), (100% - var(--luz-content-max)) / 2 + var(--luz-space-md));
+	border-block-start: 1px solid var(--luz-divider);
+	background: var(--luz-surface-muted);
+	color: var(--luz-text-primary);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-md);
+}
+
+@media (min-width: 641px) {
+	.luz-consent {
+		padding-inline: max(var(--luz-space-xl), (100% - var(--luz-content-max)) / 2 + var(--luz-space-xl));
+	}
+}
+
+/* On a screen taller than 30rem: fixed at the block end, at most half the
+   window, scrolling inside; and while it shows, the room it covers is kept
+   at the end of the page (on <html>) and of each part that scrolls on its
+   own. In a shorter window it stays in the flow, where the markup puts it
+   (first, after the skip link), with its full height. */
+@media screen and (height > 30rem) {
+	.luz-consent {
+		position: fixed;
+		inset-inline: 0;
+		inset-block-end: 0;
+		z-index: var(--luz-z-toast);
+		max-block-size: 50dvh;
+		overflow-y: auto;
+	}
+
+	:root:has(:where(luz-consent) > :not([hidden])),
+	:root:has(:where(luz-consent) > :not([hidden])) :is(.o-main, .luz-sidebar) {
+		padding-block-end: var(--luz-consent-h);
+		scroll-padding-block-end: var(--luz-consent-h);
+	}
+}
+
+.luz-consent__title {
+	margin-block-end: var(--luz-space-xs);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-lg);
+}
+
+/* Core's details is a box: here it starts a step below the buttons */
+.luz-consent__choices {
+	margin-block: var(--luz-space-md) 0;
+}
+
+.luz-consent :where(form) {
+	margin-block-start: var(--luz-space-md);
+}
+
+/* The buttons that reopen it keep their place until consent.js shows them
+   (C11): nothing moves when they appear */
+[data-luz-consent-open][hidden] {
+	display: inline-flex;
+	visibility: hidden;
+}

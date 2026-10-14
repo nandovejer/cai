@@ -1744,12 +1744,12 @@ h2.docs-demo__title {
 /* The Submenu example: from 769px a submenu opens over what follows it, so
    the stage keeps room for the tallest one (three 44px links) */
 @media (min-width: 769px) {
-  .docs-demo__stage:has(.luz-site-submenu) {
+  .docs-demo__stage:has(luz-submenu) {
     padding-block-end: calc(3 * var(--luz-control-lg) + var(--luz-space-lg));
   }
 }
 
 /* Do and don't of the submenu: the open box is drawn in place, in its frame */
-.docs-dodont__stage .luz-site-submenu > ul {
+.docs-dodont__stage luz-submenu > details > ul {
   position: static;
 }

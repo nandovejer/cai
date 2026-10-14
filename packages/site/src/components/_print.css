@@ -6,12 +6,12 @@
    ========================================================================== */
 
 @media print {
+  /* <luz-search> takes its fallback link, its trigger and its dialog
+     with it; a trigger elsewhere on the page has the class */
   .luz-site-skip-link,
   :where(luz-search),
   .luz-search__trigger,
-  .luz-search,
-  .luz-consent,
-  [data-luz-search-fallback] {
+  .luz-consent {
     display: none;
   }
 

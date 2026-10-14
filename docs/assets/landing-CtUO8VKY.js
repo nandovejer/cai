@@ -1,0 +1,1 @@
+import{i as e,h as c,b as i}from"./site-header-etw6QrnT.js";function r(){document.querySelectorAll("[data-copy-from]").forEach(t=>{const o=document.getElementById(t.dataset.copyFrom);o&&(t.dataset.copy=o.textContent.trim())}),i()}e();r();document.querySelectorAll("pre.luz-code-block").forEach(c);

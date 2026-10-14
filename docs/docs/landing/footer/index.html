@@ -4,19 +4,18 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Feature grid – Landing – LUZ documentation</title>
-  <meta name="description" content="Lays out a short set of features or options of equal weight in two columns.">
+  <title>Footer – Landing – LUZ documentation</title>
+  <meta name="description" content="Ends every page of a landing site with who made it, its licence and a few secondary links, under a rule.">
   <link rel="icon" href="../../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-CmwPuUcT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-BFeoBDUZ.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-B6t6HMAm.css">
+  <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BRPDqqNi.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CeD1sUH7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DtFSzNuq.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-IcX9QOC5.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D6dp99Hi.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CN1X4AIk.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -105,7 +104,10 @@
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/site/">Site</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/landing/">Landing</a>
         <ul class="docs-nav__pages">
-          <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/landing/feature-grid/">Feature grid</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/landing/header/">Header</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/landing/hero/">Hero</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/landing/section/">Main and sections</a></li>
+          <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/landing/footer/">Footer</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/landing/templates/">Landing page templates</a></li>
         </ul>
       </li>
@@ -120,14 +122,14 @@
       <ol class="luz-breadcrumb">
         <li><a class="luz-breadcrumb__item" href="../../../docs/">Docs</a></li>
         <li><a class="luz-breadcrumb__item" href="../../../docs/landing/">Landing</a></li>
-        <li><span class="luz-breadcrumb__item" aria-current="page">Feature grid</span></li>
+        <li><span class="luz-breadcrumb__item" aria-current="page">Footer</span></li>
       </ol>
     </nav>
     <div class="docs-page-head__title">
-      <h1 class="docs-title">Feature grid</h1>
-      <code class="docs-demo__file">.luz-landing-feature-grid</code>
+      <h1 class="docs-title">Footer</h1>
+      <code class="docs-demo__file">.luz-landing-footer</code>
     </div>
-    <p class="docs-lead">Lays out a short set of features or options of equal weight in two columns.</p>
+    <p class="docs-lead">Ends every page of a landing site with who made it, its licence and a few secondary links, under a rule.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -158,34 +160,25 @@
     </details>
   </nav>
   <div class="docs-body">
-    <div class="docs-component" id="p-features">
+    <div class="docs-component" id="p-landing-footer">
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <div class="luz-landing-feature-grid">
-              <div class="luz-card">
-                <h3 class="luz-card__title">Usage</h3>
-                <p class="luz-card__body">1.2 million requests this month.</p>
-              </div>
-              <div class="luz-card">
-                <h3 class="luz-card__title">Team</h3>
-                <p class="luz-card__body">Eight members, two pending invites.</p>
-              </div>
-              <div class="luz-card">
-                <h3 class="luz-card__title">Billing</h3>
-                <p class="luz-card__body">Next invoice on the first of the month.</p>
-              </div>
-              <div class="luz-card">
-                <h3 class="luz-card__title">Security</h3>
-                <p class="luz-card__body">Two-factor sign-in is on for everyone.</p>
+            <div class="luz-landing-footer">
+              <div class="o-container o-container--inline o-row">
+                <p class="u-text-muted">Acme Inc. · All systems normal</p>
+                <div class="o-actions">
+                  <button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Status</button>
+                  <button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Support</button>
+                </div>
               </div>
             </div>
-            <p class="docs-demo__note">Two columns; one when two do not fit 16rem each.</p>
           </div>
+          <p class="docs-demo__note">A <code class="luz-code-inline">&lt;div&gt;</code> here: a page has one footer landmark, and this one has its own.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="luz-tabs docs-view-tabs" aria-label="Feature grid documentation">
+          <nav class="luz-tabs docs-view-tabs" aria-label="Footer documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
@@ -195,85 +188,89 @@
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="luz-copy-btn" type="button" data-copy-from="code-feature-grid" aria-label="Copy the feature grid markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-landing-footer" aria-label="Copy the footer markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Feature grid markup"><code id="code-feature-grid">&lt;div class=&quot;luz-landing-feature-grid&quot;&gt;
-  &lt;article class=&quot;luz-card&quot;&gt;
-    &lt;h3 class=&quot;luz-card__title&quot;&gt;Usage&lt;/h3&gt;
-    &lt;p class=&quot;luz-card__body&quot;&gt;1.2 million requests this month.&lt;/p&gt;
-  &lt;/article&gt;
-  &lt;article class=&quot;luz-card&quot;&gt;
-    &lt;h3 class=&quot;luz-card__title&quot;&gt;Team&lt;/h3&gt;
-    &lt;p class=&quot;luz-card__body&quot;&gt;Eight members, two pending invites.&lt;/p&gt;
-  &lt;/article&gt;
-&lt;/div&gt;</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Footer markup"><code id="code-landing-footer">&lt;footer class=&quot;luz-landing-footer&quot;&gt;
+  &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+    &lt;p&gt;Acme Inc. · MIT licence&lt;/p&gt;
+    &lt;nav class=&quot;o-actions&quot; aria-label=&quot;Links&quot;&gt;
+      &lt;a class=&quot;luz-btn luz-btn--ghost luz-btn--sm&quot; href=&quot;/status/&quot;&gt;Service status&lt;/a&gt;
+      &lt;a class=&quot;luz-btn luz-btn--ghost luz-btn--sm&quot; href=&quot;/accessibility/&quot;&gt;Accessibility statement&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>There are no modifiers.</p>
-            <div class="luz-table-wrap" role="region" aria-label="Feature grid class" tabindex="0">
+            <p>There are no modifiers. The footer is a class of the landing on a native <code>&lt;footer&gt;</code>, with a row of core's inside.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Footer classes" tabindex="0">
               <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.luz-landing-feature-grid</code></div></td><td data-label="Effect"><div>Two equal columns with 12 px between cells; one column when two do not fit 16rem each (it follows the room the grid has, not the window)</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-footer</code></div></td><td data-label="Effect"><div>On <code>&lt;footer&gt;</code>: a rule on top, 24 px above its row and 32 px below; its row spreads its children to the two ends, and is a column aligned to the start at 768 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-container.o-container--inline.o-row</code> (core)</div></td><td data-label="Effect"><div>The row: the width and gutters of the page, so its content starts where the main's does</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-actions</code> (core)</div></td><td data-label="Effect"><div>The links, as an <a href="../../../docs/components/layout/#objects-actions">action group</a></div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS grid from <code>@luz-ds/landing</code>, in its <code>landing.css</code>, loaded after <code>site.css</code>. No JavaScript.</p>
+            <p>CSS from <code>@luz-ds/landing</code> on core's objects. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
             <ul>
-              <li>Each cell is usually a <a href="../../../docs/components/card/">card</a>.</li>
+              <li>The landing adds the rule, the room around the row and how the row spreads its children; <code>.o-container--inline</code> lines the row up with the page's content.</li>
+              <li>On an <code>.o-page</code> the main grows, so the footer rests on the bottom of a page shorter than the window.</li>
+              <li>The column at 768 px and below does not wrap, so its children stay one under the other.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Nothing changes: the grid is CSS.</p>
+            <p>Nothing changes: the footer is HTML and CSS. A <a href="../../../docs/components/mode-switcher/">color mode switcher</a> inside it keeps working as radios.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>The grid has no interaction of its own.</p>
+            <p>The footer has no interaction of its own; its links keep theirs.</p>
             <ul>
-              <li>To link a card, put the link on its title text and keep the rest plain: one tab stop per card.</li>
-              <li>Give each card a heading, so screen reader users can move from card to card.</li>
+              <li>A <code>&lt;footer&gt;</code> that is a direct child of <code>&lt;body&gt;</code> is the contentinfo landmark.</li>
+              <li>Name a <code>&lt;nav&gt;</code> of links with <code>aria-label</code>, and keep the links in the same order on every page.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>Use a feature grid for a short set of features or options of equal weight, each in its own card.</p>
+            <p>Use the footer at the end of every page of a landing site, for who made it, its licence and a few secondary links.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>Do not use it for data that readers compare across rows: use a <a href="../../../docs/components/table/">table</a>.</p>
+            <p>Do not put the main navigation, or anything needed to finish a task, in the footer.</p>
             <ul>
-              <li>For items with an order, use a numbered list.</li>
-              <li>For a single item, use a card on its own.</li>
+              <li>Main navigation goes in the <a href="../../../docs/landing/header/">header</a>.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
-                <figcaption><strong class="docs-dodont__verdict">Do</strong> Parallel cards: the same kind of title and one sentence each.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Two to four links that say where they go.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="luz-landing-feature-grid"><div class="luz-card"><h4 class="luz-card__title">Usage</h4><p class="luz-card__body">1.2 million requests this month.</p></div><div class="luz-card"><h4 class="luz-card__title">Team</h4><p class="luz-card__body">Eight members.</p></div></div>
+                  <div class="luz-landing-footer"><div class="o-container o-container--inline o-row"><p class="u-text-muted">Acme Inc.</p><div class="o-actions"><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Accessibility statement</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Status</button></div></div></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
-                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Plans the reader compares, value by value, in cards: use a table, with one column per plan.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The main navigation in the footer: the reader has to reach the end of the page to move around.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="luz-landing-feature-grid"><div class="luz-card"><h4 class="luz-card__title">Team</h4><p class="luz-card__body">€20 a month, 10 users, 50 GB.</p></div><div class="luz-card"><h4 class="luz-card__title">Business</h4><p class="luz-card__body">50 GB more, €45 a month and 25 users.</p></div></div>
+                  <div class="luz-landing-footer"><div class="o-container o-container--inline o-row"><p class="u-text-muted">Acme Inc.</p><div class="o-actions"><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Programme</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Speakers</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Tickets</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Venue</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Contact</button></div></div></div>
                 </div>
               </figure>
             </div>
             <h3 id="content">Writing the content</h3>
-            <p>Keep the cards parallel: the same heading level and one or two sentences each.</p>
+            <p>Keep it short: who made it, the licence, and two to four links.</p>
             <ul>
-              <li>An even number of items fills the two columns.</li>
+              <li>Each link says where it goes: "Accessibility statement", not "Legal".</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
-            <p>The grid adds no colour of its own: the cards in it keep the pairs on the <a href="../../../docs/components/card/#contrast">card page</a>.</p>
+            <p>The footer adds only a top rule (<code>--luz-divider</code>), which is decorative; its text and links keep their own colours.</p>
             <ul>
-              <li><strong>Focus:</strong> the grid takes none; what is inside keeps its own ring.</li>
+              <li><strong>Focus:</strong> links and buttons in it keep their own ring.</li>
+              <li><strong>Forced colors:</strong> the rule is a border, so it stays.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 1 tokens that the <code>.luz-landing-feature-grid</code> rule of landing's <code>components/feature-grid.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 4 tokens that the <code>.luz-landing-footer</code> rules of landing's <code>components/footer.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-sm</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#luz-divider"><code>--luz-divider</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
@@ -287,16 +284,16 @@
       <li><a href="../../../docs/site/">Site</a></li>
     </ul>
     <ul class="docs-pager">
-      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/landing/" aria-label="Previous: Landing"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Landing</span></a></li>
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/landing/section/" aria-label="Previous: Main and sections"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Main and sections</span></a></li>
       <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/landing/templates/" aria-label="Next: Landing page templates"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Landing page templates</span></a></li>
     </ul>
   </nav>
   </main>
 
-  <footer class="docs-footer" id="site-footer">
-    <div class="luz-site-footer">
+  <footer class="docs-footer luz-landing-footer" id="site-footer">
+    <div class="o-container o-container--inline o-row">
       <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
-      <nav class="luz-site-actions" aria-label="Project links">
+      <nav class="o-actions" aria-label="Project links">
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../docs/a-z/">A–Z index</a>

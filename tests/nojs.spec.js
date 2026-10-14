@@ -5,6 +5,7 @@
  */
 import { test, expect } from '@playwright/test';
 import { gotoId, notFoundRoute, routes, routesWith } from './helpers/docs-site.js';
+import { px } from './helpers/site-loader.js';
 
 // The home page in each of its languages (apps/landing/i18n)
 const APPS = ['/', '/es/', '/ar/', ...routes(), notFoundRoute];
@@ -101,17 +102,24 @@ for (const app of ['/', '/docs/', '/docs/components/button/', notFoundRoute]) {
 }
 
 // a11y.md SRCH-4: at 320 px the header stays one row without JavaScript.
-// The fallback link shows "A–Z"; its name stays "A–Z index" (2.5.3).
+// At 768 px and below the fallback link paints the magnifier alone, a 44 px
+// square; its words stay in the page, clipped, so its name stays "A–Z index"
+// (2.5.3).
 for (const app of ['/', '/docs/', '/docs/components/button/', notFoundRoute]) {
-  test(`${app}: the header is one row at 320 px, with the short A–Z link`, async ({ page }) => {
+  test(`${app}: the header is one row at 320 px, with the magnifier as the A–Z link`, async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 640 });
     await page.goto(app);
     const link = page.getByRole('banner').getByRole('link', { name: 'A–Z index', exact: true });
     await expect(link).toBeVisible();
-    // painted text: the link's words outside a visually hidden (1 px, clipped) box
-    expect(await link.evaluate((a) => [...a.childNodes]
-      .filter((n) => n.nodeType === Node.TEXT_NODE || n.getBoundingClientRect().width > 1)
-      .map((n) => n.textContent).join('').trim())).toBe('A–Z');
+    // a touch target: 44 px square, from the control token
+    const target = await px(page, 'var(--luz-control-lg)');
+    const box = await link.boundingBox();
+    expect(box.width, 'link width').toBeCloseTo(target, 0);
+    expect(box.height, 'link height').toBeCloseTo(target, 0);
+    // the words are clipped to a point (visually hidden), not painted
+    const label = await link.locator('.luz-search__fallback-label').boundingBox();
+    expect(label.width, 'label width').toBeLessThanOrEqual(1);
+    expect(label.height, 'label height').toBeLessThanOrEqual(1);
     const rows = await page.locator('.site-header__inner').evaluate((row) =>
       new Set([...row.children]
         .filter((el) => el.checkVisibility())

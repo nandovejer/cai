@@ -124,8 +124,9 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `core` JS lazy chunk: `table-sort` | — | ≤ 1 kB | 1 kB | 2 kB |
 | `core` JS lazy chunk: `timeline` | — | ≤ 2 kB | 2 kB | 3 kB |
 | `site` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
-| `site` JS | — | ≤ 1 kB | 1 kB | 2 kB |
-| `site` JS module: `consent` (a file of its own, not imported by `site.js`) | — | ≤ 1 kB | 1 kB | 1.5 kB |
+| `site` JS entry (the loader; lazy chunks excluded) | — | ≤ 1 kB | 1 kB | 2 kB |
+| `site` JS lazy chunk: `search` (loaded by `site.js` when the page has a `<luz-search>`) | — | ≤ 2 kB | 2 kB | 2.5 kB |
+| `site` JS lazy chunk: `consent` (loaded by `site.js` when the page has a `<luz-consent>`) | — | ≤ 1 kB | 1 kB | 1.5 kB |
 | `landing` CSS | — | ≤ 1 kB | 1 kB | 2 kB |
 | `cms` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |

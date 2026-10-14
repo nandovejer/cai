@@ -18,9 +18,10 @@ import { initTabs } from "/packages/core/dist/tabs.js";
 import { initModals } from "/packages/core/dist/modal.js";
 import { initPlayers } from "/packages/core/dist/player.js";
 import { initSidebar } from "/packages/core/dist/sidebar.js";
-// Defines <luz-site-search>: the search wires itself when it connects
+// Defines <luz-search> at once, not on idle as site.js would: the header's
+// search button is on every page, and wires itself when it connects
 import "/packages/site/dist/search.js";
-// Defines <luz-site-consent>, for the live example of the Cookie consent page
+// Defines <luz-consent>, for the live example of the Cookie consent page
 // (its answer is stored under its own key, luz-consent-demo)
 import "/packages/site/dist/consent.js";
 import { initSiteHeader } from "../landing/site-header.js";

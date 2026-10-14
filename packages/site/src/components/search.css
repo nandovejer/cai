@@ -1,23 +1,54 @@
 /* ==========================================================================
-	 LUZ Site: search.
+	 LUZ Site: search, <luz-search>.
 	 A button shaped like a field that opens a native <dialog> (core's
 	 .luz-modal surface) with a field and grouped lists of links. Without
-	 JavaScript the button stays hidden and a plain link to an index shows.
+	 JavaScript the button stays hidden and a plain link to an index shows,
+	 in the same place and the same space.
 	 ========================================================================== */
 
-/* The wrapper has no box of its own: the dialog is in the top layer, and
-   a box would take a cell of the page's grid or flex container */
-:where(luz-site-search) {
-	display: contents;
+/* The slot: the fallback link and the trigger share one cell, and both
+   always take part in its size, so swapping them moves nothing. The dialog
+   is in the top layer when open, with no box in the cell. */
+:where(luz-search) {
+	display: inline-grid;
+	vertical-align: middle;
+}
+
+:where(luz-search) > :is(.luz-search__fallback, .luz-search__trigger) {
+	grid-area: 1 / 1;
+}
+
+/* The hidden one keeps its space: invisible, so it is not focusable and
+   not in the accessibility tree. Without CSS the browser's [hidden] hides
+   it. */
+:where(luz-search) > [hidden]:is(.luz-search__fallback, .luz-search__trigger) {
+	display: inline-flex;
+	visibility: hidden;
+}
+
+/* The fallback: a link to an index of every page, a control high, with
+   the trigger's magnifier before its words. Both are in the sans, like
+   every control: a system font, so the slot keeps its width when the
+   page's web font arrives. */
+.luz-search__fallback:not([hidden]) {
+	display: inline-flex;
+}
+
+.luz-search__fallback {
+	align-items: center;
+	gap: var(--luz-space-xs);
+	min-block-size: var(--luz-control-lg);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-sm);
 }
 
 /* The trigger: real text at full contrast, not placeholder grey, inside a
    field-like border; one row, at least 44px high */
-.luz-site-search-trigger:not([hidden]) {
+.luz-search__trigger:not([hidden]) {
 	display: inline-flex;
 }
 
-.luz-site-search-trigger {
+.luz-search__trigger {
 	align-items: center;
 	gap: var(--luz-space-xs);
 	min-block-size: var(--luz-control-lg);
@@ -28,21 +59,22 @@
 	background: var(--luz-input-bg);
 	color: var(--luz-text-secondary);
 	font: inherit;
+	font-family: var(--luz-font-sans);
 	font-size: var(--luz-text-sm);
 	cursor: pointer;
 }
 
-.luz-site-search-trigger:hover {
+.luz-search__trigger:hover {
 	color: var(--luz-text-primary);
 	border-color: var(--luz-text-secondary);
 }
 
-.luz-site-search-trigger:focus-visible {
+.luz-search__trigger:focus-visible {
 	outline: 2px solid var(--luz-focus-ring);
 	outline-offset: 2px;
 }
 
-.luz-site-search-trigger__icon {
+.luz-search__trigger-icon {
 	flex: none;
 	inline-size: 1.125rem;
 	block-size: 1.125rem;
@@ -51,7 +83,7 @@
 	stroke-width: 2;
 }
 
-.luz-site-search-trigger__key {
+.luz-search__trigger-key {
 	margin-inline-start: auto;
 	padding-inline: var(--luz-space-2xs);
 	border: 1px solid var(--luz-divider);
@@ -63,20 +95,31 @@
 
 /* The shortcut needs a keyboard */
 @media (pointer: coarse) and (hover: none) {
-	.luz-site-search-trigger__key {
+	.luz-search__trigger-key {
 		display: none;
 	}
 }
 
-/* Narrow screens: the magnifier only. The label stays in the accessible
-   name ("Search docs"), clipped, not removed. */
+/* Narrow screens: the magnifier only, 44 by 44. The words stay in the
+   accessible name ("Search docs", "A–Z index"), clipped, not removed. A
+   fallback next to a compact trigger is compact too, so the slot is one
+   square before and after the swap. */
 @media (max-width: 768px) {
-	.luz-site-search-trigger--compact {
+	.luz-search__trigger--compact,
+	:where(luz-search):has(> .luz-search__trigger--compact) > .luz-search__fallback {
 		justify-content: center;
 		padding-inline: 0;
 	}
 
-	.luz-site-search-trigger--compact .luz-site-search-trigger__label {
+	:where(luz-search):has(> .luz-search__trigger--compact) > .luz-search__fallback {
+		inline-size: var(--luz-control-lg);
+		block-size: var(--luz-control-lg);
+		border: 1px solid var(--luz-input-border);
+		border-radius: var(--luz-radius-md);
+	}
+
+	.luz-search__trigger--compact .luz-search__trigger-label,
+	:where(luz-search):has(> .luz-search__trigger--compact) .luz-search__fallback-label {
 		position: absolute;
 		inline-size: 1px;
 		block-size: 1px;
@@ -85,7 +128,7 @@
 		white-space: nowrap;
 	}
 
-	.luz-site-search-trigger--compact .luz-site-search-trigger__key {
+	.luz-search__trigger--compact .luz-search__trigger-key {
 		display: none;
 	}
 }
@@ -93,7 +136,7 @@
 /* The dialog: a column whose list of results scrolls between the field and
    the footer line; the whole dialog scrolls when the screen is too short
    for both (400 % zoom). Full screen on narrow screens. */
-.luz-site-search {
+.luz-search {
 	inline-size: min(100%, 40rem);
 	max-inline-size: 100%;
 	max-block-size: min(80dvb, 40rem);
@@ -102,12 +145,12 @@
 	padding: var(--luz-space-lg);
 }
 
-.luz-site-search[open] {
+.luz-search[open] {
 	display: flex;
 	flex-direction: column;
 }
 
-.luz-site-search__body {
+.luz-search__body {
 	display: flex;
 	flex-direction: column;
 	gap: var(--luz-space-xs);
@@ -116,7 +159,7 @@
 	font-family: var(--luz-font-sans);
 }
 
-.luz-site-search__head {
+.luz-search__head {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -124,7 +167,7 @@
 	gap: var(--luz-space-xs) var(--luz-space-md);
 }
 
-.luz-site-search__title {
+.luz-search__title {
 	margin: 0;
 	font-family: var(--luz-font-heading);
 	font-size: var(--luz-text-lg);
@@ -132,11 +175,11 @@
 
 /* The field with a magnifier at its start. The icon is decorative (the
    heading labels the field) and lets clicks through to the field. */
-.luz-site-search__field {
+.luz-search__field {
 	position: relative;
 }
 
-.luz-site-search__field :where(svg) {
+.luz-search__field :where(svg) {
 	position: absolute;
 	inset-block: 0;
 	inset-inline-start: var(--luz-space-sm);
@@ -150,25 +193,25 @@
 	pointer-events: none;
 }
 
-.luz-site-search__field :where(input) {
+.luz-search__field :where(input) {
 	/* The icon's inset, a 24px slot for it, and a gap before the text */
 	padding-inline-start: calc(var(--luz-space-sm) + var(--luz-space-lg) + var(--luz-space-2xs));
 }
 
 /* The count: small and muted, below the group headings in weight */
-.luz-site-search__status {
+.luz-search__status {
 	font-size: var(--luz-text-sm);
 	color: var(--luz-text-secondary);
 }
 
 /* At the end of the row, also when it wraps below the title */
-.luz-site-search__head > :last-child {
+.luz-search__head > :last-child {
 	margin-inline-start: auto;
 }
 
 /* An icon button: a square target as tall as the large controls. The × is
    decorative; the button's name is its aria-label. */
-.luz-site-search__close {
+.luz-search__close {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -181,12 +224,12 @@
 	color: var(--luz-text-secondary);
 }
 
-.luz-site-search__close:hover {
+.luz-search__close:hover {
 	color: var(--luz-text-primary);
 	background: var(--luz-surface-hover);
 }
 
-.luz-site-search__close :where(svg) {
+.luz-search__close :where(svg) {
 	flex: none;
 	inline-size: 1.25rem;
 	block-size: 1.25rem;
@@ -196,7 +239,7 @@
 	stroke-linecap: round;
 }
 
-.luz-site-search__results {
+.luz-search__results {
 	flex: 0 1 auto;
 	overflow-y: auto;
 	/* Room for the focus ring of the first and last result */
@@ -205,17 +248,17 @@
 }
 
 /* With results, the list keeps a few rows in view when the dialog is short */
-.luz-site-search__results:has(> :not([hidden]) li) {
+.luz-search__results:has(> :not([hidden]) li) {
 	min-block-size: 5rem;
 }
 
-.luz-site-search__results :where(h3) {
+.luz-search__results :where(h3) {
 	margin-block: var(--luz-space-sm) var(--luz-space-2xs);
 	font-size: var(--luz-text-sm);
 	color: var(--luz-text-secondary);
 }
 
-.luz-site-search__results :where(ul) {
+.luz-search__results :where(ul) {
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -223,7 +266,7 @@
 
 /* A result: the whole row is the link, at least 24px high (44px on touch);
    the focused one has the shared focus ring of every link */
-.luz-site-search__results :where(a) {
+.luz-search__results :where(a) {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
@@ -236,23 +279,23 @@
 }
 
 /* Only the title is underlined (it is the link text); the page after it is not */
-.luz-site-search__results :where(a > :first-child) {
+.luz-search__results :where(a > :first-child) {
 	text-decoration: underline;
 	text-underline-offset: 0.18em;
 }
 
-.luz-site-search__results :where(a):hover {
+.luz-search__results :where(a):hover {
 	background: var(--luz-surface-hover);
 }
 
-.luz-site-search__results :where(a > span + span) {
+.luz-search__results :where(a > span + span) {
 	color: var(--luz-text-secondary);
 	font-size: var(--luz-text-sm);
 }
 
 /* The ", " between the title and the page: read, not shown ("Button,
    Components"); here and not a class the script writes, for the JS budget */
-.luz-site-search__results :where(a > span:nth-child(2):not(:last-child)) {
+.luz-search__results :where(a > span:nth-child(2):not(:last-child)) {
 	position: absolute;
 	inline-size: 1px;
 	block-size: 1px;
@@ -262,19 +305,19 @@
 }
 
 @media (pointer: coarse) {
-	.luz-site-search__results :where(a) {
+	.luz-search__results :where(a) {
 		min-block-size: var(--luz-control-lg);
 	}
 }
 
-.luz-site-search__foot {
+.luz-search__foot {
 	margin: 0;
 	padding-block-start: var(--luz-space-sm);
 	border-block-start: 1px solid var(--luz-divider);
 }
 
 @media (max-width: 768px), (max-height: 30rem) {
-	.luz-site-search {
+	.luz-search {
 		inline-size: 100%;
 		max-block-size: 100dvb;
 		block-size: 100dvb;
@@ -287,7 +330,7 @@
 /* Forced colours: the edge of the dialog is a real border, in the system's
    text colour (a shadow alone disappears) */
 @media (forced-colors: active) {
-	.luz-site-search {
+	.luz-search {
 		border-color: CanvasText;
 	}
 }

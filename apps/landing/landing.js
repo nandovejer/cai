@@ -10,7 +10,8 @@
 
 import { initCopyButtons } from "/packages/core/dist/clipboard.js";
 import { highlightBlock } from "/packages/core/dist/highlight.js";
-// Defines <luz-site-search>: the search wires itself when it connects
+// Defines <luz-search> at once, not on idle as site.js would: the header's
+// search button wires itself when it connects
 import "/packages/site/dist/search.js";
 import { initSiteHeader } from "./site-header.js";
 

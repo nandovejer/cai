@@ -13,11 +13,15 @@
  *     which changes only with its own changeset, so budgets.json cannot be
  *     raised quietly;
  *   - every chunk a budgeted JS file imports lazily is budgeted too, and it
- *     imports no other file statically (site.min.js bundles search.js,
- *     so its budget measures everything a <script> of it loads);
+ *     imports no other file statically;
  *   - no published packages/*\/dist/*.min.js imports a bare specifier (an
- *     inlined or missing dependency would escape its budget), and the
- *     site bundles import nothing.
+ *     inlined or missing dependency would escape its budget);
+ *   - the lazy chunks (SEC-CHUNK-1, SEC-CHUNK-2): every import() of a
+ *     published .min.js names a string literal; every chunk (a file another
+ *     one imports lazily, in any package, and site's search and consent)
+ *     imports nothing, static or dynamic; site.min.js, the presence loader,
+ *     has no static import, and its dynamic imports are exactly its two
+ *     chunks.
  *
  * Usage: node scripts/check-size.js
  */
@@ -77,28 +81,68 @@ for (const { file } of budgets.filter((b) => b.file?.endsWith(".js"))) {
 // --- No published .min.js imports another package (RL-1) ---
 // A bare specifier ("@luz-ds/core/…", "lit") in a file a CDN serves would
 // fail there, or pull in a dependency. Every packages/*/dist/*.min.js may
-// import only its own relative files, and the site bundles (one
-// <script> each, security.md phase 4 review 5b) import nothing at all.
+// import only its own relative files.
 const SPECIFIERS = [
   /(?:^|[;}\s])(?:import|export)\b[^"'();]*?\bfrom\s*["']([^"']+)["']/g,
   /(?:^|[;}\s])import\s*["']([^"']+)["']/g,
   /\bimport\(\s*["']([^"']+)["']\s*\)/g,
 ];
-const SELF_CONTAINED = new Set(["packages/site/dist/site.min.js", "packages/site/dist/search.min.js", "packages/site/dist/consent.min.js"]);
+// --- The lazy chunks (security.md, Phase F3) ---
+// SEC-CHUNK-1: every import() names a string literal, never a URL built
+// from the page. SEC-CHUNK-2: a chunk is one file that loads nothing (so
+// one integrity hash covers it), and the loader loads exactly its chunks.
+// These replace the "one self-contained file" rule of the phase 4 review
+// (answer 5b), which a loader with chunks cannot keep.
+const IMPORT_CALL = /\bimport\s*\(/g;
+const LITERAL_IMPORT = /\bimport\s*\(\s*(["'])([^"'`]+)\1\s*\)/g;
+const STATIC_IMPORT = /(?:^|[;}\s])(?:import\b(?!\s*[(.])|export\b[^"'();]*?\bfrom\b)/;
+const LOADERS = { "packages/site/dist/site.min.js": ["./consent.min.js", "./search.min.js"] };
+const chunks = new Set(Object.entries(LOADERS).flatMap(([loader, targets]) => targets.map((t) => relative(root, resolve(root, dirname(loader), t)))));
+const published = [];
 for (const pkg of readdirSync(resolve(root, "packages"))) {
   const dist = resolve(root, "packages", pkg, "dist");
   if (!existsSync(dist)) continue;
   for (const name of readdirSync(dist).filter((f) => f.endsWith(".min.js"))) {
     const file = `packages/${pkg}/dist/${name}`;
     const code = readFileSync(resolve(root, file), "utf-8");
-    for (const specifier of SPECIFIERS.flatMap((re) => [...code.matchAll(re)].map((m) => m[1]))) {
-      if (!/^\.{1,2}\//.test(specifier)) {
-        console.error(`✗ ${file} imports "${specifier}": a published file imports only its own relative files (red line 1)`);
-        failed = true;
-      } else if (SELF_CONTAINED.has(file)) {
-        console.error(`✗ ${file} imports ${specifier}: it must be one self-contained file`);
+    published.push([file, code]);
+    for (const [, , target] of code.matchAll(LITERAL_IMPORT)) {
+      if (/^\.{1,2}\//.test(target)) chunks.add(relative(root, resolve(root, dirname(file), target)));
+    }
+  }
+}
+for (const [file, code] of published) {
+  for (const specifier of SPECIFIERS.flatMap((re) => [...code.matchAll(re)].map((m) => m[1]))) {
+    if (!/^\.{1,2}\//.test(specifier)) {
+      console.error(`✗ ${file} imports "${specifier}": a published file imports only its own relative files (red line 1)`);
+      failed = true;
+    }
+  }
+  const calls = code.match(IMPORT_CALL)?.length ?? 0;
+  const targets = [...code.matchAll(LITERAL_IMPORT)].map((m) => m[2]);
+  if (calls !== targets.length) {
+    console.error(`✗ ${file} has an import() whose argument is not a string literal: a lazy chunk is named, never built (SEC-CHUNK-1)`);
+    failed = true;
+  }
+  if (chunks.has(file) && (calls || STATIC_IMPORT.test(code))) {
+    console.error(`✗ ${file} is a lazy chunk and imports a file: a chunk imports nothing, static or dynamic (SEC-CHUNK-2)`);
+    failed = true;
+  }
+  const expected = LOADERS[file];
+  if (expected) {
+    if (STATIC_IMPORT.test(code)) {
+      console.error(`✗ ${file} has a static import: the loader imports its chunks lazily, and nothing else (SEC-CHUNK-2)`);
+      failed = true;
+    }
+    for (const target of new Set(targets)) {
+      if (!expected.includes(target)) {
+        console.error(`✗ ${file} imports ${target}: the loader imports only ${expected.join(" and ")} (SEC-CHUNK-1)`);
         failed = true;
       }
+    }
+    for (const target of expected.filter((t) => !targets.includes(t))) {
+      console.error(`✗ ${file} does not import ${target}: the loader must load each of its chunks (SEC-CHUNK-1)`);
+      failed = true;
     }
   }
 }

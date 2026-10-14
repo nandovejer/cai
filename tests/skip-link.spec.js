@@ -62,7 +62,7 @@ test.describe('skip link', () => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.waitForLoadState('networkidle');
     await page.evaluate(() => document.fonts.ready);
-    expect(await page.evaluate(() => document.documentElement.scrollHeight - innerHeight), 'tall enough for the jump to scroll').toBeGreaterThan(500);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight - window.innerHeight), 'tall enough for the jump to scroll').toBeGreaterThan(500);
     await page.keyboard.press('Tab');
     await expect(page.locator('#skip')).toBeFocused();
     await page.keyboard.press('Enter');

@@ -100,6 +100,8 @@ test.describe('the loader: content added after the scan', () => {
     await page.locator('#fallback').focus();
     await page.waitForTimeout(SETTLE);
     expect(seen).toEqual([]);
+    // S1: a control under focus is not swapped, so the focus leaves before the import
+    await page.locator('#fallback').blur();
     expect(await page.locator('luz-search').evaluate((el) => el.matches(':defined'))).toBe(false);
     await expect(page.locator('#fallback')).toBeVisible();
     await expect(page.locator('#trigger')).toBeHidden();

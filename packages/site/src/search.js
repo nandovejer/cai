@@ -1,20 +1,25 @@
 /**
  * LUZ Site — site search: a native <dialog> with grouped links, in a
- * custom element, <luz-site-search> (light DOM, no Shadow DOM).
+ * custom element, <luz-search> (light DOM, no Shadow DOM). A lazy chunk:
+ * site.js loads this file (dist/search.min.js, one file with its own
+ * budget, which loads nothing else) when the page has a <luz-search>; a
+ * page that adds one later loads it by hand ("@luz-ds/site/search").
  *
  * Markup (every fixed text is authored in the HTML; the docs page,
  * /docs/site/search/, has the full example):
  *
- *   <a href="a-z/" data-luz-search-fallback>A–Z index</a>
- *   <button class="luz-site-search-trigger" type="button" data-luz-search-open
- *           aria-keyshortcuts="Control+K Meta+K" hidden>…</button>
- *   <luz-site-search>
- *     <dialog class="luz-modal luz-site-search" data-luz-search
+ *   <luz-search>
+ *     <a class="luz-search__fallback" href="a-z/" data-luz-search-fallback>
+ *       <svg class="luz-search__trigger-icon" aria-hidden="true">…</svg>
+ *       <span class="luz-search__fallback-label">A–Z index</span></a>
+ *     <button class="luz-search__trigger" type="button" data-luz-search-open
+ *             aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>…</button>
+ *     <dialog class="luz-modal luz-search" data-luz-search
  *             data-luz-search-src="search-index.json"
  *             aria-labelledby="…" data-luz-label-results="{n} results" …>
- *       <div class="luz-site-search__field"><svg aria-hidden="true" …>…</svg>
+ *       <div class="luz-search__field"><svg aria-hidden="true" …>…</svg>
  *         <input type="text" autofocus aria-describedby="…"></div>
- *       <p class="luz-site-search__status" role="status"></p>
+ *       <p class="luz-search__status" role="status"></p>
  *       <div data-luz-search-results>
  *         <div data-luz-search-show="idle">…shown while the field is empty…</div>
  *         <div hidden><h3>Pages</h3><ul data-luz-search-list="pages"></ul></div>
@@ -22,28 +27,37 @@
  *       </div>
  *       <p data-luz-search-show="none" hidden>…shown when nothing matches…</p>
  *     </dialog>
- *   </luz-site-search>
+ *   </luz-search>
  *
  * The index is a JSON file on the same origin (data-luz-search-src),
  * format version 1: { "version": 1, "pages": [[text, url, meta?, lang?]],
  * "sections": [...], "elements": [...] }, URLs relative to the file.
  *
  * Without JavaScript the element does nothing, the trigger stays hidden and
- * the fallback link shows. With it: the button and Ctrl+K or ⌘K open the
- * dialog (showModal: focus trap, Escape and focus return are the browser's;
- * the field is type="text" because in a type="search" field the first
- * Escape clears the text instead of closing the dialog);
- * the index loads on the first open; the results are real links, grouped
- * under headings, at most 8 per group (each a span with the title, then a
- * visually hidden ", " and a span with the page, if any); the arrows move
- * between them, Enter follows one. An element added to the page later wires itself when it
- * connects.
+ * the fallback link shows. With it, the element wires itself when it
+ * connects: the trigger takes the fallback's place (search.css keeps both
+ * in one cell, so nothing moves), but never under the reader: while the
+ * fallback has the keyboard focus or a pressed pointer the swap waits for
+ * its focusout, click or pointercancel, and focus is never moved. Every
+ * [data-luz-search-open] button of the page shows when it works. The
+ * button and Ctrl+K or ⌘K open the dialog (showModal: focus trap, Escape
+ * and focus return are the browser's, except that a close after an open
+ * with nothing focused moves the focus to the opening button; the field is type="text" because in
+ * a type="search" field the first Escape clears the text instead of
+ * closing the dialog); the index loads on the first open; the results are
+ * real links, grouped under headings, at most 8 per group (each a span
+ * with the title, then a visually hidden ", " and a span with the page, if
+ * any); the arrows move between them, Enter follows one.
  *
- * Security (.claude/plans/docs-redesign/security.md, SEC-IDX, SEC-NET):
- * index text reaches the page through textContent only; a link is the URL
- * the index gives, resolved and checked (http or https), never the raw
- * string; the JSON comes from this origin, without redirects, and has size
- * limits.
+ * Two copies of this file on one page (a CDN copy and a bundled one) define
+ * the element once: the second finds it defined and does nothing, so the
+ * page gets one keydown handler (SEC-CHUNK-5).
+ *
+ * Security (.claude/plans/docs-redesign/security.md, SEC-IDX, SEC-NET,
+ * SEC-CHUNK): index text reaches the page through textContent only; a link
+ * is the URL the index gives, resolved and checked (http or https), never
+ * the raw string; the JSON comes from this origin, without redirects, and
+ * has size limits.
  */
 
 /** Result groups, in their order on screen. */
@@ -138,14 +152,15 @@ const make = (tag, text) => {
   return el;
 };
 
-/** The dialog Ctrl+K opens: the last one wired. */
+/** The dialog Ctrl+K and the buttons outside any <luz-search> open: the last one wired. */
 let current;
-let wired;
+const wired = new WeakSet();
 
-/** Wire the dialog inside `host`, and the triggers of the page. Once per dialog. */
+/** Wire the dialog inside `host`, its trigger and fallback, and the buttons of the page. Once per dialog. */
 const wire = (host) => {
   const box = host.querySelector("dialog");
-  if (!box || box === wired) return;
+  if (!box || wired.has(box)) return;
+  wired.add(box);
   const $ = (selector) => box.querySelector(selector);
   const input = $("input");
   const status = $("[role=status]");
@@ -161,6 +176,8 @@ const wire = (host) => {
   let index;
   let loading;
   let timer;
+  // Where focus goes on close when nothing had it at the open (a11y 2.4.3)
+  let back;
 
   const update = () => {
     if (!index) return;
@@ -216,8 +233,13 @@ const wire = (host) => {
 
   // Every search starts afresh (not on "close": that event comes late, and
   // could empty a search opened again at once)
-  const open = () => {
+  const open = (from) => {
     if (!box.isConnected) return;
+    // Nothing focused (Ctrl+K on a fresh page, a click in a browser that
+    // does not focus buttons): the close returns to the button that opened
+    // the dialog, or to this search's trigger, not to the top of the page
+    const el = document.activeElement;
+    back = (!el || el === document.body) && (from?.nodeType ? from : host.querySelector(".luz-search__trigger"));
     input.value = "";
     update();
     box.showModal();
@@ -225,11 +247,36 @@ const wire = (host) => {
   };
 
   input.addEventListener("input", update);
+  // After the browser's own return, to <body>, one task later (Chromium
+  // moves the focus out of the dialog after this event): not if it opened
+  // again or something outside the dialog has the focus by then
+  box.addEventListener("close", () =>
+    setTimeout(() => {
+      const el = document.activeElement;
+      if (back && !box.open && (!el || el === document.body || box.contains(el))) back.focus();
+    }),
+  );
 
-  for (const link of document.querySelectorAll("[data-luz-search-fallback]")) link.hidden = true;
-  for (const button of document.querySelectorAll("[data-luz-search-open]")) {
-    button.hidden = false;
-    button.addEventListener("click", open);
+  // The trigger takes the fallback's place (a11y S1, S2): at once, unless
+  // the reader is on the fallback (keyboard focus, or a pointer pressed on
+  // it); then when they leave it, follow it or the press is cancelled
+  const swap = () => {
+    for (const link of host.querySelectorAll("[data-luz-search-fallback]")) link.hidden = true;
+    for (const button of host.querySelectorAll("[data-luz-search-open]")) button.hidden = false;
+  };
+  const busy = host.querySelector("[data-luz-search-fallback]:is(:focus-visible, :active)");
+  if (busy) for (const type of ["focusout", "click", "pointercancel"]) busy.addEventListener(type, swap, { once: true });
+  else swap();
+  for (const button of host.querySelectorAll("[data-luz-search-open]")) button.addEventListener("click", () => open(button));
+  // Fallbacks and buttons outside any <luz-search>: shown at once, each
+  // bound once, to the last search wired
+  for (const el of document.querySelectorAll("[data-luz-search-fallback], [data-luz-search-open]")) {
+    if (el.closest("luz-search")) continue;
+    el.hidden = el.matches("[data-luz-search-fallback]");
+    if (!el.hidden && !wired.has(el)) {
+      wired.add(el);
+      el.addEventListener("click", () => current.open(el));
+    }
   }
 
   // Down from the field to the first result; Down, Up, Home and End between
@@ -261,6 +308,7 @@ const wire = (host) => {
   results.addEventListener("click", (e) => {
     const a = e.target.closest("a");
     if (!a) return;
+    back = 0;
     box.close();
     try {
       const id = decodeURIComponent(a.hash.slice(1));
@@ -277,26 +325,29 @@ const wire = (host) => {
     }
   });
 
-  const shortcut = (e) => {
-    const inside = document.activeElement?.closest("dialog[open]");
-    // Never over another modal dialog (SEC-MISC-7)
-    if (!isShortcut(e) || !box.isConnected || (inside && inside !== box)) return;
-    // eslint-disable-next-line no-restricted-syntax -- PRINCIPLES.md §3: the site search may take Ctrl+K and ⌘K (shown on the trigger, listed in the accessibility statement)
-    e.preventDefault();
-    // Open, or back to the field with its text selected (a11y.md SRCH-8)
-    if (box.open) input.select(input.focus());
-    else open();
+  // One listener for the page, added by the first wiring, whatever the
+  // number of elements or of copies of this file (SEC-MISC-6, SEC-CHUNK-5)
+  if (!current) document.addEventListener("keydown", (e) => current.shortcut(e));
+  current = {
+    open,
+    shortcut: (e) => {
+      const inside = document.activeElement?.closest("dialog[open]");
+      // Never over another modal dialog (SEC-MISC-7)
+      if (!isShortcut(e) || !box.isConnected || (inside && inside !== box)) return;
+      // eslint-disable-next-line no-restricted-syntax -- PRINCIPLES.md §3: the site search may take Ctrl+K and ⌘K (shown on the trigger, listed in the accessibility statement)
+      e.preventDefault();
+      // Open, or back to the field with its text selected (a11y.md SRCH-8)
+      if (box.open) input.select(input.focus());
+      else open();
+    },
   };
-  // One listener for the page, whatever the number of calls (SEC-MISC-6)
-  if (!current) document.addEventListener("keydown", (e) => current(e));
-  current = shortcut;
-  wired = box;
 };
 
-// <luz-site-search> wraps the dialog. Defined once, and only where there
-// is a DOM, so importing this module in Node is harmless.
-if (typeof customElements < "u" && !customElements.get("luz-site-search")) {
-  customElements.define("luz-site-search", class extends HTMLElement {
+// <luz-search> holds the fallback, the trigger and the dialog. Defined
+// once, whatever the number of copies of this file (SEC-CHUNK-5), and only
+// where there is a DOM, so importing this module in Node is harmless.
+if (typeof customElements < "u" && !customElements.get("luz-search")) {
+  customElements.define("luz-search", class extends HTMLElement {
     connectedCallback() {
       wire(this);
     }

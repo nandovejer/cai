@@ -347,7 +347,7 @@
 }
 
 /* Stand-ins: the component's own classes, held still for a picture */
-.docs-dodont__stage > .luz-site-search-trigger {
+.docs-dodont__stage > .luz-search__trigger {
   justify-self: start;
 }
 
@@ -732,17 +732,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--luz-space-sm);
-}
-
-/* The not-found page loads no script, so the header's search button would
-   show and do nothing (the header assumes scripting means search.js runs).
-   Here the plain link to the A–Z index stays, as it does without JavaScript. */
-.docs-page--static .site-header__search[hidden] {
-  display: none;
-}
-
-.docs-page--static .site-header__az:not([hidden]) {
-  display: inline-flex;
 }
 
 .docs-chapter {

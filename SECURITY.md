@@ -52,9 +52,37 @@ Thank you for helping keep LUZ secure!
   crossorigin="anonymous"
 />
 
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css"
+  integrity="sha384-<hash>"
+  crossorigin="anonymous"
+/>
+
 <script
   type="module"
   src="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js"
+  integrity="sha384-<hash>"
+  crossorigin="anonymous"
+></script>
+
+<!-- One modulepreload per lazy chunk, each with its own hash, before the
+     script that imports it: the import uses the preload's verdict -->
+<link
+  rel="modulepreload"
+  href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/search.min.js"
+  integrity="sha384-<hash>"
+  crossorigin="anonymous"
+/>
+<link
+  rel="modulepreload"
+  href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js"
+  integrity="sha384-<hash>"
+  crossorigin="anonymous"
+/>
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js"
   integrity="sha384-<hash>"
   crossorigin="anonymous"
 ></script>
@@ -66,7 +94,7 @@ Compute each hash from the file you are pinning:
 curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A
 ```
 
-`luz.js` is an ES module and must be loaded with `type="module"`. SRI on the entry file does not cover the MIDI and table-sort chunks it imports on demand (`midi.js`, `table-sort.js`); pages that play MIDI or sort a table in the browser and need full integrity coverage should self-host the files or install from npm.
+`luz.js` and `site.js` are ES modules and must be loaded with `type="module"`. SRI on an entry file does not cover the lazy chunks it imports on demand: core's `midi.js`, `table-sort.js` and `timeline.js`, and site's `search.js` (on a page with a `<luz-search>`) and `consent.js` (on a page with a `<luz-consent>`). Each chunk imports nothing, and each entry imports its chunks by fixed names next to it, never a URL built from the page. For full integrity coverage, add one `<link rel="modulepreload" integrity crossorigin>` per chunk the page may load, before the entry's `<script>`, as above: the browser checks the hash, and the entry's import uses that result instead of fetching the file again, so a chunk with a wrong hash never runs and the page stays as it is without JavaScript. Import maps with `integrity` are another way, for browsers that support them; they are not yet available in every browser LUZ supports. Self-hosting the files or installing from npm also works.
 
 Range URLs such as `@luz-ds/core@3` are fine for prototypes, but they cannot carry an SRI hash and pick up new releases automatically.
 

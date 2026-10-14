@@ -7,9 +7,10 @@
 
 @media print {
   .luz-site-skip-link,
-  .luz-site-search-trigger,
-  .luz-site-search,
-  .luz-site-consent,
+  :where(luz-search),
+  .luz-search__trigger,
+  .luz-search,
+  .luz-consent,
   [data-luz-search-fallback] {
     display: none;
   }

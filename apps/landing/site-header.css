@@ -101,35 +101,17 @@
   text-underline-offset: var(--luz-space-2xs);
 }
 
-/* Search: with JavaScript, @luz-ds/site's button (magnifier only at
-   768px and below); without it, a plain link to the A–Z index, like the
-   site links. Both sit at the end of the row. */
-.site-header__az:not([hidden]) {
-  display: inline-flex;
-  align-items: center;
-  min-block-size: var(--luz-control-lg);
-  font-size: var(--luz-text-md);
-}
-
-/* With scripting on, the button shows from the first paint and the A–Z link
-   never does, so a reload does not flash "A–Z" before search.js swaps them
-   (the same approach as the mode switcher). A browser without the
-   `scripting` media feature keeps the swap done by the script. */
-@media (scripting: enabled) {
-  .site-header__az:not([hidden]) {
-    display: none;
-  }
-
-  .site-header__search[hidden] {
-    display: inline-flex;
-  }
-}
-
-/* The search is one icon button at every width (the site's compact
-   trigger): "Search docs" stays its accessible name, clipped, not removed,
-   and the title shows the shortcut on hover. */
-.site-header__search {
+/* Search: @luz-ds/site's <luz-search>, at the end of the row. With
+   JavaScript its button; without it, a link to the A–Z index in the same
+   place. Both are one icon of the same size at every width (the site's
+   compact trigger), so the swap moves nothing: the words, "Search docs" and
+   "A–Z index", stay their accessible names, clipped, not removed, and the
+   button's title shows the shortcut on hover. */
+.site-header__search,
+.site-header__az {
   justify-content: center;
+  inline-size: var(--luz-control-lg);
+  block-size: var(--luz-control-lg);
   padding-inline: 0;
   /* No frame: an icon button like the menu button. Hover fills it; the
      focus ring stays (core's outline) */
@@ -137,12 +119,24 @@
   background: transparent;
 }
 
-.site-header__search:hover {
+.site-header__search:hover,
+.site-header__az:hover {
   border-color: transparent;
   background: var(--luz-surface-muted);
 }
 
-.site-header__search .luz-site-search-trigger__label {
+/* The link takes the button's quiet colour, so the icon looks the same
+   before and after the swap */
+.site-header__az {
+  color: var(--luz-text-secondary);
+}
+
+.site-header__az:hover {
+  color: var(--luz-text-primary);
+}
+
+.site-header__search .luz-search__trigger-label,
+.site-header__az .luz-search__fallback-label {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -151,7 +145,7 @@
   white-space: nowrap;
 }
 
-.site-header__search .luz-site-search-trigger__key {
+.site-header__search .luz-search__trigger-key {
   display: none;
 }
 

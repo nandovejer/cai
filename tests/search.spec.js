@@ -107,14 +107,43 @@ test.describe('search: opening and closing', () => {
     await expect(button).toBeFocused();
   });
 
-  test('after Ctrl+K and Escape with nothing focused, Tab starts at the skip link (2.4.3)', async ({ page }) => {
-    // The browser starts the next Tab from the closed dialog: it comes first in <body>
+  test('after Ctrl+K and Escape with nothing focused, the focus is on the search button and Tab moves forward from it (2.4.3)', async ({ page }) => {
+    // Not the browser's default, which starts the next Tab from the closed
+    // dialog (first in <body>): the skip link, or the sidebar
     await open(page);
     await page.keyboard.press('Control+k');
     await expect(field(page)).toBeFocused();
     await page.keyboard.press('Escape');
+    await expect(dialog(page)).toBeHidden();
+    const trigger = page.locator('.luz-search__trigger');
+    await expect(trigger).toBeFocused();
+    // The first focusable element after the trigger in document order
+    await page.evaluate(() => {
+      const trigger = document.querySelector('.luz-search__trigger');
+      const focusable = 'a[href], button, input:not([type="hidden"]), select, textarea, summary, [tabindex]';
+      const first = [...document.querySelectorAll(focusable)].find(
+        (el) =>
+          !!(trigger.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING) &&
+          !el.matches(':disabled') &&
+          el.tabIndex >= 0 &&
+          !el.closest('[inert]') &&
+          el.checkVisibility({ visibilityProperty: true }),
+      );
+      first.setAttribute('data-expected-next', '');
+    });
     await page.keyboard.press('Tab');
-    await expect(page.getByRole('link', { name: 'Skip to main content' })).toBeFocused();
+    const next = await page.evaluate(() => {
+      const el = document.activeElement;
+      const trigger = document.querySelector('.luz-search__trigger');
+      return {
+        followsTrigger: !!(trigger.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING),
+        isFirstAfter: el.hasAttribute('data-expected-next'),
+        isSkip: !!el.closest('.luz-skip-link, [href="#main-content"]'),
+      };
+    });
+    expect(next.followsTrigger, 'Tab went forward from the button').toBe(true);
+    expect(next.isSkip, 'not back at the skip link').toBe(false);
+    expect(next.isFirstAfter, 'the first focusable element after the button').toBe(true);
   });
 });
 

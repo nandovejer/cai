@@ -4,7 +4,7 @@ description: Asks a visitor once whether the site may use optional cookies, with
 area: site
 order: 5
 group: patterns
-files: .luz-site-consent, __title, __choices
+files: .luz-consent, __title, __choices
 module: consent.js
 keywords: cookie banner, GDPR, ePrivacy, privacy, tracking consent
 toc: h2,h3
@@ -13,16 +13,16 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <luz-site-consent>
-              <section class="luz-site-consent" data-luz-consent data-luz-consent-key="luz-consent-demo" aria-labelledby="consent-demo-title" hidden>
+            <luz-consent>
+              <section class="luz-consent" data-luz-consent data-luz-consent-key="luz-consent-demo" aria-labelledby="consent-demo-title" hidden>
                 <div data-luz-consent-ask>
-                  <h2 class="luz-site-consent__title" id="consent-demo-title">Cookies on Bodega Albar</h2>
+                  <h2 class="luz-consent__title" id="consent-demo-title">Cookies on Bodega Albar</h2>
                   <p>We use cookies that this site needs to work. We would also like to measure how you use it, to improve it. <a href="#how">Read the cookie policy</a>.</p>
                   <form class="luz-site-actions">
                     <button class="luz-btn luz-btn--primary" type="submit" value="all">Accept optional cookies</button>
                     <button class="luz-btn luz-btn--primary" type="submit" value="none">Reject optional cookies</button>
                   </form>
-                  <details class="luz-site-consent__choices">
+                  <details class="luz-consent__choices">
                     <summary>Choose which cookies to allow</summary>
                     <form class="o-stack">
                       <fieldset class="luz-fieldset">
@@ -40,7 +40,7 @@ toc: h2,h3
                 </div>
                 <p data-luz-consent-done tabindex="-1" hidden>Your choice is saved. You can change it at any time on the <a href="#how">cookie policy</a> page.</p>
               </section>
-            </luz-site-consent>
+            </luz-consent>
             <p class="luz-site-actions"><button class="luz-btn luz-btn--outline" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
             <p class="docs-demo__note">The answer of this example is stored under its own key, <code>luz-consent-demo</code>, so it does not count as an answer for this site. Without JavaScript the banner and its button stay hidden.</p>
           </div>
@@ -54,26 +54,26 @@ toc: h2,h3
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>Right after the <a href="/docs/components/skip-link/">skip link</a>, before a <a href="/docs/site/notice/">notice</a> and the <a href="/docs/site/site-header/">site header</a>. One checkbox per category of optional cookies, its <code>value</code> the category’s name. Load the module on its own: <code>site.js</code> does not include it.</p>
+            <p>Right after the <a href="/docs/components/skip-link/">skip link</a>, before a <a href="/docs/site/notice/">notice</a> and the <a href="/docs/site/site-header/">site header</a>. One checkbox per category of optional cookies, its <code>value</code> the category’s name. <code>site.min.js</code> loads the banner’s own file, <code>consent.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-consent" aria-label="Copy the cookie consent markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cookie consent markup"><code id="code-consent">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js&quot;&gt;&lt;/script&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cookie consent markup"><code id="code-consent">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js&quot;&gt;&lt;/script&gt;
 
 &lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
-&lt;luz-site-consent&gt;
-  &lt;section class=&quot;luz-site-consent&quot; data-luz-consent aria-labelledby=&quot;consent-title&quot; hidden&gt;
+&lt;luz-consent&gt;
+  &lt;section class=&quot;luz-consent&quot; data-luz-consent aria-labelledby=&quot;consent-title&quot; hidden&gt;
     &lt;div data-luz-consent-ask&gt;
-      &lt;h2 class=&quot;luz-site-consent__title&quot; id=&quot;consent-title&quot;&gt;Cookies on Bodega Albar&lt;/h2&gt;
+      &lt;h2 class=&quot;luz-consent__title&quot; id=&quot;consent-title&quot;&gt;Cookies on Bodega Albar&lt;/h2&gt;
       &lt;p&gt;We use cookies that this site needs to work. We would also like to measure how you
         use it, to improve it. &lt;a href=&quot;/cookies/&quot;&gt;Read the cookie policy&lt;/a&gt;.&lt;/p&gt;
       &lt;form class=&quot;luz-site-actions&quot;&gt;
         &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot; value=&quot;all&quot;&gt;Accept optional cookies&lt;/button&gt;
         &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot; value=&quot;none&quot;&gt;Reject optional cookies&lt;/button&gt;
       &lt;/form&gt;
-      &lt;details class=&quot;luz-site-consent__choices&quot;&gt;
+      &lt;details class=&quot;luz-consent__choices&quot;&gt;
         &lt;summary&gt;Choose which cookies to allow&lt;/summary&gt;
         &lt;form class=&quot;o-stack&quot;&gt;
           &lt;fieldset class=&quot;luz-fieldset&quot;&gt;
@@ -92,7 +92,7 @@ toc: h2,h3
     &lt;p data-luz-consent-done tabindex=&quot;-1&quot; hidden&gt;Your choice is saved. You can change it at any
       time on the &lt;a href=&quot;/cookies/&quot;&gt;cookie policy&lt;/a&gt; page.&lt;/p&gt;
   &lt;/section&gt;
-&lt;/luz-site-consent&gt;
+&lt;/luz-consent&gt;
 &lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;
 
 &lt;!-- On the cookie policy page --&gt;
@@ -123,10 +123,10 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent</code></div></td><td data-label="Effect"><div>The banner: a band as wide as its container, its text in the site header’s column, in the sans. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>&lt;luz-site-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-consent</code></div></td><td data-label="Effect"><div>The banner: a band as wide as its container, its text in the site header’s column, in the sans. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>&lt;luz-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>data-luz-consent</code></div></td><td data-label="Effect"><div>On the <code>&lt;section&gt;</code>: the banner. Optional <code>data-luz-consent-days</code>, how long an answer lasts (180 days by default, 395 at most), and <code>data-luz-consent-key</code>, the storage key (it must start with <code>luz-</code>)</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>data-luz-consent-ask</code>, <code>data-luz-consent-done</code></div></td><td data-label="Effect"><div>The question, and the confirmation that takes its place. The confirmation has <code>tabindex="-1"</code>: it takes focus</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>value="all"</code>, <code>value="none"</code></div></td><td data-label="Effect"><div>On the submit buttons: Accept grants every category, Reject none. A submit button with another value, or none, grants the ticked ones of its form</div></td></tr>
@@ -135,7 +135,7 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@luz-ds/site</code>, two native forms and a module of its own, <code>@luz-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed). <code>site.js</code> does not import it, so only the pages that ask load it.</p>
+            <p>CSS from <code>@luz-ds/site</code>, two native forms and a file of its own, <code>@luz-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed), which defines <code>&lt;luz-consent&gt;</code>. <code>site.min.js</code> loads it when the browser is idle, and only on a page with a <code>&lt;luz-consent&gt;</code>, so no other page pays for it. A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.</p>
             <ul>
               <li><strong>When it asks:</strong> when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, in the flow above the header: it covers nothing, traps nothing and takes no focus, so the page can be read and used before answering.</li>
               <li><strong>The answer:</strong> Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read.</li>

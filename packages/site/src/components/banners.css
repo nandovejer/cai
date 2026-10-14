@@ -9,7 +9,7 @@
 	 ========================================================================== */
 
 .luz-site-notice,
-.luz-site-consent {
+.luz-consent {
 	padding-block: var(--luz-space-xs);
 	padding-inline: max(var(--luz-space-md), (100% - var(--luz-content-max)) / 2 + var(--luz-space-md));
 	border-block-end: 1px solid var(--luz-divider);
@@ -21,7 +21,7 @@
 
 @media (min-width: 641px) {
 	.luz-site-notice,
-	.luz-site-consent {
+	.luz-consent {
 		padding-inline: max(var(--luz-space-xl), (100% - var(--luz-content-max)) / 2 + var(--luz-space-xl));
 	}
 }
@@ -33,22 +33,22 @@
 }
 
 /* The banner: room around the question, its title, its two forms */
-.luz-site-consent {
+.luz-consent {
 	padding-block: var(--luz-space-md);
 	font-size: var(--luz-text-md);
 }
 
-.luz-site-consent__title {
+.luz-consent__title {
 	margin-block-end: var(--luz-space-xs);
 	font-family: var(--luz-font-sans);
 	font-size: var(--luz-text-lg);
 }
 
 /* Core's details is a box: here it starts a step below the buttons */
-.luz-site-consent__choices {
+.luz-consent__choices {
 	margin-block: var(--luz-space-md) 0;
 }
 
-.luz-site-consent :where(form) {
+.luz-consent :where(form) {
 	margin-block-start: var(--luz-space-md);
 }

@@ -7,7 +7,9 @@
  *       and the fallback leaves the Tab order once swapped;
  *   S3  Ctrl+K before the chunk loads it and opens the dialog;
  *   S4  a failed import leaves the fallback working, with a clean console,
- *       and the next pointerdown or focus retries once (R4, SEC-CHUNK-3).
+ *       and neither retries nor loops (R4, SEC-CHUNK-3; decided in steps 6-7:
+ *       a failed module stays in the browser's module map, and a cache-busting
+ *       URL would break SEC-CHUNK-1/2).
  * Page: tests/fixtures/site-loader.html (the loader, site.min.js). Idle is held.
  */
 import { test, expect } from '@playwright/test';
@@ -183,11 +185,14 @@ test.describe('S4 and R4: the chunk does not load', () => {
     await rejections(page);
     await holdIdle(page);
     await page.route(SEARCH_CHUNK, (route) => route.fulfill({ status: 500, body: 'no' }));
-    const seen = chunkRequests(page);
+    // The fixture has a <luz-consent> too: count the search chunk only
+    const all = chunkRequests(page);
+    const seen = { get length() { return all.filter((c) => c === 'search').length; } };
     await page.goto(PAGE);
     await releaseIdle(page);
-    await expect.poll(() => seen).toEqual(['search']);
+    await expect.poll(() => seen.length).toBe(1);
     await page.waitForTimeout(500);
+    expect(seen.length).toBe(1);
     expect(problems).toEqual([]);
     expect(await page.evaluate(() => window.__rejected)).toEqual([]);
     await expect(page.locator('#fallback')).toBeVisible();
@@ -196,36 +201,32 @@ test.describe('S4 and R4: the chunk does not load', () => {
     expect(await isDefined(page)).toBe(false);
   });
 
-  test('the next pointerdown retries once; nothing after that loops', async ({ page }) => {
+  test('no retry, no loop: a second pointerdown or focus makes no new request, no error, and the fallback still navigates', async ({ page }) => {
     const problems = watch(page);
+    await rejections(page);
     await holdIdle(page);
     await page.route(SEARCH_CHUNK, (route) => route.fulfill({ status: 500, body: 'no' }));
-    const seen = chunkRequests(page);
+    const all = chunkRequests(page);
+    const requested = () => all.filter((c) => c === 'search').length;
     await page.goto(PAGE);
     await releaseIdle(page);
-    await expect.poll(() => seen).toHaveLength(1);
+    await expect.poll(requested).toBe(1);
     await page.waitForTimeout(500);
-    expect(seen).toHaveLength(1);
+    expect(requested()).toBe(1);
     await page.locator('#fallback').dispatchEvent('pointerdown');
-    await expect.poll(() => seen).toHaveLength(2);
     await page.locator('#fallback').dispatchEvent('pointerdown');
     await page.locator('#fallback').focus();
+    await page.locator('#fallback').dispatchEvent('focusin');
     await page.waitForTimeout(500);
-    expect(seen).toHaveLength(2);
+    expect(requested(), 'search chunk requests after the second pointerdown and focus').toBe(1);
     expect(problems).toEqual([]);
-  });
-
-  test('if the retry succeeds the element is defined and wired', async ({ page }) => {
-    await holdIdle(page);
-    let calls = 0;
-    await page.route(SEARCH_CHUNK, (route) => (++calls === 1 ? route.fulfill({ status: 500, body: 'no' }) : route.continue()));
-    await page.goto(PAGE);
-    await releaseIdle(page);
-    await expect.poll(() => calls).toBe(1);
-    await page.waitForTimeout(300);
+    expect(await page.evaluate(() => window.__rejected)).toEqual([]);
     expect(await isDefined(page)).toBe(false);
-    await page.locator('#fallback').dispatchEvent('pointerdown');
-    await defined(page);
-    await expect(page.locator('#trigger')).toBeVisible();
+    // The fallback is still the working control
+    await expect(page.locator('#fallback')).toBeVisible();
+    await expect(page.locator('#trigger')).toBeHidden();
+    await page.route(/\/a-z\/$/, (route) => route.fulfill({ contentType: 'text/html', body: '<!doctype html><title>A-Z</title><h1>A-Z</h1>' }));
+    await page.locator('#fallback').click();
+    await expect(page).toHaveURL(/\/a-z\/$/);
   });
 });

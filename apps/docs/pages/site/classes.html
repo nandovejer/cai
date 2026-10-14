@@ -194,72 +194,87 @@ files: components/_components.css, components/search.css, components/lang-switch
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.luz-site-search-trigger</div></td>
-                <td data-label="Element"><div>&lt;button&gt;</div></td>
-                <td data-label="Description"><div>The search button, shaped like a field: label, then the shortcut. Hidden in the markup; the script shows it.</div></td>
+                <td data-label="Class"><div>&lt;luz-search&gt;</div></td>
+                <td data-label="Element"><div>&lt;luz-search&gt;</div></td>
+                <td data-label="Description"><div>The element <code class="luz-code-inline">search.min.js</code> defines. It holds the fallback link, the trigger and the dialog; the link and the trigger share one place, so nothing moves when the trigger takes over.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search-trigger--compact</div></td>
-                <td data-label="Element"><div>&lt;button&gt;</div></td>
-                <td data-label="Description"><div>Modifier. At 768 pixels and below, the magnifier only; the label stays its name.</div></td>
+                <td data-label="Class"><div>.luz-search__fallback</div></td>
+                <td data-label="Element"><div>&lt;a&gt;</div></td>
+                <td data-label="Description"><div>The link to an index of every page, shown until the search works. A control high, with the magnifier before its words.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search-trigger__icon</div></td>
+                <td data-label="Class"><div>.luz-search__fallback-label</div></td>
+                <td data-label="Element"><div>&lt;span&gt;</div></td>
+                <td data-label="Description"><div>The link’s words, also its name. Clipped, not removed, next to a compact trigger at 768 pixels and below.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.luz-search__trigger</div></td>
+                <td data-label="Element"><div>&lt;button&gt;</div></td>
+                <td data-label="Description"><div>The search button, shaped like a field: label, then the shortcut. Hidden in the markup, in its place; the script shows it.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.luz-search__trigger--compact</div></td>
+                <td data-label="Element"><div>&lt;button&gt;</div></td>
+                <td data-label="Description"><div>Modifier. At 768 pixels and below, the magnifier only, and the link next to it too; the words stay their names.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.luz-search__trigger-icon</div></td>
                 <td data-label="Element"><div>&lt;svg&gt;</div></td>
-                <td data-label="Description"><div>The magnifier, in the text color.</div></td>
+                <td data-label="Description"><div>The magnifier, in the text color, in the trigger and the link.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search-trigger__label</div></td>
+                <td data-label="Class"><div>.luz-search__trigger-label</div></td>
                 <td data-label="Element"><div>&lt;span&gt;</div></td>
                 <td data-label="Description"><div>The visible label, which is also the button’s name.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search-trigger__key</div></td>
-                <td data-label="Element"><div>&lt;kbd&gt;</div></td>
-                <td data-label="Description"><div>The shortcut hint, "Ctrl K". Hidden on touch screens.</div></td>
+                <td data-label="Class"><div>.luz-search__trigger-key</div></td>
+                <td data-label="Element"><div>&lt;kbd aria-hidden="true"&gt;</div></td>
+                <td data-label="Description"><div>The shortcut hint, "Ctrl K". Hidden on touch screens and from assistive technology, which reads <code class="luz-code-inline">aria-keyshortcuts</code>.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search</div></td>
+                <td data-label="Class"><div>.luz-search</div></td>
                 <td data-label="Element"><div>&lt;dialog&gt;</div></td>
                 <td data-label="Description"><div>With <code class="luz-code-inline">.luz-modal</code>: the search dialog, a column whose results scroll; full screen at 768 pixels and below.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search__body</div></td>
+                <td data-label="Class"><div>.luz-search__body</div></td>
                 <td data-label="Element"><div>&lt;search&gt;</div></td>
                 <td data-label="Description"><div>The field, the status and the results.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search__head</div></td>
+                <td data-label="Class"><div>.luz-search__head</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The title and the close button, in one row that wraps.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search__title</div></td>
+                <td data-label="Class"><div>.luz-search__title</div></td>
                 <td data-label="Element"><div>&lt;h2&gt;</div></td>
                 <td data-label="Description"><div>The dialog’s name; its label names the field.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search__field</div></td>
+                <td data-label="Class"><div>.luz-search__field</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The field, with a decorative magnifier <code class="luz-code-inline">svg</code> at its start.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search__status</div></td>
+                <td data-label="Class"><div>.luz-search__status</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>The count of results, <code class="luz-code-inline">role="status"</code>, small and muted.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search__close</div></td>
+                <td data-label="Class"><div>.luz-search__close</div></td>
                 <td data-label="Element"><div>&lt;button&gt;</div></td>
                 <td data-label="Description"><div>The close button, 44 pixels high, in a <code class="luz-code-inline">form method="dialog"</code>.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search__results</div></td>
+                <td data-label="Class"><div>.luz-search__results</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The result groups: a heading and a list of links each.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-search__foot</div></td>
+                <td data-label="Class"><div>.luz-search__foot</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>The last line, with the link to the index page.</div></td>
               </tr>
@@ -346,17 +361,17 @@ files: components/_components.css, components/search.css, components/lang-switch
                 <td data-label="Description"><div>The warning colours, for something that stops the visitor; the words say it too.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-consent</div></td>
+                <td data-label="Class"><div>.luz-consent</div></td>
                 <td data-label="Element"><div>&lt;section hidden&gt;</div></td>
-                <td data-label="Description"><div>The cookie banner, above the site header, in a <code class="luz-code-inline">&lt;luz-site-consent&gt;</code>. Hidden in the markup: <code class="luz-code-inline">consent.js</code> shows it when no answer is stored.</div></td>
+                <td data-label="Description"><div>The cookie banner, above the site header, in a <code class="luz-code-inline">&lt;luz-consent&gt;</code>. Hidden in the markup: <code class="luz-code-inline">consent.min.js</code> shows it when no answer is stored.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-consent__title</div></td>
+                <td data-label="Class"><div>.luz-consent__title</div></td>
                 <td data-label="Element"><div>&lt;h2&gt;</div></td>
                 <td data-label="Description"><div>The banner’s heading, in the sans; it names the region.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-consent__choices</div></td>
+                <td data-label="Class"><div>.luz-consent__choices</div></td>
                 <td data-label="Element"><div>&lt;details&gt;</div></td>
                 <td data-label="Description"><div>The categories of optional cookies, as checkboxes in a form, under Accept and Reject.</div></td>
               </tr>

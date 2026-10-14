@@ -24,7 +24,7 @@ import '@luz-ds/core/css'
 import '@luz-ds/site/css'
 
 import '@luz-ds/core'        // optional: the core behaviors
-import '@luz-ds/site'    // only for the search
+import '@luz-ds/site'    // the loader: the search and the cookie banner, when the page has them
 ```
 
 `@luz-ds/core` and `@luz-ds/site` without `/css` are the scripts.
@@ -36,17 +36,24 @@ import '@luz-ds/site'    // only for the search
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js"></script>
-<!-- Only for the search: it wires the dialog when the page loads -->
+<!-- The loader: it loads search.min.js on a page with a <luz-search>
+     and consent.min.js on a page with a <luz-consent>, and nothing else -->
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js"></script>
-<!-- Only on pages with the cookie banner: site.min.js does not include it -->
-<script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js"></script>
+```
+
+With Subresource Integrity, an `integrity` on the `<script>` covers `site.min.js` only. List each chunk the page may load in a `<link rel="modulepreload">` with its own hash, before the script: the browser checks it, and the loader's import uses that verdict.
+
+```html
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/search.min.js" integrity="sha384-…" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js" integrity="sha384-…" crossorigin>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js" integrity="sha384-…" crossorigin></script>
 ```
 
 ## Package exports
 
-- **`.`** → `site.js` — Warns when core is not loaded and defines `<luz-site-search>`. `site.min.js` is one file with the search inside
-- **`./search`** → `search.js` — defines `<luz-site-search>`, a custom element (light DOM) that wraps the search `<dialog>` and wires it when it connects; importing it in a page defines the element, importing it in Node does nothing
-- **`./consent`** → `consent.js` — defines `<luz-site-consent>`, the cookie banner (light DOM), and exports `getConsent(key?)`. Not imported by `site.js`: load it, or `consent.min.js`, only where the banner is. Importing it in Node does nothing but give `getConsent`
+- **`.`** → `site.js` — The presence loader. Warns when core is not loaded, scans the page once and loads `search.js` when it has a `<luz-search>` (on the first pointerdown or focus in it, Ctrl+K, or idle) and `consent.js` when it has a `<luz-consent>` (on idle). `site.min.js` imports `./search.min.js` and `./consent.min.js` and nothing else
+- **`./search`** → `search.js` — defines `<luz-search>`, a custom element (light DOM) that holds the fallback link, the trigger and the search `<dialog>`, and wires them when it connects; importing it in a page defines the element (once, however many copies), importing it in Node does nothing. Import it by hand for a `<luz-search>` added after the page has loaded
+- **`./consent`** → `consent.js` — defines `<luz-consent>`, the cookie banner (light DOM), and exports `getConsent(key?)`. Importing it in Node does nothing but give `getConsent`
 - **`./css`** → `site.css` — App shell and layout primitives (`./css/min` for the minified twin)
 - **`./components/*`** → `dist/components/` — one stylesheet per component, `<name>.css` and `<name>.min.css`, each in `luz.site`, for a page that loads only what it uses
 - **`./print.css`** → `print.css` — what site's pieces do on paper, in `luz.site`, for a page that loads components one by one (`site.css` already has it)
@@ -63,16 +70,16 @@ import '@luz-ds/site'    // only for the search
 - `.luz-site-header` (`--sticky`, `__inner`, `__brand`, `__nav`, `__actions`) — Site header: the name, the main links and a few controls; below 769 px the links are a native popover panel opened by core's `.luz-nav-toggle`, with no script
 - `.luz-site-submenu` — An item of the header's links that holds more links: a native `<details name>`, in the flow in the menu panel and a box under its button from 769 px; no script
 - `.luz-site-notice` (`--warning`) — A band above the header with one short announcement and one link; no script, no close button
-- `.luz-site-consent` (`__title`, `__choices`) — The cookie banner, above the header, hidden until `consent.js` shows it
+- `<luz-consent>` and `.luz-consent` (`__title`, `__choices`) — The cookie banner, above the header, hidden until `consent.js` shows it
 - `.luz-site-footer` — Page footer
 - `.luz-site-lang-switcher` (`__button`, `__menu`, `__list`, `__link`, `__name`, `__title`, `__icon`) — Language switcher: a button that opens a native popover list of links, with no script
 - `.luz-site-skip-link` — Accessibility skip link
 - `.luz-site-image` — Fixed-ratio frame around a native `<picture>`; modifiers `--4x3`, `--3x2`, `--1x1`, `--21x9`, `--9x16`
-- `.luz-site-search-trigger` (`--compact`, `__icon`, `__label`, `__key`) and `.luz-site-search` (`__body`, `__head`, `__title`, `__close`, `__results`, `__foot`) — Site search: a button that opens a native `<dialog>` of grouped links
+- `<luz-search>` with `.luz-search__fallback` (`__fallback-label`), `.luz-search__trigger` (`--compact`, `__trigger-icon`, `__trigger-label`, `__trigger-key`) and `.luz-search` (`__body`, `__head`, `__title`, `__field`, `__status`, `__close`, `__results`, `__foot`) — Site search: a link to your index that a button replaces, in the same space, and a native `<dialog>` of grouped links
 
 ## Search
 
-A button shaped like a field ("Search docs…", <kbd>Ctrl K</kbd>) opens a native `<dialog>` with a field and the results as links, grouped under Pages, Sections and HTML elements (8 per group at most). Ctrl+K and ⌘K open it too. Without JavaScript the button stays hidden and a plain link to your index page shows. Every fixed text is in your markup, and the few the script writes (the count, "no results", loading, error) are `data-luz-label-*` attributes on the dialog, in the page's language. The full markup, the keyboard model and the index format are on the [Search page of the docs](https://nandovejer.github.io/luz/docs/site/search/).
+A button shaped like a field ("Search docs…", <kbd>Ctrl K</kbd>) opens a native `<dialog>` with a field and the results as links, grouped under Pages, Sections and HTML elements (8 per group at most). Ctrl+K and ⌘K open it too, also before its script has loaded. Without JavaScript the button stays hidden and a plain link to your index page shows in its place. Every fixed text is in your markup, and the few the script writes (the count, "no results", loading, error) are `data-luz-label-*` attributes on the dialog, in the page's language. The full markup, the keyboard model and the index format are on the [Search page of the docs](https://nandovejer.github.io/luz/docs/site/search/).
 
 The index is a JSON file on the same origin (`data-luz-search-src`), format version 1, with URLs relative to the file:
 

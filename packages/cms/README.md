@@ -13,7 +13,7 @@ The classes go on any element, so a template of any CMS can write them (in a blo
 
 ## Prerequisites
 
-Requires `@luz-ds/tokens`, `@luz-ds/core` and `@luz-ds/site`, version `^0.1.0`, declared as peer dependencies, loaded in that order before this package.
+Requires `@luz-ds/tokens` and `@luz-ds/core`, version `^0.1.0`, declared as peer dependencies, loaded in that order before this package. `@luz-ds/site` (`^0.1.0`) is an optional peer: load it before this package if you use its pieces; the patterns work without it.
 
 ## Installation
 
@@ -48,6 +48,7 @@ The body of a story is core's `.luz-prose` (line length and the space between bl
 ## Package exports
 
 - **`./css`** → `cms.css` — the patterns, in the cascade layer `luz.cms`, after `luz.site` (`./css/min` for the minified twin)
+- **`./components/*`** → `dist/components/` — one stylesheet per pattern, `<name>.css` and `<name>.min.css`, each in `luz.cms`, for a page that loads only what it uses
 
 ## Classes included
 

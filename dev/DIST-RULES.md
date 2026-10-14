@@ -64,7 +64,11 @@ pnpm site:build
 This inlines the `@import` graph of `src/index.css` →
 `dist/site.css` (+ `.min`), syncs `site.js`, `search.js` and `consent.js` and bundles
 each into a `.min.js`, and copies `src/placeholders/`. It runs the shared
-builder, `scripts/build-package.js`.
+builder, `scripts/build-package.js`, which also emits every
+`src/components/*.css` whose name does not start with `_` as
+`dist/components/<name>.css` (+ `.min`), in the package's layer with the same
+rebased `url()`s as the bundle, and `src/components/_print.css` as
+`dist/print.css` (+ `.min`). The same holds for landing and cms.
 
 ## @luz-ds/landing
 
@@ -75,7 +79,8 @@ pnpm landing:build
 ```
 
 This inlines the `@import` graph of `src/index.css` → `dist/landing.css`
-(+ `.min`), in the `luz.landing` layer, through the same shared builder.
+(+ `.min`), in the `luz.landing` layer, through the same shared builder,
+and each component as `dist/components/<name>.css` (+ `.min`).
 No JavaScript. Landing has its own version (0.x): after adding or removing a
 published file, run `node scripts/check-pack.js --update`.
 
@@ -88,7 +93,8 @@ pnpm cms:build
 ```
 
 This inlines the `@import` graph of `src/index.css` → `dist/cms.css`
-(+ `.min`), in the `luz.cms` layer, through the same shared builder.
+(+ `.min`), in the `luz.cms` layer, through the same shared builder,
+and each component as `dist/components/<name>.css` (+ `.min`).
 No JavaScript (the table of contents uses core's scroll spy). CMS has its own
 version (0.x): after adding or removing a published file, run
 `node scripts/check-pack.js --update`.

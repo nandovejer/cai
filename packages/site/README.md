@@ -48,6 +48,8 @@ import '@luz-ds/site'    // only for the search
 - **`./search`** → `search.js` — defines `<luz-site-search>`, a custom element (light DOM) that wraps the search `<dialog>` and wires it when it connects; importing it in a page defines the element, importing it in Node does nothing
 - **`./consent`** → `consent.js` — defines `<luz-site-consent>`, the cookie banner (light DOM), and exports `getConsent(key?)`. Not imported by `site.js`: load it, or `consent.min.js`, only where the banner is. Importing it in Node does nothing but give `getConsent`
 - **`./css`** → `site.css` — App shell and layout primitives (`./css/min` for the minified twin)
+- **`./components/*`** → `dist/components/` — one stylesheet per component, `<name>.css` and `<name>.min.css`, each in `luz.site`, for a page that loads only what it uses
+- **`./print.css`** → `print.css` — what site's pieces do on paper, in `luz.site`, for a page that loads components one by one (`site.css` already has it)
 - **`./placeholders/*`** → `dist/placeholders/` — The image placeholder: `placeholder[-night]-<ratio>-<width>.{avif,webp,jpg}`, `placeholder.svg` and `placeholder-night.svg`
 
 ## Classes included

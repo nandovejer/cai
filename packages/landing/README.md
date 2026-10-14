@@ -13,7 +13,7 @@ The blocks of an event landing page (hero, programme, speakers, tickets, call to
 
 ## Prerequisites
 
-Requires `@luz-ds/tokens`, `@luz-ds/core` and `@luz-ds/site`, version `^0.1.0`, declared as peer dependencies, loaded in that order before this package.
+Requires `@luz-ds/tokens` and `@luz-ds/core`, version `^0.1.0`, declared as peer dependencies, loaded in that order before this package. `@luz-ds/site` (`^0.1.0`) is an optional peer: load it before this package if you use its pieces; the patterns work without it.
 
 ## Installation
 
@@ -46,6 +46,7 @@ There is no script. Add core's and site's if you use their behaviours.
 ## Package exports
 
 - **`./css`** → `landing.css` — the patterns, in the cascade layer `luz.landing`, after `luz.site` (`./css/min` for the minified twin)
+- **`./components/*`** → `dist/components/` — one stylesheet per pattern, `<name>.css` and `<name>.min.css`, each in `luz.landing`, for a page that loads only what it uses
 
 ## Classes included
 

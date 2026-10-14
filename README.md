@@ -55,7 +55,7 @@ Each package needs the ones below it and nothing above it. Adopt one level and s
 | A landing page | the three above and `@luz-ds/landing` | the files of the row above, then `landing.css` |
 | A blog or a newspaper | the three above and `@luz-ds/cms` | the files of level 3, then `cms.css` |
 
-`@luz-ds/core` declares `@luz-ds/tokens` as a required peer dependency; `@luz-ds/site` declares both, and `@luz-ds/landing` and `@luz-ds/cms` the three. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
+`@luz-ds/core` declares `@luz-ds/tokens` as a required peer dependency; `@luz-ds/site` declares both, and `@luz-ds/landing` and `@luz-ds/cms` require tokens and core and take `@luz-ds/site` as an optional peer (install it if you use its pieces). npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
 
 ```bash
 npm install @luz-ds/tokens                                   # level 1

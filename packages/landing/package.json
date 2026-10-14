@@ -7,6 +7,7 @@
   "exports": {
     "./css": "./dist/landing.css",
     "./css/min": "./dist/landing.min.css",
+    "./components/*": "./dist/components/*",
     "./package.json": "./package.json"
   },
   "files": [
@@ -39,6 +40,11 @@
     "@luz-ds/core": "^0.1.0",
     "@luz-ds/site": "^0.1.0",
     "@luz-ds/tokens": "^0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@luz-ds/site": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@luz-ds/core": "workspace:*",

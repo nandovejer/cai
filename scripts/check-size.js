@@ -84,7 +84,7 @@ const SPECIFIERS = [
   /(?:^|[;}\s])import\s*["']([^"']+)["']/g,
   /\bimport\(\s*["']([^"']+)["']\s*\)/g,
 ];
-const SELF_CONTAINED = new Set(["packages/site/dist/site.min.js", "packages/site/dist/search.min.js"]);
+const SELF_CONTAINED = new Set(["packages/site/dist/site.min.js", "packages/site/dist/search.min.js", "packages/site/dist/consent.min.js"]);
 for (const pkg of readdirSync(resolve(root, "packages"))) {
   const dist = resolve(root, "packages", pkg, "dist");
   if (!existsSync(dist)) continue;

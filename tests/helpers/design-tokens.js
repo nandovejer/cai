@@ -91,8 +91,8 @@ function sourceOf(page) {
     const dir = `packages/${page.meta.area}/src/components`;
     return { css: readdirSync(`${repo}${dir}`).filter((f) => f.endsWith(".css")).sort().map((f) => read(`${dir}/${f}`)).join("\n"), classes };
   }
-  // The shell patterns, and the patterns with a file of their own (the language switcher, the site header)
-  const files = ["_components.css", "lang-switcher.css", "site-header.css"].map((f) => read(`packages/site/src/components/${f}`));
+  // The shell patterns, and the patterns with a file of their own (the language switcher, the site header, the submenu, the notice and the cookie banner)
+  const files = ["_components.css", "lang-switcher.css", "site-header.css", "submenu.css", "banners.css"].map((f) => read(`packages/site/src/components/${f}`));
   return { css: files.join("\n"), classes };
 }
 

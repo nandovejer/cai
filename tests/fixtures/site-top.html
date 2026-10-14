@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Top of a site: consent, notice, header with submenus</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <script type="module" src="/packages/site/dist/consent.min.js"></script>
+</head>
+<body>
+  <a class="cai-site-skip-link" id="skip" href="#main">Skip to main content</a>
+
+  <cai-site-consent>
+    <section class="cai-site-consent" id="consent" data-cai-consent aria-labelledby="consent-title" hidden>
+      <div data-cai-consent-ask>
+        <h2 class="cai-site-consent__title" id="consent-title">Cookies on Bodega Albar</h2>
+        <p>We use cookies that this site needs to work. We would also like to measure how you use it, to improve it. <a id="policy" href="#cookies">Read the cookie policy</a>.</p>
+        <form class="cai-site-actions">
+          <button class="cai-btn cai-btn--primary" id="accept" type="submit" value="all">Accept optional cookies</button>
+          <button class="cai-btn cai-btn--primary" id="reject" type="submit" value="none">Reject optional cookies</button>
+        </form>
+        <details class="cai-site-consent__choices" id="choices">
+          <summary id="choose">Choose which cookies to allow</summary>
+          <form class="o-stack">
+            <fieldset class="cai-fieldset">
+              <legend>Optional cookies</legend>
+              <div class="cai-check-group">
+                <label class="cai-check-item"><input type="checkbox" id="c-analytics" value="analytics"> Measuring visits</label>
+                <label class="cai-check-item"><input type="checkbox" id="c-marketing" value="marketing"> Adverts on other sites</label>
+              </div>
+            </fieldset>
+            <div class="cai-site-actions">
+              <button class="cai-btn cai-btn--secondary" id="save" type="submit">Save my choices</button>
+            </div>
+          </form>
+        </details>
+      </div>
+      <p id="done" data-cai-consent-done tabindex="-1" hidden>Your choice is saved. You can change it at any time on the <a href="#cookies">cookie policy</a> page.</p>
+    </section>
+  </cai-site-consent>
+
+  <section class="cai-site-notice" id="notice" aria-labelledby="notice-label">
+    <p><strong id="notice-label">Open day.</strong> Visit the winery on Saturday 25 October, from 11:00 to 18:00. <a id="notice-link" href="#visits">Book a visit</a></p>
+  </section>
+
+  <header class="cai-site-header cai-site-header--sticky" id="hdr">
+    <div class="cai-site-header__inner">
+      <button class="cai-nav-toggle" id="toggle" type="button" popovertarget="site-nav" aria-label="Menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+      </button>
+      <a class="cai-site-header__brand" id="brand" href="#top">Bodega Albar</a>
+      <nav class="cai-site-header__nav" id="site-nav" aria-label="Main" popover>
+        <ul>
+          <li><a href="#top" aria-current="page">Home</a></li>
+          <li>
+            <details class="cai-site-submenu" id="wines" name="site-menu">
+              <summary id="wines-button">Wines</summary>
+              <ul>
+                <li><a href="#red">Red wines</a></li>
+                <li><a href="#white">White wines</a></li>
+                <li><a href="#sweet">Sweet wines</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a href="#visits">Visits</a></li>
+          <li>
+            <details class="cai-site-submenu" id="about" name="site-menu">
+              <summary id="about-button">About us</summary>
+              <ul>
+                <li><a href="#history">Our history</a></li>
+                <li><a href="#team">The people of the winery</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </nav>
+      <div class="cai-site-header__actions">
+        <a class="cai-btn cai-btn--ghost" id="login" href="#top">Log in</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="o-container">
+      <h1 id="top">Wines from the coast</h1>
+      <p><a id="first" href="#top">The first link of the page</a></p>
+      <p>Text of the page.</p>
+      <p class="cai-site-actions"><button class="cai-btn cai-btn--outline" id="settings" type="button" data-cai-consent-open hidden>Change cookie settings</button></p>
+      <p id="cookies"><a href="#cookies">Cookie policy</a></p>
+    </div>
+  </main>
+</body>
+</html>

@@ -166,8 +166,8 @@
 /* A link inside the sentence of a list item is underlined, as core does in a
    paragraph: colour alone never marks a link (WCAG 1.4.1). Lists that are
    only links (galleries, the A–Z index, contents) carry a class and keep
-   their own look. */
-:where(.docs-view, .docs-prose, .docs-block, .docs-body > ul:not([class])) li > a:not([class]) {
+   their own look, and so do the links of a navigation drawn in an example. */
+:where(.docs-view, .docs-prose, .docs-block, .docs-body > ul:not([class])) li > a:not([class]):where(:not(nav a)) {
   text-decoration: underline;
   text-underline-offset: 0.18em;
 }
@@ -185,7 +185,9 @@
   align-content: start;
 }
 
-:where(.docs-body) h2 {
+/* A component's own heading in an example (it has a class) keeps the
+   component's look: this rule is outside CAI's layers and would win */
+:where(.docs-body) h2:where(:not([data-docs-specimen] [class])) {
   font-size: var(--cai-text-2xl);
   margin-block-start: var(--cai-space-md);
 }
@@ -1722,4 +1724,17 @@ h2.docs-demo__title {
     max-inline-size: none;
     padding: 0;
   }
+}
+
+/* The Submenu example: from 769px a submenu opens over what follows it, so
+   the stage keeps room for the tallest one (three 44px links) */
+@media (min-width: 769px) {
+  .docs-demo__stage:has(.cai-site-submenu) {
+    padding-block-end: calc(3 * var(--cai-control-lg) + var(--cai-space-lg));
+  }
+}
+
+/* Do and don't of the submenu: the open box is drawn in place, in its frame */
+.docs-dodont__stage .cai-site-submenu > ul {
+  position: static;
 }

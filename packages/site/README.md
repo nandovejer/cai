@@ -1,6 +1,6 @@
 # @cai-ds/site
 
-What every site needs, above the components: page shell, site header, footer, sections, image frame, site search and language switcher. A piece is here when it needs data of the site or holds other pieces; everything else is in `@cai-ds/core`. Packages for one kind of site build on this one: [`@cai-ds/landing`](../landing) for a landing page, [`@cai-ds/cms`](../cms) for a blog, a newspaper or any CMS.
+What every site needs, above the components: page shell, site header with submenus, notice, cookie consent, footer, sections, image frame, site search and language switcher. A piece is here when it needs data of the site or holds other pieces; everything else is in `@cai-ds/core`. Packages for one kind of site build on this one: [`@cai-ds/landing`](../landing) for a landing page, [`@cai-ds/cms`](../cms) for a blog, a newspaper or any CMS.
 
 > **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
 
@@ -38,12 +38,15 @@ import '@cai-ds/site'    // only for the search
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js"></script>
 <!-- Only for the search: it wires the dialog when the page loads -->
 <script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.js"></script>
+<!-- Only on pages with the cookie banner: site.min.js does not include it -->
+<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/consent.min.js"></script>
 ```
 
 ## Package exports
 
 - **`.`** → `site.js` — Warns when core is not loaded and defines `<cai-site-search>`. `site.min.js` is one file with the search inside
 - **`./search`** → `search.js` — defines `<cai-site-search>`, a custom element (light DOM) that wraps the search `<dialog>` and wires it when it connects; importing it in a page defines the element, importing it in Node does nothing
+- **`./consent`** → `consent.js` — defines `<cai-site-consent>`, the cookie banner (light DOM), and exports `getConsent(key?)`. Not imported by `site.js`: load it, or `consent.min.js`, only where the banner is. Importing it in Node does nothing but give `getConsent`
 - **`./css`** → `site.css` — App shell and layout primitives (`./css/min` for the minified twin)
 - **`./placeholders/*`** → `dist/placeholders/` — The image placeholder: `placeholder[-night]-<ratio>-<width>.{avif,webp,jpg}`, `placeholder.svg` and `placeholder-night.svg`
 
@@ -56,6 +59,9 @@ import '@cai-ds/site'    // only for the search
 - `.cai-site-page-header`, `__title`, `__lead` — Page header block
 - `.cai-site-actions` — Action button group
 - `.cai-site-header` (`--sticky`, `__inner`, `__brand`, `__nav`, `__actions`) — Site header: the name, the main links and a few controls; below 769 px the links are a native popover panel opened by core's `.cai-nav-toggle`, with no script
+- `.cai-site-submenu` — An item of the header's links that holds more links: a native `<details name>`, in the flow in the menu panel and a box under its button from 769 px; no script
+- `.cai-site-notice` (`--warning`) — A band above the header with one short announcement and one link; no script, no close button
+- `.cai-site-consent` (`__title`, `__choices`) — The cookie banner, above the header, hidden until `consent.js` shows it
 - `.cai-site-footer` — Page footer
 - `.cai-site-lang-switcher` (`__button`, `__menu`, `__list`, `__link`, `__name`, `__title`, `__icon`) — Language switcher: a button that opens a native popover list of links, with no script
 - `.cai-site-skip-link` — Accessibility skip link
@@ -76,6 +82,19 @@ The index is a JSON file on the same origin (`data-cai-search-src`), format vers
 ```
 
 Each item is `[text, url, meta?, lang?]`. The component fetches it only from the page's own origin, without following redirects (your CSP needs `connect-src 'self'`), keeps only `http:` and `https:` links, writes every text as text, and has limits: 1,000,000 characters of JSON, 10,000 results, 300 characters a text, 8 words a search. Unknown fields are ignored.
+
+## Cookie consent
+
+A banner above the header asks once whether the site may use optional cookies: Accept and Reject side by side, with the same style, and a `<details>` with one checkbox per category. It is `hidden` in the markup and `consent.js` shows it when no answer is stored, when the stored one has expired (180 days by default, `data-cai-consent-days`, 395 at most), or when it offers a category the stored answer was not asked about. It covers nothing and takes no focus; Escape is not an answer. Without JavaScript it stays hidden: none of your scripts run either, and the cookie policy is a link on every page.
+
+The answer is stored in `localStorage` under `cai-consent` (or `data-cai-consent-key`, starting with `cai-`), as `{"version":1,"expires":<ms>,"asked":[…],"granted":[…]}`. Read it with `getConsent()`, which returns `{ asked, granted, expires }` or `null`, and listen for `cai:consent` on `document`, dispatched with the same object as `detail` on every new answer. A button with `data-cai-consent-open` (and `hidden`) shows the banner again. The script writes no text. Full markup on the [Cookie consent page of the docs](https://nandovejer.github.io/cai/docs/site/consent/).
+
+```js
+import { getConsent } from "@cai-ds/site/consent";
+const granted = (answer) => answer?.granted.includes("analytics");
+if (granted(getConsent())) startMeasuring();
+document.addEventListener("cai:consent", (e) => (granted(e.detail) ? startMeasuring() : location.reload()));
+```
 
 ## Image and placeholder
 

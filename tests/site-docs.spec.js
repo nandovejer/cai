@@ -38,6 +38,9 @@ const PACKAGES = {
       search: 'search',
       'search-trigger': 'search',
       'lang-switcher': 'lang',
+      submenu: 'submenu',
+      notice: 'notice',
+      consent: 'consent',
     },
   },
   landing: {

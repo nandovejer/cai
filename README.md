@@ -108,6 +108,7 @@ Pin an exact version and add an `integrity` hash in production; see [SECURITY.md
 | `themes/_template.css` | core | The starting point of a theme of your own |
 | `tokens.css`, `fonts.css` | tokens | The tokens without `@font-face`, or the `@font-face` only |
 | `search.js` | site | The search element on its own (`@cai-ds/site/search`) |
+| `consent.js` | site | The cookie banner (`@cai-ds/site/consent`): `site.js` does not include it |
 | `placeholders/*` | site | The images the image frame shows when it has no picture |
 
 ### JavaScript modules

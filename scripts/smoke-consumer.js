@@ -179,6 +179,7 @@ const PAGE = (base, label) => `<!doctype html>
       [core + "/dist/i18n.js"]: ["t", "registerLocale"],
       [core + "/dist/clipboard.js"]: ["initCopyButtons"],
       [site + "/dist/search.js"]: ["search"],
+      [site + "/dist/consent.js"]: ["getConsent"],
       [site + "/dist/site.js"]: [],
     };
     const missing = [];

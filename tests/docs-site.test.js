@@ -553,7 +553,7 @@ describe("the CAI docs site", () => {
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", ...SITE_KINDS].includes(p.meta.area) && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(41);
+    expect(viewPages).toHaveLength(44);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {

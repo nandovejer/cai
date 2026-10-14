@@ -1,13 +1,14 @@
 {
   "name": "@cai-ds/site",
   "version": "2.0.0",
-  "description": "CAI Design System — site-level patterns (shell, header, footer, search, language switcher) built on @cai-ds/core",
+  "description": "CAI Design System — site-level patterns (shell, header, navigation, notice, cookie consent, footer, search, language switcher) built on @cai-ds/core",
   "license": "MIT",
   "type": "module",
   "main": "dist/site.js",
   "exports": {
     ".": "./dist/site.js",
     "./search": "./dist/search.js",
+    "./consent": "./dist/consent.js",
     "./css": "./dist/site.css",
     "./css/min": "./dist/site.min.css",
     "./placeholders/*": "./dist/placeholders/*",
@@ -40,7 +41,9 @@
     "./dist/site.js",
     "./dist/site.min.js",
     "./dist/search.js",
-    "./dist/search.min.js"
+    "./dist/search.min.js",
+    "./dist/consent.js",
+    "./dist/consent.min.js"
   ],
   "publishConfig": {
     "access": "public"

@@ -3,7 +3,8 @@
  * Wires the core behaviors the examples demonstrate, one module at a time,
  * the few HTML element demos that need a line of script (canvas,
  * template, custom element), "On this page", the Code / Design tab the
- * reader chose last (view.js), and the site search (@cai-ds/site).
+ * reader chose last (view.js), and the site search and the cookie consent
+ * example (@cai-ds/site).
  *
  * cai.js is deliberately not loaded: its auto-init applies the stored or
  * default custom theme to <html>, and this page shows the base color modes
@@ -19,6 +20,9 @@ import { initPlayers } from "/packages/core/dist/player.js";
 import { initSidebar } from "/packages/core/dist/sidebar.js";
 // Defines <cai-site-search>: the search wires itself when it connects
 import "/packages/site/dist/search.js";
+// Defines <cai-site-consent>, for the live example of the Cookie consent page
+// (its answer is stored under its own key, cai-consent-demo)
+import "/packages/site/dist/consent.js";
 import { initSiteHeader } from "../landing/site-header.js";
 import { initDocsView } from "./view.js";
 

@@ -180,3 +180,38 @@
 		gap: 0;
 	}
 }
+
+/* Where anchor positioning is supported, the panel and the language list
+   open under the header wherever it is: below a notice or the cookie
+   banner, or on two rows with enlarged text. The area under the header is
+   their containing block, so the panel never runs past the window, and the
+   scrim is the panel's own shadow, below it, so it never dims the header.
+   Elsewhere they open at --cai-site-header-h from the top of the window. */
+@supports (position-area: block-end span-all) {
+	/* Scoped, so with two headers on a page each panel finds its own */
+	.cai-site-header {
+		anchor-name: --cai-site-header;
+		anchor-scope: --cai-site-header;
+	}
+
+	.cai-site-header__nav[popover]:popover-open,
+	.cai-site-header .cai-site-lang-switcher__menu {
+		position-anchor: --cai-site-header;
+		position-area: block-end span-all;
+		inset-block-start: 0;
+	}
+
+	.cai-site-header .cai-site-lang-switcher__menu {
+		justify-self: end;
+	}
+
+	.cai-site-header__nav[popover]:popover-open {
+		justify-self: stretch;
+		max-block-size: 100%;
+		box-shadow: var(--cai-shadow-lg), 0 0 0 100vmax var(--cai-scrim);
+	}
+
+	.cai-site-header__nav[popover]::backdrop {
+		background: none;
+	}
+}

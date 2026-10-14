@@ -4,7 +4,7 @@ description: Every cai-site class, what element it goes on and what it does, in 
 area: site
 order: 11
 group: reference
-files: components/_components.css, components/search.css, components/lang-switcher.css, components/site-header.css
+files: components/_components.css, components/search.css, components/lang-switcher.css, components/site-header.css, components/submenu.css, components/banners.css
 -->
     <div class="docs-block" id="p-reference">
           <p>Look up a class by name. Each pattern's own page has its markup and guidance.</p>
@@ -90,6 +90,11 @@ files: components/_components.css, components/search.css, components/lang-switch
                 <td data-label="Class"><div>.cai-site-header__actions</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The controls at the end of the row: search, language switcher, a button.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-submenu</div></td>
+                <td data-label="Element"><div>&lt;details&gt;</div></td>
+                <td data-label="Description"><div>An item of the header’s links that holds more links: its <code class="cai-code-inline">&lt;summary&gt;</code> is the button, with a chevron; its list opens under it, in the flow in the menu panel and in a box from 769 px. Give every submenu the same <code class="cai-code-inline">name</code>.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-site-hero</div></td>
@@ -313,6 +318,47 @@ files: components/_components.css, components/search.css, components/lang-switch
                 <td data-label="Class"><div>.cai-site-lang-switcher__link</div></td>
                 <td data-label="Element"><div>&lt;a&gt;</div></td>
                 <td data-label="Description"><div>A language, named in itself, with <code class="cai-code-inline">lang</code> and <code class="cai-code-inline">hreflang</code>; bold and underlined with <code class="cai-code-inline">aria-current</code>.</div></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="notice-and-consent" class="docs-prose__title">Notice and cookie consent</h2>
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Site classes: notice and cookie consent">
+          <table class="cai-table docs-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Element</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Class"><div>.cai-site-notice</div></td>
+                <td data-label="Element"><div>&lt;section&gt;</div></td>
+                <td data-label="Description"><div>A band above the site header with one short announcement and one link, its text in the header’s column. No script, no close button.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-notice--warning</div></td>
+                <td data-label="Element"><div>&lt;section&gt;</div></td>
+                <td data-label="Description"><div>The warning colours, for something that stops the visitor; the words say it too.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-consent</div></td>
+                <td data-label="Element"><div>&lt;section hidden&gt;</div></td>
+                <td data-label="Description"><div>The cookie banner, above the site header, in a <code class="cai-code-inline">&lt;cai-site-consent&gt;</code>. Hidden in the markup: <code class="cai-code-inline">consent.js</code> shows it when no answer is stored.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-consent__title</div></td>
+                <td data-label="Element"><div>&lt;h2&gt;</div></td>
+                <td data-label="Description"><div>The banner’s heading, in the sans; it names the region.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-consent__choices</div></td>
+                <td data-label="Element"><div>&lt;details&gt;</div></td>
+                <td data-label="Description"><div>The categories of optional cookies, as checkboxes in a form, under Accept and Reject.</div></td>
               </tr>
             </tbody>
           </table>

@@ -683,8 +683,10 @@ test.describe('Documentation site', () => {
         for (const route of ALL) {
           await page.goto(route);
           await expect(page.locator('html'), route).toHaveAttribute('data-theme', 'light');
-          // Nothing is hidden but the search buttons, which only work with JavaScript
-          await expect(page.locator('main [hidden]:not([data-cai-search-open])'), route).toHaveCount(0);
+          // Nothing is hidden but what only works with JavaScript: the search
+          // buttons, and the cookie banner of the Cookie consent example with
+          // the button that shows it again
+          await expect(page.locator('main [hidden]:not([data-cai-search-open], [data-cai-consent], [data-cai-consent] *, [data-cai-consent-open])'), route).toHaveCount(0);
           expect(
             await page.locator('details[data-fold-narrow]').evaluateAll((all) => all.every((el) => el.open)),
             route,

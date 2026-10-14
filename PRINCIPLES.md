@@ -110,7 +110,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 
 ## 8. Privacy and performance
 
-- **No tracking, no analytics, no third-party domains.** The only things stored are the visitor's own display preferences — the color mode or theme, and on the docs site the last Code or Design tab — in `localStorage`, under a `cai-` key, with the value checked against the allowed list and no personal data. Every read and write is in `try`/`catch`: the page works the same if storage is blocked or throws.
+- **No tracking, no analytics, no third-party domains.** The only things stored are the visitor's own display preferences — the color mode or theme, and on the docs site the last Code or Design tab — and, where a site uses site's cookie consent, the visitor's answer to it (the categories asked, the ones granted and when the answer expires), in `localStorage`, under a `cai-` key, with the value checked against the allowed list and no personal data. Every read and write is in `try`/`catch`: the page works the same if storage is blocked or throws.
 - **Zero runtime dependencies**, forever.
 - **Size budgets**, min+gzip, in [budgets.json](./budgets.json) and checked by `pnpm check:size`. The ceiling is red line 17; the other bands are warnings.
 
@@ -124,6 +124,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `core` JS lazy chunk: `table-sort` | — | ≤ 1 kB | 1 kB | 2 kB |
 | `site` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | `site` JS | — | ≤ 1 kB | 1 kB | 2 kB |
+| `site` JS module: `consent` (a file of its own, not imported by `site.js`) | — | ≤ 1 kB | 1 kB | 1.5 kB |
 | `landing` CSS | — | ≤ 1 kB | 1 kB | 2 kB |
 | `cms` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |

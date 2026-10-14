@@ -146,7 +146,9 @@ describe.skipIf(!built)("cai-tokens check-contrast", () => {
 
 describe("the pairs the docs pages print", () => {
   it("are all pairs the command checks, at least as strictly", () => {
-    const known = new Map(expandPairs(PAIRS).map((p) => [`${p.fg}|${p.bg}`, p.min]));
+    // A pair listed twice (as text and as a shape) is checked at its strictest
+    const known = new Map();
+    for (const p of expandPairs(PAIRS)) known.set(`${p.fg}|${p.bg}`, Math.max(p.min, known.get(`${p.fg}|${p.bg}`) ?? 0));
     const missing = [];
     for (const page of site.pages) {
       if (page.meta.area !== "components" && page.meta.group !== "patterns") continue;

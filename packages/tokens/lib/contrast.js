@@ -153,6 +153,13 @@ export const PAIRS = [
   { fg: ["brand-primary"], bg: ["surface-strong"], min: 3, kind: "ui" },
   { fg: ["sidebar-active-bg"], bg: ["sidebar-bg"], min: 3, kind: "ui" },
   { fg: ["text-on-fill"], bg: ["surface-media"], min: 4.5, kind: "text" },
+  // Site's bands (notice, cookie banner): a link and a focus ring on the
+  // warning notice, a primary button's edge on the muted band, and the edge
+  // of a checkbox on its field surface
+  { fg: ["brand-primary"], bg: ["color-warning-bg > surface-page"], min: 4.5, kind: "text" },
+  { fg: ["focus-ring"], bg: ["color-warning-bg > surface-page"], min: 3, kind: "ui" },
+  { fg: ["brand-fill"], bg: ["surface-muted"], min: 3, kind: "ui" },
+  { fg: ["outline"], bg: ["input-bg"], min: 3, kind: "ui" },
 ];
 
 /** CAI's own high-contrast mode goes beyond AA where it can: syntax colours keep 7:1 (WCAG 1.4.6). */

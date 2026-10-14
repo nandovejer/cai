@@ -1,0 +1,95 @@
+/* ==========================================================================
+	 CAI Site: submenu.
+	 An item of the site header's links that holds more links: a native
+	 <details> in the list, its <summary> the button. No JavaScript: the
+	 browser opens and closes it and tells assistive technology whether it is
+	 open; with `name`, opening one closes the others where it is supported.
+	 Under its button, in the flow, in the header's narrow panel; from 769px a
+	 box under the button, over the page. Never on hover.
+	 ========================================================================== */
+
+/* Core's bare details is a boxed accordion: here it is an item of the row */
+.cai-site-submenu {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+}
+
+/* The button looks like the links beside it, a 44px target with a chevron
+   that says it opens rather than goes somewhere */
+.cai-site-submenu > summary {
+	display: flex;
+	align-items: center;
+	gap: var(--cai-space-xs);
+	min-block-size: var(--cai-control-lg);
+	margin: 0;
+	padding: 0;
+	background: none;
+	color: var(--cai-text-secondary);
+	font-family: var(--cai-font-sans);
+	font-size: var(--cai-text-md);
+	font-weight: 400;
+	list-style: none;
+}
+
+/* Safari draws its marker here, not with list-style */
+.cai-site-submenu > summary::-webkit-details-marker {
+	display: none;
+}
+
+.cai-site-submenu > summary:hover,
+.cai-site-submenu[open] > summary {
+	color: var(--cai-text-primary);
+}
+
+/* Two borders turned to point down, then up when open: empty content,
+   nothing to announce. Physical on purpose: the arrow does not mirror. */
+.cai-site-submenu > summary::after {
+	content: "";
+	inline-size: 0.4em;
+	block-size: 0.4em;
+	border: solid;
+	border-width: 0 0.125em 0.125em 0;
+	transform: translateY(-25%) rotate(45deg);
+}
+
+.cai-site-submenu[open] > summary::after {
+	transform: translateY(25%) rotate(225deg);
+}
+
+/* The links, one under the other and indented under their button */
+.cai-site-submenu > ul {
+	display: grid;
+	gap: 0;
+	margin: 0;
+	padding: 0;
+	padding-inline-start: var(--cai-space-md);
+	list-style: none;
+}
+
+/* From 769px, where the header's links are a row: a box under the button.
+   The last item's box opens toward the start, so it stays in the window. */
+@media (min-width: 769px) {
+	.cai-site-submenu {
+		position: relative;
+	}
+
+	.cai-site-submenu > ul {
+		position: absolute;
+		inset-block-start: 100%;
+		inset-inline-start: calc(-1 * var(--cai-space-md));
+		z-index: var(--cai-z-overlay);
+		inline-size: max-content;
+		max-inline-size: min(22rem, 100vw - var(--cai-space-xl));
+		padding: var(--cai-space-2xs) var(--cai-space-md);
+		border: 1px solid var(--cai-divider);
+		border-radius: var(--cai-radius-md);
+		background: var(--cai-surface);
+		box-shadow: var(--cai-shadow-md);
+	}
+
+	:last-child > .cai-site-submenu > ul {
+		inset-inline: auto calc(-1 * var(--cai-space-md));
+	}
+}

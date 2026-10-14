@@ -12,11 +12,11 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-CmwPuUcT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CKNYgApZ.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BFeoBDUZ.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-B6t6HMAm.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CeD1sUH7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-PXDzkWMK.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-bvVC2Sbg.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DtFSzNuq.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-IcX9QOC5.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -111,11 +111,11 @@
           <li><a class="luz-sidebar__link" href="../../../docs/site/page-header/">Page header</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/section/">Section</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/footer/">Footer</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/site/banner/">Banner</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/consent/">Cookie consent</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/notice/">Notice</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/actions/">Action group</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/image/">Image</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/lang-switcher/">Language switcher</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/site/lang-switch/">Language switch</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/search/">Search</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/templates/">Page templates</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/classes/">Class reference</a></li>
@@ -138,7 +138,7 @@
     </nav>
     <div class="docs-page-head__title">
       <h1 class="docs-title">Submenu</h1>
-      <code class="docs-demo__file">.luz-site-submenu</code>
+      <code class="docs-demo__file">&lt;luz-submenu&gt;</code>
     </div>
     <p class="docs-lead">Groups a few links of the site header under one button, so the header keeps a short row of links.</p>
   </div>
@@ -185,24 +185,28 @@
                   <ul>
                     <li><a href="#example" aria-current="page">Home</a></li>
                     <li>
-                      <details class="luz-site-submenu" name="submenu-demo">
-                        <summary>Wines</summary>
-                        <ul>
-                          <li><a href="#example">Red wines</a></li>
-                          <li><a href="#example">White wines</a></li>
-                          <li><a href="#example">Sweet wines</a></li>
-                        </ul>
-                      </details>
+                      <luz-submenu>
+                        <details name="submenu-demo">
+                          <summary>Wines</summary>
+                          <ul>
+                            <li><a href="#example">Red wines</a></li>
+                            <li><a href="#example">White wines</a></li>
+                            <li><a href="#example">Sweet wines</a></li>
+                          </ul>
+                        </details>
+                      </luz-submenu>
                     </li>
                     <li><a href="#example">Visits</a></li>
                     <li>
-                      <details class="luz-site-submenu" name="submenu-demo">
-                        <summary>About us</summary>
-                        <ul>
-                          <li><a href="#example">Our history</a></li>
-                          <li><a href="#example">The people of the winery</a></li>
-                        </ul>
-                      </details>
+                      <luz-submenu>
+                        <details name="submenu-demo">
+                          <summary>About us</summary>
+                          <ul>
+                            <li><a href="#example">Our history</a></li>
+                            <li><a href="#example">The people of the winery</a></li>
+                          </ul>
+                        </details>
+                      </luz-submenu>
                     </li>
                   </ul>
                 </nav>
@@ -220,7 +224,7 @@
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>An item of the <a href="../../../docs/site/site-header/">site header</a>’s list whose content is a <code>&lt;details&gt;</code>: its <code>&lt;summary&gt;</code> is the button, and a list of links follows it. Give every submenu of the header the same <code>name</code>, so opening one closes the others.</p>
+            <p>An item of the <a href="../../../docs/site/site-header/">site header</a>’s list whose content is a <code>&lt;luz-submenu&gt;</code> around a <code>&lt;details&gt;</code>: its <code>&lt;summary&gt;</code> is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place. Give every submenu of the header the same <code>name</code>, so opening one closes the others.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
@@ -230,13 +234,15 @@
   &lt;ul&gt;
     &lt;li&gt;&lt;a href=&quot;/&quot; aria-current=&quot;page&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;
-      &lt;details class=&quot;luz-site-submenu&quot; name=&quot;site-menu&quot;&gt;
-        &lt;summary&gt;Wines&lt;/summary&gt;
-        &lt;ul&gt;
-          &lt;li&gt;&lt;a href=&quot;/wines/red/&quot;&gt;Red wines&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;/wines/white/&quot;&gt;White wines&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/details&gt;
+      &lt;luz-submenu&gt;
+        &lt;details name=&quot;site-menu&quot;&gt;
+          &lt;summary&gt;Wines&lt;/summary&gt;
+          &lt;ul&gt;
+            &lt;li&gt;&lt;a href=&quot;/wines/red/&quot;&gt;Red wines&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href=&quot;/wines/white/&quot;&gt;White wines&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/details&gt;
+      &lt;/luz-submenu&gt;
     &lt;/li&gt;
     &lt;li&gt;&lt;a href=&quot;/visits/&quot;&gt;Visits&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
@@ -244,20 +250,20 @@
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>There are no variants. The attributes are the browser’s.</p>
-            <div class="luz-table-wrap" role="region" aria-label="Submenu classes and attributes" tabindex="0">
+            <div class="luz-table-wrap" role="region" aria-label="Submenu tag and attributes" tabindex="0">
               <table class="luz-table">
                 <thead>
-                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                  <tr><th scope="col">Tag or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-site-submenu</code></div></td><td data-label="Effect"><div>On the <code>&lt;details&gt;</code>. Its <code>&lt;summary&gt;</code> looks like the links beside it, with a chevron; its list of links is indented under it, and from 769 px a box under it</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>name</code></div></td><td data-label="Effect"><div>The same value on every submenu of the header: opening one closes the others. Browsers without it leave the others open</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>open</code></div></td><td data-label="Effect"><div>Set by the browser. Do not write it in the markup: a submenu open on every page hides the page under it</div></td></tr>
+                  <tr><td data-label="Tag or attribute"><div><code>&lt;luz-submenu&gt;</code></div></td><td data-label="Effect"><div>Around the <code>&lt;details&gt;</code>, with <code>display: contents</code>: it draws no box and adds no role. The <code>&lt;summary&gt;</code> looks like the links beside it, with a chevron; the list of links is indented under it, and from 769 px a box under it</div></td></tr>
+                  <tr><td data-label="Tag or attribute"><div><code>name</code></div></td><td data-label="Effect"><div>The same value on every submenu of the header: opening one closes the others. Browsers without it leave the others open</div></td></tr>
+                  <tr><td data-label="Tag or attribute"><div><code>open</code></div></td><td data-label="Effect"><div>Set by the browser. Do not write it in the markup: a submenu open on every page hides the page under it</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@luz-ds/site</code> and a native <code>&lt;details&gt;</code>. No JavaScript.</p>
+            <p>CSS from <code>@luz-ds/site</code> and a native <code>&lt;details&gt;</code>. No JavaScript: <code>&lt;luz-submenu&gt;</code> is a tag that no script ever defines.</p>
             <ul>
               <li>The browser opens and closes it, and tells assistive technology whether it is open. A submenu opens on a click, a tap, Enter or Space: never on hover, so it does not open under a pointer passing by, and it works the same on a touch screen.</li>
               <li>At 768 px and below, inside the header’s menu, the links of a group open in place, under their button, indented, and push the next links down.</li>
@@ -296,14 +302,16 @@
                   <nav class="luz-site-header__nav">
                     <ul>
                       <li>
-                        <details class="luz-site-submenu" open>
-                          <summary>Wines</summary>
-                          <ul>
-                            <li><a href="#example">Red wines</a></li>
-                            <li><a href="#example">White wines</a></li>
-                            <li><a href="#example">Sweet wines</a></li>
-                          </ul>
-                        </details>
+                        <luz-submenu>
+                          <details open>
+                            <summary>Wines</summary>
+                            <ul>
+                              <li><a href="#example">Red wines</a></li>
+                              <li><a href="#example">White wines</a></li>
+                              <li><a href="#example">Sweet wines</a></li>
+                            </ul>
+                          </details>
+                        </luz-submenu>
                       </li>
                     </ul>
                   </nav>
@@ -315,14 +323,16 @@
                   <nav class="luz-site-header__nav">
                     <ul>
                       <li>
-                        <details class="luz-site-submenu" open>
-                          <summary>Resources</summary>
-                          <ul>
-                            <li><a href="#example">Visits</a></li>
-                            <li><a href="#example">Shop</a></li>
-                            <li><a href="#example">Press</a></li>
-                          </ul>
-                        </details>
+                        <luz-submenu>
+                          <details open>
+                            <summary>Resources</summary>
+                            <ul>
+                              <li><a href="#example">Visits</a></li>
+                              <li><a href="#example">Shop</a></li>
+                              <li><a href="#example">Press</a></li>
+                            </ul>
+                          </details>
+                        </luz-submenu>
                       </li>
                     </ul>
                   </nav>

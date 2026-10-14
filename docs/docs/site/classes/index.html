@@ -5,18 +5,18 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class reference – Site – LUZ documentation</title>
-  <meta name="description" content="Every luz-site class, what element it goes on and what it does, in one place.">
+  <meta name="description" content="Every luz-site class and every site tag, what element it goes on and what it does, in one place.">
   <link rel="icon" href="../../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-CmwPuUcT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CKNYgApZ.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BFeoBDUZ.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-B6t6HMAm.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CeD1sUH7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-PXDzkWMK.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-bvVC2Sbg.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DtFSzNuq.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-IcX9QOC5.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -111,11 +111,11 @@
           <li><a class="luz-sidebar__link" href="../../../docs/site/page-header/">Page header</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/section/">Section</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/footer/">Footer</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/site/banner/">Banner</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/consent/">Cookie consent</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/notice/">Notice</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/actions/">Action group</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/image/">Image</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/lang-switcher/">Language switcher</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/site/lang-switch/">Language switch</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/search/">Search</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/templates/">Page templates</a></li>
           <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/site/classes/">Class reference</a></li>
@@ -140,12 +140,13 @@
       <h1 class="docs-title">Class reference</h1>
       <code class="docs-demo__file">components/_components.css</code>
       <code class="docs-demo__file">components/search.css</code>
-      <code class="docs-demo__file">components/lang-switcher.css</code>
+      <code class="docs-demo__file">components/lang-switch.css</code>
       <code class="docs-demo__file">components/site-header.css</code>
       <code class="docs-demo__file">components/submenu.css</code>
-      <code class="docs-demo__file">components/banners.css</code>
+      <code class="docs-demo__file">components/banner.css</code>
+      <code class="docs-demo__file">components/consent.css</code>
     </div>
-    <p class="docs-lead">Every luz-site class, what element it goes on and what it does, in one place.</p>
+    <p class="docs-lead">Every luz-site class and every site tag, what element it goes on and what it does, in one place.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -155,8 +156,8 @@
         <li><a class="luz-sidebar__link docs-onpage__link" href="#header-and-footer">Header and footer</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#content-patterns">Content patterns</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#search">Search</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#language-switcher">Language switcher</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#notice-and-consent">Notice and cookie consent</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#language-switch">Language switch</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#banner-and-consent">Banner and cookie consent</a></li>
       </ul>
     </details>
   </nav>
@@ -244,12 +245,12 @@
               <tr>
                 <td data-label="Class"><div>.luz-site-header__actions</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The controls at the end of the row: search, language switcher, a button.</div></td>
+                <td data-label="Description"><div>The controls at the end of the row: search, language switch, a button.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-submenu</div></td>
-                <td data-label="Element"><div>&lt;details&gt;</div></td>
-                <td data-label="Description"><div>An item of the header’s links that holds more links: its <code class="luz-code-inline">&lt;summary&gt;</code> is the button, with a chevron; its list opens under it, in the flow in the menu panel and in a box from 769 px. Give every submenu the same <code class="luz-code-inline">name</code>.</div></td>
+                <td data-label="Class"><div>&lt;luz-submenu&gt;</div></td>
+                <td data-label="Element"><div>around a &lt;details&gt;</div></td>
+                <td data-label="Description"><div>A tag, no class: an item of the header’s links that holds more links. The <code class="luz-code-inline">&lt;details&gt;</code> inside it is selected by its place; its <code class="luz-code-inline">&lt;summary&gt;</code> is the button, with a chevron; its list opens under it, in the flow in the menu panel and in a box from 769 px. Give every submenu the same <code class="luz-code-inline">name</code>.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.luz-site-hero</div></td>
@@ -438,8 +439,8 @@
             </div>
           </div>
           <div class="docs-prose">
-            <h2 id="language-switcher" class="docs-prose__title">Language switcher</h2>
-            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: language switcher">
+            <h2 id="language-switch" class="docs-prose__title">Language switch</h2>
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: language switch">
           <table class="luz-table docs-ref-table">
             <thead>
               <tr>
@@ -450,42 +451,42 @@
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.luz-site-lang-switcher</div></td>
-                <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The wrapper of the button and the list. Sets <code class="luz-code-inline">--luz-site-lang-switcher-top</code>, how far down the list opens.</div></td>
+                <td data-label="Class"><div>&lt;luz-lang-switch&gt;</div></td>
+                <td data-label="Element"><div>a tag</div></td>
+                <td data-label="Description"><div>The block: holds the button and the list, with no class and no role of its own. Sets <code class="luz-code-inline">--luz-lang-switch-top</code>, how far down the list opens (core’s <code class="luz-code-inline">--luz-bar-h</code> by default).</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-lang-switcher__button</div></td>
+                <td data-label="Class"><div>.luz-lang-switch__button</div></td>
                 <td data-label="Element"><div>&lt;button&gt;</div></td>
                 <td data-label="Description"><div>Opens the list with <code class="luz-code-inline">popovertarget</code>. Shows the current language; its name starts with the label, hidden.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-lang-switcher__icon</div></td>
+                <td data-label="Class"><div>.luz-lang-switch__icon</div></td>
                 <td data-label="Element"><div>&lt;svg&gt;</div></td>
                 <td data-label="Description"><div>The globe, decorative, in the text color.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-lang-switcher__name</div></td>
+                <td data-label="Class"><div>.luz-lang-switch__name</div></td>
                 <td data-label="Element"><div>&lt;span&gt;</div></td>
                 <td data-label="Description"><div>The current language’s name in the button. Clipped below 360 pixels, where the globe shows alone; it stays in the button’s name.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-lang-switcher__menu</div></td>
+                <td data-label="Class"><div>.luz-lang-switch__menu</div></td>
                 <td data-label="Element"><div>&lt;nav&gt;</div></td>
                 <td data-label="Description"><div>The popover with the list, fixed under the header at the end of the row.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-lang-switcher__title</div></td>
+                <td data-label="Class"><div>.luz-lang-switch__title</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>The visible name of the list, which labels the nav.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-lang-switcher__list</div></td>
+                <td data-label="Class"><div>.luz-lang-switch__list</div></td>
                 <td data-label="Element"><div>&lt;ul&gt;</div></td>
                 <td data-label="Description"><div>The languages, one per row, without bullets.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-lang-switcher__link</div></td>
+                <td data-label="Class"><div>.luz-lang-switch__link</div></td>
                 <td data-label="Element"><div>&lt;a&gt;</div></td>
                 <td data-label="Description"><div>A language, named in itself, with <code class="luz-code-inline">lang</code> and <code class="luz-code-inline">hreflang</code>; bold and underlined with <code class="luz-code-inline">aria-current</code>.</div></td>
               </tr>
@@ -494,8 +495,8 @@
             </div>
           </div>
           <div class="docs-prose">
-            <h2 id="notice-and-consent" class="docs-prose__title">Notice and cookie consent</h2>
-            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: notice and cookie consent">
+            <h2 id="banner-and-consent" class="docs-prose__title">Banner and cookie consent</h2>
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: banner and cookie consent">
           <table class="luz-table docs-ref-table">
             <thead>
               <tr>
@@ -506,19 +507,19 @@
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.luz-site-notice</div></td>
-                <td data-label="Element"><div>&lt;section&gt;</div></td>
-                <td data-label="Description"><div>A band above the site header with one short announcement and one link, its text in the header’s column. No script, no close button.</div></td>
+                <td data-label="Class"><div>&lt;luz-banner&gt;</div></td>
+                <td data-label="Element"><div>around a &lt;section&gt;</div></td>
+                <td data-label="Description"><div>A tag, no class: a band above the site header with one short announcement and one link, its text in the header’s column. No script, no close button.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.luz-site-notice--warning</div></td>
-                <td data-label="Element"><div>&lt;section&gt;</div></td>
+                <td data-label="Class"><div>tone="warning"</div></td>
+                <td data-label="Element"><div>&lt;luz-banner&gt;</div></td>
                 <td data-label="Description"><div>The warning colours, for something that stops the visitor; the words say it too.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.luz-consent</div></td>
                 <td data-label="Element"><div>&lt;section hidden&gt;</div></td>
-                <td data-label="Description"><div>The cookie banner, above the site header, in a <code class="luz-code-inline">&lt;luz-consent&gt;</code>. Hidden in the markup: <code class="luz-code-inline">consent.min.js</code> shows it when no answer is stored.</div></td>
+                <td data-label="Description"><div>The cookie banner, in a <code class="luz-code-inline">&lt;luz-consent&gt;</code> before the site header, shown as a band fixed at the bottom of the window. Hidden in the markup: <code class="luz-code-inline">consent.min.js</code> shows it when no answer is stored.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.luz-consent__title</div></td>

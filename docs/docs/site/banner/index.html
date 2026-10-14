@@ -4,19 +4,19 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Language switcher – Site – LUZ documentation</title>
-  <meta name="description" content="Lets readers go to the same page in another language, from a button in the header.">
+  <title>Banner – Site – LUZ documentation</title>
+  <meta name="description" content="Tells every visitor one short thing at the top of the page, such as a sale, an event or planned maintenance.">
   <link rel="icon" href="../../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-CmwPuUcT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CKNYgApZ.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BFeoBDUZ.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-B6t6HMAm.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CeD1sUH7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-PXDzkWMK.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-bvVC2Sbg.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DtFSzNuq.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-IcX9QOC5.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -111,11 +111,11 @@
           <li><a class="luz-sidebar__link" href="../../../docs/site/page-header/">Page header</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/section/">Section</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/footer/">Footer</a></li>
+          <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/site/banner/">Banner</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/consent/">Cookie consent</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/notice/">Notice</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/actions/">Action group</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/image/">Image</a></li>
-          <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/site/lang-switcher/">Language switcher</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/site/lang-switch/">Language switch</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/search/">Search</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/templates/">Page templates</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/classes/">Class reference</a></li>
@@ -133,14 +133,15 @@
       <ol class="luz-breadcrumb">
         <li><a class="luz-breadcrumb__item" href="../../../docs/">Docs</a></li>
         <li><a class="luz-breadcrumb__item" href="../../../docs/site/">Site</a></li>
-        <li><span class="luz-breadcrumb__item" aria-current="page">Language switcher</span></li>
+        <li><span class="luz-breadcrumb__item" aria-current="page">Banner</span></li>
       </ol>
     </nav>
     <div class="docs-page-head__title">
-      <h1 class="docs-title">Language switcher</h1>
-      <code class="docs-demo__file">.luz-site-lang-switcher</code>
+      <h1 class="docs-title">Banner</h1>
+      <code class="docs-demo__file">&lt;luz-banner&gt;</code>
+      <code class="docs-demo__file">tone=&quot;warning&quot;</code>
     </div>
-    <p class="docs-lead">Lets readers go to the same page in another language, from a button in the header.</p>
+    <p class="docs-lead">Tells every visitor one short thing at the top of the page, such as a sale, an event or planned maintenance.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -171,164 +172,149 @@
     </details>
   </nav>
   <div class="docs-body">
-    <div class="docs-component" id="p-lang">
+    <div class="docs-component" id="p-banner">
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <div class="luz-site-lang-switcher">
-              <button class="luz-site-lang-switcher__button" type="button" popovertarget="lang-demo-menu"><svg class="luz-site-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">Language: </span><span class="luz-site-lang-switcher__name">English</span></button>
-              <nav class="luz-site-lang-switcher__menu" id="lang-demo-menu" popover aria-labelledby="lang-demo-title">
-                <p class="luz-site-lang-switcher__title" id="lang-demo-title">Language</p>
-                <ul class="luz-site-lang-switcher__list">
-                  <li><a class="luz-site-lang-switcher__link" href="../../../" hreflang="en" lang="en" aria-current="true">English</a></li>
-                  <li><a class="luz-site-lang-switcher__link" href="../../../es/" hreflang="es" lang="es">Español</a></li>
-                  <li><a class="luz-site-lang-switcher__link" href="../../../ar/" hreflang="ar" lang="ar">العربية</a></li>
-                </ul>
-              </nav>
-            </div>
-            <p class="docs-demo__note">The links go to this site’s home page in each language. The list opens under the header, at the end of the row, as it does on the <a href="../../../">home page</a>; this documentation is in English only.</p>
+            <luz-banner>
+              <section aria-labelledby="banner-demo-label">
+                <p><strong id="banner-demo-label">Open day.</strong> Visit the winery on Saturday 25 October, from 11:00 to 18:00. <a href="#example">Book a visit</a></p>
+              </section>
+            </luz-banner>
+            <luz-banner tone="warning">
+              <section aria-labelledby="banner-demo-warning">
+                <p><strong id="banner-demo-warning">Planned maintenance.</strong> The shop will be closed on Monday 3 November from 07:00 to 09:00. <a href="#example">See what still works</a></p>
+              </section>
+            </luz-banner>
           </div>
+          <p class="docs-demo__note">On a site the banner goes above the site header, as wide as the window, and its text starts where the header’s row starts. Here it is as wide as the example.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe. It has not been tested with a screen reader yet.</p>
-          <nav class="luz-tabs docs-view-tabs" aria-label="Language switcher documentation">
+          <p>It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the banner short and remove it from the markup when it ends. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the site header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a banner; Escape or a click outside closes it.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Banner documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>One link per language, to the same page in that language, in the header of every translated page. On each page mark its own language with <code>aria-current="page"</code> and write the label in the page’s language.</p>
+            <p>A <code>&lt;luz-banner&gt;</code> around one <code>&lt;section&gt;</code> named by its first words, after the <a href="../../../docs/components/skip-link/">skip link</a> and the <a href="../../../docs/site/consent/">cookie consent</a>, before the <a href="../../../docs/site/site-header/">site header</a>.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="luz-copy-btn" type="button" data-copy-from="code-lang-switcher" aria-label="Copy the language switcher markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-banner" aria-label="Copy the banner markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Language switcher markup"><code id="code-lang-switcher">&lt;div class=&quot;luz-site-lang-switcher&quot;&gt;
-  &lt;button class=&quot;luz-site-lang-switcher__button&quot; type=&quot;button&quot; popovertarget=&quot;lang-menu&quot;&gt;
-    &lt;span class=&quot;u-sr-only&quot;&gt;Language: &lt;/span&gt;&lt;span class=&quot;luz-site-lang-switcher__name&quot;&gt;English&lt;/span&gt;
-  &lt;/button&gt;
-  &lt;nav class=&quot;luz-site-lang-switcher__menu&quot; id=&quot;lang-menu&quot; popover aria-labelledby=&quot;lang-title&quot;&gt;
-    &lt;p class=&quot;luz-site-lang-switcher__title&quot; id=&quot;lang-title&quot;&gt;Language&lt;/p&gt;
-    &lt;ul class=&quot;luz-site-lang-switcher__list&quot;&gt;
-      &lt;li&gt;&lt;a class=&quot;luz-site-lang-switcher__link&quot; href=&quot;/&quot; hreflang=&quot;en&quot; lang=&quot;en&quot; aria-current=&quot;page&quot;&gt;English&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a class=&quot;luz-site-lang-switcher__link&quot; href=&quot;/es/&quot; hreflang=&quot;es&quot; lang=&quot;es&quot;&gt;Español&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a class=&quot;luz-site-lang-switcher__link&quot; href=&quot;/ar/&quot; hreflang=&quot;ar&quot; lang=&quot;ar&quot;&gt;العربية&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/nav&gt;
-&lt;/div&gt;</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Banner markup"><code id="code-banner">&lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+&lt;luz-banner&gt;
+  &lt;section aria-labelledby=&quot;banner-label&quot;&gt;
+    &lt;p&gt;&lt;strong id=&quot;banner-label&quot;&gt;Open day.&lt;/strong&gt; Visit the winery on Saturday 25 October,
+      from 11:00 to 18:00. &lt;a href=&quot;/visits/&quot;&gt;Book a visit&lt;/a&gt;&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/luz-banner&gt;
+&lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>There are no variants. One custom property places the list.</p>
-            <div class="luz-table-wrap" role="region" aria-label="Language switcher classes and properties" tabindex="0">
+            <div class="luz-table-wrap" role="region" aria-label="Banner tag and attribute" tabindex="0">
               <table class="luz-table">
                 <thead>
-                  <tr><th scope="col">Class or property</th><th scope="col">Effect</th></tr>
+                  <tr><th scope="col">Tag or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher</code></div></td><td data-label="Effect"><div>The wrapper. Holds the button and the list.</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__button</code></div></td><td data-label="Effect"><div>A 44 px button with the current language’s name; filled while the list is open</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__icon</code></div></td><td data-label="Effect"><div>An optional globe before the name, drawn in the text colour. Decorative: <code>aria-hidden="true"</code></div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__name</code></div></td><td data-label="Effect"><div>The current language’s name. Below 360 px it is clipped and the globe shows alone; it stays in the button’s name</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__menu</code></div></td><td data-label="Effect"><div>The popover: fixed under the header, at the end of the row (the left edge in right-to-left text)</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__title</code></div></td><td data-label="Effect"><div>The visible name of the list</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__list</code></div></td><td data-label="Effect"><div>The list of languages, without bullets</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.luz-site-lang-switcher__link</code></div></td><td data-label="Effect"><div>One 44 px row per language. With <code>aria-current</code>: bold and underlined</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>--luz-site-lang-switcher-top</code></div></td><td data-label="Effect"><div>How far from the top of the screen the list opens. Defaults to the height of a one-row header of 44 px controls; set it on the wrapper if your header is taller.</div></td></tr>
+                  <tr><td data-label="Tag or attribute"><div><code>&lt;luz-banner&gt;</code></div></td><td data-label="Effect"><div>Around one <code>&lt;section&gt;</code>, which becomes a band as wide as its container, on a muted surface with a rule under it, in small sans text. Its text starts where the site header’s row starts. A tag that no script defines: no class, no role of its own</div></td></tr>
+                  <tr><td data-label="Tag or attribute"><div><code>tone="warning"</code></div></td><td data-label="Effect"><div>On the tag, the one tone: The warning colours: for something that stops the visitor doing what they came to do, such as maintenance. Say it in the words too: “Planned maintenance.” Any other value leaves the plain band</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>Changing language is going to another page, so the switcher is a list of links. The button opens it with the native <code>popovertarget</code>, and <code>@luz-ds/site</code> only styles it: there is no script.</p>
+            <p>CSS from <code>@luz-ds/site</code>. No JavaScript: <code>&lt;luz-banner&gt;</code> is a tag that no script ever defines.</p>
             <ul>
-              <li>Each language is named in that language, with <code>lang</code> so a screen reader pronounces it, and <code>hreflang</code> so the link says where it goes.</li>
-              <li>The list is a popover in the top layer, fixed under the header at the inline end; it mirrors in right-to-left text.</li>
-              <li>The page itself declares its language and direction: <code>&lt;html lang="ar" dir="rtl"&gt;</code>. Add a <code>&lt;link rel="alternate" hreflang="…"&gt;</code> per language in the <code>&lt;head&gt;</code>, so search engines find the others.</li>
-              <li>Core switches Arabic text to the system sans and removes letter spacing from it: the serif has no Arabic letters, and spacing breaks the joins of the script.</li>
+              <li>It is a band of the page, in the flow: it scrolls away with the page, and a <code>--sticky</code> site header stays at the top under it. Nothing covers the page.</li>
+              <li>Its inline padding lines its text up with the site header’s row, up to <code>--luz-content-max</code> wide, in either direction of text.</li>
+              <li>There is no close button. Closing it for good needs a script and a value stored in the browser, and a button that does nothing without a script is never shown. A banner is short-lived: remove it from the markup when the event is over.</li>
+              <li>There is no success or error tone: a banner is not the answer to something the visitor did. For that use an <a href="../../../docs/components/alert/">alert</a> in the page.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Nothing changes: the button opens the list with the popover API, and the links are links. In a browser without the popover API the button is hidden and the links show in a row.</p>
+            <p>Nothing changes: there is no script.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Tab to the button and press Enter or Space to open the list; Tab moves through the languages and Enter follows one. Escape, or a click outside, closes the list.</p>
             <ul>
-              <li>The browser tells assistive technology whether the list is open, from <code>popovertarget</code>.</li>
-              <li>The button’s name is “Language: English”: what it is, then the visible text (WCAG 2.5.3). Below 360 px only the globe shows, and the name is the same.</li>
-              <li>The current language is a link with <code>aria-current="page"</code>.</li>
+              <li><strong>Order:</strong> its link comes after the skip link and before the site header.</li>
+              <li><strong>Landmark:</strong> a <code>&lt;section&gt;</code> with a name is a region, so a screen reader lists it among the landmarks; name it with <code>aria-labelledby</code> pointing at its first words. If it says nothing more than its sentence, a <code>&lt;div&gt;</code> with no name is fine.</li>
+              <li><strong>Not a live region:</strong> it is there when the page loads, so it needs no <code>role="status"</code> or <code>role="alert"</code>; a screen reader reads it with the rest of the page.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>Use it on a site whose pages exist in two languages or more, in the header of every translated page, at the same place on each.</p>
+            <p>Use it for one short, timely thing every visitor of the site should know, on every page, for a few days: a sale, an event, planned maintenance, a change of opening hours.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>Do not add it to pages that exist in one language only, even if the rest of the site is translated.</p>
+            <p>Do not use it for something that belongs to one page or to one visitor: put that in the page, or answer with an <a href="../../../docs/components/alert/">alert</a> or a <a href="../../../docs/components/toast/">toast</a>.</p>
             <ul>
-              <li>Do not choose the language for the reader from the browser’s settings or their location: let them choose, and link each page to the others.</li>
-              <li>Do not use it to translate the page in place with a script: each language is a page of its own, with its own address.</li>
+              <li>Do not show two banners at once, and do not leave one up for months: a band that never changes is no longer read.</li>
+              <li>Do not use it to ask for cookies: use the <a href="../../../docs/site/consent/">cookie consent</a> banner.</li>
+              <li>Do not put a form or more than one link in it.</li>
             </ul>
-            <p>It replaces nothing in LUZ. It makes a <code>&lt;select&gt;</code> with a script that changes the address unnecessary.</p>
+            <p>It replaces the announcement bars a site builds with its own CSS. Nothing in LUZ is removed.</p>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
-                <figcaption><strong class="docs-dodont__verdict">Do</strong> Name each language in that language, so a reader who does not understand the page still finds theirs.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Start with what it is about, in bold, say when, and end with one link that says where it goes.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <ul class="luz-site-lang-switcher__list">
-                    <li><span class="luz-site-lang-switcher__link">English</span></li>
-                    <li><span class="luz-site-lang-switcher__link">Español</span></li>
-                    <li><span class="luz-site-lang-switcher__link">العربية</span></li>
-                  </ul>
+                  <luz-banner tone="warning">
+                    <section>
+                      <p><strong>Planned maintenance.</strong> The shop will be closed on Monday 3 November from 07:00 to 09:00. <a href="#example">See what still works</a></p>
+                    </section>
+                  </luz-banner>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
-                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Use flags, or name the languages in the page’s language: a flag is a country, not a language, and “Árabe” means nothing to a reader of Arabic.</figcaption>
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Rely on the yellow to say it is a warning, shout in capitals, or leave out the date: the words alone must carry the message, and “soon” is wrong a day later.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <ul class="luz-site-lang-switcher__list">
-                    <li><span class="luz-site-lang-switcher__link">🇬🇧 Inglés</span></li>
-                    <li><span class="luz-site-lang-switcher__link">🇪🇸 Español</span></li>
-                    <li><span class="luz-site-lang-switcher__link">🇸🇦 Árabe</span></li>
-                  </ul>
+                  <luz-banner tone="warning">
+                    <section>
+                      <p>IMPORTANT!!! THE SHOP WILL BE CLOSED SOON.</p>
+                    </section>
+                  </luz-banner>
                 </div>
               </figure>
             </div>
             <h3 id="content">Writing the content</h3>
-            <p>Write each language’s name as its speakers write it: “English”, “Español”, “العربية”, never “EN” or a flag.</p>
+            <p>One sentence, two at most. Start with what it is about, in bold, ending with a full stop: “Open day.”, “Planned maintenance.”.</p>
             <ul>
-              <li>Write the label in the page’s language: “Language”, “Idioma”, “اللغة”.</li>
-              <li>List the languages in the same order on every page.</li>
-              <li>If some pages are not translated, link to the closest page that is, and say in its language that the rest is in another one.</li>
+              <li>Give the date and the time, with the day of the week, so it is still true when read late.</li>
+              <li>End with one link that says where it goes: “Book a visit”, not “More information”.</li>
+              <li>Write in sentence case, with no exclamation marks.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
-            <p>The button sits on the page; the list is a raised surface with a border and a shadow.</p>
-            <div class="luz-table-wrap" role="region" aria-label="Language switcher contrast in each mode" tabindex="0">
+            <p>The text and its link sit on the band’s surface.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Banner contrast in each mode" tabindex="0">
               <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Button text and globe</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Button, hovered or open</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>List title</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Language link</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Language link, hovered</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring on the button</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring on a link</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text, warning</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>16.0:1</div></td><td data-label="Dark"><div>11.5:1</div></td><td data-label="High contrast"><div>20.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link, warning</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.7:1</div></td><td data-label="Dark"><div>5.9:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring on the link</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring on the link, warning</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.7:1</div></td><td data-label="Dark"><div>5.9:1</div></td><td data-label="High contrast"><div>20.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings.</p>
             <ul>
-              <li><strong>Focus:</strong> a 2 px <code>--luz-focus-ring</code> outline, 2 px outside the button and just inside each link, so the list’s rounded corners never cut it.</li>
-              <li>The current language is bold and underlined, not only a colour.</li>
+              <li><strong>Focus:</strong> core’s 2 px <code>--luz-focus-ring</code> outline around the link.</li>
+              <li>The link is underlined, as every link in text is: not only a colour.</li>
+              <li>The warning’s yellow is never the only signal: its first words say what it is.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 16 tokens that the rules of site’s <code>components/lang-switcher.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 11 tokens that the rules of site’s <code>components/banner.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="../../../docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="../../../docs/tokens/color/#luz-surface"><code>--luz-surface</code></a>, <a href="../../../docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="../../../docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="../../../docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
-              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-xs</code>, <code>--luz-space-sm</code>, <code>--luz-space-md</code></dd></div>
-              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-sm</code>, <code>--luz-text-md</code></dd></div>
-              <div><dt><a href="../../../docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
-              <div><dt><a href="../../../docs/tokens/shadows/">Shadows</a></dt><dd><code>--luz-shadow-md</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#luz-color-warning-accent"><code>--luz-color-warning-accent</code></a>, <a href="../../../docs/tokens/color/#luz-color-warning-bg"><code>--luz-color-warning-bg</code></a>, <a href="../../../docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="../../../docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="../../../docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-xs</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-sm</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-content-max</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
@@ -343,8 +329,8 @@
       <li><a href="../../../docs/get-started/">Install LUZ</a></li>
     </ul>
     <ul class="docs-pager">
-      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/site/image/" aria-label="Previous: Image"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Image</span></a></li>
-      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/site/search/" aria-label="Next: Search"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Search</span></a></li>
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/site/footer/" aria-label="Previous: Footer"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Footer</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/site/consent/" aria-label="Next: Cookie consent"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Cookie consent</span></a></li>
     </ul>
   </nav>
   </main>

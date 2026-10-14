@@ -1,8 +1,8 @@
 /**
- * CAI Site — image placeholders
+ * LUZ Site — image placeholders
  * Renders the two masters in packages/site/src/placeholders/ (day:
  * placeholder.svg, night: placeholder-night.svg) to every aspect ratio and
- * width that .cai-site-image uses, in AVIF and WebP, and in JPEG at the
+ * width that .luz-site-image uses, in AVIF and WebP, and in JPEG at the
  * smaller widths only (the fallback for browsers without either), next to
  * the masters. The rasters are committed: CI and the
  * release only copy them (scripts/build-site.js), so a build never needs
@@ -68,7 +68,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     if (/^placeholder-.+\.(avif|webp|jpg)$/.test(name)) unlinkSync(join(dir, name));
   }
 
-  const tmp = mkdtempSync(join(tmpdir(), "cai-placeholders-"));
+  const tmp = mkdtempSync(join(tmpdir(), "luz-placeholders-"));
   try {
     let count = 0;
     let bytes = 0;

@@ -36,7 +36,7 @@ describe("select.css layering", () => {
   });
 
   it("draws the closed box without the second layer: border, arrow, focus, states", () => {
-    expect(layer1).toMatch(/\.cai-select\s*{[^}]*appearance:\s*none/);
+    expect(layer1).toMatch(/\.luz-select\s*{[^}]*appearance:\s*none/);
     expect(layer1).toMatch(/linear-gradient\([^)]*currentcolor/);
     for (const state of [":hover", ":focus-visible", ":disabled", '[aria-invalid="true"]', "[multiple]", "forced-colors"]) {
       expect(layer1, state).toContain(state);
@@ -44,7 +44,7 @@ describe("select.css layering", () => {
   });
 
   it("uses no literal colour or physical side, and no primitive token", () => {
-    expect(css).not.toMatch(/#[0-9a-f]{3,8}\b|rgba?\(|var\(--cai-(gray|blue|red|green|yellow|purple)-\d+/);
+    expect(css).not.toMatch(/#[0-9a-f]{3,8}\b|rgba?\(|var\(--luz-(gray|blue|red|green|yellow|purple)-\d+/);
     expect(css).not.toMatch(/\b(margin|padding|border)-(left|right)\b|\b(left|right):/);
   });
 });

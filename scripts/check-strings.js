@@ -1,5 +1,5 @@
 /**
- * CAI — shipped-strings check (PRINCIPLES.md §4, strong rule SR-1).
+ * LUZ — shipped-strings check (PRINCIPLES.md §4, strong rule SR-1).
  * Scans the visible text of every HTML file under apps/ (pages, and the docs site's layouts, partials and
  * page fragments in apps/docs/) for wording the principles forbid:
  * vague link/button text and Title Case headings. Code samples are skipped.
@@ -34,7 +34,7 @@ const VAGUE = {
 const CASED = new Set(["en", "es"]);
 
 // Words that may be capitalised inside a sentence-case heading
-const ALLOWED_CAPS = /^(CAI|CSS|HTML|JS|JavaScript|JSON|ARIA|WCAG|MIDI|API|npm|pnpm|URL|UI|UX|ITCSS|BEM|CDN|ES|SVG|MDN|DOM|OK|Tokens|Core|Site|Level|Components)$/;
+const ALLOWED_CAPS = /^(LUZ|CSS|HTML|JS|JavaScript|JSON|ARIA|WCAG|MIDI|API|npm|pnpm|URL|UI|UX|ITCSS|BEM|CDN|ES|SVG|MDN|DOM|OK|Tokens|Core|Site|Level|Components)$/;
 
 // Removed parts keep their line breaks, so the reported line numbers stay right
 const blank = (text) => text.replace(/[^\n]/g, "");

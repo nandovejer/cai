@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Sidebar
 description: Holds the main navigation of a site or an app, and becomes a drawer on small screens.
 area: components
@@ -12,37 +12,37 @@ keywords: drawer, side navigation
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage docs-sidebar-demo">
-            <nav class="cai-sidebar" aria-label="Sidebar specimen">
-              <div class="cai-sidebar__brand">
-                <div class="cai-sidebar__brand-name">
-                  <span class="cai-sidebar__logo" aria-hidden="true"><svg viewBox="8 8 32 32" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span>
-                  CAI
+            <nav class="luz-sidebar" aria-label="Sidebar specimen">
+              <div class="luz-sidebar__brand">
+                <div class="luz-sidebar__brand-name">
+                  <span class="luz-sidebar__logo" aria-hidden="true"><svg viewBox="8 8 32 32" width="16" height="16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span>
+                  LUZ
                 </div>
-                <div class="cai-sidebar__version">v3.0.0</div>
+                <div class="luz-sidebar__version">v0.1.0</div>
               </div>
-              <div class="cai-sidebar__section">
-                <div class="cai-sidebar__section-label">System</div>
-                <a class="cai-sidebar__link is-active" href="/docs/tokens/" aria-current="true">Tokens</a>
-                <a class="cai-sidebar__link" href="/docs/components/">Components</a>
-                <a class="cai-sidebar__link" href="/docs/site/">Site</a>
+              <div class="luz-sidebar__section">
+                <div class="luz-sidebar__section-label">System</div>
+                <a class="luz-sidebar__link is-active" href="/docs/tokens/" aria-current="true">Tokens</a>
+                <a class="luz-sidebar__link" href="/docs/components/">Components</a>
+                <a class="luz-sidebar__link" href="/docs/site/">Site</a>
               </div>
-              <div class="cai-sidebar__footer">
-                <fieldset class="cai-mode-switcher" disabled>
-                  <legend class="cai-mode-switcher__label">Color mode (specimen)</legend>
-                  <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="light" checked>Light</label>
-                  <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="dark">Dark</label>
-                  <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="high-contrast">High contrast</label>
+              <div class="luz-sidebar__footer">
+                <fieldset class="luz-mode-switcher" disabled>
+                  <legend class="luz-mode-switcher__label">Color mode (specimen)</legend>
+                  <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme-specimen" value="light" checked>Light</label>
+                  <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme-specimen" value="dark">Dark</label>
+                  <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme-specimen" value="high-contrast">High contrast</label>
                 </fieldset>
               </div>
             </nav>
             <div class="docs-demo__stage">
               <div class="o-row">
-                <button class="cai-nav-toggle" type="button" aria-label="Navigation toggle (specimen)" disabled>
-                  <span class="cai-nav-toggle__bar"></span>
-                  <span class="cai-nav-toggle__bar"></span>
-                  <span class="cai-nav-toggle__bar"></span>
+                <button class="luz-nav-toggle" type="button" aria-label="Navigation toggle (specimen)" disabled>
+                  <span class="luz-nav-toggle__bar"></span>
+                  <span class="luz-nav-toggle__bar"></span>
+                  <span class="luz-nav-toggle__bar"></span>
                 </button>
-                <code class="docs-demo__file">.cai-nav-toggle</code>
+                <code class="docs-demo__file">.luz-nav-toggle</code>
               </div>
               <p class="docs-demo__note">On small screens the sidebar becomes a drawer. <a href="#page-nav">This page's navigation uses it live</a>.</p>
             </div>
@@ -50,59 +50,59 @@ keywords: drawer, side navigation
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>In a browser without the popover API the navigation does not become a drawer: it stays visible above the content on small screens.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Sidebar documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Sidebar documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-sidebar" aria-label="Copy the sidebar with its drawer button markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-sidebar" aria-label="Copy the sidebar with its drawer button markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Sidebar with its drawer button markup"><code id="code-sidebar">&lt;header&gt;
-  &lt;button class=&quot;cai-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;site-nav&quot; aria-label=&quot;Menu&quot;&gt;
-    &lt;span class=&quot;cai-nav-toggle__bar&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;cai-nav-toggle__bar&quot;&gt;&lt;/span&gt;
-    &lt;span class=&quot;cai-nav-toggle__bar&quot;&gt;&lt;/span&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Sidebar with its drawer button markup"><code id="code-sidebar">&lt;header&gt;
+  &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;site-nav&quot; aria-label=&quot;Menu&quot;&gt;
+    &lt;span class=&quot;luz-nav-toggle__bar&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;luz-nav-toggle__bar&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;luz-nav-toggle__bar&quot;&gt;&lt;/span&gt;
   &lt;/button&gt;
 &lt;/header&gt;
 
-&lt;nav class=&quot;cai-sidebar&quot; id=&quot;site-nav&quot; popover aria-label=&quot;Main&quot;&gt;
-  &lt;div class=&quot;cai-sidebar__section&quot;&gt;
-    &lt;div class=&quot;cai-sidebar__section-label&quot;&gt;Account&lt;/div&gt;
-    &lt;a class=&quot;cai-sidebar__link is-active&quot; href=&quot;/profile/&quot; aria-current=&quot;page&quot;&gt;Profile&lt;/a&gt;
-    &lt;a class=&quot;cai-sidebar__link&quot; href=&quot;/billing/&quot;&gt;Billing&lt;/a&gt;
+&lt;nav class=&quot;luz-sidebar&quot; id=&quot;site-nav&quot; popover aria-label=&quot;Main&quot;&gt;
+  &lt;div class=&quot;luz-sidebar__section&quot;&gt;
+    &lt;div class=&quot;luz-sidebar__section-label&quot;&gt;Account&lt;/div&gt;
+    &lt;a class=&quot;luz-sidebar__link is-active&quot; href=&quot;/profile/&quot; aria-current=&quot;page&quot;&gt;Profile&lt;/a&gt;
+    &lt;a class=&quot;luz-sidebar__link&quot; href=&quot;/billing/&quot;&gt;Billing&lt;/a&gt;
   &lt;/div&gt;
 &lt;/nav&gt;</code></pre>
             </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">JS</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-sidebar-js" aria-label="Copy the sidebar script code">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-sidebar-js" aria-label="Copy the sidebar script code">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Sidebar script code"><code id="code-sidebar-js">import { initSidebar } from &quot;@cai-ds/core/sidebar&quot;;
+              <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="Sidebar script code"><code id="code-sidebar-js">import { initSidebar } from &quot;@luz-ds/core/sidebar&quot;;
 initSidebar();</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <div class="cai-table-wrap" role="region" aria-label="Sidebar parts and options" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Sidebar parts and options" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar</code></div></td><td data-label="What it does"><div>The navigation column, in the sidebar colours</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>popover</code> on <code>.cai-sidebar</code></div></td><td data-label="What it does"><div>Makes it a drawer at 768 px and below</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__brand</code>, <code>__brand-name</code>, <code>__logo</code>, <code>__version</code></div></td><td data-label="What it does"><div>An optional brand block at the top</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__section</code>, <code>__section-label</code></div></td><td data-label="What it does"><div>A group of links and its label</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__link</code></div></td><td data-label="What it does"><div>A link</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-cai-spy</code> on any element</div></td><td data-label="What it does"><div>Not part of the sidebar: the scroll spy also marks the links to sections of the page inside it, such as a table of contents styled your own way</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-sidebar</code></div></td><td data-label="What it does"><div>The navigation column, in the sidebar colours</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>popover</code> on <code>.luz-sidebar</code></div></td><td data-label="What it does"><div>Makes it a drawer at 768 px and below</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-sidebar__brand</code>, <code>__brand-name</code>, <code>__logo</code>, <code>__version</code></div></td><td data-label="What it does"><div>An optional brand block at the top</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-sidebar__section</code>, <code>__section-label</code></div></td><td data-label="What it does"><div>A group of links and its label</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-sidebar__link</code></div></td><td data-label="What it does"><div>A link</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-luz-spy</code> on any element</div></td><td data-label="What it does"><div>Not part of the sidebar: the scroll spy also marks the links to sections of the page inside it, such as a table of contents styled your own way</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.is-active</code> on a link</div></td><td data-label="What it does"><div>Marks the current link with weight and colour; pair it with <code>aria-current="page"</code></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__footer</code></div></td><td data-label="What it does"><div>Pinned to the bottom, for example for the <a href="/docs/components/mode-switcher/">color mode switcher</a></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-nav-toggle</code></div></td><td data-label="What it does"><div>The menu button, shown at 768 px and below; put it first in your header row</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-nav-toggle--fixed</code></div></td><td data-label="What it does"><div>Pins the menu button to the top start corner, for a page with no header</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-sidebar__footer</code></div></td><td data-label="What it does"><div>Pinned to the bottom, for example for the <a href="/docs/components/mode-switcher/">color mode switcher</a></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-nav-toggle</code></div></td><td data-label="What it does"><div>The menu button, shown at 768 px and below; put it first in your header row</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-nav-toggle--fixed</code></div></td><td data-label="What it does"><div>Pins the menu button to the top start corner, for a page with no header</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -110,8 +110,8 @@ initSidebar();</code></pre>
             <p>A <code>&lt;nav&gt;</code> landmark, styled by <code>components/sidebar.css</code>. On small screens it is a native popover drawer.</p>
             <ul>
               <li>The menu button opens it with <code>popovertarget</code>, with no script. The browser gives Escape, a click outside to close, the top layer and the expanded state.</li>
-              <li><code>initSidebar()</code> from <code>sidebar.js</code> is optional: it marks the link of the section in view on a long page (<code>aria-current="true"</code>) and closes the drawer when a link is followed. <code>cai.js</code> runs it.</li>
-              <li>The scroll spy finds its links by <code>.cai-sidebar__link</code>, and by <code>data-cai-spy</code>: on any element (a <code>&lt;nav&gt;</code> of contents), it spies every link inside that points at a section of the page (<code>href="#…"</code>). The attribute is the hook; the look of those links is yours.</li>
+              <li><code>initSidebar()</code> from <code>sidebar.js</code> is optional: it marks the link of the section in view on a long page (<code>aria-current="true"</code>) and closes the drawer when a link is followed. <code>luz.js</code> runs it.</li>
+              <li>The scroll spy finds its links by <code>.luz-sidebar__link</code>, and by <code>data-luz-spy</code>: on any element (a <code>&lt;nav&gt;</code> of contents), it spies every link inside that points at a section of the page (<code>href="#…"</code>). The attribute is the hook; the look of those links is yours.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>The sidebar and the drawer work. The current link is the one your markup marks; it does not follow the scroll.</p>
@@ -124,7 +124,7 @@ initSidebar();</code></pre>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a sidebar for the main navigation of an app or a documentation site with many sections.</p>
@@ -139,13 +139,13 @@ initSidebar();</code></pre>
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Short nouns, grouped under a label, in the order people need them.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="docs-dodont__sidebar"><span class="cai-sidebar__section-label">Account</span><span class="cai-sidebar__link">Profile</span><span class="cai-sidebar__link">Billing</span><span class="cai-sidebar__link">Team</span></div>
+                  <div class="docs-dodont__sidebar"><span class="luz-sidebar__section-label">Account</span><span class="luz-sidebar__link">Profile</span><span class="luz-sidebar__link">Billing</span><span class="luz-sidebar__link">Team</span></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Sentences and catch-alls as links: “Manage your billing details” is slow to scan and “Other stuff” says nothing.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="docs-dodont__sidebar"><span class="cai-sidebar__section-label">Menu</span><span class="cai-sidebar__link">Manage your billing details</span><span class="cai-sidebar__link">Profile</span><span class="cai-sidebar__link">Other stuff</span></div>
+                  <div class="docs-dodont__sidebar"><span class="luz-sidebar__section-label">Menu</span><span class="luz-sidebar__link">Manage your billing details</span><span class="luz-sidebar__link">Profile</span><span class="luz-sidebar__link">Other stuff</span></div>
                 </div>
               </figure>
             </div>
@@ -157,40 +157,40 @@ initSidebar();</code></pre>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The sidebar has its own tokens: light text on a dark panel in every mode, and a filled current link.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Sidebar contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Sidebar contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-text</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>10.9:1</div></td><td data-label="Dark"><div>10.0:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Link, hover</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-text-hover</code> on <code>--cai-sidebar-hover</code></div></td><td data-label="Light"><div>13.0:1</div></td><td data-label="Dark"><div>16.4:1</div></td><td data-label="High contrast"><div>17.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Current link</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-active-text</code> on <code>--cai-sidebar-active-bg</code></div></td><td data-label="Light"><div>10.3:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Current link fill</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-active-bg</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>8.9:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Section label and version</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-label</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>6.7:1</div></td><td data-label="Dark"><div>6.6:1</div></td><td data-label="High contrast"><div>6.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Menu button</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Menu button border</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Menu button focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-text</code> on <code>--luz-sidebar-bg</code></div></td><td data-label="Light"><div>10.9:1</div></td><td data-label="Dark"><div>10.0:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link, hover</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-text-hover</code> on <code>--luz-sidebar-hover</code></div></td><td data-label="Light"><div>13.0:1</div></td><td data-label="Dark"><div>16.4:1</div></td><td data-label="High contrast"><div>17.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current link</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-active-text</code> on <code>--luz-sidebar-active-bg</code></div></td><td data-label="Light"><div>10.3:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current link fill</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-active-bg</code> on <code>--luz-sidebar-bg</code></div></td><td data-label="Light"><div>8.9:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Section label and version</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-label</code> on <code>--luz-sidebar-bg</code></div></td><td data-label="Light"><div>6.7:1</div></td><td data-label="Dark"><div>6.6:1</div></td><td data-label="High contrast"><div>6.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Menu button</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Menu button border</div></td><td data-label="Colour on background"><div><code>--luz-outline</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Menu button focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> a link gets a 2 px outline inside its edge, in its own text colour, so the ring has the link's own contrast; other controls in the sidebar take <code>--cai-sidebar-text-hover</code>. The menu button has the 2 px <code>--cai-focus-ring</code> outline.</li>
+              <li><strong>Focus:</strong> a link gets a 2 px outline inside its edge, in its own text colour, so the ring has the link's own contrast; other controls in the sidebar take <code>--luz-sidebar-text-hover</code>. The menu button has the 2 px <code>--luz-focus-ring</code> outline.</li>
               <li><strong>Not colour alone:</strong> the current link is filled and carries <code>aria-current</code>.</li>
               <li><strong>Target:</strong> the menu button is 44 px square.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 36 tokens that <code>components/sidebar.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="/docs/tokens/color/#cai-scrim"><code>--cai-scrim</code></a>, <a href="/docs/tokens/color/#cai-sidebar-active-bg"><code>--cai-sidebar-active-bg</code></a>, <a href="/docs/tokens/color/#cai-sidebar-active-text"><code>--cai-sidebar-active-text</code></a>, <a href="/docs/tokens/color/#cai-sidebar-bg"><code>--cai-sidebar-bg</code></a>, <a href="/docs/tokens/color/#cai-sidebar-border"><code>--cai-sidebar-border</code></a>, <a href="/docs/tokens/color/#cai-sidebar-hover"><code>--cai-sidebar-hover</code></a>, <a href="/docs/tokens/color/#cai-sidebar-label"><code>--cai-sidebar-label</code></a>, <a href="/docs/tokens/color/#cai-sidebar-logo-bg"><code>--cai-sidebar-logo-bg</code></a>, <a href="/docs/tokens/color/#cai-sidebar-text"><code>--cai-sidebar-text</code></a>, <a href="/docs/tokens/color/#cai-sidebar-text-hover"><code>--cai-sidebar-text-hover</code></a>, <a href="/docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="/docs/tokens/color/#cai-surface-page"><code>--cai-surface-page</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-space-2xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xl</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-font-sans</code>, <code>--cai-text-md</code>, <code>--cai-text-sm</code>, <code>--cai-text-xl</code>, <code>--cai-text-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-lg</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-base</code>, <code>--cai-duration-fast</code>, <code>--cai-duration-slow</code>, <code>--cai-easing-standard</code></dd></div>
-              <div><dt><a href="/docs/tokens/layers/">Layers</a></dt><dd><code>--cai-z-modal</code>, <code>--cai-z-sidebar</code></dd></div>
-              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--cai-sidebar-width</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-outline"><code>--luz-outline</code></a>, <a href="/docs/tokens/color/#luz-scrim"><code>--luz-scrim</code></a>, <a href="/docs/tokens/color/#luz-sidebar-active-bg"><code>--luz-sidebar-active-bg</code></a>, <a href="/docs/tokens/color/#luz-sidebar-active-text"><code>--luz-sidebar-active-text</code></a>, <a href="/docs/tokens/color/#luz-sidebar-bg"><code>--luz-sidebar-bg</code></a>, <a href="/docs/tokens/color/#luz-sidebar-border"><code>--luz-sidebar-border</code></a>, <a href="/docs/tokens/color/#luz-sidebar-hover"><code>--luz-sidebar-hover</code></a>, <a href="/docs/tokens/color/#luz-sidebar-label"><code>--luz-sidebar-label</code></a>, <a href="/docs/tokens/color/#luz-sidebar-logo-bg"><code>--luz-sidebar-logo-bg</code></a>, <a href="/docs/tokens/color/#luz-sidebar-text"><code>--luz-sidebar-text</code></a>, <a href="/docs/tokens/color/#luz-sidebar-text-hover"><code>--luz-sidebar-text-hover</code></a>, <a href="/docs/tokens/color/#luz-surface-hover"><code>--luz-surface-hover</code></a>, <a href="/docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code>, <code>--luz-space-xl</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-mono</code>, <code>--luz-font-sans</code>, <code>--luz-text-md</code>, <code>--luz-text-sm</code>, <code>--luz-text-xl</code>, <code>--luz-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--luz-shadow-lg</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-base</code>, <code>--luz-duration-fast</code>, <code>--luz-duration-slow</code>, <code>--luz-easing-standard</code></dd></div>
+              <div><dt><a href="/docs/tokens/layers/">Layers</a></dt><dd><code>--luz-z-modal</code>, <code>--luz-z-sidebar</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-sidebar-width</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

@@ -1,7 +1,7 @@
 /**
- * CAI Design System — Pattern docs guidance, per package
- * Every block class that a package of patterns ships (@cai-ds/site,
- * @cai-ds/landing, @cai-ds/cms) belongs to a pattern, and every pattern has
+ * LUZ Design System — Pattern docs guidance, per package
+ * Every block class that a package of patterns ships (@luz-ds/site,
+ * @luz-ds/landing, @luz-ds/cms) belongs to a pattern, and every pattern has
  * its page in the documentation, in the area of its package (/docs/site/,
  * /docs/landing/, /docs/cms/), with the same structure as a component page: example,
  * known issues, then the Code and Design tabs (PRINCIPLES.md red line 18 and
@@ -18,7 +18,7 @@ import { gotoId, routeOf } from './helpers/docs-site.js';
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
 // One entry per package of patterns: its docs area is its name, its
-// classes start with .cai-<name>-, and each block maps to the id of its
+// classes start with .luz-<name>-, and each block maps to the id of its
 // pattern page (p-<pattern>)
 const PACKAGES = {
   site: {
@@ -66,7 +66,7 @@ function blocksOf(name) {
     .filter((file) => file.endsWith('.css'))
     .map((file) => readFileSync(`${dir}/${file}`, 'utf-8'))
     .join('\n');
-  return [...new Set([...css.matchAll(new RegExp(`\\.cai-${name}-([\\w-]+)`, 'g'))].map((m) => m[1].split(/__|--/)[0]))];
+  return [...new Set([...css.matchAll(new RegExp(`\\.luz-${name}-([\\w-]+)`, 'g'))].map((m) => m[1].split(/__|--/)[0]))];
 }
 
 // Code tab, then Design tab; Known issues is above them (ia.md §6)
@@ -78,9 +78,9 @@ for (const [name, { label, patternOf }] of Object.entries(PACKAGES)) {
   test.describe(`${label} docs`, () => {
     test(`every ${name} class belongs to a pattern`, () => {
       const blocks = blocksOf(name);
-      expect(blocks.length, `packages/${name} has no .cai-${name}-* class`).toBeGreaterThan(0);
+      expect(blocks.length, `packages/${name} has no .luz-${name}-* class`).toBeGreaterThan(0);
       for (const block of blocks) {
-        expect(patternOf[block], `.cai-${name}-${block} has no pattern in tests/site-docs.spec.js`).toBeTruthy();
+        expect(patternOf[block], `.luz-${name}-${block} has no pattern in tests/site-docs.spec.js`).toBeTruthy();
       }
     });
 
@@ -119,7 +119,7 @@ test.describe('Site docs: keyboard', () => {
     await gotoId(page, 'p-skip');
     await page.keyboard.press('Tab');
     // The page's own link: the Design tab's examples are spans, never links
-    const skip = page.locator('a.cai-site-skip-link[href="#main-content"]');
+    const skip = page.locator('a.luz-site-skip-link[href="#main-content"]');
     await expect(skip).toBeFocused();
     await expect(skip).toBeInViewport();
     await page.keyboard.press('Enter');

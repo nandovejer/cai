@@ -1,87 +1,87 @@
 /* --------------------------------------------------------------------------
-   CAI Component: form
+   LUZ Component: form
    Form controls: field, input, textarea, range, color, file, date, fieldset, output, checkbox, radio, toggle
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-field {
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
-  margin-bottom: var(--cai-space-md);
+.luz-field {
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
+  margin-bottom: var(--luz-space-md);
 }
 
-.cai-field__label {
+.luz-field__label {
   display: block;
-  font-size: var(--cai-text-md);
+  font-size: var(--luz-text-md);
   font-weight: 400;
-  color: var(--cai-text-secondary);
-  margin-bottom: var(--cai-space-2xs);
+  color: var(--luz-text-secondary);
+  margin-bottom: var(--luz-space-2xs);
 }
 
-.cai-field__label--required::after {
+.luz-field__label--required::after {
   content: " *";
-  color: var(--cai-color-danger);
+  color: var(--luz-color-danger);
 }
 
-.cai-field__helper {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
-  margin-top: var(--cai-space-2xs);
+.luz-field__helper {
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
+  margin-top: var(--luz-space-2xs);
 }
 
-.cai-field__error {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-color-danger);
-  margin-top: var(--cai-space-2xs);
+.luz-field__error {
+  font-size: var(--luz-text-sm);
+  color: var(--luz-color-danger);
+  margin-top: var(--luz-space-2xs);
 }
 
-.cai-input {
+.luz-input {
   display: block;
   width: 100%;
-  height: var(--cai-control-lg);
-  background: var(--cai-input-bg);
+  height: var(--luz-control-lg);
+  background: var(--luz-input-bg);
   border: none;
-  border-bottom: 1px solid var(--cai-input-border);
-  color: var(--cai-text-primary);
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-control);
-  padding: 0 var(--cai-space-sm);
-  transition: border-color var(--cai-duration-fast),
-    background var(--cai-duration-base);
+  border-bottom: 1px solid var(--luz-input-border);
+  color: var(--luz-text-primary);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-control);
+  padding: 0 var(--luz-space-sm);
+  transition: border-color var(--luz-duration-fast),
+    background var(--luz-duration-base);
 }
 
-.cai-input::placeholder {
-  color: var(--cai-text-muted);
+.luz-input::placeholder {
+  color: var(--luz-text-muted);
 }
 
-.cai-input:focus {
-  border-bottom: 2px solid var(--cai-focus-ring);
+.luz-input:focus {
+  border-bottom: 2px solid var(--luz-focus-ring);
 }
 
 /* Same ring as buttons and links: one focus appearance everywhere */
-.cai-input:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-input:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-.cai-input--error {
-  border-bottom: 2px solid var(--cai-color-danger);
+.luz-input--error {
+  border-bottom: 2px solid var(--luz-color-danger);
 }
 
-.cai-input--textarea {
+.luz-input--textarea {
   height: auto;
-  padding: var(--cai-space-xs) var(--cai-space-sm);
+  padding: var(--luz-space-xs) var(--luz-space-sm);
   min-height: 80px;
   resize: vertical;
 }
 
-.cai-input:disabled {
+.luz-input:disabled {
   opacity: 0.45;
   cursor: not-allowed;
 }
 
-.cai-input[readonly] {
+.luz-input[readonly] {
   opacity: 0.7;
   border-bottom-style: dashed;
 }
@@ -90,18 +90,18 @@
    FORM — Range slider
    -------------------------------------------------------------------------- */
 
-.cai-input[type="range"] {
+.luz-input[type="range"] {
   height: auto;
-  padding: var(--cai-space-2xs) 0;
+  padding: var(--luz-space-2xs) 0;
   border-bottom: none;
   background: transparent;
-  accent-color: var(--cai-brand-primary);
+  accent-color: var(--luz-brand-primary);
   cursor: pointer;
 }
 
-.cai-input[type="range"]:focus {
+.luz-input[type="range"]:focus {
   border-bottom: none;
-  outline: 2px solid var(--cai-focus-ring);
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 4px;
 }
 
@@ -109,62 +109,62 @@
    FORM — Color picker
    -------------------------------------------------------------------------- */
 
-.cai-input[type="color"] {
-  height: var(--cai-control-md);
-  padding: var(--cai-space-3xs) var(--cai-space-2xs);
+.luz-input[type="color"] {
+  height: var(--luz-control-md);
+  padding: var(--luz-space-3xs) var(--luz-space-2xs);
   cursor: pointer;
   width: 64px;
-  border-bottom: 1px solid var(--cai-input-border);
-  background: var(--cai-input-bg);
+  border-bottom: 1px solid var(--luz-input-border);
+  background: var(--luz-input-bg);
 }
 
 /* --------------------------------------------------------------------------
    FORM — File input
    -------------------------------------------------------------------------- */
 
-.cai-input[type="file"] {
+.luz-input[type="file"] {
   height: auto;
-  padding: var(--cai-space-xs) var(--cai-space-sm);
+  padding: var(--luz-space-xs) var(--luz-space-sm);
   cursor: pointer;
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
-.cai-input[type="file"]::file-selector-button {
-  background: var(--cai-surface-strong);
-  color: var(--cai-text-primary);
+.luz-input[type="file"]::file-selector-button {
+  background: var(--luz-surface-strong);
+  color: var(--luz-text-primary);
   border: none;
-  border-radius: var(--cai-radius-md);
-  padding: var(--cai-space-2xs) var(--cai-space-sm);
-  font-size: var(--cai-text-sm);
-  font-family: var(--cai-font-sans);
+  border-radius: var(--luz-radius-md);
+  padding: var(--luz-space-2xs) var(--luz-space-sm);
+  font-size: var(--luz-text-sm);
+  font-family: var(--luz-font-sans);
   cursor: pointer;
-  margin-inline-end: var(--cai-space-sm);
-  transition: background var(--cai-duration-fast);
+  margin-inline-end: var(--luz-space-sm);
+  transition: background var(--luz-duration-fast);
 }
 
-.cai-input[type="file"]::file-selector-button:hover {
-  background: var(--cai-surface-hover);
+.luz-input[type="file"]::file-selector-button:hover {
+  background: var(--luz-surface-hover);
 }
 
 /* --------------------------------------------------------------------------
    FORM — Date / time inputs
    -------------------------------------------------------------------------- */
 
-.cai-input[type="date"],
-.cai-input[type="time"],
-.cai-input[type="datetime-local"],
-.cai-input[type="month"],
-.cai-input[type="week"] {
+.luz-input[type="date"],
+.luz-input[type="time"],
+.luz-input[type="datetime-local"],
+.luz-input[type="month"],
+.luz-input[type="week"] {
   color-scheme: light; /* the picker follows the mode: dark only in dark */
   /* WebKit's own sheet centres the value with inline-flex, which the block
-     display of .cai-input removes: do it here, so the value is at the middle
+     display of .luz-input removes: do it here, so the value is at the middle
      of the field in every engine */
   display: flex;
   align-items: center;
 }
 
-:is([data-theme="dark"], [data-mode="dark"], :root:has(input[name="cai-theme"][value="dark"]:checked)) .cai-input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
+:is([data-theme="dark"], [data-mode="dark"], :root:has(input[name="luz-theme"][value="dark"]:checked)) .luz-input:is([type="date"], [type="time"], [type="datetime-local"], [type="month"], [type="week"]) {
   color-scheme: dark;
 }
 
@@ -172,28 +172,28 @@
    FORM — Fieldset / Legend
    -------------------------------------------------------------------------- */
 
-.cai-fieldset {
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  padding: var(--cai-space-md) var(--cai-space-lg);
+.luz-fieldset {
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  padding: var(--luz-space-md) var(--luz-space-lg);
   margin: 0;
-  background: var(--cai-input-bg);
+  background: var(--luz-input-bg);
 }
 
-.cai-fieldset legend,
-.cai-legend {
-  font-size: var(--cai-text-sm);
+.luz-fieldset legend,
+.luz-legend {
+  font-size: var(--luz-text-sm);
   font-weight: 500;
-  color: var(--cai-text-secondary);
-  padding: 0 var(--cai-space-xs);
+  color: var(--luz-text-secondary);
+  padding: 0 var(--luz-space-xs);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
 /* Spacing between letters breaks the joins of Arabic script */
-.cai-fieldset legend:lang(ar),
-.cai-legend:lang(ar) {
+.luz-fieldset legend:lang(ar),
+.luz-legend:lang(ar) {
   letter-spacing: 0;
 }
 
@@ -201,12 +201,12 @@
    FORM — Output element
    -------------------------------------------------------------------------- */
 
-.cai-output {
+.luz-output {
   display: inline-block;
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
-  font-size: var(--cai-text-md);
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
+  font-size: var(--luz-text-md);
   font-weight: 500;
-  color: var(--cai-brand-primary);
+  color: var(--luz-brand-primary);
   font-variant-numeric: tabular-nums;
   min-width: 2.5em;
   text-align: end;
@@ -216,49 +216,49 @@
    FORM — Checkbox / Radio
    -------------------------------------------------------------------------- */
 
-.cai-check-group {
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
+.luz-check-group {
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
   display: flex;
   flex-direction: column;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
-.cai-check-item {
+.luz-check-item {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   cursor: pointer;
   /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
   -webkit-user-select: none;
   user-select: none;
 }
 
-.cai-check-item input[type="checkbox"],
-.cai-check-item input[type="radio"] {
+.luz-check-item input[type="checkbox"],
+.luz-check-item input[type="radio"] {
   appearance: none;
   width: 18px;
   height: 18px;
-  border: 2px solid var(--cai-outline);
-  border-radius: var(--cai-radius-sm);
+  border: 2px solid var(--luz-outline);
+  border-radius: var(--luz-radius-sm);
   background: transparent;
   cursor: pointer;
   position: relative;
   flex-shrink: 0;
-  transition: border-color var(--cai-duration-fast),
-    background var(--cai-duration-fast);
+  transition: border-color var(--luz-duration-fast),
+    background var(--luz-duration-fast);
 }
 
-.cai-check-item input[type="radio"] {
+.luz-check-item input[type="radio"] {
   border-radius: 50%;
 }
 
-/* Solid surface under the --cai-text-on-fill check mark */
-.cai-check-item input[type="checkbox"]:checked {
-  background: var(--cai-brand-fill);
-  border-color: var(--cai-brand-fill);
+/* Solid surface under the --luz-text-on-fill check mark */
+.luz-check-item input[type="checkbox"]:checked {
+  background: var(--luz-brand-fill);
+  border-color: var(--luz-brand-fill);
 }
 
-.cai-check-item input[type="checkbox"]:checked::after {
+.luz-check-item input[type="checkbox"]:checked::after {
   content: "";
   position: absolute;
   inset-inline-start: 4px;
@@ -267,16 +267,16 @@
   height: 10px;
   /* Check glyph drawn with two borders, then rotated: physical on purpose, a
      check mark is not mirrored in right-to-left text */
-  border: solid var(--cai-text-on-fill);
+  border: solid var(--luz-text-on-fill);
   border-width: 0 2px 2px 0;
   transform: rotate(40deg);
 }
 
-.cai-check-item input[type="radio"]:checked {
-  border-color: var(--cai-brand-primary);
+.luz-check-item input[type="radio"]:checked {
+  border-color: var(--luz-brand-primary);
 }
 
-.cai-check-item input[type="radio"]:checked::after {
+.luz-check-item input[type="radio"]:checked::after {
   content: "";
   position: absolute;
   inset-inline-start: 3px;
@@ -284,18 +284,18 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--cai-brand-primary);
+  background: var(--luz-brand-primary);
 }
 
-.cai-check-item input:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-check-item input:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-.cai-check-item label {
-  font-size: var(--cai-text-md);
+.luz-check-item label {
+  font-size: var(--luz-text-md);
   cursor: pointer;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
 }
 
 /* --------------------------------------------------------------------------
@@ -305,11 +305,11 @@
    CSS only draws it. Works with JavaScript disabled.
    -------------------------------------------------------------------------- */
 
-.cai-toggle {
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
+.luz-toggle {
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
   display: flex;
   align-items: center;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   cursor: pointer;
   /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
   -webkit-user-select: none;
@@ -318,7 +318,7 @@
 }
 
 /* Visually hidden but still focusable and clickable: never display:none */
-.cai-toggle__input {
+.luz-toggle__input {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -328,56 +328,56 @@
   clip-path: inset(50%);
 }
 
-.cai-toggle__track {
+.luz-toggle__track {
   flex: none;
   inline-size: 48px;
   block-size: 24px;
-  background: var(--cai-outline);
-  border-radius: var(--cai-radius-full); /* a pill: a switch track, round by nature */
+  background: var(--luz-outline);
+  border-radius: var(--luz-radius-full); /* a pill: a switch track, round by nature */
   position: relative;
-  transition: background var(--cai-duration-fast);
+  transition: background var(--luz-duration-fast);
 }
 
-.cai-toggle__input:focus-visible + .cai-toggle__track {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-toggle__input:focus-visible + .luz-toggle__track {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-/* Solid surface under the --cai-text-on-fill thumb */
-.cai-toggle__input:checked + .cai-toggle__track {
-  background: var(--cai-brand-fill);
+/* Solid surface under the --luz-text-on-fill thumb */
+.luz-toggle__input:checked + .luz-toggle__track {
+  background: var(--luz-brand-fill);
 }
 
-.cai-toggle__input:disabled + .cai-toggle__track {
+.luz-toggle__input:disabled + .luz-toggle__track {
   opacity: 0.45;
 }
 
-.cai-toggle:has(.cai-toggle__input:disabled) {
+.luz-toggle:has(.luz-toggle__input:disabled) {
   cursor: not-allowed;
 }
 
-.cai-toggle__thumb {
+.luz-toggle__thumb {
   position: absolute;
   inline-size: 18px;
   block-size: 18px;
-  background: var(--cai-text-on-fill);
+  background: var(--luz-text-on-fill);
   border-radius: 50%;
   inset-block-start: 3px;
   inset-inline-start: 3px;
-  transition: transform var(--cai-duration-fast);
+  transition: transform var(--luz-duration-fast);
 }
 
-.cai-toggle__input:checked + .cai-toggle__track .cai-toggle__thumb {
+.luz-toggle__input:checked + .luz-toggle__track .luz-toggle__thumb {
   transform: translateX(24px);
 }
 
-.cai-toggle__input:checked + .cai-toggle__track .cai-toggle__thumb:dir(rtl) {
+.luz-toggle__input:checked + .luz-toggle__track .luz-toggle__thumb:dir(rtl) {
   transform: translateX(-24px);
 }
 
-.cai-toggle__label {
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-primary);
+.luz-toggle__label {
+  font-size: var(--luz-text-md);
+  color: var(--luz-text-primary);
 }
 
 /* --------------------------------------------------------------------------
@@ -389,41 +389,41 @@
    -------------------------------------------------------------------------- */
 
 @media (forced-colors: active) {
-  .cai-check-item input[type="checkbox"]:checked,
-  .cai-check-item input[type="radio"]:checked::after,
-  .cai-toggle__track,
-  .cai-toggle__thumb {
+  .luz-check-item input[type="checkbox"]:checked,
+  .luz-check-item input[type="radio"]:checked::after,
+  .luz-toggle__track,
+  .luz-toggle__thumb {
     forced-color-adjust: none;
   }
 
-  .cai-check-item input[type="checkbox"]:checked {
+  .luz-check-item input[type="checkbox"]:checked {
     background: Highlight;
     border-color: Highlight;
   }
 
-  .cai-check-item input[type="checkbox"]:checked::after {
+  .luz-check-item input[type="checkbox"]:checked::after {
     border-color: HighlightText;
   }
 
-  .cai-check-item input[type="radio"]:checked::after {
+  .luz-check-item input[type="radio"]:checked::after {
     background: Highlight;
   }
 
-  .cai-toggle__track {
+  .luz-toggle__track {
     background: Canvas;
     border: 1px solid CanvasText;
   }
 
-  .cai-toggle__thumb {
+  .luz-toggle__thumb {
     background: CanvasText;
   }
 
-  .cai-toggle__input:checked + .cai-toggle__track {
+  .luz-toggle__input:checked + .luz-toggle__track {
     background: Highlight;
     border-color: Highlight;
   }
 
-  .cai-toggle__input:checked + .cai-toggle__track .cai-toggle__thumb {
+  .luz-toggle__input:checked + .luz-toggle__track .luz-toggle__thumb {
     background: HighlightText;
   }
 }

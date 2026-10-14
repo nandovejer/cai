@@ -1,13 +1,13 @@
-<!-- cai:page
+<!-- luz:page
 title: Accessibility statement
-description: CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 13 October 2026.
+description: LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 13 October 2026.
 area: accessibility
 lead: false
 -->
     <div class="docs-block docs-prose-chapter" id="accessibility">
-      <p class="docs-lead">CAI aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 13 October 2026.</p>
+      <p class="docs-lead">LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 13 October 2026.</p>
       <h2 id="h-a11y-target">Target</h2>
-      <p>CAI aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to.</p>
+      <p>LUZ aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to.</p>
       <p>A design system cannot make a service accessible by itself: how you use the components decides the result. Each component page says what is yours to do, under <em>Keyboard and ARIA</em> and <em>Writing the content</em>.</p>
 
       <h2 id="h-a11y-checked">What is checked on every change</h2>
@@ -18,7 +18,7 @@ lead: false
         <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
         <li>Forced colors: a focused button and a focused search result keep a visible outline, the selected tab keeps its underline, and the search dialog keeps its border.</li>
         <li>The home page in Arabic, right to left: it must not overflow at 320 pixels wide, with JavaScript or without it.</li>
-        <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="cai-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
+        <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="luz-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
         <li>Before this release, the same automated suites ran once in Firefox 155 and in WebKit 26.6 and 27.2 (the engine of Safari), on Linux, and their findings were fixed. They do not run on every change, and neither is a test on macOS or iOS.</li>
         <li>Contrast of every token pair a component draws, by a script, in the three base modes. A theme of your own is measured by the same script, as <a href="/docs/tokens/themes/">the themes page</a> shows.</li>
@@ -37,14 +37,14 @@ lead: false
       <h2 id="h-a11y-known">Known issues</h2>
       <ul>
         <li><strong>Tooltip.</strong> Escape does not close it. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.</li>
-        <li><strong>Modal.</strong> Its buttons use the <code class="cai-code-inline">command</code> and <code class="cai-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
+        <li><strong>Modal.</strong> Its buttons use the <code class="luz-code-inline">command</code> and <code class="luz-code-inline">commandfor</code> attributes. In a browser without them, and without JavaScript, the open button does nothing.</li>
         <li><strong>Player.</strong> MIDI needs JavaScript and Web Audio. Without them the player shows a message. On this documentation site, the example video's caption files load only with JavaScript; without it the browser lists the tracks but shows no text.</li>
-        <li><strong>Select.</strong> The open list is the browser’s or the system’s, so it looks and sounds different in each. Where the browser supports <code class="cai-code-inline">appearance: base-select</code> (Chrome and Edge 135, Safari 27), CAI styles the list too, and that list has not been tested with a screen reader yet. It works without JavaScript.</li>
+        <li><strong>Select.</strong> The open list is the browser’s or the system’s, so it looks and sounds different in each. Where the browser supports <code class="luz-code-inline">appearance: base-select</code> (Chrome and Edge 135, Safari 27), LUZ styles the list too, and that list has not been tested with a screen reader yet. It works without JavaScript.</li>
         <li><strong>Linked card.</strong> The link in the title covers the whole card, so the body text cannot be selected with a mouse. Keyboard selection, find in page and screen readers reach it as usual.</li>
-        <li><strong>Table sorted in the browser.</strong> The sorted column is exposed with <code class="cai-code-inline">aria-sort</code> on its column header, and each sort is announced in a status message. Tabbing through the headings announces the column name; the sort state is read on the header cell and in the status message. Checked in the Chromium accessibility tree only; not yet tested with NVDA, JAWS, VoiceOver, TalkBack or Orca.</li>
+        <li><strong>Table sorted in the browser.</strong> The sorted column is exposed with <code class="luz-code-inline">aria-sort</code> on its column header, and each sort is announced in a status message. Tabbing through the headings announces the column name; the sort state is read on the header cell and in the status message. Checked in the Chromium accessibility tree only; not yet tested with NVDA, JAWS, VoiceOver, TalkBack or Orca.</li>
         <li><strong>Avatar with a photo.</strong> If the photo does not load, the browser draws its text alternative inside the box, in capitals, and a long name can spill past it.</li>
         <li><strong>Code and Design tabs.</strong> The tab you chose last opens after the page has loaded, so the content below the tabs can move once.</li>
-        <li><strong>Find in page.</strong> In browsers that do not support <code class="cai-code-inline">hidden="until-found"</code> (Safari before 26.2, Firefox before 139), find in page (Ctrl+F) does not find text in the tab that is not open. In Safari 26.2 and later it opens the tab but does not scroll to the match. Open the other tab, or turn JavaScript off to see both.</li>
+        <li><strong>Find in page.</strong> In browsers that do not support <code class="luz-code-inline">hidden="until-found"</code> (Safari before 26.2, Firefox before 139), find in page (Ctrl+F) does not find text in the tab that is not open. In Safari 26.2 and later it opens the tab but does not scroll to the match. Open the other tab, or turn JavaScript off to see both.</li>
         <li><strong>Search shortcut.</strong> Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there.</li>
         <li><strong>Search.</strong> It has not been tested with a screen reader. The number of results is announced once you stop typing.</li>
         <li><strong>Search at 400 percent zoom.</strong> The whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.</li>
@@ -55,14 +55,14 @@ lead: false
         <li><strong>Cookie consent.</strong> Without JavaScript the banner is not shown, because none of the site's own scripts run either; the cookie policy is a link on every page. With it, the banner takes no focus when the page loads, does not block the page, and Escape is not an answer. The answer is stored in the browser, not in a cookie. It has not been tested with a screen reader.</li>
         <li><strong>Site header, enlarged text.</strong> A sticky header keeps a field reached with Tab clear of it by a minimum height. That works at 100 and 200 percent text. At 300 percent text, when the header wraps to several rows, Safari can still leave the field partly under it; Chrome, Edge and Firefox keep it clear. The Site header page says how to set the padding for your own header. In Firefox with forced colors the dim layer behind the open menu is not drawn; the panel keeps its border.</li>
         <li><strong>Section band.</strong> A band cuts off whatever sticks out of it above or below, so a tooltip on the first control of a band is clipped at 200 percent text and larger; start the band with its heading. The hover of an outline or ghost button on a band shows no change. In forced colors the band has no tint, only two thin rules above and below it.</li>
-        <li><strong>Prose.</strong> A table that is wider than the text column and has no <code class="cai-code-inline">.cai-table-wrap</code> around it makes the whole page scroll sideways on a narrow screen. A long preformatted block scrolls inside itself; give it <code class="cai-code-inline">tabindex="0"</code> and a name, as the code block has, or Safari users cannot scroll it with the keyboard.</li>
+        <li><strong>Prose.</strong> A table that is wider than the text column and has no <code class="luz-code-inline">.luz-table-wrap</code> around it makes the whole page scroll sideways on a narrow screen. A long preformatted block scrolls inside itself; give it <code class="luz-code-inline">tabindex="0"</code> and a name, as the code block has, or Safari users cannot scroll it with the keyboard.</li>
         <li><strong>Meta line.</strong> The dots between the facts are hidden from screen readers with alternative text for generated content. In a browser without it (Firefox before 128, Safari before 17.4) a screen reader reads each dot.</li>
         <li><strong>Lists laid out as a grid, stack or row.</strong> Safari does not announce a list whose markers are removed, outside a navigation landmark, as a list. Its items are still read in order, and the headings in them still lead through it.</li>
-        <li><strong>Table of contents (cms).</strong> The mark on the section in view comes from core's script (<code class="cai-code-inline">data-cai-spy</code>); without it, no link is marked, and the links still work. Next to the text, the contents list the sections at the inline end but come first in the source, so Tab reaches them before the text. It has not been tested with a screen reader.</li>
+        <li><strong>Table of contents (cms).</strong> The mark on the section in view comes from core's script (<code class="luz-code-inline">data-luz-spy</code>); without it, no link is marked, and the links still work. Next to the text, the contents list the sections at the inline end but come first in the source, so Tab reaches them before the text. It has not been tested with a screen reader.</li>
         <li><strong>Copy button.</strong> When the browser refuses to copy, the failure is announced to screen readers, but the button shows no message.</li>
       </ul>
 
       <h2 id="h-a11y-report">Report a problem</h2>
-      <p>If something does not work for you, <a href="https://github.com/nandovejer/cai/issues">open an issue on GitHub</a> and say what you were trying to do, the browser and the assistive technology you use.</p>
+      <p>If something does not work for you, <a href="https://github.com/nandovejer/luz/issues">open an issue on GitHub</a> and say what you were trying to do, the browser and the assistive technology you use.</p>
     
     </div>

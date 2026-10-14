@@ -50,73 +50,73 @@ importers:
 
   apps/docs:
     dependencies:
-      '@cai-ds/cms':
+      '@luz-ds/cms':
         specifier: workspace:*
         version: link:../../packages/cms
-      '@cai-ds/core':
+      '@luz-ds/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@cai-ds/landing':
+      '@luz-ds/landing':
         specifier: workspace:*
         version: link:../../packages/landing
-      '@cai-ds/site':
+      '@luz-ds/site':
         specifier: workspace:*
         version: link:../../packages/site
-      '@cai-ds/tokens':
+      '@luz-ds/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
 
   apps/landing:
     dependencies:
-      '@cai-ds/core':
+      '@luz-ds/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@cai-ds/landing':
+      '@luz-ds/landing':
         specifier: workspace:*
         version: link:../../packages/landing
-      '@cai-ds/site':
+      '@luz-ds/site':
         specifier: workspace:*
         version: link:../../packages/site
-      '@cai-ds/tokens':
+      '@luz-ds/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
 
   packages/cms:
     devDependencies:
-      '@cai-ds/core':
+      '@luz-ds/core':
         specifier: workspace:*
         version: link:../core
-      '@cai-ds/site':
+      '@luz-ds/site':
         specifier: workspace:*
         version: link:../site
-      '@cai-ds/tokens':
+      '@luz-ds/tokens':
         specifier: workspace:*
         version: link:../tokens
 
   packages/core:
     devDependencies:
-      '@cai-ds/tokens':
+      '@luz-ds/tokens':
         specifier: workspace:*
         version: link:../tokens
 
   packages/landing:
     devDependencies:
-      '@cai-ds/core':
+      '@luz-ds/core':
         specifier: workspace:*
         version: link:../core
-      '@cai-ds/site':
+      '@luz-ds/site':
         specifier: workspace:*
         version: link:../site
-      '@cai-ds/tokens':
+      '@luz-ds/tokens':
         specifier: workspace:*
         version: link:../tokens
 
   packages/site:
     devDependencies:
-      '@cai-ds/core':
+      '@luz-ds/core':
         specifier: workspace:*
         version: link:../core
-      '@cai-ds/tokens':
+      '@luz-ds/tokens':
         specifier: workspace:*
         version: link:../tokens
 

@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * The home page in English (/), Spanish (/es/) and Arabic (/ar/), and the
- * language switcher of @cai-ds/site in its header. Each language is a
+ * language switcher of @luz-ds/site in its header. Each language is a
  * static page: its own lang, dir, title and alternates, no redirect and no
  * text swapped by a script. The switcher is links in a native popover, so
  * it is checked with JavaScript and, in chromium-nojs, without it.
@@ -33,7 +33,7 @@ async function open(page, path) {
   return { failed, problems };
 }
 
-const switcher = (page) => page.locator('.site-header .cai-site-lang-switcher');
+const switcher = (page) => page.locator('.site-header .luz-site-lang-switcher');
 
 for (const { route, lang, dir, name, label } of LANGUAGES) {
   test.describe(`home page ${route}`, () => {
@@ -122,7 +122,7 @@ test.describe('the language switcher', () => {
       expect(box && brand && box.x < brand.x).toBe(true);
       expect(box && box.height).toBeGreaterThanOrEqual(44);
       await button.click();
-      const list = await page.locator('#cai-lang-menu').boundingBox();
+      const list = await page.locator('#luz-lang-menu').boundingBox();
       expect(list && list.x >= 0 && list.x + list.width <= width, JSON.stringify(list)).toBe(true);
       // Under the header, not over it
       expect(list && list.y).toBeGreaterThanOrEqual(((await header.boundingBox())?.height ?? 0) - 1);
@@ -143,7 +143,7 @@ test.describe('the language switcher', () => {
       const button = switcher(page).getByRole('button');
       await expect(button).toHaveAccessibleName(`${label}: ${name}`);
       // No visible text: the name is clipped to 1px
-      const shown = await button.locator('.cai-site-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width);
+      const shown = await button.locator('.luz-site-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width);
       expect(shown).toBeLessThanOrEqual(1);
       expect((await button.boundingBox())?.width).toBeGreaterThanOrEqual(44);
     });
@@ -152,8 +152,8 @@ test.describe('the language switcher', () => {
   test('from 360px the button shows the language\'s name', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 700 });
     await open(page, '/es/');
-    await expect(switcher(page).locator('.cai-site-lang-switcher__name')).toBeVisible();
-    expect(await switcher(page).locator('.cai-site-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width)).toBeGreaterThan(20);
+    await expect(switcher(page).locator('.luz-site-lang-switcher__name')).toBeVisible();
+    expect(await switcher(page).locator('.luz-site-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width)).toBeGreaterThan(20);
   });
 
   test('a browser without the popover API gets the languages as a row of links', async ({ page }) => {
@@ -180,7 +180,7 @@ test.describe('Arabic typography', () => {
     await open(page, '/ar/');
     const style = (selector) =>
       page.locator(selector).first().evaluate((el) => ({ font: getComputedStyle(el).fontFamily, spacing: getComputedStyle(el).letterSpacing }));
-    const sans = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--cai-font-sans').trim());
+    const sans = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--luz-font-sans').trim());
     for (const selector of ['h1', 'h2', '.landing-lead', '.landing-level__title .landing-eyebrow']) {
       const { font, spacing } = await style(selector);
       expect(font, selector).not.toMatch(/ET Book/i);
@@ -188,14 +188,14 @@ test.describe('Arabic typography', () => {
       expect(['normal', '0px'], `${selector} letter-spacing`).toContain(spacing);
     }
     // English text on the same page keeps its own face
-    const { font } = await style('.cai-site-hero__copy > .cai-site-hero__eyebrow[lang="en"]');
+    const { font } = await style('.luz-site-hero__copy > .luz-site-hero__eyebrow[lang="en"]');
     expect(font).toMatch(/mono/i);
   });
 
   test('the page tint sits in the top right corner', async ({ page }) => {
     await open(page, '/ar/');
     const background = await page.evaluate(() => {
-      document.body.classList.add('cai-site-page--gradient');
+      document.body.classList.add('luz-site-page--gradient');
       return getComputedStyle(document.body).backgroundImage;
     });
     expect(background).toMatch(/at right top|at top right|at 100% 0%/);
@@ -210,9 +210,9 @@ test.describe('links from another language into the English documentation', () =
         links.filter((a) => new URL(a.href).pathname.startsWith('/docs/') && a.hreflang !== 'en').map((a) => a.outerHTML.slice(0, 80)),
       );
       expect(missing).toEqual([]);
-      expect(await page.locator('[data-cai-search-list]').evaluateAll((lists) => lists.map((l) => l.lang))).toEqual(['en', 'en', 'en']);
+      expect(await page.locator('[data-luz-search-list]').evaluateAll((lists) => lists.map((l) => l.lang))).toEqual(['en', 'en', 'en']);
       // The dialog's own text is in the page's language
-      const label = await page.locator('label[for="cai-search-q"]').textContent();
+      const label = await page.locator('label[for="luz-search-q"]').textContent();
       expect(label).not.toBe('Search the documentation');
     });
   }

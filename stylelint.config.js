@@ -25,7 +25,7 @@ const FOCUS = {
   "outline-width": ["/^0(px|rem|em)?$/"],
 };
 
-// RL-8: every duration is a --cai-duration-* token, zeroed in one block under
+// RL-8: every duration is a --luz-duration-* token, zeroed in one block under
 // prefers-reduced-motion. A literal time other than 0 bypasses that block.
 const MOTION = {
   "/^(transition|animation)(-duration)?$/": ["/(^|[\\s,(])(?!0+m?s\\b)\\d*\\.?\\d+m?s\\b/"],
@@ -46,8 +46,8 @@ const PACKAGES = {
 const COMPONENTS = {
   ...PACKAGES,
   // Primitive tokens (Layer 1 colours): components use semantic tokens
-  "/.*/": [`/var\\(--cai-(${families})-\\d+\\)/`],
-  // Literal space: margin, padding and gap take --cai-space-* tokens. em and
+  "/.*/": [`/var\\(--luz-(${families})-\\d+\\)/`],
+  // Literal space: margin, padding and gap take --luz-space-* tokens. em and
   // ch stay allowed (relative to the type, not a spacing scale), and so does a
   // 1px hairline (the visually-hidden recipe's margin: -1px).
   "/^(margin|padding|scroll-margin|scroll-padding)(-.+)?$|^(row-|column-)?gap$/": [
@@ -63,7 +63,7 @@ export default {
   rules: {
     "declaration-property-value-disallowed-list": [
       { ...FOCUS, ...MOTION },
-      { message: "Focus stays visible (RL-5) and durations are --cai-duration-* tokens (RL-8)." },
+      { message: "Focus stays visible (RL-5) and durations are --luz-duration-* tokens (RL-8)." },
     ],
   },
   ignoreFiles: ["**/dist/**", "**/node_modules/**", "docs/**"],
@@ -81,7 +81,7 @@ export default {
           "^(([a-z][a-z0-9]*)((-{1,2}|_{2})([a-z0-9][a-z0-9-]*))*|is-[a-z][a-z0-9-]*)$",
           {
             message:
-              "Expected class selector to follow BEM (cai-block, cai-block__element, cai-block--modifier, is-state)",
+              "Expected class selector to follow BEM (luz-block, luz-block__element, luz-block--modifier, is-state)",
           },
         ],
         "alpha-value-notation": null,
@@ -110,7 +110,7 @@ export default {
               "Use the logical property: margin-inline-start, padding-inline-end, border-inline-start, inset-inline-start, border-start-start-radius… (left and right break right-to-left text) — PRINCIPLES.md, SR-4.",
           },
         ],
-        "cai/no-bare-element": true,
+        "luz/no-bare-element": true,
       },
     },
     {

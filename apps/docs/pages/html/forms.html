@@ -1,12 +1,12 @@
-<!-- cai:page
+<!-- luz:page
 title: Forms
-description: Controls and the structure around them. Fields, selects and buttons get their look from a .cai-* class; textarea, output, meter and progress are styled with no class.
+description: Controls and the structure around them. Fields, selects and buttons get their look from a .luz-* class; textarea, output, meter and progress are styled with no class.
 area: html
 order: 1
 lead: false
 -->
     <div class="docs-block elements-section" id="cat-forms" data-category="forms">
-        <p class="elements-section__lead">Controls and the structure around them. Fields, selects and buttons get their look from a .cai-* class; textarea, output, meter and progress are styled with no class.</p>
+        <p class="elements-section__lead">Controls and the structure around them. Fields, selects and buttons get their look from a .luz-* class; textarea, output, meter and progress are styled with no class.</p>
         <div class="elements-grid">
         <article class="elements-card" id="el-button" data-element="button" aria-labelledby="el-button-title">
           <div class="elements-card__head">
@@ -15,18 +15,18 @@ lead: false
           </div>
           <p class="elements-card__desc">Runs an action when clicked or pressed. Always set type: inside a form it submits by default.</p>
           <div class="elements-stage">
-            <button class="cai-btn cai-btn--primary" type="button">Save</button>
-            <button class="cai-btn cai-btn--outline" type="button">Cancel</button>
-            <button class="cai-btn cai-btn--ghost" type="button" disabled>Disabled</button>
+            <button class="luz-btn luz-btn--primary" type="button">Save</button>
+            <button class="luz-btn luz-btn--outline" type="button">Cancel</button>
+            <button class="luz-btn luz-btn--ghost" type="button" disabled>Disabled</button>
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-button" aria-label="Copy the button markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-button" aria-label="Copy the button markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="button markup"><code id="code-button">&lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;button&quot;&gt;Save&lt;/button&gt;
-&lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot;&gt;Cancel&lt;/button&gt;
-&lt;button class=&quot;cai-btn cai-btn--ghost&quot; type=&quot;button&quot; disabled&gt;Disabled&lt;/button&gt;</code></pre>
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="button markup"><code id="code-button">&lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;button&quot;&gt;Save&lt;/button&gt;
+&lt;button class=&quot;luz-btn luz-btn--outline&quot; type=&quot;button&quot;&gt;Cancel&lt;/button&gt;
+&lt;button class=&quot;luz-btn luz-btn--ghost&quot; type=&quot;button&quot; disabled&gt;Disabled&lt;/button&gt;</code></pre>
           </div>
           <p class="elements-card__style">Styled through its class, from <code>components/button.css</code>.</p>
         </article>
@@ -38,9 +38,9 @@ lead: false
           </div>
           <p class="elements-card__desc">Suggestions offered while the user types in an input. The user can still type anything else.</p>
           <div class="elements-stage">
-            <div class="cai-field">
-              <label class="cai-field__label" for="d-datalist">Browser</label>
-              <input class="cai-input" id="d-datalist" list="d-browsers" placeholder="Start typing">
+            <div class="luz-field">
+              <label class="luz-field__label" for="d-datalist">Browser</label>
+              <input class="luz-input" id="d-datalist" list="d-browsers" placeholder="Start typing">
               <datalist id="d-browsers">
                 <option value="Chrome"></option>
                 <option value="Firefox"></option>
@@ -51,11 +51,11 @@ lead: false
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-datalist" aria-label="Copy the datalist markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-datalist" aria-label="Copy the datalist markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="datalist markup"><code id="code-datalist">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-datalist&quot;&gt;Browser&lt;/label&gt;
-  &lt;input class=&quot;cai-input&quot; id=&quot;d-datalist&quot; list=&quot;d-browsers&quot; placeholder=&quot;Start typing&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="datalist markup"><code id="code-datalist">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;d-datalist&quot;&gt;Browser&lt;/label&gt;
+  &lt;input class=&quot;luz-input&quot; id=&quot;d-datalist&quot; list=&quot;d-browsers&quot; placeholder=&quot;Start typing&quot;&gt;
   &lt;datalist id=&quot;d-browsers&quot;&gt;
     &lt;option value=&quot;Chrome&quot;&gt;&lt;/option&gt;
     &lt;option value=&quot;Firefox&quot;&gt;&lt;/option&gt;
@@ -73,24 +73,24 @@ lead: false
           </div>
           <p class="elements-card__desc">Wraps related controls, such as the parts of an address or a set of radio buttons. A legend as its first child names the group.</p>
           <div class="elements-stage">
-            <fieldset class="cai-fieldset">
+            <fieldset class="luz-fieldset">
               <legend>Plan</legend>
-              <div class="cai-check-group">
-                <div class="cai-check-item"><input type="radio" name="d-plan" id="d-plan-1" checked><label for="d-plan-1">Free</label></div>
-                <div class="cai-check-item"><input type="radio" name="d-plan" id="d-plan-2"><label for="d-plan-2">Team</label></div>
+              <div class="luz-check-group">
+                <div class="luz-check-item"><input type="radio" name="d-plan" id="d-plan-1" checked><label for="d-plan-1">Free</label></div>
+                <div class="luz-check-item"><input type="radio" name="d-plan" id="d-plan-2"><label for="d-plan-2">Team</label></div>
               </div>
             </fieldset>
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-fieldset" aria-label="Copy the fieldset markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-fieldset" aria-label="Copy the fieldset markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="fieldset markup"><code id="code-fieldset">&lt;fieldset class=&quot;cai-fieldset&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="fieldset markup"><code id="code-fieldset">&lt;fieldset class=&quot;luz-fieldset&quot;&gt;
   &lt;legend&gt;Plan&lt;/legend&gt;
-  &lt;div class=&quot;cai-check-group&quot;&gt;
-    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;d-plan&quot; id=&quot;d-plan-1&quot; checked&gt;&lt;label for=&quot;d-plan-1&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;
-    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;d-plan&quot; id=&quot;d-plan-2&quot;&gt;&lt;label for=&quot;d-plan-2&quot;&gt;Team&lt;/label&gt;&lt;/div&gt;
+  &lt;div class=&quot;luz-check-group&quot;&gt;
+    &lt;div class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;d-plan&quot; id=&quot;d-plan-1&quot; checked&gt;&lt;label for=&quot;d-plan-1&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;d-plan&quot; id=&quot;d-plan-2&quot;&gt;&lt;label for=&quot;d-plan-2&quot;&gt;Team&lt;/label&gt;&lt;/div&gt;
   &lt;/div&gt;
 &lt;/fieldset&gt;</code></pre>
           </div>
@@ -105,24 +105,24 @@ lead: false
           <p class="elements-card__desc">Wraps controls whose values are sent together. The browser checks required fields and formats before it sends anything.</p>
           <div class="elements-stage">
             <form action="#" class="o-stack">
-              <div class="cai-field">
-              <label class="cai-field__label" for="d-form-name">Name</label>
-              <input class="cai-input" id="d-form-name" name="name" required>
+              <div class="luz-field">
+              <label class="luz-field__label" for="d-form-name">Name</label>
+              <input class="luz-input" id="d-form-name" name="name" required>
             </div>
-              <button class="cai-btn cai-btn--primary" type="submit">Send</button>
+              <button class="luz-btn luz-btn--primary" type="submit">Send</button>
             </form>
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-form" aria-label="Copy the form markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-form" aria-label="Copy the form markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="form markup"><code id="code-form">&lt;form action=&quot;#&quot; class=&quot;o-stack&quot;&gt;
-  &lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-form-name&quot;&gt;Name&lt;/label&gt;
-  &lt;input class=&quot;cai-input&quot; id=&quot;d-form-name&quot; name=&quot;name&quot; required&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="form markup"><code id="code-form">&lt;form action=&quot;#&quot; class=&quot;o-stack&quot;&gt;
+  &lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;d-form-name&quot;&gt;Name&lt;/label&gt;
+  &lt;input class=&quot;luz-input&quot; id=&quot;d-form-name&quot; name=&quot;name&quot; required&gt;
 &lt;/div&gt;
-  &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Send&lt;/button&gt;
+  &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot;&gt;Send&lt;/button&gt;
 &lt;/form&gt;</code></pre>
           </div>
           <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>. Leave Name empty and press Send: the browser stops the submit and says why.</p>
@@ -135,19 +135,19 @@ lead: false
           </div>
           <p class="elements-card__desc">A field the user fills in. The type attribute decides which one: text, email, number, range, color, date and more.</p>
           <div class="elements-stage">
-            <div class="cai-field">
-              <label class="cai-field__label" for="d-input">Email</label>
-              <input class="cai-input" id="d-input" type="email" placeholder="jane@example.com" autocomplete="off">
+            <div class="luz-field">
+              <label class="luz-field__label" for="d-input">Email</label>
+              <input class="luz-input" id="d-input" type="email" placeholder="jane@example.com" autocomplete="off">
             </div>
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-input" aria-label="Copy the input markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-input" aria-label="Copy the input markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="input markup"><code id="code-input">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-input&quot;&gt;Email&lt;/label&gt;
-  &lt;input class=&quot;cai-input&quot; id=&quot;d-input&quot; type=&quot;email&quot; placeholder=&quot;jane@example.com&quot; autocomplete=&quot;off&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="input markup"><code id="code-input">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;d-input&quot;&gt;Email&lt;/label&gt;
+  &lt;input class=&quot;luz-input&quot; id=&quot;d-input&quot; type=&quot;email&quot; placeholder=&quot;jane@example.com&quot; autocomplete=&quot;off&quot;&gt;
 &lt;/div&gt;</code></pre>
           </div>
           <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
@@ -160,19 +160,19 @@ lead: false
           </div>
           <p class="elements-card__desc">The visible name of a control. Connect them with for and id: screen readers announce it, and clicking it focuses or toggles the control.</p>
           <div class="elements-stage">
-            <div class="cai-field">
-              <label class="cai-field__label" for="d-label">Project name</label>
-              <input class="cai-input" id="d-label" type="text">
+            <div class="luz-field">
+              <label class="luz-field__label" for="d-label">Project name</label>
+              <input class="luz-input" id="d-label" type="text">
             </div>
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-label" aria-label="Copy the label markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-label" aria-label="Copy the label markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="label markup"><code id="code-label">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-label&quot;&gt;Project name&lt;/label&gt;
-  &lt;input class=&quot;cai-input&quot; id=&quot;d-label&quot; type=&quot;text&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="label markup"><code id="code-label">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;d-label&quot;&gt;Project name&lt;/label&gt;
+  &lt;input class=&quot;luz-input&quot; id=&quot;d-label&quot; type=&quot;text&quot;&gt;
 &lt;/div&gt;</code></pre>
           </div>
           <p class="elements-card__style">Styled through its class, from <code>components/form.css</code>.</p>
@@ -185,24 +185,24 @@ lead: false
           </div>
           <p class="elements-card__desc">The name of a fieldset, announced when the user enters the group. It is the first child of the fieldset.</p>
           <div class="elements-stage">
-            <fieldset class="cai-fieldset">
+            <fieldset class="luz-fieldset">
               <legend>Notifications</legend>
-              <div class="cai-check-group">
-                <div class="cai-check-item"><input type="checkbox" id="d-notify-1" checked><label for="d-notify-1">Email</label></div>
-                <div class="cai-check-item"><input type="checkbox" id="d-notify-2"><label for="d-notify-2">Push</label></div>
+              <div class="luz-check-group">
+                <div class="luz-check-item"><input type="checkbox" id="d-notify-1" checked><label for="d-notify-1">Email</label></div>
+                <div class="luz-check-item"><input type="checkbox" id="d-notify-2"><label for="d-notify-2">Push</label></div>
               </div>
             </fieldset>
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-legend" aria-label="Copy the legend markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-legend" aria-label="Copy the legend markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="legend markup"><code id="code-legend">&lt;fieldset class=&quot;cai-fieldset&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="legend markup"><code id="code-legend">&lt;fieldset class=&quot;luz-fieldset&quot;&gt;
   &lt;legend&gt;Notifications&lt;/legend&gt;
-  &lt;div class=&quot;cai-check-group&quot;&gt;
-    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;d-notify-1&quot; checked&gt;&lt;label for=&quot;d-notify-1&quot;&gt;Email&lt;/label&gt;&lt;/div&gt;
-    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;d-notify-2&quot;&gt;&lt;label for=&quot;d-notify-2&quot;&gt;Push&lt;/label&gt;&lt;/div&gt;
+  &lt;div class=&quot;luz-check-group&quot;&gt;
+    &lt;div class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;d-notify-1&quot; checked&gt;&lt;label for=&quot;d-notify-1&quot;&gt;Email&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; id=&quot;d-notify-2&quot;&gt;&lt;label for=&quot;d-notify-2&quot;&gt;Push&lt;/label&gt;&lt;/div&gt;
   &lt;/div&gt;
 &lt;/fieldset&gt;</code></pre>
           </div>
@@ -222,9 +222,9 @@ lead: false
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-meter" aria-label="Copy the meter markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-meter" aria-label="Copy the meter markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="meter markup"><code id="code-meter">&lt;label for=&quot;d-meter&quot;&gt;Storage used, 6 of 10 GB&lt;/label&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="meter markup"><code id="code-meter">&lt;label for=&quot;d-meter&quot;&gt;Storage used, 6 of 10 GB&lt;/label&gt;
 &lt;meter id=&quot;d-meter&quot; min=&quot;0&quot; max=&quot;10&quot; low=&quot;3&quot; high=&quot;8&quot; optimum=&quot;2&quot; value=&quot;6&quot;&gt;6 of 10 GB&lt;/meter&gt;</code></pre>
           </div>
           <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class.</p>
@@ -237,9 +237,9 @@ lead: false
           </div>
           <p class="elements-card__desc">A labelled set of options inside a select, such as cities grouped by country. The label itself cannot be chosen.</p>
           <div class="elements-stage">
-            <div class="cai-field">
-              <label class="cai-field__label" for="d-optgroup">Role</label>
-              <select class="cai-select" id="d-optgroup">
+            <div class="luz-field">
+              <label class="luz-field__label" for="d-optgroup">Role</label>
+              <select class="luz-select" id="d-optgroup">
                 <optgroup label="Product">
                   <option>Designer</option>
                   <option>Product manager</option>
@@ -253,11 +253,11 @@ lead: false
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-optgroup" aria-label="Copy the optgroup markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-optgroup" aria-label="Copy the optgroup markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="optgroup markup"><code id="code-optgroup">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-optgroup&quot;&gt;Role&lt;/label&gt;
-  &lt;select class=&quot;cai-select&quot; id=&quot;d-optgroup&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="optgroup markup"><code id="code-optgroup">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;d-optgroup&quot;&gt;Role&lt;/label&gt;
+  &lt;select class=&quot;luz-select&quot; id=&quot;d-optgroup&quot;&gt;
     &lt;optgroup label=&quot;Product&quot;&gt;
       &lt;option&gt;Designer&lt;/option&gt;
       &lt;option&gt;Product manager&lt;/option&gt;
@@ -268,7 +268,7 @@ lead: false
   &lt;/select&gt;
 &lt;/div&gt;</code></pre>
           </div>
-          <p class="elements-card__style">Styled through the <code>.cai-select</code> class, from <code>components/select.css</code>.</p>
+          <p class="elements-card__style">Styled through the <code>.luz-select</code> class, from <code>components/select.css</code>.</p>
         </article>
 
         <article class="elements-card" id="el-option" data-element="option" aria-labelledby="el-option-title">
@@ -278,9 +278,9 @@ lead: false
           </div>
           <p class="elements-card__desc">One choice in a select, or one suggestion in a datalist.</p>
           <div class="elements-stage">
-            <div class="cai-field">
-              <label class="cai-field__label" for="d-option">Role</label>
-              <select class="cai-select" id="d-option">
+            <div class="luz-field">
+              <label class="luz-field__label" for="d-option">Role</label>
+              <select class="luz-select" id="d-option">
                 <option value="">Select a role</option>
                 <option value="dev">Developer</option>
                 <option value="design">Designer</option>
@@ -290,18 +290,18 @@ lead: false
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-option" aria-label="Copy the option markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-option" aria-label="Copy the option markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="option markup"><code id="code-option">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-option&quot;&gt;Role&lt;/label&gt;
-  &lt;select class=&quot;cai-select&quot; id=&quot;d-option&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="option markup"><code id="code-option">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;d-option&quot;&gt;Role&lt;/label&gt;
+  &lt;select class=&quot;luz-select&quot; id=&quot;d-option&quot;&gt;
     &lt;option value=&quot;&quot;&gt;Select a role&lt;/option&gt;
     &lt;option value=&quot;dev&quot;&gt;Developer&lt;/option&gt;
     &lt;option value=&quot;design&quot;&gt;Designer&lt;/option&gt;
   &lt;/select&gt;
 &lt;/div&gt;</code></pre>
           </div>
-          <p class="elements-card__style">Styled through the <code>.cai-select</code> class, from <code>components/select.css</code>.</p>
+          <p class="elements-card__style">Styled through the <code>.luz-select</code> class, from <code>components/select.css</code>.</p>
         </article>
 
         <article class="elements-card" id="el-output" data-element="output" aria-labelledby="el-output-title">
@@ -312,15 +312,15 @@ lead: false
           <p class="elements-card__desc">Shows the result of a calculation or of something the user did. Screen readers announce it when it changes.</p>
           <div class="elements-stage">
             <label for="d-range">Volume <output id="d-range-out" for="d-range">50</output></label>
-            <input class="cai-input" id="d-range" type="range" min="0" max="100" value="50" data-output="d-range-out">
+            <input class="luz-input" id="d-range" type="range" min="0" max="100" value="50" data-output="d-range-out">
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-output" aria-label="Copy the output markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-output" aria-label="Copy the output markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="output markup"><code id="code-output">&lt;label for=&quot;d-range&quot;&gt;Volume &lt;output id=&quot;d-range-out&quot; for=&quot;d-range&quot;&gt;50&lt;/output&gt;&lt;/label&gt;
-&lt;input class=&quot;cai-input&quot; id=&quot;d-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;50&quot; data-output=&quot;d-range-out&quot;&gt;</code></pre>
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="output markup"><code id="code-output">&lt;label for=&quot;d-range&quot;&gt;Volume &lt;output id=&quot;d-range-out&quot; for=&quot;d-range&quot;&gt;50&lt;/output&gt;&lt;/label&gt;
+&lt;input class=&quot;luz-input&quot; id=&quot;d-range&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;50&quot; data-output=&quot;d-range-out&quot;&gt;</code></pre>
           </div>
           <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class.</p>
           <div class="elements-worth">
@@ -346,14 +346,14 @@ lead: false
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-progress" aria-label="Copy the progress markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-progress" aria-label="Copy the progress markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="progress markup"><code id="code-progress">&lt;label for=&quot;d-progress&quot;&gt;Uploading, 70%&lt;/label&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="progress markup"><code id="code-progress">&lt;label for=&quot;d-progress&quot;&gt;Uploading, 70%&lt;/label&gt;
 &lt;progress id=&quot;d-progress&quot; max=&quot;100&quot; value=&quot;70&quot;&gt;70%&lt;/progress&gt;
 &lt;label for=&quot;d-progress-wait&quot;&gt;Working&lt;/label&gt;
 &lt;progress id=&quot;d-progress-wait&quot;&gt;Working&lt;/progress&gt;</code></pre>
           </div>
-          <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class. The .cai-progress component is a separate div for custom bars.</p>
+          <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class. The .luz-progress component is a separate div for custom bars.</p>
         </article>
 
         <article class="elements-card" id="el-select" data-element="select" aria-labelledby="el-select-title">
@@ -363,9 +363,9 @@ lead: false
           </div>
           <p class="elements-card__desc">A list of fixed choices the user picks from. When there are only a few and they should all stay in view, radio buttons are quicker.</p>
           <div class="elements-stage">
-            <div class="cai-field">
-              <label class="cai-field__label" for="d-select">Role</label>
-              <select class="cai-select" id="d-select">
+            <div class="luz-field">
+              <label class="luz-field__label" for="d-select">Role</label>
+              <select class="luz-select" id="d-select">
                 <option value="">Select a role</option>
                 <option value="dev">Developer</option>
                 <option value="design">Designer</option>
@@ -375,24 +375,24 @@ lead: false
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-select" aria-label="Copy the select markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-select" aria-label="Copy the select markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="select markup"><code id="code-select">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-select&quot;&gt;Role&lt;/label&gt;
-  &lt;select class=&quot;cai-select&quot; id=&quot;d-select&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="select markup"><code id="code-select">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;d-select&quot;&gt;Role&lt;/label&gt;
+  &lt;select class=&quot;luz-select&quot; id=&quot;d-select&quot;&gt;
     &lt;option value=&quot;&quot;&gt;Select a role&lt;/option&gt;
     &lt;option value=&quot;dev&quot;&gt;Developer&lt;/option&gt;
     &lt;option value=&quot;design&quot;&gt;Designer&lt;/option&gt;
   &lt;/select&gt;
 &lt;/div&gt;</code></pre>
           </div>
-          <p class="elements-card__style">Styled through the <code>.cai-select</code> class, from <code>components/select.css</code>.</p>
+          <p class="elements-card__style">Styled through the <code>.luz-select</code> class, from <code>components/select.css</code>.</p>
         </article>
 
         <article class="elements-card" id="el-selectedcontent" data-element="selectedcontent" aria-labelledby="el-selectedcontent-title">
           <div class="elements-card__head">
             <h2 class="elements-card__title" id="el-selectedcontent-title"><code>&lt;selectedcontent&gt;</code></h2>
-            <span class="cai-tag cai-tag--purple">Experimental</span>
+            <span class="luz-tag luz-tag--purple">Experimental</span>
             <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/selectedcontent">MDN<span class="u-sr-only"> reference for the selectedcontent element</span></a>
           </div>
           <p class="elements-card__desc">Repeats the chosen option inside the button of a customizable select, so its icons and formatting carry over. Experimental: check the browser compatibility table on MDN before you rely on it.</p>
@@ -400,9 +400,9 @@ lead: false
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-selectedcontent" aria-label="Copy the selectedcontent markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-selectedcontent" aria-label="Copy the selectedcontent markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="selectedcontent markup"><code id="code-selectedcontent">&lt;select&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="selectedcontent markup"><code id="code-selectedcontent">&lt;select&gt;
   &lt;button&gt;
     &lt;selectedcontent&gt;&lt;/selectedcontent&gt;
   &lt;/button&gt;
@@ -410,7 +410,7 @@ lead: false
   &lt;option value=&quot;build&quot;&gt;Build&lt;/option&gt;
 &lt;/select&gt;</code></pre>
           </div>
-          <p class="elements-card__style">CAI adds no style: the browser look is kept.</p>
+          <p class="elements-card__style">LUZ adds no style: the browser look is kept.</p>
         </article>
 
         <article class="elements-card" id="el-textarea" data-element="textarea" aria-labelledby="el-textarea-title">
@@ -418,21 +418,21 @@ lead: false
             <h2 class="elements-card__title" id="el-textarea-title"><code>&lt;textarea&gt;</code></h2>
             <a class="elements-card__mdn" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/textarea">MDN<span class="u-sr-only"> reference for the textarea element</span></a>
           </div>
-          <p class="elements-card__desc">A field for text that runs over several lines, such as a message. CAI lets it grow vertically only.</p>
+          <p class="elements-card__desc">A field for text that runs over several lines, such as a message. LUZ lets it grow vertically only.</p>
           <div class="elements-stage">
-            <div class="cai-field">
-              <label class="cai-field__label" for="d-textarea">Notes</label>
-              <textarea class="cai-input cai-input--textarea" id="d-textarea" rows="3" placeholder="Anything else?"></textarea>
+            <div class="luz-field">
+              <label class="luz-field__label" for="d-textarea">Notes</label>
+              <textarea class="luz-input luz-input--textarea" id="d-textarea" rows="3" placeholder="Anything else?"></textarea>
             </div>
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-textarea" aria-label="Copy the textarea markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-textarea" aria-label="Copy the textarea markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="textarea markup"><code id="code-textarea">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;d-textarea&quot;&gt;Notes&lt;/label&gt;
-  &lt;textarea class=&quot;cai-input cai-input--textarea&quot; id=&quot;d-textarea&quot; rows=&quot;3&quot; placeholder=&quot;Anything else?&quot;&gt;&lt;/textarea&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="textarea markup"><code id="code-textarea">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;d-textarea&quot;&gt;Notes&lt;/label&gt;
+  &lt;textarea class=&quot;luz-input luz-input--textarea&quot; id=&quot;d-textarea&quot; rows=&quot;3&quot; placeholder=&quot;Anything else?&quot;&gt;&lt;/textarea&gt;
 &lt;/div&gt;</code></pre>
           </div>
           <p class="elements-card__style">Styled by <code>elements/forms.css</code>, with no class.</p>
@@ -441,12 +441,12 @@ lead: false
 
         <section class="elements-section__extra" id="input-types" aria-labelledby="input-types-title">
           <h2 class="elements-index__title" id="input-types-title">The 22 input types</h2>
-          <p class="elements-index__lead">One element, <code>&lt;input&gt;</code>, becomes a different control with its <code>type</code>. Each has a live example, with CAI’s class where there is one; <code>hidden</code> and <code>image</code> have nothing to show. The browser validates and offers the right keyboard on its own: pick the most specific type before reaching for a script.</p>
+          <p class="elements-index__lead">One element, <code>&lt;input&gt;</code>, becomes a different control with its <code>type</code>. Each has a live example, with LUZ’s class where there is one; <code>hidden</code> and <code>image</code> have nothing to show. The browser validates and offers the right keyboard on its own: pick the most specific type before reaching for a script.</p>
           <ul class="elements-types">
             <li class="elements-type" id="it-button">
               <p class="elements-type__name"><code>type=&quot;button&quot;</code></p>
               <p class="elements-type__desc">A push button with no behaviour of its own: a script gives it one. Prefer the <code>button</code> element, which can hold markup.</p>
-              <div class="elements-type__stage"><input class="cai-btn cai-btn--secondary" type="button" value="Button"></div>
+              <div class="elements-type__stage"><input class="luz-btn luz-btn--secondary" type="button" value="Button"></div>
             </li>
             <li class="elements-type" id="it-checkbox">
               <p class="elements-type__name"><code>type=&quot;checkbox&quot;</code></p>
@@ -456,27 +456,27 @@ lead: false
             <li class="elements-type" id="it-color">
               <p class="elements-type__name"><code>type=&quot;color&quot;</code></p>
               <p class="elements-type__desc">Opens the browser’s color picker. The value is always <code>#rrggbb</code>.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="color" value="#2365a6" aria-label="Color"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="color" value="#2365a6" aria-label="Color"></div>
             </li>
             <li class="elements-type" id="it-date">
               <p class="elements-type__name"><code>type=&quot;date&quot;</code></p>
               <p class="elements-type__desc">A day: year, month and day. The value is <code>YYYY-MM-DD</code> whatever the display language.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="date" value="2026-10-12" aria-label="Date"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="date" value="2026-10-12" aria-label="Date"></div>
             </li>
             <li class="elements-type" id="it-datetime-local">
               <p class="elements-type__name"><code>type=&quot;datetime-local&quot;</code></p>
               <p class="elements-type__desc">A day and a time with no time zone.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="datetime-local" value="2026-10-12T09:30" aria-label="Date and time"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="datetime-local" value="2026-10-12T09:30" aria-label="Date and time"></div>
             </li>
             <li class="elements-type" id="it-email">
               <p class="elements-type__name"><code>type=&quot;email&quot;</code></p>
               <p class="elements-type__desc">One address, or several with <code>multiple</code>. The browser checks the shape and shows an <code>@</code> on a phone keyboard.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="email" value="jane@example.com" autocomplete="off" aria-label="Email address"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="email" value="jane@example.com" autocomplete="off" aria-label="Email address"></div>
             </li>
             <li class="elements-type" id="it-file">
               <p class="elements-type__name"><code>type=&quot;file&quot;</code></p>
               <p class="elements-type__desc">Chooses files from the device. <code>accept</code> filters them, <code>multiple</code> allows several.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="file" aria-label="File"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="file" aria-label="File"></div>
             </li>
             <li class="elements-type" id="it-hidden">
               <p class="elements-type__name"><code>type=&quot;hidden&quot;</code></p>
@@ -491,17 +491,17 @@ lead: false
             <li class="elements-type" id="it-month">
               <p class="elements-type__name"><code>type=&quot;month&quot;</code></p>
               <p class="elements-type__desc">A year and a month. Firefox and Safari on a computer show a text field: write <code>YYYY-MM</code>, and add a <code>pattern</code>.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="month" value="2026-10" aria-label="Month"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="month" value="2026-10" aria-label="Month"></div>
             </li>
             <li class="elements-type" id="it-number">
               <p class="elements-type__name"><code>type=&quot;number&quot;</code></p>
               <p class="elements-type__desc">A number with steps: <code>min</code>, <code>max</code> and <code>step</code>. For a postal code or a card number use <code>inputmode=&quot;numeric&quot;</code> on a text field instead.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="number" min="0" max="10" value="3" aria-label="Number"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="number" min="0" max="10" value="3" aria-label="Number"></div>
             </li>
             <li class="elements-type" id="it-password">
               <p class="elements-type__name"><code>type=&quot;password&quot;</code></p>
               <p class="elements-type__desc">Hides the characters. Set <code>autocomplete</code> to <code>current-password</code> or <code>new-password</code> so a password manager can help.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="password" value="secret" autocomplete="new-password" aria-label="Password"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="password" value="secret" autocomplete="new-password" aria-label="Password"></div>
             </li>
             <li class="elements-type" id="it-radio">
               <p class="elements-type__name"><code>type=&quot;radio&quot;</code></p>
@@ -511,47 +511,47 @@ lead: false
             <li class="elements-type" id="it-range">
               <p class="elements-type__name"><code>type=&quot;range&quot;</code></p>
               <p class="elements-type__desc">A slider between <code>min</code> and <code>max</code>. It does not show its value: pair it with an <code>output</code>.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="range" min="0" max="100" value="40" aria-label="Range"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="range" min="0" max="100" value="40" aria-label="Range"></div>
             </li>
             <li class="elements-type" id="it-reset">
               <p class="elements-type__name"><code>type=&quot;reset&quot;</code></p>
               <p class="elements-type__desc">Puts the fields of its form back to their first values. Rarely wanted: it is easy to press by mistake.</p>
-              <div class="elements-type__stage"><input class="cai-btn cai-btn--outline" type="reset" value="Reset"></div>
+              <div class="elements-type__stage"><input class="luz-btn luz-btn--outline" type="reset" value="Reset"></div>
             </li>
             <li class="elements-type" id="it-search">
               <p class="elements-type__name"><code>type=&quot;search&quot;</code></p>
               <p class="elements-type__desc">A search term. Some browsers add a button to clear it.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="search" value="Search" autocomplete="off" aria-label="Search"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="search" value="Search" autocomplete="off" aria-label="Search"></div>
             </li>
             <li class="elements-type" id="it-submit">
               <p class="elements-type__name"><code>type=&quot;submit&quot;</code></p>
               <p class="elements-type__desc">Sends its form. Without a form it does nothing.</p>
-              <div class="elements-type__stage"><input class="cai-btn cai-btn--primary" type="submit" value="Submit"></div>
+              <div class="elements-type__stage"><input class="luz-btn luz-btn--primary" type="submit" value="Submit"></div>
             </li>
             <li class="elements-type" id="it-tel">
               <p class="elements-type__name"><code>type=&quot;tel&quot;</code></p>
               <p class="elements-type__desc">A phone number. The browser checks no format, and shows a keypad on a phone.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="tel" value="+34 600 000 000" autocomplete="off" aria-label="Telephone number"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="tel" value="+34 600 000 000" autocomplete="off" aria-label="Telephone number"></div>
             </li>
             <li class="elements-type" id="it-text">
               <p class="elements-type__name"><code>type=&quot;text&quot;</code></p>
               <p class="elements-type__desc">The default: one line of free text.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="text" value="Anything" autocomplete="off" aria-label="Text"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="text" value="Anything" autocomplete="off" aria-label="Text"></div>
             </li>
             <li class="elements-type" id="it-time">
               <p class="elements-type__name"><code>type=&quot;time&quot;</code></p>
               <p class="elements-type__desc">A time of day with no date.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="time" value="09:30" aria-label="Time"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="time" value="09:30" aria-label="Time"></div>
             </li>
             <li class="elements-type" id="it-url">
               <p class="elements-type__name"><code>type=&quot;url&quot;</code></p>
               <p class="elements-type__desc">One absolute address, checked by the browser.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="url" value="https://example.com" autocomplete="off" aria-label="Web address"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="url" value="https://example.com" autocomplete="off" aria-label="Web address"></div>
             </li>
             <li class="elements-type" id="it-week">
               <p class="elements-type__name"><code>type=&quot;week&quot;</code></p>
               <p class="elements-type__desc">A year and an ISO week. Firefox and Safari on a computer show a text field: write <code>YYYY-Www</code>, and add a <code>pattern</code>.</p>
-              <div class="elements-type__stage"><input class="cai-input" type="week" value="2026-W42" aria-label="Week"></div>
+              <div class="elements-type__stage"><input class="luz-input" type="week" value="2026-W42" aria-label="Week"></div>
             </li>
           </ul>
         </section>

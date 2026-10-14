@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Alert
 description: Tells the reader about the page or a task: information, success, a warning or an error.
 area: components
@@ -11,70 +11,70 @@ keywords: banner, callout
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage docs-demo__stage--flush">
-            <div class="cai-alert cai-alert--info">
-              <div class="cai-alert__icon" aria-hidden="true">i</div>
+            <div class="luz-alert luz-alert--info">
+              <div class="luz-alert__icon" aria-hidden="true">i</div>
               <div>
-                <div class="cai-alert__title">Information</div>
-                <div class="cai-alert__body">A new version is available.</div>
+                <div class="luz-alert__title">Information</div>
+                <div class="luz-alert__body">A new version is available.</div>
               </div>
             </div>
-            <div class="cai-alert cai-alert--success">
-              <div class="cai-alert__icon" aria-hidden="true">✓</div>
+            <div class="luz-alert luz-alert--success">
+              <div class="luz-alert__icon" aria-hidden="true">✓</div>
               <div>
-                <div class="cai-alert__title">Success</div>
-                <div class="cai-alert__body">Deployment completed.</div>
+                <div class="luz-alert__title">Success</div>
+                <div class="luz-alert__body">Deployment completed.</div>
               </div>
             </div>
-            <div class="cai-alert cai-alert--warning">
-              <div class="cai-alert__icon" aria-hidden="true">!</div>
+            <div class="luz-alert luz-alert--warning">
+              <div class="luz-alert__icon" aria-hidden="true">!</div>
               <div>
-                <div class="cai-alert__title">Warning</div>
-                <div class="cai-alert__body">Storage is almost full.</div>
+                <div class="luz-alert__title">Warning</div>
+                <div class="luz-alert__body">Storage is almost full.</div>
               </div>
             </div>
-            <div class="cai-alert cai-alert--error">
-              <div class="cai-alert__icon" aria-hidden="true">×</div>
+            <div class="luz-alert luz-alert--error">
+              <div class="luz-alert__icon" aria-hidden="true">×</div>
               <div>
-                <div class="cai-alert__title">Error</div>
-                <div class="cai-alert__body">The build failed.</div>
+                <div class="luz-alert__title">Error</div>
+                <div class="luz-alert__body">The build failed.</div>
               </div>
             </div>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Alert documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Alert documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-alert" aria-label="Copy the warning alert markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-alert" aria-label="Copy the warning alert markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Warning alert markup"><code id="code-alert">&lt;div class=&quot;cai-alert cai-alert--warning&quot;&gt;
-  &lt;div class=&quot;cai-alert__icon&quot; aria-hidden=&quot;true&quot;&gt;!&lt;/div&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Warning alert markup"><code id="code-alert">&lt;div class=&quot;luz-alert luz-alert--warning&quot;&gt;
+  &lt;div class=&quot;luz-alert__icon&quot; aria-hidden=&quot;true&quot;&gt;!&lt;/div&gt;
   &lt;div&gt;
-    &lt;div class=&quot;cai-alert__title&quot;&gt;Warning&lt;/div&gt;
-    &lt;div class=&quot;cai-alert__body&quot;&gt;Storage is almost full. Delete old builds to free space.&lt;/div&gt;
+    &lt;div class=&quot;luz-alert__title&quot;&gt;Warning&lt;/div&gt;
+    &lt;div class=&quot;luz-alert__body&quot;&gt;Storage is almost full. Delete old builds to free space.&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>One modifier sets the status. Write the status in the title too: the colour is only a second cue.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Alert variants" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Alert variants" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">Use it for</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-alert--info</code></div></td><td data-label="Use it for"><div>Something useful to know</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-alert--success</code></div></td><td data-label="Use it for"><div>A task that finished well</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-alert--warning</code></div></td><td data-label="Use it for"><div>Something that may go wrong soon</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-alert--error</code></div></td><td data-label="Use it for"><div>Something that went wrong and needs action</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-alert--info</code></div></td><td data-label="Use it for"><div>Something useful to know</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-alert--success</code></div></td><td data-label="Use it for"><div>A task that finished well</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-alert--warning</code></div></td><td data-label="Use it for"><div>Something that may go wrong soon</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-alert--error</code></div></td><td data-label="Use it for"><div>Something that went wrong and needs action</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -94,7 +94,7 @@ keywords: banner, callout
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use an alert to tell the reader about a state that matters on this page.</p>
@@ -115,13 +115,13 @@ keywords: banner, callout
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Say what happened and what to do next: “Storage is almost full. Delete old builds or change your plan.”</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-alert cai-alert--warning"><div class="cai-alert__icon">!</div><div><div class="cai-alert__title">Storage almost full</div><div class="cai-alert__body">Delete old builds or change your plan.</div></div></div>
+                  <div class="luz-alert luz-alert--warning"><div class="luz-alert__icon">!</div><div><div class="luz-alert__title">Storage almost full</div><div class="luz-alert__body">Delete old builds or change your plan.</div></div></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> “Something went wrong.” names neither what failed nor what the reader can do about it.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-alert cai-alert--error"><div class="cai-alert__icon">×</div><div><div class="cai-alert__title">Error</div><div class="cai-alert__body">Something went wrong.</div></div></div>
+                  <div class="luz-alert luz-alert--error"><div class="luz-alert__icon">×</div><div><div class="luz-alert__title">Error</div><div class="luz-alert__body">Something went wrong.</div></div></div>
                 </div>
               </figure>
             </div>
@@ -134,20 +134,20 @@ keywords: banner, callout
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>Each title is in its status colour on its own tint; the body text is the same on every tint.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Alert contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Alert contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Title, info</div></td><td data-label="Colour on background"><div><code>--cai-color-info</code> on <code>--cai-color-info-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>9.7:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Title, success</div></td><td data-label="Colour on background"><div><code>--cai-color-success</code> on <code>--cai-color-success-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>10.1:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Title, warning</div></td><td data-label="Colour on background"><div><code>--cai-color-warning</code> on <code>--cai-color-warning-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.8:1</div></td><td data-label="Dark"><div>9.0:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Title, error</div></td><td data-label="Colour on background"><div><code>--cai-color-danger</code> on <code>--cai-color-danger-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Body, info</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-color-info-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.3:1</div></td><td data-label="Dark"><div>6.0:1</div></td><td data-label="High contrast"><div>18.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Body, success</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-color-success-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.3:1</div></td><td data-label="Dark"><div>6.0:1</div></td><td data-label="High contrast"><div>18.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Body, warning</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-color-warning-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.3:1</div></td><td data-label="Dark"><div>5.7:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Body, error</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-color-danger-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title, info</div></td><td data-label="Colour on background"><div><code>--luz-color-info</code> on <code>--luz-color-info-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>9.7:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title, success</div></td><td data-label="Colour on background"><div><code>--luz-color-success</code> on <code>--luz-color-success-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>10.1:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title, warning</div></td><td data-label="Colour on background"><div><code>--luz-color-warning</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.8:1</div></td><td data-label="Dark"><div>9.0:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title, error</div></td><td data-label="Colour on background"><div><code>--luz-color-danger</code> on <code>--luz-color-danger-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Body, info</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-color-info-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.3:1</div></td><td data-label="Dark"><div>6.0:1</div></td><td data-label="High contrast"><div>18.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Body, success</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-color-success-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.3:1</div></td><td data-label="Dark"><div>6.0:1</div></td><td data-label="High contrast"><div>18.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Body, warning</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.3:1</div></td><td data-label="Dark"><div>5.7:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Body, error</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-color-danger-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -159,11 +159,11 @@ keywords: banner, callout
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 18 tokens that <code>components/alert.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-color-danger"><code>--cai-color-danger</code></a>, <a href="/docs/tokens/color/#cai-color-danger-bg"><code>--cai-color-danger-bg</code></a>, <a href="/docs/tokens/color/#cai-color-info"><code>--cai-color-info</code></a>, <a href="/docs/tokens/color/#cai-color-info-bg"><code>--cai-color-info-bg</code></a>, <a href="/docs/tokens/color/#cai-color-success"><code>--cai-color-success</code></a>, <a href="/docs/tokens/color/#cai-color-success-bg"><code>--cai-color-success-bg</code></a>, <a href="/docs/tokens/color/#cai-color-warning"><code>--cai-color-warning</code></a>, <a href="/docs/tokens/color/#cai-color-warning-accent"><code>--cai-color-warning-accent</code></a>, <a href="/docs/tokens/color/#cai-color-warning-bg"><code>--cai-color-warning-bg</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-3xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-text-base</code>, <code>--cai-text-md</code>, <code>--cai-text-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-base</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-color-danger"><code>--luz-color-danger</code></a>, <a href="/docs/tokens/color/#luz-color-danger-bg"><code>--luz-color-danger-bg</code></a>, <a href="/docs/tokens/color/#luz-color-info"><code>--luz-color-info</code></a>, <a href="/docs/tokens/color/#luz-color-info-bg"><code>--luz-color-info-bg</code></a>, <a href="/docs/tokens/color/#luz-color-success"><code>--luz-color-success</code></a>, <a href="/docs/tokens/color/#luz-color-success-bg"><code>--luz-color-success-bg</code></a>, <a href="/docs/tokens/color/#luz-color-warning"><code>--luz-color-warning</code></a>, <a href="/docs/tokens/color/#luz-color-warning-accent"><code>--luz-color-warning-accent</code></a>, <a href="/docs/tokens/color/#luz-color-warning-bg"><code>--luz-color-warning-bg</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-3xs</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-text-base</code>, <code>--luz-text-md</code>, <code>--luz-text-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-base</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

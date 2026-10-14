@@ -1,11 +1,11 @@
-# CAI Monorepo Structure
+# LUZ Monorepo Structure
 
 ```
-cai-design-system/
+luz-design-system/
 ├── apps/                              ← internal apps (NOT publishable)
 │   ├── docs/                          ← the documentation site, built by scripts/docs-site
 │   │   ├── site.json                  ← the seven areas of the docs (id, label, slug, groups)
-│   │   ├── pages/                     ← one HTML fragment per page, front matter in <!-- cai:page -->; route = path
+│   │   ├── pages/                     ← one HTML fragment per page, front matter in <!-- luz:page -->; route = path
 │   │   │   ├── index.html             ← /docs/ (the hub)
 │   │   │   ├── a-z.html               ← /docs/a-z/ (generated index)
 │   │   │   ├── accessibility.html     ← /docs/accessibility/ (the statement)
@@ -28,19 +28,19 @@ cai-design-system/
 │   │   ├── i18n/                      ← locales.json (languages and routes) + one catalog per language (en, es, ar)
 │   │   ├── landing.css
 │   │   ├── site-header.css            ← header shared with the docs page
-│   │   └── assets/                    ← favicon set and CAI mark
+│   │   └── assets/                    ← favicon set and LUZ mark
 ├── packages/
-│   ├── tokens/                        ← @cai-ds/tokens (publishable)
+│   ├── tokens/                        ← @luz-ds/tokens (publishable)
 │   │   ├── tokens.json                ← source of truth for Layer 1 primitives
 │   │   ├── src/semantic.css           ← Layer 2 semantic themes (light/dark/high-contrast)
 │   │   ├── fonts/                     ← Gidole, ET Book, Monoid woff2 + fonts.css + MIT licence texts
 │   │   └── dist/                      ← GENERATED (do not edit)
-│   │       ├── cai-tokens.css (+ .min) ← fonts + primitives + semantic
+│   │       ├── luz-tokens.css (+ .min) ← fonts + primitives + semantic
 │   │       ├── tokens.css, fonts.css  ← the same, split (bring your own fonts)
 │   │       ├── tokens.json            ← primitives source, for tooling
 │   │       └── fonts/                 ← woff2 files + licence texts
 │   │
-│   ├── core/                          ← @cai-ds/core (publishable)
+│   ├── core/                          ← @luz-ds/core (publishable)
 │   │   ├── src/                       ← EDIT HERE
 │   │   │   ├── settings/_settings.css ← config tokens (z-index, breakpoints, motion)
 │   │   │   ├── generic/_reset.css     ← reset
@@ -48,14 +48,14 @@ cai-design-system/
 │   │   │   │   ├── index.css          ← barrel (document, sections, text, inline, media, forms, interactive)
 │   │   │   │   └── *.css              ← new rules wrapped in :where() (specificity 0)
 │   │   │   ├── objects/_objects.css   ← layout abstractions (.o-)
-│   │   │   ├── components/            ← ONE FILE PER COMPONENT (.cai-*)
+│   │   │   ├── components/            ← ONE FILE PER COMPONENT (.luz-*)
 │   │   │   │   ├── index.css          ← barrel (@import in cascade order)
 │   │   │   │   ├── button.css, form.css, table.css, modal.css, player.css, …
 │   │   │   │   └── _animations.css    ← shared public @keyframes
 │   │   │   ├── utilities/_utilities.css   ← .u-*
 │   │   │   ├── themes/                ← the theme template, _template.css
 │   │   │   ├── index.css              ← entry with ITCSS imports (source of truth for layer order)
-│   │   │   ├── cai.js                 ← entry: re-exports API + auto-init
+│   │   │   ├── luz.js                 ← entry: re-exports API + auto-init
 │   │   │   ├── theme.js               ← theme system (applyTheme, applyMode, …)
 │   │   │   ├── sidebar.js             ← sidebar nav + mobile drawer
 │   │   │   ├── clipboard.js           ← copy-to-clipboard behaviors
@@ -67,16 +67,16 @@ cai-design-system/
 │   │   │   └── utils.js               ← pure helpers (unit-tested)
 │   │   ├── fonts/custom-faces/        ← theme font (Comic Shanns) + MIT licence text
 │   │   └── dist/                      ← GENERATED (do not edit)
-│   │       ├── cai.css (+ .min)       ← full bundle
+│   │       ├── luz.css (+ .min)       ← full bundle
 │   │       ├── base.css (+ .min)      ← settings + reset + elements (needed by per-component files)
 │   │       ├── components/*.css       ← per-component files (standalone use)
-│   │       ├── cai.js                 ← bundled entry (rollup)
+│   │       ├── luz.js                 ← bundled entry (rollup)
 │   │       ├── theme.js, sidebar.js, … ← individual ESM modules
 │   │       ├── midi.js                ← lazy chunk
 │   │       ├── fonts/custom-faces/    ← copied for the themes
 │   │       └── themes/*.css
 │   │
-│   ├── site/                      ← @cai-ds/site (publishable)
+│   ├── site/                      ← @luz-ds/site (publishable)
 │   │   ├── src/                       ← EDIT HERE
 │   │   │   ├── components/_components.css
 │   │   │   ├── index.css
@@ -85,7 +85,7 @@ cai-design-system/
 │   │       ├── site.css
 │   │       └── site.js
 │   │
-│   ├── landing/                   ← @cai-ds/landing (publishable, its own version, 0.x)
+│   ├── landing/                   ← @luz-ds/landing (publishable, its own version, 0.x)
 │   │   ├── src/                       ← EDIT HERE
 │   │   │   ├── components/feature-grid.css
 │   │   │   └── index.css
@@ -93,7 +93,7 @@ cai-design-system/
 │   │       ├── landing.css
 │   │       └── landing.min.css
 │   │
-│   └── cms/                       ← @cai-ds/cms (publishable, its own version, 0.x)
+│   └── cms/                       ← @luz-ds/cms (publishable, its own version, 0.x)
 │       ├── src/                       ← EDIT HERE
 │       │   ├── components/article-header.css
 │       │   ├── components/article.css   ← article layout and table of contents
@@ -120,7 +120,7 @@ cai-design-system/
     ├── build-site.js                  ← site: calls build-package.js (JS modules, placeholders)
     ├── build-landing.js               ← landing: calls build-package.js (CSS only)
     ├── build-cms.js                   ← cms: calls build-package.js (CSS only)
-    ├── cai-packages.js                ← the published packages, in dependency order
+    ├── luz-packages.js                ← the published packages, in dependency order
     ├── check-dist.js                  ← predev guard (rebuilds if any dist missing)
     ├── check-pack.js                  ← tarball contract: file snapshot, licences, exports, no workspace: ranges
     └── publish.js                     ← CI-only: publishes versions missing from npm (OIDC + provenance)
@@ -129,17 +129,17 @@ cai-design-system/
 ## Dependency Chain
 
 ```
-@cai-ds/tokens
+@luz-ds/tokens
     ↓
-@cai-ds/core  (consumes tokens, must never import site)
+@luz-ds/core  (consumes tokens, must never import site)
     ↓
-@cai-ds/site  (app-level patterns)
+@luz-ds/site  (app-level patterns)
     ↓
-@cai-ds/landing  (patterns of a landing page; own version, 0.x)
-@cai-ds/cms      (patterns of a blog or a newspaper, any CMS; own version, 0.x; never depends on landing)
+@luz-ds/landing  (patterns of a landing page; own version, 0.x)
+@luz-ds/cms      (patterns of a blog or a newspaper, any CMS; own version, 0.x; never depends on landing)
 ```
 
-Tokens, core and site share one version; landing and cms (and later wordpress, on cms) have their own and peer ranges on the base's major.
+Tokens, core and site share one version; landing and cms have their own and peer ranges on the base's major.
 
 ## Key Rules
 

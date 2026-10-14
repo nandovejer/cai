@@ -13,7 +13,7 @@ const EXAMPLE = '#example ~ .docs-example';
 /** Fraction of the inside of a meter that is the fill colour, read from its screenshot. */
 async function filled(page, meter) {
   const png = await meter.screenshot();
-  const [fill, track] = await Promise.all([paintOf(page, 'var(--cai-brand-primary)'), paintOf(page, 'var(--cai-surface-muted)')]);
+  const [fill, track] = await Promise.all([paintOf(page, 'var(--luz-brand-primary)'), paintOf(page, 'var(--luz-surface-muted)')]);
   const row = await readRow(page, png, Math.floor((await meter.boundingBox()).height / 2));
   const inside = row.slice(1, -1);
   const count = inside.filter((p) => near(p, fill)).length;
@@ -25,7 +25,7 @@ test.describe('meter', () => {
     test(`the fill is value / max of the bar, at ${width} px`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(PAGE);
-      const meters = page.locator(`${EXAMPLE} .cai-meter`);
+      const meters = page.locator(`${EXAMPLE} .luz-meter`);
       expect(await meters.count()).toBe(3);
       for (let i = 0; i < 3; i++) {
         const meter = meters.nth(i);
@@ -41,7 +41,7 @@ test.describe('meter', () => {
   test('a meter is a block, not drawn by the browser, and never narrower than 8rem outside a stacked cell', async ({ page }) => {
     await page.setViewportSize({ width: 1024, height: 900 });
     await page.goto(PAGE);
-    const style = await page.locator(`${EXAMPLE} .cai-meter`).first().evaluate((m) => {
+    const style = await page.locator(`${EXAMPLE} .luz-meter`).first().evaluate((m) => {
       const s = getComputedStyle(m);
       return { display: s.display, appearance: s.appearance, min: s.minInlineSize, height: s.blockSize, border: s.borderTopWidth, rem: parseFloat(getComputedStyle(document.documentElement).fontSize) };
     });
@@ -58,9 +58,9 @@ test.describe('meter', () => {
       const host = document.createElement('div');
       host.id = 'states';
       host.innerHTML = [
-        '<meter class="cai-meter" id="m-good" min="0" max="10" low="3" high="8" optimum="9" value="9" aria-hidden="true"></meter>',
-        '<meter class="cai-meter" id="m-mid" min="0" max="10" low="3" high="8" optimum="9" value="5" aria-hidden="true"></meter>',
-        '<meter class="cai-meter" id="m-bad" min="0" max="10" low="3" high="8" optimum="9" value="1" aria-hidden="true"></meter>',
+        '<meter class="luz-meter" id="m-good" min="0" max="10" low="3" high="8" optimum="9" value="9" aria-hidden="true"></meter>',
+        '<meter class="luz-meter" id="m-mid" min="0" max="10" low="3" high="8" optimum="9" value="5" aria-hidden="true"></meter>',
+        '<meter class="luz-meter" id="m-bad" min="0" max="10" low="3" high="8" optimum="9" value="1" aria-hidden="true"></meter>',
       ].join('');
       document.querySelector('#example').after(host);
     });
@@ -76,7 +76,7 @@ test.describe('meter', () => {
   test('forced colors: the bar keeps its border and its fill', async ({ page }) => {
     await page.goto(PAGE);
     await page.emulateMedia({ forcedColors: 'active' });
-    const meter = page.locator(`${EXAMPLE} .cai-meter`).first();
+    const meter = page.locator(`${EXAMPLE} .luz-meter`).first();
     const [text, canvas] = await Promise.all([paintOf(page, 'CanvasText'), paintOf(page, 'Canvas')]);
     const border = await meter.evaluate((m) => getComputedStyle(m).borderTopColor);
     expect(border.match(/\d+/g).slice(0, 3).map(Number)).toEqual(text);
@@ -92,7 +92,7 @@ test.describe('meter', () => {
     await page.setViewportSize({ width: 320, height: 900 });
     await page.goto(PAGE);
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
-    const fits = await page.locator(`${EXAMPLE} .cai-meter`).evaluateAll((list) =>
+    const fits = await page.locator(`${EXAMPLE} .luz-meter`).evaluateAll((list) =>
       list.map((m) => {
         const cell = m.closest('td').getBoundingClientRect();
         const box = m.getBoundingClientRect();

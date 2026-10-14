@@ -1,6 +1,6 @@
 /**
- * CAI — the Do and don't examples of the Design tab (a11y.md TAB-20, HUB-2).
- * Each example is live CAI markup inside a stage with `inert` and
+ * LUZ — the Do and don't examples of the Design tab (a11y.md TAB-20, HUB-2).
+ * Each example is live LUZ markup inside a stage with `inert` and
  * `aria-hidden="true"`, captioned by a figcaption that starts with the verdict.
  * The stage is a picture: nothing in it takes focus or reaches the
  * accessibility tree, so the figure is announced by its caption alone. It is

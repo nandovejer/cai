@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Layout objects
 description: Lay out blocks in a stack, a row, a grid or beside an image, and the page itself, with the o-* classes.
 area: components
@@ -39,7 +39,7 @@ files: objects/_objects.css
             <div class="docs-demo__stage">
               <code class="docs-demo__file">.o-media</code>
               <div class="o-media">
-                <span class="cai-avatar cai-avatar--md" aria-hidden="true">AB</span>
+                <span class="luz-avatar luz-avatar--md" aria-hidden="true">AB</span>
                 <div class="o-media__body">
                   <p>Media object</p>
                   <p class="u-text-muted">A fixed item beside content that takes the remaining width.</p>
@@ -47,12 +47,12 @@ files: objects/_objects.css
               </div>
             </div>
           </div>
-          <p class="docs-demo__note"><code class="cai-code-inline">.o-shell</code>, <code class="cai-code-inline">.o-main</code> and <code class="cai-code-inline">.o-container</code> are page-level: <a href="#page-nav">this page uses them</a>.</p>
+          <p class="docs-demo__note"><code class="luz-code-inline">.o-shell</code>, <code class="luz-code-inline">.o-main</code> and <code class="luz-code-inline">.o-container</code> are page-level: <a href="#page-nav">this page uses them</a>.</p>
         
           <h2 id="objects-reference">Pick an object</h2>
           <p>Objects only lay things out: no colour, no type. Spacing comes from the space tokens.</p>
-          <div class="cai-table-wrap" role="region" aria-label="Layout objects" tabindex="0">
-            <table class="cai-table">
+          <div class="luz-table-wrap" role="region" aria-label="Layout objects" tabindex="0">
+            <table class="luz-table">
               <thead>
                 <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
               </thead>
@@ -60,28 +60,28 @@ files: objects/_objects.css
                 <tr><td data-label="Class"><div><code>.o-stack</code></div></td><td data-label="What it does"><div>A column, 12 px between items</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-row</code></div></td><td data-label="What it does"><div>A row that wraps, items centred vertically, 12 px between them</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-grid</code></div></td><td data-label="What it does"><div>A grid with 16 px gaps; set the columns with your own <code>grid-template-columns</code>, or with one of the modifiers below</div></td></tr>
-                <tr><td data-label="Class"><div><code>.o-grid--auto</code></div></td><td data-label="What it does"><div>As many equal columns as fit, none narrower than <code>--cai-grid-min</code> (16 rem by default): the grid reflows by itself and needs no breakpoint</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-grid--auto</code></div></td><td data-label="What it does"><div>As many equal columns as fit, none narrower than <code>--luz-grid-min</code> (16 rem by default): the grid reflows by itself and needs no breakpoint</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-grid--2</code>, <code>.o-grid--3</code>, <code>.o-grid--4</code></div></td><td data-label="What it does"><div>That many equal columns above 768 px; one column at 768 px and below</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-media</code>, <code>.o-media__body</code></div></td><td data-label="What it does"><div>A fixed item, such as an avatar, beside content that takes the remaining width</div></td></tr>
-                <tr><td data-label="Class"><div><code>.o-container</code></div></td><td data-label="What it does"><div>The content width (<code>--cai-content-max</code>, 1100 px) and page padding; less padding at 640 px and below</div></td></tr>
-                <tr><td data-label="Class"><div><code>.o-shell</code></div></td><td data-label="What it does"><div>The app layout: a sidebar column (<code>--cai-sidebar-width</code>) beside the main area, a footer across the bottom; one column at 768 px and below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-container</code></div></td><td data-label="What it does"><div>The content width (<code>--luz-content-max</code>, 1100 px) and page padding; less padding at 640 px and below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-shell</code></div></td><td data-label="What it does"><div>The app layout: a sidebar column (<code>--luz-sidebar-width</code>) beside the main area, a footer across the bottom; one column at 768 px and below</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-main</code></div></td><td data-label="What it does"><div>The main area inside <code>.o-shell</code></div></td></tr>
               </tbody>
             </table>
           </div>
           <h2 id="objects-grid">The grid</h2>
-          <p>CAI has no 12-column system: a content grid is a handful of equal columns, and <code>.o-grid</code> draws them. Use <code>.o-grid--auto</code> when the items decide how many fit, such as cards; use <code>.o-grid--2</code> to <code>--4</code> when the number is part of the design.</p>
+          <p>LUZ has no 12-column system: a content grid is a handful of equal columns, and <code>.o-grid</code> draws them. Use <code>.o-grid--auto</code> when the items decide how many fit, such as cards; use <code>.o-grid--2</code> to <code>--4</code> when the number is part of the design.</p>
           <div class="docs-snippet">
             <div class="docs-snippet__bar">
               <span class="docs-snippet__lang">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-objects-grid" aria-label="Copy the grid markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-objects-grid" aria-label="Copy the grid markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Grid markup"><code id="code-objects-grid">&lt;!-- as many columns as fit, each at least 16 rem --&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Grid markup"><code id="code-objects-grid">&lt;!-- as many columns as fit, each at least 16 rem --&gt;
 &lt;div class=&quot;o-grid o-grid--auto&quot;&gt;…cards…&lt;/div&gt;
 
 &lt;!-- at least 12 rem: set the property in your own CSS --&gt;
 &lt;div class=&quot;o-grid o-grid--auto gallery&quot;&gt;…&lt;/div&gt;
-&lt;style&gt;.gallery { --cai-grid-min: 12rem; }&lt;/style&gt;
+&lt;style&gt;.gallery { --luz-grid-min: 12rem; }&lt;/style&gt;
 
 &lt;!-- three columns above 768 px, one below --&gt;
 &lt;div class=&quot;o-grid o-grid--3&quot;&gt;…&lt;/div&gt;</code></pre>
@@ -96,11 +96,11 @@ files: objects/_objects.css
           <div class="docs-snippet">
             <div class="docs-snippet__bar">
               <span class="docs-snippet__lang">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-objects-list" aria-label="Copy the list grid markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-objects-list" aria-label="Copy the list grid markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="List grid markup"><code id="code-objects-list">&lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
-  &lt;li class=&quot;cai-card&quot;&gt;…&lt;/li&gt;
-  &lt;li class=&quot;cai-card&quot;&gt;…&lt;/li&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="List grid markup"><code id="code-objects-list">&lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
+  &lt;li class=&quot;luz-card&quot;&gt;…&lt;/li&gt;
+  &lt;li class=&quot;luz-card&quot;&gt;…&lt;/li&gt;
 &lt;/ul&gt;</code></pre>
           </div>
           <ul>
@@ -111,10 +111,10 @@ files: objects/_objects.css
           <div class="docs-snippet">
             <div class="docs-snippet__bar">
               <span class="docs-snippet__lang">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-objects-media" aria-label="Copy the media object markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-objects-media" aria-label="Copy the media object markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Media object markup"><code id="code-objects-media">&lt;div class=&quot;o-media&quot;&gt;
-  &lt;span class=&quot;cai-avatar cai-avatar--md&quot; aria-hidden=&quot;true&quot;&gt;AB&lt;/span&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Media object markup"><code id="code-objects-media">&lt;div class=&quot;o-media&quot;&gt;
+  &lt;span class=&quot;luz-avatar luz-avatar--md&quot; aria-hidden=&quot;true&quot;&gt;AB&lt;/span&gt;
   &lt;div class=&quot;o-media__body&quot;&gt;
     &lt;p&gt;Ana Belén&lt;/p&gt;
   &lt;/div&gt;
@@ -123,15 +123,15 @@ files: objects/_objects.css
           <div class="docs-snippet">
             <div class="docs-snippet__bar">
               <span class="docs-snippet__lang">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-objects-shell" aria-label="Copy the app shell markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-objects-shell" aria-label="Copy the app shell markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="App shell markup"><code id="code-objects-shell">&lt;body class=&quot;o-shell&quot;&gt;
-  &lt;nav class=&quot;cai-sidebar&quot; aria-label=&quot;Main&quot;&gt;…&lt;/nav&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="App shell markup"><code id="code-objects-shell">&lt;body class=&quot;o-shell&quot;&gt;
+  &lt;nav class=&quot;luz-sidebar&quot; aria-label=&quot;Main&quot;&gt;…&lt;/nav&gt;
   &lt;main class=&quot;o-main&quot; id=&quot;main-content&quot;&gt;
     &lt;div class=&quot;o-container&quot;&gt;…&lt;/div&gt;
   &lt;/main&gt;
   &lt;footer&gt;…&lt;/footer&gt;
 &lt;/body&gt;</code></pre>
           </div>
-          <p>The footer is a plain <code>&lt;footer&gt;</code>, which core places across the bottom: nothing here needs site. To give it the look of site's footer, use <code>.cai-site-footer</code> on it. For whole pages without a sidebar, the <a href="/docs/site/shell/">page shell</a> of site does the same job. <a href="/docs/get-started/structure/#needs">What each package needs</a> lists every piece.</p>
+          <p>The footer is a plain <code>&lt;footer&gt;</code>, which core places across the bottom: nothing here needs site. To give it the look of site's footer, use <code>.luz-site-footer</code> on it. For whole pages without a sidebar, the <a href="/docs/site/shell/">page shell</a> of site does the same job. <a href="/docs/get-started/structure/#needs">What each package needs</a> lists every piece.</p>
     </div>

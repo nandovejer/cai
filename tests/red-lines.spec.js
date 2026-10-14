@@ -1,5 +1,5 @@
 /**
- * CAI — the red lines of PRINCIPLES.md that can only be checked in a browser.
+ * LUZ — the red lines of PRINCIPLES.md that can only be checked in a browser.
  * Every test runs on the home page and every page of the docs site; the visual ones run in the three base
  * themes. The static half lives in tests/red-lines.test.js, stylelint and
  * ESLint; the no-JavaScript half (RL-2) in tests/nojs.spec.js.
@@ -76,11 +76,11 @@ test.describe('RL-12: searching makes no third-party request', () => {
       const dialog = page.getByRole('dialog', { name: 'Search the documentation' });
       await page.getByRole('banner').getByRole('button', { name: /^Search docs/ }).click();
       await dialog.getByRole('textbox').fill('button');
-      await expect(dialog.locator('[data-cai-search-list] a').first()).toBeVisible();
+      await expect(dialog.locator('[data-luz-search-list] a').first()).toBeVisible();
       await page.keyboard.press('Escape');
       await page.keyboard.press('Control+k');
       await dialog.getByRole('textbox').fill('table');
-      await expect(dialog.locator('[data-cai-search-list] a').first()).toBeVisible();
+      await expect(dialog.locator('[data-luz-search-list] a').first()).toBeVisible();
       await page.waitForLoadState('networkidle');
       expect(external, 'requests to other hosts').toEqual([]);
     });
@@ -348,9 +348,9 @@ for (const app of APPS) {
             if (!message && el.checkVisibility()) offenders.push(`invalid ${el.tagName.toLowerCase()}#${el.id}: no visible error message`);
           }
           // A status alert carries an icon or a title, not only its colour
-          for (const el of document.querySelectorAll('.cai-alert')) {
-            if (!el.querySelector('.cai-alert__icon, svg, .cai-alert__title')?.textContent.trim() && !el.querySelector('svg')) {
-              offenders.push(`status .cai-alert "${el.textContent.trim().slice(0, 30)}": no icon or title`);
+          for (const el of document.querySelectorAll('.luz-alert')) {
+            if (!el.querySelector('.luz-alert__icon, svg, .luz-alert__title')?.textContent.trim() && !el.querySelector('svg')) {
+              offenders.push(`status .luz-alert "${el.textContent.trim().slice(0, 30)}": no icon or title`);
             }
           }
           return offenders;
@@ -362,7 +362,7 @@ for (const app of APPS) {
         await page.emulateMedia({ reducedMotion: 'reduce' });
         await open(page, app, theme);
 
-        // Disabled text is exempt in WCAG, not in CAI: it keeps 3:1 (RL-7)
+        // Disabled text is exempt in WCAG, not in LUZ: it keeps 3:1 (RL-7)
         const disabled = await page.evaluate(() => {
           const parse = (value) => {
             const p = value.match(/rgba?\(([^)]+)\)/)[1].split(/[,\s/]+/).filter(Boolean).map(Number);
@@ -446,7 +446,7 @@ const SYNTAX = ['comment', 'keyword', 'name', 'property', 'string', 'literal'];
 
 test.describe('RL-7: syntax colours on the code block', () => {
   for (const theme of THEMES) {
-    test(`every --cai-code-* colour keeps 4.5:1 (7:1 in high contrast) in ${theme}`, async ({ page }) => {
+    test(`every --luz-code-* colour keeps 4.5:1 (7:1 in high contrast) in ${theme}`, async ({ page }) => {
       // No background transition between the light first paint and the mode
       await page.emulateMedia({ reducedMotion: 'reduce' });
       await open(page, routeOf('c-code-syntax'), theme);
@@ -459,7 +459,7 @@ test.describe('RL-7: syntax colours on the code block', () => {
         };
         const seen = {};
         const offenders = [];
-        for (const span of document.querySelectorAll('pre.cai-code-block code [class^="tok-"]')) {
+        for (const span of document.querySelectorAll('pre.luz-code-block code [class^="tok-"]')) {
           const pre = span.closest('pre');
           const mode = pre.closest('[data-theme]').dataset.theme;
           const [a, b] = [luminance(getComputedStyle(span).color), luminance(getComputedStyle(pre).backgroundColor)];

@@ -1,57 +1,57 @@
-<!-- cai:page
+<!-- luz:page
 title: Action group
 description: Keeps two or three related buttons and links together in one row.
 area: site
 order: 6
 group: patterns
-files: .cai-site-actions
+files: .luz-site-actions
 toc: h2,h3
 -->
     <div class="docs-component" id="p-actions">
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <div class="cai-site-actions">
-              <button class="cai-btn cai-btn--primary" type="button">Save</button>
-              <button class="cai-btn cai-btn--outline" type="button">Preview</button>
-              <button class="cai-btn cai-btn--ghost" type="button">Cancel</button>
+            <div class="luz-site-actions">
+              <button class="luz-btn luz-btn--primary" type="button">Save</button>
+              <button class="luz-btn luz-btn--outline" type="button">Preview</button>
+              <button class="luz-btn luz-btn--ghost" type="button">Cancel</button>
             </div>
             <p class="docs-demo__note">Stacks full-width at 640px and below.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Action group documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Action group documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-actions" aria-label="Copy the action group markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-actions" aria-label="Copy the action group markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Action group markup"><code id="code-actions">&lt;div class=&quot;cai-site-actions&quot;&gt;
-  &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot;&gt;Save details&lt;/button&gt;
-  &lt;a class=&quot;cai-btn cai-btn--ghost&quot; href=&quot;/account/&quot;&gt;Cancel&lt;/a&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Action group markup"><code id="code-actions">&lt;div class=&quot;luz-site-actions&quot;&gt;
+  &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot;&gt;Save details&lt;/button&gt;
+  &lt;a class=&quot;luz-btn luz-btn--ghost&quot; href=&quot;/account/&quot;&gt;Cancel&lt;/a&gt;
 &lt;/div&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>There are no modifiers.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Action group class" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Action group class" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-site-actions</code></div></td><td data-label="Effect"><div>A wrapping row with 8 px between items; at 640 px and below each item takes the full width, one per line</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-site-actions</code></div></td><td data-label="Effect"><div>A wrapping row with 8 px between items; at 640 px and below each item takes the full width, one per line</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>A flex row from <code>@cai-ds/site</code>. No JavaScript.</p>
+            <p>A flex row from <code>@luz-ds/site</code>. No JavaScript.</p>
             <ul>
               <li>Put <a href="/docs/components/button/">buttons</a> and links styled as buttons inside it.</li>
               <li>On a phone the actions stack, so each one stays an easy target.</li>
@@ -66,7 +66,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use an action group for two or three related actions, such as the buttons at the end of a form or in a hero.</p>
@@ -80,13 +80,13 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> The main action first, as the only primary button, and no more than three.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-site-actions"><button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Save details</button><button class="cai-btn cai-btn--ghost cai-btn--sm" type="button">Cancel</button></div>
+                  <div class="luz-site-actions"><button class="luz-btn luz-btn--primary luz-btn--sm" type="button">Save details</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Cancel</button></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Five buttons of the same weight: the reader cannot tell which one matters.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-site-actions"><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Save</button><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Save as</button><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Export</button><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Share</button><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Print</button></div>
+                  <div class="luz-site-actions"><button class="luz-btn luz-btn--outline luz-btn--sm" type="button">Save</button><button class="luz-btn luz-btn--outline luz-btn--sm" type="button">Save as</button><button class="luz-btn luz-btn--outline luz-btn--sm" type="button">Export</button><button class="luz-btn luz-btn--outline luz-btn--sm" type="button">Share</button><button class="luz-btn luz-btn--outline luz-btn--sm" type="button">Print</button></div>
                 </div>
               </figure>
             </div>
@@ -102,9 +102,9 @@ toc: h2,h3
               <li><strong>Focus:</strong> each button keeps its own ring; the group's gap keeps the rings of neighbours apart.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 1 tokens that the <code>.cai-site-actions</code> rules of site's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 1 tokens that the <code>.luz-site-actions</code> rules of site's <code>components/_components.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-xs</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

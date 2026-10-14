@@ -1,6 +1,6 @@
 /**
  * The docs site's remembered Code / Design tab (apps/docs/view.js): only
- * "code" or "design" is read back from storage, under one cai- key, and
+ * "code" or "design" is read back from storage, under one luz- key, and
  * storage that is missing, blocked or throwing never breaks the page
  * (PRINCIPLES.md §8, security.md SEC-MISC-1, a11y.md TAB-15).
  */
@@ -27,8 +27,8 @@ const throwing = {
 };
 
 describe("the remembered docs view", () => {
-  it("uses one key with the cai- prefix", () => {
-    expect(VIEW_KEY).toBe("cai-docs-view");
+  it("uses one key with the luz- prefix", () => {
+    expect(VIEW_KEY).toBe("luz-docs-view");
   });
 
   it("reads back code or design only", () => {

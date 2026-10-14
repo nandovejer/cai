@@ -1,5 +1,5 @@
 /* ==========================================================================
-	 CAI CMS: article header.
+	 LUZ CMS: article header.
 	 The top of a post or a story: its section, the title, the standfirst,
 	 the byline and an optional lead picture. The classes go on any element,
 	 so a template of any CMS can emit them (in WordPress, a block's
@@ -7,85 +7,85 @@
 	 around a paragraph works as well as the paragraph.
 	 ========================================================================== */
 
-.cai-cms-article-header {
+.luz-cms-article-header {
 	display: grid;
-	gap: var(--cai-space-sm);
-	margin-block-end: var(--cai-space-xl);
+	gap: var(--luz-space-sm);
+	margin-block-end: var(--luz-space-xl);
 }
 
 /* The section above the title, in the voice of site's hero eyebrow, so a
    story and a home page start alike. A link in it stays a link. */
-.cai-cms-article-header__kicker {
-	font-family: var(--cai-font-mono);
-	font-size: var(--cai-text-xs);
+.luz-cms-article-header__kicker {
+	font-family: var(--luz-font-mono);
+	font-size: var(--luz-text-xs);
 	font-weight: 500;
 	line-height: 1.5;
 	letter-spacing: 0.1em;
 	text-transform: uppercase;
-	color: var(--cai-text-secondary);
+	color: var(--luz-text-secondary);
 }
 
 /* The mono has no Arabic letters; spacing between letters breaks the joins */
-.cai-cms-article-header__kicker:lang(ar) {
-	font-family: var(--cai-font-sans);
+.luz-cms-article-header__kicker:lang(ar) {
+	font-family: var(--luz-font-sans);
 }
 
-.cai-cms-article-header__kicker:lang(ar),
-.cai-cms-article-header__title:lang(ar) {
+.luz-cms-article-header__kicker:lang(ar),
+.luz-cms-article-header__title:lang(ar) {
 	letter-spacing: 0;
 }
 
 /* The title of a story runs long: balanced lines, a little tighter. The
    heading's look is set here too, so a template that writes the title in
    another element (a link in a <p>, a block's wrapper) keeps it. */
-.cai-cms-article-header__title {
-	font-family: var(--cai-font-heading);
-	font-size: var(--cai-text-3xl);
+.luz-cms-article-header__title {
+	font-family: var(--luz-font-heading);
+	font-size: var(--luz-text-3xl);
 	font-weight: 300;
 	line-height: 1.15;
 	letter-spacing: -0.02em;
 	text-wrap: balance;
-	color: var(--cai-text-primary);
+	color: var(--luz-text-primary);
 }
 
 /* The standfirst: what the story says, in a sentence or two */
-.cai-cms-article-header__standfirst {
+.luz-cms-article-header__standfirst {
 	max-inline-size: 70ch;
-	font-size: var(--cai-text-lg);
+	font-size: var(--luz-text-lg);
 	line-height: 1.4;
 	text-wrap: pretty;
-	color: var(--cai-text-secondary);
+	color: var(--luz-text-secondary);
 }
 
 /* Who wrote it and when: an avatar, then its lines. Facts, not prose: the
    sans, as navigation and labels are */
-.cai-cms-article-header__byline {
+.luz-cms-article-header__byline {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: var(--cai-space-xs) var(--cai-space-sm);
-	margin-block-start: var(--cai-space-xs);
-	font-family: var(--cai-font-sans);
-	font-size: var(--cai-text-md);
+	gap: var(--luz-space-xs) var(--luz-space-sm);
+	margin-block-start: var(--luz-space-xs);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-md);
 	line-height: 1.5;
-	color: var(--cai-text-secondary);
+	color: var(--luz-text-secondary);
 }
 
 /* The lead picture and its caption, edge to edge: core's bare <figure> is
    a tinted panel, which would frame the photo twice */
-.cai-cms-article-header__media {
-	margin-block: var(--cai-space-sm) 0;
+.luz-cms-article-header__media {
+	margin-block: var(--luz-space-sm) 0;
 	margin-inline: 0;
 	padding: 0;
 	background: none;
 }
 
 @media (max-width: 640px) {
-	.cai-cms-article-header__title {
-		font-size: var(--cai-text-2xl);
+	.luz-cms-article-header__title {
+		font-size: var(--luz-text-2xl);
 	}
 
-	.cai-cms-article-header__standfirst {
-		font-size: var(--cai-text-base);
+	.luz-cms-article-header__standfirst {
+		font-size: var(--luz-text-base);
 	}
 }

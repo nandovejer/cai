@@ -1,5 +1,5 @@
 /**
- * CAI — the red lines of PRINCIPLES.md that can be checked on the sources,
+ * LUZ — the red lines of PRINCIPLES.md that can be checked on the sources,
  * without a browser. The browser half is tests/red-lines.spec.js; stylelint
  * (stylelint.config.js) and ESLint (eslint.config.js) cover the CSS and JS
  * rules; scripts/check-*.js cover sizes, contrast tokens and generated files.
@@ -45,8 +45,8 @@ describe("red-line debt register (tests/fixtures/red-line-debt.json)", () => {
   });
 
   // PRINCIPLES.md, "Migration": a red-line breach is fixed before the next
-  // release. CI sets CAI_RELEASE on main and on pull requests into main.
-  it.runIf(process.env.CAI_RELEASE === "true")("is empty before a release", () => {
+  // release. CI sets LUZ_RELEASE on main and on pull requests into main.
+  it.runIf(process.env.LUZ_RELEASE === "true")("is empty before a release", () => {
     expect(debt.map((e) => `${e.rl}: ${e.what}`)).toEqual([]);
   });
 });
@@ -65,12 +65,12 @@ describe("RL-1: no runtime dependency", () => {
     for (const field of ["dependencies", "optionalDependencies", "bundleDependencies", "bundledDependencies"]) {
       const names = Object.keys(manifest[field] ?? {}).map((key) => (Array.isArray(manifest[field]) ? manifest[field][key] : key));
       // A private app consumes the three packages; nothing else ships to a page
-      const allowed = path.startsWith("apps/") && field === "dependencies" ? (name) => name.startsWith("@cai-ds/") : () => false;
+      const allowed = path.startsWith("apps/") && field === "dependencies" ? (name) => name.startsWith("@luz-ds/") : () => false;
       expect(names.filter((name) => !allowed(name)), `${path} ${field}`).toEqual([]);
     }
     // The layers require each other, and nothing else
     for (const name of Object.keys(manifest.peerDependencies ?? {})) {
-      expect(name, `${path} peerDependencies`).toMatch(/^@cai-ds\//);
+      expect(name, `${path} peerDependencies`).toMatch(/^@luz-ds\//);
     }
   });
 });
@@ -80,7 +80,7 @@ describe("RL-1: no runtime dependency", () => {
 describe("RL-8: every duration token is zeroed under prefers-reduced-motion", () => {
   const settings = read("packages/core/src/settings/_settings.css").replace(/\/\*[\s\S]*?\*\//g, "");
   const reduce = settings.match(/@media \(prefers-reduced-motion: reduce\)\s*\{\s*:root\s*\{([^}]*)\}/)?.[1] ?? "";
-  const declared = [...new Set([...settings.matchAll(/(--cai-duration-[\w-]+)\s*:/g)].map((m) => m[1]))];
+  const declared = [...new Set([...settings.matchAll(/(--luz-duration-[\w-]+)\s*:/g)].map((m) => m[1]))];
 
   it("declares durations and a reduce block", () => {
     expect(declared.length).toBeGreaterThan(2);
@@ -94,7 +94,7 @@ describe("RL-8: every duration token is zeroed under prefers-reduced-motion", ()
   it("no other file redefines a duration token (it would escape the switch)", () => {
     const offenders = filesIn(["packages", "apps"], [".css", ".html"])
       .filter((p) => !p.endsWith("_settings.css"))
-      .filter((p) => /--cai-duration-[\w-]+\s*:/.test(readFileSync(p, "utf-8")))
+      .filter((p) => /--luz-duration-[\w-]+\s*:/.test(readFileSync(p, "utf-8")))
       .map(rel);
     expect(offenders).toEqual([]);
   });
@@ -179,10 +179,10 @@ describe("RL-15: status colours keep their set and their meaning", () => {
   // Changing either list changes the meaning of colour: it needs its own
   // changeset and the maintainer's approval (PRINCIPLES.md §6).
   const COLOR_TOKENS = [
-    "--cai-color-code", "--cai-color-danger", "--cai-color-danger-bg", "--cai-color-danger-fill",
-    "--cai-color-info", "--cai-color-info-bg", "--cai-color-purple", "--cai-color-purple-bg",
-    "--cai-color-success", "--cai-color-success-bg", "--cai-color-teal", "--cai-color-teal-bg",
-    "--cai-color-warning", "--cai-color-warning-accent", "--cai-color-warning-bg",
+    "--luz-color-code", "--luz-color-danger", "--luz-color-danger-bg", "--luz-color-danger-fill",
+    "--luz-color-info", "--luz-color-info-bg", "--luz-color-purple", "--luz-color-purple-bg",
+    "--luz-color-success", "--luz-color-success-bg", "--luz-color-teal", "--luz-color-teal-bg",
+    "--luz-color-warning", "--luz-color-warning-accent", "--luz-color-warning-bg",
   ];
   // Modifier → the status it means. Hue names map to their one meaning.
   const MEANING = {
@@ -192,18 +192,18 @@ describe("RL-15: status colours keep their set and their meaning", () => {
     info: "info", blue: "info",
     teal: "teal", purple: "purple",
   };
-  const STATUS_BLOCKS = /\.cai-(alert|tag|badge|toast|btn|input|progress|meter|site-[\w-]+)--([a-z]+)\b/g;
+  const STATUS_BLOCKS = /\.luz-(alert|tag|badge|toast|btn|input|progress|meter|site-[\w-]+)--([a-z]+)\b/g;
 
   const css = filesIn(["packages"], [".css"]).map((p) => [rel(p), readFileSync(p, "utf-8").replace(/\/\*[\s\S]*?\*\//g, "")]);
 
-  it("no new --cai-color-* token, in the base modes or the custom themes", () => {
-    const declared = new Set(css.flatMap(([, text]) => [...text.matchAll(/(--cai-color-[\w-]+)\s*:/g)].map((m) => m[1])));
+  it("no new --luz-color-* token, in the base modes or the custom themes", () => {
+    const declared = new Set(css.flatMap(([, text]) => [...text.matchAll(/(--luz-color-[\w-]+)\s*:/g)].map((m) => m[1])));
     expect([...declared].filter((name) => !COLOR_TOKENS.includes(name))).toEqual([]);
   });
 
   it("no app redefines a status colour", () => {
     const offenders = filesIn(["apps"], [".css", ".html"])
-      .filter((p) => /--cai-color-[\w-]+\s*:/.test(readFileSync(p, "utf-8")))
+      .filter((p) => /--luz-color-[\w-]+\s*:/.test(readFileSync(p, "utf-8")))
       .map(rel);
     expect(offenders).toEqual([]);
   });
@@ -215,8 +215,8 @@ describe("RL-15: status colours keep their set and their meaning", () => {
         const meanings = new Set([...selector.matchAll(STATUS_BLOCKS)].map((m) => MEANING[m[2]]).filter(Boolean));
         if (meanings.size !== 1) continue;
         const [meaning] = meanings;
-        for (const [, used] of body.matchAll(/--cai-color-(success|danger|warning|info|teal|purple)\b/g)) {
-          if (used !== meaning) offenders.push(`${file}: ${selector.trim()} (${meaning}) uses --cai-color-${used}`);
+        for (const [, used] of body.matchAll(/--luz-color-(success|danger|warning|info|teal|purple)\b/g)) {
+          if (used !== meaning) offenders.push(`${file}: ${selector.trim()} (${meaning}) uses --luz-color-${used}`);
         }
       }
     }
@@ -256,8 +256,8 @@ describe("Pages site: the not-found page (docs-redesign SEC-MISC-3/4/5)", () => 
 
   it("accepts only \"/\" or one folder as the site's path, never another host or a dot segment", () => {
     expect(base).toMatch(BASE_PATH);
-    for (const ok of ["/", "/cai/", "/my.site_1/"]) expect(ok, ok).toMatch(BASE_PATH);
-    for (const bad of ["", "cai/", "//evil.example/", "https://evil.example/", "/../", "/./", "/.git/", "/a/b/", "/cai", "/c ai/"]) {
+    for (const ok of ["/", "/luz/", "/my.site_1/"]) expect(ok, ok).toMatch(BASE_PATH);
+    for (const bad of ["", "luz/", "//evil.example/", "https://evil.example/", "/../", "/./", "/.git/", "/a/b/", "/luz", "/c ai/"]) {
       expect(bad, bad).not.toMatch(BASE_PATH);
     }
   });

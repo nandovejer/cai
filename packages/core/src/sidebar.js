@@ -1,7 +1,7 @@
 /**
- * CAI Design System — Sidebar
+ * LUZ Design System — Sidebar
  * Navigation active state (scroll spy). The mobile drawer is a native
- * popover (<nav class="cai-sidebar" popover> + <button popovertarget>) and
+ * popover (<nav class="luz-sidebar" popover> + <button popovertarget>) and
  * needs no script; this module only enhances it.
  *
  * Importing this module has no side effects; call initSidebar() to enable it.
@@ -47,8 +47,8 @@ function isOpenPopover(el) {
 }
 
 /** The links it spies: core's sidebar links, and every in-page link inside
- * an element with data-cai-spy (a table of contents styled your own way). */
-const SPY = '.cai-sidebar__link,[data-cai-spy] a[href^="#"]';
+ * an element with data-luz-spy (a table of contents styled your own way). */
+const SPY = '.luz-sidebar__link,[data-luz-spy] a[href^="#"]';
 
 /**
  * Wire up nav active state, drawer controls, and section observation.
@@ -61,7 +61,7 @@ export function initSidebar(root = document) {
   const linkMap = new Map(
     navLinks.map((link) => [link.getAttribute("href"), link]),
   );
-  let currentActive = root.querySelector(".cai-sidebar__link.is-active");
+  let currentActive = root.querySelector(".luz-sidebar__link.is-active");
 
   // A link to a section of this page is the current *location*
   // (aria-current="true"); "page" is kept for a link to another document.
@@ -137,7 +137,7 @@ export function initSidebar(root = document) {
       : null;
     if (targetEl) updateActiveState(link);
 
-    const drawer = link.closest(".cai-sidebar[popover]");
+    const drawer = link.closest(".luz-sidebar[popover]");
     if (drawer && isOpenPopover(drawer)) {
       drawer.hidePopover();
       requestAnimationFrame(() => focusSidebarTarget(targetEl));

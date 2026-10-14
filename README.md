@@ -1,13 +1,13 @@
 <div align="center">
 
-# CAI Design System
+# LUZ Design System
 
-**Consistent Adaptive Identity**
+**LUZ — Light, Usable & Zero-dependency**
 
 A vanilla design system in plain CSS and ES modules.<br>
 No framework. No build step for consumers.
 
-[![CI](https://github.com/nandovejer/cai/actions/workflows/ci.yml/badge.svg)](https://github.com/nandovejer/cai/actions/workflows/ci.yml)
+[![CI](https://github.com/nandovejer/luz/actions/workflows/ci.yml/badge.svg)](https://github.com/nandovejer/luz/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 ![Status: beta](https://img.shields.io/badge/status-beta-orange)
 ![Runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-0-brightgreen)
@@ -16,8 +16,8 @@ No framework. No build step for consumers.
 [What each package needs](#what-each-package-needs) ·
 [Components](#components) ·
 [Accessibility](#accessibility) ·
-[Documentation](https://nandovejer.github.io/cai/docs/) ·
-[Work on CAI](#work-on-cai)
+[Documentation](https://nandovejer.github.io/luz/docs/) ·
+[Work on LUZ](#work-on-luz)
 
 </div>
 
@@ -26,22 +26,22 @@ No framework. No build step for consumers.
 > [!WARNING]
 > **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
 
-CAI is built with plain CSS, ES modules and native browser APIs. Adopt only the tokens, add the components, or take whole-page patterns: the three layers are independent packages that stack in one direction. Packages for one kind of site build on top of them.
+LUZ (formerly CAI) is built with plain CSS, ES modules and native browser APIs. Adopt only the tokens, add the components, or take whole-page patterns: the three layers are independent packages that stack in one direction. Packages for one kind of site build on top of them.
 
 ```text
-@cai-ds/tokens  ->  @cai-ds/core  ->  @cai-ds/site  ->  @cai-ds/landing
-   standalone        needs tokens      needs core +   \->  @cai-ds/cms
+@luz-ds/tokens  ->  @luz-ds/core  ->  @luz-ds/site  ->  @luz-ds/landing
+   standalone        needs tokens      needs core +   \->  @luz-ds/cms
                                        tokens             each needs site,
                                                           core and tokens
 ```
 
-The name stands for Consistent Adaptive Identity: one set of tokens that every component reads (consistent), that switches between light, dark and high contrast and reflows with the screen (adaptive), and that your own tokens can replace to carry your brand (identity).
+The name stands for Light, Usable & Zero-dependency: light in weight (plain CSS and ES modules, nothing to build for the people who use it), usable by everyone (native HTML, three color modes, tested for accessibility), and with zero runtime dependencies.
 
-- [`@cai-ds/tokens`](./packages/tokens): design tokens (CSS custom properties), the three color modes and the font.
-- [`@cai-ds/core`](./packages/core): the components, the layout objects, the styles of bare HTML elements and optional JavaScript.
-- [`@cai-ds/site`](./packages/site): page patterns (page shell, site header, footer, image frame) and the site search.
-- [`@cai-ds/landing`](./packages/landing): patterns for a landing page (the feature grid). It has its own version, 0.x, and needs version 3 of the other three.
-- [`@cai-ds/cms`](./packages/cms): patterns for a blog, a newspaper or any CMS, with any stack (the article header and the table of contents). It has its own version, 0.x, and needs version 3 of tokens, core and site.
+- [`@luz-ds/tokens`](./packages/tokens): design tokens (CSS custom properties), the three color modes and the font.
+- [`@luz-ds/core`](./packages/core): the components, the layout objects, the styles of bare HTML elements and optional JavaScript.
+- [`@luz-ds/site`](./packages/site): page patterns (page shell, site header, footer, image frame) and the site search.
+- [`@luz-ds/landing`](./packages/landing): patterns for a landing page (the feature grid). It has its own version, 0.x, and needs `^0.1.0` of the other three.
+- [`@luz-ds/cms`](./packages/cms): patterns for a blog, a newspaper or any CMS, with any stack (the article header and the table of contents). It has its own version, 0.x, and needs `^0.1.0` of tokens, core and site.
 
 ## Install and load
 
@@ -49,66 +49,66 @@ Each package needs the ones below it and nothing above it. Adopt one level and s
 
 | You want | Install | Load, in order |
 | --- | --- | --- |
-| Tokens only | `@cai-ds/tokens` | `cai-tokens.css` |
-| Tokens + components | `@cai-ds/tokens` `@cai-ds/core` | `cai-tokens.css`, `cai.css`, optionally `cai.js` |
-| Tokens + components + page patterns | `@cai-ds/tokens` `@cai-ds/core` `@cai-ds/site` | `cai-tokens.css`, `cai.css`, `site.css`, optionally `cai.js` and `site.js` |
-| A landing page | the three above and `@cai-ds/landing` | the files of the row above, then `landing.css` |
-| A blog or a newspaper | the three above and `@cai-ds/cms` | the files of level 3, then `cms.css` |
+| Tokens only | `@luz-ds/tokens` | `luz-tokens.css` |
+| Tokens + components | `@luz-ds/tokens` `@luz-ds/core` | `luz-tokens.css`, `luz.css`, optionally `luz.js` |
+| Tokens + components + page patterns | `@luz-ds/tokens` `@luz-ds/core` `@luz-ds/site` | `luz-tokens.css`, `luz.css`, `site.css`, optionally `luz.js` and `site.js` |
+| A landing page | the three above and `@luz-ds/landing` | the files of the row above, then `landing.css` |
+| A blog or a newspaper | the three above and `@luz-ds/cms` | the files of level 3, then `cms.css` |
 
-`@cai-ds/core` declares `@cai-ds/tokens` as a required peer dependency; `@cai-ds/site` declares both, and `@cai-ds/landing` and `@cai-ds/cms` the three. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
+`@luz-ds/core` declares `@luz-ds/tokens` as a required peer dependency; `@luz-ds/site` declares both, and `@luz-ds/landing` and `@luz-ds/cms` the three. npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
 
 ```bash
-npm install @cai-ds/tokens                                   # level 1
-npm install @cai-ds/tokens @cai-ds/core                      # level 2
-npm install @cai-ds/tokens @cai-ds/core @cai-ds/site         # level 3
-npm install @cai-ds/tokens @cai-ds/core @cai-ds/site @cai-ds/landing   # a landing page
-npm install @cai-ds/tokens @cai-ds/core @cai-ds/site @cai-ds/cms       # a blog or a newspaper
+npm install @luz-ds/tokens                                   # level 1
+npm install @luz-ds/tokens @luz-ds/core                      # level 2
+npm install @luz-ds/tokens @luz-ds/core @luz-ds/site         # level 3
+npm install @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/landing   # a landing page
+npm install @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/cms       # a blog or a newspaper
 ```
 
 ### With a bundler
 
 ```js
-import "@cai-ds/tokens/css";
-import "@cai-ds/core/css";
-import "@cai-ds/site/css"; // level 3 only
-import "@cai-ds/landing/css"; // a landing page only
-import "@cai-ds/cms/css"; // a blog or a newspaper only
+import "@luz-ds/tokens/css";
+import "@luz-ds/core/css";
+import "@luz-ds/site/css"; // level 3 only
+import "@luz-ds/landing/css"; // a landing page only
+import "@luz-ds/cms/css"; // a blog or a newspaper only
 
-import "@cai-ds/core";         // optional: the JavaScript, starts every behavior
-import "@cai-ds/site";     // level 3, only if you use the search
+import "@luz-ds/core";         // optional: the JavaScript, starts every behavior
+import "@luz-ds/site";     // level 3, only if you use the search
 ```
 
-`@cai-ds/core` and `@cai-ds/site` without `/css` are the scripts, not the stylesheets.
+`@luz-ds/core` and `@luz-ds/site` without `/css` are the scripts, not the stylesheets.
 
 ### From a CDN
 
 Drop the lines for the levels you do not use:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/landing@0.1.0/dist/landing.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/cms@0.1.0/dist/cms.min.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js"></script>
-<script type="module" src="https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/landing@0.1.0/dist/landing.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/cms@0.1.0/dist/cms.min.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js"></script>
 ```
 
 Pin an exact version and add an `integrity` hash in production; see [SECURITY.md](./SECURITY.md). A console warning tells you when a layer is loaded without the one below it.
 
-> **Release status:** CAI is in beta. The `3.0.0` and `0.1.0` snippets above work once the release is published. Until then the packages in this repository are versioned `2.0.0` (landing and cms `0.0.0`) with pending changesets.
+> **Release status:** LUZ is in beta. The `0.1.0` snippets above work once the first release is published. Until then the packages in this repository are at `0.0.0`, with the changesets that release them as `0.1.0`.
 
 ### Other files you can load
 
 | File | Package | What it is |
 | --- | --- | --- |
-| `base.css` + `components/<name>.css` | core | The reset and bare elements, then only the components you list, instead of `cai.css` |
-| `classless.css` (`@cai-ds/core/classless.css`) | core | Styles bare `button`, fields, `select` and `table` inside `[data-cai-classless]`, for Markdown or a CMS |
-| `print.css` | core | The print styles on their own; `cai.css` already contains them |
+| `base.css` + `components/<name>.css` | core | The reset and bare elements, then only the components you list, instead of `luz.css` |
+| `classless.css` (`@luz-ds/core/classless.css`) | core | Styles bare `button`, fields, `select` and `table` inside `[data-luz-classless]`, for Markdown or a CMS |
+| `print.css` | core | The print styles on their own; `luz.css` already contains them |
 | `themes/_template.css` | core | The starting point of a theme of your own |
 | `tokens.css`, `fonts.css` | tokens | The tokens without `@font-face`, or the `@font-face` only |
-| `search.js` | site | The search element on its own (`@cai-ds/site/search`) |
-| `consent.js` | site | The cookie banner (`@cai-ds/site/consent`): `site.js` does not include it |
+| `search.js` | site | The search element on its own (`@luz-ds/site/search`) |
+| `consent.js` | site | The cookie banner (`@luz-ds/site/consent`): `site.js` does not include it |
 | `placeholders/*` | site | The images the image frame shows when it has no picture |
 
 ### JavaScript modules
@@ -116,15 +116,15 @@ Pin an exact version and add an `integrity` hash in production; see [SECURITY.md
 To load one behavior instead of the auto-initializing entry:
 
 ```js
-import { initTabs } from "@cai-ds/core/tabs";
-import { copyToClipboard } from "@cai-ds/core/clipboard";
+import { initTabs } from "@luz-ds/core/tabs";
+import { copyToClipboard } from "@luz-ds/core/clipboard";
 ```
 
 Published modules: `theme`, `sidebar`, `clipboard`, `modal`, `highlight`, `player`, `tabs`, `utils`, `i18n`, `midi`, `table-sort`. Importing one has no side effects until you call its `init*()`. Every page works without JavaScript.
 
 ## What each package needs
 
-The page shell of a whole page is site; the layout objects of an app with a sidebar are core; the feature grid is landing. The full table, checked against the CSS, is on [How CAI is organised](https://nandovejer.github.io/cai/docs/get-started/structure/#needs).
+The page shell of a whole page is site; the layout objects of an app with a sidebar are core; the feature grid is landing. The full table, checked against the CSS, is on [How LUZ is organised](https://nandovejer.github.io/luz/docs/get-started/structure/#needs).
 
 ## Color modes and themes
 
@@ -134,18 +134,18 @@ The page shell of a whole page is site; the layout objects of an app with a side
 <html data-theme="dark"></html>
 ```
 
-**Themes.** CAI ships one look, Vejer, in the three modes above. A theme of your own is a set of semantic tokens under its own `data-theme`, with `data-mode` for its light, dark and high-contrast variants. Start from `@cai-ds/core/themes/_template.css` and list the name in `<html data-cai-themes="my-brand">` so the mode switcher remembers it.
+**Themes.** LUZ ships one look, Vejer, in the three modes above. A theme of your own is a set of semantic tokens under its own `data-theme`, with `data-mode` for its light, dark and high-contrast variants. Start from `@luz-ds/core/themes/_template.css` and list the name in `<html data-luz-themes="my-brand">` so the mode switcher remembers it.
 
 Components use semantic tokens, never the primitive scales:
 
 ```css
 /* Correct */
-color: var(--cai-text-primary);
-background: var(--cai-brand-fill);
-border-color: var(--cai-divider);
+color: var(--luz-text-primary);
+background: var(--luz-brand-fill);
+border-color: var(--luz-divider);
 
 /* Incorrect: breaks theming */
-color: var(--cai-gray-100);
+color: var(--luz-gray-100);
 background: #0d0e11;
 ```
 
@@ -162,17 +162,17 @@ Every component has a page in the documentation with a live example, the markup 
 
 ## Accessibility
 
-CAI aims for WCAG 2.2 level AA: keyboard operation, visible focus, 4.5:1 text contrast in the three modes and a high-contrast mode are part of every component. Form controls are native HTML controls where possible.
+LUZ aims for WCAG 2.2 level AA: keyboard operation, visible focus, 4.5:1 text contrast in the three modes and a high-contrast mode are part of every component. Form controls are native HTML controls where possible.
 
-Automated checks run on every change. No assistive technology has been used to test this release. The [accessibility statement](https://nandovejer.github.io/cai/docs/accessibility/) lists what is checked, what has not been tested and the known issues.
+Automated checks run on every change. No assistive technology has been used to test this release. The [accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/) lists what is checked, what has not been tested and the known issues.
 
 ## License
 
-MIT, including the fonts. Every bundled font is under the MIT License only: ET Book, in `@cai-ds/tokens`. Its notice ships next to the font files (`LICENSE-ETBook.txt`). Controls, labels, tables and code use the system fonts, so nothing else is bundled; `@cai-ds/core` ships no fonts.
+MIT, including the fonts. Every bundled font is under the MIT License only: ET Book, in `@luz-ds/tokens`. Its notice ships next to the font files (`LICENSE-ETBook.txt`). Controls, labels, tables and code use the system fonts, so nothing else is bundled; `@luz-ds/core` ships no fonts.
 
 ---
 
-## Work on CAI
+## Work on LUZ
 
 Everything above is for people who install the packages. The rest is for people who change them.
 
@@ -188,17 +188,17 @@ Everything above is for people who install the packages. The rest is for people 
 See [STRUCTURE.md](./dev/STRUCTURE.md) for the full annotated directory layout. Summary:
 
 ```text
-cai-design-system/
+luz-design-system/
 ├── apps/                      # Internal apps (not publishable)
-│   ├── landing/               # Home page: what CAI is for, why, and how to adopt it
+│   ├── landing/               # Home page: what LUZ is for, why, and how to adopt it
 │   └── docs/                  # The documentation: install, tokens, components, site patterns, HTML elements
 ├── packages/
-│   ├── tokens/                # @cai-ds/tokens
+│   ├── tokens/                # @luz-ds/tokens
 │   │   ├── tokens.json        # Source of truth for primitives
 │   │   ├── src/semantic.css   # Semantic tokens (light / dark / high-contrast)
 │   │   ├── fonts/             # ET Book woff2 + licence
 │   │   └── dist/              # Generated: do not edit directly
-│   ├── core/                  # @cai-ds/core
+│   ├── core/                  # @luz-ds/core
 │   │   ├── src/               # Edit here, never dist/
 │   │   │   ├── settings/  generic/  elements/  objects/  utilities/
 │   │   │   ├── components/    # One file per component
@@ -206,13 +206,13 @@ cai-design-system/
 │   │   │   ├── themes/        # _template.css, the starting point of a theme of your own
 │   │   │   └── *.js           # One module per behavior
 │   │   └── dist/              # Generated: do not edit directly
-│   ├── site/                  # @cai-ds/site
+│   ├── site/                  # @luz-ds/site
 │   │   ├── src/
 │   │   └── dist/
-│   ├── landing/               # @cai-ds/landing (its own version, 0.x)
+│   ├── landing/               # @luz-ds/landing (its own version, 0.x)
 │   │   ├── src/
 │   │   └── dist/
-│   └── cms/                   # @cai-ds/cms (its own version, 0.x)
+│   └── cms/                   # @luz-ds/cms (its own version, 0.x)
 │       ├── src/
 │       └── dist/
 ├── docs/                      # Generated GitHub Pages site (pnpm pages:build): do not edit
@@ -243,7 +243,7 @@ pnpm dev
 
 Edits to files under `apps/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm site:build` / `pnpm landing:build` / `pnpm cms:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
 
-To load the packages from this repository in a page of your own, point at `dist/`: `/packages/tokens/dist/cai-tokens.css`, `/packages/core/dist/cai.css`, `/packages/site/dist/site.css`, `/packages/landing/dist/landing.css`, `/packages/cms/dist/cms.css` and `/packages/core/dist/cai.js`.
+To load the packages from this repository in a page of your own, point at `dist/`: `/packages/tokens/dist/luz-tokens.css`, `/packages/core/dist/luz.css`, `/packages/site/dist/site.css`, `/packages/landing/dist/landing.css`, `/packages/cms/dist/cms.css` and `/packages/core/dist/luz.js`.
 
 ### Commands
 
@@ -277,9 +277,9 @@ See [TESTING.md](./dev/TESTING.md) for the detailed guide. Test tooling is dev-o
 
 For the complete workflow see [DIST-RULES.md](./dev/DIST-RULES.md). The short version: edit `src/`, run the package's build, never edit `dist/`. Every build starts from a clean `dist/`.
 
-**Tokens.** `packages/tokens/dist/` is composed from tracked sources: the primitives (Layer 1), generated from `packages/tokens/tokens.json`, and the handwritten `light`, `dark` and `high-contrast` blocks of `packages/tokens/src/semantic.css` (Layer 2). Outputs: `cai-tokens.css` (fonts + tokens), `tokens.css` (no `@font-face`), `fonts.css`, `tokens.json`, the DTCG files and `fonts/`.
+**Tokens.** `packages/tokens/dist/` is composed from tracked sources: the primitives (Layer 1), generated from `packages/tokens/tokens.json`, and the handwritten `light`, `dark` and `high-contrast` blocks of `packages/tokens/src/semantic.css` (Layer 2). Outputs: `luz-tokens.css` (fonts + tokens), `tokens.css` (no `@font-face`), `fonts.css`, `tokens.json`, the DTCG files and `fonts/`.
 
-The colour primitives are CAI's own palette, computed in OKLCH by `scripts/build-palette.js` (one lightness curve shared by every family, a chroma curve and a hue per family): to change a colour, edit the numbers there and run `node scripts/build-palette.js`, which rewrites the `color` block of `tokens.json`. To add another primitive, edit `tokens.json`; to add a semantic token, edit all three blocks of `semantic.css`. Then:
+The colour primitives are LUZ's own palette, computed in OKLCH by `scripts/build-palette.js` (one lightness curve shared by every family, a chroma curve and a hue per family): to change a colour, edit the numbers there and run `node scripts/build-palette.js`, which rewrites the `color` block of `tokens.json`. To add another primitive, edit `tokens.json`; to add a semantic token, edit all three blocks of `semantic.css`. Then:
 
 ```bash
 pnpm tokens:build
@@ -291,21 +291,21 @@ pnpm tokens:build
 pnpm core:build
 ```
 
-This regenerates `dist/cai.css`, `dist/base.css` (settings + reset + elements, the prerequisite for per-component CSS), `dist/components/*.css`, `dist/classless.css`, `dist/print.css`, the JS modules, the lazy `midi.js` and `table-sort.js` chunks and `dist/themes/*.css`. Core settings (z-index scale, motion, breakpoints, `--cai-font-heading`) ship with core, not with tokens.
+This regenerates `dist/luz.css`, `dist/base.css` (settings + reset + elements, the prerequisite for per-component CSS), `dist/components/*.css`, `dist/classless.css`, `dist/print.css`, the JS modules, the lazy `midi.js` and `table-sort.js` chunks and `dist/themes/*.css`. Core settings (z-index scale, motion, breakpoints, `--luz-font-heading`) ship with core, not with tokens.
 
-**Site.** `@cai-ds/site` holds page patterns that are too opinionated for core. It is CSS first; `dist/site.js` defines the search element and warns when core is not loaded.
+**Site.** `@luz-ds/site` holds page patterns that are too opinionated for core. It is CSS first; `dist/site.js` defines the search element and warns when core is not loaded.
 
 ```bash
 pnpm site:build
 ```
 
-**Landing.** `@cai-ds/landing` holds the patterns of a landing page, on top of site. CSS only: `dist/landing.css` and `landing.min.css`, in the `cai.landing` layer. Site and landing build through one shared builder, `scripts/build-package.js` (a package for another kind of site adds a three-line `scripts/build-<name>.js`).
+**Landing.** `@luz-ds/landing` holds the patterns of a landing page, on top of site. CSS only: `dist/landing.css` and `landing.min.css`, in the `luz.landing` layer. Site and landing build through one shared builder, `scripts/build-package.js` (a package for another kind of site adds a three-line `scripts/build-<name>.js`).
 
 ```bash
 pnpm landing:build
 ```
 
-**CMS.** `@cai-ds/cms` holds the patterns of a blog, a newspaper or any CMS, on top of site, through the same builder. CSS only: `dist/cms.css` and `cms.min.css`, in the `cai.cms` layer. Landing and cms never depend on each other.
+**CMS.** `@luz-ds/cms` holds the patterns of a blog, a newspaper or any CMS, on top of site, through the same builder. CSS only: `dist/cms.css` and `cms.min.css`, in the `luz.cms` layer. Landing and cms never depend on each other.
 
 ```bash
 pnpm cms:build

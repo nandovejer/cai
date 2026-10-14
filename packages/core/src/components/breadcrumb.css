@@ -1,56 +1,56 @@
 /* --------------------------------------------------------------------------
-   CAI Component: breadcrumb
+   LUZ Component: breadcrumb
    Breadcrumb navigation
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-/* The APG breadcrumb pattern: nav[aria-label] > ol.cai-breadcrumb > li, the
+/* The APG breadcrumb pattern: nav[aria-label] > ol.luz-breadcrumb > li, the
    current page last, with aria-current="page". The separator is drawn by CSS
    with no content, so screen readers do not read it out. */
-.cai-breadcrumb {
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
+.luz-breadcrumb {
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--cai-text-sm);
+  font-size: var(--luz-text-sm);
 }
 
-.cai-breadcrumb > li {
+.luz-breadcrumb > li {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
 /* A slash, drawn with a border: empty content, nothing to announce */
-.cai-breadcrumb > li + li::before {
+.luz-breadcrumb > li + li::before {
   content: "";
   block-size: 0.9em;
-  border-inline-end: 0.1em solid var(--cai-text-muted);
+  border-inline-end: 0.1em solid var(--luz-text-muted);
   transform: rotate(15deg);
 }
 
 /* A slash leans the other way in right-to-left text */
-.cai-breadcrumb > li + li:dir(rtl)::before {
+.luz-breadcrumb > li + li:dir(rtl)::before {
   transform: rotate(-15deg);
 }
 
-.cai-breadcrumb__item {
-  color: var(--cai-text-secondary);
+.luz-breadcrumb__item {
+  color: var(--luz-text-secondary);
   text-decoration: none;
 }
 
-.cai-breadcrumb__item:hover {
+.luz-breadcrumb__item:hover {
   text-decoration: none;
 }
 
-.cai-breadcrumb__item.is-active,
-.cai-breadcrumb__item[aria-current="page"] {
-  color: var(--cai-text-primary);
+.luz-breadcrumb__item.is-active,
+.luz-breadcrumb__item[aria-current="page"] {
+  color: var(--luz-text-primary);
   font-weight: 500;
 }

@@ -61,7 +61,7 @@ const PAGE_SYNTAX = [
   },
   {
     selector: "CallExpression[callee.property.name='animate']",
-    message: "Script animations ignore the --cai-duration-* tokens: use CSS, or check prefers-reduced-motion and document it (red line 8).",
+    message: "Script animations ignore the --luz-duration-* tokens: use CSS, or check prefers-reduced-motion and document it (red line 8).",
   },
 ];
 

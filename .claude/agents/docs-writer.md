@@ -1,6 +1,6 @@
 ---
 name: docs-writer
-description: Writes CAI documentation that follows a fixed template: component and pattern pages under `apps/docs/pages/` (the structure of AGENTS.md "Adding a new component", step 4), Get started pages, package READMEs, CONTRIBUTING and similar repo guides. Plain language, sentence case, GOV.UK style. Computes every ratio, value and token list with the test helpers, never types one. Does not design components or change CSS and JS.
+description: Writes LUZ documentation that follows a fixed template: component and pattern pages under `apps/docs/pages/` (the structure of AGENTS.md "Adding a new component", step 4), Get started pages, package READMEs, CONTRIBUTING and similar repo guides. Plain language, sentence case, GOV.UK style. Computes every ratio, value and token list with the test helpers, never types one. Does not design components or change CSS and JS.
 model: claude-sonnet-5-5
 effort: high
 tools: Read, Grep, Glob, Bash, Edit, Write

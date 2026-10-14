@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * The notice of @cai-ds/site (.cai-site-notice): a band above the site
+ * The notice of @luz-ds/site (.luz-site-notice): a band above the site
  * header with one announcement and an optional link. No script and no
  * close button. On tests/fixtures/site-top.html. Runs in `chromium` and
  * `chromium-nojs`: it is the same in both.
@@ -27,7 +27,7 @@ const sideways = (page) => page.evaluate(() => document.documentElement.scrollWi
 
 test.describe('site notice', () => {
   for (const theme of ['light', 'dark', 'high-contrast']) {
-    for (const variant of ['', 'cai-site-notice--warning']) {
+    for (const variant of ['', 'luz-site-notice--warning']) {
       test(`axe finds nothing serious in ${theme}${variant ? ', warning' : ''}`, async ({ page }, testInfo) => {
         test.skip(testInfo.project.name === 'chromium-nojs', 'axe needs JavaScript');
         await open(page, 1280);
@@ -78,11 +78,11 @@ test.describe('site notice', () => {
     const plain = await page.locator('#notice').evaluate((el) => getComputedStyle(el).backgroundColor);
     await page.evaluate(() => {
       const notice = document.getElementById('notice');
-      notice.classList.add('cai-site-notice--warning');
+      notice.classList.add('luz-site-notice--warning');
       notice.querySelector('strong').textContent = 'Planned maintenance.';
     });
     const warning = await page.locator('#notice').evaluate((el) => {
-      const probe = Object.assign(document.createElement('div'), { style: 'background: var(--cai-color-warning-bg)' });
+      const probe = Object.assign(document.createElement('div'), { style: 'background: var(--luz-color-warning-bg)' });
       document.body.append(probe);
       const token = getComputedStyle(probe).backgroundColor;
       probe.remove();

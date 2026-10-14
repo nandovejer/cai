@@ -1,5 +1,5 @@
 /**
- * CAI Design System — UI Smoke Tests
+ * LUZ Design System — UI Smoke Tests
  * Tests for keyboard navigation, theme switching, modal focus trap, sidebar behavior
  * Run with: pnpm test:ui
  */
@@ -14,7 +14,7 @@ async function isModalVisible(modal) {
   });
 }
 
-test.describe('CAI Design System UI Smoke Tests', () => {
+test.describe('LUZ Design System UI Smoke Tests', () => {
   test.beforeEach(async ({ page }) => {
     // A component page: its demos (modal, tabs) are what these tests drive
     await page.goto(routeOf('docs-modal'));
@@ -27,7 +27,7 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       const initialTheme = await page.evaluate(() => document.documentElement.dataset.theme);
 
       // The header's cycle button steps to the next mode
-      await page.click('footer .cai-mode-cycle');
+      await page.click('footer .luz-mode-cycle');
 
       // Verify theme changed
       const newTheme = await page.evaluate(() => document.documentElement.dataset.theme);
@@ -36,7 +36,7 @@ test.describe('CAI Design System UI Smoke Tests', () => {
 
     test('should persist theme after page reload', async ({ page }) => {
       // The documentation page keeps the color mode under the site's key
-      await page.evaluate(() => localStorage.setItem('cai-site-mode', 'dark'));
+      await page.evaluate(() => localStorage.setItem('luz-site-mode', 'dark'));
       await page.reload();
       
       // Verify it persists
@@ -44,25 +44,25 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       expect(theme).toBe('dark');
     });
 
-    // cai.js (initThemeSystem) and its own storage key: no site page loads
-    // cai.js since the site reference moved into /docs/, so a fixture does
+    // luz.js (initThemeSystem) and its own storage key: no site page loads
+    // luz.js since the site reference moved into /docs/, so a fixture does
     test('should persist a theme chosen with the switcher', async ({ page }) => {
       await page.goto('/tests/fixtures/mode-switcher.html');
       await page.waitForLoadState('networkidle');
 
-      await page.click('.cai-mode-btn:has(input[value="dark"])');
+      await page.click('.luz-mode-btn:has(input[value="dark"])');
 
-      expect(await page.evaluate(() => localStorage.getItem('cai-theme'))).toBe('dark');
+      expect(await page.evaluate(() => localStorage.getItem('luz-theme'))).toBe('dark');
     });
 
     test('mode switcher is a native radio group that checks the active mode', async ({ page }) => {
       await page.goto('/tests/fixtures/mode-switcher.html');
       await page.waitForLoadState('networkidle');
 
-      await expect(page.locator('fieldset.cai-mode-switcher legend')).toHaveText('Color mode');
-      await page.click('.cai-mode-btn:has(input[value="dark"])');
-      await expect(page.locator('input[name="cai-theme"][value="dark"]')).toBeChecked();
-      await expect(page.locator('input[name="cai-theme"][value="light"]')).not.toBeChecked();
+      await expect(page.locator('fieldset.luz-mode-switcher legend')).toHaveText('Color mode');
+      await page.click('.luz-mode-btn:has(input[value="dark"])');
+      await expect(page.locator('input[name="luz-theme"][value="dark"]')).toBeChecked();
+      await expect(page.locator('input[name="luz-theme"][value="light"]')).not.toBeChecked();
     });
   });
 
@@ -71,8 +71,8 @@ test.describe('CAI Design System UI Smoke Tests', () => {
       // Set mobile viewport
       await page.setViewportSize({ width: 480, height: 800 });
       
-      const sidebar = await page.$('.cai-sidebar');
-      const toggleBtn = await page.$('.cai-nav-toggle');
+      const sidebar = await page.$('.luz-sidebar');
+      const toggleBtn = await page.$('.luz-nav-toggle');
       
       if (toggleBtn && sidebar) {
         // Initially closed
@@ -97,7 +97,7 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     });
 
     test('sidebar toggle is a native popover trigger for the drawer', async ({ page }) => {
-      const toggleBtn = await page.$('.cai-nav-toggle[popovertarget]');
+      const toggleBtn = await page.$('.luz-nav-toggle[popovertarget]');
       expect(toggleBtn).not.toBeNull();
 
       const target = await toggleBtn.getAttribute('popovertarget');
@@ -108,8 +108,8 @@ test.describe('CAI Design System UI Smoke Tests', () => {
     test('should close sidebar with Escape key on mobile', async ({ page }) => {
       await page.setViewportSize({ width: 480, height: 800 });
       
-      const toggleBtn = await page.$('.cai-nav-toggle');
-      const sidebar = await page.$('.cai-sidebar');
+      const toggleBtn = await page.$('.luz-nav-toggle');
+      const sidebar = await page.$('.luz-sidebar');
       
       if (toggleBtn && sidebar) {
         await toggleBtn.click();

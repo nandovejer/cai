@@ -1,7 +1,7 @@
 /**
- * CAI — reading token overrides from CSS, for the contrast checker.
+ * LUZ — reading token overrides from CSS, for the contrast checker.
  *
- * Reads the --cai-* declarations of one or more stylesheets and answers what
+ * Reads the --luz-* declarations of one or more stylesheets and answers what
  * each colour mode would have, with a small model of the cascade: later rules
  * win over earlier ones of the same specificity, and a more specific selector
  * wins over a later one. The model covers what a theme file really contains:
@@ -22,7 +22,7 @@ export const BASE_MODES = ["light", "dark", "high-contrast"];
 const stripComments = (css) => css.replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, " "));
 
 /**
- * The --cai-* declarations of a stylesheet as flat rules, in source order:
+ * The --luz-* declarations of a stylesheet as flat rules, in source order:
  * { selectors, conditions, declarations: [{ name, value, line }], line }.
  * `conditions` are the preludes of the at-rules around the rule.
  */
@@ -79,7 +79,7 @@ export function parseRules(css) {
         const colon = prelude.indexOf(":");
         if (prelude && !prelude.startsWith("@") && colon > 0) {
           const name = prelude.slice(0, colon).trim();
-          if (name.startsWith("--cai-")) declarations.push({ name, value: prelude.slice(colon + 1).trim(), line: startLine });
+          if (name.startsWith("--luz-")) declarations.push({ name, value: prelude.slice(colon + 1).trim(), line: startLine });
         }
         if (stop === "}") {
           i++;
@@ -95,7 +95,7 @@ export function parseRules(css) {
 
   function readBlockInto(atPrelude, conditions, selectors) {
     // At-rule blocks hold rules (@media, @layer, @supports) or declarations
-    // (@font-face, @page), which carry no --cai- token for us either way
+    // (@font-face, @page), which carry no --luz- token for us either way
     readBlock([...conditions, atPrelude], selectors ?? null, line);
   }
 
@@ -170,9 +170,9 @@ export function targetsOf(rules) {
 }
 
 /**
- * The effective value of every --cai-* token in a target: later rules win,
+ * The effective value of every --luz-* token in a target: later rules win,
  * a more specific selector wins over a later one.
- * `sources` is a list of { file, rules }, in load order (CAI's tokens first).
+ * `sources` is a list of { file, rules }, in load order (LUZ's tokens first).
  * Returns { values, origin, ignored }: name → raw value, name → { file, line }
  * of the declaration that won, and the selectors and conditions left out.
  */
@@ -200,7 +200,7 @@ export function valuesFor(target, sources) {
       for (const selector of rule.selectors) {
         const read = readSelector(selector);
         if (!read) {
-          // CAI's own no-JS path (:root:has(...)) is not a consumer's rule
+          // LUZ's own no-JS path (:root:has(...)) is not a consumer's rule
           if (file !== "tokens") ignored.push({ file, line: rule.line, selector, reason: "only html, :root, [data-theme] and [data-mode] selectors are read" });
           continue;
         }

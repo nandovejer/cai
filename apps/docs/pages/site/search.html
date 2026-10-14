@@ -1,10 +1,10 @@
-<!-- cai:page
+<!-- luz:page
 title: Search
 description: Finds a page, a section or an HTML element of a site by name, from a button in the header.
 area: site
 order: 9
 group: patterns
-files: .cai-site-search, .cai-site-search-trigger
+files: .luz-site-search, .luz-site-search-trigger
 module: search.js
 toc: h2,h3
 -->
@@ -12,84 +12,84 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <a href="/docs/a-z/" data-cai-search-fallback>A–Z index</a>
-            <button class="cai-site-search-trigger" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
-              <svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-              <span class="cai-site-search-trigger__label">Search docs…</span>
-              <kbd class="cai-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+            <a href="/docs/a-z/" data-luz-search-fallback>A–Z index</a>
+            <button class="luz-site-search-trigger" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+              <svg class="luz-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <span class="luz-site-search-trigger__label">Search docs…</span>
+              <kbd class="luz-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
             </button>
             <p class="docs-demo__note">The same search as the one in this site’s header. Without JavaScript the button is a link to the A–Z index.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>The search has not been tested with a screen reader yet. Ctrl+K opens this search instead of the browser’s own web search box: use the address bar to search the web. At 400 percent zoom the whole dialog scrolls, so the field can move out of view while you read the results.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Search documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Search documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <p>The trigger, with the link it replaces, goes in the header. The dialog goes once per page, at the start of <code>&lt;body&gt;</code>, before the skip link: after <kbd>Ctrl</kbd> + <kbd>K</kbd> with nothing focused, the browser starts the next Tab from where the dialog is. Every text is yours: write it in the page’s language.</p>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Search markup"><code>&lt;a href=&quot;/a-z/&quot; data-cai-search-fallback&gt;A–Z index&lt;/a&gt;
-&lt;button class=&quot;cai-site-search-trigger&quot; type=&quot;button&quot; data-cai-search-open
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Search markup"><code>&lt;a href=&quot;/a-z/&quot; data-luz-search-fallback&gt;A–Z index&lt;/a&gt;
+&lt;button class=&quot;luz-site-search-trigger&quot; type=&quot;button&quot; data-luz-search-open
         aria-haspopup=&quot;dialog&quot; aria-keyshortcuts=&quot;Control+K Meta+K&quot; hidden&gt;
-  &lt;span class=&quot;cai-site-search-trigger__label&quot;&gt;Search docs…&lt;/span&gt;
-  &lt;kbd class=&quot;cai-site-search-trigger__key&quot; aria-hidden=&quot;true&quot;&gt;Ctrl K&lt;/kbd&gt;
+  &lt;span class=&quot;luz-site-search-trigger__label&quot;&gt;Search docs…&lt;/span&gt;
+  &lt;kbd class=&quot;luz-site-search-trigger__key&quot; aria-hidden=&quot;true&quot;&gt;Ctrl K&lt;/kbd&gt;
 &lt;/button&gt;
 
-&lt;cai-site-search&gt;
-&lt;dialog class=&quot;cai-modal cai-site-search&quot; aria-labelledby=&quot;search-title&quot;
-        data-cai-search data-cai-search-src=&quot;/search-index.json&quot;
-        data-cai-label-results=&quot;{n} results&quot;
-        data-cai-label-result=&quot;1 result&quot;
-        data-cai-label-capped=&quot;{shown} of {n} results. Type more to narrow.&quot;
-        data-cai-label-none=&quot;No results for “{query}”. Check the spelling or try a shorter word.&quot;
-        data-cai-label-loading=&quot;Loading the search index…&quot;
-        data-cai-label-error=&quot;Search is not available right now.&quot;&gt;
-  &lt;search class=&quot;cai-site-search__body&quot;&gt;
-    &lt;div class=&quot;cai-site-search__head&quot;&gt;
-      &lt;h2 class=&quot;cai-site-search__title&quot; id=&quot;search-title&quot;&gt;&lt;label for=&quot;search-q&quot;&gt;Search the documentation&lt;/label&gt;&lt;/h2&gt;
-      &lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;cai-btn cai-btn--ghost cai-site-search__close&quot; aria-label=&quot;Close search&quot;&gt;
+&lt;luz-site-search&gt;
+&lt;dialog class=&quot;luz-modal luz-site-search&quot; aria-labelledby=&quot;search-title&quot;
+        data-luz-search data-luz-search-src=&quot;/search-index.json&quot;
+        data-luz-label-results=&quot;{n} results&quot;
+        data-luz-label-result=&quot;1 result&quot;
+        data-luz-label-capped=&quot;{shown} of {n} results. Type more to narrow.&quot;
+        data-luz-label-none=&quot;No results for “{query}”. Check the spelling or try a shorter word.&quot;
+        data-luz-label-loading=&quot;Loading the search index…&quot;
+        data-luz-label-error=&quot;Search is not available right now.&quot;&gt;
+  &lt;search class=&quot;luz-site-search__body&quot;&gt;
+    &lt;div class=&quot;luz-site-search__head&quot;&gt;
+      &lt;h2 class=&quot;luz-site-search__title&quot; id=&quot;search-title&quot;&gt;&lt;label for=&quot;search-q&quot;&gt;Search the documentation&lt;/label&gt;&lt;/h2&gt;
+      &lt;form method=&quot;dialog&quot;&gt;&lt;button class=&quot;luz-btn luz-btn--ghost luz-site-search__close&quot; aria-label=&quot;Close search&quot;&gt;
         &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path d=&quot;M6 6l12 12M18 6 6 18&quot;/&gt;&lt;/svg&gt;
       &lt;/button&gt;&lt;/form&gt;
     &lt;/div&gt;
-    &lt;div class=&quot;cai-site-search__field&quot;&gt;
+    &lt;div class=&quot;luz-site-search__field&quot;&gt;
       &lt;svg viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;circle cx=&quot;11&quot; cy=&quot;11&quot; r=&quot;7&quot;/&gt;&lt;path d=&quot;m20 20-4-4&quot;/&gt;&lt;/svg&gt;
-      &lt;input class=&quot;cai-input&quot; id=&quot;search-q&quot; type=&quot;text&quot; maxlength=&quot;100&quot; autocomplete=&quot;off&quot;
+      &lt;input class=&quot;luz-input&quot; id=&quot;search-q&quot; type=&quot;text&quot; maxlength=&quot;100&quot; autocomplete=&quot;off&quot;
              spellcheck=&quot;false&quot; enterkeyhint=&quot;go&quot; autofocus aria-describedby=&quot;search-hint&quot;&gt;
     &lt;/div&gt;
-    &lt;p class=&quot;cai-field__helper&quot; id=&quot;search-hint&quot;&gt;Results update as you type. Arrow keys move through them.&lt;/p&gt;
-    &lt;p class=&quot;cai-site-search__status&quot; role=&quot;status&quot;&gt;&lt;/p&gt;
-    &lt;div class=&quot;cai-site-search__results&quot; data-cai-search-results&gt;
-      &lt;div hidden&gt;&lt;h3&gt;Pages&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;pages&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
-      &lt;div hidden&gt;&lt;h3&gt;Sections&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;sections&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
-      &lt;div hidden&gt;&lt;h3&gt;HTML elements&lt;/h3&gt;&lt;ul data-cai-search-list=&quot;elements&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
+    &lt;p class=&quot;luz-field__helper&quot; id=&quot;search-hint&quot;&gt;Results update as you type. Arrow keys move through them.&lt;/p&gt;
+    &lt;p class=&quot;luz-site-search__status&quot; role=&quot;status&quot;&gt;&lt;/p&gt;
+    &lt;div class=&quot;luz-site-search__results&quot; data-luz-search-results&gt;
+      &lt;div hidden&gt;&lt;h3&gt;Pages&lt;/h3&gt;&lt;ul data-luz-search-list=&quot;pages&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
+      &lt;div hidden&gt;&lt;h3&gt;Sections&lt;/h3&gt;&lt;ul data-luz-search-list=&quot;sections&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
+      &lt;div hidden&gt;&lt;h3&gt;HTML elements&lt;/h3&gt;&lt;ul data-luz-search-list=&quot;elements&quot;&gt;&lt;/ul&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;p class=&quot;cai-site-search__foot&quot;&gt;Can’t find it? &lt;a href=&quot;/a-z/&quot;&gt;Browse the A–Z index&lt;/a&gt;&lt;/p&gt;
+    &lt;p class=&quot;luz-site-search__foot&quot;&gt;Can’t find it? &lt;a href=&quot;/a-z/&quot;&gt;Browse the A–Z index&lt;/a&gt;&lt;/p&gt;
   &lt;/search&gt;
 &lt;/dialog&gt;
-&lt;/cai-site-search&gt;
+&lt;/luz-site-search&gt;
 
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/site.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js&quot;&gt;&lt;/script&gt;</code></pre>
             <h3 id="variants">Variants and options</h3>
             <p>Every option is markup: a class or an attribute.</p>
             <ul>
-              <li><code>.cai-site-search-trigger--compact</code>: at 768 pixels and below, the trigger shows the magnifier only; its name stays the label text. Add an <code>&lt;svg class=&quot;cai-site-search-trigger__icon&quot;&gt;</code> for it.</li>
-              <li>More than one trigger: every <code>[data-cai-search-open]</code> opens the dialog (this site has one in the header and one on the documentation home).</li>
-              <li>An element with <code>data-cai-search-show=&quot;idle&quot;</code> inside <code>[data-cai-search-results]</code> shows while the field is empty, for example a short list of popular pages; one with <code>data-cai-search-show=&quot;none&quot;</code> shows when nothing matches.</li>
-              <li>Leave out a <code>[data-cai-search-list]</code> to leave out that group.</li>
-              <li>The texts the script writes are the <code>data-cai-label-*</code> attributes of the dialog: <code>results</code>, <code>result</code>, <code>capped</code>, <code>none</code>, <code>loading</code> and <code>error</code>, with <code>{n}</code>, <code>{shown}</code> and <code>{query}</code> in them. A missing label writes nothing.</li>
+              <li><code>.luz-site-search-trigger--compact</code>: at 768 pixels and below, the trigger shows the magnifier only; its name stays the label text. Add an <code>&lt;svg class=&quot;luz-site-search-trigger__icon&quot;&gt;</code> for it.</li>
+              <li>More than one trigger: every <code>[data-luz-search-open]</code> opens the dialog (this site has one in the header and one on the documentation home).</li>
+              <li>An element with <code>data-luz-search-show=&quot;idle&quot;</code> inside <code>[data-luz-search-results]</code> shows while the field is empty, for example a short list of popular pages; one with <code>data-luz-search-show=&quot;none&quot;</code> shows when nothing matches.</li>
+              <li>Leave out a <code>[data-luz-search-list]</code> to leave out that group.</li>
+              <li>The texts the script writes are the <code>data-luz-label-*</code> attributes of the dialog: <code>results</code>, <code>result</code>, <code>capped</code>, <code>none</code>, <code>loading</code> and <code>error</code>, with <code>{n}</code>, <code>{shown}</code> and <code>{query}</code> in them. A missing label writes nothing.</li>
             </ul>
             <h3 id="how">How it works</h3>
-            <p>Load <code>site.min.js</code>, or import <code>@cai-ds/site/search</code>: either defines <code>&lt;cai-site-search&gt;</code>, a custom element in the light DOM (no Shadow DOM) that wraps the dialog. It wires the dialog and the triggers of the page when it connects, so markup added later, by a router or a framework, works with no call. Load the script as a module, which the browser defers, or after the markup: a classic script that defines the element before the parser has read the dialog finds the element empty and wires nothing.</p>
+            <p>Load <code>site.min.js</code>, or import <code>@luz-ds/site/search</code>: either defines <code>&lt;luz-site-search&gt;</code>, a custom element in the light DOM (no Shadow DOM) that wraps the dialog. It wires the dialog and the triggers of the page when it connects, so markup added later, by a router or a framework, works with no call. Load the script as a module, which the browser defers, or after the markup: a classic script that defines the element before the parser has read the dialog finds the element empty and wires nothing.</p>
             <ul>
               <li>It shows the button and hides the link.</li>
               <li>The button opens the native <code>&lt;dialog&gt;</code> with <code>showModal()</code>: the browser keeps the focus inside, closes it with Escape and returns the focus.</li>
               <li>The first time the dialog opens, the script reads the index.</li>
             </ul>
             <p>The index is a JSON file, version 1. Each list holds <code>[text, url, meta, lang]</code>; <code>meta</code> (shown muted after the text) and <code>lang</code> are optional, and URLs are relative to the file:</p>
-            <pre class="cai-code-block" data-lang="json" tabindex="0" role="region" aria-label="Search index format"><code>{
+            <pre class="luz-code-block" data-lang="json" tabindex="0" role="region" aria-label="Search index format"><code>{
   &quot;version&quot;: 1,
   &quot;pages&quot;: [[&quot;Button&quot;, &quot;components/button/&quot;, &quot;Components&quot;]],
   &quot;sections&quot;: [[&quot;When to use&quot;, &quot;components/button/#when&quot;, &quot;Button › Design&quot;]],
@@ -115,7 +115,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use search on a site of more than a few pages, where readers look for something by its name: a component, a setting, an article title.</p>
@@ -130,13 +130,13 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Say what is searched, in a short label that fits every language.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <span class="cai-site-search-trigger"><svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="cai-site-search-trigger__label">Search docs…</span><kbd class="cai-site-search-trigger__key">Ctrl K</kbd></span>
+                  <span class="luz-site-search-trigger"><svg class="luz-site-search-trigger__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="luz-site-search-trigger__label">Search docs…</span><kbd class="luz-site-search-trigger__key">Ctrl K</kbd></span>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> The magnifier alone on a wide screen: the reader has to guess what it searches, and the shortcut hint is gone. Keep the icon-only trigger for narrow screens.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <span class="cai-site-search-trigger"><svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></span>
+                  <span class="luz-site-search-trigger"><svg class="luz-site-search-trigger__icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></span>
                 </div>
               </figure>
             </div>
@@ -150,38 +150,38 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The trigger's text is secondary text on the field colour, not placeholder grey; results sit on the dialog's surface.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Search contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Search contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Trigger text</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Trigger text, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Trigger border</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Result title</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Result title, hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.4:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Group heading, result page, count and hint</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Result page, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.2:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Field magnifier</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Close icon</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Close icon, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>14.4:1</div></td><td data-label="Dark"><div>12.6:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Trigger text</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-input-bg</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Trigger text, hover</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-input-bg</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Trigger border</div></td><td data-label="Colour on background"><div><code>--luz-input-border</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Result title</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Result title, hover</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-hover</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.4:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Group heading, result page, count and hint</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Result page, hover</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-hover</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.2:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Field magnifier</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-input-bg</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Close icon</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Close icon, hover</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-hover</code></div></td><td data-label="Light"><div>14.4:1</div></td><td data-label="Dark"><div>12.6:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> the trigger has a 2 px <code>--cai-focus-ring</code> outline, 2 px outside; the focused result has the ring every link has.</li>
+              <li><strong>Focus:</strong> the trigger has a 2 px <code>--luz-focus-ring</code> outline, 2 px outside; the focused result has the ring every link has.</li>
               <li><strong>Edges:</strong> in forced colors the dialog keeps a real border, and the magnifier and the close icon are drawn in the system's text colour.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 22 tokens that <code>components/search.css</code> of site reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-input-bg"><code>--cai-input-bg</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-control-sm</code>, <code>--cai-space-2xs</code>, <code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-heading</code>, <code>--cai-font-mono</code>, <code>--cai-font-sans</code>, <code>--cai-text-lg</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code>, <code>--cai-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-input-bg"><code>--luz-input-bg</code></a>, <a href="/docs/tokens/color/#luz-input-border"><code>--luz-input-border</code></a>, <a href="/docs/tokens/color/#luz-surface-hover"><code>--luz-surface-hover</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-control-sm</code>, <code>--luz-space-2xs</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-heading</code>, <code>--luz-font-mono</code>, <code>--luz-font-sans</code>, <code>--luz-text-lg</code>, <code>--luz-text-sm</code>, <code>--luz-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code>, <code>--luz-radius-sm</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

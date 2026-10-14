@@ -1,5 +1,5 @@
 /* ==========================================================================
-	 CAI Site: notice and cookie consent.
+	 LUZ Site: notice and cookie consent.
 	 Two bands above the site header, the width of the window, their text in
 	 the header's column. The notice is one short announcement with an
 	 optional link: no script and no close button (a dismissal that lasts
@@ -8,47 +8,47 @@
 	 markup and consent.js shows it when no choice is stored.
 	 ========================================================================== */
 
-.cai-site-notice,
-.cai-site-consent {
-	padding-block: var(--cai-space-xs);
-	padding-inline: max(var(--cai-space-md), (100% - var(--cai-content-max)) / 2 + var(--cai-space-md));
-	border-block-end: 1px solid var(--cai-divider);
-	background: var(--cai-surface-muted);
-	color: var(--cai-text-primary);
-	font-family: var(--cai-font-sans);
-	font-size: var(--cai-text-sm);
+.luz-site-notice,
+.luz-site-consent {
+	padding-block: var(--luz-space-xs);
+	padding-inline: max(var(--luz-space-md), (100% - var(--luz-content-max)) / 2 + var(--luz-space-md));
+	border-block-end: 1px solid var(--luz-divider);
+	background: var(--luz-surface-muted);
+	color: var(--luz-text-primary);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-sm);
 }
 
 @media (min-width: 641px) {
-	.cai-site-notice,
-	.cai-site-consent {
-		padding-inline: max(var(--cai-space-xl), (100% - var(--cai-content-max)) / 2 + var(--cai-space-xl));
+	.luz-site-notice,
+	.luz-site-consent {
+		padding-inline: max(var(--luz-space-xl), (100% - var(--luz-content-max)) / 2 + var(--luz-space-xl));
 	}
 }
 
 /* Warning: a yellow band and a darker rule; the text says it too (RL-6) */
-.cai-site-notice--warning {
-	border-color: var(--cai-color-warning-accent);
-	background: var(--cai-color-warning-bg);
+.luz-site-notice--warning {
+	border-color: var(--luz-color-warning-accent);
+	background: var(--luz-color-warning-bg);
 }
 
 /* The banner: room around the question, its title, its two forms */
-.cai-site-consent {
-	padding-block: var(--cai-space-md);
-	font-size: var(--cai-text-md);
+.luz-site-consent {
+	padding-block: var(--luz-space-md);
+	font-size: var(--luz-text-md);
 }
 
-.cai-site-consent__title {
-	margin-block-end: var(--cai-space-xs);
-	font-family: var(--cai-font-sans);
-	font-size: var(--cai-text-lg);
+.luz-site-consent__title {
+	margin-block-end: var(--luz-space-xs);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-lg);
 }
 
 /* Core's details is a box: here it starts a step below the buttons */
-.cai-site-consent__choices {
-	margin-block: var(--cai-space-md) 0;
+.luz-site-consent__choices {
+	margin-block: var(--luz-space-md) 0;
 }
 
-.cai-site-consent :where(form) {
-	margin-block-start: var(--cai-space-md);
+.luz-site-consent :where(form) {
+	margin-block-start: var(--luz-space-md);
 }

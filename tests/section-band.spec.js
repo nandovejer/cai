@@ -1,13 +1,13 @@
 // @ts-check
 /**
- * `.cai-site-section--band`: a section on a tint that runs from edge to
+ * `.luz-site-section--band`: a section on a tint that runs from edge to
  * edge of the page (.claude/plans/specs/band-and-featured-card.md and its
  * accessibility review, B2 and B3). The band is a spread `box-shadow` cut off
  * above and below by `clip-path`, so it adds no scrollable width and does not
  * clip the controls inside.
  *
  * The page is a synthetic one, served at /__band__ with the three stylesheets
- * of the packages, built like a consumer's page (`.cai-site-main`,
+ * of the packages, built like a consumer's page (`.luz-site-main`,
  * `.o-container`): the docs' own frame would answer for the docs.
  * Runs in `chromium` and `chromium-nojs` (it is CSS only).
  */
@@ -19,25 +19,25 @@ const PAGE = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Band</title>
-<link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
-<link rel="stylesheet" href="/packages/core/dist/cai.css">
+<link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+<link rel="stylesheet" href="/packages/core/dist/luz.css">
 <link rel="stylesheet" href="/packages/site/dist/site.css">
 </head>
-<body class="cai-site-page">
-<main id="main-content" class="cai-site-main o-container">
-  <section class="cai-site-section" aria-labelledby="before-title">
+<body class="luz-site-page">
+<main id="main-content" class="luz-site-main o-container">
+  <section class="luz-site-section" aria-labelledby="before-title">
     <h2 id="before-title">Programme</h2>
     <p>Two days of talks and workshops for retail teams.</p>
   </section>
-  <section class="cai-site-section cai-site-section--band" aria-labelledby="last-seats-title" id="band">
+  <section class="luz-site-section luz-site-section--band" aria-labelledby="last-seats-title" id="band">
     <h2 id="last-seats-title">Registration closes on 30 April</h2>
     <p>The hall holds 400 people, and the Two days ticket sold out last year.</p>
-    <div class="cai-site-actions">
-      <a class="cai-btn cai-btn--primary" href="#after-title">Register now</a>
-      <a class="cai-btn cai-btn--outline" href="#after-title">Programme</a>
+    <div class="luz-site-actions">
+      <a class="luz-btn luz-btn--primary" href="#after-title">Register now</a>
+      <a class="luz-btn luz-btn--outline" href="#after-title">Programme</a>
     </div>
   </section>
-  <section class="cai-site-section" aria-labelledby="after-title">
+  <section class="luz-site-section" aria-labelledby="after-title">
     <h2 id="after-title">Venue</h2>
     <p>The main hall, in Seville.</p>
   </section>
@@ -45,7 +45,7 @@ const PAGE = `<!doctype html>
 </body>
 </html>`;
 
-// The labels are short on purpose: a .cai-btn does not wrap its label outside a card, so a long one
+// The labels are short on purpose: a .luz-btn does not wrap its label outside a card, so a long one
 // ("See the programme") is wider than 288 px at 200 % text: a Button matter, not the band's.
 
 /** Add a rule to the page. addStyleTag needs script, and this test also runs without it. */

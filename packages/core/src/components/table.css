@@ -1,13 +1,13 @@
 /* --------------------------------------------------------------------------
-   CAI Component: table
+   LUZ Component: table
    Table + sticky column + container-query card stacking
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
 /* Scroll wrapper — also a container-query context */
-.cai-table-wrap {
+.luz-table-wrap {
   overflow-x: auto;
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
@@ -15,42 +15,42 @@
 }
 
 /* The wrapper is a focusable scroll region (tabindex="0") */
-.cai-table-wrap:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-table-wrap:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-.cai-table {
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
+.luz-table {
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
   width: 100%;
   border-collapse: collapse;
-  font-size: var(--cai-text-md);
+  font-size: var(--luz-text-md);
 }
 
-.cai-table caption {
+.luz-table caption {
   text-align: start;
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
-  padding: var(--cai-space-xs) var(--cai-space-md);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
+  padding: var(--luz-space-xs) var(--luz-space-md);
   caption-side: top;
 }
 
-.cai-table th a {
+.luz-table th a {
   /* The brand blue is below 4.5:1 on the header surface */
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
   text-decoration: underline;
 }
 
-.cai-table th {
-  background: var(--cai-surface-strong);
-  color: var(--cai-text-primary);
+.luz-table th {
+  background: var(--luz-surface-strong);
+  color: var(--luz-text-primary);
   text-align: start;
-  padding: var(--cai-space-xs) var(--cai-space-md);
+  padding: var(--luz-space-xs) var(--luz-space-md);
   font-weight: 500;
-  font-size: var(--cai-text-sm);
+  font-size: var(--luz-text-sm);
   letter-spacing: 0.5px;
   white-space: nowrap;
-  transition: background var(--cai-duration-base);
+  transition: background var(--luz-duration-base);
 }
 
 /* ---- Sortable headings ---------------------------------------------
@@ -61,10 +61,10 @@
    not a background, so it stays visible in forced colors. The button is at
    least 24px high on its own (WCAG 2.5.8), whatever the padding of the cell.
 --------------------------------------------------------------------- */
-.cai-table th > button {
+.luz-table th > button {
   font: inherit;
   letter-spacing: inherit;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
   background: none;
   border: 0;
   padding: 0;
@@ -73,49 +73,49 @@
   cursor: pointer;
 }
 
-.cai-table th > button:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-table th > button:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-.cai-table th[aria-sort] > :where(a, button)::after {
+.luz-table th[aria-sort] > :where(a, button)::after {
   content: "";
   display: inline-block;
   inline-size: 0.65em;
   block-size: 0;
-  margin-inline-start: var(--cai-space-2xs);
+  margin-inline-start: var(--luz-space-2xs);
   border-block-end: 0.5em solid currentcolor;
   clip-path: polygon(50% 0, 100% 100%, 0 100%);
 }
 
-.cai-table th[aria-sort="descending"] > :where(a, button)::after {
+.luz-table th[aria-sort="descending"] > :where(a, button)::after {
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
 /* Spacing between letters breaks the joins of Arabic script (the card
    labels of narrow screens too) */
-.cai-table th:lang(ar),
-.cai-table td[data-label]:lang(ar)::before {
+.luz-table th:lang(ar),
+.luz-table td[data-label]:lang(ar)::before {
   letter-spacing: 0;
 }
 
-.cai-table td {
-  padding: var(--cai-space-sm) var(--cai-space-md);
-  border-bottom: 1px solid var(--cai-divider);
-  color: var(--cai-text-primary);
-  transition: background var(--cai-duration-fast);
+.luz-table td {
+  padding: var(--luz-space-sm) var(--luz-space-md);
+  border-bottom: 1px solid var(--luz-divider);
+  color: var(--luz-text-primary);
+  transition: background var(--luz-duration-fast);
 }
 
-.cai-table tr:hover td {
-  background: var(--cai-surface-hover);
+.luz-table tr:hover td {
+  background: var(--luz-surface-hover);
 }
 
-.cai-table tr:last-child td {
+.luz-table tr:last-child td {
   border-bottom: none;
 }
 
 /* ---- Numbers -------------------------------------------------------
-   .cai-table__numeric on the <th> and on every <td> of a column of
+   .luz-table__numeric on the <th> and on every <td> of a column of
    numbers, amounts or counts: aligned to the end of the cell, so the
    digits of a column share their right edge, and in tabular figures, so
    every digit has the same width. Put it on the heading too, or the
@@ -123,8 +123,8 @@
    end is the left edge. In the stacked card layout the value is already
    at the end of its row; only the figures stay tabular.
 --------------------------------------------------------------------- */
-.cai-table th.cai-table__numeric,
-.cai-table td.cai-table__numeric {
+.luz-table th.luz-table__numeric,
+.luz-table td.luz-table__numeric {
   text-align: end;
   font-variant-numeric: tabular-nums;
 }
@@ -136,40 +136,40 @@
    stays, so the text is no harder to read. Placed before the container
    query below on purpose, so a stacked card keeps its own padding.
 --------------------------------------------------------------------- */
-.cai-table--compact th {
-  padding-block: var(--cai-space-2xs);
-  padding-inline: var(--cai-space-sm);
+.luz-table--compact th {
+  padding-block: var(--luz-space-2xs);
+  padding-inline: var(--luz-space-sm);
 }
 
-.cai-table--compact td {
-  padding-block: var(--cai-space-2xs);
-  padding-inline: var(--cai-space-sm);
+.luz-table--compact td {
+  padding-block: var(--luz-space-2xs);
+  padding-inline: var(--luz-space-sm);
 }
 
 /* ---- Sticky first column modifier ----------------------------------
-   Use .cai-table--sticky-col when the table scrolls horizontally and
+   Use .luz-table--sticky-col when the table scrolls horizontally and
    the first column identifies the row (name, ID, label…).
    The wrapper should also have:
    role="region"  aria-label="…"  tabindex="0"
 --------------------------------------------------------------------- */
-.cai-table--sticky-col th:first-child,
-.cai-table--sticky-col td:first-child {
+.luz-table--sticky-col th:first-child,
+.luz-table--sticky-col td:first-child {
   position: sticky;
   inset-inline-start: 0;
 }
 
-.cai-table--sticky-col th:first-child {
+.luz-table--sticky-col th:first-child {
   z-index: 2;
-  background: var(--cai-surface-strong);
+  background: var(--luz-surface-strong);
 }
 
-.cai-table--sticky-col td:first-child {
+.luz-table--sticky-col td:first-child {
   z-index: 1;
-  background: var(--cai-surface-page);
+  background: var(--luz-surface-page);
 }
 
-.cai-table--sticky-col tr:hover td:first-child {
-  background: var(--cai-surface-hover);
+.luz-table--sticky-col tr:hover td:first-child {
+  background: var(--luz-surface-hover);
 }
 
 /* ---- Container-query card stacking ---------------------------------
@@ -180,7 +180,7 @@
 --------------------------------------------------------------------- */
 @container (max-width: 480px) {
   /* Visually hidden thead — kept in DOM for screen readers */
-  .cai-table thead {
+  .luz-table thead {
     position: absolute;
     width: 1px;
     height: 1px;
@@ -196,82 +196,82 @@
      is a control, and a control is not hidden: it would keep the focus with
      no ring in sight (WCAG 2.4.7). The headings show, as a row above the
      cards, and wrap. */
-  .cai-table thead:has(a, button) {
+  .luz-table thead:has(a, button) {
     display: block;
     position: static;
     inline-size: auto;
     block-size: auto;
-    margin: 0 0 var(--cai-space-sm);
+    margin: 0 0 var(--luz-space-sm);
     overflow: visible;
     white-space: normal;
   }
 
-  .cai-table,
-  .cai-table tbody,
-  .cai-table tr {
+  .luz-table,
+  .luz-table tbody,
+  .luz-table tr {
     display: block;
   }
 
   /* A caption of a table that is a block would shrink to a narrow column */
-  .cai-table caption {
+  .luz-table caption {
     display: block;
   }
 
-  .cai-table thead:has(a, button) tr {
+  .luz-table thead:has(a, button) tr {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--cai-space-2xs);
+    gap: var(--luz-space-2xs);
     margin: 0;
     border: 0;
     border-radius: 0;
     overflow: visible;
   }
 
-  .cai-table thead:has(a, button) th {
-    border-radius: var(--cai-radius-md);
+  .luz-table thead:has(a, button) th {
+    border-radius: var(--luz-radius-md);
   }
 
   /* Each row becomes a card */
-  .cai-table tr {
-    border: 1px solid var(--cai-divider);
-    border-radius: var(--cai-radius-md);
-    margin-bottom: var(--cai-space-sm);
+  .luz-table tr {
+    border: 1px solid var(--luz-divider);
+    border-radius: var(--luz-radius-md);
+    margin-bottom: var(--luz-space-sm);
     overflow: hidden;
   }
 
   /* Each cell becomes a key–value row */
-  .cai-table td {
+  .luz-table td {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: var(--cai-space-md);
-    padding: var(--cai-space-xs) var(--cai-space-sm);
-    border-bottom: 1px solid var(--cai-divider);
+    gap: var(--luz-space-md);
+    padding: var(--luz-space-xs) var(--luz-space-sm);
+    border-bottom: 1px solid var(--luz-divider);
   }
 
-  .cai-table tr:last-child td:last-child {
+  .luz-table tr:last-child td:last-child {
     border-bottom: none;
   }
 
   /* Inject the column label before the value */
-  .cai-table td[data-label]::before {
+  .luz-table td[data-label]::before {
     content: attr(data-label);
-    font-size: var(--cai-text-sm);
+    font-size: var(--luz-text-sm);
     font-weight: 500;
-    color: var(--cai-text-secondary);
+    color: var(--luz-text-secondary);
     letter-spacing: 0.3px;
     white-space: nowrap;
     flex-shrink: 0;
   }
 
   /* No full-row hover in card mode */
-  .cai-table tr:hover td {
+  .luz-table tr:hover td {
     background: transparent;
   }
 
   /* No sticky column — no horizontal overflow in stacked mode */
-  .cai-table--sticky-col th:first-child,
-  .cai-table--sticky-col td:first-child {
+  .luz-table--sticky-col th:first-child,
+  .luz-table--sticky-col td:first-child {
     position: static;
   }
 }
@@ -279,11 +279,11 @@
 /* Cell padding follows the same container as the stacking above, not the
    window: a narrow table in a wide page reduces its padding too */
 @container (max-width: 480px) {
-  .cai-table th {
-    padding: var(--cai-space-2xs) var(--cai-space-xs);
+  .luz-table th {
+    padding: var(--luz-space-2xs) var(--luz-space-xs);
   }
 
-  .cai-table td {
-    padding: var(--cai-space-xs) var(--cai-space-xs);
+  .luz-table td {
+    padding: var(--luz-space-xs) var(--luz-space-xs);
   }
 }

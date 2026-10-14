@@ -1,6 +1,6 @@
 /**
- * CAI documentation site — the contrast check in the browser
- * (/docs/tokens/contrast/). The same engine as `cai-tokens check-contrast`
+ * LUZ documentation site — the contrast check in the browser
+ * (/docs/tokens/contrast/). The same engine as `luz-tokens check-contrast`
  * (packages/tokens/lib), on CSS pasted into a field, measured against the
  * installed tokens. Everything stays in the page: nothing is sent anywhere.
  *

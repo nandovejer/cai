@@ -1,6 +1,6 @@
-# Contributing to CAI Design System
+# Contributing to LUZ Design System
 
-Thank you for your interest in contributing! CAI is a community-driven project, and we welcome contributions of all kinds.
+Thank you for your interest in contributing! LUZ is a community-driven project, and we welcome contributions of all kinds.
 
 ## Code of Conduct
 
@@ -75,7 +75,7 @@ pnpm check:strings # Shipped strings (sentence case, no "OK" / "click here")
 pnpm pages:build  # Rebuild the GitHub Pages site in docs/ (commit the result)
 ```
 
-The build commands of each layer, for working on CAI itself (moved here from the documentation site, which is for the people who use CAI):
+The build commands of each layer, for working on LUZ itself (moved here from the documentation site, which is for the people who use LUZ):
 
 ```bash
 pnpm tokens:build    # packages/tokens/dist
@@ -166,7 +166,7 @@ If UI change, include screenshot or link to demo.
 
 To keep releases stable without heavy maintenance, use this minimum baseline:
 
-- Unit tests for behavior in `packages/core/src/cai.js` and `packages/core/src/midi.js`
+- Unit tests for behavior in `packages/core/src/luz.js` and `packages/core/src/midi.js`
 - UI smoke tests for critical flows in the documentation (`/docs/`, source in `apps/docs/pages/`)
 - Automated a11y smoke on key pages/components
 
@@ -236,7 +236,7 @@ Open and close it declaratively, with no JavaScript:
 ```html
 <button type="button" commandfor="my-dialog" command="show-modal">Open dialog</button>
 
-<dialog class="cai-modal" id="my-dialog" aria-labelledby="my-dialog-title">
+<dialog class="luz-modal" id="my-dialog" aria-labelledby="my-dialog-title">
   <h2 id="my-dialog-title">Delete this draft</h2>
   <p>This cannot be undone.</p>
   <button type="button" commandfor="my-dialog" command="close">Cancel</button>
@@ -244,7 +244,7 @@ Open and close it declaratively, with no JavaScript:
 </dialog>
 ```
 
-`initModals()` (called by `cai.js`) only supplies the two commands in browsers that do not implement them yet.
+`initModals()` (called by `luz.js`) only supplies the two commands in browsers that do not implement them yet.
 
 ## Documentation
 
@@ -299,7 +299,7 @@ pnpm check:pack
 
 ### Dependency ranges between packages
 
-`@cai-ds/core` and `@cai-ds/site` declare the layers below them as `peerDependencies` with literal ranges (`^3.0.0`). Do not use the `workspace:` protocol there; changesets updates the ranges on a major release.
+`@luz-ds/core` and `@luz-ds/site` declare the layers below them as `peerDependencies` with literal ranges (`^0.1.0`). Do not use the `workspace:` protocol there; changesets updates the ranges on a major release.
 
 ---
 
@@ -310,4 +310,4 @@ pnpm check:pack
 
 ## Thank You
 
-Every contribution — big or small — helps make CAI better! 🙏
+Every contribution — big or small — helps make LUZ better! 🙏

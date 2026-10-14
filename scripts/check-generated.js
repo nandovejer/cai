@@ -1,5 +1,5 @@
 /**
- * CAI — generated files are never edited by hand (PRINCIPLES.md, red line 14).
+ * LUZ — generated files are never edited by hand (PRINCIPLES.md, red line 14).
  *
  * docs/ is the GitHub Pages build and is committed. This script builds the
  * site again into a temporary folder and compares it, file by file, with
@@ -47,11 +47,11 @@ const published = (paths) => {
   return paths.filter((p) => !ignored.has(p));
 };
 
-const out = mkdtempSync(join(tmpdir(), "cai-pages-"));
+const out = mkdtempSync(join(tmpdir(), "luz-pages-"));
 try {
   execFileSync("pnpm", ["exec", "vite", "build", "--mode", "pages", "--logLevel", "error"], {
     cwd: root,
-    env: { ...process.env, CAI_PAGES_OUT: out },
+    env: { ...process.env, LUZ_PAGES_OUT: out },
     stdio: ["ignore", "ignore", "inherit"],
   });
 

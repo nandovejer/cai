@@ -1,5 +1,5 @@
 /**
- * CAI — captions and subtitles of the video player (packages/core/src/player.js).
+ * LUZ — captions and subtitles of the video player (packages/core/src/player.js).
  *
  * The state is the TextTrack's mode, never a variable: the button and the
  * select only set it and mirror it. Node has no DOM, but it has EventTarget;
@@ -119,8 +119,8 @@ afterEach(() => {
  * @param {object[]} specs     - the <track> elements: { kind, label, language }
  * @param {object}   options
  * @param {number}   [options.defaultIndex] - the track with `default`
- * @param {boolean}  [options.button]       - author a .cai-player-captions
- * @param {boolean}  [options.select]       - author a .cai-player-tracks
+ * @param {boolean}  [options.button]       - author a .luz-player-captions
+ * @param {boolean}  [options.select]       - author a .luz-player-tracks
  * @param {string}   [options.lang]         - lang of the player
  */
 function player(specs, { defaultIndex, button = true, select = false, lang = "" } = {}) {
@@ -133,10 +133,10 @@ function player(specs, { defaultIndex, button = true, select = false, lang = "" 
   const ccBtn = button ? new FakeElement("BUTTON") : null;
   const ccMenu = select ? new FakeSelect() : null;
   root.parts = {
-    ".cai-player-video": media,
-    ".cai-player-controls": new FakeElement(),
-    ".cai-player-captions": ccBtn,
-    ".cai-player-tracks": ccMenu,
+    ".luz-player-video": media,
+    ".luz-player-controls": new FakeElement(),
+    ".luz-player-captions": ccBtn,
+    ".luz-player-tracks": ccMenu,
     "track[default]": defaultIndex === undefined ? null : { track: tracks[defaultIndex] },
   };
   mountPlayer(root);
@@ -256,7 +256,7 @@ describe("player captions — a name written in the HTML", () => {
     media.textTracks = list;
     const ccBtn = new FakeElement("BUTTON");
     ccBtn.setAttribute("aria-label", "Closed captions");
-    root.parts = { ".cai-player-video": media, ".cai-player-controls": new FakeElement(), ".cai-player-captions": ccBtn };
+    root.parts = { ".luz-player-video": media, ".luz-player-controls": new FakeElement(), ".luz-player-captions": ccBtn };
     mountPlayer(root);
     expect(ccBtn.getAttribute("aria-label")).toBe("Closed captions");
   });

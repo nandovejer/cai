@@ -13,17 +13,17 @@ const css = readFileSync(new URL("../packages/core/src/components/meter.css", im
 
 describe("meter.css", () => {
   it("is native: no appearance of the browser, one block", () => {
-    expect(css).toMatch(/\.cai-meter\s*\{[^}]*appearance:\s*none/);
-    expect(css).toMatch(/\.cai-meter\s*\{[^}]*display:\s*block/);
-    expect(css).toMatch(/\.cai-meter\s*\{[^}]*min-inline-size:\s*8rem/);
+    expect(css).toMatch(/\.luz-meter\s*\{[^}]*appearance:\s*none/);
+    expect(css).toMatch(/\.luz-meter\s*\{[^}]*display:\s*block/);
+    expect(css).toMatch(/\.luz-meter\s*\{[^}]*min-inline-size:\s*8rem/);
   });
 
   it("draws the three states of each engine in the brand colour, and no status colour", () => {
-    expect(css).not.toMatch(/--cai-color-(success|warning|danger|info)/);
+    expect(css).not.toMatch(/--luz-color-(success|warning|danger|info)/);
     const fill = /(::-webkit-meter-optimum-value[^{]*::-webkit-meter-suboptimum-value[^{]*::-webkit-meter-even-less-good-value|::-moz-meter-bar)\s*\{([^}]*)\}/g;
     const bodies = [...css.matchAll(fill)].map((m) => m[2]);
     expect(bodies.length).toBeGreaterThanOrEqual(2);
-    for (const body of bodies.slice(0, 2)) expect(body).toMatch(/background:\s*var\(--cai-brand-primary\)/);
+    for (const body of bodies.slice(0, 2)) expect(body).toMatch(/background:\s*var\(--luz-brand-primary\)/);
     // The engine's states are not styled apart
     expect(css).not.toMatch(/(?<!:):-moz-meter-/);
   });
@@ -36,10 +36,10 @@ describe("meter.css", () => {
   });
 });
 
-/** Every <meter class="cai-meter" …> of the docs: the page, the tag and the markup before it in its cell. */
+/** Every <meter class="luz-meter" …> of the docs: the page, the tag and the markup before it in its cell. */
 const meters = [];
 for (const page of site.pages) {
-  for (const m of page.body.matchAll(/<meter\b[^>]*class="[^"]*\bcai-meter\b[^"]*"[^>]*>/g)) {
+  for (const m of page.body.matchAll(/<meter\b[^>]*class="[^"]*\bluz-meter\b[^"]*"[^>]*>/g)) {
     const before = page.body.slice(0, m.index);
     const cell = before.lastIndexOf("<td");
     const stage = before.lastIndexOf('class="docs-dodont__stage"');
@@ -54,7 +54,7 @@ describe("meters in the docs", () => {
     expect(meters.length).toBeGreaterThanOrEqual(5);
   });
 
-  it("never sets low, high or optimum on a .cai-meter", () => {
+  it("never sets low, high or optimum on a .luz-meter", () => {
     for (const { page, tag } of meters) expect(tag, page.file).not.toMatch(/\s(low|high|optimum)=/);
   });
 

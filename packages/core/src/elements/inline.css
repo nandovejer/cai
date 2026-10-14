@@ -1,10 +1,10 @@
 /* ==========================================================================
-   CAI — 3. ELEMENTS · inline
+   LUZ — 3. ELEMENTS · inline
    Inline text: a, mark, kbd, time. Specificity: :where() (0,0,0) for a.
    ========================================================================== */
 
 :where(a) {
-  color: var(--cai-brand-primary);
+  color: var(--luz-brand-primary);
   /* Every link in content, cards and lists is underlined: the brand blue is
      close in lightness to the text, so colour alone would not mark it
      (WCAG 1.4.1, RL-6). */
@@ -23,9 +23,9 @@
 }
 
 :where(a:focus-visible) {
-  outline: 2px solid var(--cai-focus-ring);
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
-  border-radius: var(--cai-radius-sm);
+  border-radius: var(--luz-radius-sm);
 }
 
 /* ========================================================================== */
@@ -33,10 +33,10 @@
 /* ========================================================================== */
 
 :where(mark) {
-  background: var(--cai-color-warning-bg);
-  color: var(--cai-text-primary);
-  padding: 0 var(--cai-space-3xs);
-  border-radius: var(--cai-radius-sm);
+  background: var(--luz-color-warning-bg);
+  color: var(--luz-text-primary);
+  padding: 0 var(--luz-space-3xs);
+  border-radius: var(--luz-radius-sm);
 }
 
 /* ========================================================================== */
@@ -44,14 +44,14 @@
 /* ========================================================================== */
 
 :where(kbd) {
-  font-family: var(--cai-font-mono);
+  font-family: var(--luz-font-mono);
   /* Relative to the surrounding text, never below the 12px floor */
-  font-size: max(0.875em, var(--cai-text-xs));
-  padding: var(--cai-space-3xs) var(--cai-space-2xs);
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-outline);
-  border-radius: var(--cai-radius-sm);
-  box-shadow: 0 2px 0 var(--cai-outline);
+  font-size: max(0.875em, var(--luz-text-xs));
+  padding: var(--luz-space-3xs) var(--luz-space-2xs);
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-outline);
+  border-radius: var(--luz-radius-sm);
+  box-shadow: 0 2px 0 var(--luz-outline);
   display: inline-block;
 }
 
@@ -60,8 +60,8 @@
 /* ========================================================================== */
 
 :where(time) {
-  font-size: max(0.95em, var(--cai-text-xs));
-  color: var(--cai-text-secondary);
+  font-size: max(0.95em, var(--luz-text-xs));
+  color: var(--luz-text-secondary);
 }
 
 
@@ -80,7 +80,7 @@
 }
 
 :where(s) {
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 :where(u) {
@@ -90,17 +90,17 @@
 /* The browser shrinks these relative to the parent, which can drop them
    under the 12px floor; max() keeps them readable */
 :where(small) {
-  font-size: max(0.875em, var(--cai-text-xs));
+  font-size: max(0.875em, var(--luz-text-xs));
 }
 
 :where(sub, sup) {
-  font-size: max(0.75em, var(--cai-text-xs));
+  font-size: max(0.75em, var(--luz-text-xs));
   /* Without this they push the line box apart */
   line-height: 0;
 }
 
 :where(rt) {
-  font-size: max(0.6em, var(--cai-text-xs));
+  font-size: max(0.6em, var(--luz-text-xs));
 }
 
 /* Code is read left to right, also in a right-to-left page: tags, operators
@@ -112,11 +112,11 @@
   unicode-bidi: isolate;
 }
 
-/* Computer output and variables. Not code inside <pre>: .cai-code-block
+/* Computer output and variables. Not code inside <pre>: .luz-code-block
    and pre set their own type. */
 :where(:not(pre) > code, samp, var) {
-  font-family: var(--cai-font-mono);
-  font-size: max(0.875em, var(--cai-text-xs));
+  font-family: var(--luz-font-mono);
+  font-size: max(0.875em, var(--luz-text-xs));
 }
 
 :where(var) {
@@ -128,17 +128,17 @@
 /* ========================================================================== */
 
 :where(del, ins) {
-  color: var(--cai-text-primary);
-  padding: 0 var(--cai-space-3xs);
-  border-radius: var(--cai-radius-sm);
+  color: var(--luz-text-primary);
+  padding: 0 var(--luz-space-3xs);
+  border-radius: var(--luz-radius-sm);
   text-decoration-thickness: 1px;
 }
 
 :where(del) {
-  background: var(--cai-color-danger-bg);
+  background: var(--luz-color-danger-bg);
 }
 
 :where(ins) {
-  background: var(--cai-color-success-bg);
+  background: var(--luz-color-success-bg);
   text-underline-offset: 0.2em;
 }

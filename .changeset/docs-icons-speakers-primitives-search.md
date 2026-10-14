@@ -1,4 +1,0 @@
----
----
-
-Documentation site and its generator, no package changes. The Icon grid page now shows CAI's own set of 22 icons (menu, close, search, check, plus, minus, three chevrons and an arrow, cart, user, mail, calendar, clock, map pin, download, external link, info, warning, heart, filter), drawn for CAI on a 24 × 24 grid in `currentColor`: copy the SVG of each, or the sprite of all of them with `<use href="#id">`, and the two icon-in-a-button forms. Nothing is added to a package. Page templates gains a Speakers block (a list of cards with a square photo, the name as an `h3` and the role). The search index lists the 53 primitive colours of the palette (`--cai-blue-60`…) at the label of their scale on the Color palette page: the generator reads a colour drawn as a swatch (`class="docs-swatch" style="--v: var(--cai-…)"`) without a `<code>`. The Do and don't section of a Design tab may hold more than one pair, a Do then its Don't.

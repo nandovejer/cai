@@ -1,8 +1,8 @@
 /**
- * CAI — the DTCG export (packages/tokens/dist/cai-tokens.dtcg.json) says the
+ * LUZ — the DTCG export (packages/tokens/dist/luz-tokens.dtcg.json) says the
  * same as the CSS. Every custom property of dist/tokens.css (primitives and
  * the three base color modes) is in the JSON, under the name rule
- * (--cai-surface-page ↔ surface/page), with the same resolved value in each
+ * (--luz-surface-page ↔ surface/page), with the same resolved value in each
  * mode. The CSS side is resolved here on its own (var() chains), not with the
  * generator's parser. Run after `pnpm tokens:build`.
  */
@@ -15,7 +15,7 @@ import { DTCG_VERSION, buildDtcg, buildResolver } from "../scripts/tokens-dtcg.j
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = resolve(root, "packages/tokens/dist");
-const built = existsSync(resolve(dist, "cai-tokens.dtcg.json")) && existsSync(resolve(dist, "tokens.css"));
+const built = existsSync(resolve(dist, "luz-tokens.dtcg.json")) && existsSync(resolve(dist, "tokens.css"));
 const MODES = { Light: "light", Dark: "dark", "High contrast": "high-contrast" };
 
 /** CSS → [{ selector, decls: Map }] (comments removed). */
@@ -71,7 +71,7 @@ function canon(css) {
 
 /** Path of a custom property under the name rule. */
 function pathOf(prop) {
-  const name = prop.slice("--cai-".length);
+  const name = prop.slice("--luz-".length);
   const cut = name.indexOf("-");
   return cut === -1 ? [name] : [name.slice(0, cut), name.slice(cut + 1)];
 }
@@ -93,21 +93,21 @@ function resolveDtcg(json, value, mode) {
   return value;
 }
 
-describe.skipIf(!built)("DTCG export (packages/tokens/dist/cai-tokens.dtcg.json)", () => {
-  const json = built ? JSON.parse(readFileSync(resolve(dist, "cai-tokens.dtcg.json"), "utf-8")) : {};
+describe.skipIf(!built)("DTCG export (packages/tokens/dist/luz-tokens.dtcg.json)", () => {
+  const json = built ? JSON.parse(readFileSync(resolve(dist, "luz-tokens.dtcg.json"), "utf-8")) : {};
   const css = built ? blocks(readFileSync(resolve(dist, "tokens.css"), "utf-8")) : [];
   const primitives = css.find((b) => b.selector === ":root")?.decls ?? new Map();
   // Shadows are primitives that a mode may redraw; the semantic collection holds colors
   const modeDecls = (theme) => {
     const decls = css.find((b) => b.selector.split(",").some((s) => s.trim() === `[data-theme="${theme}"]`))?.decls;
-    return decls && new Map([...decls].filter(([prop]) => !prop.startsWith("--cai-shadow-")));
+    return decls && new Map([...decls].filter(([prop]) => !prop.startsWith("--luz-shadow-")));
   };
 
   /** Resolve var() chains: inside the mode first, then the primitives. */
   function resolveCss(value, decls) {
     for (let hops = 0; /^var\(/.test(value); hops++) {
       expect(hops).toBeLessThan(10);
-      const ref = /^var\((--cai-[\w-]+)\)$/.exec(value)[1];
+      const ref = /^var\((--luz-[\w-]+)\)$/.exec(value)[1];
       value = decls.get(ref) ?? primitives.get(ref);
       expect(value, ref).toBeDefined();
     }
@@ -150,7 +150,7 @@ describe.skipIf(!built)("DTCG export (packages/tokens/dist/cai-tokens.dtcg.json)
     for (const [prop, value] of modeDecls("light")) {
       const token = at(json.semantic, pathOf(prop));
       expect(token.$value, prop).toEqual(token.$extensions.mode.Light);
-      const ref = /^var\((--cai-[\w-]+)\)$/.exec(value)?.[1];
+      const ref = /^var\((--luz-[\w-]+)\)$/.exec(value)?.[1];
       if (ref) {
         const collection = primitives.has(ref) ? "primitives" : "semantic";
         expect(at(json, token.$value.slice(1, -1).split(".")), prop).toBe(at(json[collection], pathOf(ref)));
@@ -161,13 +161,13 @@ describe.skipIf(!built)("DTCG export (packages/tokens/dist/cai-tokens.dtcg.json)
   });
 
   it("declares the two collections and their modes", () => {
-    expect(json.primitives.$extensions["com.cai-ds"]).toEqual({ collection: "CAI primitives", modes: ["Value"] });
-    expect(json.semantic.$extensions["com.cai-ds"]).toEqual({ collection: "CAI semantic", modes: MODES });
+    expect(json.primitives.$extensions["com.luz-ds"]).toEqual({ collection: "LUZ primitives", modes: ["Value"] });
+    expect(json.semantic.$extensions["com.luz-ds"]).toEqual({ collection: "LUZ semantic", modes: MODES });
   });
 
-  it("is published as @cai-ds/tokens/dtcg", () => {
+  it("is published as @luz-ds/tokens/dtcg", () => {
     const pkg = JSON.parse(readFileSync(resolve(root, "packages/tokens/package.json"), "utf-8"));
-    expect(pkg.exports["./dtcg"]).toBe("./dist/cai-tokens.dtcg.json");
+    expect(pkg.exports["./dtcg"]).toBe("./dist/luz-tokens.dtcg.json");
   });
 });
 
@@ -182,8 +182,8 @@ const validator = (name) => {
 };
 
 describe.skipIf(!built)("DTCG files against the official schemas (version 2025.10)", () => {
-  const dtcg = built ? JSON.parse(readFileSync(resolve(dist, "cai-tokens.dtcg.json"), "utf-8")) : {};
-  const resolverPath = resolve(dist, "cai-tokens.resolver.json");
+  const dtcg = built ? JSON.parse(readFileSync(resolve(dist, "luz-tokens.dtcg.json"), "utf-8")) : {};
+  const resolverPath = resolve(dist, "luz-tokens.resolver.json");
   const resolver = existsSync(resolverPath) ? JSON.parse(readFileSync(resolverPath, "utf-8")) : null;
 
   it("the token file is valid against the Format Module schema", () => {
@@ -205,7 +205,7 @@ describe.skipIf(!built)("DTCG files against the official schemas (version 2025.1
   });
 
   it("the resolver's base set is the token file next to it, and its default mode is a context", () => {
-    expect(resolver.sets.base.sources).toEqual([{ $ref: "cai-tokens.dtcg.json" }]);
+    expect(resolver.sets.base.sources).toEqual([{ $ref: "luz-tokens.dtcg.json" }]);
     expect(existsSync(resolve(dist, resolver.sets.base.sources[0].$ref))).toBe(true);
     const { default: fallback, contexts } = resolver.modifiers.mode;
     expect(Object.keys(contexts)).toEqual(["light", "dark", "high-contrast"]);

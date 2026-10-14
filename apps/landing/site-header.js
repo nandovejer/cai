@@ -1,5 +1,5 @@
 /**
- * CAI site header — one behavior for every page of the site (home, docs).
+ * LUZ site header — one behavior for every page of the site (home, docs).
  * Everything here enhances what works without JavaScript: the color mode is
  * a native radio group (:root:has() in the tokens) and the menu
  * drawer is a native popover.
@@ -20,7 +20,7 @@ import { initSidebar } from "/packages/core/dist/sidebar.js";
 
 // One key for the whole site, so the choice follows the visitor
 const MODES = ["light", "dark", "high-contrast"];
-const MODE_KEY = "cai-site-mode";
+const MODE_KEY = "luz-site-mode";
 
 function storedMode() {
   try {
@@ -48,7 +48,7 @@ function initModes(onModeChange) {
       } catch (_) {}
     }
     // The native radios show the mode (and set it without JavaScript)
-    document.querySelectorAll('input[name="cai-theme"]').forEach((radio) => {
+    document.querySelectorAll('input[name="luz-theme"]').forEach((radio) => {
       radio.checked = radio.value === mode;
     });
     onModeChange?.(mode);
@@ -57,7 +57,7 @@ function initModes(onModeChange) {
   setMode(storedMode() || osMode(), false);
 
   document.addEventListener("change", (e) => {
-    const radio = e.target.closest?.('input[name="cai-theme"]');
+    const radio = e.target.closest?.('input[name="luz-theme"]');
     if (radio?.checked) setMode(radio.value, true);
   });
 

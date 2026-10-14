@@ -11,9 +11,9 @@ import { fileURLToPath } from "node:url";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const strip = (css) => css.replace(/\/\*[\s\S]*?\*\//g, "");
-const blocks = (css) => [...strip(css).matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => ({ selector: selector.replace(/\s+/g, " ").trim(), props: [...body.matchAll(/(--cai-[\w-]+)\s*:/g)].map((m) => m[1]) }));
+const blocks = (css) => [...strip(css).matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => ({ selector: selector.replace(/\s+/g, " ").trim(), props: [...body.matchAll(/(--luz-[\w-]+)\s*:/g)].map((m) => m[1]) }));
 // Shadows are primitives that a mode redraws; the template names them in dark and high contrast
-const colours = (props) => props.filter((p) => !p.startsWith("--cai-shadow-"));
+const colours = (props) => props.filter((p) => !p.startsWith("--luz-shadow-"));
 
 const semantic = blocks(readFileSync(resolve(root, "packages/tokens/src/semantic.css"), "utf-8"));
 const template = blocks(readFileSync(resolve(root, "packages/core/src/themes/_template.css"), "utf-8"));
@@ -44,7 +44,7 @@ describe("the themes page lists the tokens of the template", () => {
   it("names every semantic token of the template, and no other", () => {
     const page = readFileSync(resolve(root, "apps/docs/pages/tokens/themes.html"), "utf-8");
     const table = page.split('aria-label="Semantic tokens a theme sets"')[1].split("</table>")[0];
-    const listed = [...table.matchAll(/<code>(--cai-[\w-]+)<\/code>/g)].map((m) => m[1]).sort();
+    const listed = [...table.matchAll(/<code>(--luz-[\w-]+)<\/code>/g)].map((m) => m[1]).sort();
     const light = template.find((b) => b.selector.startsWith('[data-theme="my-brand"],'));
     expect(listed).toEqual(colours(light.props).sort());
   });

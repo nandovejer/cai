@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Site
 description: What every site needs above the components, from the page shell to the site search, and how to tell whether you need it.
 area: site
@@ -6,14 +6,14 @@ order: 0
 lead: false
 generate: gallery
 -->
-    <p class="docs-eyebrow">Level 3 · @cai-ds/site</p>
+    <p class="docs-eyebrow">Level 3 · @luz-ds/site</p>
 
     <p class="docs-lead">What every site needs above the components, from the page shell to the site search, and how to tell whether you need it.</p>
     <p>A piece is here when it needs data of the site (its languages, its search index, its menu) or is page structure that holds other pieces: a page shell, a site header, a section. Everything else is a <strong>component</strong>, one reusable piece that fits inside anything; components are in <a href="/docs/components/">Components</a>.</p>
-    <p>Packages for one kind of site build on this one: <a href="/docs/landing/">landing</a> for a landing page, and later <code class="cai-code-inline">cms</code> for a blog, a newspaper or any CMS, and <code class="cai-code-inline">wordpress</code> on top of <code class="cai-code-inline">cms</code>.</p>
+    <p>Packages for one kind of site build on this one: <a href="/docs/landing/">landing</a> for a landing page, and later <code class="luz-code-inline">cms</code> for a blog, a newspaper or any CMS, and <code class="luz-code-inline">wordpress</code> on top of <code class="luz-code-inline">cms</code>.</p>
     <ul>
-      <li>Every class starts with <code class="cai-code-inline">.cai-site-</code> and uses semantic tokens only.</li>
-      <li><a href="/">The CAI home page</a> and these docs are built with them.</li>
+      <li>Every class starts with <code class="luz-code-inline">.luz-site-</code> and uses semantic tokens only.</li>
+      <li><a href="/">The LUZ home page</a> and these docs are built with them.</li>
       <li>Not sure which package a piece belongs to? <a href="/docs/get-started/structure/#needs">What each package needs</a> lists every piece, with the package it is in.</li>
     </ul>
 
@@ -39,17 +39,17 @@ generate: gallery
     <div class="docs-prose">
         <h2 id="your-own-components-on-top" class="docs-prose__title">Your own components on top</h2>
         <p>Style what you add with semantic tokens too, so it follows the color mode and any <a href="/docs/tokens/themes/">theme of your own</a>.</p>
-        <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Semantic tokens in an app-level component"><code>.my-panel {
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  color: var(--cai-text-primary);
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Semantic tokens in an app-level component"><code>.my-panel {
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-divider);
+  color: var(--luz-text-primary);
 }
 
 .my-panel:hover {
-  background: var(--cai-surface-muted);
-  border-color: var(--cai-outline);
+  background: var(--luz-surface-muted);
+  border-color: var(--luz-outline);
 }
 
 /* Not a primitive colour: it would stay the same in dark mode */
-/* color: var(--cai-gray-100); */</code></pre>
+/* color: var(--luz-gray-100); */</code></pre>
       </div>

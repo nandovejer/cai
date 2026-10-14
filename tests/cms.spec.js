@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * @cai-ds/cms: the article header and the article layout with its table of
+ * @luz-ds/cms: the article header and the article layout with its table of
  * contents. The page is tests/fixtures/cms-article.html, a whole story as a
  * consumer builds it (site's sticky header, the article, the author box and
  * related posts, which are templates of core and site classes), served at
@@ -74,7 +74,7 @@ test.describe('cms article page', () => {
   });
 
   test('the title steps down: 3xl, 2xl at 640 px and below', async ({ page: p }) => {
-    for (const [width, token] of [[1280, '--cai-text-3xl'], [640, '--cai-text-2xl']]) {
+    for (const [width, token] of [[1280, '--luz-text-3xl'], [640, '--luz-text-2xl']]) {
       await open(p, width);
       expect(await p.locator('#title').evaluate((el) => getComputedStyle(el).fontSize), `${width} px`).toBe(await tokenSize(p, token));
     }
@@ -96,7 +96,7 @@ test.describe('cms article page', () => {
     await expect.poll(() => p.evaluate(() => window.scrollY)).toBeGreaterThan(800);
     const header = await box(p, 'hdr');
     const stuck = await box(p, 'toc');
-    // Under the header, by --cai-space-lg
+    // Under the header, by --luz-space-lg
     expect(stuck.top).toBeGreaterThanOrEqual(header.bottom);
     expect(stuck.top - header.bottom).toBeLessThanOrEqual(32);
   });
@@ -137,9 +137,9 @@ test.describe('cms article page', () => {
 
   test('in Arabic the kicker and the title have no letter-spacing, and the kicker is in the sans', async ({ page: p }) => {
     await open(p, 1280, { lang: 'ar', dir: 'rtl' });
-    const kicker = await p.locator('.cai-cms-article-header__kicker').evaluate((el) => {
+    const kicker = await p.locator('.luz-cms-article-header__kicker').evaluate((el) => {
       const cs = getComputedStyle(el);
-      return { spacing: cs.letterSpacing, family: cs.fontFamily, sans: getComputedStyle(document.documentElement).getPropertyValue('--cai-font-sans').trim() };
+      return { spacing: cs.letterSpacing, family: cs.fontFamily, sans: getComputedStyle(document.documentElement).getPropertyValue('--luz-font-sans').trim() };
     });
     expect(['normal', '0px']).toContain(kicker.spacing);
     expect(kicker.family.replace(/\s/g, '')).toBe(kicker.sans.replace(/\s/g, ''));

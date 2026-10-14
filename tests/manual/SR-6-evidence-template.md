@@ -10,7 +10,7 @@ PRINCIPLES.md SR-6: a release that changes markup, CSS or JS of a component is t
 | --- | --- |
 | Component or pattern | |
 | Docs page | |
-| Package and version | `@cai-ds/…@…` |
+| Package and version | `@luz-ds/…@…` |
 | Release or commit tested | |
 | What changed (changeset) | |
 | Tester | |

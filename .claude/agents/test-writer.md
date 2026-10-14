@@ -1,6 +1,6 @@
 ---
 name: test-writer
-description: Writes the failing test first for CAI (TDD). Use before any change to `packages/`, `apps/` or `scripts/`: given the behaviour the change must have, writes the vitest or Playwright test that encodes it, runs it, and confirms it fails for the right reason (the red commit). Edits only `tests/` (specs, unit tests, fixtures, helpers); never `packages/*/src`, `apps/` or `scripts/`. Never makes a test pass by weakening it.
+description: Writes the failing test first for LUZ (TDD). Use before any change to `packages/`, `apps/` or `scripts/`: given the behaviour the change must have, writes the vitest or Playwright test that encodes it, runs it, and confirms it fails for the right reason (the red commit). Edits only `tests/` (specs, unit tests, fixtures, helpers); never `packages/*/src`, `apps/` or `scripts/`. Never makes a test pass by weakening it.
 model: claude-sonnet-5-5
 effort: high
 tools: Read, Grep, Glob, Bash, Edit, Write

@@ -1,67 +1,67 @@
 /* ==========================================================================
-   CAI — 1. SETTINGS
+   LUZ — 1. SETTINGS
    No CSS output. Defines configuration custom properties
    that do not live in tokens (layout, z-index scale, motion, etc.)
-   Requires: cai-tokens.css loaded first.
+   Requires: luz-tokens.css loaded first.
    ========================================================================== */
 
 :root {
   /* Typography — serif for headings, sans for UI, mono for code */
-  --cai-font-heading: var(--cai-font-serif);
+  --luz-font-heading: var(--luz-font-serif);
   /* Running text: what <body> and everything that inherits from it uses.
      The serif; controls, labels, tables and navigation keep
-     --cai-font-sans. A theme of your own can set it to the sans. */
-  --cai-font-body: var(--cai-font-serif);
+     --luz-font-sans. A theme of your own can set it to the sans. */
+  --luz-font-body: var(--luz-font-serif);
   /* Text inside form fields. Never below 16px on touch screens: iOS Safari
      zooms the page when a focused field is smaller. */
-  --cai-text-control: var(--cai-text-md);
+  --luz-text-control: var(--luz-text-md);
   /* Z-index scale */
-  --cai-z-base: 0;
-  --cai-z-raised: 10;
-  --cai-z-overlay: 90;
-  --cai-z-sidebar: 100;
-  --cai-z-modal: 200;
-  --cai-z-toast: 300;
+  --luz-z-base: 0;
+  --luz-z-raised: 10;
+  --luz-z-overlay: 90;
+  --luz-z-sidebar: 100;
+  --luz-z-modal: 200;
+  --luz-z-toast: 300;
 
   /* Layout */
-  --cai-sidebar-width: 256px;
-  --cai-content-max: 1100px;
+  --luz-sidebar-width: 256px;
+  --luz-content-max: 1100px;
 
   /* Breakpoints — using @media (max-width: var()) does not work in native CSS,
      but they are documented here as a canonical reference for JS and preprocessors */
-  --cai-mq-sm: 640px; /* mobile */
-  --cai-mq-md: 768px; /* tablet / sidebar collapse */
-  --cai-mq-lg: 1024px; /* narrow desktop */
-  --cai-mq-xl: 1280px; /* standard desktop */
-  --cai-mq-xxl: 1536px; /* wide screen */
-  --cai-mq-xxxl: 1920px; /* full HD */
+  --luz-mq-sm: 640px; /* mobile */
+  --luz-mq-md: 768px; /* tablet / sidebar collapse */
+  --luz-mq-lg: 1024px; /* narrow desktop */
+  --luz-mq-xl: 1280px; /* standard desktop */
+  --luz-mq-xxl: 1536px; /* wide screen */
+  --luz-mq-xxxl: 1920px; /* full HD */
 
   /* Motion — durations */
-  --cai-duration-instant: 0.05s;
-  --cai-duration-fast: 0.1s;
-  --cai-duration-base: 0.2s;
-  --cai-duration-slow: 0.3s;
-  --cai-duration-slower: 0.5s;
-  --cai-duration-lazy: 0.8s;
+  --luz-duration-instant: 0.05s;
+  --luz-duration-fast: 0.1s;
+  --luz-duration-base: 0.2s;
+  --luz-duration-slow: 0.3s;
+  --luz-duration-slower: 0.5s;
+  --luz-duration-lazy: 0.8s;
 
-  /* Motion — easing. CAI's own curves: movement starts promptly and spends
+  /* Motion — easing. LUZ's own curves: movement starts promptly and spends
      most of its time settling, so it reads as calm rather than snappy. */
-  --cai-easing-standard: cubic-bezier(0.3, 0, 0.1, 1); /* moves within the page */
-  --cai-easing-enter: cubic-bezier(0.15, 0.6, 0.3, 1); /* arrives quickly, settles slowly */
-  --cai-easing-exit: cubic-bezier(0.5, 0, 0.85, 0.4); /* leaves without a long tail */
-  --cai-easing-spring: cubic-bezier(0.3, 1.35, 0.55, 1); /* a small overshoot */
-  --cai-easing-linear: linear;
+  --luz-easing-standard: cubic-bezier(0.3, 0, 0.1, 1); /* moves within the page */
+  --luz-easing-enter: cubic-bezier(0.15, 0.6, 0.3, 1); /* arrives quickly, settles slowly */
+  --luz-easing-exit: cubic-bezier(0.5, 0, 0.85, 0.4); /* leaves without a long tail */
+  --luz-easing-spring: cubic-bezier(0.3, 1.35, 0.55, 1); /* a small overshoot */
+  --luz-easing-linear: linear;
 
   /* Scrollbar */
-  --cai-scrollbar-size: 4px;
+  --luz-scrollbar-size: 4px;
 }
 
 /* Arabic: ET Book has no Arabic letters, so running text and headings take
    the system sans, which has them on every platform (no bundled font, red
-   line 13). Zero specificity: your own rule, outside CAI's layers, still wins. */
+   line 13). Zero specificity: your own rule, outside LUZ's layers, still wins. */
 :where(:lang(ar)) {
-  --cai-font-heading: var(--cai-font-sans);
-  --cai-font-body: var(--cai-font-sans);
+  --luz-font-heading: var(--luz-font-sans);
+  --luz-font-body: var(--luz-font-sans);
 }
 
 /* Reduced motion: one switch. Every transition and animation in core takes
@@ -69,17 +69,17 @@
    everywhere without !important. Never hard-code a duration in a component. */
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --cai-duration-instant: 0s;
-    --cai-duration-fast: 0s;
-    --cai-duration-base: 0s;
-    --cai-duration-slow: 0s;
-    --cai-duration-slower: 0s;
-    --cai-duration-lazy: 0s;
+    --luz-duration-instant: 0s;
+    --luz-duration-fast: 0s;
+    --luz-duration-base: 0s;
+    --luz-duration-slow: 0s;
+    --luz-duration-slower: 0s;
+    --luz-duration-lazy: 0s;
   }
 }
 
 @media (max-width: 768px), (pointer: coarse) {
   :root {
-    --cai-text-control: var(--cai-text-base);
+    --luz-text-control: var(--luz-text-base);
   }
 }

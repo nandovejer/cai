@@ -1,5 +1,5 @@
 /**
- * CAI — token contrast (PRINCIPLES.md §1, red lines 5 and 7).
+ * LUZ — token contrast (PRINCIPLES.md §1, red lines 5 and 7).
  * Resolves the semantic tokens of the three base modes (light, dark,
  * high-contrast) and of every custom theme in packages/core/src/themes, in
  * its default mode and in each data-mode, to their real values and measures the pairs the components
@@ -24,14 +24,14 @@ const read = (path) => readFileSync(resolve(root, path), "utf-8");
 const BASE = ["light", "dark", "high-contrast"];
 
 /* The pairs and the maths are in packages/tokens/lib/contrast.js, shared with
-   the consumer's `cai-tokens check-contrast` and the docs pages. */
+   the consumer's `luz-tokens check-contrast` and the docs pages. */
 
 /* ---- Token values ------------------------------------------------------- */
 
 const tokens = JSON.parse(read("packages/tokens/tokens.json"));
 const primitives = {};
 for (const [family, steps] of Object.entries(tokens.color)) {
-  for (const [step, { value }] of Object.entries(steps)) primitives[`--cai-${family}-${step}`] = value;
+  for (const [step, { value }] of Object.entries(steps)) primitives[`--luz-${family}-${step}`] = value;
 }
 
 /** Every "selector { --custom: value; }" block of a stylesheet. */
@@ -59,7 +59,7 @@ const themes = {};
 for (const name of BASE) themes[name] = { ...base.light, ...base[name] };
 const MODES = ["light", "dark", "high-contrast"];
 const themesDir = resolve(root, "packages/core/src/themes");
-for (const file of (existsSync(themesDir) ? readdirSync(themesDir) : []).filter((f) => /^(cai-theme-.+|_template)\.css$/.test(f))) {
+for (const file of (existsSync(themesDir) ? readdirSync(themesDir) : []).filter((f) => /^(luz-theme-.+|_template)\.css$/.test(f))) {
   const custom = {};
   for (const { selectors, props } of blocks(read(`packages/core/src/themes/${file}`))) {
     for (const selector of selectors) {
@@ -99,7 +99,7 @@ for (const theme of THEMES) {
     measured += 1;
     if (r.ok) continue;
     if (r.advisory) {
-      advisory.push(`${theme}: ${r.foreground} on ${r.background} is ${r.ratio.toFixed(2)}:1 (CAI aims for ${r.minimum}:1)`);
+      advisory.push(`${theme}: ${r.foreground} on ${r.background} is ${r.ratio.toFixed(2)}:1 (LUZ aims for ${r.minimum}:1)`);
       continue;
     }
     const line = `${theme}: ${r.foreground} on ${r.background} is ${r.ratio.toFixed(2)}:1 (needs ${r.minimum}:1)`;

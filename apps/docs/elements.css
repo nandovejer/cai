@@ -1,11 +1,11 @@
 /* ==========================================================================
-   CAI — HTML ELEMENTS REFERENCE
+   LUZ — HTML ELEMENTS REFERENCE
    The HTML elements part of the documentation page (apps/docs, #html-elements),
    written on top of tokens + core + site. Not part of any published
    package. The page layout and the snippet bars come from reference.css.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
-     - media queries use the literal values of --cai-mq-* (768, 640).
+     - media queries use the literal values of --luz-mq-* (768, 640).
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -14,42 +14,42 @@
 
 .elements-eyebrow,
 .docs-snippet__lang {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 .elements-legend {
   display: grid;
-  gap: var(--cai-space-xs);
-  margin-bottom: var(--cai-space-xl);
-  padding: var(--cai-space-md);
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  gap: var(--luz-space-xs);
+  margin-bottom: var(--luz-space-xl);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
 }
 
 .elements-legend ul {
   display: grid;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
 }
 
 .elements-index__title,
 .elements-section__title {
-  font-family: var(--cai-font-serif);
-  font-size: var(--cai-text-2xl);
+  font-family: var(--luz-font-serif);
+  font-size: var(--luz-text-2xl);
   font-weight: 300;
   letter-spacing: -0.5px;
 }
 
 .elements-index__lead,
 .elements-section__lead {
-  margin-block: var(--cai-space-2xs) var(--cai-space-md);
-  color: var(--cai-text-secondary);
+  margin-block: var(--luz-space-2xs) var(--luz-space-md);
+  color: var(--luz-text-secondary);
   max-width: 70ch;
 }
 
@@ -59,14 +59,14 @@
 
 /* The page grid spaces the sections; the rule marks where a category starts */
 .elements-section {
-  padding-top: var(--cai-space-xl);
-  border-top: 1px solid var(--cai-divider);
+  padding-top: var(--luz-space-xl);
+  border-top: 1px solid var(--luz-divider);
 }
 
 .elements-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 24rem), 1fr));
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
 }
 
 /* Tables stack into cards under 480px of container width: give them room */
@@ -76,69 +76,69 @@
 
 .elements-card {
   display: grid;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   align-content: start;
-  padding: var(--cai-space-md);
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
 }
 
 .elements-card__head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--cai-space-2xs) var(--cai-space-sm);
+  gap: var(--luz-space-2xs) var(--luz-space-sm);
 }
 
 .elements-card__title {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-lg);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-lg);
   font-weight: 500;
   letter-spacing: 0;
 }
 
 .elements-card__mdn {
   margin-inline-start: auto;
-  font-size: var(--cai-text-sm);
+  font-size: var(--luz-text-sm);
 }
 
 .elements-card__desc {
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 .elements-card__style {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
 /* Why the element is worth using, and what is known about assistive technology */
 .elements-worth {
   display: grid;
-  gap: var(--cai-space-2xs);
-  padding-inline-start: var(--cai-space-sm);
-  border-inline-start: 3px solid var(--cai-divider);
-  font-size: var(--cai-text-sm);
+  gap: var(--luz-space-2xs);
+  padding-inline-start: var(--luz-space-sm);
+  border-inline-start: 3px solid var(--luz-divider);
+  font-size: var(--luz-text-sm);
 }
 
 .elements-worth__title {
-  font-size: var(--cai-text-base);
+  font-size: var(--luz-text-base);
   font-weight: 600;
 }
 
 .elements-worth__src {
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 /* The live example. Dashed edge: this is a specimen, not page content. */
 .elements-stage {
   display: grid;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   align-content: start;
-  padding: var(--cai-space-md);
-  background: var(--cai-surface-page);
-  border: 1px dashed var(--cai-outline);
-  border-radius: var(--cai-radius-sm);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface-page);
+  border: 1px dashed var(--luz-outline);
+  border-radius: var(--luz-radius-sm);
   /* No scroll here: a scrolling region would need keyboard focus. Media is
      capped to the width by core, tables and code scroll in their own region. */
   overflow-wrap: anywhere;
@@ -153,7 +153,7 @@
 .docs-snippet,
 .elements-snippet {
   display: grid;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
 }
 
 .docs-snippet__bar,
@@ -161,27 +161,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
 }
 
 /* The bar carries the label; the absolute language badge would sit on top of
    the first line of code. */
-.docs-snippet .cai-code-block::before,
-.elements-snippet .cai-code-block::before {
+.docs-snippet .luz-code-block::before,
+.elements-snippet .luz-code-block::before {
   content: none;
 }
 
 /* No width jump when the label becomes "✓ Copied" */
-.docs-snippet .cai-copy-btn,
-.elements-snippet .cai-copy-btn {
-  min-width: calc(var(--cai-space-3xl) + var(--cai-space-md) + var(--cai-space-xs));
+.docs-snippet .luz-copy-btn,
+.elements-snippet .luz-copy-btn {
+  min-width: calc(var(--luz-space-3xl) + var(--luz-space-md) + var(--luz-space-xs));
   justify-content: center;
 }
 
-.docs-snippet .cai-copy-btn:not(:hover, .is-copied),
-.elements-snippet .cai-copy-btn:not(:hover, .is-copied) {
-  background: var(--cai-surface);
-  border-color: var(--cai-outline);
+.docs-snippet .luz-copy-btn:not(:hover, .is-copied),
+.elements-snippet .luz-copy-btn:not(:hover, .is-copied) {
+  background: var(--luz-surface);
+  border-color: var(--luz-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -191,7 +191,7 @@
 /* A fixed-size box for the demos that resize or clip their content */
 .elements-stage canvas,
 .elements-stage iframe {
-  background: var(--cai-surface-muted);
+  background: var(--luz-surface-muted);
 }
 
 /* --------------------------------------------------------------------------
@@ -200,16 +200,16 @@
 
 .elements-section__extra {
   display: grid;
-  gap: var(--cai-space-sm);
-  margin-block-start: var(--cai-space-xl);
-  padding-block-start: var(--cai-space-xl);
-  border-block-start: 1px solid var(--cai-divider);
+  gap: var(--luz-space-sm);
+  margin-block-start: var(--luz-space-xl);
+  padding-block-start: var(--luz-space-xl);
+  border-block-start: 1px solid var(--luz-divider);
 }
 
 .elements-types {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -217,12 +217,12 @@
 
 .elements-type {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   align-content: start;
-  padding: var(--cai-space-md);
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
 }
 
 .elements-type__name {
@@ -230,17 +230,17 @@
 }
 
 .elements-type__desc {
-  color: var(--cai-text-secondary);
-  font-size: var(--cai-text-sm);
+  color: var(--luz-text-secondary);
+  font-size: var(--luz-text-sm);
 }
 
 .elements-type__stage {
   display: grid;
   align-content: end;
-  padding: var(--cai-space-xs);
-  background: var(--cai-surface-page);
-  border: 1px dashed var(--cai-outline);
-  border-radius: var(--cai-radius-sm);
+  padding: var(--luz-space-xs);
+  background: var(--luz-surface-page);
+  border: 1px dashed var(--luz-outline);
+  border-radius: var(--luz-radius-sm);
 }
 
 .elements-type__stage > * {
@@ -253,8 +253,8 @@
 }
 
 .elements-type__none {
-  color: var(--cai-text-secondary);
-  font-size: var(--cai-text-sm);
+  color: var(--luz-text-secondary);
+  font-size: var(--luz-text-sm);
 }
 
 /* <demo-card> is the custom element the slot and template demos define */
@@ -269,12 +269,12 @@ demo-card {
 @media (max-width: 768px) {
   .elements-card,
   .elements-stage {
-    padding: var(--cai-space-sm);
+    padding: var(--luz-space-sm);
   }
 
   .elements-section__title,
   .elements-index__title {
-    font-size: var(--cai-text-xl);
+    font-size: var(--luz-text-xl);
   }
 }
 

@@ -12,14 +12,14 @@ import { site } from "./helpers/docs-site.js";
 const tables = [];
 for (const page of site.pages) {
   for (const [html] of page.body.matchAll(/<table\b[\s\S]*?<\/table>/g)) {
-    if (html.includes("data-cai-sort")) tables.push({ page, html });
+    if (html.includes("data-luz-sort")) tables.push({ page, html });
   }
 }
 
 const text = (html) => html.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 const PLAIN = /^(-?\d+(\.\d+)?(e[+-]?\d+)?|\d{4}-\d{2}-\d{2})$/i;
 
-describe("tables with data-cai-sort in the docs", () => {
+describe("tables with data-luz-sort in the docs", () => {
   it("has at least the Table page's example", () => {
     expect(tables.length).toBeGreaterThanOrEqual(1);
     expect(tables.map((t) => t.page.route)).toContain("/docs/components/table/");
@@ -38,7 +38,7 @@ describe("tables with data-cai-sort in the docs", () => {
   it("T4b: a cell of a sortable column that is not a plain number or an ISO date has data-sort-value", () => {
     for (const { page, html } of tables) {
       const head = html.match(/<thead>([\s\S]*?)<\/thead>/)[1];
-      const heads = [...head.matchAll(/<th\b([^>]*)>/g)].map((m) => /\bdata-cai-sort\b/.test(m[1]));
+      const heads = [...head.matchAll(/<th\b([^>]*)>/g)].map((m) => /\bdata-luz-sort\b/.test(m[1]));
       const body = html.match(/<tbody>([\s\S]*?)<\/tbody>/)[1];
       for (const [, row] of body.matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
         const cells = [...row.matchAll(/<td\b([^>]*)>([\s\S]*?)<\/td>/g)];
@@ -60,7 +60,7 @@ describe("tables with data-cai-sort in the docs", () => {
   it("one heading at most carries aria-sort, and a sortable heading is a column header", () => {
     for (const { page, html } of tables) {
       expect([...html.matchAll(/aria-sort="/g)].length, page.file).toBeLessThanOrEqual(1);
-      for (const [, attrs] of html.matchAll(/<th\b([^>]*\bdata-cai-sort\b[^>]*)>/g)) {
+      for (const [, attrs] of html.matchAll(/<th\b([^>]*\bdata-luz-sort\b[^>]*)>/g)) {
         expect(attrs, page.file).toMatch(/scope="col"/);
       }
     }

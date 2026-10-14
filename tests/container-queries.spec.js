@@ -29,12 +29,12 @@ test.describe('component size queries', () => {
   test('table: a heading row with sort links stays visible and focusable when stacked (H7, WCAG 2.4.7)', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.evaluate(() => {
-      document.body.innerHTML = `<div style="padding:16px"><div class="cai-table-wrap"><table class="cai-table" id="sortable">
+      document.body.innerHTML = `<div style="padding:16px"><div class="luz-table-wrap"><table class="luz-table" id="sortable">
         <caption>Wines, sorted by price, ascending</caption>
         <thead><tr><th scope="col"><a href="#sortable">Name</a></th><th scope="col" aria-sort="ascending"><a href="#sortable">Price (EUR), ascending</a></th></tr></thead>
         <tbody><tr><td data-label="Name">Malbec</td><td data-label="Price (EUR)">12.50</td></tr></tbody>
       </table></div></div>
-      <div style="padding:16px"><div class="cai-table-wrap"><table class="cai-table" id="plain">
+      <div style="padding:16px"><div class="luz-table-wrap"><table class="luz-table" id="plain">
         <thead><tr><th scope="col">Name</th><th scope="col">Price</th></tr></thead>
         <tbody><tr><td data-label="Name">Malbec</td><td data-label="Price">12.50</td></tr></tbody>
       </table></div></div>`;

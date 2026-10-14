@@ -1,8 +1,8 @@
-# CAI — Principles and red lines
+# LUZ — Principles and red lines
 
 Inspired by the [GOV.UK Design System](https://design-system.service.gov.uk/). These rules govern every change to `packages/`, `apps/` and the docs. They sit above [VANILLA-FIRST.md](./dev/VANILLA-FIRST.md) (which covers *how* we build) and tell you *what* we accept.
 
-CAI is npm packages for developers who install it without talking to us: `@cai-ds/tokens` (standalone), `@cai-ds/core` (needs tokens) and `@cai-ds/site` (needs core and tokens), which share one version, and packages for one kind of site on top of them, each with its own version: `@cai-ds/landing` and `@cai-ds/cms` (each needs site, core and tokens).
+LUZ is npm packages for developers who install it without talking to us: `@luz-ds/tokens` (standalone), `@luz-ds/core` (needs tokens) and `@luz-ds/site` (needs core and tokens), which share one version, and packages for one kind of site on top of them, each with its own version: `@luz-ds/landing` and `@luz-ds/cms` (each needs site, core and tokens).
 
 ---
 
@@ -11,7 +11,7 @@ CAI is npm packages for developers who install it without talking to us: `@cai-d
 There are two levels.
 
 - **Red lines (`RL-n`)** are absolute. No exception, no deadline, no "just this once". A PR that crosses one is closed, not reviewed.
-- **Strong rules (`SR-n`)** are mandatory by default. A change may break one only with a written exception: a `cai-exception: EX-nnn` comment next to the code and a row in [EXCEPTIONS.md](./EXCEPTIONS.md). `pnpm check:exceptions` keeps the two in step. Everything in sections 1–9 that is not a red line is a strong rule (`SR-8`).
+- **Strong rules (`SR-n`)** are mandatory by default. A change may break one only with a written exception: a `luz-exception: EX-nnn` comment next to the code and a row in [EXCEPTIONS.md](./EXCEPTIONS.md). `pnpm check:exceptions` keeps the two in step. Everything in sections 1–9 that is not a red line is a strong rule (`SR-8`).
 - **Aspirations** are marked as such. They guide the work but block nothing.
 
 **Who decides.** The maintainer owns these rules and approves every exception. Changing this file needs its own changeset that says what changed and why, so the rules never erode silently.
@@ -29,7 +29,7 @@ Accessibility is the baseline, not a feature, a phase or a ticket.
 - **Focus is always visible.** Never `outline: none` without an equivalent `:focus-visible` style with 3:1 contrast against adjacent colours.
 - **Colour is never the only signal.** Error, success, selected, disabled and current states need a second cue: text, icon, border, underline or weight.
 - **Contrast minimums:** 4.5:1 for text, 3:1 for large text, UI borders, icons and focus rings, in the three shipped themes (`light`, `dark`, `high-contrast`).
-- **Custom themes are the consumer's responsibility.** CAI guarantees the look it ships, in its three modes, and provides a tool to check a custom theme against the same minimums: `npx @cai-ds/tokens check-contrast <file.css>`, also in the page at `/docs/tokens/contrast/`.
+- **Custom themes are the consumer's responsibility.** LUZ guarantees the look it ships, in its three modes, and provides a tool to check a custom theme against the same minimums: `npx @luz-ds/tokens check-contrast <file.css>`, also in the page at `/docs/tokens/contrast/`.
 - **Motion is opt-in.** Any animation longer than 150 ms or that moves content is disabled under `prefers-reduced-motion: reduce`. No auto-playing media, no parallax, no infinite loops.
 - **Disabled controls are a last resort.** Prefer leaving the control enabled and explaining the error. If you must disable, keep the label readable (≥ 3:1, red line 7) and mark the state with something other than colour.
 - **Names come from the DOM.** Use `<label>`, visible text, `aria-labelledby`. `aria-label` is the fallback, never the default.
@@ -51,7 +51,7 @@ Order of preference, strictly:
 Rules:
 
 - **Semantic HTML before ARIA.** If a native element has the semantics you need, do not add a `role`. `role="switch"` on a `<div>` is wrong; `<input type="checkbox" role="switch">` is right.
-- **Bare elements are styled with `:where()`** (specificity 0) in `packages/core/src/elements/`. The consumer's rule and any `.cai-*` class must always win.
+- **Bare elements are styled with `:where()`** (specificity 0) in `packages/core/src/elements/`. The consumer's rule and any `.luz-*` class must always win.
 - **Design tokens are the only source of colour, space, type and motion values.** Components use semantic tokens only, never primitives, never literals.
 - **System fonts first.** The sans and mono stacks are the operating system's (`system-ui`, `ui-monospace`). A bundled face is added only when no system font does the job, and it must pass red line 13.
 - **Use `@supports` and baseline, not polyfills.** When a feature is not baseline, ship the degraded experience, not a shim.
@@ -60,7 +60,7 @@ Rules:
 
 ## 3. JavaScript only when strictly necessary
 
-JS is the last layer, never the foundation. A page built with CAI must be usable with JS disabled, failed or not yet loaded.
+JS is the last layer, never the foundation. A page built with LUZ must be usable with JS disabled, failed or not yet loaded.
 
 - **Three layers, in this order:** HTML that works alone → CSS that improves it → JS that enhances it. Design and document the no-JS state first.
 - **If the standard does it, JS does not.** Opening a `dialog`, toggling `details`, showing a `popover`, validating a `required` field, scrolling to an anchor: none of these get custom JS.
@@ -68,14 +68,14 @@ JS is the last layer, never the foundation. A page built with CAI must be usable
 - **JS is an enhancement, never a requirement.** Each use must degrade: tabs become stacked sections, the mode switcher becomes radios, the copy button becomes selectable text.
 - **Feature-detect, never user-agent-sniff.** `if ("showPopover" in HTMLElement.prototype)`, `CSS.supports()`, `@supports`.
 - **Importing a module has no side effects.** Only `init*()` touches the DOM. `init*()` is idempotent and scoped (accepts a root element).
-- **Hooks are `data-*` attributes, not classes.** `.cai-*` classes are for styling; JS binds to `data-cai-*` or ARIA attributes.
+- **Hooks are `data-*` attributes, not classes.** `.luz-*` classes are for styling; JS binds to `data-luz-*` or ARIA attributes.
 - **No JS on the critical rendering path and no inline scripts.** Everything is `type="module"`, deferred, and heavy modules (`midi.js`) and modules few pages need (`table-sort.js`) are lazy-loaded.
 - **State lives in the DOM and in ARIA**, not in JS variables: `aria-expanded`, `aria-selected`, `open`, `hidden`, `checked`. `.is-*` classes are a mirror for styling, never the source of truth.
 - A component that needs more than 2 kB of JS needs a written justification in its PR.
 
 ## 4. Text is part of the system
 
-Words are a component. A button with the wrong label is a broken button. These rules are mandatory for CAI's own strings and docs. For consumers they are content guidance, written into each component's docs.
+Words are a component. A button with the wrong label is a broken button. These rules are mandatory for LUZ's own strings and docs. For consumers they are content guidance, written into each component's docs.
 
 - **Sentence case and meaningful text (`SR-1`).** Headings, buttons, labels, tabs, menu items in sentence case. Buttons describe the action with a verb ("Save changes", "Copy command"); never "OK", "Submit", "Click here", "Yes". Links make sense out of context; never "here", "read more", "this page". The trailing full stop is outside the link.
 - **No new tabs by default (`SR-2`).** If a link must open a new tab, its text says "(opens in new tab)" and it carries `rel="noopener noreferrer"`.
@@ -86,17 +86,17 @@ Words are a component. A button with the wrong label is a broken button. These r
 
 ## 5. Language
 
-- **Generated text comes from the dictionary (`SR-7`).** Any visible text or accessible name that CAI's JS writes comes from `@cai-ds/core/i18n`, never a literal in a module. English and Spanish ship built in; consumers register more with `registerLocale()`.
-- **The language is the page's.** Components read the nearest `lang` attribute, so a page declares its language once (WCAG 3.1.1) and multilingual fragments work by marking them with their own `lang` (WCAG 3.1.2). With no `lang`, CAI falls back to English and warns in the console.
-- **Authored HTML wins.** Text in the markup and `data-cai-label-*` attributes override the dictionary, which overrides English.
+- **Generated text comes from the dictionary (`SR-7`).** Any visible text or accessible name that LUZ's JS writes comes from `@luz-ds/core/i18n`, never a literal in a module. English and Spanish ship built in; consumers register more with `registerLocale()`.
+- **The language is the page's.** Components read the nearest `lang` attribute, so a page declares its language once (WCAG 3.1.1) and multilingual fragments work by marking them with their own `lang` (WCAG 3.1.2). With no `lang`, LUZ falls back to English and warns in the console.
+- **Authored HTML wins.** Text in the markup and `data-luz-label-*` attributes override the dictionary, which overrides English.
 - **Works in any writing direction:** logical properties (`SR-4`: `margin-inline-start`, not `margin-left`); test with `dir="rtl"` and with 30 % longer strings.
 
 ## 6. Consistency over novelty
 
 - **Do not invent new meanings.** Blue is interactive. Red is error or danger. Green is success. Yellow is warning.
 - **Do not restyle the primitives per app.** Buttons, inputs, links and focus rings look the same in every app and consumer. Apps add layout, not new skins.
-- **One component, one job.** No `.cai-card--as-button`. If you need both, you need two components.
-- **Core or site.** `core` holds pieces that know nothing about the site and fit inside anything (button, form, dialog). `site` holds what needs data of the site (its languages, its index, its menu, its cookie policy) or is page structure that holds other pieces (header, footer, shell, sections). If in doubt, it belongs in the consumer's app. Packages for one kind of site (`cms`, `landing`) and for one CMS (`wordpress`) build on `site`: `tokens → core → site → cms → wordpress`, and `site → landing`.
+- **One component, one job.** No `.luz-card--as-button`. If you need both, you need two components.
+- **Core or site.** `core` holds pieces that know nothing about the site and fit inside anything (button, form, dialog). `site` holds what needs data of the site (its languages, its index, its menu, its cookie policy) or is page structure that holds other pieces (header, footer, shell, sections). If in doubt, it belongs in the consumer's app. Packages for one kind of site (`cms`, `landing`) build on `site`: `tokens → core → site → cms`, and `site → landing`.
 - **A component must be useful, unique, usable and consistent** (the GOV.UK contribution criteria). "I needed it once" is not a reason to add it.
 - **Prefer removing to adding.** Every new component lists what it makes obsolete.
 
@@ -110,7 +110,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 
 ## 8. Privacy and performance
 
-- **No tracking, no analytics, no third-party domains.** The only things stored are the visitor's own display preferences — the color mode or theme, and on the docs site the last Code or Design tab — and, where a site uses site's cookie consent, the visitor's answer to it (the categories asked, the ones granted and when the answer expires), in `localStorage`, under a `cai-` key, with the value checked against the allowed list and no personal data. Every read and write is in `try`/`catch`: the page works the same if storage is blocked or throws.
+- **No tracking, no analytics, no third-party domains.** The only things stored are the visitor's own display preferences — the color mode or theme, and on the docs site the last Code or Design tab — and, where a site uses site's cookie consent, the visitor's answer to it (the categories asked, the ones granted and when the answer expires), in `localStorage`, under a `luz-` key, with the value checked against the allowed list and no personal data. Every read and write is in `try`/`catch`: the page works the same if storage is blocked or throws.
 - **Zero runtime dependencies**, forever.
 - **Size budgets**, min+gzip, in [budgets.json](./budgets.json) and checked by `pnpm check:size`. The ceiling is red line 17; the other bands are warnings.
 
@@ -118,7 +118,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 | --- | --- | --- | --- | --- |
 | `tokens` CSS | 1 kB (a theme or scale is probably missing) | 1–3 kB | 3 kB | 5 kB |
 | `core` CSS | — | ≤ 12 kB | 12 kB | 15 kB |
-| `core` classless CSS (a file of its own, not in `cai.css`) | — | ≤ 2 kB | 2 kB | 3 kB |
+| `core` classless CSS (a file of its own, not in `luz.css`) | — | ≤ 2 kB | 2 kB | 3 kB |
 | `core` JS entry (lazy chunks excluded) | — | ≤ 5 kB | 5 kB | 8 kB |
 | `core` JS lazy chunk: `midi` | — | ≤ 3 kB | 3 kB | 4 kB |
 | `core` JS lazy chunk: `table-sort` | — | ≤ 1 kB | 1 kB | 2 kB |
@@ -138,7 +138,7 @@ Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without
 - **Tests encode the rules.** Every rule here that a machine can check has a check in `tests/`, stylelint, ESLint or `scripts/check-*.js`.
 - **Tests first (`SR-9`).** Every change to `packages/`, `apps/` or `scripts/` starts with a test that fails without it: a commit `test: …` that is red, then the change that makes it green. A bug fix starts with the test that reproduces it. A change no machine can check (wording, a docs page's prose) says so in its PR. The person or agent who writes the change does not write its test alone: the test is read before the code.
 - **Docs per component (`SR-5`).** Every core component and site pattern has its own page with, in this order: a one-line summary, a live example, *Known issues* (always visible; "None known." when empty), and two tabs, **Code** and **Design**, that stack as plain sections without JavaScript. **Code**: *Copy the markup* · *Variants and options* · *How it works* · *Without JavaScript* · *Keyboard and ARIA*. **Design**: *When to use* · *When not to use* · *Do and don't* · *Writing the content* · *Contrast and focus* · *Tokens it uses*. Plus an axe and a keyboard test. *When to use* and *When not to use* are red line 18.
-- **Beta.** CAI is in beta: any release may break anything, always with a changeset that explains how to migrate. It leaves beta when every red line is checked by a tool, the EN 301 549 mapping is published, the public API (`.cai-*` classes, `data-cai-*` hooks, semantic tokens, JS exports) is frozen, the backlog in AGENTS.md is done, and the maintainer considers it stable. From then on, semantic versioning applies strictly: [VERSIONING.md](./VERSIONING.md) says what the public API is, how a deprecation runs, and the checklist for leaving beta.
+- **Beta.** LUZ is in beta: any release may break anything, always with a changeset that explains how to migrate. It leaves beta when every red line is checked by a tool, the EN 301 549 mapping is published, the public API (`.luz-*` classes, `data-luz-*` hooks, semantic tokens, JS exports) is frozen, the backlog in AGENTS.md is done, and the maintainer considers it stable. From then on, semantic versioning applies strictly: [VERSIONING.md](./VERSIONING.md) says what the public API is, how a deprecation runs, and the checklist for leaving beta.
 
 ---
 
@@ -164,7 +164,7 @@ Absolute. A PR that crosses one is closed, not reviewed.
 16. **No browser sniffing.** Feature detection only.
 17. **No artifact over its size ceiling** in budgets.json. Ceilings are never raised: optimise or remove instead.
 18. **No component or pattern merged without its docs page, and that page says *When to use* and *When not to use*.**
-19. **Nothing only for AI agents.** What CAI publishes for an agent to read (`llms.txt`, manifests of classes and elements, examples, the "For AI agents" section of a README) is generated from the docs and the source a person reads, never written by hand on the side. An agent and a person always get the same facts.
+19. **Nothing only for AI agents.** What LUZ publishes for an agent to read (`llms.txt`, manifests of classes and elements, examples, the "For AI agents" section of a README) is generated from the docs and the source a person reads, never written by hand on the side. An agent and a person always get the same facts.
 
 ### Which check covers which red line
 
@@ -198,7 +198,7 @@ Mandatory unless an exception is registered in [EXCEPTIONS.md](./EXCEPTIONS.md).
 
 | Id | Rule | Where |
 | --- | --- | --- |
-| SR-1 | Sentence case, verb-first buttons, meaningful links, no "OK" or "click here" in CAI's strings | §4, `pnpm check:strings` |
+| SR-1 | Sentence case, verb-first buttons, meaningful links, no "OK" or "click here" in LUZ's strings | §4, `pnpm check:strings` |
 | SR-2 | No `target="_blank"` without "(opens in new tab)" and `rel="noopener noreferrer"` | §4 |
 | SR-3 | No `!important` in `packages/` | §7, stylelint |
 | SR-4 | Logical properties instead of physical ones | §5, stylelint |

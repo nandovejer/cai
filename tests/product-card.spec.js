@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * The product card (a .cai-card with a linked title and a button), on the
+ * The product card (a .luz-card with a linked title and a button), on the
  * Product card example of /docs/components/card/. The accessibility review
  * of 2026-10-13 turned into checks (A1 to A4 of
  * .claude/plans/specs/product-card.md). Runs in `chromium` and
@@ -9,7 +9,7 @@
 import { test, expect } from '@playwright/test';
 
 const PAGE = '/docs/components/card/';
-const CARDS = '#red-wines ~ ul > li.cai-card';
+const CARDS = '#red-wines ~ ul > li.luz-card';
 
 /** The Product card example sits in the Code tab: show it. */
 async function open(page, width = 1100) {
@@ -37,7 +37,7 @@ test.describe('product card', () => {
         const onImage = at(c.x + c.width / 2, c.y + 40);
         return {
           button: onButton.closest('button') !== null,
-          padding: onPadding.closest('a')?.closest('.cai-card__title') !== null && onPadding.closest('a') !== null,
+          padding: onPadding.closest('a')?.closest('.luz-card__title') !== null && onPadding.closest('a') !== null,
           image: onImage.closest('a') !== null,
         };
       });
@@ -78,7 +78,7 @@ test.describe('product card', () => {
     await page.keyboard.press('Tab');
     const button = await page.evaluate(() => {
       const a = document.activeElement;
-      return { tag: a.tagName, ring: getComputedStyle(a).outlineStyle, card: getComputedStyle(a.closest('.cai-card').querySelector('.cai-card__title a'), '::after').outlineStyle };
+      return { tag: a.tagName, ring: getComputedStyle(a).outlineStyle, card: getComputedStyle(a.closest('.luz-card').querySelector('.luz-card__title a'), '::after').outlineStyle };
     });
     expect(button.tag).toBe('BUTTON');
     expect(button.ring).toBe('solid');
@@ -121,7 +121,7 @@ test.describe('product card', () => {
 
   test('the old price is <s>, with "Was" and "Now" for assistive technology', async ({ page }) => {
     await open(page);
-    const price = page.locator(`${CARDS} .cai-card__price`).nth(1);
+    const price = page.locator(`${CARDS} .luz-card__price`).nth(1);
     await expect(price.locator('s')).toHaveCount(1);
     await expect(price.locator('del')).toHaveCount(0);
     expect(await price.evaluate((p) => p.textContent.replace(/\s+/g, ' ').trim())).toBe('Now 9,90 € Was 12,50 €');
@@ -153,10 +153,10 @@ test.describe('product card', () => {
 
   // .claude/plans/specs/button-block.md and its accessibility review (K1, K2)
   for (const width of [320, 1280]) {
-    test(`block: each .cai-btn--block is as wide as its container at ${width} px`, async ({ page }) => {
+    test(`block: each .luz-btn--block is as wide as its container at ${width} px`, async ({ page }) => {
       await open(page, width);
       const widths = await page.evaluate((sel) =>
-        [...document.querySelectorAll(`${sel} .cai-btn--block`)].map((b) => {
+        [...document.querySelectorAll(`${sel} .luz-btn--block`)].map((b) => {
           const box = b.parentElement.getBoundingClientRect();
           return [b.getBoundingClientRect().width, box.width];
         }), CARDS);
@@ -170,9 +170,9 @@ test.describe('product card', () => {
       await open(page, 320);
       await page.evaluate((s) => { document.documentElement.style.fontSize = s; }, scale);
       const { button, right, viewport } = await page.evaluate((sel) => {
-        const b = document.querySelector(`${sel} .cai-btn--block`);
+        const b = document.querySelector(`${sel} .luz-btn--block`);
         b.firstChild.textContent = 'Handschuhaufbewahrungsbox';
-        const card = b.closest('.cai-card');
+        const card = b.closest('.luz-card');
         return {
           button: b.scrollWidth - b.clientWidth,
           right: card.getBoundingClientRect().right,
@@ -188,8 +188,8 @@ test.describe('product card', () => {
     await open(page, 320);
     await page.evaluate((s) => { document.documentElement.style.fontSize = s; }, '200%');
     const overflow = await page.evaluate((sel) => {
-      const b = document.querySelector(`${sel} .cai-btn--block`);
-      b.classList.remove('cai-btn--block');
+      const b = document.querySelector(`${sel} .luz-btn--block`);
+      b.classList.remove('luz-btn--block');
       b.firstChild.textContent = 'Handschuhaufbewahrungsbox';
       return b.scrollWidth - b.clientWidth;
     }, CARDS);
@@ -199,8 +199,8 @@ test.describe('product card', () => {
   test('--sm with the full width is at least 24 px high, and the name still starts with its visible text', async ({ page }) => {
     await open(page, 320);
     const { height, name, text } = await page.evaluate((sel) => {
-      const b = document.querySelector(`${sel} .cai-btn--block`);
-      b.classList.add('cai-btn--sm');
+      const b = document.querySelector(`${sel} .luz-btn--block`);
+      b.classList.add('luz-btn--sm');
       return { height: b.getBoundingClientRect().height, name: b.textContent.trim(), text: b.firstChild.textContent.trim() };
     }, CARDS);
     expect(height).toBeGreaterThanOrEqual(24);
@@ -213,7 +213,7 @@ test.describe('product card', () => {
     const sizes = await page.evaluate(() => {
       const host = document.createElement('div');
       host.className = 'o-grid o-grid--2';
-      host.innerHTML = ['', ' cai-card--featured'].map((m) => `<article class="cai-card${m}"><h4 class="cai-card__title">Two days</h4><p class="cai-card__body">One line.</p></article>`).join('');
+      host.innerHTML = ['', ' luz-card--featured'].map((m) => `<article class="luz-card${m}"><h4 class="luz-card__title">Two days</h4><p class="luz-card__body">One line.</p></article>`).join('');
       document.querySelector('#red-wines').after(host);
       const [plain, featured] = [...host.children];
       const border = parseFloat(getComputedStyle(featured).borderTopWidth);
@@ -228,13 +228,13 @@ test.describe('product card', () => {
 
   test('featured: the ring of a linked featured card stands off by at least the border width (B6)', async ({ page }) => {
     await open(page, 1100);
-    await page.evaluate((sel) => document.querySelector(sel).classList.add('cai-card--featured'), CARDS);
+    await page.evaluate((sel) => document.querySelector(sel).classList.add('luz-card--featured'), CARDS);
     await page.locator(`${CARDS} a`).first().focus();
     await page.keyboard.press('Shift+Tab');
     await page.keyboard.press('Tab');
     const ring = await page.evaluate(() => {
       const after = getComputedStyle(document.activeElement, '::after');
-      const card = document.activeElement.closest('.cai-card');
+      const card = document.activeElement.closest('.luz-card');
       return { offset: parseFloat(after.outlineOffset), border: parseFloat(getComputedStyle(card).borderTopWidth), style: after.outlineStyle };
     });
     expect(ring.style).toBe('solid');
@@ -244,7 +244,7 @@ test.describe('product card', () => {
 
   test('featured: forced colors keep the 2 px border of a featured card', async ({ page }) => {
     await open(page, 1100);
-    await page.evaluate((sel) => document.querySelector(sel).classList.add('cai-card--featured'), CARDS);
+    await page.evaluate((sel) => document.querySelector(sel).classList.add('luz-card--featured'), CARDS);
     await page.emulateMedia({ forcedColors: 'active' });
     const border = await page.locator(CARDS).first().evaluate((c) => {
       const s = getComputedStyle(c);

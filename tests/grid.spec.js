@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * Layout grid (objects/_objects.css): .o-grid with .o-grid--auto, which fits
- * as many columns as it can above --cai-grid-min, and .o-grid--2 to --4, a
+ * as many columns as it can above --luz-grid-min, and .o-grid--2 to --4, a
  * fixed number of columns above 768px and one column at 768px and below.
  */
 import { test, expect } from '@playwright/test';
@@ -37,7 +37,7 @@ test.describe('layout grid', () => {
     expect(await columns(page, 'auto')).toBe(1);
   });
 
-  test('auto: --cai-grid-min sets the narrowest column', async ({ page }) => {
+  test('auto: --luz-grid-min sets the narrowest column', async ({ page }) => {
     await page.setViewportSize({ width: 600, height: 800 });
     await page.goto(FIXTURE);
     // 8rem columns: 4 of them fit in 600px, where 16rem fits 2

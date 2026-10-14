@@ -1,107 +1,107 @@
-<!-- cai:page
+<!-- luz:page
 title: Cascade layers
-description: How CAI sits in your cascade: one layer called cai, the order to declare, and how to override it with no !important.
+description: How LUZ sits in your cascade: one layer called luz, the order to declare, and how to override it with no !important.
 area: get-started
 order: 4
 -->
     <section class="docs-block" id="order" aria-labelledby="order-title">
       <h2 class="docs-chapter__title" id="order-title">Declare the order first</h2>
-      <p class="docs-lead">All of CAI's CSS is inside one cascade layer, <code>cai</code>. Put it between your reset and your own styles, and declare that order before any stylesheet loads.</p>
-      <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Layer order"><code>@layer reset, cai, app;</code></pre>
+      <p class="docs-lead">All of LUZ's CSS is inside one cascade layer, <code>luz</code>. Put it between your reset and your own styles, and declare that order before any stylesheet loads.</p>
+      <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Layer order"><code>@layer reset, luz, app;</code></pre>
       <ul>
         <li>The order of layers is the order in which their names first appear. A statement like this one, before everything else, fixes it.</li>
-        <li>In HTML, put it in a <code>&lt;style&gt;</code> before the <code>&lt;link&gt;</code> elements. In a stylesheet, make it the first line, before any <code>@import</code> of CAI.</li>
-        <li>A later layer wins over an earlier one. So <code>app</code> wins over <code>cai</code>, and <code>cai</code> over <code>reset</code>.</li>
-        <li>You do not have to use these names. Use whatever layers you have: <code>cai</code> is the only name CAI adds.</li>
+        <li>In HTML, put it in a <code>&lt;style&gt;</code> before the <code>&lt;link&gt;</code> elements. In a stylesheet, make it the first line, before any <code>@import</code> of LUZ.</li>
+        <li>A later layer wins over an earlier one. So <code>app</code> wins over <code>luz</code>, and <code>luz</code> over <code>reset</code>.</li>
+        <li>You do not have to use these names. Use whatever layers you have: <code>luz</code> is the only name LUZ adds.</li>
       </ul>
-      <p>Layers, and names with a dot such as <code>cai.components</code>, work in every current browser and have been available since March 2022 (<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@layer">MDN</a>).</p>
+      <p>Layers, and names with a dot such as <code>luz.components</code>, work in every current browser and have been available since March 2022 (<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@layer">MDN</a>).</p>
     </section>
 
     <section class="docs-block" id="inside" aria-labelledby="inside-title">
-      <h2 class="docs-chapter__title" id="inside-title">What is inside cai</h2>
-      <p>Core and the other packages put their rules in their own layers inside <code>cai</code>. They are listed here from first to last: a layer lower in the table wins over the ones above it.</p>
-      <div class="cai-table-wrap" role="region" aria-label="The layers inside cai" tabindex="0">
-        <table class="cai-table">
+      <h2 class="docs-chapter__title" id="inside-title">What is inside luz</h2>
+      <p>Core and the other packages put their rules in their own layers inside <code>luz</code>. They are listed here from first to last: a layer lower in the table wins over the ones above it.</p>
+      <div class="luz-table-wrap" role="region" aria-label="The layers inside luz" tabindex="0">
+        <table class="luz-table">
           <thead>
             <tr><th scope="col">Layer</th><th scope="col">Package</th><th scope="col">What it holds</th></tr>
           </thead>
           <tbody>
-            <tr><td data-label="Layer"><div><code>cai.tokens</code></div></td><td data-label="Package"><div>tokens</div></td><td data-label="What it holds"><div>The <code>--cai-*</code> custom properties</div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.themes</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Your own looks (only custom properties; <a href="/docs/tokens/themes/">make one</a>). CAI ships none: its default look is in <code>cai.tokens</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.settings</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Motion, z-index and breakpoint settings</div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.generic</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The reset</div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.elements</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Bare HTML elements, at specificity 0</div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.objects</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Layout objects: <code>.o-*</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.components</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The components: <code>.cai-*</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.utilities</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Single-purpose helpers: <code>.u-*</code>. They win over components by order, not by <code>!important</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.site</code></div></td><td data-label="Package"><div>site</div></td><td data-label="What it holds"><div>The page patterns: <code>.cai-site-*</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.landing</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="What it holds"><div>The patterns of a landing page: <code>.cai-landing-*</code>. After site, so they can build on it</div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.cms</code></div></td><td data-label="Package"><div>cms</div></td><td data-label="What it holds"><div>The patterns of a blog, a newspaper or any CMS: <code>.cai-cms-*</code>. After site; landing and cms share no class, so their order decides nothing</div></td></tr>
-            <tr><td data-label="Layer"><div><code>cai.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="/docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of every package</div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.tokens</code></div></td><td data-label="Package"><div>tokens</div></td><td data-label="What it holds"><div>The <code>--luz-*</code> custom properties</div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.themes</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Your own looks (only custom properties; <a href="/docs/tokens/themes/">make one</a>). LUZ ships none: its default look is in <code>luz.tokens</code></div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.settings</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Motion, z-index and breakpoint settings</div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.generic</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The reset</div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.elements</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Bare HTML elements, at specificity 0</div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.objects</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Layout objects: <code>.o-*</code></div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.components</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The components: <code>.luz-*</code></div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.utilities</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Single-purpose helpers: <code>.u-*</code>. They win over components by order, not by <code>!important</code></div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.site</code></div></td><td data-label="Package"><div>site</div></td><td data-label="What it holds"><div>The page patterns: <code>.luz-site-*</code></div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.landing</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="What it holds"><div>The patterns of a landing page: <code>.luz-landing-*</code>. After site, so they can build on it</div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.cms</code></div></td><td data-label="Package"><div>cms</div></td><td data-label="What it holds"><div>The patterns of a blog, a newspaper or any CMS: <code>.luz-cms-*</code>. After site; landing and cms share no class, so their order decides nothing</div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="/docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of every package</div></td></tr>
           </tbody>
         </table>
       </div>
-      <p>Every file CAI publishes repeats the order of this list first, so it is the same whichever file a page loads first. These names are public: renaming one is a breaking change.</p>
+      <p>Every file LUZ publishes repeats the order of this list first, so it is the same whichever file a page loads first. These names are public: renaming one is a breaking change.</p>
     </section>
 
     <section class="docs-block" id="unlayered" aria-labelledby="unlayered-title">
       <h2 class="docs-chapter__title" id="unlayered-title">CSS without a layer wins</h2>
-      <p>Styles that are not in any layer win over every layer, whatever the order in the source. So a plain rule of yours beats <code>cai</code>, and it also beats your own <code>app</code> layer.</p>
+      <p>Styles that are not in any layer win over every layer, whatever the order in the source. So a plain rule of yours beats <code>luz</code>, and it also beats your own <code>app</code> layer.</p>
       <ul>
-        <li>If your CSS is not in layers at all, nothing changes for you: it already wins over CAI, with no <code>!important</code>.</li>
+        <li>If your CSS is not in layers at all, nothing changes for you: it already wins over LUZ, with no <code>!important</code>.</li>
         <li>If you use layers, keep your rules in one: a plain rule that you forgot to put in a layer will override your own layers.</li>
         <li>A plain rule is the one place a layer order does not help. Put an override in <code>app</code> or in no layer at all, and know which one you chose.</li>
       </ul>
     </section>
 
     <section class="docs-block" id="override" aria-labelledby="override-title">
-      <h2 class="docs-chapter__title" id="override-title">Override CAI</h2>
-      <p>Three overrides, from the smallest. Each wins over CAI because <code>app</code> comes after <code>cai</code>.</p>
-      <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Overriding CAI from your own layer"><code>@layer reset, cai, app;
+      <h2 class="docs-chapter__title" id="override-title">Override LUZ</h2>
+      <p>Three overrides, from the smallest. Each wins over LUZ because <code>app</code> comes after <code>luz</code>.</p>
+      <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Overriding LUZ from your own layer"><code>@layer reset, luz, app;
 
 @layer app {
   /* A token: every component that reads it follows */
   :root {
-    --cai-brand-fill: #0b5a8c;
+    --luz-brand-fill: #0b5a8c;
   }
 
   /* A component: your rule, in your layer */
-  .cai-btn {
+  .luz-btn {
     min-height: 3rem;
   }
 
   /* A site pattern */
-  .cai-site-section {
+  .luz-site-section {
     padding-block: 4rem;
   }
 }</code></pre>
       <ul>
         <li><strong>Prefer tokens.</strong> A token changes every component that reads it, in the mode it is set for. Check the colors you set with <a href="/docs/tokens/contrast/">the contrast check</a>.</li>
         <li><strong>No <code>!important</code> and no longer selectors</strong> are needed: layer order decides first, and specificity only counts inside one layer.</li>
-        <li>Keep a color override in the right mode: <code>:root</code> in <code>app</code> wins over CAI's dark mode too. Set the token per mode, for example in <code>[data-theme="dark"]</code>.</li>
+        <li>Keep a color override in the right mode: <code>:root</code> in <code>app</code> wins over LUZ's dark mode too. Set the token per mode, for example in <code>[data-theme="dark"]</code>.</li>
       </ul>
     </section>
 
     <section class="docs-block" id="why" aria-labelledby="why-title">
       <h2 class="docs-chapter__title" id="why-title">Why one container layer</h2>
-      <p>CAI's layers used to be six top-level names: <code>settings</code>, <code>generic</code>, <code>elements</code>, <code>objects</code>, <code>components</code> and <code>utilities</code>. They are short and common, and other tools use some of the same names. A page that loaded one of them next to CAI merged its <code>components</code> or <code>utilities</code> with CAI's, and the order between them was an accident.</p>
+      <p>LUZ's layers used to be six top-level names: <code>settings</code>, <code>generic</code>, <code>elements</code>, <code>objects</code>, <code>components</code> and <code>utilities</code>. They are short and common, and other tools use some of the same names. A page that loaded one of them next to LUZ merged its <code>components</code> or <code>utilities</code> with LUZ's, and the order between them was an accident.</p>
       <ul>
-        <li>Inside <code>cai</code>, CAI's layer names cannot meet yours.</li>
-        <li>One name orders all of CAI: you place <code>cai</code> once, and you do not have to know what is inside.</li>
+        <li>Inside <code>luz</code>, LUZ's layer names cannot meet yours.</li>
+        <li>One name orders all of LUZ: you place <code>luz</code> once, and you do not have to know what is inside.</li>
         <li>It works from a <code>&lt;link&gt;</code> or a CDN, where a layer cannot be added from the outside.</li>
       </ul>
-      <p>You can still put your own layer between two of CAI's by naming them in the first statement: <code>@layer cai.components, mine, cai.utilities;</code>.</p>
+      <p>You can still put your own layer between two of LUZ's by naming them in the first statement: <code>@layer luz.components, mine, luz.utilities;</code>.</p>
     </section>
 
     <section class="docs-block" id="import" aria-labelledby="import-title">
       <h2 class="docs-chapter__title" id="import-title">Loading with @import</h2>
-      <p>With a bundler that resolves package names, or with paths to the files, load them as they are. Do not add <code>layer(cai)</code> to the import: the files already declare their layers inside <code>cai</code>, and wrapping them would nest the names as <code>cai.cai.components</code>.</p>
-      <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Importing CAI"><code>@layer reset, cai, app;
+      <p>With a bundler that resolves package names, or with paths to the files, load them as they are. Do not add <code>layer(luz)</code> to the import: the files already declare their layers inside <code>luz</code>, and wrapping them would nest the names as <code>luz.luz.components</code>.</p>
+      <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Importing LUZ"><code>@layer reset, luz, app;
 
-@import url("@cai-ds/tokens/css");
-@import url("@cai-ds/core/css");
-@import url("@cai-ds/site/css");
-@import url("@cai-ds/landing/css"); /* only for a landing page */
-@import url("@cai-ds/cms/css");     /* only for a blog or a newspaper */</code></pre>
-      <p>Your own stylesheet imports a file after the statement, so the order is set before CAI loads.</p>
+@import url("@luz-ds/tokens/css");
+@import url("@luz-ds/core/css");
+@import url("@luz-ds/site/css");
+@import url("@luz-ds/landing/css"); /* only for a landing page */
+@import url("@luz-ds/cms/css");     /* only for a blog or a newspaper */</code></pre>
+      <p>Your own stylesheet imports a file after the statement, so the order is set before LUZ loads.</p>
     </section>

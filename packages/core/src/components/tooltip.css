@@ -1,46 +1,46 @@
 /* --------------------------------------------------------------------------
-   CAI Component: tooltip
+   LUZ Component: tooltip
    Tooltip
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-tooltip {
+.luz-tooltip {
   position: relative;
   display: inline-flex;
 }
 
-.cai-tooltip__text {
+.luz-tooltip__text {
   position: absolute;
   bottom: calc(100% + 6px);
   inset-inline-start: 50%;
   transform: translateX(-50%);
-  background: var(--cai-surface-strong);
-  color: var(--cai-text-primary);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-sm);
-  padding: var(--cai-space-2xs) var(--cai-space-xs);
+  background: var(--luz-surface-strong);
+  color: var(--luz-text-primary);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+  padding: var(--luz-space-2xs) var(--luz-space-xs);
   white-space: nowrap;
   visibility: hidden;
   opacity: 0;
-  transition: opacity var(--cai-duration-fast),
-    visibility 0s linear var(--cai-duration-fast);
-  box-shadow: var(--cai-shadow-md);
-  z-index: var(--cai-z-raised);
+  transition: opacity var(--luz-duration-fast),
+    visibility 0s linear var(--luz-duration-fast);
+  box-shadow: var(--luz-shadow-md);
+  z-index: var(--luz-z-raised);
 }
 
 /* The tooltip is centred on the trigger: inset-inline-start is the right edge
    in right-to-left text, so the shift goes the other way */
-.cai-tooltip__text:dir(rtl) {
+.luz-tooltip__text:dir(rtl) {
   transform: translateX(50%);
 }
 
 /* Bridges the gap to the trigger so the pointer can move onto the tooltip
    without closing it (WCAG 1.4.13, hoverable) */
-.cai-tooltip__text::after {
+.luz-tooltip__text::after {
   content: "";
   position: absolute;
   inset-inline: 0;
@@ -49,8 +49,8 @@
 }
 
 /* Opens on hover and on keyboard focus (WCAG 1.4.13, 2.1.1) */
-.cai-tooltip:hover .cai-tooltip__text,
-.cai-tooltip:focus-within .cai-tooltip__text {
+.luz-tooltip:hover .luz-tooltip__text,
+.luz-tooltip:focus-within .luz-tooltip__text {
   visibility: visible;
   opacity: 1;
   transition-delay: 0s;
@@ -66,15 +66,15 @@
    the parts that are not interoperable yet, are not. The tip is placed with
    anchor() insets and not with position-area, which Firefox 155 misplaces in
    right-to-left text. */
-@supports (anchor-name: --cai-tooltip) and (inset-block-end: anchor(start)) {
+@supports (anchor-name: --luz-tooltip) and (inset-block-end: anchor(start)) {
   /* Each tooltip sees only its own trigger: with one shared name Firefox
      anchors every tip to the last trigger of the page */
-  .cai-tooltip {
-    anchor-scope: --cai-tooltip;
+  .luz-tooltip {
+    anchor-scope: --luz-tooltip;
   }
 
-  .cai-tooltip > :not(.cai-tooltip__text) {
-    anchor-name: --cai-tooltip;
+  .luz-tooltip > :not(.luz-tooltip__text) {
+    anchor-name: --luz-tooltip;
   }
 
   /* Fixed, so the room it is placed in is the viewport and not the box of
@@ -82,26 +82,26 @@
      would always flip). Outside a size container it is not clipped by an
      ancestor that scrolls or hides overflow; inside one (the table wrap, the
      player) it is placed and clipped by that box, as an absolute one is. */
-  .cai-tooltip__text,
-  .cai-tooltip__text:dir(rtl) {
+  .luz-tooltip__text,
+  .luz-tooltip__text:dir(rtl) {
     position: fixed;
-    position-anchor: --cai-tooltip;
+    position-anchor: --luz-tooltip;
     inset: auto;
     inset-block-end: anchor(start);
     inset-inline-start: anchor(center);
-    margin-block: var(--cai-space-2xs);
+    margin-block: var(--luz-space-2xs);
     translate: -50% 0;
     transform: none;
     position-try-fallbacks: flip-block;
   }
 
   /* inset-inline-start is the right edge in right-to-left text */
-  .cai-tooltip__text:dir(rtl) {
+  .luz-tooltip__text:dir(rtl) {
     translate: 50% 0;
   }
 
   /* The gap to the trigger can be on either side once it flips: bridge both */
-  .cai-tooltip__text::before {
+  .luz-tooltip__text::before {
     content: "";
     position: absolute;
     inset-inline: 0;

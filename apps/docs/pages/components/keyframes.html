@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Keyframes
 description: Five shared animations for your own components, which stop when the reader asks for reduced motion.
 area: components
@@ -8,47 +8,47 @@ files: components/_animations.css
 -->
     <div class="docs-block" id="c-animations">
           <div class="docs-demo__stage docs-anim">
-            <label class="cai-toggle">
-              <input class="cai-toggle__input" type="checkbox" role="switch">
-              <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
-              <span class="cai-toggle__label">Play animations</span>
+            <label class="luz-toggle">
+              <input class="luz-toggle__input" type="checkbox" role="switch">
+              <span class="luz-toggle__track" aria-hidden="true"><span class="luz-toggle__thumb"></span></span>
+              <span class="luz-toggle__label">Play animations</span>
             </label>
             <p class="docs-motion__reduced docs-demo__note">Reduced motion is on, so the animations do not run.</p>
             <ul class="o-grid docs-cols-4 docs-anim__tiles">
-              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__spin"></span></span><code>cai-spin</code></li>
-              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__shimmer"></span></span><code>cai-shimmer</code></li>
-              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__pulse"></span></span><code>cai-pulse</code></li>
-              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__slide">Aa</span></span><code>cai-slide-up</code></li>
+              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__spin"></span></span><code>luz-spin</code></li>
+              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__shimmer"></span></span><code>luz-shimmer</code></li>
+              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__pulse"></span></span><code>luz-pulse</code></li>
+              <li class="docs-anim__tile"><span class="docs-anim__stage" aria-hidden="true"><span class="docs-anim__slide">Aa</span></span><code>luz-slide-up</code></li>
             </ul>
           </div>
-          <p class="docs-demo__note">A fifth keyframe, <code class="cai-code-inline">cai-fade-in</code>, opens the modal.</p>
+          <p class="docs-demo__note">A fifth keyframe, <code class="luz-code-inline">luz-fade-in</code>, opens the modal.</p>
           <h2 id="keyframes-use">Use a keyframe</h2>
           <p>Name the keyframe in your own <code>animation</code>, and take its duration from a <a href="/docs/tokens/motion/">motion token</a>.</p>
           <div class="docs-snippet">
             <div class="docs-snippet__bar">
               <span class="docs-snippet__lang">CSS</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-keyframes" aria-label="Copy the panel that slides in code">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-keyframes" aria-label="Copy the panel that slides in code">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="Panel that slides in code"><code id="code-keyframes">.panel[open] {
-  animation: cai-slide-up var(--cai-duration-base) var(--cai-easing-enter);
+            <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Panel that slides in code"><code id="code-keyframes">.panel[open] {
+  animation: luz-slide-up var(--luz-duration-base) var(--luz-easing-enter);
 }</code></pre>
           </div>
           <ul>
-            <li>Under reduced motion every <code>--cai-duration-*</code> token is <code>0s</code>, so the animation does not run and the element shows in its final state.</li>
+            <li>Under reduced motion every <code>--luz-duration-*</code> token is <code>0s</code>, so the animation does not run and the element shows in its final state.</li>
             <li>A hard-coded duration ignores reduced motion: never write one.</li>
             <li>Do not loop an animation for ever: stop it when the task ends.</li>
           </ul>
-          <div class="cai-table-wrap" role="region" aria-label="Keyframes" tabindex="0">
-            <table class="cai-table">
+          <div class="luz-table-wrap" role="region" aria-label="Keyframes" tabindex="0">
+            <table class="luz-table">
               <thead>
                 <tr><th scope="col">Keyframe</th><th scope="col">What it does</th></tr>
               </thead>
               <tbody>
-                <tr><td data-label="Keyframe"><div><code>cai-spin</code></div></td><td data-label="What it does"><div>One full turn, for a loading indicator</div></td></tr>
-                <tr><td data-label="Keyframe"><div><code>cai-shimmer</code></div></td><td data-label="What it does"><div>Moves a background gradient across, for a loading placeholder</div></td></tr>
-                <tr><td data-label="Keyframe"><div><code>cai-pulse</code></div></td><td data-label="What it does"><div>Grows and fades out, then back, to draw the eye once</div></td></tr>
-                <tr><td data-label="Keyframe"><div><code>cai-slide-up</code></div></td><td data-label="What it does"><div>Fades in while rising 8 px, for something that appears</div></td></tr>
-                <tr><td data-label="Keyframe"><div><code>cai-fade-in</code></div></td><td data-label="What it does"><div>Fades in, used by the modal and its backdrop</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>luz-spin</code></div></td><td data-label="What it does"><div>One full turn, for a loading indicator</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>luz-shimmer</code></div></td><td data-label="What it does"><div>Moves a background gradient across, for a loading placeholder</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>luz-pulse</code></div></td><td data-label="What it does"><div>Grows and fades out, then back, to draw the eye once</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>luz-slide-up</code></div></td><td data-label="What it does"><div>Fades in while rising 8 px, for something that appears</div></td></tr>
+                <tr><td data-label="Keyframe"><div><code>luz-fade-in</code></div></td><td data-label="What it does"><div>Fades in, used by the modal and its backdrop</div></td></tr>
               </tbody>
             </table>
           </div>

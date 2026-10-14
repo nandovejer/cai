@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CAI — 4. OBJECTS
+   LUZ — 4. OBJECTS
    Layout abstractions. No colors, no decorative typography.
    Prefix: .o-
    ========================================================================== */
@@ -7,13 +7,13 @@
 /* Shell: root app layout (sidebar + main + footer) */
 .o-shell {
   display: grid;
-  grid-template-columns: var(--cai-sidebar-width) 1fr;
+  grid-template-columns: var(--luz-sidebar-width) 1fr;
   grid-template-rows: 1fr auto;
   min-height: 100vh;
 }
 
 /* Sidebar positioned in first column, spans all rows */
-.o-shell > .cai-sidebar {
+.o-shell > .luz-sidebar {
   grid-column: 1;
   grid-row: 1 / -1;
 }
@@ -28,7 +28,7 @@
 
 /* Footer spans full width at bottom */
 .o-shell > footer,
-.o-shell > .cai-site-footer {
+.o-shell > .luz-site-footer {
   grid-column: 1 / -1;
   grid-row: 2;
 }
@@ -42,7 +42,7 @@
 
   /* A sidebar that is not a popover (or a browser without the popover API)
      is just the first block of the page, not a full-height column */
-  .o-shell > .cai-sidebar:not([popover]) {
+  .o-shell > .luz-sidebar:not([popover]) {
     grid-column: 1;
     grid-row: 1;
     position: static;
@@ -57,27 +57,27 @@
   }
 
   .o-shell > footer,
-  .o-shell > .cai-site-footer {
+  .o-shell > .luz-site-footer {
     grid-column: 1;
     grid-row: 3;
   }
 }
 
-/* Centered max-width container. The full width up to --cai-content-max, so
+/* Centered max-width container. The full width up to --luz-content-max, so
    it also centers as a grid or flex item, where auto margins would shrink
    it to its content. */
 .o-container {
   inline-size: 100%;
-  max-width: var(--cai-content-max);
+  max-width: var(--luz-content-max);
   margin-inline: auto;
-  padding: var(--cai-space-xl);
-  padding-bottom: var(--cai-space-3xl);
+  padding: var(--luz-space-xl);
+  padding-bottom: var(--luz-space-3xl);
 }
 
 @media (max-width: 640px) {
   .o-container {
-    padding: var(--cai-space-md);
-    padding-bottom: var(--cai-space-2xl);
+    padding: var(--luz-space-md);
+    padding-bottom: var(--luz-space-2xl);
   }
 }
 
@@ -85,13 +85,13 @@
    modifier's below */
 .o-grid {
   display: grid;
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
 }
 
-/* As many equal columns as fit, none narrower than --cai-grid-min (16rem by
+/* As many equal columns as fit, none narrower than --luz-grid-min (16rem by
    default; set it on the grid or on an ancestor) */
 .o-grid--auto {
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--cai-grid-min, 16rem)), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--luz-grid-min, 16rem)), 1fr));
 }
 
 /* A fixed number of equal columns above 768px; one column at 768px and below,
@@ -115,14 +115,14 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
 }
 
 /* Stack vertical */
 .o-stack {
   display: flex;
   flex-direction: column;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
 }
 
 /* A list laid out as a grid, a stack or a row: the layout replaces the
@@ -140,7 +140,7 @@
 .o-media {
   display: flex;
   align-items: flex-start;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
 }
 
 .o-media__body {

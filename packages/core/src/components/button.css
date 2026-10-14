@@ -1,120 +1,120 @@
 /* --------------------------------------------------------------------------
-   CAI Component: button
+   LUZ Component: button
    Button and its variants (primary, secondary, danger, ghost, outline, sm, lg, block)
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-btn {
+.luz-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--cai-space-xs);
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-md);
+  gap: var(--luz-space-xs);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-md);
   font-weight: 400;
   border: 1px solid transparent;
-  border-radius: var(--cai-radius-md);
+  border-radius: var(--luz-radius-md);
   cursor: pointer;
   /* min-height: the label can grow with the user's font size */
-  min-height: var(--cai-control-lg);
-  padding: 0 var(--cai-space-lg);
+  min-height: var(--luz-control-lg);
+  padding: 0 var(--luz-space-lg);
   text-decoration: none;
-  transition: background var(--cai-duration-fast),
-    border-color var(--cai-duration-fast), color var(--cai-duration-fast);
+  transition: background var(--luz-duration-fast),
+    border-color var(--luz-duration-fast), color var(--luz-duration-fast);
   white-space: nowrap;
 }
 
-.cai-btn:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-btn:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
 /* (0,2,0) beats every variant class; pointer-events blocks hover/active.
    Text keeps 3:1, and the dashed border tells the state apart without colour. */
-.cai-btn:disabled {
+.luz-btn:disabled {
   background: transparent;
-  color: var(--cai-text-disabled);
-  border-color: var(--cai-text-disabled);
+  color: var(--luz-text-disabled);
+  border-color: var(--luz-text-disabled);
   border-style: dashed;
   cursor: not-allowed;
   pointer-events: none;
 }
 
-.cai-btn svg {
+.luz-btn svg {
   width: 16px;
   height: 16px;
   flex-shrink: 0;
 }
 
 /* Variants */
-.cai-btn--primary {
-  background: var(--cai-brand-fill);
-  color: var(--cai-text-on-fill);
+.luz-btn--primary {
+  background: var(--luz-brand-fill);
+  color: var(--luz-text-on-fill);
 }
-.cai-btn--primary:hover {
-  background: var(--cai-brand-fill-hover);
+.luz-btn--primary:hover {
+  background: var(--luz-brand-fill-hover);
 }
-.cai-btn--primary:active {
-  background: var(--cai-brand-fill-active);
+.luz-btn--primary:active {
+  background: var(--luz-brand-fill-active);
 }
 
-.cai-btn--secondary {
-  background: var(--cai-surface-strong);
-  color: var(--cai-text-primary);
+.luz-btn--secondary {
+  background: var(--luz-surface-strong);
+  color: var(--luz-text-primary);
 }
 /* White text on the outline colour in every mode (4.5:1, check:contrast) */
-.cai-btn--secondary:hover {
-  background: var(--cai-outline);
-  color: var(--cai-text-on-fill);
+.luz-btn--secondary:hover {
+  background: var(--luz-outline);
+  color: var(--luz-text-on-fill);
 }
 
-.cai-btn--ghost {
+.luz-btn--ghost {
   background: transparent;
-  color: var(--cai-brand-primary);
+  color: var(--luz-brand-primary);
 }
-.cai-btn--ghost:hover {
-  background: var(--cai-brand-subtle);
+.luz-btn--ghost:hover {
+  background: var(--luz-brand-subtle);
 }
 
-.cai-btn--outline {
+.luz-btn--outline {
   background: transparent;
-  color: var(--cai-brand-primary);
-  border-color: var(--cai-brand-primary);
+  color: var(--luz-brand-primary);
+  border-color: var(--luz-brand-primary);
 }
-.cai-btn--outline:hover {
-  background: var(--cai-brand-subtle);
+.luz-btn--outline:hover {
+  background: var(--luz-brand-subtle);
 }
 
-.cai-btn--danger {
-  background: var(--cai-color-danger-fill);
-  color: var(--cai-text-on-fill);
+.luz-btn--danger {
+  background: var(--luz-color-danger-fill);
+  color: var(--luz-text-on-fill);
 }
-.cai-btn--danger:hover {
+.luz-btn--danger:hover {
   filter: brightness(0.88);
 }
 
 /* Sizes */
-.cai-btn--sm {
-  min-height: var(--cai-control-md);
-  font-size: var(--cai-text-sm);
-  padding: 0 var(--cai-space-sm);
+.luz-btn--sm {
+  min-height: var(--luz-control-md);
+  font-size: var(--luz-text-sm);
+  padding: 0 var(--luz-space-sm);
 }
 
-.cai-btn--lg {
-  min-height: var(--cai-control-xl);
-  font-size: var(--cai-text-base);
-  padding: 0 var(--cai-space-xl);
+.luz-btn--lg {
+  min-height: var(--luz-control-xl);
+  font-size: var(--luz-text-base);
+  padding: 0 var(--luz-space-xl);
 }
 
 /* Full width of the container: a form's submit, a button in a card or a drawer.
    The label wraps and a long word breaks, so the box can be narrow (WCAG 1.4.4,
    1.4.10); a wrapped label keeps a little air above and below. After the sizes,
    so its block padding wins over theirs. */
-.cai-btn--block {
+.luz-btn--block {
   inline-size: 100%;
-  padding-block: var(--cai-space-2xs);
+  padding-block: var(--luz-space-2xs);
   white-space: normal;
   overflow-wrap: anywhere;
   text-align: center;

@@ -1,23 +1,23 @@
 /* --------------------------------------------------------------------------
-   CAI Component: _animations
+   LUZ Component: _animations
    Shared system keyframes (spin, shimmer, pulse, slide-up)
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
-@keyframes cai-spin {
+@keyframes luz-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
-@keyframes cai-shimmer {
+@keyframes luz-shimmer {
   to {
     background-position: -200% 0;
   }
 }
 
-@keyframes cai-pulse {
+@keyframes luz-pulse {
   0%,
   100% {
     transform: scale(1);
@@ -29,7 +29,7 @@
   }
 }
 
-@keyframes cai-slide-up {
+@keyframes luz-slide-up {
   from {
     opacity: 0;
     transform: translateY(8px);

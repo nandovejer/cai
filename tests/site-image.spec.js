@@ -1,5 +1,5 @@
 /**
- * CAI Site — .cai-site-image
+ * LUZ Site — .luz-site-image
  * The frame shows an abstract placeholder as a CSS background when it has no
  * image, by day or by night, with no JavaScript (red line 2). A failed
  * image's alt text keeps 4.5:1 on a flat backdrop (red line 7). The files
@@ -43,11 +43,11 @@ async function mountFrames(page, { theme, mode } = {}) {
   await page.evaluate((modifiers) => {
     const probe = document.querySelector('#probe');
     probe.innerHTML = modifiers
-      .map((m) => `<div class="cai-site-image cai-site-image--${m}" data-ratio="${m}"></div>`)
+      .map((m) => `<div class="luz-site-image luz-site-image--${m}" data-ratio="${m}"></div>`)
       .join('');
     probe.insertAdjacentHTML(
       'beforeend',
-      '<div class="cai-site-image" id="broken"><picture><img src="/tests/fixtures/no-such-image.jpg" width="640" height="360" alt="A photo that does not exist"></picture></div>',
+      '<div class="luz-site-image" id="broken"><picture><img src="/tests/fixtures/no-such-image.jpg" width="640" height="360" alt="A photo that does not exist"></picture></div>',
     );
   }, MODIFIERS);
 }
@@ -147,7 +147,7 @@ test.describe('Site image', () => {
   test('dark mode shows the night placeholder: the switcher radio, without JavaScript', async ({ page }) => {
     await mountFrames(page);
     await page.evaluate(() => {
-      document.body.insertAdjacentHTML('beforeend', '<input type="radio" name="cai-theme" value="dark" aria-label="Dark" checked>');
+      document.body.insertAdjacentHTML('beforeend', '<input type="radio" name="luz-theme" value="dark" aria-label="Dark" checked>');
     });
     const value = await page.locator('[data-ratio="1x1"]').evaluate((el) => getComputedStyle(el).backgroundImage);
     expect(urlsOf(value)[0]).toMatch(/placeholder-night-1x1-1920\.avif$/);
@@ -170,7 +170,7 @@ test.describe('Site image', () => {
 
   test('the docs demos use a picture with AVIF and WebP sources and a sized img', async ({ page }) => {
     await page.goto(routeOf('demo-image')); // the image pattern's page
-    const pictures = page.locator('.cai-site-image picture');
+    const pictures = page.locator('.luz-site-image picture');
     expect(await pictures.count()).toBeGreaterThan(0);
     for (const picture of await pictures.all()) {
       await expect(picture.locator('source[type="image/avif"][srcset]')).toHaveCount(1);

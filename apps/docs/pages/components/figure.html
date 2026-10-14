@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Figure
 description: Shows an image, a chart or a diagram with a caption that says what it is.
 area: components
@@ -10,8 +10,8 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <figure class="cai-figure u-mb-0">
-              <div class="cai-figure__media">
+            <figure class="luz-figure u-mb-0">
+              <div class="luz-figure__media">
                 <svg viewBox="0 0 320 96" role="img" aria-label="Bar chart with six rising bars" fill="currentColor">
                   <rect x="8" y="64" width="40" height="32"/>
                   <rect x="60" y="52" width="40" height="44"/>
@@ -21,42 +21,42 @@ toc: h2,h3
                   <rect x="268" y="4" width="40" height="92"/>
                 </svg>
               </div>
-              <figcaption class="cai-figure__caption">Requests per day, last six days.</figcaption>
+              <figcaption class="luz-figure__caption">Requests per day, last six days.</figcaption>
             </figure>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Figure documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Figure documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-figure" aria-label="Copy the figure markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-figure" aria-label="Copy the figure markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Figure markup"><code id="code-figure">&lt;figure class=&quot;cai-figure&quot;&gt;
-  &lt;div class=&quot;cai-figure__media&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Figure markup"><code id="code-figure">&lt;figure class=&quot;luz-figure&quot;&gt;
+  &lt;div class=&quot;luz-figure__media&quot;&gt;
     &lt;img src=&quot;requests.png&quot; width=&quot;640&quot; height=&quot;192&quot; alt=&quot;Bar chart: requests rise every day, from 1,200 on Monday to 3,400 on Saturday.&quot;&gt;
   &lt;/div&gt;
-  &lt;figcaption class=&quot;cai-figure__caption&quot;&gt;Requests per day, last six days.&lt;/figcaption&gt;
+  &lt;figcaption class=&quot;luz-figure__caption&quot;&gt;Requests per day, last six days.&lt;/figcaption&gt;
 &lt;/figure&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>There are no modifiers.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Figure parts" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Figure parts" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-figure</code></div></td><td data-label="What it does"><div>A padded surface with a brand-coloured start border and rounded corners</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-figure__media</code></div></td><td data-label="What it does"><div>Rounds and clips the image, chart or code inside</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-figure__caption</code></div></td><td data-label="What it does"><div>Smaller, italic, secondary text colour</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-figure</code></div></td><td data-label="What it does"><div>A padded surface with a brand-coloured start border and rounded corners</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-figure__media</code></div></td><td data-label="What it does"><div>Rounds and clips the image, chart or code inside</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-figure__caption</code></div></td><td data-label="What it does"><div>Smaller, italic, secondary text colour</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -76,7 +76,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a figure for a chart, an image, a diagram or a code sample that the text refers to and that needs a caption.</p>
@@ -91,13 +91,13 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> A caption that says what the figure shows, and for what period.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <figure class="cai-figure u-mb-0"><div class="cai-figure__media"><svg viewBox="0 0 320 64" fill="currentColor"><rect x="8" y="40" width="40" height="24"/><rect x="60" y="32" width="40" height="32"/><rect x="112" y="24" width="40" height="40"/><rect x="164" y="16" width="40" height="48"/><rect x="216" y="8" width="40" height="56"/><rect x="268" y="2" width="40" height="62"/></svg></div><figcaption class="cai-figure__caption">Requests per day, last six days.</figcaption></figure>
+                  <figure class="luz-figure u-mb-0"><div class="luz-figure__media"><svg viewBox="0 0 320 64" fill="currentColor"><rect x="8" y="40" width="40" height="24"/><rect x="60" y="32" width="40" height="32"/><rect x="112" y="24" width="40" height="40"/><rect x="164" y="16" width="40" height="48"/><rect x="216" y="8" width="40" height="56"/><rect x="268" y="2" width="40" height="62"/></svg></div><figcaption class="luz-figure__caption">Requests per day, last six days.</figcaption></figure>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> “Figure 1” as the caption: the reader learns the number, not what the chart says.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <figure class="cai-figure u-mb-0"><div class="cai-figure__media"><svg viewBox="0 0 320 64" fill="currentColor"><rect x="8" y="40" width="40" height="24"/><rect x="60" y="32" width="40" height="32"/><rect x="112" y="24" width="40" height="40"/><rect x="164" y="16" width="40" height="48"/><rect x="216" y="8" width="40" height="56"/><rect x="268" y="2" width="40" height="62"/></svg></div><figcaption class="cai-figure__caption">Figure 1</figcaption></figure>
+                  <figure class="luz-figure u-mb-0"><div class="luz-figure__media"><svg viewBox="0 0 320 64" fill="currentColor"><rect x="8" y="40" width="40" height="24"/><rect x="60" y="32" width="40" height="32"/><rect x="112" y="24" width="40" height="40"/><rect x="164" y="16" width="40" height="48"/><rect x="216" y="8" width="40" height="56"/><rect x="268" y="2" width="40" height="62"/></svg></div><figcaption class="luz-figure__caption">Figure 1</figcaption></figure>
                 </div>
               </figure>
             </div>
@@ -109,13 +109,13 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The caption is secondary text on the figure's surface.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Figure contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Figure contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Caption</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Caption</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -127,9 +127,9 @@ toc: h2,h3
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 7 tokens that <code>components/figure.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-surface"><code>--cai-surface</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-lg</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-surface"><code>--luz-surface</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-lg</code>, <code>--luz-space-sm</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

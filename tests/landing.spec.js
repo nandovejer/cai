@@ -458,7 +458,7 @@ test.describe('Landing page', () => {
         // Every CDN URL pins the exact version
         const urls = snippet.match(/https:\/\/cdn\.jsdelivr\.net\/npm\/\S+?(?=")/g);
         expect(urls).toHaveLength(level.files.length);
-        for (const url of urls) expect(url).toMatch(/@luz-ds\/(tokens|core|site)@3\.0\.0\//);
+        for (const url of urls) expect(url).toMatch(/@luz-ds\/(tokens|core|site)@0\.1\.0\//);
         for (const script of snippet.match(/<script[^>]*>/g) ?? []) {
           expect(script).toMatch(/^<script type="module" src="[^"]+\.min\.js">$/);
         }

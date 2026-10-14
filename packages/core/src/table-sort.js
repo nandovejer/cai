@@ -1,7 +1,7 @@
 /**
- * CAI Design System — Table sort (lazy chunk; enhances a table that already works)
+ * LUZ Design System — Table sort (lazy chunk; enhances a table that already works)
  *
- * A heading marked `<th scope="col" data-cai-sort>` becomes a button that
+ * A heading marked `<th scope="col" data-luz-sort>` becomes a button that
  * sorts the rows of its table in the browser. The server markup stays the
  * no-JS path: a link in the heading (`<th><a href="?sort=price">`) sorts on
  * the server; here its content moves into a <button>, so the control that
@@ -13,8 +13,8 @@
  * status) says what changed, in the language of the table: the text comes
  * from the dictionary of core's i18n, through `translate`.
  *
- * No imports: cai.js passes its own `t`; a page that loads this module on
- * its own passes the `t` of "@cai-ds/core/i18n". Without it the table still
+ * No imports: luz.js passes its own `t`; a page that loads this module on
+ * its own passes the `t` of "@luz-ds/core/i18n". Without it the table still
  * sorts and `aria-sort` is still right; the status line stays empty.
  *
  * Importing this module has no side effects; call initTableSort() to enable it.
@@ -51,23 +51,23 @@ function sortBy(th, status, translate) {
 }
 
 /**
- * Upgrade every `th[data-cai-sort]` under `root`. Idempotent.
+ * Upgrade every `th[data-luz-sort]` under `root`. Idempotent.
  * @param {ParentNode} [root]
  * @param {(key: string, el?: Element, vars?: object) => string} [translate] - core's `t`
  */
 export function initTableSort(root = document, translate) {
-  root.querySelectorAll("table:has(th[data-cai-sort])").forEach((table) => {
-    const wrap = table.closest(".cai-table-wrap") ?? table;
+  root.querySelectorAll("table:has(th[data-luz-sort])").forEach((table) => {
+    const wrap = table.closest(".luz-table-wrap") ?? table;
     let status = wrap.nextElementSibling;
-    if (!status?.matches("output[data-cai-sort-status]")) {
+    if (!status?.matches("output[data-luz-sort-status]")) {
       status = document.createElement("output");
       status.className = "u-sr-only";
-      status.dataset.caiSortStatus = "";
+      status.dataset.luzSortStatus = "";
       // The text of the status is the table's language, not the page's
       status.lang = table.closest("[lang]")?.lang ?? "";
       wrap.after(status); // in the DOM before the first press, so it is announced
     }
-    table.querySelectorAll("th[data-cai-sort]").forEach((th) => {
+    table.querySelectorAll("th[data-luz-sort]").forEach((th) => {
       if (th.firstElementChild?.matches("button")) return;
       const button = document.createElement("button");
       button.type = "button";

@@ -2,7 +2,7 @@
 /**
  * Dropdown (components/dropdown.css): a native popover opened by a button
  * with popovertarget. The browser gives it Escape, light dismiss and focus
- * return, so these tests check what CAI adds: the panel is anchored under its
+ * return, so these tests check what LUZ adds: the panel is anchored under its
  * own button and every action is in the tab order. No JavaScript is loaded,
  * so the nojs project runs the same file.
  */
@@ -92,7 +92,7 @@ test.describe('dropdown', () => {
 
   test('every action is at least 44px high', async ({ page }) => {
     await open(page, 'one');
-    for (const box of await page.locator('#menu-one .cai-dropdown__item').evaluateAll((els) => els.map((el) => el.getBoundingClientRect().height))) {
+    for (const box of await page.locator('#menu-one .luz-dropdown__item').evaluateAll((els) => els.map((el) => el.getBoundingClientRect().height))) {
       expect(box).toBeGreaterThanOrEqual(44);
     }
   });

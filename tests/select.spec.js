@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Select (.cai-select): the closed box in every theme, forced colors and
+ * Select (.luz-select): the closed box in every theme, forced colors and
  * right-to-left text, the list boxes without an arrow, and the keyboard focus.
  * The layering (nothing of layer 1 depends on `appearance: base-select`) is
  * checked on the CSS in tests/select.test.js. Run with: pnpm test:ui
@@ -82,7 +82,7 @@ test.describe('Select', () => {
     // The arrow is gradients in currentcolor, so it resolves to the text color
     expect(image).toContain('linear-gradient');
     expect(image).toContain(color);
-    await expect(page.locator('.cai-select-wrap')).toHaveCount(0);
+    await expect(page.locator('.luz-select-wrap')).toHaveCount(0);
   });
 
   test('shows a keyboard focus ring and a thicker border', async ({ page }) => {

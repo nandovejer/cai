@@ -1,13 +1,13 @@
 // @ts-check
 /**
- * `.cai-site-hero`: the first block of a home or landing page. Its columns
+ * `.luz-site-hero`: the first block of a home or landing page. Its columns
  * are intrinsic, like the feature grid's: two equal ones when each gets 24rem
  * (the hero 51rem wide or more), one below, so it stacks in a narrow column
  * and with larger text. The copy is first in the source, so first in reading
  * order and at the inline start in both writing directions.
  *
  * The page is a synthetic one, served at /__hero__ with the three stylesheets
- * of the packages, built like a consumer's page (`.cai-site-main`,
+ * of the packages, built like a consumer's page (`.luz-site-main`,
  * `.o-container`); the home page (`/`, `/ar/`) is the real use, with no picture.
  * Runs in `chromium` and `chromium-nojs` (it is CSS only).
  */
@@ -20,27 +20,27 @@ const page = (dir = 'ltr', lang = 'en') => `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hero</title>
-<link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
-<link rel="stylesheet" href="/packages/core/dist/cai.css">
+<link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+<link rel="stylesheet" href="/packages/core/dist/luz.css">
 <link rel="stylesheet" href="/packages/site/dist/site.css">
 </head>
-<body class="cai-site-page">
-<main id="main-content" class="cai-site-main o-container">
-  <section class="cai-site-hero" id="hero" aria-labelledby="hero-title">
-    <div class="cai-site-hero__copy" id="copy">
-      <p class="cai-site-hero__eyebrow">12 and 13 May 2027 · Seville</p>
-      <h1 class="cai-site-hero__title" id="hero-title">Acme Summit 2027</h1>
-      <p class="cai-site-hero__lead">Two days of talks and workshops for retail teams.</p>
-      <div class="cai-site-actions">
-        <a class="cai-btn cai-btn--primary" href="#register">Register</a>
-        <a class="cai-btn cai-btn--outline" href="#programme">Programme</a>
+<body class="luz-site-page">
+<main id="main-content" class="luz-site-main o-container">
+  <section class="luz-site-hero" id="hero" aria-labelledby="hero-title">
+    <div class="luz-site-hero__copy" id="copy">
+      <p class="luz-site-hero__eyebrow">12 and 13 May 2027 · Seville</p>
+      <h1 class="luz-site-hero__title" id="hero-title">Acme Summit 2027</h1>
+      <p class="luz-site-hero__lead">Two days of talks and workshops for retail teams.</p>
+      <div class="luz-site-actions">
+        <a class="luz-btn luz-btn--primary" href="#register">Register</a>
+        <a class="luz-btn luz-btn--outline" href="#programme">Programme</a>
       </div>
     </div>
-    <div class="cai-site-hero__media" id="media">
-      <div class="cai-site-image cai-site-image--4x3"></div>
+    <div class="luz-site-hero__media" id="media">
+      <div class="luz-site-image luz-site-image--4x3"></div>
     </div>
   </section>
-  <section class="cai-site-section" aria-labelledby="programme">
+  <section class="luz-site-section" aria-labelledby="programme">
     <h2 id="programme">Programme</h2>
     <p id="register">Registration opens in March.</p>
   </section>
@@ -136,7 +136,7 @@ test.describe('site hero', () => {
       return value;
     }, token);
     const title = () => p.locator('#hero-title').evaluate((el) => getComputedStyle(el).fontSize);
-    for (const [width, token] of [[1280, '--cai-text-4xl'], [1000, '--cai-text-3xl'], [640, '--cai-text-2xl']]) {
+    for (const [width, token] of [[1280, '--luz-text-4xl'], [1000, '--luz-text-3xl'], [640, '--luz-text-2xl']]) {
       await open(p, width);
       expect(await title(), `${width} px`).toBe(await size(token));
     }
@@ -148,10 +148,10 @@ test.describe('home page hero', () => {
     await p.setViewportSize({ width: 1280, height: 900 });
     await p.goto('/ar/');
     const geometry = await p.evaluate(() => {
-      const hero = document.querySelector('.cai-site-hero');
+      const hero = document.querySelector('.luz-site-hero');
       const cs = getComputedStyle(hero);
       const inner = hero.getBoundingClientRect().right - parseFloat(cs.paddingRight);
-      const title = document.querySelector('.cai-site-hero__title');
+      const title = document.querySelector('.luz-site-hero__title');
       // The text, not the block: in RTL its lines start at the right
       const range = document.createRange();
       range.selectNodeContents(title);

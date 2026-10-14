@@ -1,5 +1,5 @@
 /**
- * CAI — user preferences (PRINCIPLES.md §6): reduced motion and forced colors.
+ * LUZ — user preferences (PRINCIPLES.md §6): reduced motion and forced colors.
  */
 import { test, expect } from '@playwright/test';
 import { routeOf } from './helpers/docs-site.js';
@@ -38,7 +38,7 @@ test.describe('forced-colors: active', () => {
   test('docs: a focused button keeps a visible outline', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
     await page.goto(routeOf('c-button'));
-    const btn = page.locator('main button.cai-btn, main .cai-copy-btn').first();
+    const btn = page.locator('main button.luz-btn, main .luz-copy-btn').first();
     await btn.focus();
     const outline = await btn.evaluate((el) => {
       const s = getComputedStyle(el);
@@ -56,7 +56,7 @@ test.describe('forced-colors: the color mode switcher', () => {
     test(`${app}: the cycle button keeps a visible edge and a visible icon`, async ({ page, browserName }) => {
       test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
       await page.goto(app);
-      const button = page.locator('footer .cai-mode-cycle');
+      const button = page.locator('footer .luz-mode-cycle');
       await expect(button).toBeVisible();
       const style = await button.evaluate((el) => {
         const s = getComputedStyle(el);
@@ -76,7 +76,7 @@ test.describe('forced-colors: the color mode switcher without JavaScript', () =>
   test('/: the checked mode stays visible', async ({ page, browserName }) => {
     test.skip(browserName === 'webkit', 'WebKit does not emulate forced-colors');
     await page.goto('/');
-    const styles = await page.locator('footer .cai-mode-btn').evaluateAll((labels) =>
+    const styles = await page.locator('footer .luz-mode-btn').evaluateAll((labels) =>
       labels.map((el) => ({
         checked: el.querySelector('input').checked,
         visible: el.checkVisibility(),

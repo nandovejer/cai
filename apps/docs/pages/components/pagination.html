@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Pagination
 description: Links to the pages of a list that goes on over several, with the current page marked.
 area: components
@@ -11,57 +11,57 @@ toc: h2,h3
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <nav aria-label="Example pagination">
-              <ul class="cai-pagination">
-                <li><a class="cai-pagination__link" href="#example" rel="prev">Previous</a></li>
-                <li><a class="cai-pagination__link" href="#example" aria-label="Page 1">1</a></li>
-                <li class="cai-pagination__gap" aria-hidden="true">…</li>
-                <li><a class="cai-pagination__link" href="#example" aria-label="Page 7">7</a></li>
-                <li><a class="cai-pagination__link" href="#example" aria-label="Page 8" aria-current="page">8</a></li>
-                <li><a class="cai-pagination__link" href="#example" aria-label="Page 9">9</a></li>
-                <li class="cai-pagination__gap" aria-hidden="true">…</li>
-                <li><a class="cai-pagination__link" href="#example" aria-label="Page 40">40</a></li>
-                <li><a class="cai-pagination__link" href="#example" rel="next">Next</a></li>
+              <ul class="luz-pagination">
+                <li><a class="luz-pagination__link" href="#example" rel="prev">Previous</a></li>
+                <li><a class="luz-pagination__link" href="#example" aria-label="Page 1">1</a></li>
+                <li class="luz-pagination__gap" aria-hidden="true">…</li>
+                <li><a class="luz-pagination__link" href="#example" aria-label="Page 7">7</a></li>
+                <li><a class="luz-pagination__link" href="#example" aria-label="Page 8" aria-current="page">8</a></li>
+                <li><a class="luz-pagination__link" href="#example" aria-label="Page 9">9</a></li>
+                <li class="luz-pagination__gap" aria-hidden="true">…</li>
+                <li><a class="luz-pagination__link" href="#example" aria-label="Page 40">40</a></li>
+                <li><a class="luz-pagination__link" href="#example" rel="next">Next</a></li>
               </ul>
             </nav>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Pagination documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Pagination documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-pagination" aria-label="Copy the pagination markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-pagination" aria-label="Copy the pagination markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Pagination markup"><code id="code-pagination">&lt;nav aria-label=&quot;Pagination&quot;&gt;
-  &lt;ul class=&quot;cai-pagination&quot;&gt;
-    &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=1&quot; rel=&quot;prev&quot;&gt;Previous&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=1&quot; aria-label=&quot;Page 1&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=2&quot; aria-label=&quot;Page 2&quot; aria-current=&quot;page&quot;&gt;2&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=3&quot; aria-label=&quot;Page 3&quot;&gt;3&lt;/a&gt;&lt;/li&gt;
-    &lt;li&gt;&lt;a class=&quot;cai-pagination__link&quot; href=&quot;/blog/?page=3&quot; rel=&quot;next&quot;&gt;Next&lt;/a&gt;&lt;/li&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Pagination markup"><code id="code-pagination">&lt;nav aria-label=&quot;Pagination&quot;&gt;
+  &lt;ul class=&quot;luz-pagination&quot;&gt;
+    &lt;li&gt;&lt;a class=&quot;luz-pagination__link&quot; href=&quot;/blog/?page=1&quot; rel=&quot;prev&quot;&gt;Previous&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;luz-pagination__link&quot; href=&quot;/blog/?page=1&quot; aria-label=&quot;Page 1&quot;&gt;1&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;luz-pagination__link&quot; href=&quot;/blog/?page=2&quot; aria-label=&quot;Page 2&quot; aria-current=&quot;page&quot;&gt;2&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;luz-pagination__link&quot; href=&quot;/blog/?page=3&quot; aria-label=&quot;Page 3&quot;&gt;3&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;luz-pagination__link&quot; href=&quot;/blog/?page=3&quot; rel=&quot;next&quot;&gt;Next&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/nav&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>There are no modifiers. The list wraps onto more lines when it is narrow.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Pagination parts" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Pagination parts" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or attribute</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-pagination</code></div></td><td data-label="What it does"><div>The list: one row of items, which wraps when it is narrow</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-pagination__link</code></div></td><td data-label="What it does"><div>A page, Previous or Next: a target of at least 44 px</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-pagination</code></div></td><td data-label="What it does"><div>The list: one row of items, which wraps when it is narrow</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-pagination__link</code></div></td><td data-label="What it does"><div>A page, Previous or Next: a target of at least 44 px</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>aria-current="page"</code></div></td><td data-label="What it does"><div>Marks the current page: solid fill and heavier weight</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>aria-disabled="true"</code></div></td><td data-label="What it does"><div>Previous or Next at either end, as a <code>&lt;span&gt;</code> and not a link: disabled text colour</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-pagination__gap</code></div></td><td data-label="What it does"><div>The “…” of a long list: a mark, hidden from screen readers</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-pagination__gap</code></div></td><td data-label="What it does"><div>The “…” of a long list: a mark, hidden from screen readers</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -85,7 +85,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use pagination when a list is too long for one page and each page can be reached by its own address: search results, a blog archive, a table of records.</p>
@@ -101,13 +101,13 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Show the first and last page, the current one and its neighbours, and a gap between.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <ul class="cai-pagination"><li><span class="cai-pagination__link">1</span></li><li class="cai-pagination__gap">…</li><li><span class="cai-pagination__link">7</span></li><li><span class="cai-pagination__link" aria-current="page">8</span></li><li><span class="cai-pagination__link">9</span></li><li class="cai-pagination__gap">…</li><li><span class="cai-pagination__link">40</span></li></ul>
+                  <ul class="luz-pagination"><li><span class="luz-pagination__link">1</span></li><li class="luz-pagination__gap">…</li><li><span class="luz-pagination__link">7</span></li><li><span class="luz-pagination__link" aria-current="page">8</span></li><li><span class="luz-pagination__link">9</span></li><li class="luz-pagination__gap">…</li><li><span class="luz-pagination__link">40</span></li></ul>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Print every page of a long list: it grows past the width and the reader has to count.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <ul class="cai-pagination"><li><span class="cai-pagination__link">1</span></li><li><span class="cai-pagination__link">2</span></li><li><span class="cai-pagination__link">3</span></li><li><span class="cai-pagination__link">4</span></li><li><span class="cai-pagination__link">5</span></li><li><span class="cai-pagination__link">6</span></li><li><span class="cai-pagination__link">7</span></li><li><span class="cai-pagination__link">8</span></li><li><span class="cai-pagination__link">9</span></li><li><span class="cai-pagination__link">10</span></li></ul>
+                  <ul class="luz-pagination"><li><span class="luz-pagination__link">1</span></li><li><span class="luz-pagination__link">2</span></li><li><span class="luz-pagination__link">3</span></li><li><span class="luz-pagination__link">4</span></li><li><span class="luz-pagination__link">5</span></li><li><span class="luz-pagination__link">6</span></li><li><span class="luz-pagination__link">7</span></li><li><span class="luz-pagination__link">8</span></li><li><span class="luz-pagination__link">9</span></li><li><span class="luz-pagination__link">10</span></li></ul>
                 </div>
               </figure>
             </div>
@@ -120,36 +120,36 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>Pages are secondary text; the current page is white on a solid brand fill.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Pagination contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Pagination contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Link on hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>14.4:1</div></td><td data-label="Dark"><div>12.6:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Current page</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Current page fill</div></td><td data-label="Colour on background"><div><code>--cai-brand-fill</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Previous or Next at the end</div></td><td data-label="Colour on background"><div><code>--cai-text-disabled</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.5:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>5.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Gap</div></td><td data-label="Colour on background"><div><code>--cai-text-muted</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>4.9:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link on hover</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-hover</code></div></td><td data-label="Light"><div>14.4:1</div></td><td data-label="Dark"><div>12.6:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current page</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current page fill</div></td><td data-label="Colour on background"><div><code>--luz-brand-fill</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Previous or Next at the end</div></td><td data-label="Colour on background"><div><code>--luz-text-disabled</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>3.5:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>5.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Gap</div></td><td data-label="Colour on background"><div><code>--luz-text-muted</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>4.9:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders, icons and the disabled state.</p>
             <ul>
-              <li><strong>Focus:</strong> each link has the shared link ring, a 2 px <code>--cai-focus-ring</code> outline 2 px outside the item.</li>
+              <li><strong>Focus:</strong> each link has the shared link ring, a 2 px <code>--luz-focus-ring</code> outline 2 px outside the item.</li>
               <li><strong>Not colour alone:</strong> the current page has a solid fill and a heavier weight (600), and carries <code>aria-current</code>.</li>
               <li><strong>Forced colors:</strong> the current page takes the system selection colors (<code>Highlight</code> and <code>HighlightText</code>) and a focus ring in <code>CanvasText</code>; an end that is not a link is <code>GrayText</code>.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 15 tokens that <code>components/pagination.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-fill"><code>--cai-brand-fill</code></a>, <a href="/docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="/docs/tokens/color/#cai-surface-pressed"><code>--cai-surface-pressed</code></a>, <a href="/docs/tokens/color/#cai-text-disabled"><code>--cai-text-disabled</code></a>, <a href="/docs/tokens/color/#cai-text-muted"><code>--cai-text-muted</code></a>, <a href="/docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-fill"><code>--luz-brand-fill</code></a>, <a href="/docs/tokens/color/#luz-surface-hover"><code>--luz-surface-hover</code></a>, <a href="/docs/tokens/color/#luz-surface-pressed"><code>--luz-surface-pressed</code></a>, <a href="/docs/tokens/color/#luz-text-disabled"><code>--luz-text-disabled</code></a>, <a href="/docs/tokens/color/#luz-text-muted"><code>--luz-text-muted</code></a>, <a href="/docs/tokens/color/#luz-text-on-fill"><code>--luz-text-on-fill</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-sm</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-fast</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

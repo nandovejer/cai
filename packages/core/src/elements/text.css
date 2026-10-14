@@ -1,11 +1,11 @@
 /* ==========================================================================
-   CAI — 3. ELEMENTS · text
+   LUZ — 3. ELEMENTS · text
    Flow content: hr, figure, figcaption. Specificity: type (0,0,1).
    ========================================================================== */
 
 :where(hr) {
   border: none;
-  border-top: 1px solid var(--cai-divider);
+  border-top: 1px solid var(--luz-divider);
 }
 
 
@@ -14,16 +14,16 @@
 /* ========================================================================== */
 
 :where(figure) {
-  margin: var(--cai-space-lg) 0;
-  padding: var(--cai-space-sm);
-  background: var(--cai-surface);
-  border-radius: var(--cai-radius-md);
+  margin: var(--luz-space-lg) 0;
+  padding: var(--luz-space-sm);
+  background: var(--luz-surface);
+  border-radius: var(--luz-radius-md);
 }
 
 :where(figcaption) {
-  font-size: max(0.875em, var(--cai-text-sm));
-  color: var(--cai-text-secondary);
-  margin-top: var(--cai-space-xs);
+  font-size: max(0.875em, var(--luz-text-sm));
+  color: var(--luz-text-secondary);
+  margin-top: var(--luz-space-xs);
   font-style: italic;
 }
 
@@ -41,10 +41,10 @@
 /* ========================================================================== */
 
 :where(blockquote) {
-  padding-block: var(--cai-space-2xs);
-  padding-inline: var(--cai-space-md);
-  border-inline-start: 3px solid var(--cai-outline);
-  color: var(--cai-text-secondary);
+  padding-block: var(--luz-space-2xs);
+  padding-inline: var(--luz-space-md);
+  border-inline-start: 3px solid var(--luz-outline);
+  color: var(--luz-text-secondary);
 }
 
 /* ========================================================================== */
@@ -56,18 +56,18 @@
 }
 
 :where(dd) {
-  padding-inline-start: var(--cai-space-md);
-  color: var(--cai-text-secondary);
+  padding-inline-start: var(--luz-space-md);
+  color: var(--luz-text-secondary);
 }
 
 :where(dl > dd + dt) {
-  margin-block-start: var(--cai-space-xs);
+  margin-block-start: var(--luz-space-xs);
 }
 
 /* Pairs grouped in a wrapper (a div, as HTML allows): the same space between
    groups. No type selector: the wrapper stays unstyled. */
 :where(dl > :not(dt, dd) + :not(dt, dd)) {
-  margin-block-start: var(--cai-space-xs);
+  margin-block-start: var(--luz-space-xs);
 }
 
 /* The reset removes the list padding, which leaves the markers outside the
@@ -80,23 +80,23 @@
 :where(menu) {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   list-style: none;
 }
 
 /* ========================================================================== */
-/* Pre — preformatted text (.cai-code-block overrides all of this)           */
+/* Pre — preformatted text (.luz-code-block overrides all of this)           */
 /* ========================================================================== */
 
 :where(pre) {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-sm);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-sm);
   line-height: 1.6;
   white-space: pre;
   tab-size: 2;
   overflow-x: auto;
-  padding: var(--cai-space-sm) var(--cai-space-md);
-  background: var(--cai-surface-muted);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  padding: var(--luz-space-sm) var(--luz-space-md);
+  background: var(--luz-surface-muted);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
 }

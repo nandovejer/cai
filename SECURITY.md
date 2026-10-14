@@ -4,9 +4,9 @@
 
 **Please do NOT create a public GitHub issue for security vulnerabilities.**
 
-If you discover a security vulnerability in CAI Design System, please report it privately:
+If you discover a security vulnerability in LUZ Design System, please report it privately:
 
-- **GitHub Security Advisory:** https://github.com/nandovejer/cai/security/advisories/new
+- **GitHub Security Advisory:** https://github.com/nandovejer/luz/security/advisories/new
 
 **Include in your report:**
 - Description of the vulnerability
@@ -20,7 +20,7 @@ If you discover a security vulnerability in CAI Design System, please report it 
 - Patch release: Within 2 weeks (for critical issues)
 - Public disclosure: Only after patch is released
 
-Thank you for helping keep CAI secure!
+Thank you for helping keep LUZ secure!
 
 ---
 
@@ -28,35 +28,33 @@ Thank you for helping keep CAI secure!
 
 | Version | Status | Support Until | Security Fixes |
 |---------|--------|---------------|----------------|
-| **3.x** | ✅ Active | Current | Yes |
-| **2.x** | ❌ EOL | — | No |
-| **1.x** | ❌ EOL | 2025-12-31 | No |
+| **0.1.x** | ✅ Active | Current | Yes |
 
 ---
 
 ## Security Best Practices
 
-### When Using CAI Design System from CDN
+### When Using LUZ Design System from CDN
 
 1. **Pin an exact version and use Subresource Integrity (SRI)** so a file cannot change under you. Load the layers in order — tokens, core, site:
 
 ```html
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css"
+  href="https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css"
   integrity="sha384-<hash>"
   crossorigin="anonymous"
 />
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css"
+  href="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css"
   integrity="sha384-<hash>"
   crossorigin="anonymous"
 />
 
 <script
   type="module"
-  src="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.js"
+  src="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js"
   integrity="sha384-<hash>"
   crossorigin="anonymous"
 ></script>
@@ -68,9 +66,9 @@ Compute each hash from the file you are pinning:
 curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A
 ```
 
-`cai.js` is an ES module and must be loaded with `type="module"`. SRI on the entry file does not cover the MIDI and table-sort chunks it imports on demand (`midi.js`, `table-sort.js`); pages that play MIDI or sort a table in the browser and need full integrity coverage should self-host the files or install from npm.
+`luz.js` is an ES module and must be loaded with `type="module"`. SRI on the entry file does not cover the MIDI and table-sort chunks it imports on demand (`midi.js`, `table-sort.js`); pages that play MIDI or sort a table in the browser and need full integrity coverage should self-host the files or install from npm.
 
-Range URLs such as `@cai-ds/core@3` are fine for prototypes, but they cannot carry an SRI hash and pick up new releases automatically.
+Range URLs such as `@luz-ds/core@3` are fine for prototypes, but they cannot carry an SRI hash and pick up new releases automatically.
 
 2. **Set Content-Security-Policy (CSP) headers:**
 
@@ -82,8 +80,8 @@ Content-Security-Policy:
 ```
 
 3. **Use specific versions** (not latest):
-- ✅ Good: `@cai-ds/core@3.0.0`
-- ❌ Avoid: `@cai-ds/core@latest`
+- ✅ Good: `@luz-ds/core@0.1.0`
+- ❌ Avoid: `@luz-ds/core@latest`
 
 ### When Installing from npm
 
@@ -94,7 +92,7 @@ pnpm install  # Uses pnpm-lock.yaml
 
 2. **Use `--save` or `--save-dev`** to update lock file:
 ```bash
-pnpm add @cai-ds/core --save
+pnpm add @luz-ds/core --save
 pnpm add vitest --save-dev
 ```
 
@@ -110,7 +108,7 @@ git diff pnpm-lock.yaml
 
 ## Supply Chain Security
 
-### For CAI Package Maintainers
+### For LUZ Package Maintainers
 
 **Publishing:**
 - Packages are published only by `.github/workflows/publish.yml`, through npm trusted publishing (OIDC). No npm token is stored in GitHub or on any machine, and every release carries a provenance attestation.
@@ -171,8 +169,8 @@ Before each release:
 ## Contact
 
 **Security Maintainer:** @nandovejer  
-**Private reports:** https://github.com/nandovejer/cai/security/advisories/new  
-**GitHub Issues:** https://github.com/nandovejer/cai/issues
+**Private reports:** https://github.com/nandovejer/luz/security/advisories/new  
+**GitHub Issues:** https://github.com/nandovejer/luz/issues
 
 For non-security questions, use [CONTRIBUTING.md](./CONTRIBUTING.md) or GitHub discussions.
 

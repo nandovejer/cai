@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Card
 description: Groups a few facts about one thing on a bordered surface.
 area: components
@@ -10,85 +10,85 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage o-grid docs-cols-2">
-            <div class="cai-card">
-              <h3 class="cai-card__title">API gateway</h3>
-              <p class="cai-card__body">1,204 requests per minute.</p>
+            <div class="luz-card">
+              <h3 class="luz-card__title">API gateway</h3>
+              <p class="luz-card__body">1,204 requests per minute.</p>
             </div>
-            <div class="cai-card">
-              <h3 class="cai-card__title">Database</h3>
-              <p class="cai-card__body">48 active connections.</p>
+            <div class="luz-card">
+              <h3 class="luz-card__title">Database</h3>
+              <p class="luz-card__body">48 active connections.</p>
             </div>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>In a linked card, the body text, the price included, cannot be selected with a mouse: the title link covers the whole card, so a drag follows or moves the link. Find in page, keyboard selection and screen readers reach the text as usual.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Card documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Card documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-card" aria-label="Copy the card markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-card" aria-label="Copy the card markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Card markup"><code id="code-card">&lt;article class=&quot;cai-card&quot;&gt;
-  &lt;h3 class=&quot;cai-card__title&quot;&gt;Database&lt;/h3&gt;
-  &lt;p class=&quot;cai-card__body&quot;&gt;48 active connections.&lt;/p&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Card markup"><code id="code-card">&lt;article class=&quot;luz-card&quot;&gt;
+  &lt;h3 class=&quot;luz-card__title&quot;&gt;Database&lt;/h3&gt;
+  &lt;p class=&quot;luz-card__body&quot;&gt;48 active connections.&lt;/p&gt;
 &lt;/article&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>One card, four classes and one modifier. A link in the title makes the whole card one link; any other link or button in it is raised above that link.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Card parts" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Card parts" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or markup</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or markup"><div><code>.cai-card</code></div></td><td data-label="What it does"><div>The surface: border, rounded corners and padding</div></td></tr>
-                  <tr><td data-label="Class or markup"><div><code>.cai-card__title</code></div></td><td data-label="What it does"><div>Base size, semibold, primary text colour</div></td></tr>
-                  <tr><td data-label="Class or markup"><div><code>.cai-card__body</code></div></td><td data-label="What it does"><div>Medium size, secondary text colour</div></td></tr>
-                  <tr><td data-label="Class or markup"><div><code>.cai-card__price</code></div></td><td data-label="What it does"><div>The price: base size, semibold, primary text colour, figures of equal width. A previous price goes in <code>&lt;s&gt;</code></div></td></tr>
-                  <tr><td data-label="Class or markup"><div><code>.cai-card--featured</code></div></td><td data-label="What it does"><div>The one card to look at first in a group: a 2 px border in the brand colour, as tall as its neighbours. Say why in words too, with a tag such as “Most chosen”</div></td></tr>
-                  <tr><td data-label="Class or markup"><div><code>&lt;a&gt;</code> in <code>.cai-card__title</code></div></td><td data-label="What it does"><div>A linked card: the link covers the card, the title turns sans, a darker border and a shadow on hover, a focus ring round the card</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.luz-card</code></div></td><td data-label="What it does"><div>The surface: border, rounded corners and padding</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.luz-card__title</code></div></td><td data-label="What it does"><div>Base size, semibold, primary text colour</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.luz-card__body</code></div></td><td data-label="What it does"><div>Medium size, secondary text colour</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.luz-card__price</code></div></td><td data-label="What it does"><div>The price: base size, semibold, primary text colour, figures of equal width. A previous price goes in <code>&lt;s&gt;</code></div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>.luz-card--featured</code></div></td><td data-label="What it does"><div>The one card to look at first in a group: a 2 px border in the brand colour, as tall as its neighbours. Say why in words too, with a tag such as “Most chosen”</div></td></tr>
+                  <tr><td data-label="Class or markup"><div><code>&lt;a&gt;</code> in <code>.luz-card__title</code></div></td><td data-label="What it does"><div>A linked card: the link covers the card, the title turns sans, a darker border and a shadow on hover, a focus ring round the card</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p>Compose a card with the layout objects and the other components, with no new class: a linked card, an avatar or an icon beside the text with <code>.o-media</code>, an image on top, and a row of actions with <code>.o-row</code>.</p>
             <div class="docs-example" data-docs-specimen>
             <div class="docs-demo__stage o-grid docs-cols-2">
-              <article class="cai-card">
-                <h4 class="cai-card__title"><a href="/docs/components/table/">Table</a></h4>
-                <p class="cai-card__body">Rows of records that share the same attributes.</p>
+              <article class="luz-card">
+                <h4 class="luz-card__title"><a href="/docs/components/table/">Table</a></h4>
+                <p class="luz-card__body">Rows of records that share the same attributes.</p>
               </article>
-              <article class="cai-card">
+              <article class="luz-card">
                 <div class="o-media">
-                  <span class="cai-avatar cai-avatar--md" aria-hidden="true">CD</span>
+                  <span class="luz-avatar luz-avatar--md" aria-hidden="true">CD</span>
                   <div class="o-media__body">
-                    <h4 class="cai-card__title">Carlos Díaz</h4>
-                    <p class="cai-card__body">Looks after billing and invoices.</p>
+                    <h4 class="luz-card__title">Carlos Díaz</h4>
+                    <p class="luz-card__body">Looks after billing and invoices.</p>
                   </div>
                 </div>
               </article>
-              <article class="cai-card">
-                <div class="cai-site-image u-mb-sm">
+              <article class="luz-card">
+                <div class="luz-site-image u-mb-sm">
                   <picture>
                     <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                     <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
                     <img src="/apps/docs/assets/desert-640.jpg" width="640" height="360" alt="Soft dunes in warm light under a clear blue sky" loading="lazy" decoding="async">
                   </picture>
                 </div>
-                <h4 class="cai-card__title">Dunes at sunset</h4>
-                <p class="cai-card__body">A two-hour walk from the car park.</p>
+                <h4 class="luz-card__title">Dunes at sunset</h4>
+                <p class="luz-card__body">A two-hour walk from the car park.</p>
               </article>
-              <article class="cai-card">
-                <h4 class="cai-card__title">Database</h4>
-                <p class="cai-card__body">48 active connections.</p>
+              <article class="luz-card">
+                <h4 class="luz-card__title">Database</h4>
+                <p class="luz-card__body">48 active connections.</p>
                 <div class="o-row">
-                  <span class="cai-tag cai-tag--green cai-tag--dot">Running</span>
-                  <button class="cai-btn cai-btn--secondary cai-btn--sm" type="button">Restart the database</button>
+                  <span class="luz-tag luz-tag--green luz-tag--dot">Running</span>
+                  <button class="luz-btn luz-btn--secondary luz-btn--sm" type="button">Restart the database</button>
                 </div>
               </article>
             </div>
@@ -96,8 +96,8 @@ toc: h2,h3
             <ul>
               <li><strong>Linked card:</strong> the <code>&lt;a&gt;</code> goes inside the heading, round its text. A second link or a button in it is allowed, and sits above the title link: see Product card below.</li>
               <li><strong>Avatar or icon:</strong> <code>.o-media</code> puts it beside <code>.o-media__body</code>, which holds the title and the body. Next to a name, hide the avatar with <code>aria-hidden="true"</code>: it repeats the name.</li>
-              <li><strong>Image on top:</strong> the image frame of <code>@cai-ds/site</code> (<code>.cai-site-image</code>), inside the padding, with <code>.u-mb-sm</code> under it. Its alt text says what the picture shows; if it only repeats the title, leave it empty (<code>alt=""</code>). With core alone, use an <code>&lt;img&gt;</code> and your own size rules.</li>
-              <li><strong>Actions:</strong> <code>.o-row</code> with small buttons (<code>.cai-btn--sm</code>) or tags (<code>.cai-tag</code>), last in the card. In a linked card, one action at most, as a button after the title.</li>
+              <li><strong>Image on top:</strong> the image frame of <code>@luz-ds/site</code> (<code>.luz-site-image</code>), inside the padding, with <code>.u-mb-sm</code> under it. Its alt text says what the picture shows; if it only repeats the title, leave it empty (<code>alt=""</code>). With core alone, use an <code>&lt;img&gt;</code> and your own size rules.</li>
+              <li><strong>Actions:</strong> <code>.o-row</code> with small buttons (<code>.luz-btn--sm</code>) or tags (<code>.luz-tag</code>), last in the card. In a linked card, one action at most, as a button after the title.</li>
             </ul>
             <h4 id="product-card">Product card</h4>
             <p>A card for a shop is the card with an image, a linked title, a price and one action. The action is a button in a form, so it works without JavaScript; it is raised above the title link, so it takes its own click.</p>
@@ -105,36 +105,36 @@ toc: h2,h3
             <div class="docs-demo__stage">
               <h5 id="red-wines">Red wines</h5>
               <ul class="o-grid docs-cols-2 docs-list-plain" aria-labelledby="red-wines">
-                <li class="cai-card">
-                  <div class="cai-site-image cai-site-image--4x3 u-mb-sm">
+                <li class="luz-card">
+                  <div class="luz-site-image luz-site-image--4x3 u-mb-sm">
                     <picture>
                       <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                       <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
                       <img src="/apps/docs/assets/desert-640.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
                     </picture>
                   </div>
-                  <h6 class="cai-card__title"><a href="#product-card">Malbec 2021</a></h6>
-                  <p class="cai-card__body">Bodega Albar · 75 cl</p>
-                  <p class="cai-card__price"><data value="12.50">12,50 €</data></p>
+                  <h6 class="luz-card__title"><a href="#product-card">Malbec 2021</a></h6>
+                  <p class="luz-card__body">Bodega Albar · 75 cl</p>
+                  <p class="luz-card__price"><data value="12.50">12,50 €</data></p>
                   <form action="#product-card" method="get">
                     <input type="hidden" name="product" value="malbec-2021">
-                    <button class="cai-btn cai-btn--primary cai-btn--block" type="submit">Add to cart<span class="u-sr-only"> Malbec 2021</span></button>
+                    <button class="luz-btn luz-btn--primary luz-btn--block" type="submit">Add to cart<span class="u-sr-only"> Malbec 2021</span></button>
                   </form>
                 </li>
-                <li class="cai-card">
-                  <div class="cai-site-image cai-site-image--4x3 u-mb-sm">
+                <li class="luz-card">
+                  <div class="luz-site-image luz-site-image--4x3 u-mb-sm">
                     <picture>
                       <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                       <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
                       <img src="/apps/docs/assets/desert-640.jpg" width="640" height="360" alt="" loading="lazy" decoding="async">
                     </picture>
                   </div>
-                  <h6 class="cai-card__title"><a href="#product-card">Tempranillo reserva 2019</a></h6>
-                  <p class="cai-card__body">Bodega Albar · 75 cl</p>
-                  <p class="cai-card__price"><span class="u-sr-only">Now </span><data value="9.90">9,90 €</data> <s><span class="u-sr-only">Was </span>12,50 €</s></p>
+                  <h6 class="luz-card__title"><a href="#product-card">Tempranillo reserva 2019</a></h6>
+                  <p class="luz-card__body">Bodega Albar · 75 cl</p>
+                  <p class="luz-card__price"><span class="u-sr-only">Now </span><data value="9.90">9,90 €</data> <s><span class="u-sr-only">Was </span>12,50 €</s></p>
                   <form action="#product-card" method="get">
                     <input type="hidden" name="product" value="tempranillo-reserva-2019">
-                    <button class="cai-btn cai-btn--primary cai-btn--block" type="submit">Add to cart<span class="u-sr-only"> Tempranillo reserva 2019</span></button>
+                    <button class="luz-btn luz-btn--primary luz-btn--block" type="submit">Add to cart<span class="u-sr-only"> Tempranillo reserva 2019</span></button>
                   </form>
                 </li>
               </ul>
@@ -144,21 +144,21 @@ toc: h2,h3
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-product-card" aria-label="Copy the product card markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-product-card" aria-label="Copy the product card markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Product card markup"><code id="code-product-card">&lt;article&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Product card markup"><code id="code-product-card">&lt;article&gt;
   &lt;h4 id=&quot;red-wines&quot;&gt;Red wines&lt;/h4&gt;
   &lt;ul class=&quot;o-grid o-grid--auto&quot; aria-labelledby=&quot;red-wines&quot;&gt;
-    &lt;li class=&quot;cai-card&quot;&gt;
-      &lt;div class=&quot;cai-site-image cai-site-image--4x3 u-mb-sm&quot;&gt;
+    &lt;li class=&quot;luz-card&quot;&gt;
+      &lt;div class=&quot;luz-site-image luz-site-image--4x3 u-mb-sm&quot;&gt;
         &lt;picture&gt;…&lt;img src=&quot;malbec.jpg&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/picture&gt;
       &lt;/div&gt;
-      &lt;h5 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/wines/malbec-2021/&quot;&gt;Malbec 2021&lt;/a&gt;&lt;/h5&gt;
-      &lt;p class=&quot;cai-card__body&quot;&gt;Bodega Albar · 75 cl&lt;/p&gt;
-      &lt;p class=&quot;cai-card__price&quot;&gt;&lt;data value=&quot;12.50&quot;&gt;12,50 €&lt;/data&gt;&lt;/p&gt;
+      &lt;h5 class=&quot;luz-card__title&quot;&gt;&lt;a href=&quot;/wines/malbec-2021/&quot;&gt;Malbec 2021&lt;/a&gt;&lt;/h5&gt;
+      &lt;p class=&quot;luz-card__body&quot;&gt;Bodega Albar · 75 cl&lt;/p&gt;
+      &lt;p class=&quot;luz-card__price&quot;&gt;&lt;data value=&quot;12.50&quot;&gt;12,50 €&lt;/data&gt;&lt;/p&gt;
       &lt;form action=&quot;/cart/add&quot; method=&quot;post&quot;&gt;
         &lt;input type=&quot;hidden&quot; name=&quot;product&quot; value=&quot;malbec-2021&quot;&gt;
-        &lt;button class=&quot;cai-btn cai-btn--primary cai-btn--block&quot; type=&quot;submit&quot;&gt;Add to cart&lt;span class=&quot;u-sr-only&quot;&gt; Malbec 2021&lt;/span&gt;&lt;/button&gt;
+        &lt;button class=&quot;luz-btn luz-btn--primary luz-btn--block&quot; type=&quot;submit&quot;&gt;Add to cart&lt;span class=&quot;u-sr-only&quot;&gt; Malbec 2021&lt;/span&gt;&lt;/button&gt;
       &lt;/form&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
@@ -166,50 +166,50 @@ toc: h2,h3
 &lt;/article&gt;</code></pre>
             </div>
             <ul>
-              <li><strong>The button is the width of the card</strong> with <code>.cai-btn--block</code>: a thumb finds it, and its label wraps and breaks inside the card at any text size.</li>
+              <li><strong>The button is the width of the card</strong> with <code>.luz-btn--block</code>: a thumb finds it, and its label wraps and breaks inside the card at any text size.</li>
               <li><strong>One action, one link.</strong> The name is the link; the button is the action. A card with a second action (a wish list, a comparison) has outgrown a card: send the reader to the product's own page.</li>
               <li><strong>The button's name is unique.</strong> The visible words come first, then the product's name in <code>.u-sr-only</code>, repeating the link's text exactly (keep the space before it). A list of twelve buttons all called “Add to cart” says nothing to someone who lists the buttons of a page, or says them by voice.</li>
               <li><strong>The list is named by its heading:</strong> <code>aria-labelledby</code> points at the <code>&lt;h4&gt;</code> above it, and the cards use the next level. Core styles no list: remove the bullets and the indent with your own rule (<code>list-style: none; margin: 0; padding: 0</code>).</li>
               <li><strong>The old price is <code>&lt;s&gt;</code>,</strong> with the words “Now” and “Was” hidden visually so the order is clear to a screen reader; the line through it is not colour.</li>
               <li><strong>Feedback after a script adds the item:</strong> keep an empty <code>&lt;output&gt;</code> (it has the role <code>status</code>) in the page from the start and write “Malbec 2021 added to the cart” into it; focus stays on the button. A status region that is created together with its text is often not announced. Without a script the form posts and the cart page is the feedback.</li>
-              <li><strong>Sold out:</strong> replace the form with <code>&lt;span class="cai-tag"&gt;Sold out&lt;/span&gt;</code>; do not disable the button.</li>
+              <li><strong>Sold out:</strong> replace the form with <code>&lt;span class="luz-tag"&gt;Sold out&lt;/span&gt;</code>; do not disable the button.</li>
               <li>With core alone there is no image frame: use an <code>&lt;img&gt;</code> with your own size rules.</li>
             </ul>
             <h4 id="featured-card">Featured card</h4>
-            <p>In a group of plans or offers, <code>.cai-card--featured</code> marks the one to look at first. The class says nothing to a screen reader, so the card carries a tag with the reason, in its text.</p>
+            <p>In a group of plans or offers, <code>.luz-card--featured</code> marks the one to look at first. The class says nothing to a screen reader, so the card carries a tag with the reason, in its text.</p>
             <div class="docs-example" data-docs-specimen>
             <div class="docs-demo__stage o-grid docs-cols-3">
-              <article class="cai-card">
-                <h5 class="cai-card__title">One day</h5>
-                <p class="cai-card__price"><data value="79">79 €</data></p>
-                <p class="cai-card__body">The talks and the workshops of one day.</p>
-                <a class="cai-btn cai-btn--outline cai-btn--block" href="#featured-card">Choose One day</a>
+              <article class="luz-card">
+                <h5 class="luz-card__title">One day</h5>
+                <p class="luz-card__price"><data value="79">79 €</data></p>
+                <p class="luz-card__body">The talks and the workshops of one day.</p>
+                <a class="luz-btn luz-btn--outline luz-btn--block" href="#featured-card">Choose One day</a>
               </article>
-              <article class="cai-card cai-card--featured">
-                <h5 class="cai-card__title">Two days</h5>
-                <p class="cai-card__price"><span class="u-sr-only">Now </span><data value="149">149 €</data> <s><span class="u-sr-only">Was </span>180 €</s></p>
-                <p class="cai-card__body">Both days, lunch and the recordings. <span class="cai-tag cai-tag--blue">Most chosen</span></p>
-                <a class="cai-btn cai-btn--primary cai-btn--block" href="#featured-card">Choose Two days</a>
+              <article class="luz-card luz-card--featured">
+                <h5 class="luz-card__title">Two days</h5>
+                <p class="luz-card__price"><span class="u-sr-only">Now </span><data value="149">149 €</data> <s><span class="u-sr-only">Was </span>180 €</s></p>
+                <p class="luz-card__body">Both days, lunch and the recordings. <span class="luz-tag luz-tag--blue">Most chosen</span></p>
+                <a class="luz-btn luz-btn--primary luz-btn--block" href="#featured-card">Choose Two days</a>
               </article>
-              <article class="cai-card">
-                <h5 class="cai-card__title">Team</h5>
-                <p class="cai-card__price"><data value="590">590 €</data></p>
-                <p class="cai-card__body">Two days for five people, with a shared table.</p>
-                <a class="cai-btn cai-btn--outline cai-btn--block" href="#featured-card">Choose Team</a>
+              <article class="luz-card">
+                <h5 class="luz-card__title">Team</h5>
+                <p class="luz-card__price"><data value="590">590 €</data></p>
+                <p class="luz-card__body">Two days for five people, with a shared table.</p>
+                <a class="luz-btn luz-btn--outline luz-btn--block" href="#featured-card">Choose Team</a>
               </article>
             </div>
             </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-card-featured" aria-label="Copy the featured card markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-card-featured" aria-label="Copy the featured card markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Featured card markup"><code id="code-card-featured">&lt;article class=&quot;cai-card cai-card--featured&quot;&gt;
-  &lt;h4 class=&quot;cai-card__title&quot;&gt;Two days&lt;/h4&gt;
-  &lt;p class=&quot;cai-card__price&quot;&gt;&lt;data value=&quot;149&quot;&gt;149 €&lt;/data&gt;&lt;/p&gt;
-  &lt;p class=&quot;cai-card__body&quot;&gt;Both days, lunch and the recordings.
-    &lt;span class=&quot;cai-tag cai-tag--blue&quot;&gt;Most chosen&lt;/span&gt;&lt;/p&gt;
-  &lt;a class=&quot;cai-btn cai-btn--primary cai-btn--block&quot; href=&quot;/register/?ticket=two-days&quot;&gt;Choose Two days&lt;/a&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Featured card markup"><code id="code-card-featured">&lt;article class=&quot;luz-card luz-card--featured&quot;&gt;
+  &lt;h4 class=&quot;luz-card__title&quot;&gt;Two days&lt;/h4&gt;
+  &lt;p class=&quot;luz-card__price&quot;&gt;&lt;data value=&quot;149&quot;&gt;149 €&lt;/data&gt;&lt;/p&gt;
+  &lt;p class=&quot;luz-card__body&quot;&gt;Both days, lunch and the recordings.
+    &lt;span class=&quot;luz-tag luz-tag--blue&quot;&gt;Most chosen&lt;/span&gt;&lt;/p&gt;
+  &lt;a class=&quot;luz-btn luz-btn--primary luz-btn--block&quot; href=&quot;/register/?ticket=two-days&quot;&gt;Choose Two days&lt;/a&gt;
 &lt;/article&gt;</code></pre>
             </div>
             <ul>
@@ -222,10 +222,10 @@ toc: h2,h3
             <ul>
               <li>Use any element: <code>&lt;article&gt;</code> for a self-contained item, <code>&lt;div&gt;</code> for a group of facts, <code>&lt;li&gt;</code> inside a list of cards.</li>
               <li>The title class goes on the heading level that fits the page outline.</li>
-              <li>The corners are rounded with <code>--cai-radius-md</code>, like a figure or a dropdown.</li>
+              <li>The corners are rounded with <code>--luz-radius-md</code>, like a figure or a dropdown.</li>
               <li>The last title or body has no space under it: the padding is the card's last space.</li>
-              <li>A linked card: the link's <code>::after</code> is stretched over the card (<code>position: absolute; inset: 0</code>), so a click anywhere in it follows the link. The card is <code>position: relative</code> to hold it. Any other link or control inside the card (<code>a</code>, <code>button</code>, <code>input</code>, <code>select</code>, <code>textarea</code>, <code>summary</code>) is <code>position: relative</code> with <code>z-index: 1</code>, so it paints above that overlay and takes its own click; the title link is the one thing never raised. A button's label wraps in a card (<code>white-space: normal</code>), so a long label or enlarged text stays inside it. On hover the border turns <code>--cai-input-border</code> and a small shadow shows; on keyboard focus a ring goes round the card. The title of a linked card is in sans, as a nav or a list of links is; a card without a link keeps the heading face. Both are found with <code>:has()</code>; a card without a link does not change on hover.</li>
-              <li><code>.cai-card--featured</code> sets <code>border-width: 2px</code> in <code>--cai-brand-primary</code> and takes the extra pixel from the padding, so the card keeps the height of its neighbours. In a linked card the border turns <code>--cai-brand-hover</code> on hover, and the keyboard ring stands 4 px off the border, so it does not read as a thicker border.</li>
+              <li>A linked card: the link's <code>::after</code> is stretched over the card (<code>position: absolute; inset: 0</code>), so a click anywhere in it follows the link. The card is <code>position: relative</code> to hold it. Any other link or control inside the card (<code>a</code>, <code>button</code>, <code>input</code>, <code>select</code>, <code>textarea</code>, <code>summary</code>) is <code>position: relative</code> with <code>z-index: 1</code>, so it paints above that overlay and takes its own click; the title link is the one thing never raised. A button's label wraps in a card (<code>white-space: normal</code>), so a long label or enlarged text stays inside it. On hover the border turns <code>--luz-input-border</code> and a small shadow shows; on keyboard focus a ring goes round the card. The title of a linked card is in sans, as a nav or a list of links is; a card without a link keeps the heading face. Both are found with <code>:has()</code>; a card without a link does not change on hover.</li>
+              <li><code>.luz-card--featured</code> sets <code>border-width: 2px</code> in <code>--luz-brand-primary</code> and takes the extra pixel from the padding, so the card keeps the height of its neighbours. In a linked card the border turns <code>--luz-brand-hover</code> on hover, and the keyboard ring stands 4 px off the border, so it does not read as a thicker border.</li>
               <li>To lay cards out, use the <a href="/docs/components/layout/">grid object</a> or the <a href="/docs/landing/feature-grid/">feature grid</a>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
@@ -241,12 +241,12 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a card to group a small set of facts that read as one unit, often in a grid of similar items.</p>
             <ul>
-              <li>A featured card (<code>.cai-card--featured</code>) for the one recommended choice in a group of plans or offers.</li>
+              <li>A featured card (<code>.luz-card--featured</code>) for the one recommended choice in a group of plans or offers.</li>
             </ul>
             <h3 id="when-not">When not to use</h3>
             <p>Do not use a card to box content that is not a separate thing.</p>
@@ -263,22 +263,22 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Put the link on the title: the whole card takes the click and the link is named by the title. An action goes after it as a button, with a name of its own.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-card"><h4 class="cai-card__title"><a href="/docs/components/table/">Table</a></h4><p class="cai-card__body">Rows of records that share the same attributes.</p><button class="cai-btn cai-btn--secondary cai-btn--sm" type="button">Add to the page</button></div>
+                  <div class="luz-card"><h4 class="luz-card__title"><a href="/docs/components/table/">Table</a></h4><p class="luz-card__body">Rows of records that share the same attributes.</p><button class="luz-btn luz-btn--secondary luz-btn--sm" type="button">Add to the page</button></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> A link round the whole card, or a second link such as “Read more” in it: the first takes every word of the card as its name, the second sits under the title link and says nothing out of context.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <pre class="cai-code-block" data-lang="html"><code>&lt;a href="/table/"&gt;
-  &lt;div class="cai-card"&gt;
-    &lt;h4 class="cai-card__title"&gt;Table&lt;/h4&gt;
-    &lt;p class="cai-card__body"&gt;Rows of records…&lt;/p&gt;
+                  <pre class="luz-code-block" data-lang="html"><code>&lt;a href="/table/"&gt;
+  &lt;div class="luz-card"&gt;
+    &lt;h4 class="luz-card__title"&gt;Table&lt;/h4&gt;
+    &lt;p class="luz-card__body"&gt;Rows of records…&lt;/p&gt;
   &lt;/div&gt;
 &lt;/a&gt;
 
-&lt;div class="cai-card"&gt;
-  &lt;h4 class="cai-card__title"&gt;Table&lt;/h4&gt;
-  &lt;p class="cai-card__body"&gt;Rows of records…&lt;/p&gt;
+&lt;div class="luz-card"&gt;
+  &lt;h4 class="luz-card__title"&gt;Table&lt;/h4&gt;
+  &lt;p class="luz-card__body"&gt;Rows of records…&lt;/p&gt;
   &lt;a href="/table/"&gt;Read more&lt;/a&gt;
 &lt;/div&gt;</code></pre>
                 </div>
@@ -288,15 +288,15 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Feature one card, and say why in words: the border draws the eye, the tag tells everybody.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-card cai-card--featured"><h4 class="cai-card__title">Two days</h4><p class="cai-card__body">Both days and lunch. <span class="cai-tag cai-tag--blue">Most chosen</span></p></div>
+                  <div class="luz-card luz-card--featured"><h4 class="luz-card__title">Two days</h4><p class="luz-card__body">Both days and lunch. <span class="luz-tag luz-tag--blue">Most chosen</span></p></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> A featured card with no words: a reader who does not see the border, or the colour, gets no hint that it is the one to choose.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <pre class="cai-code-block" data-lang="html"><code>&lt;div class="cai-card cai-card--featured"&gt;
-  &lt;h4 class="cai-card__title"&gt;Two days&lt;/h4&gt;
-  &lt;p class="cai-card__body"&gt;Both days and lunch.&lt;/p&gt;
+                  <pre class="luz-code-block" data-lang="html"><code>&lt;div class="luz-card luz-card--featured"&gt;
+  &lt;h4 class="luz-card__title"&gt;Two days&lt;/h4&gt;
+  &lt;p class="luz-card__body"&gt;Both days and lunch.&lt;/p&gt;
 &lt;/div&gt;</code></pre>
                 </div>
               </figure>
@@ -312,40 +312,40 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The title is primary text and the body secondary text, on the card surface. In a linked card the title is a link, and the border on hover and the focus ring sit between the card and the page. A featured card has a brand border against both.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Card contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Card contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Title</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Price</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Body</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Title link</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Border of a linked card, on hover</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Border of a linked card, on hover, against the page</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Border of a featured card</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Border of a featured card, against the page</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Border of a linked featured card, on hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-hover</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>7.7:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>17.9:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring round a linked card</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Price</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Body</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title link</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border of a linked card, on hover</div></td><td data-label="Colour on background"><div><code>--luz-input-border</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border of a linked card, on hover, against the page</div></td><td data-label="Colour on background"><div><code>--luz-input-border</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border of a featured card</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border of a featured card, against the page</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border of a linked featured card, on hover</div></td><td data-label="Colour on background"><div><code>--luz-brand-hover</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>7.7:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>17.9:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring round a linked card</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> a plain card takes none; the links and buttons inside keep their own ring. In a linked card the title link keeps its ring, and a second one, 2 px of <code>--cai-focus-ring</code>, goes round the card, 2 px outside its border (4 px on a featured card, whose own border is 2 px thick). Both are outlines, so they stay in forced-colors mode.</li>
-              <li><strong>Edges:</strong> the border (<code>--cai-divider</code>) is decorative and has no minimum: the content and the space around it group the card. On a linked card the hover border is <code>--cai-input-border</code>, 3:1 or more, with a shadow.</li>
+              <li><strong>Focus:</strong> a plain card takes none; the links and buttons inside keep their own ring. In a linked card the title link keeps its ring, and a second one, 2 px of <code>--luz-focus-ring</code>, goes round the card, 2 px outside its border (4 px on a featured card, whose own border is 2 px thick). Both are outlines, so they stay in forced-colors mode.</li>
+              <li><strong>Edges:</strong> the border (<code>--luz-divider</code>) is decorative and has no minimum: the content and the space around it group the card. On a linked card the hover border is <code>--luz-input-border</code>, 3:1 or more, with a shadow.</li>
               <li><strong>Not colour alone:</strong> a featured card has a border twice as thick (2 px against 1 px), which stays in forced colors when the colour does not, and a tag that says why. The tag is the cue that does not depend on seeing.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 19 tokens that <code>components/card.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-hover"><code>--cai-brand-hover</code></a>, <a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface"><code>--cai-surface</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-base</code>, <code>--cai-text-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-base</code>, <code>--cai-duration-fast</code>, <code>--cai-easing-enter</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-hover"><code>--luz-brand-hover</code></a>, <a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-input-border"><code>--luz-input-border</code></a>, <a href="/docs/tokens/color/#luz-surface"><code>--luz-surface</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xs</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-base</code>, <code>--luz-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--luz-shadow-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-base</code>, <code>--luz-duration-fast</code>, <code>--luz-easing-enter</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

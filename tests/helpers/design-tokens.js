@@ -7,13 +7,13 @@
  *     high-contrast, from packages/tokens (semantic.css over tokens.json);
  *   - contrast(mode, fg, bg): the WCAG 2.x ratio, translucent layers
  *     composited over the page as in check-contrast.js;
- *   - tokensUsedBy(page): the --cai-* tokens the component's own CSS reads;
+ *   - tokensUsedBy(page): the --luz-* tokens the component's own CSS reads;
  *   - familyOf(token): the token page that documents it.
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { formatRatio as format, over, parseColor as parse, ratio } from "../../packages/tokens/lib/contrast.js";
-import { SITE_KINDS } from "../../scripts/cai-packages.js";
+import { SITE_KINDS } from "../../scripts/luz-packages.js";
 
 const repo = fileURLToPath(new URL("../../", import.meta.url));
 const read = (path) => readFileSync(`${repo}${path}`, "utf-8");
@@ -24,7 +24,7 @@ export const MODES = ["light", "dark", "high-contrast"];
 
 const primitives = {};
 for (const [family, steps] of Object.entries(JSON.parse(read("packages/tokens/tokens.json")).color)) {
-  for (const [step, { value }] of Object.entries(steps)) primitives[`--cai-${family}-${step}`] = value;
+  for (const [step, { value }] of Object.entries(steps)) primitives[`--luz-${family}-${step}`] = value;
 }
 
 const strip = (css) => css.replace(/\/\*[\s\S]*?\*\//g, "");
@@ -43,7 +43,7 @@ const scope = Object.fromEntries(MODES.map((m) => [m, { ...declared.light, ...de
 
 /** The literal value of a colour token in a mode (#rrggbb, rgba(…)). */
 export function resolveColor(mode, token) {
-  const name = token.startsWith("--") ? token : `--cai-${token}`;
+  const name = token.startsWith("--") ? token : `--luz-${token}`;
   const raw = scope[mode][name] ?? primitives[name];
   if (raw === undefined) throw new Error(`${mode}: ${name} is not a colour token`);
   const ref = raw.match(/^var\((--[\w-]+)\)$/)?.[1];
@@ -52,7 +52,7 @@ export function resolveColor(mode, token) {
 
 /** The token a semantic colour points at in a mode (a primitive, or null for a literal). */
 export function aliasOf(mode, token) {
-  const name = token.startsWith("--") ? token : `--cai-${token}`;
+  const name = token.startsWith("--") ? token : `--luz-${token}`;
   const ref = (scope[mode][name] ?? "").match(/^var\((--[\w-]+)\)$/)?.[1];
   if (!ref) return null;
   return ref in primitives ? ref : aliasOf(mode, ref) ?? ref;
@@ -96,7 +96,7 @@ function sourceOf(page) {
   return { css: files.join("\n"), classes };
 }
 
-/** The --cai-* tokens the component's CSS reads with var(), minus the ones it declares itself. */
+/** The --luz-* tokens the component's CSS reads with var(), minus the ones it declares itself. */
 export function tokensUsedBy(page) {
   const { css, classes } = sourceOf(page);
   const own = classes && new RegExp(`\\.(?:${classes.join("|")})(?:(?:--|__)[\\w-]+)?(?![\\w-])`);
@@ -104,11 +104,11 @@ export function tokensUsedBy(page) {
   const local = new Set();
   for (const { selector, body } of rules(css)) {
     if (own && !own.test(selector)) continue;
-    for (const [, name] of body.matchAll(/(--cai-[\w-]+)\s*:/g)) local.add(name);
-    for (const [, name] of body.matchAll(/var\(\s*(--cai-[\w-]+)/g)) used.add(name);
+    for (const [, name] of body.matchAll(/(--luz-[\w-]+)\s*:/g)) local.add(name);
+    for (const [, name] of body.matchAll(/var\(\s*(--luz-[\w-]+)/g)) used.add(name);
   }
-  // --cai-site-* and --cai-<kind>-* (landing, cms…) are properties a pattern sets for its own parts, not design tokens
-  const patternProperty = new RegExp(`^--cai-(?:${["site", ...SITE_KINDS].join("|")})-`);
+  // --luz-site-* and --luz-<kind>-* (landing, cms…) are properties a pattern sets for its own parts, not design tokens
+  const patternProperty = new RegExp(`^--luz-(?:${["site", ...SITE_KINDS].join("|")})-`);
   return [...used].filter((t) => !local.has(t) && !patternProperty.test(t)).sort();
 }
 
@@ -116,13 +116,13 @@ export function tokensUsedBy(page) {
 
 const FAMILIES = [
   ["Color", "/docs/tokens/color/", (t) => colorTokens().includes(t)],
-  ["Spacing and sizing", "/docs/tokens/spacing/", (t) => /^--cai-(space|control)-/.test(t)],
-  ["Typography", "/docs/tokens/typography/", (t) => /^--cai-(font-|text-(xs|sm|base|md|lg|xl|2xl|3xl|4xl|control)$|leading-|weight-)/.test(t)],
-  ["Radius", "/docs/tokens/radius/", (t) => t.startsWith("--cai-radius-")],
-  ["Shadows", "/docs/tokens/shadows/", (t) => t.startsWith("--cai-shadow-")],
-  ["Motion", "/docs/tokens/motion/", (t) => /^--cai-(duration|easing)-/.test(t)],
-  ["Layers", "/docs/tokens/layers/", (t) => t.startsWith("--cai-z-")],
-  ["Layout and breakpoints", "/docs/tokens/layout/", (t) => /^--cai-(mq-|content-max|sidebar-width|scrollbar-size)/.test(t)],
+  ["Spacing and sizing", "/docs/tokens/spacing/", (t) => /^--luz-(space|control)-/.test(t)],
+  ["Typography", "/docs/tokens/typography/", (t) => /^--luz-(font-|text-(xs|sm|base|md|lg|xl|2xl|3xl|4xl|control)$|leading-|weight-)/.test(t)],
+  ["Radius", "/docs/tokens/radius/", (t) => t.startsWith("--luz-radius-")],
+  ["Shadows", "/docs/tokens/shadows/", (t) => t.startsWith("--luz-shadow-")],
+  ["Motion", "/docs/tokens/motion/", (t) => /^--luz-(duration|easing)-/.test(t)],
+  ["Layers", "/docs/tokens/layers/", (t) => t.startsWith("--luz-z-")],
+  ["Layout and breakpoints", "/docs/tokens/layout/", (t) => /^--luz-(mq-|content-max|sidebar-width|scrollbar-size)/.test(t)],
 ];
 
 /** The family of a token: [label, route] of the token page that documents it. */

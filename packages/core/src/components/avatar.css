@@ -1,44 +1,44 @@
 /* --------------------------------------------------------------------------
-   CAI Component: avatar
+   LUZ Component: avatar
    Avatar: initials, or a photo (an <img>) that fills the box.
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-avatar {
+.luz-avatar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-weight: 500;
   flex-shrink: 0;
-  border-radius: var(--cai-radius-md);
+  border-radius: var(--luz-radius-md);
   text-transform: uppercase;
-  background: var(--cai-brand-subtle);
-  color: var(--cai-brand-primary);
-  font-family: var(--cai-font-mono);
+  background: var(--luz-brand-subtle);
+  color: var(--luz-brand-primary);
+  font-family: var(--luz-font-mono);
 }
 
-.cai-avatar--sm {
+.luz-avatar--sm {
   width: 24px;
   height: 24px;
-  font-size: var(--cai-text-xs);
+  font-size: var(--luz-text-xs);
 }
-.cai-avatar--md {
+.luz-avatar--md {
   width: 36px;
   height: 36px;
-  font-size: var(--cai-text-sm);
+  font-size: var(--luz-text-sm);
 }
-.cai-avatar--lg {
+.luz-avatar--lg {
   width: 48px;
   height: 48px;
-  font-size: var(--cai-text-base);
+  font-size: var(--luz-text-base);
 }
 
 /* A photo fills the box and is cropped to it. The corners are the avatar's:
    the image is rounded, the box does not clip (overflow: hidden would cut
    initials that outgrow a small box at 200% text, WCAG 1.4.4) */
-.cai-avatar :where(img) {
+.luz-avatar :where(img) {
   inline-size: 100%;
   block-size: 100%;
   object-fit: cover;

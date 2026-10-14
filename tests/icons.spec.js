@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * CAI's own icons, on the Icon grid page (.claude/plans/specs/icons-charts-data-grid.md,
+ * LUZ's own icons, on the Icon grid page (.claude/plans/specs/icons-charts-data-grid.md,
  * 5a, and its accessibility review: I1, M3). The set is docs only: the page is
  * the contract, so the page is what is tested.
  *  - every icon is decorative (`aria-hidden="true"`, `focusable="false"`), draws
@@ -19,10 +19,10 @@ const PAGE = '/docs/components/icon-grid/';
 
 /** The icons of the grid, as the page states them. */
 async function icons(page) {
-  return page.locator('.docs-example .cai-icon-item').evaluateAll((items) =>
+  return page.locator('.docs-example .luz-icon-item').evaluateAll((items) =>
     items.map((li) => {
-      const svg = li.querySelector('.cai-icon-display svg');
-      const name = li.querySelector('.cai-icon-name');
+      const svg = li.querySelector('.luz-icon-display svg');
+      const name = li.querySelector('.luz-icon-name');
       const button = li.querySelector('button');
       const labelledby = (button.getAttribute('aria-labelledby') ?? '').split(/\s+/);
       return {
@@ -34,7 +34,7 @@ async function icons(page) {
         stroke: svg.getAttribute('stroke'),
         fill: svg.getAttribute('fill'),
         viewBox: svg.getAttribute('viewBox'),
-        flip: svg.hasAttribute('data-cai-flip'),
+        flip: svg.hasAttribute('data-luz-flip'),
         buttonName: labelledby.map((id) => document.getElementById(id)?.textContent.trim()).join(' '),
         copy: button.getAttribute('data-copy'),
       };
@@ -94,7 +94,7 @@ test.describe('icons', () => {
   test('each icon draws inside 24 × 24 and takes the colour of its text, and the system text colour in forced colors', async ({ page }) => {
     await page.goto(PAGE);
     const draw = () =>
-      page.locator('.docs-example .cai-icon-display svg').evaluateAll((list) =>
+      page.locator('.docs-example .luz-icon-display svg').evaluateAll((list) =>
         list.map((svg) => {
           const box = svg.getBBox();
           return { w: box.width, h: box.height, x: box.x, y: box.y, stroke: getComputedStyle(svg).stroke, color: getComputedStyle(svg.parentElement).color };
@@ -149,7 +149,7 @@ test.describe('icons', () => {
       };
     });
     expect(out.sprite).toEqual({ ariaHidden: 'true', focusable: 'false', width: '0', height: '0' });
-    expect(out.symbols.map((s) => s.id)).toEqual(list.map((i) => `cai-icon-${i.id}`));
+    expect(out.symbols.map((s) => s.id)).toEqual(list.map((i) => `luz-icon-${i.id}`));
     for (const [i, symbol] of out.symbols.entries()) {
       expect(symbol.viewBox, symbol.id).toBe('0 0 24 24');
       expect(symbol.inner, symbol.id).toBe(list[i].inner);
@@ -163,9 +163,9 @@ test.describe('icons', () => {
     await page.goto(PAGE);
     // In the grid: the name is visible text in the same item (M3)
     for (const id of ['info', 'warning']) {
-      const item = page.locator('.docs-example .cai-icon-item', { has: page.locator(`#c-icons-${id}`) });
-      await expect(item.locator('.cai-icon-name')).toBeVisible();
-      expect((await item.locator('.cai-icon-name').innerText()).trim().length).toBeGreaterThan(3);
+      const item = page.locator('.docs-example .luz-icon-item', { has: page.locator(`#c-icons-${id}`) });
+      await expect(item.locator('.luz-icon-name')).toBeVisible();
+      expect((await item.locator('.luz-icon-name').innerText()).trim().length).toBeGreaterThan(3);
       await expect(item.locator('svg[aria-hidden="true"]').first()).toHaveAttribute('focusable', 'false');
     }
     // Everywhere on the page: a decorative icon sits beside text, or in a control that has a name;

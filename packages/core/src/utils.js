@@ -1,5 +1,5 @@
 /**
- * Utility functions for CAI Design System
+ * Utility functions for LUZ Design System
  * Pure functions that can be tested independently
  */
 
@@ -65,10 +65,10 @@ export function escapeHtml(str) {
 
 /**
  * Mark the document as running enhancement scripts. CSS uses
- * `:root:not([data-cai-js])` to hide controls that only work with JavaScript
+ * `:root:not([data-luz-js])` to hide controls that only work with JavaScript
  * (copy buttons) or to lay out the no-JS state of a component (tabs).
  * Safe to call more than once. Called by the init*() of enhancing modules.
  */
 export function enableJs() {
-  document.documentElement.setAttribute("data-cai-js", "");
+  document.documentElement.setAttribute("data-luz-js", "");
 }

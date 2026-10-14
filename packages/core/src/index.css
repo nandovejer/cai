@@ -1,27 +1,27 @@
 /* ==========================================================================
-   CAI Design System — Core
+   LUZ Design System — Core
    ITCSS layer order (increasing specificity):
      1. Settings   — configuration custom properties
      2. Generic    — reset / normalize
      3. Elements   — bare HTML elements
      4. Objects    — layout abstractions (.o-)
-     5. Components — UI components (.cai-)
+     5. Components — UI components (.luz-)
      6. Utilities  — single-purpose helpers (.u-)
      7. Print      — @media print, the last layer
    Every layer is a native CSS cascade layer (@layer) inside one container
-   layer, `cai` (cai.settings … cai.utilities; the full list is in
-   scripts/cai-layers.js). Utilities win over components by order, not by
+   layer, `luz` (luz.settings … luz.utilities; the full list is in
+   scripts/luz-layers.js). Utilities win over components by order, not by
    !important, any unlayered consumer CSS wins over all of core, and a
-   consumer orders CAI as one unit: @layer reset, cai, app;
-   Requires: @cai-ds/tokens (cai-tokens.css) loaded first.
+   consumer orders LUZ as one unit: @layer reset, luz, app;
+   Requires: @luz-ds/tokens (luz-tokens.css) loaded first.
    ========================================================================== */
 
-@layer cai.tokens, cai.themes, cai.settings, cai.generic, cai.elements, cai.objects, cai.components, cai.utilities, cai.site, cai.landing, cai.cms, cai.print;
+@layer luz.tokens, luz.themes, luz.settings, luz.generic, luz.elements, luz.objects, luz.components, luz.utilities, luz.site, luz.landing, luz.cms, luz.print;
 
-@import url("./settings/_settings.css") layer(cai.settings);
-@import url("./generic/_reset.css") layer(cai.generic);
-@import url("./elements/index.css") layer(cai.elements);
-@import url("./objects/_objects.css") layer(cai.objects);
-@import url("./components/index.css") layer(cai.components);
-@import url("./utilities/_utilities.css") layer(cai.utilities);
-@import url("./print/_print.css") layer(cai.print);
+@import url("./settings/_settings.css") layer(luz.settings);
+@import url("./generic/_reset.css") layer(luz.generic);
+@import url("./elements/index.css") layer(luz.elements);
+@import url("./objects/_objects.css") layer(luz.objects);
+@import url("./components/index.css") layer(luz.components);
+@import url("./utilities/_utilities.css") layer(luz.utilities);
+@import url("./print/_print.css") layer(luz.print);

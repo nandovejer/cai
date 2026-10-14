@@ -1,5 +1,5 @@
 /**
- * CAI — release QA runner (what the /qa-release skill runs).
+ * LUZ — release QA runner (what the /qa-release skill runs).
  * Runs, in order, the checks CI runs plus the Playwright suites, records
  * each result, and writes an evidence report to test-results/qa-release/.
  * Then lists what no script can decide: the manual and the browser reviews.
@@ -76,7 +76,7 @@ const uiFiles = changed.filter((f) => /^packages\/(core|site|landing|cms|tokens)
 const components = [...new Set(uiFiles.filter((f) => /components\/[\w-]+\.(css|js)$/.test(f)).map((f) => f.match(/components\/([\w-]+)\./)[1]).filter((n) => !n.startsWith("_") && n !== "index"))].sort();
 const changesets = existsSync(join(root, ".changeset")) ? readdirSync(join(root, ".changeset")).filter((f) => f.endsWith(".md") && f !== "README.md") : [];
 // Open Safari and Firefox reviews live in Claude's memory for this repo (AGENTS.md section 6).
-const ledgerFile = join(homedir(), ".claude", "projects", root.replace(/[\\/]/g, "-"), "memory", "cai-browser-review-pending.md");
+const ledgerFile = join(homedir(), ".claude", "projects", root.replace(/[\\/]/g, "-"), "memory", "luz-browser-review-pending.md");
 const ledger = existsSync(ledgerFile) ? readFileSync(ledgerFile, "utf-8") : null;
 const openRows = ledger
   ? (ledger.split(/^## Open\s*$/m)[1] ?? "").split(/^## /m)[0].split("\n").filter((l) => /^\|\s*\d{4}-\d{2}-\d{2}/.test(l))
@@ -105,7 +105,7 @@ out.push("## Needs a person", "");
 out.push("Nothing below was decided by a script.", "");
 out.push("### Browsers (AGENTS.md section 6)", "");
 out.push("- **Not run here:** the `firefox` and `webkit` Playwright projects. They run only with the owner's permission, through `firefox-reviewer` and `safari-reviewer`.");
-if (ledger === null) out.push("- The pending list `cai-browser-review-pending.md` was not found in Claude's memory: ask what has not been reviewed.");
+if (ledger === null) out.push("- The pending list `luz-browser-review-pending.md` was not found in Claude's memory: ask what has not been reviewed.");
 else if (openRows.length === 0) out.push("- The pending list has **no open rows**.");
 else {
   out.push(`- The pending list has **${openRows.length} open row${openRows.length === 1 ? "" : "s"}**. The security audit gives no OK while any is open (AGENTS.md section 6):`);

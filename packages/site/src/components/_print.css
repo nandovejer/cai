@@ -1,21 +1,21 @@
 /* ==========================================================================
-   CAI Site — print
+   LUZ Site — print
    What a page shell, its search, its skip link and the cookie banner do
-   on paper. Core's print layer (cai.print) sets the colors and the breaks;
-   this hides what only works on a screen. In the cai.site layer, after the screen rules.
+   on paper. Core's print layer (luz.print) sets the colors and the breaks;
+   this hides what only works on a screen. In the luz.site layer, after the screen rules.
    ========================================================================== */
 
 @media print {
-  .cai-site-skip-link,
-  .cai-site-search-trigger,
-  .cai-site-search,
-  .cai-site-consent,
-  [data-cai-search-fallback] {
+  .luz-site-skip-link,
+  .luz-site-search-trigger,
+  .luz-site-search,
+  .luz-site-consent,
+  [data-luz-search-fallback] {
     display: none;
   }
 
   /* The soft glow of the shell is a screen decoration */
-  .cai-site-page--gradient {
+  .luz-site-page--gradient {
     background-image: none;
   }
 }

@@ -1,5 +1,5 @@
 /* ==========================================================================
-   CAI — 3. ELEMENTS · interactive
+   LUZ — 3. ELEMENTS · interactive
    Native disclosure: details, summary. Specificity: type (0,0,1).
    ========================================================================== */
 
@@ -8,59 +8,59 @@
 /* ========================================================================== */
 
 :where(details) {
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  padding: var(--cai-space-sm);
-  margin-block: var(--cai-space-xs);
-  background: var(--cai-surface);
-  transition: background var(--cai-duration-base);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  padding: var(--luz-space-sm);
+  margin-block: var(--luz-space-xs);
+  background: var(--luz-surface);
+  transition: background var(--luz-duration-base);
 }
 
 :where(details[open]) {
-  background: var(--cai-surface);
+  background: var(--luz-surface);
 }
 
 :where(summary) {
   cursor: pointer;
   font-weight: 600;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
   /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
   -webkit-user-select: none;
   user-select: none;
-  padding: var(--cai-space-2xs);
-  margin: calc(-1 * var(--cai-space-sm));
-  margin-bottom: var(--cai-space-xs);
-  border-radius: var(--cai-radius-sm);
-  transition: background var(--cai-duration-fast);
+  padding: var(--luz-space-2xs);
+  margin: calc(-1 * var(--luz-space-sm));
+  margin-bottom: var(--luz-space-xs);
+  border-radius: var(--luz-radius-sm);
+  transition: background var(--luz-duration-fast);
 }
 
 :where(summary:hover) {
-  background: var(--cai-surface-hover);
+  background: var(--luz-surface-hover);
 }
 
 :where(summary:focus-visible) {
-  outline: 2px solid var(--cai-focus-ring);
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
 
 /* ========================================================================== */
-/* Dialog — native modal / non-modal dialog (.cai-modal overrides this)      */
+/* Dialog — native modal / non-modal dialog (.luz-modal overrides this)      */
 /* ========================================================================== */
 
 /* No display here: the browser shows a dialog only while it is open.
    margin: auto gives back what the reset removes, the browser's own centering
-   of a dialog in the top layer. It is on every dialog: .cai-modal is one, and
+   of a dialog in the top layer. It is on every dialog: .luz-modal is one, and
    a component that places its dialog elsewhere (site search) sets its own
    margin and wins by layer. */
 :where(dialog) {
   margin: auto;
-  padding: var(--cai-space-lg);
-  color: var(--cai-text-primary);
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  box-shadow: var(--cai-shadow-lg);
+  padding: var(--luz-space-lg);
+  color: var(--luz-text-primary);
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  box-shadow: var(--luz-shadow-lg);
   max-width: min(90vw, 600px);
   max-height: 90vh;
   max-height: 90dvh;
@@ -69,10 +69,10 @@
 
 /* The reset zeroes every margin: space the dialog's own blocks */
 :where(dialog > * + *) {
-  margin-block-start: var(--cai-space-sm);
+  margin-block-start: var(--luz-space-sm);
 }
 
 /* A pseudo-element cannot go inside :where(), so this is (0,0,1) */
 :where(dialog)::backdrop {
-  background: var(--cai-scrim);
+  background: var(--luz-scrim);
 }

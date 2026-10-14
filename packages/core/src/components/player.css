@@ -1,8 +1,8 @@
 /* --------------------------------------------------------------------------
-   CAI Component: player
+   LUZ Component: player
    Media player (video, audio, MIDI)
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
@@ -10,98 +10,98 @@
    itself is narrow, wherever it is placed. Inline-size containment means the
    player takes its width from its parent, so a parent that sizes it to its
    content (an inline-flex item, a float) needs a width of its own. */
-.cai-player {
-  background: var(--cai-surface-strong);
-  border: 1px solid var(--cai-divider);
+.luz-player {
+  background: var(--luz-surface-strong);
+  border: 1px solid var(--luz-divider);
   overflow: hidden;
   container-type: inline-size;
 }
 
-.cai-player-media-wrap {
+.luz-player-media-wrap {
   position: relative;
   inline-size: 100%;
-  background: var(--cai-surface-media);
+  background: var(--luz-surface-media);
   cursor: pointer;
   line-height: 0;
 }
 
-.cai-player-video {
+.luz-player-video {
   inline-size: 100%;
   max-block-size: 360px;
   display: block;
   object-fit: contain;
 }
 
-.cai-player-overlay {
+.luz-player-overlay {
   position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
-  transition: opacity var(--cai-duration-fast);
+  transition: opacity var(--luz-duration-fast);
   pointer-events: none;
 }
 
-.cai-player-media-wrap.is-paused .cai-player-overlay {
+.luz-player-media-wrap.is-paused .luz-player-overlay {
   opacity: 1;
 }
 
-.cai-play-icon {
+.luz-play-icon {
   inline-size: 56px;
   block-size: 56px;
-  color: var(--cai-text-on-fill);
-  filter: drop-shadow(var(--cai-shadow-icon));
+  color: var(--luz-text-on-fill);
+  filter: drop-shadow(var(--luz-shadow-icon));
   opacity: 0.9;
 }
 
-.cai-player-controls {
+.luz-player-controls {
   display: flex;
   flex-direction: column;
-  gap: var(--cai-space-2xs);
-  padding: var(--cai-space-xs) var(--cai-space-sm);
-  background: var(--cai-surface-strong);
-  border-block-start: 1px solid var(--cai-divider);
+  gap: var(--luz-space-2xs);
+  padding: var(--luz-space-xs) var(--luz-space-sm);
+  background: var(--luz-surface-strong);
+  border-block-start: 1px solid var(--luz-divider);
 }
 
-.cai-player-controls--audio {
+.luz-player-controls--audio {
   flex-direction: row;
   align-items: center;
-  gap: var(--cai-space-sm);
-  padding: var(--cai-space-sm) var(--cai-space-md);
+  gap: var(--luz-space-sm);
+  padding: var(--luz-space-sm) var(--luz-space-md);
 }
 
-.cai-player-progress-row {
+.luz-player-progress-row {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
-.cai-player-progress-row--audio {
+.luz-player-progress-row--audio {
   flex: 1;
   min-width: 0;
 }
 
-.cai-player-time {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+.luz-player-time {
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
   white-space: nowrap;
   min-inline-size: 32px;
 }
 
-.cai-player-btns {
+.luz-player-btns {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
 }
 
-.cai-player-spacer {
+.luz-player-spacer {
   flex: 1;
 }
 
-.cai-player-btn {
+.luz-player-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -110,25 +110,25 @@
   padding: 0;
   background: transparent;
   border: none;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
   cursor: pointer;
-  border-radius: var(--cai-radius-md);
-  transition: background var(--cai-duration-fast),
-    color var(--cai-duration-fast);
+  border-radius: var(--luz-radius-md);
+  transition: background var(--luz-duration-fast),
+    color var(--luz-duration-fast);
   flex-shrink: 0;
 }
 
-.cai-player-btn:hover {
-  background: var(--cai-surface-hover);
-  color: var(--cai-brand-primary);
+.luz-player-btn:hover {
+  background: var(--luz-surface-hover);
+  color: var(--luz-brand-primary);
 }
 
-.cai-player-btn:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-player-btn:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-.cai-player-btn svg {
+.luz-player-btn svg {
   inline-size: 16px;
   block-size: 16px;
   pointer-events: none;
@@ -136,65 +136,65 @@
 
 /* Captions button: aria-pressed is the state; when on, it takes the brand
    colour and an underline, as the selected tab does (not colour alone) */
-.cai-player-captions[aria-pressed="true"] {
-  color: var(--cai-brand-primary);
-  border-block-end: 2px solid var(--cai-brand-primary);
+.luz-player-captions[aria-pressed="true"] {
+  color: var(--luz-brand-primary);
+  border-block-end: 2px solid var(--luz-brand-primary);
 }
 
 /* Track select: the form field, sized to sit in the control row */
-.cai-player-tracks {
+.luz-player-tracks {
   inline-size: auto;
-  block-size: var(--cai-control-md);
+  block-size: var(--luz-control-md);
 }
 
 /* A captions control is hidden while the media has no track to show */
-.cai-player [hidden] {
+.luz-player [hidden] {
   display: none;
 }
 
 /* Cues are drawn by the browser: light text on the media surface, as the
    play icon on the video. The reader's own caption settings still win. */
-.cai-player-video::cue {
-  color: var(--cai-text-on-fill);
-  background-color: var(--cai-surface-media);
+.luz-player-video::cue {
+  color: var(--luz-text-on-fill);
+  background-color: var(--luz-surface-media);
 }
 
-/* Full screen (the .cai-player-fullscreen button): the picture takes the
+/* Full screen (the .luz-player-fullscreen button): the picture takes the
    height the controls leave, instead of its 360px cap */
-.cai-player:fullscreen {
+.luz-player:fullscreen {
   display: flex;
   flex-direction: column;
 }
 
-.cai-player:fullscreen .cai-player-media-wrap {
+.luz-player:fullscreen .luz-player-media-wrap {
   flex: 1;
   min-block-size: 0;
 }
 
-.cai-player:fullscreen .cai-player-video {
+.luz-player:fullscreen .luz-player-video {
   block-size: 100%;
   max-block-size: none;
 }
 
-.cai-player-vol-wrap {
+.luz-player-vol-wrap {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-3xs);
+  gap: var(--luz-space-3xs);
 }
 
 /* Seek and volume bars are native <input type="range">: pointer, touch,
    keyboard (arrows, Home, End, PageUp/PageDown) and the slider semantics come
-   from the browser. JS only feeds --cai-seek (played share) and --cai-buf
+   from the browser. JS only feeds --luz-seek (played share) and --luz-buf
    (buffered share), both percentages. The element is 24px tall (WCAG 2.5.8);
    the visible track is 4px inside a 1px edge of the field border colour, 3:1
    on the controls; the played part keeps 3:1 on the buffered (surface-pressed)
    and unbuffered (surface-muted) parts in every mode (WCAG 1.4.11).
-   --cai-seek-to is the side the bar fills towards: a range input runs right
+   --luz-seek-to is the side the bar fills towards: a range input runs right
    to left in RTL, and the gradient (forced colours included) runs with it. */
-.cai-player-seekbar {
-  --cai-seek: 0%;
-  --cai-buf: 0%;
-  --cai-seek-to: right;
+.luz-player-seekbar {
+  --luz-seek: 0%;
+  --luz-buf: 0%;
+  --luz-seek-to: right;
 
   appearance: none;
   flex: 1;
@@ -206,102 +206,102 @@
   cursor: pointer;
 }
 
-.cai-player-seekbar::-webkit-slider-runnable-track {
+.luz-player-seekbar::-webkit-slider-runnable-track {
   block-size: 4px;
-  border: 1px solid var(--cai-input-border);
-  border-radius: var(--cai-radius-sm);
+  border: 1px solid var(--luz-input-border);
+  border-radius: var(--luz-radius-sm);
   background: linear-gradient(
-    to var(--cai-seek-to),
-    var(--cai-brand-primary) var(--cai-seek),
-    var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
-    var(--cai-surface-muted) var(--cai-buf)
+    to var(--luz-seek-to),
+    var(--luz-brand-primary) var(--luz-seek),
+    var(--luz-surface-pressed) var(--luz-seek) var(--luz-buf),
+    var(--luz-surface-muted) var(--luz-buf)
   );
 }
 
-.cai-player-seekbar::-moz-range-track {
+.luz-player-seekbar::-moz-range-track {
   block-size: 4px;
-  border: 1px solid var(--cai-input-border);
-  border-radius: var(--cai-radius-sm);
+  border: 1px solid var(--luz-input-border);
+  border-radius: var(--luz-radius-sm);
   background: linear-gradient(
-    to var(--cai-seek-to),
-    var(--cai-brand-primary) var(--cai-seek),
-    var(--cai-surface-pressed) var(--cai-seek) var(--cai-buf),
-    var(--cai-surface-muted) var(--cai-buf)
+    to var(--luz-seek-to),
+    var(--luz-brand-primary) var(--luz-seek),
+    var(--luz-surface-pressed) var(--luz-seek) var(--luz-buf),
+    var(--luz-surface-muted) var(--luz-buf)
   );
 }
 
-.cai-player-seekbar:dir(rtl) {
-  --cai-seek-to: left;
+.luz-player-seekbar:dir(rtl) {
+  --luz-seek-to: left;
 }
 
-.cai-player-seekbar::-webkit-slider-thumb {
+.luz-player-seekbar::-webkit-slider-thumb {
   appearance: none;
   inline-size: 12px;
   block-size: 12px;
-  margin-block-start: calc(var(--cai-space-2xs) * -1); /* centre the 12px thumb on the 4px track */
+  margin-block-start: calc(var(--luz-space-2xs) * -1); /* centre the 12px thumb on the 4px track */
   border: 0;
   border-radius: 50%;
-  background: var(--cai-brand-primary);
+  background: var(--luz-brand-primary);
 }
 
-.cai-player-seekbar::-moz-range-thumb {
+.luz-player-seekbar::-moz-range-thumb {
   inline-size: 12px;
   block-size: 12px;
   border: 0;
   border-radius: 50%;
-  background: var(--cai-brand-primary);
+  background: var(--luz-brand-primary);
 }
 
-.cai-player-seekbar:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-player-seekbar:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
 /* No JavaScript: the native controls of the media element are on screen and
    the custom ones would do nothing, so they stay hidden. The MIDI player has
    no native controls: it shows a download link instead. */
-:root:not([data-cai-js]) .cai-player-controls,
-:root:not([data-cai-js]) .cai-player-overlay {
+:root:not([data-luz-js]) .luz-player-controls,
+:root:not([data-luz-js]) .luz-player-overlay {
   display: none;
 }
 
-.cai-player-fallback {
+.luz-player-fallback {
   margin: 0;
-  padding: var(--cai-space-sm) var(--cai-space-md);
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
+  padding: var(--luz-space-sm) var(--luz-space-md);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
-[data-cai-js] .cai-player-fallback {
+[data-luz-js] .luz-player-fallback {
   display: none;
 }
 
-.cai-player-volbar {
+.luz-player-volbar {
   flex: none;
   inline-size: 72px;
 }
 
-.cai-player-midi-status {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
-  margin-inline-start: var(--cai-space-xs);
+.luz-player-midi-status {
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
+  margin-inline-start: var(--luz-space-xs);
   white-space: nowrap;
 }
 
 @container (max-width: 480px) {
-  .cai-player:not([data-type="video"]) .cai-player-volbar {
+  .luz-player:not([data-type="video"]) .luz-player-volbar {
     display: none;
   }
 
   /* Audio player — stack controls vertically on very small screens */
-  .cai-player-controls--audio {
+  .luz-player-controls--audio {
     flex-direction: column;
     align-items: stretch;
-    gap: var(--cai-space-xs);
+    gap: var(--luz-space-xs);
   }
 
-  .cai-player-progress-row--audio {
+  .luz-player-progress-row--audio {
     flex: unset;
   }
 }
@@ -311,28 +311,28 @@
    One rule per engine: a selector list with a pseudo-element the browser
    does not know is dropped whole. */
 @media (forced-colors: active) {
-  .cai-player-captions[aria-pressed="true"] {
+  .luz-player-captions[aria-pressed="true"] {
     border-block-end-color: Highlight;
   }
 
-  .cai-player-seekbar::-webkit-slider-runnable-track {
+  .luz-player-seekbar::-webkit-slider-runnable-track {
     border-color: CanvasText;
     forced-color-adjust: none;
-    background: linear-gradient(to var(--cai-seek-to), Highlight var(--cai-seek), Canvas var(--cai-seek));
+    background: linear-gradient(to var(--luz-seek-to), Highlight var(--luz-seek), Canvas var(--luz-seek));
   }
 
-  .cai-player-seekbar::-moz-range-track {
+  .luz-player-seekbar::-moz-range-track {
     border-color: CanvasText;
     forced-color-adjust: none;
-    background: linear-gradient(to var(--cai-seek-to), Highlight var(--cai-seek), Canvas var(--cai-seek));
+    background: linear-gradient(to var(--luz-seek-to), Highlight var(--luz-seek), Canvas var(--luz-seek));
   }
 
-  .cai-player-seekbar::-webkit-slider-thumb {
+  .luz-player-seekbar::-webkit-slider-thumb {
     forced-color-adjust: none;
     background: Highlight;
   }
 
-  .cai-player-seekbar::-moz-range-thumb {
+  .luz-player-seekbar::-moz-range-thumb {
     forced-color-adjust: none;
     background: Highlight;
   }

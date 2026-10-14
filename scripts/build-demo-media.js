@@ -1,5 +1,5 @@
 /**
- * CAI — demo media for the player examples in apps/docs.
+ * LUZ — demo media for the player examples in apps/docs.
  * Every file is generated here, so it is the project's own work under the
  * repository's MIT licence (no third-party recordings, footage or scores).
  *
@@ -70,8 +70,8 @@ const bass = [45, 43, 41, 40, 45, 43, 41, 40, 45, 41, 43, 40, 45, 41, 40, 45].fl
 
 const tempo = Math.round(60_000_000 / 96);
 const conductor = chunk("MTrk", [
-  ...text(0x03, "CAI demo melody"),
-  ...text(0x02, "MIT License, CAI Design System"),
+  ...text(0x03, "LUZ demo melody"),
+  ...text(0x02, "MIT License, LUZ Design System"),
   0x00, 0xff, 0x51, 0x03, tempo >> 16, (tempo >> 8) & 0xff, tempo & 0xff,
   0x00, 0xff, 0x58, 0x04, 4, 2, 24, 8,
   0x00, 0xff, 0x2f, 0x00,

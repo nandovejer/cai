@@ -1,14 +1,14 @@
 {
-  "name": "@cai-ds/core",
-  "version": "2.0.0",
-  "description": "CAI Design System — CSS components and vanilla JS behaviors",
+  "name": "@luz-ds/core",
+  "version": "0.0.0",
+  "description": "LUZ Design System — CSS components and vanilla JS behaviors",
   "license": "MIT",
   "type": "module",
-  "main": "dist/cai.js",
+  "main": "dist/luz.js",
   "exports": {
-    ".": "./dist/cai.js",
-    "./css": "./dist/cai.css",
-    "./css/min": "./dist/cai.min.css",
+    ".": "./dist/luz.js",
+    "./css": "./dist/luz.css",
+    "./css/min": "./dist/luz.min.css",
     "./base.css": "./dist/base.css",
     "./print.css": "./dist/print.css",
     "./classless.css": "./dist/classless.css",
@@ -33,12 +33,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/nandovejer/cai.git",
+    "url": "https://github.com/nandovejer/luz.git",
     "directory": "packages/core"
   },
-  "homepage": "https://github.com/nandovejer/cai#readme",
+  "homepage": "https://github.com/nandovejer/luz#readme",
   "bugs": {
-    "url": "https://github.com/nandovejer/cai/issues"
+    "url": "https://github.com/nandovejer/luz/issues"
   },
   "keywords": [
     "design-system",
@@ -51,16 +51,16 @@
   ],
   "sideEffects": [
     "*.css",
-    "./dist/cai.js",
-    "./dist/cai.min.js"
+    "./dist/luz.js",
+    "./dist/luz.min.js"
   ],
   "publishConfig": {
     "access": "public"
   },
   "peerDependencies": {
-    "@cai-ds/tokens": "^2.0.0"
+    "@luz-ds/tokens": "^0.1.0"
   },
   "devDependencies": {
-    "@cai-ds/tokens": "workspace:*"
+    "@luz-ds/tokens": "workspace:*"
   }
 }

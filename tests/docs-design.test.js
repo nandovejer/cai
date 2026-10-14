@@ -9,7 +9,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { site } from "./helpers/docs-site.js";
-import { SITE_KINDS } from "../scripts/cai-packages.js";
+import { SITE_KINDS } from "../scripts/luz-packages.js";
 import { MODES, colorTokens, contrast, familyOf, formatRatio, resolveColor, tokensUsedBy } from "./helpers/design-tokens.js";
 
 const viewPages = site.pages.filter(
@@ -27,7 +27,7 @@ describe("Design tab of every component and pattern page", () => {
   it("Do and don't: a Do then a Don't, labelled with a word, never a live barrier (a11y.md TAB-20)", () => {
     for (const page of viewPages) {
       const html = section(page, "do-dont");
-      const items = [...html.matchAll(/<figure class="docs-dodont__item docs-dodont__item--(do|dont)">\s*<figcaption><strong class="docs-dodont__verdict">([^<]+)<\/strong>([^<]|<(?!\/figcaption>))+<\/figcaption>\s*(<div class="docs-dodont__stage"[^>]*>|<pre class="cai-code-block")/g)];
+      const items = [...html.matchAll(/<figure class="docs-dodont__item docs-dodont__item--(do|dont)">\s*<figcaption><strong class="docs-dodont__verdict">([^<]+)<\/strong>([^<]|<(?!\/figcaption>))+<\/figcaption>\s*(<div class="docs-dodont__stage"[^>]*>|<pre class="luz-code-block")/g)];
       // One pair for each lesson of the page: a Do, then its Don't
       const verdicts = items.map((m) => [m[1], m[2]]);
       expect(verdicts.length, page.file).toBeGreaterThanOrEqual(2);
@@ -50,7 +50,7 @@ describe("Design tab of every component and pattern page", () => {
       for (const [row] of html.matchAll(/<tr><td data-label="Part">[\s\S]*?<\/tr>/g)) {
         const cells = [...row.matchAll(/<td data-label="[^"]+"><div>([\s\S]*?)<\/div><\/td>/g)].map((m) => m[1]);
         const [part, pair, ...rest] = cells;
-        const tokens = [...pair.matchAll(/<code>--cai-([\w-]+)<\/code>/g)].map((m) => m[1]);
+        const tokens = [...pair.matchAll(/<code>--luz-([\w-]+)<\/code>/g)].map((m) => m[1]);
         const [fg, ...bg] = tokens;
         const min = Number(rest.at(-1).replace(":1", ""));
         MODES.forEach((mode, i) => {
@@ -69,7 +69,7 @@ describe("Design tab of every component and pattern page", () => {
       const html = section(page, "tokens");
       const listed = [];
       for (const [, route, dd] of html.matchAll(/<dt><a href="([^"]+)">[^<]+<\/a><\/dt><dd>([\s\S]*?)<\/dd>/g)) {
-        for (const [, token] of dd.matchAll(/<code>(--cai-[\w-]+)<\/code>/g)) {
+        for (const [, token] of dd.matchAll(/<code>(--luz-[\w-]+)<\/code>/g)) {
           expect(familyOf(token)[1], `${page.file} ${token}`).toBe(route);
           listed.push(token);
         }
@@ -85,11 +85,11 @@ describe("Token gallery (a11y.md HUB-8)", () => {
   const color = site.byRoute.get("/docs/tokens/color/").body;
 
   it("shows every semantic colour with its job and its value in light, dark and high contrast, as text", () => {
-    const cards = [...color.matchAll(/<li class="docs-token" id="cai-([\w-]+)">([\s\S]*?)<\/li>/g)];
-    expect(cards.map((m) => `--cai-${m[1]}`)).toEqual(colorTokens());
+    const cards = [...color.matchAll(/<li class="docs-token" id="luz-([\w-]+)">([\s\S]*?)<\/li>/g)];
+    expect(cards.map((m) => `--luz-${m[1]}`)).toEqual(colorTokens());
     for (const [, name, card] of cards) {
-      expect(card, name).toMatch(new RegExp(`<code class="u-select-all">--cai-${name}</code>\\s*<span class="docs-token__role">[^<]{8,}</span>`));
-      const modes = [...card.matchAll(/<span class="docs-swatch" data-theme="([\w-]+)" style="--v: var\(--cai-([\w-]+)\)"><\/span>([^<]+)<code>([^<]+)<\/code>/g)];
+      expect(card, name).toMatch(new RegExp(`<code class="u-select-all">--luz-${name}</code>\\s*<span class="docs-token__role">[^<]{8,}</span>`));
+      const modes = [...card.matchAll(/<span class="docs-swatch" data-theme="([\w-]+)" style="--v: var\(--luz-([\w-]+)\)"><\/span>([^<]+)<code>([^<]+)<\/code>/g)];
       expect(modes.map((m) => [m[1], m[2], m[3].trim(), m[4]]), name).toEqual(
         MODES.map((mode, i) => [mode, name, ["Light", "Dark", "High contrast"][i], resolveColor(mode, name)]),
       );
@@ -100,7 +100,7 @@ describe("Token gallery (a11y.md HUB-8)", () => {
     const shadows = site.byRoute.get("/docs/tokens/shadows/").body;
     const { shadow } = JSON.parse(readFileSync(new URL("../packages/tokens/tokens.json", import.meta.url), "utf-8"));
     for (const [step, { value }] of Object.entries(shadow)) {
-      expect(shadows, step).toContain(`<code>--cai-shadow-${step}</code><br>${value}</div>`);
+      expect(shadows, step).toContain(`<code>--luz-shadow-${step}</code><br>${value}</div>`);
     }
   });
 });

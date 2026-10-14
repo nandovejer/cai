@@ -1,68 +1,68 @@
 /* --------------------------------------------------------------------------
-   CAI Component: alert
+   LUZ Component: alert
    Alert (info, success, warning, error)
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-alert {
+.luz-alert {
   display: flex;
-  gap: var(--cai-space-sm);
-  padding: var(--cai-space-sm) var(--cai-space-md);
+  gap: var(--luz-space-sm);
+  padding: var(--luz-space-sm) var(--luz-space-md);
   border-inline-start: 3px solid;
-  border-radius: var(--cai-radius-md);
-  margin-bottom: var(--cai-space-sm);
-  transition: background var(--cai-duration-base);
+  border-radius: var(--luz-radius-md);
+  margin-bottom: var(--luz-space-sm);
+  transition: background var(--luz-duration-base);
 }
 
-.cai-alert__icon {
+.luz-alert__icon {
   flex-shrink: 0;
-  margin-block-start: var(--cai-space-3xs);
-  font-size: var(--cai-text-base);
+  margin-block-start: var(--luz-space-3xs);
+  font-size: var(--luz-text-base);
 }
 
-.cai-alert__title {
-  font-size: var(--cai-text-md);
+.luz-alert__title {
+  font-size: var(--luz-text-md);
   font-weight: 600;
-  margin-bottom: var(--cai-space-3xs);
+  margin-bottom: var(--luz-space-3xs);
 }
 
-.cai-alert__body {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
+.luz-alert__body {
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
-.cai-alert--info {
-  background: var(--cai-color-info-bg);
-  border-color: var(--cai-color-info);
+.luz-alert--info {
+  background: var(--luz-color-info-bg);
+  border-color: var(--luz-color-info);
 }
-.cai-alert--success {
-  background: var(--cai-color-success-bg);
-  border-color: var(--cai-color-success);
+.luz-alert--success {
+  background: var(--luz-color-success-bg);
+  border-color: var(--luz-color-success);
 }
-.cai-alert--warning {
-  background: var(--cai-color-warning-bg);
-  border-color: var(--cai-color-warning-accent);
+.luz-alert--warning {
+  background: var(--luz-color-warning-bg);
+  border-color: var(--luz-color-warning-accent);
 }
-.cai-alert--error {
-  background: var(--cai-color-danger-bg);
-  border-color: var(--cai-color-danger);
+.luz-alert--error {
+  background: var(--luz-color-danger-bg);
+  border-color: var(--luz-color-danger);
 }
 
-.cai-alert--info .cai-alert__icon,
-.cai-alert--info .cai-alert__title {
-  color: var(--cai-color-info);
+.luz-alert--info .luz-alert__icon,
+.luz-alert--info .luz-alert__title {
+  color: var(--luz-color-info);
 }
-.cai-alert--success .cai-alert__icon,
-.cai-alert--success .cai-alert__title {
-  color: var(--cai-color-success);
+.luz-alert--success .luz-alert__icon,
+.luz-alert--success .luz-alert__title {
+  color: var(--luz-color-success);
 }
-.cai-alert--warning .cai-alert__icon,
-.cai-alert--warning .cai-alert__title {
-  color: var(--cai-color-warning);
+.luz-alert--warning .luz-alert__icon,
+.luz-alert--warning .luz-alert__title {
+  color: var(--luz-color-warning);
 }
-.cai-alert--error .cai-alert__icon,
-.cai-alert--error .cai-alert__title {
-  color: var(--cai-color-danger);
+.luz-alert--error .luz-alert__icon,
+.luz-alert--error .luz-alert__title {
+  color: var(--luz-color-danger);
 }

@@ -1,5 +1,5 @@
 /**
- * CAI — initCopyButtons() is idempotent (PRINCIPLES.md §3: `init*()` is
+ * LUZ — initCopyButtons() is idempotent (PRINCIPLES.md §3: `init*()` is
  * idempotent). Calling it again must not add a second click listener: one
  * click on a copy button writes to the clipboard once.
  *
@@ -38,8 +38,8 @@ const saved = {};
 beforeEach(() => {
   writes = [];
   button = new FakeElement();
-  button.dataset = { copy: "--cai-surface-page" };
-  button.closest = (selector) => (selector === ".cai-copy-btn" ? button : null);
+  button.dataset = { copy: "--luz-surface-page" };
+  button.closest = (selector) => (selector === ".luz-copy-btn" ? button : null);
   const body = new FakeElement();
   const region = new FakeElement();
   for (const key of ["document", "navigator"]) saved[key] = Object.getOwnPropertyDescriptor(globalThis, key);
@@ -84,7 +84,7 @@ describe("initCopyButtons", () => {
     initCopyButtons();
     initCopyButtons();
     await click();
-    expect(writes).toEqual(["--cai-surface-page"]);
+    expect(writes).toEqual(["--luz-surface-page"]);
   });
 
   it("still copies after a single call", async () => {

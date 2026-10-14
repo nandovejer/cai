@@ -1,7 +1,7 @@
 /**
- * CAI Design System — Modal & dialog
+ * LUZ Design System — Modal & dialog
  *
- * A modal is a native <dialog class="cai-modal">. The browser already gives
+ * A modal is a native <dialog class="luz-modal">. The browser already gives
  * it focus trapping, Escape, an inert page behind it and focus restoration.
  * Triggers are declarative, with no JavaScript:
  *

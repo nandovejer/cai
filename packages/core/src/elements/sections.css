@@ -1,15 +1,15 @@
 /* ==========================================================================
-   CAI — 3. ELEMENTS · sections
+   LUZ — 3. ELEMENTS · sections
    Headings. Specificity: type (0,0,1).
    ========================================================================== */
 
 /* Headings — use the heading config token (defaults to serif) */
 :where(h1, h2, h3, h4, h5, h6) {
-  font-family: var(--cai-font-heading);
+  font-family: var(--luz-font-heading);
   font-weight: 300;
   line-height: 1.2;
   letter-spacing: -0.02em;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
 }
 
 /* Spacing between letters breaks the joins of Arabic script */
@@ -24,19 +24,19 @@
 
 :where(address) {
   font-style: normal;
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 :where(hgroup > p) {
-  margin-block-start: var(--cai-space-2xs);
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
+  margin-block-start: var(--luz-space-2xs);
+  font-size: var(--luz-text-md);
+  color: var(--luz-text-secondary);
 }
 
 /* Navigation stays in the sans, as controls, labels and tables do (they have
    their component's class): running text is the serif, a list of links is
    not. */
 :where(nav) {
-  font-family: var(--cai-font-sans);
+  font-family: var(--luz-font-sans);
   line-height: 1.5;
 }

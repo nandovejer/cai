@@ -1,10 +1,10 @@
 // @ts-check
 /**
- * CAI — visual regression of the component demos.
+ * LUZ — visual regression of the component demos.
  * Every `[data-docs-specimen]` of a component page, in light, dark and high
  * contrast, compared with the PNG kept in `visual.spec.js-snapshots/`.
  *
- * Chromium on Linux only: text is drawn by the system's fonts (CAI ships the
+ * Chromium on Linux only: text is drawn by the system's fonts (LUZ ships the
  * system stacks), so a snapshot is valid on the machine image that made it.
  * Other projects and systems skip. The tolerance is set in
  * playwright.config.js (expect.toHaveScreenshot).

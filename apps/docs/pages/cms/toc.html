@@ -1,28 +1,28 @@
-<!-- cai:page
+<!-- luz:page
 title: Table of contents
 description: Lists the sections of a long article, beside the text when there is room and above it when there is not.
 area: cms
 order: 2
 group: patterns
-files: .cai-cms-article, __layout, .cai-cms-toc, __title, __list
+files: .luz-cms-article, __layout, .luz-cms-toc, __title, __list
 toc: h2,h3
 -->
     <div class="docs-component" id="p-toc">
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <article class="cai-cms-article" id="toc-demo">
-              <div class="cai-cms-article__layout">
-                <nav class="cai-cms-toc" aria-labelledby="toc-demo-title" data-cai-spy>
-                  <h3 class="cai-cms-toc__title" id="toc-demo-title">Contents</h3>
-                  <ol class="cai-cms-toc__list">
+            <article class="luz-cms-article" id="toc-demo">
+              <div class="luz-cms-article__layout">
+                <nav class="luz-cms-toc" aria-labelledby="toc-demo-title" data-luz-spy>
+                  <h3 class="luz-cms-toc__title" id="toc-demo-title">Contents</h3>
+                  <ol class="luz-cms-toc__list">
                     <li><a href="#toc-demo-method">How the readings were taken</a></li>
                     <li><a href="#toc-demo-level">Four centimetres in ten years</a></li>
                     <li><a href="#toc-demo-storms">Storms that reach the walls</a></li>
                     <li><a href="#toc-demo-next">What the council plans next</a></li>
                   </ol>
                 </nav>
-                <div class="cai-prose">
+                <div class="luz-prose">
                   <p>Since March 2016, a group of volunteers has read the tide gauge in the port at six in the morning and six in the evening, every day of the year.</p>
                   <h3 id="toc-demo-method">How the readings were taken</h3>
                   <p>Each reading is the height of the water against the gauge, to the nearest centimetre, with the time, the wind and the state of the sea. Two people read it, and a third checks the sheet the same week.</p>
@@ -40,30 +40,30 @@ toc: h2,h3
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>The mark on the section in view needs core's script; without it, no link is marked. Beside the text, the contents sit at the inline end but come first in the source, so Tab reaches them before the text. Not yet tested with a screen reader.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Table of contents documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Table of contents documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-toc" aria-label="Copy the table of contents markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-toc" aria-label="Copy the table of contents markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Table of contents markup"><code id="code-toc">&lt;article class=&quot;cai-cms-article&quot;&gt;
-  &lt;header class=&quot;cai-cms-article-header&quot;&gt;…&lt;/header&gt;
-  &lt;div class=&quot;cai-cms-article__layout&quot;&gt;
-    &lt;nav class=&quot;cai-cms-toc&quot; aria-labelledby=&quot;toc-title&quot; data-cai-spy&gt;
-      &lt;h2 class=&quot;cai-cms-toc__title&quot; id=&quot;toc-title&quot;&gt;Contents&lt;/h2&gt;
-      &lt;ol class=&quot;cai-cms-toc__list&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Table of contents markup"><code id="code-toc">&lt;article class=&quot;luz-cms-article&quot;&gt;
+  &lt;header class=&quot;luz-cms-article-header&quot;&gt;…&lt;/header&gt;
+  &lt;div class=&quot;luz-cms-article__layout&quot;&gt;
+    &lt;nav class=&quot;luz-cms-toc&quot; aria-labelledby=&quot;toc-title&quot; data-luz-spy&gt;
+      &lt;h2 class=&quot;luz-cms-toc__title&quot; id=&quot;toc-title&quot;&gt;Contents&lt;/h2&gt;
+      &lt;ol class=&quot;luz-cms-toc__list&quot;&gt;
         &lt;li&gt;&lt;a href=&quot;#method&quot;&gt;How the readings were taken&lt;/a&gt;&lt;/li&gt;
         &lt;li&gt;&lt;a href=&quot;#level&quot;&gt;Four centimetres in ten years&lt;/a&gt;&lt;/li&gt;
         &lt;li&gt;&lt;a href=&quot;#storms&quot;&gt;Storms that reach the walls&lt;/a&gt;&lt;/li&gt;
       &lt;/ol&gt;
     &lt;/nav&gt;
-    &lt;div class=&quot;cai-prose&quot;&gt;
+    &lt;div class=&quot;luz-prose&quot;&gt;
       &lt;p&gt;Since March 2016, a group of volunteers has read the tide gauge…&lt;/p&gt;
       &lt;h2 id=&quot;method&quot;&gt;How the readings were taken&lt;/h2&gt;
       &lt;p&gt;…&lt;/p&gt;
@@ -77,29 +77,29 @@ toc: h2,h3
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>There are no modifiers. The contents are optional: without them, the text takes the first column alone.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Table of contents parts" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Table of contents parts" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or property</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or property"><div><code>.cai-cms-article</code></div></td><td data-label="What it does"><div>The story: its width decides the layout, not the window's (a size container)</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.cai-cms-article__layout</code></div></td><td data-label="What it does"><div>The contents, then the text. When the article is 46rem wide or more: the text in the first column, the contents in a 13rem column at the inline end, 48 px apart; one column below that</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.cai-cms-toc</code></div></td><td data-label="What it does"><div>The <code>&lt;nav&gt;</code>. Beside the text it stays in view while the text scrolls, and a list taller than the window scrolls inside it</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>data-cai-spy</code> on <code>.cai-cms-toc</code></div></td><td data-label="What it does"><div>Core's scroll spy marks the link of the section in view. Optional</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.cai-cms-toc__title</code></div></td><td data-label="What it does"><div>The heading of the contents, in the sans, semibold</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>.cai-cms-toc__list</code></div></td><td data-label="What it does"><div>The list, with no markers and a rule along its inline start; one link a line</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>--cai-cms-toc-top</code></div></td><td data-label="What it does"><div>The space above the contents while they stay in view: 24 px, or 24 px under site's sticky header (<code>.cai-site-header--sticky</code>). Set it on <code>.cai-cms-toc</code> for a header of your own</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>.luz-cms-article</code></div></td><td data-label="What it does"><div>The story: its width decides the layout, not the window's (a size container)</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>.luz-cms-article__layout</code></div></td><td data-label="What it does"><div>The contents, then the text. When the article is 46rem wide or more: the text in the first column, the contents in a 13rem column at the inline end, 48 px apart; one column below that</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>.luz-cms-toc</code></div></td><td data-label="What it does"><div>The <code>&lt;nav&gt;</code>. Beside the text it stays in view while the text scrolls, and a list taller than the window scrolls inside it</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>data-luz-spy</code> on <code>.luz-cms-toc</code></div></td><td data-label="What it does"><div>Core's scroll spy marks the link of the section in view. Optional</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>.luz-cms-toc__title</code></div></td><td data-label="What it does"><div>The heading of the contents, in the sans, semibold</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>.luz-cms-toc__list</code></div></td><td data-label="What it does"><div>The list, with no markers and a rule along its inline start; one link a line</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>--luz-cms-toc-top</code></div></td><td data-label="What it does"><div>The space above the contents while they stay in view: 24 px, or 24 px under site's sticky header (<code>.luz-site-header--sticky</code>). Set it on <code>.luz-cms-toc</code> for a header of your own</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>A CSS grid inside a size container, from <code>@cai-ds/cms</code>. No JavaScript of its own.</p>
+            <p>A CSS grid inside a size container, from <code>@luz-ds/cms</code>. No JavaScript of its own.</p>
             <ul>
               <li>The layout follows the room the article has: in a page with a sidebar, or with larger text, the contents go above the text sooner. Below 46rem they are a plain list above the text, and do not stay in view: they would cover it.</li>
               <li>The contents come first in the source, so they are read first and Tab reaches them first, in both layouts. The text is one element, the second child of <code>__layout</code>; in a CMS, the element that holds the post's content.</li>
               <li>Each link points at the <code>id</code> of a section heading. Most CMSs can write those ids: in WordPress, the HTML anchor of each heading block.</li>
-              <li>With core's script (<code>cai.js</code>, or <code>initSidebar()</code> from <code>@cai-ds/core/sidebar</code>), the link of the section in view gets <code>aria-current="true"</code>, which draws a bar and makes it semibold. The script finds the links by the <code>data-cai-spy</code> attribute on the <code>&lt;nav&gt;</code>: every link to a section of the page inside it.</li>
+              <li>With core's script (<code>luz.js</code>, or <code>initSidebar()</code> from <code>@luz-ds/core/sidebar</code>), the link of the section in view gets <code>aria-current="true"</code>, which draws a bar and makes it semibold. The script finds the links by the <code>data-luz-spy</code> attribute on the <code>&lt;nav&gt;</code>: every link to a section of the page inside it.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>The contents are a list of links to the sections, which the browser scrolls to. Only the mark on the section in view needs the script; without it, no link is marked.</p>
@@ -112,7 +112,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a table of contents in an article of four or more sections, which people read in parts or come back to: a guide, a report, a long interview.</p>
@@ -127,13 +127,13 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Section headings that say what each part is about, so the list reads as a summary.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <nav class="cai-cms-toc"><p class="cai-cms-toc__title">Contents</p><ol class="cai-cms-toc__list"><li><a>How the readings were taken</a></li><li><a>Four centimetres in ten years</a></li><li><a>Storms that reach the walls</a></li></ol></nav>
+                  <nav class="luz-cms-toc"><p class="luz-cms-toc__title">Contents</p><ol class="luz-cms-toc__list"><li><a>How the readings were taken</a></li><li><a>Four centimetres in ten years</a></li><li><a>Storms that reach the walls</a></li></ol></nav>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Headings that could be in any article: the list tells the reader nothing.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <nav class="cai-cms-toc"><p class="cai-cms-toc__title">Contents</p><ol class="cai-cms-toc__list"><li><a>Introduction</a></li><li><a>Background</a></li><li><a>Discussion</a></li></ol></nav>
+                  <nav class="luz-cms-toc"><p class="luz-cms-toc__title">Contents</p><ol class="luz-cms-toc__list"><li><a>Introduction</a></li><li><a>Background</a></li><li><a>Discussion</a></li></ol></nav>
                 </div>
               </figure>
             </div>
@@ -145,30 +145,30 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The links are secondary text on the page; the current one is primary text with a bar in the brand colour.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Table of contents contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Table of contents contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Title and current link</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Link, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Current link's bar</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title and current link</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link, hover</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current link's bar</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
               <li><strong>Focus:</strong> each link keeps core's ring.</li>
-              <li>The current link is marked by the bar and the weight, not by colour alone. The links are not underlined: inside a <code>&lt;nav&gt;</code>, their place says they are links, as in every CAI navigation.</li>
+              <li>The current link is marked by the bar and the weight, not by colour alone. The links are not underlined: inside a <code>&lt;nav&gt;</code>, their place says they are links, as in every LUZ navigation.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 14 tokens that the <code>.cai-cms-article</code> and <code>.cai-cms-toc</code> rules of cms's <code>components/article.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 14 tokens that the <code>.luz-cms-article</code> and <code>.luz-cms-toc</code> rules of cms's <code>components/article.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xl</code>, <code>--cai-space-2xs</code>, <code>--cai-space-lg</code>, <code>--cai-space-sm</code>, <code>--cai-space-xl</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-base</code>, <code>--cai-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xl</code>, <code>--luz-space-2xs</code>, <code>--luz-space-lg</code>, <code>--luz-space-sm</code>, <code>--luz-space-xl</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-base</code>, <code>--luz-text-md</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

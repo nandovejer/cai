@@ -1,5 +1,5 @@
 /**
- * CAI — axe-core on every app, in every base theme.
+ * LUZ — axe-core on every app, in every base theme.
  * PRINCIPLES.md §8: serious and critical violations fail the build;
  * moderate and minor ones are attached to the report without failing it.
  */

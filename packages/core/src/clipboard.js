@@ -1,7 +1,7 @@
 /**
- * CAI Design System — Copy to clipboard
+ * LUZ Design System — Copy to clipboard
  * Visual-feedback copy helper + delegated bindings for copy buttons
- * (`button.cai-copy-btn[data-copy]`, icon-grid items included). The buttons
+ * (`button.luz-copy-btn[data-copy]`, icon-grid items included). The buttons
  * are native, so Enter and Space need no handling here.
  *
  * Importing this module has no side effects; call initCopyButtons() to
@@ -11,7 +11,7 @@
 import { enableJs } from "./utils.js";
 import { t } from "./i18n.js";
 
-const LIVE_REGION_ID = "cai-live-region";
+const LIVE_REGION_ID = "luz-live-region";
 let clearAnnouncement;
 
 /**
@@ -77,7 +77,7 @@ export async function copyToClipboard(text, el, type = "btn") {
 // One function for every call: addEventListener ignores a listener that is
 // already registered, so initCopyButtons() is idempotent at no cost.
 async function onCopyClick(e) {
-  const copyBtn = e.target.closest(".cai-copy-btn");
+  const copyBtn = e.target.closest(".luz-copy-btn");
   if (copyBtn?.dataset.copy) await copyToClipboard(copyBtn.dataset.copy, copyBtn);
 }
 

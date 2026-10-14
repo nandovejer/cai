@@ -1,20 +1,20 @@
 /**
- * CAI — the tokens in the W3C Design Tokens Community Group format (DTCG,
+ * LUZ — the tokens in the W3C Design Tokens Community Group format (DTCG,
  * 2025.10), built from the same sources as the CSS: tokens.json (primitives)
  * and src/semantic.css (semantic, one block per base color mode).
  *
  * One file, two top-level groups, one per Figma collection:
- *   primitives — "CAI primitives", one mode ("Value")
- *   semantic   — "CAI semantic", modes Light, Dark and High contrast (the
+ *   primitives — "LUZ primitives", one mode ("Value")
+ *   semantic   — "LUZ semantic", modes Light, Dark and High contrast (the
  *                three data-theme values). `$value` is the Light value; every
  *                mode is in `$extensions.mode` (the convention Terrazzo and
  *                Tokens Studio read). A semantic token that is a var() of a
  *                primitive in the CSS is an alias of it here: "{primitives.gray.90}".
  *
- * Name rule (no lookup table): drop `--cai-`, the first segment is the group,
- * the rest is the name. --cai-surface-page ↔ surface/page, --cai-space-md ↔
- * space/md, --cai-scrim ↔ scrim. A name that is also a group (--cai-surface,
- * next to --cai-surface-page) is the group's `$root` token.
+ * Name rule (no lookup table): drop `--luz-`, the first segment is the group,
+ * the rest is the name. --luz-surface-page ↔ surface/page, --luz-space-md ↔
+ * space/md, --luz-scrim ↔ scrim. A name that is also a group (--luz-surface,
+ * next to --luz-surface-page) is the group's `$root` token.
  *
  * Pure functions, no I/O: scripts/build-tokens.js writes the file and
  * tests/tokens-dtcg.test.js checks it against the CSS.
@@ -35,9 +35,9 @@ const TYPES = {
   shadow: "shadow",
 };
 
-/** `--cai-surface-page` → ["surface", "page"]; `--cai-scrim` → ["scrim"]. */
+/** `--luz-surface-page` → ["surface", "page"]; `--luz-scrim` → ["scrim"]. */
 export function pathOf(property) {
-  const name = property.replace(/^--cai-/, "");
+  const name = property.replace(/^--luz-/, "");
   const cut = name.indexOf("-");
   return cut === -1 ? [name] : [name.slice(0, cut), name.slice(cut + 1)];
 }
@@ -104,10 +104,10 @@ const VALUE = { color, dimension, fontFamily, shadow };
 function primitiveEntries(tokens) {
   const out = [];
   for (const [family, shades] of Object.entries(tokens.color)) {
-    for (const [shade, token] of Object.entries(shades)) out.push([`--cai-${family}-${shade}`, token]);
+    for (const [shade, token] of Object.entries(shades)) out.push([`--luz-${family}-${shade}`, token]);
   }
   for (const [group, prefix] of [["spacing", "space-"], ["control", "control-"], ["typography", ""], ["radius", "radius-"], ["shadow", "shadow-"]]) {
-    for (const [key, token] of Object.entries(tokens[group])) out.push([`--cai-${prefix}${key}`, token]);
+    for (const [key, token] of Object.entries(tokens[group])) out.push([`--luz-${prefix}${key}`, token]);
   }
   return out;
 }
@@ -140,10 +140,10 @@ export function parseSemantic(css) {
   const modes = Object.fromEntries(MODES.map(([, theme]) => [theme, new Map()]));
   for (const [, selector, body] of clean.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
     const themes = MODES.map(([, t]) => t).filter((t) => selector.includes(`[data-theme="${t}"]`));
-    for (const [, prop, value] of body.matchAll(/(--cai-[\w-]+)\s*:\s*([^;]+);/g)) {
+    for (const [, prop, value] of body.matchAll(/(--luz-[\w-]+)\s*:\s*([^;]+);/g)) {
       // Shadows are primitives (tokens.json); a mode may redraw them, but the
       // semantic collection holds colors and the same names in every mode
-      if (prop.startsWith("--cai-shadow-")) continue;
+      if (prop.startsWith("--luz-shadow-")) continue;
       for (const t of themes) modes[t].set(prop, value.trim());
     }
   }
@@ -153,8 +153,8 @@ export function parseSemantic(css) {
 /** Build the DTCG document. `tokens` is tokens.json, `semanticCss` semantic.css. */
 export function buildDtcg(tokens, semanticCss) {
   const primitives = {
-    $description: "CAI primitives: one mode (Value). Components never use these directly.",
-    $extensions: { "com.cai-ds": { collection: "CAI primitives", modes: ["Value"] } },
+    $description: "LUZ primitives: one mode (Value). Components never use these directly.",
+    $extensions: { "com.luz-ds": { collection: "LUZ primitives", modes: ["Value"] } },
   };
   const primitiveNames = new Set();
   for (const [prop, token] of primitiveEntries(tokens)) {
@@ -168,9 +168,9 @@ export function buildDtcg(tokens, semanticCss) {
 
   const modes = parseSemantic(semanticCss);
   const semantic = {
-    $description: "CAI semantic: modes Light, Dark and High contrast, one per data-theme value. Aliases point at primitives, as semantic.css does.",
+    $description: "LUZ semantic: modes Light, Dark and High contrast, one per data-theme value. Aliases point at primitives, as semantic.css does.",
     $extensions: {
-      "com.cai-ds": { collection: "CAI semantic", modes: Object.fromEntries(MODES) },
+      "com.luz-ds": { collection: "LUZ semantic", modes: Object.fromEntries(MODES) },
     },
   };
   const light = modes.light;
@@ -183,10 +183,10 @@ export function buildDtcg(tokens, semanticCss) {
   for (const prop of light.keys()) place(semantic, pathOf(prop), { $type: "color" });
   const tree = { primitives, semantic };
   const valueOf = (css) => {
-    const ref = /^var\((--cai-[\w-]+)\)$/.exec(css)?.[1];
+    const ref = /^var\((--luz-[\w-]+)\)$/.exec(css)?.[1];
     if (!ref) return color(css);
     const collection = primitiveNames.has(ref) ? "primitives" : light.has(ref) ? "semantic" : null;
-    if (!collection) throw new Error(`tokens-dtcg: ${css} is not a CAI token`);
+    if (!collection) throw new Error(`tokens-dtcg: ${css} is not a LUZ token`);
     return `{${refPath(tree, [collection, ...pathOf(ref)]).join(".")}}`;
   };
   for (const prop of light.keys()) {
@@ -200,7 +200,7 @@ export function buildDtcg(tokens, semanticCss) {
 
   return {
     $description:
-      "CAI Design System tokens in the DTCG format, generated from @cai-ds/tokens (tokens.json + semantic.css). Do not edit. Name rule: --cai-surface-page ↔ surface/page.",
+      "LUZ Design System tokens in the DTCG format, generated from @luz-ds/tokens (tokens.json + semantic.css). Do not edit. Name rule: --luz-surface-page ↔ surface/page.",
     ...tree,
   };
 }
@@ -214,14 +214,14 @@ export const DTCG_VERSION = "2025.10";
  * The Format Module has no modes: a token file holds one value per token.
  * The Resolver Module is where the specification puts them, as a modifier
  * whose contexts each list token sources, applied after the base set. Here:
- *   - set `base`: cai-tokens.dtcg.json (primitives, and semantic as Light);
+ *   - set `base`: luz-tokens.dtcg.json (primitives, and semantic as Light);
  *   - modifier `mode`: contexts `light`, `dark` and `high-contrast`, each
  *     the semantic group with that mode's values, aliases to primitives kept;
  *   - `default: "light"`, as :root is.
  * The `$extensions.mode` of the token file stays: Figma and Tokens Studio
  * read it, and it is not part of the specification.
  */
-export function buildResolver(tokens, semanticCss, { tokensFile = "cai-tokens.dtcg.json" } = {}) {
+export function buildResolver(tokens, semanticCss, { tokensFile = "luz-tokens.dtcg.json" } = {}) {
   const { semantic } = buildDtcg(tokens, semanticCss);
   const contexts = {};
   for (const [name, theme] of MODES) {
@@ -236,14 +236,14 @@ export function buildResolver(tokens, semanticCss, { tokensFile = "cai-tokens.dt
       }
     };
     walk(group);
-    group.$description = `CAI semantic tokens, ${name} mode (data-theme="${theme}").`;
+    group.$description = `LUZ semantic tokens, ${name} mode (data-theme="${theme}").`;
     contexts[theme] = [{ semantic: group }];
   }
   return {
     $schema: `https://www.designtokens.org/schemas/${DTCG_VERSION}/resolver.json`,
-    name: "CAI tokens",
+    name: "LUZ tokens",
     version: DTCG_VERSION,
-    description: "CAI Design System tokens with their three color modes, for tools that read the DTCG Resolver Module. Generated from @cai-ds/tokens. Do not edit.",
+    description: "LUZ Design System tokens with their three color modes, for tools that read the DTCG Resolver Module. Generated from @luz-ds/tokens. Do not edit.",
     sets: {
       base: {
         description: "Primitives, and the semantic tokens as the light mode has them.",

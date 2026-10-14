@@ -1,19 +1,19 @@
 /**
- * CAI — consumer smoke test.
- * Packs every published package (scripts/cai-packages.js) as `npm pack`
+ * LUZ — consumer smoke test.
+ * Packs every published package (scripts/luz-packages.js) as `npm pack`
  * would publish it, installs the tarballs into an empty project, and checks
  * what a consumer sees. The versions are the ones the pending changesets
  * will publish: `changeset version` runs on a copy of the manifests, so a
- * package whose peers name the next major of the base (landing's ^3.0.0
- * while the workspace is still at 2.x) installs as it will on npm.
+ * package whose peers name the next major of the base (landing's ^0.1.0
+ * while the workspace is still at 0.0.0) installs as it will on npm.
  *   1. every entry of each package's `exports` resolves to a file
  *      (patterns such as ./components/* are expanded);
  *   2. a minimal page that links the installed files loads in Chromium with
  *      no failed request, no console error or warning, the tokens defined,
  *      core, site, landing and cms CSS applied, and the JS exports importable;
- *   3. the same page with jsDelivr-style URLs (/npm/@cai-ds/<pkg>@<version>/…),
+ *   3. the same page with jsDelivr-style URLs (/npm/@luz-ds/<pkg>@<version>/…),
  *      served from the same tarballs by a local server: no network is used;
- *   4. the `cai-tokens` command runs from the installed package.
+ *   4. the `luz-tokens` command runs from the installed package.
  *
  * Needs the packages built (`pnpm build`) and Chromium
  * (`pnpm test:ui:install`). Nothing leaves the machine: the install is
@@ -29,7 +29,7 @@ import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, extname, join, normalize, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { PACKAGES } from "./cai-packages.js";
+import { PACKAGES } from "./luz-packages.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const KEEP = process.argv.includes("--keep");
@@ -68,7 +68,7 @@ try {
 
 /* ---- 1. Pack and install --------------------------------------------------- */
 
-const work = mkdtempSync(join(process.env.CAI_SMOKE_DIR ?? tmpdir(), "cai-smoke-"));
+const work = mkdtempSync(join(process.env.LUZ_SMOKE_DIR ?? tmpdir(), "luz-smoke-"));
 const packs = join(work, "packs");
 const project = join(work, "project");
 mkdirSync(packs);
@@ -98,14 +98,14 @@ const tarballs = PACKAGES.map((name) => {
   const out = execFileSync(npm, ["pack", "--json", "--pack-destination", packs], { cwd: copy, encoding: "utf-8" });
   return join(packs, JSON.parse(out)[0].filename);
 });
-check(`packed ${PACKAGES.length} tarballs (${tarballs.map((t) => t.split(sep).pop().replace(/^cai-ds-|\.tgz$/g, "")).join(", ")})`, tarballs.every(existsSync));
+check(`packed ${PACKAGES.length} tarballs (${tarballs.map((t) => t.split(sep).pop().replace(/^luz-ds-|\.tgz$/g, "")).join(", ")})`, tarballs.every(existsSync));
 
-writeFileSync(join(project, "package.json"), JSON.stringify({ name: "cai-smoke", private: true, type: "module" }));
+writeFileSync(join(project, "package.json"), JSON.stringify({ name: "luz-smoke", private: true, type: "module" }));
 const install = spawnSync(npm, ["install", "--offline", "--no-audit", "--no-fund", "--ignore-scripts", ...tarballs], { cwd: project, encoding: "utf-8" });
 check("installed the tarballs offline", install.status === 0, install.stderr || install.stdout);
 if (install.status !== 0) finish();
 
-const installed = (name) => join(project, "node_modules", "@cai-ds", name);
+const installed = (name) => join(project, "node_modules", "@luz-ds", name);
 const versions = Object.fromEntries(PACKAGES.map((n) => [n, JSON.parse(readFileSync(join(installed(n), "package.json"), "utf-8")).version]));
 
 /* ---- 2. Every export resolves ---------------------------------------------- */
@@ -136,7 +136,7 @@ for (const name of PACKAGES) {
     } else keys.push(key);
     for (const k of keys) {
       count++;
-      const specifier = `@cai-ds/${name}${k === "." ? "" : k.slice(1)}`;
+      const specifier = `@luz-ds/${name}${k === "." ? "" : k.slice(1)}`;
       try {
         const path = require.resolve(specifier);
         if (!existsSync(path)) problems.push(`${specifier}: resolves to a missing file`);
@@ -145,7 +145,7 @@ for (const name of PACKAGES) {
       }
     }
   }
-  check(`@cai-ds/${name}: ${count} exports resolve`, problems.length === 0, problems.join("\n"));
+  check(`@luz-ds/${name}: ${count} exports resolve`, problems.length === 0, problems.join("\n"));
 }
 
 /* ---- 3. The pages ---------------------------------------------------------- */
@@ -155,25 +155,25 @@ const PAGE = (base, label) => `<!doctype html>
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CAI smoke test: ${label}</title>
-  <link rel="stylesheet" href="${base.tokens}/dist/cai-tokens.css">
-  <link rel="stylesheet" href="${base.core}/dist/cai.css">
+  <title>LUZ smoke test: ${label}</title>
+  <link rel="stylesheet" href="${base.tokens}/dist/luz-tokens.css">
+  <link rel="stylesheet" href="${base.core}/dist/luz.css">
   <link rel="stylesheet" href="${base.site}/dist/site.css">
   <link rel="stylesheet" href="${base.landing}/dist/landing.css">
   <link rel="stylesheet" href="${base.cms}/dist/cms.css">
 </head>
 <body>
   <h1>Smoke test</h1>
-  <button class="cai-btn cai-btn--primary" type="button" id="probe-button">Save changes</button>
-  <div id="probe-fill" style="background: var(--cai-brand-fill)"></div>
-  <div class="cai-site-section" id="probe-section"></div>
-  <div class="cai-landing-feature-grid" id="probe-grid"></div>
-  <div class="cai-cms-article-header" id="probe-article"></div>
+  <button class="luz-btn luz-btn--primary" type="button" id="probe-button">Save changes</button>
+  <div id="probe-fill" style="background: var(--luz-brand-fill)"></div>
+  <div class="luz-site-section" id="probe-section"></div>
+  <div class="luz-landing-feature-grid" id="probe-grid"></div>
+  <div class="luz-cms-article-header" id="probe-article"></div>
   <script type="module">
     const core = ${JSON.stringify(base.core)};
     const site = ${JSON.stringify(base.site)};
     const wanted = {
-      [core + "/dist/cai.js"]: [],
+      [core + "/dist/luz.js"]: [],
       [core + "/dist/tabs.js"]: ["initTabs"],
       [core + "/dist/theme.js"]: ["applyTheme"],
       [core + "/dist/i18n.js"]: ["t", "registerLocale"],
@@ -198,13 +198,13 @@ const PAGE = (base, label) => `<!doctype html>
 `;
 
 const local = {
-  tokens: "/node_modules/@cai-ds/tokens",
-  core: "/node_modules/@cai-ds/core",
-  site: "/node_modules/@cai-ds/site",
-  landing: "/node_modules/@cai-ds/landing",
-  cms: "/node_modules/@cai-ds/cms",
+  tokens: "/node_modules/@luz-ds/tokens",
+  core: "/node_modules/@luz-ds/core",
+  site: "/node_modules/@luz-ds/site",
+  landing: "/node_modules/@luz-ds/landing",
+  cms: "/node_modules/@luz-ds/cms",
 };
-const cdn = Object.fromEntries(PACKAGES.map((n) => [n, `/npm/@cai-ds/${n}@${versions[n]}`]));
+const cdn = Object.fromEntries(PACKAGES.map((n) => [n, `/npm/@luz-ds/${n}@${versions[n]}`]));
 
 const server = createServer((req, res) => {
   const url = new URL(req.url, "http://127.0.0.1");
@@ -215,8 +215,8 @@ const server = createServer((req, res) => {
   };
   if (path === "/npm.html") return send(200, PAGE(local, "installed files"), TYPES[".html"]);
   if (path === "/cdn.html") return send(200, PAGE(cdn, "CDN paths"), TYPES[".html"]);
-  // jsDelivr layout: /npm/@cai-ds/<name>@<version>/<file>
-  const cdnPath = path.match(/^\/npm\/@cai-ds\/([\w-]+)@([^/]+)\/(.+)$/);
+  // jsDelivr layout: /npm/@luz-ds/<name>@<version>/<file>
+  const cdnPath = path.match(/^\/npm\/@luz-ds\/([\w-]+)@([^/]+)\/(.+)$/);
   let file;
   if (cdnPath) {
     if (versions[cdnPath[1]] !== cdnPath[2]) return send(404, "unknown version");
@@ -267,7 +267,7 @@ if (browser) {
         }
       });
       return {
-        token: root.getPropertyValue("--cai-brand-fill").trim(),
+        token: root.getPropertyValue("--luz-brand-fill").trim(),
         buttonBackground: button.backgroundColor,
         tokenBackground: fill.backgroundColor,
         buttonHeight: parseFloat(button.height),
@@ -281,11 +281,11 @@ if (browser) {
     });
     const label2 = `${label}:`;
     check(`${label2} no failed request, console message or request off the machine`, problems.length === 0, problems.join("\n"));
-    check(`${label2} tokens loaded (--cai-brand-fill is defined)`, state.token !== "", "the custom property is empty");
-    check(`${label2} core CSS applied (.cai-btn--primary uses the token)`, state.buttonBackground === state.tokenBackground && state.buttonBackground !== "rgba(0, 0, 0, 0)", `${state.buttonBackground} vs ${state.tokenBackground}`);
-    check(`${label2} site CSS applied (.cai-site-section is a grid)`, state.sectionDisplay === "grid", state.sectionDisplay);
-    check(`${label2} landing CSS applied (.cai-landing-feature-grid is a grid with columns)`, state.gridDisplay === "grid" && state.gridColumns !== "none", `${state.gridDisplay} / ${state.gridColumns}`);
-    check(`${label2} cms CSS applied (.cai-cms-article-header is a grid)`, state.articleDisplay === "grid", state.articleDisplay);
+    check(`${label2} tokens loaded (--luz-brand-fill is defined)`, state.token !== "", "the custom property is empty");
+    check(`${label2} core CSS applied (.luz-btn--primary uses the token)`, state.buttonBackground === state.tokenBackground && state.buttonBackground !== "rgba(0, 0, 0, 0)", `${state.buttonBackground} vs ${state.tokenBackground}`);
+    check(`${label2} site CSS applied (.luz-site-section is a grid)`, state.sectionDisplay === "grid", state.sectionDisplay);
+    check(`${label2} landing CSS applied (.luz-landing-feature-grid is a grid with columns)`, state.gridDisplay === "grid" && state.gridColumns !== "none", `${state.gridDisplay} / ${state.gridColumns}`);
+    check(`${label2} cms CSS applied (.luz-cms-article-header is a grid)`, state.articleDisplay === "grid", state.articleDisplay);
     check(`${label2} ${PACKAGES.length} stylesheets with rules`, state.sheets.length === PACKAGES.length && state.sheets.every((n) => n > 0), JSON.stringify(state.sheets));
     check(`${label2} JS entries import and export what the docs name`, state.missing.length === 0, state.missing.join("\n"));
     await page.close();
@@ -296,15 +296,15 @@ server.close();
 
 /* ---- 4. The command -------------------------------------------------------- */
 
-const bin = join(installed("tokens"), "bin", "cai-tokens.js");
+const bin = join(installed("tokens"), "bin", "luz-tokens.js");
 if (existsSync(bin)) {
   writeFileSync(join(project, "empty.css"), "/* no overrides */\n");
-  writeFileSync(join(project, "bad.css"), ":root { --cai-text-secondary: #bbb; }\n");
+  writeFileSync(join(project, "bad.css"), ":root { --luz-text-secondary: #bbb; }\n");
   const ok = spawnSync(process.execPath, [bin, "check-contrast", "empty.css"], { cwd: project, encoding: "utf-8" });
-  check("cai-tokens check-contrast passes CAI's own tokens (exit 0)", ok.status === 0, ok.stdout + ok.stderr);
+  check("luz-tokens check-contrast passes LUZ's own tokens (exit 0)", ok.status === 0, ok.stdout + ok.stderr);
   const bad = spawnSync(process.execPath, [bin, "check-contrast", "bad.css"], { cwd: project, encoding: "utf-8" });
-  check("cai-tokens check-contrast fails a low-contrast override (exit 1)", bad.status === 1, `exit ${bad.status}\n${bad.stdout}${bad.stderr}`);
-} else check("cai-tokens is installed", false, `${relative(project, bin)} is missing`);
+  check("luz-tokens check-contrast fails a low-contrast override (exit 1)", bad.status === 1, `exit ${bad.status}\n${bad.stdout}${bad.stderr}`);
+} else check("luz-tokens is installed", false, `${relative(project, bin)} is missing`);
 
 /* ---- Done ------------------------------------------------------------------ */
 

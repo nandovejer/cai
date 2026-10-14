@@ -1,6 +1,6 @@
 ---
 name: qa-release
-description: Run the CAI release QA checklist: lint, size/strings/exceptions/pack/contrast checks, unit tests and Playwright (chromium and chromium-nojs), then write an evidence report and list what needs manual or browser review. Use before a release or when asked for "QA", "release check" or "evidence". Never runs firefox or webkit.
+description: Run the LUZ release QA checklist: lint, size/strings/exceptions/pack/contrast checks, unit tests and Playwright (chromium and chromium-nojs), then write an evidence report and list what needs manual or browser review. Use before a release or when asked for "QA", "release check" or "evidence". Never runs firefox or webkit.
 ---
 
 # QA release
@@ -24,7 +24,7 @@ Runs the same gates as CI plus the Playwright suites, and writes an evidence rep
 3. **On a failure**, re-run only that step to tell a real failure from a load failure (a Playwright test that fails under load and passes alone is flaky: say so, do not hide it). Fix real failures, or say what blocks them. Never raise a ceiling in `budgets.json` and never update a visual snapshot to make the suite pass.
 
 4. **Close with the manual list**, from the report's "Needs a person" section:
-   - the open rows of the pending list in Claude's memory (`cai-browser-review-pending.md`): the security audit gives no OK while one is open (OWNER.md §4);
+   - the open rows of the pending list in Claude's memory (`luz-browser-review-pending.md`): the security audit gives no OK while one is open (OWNER.md §4);
    - the components changed since the last tag, which need SR-6 testing: one `tests/manual/SR-6-evidence-template.md` copy each;
    - changesets waiting, uncommitted changes, changed snapshots.
 

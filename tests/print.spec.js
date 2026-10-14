@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Print styles (packages/core/src/print, cai.print): a representative docs
+ * Print styles (packages/core/src/print, luz.print): a representative docs
  * page rendered with media "print", in the dark mode, must come out as paper
  * would: white and black, no navigation, no controls, the address of an
  * external link, no breaks inside a figure, a table row or code, the table
@@ -37,26 +37,26 @@ test.describe('print', () => {
     await expect.poll(() => style(page, 'body', '', 'color')).toBe('rgb(0, 0, 0)');
     expect(await style(page, 'body', '', 'background-color')).toBe('rgb(255, 255, 255)');
     // A component that reads tokens follows: the table header is not a dark surface
-    await expect.poll(() => style(page, '.cai-table th', '', 'background-color')).toBe('rgb(255, 255, 255)');
-    await expect.poll(() => style(page, '.cai-table td', '', 'color')).toBe('rgb(0, 0, 0)');
+    await expect.poll(() => style(page, '.luz-table th', '', 'background-color')).toBe('rgb(255, 255, 255)');
+    await expect.poll(() => style(page, '.luz-table td', '', 'color')).toBe('rgb(0, 0, 0)');
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).colorScheme)).toBe('light');
   });
 
   test('navigation and screen-only controls are not printed', async ({ page }) => {
     await page.emulateMedia({ media: 'print' });
     const shown = await page.evaluate(() =>
-      [...document.querySelectorAll('nav, .cai-sidebar, .cai-tabs, .cai-copy-btn, .cai-player')]
+      [...document.querySelectorAll('nav, .luz-sidebar, .luz-tabs, .luz-copy-btn, .luz-player')]
         .filter((el) => el.checkVisibility())
         .map((el) => `${el.localName}.${el.className}`),
     );
     expect(shown).toEqual([]);
     // There is something to hide on this page, or the test says nothing
-    expect(await page.locator('nav, .cai-tabs, .cai-copy-btn').count()).toBeGreaterThan(0);
+    expect(await page.locator('nav, .luz-tabs, .luz-copy-btn').count()).toBeGreaterThan(0);
   });
 
   test('an external link shows its address after its text', async ({ page }) => {
     await page.emulateMedia({ media: 'print' });
-    const link = page.locator('main a[href^="http"]:not(.cai-btn)').first();
+    const link = page.locator('main a[href^="http"]:not(.luz-btn)').first();
     const href = await link.getAttribute('href');
     const content = await link.evaluate((el) => getComputedStyle(el, '::after').content);
     expect(content).toContain(href);
@@ -78,7 +78,7 @@ test.describe('print', () => {
   test('every tab panel is shown, not only the open one', async ({ page }) => {
     await page.emulateMedia({ media: 'print' });
     const hidden = await page.evaluate(() =>
-      [...document.querySelectorAll('.cai-tabpanel')]
+      [...document.querySelectorAll('.luz-tabpanel')]
         .filter((el) => getComputedStyle(el).display === 'none' || getComputedStyle(el).contentVisibility === 'hidden')
         .map((el) => el.id),
     );
@@ -87,7 +87,7 @@ test.describe('print', () => {
 
   test('a wide table and a code block are not clipped', async ({ page }) => {
     await page.emulateMedia({ media: 'print' });
-    expect(await style(page, '.cai-table-wrap', '', 'overflow-x')).toBe('visible');
-    expect(await style(page, 'pre.cai-code-block', '', 'white-space')).toBe('pre-wrap');
+    expect(await style(page, '.luz-table-wrap', '', 'overflow-x')).toBe('visible');
+    expect(await style(page, 'pre.luz-code-block', '', 'white-space')).toBe('pre-wrap');
   });
 });

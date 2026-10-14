@@ -1,5 +1,5 @@
 /**
- * CAI docs site — the Vite plugin (`cai-docs-site`). Development tooling only:
+ * LUZ docs site — the Vite plugin (`luz-docs-site`). Development tooling only:
  * nothing here ships in a package.
  *
  * - Routes: every page under apps/docs/pages/ is an HTML entry of the build
@@ -19,7 +19,7 @@
  *   moved to <route>/index.html. The not-found page (apps/docs/404.html)
  *   becomes /404.html, with every URL starting at the site's path on GitHub
  *   Pages ("/<repo>/"), because it is served at any URL.
- * - The search index (@cai-ds/site search, format version 1) is
+ * - The search index (@luz-ds/site search, format version 1) is
  *   generated from the same scan as the A–Z page: served at
  *   /docs/search-index.json in dev, written there by the build.
  * - The color-mode boot script (apps/landing/theme-boot.js, EX-009) is a
@@ -124,7 +124,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
     }).problems;
 
   return {
-    name: "cai-docs-site",
+    name: "luz-docs-site",
 
     config() {
       const input = Object.fromEntries(
@@ -181,9 +181,9 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
       warn = () => {
         try {
           const problems = check();
-          if (problems.length) logger.warn(`[cai-docs-site] broken links:\n  ${problems.join("\n  ")}`);
+          if (problems.length) logger.warn(`[luz-docs-site] broken links:\n  ${problems.join("\n  ")}`);
         } catch (error) {
-          logger.error(`[cai-docs-site] ${error.message}`);
+          logger.error(`[luz-docs-site] ${error.message}`);
         }
       };
       warn();
@@ -211,7 +211,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
         try {
           map = table();
         } catch (error) {
-          logger.error(`[cai-docs-site] ${error.message}`);
+          logger.error(`[luz-docs-site] ${error.message}`);
           return next();
         }
         // The search index: generated, never a file (SEC-PLG-6)
@@ -221,7 +221,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
             res.setHeader("Content-Type", "application/json; charset=utf-8");
             return res.end(body);
           } catch (error) {
-            logger.error(`[cai-docs-site] ${error.message}`);
+            logger.error(`[luz-docs-site] ${error.message}`);
             return next();
           }
         }
@@ -236,7 +236,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
               res.end(html);
             })
             .catch((error) => {
-              logger.error(`[cai-docs-site] ${error.message}`);
+              logger.error(`[luz-docs-site] ${error.message}`);
               next(error);
             });
           return undefined;

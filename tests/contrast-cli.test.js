@@ -1,5 +1,5 @@
 /**
- * CAI — the contrast engine and `cai-tokens check-contrast`
+ * LUZ — the contrast engine and `luz-tokens check-contrast`
  * (packages/tokens/lib, packages/tokens/bin). The engine is shared with
  * scripts/check-contrast.js and with the docs pages; these tests pin the
  * colour reader, the cascade model and the command's report and exit codes,
@@ -49,8 +49,8 @@ describe("parseColor and ratio", () => {
   });
 });
 
-describe.skipIf(!built)("cai-tokens check-contrast", () => {
-  it("passes CAI's own tokens, with nothing overridden", () => {
+describe.skipIf(!built)("luz-tokens check-contrast", () => {
+  it("passes LUZ's own tokens, with nothing overridden", () => {
     const report = json({ "empty.css": "" });
     expect(report.ok).toBe(true);
     expect(report.modes).toEqual(["light", "dark", "high-contrast"]);
@@ -59,70 +59,70 @@ describe.skipIf(!built)("cai-tokens check-contrast", () => {
   });
 
   it("fails a text pair below 4.5:1, says where the colour was set, and exits 1", () => {
-    const css = ":root {\n  --cai-text-secondary: #999;\n}\n";
+    const css = ":root {\n  --luz-text-secondary: #999;\n}\n";
     const result = check({ "my.css": css });
     expect(result.code).toBe(1);
-    expect(result.stdout).toMatch(/✗ .*light.*--cai-text-secondary on surface-page is 2\.6:1, needs 4\.5:1 \(text\)/);
-    expect(result.stdout).toContain("--cai-text-secondary: #999 is set in my.css:2");
+    expect(result.stdout).toMatch(/✗ .*light.*--luz-text-secondary on surface-page is 2\.6:1, needs 4\.5:1 \(text\)/);
+    expect(result.stdout).toContain("--luz-text-secondary: #999 is set in my.css:2");
     const report = json({ "my.css": css });
     expect(report.ok).toBe(false);
     const f = report.failures.find((x) => x.mode === "light" && x.background === "surface-page");
-    expect(f).toMatchObject({ foreground: "--cai-text-secondary", minimum: 4.5, kind: "text" });
-    expect(f.overrides).toEqual([{ token: "--cai-text-secondary", value: "#999", file: "my.css", line: 2 }]);
+    expect(f).toMatchObject({ foreground: "--luz-text-secondary", minimum: 4.5, kind: "text" });
+    expect(f.overrides).toEqual([{ token: "--luz-text-secondary", value: "#999", file: "my.css", line: 2 }]);
   });
 
   it("holds a focus ring and a field border to 3:1, as UI components", () => {
-    const report = json({ "my.css": ":root { --cai-focus-ring: #eee; --cai-input-border: #ddd; }" });
+    const report = json({ "my.css": ":root { --luz-focus-ring: #eee; --luz-input-border: #ddd; }" });
     const kinds = new Set(report.failures.map((f) => f.kind));
     expect(kinds).toEqual(new Set(["ui"]));
     expect(report.failures.every((f) => f.minimum === 3)).toBe(true);
   });
 
   it("applies [data-theme] blocks to their own mode only", () => {
-    const report = json({ "my.css": '[data-theme="dark"] { --cai-text-primary: #555; }' });
+    const report = json({ "my.css": '[data-theme="dark"] { --luz-text-primary: #555; }' });
     const modes = new Set(report.failures.map((f) => f.mode));
     expect(modes).toEqual(new Set(["dark"]));
   });
 
-  it("lets a later :root win over CAI's dark block at equal specificity, as the browser does", () => {
+  it("lets a later :root win over LUZ's dark block at equal specificity, as the browser does", () => {
     // #555 is fine on the light page and unreadable on the dark one
-    const report = json({ "my.css": ":root { --cai-text-primary: #555; }" });
+    const report = json({ "my.css": ":root { --luz-text-primary: #555; }" });
     expect(new Set(report.failures.map((f) => f.mode))).toEqual(new Set(["dark"]));
   });
 
   it("lets a more specific selector win over a later one", () => {
-    const css = ':root[data-theme="dark"] { --cai-text-primary: #fff; }\n[data-theme="dark"] { --cai-text-primary: #555; }';
+    const css = ':root[data-theme="dark"] { --luz-text-primary: #fff; }\n[data-theme="dark"] { --luz-text-primary: #555; }';
     expect(json({ "my.css": css }).ok).toBe(true);
   });
 
   it("reads prefers-color-scheme as the dark and light modes", () => {
-    const css = "@media (prefers-color-scheme: dark) { :root { --cai-text-primary: #555; } }";
+    const css = "@media (prefers-color-scheme: dark) { :root { --luz-text-primary: #555; } }";
     expect(new Set(json({ "my.css": css }).failures.map((f) => f.mode))).toEqual(new Set(["dark"]));
   });
 
   it("checks a custom theme and its three modes, from the light values", () => {
-    const css = '[data-theme="brand"] { --cai-surface-page: #fffff0; --cai-brand-primary: #6fa8ff; }';
+    const css = '[data-theme="brand"] { --luz-surface-page: #fffff0; --luz-brand-primary: #6fa8ff; }';
     const report = json({ "my.css": css });
     expect(report.modes).toEqual(["light", "dark", "high-contrast", "brand", "brand/light", "brand/dark", "brand/high-contrast"]);
-    expect(report.failures.some((f) => f.mode === "brand" && f.foreground === "--cai-brand-primary")).toBe(true);
+    expect(report.failures.some((f) => f.mode === "brand" && f.foreground === "--luz-brand-primary")).toBe(true);
   });
 
   it("resolves var() chains and their fallbacks", () => {
-    const css = ":root { --my-grey: #999; --cai-text-secondary: var(--my-grey); }";
+    const css = ":root { --my-grey: #999; --luz-text-secondary: var(--my-grey); }";
     expect(json({ "my.css": css }).ok).toBe(false);
   });
 
   it("counts a colour it cannot read as a failure, and names the override", () => {
-    const css = ":root { --cai-text-primary: color-mix(in srgb, red, blue); }";
+    const css = ":root { --luz-text-primary: color-mix(in srgb, red, blue); }";
     const result = check({ "my.css": css });
     expect(result.code).toBe(1);
     expect(result.stdout).toContain("was not measured");
-    expect(result.stdout).toContain("--cai-text-primary: color-mix(in srgb, red, blue) is set in my.css:1");
+    expect(result.stdout).toContain("--luz-text-primary: color-mix(in srgb, red, blue) is set in my.css:1");
     expect(json({ "my.css": css }).unreadable.length).toBeGreaterThan(0);
   });
 
   it("lists what it did not read, and leaves it out of the verdict", () => {
-    const css = ".card { --cai-text-primary: #000; }\n@media (min-width: 40em) { :root { --cai-text-primary: #000; } }";
+    const css = ".card { --luz-text-primary: #000; }\n@media (min-width: 40em) { :root { --luz-text-primary: #000; } }";
     const report = json({ "my.css": css });
     expect(report.ok).toBe(true);
     expect(report.ignored.map((i) => i.reason).join("\n")).toMatch(/only html, :root/);
@@ -130,9 +130,9 @@ describe.skipIf(!built)("cai-tokens check-contrast", () => {
   });
 
   it("ignores comments and keeps line numbers", () => {
-    const css = "/* a\n   comment */\n:root {\n  /* --cai-text-primary: #fff; */\n  --cai-text-secondary: #aaa;\n}";
+    const css = "/* a\n   comment */\n:root {\n  /* --luz-text-primary: #fff; */\n  --luz-text-secondary: #aaa;\n}";
     const report = json({ "my.css": css });
-    expect(report.failures[0].overrides[0]).toMatchObject({ token: "--cai-text-secondary", line: 5 });
+    expect(report.failures[0].overrides[0]).toMatchObject({ token: "--luz-text-secondary", line: 5 });
   });
 
   it("exits 2 for a missing file, an unknown command or option, and no file", () => {
@@ -155,7 +155,7 @@ describe("the pairs the docs pages print", () => {
       for (const [row] of page.body.matchAll(/<tr><td data-label="Part">[\s\S]*?<\/tr>/g)) {
         const cells = [...row.matchAll(/<td data-label="[^"]+"><div>([\s\S]*?)<\/div><\/td>/g)].map((m) => m[1]);
         if (cells.length < 6) continue;
-        const tokens = [...cells[1].matchAll(/<code>--cai-([\w-]+)<\/code>/g)].map((m) => m[1]);
+        const tokens = [...cells[1].matchAll(/<code>--luz-([\w-]+)<\/code>/g)].map((m) => m[1]);
         const [fg, ...bg] = tokens;
         const min = Number(cells.at(-1).replace(":1", ""));
         const key = `${fg}|${bg.join(" > ")}`;

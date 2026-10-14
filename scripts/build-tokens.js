@@ -1,13 +1,13 @@
 /**
- * CAI Design System — Token Builder
+ * LUZ Design System — Token Builder
  * Composes dist/ from tracked sources:
- *   cai-tokens.css → fonts/fonts.css (@font-face) + Layer 1 primitives
+ *   luz-tokens.css → fonts/fonts.css (@font-face) + Layer 1 primitives
  *                    (generated from tokens.json) + Layer 2 semantic
  *                    (packages/tokens/src/semantic.css)
  *   tokens.css     → primitives + semantic, no @font-face (bring your own fonts)
  *   fonts.css      → @font-face only
  *   tokens.json    → primitives source, for tooling
- *   cai-tokens.dtcg.json → primitives + semantic (three modes) in the W3C
+ *   luz-tokens.dtcg.json → primitives + semantic (three modes) in the W3C
  *                    Design Tokens (DTCG) format, for Figma and other tools
  *   fonts/         → woff2 files + their MIT licence texts
  *
@@ -28,12 +28,12 @@ import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as esbuild from "esbuild";
 import { buildDtcg, buildResolver } from "./tokens-dtcg.js";
-import { inCaiLayer } from "./cai-layers.js";
+import { inLuzLayer } from "./luz-layers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const tokensPath = resolve(__dirname, "../packages/tokens/tokens.json");
 const distRoot = resolve(__dirname, "../packages/tokens/dist");
-const outputPath = resolve(distRoot, "cai-tokens.css");
+const outputPath = resolve(distRoot, "luz-tokens.css");
 
 const semanticPath = resolve(__dirname, "../packages/tokens/src/semantic.css");
 
@@ -48,34 +48,34 @@ function generatePrimitives(tokens) {
   for (const [family, shades] of Object.entries(tokens.color)) {
     lines.push(`  /* ${family.charAt(0).toUpperCase() + family.slice(1)} */`);
     for (const [shade, token] of Object.entries(shades)) {
-      lines.push(`  --cai-${family}-${shade}: ${token.value};`);
+      lines.push(`  --luz-${family}-${shade}: ${token.value};`);
     }
     lines.push("");
   }
 
   lines.push("  /* Spacing (4px base, smallest to largest) */");
   for (const [key, token] of Object.entries(tokens.spacing)) {
-    lines.push(`  --cai-space-${key}: ${token.value};`);
+    lines.push(`  --luz-space-${key}: ${token.value};`);
   }
 
   lines.push("\n  /* Control heights */");
   for (const [key, token] of Object.entries(tokens.control)) {
-    lines.push(`  --cai-control-${key}: ${token.value};`);
+    lines.push(`  --luz-control-${key}: ${token.value};`);
   }
 
   lines.push("\n  /* Typography */");
   for (const [key, token] of Object.entries(tokens.typography)) {
-    lines.push(`  --cai-${key}: ${token.value};`);
+    lines.push(`  --luz-${key}: ${token.value};`);
   }
 
   lines.push("\n  /* Radius */");
   for (const [key, token] of Object.entries(tokens.radius)) {
-    lines.push(`  --cai-radius-${key}: ${token.value};`);
+    lines.push(`  --luz-radius-${key}: ${token.value};`);
   }
 
   lines.push("\n  /* Shadows */");
   for (const [key, token] of Object.entries(tokens.shadow)) {
-    lines.push(`  --cai-shadow-${key}: ${token.value};`);
+    lines.push(`  --luz-shadow-${key}: ${token.value};`);
   }
 
   return `:root {\n${lines.join("\n")}\n}`;
@@ -100,7 +100,7 @@ try {
 }
 
 const header = `/* ==========================================================================
-   CAI Design System — Tokens
+   LUZ Design System — Tokens
    Generated from tokens.json · Do not edit manually
    ========================================================================== */
 
@@ -109,7 +109,7 @@ const header = `/* =============================================================
    -------------------------------------------------------------------------- */`;
 
 const tokensHeader = `/* ==========================================================================
-   CAI Design System — Tokens (no web fonts)
+   LUZ Design System — Tokens (no web fonts)
    Generated from tokens.json · Do not edit manually
    ========================================================================== */`;
 
@@ -125,9 +125,9 @@ async function writeCssWithMin(outPath, css) {
   writeFileSync(outPath.replace(/\.css$/, ".min.css"), code, "utf-8");
 }
 
-// The custom properties are in the cai.tokens layer, so a consumer's `app`
+// The custom properties are in the luz.tokens layer, so a consumer's `app`
 // layer can override them; @font-face is not a cascade matter and stays out
-const layered = inCaiLayer("tokens", layers);
+const layered = inLuzLayer("tokens", layers);
 await writeCssWithMin(outputPath, `${header}\n${fontFaces}\n\n${layered}`);
 console.log(`✓ Tokens built (fonts + primitives + semantic) → ${outputPath} (+ min)`);
 
@@ -138,11 +138,11 @@ console.log("✓ Split entries built → tokens.css, fonts.css (+ min)");
 copyFileSync(tokensPath, resolve(distRoot, "tokens.json"));
 console.log("✓ tokens.json copied → dist/");
 
-writeFileSync(resolve(distRoot, "cai-tokens.dtcg.json"), `${JSON.stringify(buildDtcg(tokens, semanticCss), null, 2)}\n`, "utf-8");
-console.log("✓ DTCG tokens → dist/cai-tokens.dtcg.json");
+writeFileSync(resolve(distRoot, "luz-tokens.dtcg.json"), `${JSON.stringify(buildDtcg(tokens, semanticCss), null, 2)}\n`, "utf-8");
+console.log("✓ DTCG tokens → dist/luz-tokens.dtcg.json");
 
-writeFileSync(resolve(distRoot, "cai-tokens.resolver.json"), `${JSON.stringify(buildResolver(tokens, semanticCss), null, 2)}\n`, "utf-8");
-console.log("✓ DTCG resolver (the three color modes) → dist/cai-tokens.resolver.json");
+writeFileSync(resolve(distRoot, "luz-tokens.resolver.json"), `${JSON.stringify(buildResolver(tokens, semanticCss), null, 2)}\n`, "utf-8");
+console.log("✓ DTCG resolver (the three color modes) → dist/luz-tokens.resolver.json");
 
 // Copy font files and their licence texts
 function copyFontDir(fontName) {

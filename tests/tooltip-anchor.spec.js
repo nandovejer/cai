@@ -27,7 +27,7 @@ const withoutAnchors = (page) =>
           sheet.deleteRule(i);
           removed++;
         } else if (rule instanceof window.CSSLayerBlockRule) {
-          // The component is inside @layer cai.components
+          // The component is inside @layer luz.components
           for (let j = rule.cssRules.length - 1; j >= 0; j--) {
             const inner = rule.cssRules[j];
             if (inner instanceof window.CSSSupportsRule && inner.conditionText.includes('anchor-name')) {

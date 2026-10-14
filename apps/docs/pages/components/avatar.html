@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Avatar
 description: Shows who a person or a team is, with their initials or a photo, in three sizes.
 area: components
@@ -11,62 +11,62 @@ toc: h2,h3
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <div class="o-row">
-              <span class="cai-avatar cai-avatar--sm" role="img" aria-label="Ana Belén">AB</span>
-              <span class="cai-avatar cai-avatar--md" role="img" aria-label="Carlos Díaz">CD</span>
-              <span class="cai-avatar cai-avatar--lg" role="img" aria-label="Eva Flores">EF</span>
+              <span class="luz-avatar luz-avatar--sm" role="img" aria-label="Ana Belén">AB</span>
+              <span class="luz-avatar luz-avatar--md" role="img" aria-label="Carlos Díaz">CD</span>
+              <span class="luz-avatar luz-avatar--lg" role="img" aria-label="Eva Flores">EF</span>
             </div>
             <div class="o-row">
-              <span class="cai-avatar cai-avatar--sm"><img src="/apps/docs/assets/desert-640.jpg" width="24" height="24" alt="Ana Belén"></span>
-              <span class="cai-avatar cai-avatar--md"><img src="/apps/docs/assets/desert-640.jpg" width="36" height="36" alt="Carlos Díaz"></span>
-              <span class="cai-avatar cai-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt="Eva Flores"></span>
+              <span class="luz-avatar luz-avatar--sm"><img src="/apps/docs/assets/desert-640.jpg" width="24" height="24" alt="Ana Belén"></span>
+              <span class="luz-avatar luz-avatar--md"><img src="/apps/docs/assets/desert-640.jpg" width="36" height="36" alt="Carlos Díaz"></span>
+              <span class="luz-avatar luz-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt="Eva Flores"></span>
             </div>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>If a photo does not load, the browser draws its <code>alt</code> text in the box, in the avatar's capitals; a long name can spill past the box. The name is still there for a screen reader.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Avatar documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Avatar documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-avatar" aria-label="Copy the avatar markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-avatar" aria-label="Copy the avatar markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar markup"><code id="code-avatar">&lt;span class=&quot;cai-avatar cai-avatar--md&quot; role=&quot;img&quot; aria-label=&quot;Carlos Díaz&quot;&gt;CD&lt;/span&gt;</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar markup"><code id="code-avatar">&lt;span class=&quot;luz-avatar luz-avatar--md&quot; role=&quot;img&quot; aria-label=&quot;Carlos Díaz&quot;&gt;CD&lt;/span&gt;</code></pre>
             </div>
             <p>Next to the person's name, the avatar repeats it: hide it instead.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-avatar-named" aria-label="Copy the avatar next to a name markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-avatar-named" aria-label="Copy the avatar next to a name markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar next to a name markup"><code id="code-avatar-named">&lt;span class=&quot;cai-avatar cai-avatar--sm&quot; aria-hidden=&quot;true&quot;&gt;CD&lt;/span&gt; Carlos Díaz</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar next to a name markup"><code id="code-avatar-named">&lt;span class=&quot;luz-avatar luz-avatar--sm&quot; aria-hidden=&quot;true&quot;&gt;CD&lt;/span&gt; Carlos Díaz</code></pre>
             </div>
             <p>With a photo: the image fills the box, cropped to a square.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-avatar-photo" aria-label="Copy the avatar with a photo markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-avatar-photo" aria-label="Copy the avatar with a photo markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar with a photo markup"><code id="code-avatar-photo">&lt;span class=&quot;cai-avatar cai-avatar--md&quot;&gt;&lt;img src=&quot;/img/ana.jpg&quot; width=&quot;36&quot; height=&quot;36&quot; alt=&quot;Ana Belén&quot;&gt;&lt;/span&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Avatar with a photo markup"><code id="code-avatar-photo">&lt;span class=&quot;luz-avatar luz-avatar--md&quot;&gt;&lt;img src=&quot;/img/ana.jpg&quot; width=&quot;36&quot; height=&quot;36&quot; alt=&quot;Ana Belén&quot;&gt;&lt;/span&gt;
 
-&lt;span class=&quot;cai-avatar cai-avatar--lg&quot;&gt;&lt;img src=&quot;/img/ana.jpg&quot; width=&quot;48&quot; height=&quot;48&quot; alt=&quot;&quot;&gt;&lt;/span&gt; Ana Belén</code></pre>
+&lt;span class=&quot;luz-avatar luz-avatar--lg&quot;&gt;&lt;img src=&quot;/img/ana.jpg&quot; width=&quot;48&quot; height=&quot;48&quot; alt=&quot;&quot;&gt;&lt;/span&gt; Ana Belén</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>Pick one size modifier. Without one, the avatar has no size of its own. The content is the initials or one <code>&lt;img&gt;</code>.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Avatar sizes" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Avatar sizes" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or content</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or content"><div><code>.cai-avatar--sm</code></div></td><td data-label="Effect"><div>24 × 24 px, extra-small text</div></td></tr>
-                  <tr><td data-label="Class or content"><div><code>.cai-avatar--md</code></div></td><td data-label="Effect"><div>36 × 36 px, small text</div></td></tr>
-                  <tr><td data-label="Class or content"><div><code>.cai-avatar--lg</code></div></td><td data-label="Effect"><div>48 × 48 px, base text</div></td></tr>
+                  <tr><td data-label="Class or content"><div><code>.luz-avatar--sm</code></div></td><td data-label="Effect"><div>24 × 24 px, extra-small text</div></td></tr>
+                  <tr><td data-label="Class or content"><div><code>.luz-avatar--md</code></div></td><td data-label="Effect"><div>36 × 36 px, small text</div></td></tr>
+                  <tr><td data-label="Class or content"><div><code>.luz-avatar--lg</code></div></td><td data-label="Effect"><div>48 × 48 px, base text</div></td></tr>
                   <tr><td data-label="Class or content"><div><code>&lt;img&gt;</code> inside</div></td><td data-label="Effect"><div>A photo: fills the box, cropped to a square, with the avatar's corners</div></td></tr>
                 </tbody>
               </table>
@@ -90,7 +90,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use an avatar to identify a person or an account where space is tight, such as a list of members or the author of a comment.</p>
@@ -106,14 +106,14 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Show the name next to the avatar: two people can share initials.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="o-row"><span class="cai-avatar cai-avatar--md">AB</span><span>Ana Belén</span></div>
-                  <div class="o-row"><span class="cai-avatar cai-avatar--md">AB</span><span>Álvaro Blanco</span></div>
+                  <div class="o-row"><span class="luz-avatar luz-avatar--md">AB</span><span>Ana Belén</span></div>
+                  <div class="o-row"><span class="luz-avatar luz-avatar--md">AB</span><span>Álvaro Blanco</span></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Avatars alone, as the only way to tell people apart: “AB” and “AB” are two different people.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="o-row"><span class="cai-avatar cai-avatar--md">AB</span><span class="cai-avatar cai-avatar--md">AB</span><span class="cai-avatar cai-avatar--md">CD</span></div>
+                  <div class="o-row"><span class="luz-avatar luz-avatar--md">AB</span><span class="luz-avatar luz-avatar--md">AB</span><span class="luz-avatar luz-avatar--md">CD</span></div>
                 </div>
               </figure>
             </div>
@@ -121,13 +121,13 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Give every photo in a list the same framing: head and shoulders, the face away from the edges, because the box crops it to a square.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="o-row"><span class="cai-avatar cai-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span><span class="cai-avatar cai-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span><span class="cai-avatar cai-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span></div>
+                  <div class="o-row"><span class="luz-avatar luz-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span><span class="luz-avatar luz-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span><span class="luz-avatar luz-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Mix photos with initials in a list that could be all one or the other: the people without a photo look like a different kind of member.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="o-row"><span class="cai-avatar cai-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span><span class="cai-avatar cai-avatar--lg">CD</span><span class="cai-avatar cai-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span><span class="cai-avatar cai-avatar--lg">EF</span></div>
+                  <div class="o-row"><span class="luz-avatar luz-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span><span class="luz-avatar luz-avatar--lg">CD</span><span class="luz-avatar luz-avatar--lg"><img src="/apps/docs/assets/desert-640.jpg" width="48" height="48" alt=""></span><span class="luz-avatar luz-avatar--lg">EF</span></div>
                 </div>
               </figure>
             </div>
@@ -139,13 +139,13 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The initials are brand text on the subtle brand tint. A photo is content: the system does not measure it.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Avatar contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Avatar contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Initials</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-brand-subtle</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Initials</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -157,9 +157,9 @@ toc: h2,h3
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 7 tokens that <code>components/avatar.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-brand-subtle"><code>--cai-brand-subtle</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-base</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-brand-subtle"><code>--luz-brand-subtle</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-mono</code>, <code>--luz-text-base</code>, <code>--luz-text-sm</code>, <code>--luz-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

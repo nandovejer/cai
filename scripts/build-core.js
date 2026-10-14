@@ -1,12 +1,12 @@
 /**
- * CAI Design System — Core dist builder
+ * LUZ Design System — Core dist builder
  * Regenerates packages/core/dist assets from packages/core/src.
  *
  * Usage: node scripts/build-core.js (from the repo root)
  *
  * Strategy:
  * - CSS: inline the @import graph of src/index.css (single source of truth)
- *   into dist/cai.css, plus one dist/components/<name>.css per component
+ *   into dist/luz.css, plus one dist/components/<name>.css per component
  *   and dist/base.css (settings + reset + elements) as their prerequisite
  * - JS: bundle with Rollup — utils.js inlined, midi.js and table-sort.js as lazy chunks;
  *   individual modules copied verbatim (browser-native ESM)
@@ -26,7 +26,7 @@ import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { rollup } from "rollup";
 import * as esbuild from "esbuild";
-import { LAYER_ORDER, inCaiLayer } from "./cai-layers.js";
+import { LAYER_ORDER, inLuzLayer } from "./luz-layers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -55,7 +55,7 @@ function inlineCssImports(filePath, seen = new Set()) {
   );
 }
 
-// The public layers live in scripts/cai-layers.js (container layer `cai`).
+// The public layers live in scripts/luz-layers.js (container layer `luz`).
 // src/index.css is the single source of layer order for the full bundle.
 
 async function writeCssWithMin(outPath, css) {
@@ -66,16 +66,16 @@ async function writeCssWithMin(outPath, css) {
 
 // --- CSS: full bundle from the src/index.css import graph ---
 const css = inlineCssImports(resolve(srcRoot, "index.css"));
-await writeCssWithMin(resolve(distRoot, "cai.css"), css);
-console.log(`✓ Core CSS built → ${resolve(distRoot, "cai.css")} (+ min)`);
+await writeCssWithMin(resolve(distRoot, "luz.css"), css);
+console.log(`✓ Core CSS built → ${resolve(distRoot, "luz.css")} (+ min)`);
 
 // --- CSS: base layer required by per-component files ---
 const baseCss =
   LAYER_ORDER +
   [
-    ["settings/_settings.css", "cai.settings"],
-    ["generic/_reset.css", "cai.generic"],
-    ["elements/index.css", "cai.elements"],
+    ["settings/_settings.css", "luz.settings"],
+    ["generic/_reset.css", "luz.generic"],
+    ["elements/index.css", "luz.elements"],
   ]
     .map(([f, layer]) => `@layer ${layer} {\n${inlineCssImports(resolve(srcRoot, f))}\n}\n`)
     .join("\n");
@@ -92,7 +92,7 @@ const componentFiles = readdirSync(componentsSrcDir).filter(
 for (const f of componentFiles) {
   await writeCssWithMin(
     resolve(componentsDistDir, f),
-    inCaiLayer("components", readFileSync(resolve(componentsSrcDir, f), "utf-8")),
+    inLuzLayer("components", readFileSync(resolve(componentsSrcDir, f), "utf-8")),
   );
 }
 console.log(`✓ ${componentFiles.length} component CSS files → ${componentsDistDir} (+ min)`);
@@ -100,14 +100,14 @@ console.log(`✓ ${componentFiles.length} component CSS files → ${componentsDi
 // --- CSS: print styles on their own, for pages that load components one by one ---
 await writeCssWithMin(
   resolve(distRoot, "print.css"),
-  inCaiLayer("print", readFileSync(resolve(srcRoot, "print/_print.css"), "utf-8")),
+  inLuzLayer("print", readFileSync(resolve(srcRoot, "print/_print.css"), "utf-8")),
 );
 console.log("✓ Print CSS built → dist/print.css (+ min)");
 
-// --- CSS: classless layer, a file of its own (scoped by [data-cai-classless]) ---
+// --- CSS: classless layer, a file of its own (scoped by [data-luz-classless]) ---
 await writeCssWithMin(
   resolve(distRoot, "classless.css"),
-  inCaiLayer("elements", readFileSync(resolve(srcRoot, "classless/_classless.css"), "utf-8")),
+  inLuzLayer("elements", readFileSync(resolve(srcRoot, "classless/_classless.css"), "utf-8")),
 );
 console.log("✓ Classless CSS built → dist/classless.css (+ min)");
 
@@ -115,20 +115,20 @@ console.log("✓ Classless CSS built → dist/classless.css (+ min)");
 async function buildJS() {
   try {
     const bundle = await rollup({
-      input: resolve(srcRoot, "cai.js"),
+      input: resolve(srcRoot, "luz.js"),
       external: [], // Nothing is external — all modules must be resolved
     });
 
     await bundle.write({
       dir: distRoot,
       format: "es",
-      entryFileNames: "cai.js",
+      entryFileNames: "luz.js",
       chunkFileNames: "[name].js",
       inlineDynamicImports: false,
     });
 
     await bundle.close();
-    console.log(`✓ Core JS bundled → ${resolve(distRoot, "cai.js")}`);
+    console.log(`✓ Core JS bundled → ${resolve(distRoot, "luz.js")}`);
 
     // Individual modules: the source IS the artifact (browser-native ESM
     // with relative imports only) — copy verbatim next to the bundle.
@@ -151,9 +151,9 @@ async function buildJS() {
     console.log(`✓ ${jsModules.length} JS modules copied → dist/`);
 
     // Minify JS outputs with esbuild. A minified file imports the minified
-    // siblings, so cai.min.js lazy-loads midi.min.js and table-sort.min.js,
+    // siblings, so luz.min.js lazy-loads midi.min.js and table-sort.min.js,
     // not the unminified chunks (red line 17: the chunk a page loads is the one budgeted).
-    const minified = ["cai.js", "midi.js", "table-sort.js", ...jsModules];
+    const minified = ["luz.js", "midi.js", "table-sort.js", ...jsModules];
     for (const jsFile of minified) {
       const jsPath = resolve(distRoot, jsFile);
       if (!existsSync(jsPath)) continue;
@@ -180,8 +180,8 @@ if (existsSync(themesSrcDir)) {
   mkdirSync(themesDistDir, { recursive: true });
   for (const f of readdirSync(themesSrcDir).filter((f) => f.endsWith(".css"))) {
     // The source stays plain (check:contrast reads it); the published file
-    // is in the cai.themes layer, so a consumer's `app` layer wins over it
-    const src = inCaiLayer("themes", readFileSync(resolve(themesSrcDir, f), "utf-8"));
+    // is in the luz.themes layer, so a consumer's `app` layer wins over it
+    const src = inLuzLayer("themes", readFileSync(resolve(themesSrcDir, f), "utf-8"));
     writeFileSync(resolve(themesDistDir, f), src, "utf-8");
     console.log(`✓ Theme synced → ${resolve(themesDistDir, f)}`);
     const { code: minCss } = await esbuild.transform(src, { loader: "css", minify: true });

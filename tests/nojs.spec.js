@@ -1,5 +1,5 @@
 /**
- * CAI — the no-JavaScript state (PRINCIPLES.md §3, red line 2).
+ * LUZ — the no-JavaScript state (PRINCIPLES.md §3, red line 2).
  * Runs in the `chromium-nojs` project, where JavaScript is disabled.
  * Each test says what the page must still do without scripts.
  */
@@ -27,11 +27,11 @@ for (const app of APPS) {
     // Controls whose behaviour lives in JavaScript. Without JS they must be
     // hidden (or replaced by a native equivalent), never shown and inert.
     const jsOnly = [
-      '.cai-copy-btn',
-      '.cai-theme-apply-btn',
-      '.cai-theme-mode-btn',
-      '.cai-player button',
-      '.cai-site-search-trigger',
+      '.luz-copy-btn',
+      '.luz-theme-apply-btn',
+      '.luz-theme-mode-btn',
+      '.luz-player button',
+      '.luz-site-search-trigger',
       '[role="switch"]:not(input)',
       '[role="slider"]:not(input)',
     ].join(', ');
@@ -144,13 +144,13 @@ test('docs: the image placeholder shows without JavaScript', async ({ page }) =>
 
 test('docs: the color mode switcher is three radios that set the mode', async ({ page }) => {
   await page.goto('/docs/');
-  const switcher = page.locator('footer .cai-mode-switcher--cycle');
-  await expect(switcher.locator('.cai-mode-btn')).toHaveCount(3);
-  for (const label of await switcher.locator('.cai-mode-btn').all()) await expect(label).toBeVisible();
-  await expect(page.locator('.cai-mode-cycle')).toBeHidden();
+  const switcher = page.locator('footer .luz-mode-switcher--cycle');
+  await expect(switcher.locator('.luz-mode-btn')).toHaveCount(3);
+  for (const label of await switcher.locator('.luz-mode-btn').all()) await expect(label).toBeVisible();
+  await expect(page.locator('.luz-mode-cycle')).toBeHidden();
   const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const light = await background();
-  await switcher.locator('.cai-mode-btn:has(input[value="dark"])').click();
+  await switcher.locator('.luz-mode-btn:has(input[value="dark"])').click();
   await expect.poll(background).not.toBe(light);
 });
 

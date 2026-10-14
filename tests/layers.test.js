@@ -1,22 +1,22 @@
 /**
- * Every published stylesheet puts its rules in a `cai.*` layer and repeats
- * the order statement first (scripts/cai-layers.js). A top-level layer name
+ * Every published stylesheet puts its rules in a `luz.*` layer and repeats
+ * the order statement first (scripts/luz-layers.js). A top-level layer name
  * or an unlayered rule would collide with the consumer's own layers, which
  * is what the container layer exists to prevent.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { LAYERS, LAYER_ORDER } from "../scripts/cai-layers.js";
+import { LAYERS, LAYER_ORDER } from "../scripts/luz-layers.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const dist = (path) => `${root}${path}`;
 const listed = (dir) => (existsSync(dist(dir)) ? readdirSync(dist(dir)).filter((f) => f.endsWith(".css")).map((f) => `${dir}/${f}`) : []);
 
 const files = [
-  "packages/tokens/dist/cai-tokens.css",
+  "packages/tokens/dist/luz-tokens.css",
   "packages/tokens/dist/tokens.css",
-  "packages/core/dist/cai.css",
+  "packages/core/dist/luz.css",
   "packages/core/dist/base.css",
   "packages/site/dist/site.css",
   "packages/landing/dist/landing.css",
@@ -49,17 +49,17 @@ function topLevel(css) {
   return out;
 }
 
-describe.skipIf(files.length === 0)("published stylesheets and the cai layers", () => {
+describe.skipIf(files.length === 0)("published stylesheets and the luz layers", () => {
   it("covers every package's CSS", () => {
     expect(files.some((f) => f.includes("tokens/dist"))).toBe(true);
-    expect(files.some((f) => f.endsWith("cai.css"))).toBe(true);
+    expect(files.some((f) => f.endsWith("luz.css"))).toBe(true);
     expect(files.some((f) => f.endsWith("site.css"))).toBe(true);
     expect(files.some((f) => f.endsWith("landing.css"))).toBe(true);
     expect(files.some((f) => f.endsWith("cms.css"))).toBe(true);
   });
 
   for (const file of files) {
-    it(`${file}: only cai.* layers, the order statement first, nothing unlayered but @font-face`, () => {
+    it(`${file}: only luz.* layers, the order statement first, nothing unlayered but @font-face`, () => {
       const items = topLevel(readFileSync(dist(file), "utf-8"));
       const statement = items.find((it) => it.body === null && it.prelude.startsWith("@layer"));
       expect(statement, "an @layer order statement").toBeTruthy();
@@ -70,15 +70,15 @@ describe.skipIf(files.length === 0)("published stylesheets and the cai layers", 
       for (const { prelude, body } of items) {
         if (prelude.startsWith("@font-face") || prelude.startsWith("@charset") || prelude === statement.prelude) continue;
         const layer = prelude.match(/^@layer\s+([\w.-]+)$/)?.[1];
-        if (body === null || !layer || !layer.startsWith("cai.") || !LAYERS.includes(layer.slice(4))) stray.push(prelude.slice(0, 80));
+        if (body === null || !layer || !layer.startsWith("luz.") || !LAYERS.includes(layer.slice(4))) stray.push(prelude.slice(0, 80));
       }
       expect(stray).toEqual([]);
     });
   }
 
   it("the full bundle has the layers in the documented order", () => {
-    const css = readFileSync(dist("packages/core/dist/cai.css"), "utf-8");
-    const order = [...css.matchAll(/^@layer (cai\.[\w-]+) \{/gm)].map((m) => m[1]);
-    expect(order).toEqual(["cai.settings", "cai.generic", "cai.elements", "cai.objects", "cai.components", "cai.utilities", "cai.print"]);
+    const css = readFileSync(dist("packages/core/dist/luz.css"), "utf-8");
+    const order = [...css.matchAll(/^@layer (luz\.[\w-]+) \{/gm)].map((m) => m[1]);
+    expect(order).toEqual(["luz.settings", "luz.generic", "luz.elements", "luz.objects", "luz.components", "luz.utilities", "luz.print"]);
   });
 });

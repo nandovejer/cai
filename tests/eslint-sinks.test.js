@@ -1,5 +1,5 @@
 /**
- * CAI — the ESLint HTML-sink rule (docs-redesign security.md SEC-IDX-1/2)
+ * LUZ — the ESLint HTML-sink rule (docs-redesign security.md SEC-IDX-1/2)
  * covers every package and every app, and every way to turn a string into
  * HTML or code that the phase 4 review found. Each line of the fixture is one
  * sink and must be reported once; the safe lines must not be.

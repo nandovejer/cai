@@ -7,27 +7,27 @@ import { docsSite } from "./scripts/docs-site/plugin.js";
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const distRoot = resolve(__dirname, "dist");
 // `vite build --mode pages` builds the GitHub Pages site into docs/.
-// CAI_PAGES_OUT builds it elsewhere: scripts/check-generated.js compares
+// LUZ_PAGES_OUT builds it elsewhere: scripts/check-generated.js compares
 // that fresh build with the committed docs/ (red line 14).
-const pagesRoot = resolve(__dirname, process.env.CAI_PAGES_OUT ?? "docs");
+const pagesRoot = resolve(__dirname, process.env.LUZ_PAGES_OUT ?? "docs");
 // emptyOutDir wipes pagesRoot: allow only docs/ or a folder inside the OS temp dir
 const insideTmp = pagesRoot.startsWith(resolve(tmpdir()) + sep);
 if (pagesRoot !== resolve(__dirname, "docs") && !insideTmp) {
-  throw new Error(`CAI_PAGES_OUT must be docs/ or a folder inside ${tmpdir()}, got ${pagesRoot}`);
+  throw new Error(`LUZ_PAGES_OUT must be docs/ or a folder inside ${tmpdir()}, got ${pagesRoot}`);
 }
 
 /**
- * The site's path on GitHub Pages (https://<user>.github.io/cai/). Only the
+ * The site's path on GitHub Pages (https://<user>.github.io/luz/). Only the
  * not-found page uses it, as its <base href>: GitHub Pages serves /404.html
  * at whatever URL was missing, so its relative URLs need a fixed base. A fork
  * or a custom domain changes it ("/" for a domain of its own); if it is wrong,
  * the 404 page is still readable, only unstyled.
  */
-export const PAGES_BASE = "/cai/";
+export const PAGES_BASE = "/luz/";
 
 /**
  * The published site's root URL: GitHub Pages of the repository
- * github.com/nandovejer/cai (the git remote), at PAGES_BASE. The pages build
+ * github.com/nandovejer/luz (the git remote), at PAGES_BASE. The pages build
  * writes the home pages' canonical and hreflang alternates with it, absolute
  * as search engines ask; the dev server keeps them root-absolute. A fork or a
  * custom domain changes it with PAGES_BASE.

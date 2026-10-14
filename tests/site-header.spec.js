@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * The site header pattern (@cai-ds/site, .cai-site-header): the
+ * The site header pattern (@luz-ds/site, .luz-site-header): the
  * accessibility review of 2026-10-13 turned into checks, on a page of its own
  * (tests/fixtures/site-header.html). Each test names the change it keeps
  * (H1 to H6 of .claude/plans/specs/platform-site-header.md).
@@ -185,7 +185,7 @@ test.describe('site header', () => {
     });
     expect(svg.w).toBeGreaterThan(10);
     expect(svg.fill).not.toMatch(/none|rgba\(0, 0, 0, 0\)/);
-    const bars = await page.locator('#bars .cai-nav-toggle__bar').first().evaluate((b) => getComputedStyle(b).backgroundColor);
+    const bars = await page.locator('#bars .luz-nav-toggle__bar').first().evaluate((b) => getComputedStyle(b).backgroundColor);
     expect(bars, 'a system color, not transparent').not.toBe('rgba(0, 0, 0, 0)');
     // The current link keeps its underline
     expect(await page.locator('#site-nav a[aria-current]').evaluate((a) => getComputedStyle(a).textDecorationLine)).toBe('underline');

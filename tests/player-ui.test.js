@@ -1,5 +1,5 @@
 /**
- * CAI — the shared controls of the players (bindPlayerUI in
+ * LUZ — the shared controls of the players (bindPlayerUI in
  * packages/core/src/player.js), on a stand-in media object: the state comes
  * from the media, whatever it was before the script ran.
  */
@@ -59,12 +59,12 @@ function mount(state) {
     current: new FakeElement(),
     duration: new FakeElement(),
   };
-  root.parts = { ".cai-player-mute": muteBtn };
+  root.parts = { ".luz-player-mute": muteBtn };
   controls.parts = {
-    ".cai-player-progress-row .cai-player-seekbar": parts.seekbar,
-    ".cai-player-volbar": parts.volbar,
-    ".cai-player-current": parts.current,
-    ".cai-player-duration": parts.duration,
+    ".luz-player-progress-row .luz-player-seekbar": parts.seekbar,
+    ".luz-player-volbar": parts.volbar,
+    ".luz-player-current": parts.current,
+    ".luz-player-duration": parts.duration,
   };
   const m = media(state);
   bindPlayerUI(root, controls, m);

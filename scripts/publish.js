@@ -1,5 +1,5 @@
 /**
- * CAI Design System — Publisher
+ * LUZ Design System — Publisher
  * Publishes each package whose current version is not on the registry yet,
  * lowest layer first. Already-published versions are skipped, so the script
  * is safe to re-run; any real failure stops the release.
@@ -19,8 +19,8 @@ import { tmpdir } from "os";
 import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 // Order matters: a package is only published after the ones it depends on
-// (scripts/cai-packages.js lists them in that order)
-import { PACKAGES } from "./cai-packages.js";
+// (scripts/luz-packages.js lists them in that order)
+import { PACKAGES } from "./luz-packages.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -67,7 +67,7 @@ for (const dir of PACKAGES) {
     continue;
   }
 
-  const outDir = mkdtempSync(join(tmpdir(), "cai-pack-"));
+  const outDir = mkdtempSync(join(tmpdir(), "luz-pack-"));
   execFileSync("pnpm", ["pack", "--pack-destination", outDir], { cwd: pkgRoot, stdio: "inherit" });
   const tarball = join(outDir, readdirSync(outDir).find((f) => f.endsWith(".tgz")));
   checkTarball(tarball, pkgRoot, name);

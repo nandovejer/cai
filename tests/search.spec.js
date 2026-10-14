@@ -1,5 +1,5 @@
 /**
- * CAI — the site search of @cai-ds/site, in the docs (a11y.md §2 SRCH-*,
+ * LUZ — the site search of @luz-ds/site, in the docs (a11y.md §2 SRCH-*,
  * TEST-5; security.md SEC-IDX, SEC-NET-6). The pure half (index checks,
  * matching, the shortcut filter) is tests/search.test.js; the no-JavaScript
  * state is in tests/nojs.spec.js.
@@ -8,7 +8,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { routeOf, site } from './helpers/docs-site.js';
-import { SITE_KINDS } from '../scripts/cai-packages.js';
+import { SITE_KINDS } from '../scripts/luz-packages.js';
 
 const BUTTON = routeOf('c-button');
 const THEMES = ['light', 'dark', 'high-contrast'];
@@ -16,7 +16,7 @@ const THEMES = ['light', 'dark', 'high-contrast'];
 const dialog = (page) => page.getByRole('dialog', { name: 'Search the documentation' });
 const field = (page) => dialog(page).getByRole('textbox', { name: 'Search the documentation' });
 const status = (page) => dialog(page).getByRole('status');
-const results = (page) => dialog(page).locator('[data-cai-search-list] a');
+const results = (page) => dialog(page).locator('[data-luz-search-list] a');
 
 async function open(page, url = BUTTON) {
   await page.goto(url);
@@ -119,9 +119,9 @@ test.describe('search: results', () => {
   test('results are links grouped under headings, 8 at most, and the count is announced (SRCH-18, 19, 24, 25)', async ({ page }) => {
     await open(page);
     await searchFor(page, 't');
-    const groups = dialog(page).locator('[data-cai-search-results] > :not([hidden])');
+    const groups = dialog(page).locator('[data-luz-search-results] > :not([hidden])');
     await expect(groups.locator('h3')).toHaveText(['Pages', 'Sections', 'HTML elements']);
-    for (const list of await dialog(page).locator('[data-cai-search-list]').all()) {
+    for (const list of await dialog(page).locator('[data-luz-search-list]').all()) {
       expect(await list.locator('li > a').count()).toBeLessThanOrEqual(8);
     }
     await expect(status(page)).toHaveText(/^\d+ of \d+ results\. Type more to narrow\.$/);
@@ -134,7 +134,7 @@ test.describe('search: results', () => {
     await open(page);
     await page.keyboard.press('Control+k');
     const changes = await page.evaluate(() => {
-      const region = document.querySelector('[data-cai-search] [role="status"]');
+      const region = document.querySelector('[data-luz-search] [role="status"]');
       const seen = [];
       new MutationObserver(() => seen.push(region.textContent)).observe(region, { childList: true, characterData: true, subtree: true });
       window.__statusChanges = seen;
@@ -188,9 +188,9 @@ test.describe('search: keyboard (SRCH-20)', () => {
     await page.keyboard.press('Home');
     await expect(links.nth(0)).toBeFocused();
     // Across the groups: the last page, then the first section
-    const pages = await dialog(page).locator('[data-cai-search-list="pages"] a').count();
+    const pages = await dialog(page).locator('[data-luz-search-list="pages"] a').count();
     for (let i = 1; i <= pages; i++) await page.keyboard.press('ArrowDown');
-    await expect(dialog(page).locator('[data-cai-search-list="sections"] a').first()).toBeFocused();
+    await expect(dialog(page).locator('[data-luz-search-list="sections"] a').first()).toBeFocused();
     await page.keyboard.press('Home');
     await page.keyboard.press('ArrowUp');
     await expect(field(page)).toBeFocused();
@@ -289,9 +289,9 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
       return route.fulfill({ status: 500, body: 'no' });
     });
     await open(page);
-    await page.locator('[data-cai-search]').evaluate((d) => {
-      d.setAttribute('data-cai-label-error', 'Down {n}');
-      d.setAttribute('data-cai-label-loading', 'Loading {n}');
+    await page.locator('[data-luz-search]').evaluate((d) => {
+      d.setAttribute('data-luz-label-error', 'Down {n}');
+      d.setAttribute('data-luz-label-loading', 'Loading {n}');
     });
     for (let i = 1; i <= 2; i++) {
       await page.keyboard.press('Control+k');
@@ -342,7 +342,7 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
         return route.abort();
       });
       await open(page);
-      await page.locator('[data-cai-search]').evaluate((d, value) => d.setAttribute('data-cai-search-src', value), src);
+      await page.locator('[data-luz-search]').evaluate((d, value) => d.setAttribute('data-luz-search-src', value), src);
       await page.keyboard.press('Control+k');
       await expect(status(page), src).toHaveText('Search is not available right now.');
       expect(external, src).toEqual([]);
@@ -364,7 +364,7 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
     expect(sent.filter((url) => new URL(url).origin !== new URL(page.url()).origin)).toEqual([]);
     // Control: a plain fetch() of the same URL follows the 302 (the dev
     // server has no CSP), so the empty list above is the search's redirect: "error"
-    const src = await page.locator('[data-cai-search]').evaluate((d) => new URL(d.dataset.caiSearchSrc, document.baseURI).href);
+    const src = await page.locator('[data-luz-search]').evaluate((d) => new URL(d.dataset.luzSearchSrc, document.baseURI).href);
     await page.evaluate((url) => fetch(url).catch(() => {}), src);
     await expect.poll(() => sent).toContain(OTHER);
   });
@@ -407,7 +407,7 @@ test.describe('search: rendering', () => {
         await searchFor(page, query);
         await page.waitForTimeout(400);
         const { violations } = await new AxeBuilder({ page })
-          .include('[data-cai-search]')
+          .include('[data-luz-search]')
           .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
           .analyze();
         const blocking = violations.filter((v) => ['serious', 'critical'].includes(v.impact)).map((v) => `${v.id}: ${v.nodes[0]?.target.join(' ')}`);

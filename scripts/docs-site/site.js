@@ -1,8 +1,8 @@
 /**
- * CAI docs site — the page generator, without Vite.
+ * LUZ docs site — the page generator, without Vite.
  *
  * apps/docs/pages/ holds one HTML fragment per page, with its front matter in
- * a leading `<!-- cai:page … -->` comment. This module scans that folder,
+ * a leading `<!-- luz:page … -->` comment. This module scans that folder,
  * works out each page's route, renders it inside its layout with the shared
  * partials, and checks every internal link. plugin.js wires it into Vite;
  * the unit tests (tests/docs-site.test.js) call it directly, so the build
@@ -16,7 +16,7 @@
  * the site's path, because GitHub Pages serves it at any URL.
  *
  * Template syntax, on purpose only these:
- *   <!-- cai:include name -->   a file of _partials/ (name: [a-z0-9-]+)
+ *   <!-- luz:include name -->   a file of _partials/ (name: [a-z0-9-]+)
  *   {{key}}                      a fixed set of values (the landing, layouts and partials)
  *   {{t:key}} / {{html:key}}     a string of the page's language catalog
  *                                (apps/landing/i18n/, see i18n.js)
@@ -34,7 +34,7 @@
 import { lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
-import { SITE_KINDS } from "../cai-packages.js";
+import { SITE_KINDS } from "../luz-packages.js";
 import { assertInlineHtml, loadLocales, lookup, markDocsLinks, renderAlternates, renderSwitcher, unusedKeys } from "./i18n.js";
 
 /** Where the docs pages are published. */
@@ -43,7 +43,7 @@ export const DOCS_ROUTE = "/docs/";
 export const NOT_FOUND_ROUTE = "/404.html";
 export const NOT_FOUND_FILE = "404.html";
 /** The last part of every page title, and the whole title of the hub. */
-export const SITE_TITLE = "CAI documentation";
+export const SITE_TITLE = "LUZ documentation";
 
 const SEGMENT = /^[a-z0-9][a-z0-9-]*$/;
 const NAME = /^[a-z0-9-]+$/;
@@ -181,8 +181,8 @@ export function currentOf(route, homes = ["/"]) {
  * newline removed), `bodyLine` the line of the source where it starts.
  */
 export function parseFrontMatter(source, file, areas = null) {
-  const match = /^<!-- cai:page\n([\s\S]*?)\n-->\n/.exec(source);
-  if (!match) throw new Error(`${file}:1: a page starts with a <!-- cai:page … --> front matter comment`);
+  const match = /^<!-- luz:page\n([\s\S]*?)\n-->\n/.exec(source);
+  if (!match) throw new Error(`${file}:1: a page starts with a <!-- luz:page … --> front matter comment`);
   const meta = {};
   match[1].split("\n").forEach((line, i) => {
     const where = `${file}:${i + 2}`;
@@ -398,7 +398,7 @@ export function essentialsOf(site, page) {
     .map((item) => ({ route: item.href, label: item.label ?? site.byRoute.get(item.href).meta.title }));
 }
 
-/** The text of <title>: "<h1> – <Area> – CAI documentation", shorter on the hub and area indexes. */
+/** The text of <title>: "<h1> – <Area> – LUZ documentation", shorter on the hub and area indexes. */
 export function docTitleOf(site, page) {
   if (page.route === DOCS_ROUTE || page.meta.title === SITE_TITLE) return SITE_TITLE;
   const area = areaOf(site, page);
@@ -428,14 +428,14 @@ export function renderNav(site, page) {
     const here = current?.id === area.id;
     const mark = !here ? "" : page.route === route ? ' aria-current="page"' : ' aria-current="true"';
     const href = indexOf(site, area) ? route : area.fallback ?? route;
-    const head = link(href, area.label, ` class="cai-sidebar__link docs-nav__area"${mark}`);
+    const head = link(href, area.label, ` class="luz-sidebar__link docs-nav__area"${mark}`);
     if (!here) return `      <li>${head}</li>`;
     const item = (p) =>
-      `<li>${link(p.route, p.meta.title, ` class="cai-sidebar__link"${p.route === page.route ? ' aria-current="page"' : ""}`)}</li>`;
+      `<li>${link(p.route, p.meta.title, ` class="luz-sidebar__link"${p.route === page.route ? ' aria-current="page"' : ""}`)}</li>`;
     const children = sectionsOf(site, area).flatMap(({ group, pages }) =>
       group
         ? [
-            `<li class="docs-nav__group"><span class="cai-sidebar__section-label" id="nav-${group.id}">${escapeHtml(group.label)}</span>`,
+            `<li class="docs-nav__group"><span class="luz-sidebar__section-label" id="nav-${group.id}">${escapeHtml(group.label)}</span>`,
             `  <ul class="docs-nav__pages" aria-labelledby="nav-${group.id}">`,
             ...pages.map((p) => `    ${item(p)}`),
             "  </ul>",
@@ -458,20 +458,20 @@ export function renderNav(site, page) {
 export function renderBreadcrumb(site, page) {
   if (page.route === DOCS_ROUTE || page.route === NOT_FOUND_ROUTE) return "";
   const area = areaOf(site, page);
-  const trail = [link(DOCS_ROUTE, "Docs", ' class="cai-breadcrumb__item"')];
+  const trail = [link(DOCS_ROUTE, "Docs", ' class="luz-breadcrumb__item"')];
   if (area && page.route !== areaRoute(area) && indexOf(site, area)) {
-    trail.push(link(areaRoute(area), area.label, ' class="cai-breadcrumb__item"'));
+    trail.push(link(areaRoute(area), area.label, ' class="luz-breadcrumb__item"'));
   }
-  trail.push(`<span class="cai-breadcrumb__item" aria-current="page">${escapeHtml(page.meta.title)}</span>`);
+  trail.push(`<span class="luz-breadcrumb__item" aria-current="page">${escapeHtml(page.meta.title)}</span>`);
   const items = trail.map((item) => `        <li>${item}</li>`).join("\n");
-  return `    <nav class="docs-breadcrumb" aria-label="Breadcrumb">\n      <ol class="cai-breadcrumb">\n${items}\n      </ol>\n    </nav>`;
+  return `    <nav class="docs-breadcrumb" aria-label="Breadcrumb">\n      <ol class="luz-breadcrumb">\n${items}\n      </ol>\n    </nav>`;
 }
 
 /** Breadcrumb, h1 (with the component's files and JS module), and the lead. */
 export function renderPageHead(site, page) {
   const meta = [
     ...page.meta.files.split(",").map((f) => f.trim()).filter(Boolean).map((f) => `<code class="docs-demo__file">${escapeHtml(f)}</code>`),
-    ...(page.meta.module ? [`<span class="cai-tag cai-tag--purple">JS: ${escapeHtml(page.meta.module)}</span>`] : []),
+    ...(page.meta.module ? [`<span class="luz-tag luz-tag--purple">JS: ${escapeHtml(page.meta.module)}</span>`] : []),
   ];
   const title = meta.length
     ? `    <div class="docs-page-head__title">\n      <h1 class="docs-title">${escapeHtml(page.meta.title)}</h1>\n      ${meta.join("\n      ")}\n    </div>`
@@ -498,7 +498,7 @@ export function renderToc(page, html) {
   const missing = headings.find((h) => !h.id);
   if (missing) throw new Error(`${page.file}: the heading "${missing.text}" belongs in "On this page" and needs an id`);
   if (headings[0].level !== 2) throw new Error(`${page.file}: the h3 "${headings[0].text}" comes before any h2`);
-  const item = (h) => link(`#${h.id}`, h.text, ' class="cai-sidebar__link docs-onpage__link"');
+  const item = (h) => link(`#${h.id}`, h.text, ' class="luz-sidebar__link docs-onpage__link"');
   const lines = [];
   headings.forEach((h, i) => {
     const next = headings[i + 1];
@@ -557,7 +557,7 @@ export function renderGallery(site, page) {
     .sort(byOrder);
   const groups = [...(area.groups ?? []), { id: "", label: "" }];
   const card = (p) =>
-    `      <li class="cai-card docs-card">\n        <h3 class="cai-card__title docs-card__title">${link(p.route, p.meta.title)}</h3>\n        <p class="cai-card__body docs-card__desc">${escapeHtml(p.meta.description)}</p>\n      </li>`;
+    `      <li class="luz-card docs-card">\n        <h3 class="luz-card__title docs-card__title">${link(p.route, p.meta.title)}</h3>\n        <p class="luz-card__body docs-card__desc">${escapeHtml(p.meta.description)}</p>\n      </li>`;
   const row = (p) => `      <li>${link(p.route, p.meta.title)} <span class="docs-gallery__desc">${escapeHtml(p.meta.description)}</span></li>`;
   return groups
     .map((group) => {
@@ -576,16 +576,16 @@ export function renderGallery(site, page) {
 /** The h2 of a component page's tab panels: its h3 belong to that tab. */
 const VIEW_HEADINGS = new Set(["code", "design"]);
 
-/** A class a page names in <code>, with its dot: `.cai-btn--primary`, `.o-container`, `.u-hidden`. */
-const CLASS_NAME = /^\.(?:cai|o|u)-[a-z0-9]+(?:(?:-{1,2}|__)[a-z0-9]+)*$/;
-/** A token a page names in <code>: `--cai-brand-primary`. */
-const TOKEN_NAME = /^--cai-[a-z0-9]+(?:-[a-z0-9]+)*$/;
+/** A class a page names in <code>, with its dot: `.luz-btn--primary`, `.o-container`, `.u-hidden`. */
+const CLASS_NAME = /^\.(?:luz|o|u)-[a-z0-9]+(?:(?:-{1,2}|__)[a-z0-9]+)*$/;
+/** A token a page names in <code>: `--luz-brand-primary`. */
+const TOKEN_NAME = /^--luz-[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /**
  * The classes and tokens a page names in its own text (not in a demo, not in
  * a code sample), each with the section it is named in: the one that names
  * it most, the first on a tie; or the element that carries its own id (a
- * token card, `id="cai-brand-primary"`). `defined` says a card or a table of
+ * token card, `id="luz-brand-primary"`). `defined` says a card or a table of
  * classes (a cell labelled "Class…") names it. [{ text, id, tab, count, defined, token }]
  * in document order; `id` is null before the page's first heading.
  */
@@ -663,8 +663,8 @@ export function indexData(site) {
       return { page, title: page.meta.title, route: page.route, area: area?.label ?? null, kind, keywords, sections, elements, names: [], candidates };
     });
   // Each name goes to one page. Tokens: a page of the tokens area. Then the page that names most of
-  // its family (`.cai-btn` with `.cai-btn--primary`, `--cai-space` with `--cai-space-md`), where it
-  // is defined, the page named after it (`.cai-select`, Select), and the page that names it most.
+  // its family (`.luz-btn` with `.luz-btn--primary`, `--luz-space` with `--luz-space-md`), where it
+  // is defined, the page named after it (`.luz-select`, Select), and the page that names it most.
   const block = (c) => (c.token ? c.text.split("-").slice(0, 4).join("-") : c.text.split(/--|__/)[0]);
   for (const entry of data) {
     const family = new Map();
@@ -725,7 +725,7 @@ export const SEARCH_INDEX_ROUTE = `${DOCS_ROUTE}search-index.json`;
 const NOT_SEARCHED = new Set(["example", "code", "design"]);
 
 /**
- * The search index of @cai-ds/site's search (format version 1, the
+ * The search index of @luz-ds/site's search (format version 1, the
  * public contract documented on /docs/site/search/), from the same data
  * as the A–Z index: three lists of [text, url, meta?]. URLs are relative to
  * the JSON file, so the site works under any path; a section's URL carries
@@ -734,7 +734,7 @@ const NOT_SEARCHED = new Set(["example", "code", "design"]);
  * Design"], read after it, so it makes sense alone (a11y.md SRCH-19) and is
  * found by the page's name (the search reads the meta too); that is why
  * template headings are kept here. An element names its page in its text.
- * A class or a token is a section too: [".cai-btn--primary", url, "Button ›
+ * A class or a token is a section too: [".luz-btn--primary", url, "Button ›
  * Code"], at the part of the page that names it. A page's other names (its
  * `keywords`) follow its area in the meta of the page. Plain data for
  * JSON.stringify (SEC-PLG-9).
@@ -825,7 +825,7 @@ export function assertFragmentSafe(html, file) {
 export function expand(template, ctx) {
   const stack = ctx.stack ?? [];
   const lineAt = (offset) => (ctx.firstLine ?? 1) + (template.slice(0, offset).match(/\n/g)?.length ?? 0);
-  return template.replace(/^([ \t]*)<!-- cai:include ([^\s>]*) -->|<!-- cai:include ([^\s>]*) -->|\{\{([^{}]*)\}\}/gm, (whole, indent, lineName, inlineName, key, offset) => {
+  return template.replace(/^([ \t]*)<!-- luz:include ([^\s>]*) -->|<!-- luz:include ([^\s>]*) -->|\{\{([^{}]*)\}\}/gm, (whole, indent, lineName, inlineName, key, offset) => {
     const name = lineName ?? inlineName;
     if (name !== undefined) {
       if (!NAME.test(name)) throw new Error(`${ctx.file}: include name "${name}" is not valid ([a-z0-9-]+)`);
@@ -961,14 +961,14 @@ export function landingDocuments(site, file, html) {
  * Pages build: make every root-absolute link to a known route relative to
  * `route`, so the site works under any sub-path (https://<user>.github.io/<repo>/).
  * `href="/docs/#x"` on /docs/a/ becomes `href="../../docs/#x"`. On the
- * not-found page `root` is the site's path: "/docs/" becomes "/cai/docs/".
+ * not-found page `root` is the site's path: "/docs/" becomes "/luz/docs/".
  */
 export function relativizeLinks(html, route, routes, root = rootOf(route)) {
   return html
     .replace(/href="\/([^"#?]*)(#[^"]*)?"/g, (whole, path, hash = "") =>
       routes.has(`/${path}`) ? `href="${root}${path}${hash}"` : whole,
     )
-    .replaceAll(`data-cai-search-src="${SEARCH_INDEX_ROUTE}"`, `data-cai-search-src="${root}${SEARCH_INDEX_ROUTE.slice(1)}"`);
+    .replaceAll(`data-luz-search-src="${SEARCH_INDEX_ROUTE}"`, `data-luz-search-src="${root}${SEARCH_INDEX_ROUTE.slice(1)}"`);
 }
 
 /* ---- Checking ---------------------------------------------------------- */
@@ -1042,7 +1042,7 @@ export function buildSite(site, { extra = [], unchecked = [], root } = {}) {
   // checked once. Called after rendering, which already refused include cycles.
   const partials = new Map();
   const partialLinks = (html) =>
-    [...html.matchAll(/<!-- cai:include ([a-z0-9-]+) -->/g)].flatMap(([, name]) => {
+    [...html.matchAll(/<!-- luz:include ([a-z0-9-]+) -->/g)].flatMap(([, name]) => {
       if (!partials.has(name)) {
         const partial = reader.partial(name);
         partials.set(name, [...sourceLinks(partial.text, partial.file, 1, true), ...partialLinks(partial.text)]);

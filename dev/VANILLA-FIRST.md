@@ -1,6 +1,6 @@
-# CAI — Vanilla-First Architecture
+# LUZ — Vanilla-First Architecture
 
-**CAI is a vanilla design system. No JS frameworks. No runtime dependencies.**
+**LUZ is a vanilla design system. No JS frameworks. No runtime dependencies.**
 
 This is not a preference — it is an architectural decision that defines what the system can do and how it grows.
 

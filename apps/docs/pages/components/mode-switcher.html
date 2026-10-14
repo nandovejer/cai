@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Color mode switcher
 description: Lets readers choose light, dark or high contrast: radios that work without JavaScript, or one button that cycles.
 area: components
@@ -12,52 +12,52 @@ keywords: dark mode
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <fieldset class="cai-mode-switcher" disabled>
-                  <legend class="cai-mode-switcher__label">Color mode (specimen)</legend>
-                  <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="light" checked>Light</label>
-                  <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="dark">Dark</label>
-                  <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme-specimen" value="high-contrast">High contrast</label>
+            <fieldset class="luz-mode-switcher" disabled>
+                  <legend class="luz-mode-switcher__label">Color mode (specimen)</legend>
+                  <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme-specimen" value="light" checked>Light</label>
+                  <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme-specimen" value="dark">Dark</label>
+                  <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme-specimen" value="high-contrast">High contrast</label>
                 </fieldset>
           </div>
           <p class="docs-demo__note">The radio group, disabled here so it does not change this page. The working switcher, in the cycle variant, is in <a href="#site-footer">this page's footer</a>: one button with the icon of the current mode.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>A stored color mode can flash once on load: <code>initThemeSystem()</code> is a deferred module and runs after the first paint, and CAI ships no script for the <code>&lt;head&gt;</code>, by design. This site sets the mode before the first paint with a small script of its own.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Color mode switcher documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <p>A stored color mode can flash once on load: <code>initThemeSystem()</code> is a deferred module and runs after the first paint, and LUZ ships no script for the <code>&lt;head&gt;</code>, by design. This site sets the mode before the first paint with a small script of its own.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Color mode switcher documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-mode-radios" aria-label="Copy the radio group markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-mode-radios" aria-label="Copy the radio group markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Radio group markup"><code id="code-mode-radios">&lt;fieldset class=&quot;cai-mode-switcher&quot;&gt;
-  &lt;legend class=&quot;cai-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
-  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;light&quot;&gt;&lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;light&quot; checked&gt;Light&lt;/label&gt;
-  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;dark&quot;&gt;&lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;dark&quot;&gt;Dark&lt;/label&gt;
-  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;high-contrast&quot;&gt;&lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;high-contrast&quot;&gt;High contrast&lt;/label&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Radio group markup"><code id="code-mode-radios">&lt;fieldset class=&quot;luz-mode-switcher&quot;&gt;
+  &lt;legend class=&quot;luz-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
+  &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;light&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;light&quot; checked&gt;Light&lt;/label&gt;
+  &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;dark&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;dark&quot;&gt;Dark&lt;/label&gt;
+  &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;high-contrast&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;high-contrast&quot;&gt;High contrast&lt;/label&gt;
 &lt;/fieldset&gt;</code></pre>
             </div>
             <p id="cycle-variant">The cycle variant: the same radios, an icon in each label, and a button with one icon per mode.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-mode-cycle" aria-label="Copy the cycle variant markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-mode-cycle" aria-label="Copy the cycle variant markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cycle variant markup"><code id="code-mode-cycle">&lt;fieldset class=&quot;cai-mode-switcher cai-mode-switcher--cycle&quot;&gt;
-  &lt;legend class=&quot;cai-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
-  &lt;button class=&quot;cai-mode-cycle&quot; type=&quot;button&quot; aria-label=&quot;Change color mode&quot;&gt;
-    &lt;svg class=&quot;cai-mode-btn__icon&quot; data-mode-icon=&quot;light&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cycle variant markup"><code id="code-mode-cycle">&lt;fieldset class=&quot;luz-mode-switcher luz-mode-switcher--cycle&quot;&gt;
+  &lt;legend class=&quot;luz-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
+  &lt;button class=&quot;luz-mode-cycle&quot; type=&quot;button&quot; aria-label=&quot;Change color mode&quot;&gt;
+    &lt;svg class=&quot;luz-mode-btn__icon&quot; data-mode-icon=&quot;light&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;…&lt;/svg&gt;
     &lt;!-- the same for data-mode-icon=&quot;dark&quot; and &quot;high-contrast&quot; --&gt;
   &lt;/button&gt;
-  &lt;span class=&quot;cai-mode-cycle__status&quot; role=&quot;status&quot;&gt;&lt;/span&gt;
-  &lt;label class=&quot;cai-mode-btn&quot; data-theme=&quot;light&quot;&gt;
-    &lt;input class=&quot;cai-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;cai-theme&quot; value=&quot;light&quot; checked&gt;
-    &lt;svg class=&quot;cai-mode-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;…&lt;/svg&gt;
+  &lt;span class=&quot;luz-mode-cycle__status&quot; role=&quot;status&quot;&gt;&lt;/span&gt;
+  &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;light&quot;&gt;
+    &lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;light&quot; checked&gt;
+    &lt;svg class=&quot;luz-mode-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;…&lt;/svg&gt;
     Light
   &lt;/label&gt;
   &lt;!-- the same for dark and high-contrast --&gt;
@@ -66,24 +66,24 @@ keywords: dark mode
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">JS</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-mode-js" aria-label="Copy the mode script code">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-mode-js" aria-label="Copy the mode script code">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Mode script code"><code id="code-mode-js">import { initThemeSystem, initThemeCycle } from &quot;@cai-ds/core/theme&quot;;
+              <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="Mode script code"><code id="code-mode-js">import { initThemeSystem, initThemeCycle } from &quot;@luz-ds/core/theme&quot;;
 initThemeSystem();
 initThemeCycle();</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <div class="cai-table-wrap" role="region" aria-label="Color mode switcher options" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Color mode switcher options" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-mode-switcher</code></div></td><td data-label="Effect"><div>The radio group, as a row of buttons; the checked one is filled</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-mode-switcher--cycle</code></div></td><td data-label="Effect"><div>One button instead of the radios, when scripting is on</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-mode-cycle</code></div></td><td data-label="Effect"><div>The cycle button; shows the icon whose <code>data-mode-icon</code> matches the checked radio</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-mode-cycle__status</code></div></td><td data-label="Effect"><div>A hidden live region for the new mode; added by the script if missing</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>name="cai-theme"</code></div></td><td data-label="Effect"><div>The radio name the tokens and <code>theme.js</code> listen to</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-mode-switcher</code></div></td><td data-label="Effect"><div>The radio group, as a row of buttons; the checked one is filled</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-mode-switcher--cycle</code></div></td><td data-label="Effect"><div>One button instead of the radios, when scripting is on</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-mode-cycle</code></div></td><td data-label="Effect"><div>The cycle button; shows the icon whose <code>data-mode-icon</code> matches the checked radio</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-mode-cycle__status</code></div></td><td data-label="Effect"><div>A hidden live region for the new mode; added by the script if missing</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>name="luz-theme"</code></div></td><td data-label="Effect"><div>The radio name the tokens and <code>theme.js</code> listen to</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -91,10 +91,10 @@ initThemeCycle();</code></pre>
             <p>A native radio group, styled by <code>components/mode-switcher.css</code>. The radios are the control and the source of truth.</p>
             <ul>
               <li>The tokens re-scope the page from the checked radio with <code>:root:has()</code>, so choosing a mode works with no script.</li>
-              <li><code>initThemeSystem()</code> from <code>theme.js</code> sets <code>data-theme</code> on <code>&lt;html&gt;</code>, and stores the choice under <code>cai-theme</code> in <code>localStorage</code>. It starts from the attribute on <code>&lt;html&gt;</code>, light if there is none: <a href="/docs/tokens/modes/#system">to start from the system's setting</a>, set the attribute before it runs.</li>
+              <li><code>initThemeSystem()</code> from <code>theme.js</code> sets <code>data-theme</code> on <code>&lt;html&gt;</code>, and stores the choice under <code>luz-theme</code> in <code>localStorage</code>. It starts from the attribute on <code>&lt;html&gt;</code>, light if there is none: <a href="/docs/tokens/modes/#system">to start from the system's setting</a>, set the attribute before it runs.</li>
               <li><code>initThemeCycle()</code> turns each <code>--cycle</code> group into one button. Each press checks the next mode and fires its <code>change</code> event, so whatever listens to the radios applies it. It adds the button if the markup has none.</li>
-              <li>A look of your own (<a href="/docs/tokens/themes/">make one</a>) joins the choice when its name is listed in <code>data-cai-themes</code> on <code>&lt;html&gt;</code>: a stored value is accepted only for the three modes and for those names.</li>
-              <li><code>cai.js</code> runs both.</li>
+              <li>A look of your own (<a href="/docs/tokens/themes/">make one</a>) joins the choice when its name is listed in <code>data-luz-themes</code> on <code>&lt;html&gt;</code>: a stored value is accepted only for the three modes and for those names.</li>
+              <li><code>luz.js</code> runs both.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>The three radios show, even in the cycle variant, and choosing one changes the mode of the page. The choice is not remembered on the next page.</p>
@@ -107,7 +107,7 @@ initThemeCycle();</code></pre>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Offer a color mode switcher on every page of a site, in the same place, so readers can pick the mode they read best in.</p>
@@ -125,13 +125,13 @@ initThemeCycle();</code></pre>
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Name the modes for what they are: “Light”, “Dark”, “High contrast”.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <fieldset class="cai-mode-switcher"><legend class="cai-mode-switcher__label">Color mode</legend><label class="cai-mode-btn"><input class="cai-mode-btn__input" type="radio" name="dd-mode-do" checked>Light</label><label class="cai-mode-btn"><input class="cai-mode-btn__input" type="radio" name="dd-mode-do">Dark</label><label class="cai-mode-btn"><input class="cai-mode-btn__input" type="radio" name="dd-mode-do">High contrast</label></fieldset>
+                  <fieldset class="luz-mode-switcher"><legend class="luz-mode-switcher__label">Color mode</legend><label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="dd-mode-do" checked>Light</label><label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="dd-mode-do">Dark</label><label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="dd-mode-do">High contrast</label></fieldset>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> “Accessible” for the high-contrast mode: it says the other modes are not, and does not say what changes.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <fieldset class="cai-mode-switcher"><legend class="cai-mode-switcher__label">Color mode</legend><label class="cai-mode-btn"><input class="cai-mode-btn__input" type="radio" name="dd-mode-dont" checked>Default</label><label class="cai-mode-btn"><input class="cai-mode-btn__input" type="radio" name="dd-mode-dont">Night</label><label class="cai-mode-btn"><input class="cai-mode-btn__input" type="radio" name="dd-mode-dont">Accessible</label></fieldset>
+                  <fieldset class="luz-mode-switcher"><legend class="luz-mode-switcher__label">Color mode</legend><label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="dd-mode-dont" checked>Default</label><label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="dd-mode-dont">Night</label><label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="dd-mode-dont">Accessible</label></fieldset>
                 </div>
               </figure>
             </div>
@@ -142,39 +142,39 @@ initThemeCycle();</code></pre>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>On the page the checked mode is filled with the brand; in the sidebar it takes the sidebar's current-link colours.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Color mode switcher contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Color mode switcher contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Group label</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Mode name, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>14.4:1</div></td><td data-label="Dark"><div>12.6:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Button border</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Checked mode</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Checked fill</div></td><td data-label="Colour on background"><div><code>--cai-brand-fill</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Group label, in the sidebar</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-label</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>6.7:1</div></td><td data-label="Dark"><div>6.6:1</div></td><td data-label="High contrast"><div>6.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Checked mode, in the sidebar</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-active-text</code> on <code>--cai-sidebar-active-bg</code></div></td><td data-label="Light"><div>10.3:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Checked fill, in the sidebar</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-active-bg</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>8.9:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring, in the sidebar</div></td><td data-label="Colour on background"><div><code>--cai-sidebar-text-hover</code> on <code>--cai-sidebar-bg</code></div></td><td data-label="Light"><div>15.7:1</div></td><td data-label="Dark"><div>18.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Group label</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Mode name, hover</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-hover</code></div></td><td data-label="Light"><div>14.4:1</div></td><td data-label="Dark"><div>12.6:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Button border</div></td><td data-label="Colour on background"><div><code>--luz-outline</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checked mode</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checked fill</div></td><td data-label="Colour on background"><div><code>--luz-brand-fill</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Group label, in the sidebar</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-label</code> on <code>--luz-sidebar-bg</code></div></td><td data-label="Light"><div>6.7:1</div></td><td data-label="Dark"><div>6.6:1</div></td><td data-label="High contrast"><div>6.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checked mode, in the sidebar</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-active-text</code> on <code>--luz-sidebar-active-bg</code></div></td><td data-label="Light"><div>10.3:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checked fill, in the sidebar</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-active-bg</code> on <code>--luz-sidebar-bg</code></div></td><td data-label="Light"><div>8.9:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring, in the sidebar</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-text-hover</code> on <code>--luz-sidebar-bg</code></div></td><td data-label="Light"><div>15.7:1</div></td><td data-label="Dark"><div>18.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> a 2 px outline, 2 px outside the whole mode button, in <code>--cai-focus-ring</code> on the page and <code>--cai-sidebar-text-hover</code> in the sidebar.</li>
+              <li><strong>Focus:</strong> a 2 px outline, 2 px outside the whole mode button, in <code>--luz-focus-ring</code> on the page and <code>--luz-sidebar-text-hover</code> in the sidebar.</li>
               <li><strong>Not colour alone:</strong> every mode keeps its visible name; in forced colors the checked one is a system highlight with a 2 px border.</li>
               <li><strong>Target:</strong> each mode button is at least 28 px high.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 21 tokens that <code>components/mode-switcher.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-fill"><code>--cai-brand-fill</code></a>, <a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-brand-subtle"><code>--cai-brand-subtle</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="/docs/tokens/color/#cai-sidebar-active-bg"><code>--cai-sidebar-active-bg</code></a>, <a href="/docs/tokens/color/#cai-sidebar-active-text"><code>--cai-sidebar-active-text</code></a>, <a href="/docs/tokens/color/#cai-sidebar-border"><code>--cai-sidebar-border</code></a>, <a href="/docs/tokens/color/#cai-sidebar-hover"><code>--cai-sidebar-hover</code></a>, <a href="/docs/tokens/color/#cai-sidebar-label"><code>--cai-sidebar-label</code></a>, <a href="/docs/tokens/color/#cai-sidebar-text-hover"><code>--cai-sidebar-text-hover</code></a>, <a href="/docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="/docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-fill"><code>--luz-brand-fill</code></a>, <a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-brand-subtle"><code>--luz-brand-subtle</code></a>, <a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-outline"><code>--luz-outline</code></a>, <a href="/docs/tokens/color/#luz-sidebar-active-bg"><code>--luz-sidebar-active-bg</code></a>, <a href="/docs/tokens/color/#luz-sidebar-active-text"><code>--luz-sidebar-active-text</code></a>, <a href="/docs/tokens/color/#luz-sidebar-border"><code>--luz-sidebar-border</code></a>, <a href="/docs/tokens/color/#luz-sidebar-hover"><code>--luz-sidebar-hover</code></a>, <a href="/docs/tokens/color/#luz-sidebar-label"><code>--luz-sidebar-label</code></a>, <a href="/docs/tokens/color/#luz-sidebar-text-hover"><code>--luz-sidebar-text-hover</code></a>, <a href="/docs/tokens/color/#luz-surface-hover"><code>--luz-surface-hover</code></a>, <a href="/docs/tokens/color/#luz-text-on-fill"><code>--luz-text-on-fill</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xs</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-mono</code>, <code>--luz-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-fast</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

@@ -1,5 +1,5 @@
 /**
- * Unit tests for CAI Design System utilities
+ * Unit tests for LUZ Design System utilities
  * Run with: pnpm test:unit
  */
 
@@ -57,7 +57,7 @@ describe("isCustomTheme", () => {
     expect(isCustomTheme("unknown", customThemes)).toBe(false);
   });
 
-  it("CAI ships no theme: with no list nothing is a custom theme", () => {
+  it("LUZ ships no theme: with no list nothing is a custom theme", () => {
     expect(isCustomTheme("vejer")).toBe(false);
     expect(isCustomTheme("minimalist")).toBe(false);
   });
@@ -142,9 +142,9 @@ describe("escapeHtml", () => {
   });
 });
 
-const tokensDist = resolve(process.cwd(), "packages/tokens/dist/cai-tokens.css");
+const tokensDist = resolve(process.cwd(), "packages/tokens/dist/luz-tokens.css");
 const coreDist = resolve(process.cwd(), "packages/core/dist");
-const distBuilt = existsSync(tokensDist) && existsSync(resolve(coreDist, "cai.js"));
+const distBuilt = existsSync(tokensDist) && existsSync(resolve(coreDist, "luz.js"));
 
 if (!distBuilt) {
   console.warn(
@@ -153,8 +153,8 @@ if (!distBuilt) {
 }
 
 describe("check-dist sentinel (BUG-01)", () => {
-  it("sentinel path points to packages/tokens/dist/cai-tokens.css", () => {
-    expect(tokensDist).toMatch(/packages[/\\]tokens[/\\]dist[/\\]cai-tokens\.css$/);
+  it("sentinel path points to packages/tokens/dist/luz-tokens.css", () => {
+    expect(tokensDist).toMatch(/packages[/\\]tokens[/\\]dist[/\\]luz-tokens\.css$/);
   });
 
   it.skipIf(!distBuilt)("script exits cleanly when sentinel exists (post-build)", () => {
@@ -163,10 +163,10 @@ describe("check-dist sentinel (BUG-01)", () => {
 });
 
 describe.skipIf(!distBuilt)("tokens semantic layer (regression: lost Layer 2)", () => {
-  it("dist/cai-tokens.css contains the semantic layer for all base modes", () => {
+  it("dist/luz-tokens.css contains the semantic layer for all base modes", () => {
     const content = readFileSync(tokensDist, "utf-8");
-    expect(content).toContain("--cai-surface-page");
-    expect(content).toContain("--cai-text-primary");
+    expect(content).toContain("--luz-surface-page");
+    expect(content).toContain("--luz-text-primary");
     expect(content).toContain('[data-theme="light"]');
     expect(content).toContain('[data-theme="dark"]');
     expect(content).toContain('[data-theme="high-contrast"]');
@@ -179,20 +179,20 @@ describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
     expect(existsSync(resolve(coreDist, "midi.js"))).toBe(true);
   });
 
-  it("dist/cai.js does not contain MidiParser (midi.js is lazy-loaded)", () => {
-    const content = readFileSync(resolve(coreDist, "cai.js"), "utf-8");
+  it("dist/luz.js does not contain MidiParser (midi.js is lazy-loaded)", () => {
+    const content = readFileSync(resolve(coreDist, "luz.js"), "utf-8");
     expect(content).not.toContain("MidiParser");
   });
 
-  it("dist/table-sort.js is a chunk of its own with no import, and cai.js does not contain its code", () => {
+  it("dist/table-sort.js is a chunk of its own with no import, and luz.js does not contain its code", () => {
     const chunk = readFileSync(resolve(coreDist, "table-sort.js"), "utf-8");
     expect(chunk).toContain("initTableSort");
     expect(chunk).not.toMatch(/^\s*import\b/m);
-    const entry = readFileSync(resolve(coreDist, "cai.js"), "utf-8");
+    const entry = readFileSync(resolve(coreDist, "luz.js"), "utf-8");
     expect(entry).not.toContain("Intl.Collator");
     expect(entry).toMatch(/import\(["']\.\/table-sort\.js["']\)/);
     // The minified entry loads the minified chunk, the one that is budgeted
-    expect(readFileSync(resolve(coreDist, "cai.min.js"), "utf-8")).toContain("./table-sort.min.js");
+    expect(readFileSync(resolve(coreDist, "luz.min.js"), "utf-8")).toContain("./table-sort.min.js");
     expect(existsSync(resolve(coreDist, "table-sort.min.js"))).toBe(true);
   });
 
@@ -219,12 +219,12 @@ describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
 
   it("dist/base.css carries the settings the components depend on", () => {
     const content = readFileSync(resolve(coreDist, "base.css"), "utf-8");
-    expect(content).toContain("--cai-z-modal");
-    expect(content).toContain("--cai-duration-base");
+    expect(content).toContain("--luz-z-modal");
+    expect(content).toContain("--luz-duration-base");
   });
 
   it("core ships no docs-app selectors", () => {
-    for (const f of ["cai.js", "cai.css", "classless.css", "print.css"]) {
+    for (const f of ["luz.js", "luz.css", "classless.css", "print.css"]) {
       expect(readFileSync(resolve(coreDist, f), "utf-8")).not.toMatch(/\.docs-|#demo-form/);
     }
   });

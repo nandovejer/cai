@@ -1,6 +1,6 @@
-<!-- cai:page
+<!-- luz:page
 title: Class reference
-description: Every cai-site class, what element it goes on and what it does, in one place.
+description: Every luz-site class, what element it goes on and what it does, in one place.
 area: site
 order: 11
 group: reference
@@ -10,8 +10,8 @@ files: components/_components.css, components/search.css, components/lang-switch
           <p>Look up a class by name. Each pattern's own page has its markup and guidance.</p>
           <div class="docs-prose">
             <h2 id="page-structure" class="docs-prose__title">Page structure</h2>
-            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Site classes: page structure">
-          <table class="cai-table docs-ref-table">
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: page structure">
+          <table class="luz-table docs-ref-table">
             <thead>
               <tr>
                 <th scope="col">Class</th>
@@ -21,34 +21,34 @@ files: components/_components.css, components/search.css, components/lang-switch
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.cai-site-page</div></td>
+                <td data-label="Class"><div>.luz-site-page</div></td>
                 <td data-label="Element"><div>&lt;body&gt;</div></td>
                 <td data-label="Description"><div>Three rows: header, main (takes the free space), footer. At least the height of the screen.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-page--gradient</div></td>
+                <td data-label="Class"><div>.luz-site-page--gradient</div></td>
                 <td data-label="Element"><div>&lt;body&gt;</div></td>
                 <td data-label="Description"><div>Modifier. A soft brand tint in the top corner. For short pages such as a landing page.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-skip-link</div></td>
+                <td data-label="Class"><div>.luz-site-skip-link</div></td>
                 <td data-label="Element"><div>&lt;a&gt;</div></td>
-                <td data-label="Description"><div>Off screen until it has focus. Links to the <code class="cai-code-inline">id</code> of <code class="cai-code-inline">&lt;main&gt;</code>. First in <code class="cai-code-inline">&lt;body&gt;</code> on every page.</div></td>
+                <td data-label="Description"><div>Off screen until it has focus. Links to the <code class="luz-code-inline">id</code> of <code class="luz-code-inline">&lt;main&gt;</code>. First in <code class="luz-code-inline">&lt;body&gt;</code> on every page.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-main</div></td>
+                <td data-label="Class"><div>.luz-site-main</div></td>
                 <td data-label="Element"><div>&lt;main&gt;</div></td>
-                <td data-label="Description"><div>Main content area. Grid with <code class="cai-code-inline">gap: --cai-space-3xl</code> between sections. Combine with <code class="cai-code-inline">.o-container</code> for the content width and padding.</div></td>
+                <td data-label="Description"><div>Main content area. Grid with <code class="luz-code-inline">gap: --luz-space-3xl</code> between sections. Combine with <code class="luz-code-inline">.o-container</code> for the content width and padding.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-content</div></td>
+                <td data-label="Class"><div>.luz-site-content</div></td>
                 <td data-label="Element"><div>&lt;div&gt; / &lt;main&gt;</div></td>
                 <td data-label="Description"><div>Padded content wrapper with max-width cap. For app-shell layouts where the sidebar handles its own width.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-section</div></td>
+                <td data-label="Class"><div>.luz-site-section</div></td>
                 <td data-label="Element"><div>&lt;section&gt;</div></td>
-                <td data-label="Description"><div>Grid container with vertical gap between child elements. Use as the direct child of <code class="cai-code-inline">.cai-site-main</code>.</div></td>
+                <td data-label="Description"><div>Grid container with vertical gap between child elements. Use as the direct child of <code class="luz-code-inline">.luz-site-main</code>.</div></td>
               </tr>
             </tbody>
           </table>
@@ -56,8 +56,8 @@ files: components/_components.css, components/search.css, components/lang-switch
           </div>
           <div class="docs-prose">
             <h2 id="header-and-footer" class="docs-prose__title">Header and footer</h2>
-            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Site classes: header and footer">
-          <table class="cai-table docs-ref-table">
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: header and footer">
+          <table class="luz-table docs-ref-table">
             <thead>
               <tr>
                 <th scope="col">Class</th>
@@ -67,84 +67,84 @@ files: components/_components.css, components/search.css, components/lang-switch
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.cai-site-header</div></td>
+                <td data-label="Class"><div>.luz-site-header</div></td>
                 <td data-label="Element"><div>&lt;header&gt;</div></td>
-                <td data-label="Description"><div>The site's banner: page surface and a rule underneath. <code class="cai-code-inline">--sticky</code> keeps it at the top in a window at least 30 rem tall. Sets <code class="cai-code-inline">--cai-site-header-h</code>, where the menu panel and the language list open.</div></td>
+                <td data-label="Description"><div>The site's banner: page surface and a rule underneath. <code class="luz-code-inline">--sticky</code> keeps it at the top in a window at least 30 rem tall. Sets <code class="luz-code-inline">--luz-site-header-h</code>, where the menu panel and the language list open.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-header__inner</div></td>
+                <td data-label="Class"><div>.luz-site-header__inner</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The row: wraps, centred, with the gutters of <code class="cai-code-inline">.o-container</code>.</div></td>
+                <td data-label="Description"><div>The row: wraps, centred, with the gutters of <code class="luz-code-inline">.o-container</code>.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-header__brand</div></td>
+                <td data-label="Class"><div>.luz-site-header__brand</div></td>
                 <td data-label="Element"><div>&lt;a&gt;</div></td>
                 <td data-label="Description"><div>The site's name, linked to the home page, not underlined; takes the free space of the row.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-header__nav</div></td>
+                <td data-label="Class"><div>.luz-site-header__nav</div></td>
                 <td data-label="Element"><div>&lt;nav popover&gt;</div></td>
-                <td data-label="Description"><div>The links: a row from 769 px, a panel under the header below it, opened by <code class="cai-code-inline">.cai-nav-toggle</code>.</div></td>
+                <td data-label="Description"><div>The links: a row from 769 px, a panel under the header below it, opened by <code class="luz-code-inline">.luz-nav-toggle</code>.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-header__actions</div></td>
+                <td data-label="Class"><div>.luz-site-header__actions</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The controls at the end of the row: search, language switcher, a button.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-submenu</div></td>
+                <td data-label="Class"><div>.luz-site-submenu</div></td>
                 <td data-label="Element"><div>&lt;details&gt;</div></td>
-                <td data-label="Description"><div>An item of the header’s links that holds more links: its <code class="cai-code-inline">&lt;summary&gt;</code> is the button, with a chevron; its list opens under it, in the flow in the menu panel and in a box from 769 px. Give every submenu the same <code class="cai-code-inline">name</code>.</div></td>
+                <td data-label="Description"><div>An item of the header’s links that holds more links: its <code class="luz-code-inline">&lt;summary&gt;</code> is the button, with a chevron; its list opens under it, in the flow in the menu panel and in a box from 769 px. Give every submenu the same <code class="luz-code-inline">name</code>.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-hero</div></td>
+                <td data-label="Class"><div>.luz-site-hero</div></td>
                 <td data-label="Element"><div>&lt;section&gt;</div></td>
                 <td data-label="Description"><div>The first block of a home or landing page, with space above it. Two equal columns when each gets 24rem and there is a picture; one below.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-hero__copy</div></td>
+                <td data-label="Class"><div>.luz-site-hero__copy</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The eyebrow, title, lead and actions, first in the source.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-hero__eyebrow</div></td>
+                <td data-label="Class"><div>.luz-site-hero__eyebrow</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>A short line above the title: mono, extra small, small capitals, secondary text color.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-hero__title</div></td>
+                <td data-label="Class"><div>.luz-site-hero__title</div></td>
                 <td data-label="Element"><div>&lt;h1&gt;</div></td>
                 <td data-label="Description"><div>Heading: heading font, size 4xl, weight 300, line height 1.1, balanced lines; 3xl below 1024 px, 2xl at 640 px and below.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-hero__lead</div></td>
+                <td data-label="Class"><div>.luz-site-hero__lead</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>Secondary text color, size xl, max-width 70ch; lg below 1024 px, base at 640 px and below.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-hero__media</div></td>
+                <td data-label="Class"><div>.luz-site-hero__media</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The second column, holding a <code class="cai-code-inline">.cai-site-image</code>.</div></td>
+                <td data-label="Description"><div>The second column, holding a <code class="luz-code-inline">.luz-site-image</code>.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-page-header</div></td>
+                <td data-label="Class"><div>.luz-site-page-header</div></td>
                 <td data-label="Element"><div>&lt;div&gt; / &lt;header&gt;</div></td>
                 <td data-label="Description"><div>Hero-style page header block with bottom margin. Contains a title and optional lead.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-page-header__title</div></td>
+                <td data-label="Class"><div>.luz-site-page-header__title</div></td>
                 <td data-label="Element"><div>&lt;h1&gt;</div></td>
                 <td data-label="Description"><div>Heading: heading font, size 3xl, weight 300, tight letter-spacing.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-page-header__lead</div></td>
+                <td data-label="Class"><div>.luz-site-page-header__lead</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>Subtitle: secondary text color, max-width 600px.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-footer</div></td>
+                <td data-label="Class"><div>.luz-site-footer</div></td>
                 <td data-label="Element"><div>&lt;footer&gt;</div></td>
-                <td data-label="Description"><div>Flex row (space-between). Includes a top border and vertical padding. Stacks at 768 px and below. Combine with <code class="cai-code-inline">.o-container</code>.</div></td>
+                <td data-label="Description"><div>Flex row (space-between). Includes a top border and vertical padding. Stacks at 768 px and below. Combine with <code class="luz-code-inline">.o-container</code>.</div></td>
               </tr>
             </tbody>
           </table>
@@ -152,8 +152,8 @@ files: components/_components.css, components/search.css, components/lang-switch
           </div>
           <div class="docs-prose">
             <h2 id="content-patterns" class="docs-prose__title">Content patterns</h2>
-            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Site classes: content patterns">
-          <table class="cai-table docs-ref-table">
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: content patterns">
+          <table class="luz-table docs-ref-table">
             <thead>
               <tr>
                 <th scope="col">Class</th>
@@ -163,17 +163,17 @@ files: components/_components.css, components/search.css, components/lang-switch
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.cai-site-actions</div></td>
+                <td data-label="Class"><div>.luz-site-actions</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>Flex row with wrapping and gap for CTA button groups. One per line, full width, at 640 px and below.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-image</div></td>
+                <td data-label="Class"><div>.luz-site-image</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>16:9 frame around a native <code class="cai-code-inline">&lt;picture&gt;</code>. The image fills it; with no image, an abstract placeholder shows, in a night version in dark mode.</div></td>
+                <td data-label="Description"><div>16:9 frame around a native <code class="luz-code-inline">&lt;picture&gt;</code>. The image fills it; with no image, an abstract placeholder shows, in a night version in dark mode.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-image--4x3, --3x2, --1x1, --21x9, --9x16</div></td>
+                <td data-label="Class"><div>.luz-site-image--4x3, --3x2, --1x1, --21x9, --9x16</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>Modifiers. Other aspect ratios, each with its own placeholder.</div></td>
               </tr>
@@ -183,8 +183,8 @@ files: components/_components.css, components/search.css, components/lang-switch
           </div>
           <div class="docs-prose">
             <h2 id="search" class="docs-prose__title">Search</h2>
-            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Site classes: search">
-          <table class="cai-table docs-ref-table">
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: search">
+          <table class="luz-table docs-ref-table">
             <thead>
               <tr>
                 <th scope="col">Class</th>
@@ -194,72 +194,72 @@ files: components/_components.css, components/search.css, components/lang-switch
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.cai-site-search-trigger</div></td>
+                <td data-label="Class"><div>.luz-site-search-trigger</div></td>
                 <td data-label="Element"><div>&lt;button&gt;</div></td>
                 <td data-label="Description"><div>The search button, shaped like a field: label, then the shortcut. Hidden in the markup; the script shows it.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search-trigger--compact</div></td>
+                <td data-label="Class"><div>.luz-site-search-trigger--compact</div></td>
                 <td data-label="Element"><div>&lt;button&gt;</div></td>
                 <td data-label="Description"><div>Modifier. At 768 pixels and below, the magnifier only; the label stays its name.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search-trigger__icon</div></td>
+                <td data-label="Class"><div>.luz-site-search-trigger__icon</div></td>
                 <td data-label="Element"><div>&lt;svg&gt;</div></td>
                 <td data-label="Description"><div>The magnifier, in the text color.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search-trigger__label</div></td>
+                <td data-label="Class"><div>.luz-site-search-trigger__label</div></td>
                 <td data-label="Element"><div>&lt;span&gt;</div></td>
                 <td data-label="Description"><div>The visible label, which is also the button’s name.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search-trigger__key</div></td>
+                <td data-label="Class"><div>.luz-site-search-trigger__key</div></td>
                 <td data-label="Element"><div>&lt;kbd&gt;</div></td>
                 <td data-label="Description"><div>The shortcut hint, "Ctrl K". Hidden on touch screens.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search</div></td>
+                <td data-label="Class"><div>.luz-site-search</div></td>
                 <td data-label="Element"><div>&lt;dialog&gt;</div></td>
-                <td data-label="Description"><div>With <code class="cai-code-inline">.cai-modal</code>: the search dialog, a column whose results scroll; full screen at 768 pixels and below.</div></td>
+                <td data-label="Description"><div>With <code class="luz-code-inline">.luz-modal</code>: the search dialog, a column whose results scroll; full screen at 768 pixels and below.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search__body</div></td>
+                <td data-label="Class"><div>.luz-site-search__body</div></td>
                 <td data-label="Element"><div>&lt;search&gt;</div></td>
                 <td data-label="Description"><div>The field, the status and the results.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search__head</div></td>
+                <td data-label="Class"><div>.luz-site-search__head</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The title and the close button, in one row that wraps.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search__title</div></td>
+                <td data-label="Class"><div>.luz-site-search__title</div></td>
                 <td data-label="Element"><div>&lt;h2&gt;</div></td>
                 <td data-label="Description"><div>The dialog’s name; its label names the field.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search__field</div></td>
+                <td data-label="Class"><div>.luz-site-search__field</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The field, with a decorative magnifier <code class="cai-code-inline">svg</code> at its start.</div></td>
+                <td data-label="Description"><div>The field, with a decorative magnifier <code class="luz-code-inline">svg</code> at its start.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search__status</div></td>
+                <td data-label="Class"><div>.luz-site-search__status</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
-                <td data-label="Description"><div>The count of results, <code class="cai-code-inline">role="status"</code>, small and muted.</div></td>
+                <td data-label="Description"><div>The count of results, <code class="luz-code-inline">role="status"</code>, small and muted.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search__close</div></td>
+                <td data-label="Class"><div>.luz-site-search__close</div></td>
                 <td data-label="Element"><div>&lt;button&gt;</div></td>
-                <td data-label="Description"><div>The close button, 44 pixels high, in a <code class="cai-code-inline">form method="dialog"</code>.</div></td>
+                <td data-label="Description"><div>The close button, 44 pixels high, in a <code class="luz-code-inline">form method="dialog"</code>.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search__results</div></td>
+                <td data-label="Class"><div>.luz-site-search__results</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The result groups: a heading and a list of links each.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-search__foot</div></td>
+                <td data-label="Class"><div>.luz-site-search__foot</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>The last line, with the link to the index page.</div></td>
               </tr>
@@ -269,8 +269,8 @@ files: components/_components.css, components/search.css, components/lang-switch
           </div>
           <div class="docs-prose">
             <h2 id="language-switcher" class="docs-prose__title">Language switcher</h2>
-            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Site classes: language switcher">
-          <table class="cai-table docs-ref-table">
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: language switcher">
+          <table class="luz-table docs-ref-table">
             <thead>
               <tr>
                 <th scope="col">Class</th>
@@ -280,44 +280,44 @@ files: components/_components.css, components/search.css, components/lang-switch
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.cai-site-lang-switcher</div></td>
+                <td data-label="Class"><div>.luz-site-lang-switcher</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The wrapper of the button and the list. Sets <code class="cai-code-inline">--cai-site-lang-switcher-top</code>, how far down the list opens.</div></td>
+                <td data-label="Description"><div>The wrapper of the button and the list. Sets <code class="luz-code-inline">--luz-site-lang-switcher-top</code>, how far down the list opens.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-lang-switcher__button</div></td>
+                <td data-label="Class"><div>.luz-site-lang-switcher__button</div></td>
                 <td data-label="Element"><div>&lt;button&gt;</div></td>
-                <td data-label="Description"><div>Opens the list with <code class="cai-code-inline">popovertarget</code>. Shows the current language; its name starts with the label, hidden.</div></td>
+                <td data-label="Description"><div>Opens the list with <code class="luz-code-inline">popovertarget</code>. Shows the current language; its name starts with the label, hidden.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-lang-switcher__icon</div></td>
+                <td data-label="Class"><div>.luz-site-lang-switcher__icon</div></td>
                 <td data-label="Element"><div>&lt;svg&gt;</div></td>
                 <td data-label="Description"><div>The globe, decorative, in the text color.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-lang-switcher__name</div></td>
+                <td data-label="Class"><div>.luz-site-lang-switcher__name</div></td>
                 <td data-label="Element"><div>&lt;span&gt;</div></td>
                 <td data-label="Description"><div>The current language’s name in the button. Clipped below 360 pixels, where the globe shows alone; it stays in the button’s name.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-lang-switcher__menu</div></td>
+                <td data-label="Class"><div>.luz-site-lang-switcher__menu</div></td>
                 <td data-label="Element"><div>&lt;nav&gt;</div></td>
                 <td data-label="Description"><div>The popover with the list, fixed under the header at the end of the row.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-lang-switcher__title</div></td>
+                <td data-label="Class"><div>.luz-site-lang-switcher__title</div></td>
                 <td data-label="Element"><div>&lt;p&gt;</div></td>
                 <td data-label="Description"><div>The visible name of the list, which labels the nav.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-lang-switcher__list</div></td>
+                <td data-label="Class"><div>.luz-site-lang-switcher__list</div></td>
                 <td data-label="Element"><div>&lt;ul&gt;</div></td>
                 <td data-label="Description"><div>The languages, one per row, without bullets.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-lang-switcher__link</div></td>
+                <td data-label="Class"><div>.luz-site-lang-switcher__link</div></td>
                 <td data-label="Element"><div>&lt;a&gt;</div></td>
-                <td data-label="Description"><div>A language, named in itself, with <code class="cai-code-inline">lang</code> and <code class="cai-code-inline">hreflang</code>; bold and underlined with <code class="cai-code-inline">aria-current</code>.</div></td>
+                <td data-label="Description"><div>A language, named in itself, with <code class="luz-code-inline">lang</code> and <code class="luz-code-inline">hreflang</code>; bold and underlined with <code class="luz-code-inline">aria-current</code>.</div></td>
               </tr>
             </tbody>
           </table>
@@ -325,8 +325,8 @@ files: components/_components.css, components/search.css, components/lang-switch
           </div>
           <div class="docs-prose">
             <h2 id="notice-and-consent" class="docs-prose__title">Notice and cookie consent</h2>
-            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Site classes: notice and cookie consent">
-          <table class="cai-table docs-ref-table">
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: notice and cookie consent">
+          <table class="luz-table docs-ref-table">
             <thead>
               <tr>
                 <th scope="col">Class</th>
@@ -336,27 +336,27 @@ files: components/_components.css, components/search.css, components/lang-switch
             </thead>
             <tbody>
               <tr>
-                <td data-label="Class"><div>.cai-site-notice</div></td>
+                <td data-label="Class"><div>.luz-site-notice</div></td>
                 <td data-label="Element"><div>&lt;section&gt;</div></td>
                 <td data-label="Description"><div>A band above the site header with one short announcement and one link, its text in the header’s column. No script, no close button.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-notice--warning</div></td>
+                <td data-label="Class"><div>.luz-site-notice--warning</div></td>
                 <td data-label="Element"><div>&lt;section&gt;</div></td>
                 <td data-label="Description"><div>The warning colours, for something that stops the visitor; the words say it too.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-consent</div></td>
+                <td data-label="Class"><div>.luz-site-consent</div></td>
                 <td data-label="Element"><div>&lt;section hidden&gt;</div></td>
-                <td data-label="Description"><div>The cookie banner, above the site header, in a <code class="cai-code-inline">&lt;cai-site-consent&gt;</code>. Hidden in the markup: <code class="cai-code-inline">consent.js</code> shows it when no answer is stored.</div></td>
+                <td data-label="Description"><div>The cookie banner, above the site header, in a <code class="luz-code-inline">&lt;luz-site-consent&gt;</code>. Hidden in the markup: <code class="luz-code-inline">consent.js</code> shows it when no answer is stored.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-consent__title</div></td>
+                <td data-label="Class"><div>.luz-site-consent__title</div></td>
                 <td data-label="Element"><div>&lt;h2&gt;</div></td>
                 <td data-label="Description"><div>The banner’s heading, in the sans; it names the region.</div></td>
               </tr>
               <tr>
-                <td data-label="Class"><div>.cai-site-consent__choices</div></td>
+                <td data-label="Class"><div>.luz-site-consent__choices</div></td>
                 <td data-label="Element"><div>&lt;details&gt;</div></td>
                 <td data-label="Description"><div>The categories of optional cookies, as checkboxes in a form, under Accept and Reject.</div></td>
               </tr>

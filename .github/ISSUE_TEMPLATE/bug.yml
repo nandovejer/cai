@@ -1,5 +1,5 @@
 name: Bug
-description: Something in a CAI package or in the docs site does not work as documented.
+description: Something in a LUZ package or in the docs site does not work as documented.
 labels: ["bug"]
 body:
   - type: markdown
@@ -11,11 +11,11 @@ body:
     attributes:
       label: Package
       options:
-        - "@cai-ds/tokens"
-        - "@cai-ds/core"
-        - "@cai-ds/site"
-        - "@cai-ds/landing"
-        - "@cai-ds/cms"
+        - "@luz-ds/tokens"
+        - "@luz-ds/core"
+        - "@luz-ds/site"
+        - "@luz-ds/landing"
+        - "@luz-ds/cms"
         - Docs site
         - Not sure
     validations:
@@ -25,7 +25,7 @@ body:
     attributes:
       label: Version
       description: The version in your package.json, or the CDN URL you load.
-      placeholder: "3.0.0"
+      placeholder: "0.1.0"
     validations:
       required: true
   - type: textarea

@@ -41,7 +41,7 @@ const LANDING = `<!DOCTYPE html>
   {{alternates}}
 </head>
 <body>
-  <!-- cai:include header -->
+  <!-- luz:include header -->
   <main id="main-content">
     <h1>{{t:hero.title}}</h1>
     <p>{{html:hero.lead}}</p>
@@ -53,14 +53,14 @@ const LANDING = `<!DOCTYPE html>
 
 /** A repository with a one-page docs site and a translated landing. */
 function fixture({ registry = REGISTRY, catalogs = CATALOGS, landing = LANDING, header } = {}) {
-  const repoRoot = mkdtempSync(join(tmpdir(), "cai-i18n-"));
+  const repoRoot = mkdtempSync(join(tmpdir(), "luz-i18n-"));
   temps.push(repoRoot);
   const files = {
     "apps/docs/site.json": JSON.stringify({ areas: [{ id: "components", label: "Components", slug: "components" }] }),
-    "apps/docs/_layouts/page.html": '<!DOCTYPE html>\n<html lang="{{lang}}">\n<head><title>{{title}}</title></head>\n<body>\n<!-- cai:include header -->\n<main id="main-content">\n{{content}}\n</main>\n</body>\n</html>\n',
+    "apps/docs/_layouts/page.html": '<!DOCTYPE html>\n<html lang="{{lang}}">\n<head><title>{{title}}</title></head>\n<body>\n<!-- luz:include header -->\n<main id="main-content">\n{{content}}\n</main>\n</body>\n</html>\n',
     "apps/docs/_partials/header.html":
       header ?? '<header>\n  <nav aria-label="Site">\n    <a href="{{home}}">{{t:site.home}}</a>\n    <a href="/docs/">Docs</a>\n  </nav>\n  {{langswitch}}\n</header>\n',
-    "apps/docs/pages/index.html": "<!-- cai:page\ntitle: Docs\ndescription: The docs.\narea: hub\n-->\n<p>Hello.</p>\n",
+    "apps/docs/pages/index.html": "<!-- luz:page\ntitle: Docs\ndescription: The docs.\narea: hub\n-->\n<p>Hello.</p>\n",
     "apps/landing/index.html": landing,
     "apps/landing/i18n/locales.json": registry === null ? null : JSON.stringify(registry, null, 2),
     ...Object.fromEntries(Object.entries(catalogs).map(([code, strings]) => [`apps/landing/i18n/${code}.json`, strings && JSON.stringify(strings, null, 2)])),
@@ -176,13 +176,13 @@ describe("languages of the home page: generated markup", () => {
   });
 
   it("writes them absolute from the site's URL in the pages build, and refuses a URL that is not https or has no final slash", () => {
-    const url = "https://nandovejer.github.io/cai/";
+    const url = "https://nandovejer.github.io/luz/";
     expect(renderAlternates(i18n, i18n.byCode.get("ar"), url).split(/\n\s*/)).toEqual([
-      '<link rel="canonical" href="https://nandovejer.github.io/cai/ar/">',
-      '<link rel="alternate" hreflang="en" href="https://nandovejer.github.io/cai/">',
-      '<link rel="alternate" hreflang="es" href="https://nandovejer.github.io/cai/es/">',
-      '<link rel="alternate" hreflang="ar" href="https://nandovejer.github.io/cai/ar/">',
-      '<link rel="alternate" hreflang="x-default" href="https://nandovejer.github.io/cai/">',
+      '<link rel="canonical" href="https://nandovejer.github.io/luz/ar/">',
+      '<link rel="alternate" hreflang="en" href="https://nandovejer.github.io/luz/">',
+      '<link rel="alternate" hreflang="es" href="https://nandovejer.github.io/luz/es/">',
+      '<link rel="alternate" hreflang="ar" href="https://nandovejer.github.io/luz/ar/">',
+      '<link rel="alternate" hreflang="x-default" href="https://nandovejer.github.io/luz/">',
     ]);
     const html = renderDocument(LANDING, "apps/landing/index.html", "/es/", site, { locale: i18n.byCode.get("es"), siteUrl: "https://example.org/" });
     expect(html).toContain('<link rel="canonical" href="https://example.org/es/">');
@@ -193,16 +193,16 @@ describe("languages of the home page: generated markup", () => {
 
   it("builds the switcher from the registry: links named in their own language, the current one marked, no flags, no script", () => {
     const html = renderSwitcher(i18n, i18n.byCode.get("es"), "Idioma");
-    const links = [...html.matchAll(/<a class="cai-site-lang-switcher__link" href="([^"]*)" hreflang="([^"]*)" lang="([^"]*)"( aria-current="page")?>([^<]*)<\/a>/g)].map((m) => [m[1], m[2], m[3], Boolean(m[4]), m[5]]);
+    const links = [...html.matchAll(/<a class="luz-site-lang-switcher__link" href="([^"]*)" hreflang="([^"]*)" lang="([^"]*)"( aria-current="page")?>([^<]*)<\/a>/g)].map((m) => [m[1], m[2], m[3], Boolean(m[4]), m[5]]);
     expect(links).toEqual([
       ["/", "en", "en", false, "English"],
       ["/es/", "es", "es", true, "Español"],
       ["/ar/", "ar", "ar", false, "العربية"],
     ]);
     // A native popover: the button names it, says what it is and shows the current language
-    expect(html).toContain('<button class="cai-site-lang-switcher__button" type="button" popovertarget="cai-lang-menu">');
-    expect(html).toContain('<span class="u-sr-only">Idioma: </span><span class="cai-site-lang-switcher__name">Español</span></button>');
-    expect(html).toContain('<nav class="cai-site-lang-switcher__menu" id="cai-lang-menu" popover aria-labelledby="cai-lang-title">');
+    expect(html).toContain('<button class="luz-site-lang-switcher__button" type="button" popovertarget="luz-lang-menu">');
+    expect(html).toContain('<span class="u-sr-only">Idioma: </span><span class="luz-site-lang-switcher__name">Español</span></button>');
+    expect(html).toContain('<nav class="luz-site-lang-switcher__menu" id="luz-lang-menu" popover aria-labelledby="luz-lang-title">');
     expect(html).not.toMatch(/<script|onclick|🇪|flag/i);
   });
 
@@ -232,19 +232,19 @@ describe("languages of the home page: generated markup", () => {
 
 /* ---- The real catalogs ---------------------------------------------------- */
 
-describe("the CAI home page in every language", () => {
+describe("the LUZ home page in every language", () => {
   const site = scanSite(join(repo, "apps/docs"), repo);
   const template = readFileSync(join(repo, "apps/landing/index.html"), "utf-8");
   const docs = landingDocuments(site, "apps/landing/index.html", template);
   const render = (doc) => renderDocument(doc.html, doc.file, doc.route, site, { locale: doc.locale });
 
   it("publishes at the GitHub Pages URL of the repository, whose path is PAGES_BASE", () => {
-    expect(SITE_URL).toBe("https://nandovejer.github.io/cai/");
+    expect(SITE_URL).toBe("https://nandovejer.github.io/luz/");
     expect(new URL(SITE_URL).pathname).toBe(PAGES_BASE);
     const options = { repoRoot: repo, relative: true, outRoot: join(repo, "docs"), pagesBase: PAGES_BASE };
     expect(() => docsSite({ ...options, siteUrl: SITE_URL })).not.toThrow();
     expect(() => docsSite({ ...options, siteUrl: "https://nandovejer.github.io/other/" })).toThrow(/whose path is pagesBase/);
-    expect(() => docsSite({ ...options, siteUrl: "http://nandovejer.github.io/cai/" })).toThrow(/https URL/);
+    expect(() => docsSite({ ...options, siteUrl: "http://nandovejer.github.io/luz/" })).toThrow(/https URL/);
   });
 
   it("ships English (default), Spanish and Arabic, each named in itself", () => {
@@ -268,9 +268,9 @@ describe("the CAI home page in every language", () => {
       for (const l of [...site.i18n.locales.map((x) => x.code), "x-default"]) expect(html, `${code} ${l}`).toContain(`hreflang="${l}" href=`);
       expect(html, code).not.toMatch(/\{\{|\}\}/);
       // The strings core's scripts write come from the page, so Arabic needs no dictionary of its own
-      for (const key of ["change-mode", "mode-changed", "copied", "copied-status", "copy-failed"]) expect(html, `${code} ${key}`).toMatch(new RegExp(`data-cai-label-${key}="[^"]+"`));
+      for (const key of ["change-mode", "mode-changed", "copied", "copied-status", "copy-failed"]) expect(html, `${code} ${key}`).toMatch(new RegExp(`data-luz-label-${key}="[^"]+"`));
       // The search results are English pages
-      expect(html.match(/<ul data-cai-search-list="[a-z]+" lang="en">/g), code).toHaveLength(3);
+      expect(html.match(/<ul data-luz-search-list="[a-z]+" lang="en">/g), code).toHaveLength(3);
     }
   });
 

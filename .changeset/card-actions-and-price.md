@@ -1,5 +1,0 @@
----
-"@cai-ds/core": minor
----
-
-Card: a linked card may now hold other links and controls. Every `a`, `button`, `input`, `select`, `textarea` and `summary` in a `.cai-card` other than the title link is `position: relative; z-index: 1`, so it paints above the stretched title link and takes its own click, with its own tab stop in source order. The title link is never raised. New `.cai-card__price`: base size, semibold, primary text, figures of equal width, in the sans (a previous price goes in `<s>`, in the secondary color). A `.cai-btn` in a card wraps its label (`white-space: normal`), so a long label or enlarged text stays inside the button. The Card page documents the product card (image, linked title, price, one button in a form), the button's unique name (the visible words, then the product's name in `.u-sr-only`), a status region (`<output>`) that exists before the first press, and the list named by its heading. The "no other link or button in a linked card" rule is gone. Known issue unchanged: in a linked card the text cannot be selected with a mouse, the price included. Page: `/docs/components/card/`.

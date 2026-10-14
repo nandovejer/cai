@@ -1,10 +1,10 @@
 /**
- * CAI stylelint plugin — red line 11 (PRINCIPLES.md): no bare-element rule
+ * LUZ stylelint plugin — red line 11 (PRINCIPLES.md): no bare-element rule
  * outside :where() in packages/.
  *
  * A selector is "bare" when, once every :where(…) group is removed, it still
  * contains a type selector (`body`, `a:hover`, `ul li`) and nothing that
- * scopes it: no class, id or attribute selector. `:where(a)`, `.cai-x a`,
+ * scopes it: no class, id or attribute selector. `:where(a)`, `.luz-x a`,
  * `[popover]` and `:where(dialog)::backdrop` pass; `a`, `summary:hover` and
  * `:is(h1, h2)` do not. Keyframe selectors are ignored.
  *
@@ -12,7 +12,7 @@
  */
 import stylelint from "stylelint";
 
-const ruleName = "cai/no-bare-element";
+const ruleName = "luz/no-bare-element";
 const messages = stylelint.utils.ruleMessages(ruleName, {
   rejected: (selector) =>
     `Bare-element selector "${selector}": wrap it in :where() (red line 11)`,

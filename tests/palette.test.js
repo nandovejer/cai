@@ -1,5 +1,5 @@
 /**
- * CAI — the colour palette is CAI's own.
+ * LUZ — the colour palette is LUZ's own.
  * The primitives in packages/tokens/tokens.json are computed by
  * scripts/build-palette.js. Until 2026 they were IBM Carbon's palette
  * (Apache-2.0); CARBON lists every value the repository used then, taken from
@@ -60,7 +60,7 @@ describe("palette", () => {
     const clashes = Object.entries(palette()).flatMap(([family, steps]) =>
       Object.entries(steps)
         .filter(([, { value }]) => CARBON.includes(value.slice(1).toLowerCase()))
-        .map(([step, { value }]) => `--cai-${family}-${step}: ${value}`),
+        .map(([step, { value }]) => `--luz-${family}-${step}: ${value}`),
     );
     expect(clashes).toEqual([]);
   });
@@ -75,7 +75,7 @@ describe("palette", () => {
     expect(found).toEqual([]);
   });
 
-  it("every translucent tint in the tokens is a CAI primitive", () => {
+  it("every translucent tint in the tokens is a LUZ primitive", () => {
     const primitives = Object.values(palette()).flatMap((steps) =>
       Object.values(steps).map(({ value }) => triple(value.slice(1)).join(",")),
     );

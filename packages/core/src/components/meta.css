@@ -1,5 +1,5 @@
 /* --------------------------------------------------------------------------
-   CAI Component: meta
+   LUZ Component: meta
    A line of facts about something: a date, a reading time, an author, a
    section. Each fact is its own element (time, a, span); CSS draws a dot
    between them, which screen readers do not read.
@@ -10,34 +10,34 @@
    - The inline padding is room for a link's focus ring inside the clip; the
      negative margin of the same size keeps the text where it was.
    - Nothing is positioned, so the line stays under the link of a card that
-     covers the card (.cai-card__title a).
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+     covers the card (.luz-card__title a).
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
-.cai-meta {
+.luz-meta {
   display: flex;
   flex-wrap: wrap;
-  column-gap: var(--cai-space-md);
-  margin-inline: calc(-1 * var(--cai-space-2xs));
-  padding-inline: var(--cai-space-2xs);
+  column-gap: var(--luz-space-md);
+  margin-inline: calc(-1 * var(--luz-space-2xs));
+  padding-inline: var(--luz-space-2xs);
   overflow-x: clip;
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-md);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-md);
   line-height: 1.5;
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 /* As wide as the gap, pulled back into it. The first content is for a
    browser without alternative text in content, which reads the dot. */
-.cai-meta > * + *::before {
+.luz-meta > * + *::before {
   content: "·";
   content: "·" / "";
   display: inline-block;
-  inline-size: var(--cai-space-md);
-  margin-inline-start: calc(-1 * var(--cai-space-md));
+  inline-size: var(--luz-space-md);
+  margin-inline-start: calc(-1 * var(--luz-space-md));
   text-align: center;
   font-style: normal;
   font-weight: 400;
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }

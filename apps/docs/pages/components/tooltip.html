@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Tooltip
 description: Adds a short hint to a control on hover or focus; never essential content.
 area: components
@@ -10,42 +10,42 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage docs-demo__stage--tooltip">
-            <div class="cai-tooltip">
-              <button class="cai-btn cai-btn--outline cai-btn--sm" type="button" aria-describedby="tooltip-demo">Archive</button>
-              <div class="cai-tooltip__text" role="tooltip" id="tooltip-demo">Hides the project from the list</div>
+            <div class="luz-tooltip">
+              <button class="luz-btn luz-btn--outline luz-btn--sm" type="button" aria-describedby="tooltip-demo">Archive</button>
+              <div class="luz-tooltip__text" role="tooltip" id="tooltip-demo">Hides the project from the list</div>
             </div>
           </div>
           <p class="docs-demo__note">Point at the button, or focus it with Tab.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>Partly fails WCAG 1.4.13 (content on hover or focus): Escape does not close the tooltip, so the reader has to move the pointer or the focus away. Keep tooltips short and non-essential. Listed in the <a href="/docs/accessibility/">accessibility statement</a>.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Tooltip documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Tooltip documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-tooltip" aria-label="Copy the tooltip markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tooltip" aria-label="Copy the tooltip markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Tooltip markup"><code id="code-tooltip">&lt;div class=&quot;cai-tooltip&quot;&gt;
-  &lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; aria-describedby=&quot;archive-tip&quot;&gt;Archive&lt;/button&gt;
-  &lt;div class=&quot;cai-tooltip__text&quot; role=&quot;tooltip&quot; id=&quot;archive-tip&quot;&gt;Hides the project from the list&lt;/div&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Tooltip markup"><code id="code-tooltip">&lt;div class=&quot;luz-tooltip&quot;&gt;
+  &lt;button class=&quot;luz-btn luz-btn--outline&quot; type=&quot;button&quot; aria-describedby=&quot;archive-tip&quot;&gt;Archive&lt;/button&gt;
+  &lt;div class=&quot;luz-tooltip__text&quot; role=&quot;tooltip&quot; id=&quot;archive-tip&quot;&gt;Hides the project from the list&lt;/div&gt;
 &lt;/div&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>One position: above the control, centred. Where the browser has CSS anchor positioning, the tip moves below the control when there is no room above. There are no modifiers.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Tooltip parts" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Tooltip parts" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-tooltip</code></div></td><td data-label="What it does"><div>Wraps the control and the tip, and opens the tip on hover and on focus inside</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-tooltip__text</code></div></td><td data-label="What it does"><div>The tip: one line, on the strong surface, with a shadow</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tooltip</code></div></td><td data-label="What it does"><div>Wraps the control and the tip, and opens the tip on hover and on focus inside</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tooltip__text</code></div></td><td data-label="What it does"><div>The tip: one line, on the strong surface, with a shadow</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -53,7 +53,7 @@ toc: h2,h3
             <p>CSS only, from <code>components/tooltip.css</code>: the tip shows while the wrapper is hovered or holds focus.</p>
             <ul>
               <li>It stays open while the pointer moves from the control onto the tip.</li>
-              <li>It fades in and out over <code>--cai-duration-fast</code>, and appears at once under reduced motion.</li>
+              <li>It fades in and out over <code>--luz-duration-fast</code>, and appears at once under reduced motion.</li>
               <li>The tip does not wrap: keep it short, or it can overflow a narrow screen.</li>
               <li><strong>Enhancement:</strong> in browsers with CSS anchor positioning (Chrome and Edge 125, Safari 26, Firefox 147: Newly available, not yet Widely available), the tip is anchored to its own control (<code>anchor-scope</code> and <code>anchor()</code> insets) and flips below it when there is no room above. Outside a size container it is no longer clipped by an ancestor that hides overflow; inside one, such as a table wrapper or a player, it is placed and clipped by that box, as before. In other browsers it stays above, as before: the rules sit inside <code>@supports</code>, with no script.</li>
             </ul>
@@ -68,7 +68,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a tooltip to add a short explanation to a control whose label is clear but brief.</p>
@@ -84,13 +84,13 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> A short phrase that adds something to the label: what “Archive” does.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="docs-dodont__tip"><div class="cai-tooltip__text">Hides the project from the list</div><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Archive</button></div>
+                  <div class="docs-dodont__tip"><div class="luz-tooltip__text">Hides the project from the list</div><button class="luz-btn luz-btn--outline luz-btn--sm" type="button">Archive</button></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> A tooltip that repeats the label: “Save” then “Saves the project” makes the reader wait for nothing.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="docs-dodont__tip"><div class="cai-tooltip__text">Saves the project</div><button class="cai-btn cai-btn--outline cai-btn--sm" type="button">Save</button></div>
+                  <div class="docs-dodont__tip"><div class="luz-tooltip__text">Saves the project</div><button class="luz-btn luz-btn--outline luz-btn--sm" type="button">Save</button></div>
                 </div>
               </figure>
             </div>
@@ -102,13 +102,13 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The tooltip is primary text on the strong surface, with a border and a shadow.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Tooltip contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Tooltip contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>13.5:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>13.5:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -120,13 +120,13 @@ toc: h2,h3
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 11 tokens that <code>components/tooltip.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>
-              <div><dt><a href="/docs/tokens/layers/">Layers</a></dt><dd><code>--cai-z-raised</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-strong"><code>--luz-surface-strong</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xs</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--luz-shadow-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-fast</code></dd></div>
+              <div><dt><a href="/docs/tokens/layers/">Layers</a></dt><dd><code>--luz-z-raised</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

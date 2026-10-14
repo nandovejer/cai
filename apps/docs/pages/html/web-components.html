@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Web Components
 description: Build custom elements: a template that is parsed but not shown, and a slot that shows the page's content inside a shadow tree.
 area: html
@@ -17,8 +17,8 @@ lead: false
           <div class="elements-stage">
             <template id="d-slot-template">
               <style>
-                article { padding: var(--cai-space-sm); border: 1px solid var(--cai-divider); }
-                h4 { margin-bottom: var(--cai-space-2xs); }
+                article { padding: var(--luz-space-sm); border: 1px solid var(--luz-divider); }
+                h4 { margin-bottom: var(--luz-space-2xs); }
               </style>
               <article>
                 <h3><slot name="title">Untitled</slot></h3>
@@ -34,12 +34,12 @@ lead: false
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-slot" aria-label="Copy the slot markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-slot" aria-label="Copy the slot markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="slot markup"><code id="code-slot">&lt;template id=&quot;d-slot-template&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="slot markup"><code id="code-slot">&lt;template id=&quot;d-slot-template&quot;&gt;
   &lt;style&gt;
-    article { padding: var(--cai-space-sm); border: 1px solid var(--cai-divider); }
-    h4 { margin-bottom: var(--cai-space-2xs); }
+    article { padding: var(--luz-space-sm); border: 1px solid var(--luz-divider); }
+    h4 { margin-bottom: var(--luz-space-2xs); }
   &lt;/style&gt;
   &lt;article&gt;
     &lt;h4&gt;&lt;slot name=&quot;title&quot;&gt;Untitled&lt;/slot&gt;&lt;/h4&gt;
@@ -52,7 +52,7 @@ lead: false
   This text fills the default slot.
 &lt;/demo-card&gt;</code></pre>
           </div>
-          <p class="elements-card__style">CAI adds no style: a slot has no box of its own, and what fills it keeps its own styles. The custom element takes a few lines of script. Design tokens cross the shadow boundary, so the card follows the color mode.</p>
+          <p class="elements-card__style">LUZ adds no style: a slot has no box of its own, and what fills it keeps its own styles. The custom element takes a few lines of script. Design tokens cross the shadow boundary, so the card follows the color mode.</p>
         </article>
 
         <article class="elements-card" id="el-template" data-element="template" aria-labelledby="el-template-title">
@@ -66,22 +66,22 @@ lead: false
               <li>Item <span data-n></span></li>
             </template>
 
-            <button class="cai-btn cai-btn--outline" type="button" id="d-template-add">Add an item</button>
+            <button class="luz-btn luz-btn--outline" type="button" id="d-template-add">Add an item</button>
             <ul id="d-template-list"></ul>
           </div>
           <div class="elements-snippet">
             <div class="elements-snippet__bar">
               <span class="elements-eyebrow">HTML</span>
-              <button class="cai-copy-btn" type="button" data-copy-from="code-template" aria-label="Copy the template markup">Copy</button>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-template" aria-label="Copy the template markup">Copy</button>
             </div>
-            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="template markup"><code id="code-template">&lt;template id=&quot;d-template&quot;&gt;
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="template markup"><code id="code-template">&lt;template id=&quot;d-template&quot;&gt;
   &lt;li&gt;Item &lt;span data-n&gt;&lt;/span&gt;&lt;/li&gt;
 &lt;/template&gt;
 
-&lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; id=&quot;d-template-add&quot;&gt;Add an item&lt;/button&gt;
+&lt;button class=&quot;luz-btn luz-btn--outline&quot; type=&quot;button&quot; id=&quot;d-template-add&quot;&gt;Add an item&lt;/button&gt;
 &lt;ul id=&quot;d-template-list&quot;&gt;&lt;/ul&gt;</code></pre>
           </div>
-          <p class="elements-card__style">CAI adds no style: it is never rendered. The copies that script puts in the page take the page styles.</p>
+          <p class="elements-card__style">LUZ adds no style: it is never rendered. The copies that script puts in the page take the page styles.</p>
         </article>
         </div>
       

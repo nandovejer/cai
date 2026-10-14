@@ -1,10 +1,10 @@
 /**
- * CAI — contrast engine (PRINCIPLES.md §1, red lines 5 and 7).
+ * LUZ — contrast engine (PRINCIPLES.md §1, red lines 5 and 7).
  *
  * One place for the colour maths and for the list of token pairs the system
  * promises to keep readable. Three things use it, so they cannot disagree:
- *   - bin/cai-tokens.js, `check-contrast`, for a consumer's own overrides;
- *   - scripts/check-contrast.js, the check of CAI's shipped themes;
+ *   - bin/luz-tokens.js, `check-contrast`, for a consumer's own overrides;
+ *   - scripts/check-contrast.js, the check of LUZ's shipped themes;
  *   - tests/helpers/design-tokens.js, the ratios the docs pages print.
  *
  * WCAG 2.x relative luminance only. APCA is not normative and is not used.
@@ -84,9 +84,9 @@ export const formatRatio = (value) => `${(Math.floor(value * 10 + 1e-9) / 10).to
 /* ---- The pairs ------------------------------------------------------------
    { fg: [tokens], bg: [specs], min, kind }. A background written "a > b" is
    token a composited over token b, over the page. kind says what the minimum
-   protects: "text" (WCAG 1.4.3), "disabled-text" (CAI keeps 3:1, red line 7)
+   protects: "text" (WCAG 1.4.3), "disabled-text" (LUZ keeps 3:1, red line 7)
    or "ui" (focus ring, field borders and icons, WCAG 1.4.11). An advisory
-   pair is an aim CAI sets itself, stricter than WCAG: it is reported and
+   pair is an aim LUZ sets itself, stricter than WCAG: it is reported and
    never fails the check. */
 
 const SURFACES = ["surface-page", "surface", "surface-hover", "surface-muted", "input-bg"];
@@ -129,11 +129,11 @@ export const PAIRS = [
     kind: "text",
   })),
   { fg: ["color-code"], bg: ["surface-strong"], min: 4.5, kind: "text" },
-  // Syntax colours on the code block (.cai-code-block sits on surface-muted)
+  // Syntax colours on the code block (.luz-code-block sits on surface-muted)
   { fg: CODE, bg: ["surface-muted"], min: 4.5, kind: "text" },
   // The field border on every surface a field can sit on (WCAG 1.4.11)
   { fg: ["input-border"], bg: [...SURFACES, "surface-strong"], min: 3, kind: "ui" },
-  // .cai-badge--gray: white text on the outline colour
+  // .luz-badge--gray: white text on the outline colour
   { fg: ["text-on-fill"], bg: ["outline"], min: 4.5, kind: "text" },
   // The error mark of a form field, on the field itself (select, input)
   { fg: ["color-danger"], bg: ["input-bg"], min: 3, kind: "ui" },
@@ -162,10 +162,10 @@ export const PAIRS = [
   { fg: ["outline"], bg: ["input-bg"], min: 3, kind: "ui" },
 ];
 
-/** CAI's own high-contrast mode goes beyond AA where it can: syntax colours keep 7:1 (WCAG 1.4.6). */
+/** LUZ's own high-contrast mode goes beyond AA where it can: syntax colours keep 7:1 (WCAG 1.4.6). */
 export const HIGH_CONTRAST_PAIRS = [{ fg: CODE, bg: ["surface-muted"], min: 7, kind: "text" }];
 
-/** The pairs to measure in a mode; `mode` is "high-contrast" for CAI's own mode only. */
+/** The pairs to measure in a mode; `mode` is "high-contrast" for LUZ's own mode only. */
 export const pairsFor = (mode) => (mode === "high-contrast" ? [...PAIRS, ...HIGH_CONTRAST_PAIRS] : PAIRS);
 
 /** The same list, one entry per foreground and background. */
@@ -200,7 +200,7 @@ export function createResolver(values) {
 
 /**
  * Measure `pairs` with a resolver. `token(name)` returns the resolver's result
- * for `--cai-<name>`. A background spec "a > b" is a over b over the page.
+ * for `--luz-<name>`. A background spec "a > b" is a over b over the page.
  * Returns { results, unreadable }: one result per pair, and the pairs that
  * could not be measured with the reason.
  */
@@ -208,7 +208,7 @@ export function measure(resolve, pairs) {
   const results = [];
   const unreadable = [];
   const colour = (name) => {
-    const { value, chain } = resolve(`--cai-${name}`);
+    const { value, chain } = resolve(`--luz-${name}`);
     try {
       return { colour: parseColor(value), chain };
     } catch (error) {
@@ -232,9 +232,9 @@ export function measure(resolve, pairs) {
       const back = surface(bg);
       const front = colour(fg);
       const value = ratio(over(front.colour, back.colour), back.colour);
-      results.push({ foreground: `--cai-${fg}`, background: bg, ratio: value, minimum: min, kind, advisory, ok: value + 1e-9 >= min, tokens: [...front.chain, ...back.chain] });
+      results.push({ foreground: `--luz-${fg}`, background: bg, ratio: value, minimum: min, kind, advisory, ok: value + 1e-9 >= min, tokens: [...front.chain, ...back.chain] });
     } catch (error) {
-      unreadable.push({ foreground: `--cai-${fg}`, background: bg, reason: error.message, tokens: error.tokens ?? [] });
+      unreadable.push({ foreground: `--luz-${fg}`, background: bg, reason: error.message, tokens: error.tokens ?? [] });
     }
   }
   return { results, unreadable };

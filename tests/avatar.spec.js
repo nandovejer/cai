@@ -12,7 +12,7 @@ const EXAMPLE = '#example ~ .docs-example';
 test.describe('avatar with a photo', () => {
   test('the image fills the box and takes its corners; the box does not clip (A1)', async ({ page }) => {
     await page.goto(PAGE);
-    const sizes = await page.locator(`${EXAMPLE} .cai-avatar:has(img)`).evaluateAll((list) =>
+    const sizes = await page.locator(`${EXAMPLE} .luz-avatar:has(img)`).evaluateAll((list) =>
       list.map((a) => {
         const img = a.querySelector('img');
         const [box, image] = [a.getBoundingClientRect(), img.getBoundingClientRect()];
@@ -39,7 +39,7 @@ test.describe('avatar with a photo', () => {
 
   test('the corner of the box is the page, not the photo', async ({ page }) => {
     await page.goto(PAGE);
-    const avatar = page.locator(`${EXAMPLE} .cai-avatar--lg:has(img)`);
+    const avatar = page.locator(`${EXAMPLE} .luz-avatar--lg:has(img)`);
     await avatar.scrollIntoViewIfNeeded();
     const box = await avatar.boundingBox();
     const clip = { x: Math.floor(box.x) - 4, y: Math.floor(box.y) - 4, width: Math.ceil(box.width) + 8, height: Math.ceil(box.height) + 8 };
@@ -53,7 +53,7 @@ test.describe('avatar with a photo', () => {
   test('initials are not cut at 200 % text in any size (A1)', async ({ page }) => {
     await page.goto(PAGE);
     await page.evaluate(() => { document.documentElement.style.fontSize = '200%'; });
-    const cut = await page.locator(`${EXAMPLE} .cai-avatar`).evaluateAll((list) =>
+    const cut = await page.locator(`${EXAMPLE} .luz-avatar`).evaluateAll((list) =>
       list.filter((a) => a.textContent.trim()).map((a) => {
         const range = document.createRange();
         range.selectNodeContents(a);
@@ -66,10 +66,10 @@ test.describe('avatar with a photo', () => {
 
   test('every photo of the page has an alt, empty or the person (A2)', async ({ page }) => {
     await page.goto(PAGE);
-    const alts = await page.locator(`${EXAMPLE} .cai-avatar img`).evaluateAll((list) => list.map((i) => i.getAttribute('alt')));
+    const alts = await page.locator(`${EXAMPLE} .luz-avatar img`).evaluateAll((list) => list.map((i) => i.getAttribute('alt')));
     expect(alts).toEqual(['Ana Belén', 'Carlos Díaz', 'Eva Flores']);
     // Next to a name an avatar is decoration: the photo has an empty alt there
-    await expect(page.locator(`${EXAMPLE} .cai-avatar:has(img)`).first()).not.toHaveAttribute('role', /.*/);
-    await expect(page.locator(`${EXAMPLE} .cai-avatar:has(img)`).first()).not.toHaveAttribute('aria-label', /.*/);
+    await expect(page.locator(`${EXAMPLE} .luz-avatar:has(img)`).first()).not.toHaveAttribute('role', /.*/);
+    await expect(page.locator(`${EXAMPLE} .luz-avatar:has(img)`).first()).not.toHaveAttribute('aria-label', /.*/);
   });
 });

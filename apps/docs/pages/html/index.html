@@ -1,13 +1,13 @@
-<!-- cai:page
+<!-- luz:page
 title: HTML elements
-description: How CAI styles each of the 116 current HTML elements, with a live example and the markup to copy.
+description: How LUZ styles each of the 116 current HTML elements, with a live example and the markup to copy.
 area: html
 order: 0
 lead: false
 -->
     <p class="docs-eyebrow">Reference · HTML</p>
 
-    <p class="docs-lead">How CAI styles each of the <span data-elements-count>116</span> current HTML elements, in <span data-categories-count>14</span> categories, with a live example and the markup to copy.</p>
+    <p class="docs-lead">How LUZ styles each of the <span data-elements-count>116</span> current HTML elements, in <span data-categories-count>14</span> categories, with a live example and the markup to copy.</p>
     <p>The list follows <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements">MDN</a>. Deprecated elements are left out on purpose: <a href="#html-deprecated">here is what to use instead</a>.</p>
 
     <nav class="docs-toc docs-toc--inline" aria-label="HTML elements contents">
@@ -35,20 +35,20 @@ lead: false
     <div class="elements-legend">
       <p class="elements-eyebrow">How to read a card</p>
       <ul>
-        <li><strong>Live example.</strong> The real element, styled by CAI right now. Change the color mode in the page footer to check it in all three.</li>
+        <li><strong>Live example.</strong> The real element, styled by LUZ right now. Change the color mode in the page footer to check it in all three.</li>
         <li><strong>Markup.</strong> The exact code of the example. The copy button copies what you see.</li>
-        <li><strong>CAI note.</strong> Whether the element is styled with no class, through a component class, or left to the browser.</li>
+        <li><strong>LUZ note.</strong> Whether the element is styled with no class, through a component class, or left to the browser.</li>
       </ul>
-      <p>Rules that style bare elements have zero specificity: any <code>.cai-*</code> class, or a rule of your own, wins.</p>
+      <p>Rules that style bare elements have zero specificity: any <code>.luz-*</code> class, or a rule of your own, wins.</p>
     </div>
 
     <section class="elements-index" id="html-index" aria-labelledby="html-index-title">
       <h2 class="elements-index__title" id="html-index-title">All elements, A to Z</h2>
-      <p class="elements-index__lead">Every element, its category and how CAI styles it. Select a name to open its card.</p>
-      <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Index of HTML elements">
-        <table class="cai-table">
+      <p class="elements-index__lead">Every element, its category and how LUZ styles it. Select a name to open its card.</p>
+      <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Index of HTML elements">
+        <table class="luz-table">
           <thead>
-            <tr><th scope="col">Element</th><th scope="col">Category</th><th scope="col">CAI style</th><th scope="col">On this page</th></tr>
+            <tr><th scope="col">Element</th><th scope="col">Category</th><th scope="col">LUZ style</th><th scope="col">On this page</th></tr>
           </thead>
           <tbody>
             <tr>
@@ -283,7 +283,7 @@ lead: false
               <th scope="row"><a href="/docs/html/widgets/#el-geolocation"><code>geolocation</code></a></th>
               <td>Built-in widgets</td>
               <td>Native look</td>
-              <td>Markup only <span class="cai-tag cai-tag--purple">Experimental</span></td>
+              <td>Markup only <span class="luz-tag luz-tag--purple">Experimental</span></td>
             </tr>
             <tr>
               <th scope="row"><a href="/docs/html/structure/#el-h1"><code>h1</code></a></th>
@@ -583,7 +583,7 @@ lead: false
               <th scope="row"><a href="/docs/html/forms/#el-selectedcontent"><code>selectedcontent</code></a></th>
               <td>Forms</td>
               <td>Native look</td>
-              <td>Markup only <span class="cai-tag cai-tag--purple">Experimental</span></td>
+              <td>Markup only <span class="luz-tag luz-tag--purple">Experimental</span></td>
             </tr>
             <tr>
               <th scope="row"><a href="/docs/html/web-components/#el-slot"><code>slot</code></a></th>
@@ -754,9 +754,9 @@ lead: false
 
     <section class="elements-index" id="html-deprecated" aria-labelledby="html-deprecated-title">
       <h2 class="elements-index__title" id="html-deprecated-title">Deprecated elements, and what to use</h2>
-      <p class="elements-index__lead">The 23 elements below are left out of the reference on purpose: they are obsolete or removed, and CAI styles none of them. Use the replacement.</p>
-      <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Deprecated HTML elements and their replacement">
-        <table class="cai-table">
+      <p class="elements-index__lead">The 23 elements below are left out of the reference on purpose: they are obsolete or removed, and LUZ styles none of them. Use the replacement.</p>
+      <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Deprecated HTML elements and their replacement">
+        <table class="luz-table">
           <thead>
             <tr><th scope="col">Element</th><th scope="col">Use instead</th><th scope="col">Why</th><th scope="col">Source</th></tr>
           </thead>
@@ -918,14 +918,14 @@ lead: false
               <hr>
               <details>
                 <summary>A native disclosure</summary>
-                <p>The <code class="cai-code-inline">details</code> element needs no JavaScript.</p>
+                <p>The <code class="luz-code-inline">details</code> element needs no JavaScript.</p>
               </details>
               <p>Use <mark>mark</mark> to highlight, and <kbd>Ctrl</kbd> <kbd>K</kbd> for keys.</p>
               <p>Released on <time datetime="2026-09-30">30 September 2026</time>.</p>
             </div>
             <div class="docs-demo__stage">
               <figure>
-                <p>A bare <code class="cai-code-inline">figure</code> is a padded surface.</p>
+                <p>A bare <code class="luz-code-inline">figure</code> is a padded surface.</p>
                 <figcaption>And this is its figcaption.</figcaption>
               </figure>
               <p><label for="base-output">Output</label> <output id="base-output">42 results</output></p>

@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Progress
 description: Shows how far a task that takes time has got, with the native progress element.
 area: components
@@ -10,31 +10,31 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <progress class="cai-progress" value="25" max="100" aria-label="Upload, 25%"></progress>
-            <progress class="cai-progress" value="67" max="100" aria-label="Build, 67%"></progress>
+            <progress class="luz-progress" value="25" max="100" aria-label="Upload, 25%"></progress>
+            <progress class="luz-progress" value="67" max="100" aria-label="Build, 67%"></progress>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Progress documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Progress documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-progress" aria-label="Copy the progress bar with a visible label markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-progress" aria-label="Copy the progress bar with a visible label markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Progress bar with a visible label markup"><code id="code-progress">&lt;label for=&quot;upload&quot;&gt;Uploading report.pdf&lt;/label&gt;
-&lt;progress class=&quot;cai-progress&quot; id=&quot;upload&quot; value=&quot;25&quot; max=&quot;100&quot;&gt;25%&lt;/progress&gt;</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Progress bar with a visible label markup"><code id="code-progress">&lt;label for=&quot;upload&quot;&gt;Uploading report.pdf&lt;/label&gt;
+&lt;progress class=&quot;luz-progress&quot; id=&quot;upload&quot; value=&quot;25&quot; max=&quot;100&quot;&gt;25%&lt;/progress&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>One class. The state comes from the native attributes.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Progress attributes" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Progress attributes" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Attribute</th><th scope="col">Effect</th></tr>
                 </thead>
@@ -61,7 +61,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a progress bar for a task that takes more than a few seconds, such as an upload or a build.</p>
@@ -76,13 +76,13 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> A task with an end, named with the figure: “Uploading report.pdf, 25%”.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <p class="docs-dodont__label">Uploading report.pdf, 25%</p><progress class="cai-progress" value="25" max="100"></progress>
+                  <p class="docs-dodont__label">Uploading report.pdf, 25%</p><progress class="luz-progress" value="25" max="100"></progress>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Storage used is a measure, not a task: a progress bar suggests it will finish. Use a meter.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <p class="docs-dodont__label">Storage used, 80%</p><progress class="cai-progress" value="80" max="100"></progress>
+                  <p class="docs-dodont__label">Storage used, 80%</p><progress class="luz-progress" value="80" max="100"></progress>
                 </div>
               </figure>
             </div>
@@ -94,14 +94,14 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The done part is the brand colour on a muted track. The track has an edge in the field border colour, so you can see where the bar ends.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Progress contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Progress contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Done part against the track</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Edge of the track against the page</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Done part against the track</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of the track against the page</div></td><td data-label="Colour on background"><div><code>--luz-input-border</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -113,9 +113,9 @@ toc: h2,h3
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 6 tokens that <code>components/progress.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-slow</code>, <code>--cai-easing-enter</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-input-border"><code>--luz-input-border</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-slow</code>, <code>--luz-easing-enter</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

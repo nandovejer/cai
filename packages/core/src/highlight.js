@@ -1,10 +1,10 @@
 /**
- * CAI Design System — Syntax highlight
+ * LUZ Design System — Syntax highlight
  * Lightweight tokenizer with no dependencies for documentation code blocks.
  * Supports HTML, CSS, JS/JSX, JSON and shell (bash, sh, shell).
  *
  * Importing this module has no side effects; call initHighlight() to
- * enhance every pre.cai-code-block on the page, or highlightBlock(pre)
+ * enhance every pre.luz-code-block on the page, or highlightBlock(pre)
  * for a single block. Copy-button clicks are handled by clipboard.js
  * (initCopyButtons).
  */
@@ -32,7 +32,7 @@ function tokenize(code, rules) {
   return html + escapeHtml(code.slice(last));
 }
 
-/* Six classes, one per --cai-code-* token: tok-comment, tok-keyword,
+/* Six classes, one per --luz-code-* token: tok-comment, tok-keyword,
    tok-name (tags, selectors, functions, commands), tok-property (attributes,
    CSS and JSON properties, flags, variables), tok-string, tok-literal
    (numbers, units, colours, booleans, entities). Rules are tried in order. */
@@ -85,7 +85,7 @@ const LANGS = {
 };
 
 /**
- * Highlight a single pre.cai-code-block element (language via data-lang).
+ * Highlight a single pre.luz-code-block element (language via data-lang).
  */
 export function highlightBlock(pre) {
   const code = pre.querySelector("code");
@@ -102,19 +102,19 @@ export function highlightBlock(pre) {
 }
 
 /**
- * Enhance every pre.cai-code-block: aria-label, copy button, highlighting.
+ * Enhance every pre.luz-code-block: aria-label, copy button, highlighting.
  */
 export function initHighlight() {
-  document.querySelectorAll("pre.cai-code-block").forEach((pre, index) => {
+  document.querySelectorAll("pre.luz-code-block").forEach((pre, index) => {
     if (!pre.hasAttribute("aria-label")) {
       const lang = (pre.dataset.lang || "code").toUpperCase();
       pre.setAttribute("aria-label", t("codeExample", pre, { lang }));
     }
 
-    if (!pre.querySelector(".cai-code-block__copy")) {
+    if (!pre.querySelector(".luz-code-block__copy")) {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = "cai-copy-btn cai-code-block__copy";
+      button.className = "luz-copy-btn luz-code-block__copy";
       button.dataset.copy = pre.querySelector("code")?.textContent || "";
       button.setAttribute("aria-label", t("copyCode", pre, { n: index + 1 }));
       button.textContent = t("copy", pre);

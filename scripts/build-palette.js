@@ -1,7 +1,7 @@
 /**
- * CAI — primitive colour palette.
+ * LUZ — primitive colour palette.
  * Computes every `color` primitive in packages/tokens/tokens.json from a few
- * numbers, in OKLCH, and writes them back. The palette is CAI's own: no value
+ * numbers, in OKLCH, and writes them back. The palette is LUZ's own: no value
  * is copied from another design system (tests/palette.test.js checks it).
  *
  * Method, the same for every family:

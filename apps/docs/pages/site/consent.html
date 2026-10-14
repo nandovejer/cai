@@ -1,10 +1,10 @@
-<!-- cai:page
+<!-- luz:page
 title: Cookie consent
 description: Asks a visitor once whether the site may use optional cookies, with Accept and Reject side by side, and remembers the answer.
 area: site
 order: 5
 group: patterns
-files: .cai-site-consent, __title, __choices
+files: .luz-site-consent, __title, __choices
 module: consent.js
 keywords: cookie banner, GDPR, ePrivacy, privacy, tracking consent
 toc: h2,h3
@@ -13,135 +13,135 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <cai-site-consent>
-              <section class="cai-site-consent" data-cai-consent data-cai-consent-key="cai-consent-demo" aria-labelledby="consent-demo-title" hidden>
-                <div data-cai-consent-ask>
-                  <h2 class="cai-site-consent__title" id="consent-demo-title">Cookies on Bodega Albar</h2>
+            <luz-site-consent>
+              <section class="luz-site-consent" data-luz-consent data-luz-consent-key="luz-consent-demo" aria-labelledby="consent-demo-title" hidden>
+                <div data-luz-consent-ask>
+                  <h2 class="luz-site-consent__title" id="consent-demo-title">Cookies on Bodega Albar</h2>
                   <p>We use cookies that this site needs to work. We would also like to measure how you use it, to improve it. <a href="#how">Read the cookie policy</a>.</p>
-                  <form class="cai-site-actions">
-                    <button class="cai-btn cai-btn--primary" type="submit" value="all">Accept optional cookies</button>
-                    <button class="cai-btn cai-btn--primary" type="submit" value="none">Reject optional cookies</button>
+                  <form class="luz-site-actions">
+                    <button class="luz-btn luz-btn--primary" type="submit" value="all">Accept optional cookies</button>
+                    <button class="luz-btn luz-btn--primary" type="submit" value="none">Reject optional cookies</button>
                   </form>
-                  <details class="cai-site-consent__choices">
+                  <details class="luz-site-consent__choices">
                     <summary>Choose which cookies to allow</summary>
                     <form class="o-stack">
-                      <fieldset class="cai-fieldset">
+                      <fieldset class="luz-fieldset">
                         <legend>Optional cookies</legend>
-                        <div class="cai-check-group">
-                          <label class="cai-check-item"><input type="checkbox" value="analytics"> Measuring visits</label>
-                          <label class="cai-check-item"><input type="checkbox" value="marketing"> Adverts on other sites</label>
+                        <div class="luz-check-group">
+                          <label class="luz-check-item"><input type="checkbox" value="analytics"> Measuring visits</label>
+                          <label class="luz-check-item"><input type="checkbox" value="marketing"> Adverts on other sites</label>
                         </div>
                       </fieldset>
-                      <div class="cai-site-actions">
-                        <button class="cai-btn cai-btn--secondary" type="submit">Save my choices</button>
+                      <div class="luz-site-actions">
+                        <button class="luz-btn luz-btn--secondary" type="submit">Save my choices</button>
                       </div>
                     </form>
                   </details>
                 </div>
-                <p data-cai-consent-done tabindex="-1" hidden>Your choice is saved. You can change it at any time on the <a href="#how">cookie policy</a> page.</p>
+                <p data-luz-consent-done tabindex="-1" hidden>Your choice is saved. You can change it at any time on the <a href="#how">cookie policy</a> page.</p>
               </section>
-            </cai-site-consent>
-            <p class="cai-site-actions"><button class="cai-btn cai-btn--outline" type="button" data-cai-consent-open hidden>Change cookie settings</button></p>
-            <p class="docs-demo__note">The answer of this example is stored under its own key, <code>cai-consent-demo</code>, so it does not count as an answer for this site. Without JavaScript the banner and its button stay hidden.</p>
+            </luz-site-consent>
+            <p class="luz-site-actions"><button class="luz-btn luz-btn--outline" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
+            <p class="docs-demo__note">The answer of this example is stored under its own key, <code>luz-consent-demo</code>, so it does not count as an answer for this site. Without JavaScript the banner and its button stay hidden.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way. The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the site header’s menu at 768 px and below opens at the top of the window, so while the banner is shown and before the page scrolls it covers part of the header; Escape or a click outside closes it. It has not been tested with a screen reader.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Cookie consent documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Cookie consent documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <p>Right after the <a href="/docs/site/skip-link/">skip link</a>, before a <a href="/docs/site/notice/">notice</a> and the <a href="/docs/site/site-header/">site header</a>. One checkbox per category of optional cookies, its <code>value</code> the category’s name. Load the module on its own: <code>site.js</code> does not include it.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-consent" aria-label="Copy the cookie consent markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-consent" aria-label="Copy the cookie consent markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cookie consent markup"><code id="code-consent">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/consent.min.js&quot;&gt;&lt;/script&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cookie consent markup"><code id="code-consent">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;a class=&quot;cai-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
-&lt;cai-site-consent&gt;
-  &lt;section class=&quot;cai-site-consent&quot; data-cai-consent aria-labelledby=&quot;consent-title&quot; hidden&gt;
-    &lt;div data-cai-consent-ask&gt;
-      &lt;h2 class=&quot;cai-site-consent__title&quot; id=&quot;consent-title&quot;&gt;Cookies on Bodega Albar&lt;/h2&gt;
+&lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+&lt;luz-site-consent&gt;
+  &lt;section class=&quot;luz-site-consent&quot; data-luz-consent aria-labelledby=&quot;consent-title&quot; hidden&gt;
+    &lt;div data-luz-consent-ask&gt;
+      &lt;h2 class=&quot;luz-site-consent__title&quot; id=&quot;consent-title&quot;&gt;Cookies on Bodega Albar&lt;/h2&gt;
       &lt;p&gt;We use cookies that this site needs to work. We would also like to measure how you
         use it, to improve it. &lt;a href=&quot;/cookies/&quot;&gt;Read the cookie policy&lt;/a&gt;.&lt;/p&gt;
-      &lt;form class=&quot;cai-site-actions&quot;&gt;
-        &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot; value=&quot;all&quot;&gt;Accept optional cookies&lt;/button&gt;
-        &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot; value=&quot;none&quot;&gt;Reject optional cookies&lt;/button&gt;
+      &lt;form class=&quot;luz-site-actions&quot;&gt;
+        &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot; value=&quot;all&quot;&gt;Accept optional cookies&lt;/button&gt;
+        &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot; value=&quot;none&quot;&gt;Reject optional cookies&lt;/button&gt;
       &lt;/form&gt;
-      &lt;details class=&quot;cai-site-consent__choices&quot;&gt;
+      &lt;details class=&quot;luz-site-consent__choices&quot;&gt;
         &lt;summary&gt;Choose which cookies to allow&lt;/summary&gt;
         &lt;form class=&quot;o-stack&quot;&gt;
-          &lt;fieldset class=&quot;cai-fieldset&quot;&gt;
+          &lt;fieldset class=&quot;luz-fieldset&quot;&gt;
             &lt;legend&gt;Optional cookies&lt;/legend&gt;
-            &lt;div class=&quot;cai-check-group&quot;&gt;
-              &lt;label class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; value=&quot;analytics&quot;&gt; Measuring visits&lt;/label&gt;
-              &lt;label class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; value=&quot;marketing&quot;&gt; Adverts on other sites&lt;/label&gt;
+            &lt;div class=&quot;luz-check-group&quot;&gt;
+              &lt;label class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; value=&quot;analytics&quot;&gt; Measuring visits&lt;/label&gt;
+              &lt;label class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; value=&quot;marketing&quot;&gt; Adverts on other sites&lt;/label&gt;
             &lt;/div&gt;
           &lt;/fieldset&gt;
-          &lt;div class=&quot;cai-site-actions&quot;&gt;
-            &lt;button class=&quot;cai-btn cai-btn--secondary&quot; type=&quot;submit&quot;&gt;Save my choices&lt;/button&gt;
+          &lt;div class=&quot;luz-site-actions&quot;&gt;
+            &lt;button class=&quot;luz-btn luz-btn--secondary&quot; type=&quot;submit&quot;&gt;Save my choices&lt;/button&gt;
           &lt;/div&gt;
         &lt;/form&gt;
       &lt;/details&gt;
     &lt;/div&gt;
-    &lt;p data-cai-consent-done tabindex=&quot;-1&quot; hidden&gt;Your choice is saved. You can change it at any
+    &lt;p data-luz-consent-done tabindex=&quot;-1&quot; hidden&gt;Your choice is saved. You can change it at any
       time on the &lt;a href=&quot;/cookies/&quot;&gt;cookie policy&lt;/a&gt; page.&lt;/p&gt;
   &lt;/section&gt;
-&lt;/cai-site-consent&gt;
-&lt;header class=&quot;cai-site-header&quot;&gt;…&lt;/header&gt;
+&lt;/luz-site-consent&gt;
+&lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;
 
 &lt;!-- On the cookie policy page --&gt;
-&lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; data-cai-consent-open hidden&gt;Change cookie settings&lt;/button&gt;</code></pre>
+&lt;button class=&quot;luz-btn luz-btn--outline&quot; type=&quot;button&quot; data-luz-consent-open hidden&gt;Change cookie settings&lt;/button&gt;</code></pre>
             </div>
             <p>Your scripts read the answer and listen for a new one. Load an optional script only for a category the visitor granted:</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">JS</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-consent-js" aria-label="Copy the script that reads the answer">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-consent-js" aria-label="Copy the script that reads the answer">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Script that reads the answer"><code id="code-consent-js">import { getConsent } from &quot;@cai-ds/site/consent&quot;;
+              <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="Script that reads the answer"><code id="code-consent-js">import { getConsent } from &quot;@luz-ds/site/consent&quot;;
 
 const granted = (answer) =&gt; answer?.granted.includes(&quot;analytics&quot;);
 
 if (granted(getConsent())) startMeasuring();
-document.addEventListener(&quot;cai:consent&quot;, (event) =&gt; {
+document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
   if (granted(event.detail)) startMeasuring();
   // Withdrawn: the simplest correct answer is to reload the page
   else location.reload();
 });</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>There are no variants. The hooks are <code>data-cai-consent-*</code> attributes.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Cookie consent classes and attributes" tabindex="0">
-              <table class="cai-table">
+            <p>There are no variants. The hooks are <code>data-luz-consent-*</code> attributes.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Cookie consent classes and attributes" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-site-consent</code></div></td><td data-label="Effect"><div>The banner: a band as wide as its container, its text in the site header’s column, in the sans. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-site-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-site-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>&lt;cai-site-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-cai-consent</code></div></td><td data-label="Effect"><div>On the <code>&lt;section&gt;</code>: the banner. Optional <code>data-cai-consent-days</code>, how long an answer lasts (180 days by default, 395 at most), and <code>data-cai-consent-key</code>, the storage key (it must start with <code>cai-</code>)</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-cai-consent-ask</code>, <code>data-cai-consent-done</code></div></td><td data-label="Effect"><div>The question, and the confirmation that takes its place. The confirmation has <code>tabindex="-1"</code>: it takes focus</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent</code></div></td><td data-label="Effect"><div>The banner: a band as wide as its container, its text in the site header’s column, in the sans. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>&lt;luz-site-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-luz-consent</code></div></td><td data-label="Effect"><div>On the <code>&lt;section&gt;</code>: the banner. Optional <code>data-luz-consent-days</code>, how long an answer lasts (180 days by default, 395 at most), and <code>data-luz-consent-key</code>, the storage key (it must start with <code>luz-</code>)</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-luz-consent-ask</code>, <code>data-luz-consent-done</code></div></td><td data-label="Effect"><div>The question, and the confirmation that takes its place. The confirmation has <code>tabindex="-1"</code>: it takes focus</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>value="all"</code>, <code>value="none"</code></div></td><td data-label="Effect"><div>On the submit buttons: Accept grants every category, Reject none. A submit button with another value, or none, grants the ticked ones of its form</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-cai-consent-open</code></div></td><td data-label="Effect"><div>On a button anywhere, with <code>hidden</code>: the script shows it, and it shows the banner again, with the stored answer ticked</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-luz-consent-open</code></div></td><td data-label="Effect"><div>On a button anywhere, with <code>hidden</code>: the script shows it, and it shows the banner again, with the stored answer ticked</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@cai-ds/site</code>, two native forms and a module of its own, <code>@cai-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed). <code>site.js</code> does not import it, so only the pages that ask load it.</p>
+            <p>CSS from <code>@luz-ds/site</code>, two native forms and a module of its own, <code>@luz-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed). <code>site.js</code> does not import it, so only the pages that ask load it.</p>
             <ul>
               <li><strong>When it asks:</strong> when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, in the flow above the header: it covers nothing, traps nothing and takes no focus, so the page can be read and used before answering.</li>
               <li><strong>The answer:</strong> Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read.</li>
-              <li><strong>Where it is kept:</strong> in the browser’s <code>localStorage</code>, under <code>cai-consent</code>, as JSON: <code>{"version":1,"expires":…,"asked":["analytics","marketing"],"granted":["analytics"]}</code>, with <code>expires</code> in milliseconds since 1970. Not in a cookie: a cookie would travel to the server with every request, and asking about cookies should not need one. No personal data, and nothing leaves the browser. A malformed value counts as no answer. If storage is blocked, the answer holds for the page and the next page asks again.</li>
-              <li><strong>Your scripts:</strong> <code>getConsent()</code> returns the stored answer, <code>{ asked, granted, expires }</code>, or <code>null</code>. Each new answer dispatches <code>cai:consent</code> on <code>document</code>, with the same object as <code>detail</code>. Category names are a lowercase letter, then lowercase letters, digits or hyphens, 32 at most.</li>
-              <li><strong>Changing the answer:</strong> as easy as giving it. A button with <code>data-cai-consent-open</code>, on the cookie policy page, shows the banner again. Put one banner on a page: every such button opens it.</li>
+              <li><strong>Where it is kept:</strong> in the browser’s <code>localStorage</code>, under <code>luz-consent</code>, as JSON: <code>{"version":1,"expires":…,"asked":["analytics","marketing"],"granted":["analytics"]}</code>, with <code>expires</code> in milliseconds since 1970. Not in a cookie: a cookie would travel to the server with every request, and asking about cookies should not need one. No personal data, and nothing leaves the browser. A malformed value counts as no answer. If storage is blocked, the answer holds for the page and the next page asks again.</li>
+              <li><strong>Your scripts:</strong> <code>getConsent()</code> returns the stored answer, <code>{ asked, granted, expires }</code>, or <code>null</code>. Each new answer dispatches <code>luz:consent</code> on <code>document</code>, with the same object as <code>detail</code>. Category names are a lowercase letter, then lowercase letters, digits or hyphens, 32 at most.</li>
+              <li><strong>Changing the answer:</strong> as easy as giving it. A button with <code>data-luz-consent-open</code>, on the cookie policy page, shows the banner again. Put one banner on a page: every such button opens it.</li>
               <li>The script writes no text: every word is in your markup, in the page’s language.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
@@ -155,7 +155,7 @@ document.addEventListener(&quot;cai:consent&quot;, (event) =&gt; {
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use it when your site sets cookies, or stores data in the browser, that it does not need to work, such as measuring visits or adverts: the law in the EU and the UK asks for the visitor’s consent before that.</p>
@@ -165,24 +165,24 @@ document.addEventListener(&quot;cai:consent&quot;, (event) =&gt; {
               <li>Do not use it as a wall that hides or blocks the page until the visitor answers.</li>
               <li>Do not use it for news or a sale: that is a <a href="/docs/site/notice/">notice</a>.</li>
             </ul>
-            <p>It replaces a third-party consent script. Nothing in CAI is removed.</p>
+            <p>It replaces a third-party consent script. Nothing in LUZ is removed.</p>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Give Accept and Reject the same style, side by side, with words that say what each one does.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-site-actions">
-                    <span class="cai-btn cai-btn--primary">Accept optional cookies</span>
-                    <span class="cai-btn cai-btn--primary">Reject optional cookies</span>
+                  <div class="luz-site-actions">
+                    <span class="luz-btn luz-btn--primary">Accept optional cookies</span>
+                    <span class="luz-btn luz-btn--primary">Reject optional cookies</span>
                   </div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Make Accept a big button and hide Reject in a small link or behind settings: an answer pushed one way is not free consent.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-site-actions">
-                    <span class="cai-btn cai-btn--primary cai-btn--lg">Accept all</span>
-                    <span class="cai-btn cai-btn--ghost cai-btn--sm">Manage options</span>
+                  <div class="luz-site-actions">
+                    <span class="luz-btn luz-btn--primary luz-btn--lg">Accept all</span>
+                    <span class="luz-btn luz-btn--ghost luz-btn--sm">Manage options</span>
                   </div>
                 </div>
               </figure>
@@ -196,35 +196,35 @@ document.addEventListener(&quot;cai:consent&quot;, (event) =&gt; {
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The banner is a muted band; its buttons and the categories are core’s.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Cookie consent contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Cookie consent contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Heading and text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Link to the cookie policy</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Accept and Reject</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Edge of Accept and Reject</div></td><td data-label="Colour on background"><div><code>--cai-brand-fill</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Categories and their button</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Checkbox edge</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>4.5:1</div></td><td data-label="Dark"><div>3.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring on the band</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Heading and text</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link to the cookie policy</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Accept and Reject</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of Accept and Reject</div></td><td data-label="Colour on background"><div><code>--luz-brand-fill</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Categories and their button</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checkbox edge</div></td><td data-label="Colour on background"><div><code>--luz-outline</code> on <code>--luz-input-bg</code></div></td><td data-label="Light"><div>4.5:1</div></td><td data-label="Dark"><div>3.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring on the band</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, edges and borders.</p>
             <ul>
-              <li><strong>Focus:</strong> core’s 2 px <code>--cai-focus-ring</code> outline on the link, the buttons and the checkboxes.</li>
+              <li><strong>Focus:</strong> core’s 2 px <code>--luz-focus-ring</code> outline on the link, the buttons and the checkboxes.</li>
               <li>Accept and Reject look the same: neither is pushed by colour or size.</li>
               <li>A ticked category shows a check mark, not only a fill.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 11 tokens that the rules of site’s <code>components/banners.css</code> read for the banner, by family; the buttons, the box of the categories and the checkboxes are core’s. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-xs</code>, <code>--cai-space-md</code>, <code>--cai-space-xl</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-sm</code>, <code>--cai-text-md</code>, <code>--cai-text-lg</code></dd></div>
-              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--cai-content-max</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-xs</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-sm</code>, <code>--luz-text-md</code>, <code>--luz-text-lg</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-content-max</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

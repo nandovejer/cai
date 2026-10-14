@@ -1,5 +1,5 @@
 /**
- * CAI docs site — a small, strict HTML tokenizer for our own sources.
+ * LUZ docs site — a small, strict HTML tokenizer for our own sources.
  *
  * Not a general parser: the sources are ours, so instead of repairing bad
  * markup the way a browser does, it fails with `file:line` on anything a
@@ -144,7 +144,7 @@ export function* tags(html, file = "<html>") {
  * id of the last heading before it (outside demos), of its nearest ancestor
  * that has one, and the data-label of the table cell it is in.
  * `swatches` are the colours a page draws without naming them in a <code>:
- * an element of class `docs-swatch` whose style says `--v: var(--cai-…)` (the
+ * an element of class `docs-swatch` whose style says `--v: var(--luz-…)` (the
  * primitive scales of the palette). `own` is where to link: the id of the
  * label the swatch's list is named by (`aria-labelledby`), else of its
  * nearest ancestor that has one.
@@ -185,7 +185,7 @@ export function readHtml(html, file = "<html>") {
         code = { line, heading: section, own: stack.findLast((t) => t.id)?.id ?? null, cell: stack.findLast((t) => t.label !== undefined)?.label ?? null, specimen: specimen > 0, start: tag.end };
       }
 
-      const swatch = /(?:^|;)\s*--v\s*:\s*var\(\s*(--cai-[\w-]+)\s*\)/.exec(attrs.get("style") ?? "");
+      const swatch = /(?:^|;)\s*--v\s*:\s*var\(\s*(--luz-[\w-]+)\s*\)/.exec(attrs.get("style") ?? "");
       if (swatch && /(?:^|\s)docs-swatch(?:\s|$)/.test(attrs.get("class") ?? "")) {
         const labelled = stack.findLast((t) => t.labelledby)?.labelledby;
         swatches.push({ token: swatch[1], line, heading: section, own: labelled ?? stack.findLast((t) => t.id)?.id ?? null });

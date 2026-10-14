@@ -1,15 +1,15 @@
 /**
- * CAI Design System — Tabs (progressive enhancement)
+ * LUZ Design System — Tabs (progressive enhancement)
  *
  * Without JavaScript the markup is a row of in-page links and every panel is
  * visible, stacked, each reachable from its link:
  *
- *   <nav class="cai-tabs" aria-label="Project">
- *     <a class="cai-tab" href="#panel-a">Summary</a>
- *     <a class="cai-tab" href="#panel-b">Settings</a>
+ *   <nav class="luz-tabs" aria-label="Project">
+ *     <a class="luz-tab" href="#panel-a">Summary</a>
+ *     <a class="luz-tab" href="#panel-b">Settings</a>
  *   </nav>
- *   <div class="cai-tabpanel" id="panel-a">…</div>
- *   <div class="cai-tabpanel" id="panel-b">…</div>
+ *   <div class="luz-tabpanel" id="panel-a">…</div>
+ *   <div class="luz-tabpanel" id="panel-b">…</div>
  *
  * initTabs() upgrades it to the ARIA tabs pattern: it adds role="tablist",
  * "tab" and "tabpanel", aria-selected, aria-controls / aria-labelledby, hides
@@ -64,9 +64,9 @@ function reveal(el) {
 /** Add the ARIA roles and relationships. Idempotent. */
 function upgrade(tablist) {
   tablist.setAttribute("role", "tablist");
-  tablist.querySelectorAll(".cai-tab").forEach((tab) => {
+  tablist.querySelectorAll(".luz-tab").forEach((tab) => {
     const panel = panelOf(tab);
-    if (!tab.id) tab.id = `cai-tab-${(uid += 1)}`;
+    if (!tab.id) tab.id = `luz-tab-${(uid += 1)}`;
     tab.setAttribute("role", "tab");
     if (panel) {
       tab.setAttribute("aria-controls", panel.id);
@@ -77,10 +77,10 @@ function upgrade(tablist) {
 }
 
 export function activateTab(tab, { moveFocus = false } = {}) {
-  const tablist = tab.closest(".cai-tabs");
+  const tablist = tab.closest(".luz-tabs");
   if (!tablist) return;
 
-  const tabs = Array.from(tablist.querySelectorAll(".cai-tab"));
+  const tabs = Array.from(tablist.querySelectorAll(".luz-tab"));
   tabs.forEach((item) => {
     const isActive = item === tab;
     item.classList.toggle("is-active", isActive);
@@ -99,10 +99,10 @@ export function activateTab(tab, { moveFocus = false } = {}) {
 }
 
 function moveTabFocus(currentTab, direction) {
-  const tablist = currentTab.closest(".cai-tabs");
+  const tablist = currentTab.closest(".luz-tabs");
   if (!tablist) return;
 
-  const tabs = Array.from(tablist.querySelectorAll(".cai-tab"));
+  const tabs = Array.from(tablist.querySelectorAll(".luz-tab"));
   const currentIndex = tabs.indexOf(currentTab);
   if (currentIndex === -1) return;
 
@@ -119,22 +119,22 @@ function moveTabFocus(currentTab, direction) {
 let bound = false;
 
 /**
- * Upgrade every .cai-tabs in `root` and wire delegated click + keyboard
+ * Upgrade every .luz-tabs in `root` and wire delegated click + keyboard
  * handling once. The tab whose panel holds the URL fragment's target opens
  * first; then a tab marked aria-selected="true" or .is-active; then the first.
  */
 export function initTabs(root = document) {
   enableJs();
   const target = byHash(location.hash);
-  const lists = root.querySelectorAll(".cai-tabs");
+  const lists = root.querySelectorAll(".luz-tabs");
 
   lists.forEach((tablist) => {
     upgrade(tablist);
-    const tabs = Array.from(tablist.querySelectorAll(".cai-tab"));
+    const tabs = Array.from(tablist.querySelectorAll(".luz-tab"));
     const activeTab =
       tabs.find((t) => target && panelOf(t)?.contains(target)) ||
-      tablist.querySelector('.cai-tab[aria-selected="true"]') ||
-      tablist.querySelector(".cai-tab.is-active") ||
+      tablist.querySelector('.luz-tab[aria-selected="true"]') ||
+      tablist.querySelector(".luz-tab.is-active") ||
       tabs[0];
 
     if (activeTab) activateTab(activeTab);
@@ -147,8 +147,8 @@ export function initTabs(root = document) {
   bound = true;
 
   document.addEventListener("click", (e) => {
-    const tab = e.target.closest?.(".cai-tab");
-    if (tab?.closest(".cai-tabs[role='tablist']")) {
+    const tab = e.target.closest?.(".luz-tab");
+    if (tab?.closest(".luz-tabs[role='tablist']")) {
       // eslint-disable-next-line no-restricted-syntax -- RL-3: the tab is a link only without JavaScript; with it, the tab shows its panel in place
       e.preventDefault();
       activateTab(tab);
@@ -171,8 +171,8 @@ export function initTabs(root = document) {
   document.addEventListener("beforematch", (e) => reveal(e.target));
 
   document.addEventListener("keydown", (e) => {
-    const tab = e.target.closest?.(".cai-tab");
-    const tablist = tab?.closest(".cai-tabs[role='tablist']");
+    const tab = e.target.closest?.(".luz-tab");
+    const tablist = tab?.closest(".luz-tabs[role='tablist']");
     if (!tablist || !Object.hasOwn(TAB_KEYS, e.key)) return;
     // eslint-disable-next-line no-restricted-syntax -- RL-3: the ARIA tabs pattern moves focus with these keys; without this the page would scroll as well
     e.preventDefault();

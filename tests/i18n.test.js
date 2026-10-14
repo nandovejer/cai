@@ -93,17 +93,17 @@ describe("i18n — language resolution", () => {
   });
 });
 
-describe("i18n — data-cai-label override", () => {
+describe("i18n — data-luz-label override", () => {
   it("wins over the dictionary, on the element or an ancestor", () => {
     document.documentElement.lang = "es";
-    const root = el({ attrs: { "data-cai-label-pause": "Detener" } });
+    const root = el({ attrs: { "data-luz-label-pause": "Detener" } });
     expect(i18n.t("pause", root)).toBe("Detener");
     expect(i18n.t("pause", el({ parent: root }))).toBe("Detener");
     expect(i18n.t("play", root)).toBe("Reproducir");
   });
 
   it("maps camelCase keys to kebab-case attributes", () => {
-    const root = el({ lang: "en", attrs: { "data-cai-label-exit-fullscreen": "Leave" } });
+    const root = el({ lang: "en", attrs: { "data-luz-label-exit-fullscreen": "Leave" } });
     expect(i18n.t("exitFullscreen", root)).toBe("Leave");
   });
 });
@@ -164,7 +164,7 @@ describe("i18n — table sort", () => {
   });
 
   it("the key becomes the attribute that overrides it", () => {
-    const table = el({ lang: "en", attrs: { "data-cai-label-sorted-asc": "Par {column}, croissant" } });
+    const table = el({ lang: "en", attrs: { "data-luz-label-sorted-asc": "Par {column}, croissant" } });
     expect(i18n.t("sortedAsc", table, { column: "Colis" })).toBe("Par Colis, croissant");
   });
 });

@@ -1,12 +1,12 @@
 /**
- * CAI Design System — Strings
- * Every string CAI's JavaScript writes into the page (visible text and
+ * LUZ Design System — Strings
+ * Every string LUZ's JavaScript writes into the page (visible text and
  * accessible names) comes from here, in the language of the element it
  * is written to.
  *
  * Language: the nearest `lang` attribute, then <html lang>. A full tag
  * (es-MX) falls back to its primary subtag (es), then to English.
- * Precedence: data-cai-label-<key> on the element or an ancestor >
+ * Precedence: data-luz-label-<key> on the element or an ancestor >
  * dictionary for the resolved language > English.
  *
  * Importing this module has no side effects.
@@ -70,7 +70,7 @@ const warned = new Set();
 function warnOnce(lang, message) {
   if (warned.has(lang)) return;
   warned.add(lang);
-  console.warn(`[cai] ${message}`);
+  console.warn(`[luz] ${message}`);
 }
 
 /**
@@ -124,7 +124,7 @@ function dictionaryFor(el) {
  * @returns {string}
  */
 export function t(key, el, vars) {
-  const attr = "data-cai-label-" + key.replace(/[A-Z]/g, "-$&").toLowerCase();
+  const attr = "data-luz-label-" + key.replace(/[A-Z]/g, "-$&").toLowerCase();
   const text =
     el?.closest?.(`[${attr}]`)?.getAttribute(attr) ??
     dictionaryFor(el)[key] ??

@@ -1,10 +1,10 @@
-<!-- cai:page
+<!-- luz:page
 title: Notice
 description: Tells every visitor one short thing at the top of the page, such as a sale, an event or planned maintenance.
 area: site
 order: 5
 group: patterns
-files: .cai-site-notice, --warning
+files: .luz-site-notice, --warning
 keywords: announcement bar, banner, top bar, maintenance message
 toc: h2,h3
 -->
@@ -12,10 +12,10 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <section class="cai-site-notice" aria-labelledby="notice-demo-label">
+            <section class="luz-site-notice" aria-labelledby="notice-demo-label">
               <p><strong id="notice-demo-label">Open day.</strong> Visit the winery on Saturday 25 October, from 11:00 to 18:00. <a href="#example">Book a visit</a></p>
             </section>
-            <section class="cai-site-notice cai-site-notice--warning" aria-labelledby="notice-demo-warning">
+            <section class="luz-site-notice luz-site-notice--warning" aria-labelledby="notice-demo-warning">
               <p><strong id="notice-demo-warning">Planned maintenance.</strong> The shop will be closed on Monday 3 November from 07:00 to 09:00. <a href="#example">See what still works</a></p>
             </section>
           </div>
@@ -23,43 +23,43 @@ toc: h2,h3
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the notice short and remove it from the markup when it ends. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the site header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a notice; Escape or a click outside closes it.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Notice documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Notice documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <p>A <code>&lt;section&gt;</code> named by its first words, right after the <a href="/docs/site/skip-link/">skip link</a> and before the <a href="/docs/site/site-header/">site header</a>.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-notice" aria-label="Copy the notice markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-notice" aria-label="Copy the notice markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Notice markup"><code id="code-notice">&lt;a class=&quot;cai-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
-&lt;section class=&quot;cai-site-notice&quot; aria-labelledby=&quot;notice-label&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Notice markup"><code id="code-notice">&lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+&lt;section class=&quot;luz-site-notice&quot; aria-labelledby=&quot;notice-label&quot;&gt;
   &lt;p&gt;&lt;strong id=&quot;notice-label&quot;&gt;Open day.&lt;/strong&gt; Visit the winery on Saturday 25 October,
     from 11:00 to 18:00. &lt;a href=&quot;/visits/&quot;&gt;Book a visit&lt;/a&gt;&lt;/p&gt;
 &lt;/section&gt;
-&lt;header class=&quot;cai-site-header&quot;&gt;…&lt;/header&gt;</code></pre>
+&lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <div class="cai-table-wrap" role="region" aria-label="Notice classes" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Notice classes" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-site-notice</code></div></td><td data-label="Effect"><div>A band as wide as its container, on a muted surface with a rule under it, in small sans text. Its text starts where the site header’s row starts</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-site-notice--warning</code></div></td><td data-label="Effect"><div>The warning colours: for something that stops the visitor doing what they came to do, such as maintenance. Say it in the words too: “Planned maintenance.”</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-site-notice</code></div></td><td data-label="Effect"><div>A band as wide as its container, on a muted surface with a rule under it, in small sans text. Its text starts where the site header’s row starts</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-site-notice--warning</code></div></td><td data-label="Effect"><div>The warning colours: for something that stops the visitor doing what they came to do, such as maintenance. Say it in the words too: “Planned maintenance.”</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@cai-ds/site</code>. No JavaScript.</p>
+            <p>CSS from <code>@luz-ds/site</code>. No JavaScript.</p>
             <ul>
               <li>It is a band of the page, in the flow: it scrolls away with the page, and a <code>--sticky</code> site header stays at the top under it. Nothing covers the page.</li>
-              <li>Its inline padding lines its text up with the site header’s row, up to <code>--cai-content-max</code> wide, in either direction of text.</li>
+              <li>Its inline padding lines its text up with the site header’s row, up to <code>--luz-content-max</code> wide, in either direction of text.</li>
               <li>There is no close button. Closing it for good needs a script and a value stored in the browser, and a button that does nothing without a script is never shown. A notice is short-lived: remove it from the markup when the event is over.</li>
               <li>There is no success or error variant: a notice is not the answer to something the visitor did. For that use an <a href="/docs/components/alert/">alert</a> in the page.</li>
             </ul>
@@ -73,7 +73,7 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use it for one short, timely thing every visitor of the site should know, on every page, for a few days: a sale, an event, planned maintenance, a change of opening hours.</p>
@@ -84,13 +84,13 @@ toc: h2,h3
               <li>Do not use it to ask for cookies: use the <a href="/docs/site/consent/">cookie consent</a> banner.</li>
               <li>Do not put a form or more than one link in it.</li>
             </ul>
-            <p>It replaces the announcement bars a site builds with its own CSS. Nothing in CAI is removed.</p>
+            <p>It replaces the announcement bars a site builds with its own CSS. Nothing in LUZ is removed.</p>
             <h3 id="do-dont">Do and don't</h3>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Start with what it is about, in bold, say when, and end with one link that says where it goes.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-site-notice cai-site-notice--warning">
+                  <div class="luz-site-notice luz-site-notice--warning">
                     <p><strong>Planned maintenance.</strong> The shop will be closed on Monday 3 November from 07:00 to 09:00. <a href="#example">See what still works</a></p>
                   </div>
                 </div>
@@ -98,7 +98,7 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Rely on the yellow to say it is a warning, shout in capitals, or leave out the date: the words alone must carry the message, and “soon” is wrong a day later.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-site-notice cai-site-notice--warning">
+                  <div class="luz-site-notice luz-site-notice--warning">
                     <p>IMPORTANT!!! THE SHOP WILL BE CLOSED SOON.</p>
                   </div>
                 </div>
@@ -113,34 +113,34 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The text and its link sit on the band’s surface.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Notice contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Notice contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Text, warning</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-color-warning-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>16.0:1</div></td><td data-label="Dark"><div>11.5:1</div></td><td data-label="High contrast"><div>20.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Link, warning</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-color-warning-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.7:1</div></td><td data-label="Dark"><div>5.9:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring on the link</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring on the link, warning</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-color-warning-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.7:1</div></td><td data-label="Dark"><div>5.9:1</div></td><td data-label="High contrast"><div>20.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text, warning</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>16.0:1</div></td><td data-label="Dark"><div>11.5:1</div></td><td data-label="High contrast"><div>20.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link, warning</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.7:1</div></td><td data-label="Dark"><div>5.9:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring on the link</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring on the link, warning</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.7:1</div></td><td data-label="Dark"><div>5.9:1</div></td><td data-label="High contrast"><div>20.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings.</p>
             <ul>
-              <li><strong>Focus:</strong> core’s 2 px <code>--cai-focus-ring</code> outline around the link.</li>
+              <li><strong>Focus:</strong> core’s 2 px <code>--luz-focus-ring</code> outline around the link.</li>
               <li>The link is underlined, as every link in text is: not only a colour.</li>
               <li>The warning’s yellow is never the only signal: its first words say what it is.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 11 tokens that the rules of site’s <code>components/banners.css</code> read for the notice, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-color-warning-accent"><code>--cai-color-warning-accent</code></a>, <a href="/docs/tokens/color/#cai-color-warning-bg"><code>--cai-color-warning-bg</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-xs</code>, <code>--cai-space-md</code>, <code>--cai-space-xl</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--cai-content-max</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-color-warning-accent"><code>--luz-color-warning-accent</code></a>, <a href="/docs/tokens/color/#luz-color-warning-bg"><code>--luz-color-warning-bg</code></a>, <a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-xs</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-content-max</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

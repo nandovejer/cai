@@ -1,11 +1,11 @@
 // @ts-check
 /**
- * Core's .cai-prose (components/prose.css), and lists laid out by a layout
+ * Core's .luz-prose (components/prose.css), and lists laid out by a layout
  * object (.o-grid, .o-stack, .o-row on a ul or ol). The page is
  * tests/fixtures/prose.html, the body of a post as a CMS editor writes it
  * (bare blocks, a ul.wp-block-list), served at /__prose__ with the language
  * and direction each test needs. Checks the line length in ch at 1440 px,
- * the space between blocks, the lists, that a .cai-* class inside wins, that
+ * the space between blocks, the lists, that a .luz-* class inside wins, that
  * classless mode agrees with it, 320 px and 200 % text without sideways
  * scroll, right to left, and axe in the three modes. CSS only: runs in
  * `chromium` and `chromium-nojs`.
@@ -76,9 +76,9 @@ test.describe('prose', () => {
     }
   });
 
-  test('--cai-prose-measure on the wrapper sets the line length', async ({ page: p }) => {
+  test('--luz-prose-measure on the wrapper sets the line length', async ({ page: p }) => {
     await open(p, 1440);
-    await style(p, '#prose { --cai-prose-measure: 40ch }');
+    await style(p, '#prose { --luz-prose-measure: 40ch }');
     const ratio = await p.evaluate(() => {
       const para = document.getElementById('p1');
       const probe = Object.assign(document.createElement('span'), { style: 'inline-size: 1ch; display: inline-block' });
@@ -92,7 +92,7 @@ test.describe('prose', () => {
 
   test('rhythm: one step between blocks, more before a heading and a rule, less after a heading', async ({ page: p }) => {
     await open(p, 1280);
-    const [md, xl, sm] = [await tokenPx(p, '--cai-space-md'), await tokenPx(p, '--cai-space-xl'), await tokenPx(p, '--cai-space-sm')];
+    const [md, xl, sm] = [await tokenPx(p, '--luz-space-md'), await tokenPx(p, '--luz-space-xl'), await tokenPx(p, '--luz-space-sm')];
     expect(await spaceBefore(p, 'p2')).toBeCloseTo(md, 0);
     expect(await spaceBefore(p, 'h-method')).toBeCloseTo(xl, 0);
     expect(await spaceBefore(p, 'after-h2')).toBeCloseTo(sm, 0);
@@ -119,15 +119,15 @@ test.describe('prose', () => {
     expect(Math.abs(list - para)).toBeLessThanOrEqual(1);
   });
 
-  test('inline code has the look of .cai-code-inline, and a .cai-* class inside wins', async ({ page: p }) => {
+  test('inline code has the look of .luz-code-inline, and a .luz-* class inside wins', async ({ page: p }) => {
     await open(p, 1280);
     const PROPS = ['backgroundColor', 'color', 'fontFamily', 'fontSize', 'paddingTop', 'paddingInlineStart', 'borderTopLeftRadius', 'borderTopWidth', 'borderTopColor'];
     const read = (id) => p.locator(`#${id}`).evaluate((el, props) => Object.fromEntries(props.map((k) => [k, getComputedStyle(el)[k]])), PROPS);
     expect(await read('code')).toEqual(await read('code-component'));
-    // A component's own margin is kept: .cai-figure has --cai-space-lg above it, not the step of prose
-    const lg = await tokenPx(p, '--cai-space-lg');
-    expect(parseFloat(await p.locator('#cai-figure').evaluate((el) => getComputedStyle(el).marginBlockStart))).toBeCloseTo(lg, 0);
-    expect(await spaceBefore(p, 'cai-figure')).toBeCloseTo(lg, 0);
+    // A component's own margin is kept: .luz-figure has --luz-space-lg above it, not the step of prose
+    const lg = await tokenPx(p, '--luz-space-lg');
+    expect(parseFloat(await p.locator('#luz-figure').evaluate((el) => getComputedStyle(el).marginBlockStart))).toBeCloseTo(lg, 0);
+    expect(await spaceBefore(p, 'luz-figure')).toBeCloseTo(lg, 0);
   });
 
   test('with classless mode on the same element, the space between blocks does not change', async ({ page: p }) => {
@@ -136,7 +136,7 @@ test.describe('prose', () => {
     const before = [];
     for (const id of ids) before.push(await spaceBefore(p, id));
     await open(p, 1280, { head: '<link rel="stylesheet" href="/packages/core/dist/classless.css">' });
-    await p.evaluate(() => document.getElementById('prose').setAttribute('data-cai-classless', ''));
+    await p.evaluate(() => document.getElementById('prose').setAttribute('data-luz-classless', ''));
     const after = [];
     for (const id of ids) after.push(await spaceBefore(p, id));
     after.forEach((v, i) => expect(v, ids[i]).toBeCloseTo(before[i], 0));

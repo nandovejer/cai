@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Tabs
 description: Switches between panels of related content in one place; without JavaScript the panels are stacked sections.
 area: components
@@ -11,51 +11,51 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage docs-demo__stage--flush">
-            <nav class="cai-tabs" aria-label="Service details">
-              <a class="cai-tab is-active" id="tab-summary" href="#panel-summary">Summary</a>
-              <a class="cai-tab" id="tab-settings" href="#panel-settings">Settings</a>
-              <a class="cai-tab" id="tab-logs" href="#panel-logs">Logs</a>
+            <nav class="luz-tabs" aria-label="Service details">
+              <a class="luz-tab is-active" id="tab-summary" href="#panel-summary">Summary</a>
+              <a class="luz-tab" id="tab-settings" href="#panel-settings">Settings</a>
+              <a class="luz-tab" id="tab-logs" href="#panel-logs">Logs</a>
             </nav>
-            <div class="cai-tabpanel" id="panel-summary"><p>Three services are running.</p></div>
-            <div class="cai-tabpanel" id="panel-settings"><p>Deploys run on every push.</p></div>
-            <div class="cai-tabpanel" id="panel-logs"><p>No errors in the last hour.</p></div>
+            <div class="luz-tabpanel" id="panel-summary"><p>Three services are running.</p></div>
+            <div class="luz-tabpanel" id="panel-settings"><p>Deploys run on every push.</p></div>
+            <div class="luz-tabpanel" id="panel-logs"><p>No errors in the last hour.</p></div>
           </div>
 
           <p class="docs-demo__note">Focus a tab, then use the arrow keys, Home and End. The Code and Design tabs of this page are the same component.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Tabs documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Tabs documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-tabs" aria-label="Copy the tabs markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tabs" aria-label="Copy the tabs markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Tabs markup"><code id="code-tabs">&lt;nav class=&quot;cai-tabs&quot; aria-label=&quot;Project&quot;&gt;
-  &lt;a class=&quot;cai-tab&quot; href=&quot;#project-summary&quot;&gt;Summary&lt;/a&gt;
-  &lt;a class=&quot;cai-tab&quot; href=&quot;#project-settings&quot;&gt;Settings&lt;/a&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Tabs markup"><code id="code-tabs">&lt;nav class=&quot;luz-tabs&quot; aria-label=&quot;Project&quot;&gt;
+  &lt;a class=&quot;luz-tab&quot; href=&quot;#project-summary&quot;&gt;Summary&lt;/a&gt;
+  &lt;a class=&quot;luz-tab&quot; href=&quot;#project-settings&quot;&gt;Settings&lt;/a&gt;
 &lt;/nav&gt;
-&lt;div class=&quot;cai-tabpanel&quot; id=&quot;project-summary&quot;&gt;…&lt;/div&gt;
-&lt;div class=&quot;cai-tabpanel&quot; id=&quot;project-settings&quot;&gt;…&lt;/div&gt;</code></pre>
+&lt;div class=&quot;luz-tabpanel&quot; id=&quot;project-summary&quot;&gt;…&lt;/div&gt;
+&lt;div class=&quot;luz-tabpanel&quot; id=&quot;project-settings&quot;&gt;…&lt;/div&gt;</code></pre>
             </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">JS</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-tabs-js" aria-label="Copy the tabs script code">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tabs-js" aria-label="Copy the tabs script code">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Tabs script code"><code id="code-tabs-js">import { initTabs } from &quot;@cai-ds/core/tabs&quot;;
+              <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="Tabs script code"><code id="code-tabs-js">import { initTabs } from &quot;@luz-ds/core/tabs&quot;;
 initTabs();</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>One look. The tab that opens first is the first one that matches:</p>
-            <div class="cai-table-wrap" role="region" aria-label="Which tab opens first" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Which tab opens first" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Order</th><th scope="col">Tab</th></tr>
                 </thead>
@@ -69,7 +69,7 @@ initTabs();</code></pre>
             <h3 id="how">How it works</h3>
             <p>A row of in-page links to the panels, styled by <code>components/tabs.css</code> and upgraded by <code>tabs.js</code>.</p>
             <ul>
-              <li><code>initTabs()</code> adds the ARIA tabs pattern: <code>role="tablist"</code>, <code>"tab"</code> and <code>"tabpanel"</code>, <code>aria-selected</code>, <code>aria-controls</code>, <code>aria-labelledby</code> and a roving <code>tabindex</code>. It hides the inactive panels. <code>cai.js</code> runs it.</li>
+              <li><code>initTabs()</code> adds the ARIA tabs pattern: <code>role="tablist"</code>, <code>"tab"</code> and <code>"tabpanel"</code>, <code>aria-selected</code>, <code>aria-controls</code>, <code>aria-labelledby</code> and a roving <code>tabindex</code>. It hides the inactive panels. <code>luz.js</code> runs it.</li>
               <li>A link to an element inside a hidden panel opens its tab, on load, on <code>hashchange</code> and on click.</li>
               <li>Inactive panels are <code>hidden="until-found"</code> where the browser supports it, so find in page reaches them and opens their tab.</li>
               <li><code>activateTab(tab)</code> selects a tab from your own script.</li>
@@ -86,7 +86,7 @@ initTabs();</code></pre>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use tabs to switch between panels of the same level that readers do not need side by side, such as the summary, settings and logs of one service.</p>
@@ -102,13 +102,13 @@ initTabs();</code></pre>
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Tabs named after their panels, in a word or two.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="docs-dodont__tabs"><span class="cai-tab is-active">Summary</span><span class="cai-tab">Settings</span><span class="cai-tab">Logs</span></div>
+                  <div class="docs-dodont__tabs"><span class="luz-tab is-active">Summary</span><span class="luz-tab">Settings</span><span class="luz-tab">Logs</span></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Numbered steps as tabs: a process in order belongs on separate pages, and nothing stops the reader from skipping a step.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="docs-dodont__tabs"><span class="cai-tab is-active">1. Account</span><span class="cai-tab">2. Billing</span><span class="cai-tab">3. Confirm</span></div>
+                  <div class="docs-dodont__tabs"><span class="luz-tab is-active">1. Account</span><span class="luz-tab">2. Billing</span><span class="luz-tab">3. Confirm</span></div>
                 </div>
               </figure>
             </div>
@@ -120,31 +120,31 @@ initTabs();</code></pre>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>Tabs are secondary text; the current one is brand text over a brand underline.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Tabs contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Tabs contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Tab</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Tab, hover</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Current tab and its underline</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Tab</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Tab, hover</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current tab and its underline</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> a 2 px <code>--cai-focus-ring</code> outline drawn inside the tab, so the scrolling row never cuts it.</li>
-              <li><strong>Not colour alone:</strong> the current tab has a 2 px underline; the row's line under the others is <code>--cai-divider</code>.</li>
+              <li><strong>Focus:</strong> a 2 px <code>--luz-focus-ring</code> outline drawn inside the tab, so the scrolling row never cuts it.</li>
+              <li><strong>Not colour alone:</strong> the current tab has a 2 px underline; the row's line under the others is <code>--luz-divider</code>.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 10 tokens that <code>components/tabs.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-md</code>, <code>--cai-space-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-md</code>, <code>--luz-space-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-fast</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

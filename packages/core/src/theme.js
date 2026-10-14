@@ -1,5 +1,5 @@
 /**
- * CAI Design System — Theme system
+ * LUZ Design System — Theme system
  * Base color modes (light/dark/high-contrast) via data-theme on <html>,
  * custom themes (data-theme="<name>") with per-theme data-mode variants.
  *
@@ -16,20 +16,20 @@ import { t } from "./i18n.js";
 
 // Color modes: luminosity variants (light/dark/high-contrast)
 export const MODES = ["light", "dark", "high-contrast"];
-// Custom themes: your own visual identities. CAI ships none: the page lists
-// the names of the ones it has, <html data-cai-themes="brand other">, so the
+// Custom themes: your own visual identities. LUZ ships none: the page lists
+// the names of the ones it has, <html data-luz-themes="brand other">, so the
 // stored choice is accepted and the mode switcher remembers it.
 const THEME_NAME = /^[a-z][a-z0-9-]{0,31}$/;
 
 export function getCustomThemes() {
-  const list = document.documentElement.dataset.caiThemes || "";
+  const list = document.documentElement.dataset.luzThemes || "";
   return list.split(/\s+/).filter((name) => THEME_NAME.test(name) && !MODES.includes(name));
 }
 
 const allThemes = () => [...MODES, ...getCustomThemes()];
-const STORAGE_KEY = "cai-theme";
-const STORAGE_KEY_MODE = "cai-mode";
-const STORAGE_KEY_LAST_MODE = "cai-last-mode";
+const STORAGE_KEY = "luz-theme";
+const STORAGE_KEY_MODE = "luz-mode";
+const STORAGE_KEY_LAST_MODE = "luz-last-mode";
 
 // localStorage throws in sandboxed iframes and storage-blocked contexts;
 // theming must keep working there, just without persistence.
@@ -76,14 +76,14 @@ function syncButtons(theme) {
   const currentMode = document.documentElement.dataset.mode;
 
   // Mode radios (footer) — checked only when a base color mode is selected
-  document.querySelectorAll('input[name="cai-theme"]').forEach((radio) => {
+  document.querySelectorAll('input[name="luz-theme"]').forEach((radio) => {
     radio.checked = !isCustom && radio.value === theme;
-    const label = radio.closest(".cai-mode-btn");
+    const label = radio.closest(".luz-mode-btn");
     label?.classList.toggle("is-dimmed", isCustom);
   });
 
   // Custom theme apply buttons
-  document.querySelectorAll(".cai-theme-apply-btn").forEach((btn) => {
+  document.querySelectorAll(".luz-theme-apply-btn").forEach((btn) => {
     const active = btn.dataset.theme === theme;
     btn.classList.toggle("is-active", active);
     btn.textContent = t(active ? "themeApplied" : "applyTheme", btn);
@@ -91,7 +91,7 @@ function syncButtons(theme) {
   });
 
   // Mode buttons scoped to a custom theme (nearest [data-theme] ancestor)
-  document.querySelectorAll(".cai-theme-mode-btn").forEach((btn) => {
+  document.querySelectorAll(".luz-theme-mode-btn").forEach((btn) => {
     const cardTheme = btn.closest("[data-theme]")?.dataset.theme;
     const isCardActive = theme === cardTheme;
     const modeActive = isCardActive && currentMode === btn.dataset.mode;
@@ -141,22 +141,22 @@ export function applyMode(mode, parentTheme, { persist = true } = {}) {
   syncButtons(parentTheme);
 }
 
-/* --- Cycle button: one button for a .cai-mode-switcher--cycle group ---
+/* --- Cycle button: one button for a .luz-mode-switcher--cycle group ---
    The radios stay the source of truth and the no-JS control. The button
    checks the next enabled radio and fires its change event, so whatever
    listens to the radios (initThemeSystem or a page's own script) applies it. */
 
 function labelOf(radio) {
-  return radio?.closest(".cai-mode-btn")?.textContent.trim() ?? "";
+  return radio?.closest(".luz-mode-btn")?.textContent.trim() ?? "";
 }
 
 function renderCycle(group) {
-  const button = group.querySelector(":scope > .cai-mode-cycle");
+  const button = group.querySelector(":scope > .luz-mode-cycle");
   if (!button) return;
   const current = group.querySelector("input:checked");
   // A button that ships its own icons ([data-mode-icon]) shows the right one by CSS
   if (!button.querySelector("[data-mode-icon]")) {
-    const icon = current?.closest(".cai-mode-btn")?.querySelector(".cai-mode-btn__icon");
+    const icon = current?.closest(".luz-mode-btn")?.querySelector(".luz-mode-btn__icon");
     button.replaceChildren(...(icon ? [icon.cloneNode(true)] : []));
   }
   const name = t("changeMode", button, { mode: labelOf(current) || "—" });
@@ -171,7 +171,7 @@ function cycle(group) {
   next.checked = true;
   next.dispatchEvent(new Event("change", { bubbles: true }));
   renderCycle(group);
-  group.querySelector(":scope > .cai-mode-cycle__status").textContent = t(
+  group.querySelector(":scope > .luz-mode-cycle__status").textContent = t(
     "modeChanged",
     group,
     { mode: labelOf(next) },
@@ -181,27 +181,27 @@ function cycle(group) {
 const wiredGroups = new WeakSet();
 
 /**
- * Turn each fieldset.cai-mode-switcher--cycle into one button that steps
+ * Turn each fieldset.luz-mode-switcher--cycle into one button that steps
  * through its modes, showing the icon of the current one. Uses the
- * .cai-mode-cycle button already in the markup, or adds one. Idempotent.
+ * .luz-mode-cycle button already in the markup, or adds one. Idempotent.
  */
 export function initThemeCycle(root = document) {
   enableJs();
-  const fresh = [...root.querySelectorAll(".cai-mode-switcher--cycle")].filter(
+  const fresh = [...root.querySelectorAll(".luz-mode-switcher--cycle")].filter(
     (group) => !wiredGroups.has(group),
   );
   fresh.forEach((group) => {
     wiredGroups.add(group);
-    let button = group.querySelector(":scope > .cai-mode-cycle");
+    let button = group.querySelector(":scope > .luz-mode-cycle");
     if (!button) {
       button = document.createElement("button");
       button.type = "button";
-      button.className = "cai-mode-cycle";
+      button.className = "luz-mode-cycle";
       group.querySelector("legend")?.after(button) ?? group.prepend(button);
     }
-    if (!group.querySelector(":scope > .cai-mode-cycle__status")) {
+    if (!group.querySelector(":scope > .luz-mode-cycle__status")) {
       const status = document.createElement("span");
-      status.className = "cai-mode-cycle__status";
+      status.className = "luz-mode-cycle__status";
       status.setAttribute("role", "status");
       button.after(status);
     }
@@ -229,13 +229,13 @@ export function initThemeSystem() {
 
   // --- Color mode switcher (footer): native radios ---
   document.addEventListener("change", (e) => {
-    const radio = e.target.closest?.('input[name="cai-theme"]');
+    const radio = e.target.closest?.('input[name="luz-theme"]');
     if (radio?.checked && allThemes().includes(radio.value)) applyTheme(radio.value);
   });
 
   document.body.addEventListener("click", (e) => {
     // --- Mode buttons scoped to a custom theme ---
-    const cardModeBtn = e.target.closest(".cai-theme-mode-btn");
+    const cardModeBtn = e.target.closest(".luz-theme-mode-btn");
     if (MODES.includes(cardModeBtn?.dataset.mode)) {
       const parentTheme = cardModeBtn.closest("[data-theme]")?.dataset.theme;
       if (getCustomThemes().includes(parentTheme)) {
@@ -245,7 +245,7 @@ export function initThemeSystem() {
     }
 
     // --- Custom theme apply button ---
-    const themeApplyBtn = e.target.closest(".cai-theme-apply-btn");
+    const themeApplyBtn = e.target.closest(".luz-theme-apply-btn");
     if (themeApplyBtn?.dataset.theme) {
       const current = document.documentElement.dataset.theme;
       // Toggle: clicking again removes the custom theme → restore last mode

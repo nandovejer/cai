@@ -1,8 +1,8 @@
 /* --------------------------------------------------------------------------
-   CAI Component: modal
+   LUZ Component: modal
    Modal & dialog (native <dialog> based)
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
@@ -11,85 +11,85 @@
    restoration. It centers the dialog with `margin: auto`, which the reset
    removes and the `dialog` rule of elements/interactive.css gives back, so
    the modal needs base.css (as the header says). CSS only draws the surface. */
-.cai-modal {
-  background: var(--cai-surface);
-  color: var(--cai-text-primary);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  box-shadow: var(--cai-shadow-lg);
-  padding: var(--cai-space-xl);
+.luz-modal {
+  background: var(--luz-surface);
+  color: var(--luz-text-primary);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  box-shadow: var(--luz-shadow-lg);
+  padding: var(--luz-space-xl);
   max-inline-size: min(90vw, 600px);
   max-block-size: 90vh;
   max-block-size: 90dvh;
   overflow-y: auto;
 }
 
-.cai-modal[open] {
-  animation: cai-fade-in var(--cai-duration-fast) ease-out;
+.luz-modal[open] {
+  animation: luz-fade-in var(--luz-duration-fast) ease-out;
 }
 
-.cai-modal::backdrop {
-  background: var(--cai-scrim);
+.luz-modal::backdrop {
+  background: var(--luz-scrim);
   /* stylelint-disable-next-line property-no-vendor-prefix -- Safari before 18 */
   -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
-  animation: cai-fade-in var(--cai-duration-fast) ease-out;
+  animation: luz-fade-in var(--luz-duration-fast) ease-out;
 }
 
 /* Modal content structure */
-.cai-modal__header {
-  margin-bottom: var(--cai-space-lg);
-  padding-bottom: var(--cai-space-sm);
-  border-bottom: 1px solid var(--cai-divider);
+.luz-modal__header {
+  margin-bottom: var(--luz-space-lg);
+  padding-bottom: var(--luz-space-sm);
+  border-bottom: 1px solid var(--luz-divider);
 }
 
-.cai-modal__title {
+.luz-modal__title {
   margin: 0;
-  font-size: var(--cai-text-lg);
+  font-size: var(--luz-text-lg);
   font-weight: 600;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
 }
 
-.cai-modal__close {
+.luz-modal__close {
   float: inline-end;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   /* 24×24 minimum target (WCAG 2.5.8) */
-  min-width: var(--cai-control-sm);
-  min-height: var(--cai-control-sm);
+  min-width: var(--luz-control-sm);
+  min-height: var(--luz-control-sm);
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--cai-space-2xs);
-  color: var(--cai-text-secondary);
-  transition: color var(--cai-duration-fast);
+  padding: var(--luz-space-2xs);
+  color: var(--luz-text-secondary);
+  transition: color var(--luz-duration-fast);
 }
 
-.cai-modal__close:hover {
-  color: var(--cai-text-primary);
+.luz-modal__close:hover {
+  color: var(--luz-text-primary);
 }
 
-.cai-modal__close:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-modal__close:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-.cai-modal__body {
-  margin-bottom: var(--cai-space-lg);
-  color: var(--cai-text-primary);
+.luz-modal__body {
+  margin-bottom: var(--luz-space-lg);
+  color: var(--luz-text-primary);
   line-height: 1.6;
 }
 
-.cai-modal__footer {
+.luz-modal__footer {
   display: flex;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   justify-content: flex-end;
-  padding-top: var(--cai-space-sm);
-  border-top: 1px solid var(--cai-divider);
+  padding-top: var(--luz-space-sm);
+  border-top: 1px solid var(--luz-divider);
 }
 
-@keyframes cai-fade-in {
+@keyframes luz-fade-in {
   from {
     opacity: 0;
   }

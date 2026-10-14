@@ -12,9 +12,9 @@ dist is missing.
 pnpm build  # Runs tokens:build + core:build + site:build + landing:build + cms:build
 ```
 
-## @cai-ds/tokens
+## @luz-ds/tokens
 
-`dist/cai-tokens.css` is composed from three tracked sources:
+`dist/luz-tokens.css` is composed from three tracked sources:
 
 | Part | Source | Edit here |
 | --- | --- | --- |
@@ -31,7 +31,7 @@ pnpm tokens:build
   (`:root, [data-theme="light"]`, `[data-theme="dark"]`,
   `[data-theme="high-contrast"]`), rebuild.
 
-## @cai-ds/core
+## @luz-ds/core
 
 After editing any file in `packages/core/src/`:
 
@@ -41,19 +41,19 @@ pnpm core:build
 
 This:
 
-1. Inlines the `@import` graph of `src/index.css` → `dist/cai.css` (+ `.min`).
+1. Inlines the `@import` graph of `src/index.css` → `dist/luz.css` (+ `.min`).
    The import list in `src/index.css` (and `src/components/index.css`) is the
    **single source of truth** for cascade order.
 2. Emits every `src/components/*.css` as `dist/components/<name>.css`
    (+ `.min`) for standalone consumption.
-3. Bundles `src/cai.js` with Rollup → `dist/cai.js` (`midi.js` stays a
+3. Bundles `src/luz.js` with Rollup → `dist/luz.js` (`midi.js` stays a
    separate lazy chunk).
 4. Copies the individual ESM modules (`theme.js`, `sidebar.js`,
    `clipboard.js`, `modal.js`, `highlight.js`, `player.js`, `utils.js`)
    verbatim to `dist/` — the source IS the artifact (vanilla-first).
 5. Copies + minifies `src/themes/*.css` → `dist/themes/`.
 
-## @cai-ds/site
+## @luz-ds/site
 
 After editing `packages/site/src/`:
 
@@ -66,7 +66,7 @@ This inlines the `@import` graph of `src/index.css` →
 each into a `.min.js`, and copies `src/placeholders/`. It runs the shared
 builder, `scripts/build-package.js`.
 
-## @cai-ds/landing
+## @luz-ds/landing
 
 After editing `packages/landing/src/`:
 
@@ -75,11 +75,11 @@ pnpm landing:build
 ```
 
 This inlines the `@import` graph of `src/index.css` → `dist/landing.css`
-(+ `.min`), in the `cai.landing` layer, through the same shared builder.
+(+ `.min`), in the `luz.landing` layer, through the same shared builder.
 No JavaScript. Landing has its own version (0.x): after adding or removing a
 published file, run `node scripts/check-pack.js --update`.
 
-## @cai-ds/cms
+## @luz-ds/cms
 
 After editing `packages/cms/src/`:
 
@@ -88,7 +88,7 @@ pnpm cms:build
 ```
 
 This inlines the `@import` graph of `src/index.css` → `dist/cms.css`
-(+ `.min`), in the `cai.cms` layer, through the same shared builder.
+(+ `.min`), in the `luz.cms` layer, through the same shared builder.
 No JavaScript (the table of contents uses core's scroll spy). CMS has its own
 version (0.x): after adding or removing a published file, run
 `node scripts/check-pack.js --update`.

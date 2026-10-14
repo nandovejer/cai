@@ -1,55 +1,55 @@
 /* --------------------------------------------------------------------------
-   CAI Component: tag
+   LUZ Component: tag
    Tag / badge with color modifiers
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-tag {
+.luz-tag {
   display: inline-flex;
   align-items: center;
   min-height: 24px;
-  padding: 0 var(--cai-space-xs);
-  font-size: var(--cai-text-xs);
+  padding: 0 var(--luz-space-xs);
+  font-size: var(--luz-text-xs);
   font-weight: 400;
-  border-radius: var(--cai-radius-sm);
-  gap: var(--cai-space-2xs);
+  border-radius: var(--luz-radius-sm);
+  gap: var(--luz-space-2xs);
   white-space: nowrap;
 }
 
-.cai-tag--gray {
-  background: var(--cai-surface-strong);
-  color: var(--cai-text-secondary);
+.luz-tag--gray {
+  background: var(--luz-surface-strong);
+  color: var(--luz-text-secondary);
 }
 /* Info, not brand: the brand blue on its tint falls to 4.3:1 on a hovered
    row in dark mode, and a tag is not interactive */
-.cai-tag--blue {
-  background: var(--cai-color-info-bg);
-  color: var(--cai-color-info);
+.luz-tag--blue {
+  background: var(--luz-color-info-bg);
+  color: var(--luz-color-info);
 }
-.cai-tag--green {
-  background: var(--cai-color-success-bg);
-  color: var(--cai-color-success);
+.luz-tag--green {
+  background: var(--luz-color-success-bg);
+  color: var(--luz-color-success);
 }
-.cai-tag--red {
-  background: var(--cai-color-danger-bg);
-  color: var(--cai-color-danger);
+.luz-tag--red {
+  background: var(--luz-color-danger-bg);
+  color: var(--luz-color-danger);
 }
-.cai-tag--yellow {
-  background: var(--cai-color-warning-bg);
-  color: var(--cai-color-warning);
+.luz-tag--yellow {
+  background: var(--luz-color-warning-bg);
+  color: var(--luz-color-warning);
 }
-.cai-tag--teal {
-  background: var(--cai-color-teal-bg);
-  color: var(--cai-color-teal);
+.luz-tag--teal {
+  background: var(--luz-color-teal-bg);
+  color: var(--luz-color-teal);
 }
-.cai-tag--purple {
-  background: var(--cai-color-purple-bg);
-  color: var(--cai-color-purple);
+.luz-tag--purple {
+  background: var(--luz-color-purple-bg);
+  color: var(--luz-color-purple);
 }
 
-.cai-tag--dot::before {
+.luz-tag--dot::before {
   content: "";
   display: inline-block;
   width: 6px;
@@ -58,28 +58,28 @@
   background: currentcolor;
 }
 
-.cai-badge {
+.luz-badge {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-width: 20px;
   min-height: 20px;
-  padding: 0 var(--cai-space-2xs);
-  font-size: var(--cai-text-xs);
+  padding: 0 var(--luz-space-2xs);
+  font-size: var(--luz-text-xs);
   font-weight: 500;
-  border-radius: var(--cai-radius-full); /* a pill: a count, round by nature */
-  font-family: var(--cai-font-mono);
+  border-radius: var(--luz-radius-full); /* a pill: a count, round by nature */
+  font-family: var(--luz-font-mono);
 }
 
-.cai-badge--primary {
-  background: var(--cai-brand-fill);
-  color: var(--cai-text-on-fill);
+.luz-badge--primary {
+  background: var(--luz-brand-fill);
+  color: var(--luz-text-on-fill);
 }
-.cai-badge--gray {
-  background: var(--cai-outline);
-  color: var(--cai-text-on-fill);
+.luz-badge--gray {
+  background: var(--luz-outline);
+  color: var(--luz-text-on-fill);
 }
-.cai-badge--danger {
-  background: var(--cai-color-danger-fill);
-  color: var(--cai-text-on-fill);
+.luz-badge--danger {
+  background: var(--luz-color-danger-fill);
+  color: var(--luz-text-on-fill);
 }

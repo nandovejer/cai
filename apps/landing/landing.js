@@ -1,16 +1,16 @@
 /**
- * CAI landing — page glue.
+ * LUZ landing — page glue.
  * Everything here is an enhancement: the color mode switcher is a native
  * radio group that works without JavaScript (:root:has() in the tokens).
  *
- * cai.js is deliberately not loaded: its auto-init applies the stored or
+ * luz.js is deliberately not loaded: its auto-init applies the stored or
  * default custom theme to <html>, and this page shows the base color modes
  * (light, dark or high contrast), stored under the site's own key.
  */
 
 import { initCopyButtons } from "/packages/core/dist/clipboard.js";
 import { highlightBlock } from "/packages/core/dist/highlight.js";
-// Defines <cai-site-search>: the search wires itself when it connects
+// Defines <luz-site-search>: the search wires itself when it connects
 import "/packages/site/dist/search.js";
 import { initSiteHeader } from "./site-header.js";
 
@@ -33,4 +33,4 @@ initSiteHeader();
 initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each
 // block, and core ships no position for it.
-document.querySelectorAll("pre.cai-code-block").forEach(highlightBlock);
+document.querySelectorAll("pre.luz-code-block").forEach(highlightBlock);

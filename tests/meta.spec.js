@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Core's .cai-meta (components/meta.css): a line of facts with a dot drawn by
+ * Core's .luz-meta (components/meta.css): a line of facts with a dot drawn by
  * CSS between them. The page is tests/fixtures/prose.html (a byline above
  * the post, and a meta line in each card of a list), served at /__meta__.
  * Checks that the dots are drawn between the facts and are not in the

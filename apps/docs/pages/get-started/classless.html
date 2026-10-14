@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Classless styles
 description: The look of a button, a text field, a select and a table, and the space between paragraphs, headings and lists, on the bare element, inside one element you mark, for markup you cannot add classes to.
 area: get-started
@@ -8,8 +8,8 @@ keywords: markdown, rich text
 -->
     <section class="docs-block" id="what" aria-labelledby="what-title">
       <h2 class="docs-chapter__title" id="what-title">What it is</h2>
-      <p class="docs-lead">One extra file, <code>classless.css</code>, that gives a bare <code>button</code>, <code>input</code>, <code>textarea</code>, <code>select</code> and <code>table</code> the look of the CAI component, and the blocks of long text the space between them, inside an element that has <code>data-cai-classless</code>. It is for markup you do not control: a Markdown file, a CMS, a form from a library.</p>
-      <p>It is not in <code>cai.css</code>, and it does nothing until you load it and mark a zone. A page that does not load it is exactly what it was.</p>
+      <p class="docs-lead">One extra file, <code>classless.css</code>, that gives a bare <code>button</code>, <code>input</code>, <code>textarea</code>, <code>select</code> and <code>table</code> the look of the LUZ component, and the blocks of long text the space between them, inside an element that has <code>data-luz-classless</code>. It is for markup you do not control: a Markdown file, a CMS, a form from a library.</p>
+      <p>It is not in <code>luz.css</code>, and it does nothing until you load it and mark a zone. A page that does not load it is exactly what it was.</p>
     </section>
 
     <section class="docs-block" id="load" aria-labelledby="load-title">
@@ -18,36 +18,36 @@ keywords: markdown, rich text
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">HTML</span>
-          <button class="cai-copy-btn" type="button" data-copy-from="code-classless-cdn" aria-label="Copy the CDN tags">Copy</button>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-classless-cdn" aria-label="Copy the CDN tags">Copy</button>
         </div>
-        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Loading classless.css from a CDN"><code id="code-classless-cdn">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css"&gt;
-&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css"&gt;
-&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/classless.min.css"&gt;</code></pre>
+        <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Loading classless.css from a CDN"><code id="code-classless-cdn">&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css"&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css"&gt;
+&lt;link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/classless.min.css"&gt;</code></pre>
       </div>
       <p>With a bundler, import the packages' CSS entry points. A <code>href</code> cannot name a package: these paths are for <code>import</code> only.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">JS</span>
-          <button class="cai-copy-btn" type="button" data-copy-from="code-classless-import" aria-label="Copy the imports">Copy</button>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-classless-import" aria-label="Copy the imports">Copy</button>
         </div>
-        <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Importing classless.css"><code id="code-classless-import">import "@cai-ds/tokens/css";
-import "@cai-ds/core/css";
-import "@cai-ds/core/classless.css";</code></pre>
+        <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="Importing classless.css"><code id="code-classless-import">import "@luz-ds/tokens/css";
+import "@luz-ds/core/css";
+import "@luz-ds/core/classless.css";</code></pre>
       </div>
       <p>Then mark the zone:</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">HTML</span>
-          <button class="cai-copy-btn" type="button" data-copy-from="code-classless-zone" aria-label="Copy the zone markup">Copy</button>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-classless-zone" aria-label="Copy the zone markup">Copy</button>
         </div>
-        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Marking the zone"><code id="code-classless-zone">&lt;!-- the whole page --&gt;
-&lt;body data-cai-classless&gt;
+        <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Marking the zone"><code id="code-classless-zone">&lt;!-- the whole page --&gt;
+&lt;body data-luz-classless&gt;
 
 &lt;!-- or only the rendered content --&gt;
-&lt;article data-cai-classless&gt;…&lt;/article&gt;</code></pre>
+&lt;article data-luz-classless&gt;…&lt;/article&gt;</code></pre>
       </div>
       <ul>
-        <li>It declares the layer order itself, as every file does, and writes in <code>cai.elements</code>. A <code>.cai-*</code> class is in <code>cai.components</code> and wins by order.</li>
+        <li>It declares the layer order itself, as every file does, and writes in <code>luz.elements</code>. A <code>.luz-*</code> class is in <code>luz.components</code> and wins by order.</li>
         <li>Put the attribute on <code>&lt;body&gt;</code> or an element inside it. The elements it styles are its <em>descendants</em>.</li>
         <li>Size: about 1.7 kB min+gzip, with a budget of its own (3 kB).</li>
       </ul>
@@ -55,18 +55,18 @@ import "@cai-ds/core/classless.css";</code></pre>
 
     <section class="docs-block" id="what-changes" aria-labelledby="what-changes-title">
       <h2 class="docs-chapter__title" id="what-changes-title">What each element becomes</h2>
-      <div class="cai-table-wrap" role="region" aria-label="Elements classless styles" tabindex="0">
-        <table class="cai-table">
+      <div class="luz-table-wrap" role="region" aria-label="Elements classless styles" tabindex="0">
+        <table class="luz-table">
           <caption>Bare element, and the component it copies</caption>
           <thead>
             <tr><th scope="col">Element</th><th scope="col">Looks like</th><th scope="col">Left out</th></tr>
           </thead>
           <tbody>
-            <tr><td data-label="Element"><div><code>button</code>, <code>input</code> of type <code>button</code>, <code>reset</code></div></td><td data-label="Looks like"><div><code>.cai-btn .cai-btn--secondary</code></div></td><td data-label="Left out"><div>Sizes and the other variants: add the class</div></td></tr>
-            <tr><td data-label="Element"><div><code>button type="submit"</code>, <code>input type="submit"</code></div></td><td data-label="Looks like"><div><code>.cai-btn .cai-btn--primary</code></div></td><td data-label="Left out"><div>A button with no <code>type</code> is a submit button to the browser, but not here: say <code>type="submit"</code></div></td></tr>
-            <tr><td data-label="Element"><div><code>input</code> of type text, email, password, search, tel, url, number, date, time, datetime-local, month, week; <code>textarea</code></div></td><td data-label="Looks like"><div><code>.cai-input</code>, <code>.cai-input--textarea</code></div></td><td data-label="Left out"><div>The label, helper and error of <code>.cai-field</code></div></td></tr>
-            <tr><td data-label="Element"><div><code>select</code></div></td><td data-label="Looks like"><div>The closed box of <code>.cai-select</code></div></td><td data-label="Left out"><div>The styled open list, where the browser has <code>appearance: base-select</code>: that is <code>.cai-select</code></div></td></tr>
-            <tr><td data-label="Element"><div><code>table</code>, with its caption, <code>th</code> and <code>td</code></div></td><td data-label="Looks like"><div><code>.cai-table</code></div></td><td data-label="Left out"><div>Scrolling and stacking: they need a wrapper and <code>data-label</code></div></td></tr>
+            <tr><td data-label="Element"><div><code>button</code>, <code>input</code> of type <code>button</code>, <code>reset</code></div></td><td data-label="Looks like"><div><code>.luz-btn .luz-btn--secondary</code></div></td><td data-label="Left out"><div>Sizes and the other variants: add the class</div></td></tr>
+            <tr><td data-label="Element"><div><code>button type="submit"</code>, <code>input type="submit"</code></div></td><td data-label="Looks like"><div><code>.luz-btn .luz-btn--primary</code></div></td><td data-label="Left out"><div>A button with no <code>type</code> is a submit button to the browser, but not here: say <code>type="submit"</code></div></td></tr>
+            <tr><td data-label="Element"><div><code>input</code> of type text, email, password, search, tel, url, number, date, time, datetime-local, month, week; <code>textarea</code></div></td><td data-label="Looks like"><div><code>.luz-input</code>, <code>.luz-input--textarea</code></div></td><td data-label="Left out"><div>The label, helper and error of <code>.luz-field</code></div></td></tr>
+            <tr><td data-label="Element"><div><code>select</code></div></td><td data-label="Looks like"><div>The closed box of <code>.luz-select</code></div></td><td data-label="Left out"><div>The styled open list, where the browser has <code>appearance: base-select</code>: that is <code>.luz-select</code></div></td></tr>
+            <tr><td data-label="Element"><div><code>table</code>, with its caption, <code>th</code> and <code>td</code></div></td><td data-label="Looks like"><div><code>.luz-table</code></div></td><td data-label="Left out"><div>Scrolling and stacking: they need a wrapper and <code>data-label</code></div></td></tr>
           </tbody>
         </table>
       </div>
@@ -75,13 +75,13 @@ import "@cai-ds/core/classless.css";</code></pre>
 
     <section class="docs-block" id="flow" aria-labelledby="flow-title">
       <h2 class="docs-chapter__title" id="flow-title">Space between blocks</h2>
-      <p>CAI's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, <code>details</code>, <code>fieldset</code>, <code>form</code> or address starts one step (<code>--cai-space-md</code>) below the block before it. A heading starts further down (<code>--cai-space-xl</code>), and the block that follows it sits closer (<code>--cai-space-sm</code>), so each heading belongs to what it introduces.</p>
+      <p>LUZ's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, <code>details</code>, <code>fieldset</code>, <code>form</code> or address starts one step (<code>--luz-space-md</code>) below the block before it. A heading starts further down (<code>--luz-space-xl</code>), and the block that follows it sits closer (<code>--luz-space-sm</code>), so each heading belongs to what it introduces.</p>
       <ul>
         <li>The first child of its parent has no margin above it, so the zone does not push itself away from its container.</li>
         <li><code>div</code>, <code>span</code> and inline elements are left alone: their layout is yours. For a column of blocks you build yourself, use <a href="/docs/components/layout/"><code>.o-stack</code></a>.</li>
         <li>A button that follows a field gets the same step, so it does not touch it. Buttons side by side stay together.</li>
-        <li>It is a margin at specificity zero: any class of yours wins, and a CAI component that sets its own margin keeps it.</li>
-        <li>For an article, core's <a href="/docs/components/prose/"><code>.cai-prose</code></a> takes the same three steps between the blocks of one wrapper and adds the line length and the indent of lists. The two work together: put both on the element that holds the text, and classless mode adds the look of its tables and controls.</li>
+        <li>It is a margin at specificity zero: any class of yours wins, and a LUZ component that sets its own margin keeps it.</li>
+        <li>For an article, core's <a href="/docs/components/prose/"><code>.luz-prose</code></a> takes the same three steps between the blocks of one wrapper and adds the line length and the indent of lists. The two work together: put both on the element that holds the text, and classless mode adds the look of its tables and controls.</li>
       </ul>
     </section>
 
@@ -89,7 +89,7 @@ import "@cai-ds/core/classless.css";</code></pre>
       <h2 class="docs-chapter__title" id="rules-title">How it stays out of the way</h2>
       <ul>
         <li><strong>Specificity zero.</strong> Every selector is inside <code>:where()</code>, so any class of yours, in any layer, wins.</li>
-        <li><strong>A CAI class is left alone.</strong> An element whose class contains <code>cai-</code> belongs to its component: a <code>.cai-copy-btn</code> inside the zone keeps its own look.</li>
+        <li><strong>A LUZ class is left alone.</strong> An element whose class contains <code>luz-</code> belongs to its component: a <code>.luz-copy-btn</code> inside the zone keeps its own look.</li>
         <li><strong>A copy, kept honest.</strong> The declarations of the button, field, select and table are those of the components. A test compares each bare element with its component, property by property, and fails when one drifts. The space between blocks is not a copy: no component has it.</li>
         <li><strong>Everything else about it is the same:</strong> the three color modes, focus ring, right-to-left text and forced colors work as in the component.</li>
       </ul>

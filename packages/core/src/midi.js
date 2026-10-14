@@ -1,5 +1,5 @@
 /**
- * CAI Design System — midi.js
+ * LUZ Design System — midi.js
  * MIDI parser + Web Audio API sequencer. Zero dependencies.
  *
  * Architecture:

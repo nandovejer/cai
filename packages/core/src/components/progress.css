@@ -1,66 +1,66 @@
 /* --------------------------------------------------------------------------
-   CAI Component: progress
-   Progress bar — native <progress class="cai-progress" value max>.
+   LUZ Component: progress
+   Progress bar — native <progress class="luz-progress" value max>.
    The browser exposes the role, the value and the "indeterminate" state
    (no value attribute); CSS only draws it. Name it with aria-label or a
    <label>, and put the figure in the label ("Upload, 25%").
    Contrast (WCAG 1.4.11, 3:1 in every mode): the fill is the brand colour on
    a surface-muted track, and the track's edge is the field border colour, so
    the whole length of the bar is visible on any surface.
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-progress {
+.luz-progress {
   appearance: none;
   display: block;
   inline-size: 100%;
   block-size: 8px;
-  border: 1px solid var(--cai-input-border);
-  border-radius: var(--cai-radius-sm);
-  background: var(--cai-surface-muted);
+  border: 1px solid var(--luz-input-border);
+  border-radius: var(--luz-radius-sm);
+  background: var(--luz-surface-muted);
   overflow: hidden;
-  accent-color: var(--cai-brand-primary);
+  accent-color: var(--luz-brand-primary);
 }
 
-.cai-progress::-webkit-progress-bar {
-  background: var(--cai-surface-muted);
-  border-radius: var(--cai-radius-sm);
+.luz-progress::-webkit-progress-bar {
+  background: var(--luz-surface-muted);
+  border-radius: var(--luz-radius-sm);
 }
 
-.cai-progress::-webkit-progress-value {
-  background: var(--cai-brand-primary);
-  border-radius: var(--cai-radius-sm);
-  transition: inline-size var(--cai-duration-slow) var(--cai-easing-enter);
+.luz-progress::-webkit-progress-value {
+  background: var(--luz-brand-primary);
+  border-radius: var(--luz-radius-sm);
+  transition: inline-size var(--luz-duration-slow) var(--luz-easing-enter);
 }
 
-.cai-progress::-moz-progress-bar {
-  background: var(--cai-brand-primary);
-  border-radius: var(--cai-radius-sm);
+.luz-progress::-moz-progress-bar {
+  background: var(--luz-brand-primary);
+  border-radius: var(--luz-radius-sm);
 }
 
 /* No value: the stripes of the bare element, which the shorthand above resets.
    One rule per engine: a pseudo-element the browser does not know drops a
    whole selector list. */
-.cai-progress:indeterminate {
+.luz-progress:indeterminate {
   background-image: repeating-linear-gradient(
     45deg,
-    var(--cai-brand-primary) 0 8px,
+    var(--luz-brand-primary) 0 8px,
     transparent 8px 16px
   );
 }
 
-.cai-progress:indeterminate::-webkit-progress-bar {
+.luz-progress:indeterminate::-webkit-progress-bar {
   background-image: repeating-linear-gradient(
     45deg,
-    var(--cai-brand-primary) 0 8px,
+    var(--luz-brand-primary) 0 8px,
     transparent 8px 16px
   );
 }
 
 /* Gecko draws the bar across the whole track when there is no value */
-.cai-progress:indeterminate::-moz-progress-bar {
+.luz-progress:indeterminate::-moz-progress-bar {
   background: transparent;
 }
 
@@ -68,31 +68,31 @@
    One rule per engine: a selector list with a pseudo-element the browser
    does not know is dropped whole. */
 @media (forced-colors: active) {
-  .cai-progress {
+  .luz-progress {
     border-color: CanvasText;
     background: Canvas;
     forced-color-adjust: none;
   }
 
-  .cai-progress::-webkit-progress-bar {
+  .luz-progress::-webkit-progress-bar {
     border-color: CanvasText;
     background: Canvas;
     forced-color-adjust: none;
   }
 
-  .cai-progress::-webkit-progress-value {
+  .luz-progress::-webkit-progress-value {
     background: Highlight;
   }
 
-  .cai-progress::-moz-progress-bar {
+  .luz-progress::-moz-progress-bar {
     background: Highlight;
   }
 
-  .cai-progress:indeterminate {
+  .luz-progress:indeterminate {
     background-image: repeating-linear-gradient(45deg, Highlight 0 8px, Canvas 8px 16px);
   }
 
-  .cai-progress:indeterminate::-webkit-progress-bar {
+  .luz-progress:indeterminate::-webkit-progress-bar {
     background-image: repeating-linear-gradient(45deg, Highlight 0 8px, Canvas 8px 16px);
   }
 }

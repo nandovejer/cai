@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CAI classless fixture</title>
-  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
-  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <title>LUZ classless fixture</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
   <link rel="stylesheet" href="/packages/core/dist/classless.css">
   <style>
     body { padding: 80px; }
@@ -21,14 +21,14 @@
   </section>
 
   <!-- The scope: bare elements and, next to each, the component that is its reference -->
-  <article id="scope" data-cai-classless>
+  <article id="scope" data-luz-classless>
     <button id="button" type="button">Save</button>
     <button id="submit" type="submit">Send</button>
     <button id="button-disabled" type="button" disabled>Off</button>
     <input id="input-button" type="reset" value="Reset">
-    <button id="ref-button" class="cai-btn cai-btn--secondary" type="button">Save</button>
-    <button id="ref-submit" class="cai-btn cai-btn--primary" type="submit">Send</button>
-    <button id="ref-button-disabled" class="cai-btn cai-btn--secondary" type="button" disabled>Off</button>
+    <button id="ref-button" class="luz-btn luz-btn--secondary" type="button">Save</button>
+    <button id="ref-submit" class="luz-btn luz-btn--primary" type="submit">Send</button>
+    <button id="ref-button-disabled" class="luz-btn luz-btn--secondary" type="button" disabled>Off</button>
 
     <input id="input" type="text" aria-label="Name">
     <input id="input-email" type="email" aria-label="Email">
@@ -36,27 +36,27 @@
     <input id="input-readonly" type="text" aria-label="Read only" readonly value="x">
     <input id="input-disabled" type="text" aria-label="Disabled" disabled>
     <textarea id="textarea" aria-label="Notes"></textarea>
-    <input id="ref-input" class="cai-input" type="text" aria-label="Name">
-    <input id="ref-input-date" class="cai-input" type="date" aria-label="Date">
-    <input id="ref-input-readonly" class="cai-input" type="text" aria-label="Read only" readonly value="x">
-    <input id="ref-input-disabled" class="cai-input" type="text" aria-label="Disabled" disabled>
-    <textarea id="ref-textarea" class="cai-input cai-input--textarea" aria-label="Notes"></textarea>
+    <input id="ref-input" class="luz-input" type="text" aria-label="Name">
+    <input id="ref-input-date" class="luz-input" type="date" aria-label="Date">
+    <input id="ref-input-readonly" class="luz-input" type="text" aria-label="Read only" readonly value="x">
+    <input id="ref-input-disabled" class="luz-input" type="text" aria-label="Disabled" disabled>
+    <textarea id="ref-textarea" class="luz-input luz-input--textarea" aria-label="Notes"></textarea>
 
     <select id="select" aria-label="Pick"><option>One</option><option>Two</option></select>
     <select id="select-multiple" aria-label="Pick many" multiple><option>One</option><option>Two</option></select>
-    <select id="ref-select" class="cai-select" aria-label="Pick"><option>One</option><option>Two</option></select>
-    <select id="ref-select-multiple" class="cai-select" aria-label="Pick many" multiple><option>One</option><option>Two</option></select>
+    <select id="ref-select" class="luz-select" aria-label="Pick"><option>One</option><option>Two</option></select>
+    <select id="ref-select-multiple" class="luz-select" aria-label="Pick many" multiple><option>One</option><option>Two</option></select>
 
     <table id="table"><caption>Releases</caption><thead><tr><th scope="col">Name</th><th scope="col">Version</th></tr></thead><tbody><tr><td>Core</td><td>2.1.0</td></tr><tr><td>Tokens</td><td>2.1.0</td></tr></tbody></table>
-    <table id="ref-table" class="cai-table"><caption>Releases</caption><thead><tr><th scope="col">Name</th><th scope="col">Version</th></tr></thead><tbody><tr><td>Core</td><td>2.1.0</td></tr><tr><td>Tokens</td><td>2.1.0</td></tr></tbody></table>
+    <table id="ref-table" class="luz-table"><caption>Releases</caption><thead><tr><th scope="col">Name</th><th scope="col">Version</th></tr></thead><tbody><tr><td>Core</td><td>2.1.0</td></tr><tr><td>Tokens</td><td>2.1.0</td></tr></tbody></table>
 
-    <!-- A CAI component's own button inside the scope: left to its component -->
-    <button id="copy" class="cai-copy-btn" type="button">Copy</button>
-    <div id="field" class="cai-field"><input id="field-input" class="cai-input" type="text" aria-label="In a field"></div>
+    <!-- A LUZ component's own button inside the scope: left to its component -->
+    <button id="copy" class="luz-copy-btn" type="button">Copy</button>
+    <div id="field" class="luz-field"><input id="field-input" class="luz-input" type="text" aria-label="In a field"></div>
   </article>
 
   <!-- Space between blocks, in and out of the scope -->
-  <article id="flow" data-cai-classless>
+  <article id="flow" data-luz-classless>
     <h2 id="flow-h">Title</h2>
     <p id="flow-p1">First paragraph.</p>
     <p id="flow-p2">Second paragraph.</p>

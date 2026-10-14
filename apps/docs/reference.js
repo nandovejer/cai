@@ -1,12 +1,12 @@
 /**
- * CAI documentation site — page glue, loaded by every page.
+ * LUZ documentation site — page glue, loaded by every page.
  * Wires the core behaviors the examples demonstrate, one module at a time,
  * the few HTML element demos that need a line of script (canvas,
  * template, custom element), "On this page", the Code / Design tab the
  * reader chose last (view.js), and the site search and the cookie consent
- * example (@cai-ds/site).
+ * example (@luz-ds/site).
  *
- * cai.js is deliberately not loaded: its auto-init applies the stored or
+ * luz.js is deliberately not loaded: its auto-init applies the stored or
  * default custom theme to <html>, and this page shows the base color modes
  * (light, dark or high contrast), stored under the site's own key.
  * Everything here is an enhancement: the page reads and works without it.
@@ -18,10 +18,10 @@ import { initTabs } from "/packages/core/dist/tabs.js";
 import { initModals } from "/packages/core/dist/modal.js";
 import { initPlayers } from "/packages/core/dist/player.js";
 import { initSidebar } from "/packages/core/dist/sidebar.js";
-// Defines <cai-site-search>: the search wires itself when it connects
+// Defines <luz-site-search>: the search wires itself when it connects
 import "/packages/site/dist/search.js";
-// Defines <cai-site-consent>, for the live example of the Cookie consent page
-// (its answer is stored under its own key, cai-consent-demo)
+// Defines <luz-site-consent>, for the live example of the Cookie consent page
+// (its answer is stored under its own key, luz-consent-demo)
 import "/packages/site/dist/consent.js";
 import { initSiteHeader } from "../landing/site-header.js";
 import { initDocsView } from "./view.js";
@@ -79,7 +79,7 @@ const ASSETS = {
 };
 
 function initAssets() {
-  const player = document.querySelector('.cai-player[data-type="midi"]');
+  const player = document.querySelector('.luz-player[data-type="midi"]');
   if (player) player.dataset.src = ASSETS.midi;
   document.querySelectorAll("[data-asset]").forEach((el) => {
     const href = ASSETS[el.dataset.asset];
@@ -128,9 +128,9 @@ function drawCanvas() {
   const style = getComputedStyle(document.documentElement);
   const token = (name) => style.getPropertyValue(name).trim();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = token("--cai-brand-primary");
+  ctx.fillStyle = token("--luz-brand-primary");
   ctx.fillRect(20, 20, 80, 80);
-  ctx.fillStyle = token("--cai-text-secondary");
+  ctx.fillStyle = token("--luz-text-secondary");
   ctx.beginPath();
   ctx.arc(170, 60, 40, 0, Math.PI * 2);
   ctx.fill();
@@ -173,7 +173,7 @@ initAssets();
 initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each
 // block, and core ships no position for it.
-document.querySelectorAll("pre.cai-code-block").forEach(highlightBlock);
+document.querySelectorAll("pre.luz-code-block").forEach(highlightBlock);
 // The remembered Code / Design tab first: initTabs() opens the tab it marks,
 // unless the URL fragment points into the other one
 initDocsView();
@@ -186,9 +186,9 @@ initTemplateDemo();
 initSlotDemo();
 // Only the contrast page has the tool: its script is a separate chunk
 if (document.querySelector("[data-contrast-tool]")) import("./contrast-check.js").then((m) => m.initContrastTool());
-// The Table page sorts its example in the browser, as cai.js would: the module
+// The Table page sorts its example in the browser, as luz.js would: the module
 // loads on demand, with the strings of core's dictionary
-if (document.querySelector("th[data-cai-sort]")) {
+if (document.querySelector("th[data-luz-sort]")) {
   Promise.all([import("/packages/core/dist/table-sort.js"), import("/packages/core/dist/i18n.js")]).then(([sort, i18n]) =>
     sort.initTableSort(document, i18n.t),
   );

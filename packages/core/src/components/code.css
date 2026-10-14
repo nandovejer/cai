@@ -1,31 +1,31 @@
 /* --------------------------------------------------------------------------
-   CAI Component: code
+   LUZ Component: code
    Code block / inline code + syntax highlight styles
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-/* --cai-surface-muted: the --cai-code-* colours are measured on it
+/* --luz-surface-muted: the --luz-code-* colours are measured on it
    (4.5:1 or more, 7:1 in high contrast; pnpm check:contrast) */
-.cai-code-block {
-  background: var(--cai-surface-muted);
-  color: var(--cai-text-primary);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-sm);
-  padding: var(--cai-space-sm) var(--cai-space-md);
+.luz-code-block {
+  background: var(--luz-surface-muted);
+  color: var(--luz-text-primary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-sm);
+  padding: var(--luz-space-sm) var(--luz-space-md);
   overflow-x: auto;
-  border-radius: var(--cai-radius-md);
+  border-radius: var(--luz-radius-md);
   line-height: 1.6;
-  border: 1px solid var(--cai-divider);
-  transition: background var(--cai-duration-base);
+  border: 1px solid var(--luz-divider);
+  transition: background var(--luz-duration-base);
   position: relative;
   /* pre reset: content is displayed exactly as written */
   white-space: pre;
   tab-size: 2;
 }
 
-.cai-code-block code {
+.luz-code-block code {
   font: inherit;
   color: inherit;
   background: none;
@@ -34,53 +34,53 @@
   white-space: inherit;
 }
 
-/* Syntax highlight: CAI's own scheme, one per color mode (--cai-code-*).
+/* Syntax highlight: LUZ's own scheme, one per color mode (--luz-code-*).
    Keywords are ink and bold; names, properties and values carry the colour;
    comments are muted and italic. Weight and style survive forced colors,
    where every colour becomes the system text colour. */
-.cai-code-block .tok-comment {
-  color: var(--cai-code-comment);
+.luz-code-block .tok-comment {
+  color: var(--luz-code-comment);
   font-style: italic;
 }
-.cai-code-block .tok-keyword {
-  color: var(--cai-code-keyword);
+.luz-code-block .tok-keyword {
+  color: var(--luz-code-keyword);
   font-weight: 600;
 }
-.cai-code-block .tok-name {
-  color: var(--cai-code-name);
+.luz-code-block .tok-name {
+  color: var(--luz-code-name);
 }
-.cai-code-block .tok-property {
-  color: var(--cai-code-property);
+.luz-code-block .tok-property {
+  color: var(--luz-code-property);
 }
-.cai-code-block .tok-string {
-  color: var(--cai-code-string);
+.luz-code-block .tok-string {
+  color: var(--luz-code-string);
 }
-.cai-code-block .tok-literal {
-  color: var(--cai-code-literal);
+.luz-code-block .tok-literal {
+  color: var(--luz-code-literal);
 }
 
 /* lang badge: a line of its own above the code, at the end edge. In the flow
    and not on top of the block, so a long first line is never under it. A
    wrapper that carries the label itself (a bar with a copy button) turns it
    off with `content: none`. */
-.cai-code-block::before {
+.luz-code-block::before {
   content: attr(data-lang);
   display: block;
-  margin-block-end: var(--cai-space-2xs);
+  margin-block-end: var(--luz-space-2xs);
   text-align: end;
-  font-size: var(--cai-text-xs);
-  font-family: var(--cai-font-mono);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-xs);
+  font-family: var(--luz-font-mono);
+  color: var(--luz-text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.cai-code-inline {
-  background: var(--cai-surface-muted);
-  color: var(--cai-color-code);
-  font-family: var(--cai-font-mono);
-  font-size: max(0.9em, var(--cai-text-xs));
-  padding: var(--cai-space-3xs) var(--cai-space-2xs);
-  border-radius: var(--cai-radius-sm);
-  border: 1px solid var(--cai-divider);
+.luz-code-inline {
+  background: var(--luz-surface-muted);
+  color: var(--luz-color-code);
+  font-family: var(--luz-font-mono);
+  font-size: max(0.9em, var(--luz-text-xs));
+  padding: var(--luz-space-3xs) var(--luz-space-2xs);
+  border-radius: var(--luz-radius-sm);
+  border: 1px solid var(--luz-divider);
 }

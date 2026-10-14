@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Tag and badge
 description: Labels an item with a short status or category (tag), or shows a count (badge).
 area: components
@@ -12,62 +12,62 @@ keywords: chip
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <div class="o-row">
-              <span class="cai-tag cai-tag--gray">Gray</span>
-              <span class="cai-tag cai-tag--blue">Blue</span>
-              <span class="cai-tag cai-tag--green cai-tag--dot">Green</span>
-              <span class="cai-tag cai-tag--red cai-tag--dot">Red</span>
-              <span class="cai-tag cai-tag--yellow">Yellow</span>
-              <span class="cai-tag cai-tag--teal">Teal</span>
-              <span class="cai-tag cai-tag--purple">Purple</span>
+              <span class="luz-tag luz-tag--gray">Gray</span>
+              <span class="luz-tag luz-tag--blue">Blue</span>
+              <span class="luz-tag luz-tag--green luz-tag--dot">Green</span>
+              <span class="luz-tag luz-tag--red luz-tag--dot">Red</span>
+              <span class="luz-tag luz-tag--yellow">Yellow</span>
+              <span class="luz-tag luz-tag--teal">Teal</span>
+              <span class="luz-tag luz-tag--purple">Purple</span>
             </div>
             <div class="o-row">
-              <span class="cai-badge cai-badge--primary">3</span>
-              <span class="cai-badge cai-badge--gray">12</span>
-              <span class="cai-badge cai-badge--danger">99+</span>
+              <span class="luz-badge luz-badge--primary">3</span>
+              <span class="luz-badge luz-badge--gray">12</span>
+              <span class="luz-badge luz-badge--danger">99+</span>
             </div>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Tag and badge documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Tag and badge documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-tag" aria-label="Copy the status tag markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tag" aria-label="Copy the status tag markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Status tag markup"><code id="code-tag">&lt;span class=&quot;cai-tag cai-tag--green cai-tag--dot&quot;&gt;Running&lt;/span&gt;</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Status tag markup"><code id="code-tag">&lt;span class=&quot;luz-tag luz-tag--green luz-tag--dot&quot;&gt;Running&lt;/span&gt;</code></pre>
             </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-badge" aria-label="Copy the count badge markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-badge" aria-label="Copy the count badge markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Count badge markup"><code id="code-badge">&lt;a href=&quot;/inbox/&quot;&gt;Inbox &lt;span class=&quot;cai-badge cai-badge--primary&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;u-sr-only&quot;&gt; unread&lt;/span&gt;&lt;/a&gt;</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Count badge markup"><code id="code-badge">&lt;a href=&quot;/inbox/&quot;&gt;Inbox &lt;span class=&quot;luz-badge luz-badge--primary&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;u-sr-only&quot;&gt; unread&lt;/span&gt;&lt;/a&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>A tag takes one colour and, if you like, the dot. A badge takes one colour.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Tag and badge variants" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Tag and badge variants" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-tag--gray</code></div></td><td data-label="Effect"><div>Neutral: a category with no status</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-tag--blue</code></div></td><td data-label="Effect"><div>Information colours</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-tag--green</code></div></td><td data-label="Effect"><div>Success colours</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-tag--yellow</code></div></td><td data-label="Effect"><div>Warning colours</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-tag--red</code></div></td><td data-label="Effect"><div>Danger colours</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-tag--teal</code>, <code>.cai-tag--purple</code></div></td><td data-label="Effect"><div>Extra colours for categories, with no status meaning</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-tag--dot</code></div></td><td data-label="Effect"><div>A small dot before the text, a second cue besides colour</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-badge--primary</code></div></td><td data-label="Effect"><div>Brand fill</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-badge--gray</code></div></td><td data-label="Effect"><div>Neutral fill</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-badge--danger</code></div></td><td data-label="Effect"><div>Danger fill</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tag--gray</code></div></td><td data-label="Effect"><div>Neutral: a category with no status</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tag--blue</code></div></td><td data-label="Effect"><div>Information colours</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tag--green</code></div></td><td data-label="Effect"><div>Success colours</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tag--yellow</code></div></td><td data-label="Effect"><div>Warning colours</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tag--red</code></div></td><td data-label="Effect"><div>Danger colours</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tag--teal</code>, <code>.luz-tag--purple</code></div></td><td data-label="Effect"><div>Extra colours for categories, with no status meaning</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-tag--dot</code></div></td><td data-label="Effect"><div>A small dot before the text, a second cue besides colour</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-badge--primary</code></div></td><td data-label="Effect"><div>Brand fill</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-badge--gray</code></div></td><td data-label="Effect"><div>Neutral fill</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-badge--danger</code></div></td><td data-label="Effect"><div>Danger fill</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -87,7 +87,7 @@ keywords: chip
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a tag to label an item with a short status or category, and a badge to show a count next to a link or a heading.</p>
@@ -103,13 +103,13 @@ keywords: chip
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Status colours for status: green running, yellow degraded, red stopped, each with its word.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="o-row"><span class="cai-tag cai-tag--green cai-tag--dot">Running</span><span class="cai-tag cai-tag--yellow cai-tag--dot">Degraded</span><span class="cai-tag cai-tag--red cai-tag--dot">Stopped</span></div>
+                  <div class="o-row"><span class="luz-tag luz-tag--green luz-tag--dot">Running</span><span class="luz-tag luz-tag--yellow luz-tag--dot">Degraded</span><span class="luz-tag luz-tag--red luz-tag--dot">Stopped</span></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Teal and purple as statuses: they are for categories, so the reader cannot guess that teal means running.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="o-row"><span class="cai-tag cai-tag--teal cai-tag--dot">Running</span><span class="cai-tag cai-tag--purple cai-tag--dot">Stopped</span></div>
+                  <div class="o-row"><span class="luz-tag luz-tag--teal luz-tag--dot">Running</span><span class="luz-tag luz-tag--purple luz-tag--dot">Stopped</span></div>
                 </div>
               </figure>
             </div>
@@ -121,37 +121,37 @@ keywords: chip
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>Each tag puts its text colour on its own tint; badges put white text on a fill.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Tag and badge contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Tag and badge contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Gray tag</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Blue tag</div></td><td data-label="Colour on background"><div><code>--cai-color-info</code> on <code>--cai-color-info-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>9.7:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Green tag</div></td><td data-label="Colour on background"><div><code>--cai-color-success</code> on <code>--cai-color-success-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>10.1:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Red tag</div></td><td data-label="Colour on background"><div><code>--cai-color-danger</code> on <code>--cai-color-danger-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Yellow tag</div></td><td data-label="Colour on background"><div><code>--cai-color-warning</code> on <code>--cai-color-warning-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.8:1</div></td><td data-label="Dark"><div>9.0:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Teal tag</div></td><td data-label="Colour on background"><div><code>--cai-color-teal</code> on <code>--cai-color-teal-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>7.1:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Purple tag</div></td><td data-label="Colour on background"><div><code>--cai-color-purple</code> on <code>--cai-color-purple-bg</code> over <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>12.2:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Primary badge</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Gray badge</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-outline</code></div></td><td data-label="Light"><div>4.6:1</div></td><td data-label="Dark"><div>4.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Danger badge</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-color-danger-fill</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.0:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Gray tag</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Blue tag</div></td><td data-label="Colour on background"><div><code>--luz-color-info</code> on <code>--luz-color-info-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>9.0:1</div></td><td data-label="Dark"><div>9.7:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Green tag</div></td><td data-label="Colour on background"><div><code>--luz-color-success</code> on <code>--luz-color-success-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>10.1:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Red tag</div></td><td data-label="Colour on background"><div><code>--luz-color-danger</code> on <code>--luz-color-danger-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Yellow tag</div></td><td data-label="Colour on background"><div><code>--luz-color-warning</code> on <code>--luz-color-warning-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.8:1</div></td><td data-label="Dark"><div>9.0:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Teal tag</div></td><td data-label="Colour on background"><div><code>--luz-color-teal</code> on <code>--luz-color-teal-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>7.1:1</div></td><td data-label="High contrast"><div>8.9:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Purple tag</div></td><td data-label="Colour on background"><div><code>--luz-color-purple</code> on <code>--luz-color-purple-bg</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.4:1</div></td><td data-label="Dark"><div>12.2:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Primary badge</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Gray badge</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-outline</code></div></td><td data-label="Light"><div>4.6:1</div></td><td data-label="Dark"><div>4.8:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Danger badge</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-color-danger-fill</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.0:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
               <li><strong>Focus:</strong> tags and badges take none: they are not controls.</li>
-              <li><strong>Not colour alone:</strong> the word carries the status; <code>.cai-tag--dot</code> adds a shape for the status tags.</li>
+              <li><strong>Not colour alone:</strong> the word carries the status; <code>.luz-tag--dot</code> adds a shape for the status tags.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 24 tokens that <code>components/tag.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-fill"><code>--cai-brand-fill</code></a>, <a href="/docs/tokens/color/#cai-color-danger"><code>--cai-color-danger</code></a>, <a href="/docs/tokens/color/#cai-color-danger-bg"><code>--cai-color-danger-bg</code></a>, <a href="/docs/tokens/color/#cai-color-danger-fill"><code>--cai-color-danger-fill</code></a>, <a href="/docs/tokens/color/#cai-color-info"><code>--cai-color-info</code></a>, <a href="/docs/tokens/color/#cai-color-info-bg"><code>--cai-color-info-bg</code></a>, <a href="/docs/tokens/color/#cai-color-purple"><code>--cai-color-purple</code></a>, <a href="/docs/tokens/color/#cai-color-purple-bg"><code>--cai-color-purple-bg</code></a>, <a href="/docs/tokens/color/#cai-color-success"><code>--cai-color-success</code></a>, <a href="/docs/tokens/color/#cai-color-success-bg"><code>--cai-color-success-bg</code></a>, <a href="/docs/tokens/color/#cai-color-teal"><code>--cai-color-teal</code></a>, <a href="/docs/tokens/color/#cai-color-teal-bg"><code>--cai-color-teal-bg</code></a>, <a href="/docs/tokens/color/#cai-color-warning"><code>--cai-color-warning</code></a>, <a href="/docs/tokens/color/#cai-color-warning-bg"><code>--cai-color-warning-bg</code></a>, <a href="/docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="/docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="/docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-full</code>, <code>--cai-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-fill"><code>--luz-brand-fill</code></a>, <a href="/docs/tokens/color/#luz-color-danger"><code>--luz-color-danger</code></a>, <a href="/docs/tokens/color/#luz-color-danger-bg"><code>--luz-color-danger-bg</code></a>, <a href="/docs/tokens/color/#luz-color-danger-fill"><code>--luz-color-danger-fill</code></a>, <a href="/docs/tokens/color/#luz-color-info"><code>--luz-color-info</code></a>, <a href="/docs/tokens/color/#luz-color-info-bg"><code>--luz-color-info-bg</code></a>, <a href="/docs/tokens/color/#luz-color-purple"><code>--luz-color-purple</code></a>, <a href="/docs/tokens/color/#luz-color-purple-bg"><code>--luz-color-purple-bg</code></a>, <a href="/docs/tokens/color/#luz-color-success"><code>--luz-color-success</code></a>, <a href="/docs/tokens/color/#luz-color-success-bg"><code>--luz-color-success-bg</code></a>, <a href="/docs/tokens/color/#luz-color-teal"><code>--luz-color-teal</code></a>, <a href="/docs/tokens/color/#luz-color-teal-bg"><code>--luz-color-teal-bg</code></a>, <a href="/docs/tokens/color/#luz-color-warning"><code>--luz-color-warning</code></a>, <a href="/docs/tokens/color/#luz-color-warning-bg"><code>--luz-color-warning-bg</code></a>, <a href="/docs/tokens/color/#luz-outline"><code>--luz-outline</code></a>, <a href="/docs/tokens/color/#luz-surface-strong"><code>--luz-surface-strong</code></a>, <a href="/docs/tokens/color/#luz-text-on-fill"><code>--luz-text-on-fill</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xs</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-mono</code>, <code>--luz-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-full</code>, <code>--luz-radius-sm</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

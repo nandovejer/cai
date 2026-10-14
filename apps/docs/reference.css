@@ -1,16 +1,16 @@
 /* ==========================================================================
-   CAI — DOCUMENTATION PAGE
+   LUZ — DOCUMENTATION PAGE
    Consumer-side styles for apps/docs (the pages of the documentation site),
    written the way any level-3 consumer would: on top of tokens + core +
-   site. The page shell is core's .o-shell with a .cai-sidebar, under
+   site. The page shell is core's .o-shell with a .luz-sidebar, under
    the site header shared with the home page (apps/landing/site-header.css).
    The HTML elements reference has its own file, elements.css.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
-     - media queries use the literal values of --cai-mq-* (640, 768, 1024),
+     - media queries use the literal values of --luz-mq-* (640, 768, 1024),
        max-width like core and site, so both collapse at the same widths;
      - the token a specimen illustrates arrives as an inline custom property,
-       style="--v: var(--cai-…)", and is consumed here as var(--v).
+       style="--v: var(--luz-…)", and is consumed here as var(--v).
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -27,7 +27,7 @@
   grid-row: 1;
 }
 
-.docs-page > .cai-sidebar,
+.docs-page > .luz-sidebar,
 .docs-page > .o-main {
   grid-row: 2;
 }
@@ -40,13 +40,13 @@
    its end by the same space, so the content ends under the search. */
 @media (min-width: 769px) {
   .docs-page {
-    grid-template-columns: calc(var(--cai-sidebar-width) + var(--site-edge)) minmax(0, 1fr);
+    grid-template-columns: calc(var(--luz-sidebar-width) + var(--site-edge)) minmax(0, 1fr);
   }
 
-  .docs-page > .cai-sidebar {
-    width: calc(var(--cai-sidebar-width) + var(--site-edge));
+  .docs-page > .luz-sidebar {
+    width: calc(var(--luz-sidebar-width) + var(--site-edge));
     min-width: 0;
-    padding-inline-start: calc(var(--site-edge) + var(--cai-space-xl) - var(--cai-space-md) - 3px);
+    padding-inline-start: calc(var(--site-edge) + var(--luz-space-xl) - var(--luz-space-md) - 3px);
   }
 
   .docs-main {
@@ -54,7 +54,7 @@
   }
 
   .docs-page > .docs-footer {
-    padding-inline-end: calc(var(--site-edge) + var(--cai-space-xl));
+    padding-inline-end: calc(var(--site-edge) + var(--luz-space-xl));
   }
 }
 
@@ -74,27 +74,27 @@
 
 .docs-eyebrow,
 .docs-subhead {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 .docs-subhead {
-  margin-bottom: var(--cai-space-2xs);
+  margin-bottom: var(--luz-space-2xs);
 }
 
 /* Core gives headings a family and a weight, and leaves the size to the page */
 .docs-heading-sample {
-  font-size: var(--cai-text-xl);
+  font-size: var(--luz-text-xl);
 }
 
 .docs-lead {
-  font-size: var(--cai-text-lg);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-lg);
+  color: var(--luz-text-secondary);
   max-width: 65ch;
 }
 
@@ -108,26 +108,26 @@
   /* .o-main scrolls on its own; here the document scrolls, so the rail can stick */
   overflow-y: visible;
   display: grid;
-  gap: var(--cai-space-xl);
+  gap: var(--luz-space-xl);
   align-content: start;
-  padding-block: var(--cai-space-lg) var(--cai-space-3xl);
+  padding-block: var(--luz-space-lg) var(--luz-space-3xl);
 }
 
 /* Every anchor target clears the top edge when it is jumped to */
 .docs-main [id] {
-  scroll-margin-top: var(--cai-space-lg);
+  scroll-margin-top: var(--luz-space-lg);
 }
 
 .docs-main > * {
   width: 100%;
-  max-width: var(--cai-content-max);
+  max-width: var(--luz-content-max);
   margin-inline: auto;
-  padding-inline: var(--cai-space-xl);
+  padding-inline: var(--luz-space-xl);
 }
 
 .docs-body {
   display: grid;
-  gap: var(--cai-space-2xl);
+  gap: var(--luz-space-2xl);
   align-content: start;
 }
 
@@ -139,23 +139,23 @@
 
 .docs-page-head {
   display: grid;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
 }
 
 .docs-page-head__title {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--cai-space-2xs) var(--cai-space-sm);
+  gap: var(--luz-space-2xs) var(--luz-space-sm);
 }
 
 .docs-title {
-  font-size: var(--cai-text-4xl);
+  font-size: var(--luz-text-4xl);
   line-height: 1.1;
 }
 
 .docs-page-head__title .docs-title {
-  margin-inline-end: var(--cai-space-xs);
+  margin-inline-end: var(--luz-space-xs);
 }
 
 /* A long URL or class name in running text wraps instead of widening the page */
@@ -181,45 +181,45 @@
 .docs-block,
 .docs-component {
   display: grid;
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
   align-content: start;
 }
 
 /* A component's own heading in an example (it has a class) keeps the
-   component's look: this rule is outside CAI's layers and would win */
+   component's look: this rule is outside LUZ's layers and would win */
 :where(.docs-body) h2:where(:not([data-docs-specimen] [class])) {
-  font-size: var(--cai-text-2xl);
-  margin-block-start: var(--cai-space-md);
+  font-size: var(--luz-text-2xl);
+  margin-block-start: var(--luz-space-md);
 }
 
 /* A component page: the live example, then its guidance */
 .docs-example {
   display: grid;
-  gap: var(--cai-space-md);
-  padding: var(--cai-space-md);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  background: var(--cai-surface);
+  gap: var(--luz-space-md);
+  padding: var(--luz-space-md);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  background: var(--luz-surface);
 }
 
 /* A band bleeds to the edge of the frame it is shown in, not of the page */
-.docs-example:has(.cai-site-section--band),
-.docs-dodont__stage:has(.cai-site-section--band) {
+.docs-example:has(.luz-site-section--band),
+.docs-dodont__stage:has(.luz-site-section--band) {
   overflow: clip;
 }
 
-/* The Code and Design tabs (core .cai-tabs). Without JavaScript the tab row
+/* The Code and Design tabs (core .luz-tabs). Without JavaScript the tab row
    is two in-page links and both panels follow, stacked, each under its own
    visible h2. With it, tabs.js shows one panel; the h2 stays for screen
    readers and "On this page" (a11y.md TAB-2), only not painted. */
 .docs-view-tabs {
-  margin-block: var(--cai-space-lg) 0;
+  margin-block: var(--luz-space-lg) 0;
 }
 
 .docs-view {
   display: grid;
   grid-template-columns: minmax(0, 1fr); /* a long code line scrolls inside its block */
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   align-content: start;
 }
 
@@ -241,8 +241,8 @@
 }
 
 .docs-view h3 {
-  margin-block-start: var(--cai-space-md);
-  font-size: var(--cai-text-xl);
+  margin-block-start: var(--luz-space-md);
+  font-size: var(--luz-text-xl);
 }
 
 .docs-view > .docs-view__title + h3 {
@@ -251,9 +251,9 @@
 
 /* Stacked (no JavaScript): each panel starts with a rule and its h2 */
 .docs-view__title {
-  margin-block-start: var(--cai-space-lg);
-  padding-block-start: var(--cai-space-md);
-  border-block-start: 1px solid var(--cai-divider);
+  margin-block-start: var(--luz-space-lg);
+  padding-block-start: var(--luz-space-md);
+  border-block-start: 1px solid var(--luz-divider);
 }
 
 .docs-view[role="tabpanel"] > .docs-view__title {
@@ -267,39 +267,39 @@
 
 /* The one line that points at the other tab's accessibility notes */
 .docs-view__xref {
-  margin-block-start: var(--cai-space-md);
-  padding-block-start: var(--cai-space-sm);
-  border-block-start: 1px solid var(--cai-divider);
-  color: var(--cai-text-secondary);
+  margin-block-start: var(--luz-space-md);
+  padding-block-start: var(--luz-space-sm);
+  border-block-start: 1px solid var(--luz-divider);
+  color: var(--luz-text-secondary);
 }
 
 /* Do and don't (Design tab): two figures side by side when there is room.
    The verdict is a word at the start of the caption; the mark before it and
    the solid or dashed frame are extra cues, never the only one (a11y.md
-   TAB-20). The examples are real CAI markup, inert and hidden from assistive
+   TAB-20). The examples are real LUZ markup, inert and hidden from assistive
    technology: the caption says what each one shows. */
 .docs-dodont {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
 }
 
 .docs-dodont__item {
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   min-width: 0;
   margin: 0;
-  padding: var(--cai-space-sm);
-  border: 2px solid var(--cai-color-success);
-  border-radius: var(--cai-radius-md);
-  background: var(--cai-surface);
-  color: var(--cai-text-primary);
+  padding: var(--luz-space-sm);
+  border: 2px solid var(--luz-color-success);
+  border-radius: var(--luz-radius-md);
+  background: var(--luz-surface);
+  color: var(--luz-text-primary);
 }
 
 .docs-dodont__item--dont {
   border-style: dashed;
-  border-color: var(--cai-color-danger);
+  border-color: var(--luz-color-danger);
 }
 
 .docs-dodont__item > figcaption {
@@ -308,12 +308,12 @@
 
 .docs-dodont__verdict {
   display: block;
-  color: var(--cai-color-success);
-  font-family: var(--cai-font-sans);
+  color: var(--luz-color-success);
+  font-family: var(--luz-font-sans);
 }
 
 .docs-dodont__item--dont .docs-dodont__verdict {
-  color: var(--cai-color-danger);
+  color: var(--luz-color-danger);
 }
 
 .docs-dodont__verdict::before {
@@ -326,14 +326,14 @@
 
 .docs-dodont__stage {
   display: grid;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   align-content: center;
   min-width: 0;
-  padding: var(--cai-space-md);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-sm);
-  background: var(--cai-surface-page);
-  color: var(--cai-text-primary);
+  padding: var(--luz-space-md);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-sm);
+  background: var(--luz-surface-page);
+  color: var(--luz-text-primary);
   overflow-wrap: anywhere;
 }
 
@@ -342,40 +342,40 @@
 }
 
 /* Stand-ins: the component's own classes, held still for a picture */
-.docs-dodont__stage > .cai-site-search-trigger {
+.docs-dodont__stage > .luz-site-search-trigger {
   justify-self: start;
 }
 
 
 .docs-dodont__stage .docs-dodont__modal {
   max-inline-size: none;
-  padding: var(--cai-space-md);
+  padding: var(--luz-space-md);
   box-shadow: none;
 }
 
 .docs-dodont__tabs {
   display: flex;
   flex-wrap: wrap;
-  border-block-end: 2px solid var(--cai-divider);
-  font-family: var(--cai-font-sans);
+  border-block-end: 2px solid var(--luz-divider);
+  font-family: var(--luz-font-sans);
 }
 
 .docs-dodont__sidebar {
   display: grid;
-  gap: var(--cai-space-3xs);
-  padding: var(--cai-space-sm);
-  background: var(--cai-sidebar-bg);
-  color: var(--cai-sidebar-text);
-  font-family: var(--cai-font-sans);
+  gap: var(--luz-space-3xs);
+  padding: var(--luz-space-sm);
+  background: var(--luz-sidebar-bg);
+  color: var(--luz-sidebar-text);
+  font-family: var(--luz-font-sans);
 }
 
 .docs-dodont__tip {
   display: grid;
   justify-items: start;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
-.docs-dodont__tip .cai-tooltip__text {
+.docs-dodont__tip .luz-tooltip__text {
   position: static;
   transform: none;
   visibility: visible;
@@ -392,16 +392,16 @@
 
 .docs-dodont__shell {
   display: grid;
-  gap: var(--cai-space-xs);
-  padding: var(--cai-space-md);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-sm);
+  gap: var(--luz-space-xs);
+  padding: var(--luz-space-md);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-sm);
 }
 
 .docs-dodont__label {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
 /* Contrast tables: the ratios line up */
@@ -413,13 +413,13 @@
 /* Tokens it uses: the family, then its tokens, wrapping under it when narrow */
 .docs-uses {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
 .docs-uses > div {
   display: flex;
   flex-wrap: wrap;
-  gap: 0 var(--cai-space-sm);
+  gap: 0 var(--luz-space-sm);
 }
 
 .docs-uses dt {
@@ -445,27 +445,27 @@
 }
 
 .docs-onpage__title {
-  font-size: var(--cai-text-md);
+  font-size: var(--luz-text-md);
 }
 
 .docs-onpage__list {
   list-style: none;
   margin: 0;
   padding: 0;
-  border-inline-start: 1px solid var(--cai-divider);
+  border-inline-start: 1px solid var(--luz-divider);
 }
 
-.docs-onpage .cai-sidebar__link {
+.docs-onpage .luz-sidebar__link {
   margin-inline-start: -1px;
-  padding: var(--cai-space-2xs) var(--cai-space-sm);
+  padding: var(--luz-space-2xs) var(--luz-space-sm);
   border-inline-start: 2px solid transparent;
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-md);
+  color: var(--luz-text-secondary);
 }
 
-.docs-onpage .cai-sidebar__link:hover {
-  background: var(--cai-surface-muted);
-  color: var(--cai-text-primary);
+.docs-onpage .luz-sidebar__link:hover {
+  background: var(--luz-surface-muted);
+  color: var(--luz-text-primary);
 }
 
 /* The h3 of a section (on a component page, of a tab), under its h2 */
@@ -475,15 +475,15 @@
   padding: 0;
 }
 
-.docs-onpage .docs-onpage__sub .cai-sidebar__link {
-  padding-inline-start: var(--cai-space-lg);
+.docs-onpage .docs-onpage__sub .luz-sidebar__link {
+  padding-inline-start: var(--luz-space-lg);
 }
 
-.docs-onpage .cai-sidebar__link.is-active,
-.docs-onpage .cai-sidebar__link[aria-current="true"] {
-  border-inline-start-color: var(--cai-brand-primary);
+.docs-onpage .luz-sidebar__link.is-active,
+.docs-onpage .luz-sidebar__link[aria-current="true"] {
+  border-inline-start-color: var(--luz-brand-primary);
   background: none;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
   font-weight: 600;
 }
 
@@ -491,7 +491,7 @@
   .docs-main:has(> .docs-onpage) {
     /* The rail keeps 13rem for its links plus the page gutter at its end,
        so it ends where the header's search does (the site frame) */
-    grid-template-columns: minmax(0, 1fr) calc(13rem + var(--cai-space-xl));
+    grid-template-columns: minmax(0, 1fr) calc(13rem + var(--luz-space-xl));
     column-gap: 0;
   }
 
@@ -504,10 +504,10 @@
     grid-row: 1 / span 3;
     align-self: start;
     position: sticky;
-    inset-block-start: calc(var(--site-header-h) + var(--cai-space-lg));
-    max-block-size: calc(100vh - var(--site-header-h) - var(--cai-space-2xl));
+    inset-block-start: calc(var(--site-header-h) + var(--luz-space-lg));
+    max-block-size: calc(100vh - var(--site-header-h) - var(--luz-space-2xl));
     overflow-y: auto;
-    padding-inline: 0 var(--cai-space-xl);
+    padding-inline: 0 var(--luz-space-xl);
   }
 
   /* A rail, not a box */
@@ -520,7 +520,7 @@
   }
 
   .docs-onpage__title {
-    margin: 0 0 var(--cai-space-xs);
+    margin: 0 0 var(--luz-space-xs);
   }
 }
 
@@ -533,15 +533,15 @@
    block the link, stacked from 640px */
 .docs-end {
   display: grid;
-  gap: var(--cai-space-md);
-  border-block-start: 1px solid var(--cai-divider);
-  padding-block-start: var(--cai-space-lg);
+  gap: var(--luz-space-md);
+  border-block-start: 1px solid var(--luz-divider);
+  padding-block-start: var(--luz-space-lg);
 }
 
 .docs-end__title {
   margin: 0;
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-md);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-md);
 }
 
 .docs-end__links,
@@ -554,13 +554,13 @@
 .docs-end__links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-2xs) var(--cai-space-lg);
+  gap: var(--luz-space-2xs) var(--luz-space-lg);
 }
 
 .docs-pager {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
 }
 
 .docs-pager__next {
@@ -570,16 +570,16 @@
 
 .docs-pager__link {
   display: grid;
-  gap: var(--cai-space-3xs);
+  gap: var(--luz-space-3xs);
   block-size: 100%;
-  padding: var(--cai-space-sm) var(--cai-space-md);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  padding: var(--luz-space-sm) var(--luz-space-md);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
 }
 
 .docs-pager__link:hover {
-  border-color: var(--cai-outline);
-  background: var(--cai-surface-hover);
+  border-color: var(--luz-outline);
+  background: var(--luz-surface-hover);
   text-decoration: none;
 }
 
@@ -588,12 +588,12 @@
 }
 
 .docs-pager__label {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
 .docs-pager__title {
-  font-size: var(--cai-text-lg);
+  font-size: var(--luz-text-lg);
   font-weight: 600;
 }
 
@@ -603,12 +603,12 @@
 .docs-az__list a {
   display: inline-flex;
   align-items: center;
-  min-block-size: var(--cai-control-sm);
+  min-block-size: var(--luz-control-sm);
 }
 
 .docs-gallery {
   display: grid;
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
   align-content: start;
 }
 
@@ -627,18 +627,18 @@
 .docs-gallery__cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
 }
 
 .docs-gallery__rows,
 .docs-hub__more {
   display: grid;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
 }
 
 .docs-gallery__desc,
 .docs-hub__more span {
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 /* The big search button of the home (the A–Z link without JavaScript),
@@ -646,87 +646,87 @@
 .docs-hub__find {
   display: grid;
   justify-items: start;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
 }
 
 .docs-hub__search {
   inline-size: min(100%, 36rem);
-  min-block-size: var(--cai-control-xl);
-  font-size: var(--cai-text-md);
+  min-block-size: var(--luz-control-xl);
+  font-size: var(--luz-text-md);
 }
 
 .docs-hub__find-hint {
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
-/* A gallery or hub card is a linked core card: a link in .cai-card__title,
+/* A gallery or hub card is a linked core card: a link in .luz-card__title,
    stretched over the card (HUB-1), with a focus ring round the whole card
    (HUB-4). Here only its layout, and the sans title of the gallery. */
 .docs-card__title {
-  font-size: var(--cai-text-lg);
+  font-size: var(--luz-text-lg);
 }
 
 .docs-az__letters ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
 }
 
 .docs-az__letters li > * {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-inline-size: var(--cai-control-sm);
-  min-block-size: var(--cai-control-sm);
+  min-inline-size: var(--luz-control-sm);
+  min-block-size: var(--luz-control-sm);
 }
 
 .docs-az__letters span {
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 .docs-az__letter {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
 .docs-az__list {
   display: grid;
-  gap: 0 var(--cai-space-lg);
+  gap: 0 var(--luz-space-lg);
   grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
 }
 
 .docs-az__kind {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
 .docs-hub__beta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
 .docs-hub__cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-lg);
+  gap: var(--luz-space-lg);
 }
 
 .docs-hub-card {
-  padding: var(--cai-space-lg);
+  padding: var(--luz-space-lg);
 }
 
 .docs-hub-card__title {
-  font-family: var(--cai-font-heading);
-  font-size: var(--cai-text-2xl);
+  font-family: var(--luz-font-heading);
+  font-size: var(--luz-text-2xl);
   font-weight: 400;
 }
 
 .docs-not-found__links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
 }
 
 /* The not-found page loads no script, so the header's search button would
@@ -742,12 +742,12 @@
 
 .docs-chapter {
   display: grid;
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
   align-content: start;
 }
 
 .docs-chapter__title {
-  font-size: var(--cai-text-3xl);
+  font-size: var(--luz-text-3xl);
 }
 
 .docs-chapter p,
@@ -762,30 +762,30 @@
 .docs-prose ul,
 .docs-prose ol {
   display: grid;
-  gap: var(--cai-space-2xs);
-  padding-inline-start: var(--cai-space-lg);
+  gap: var(--luz-space-2xs);
+  padding-inline-start: var(--luz-space-lg);
 }
 
 .docs-prose {
   display: grid;
   /* One column that never grows past the page: a long code line scrolls inside its block */
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   align-content: start;
 }
 
 .docs-prose__title {
-  font-size: var(--cai-text-lg);
-  margin-block-start: var(--cai-space-sm);
+  font-size: var(--luz-text-lg);
+  margin-block-start: var(--luz-space-sm);
 }
 
 .docs-prose-chapter h3 {
-  font-size: var(--cai-text-xl);
-  margin-block-start: var(--cai-space-md);
+  font-size: var(--luz-text-xl);
+  margin-block-start: var(--luz-space-md);
 }
 
 .docs-footer {
-  padding-inline: var(--cai-space-xl);
+  padding-inline: var(--luz-space-xl);
 }
 
 /* --------------------------------------------------------------------------
@@ -802,10 +802,10 @@
 }
 
 .docs-nav {
-  padding-block: var(--cai-space-sm);
+  padding-block: var(--luz-space-sm);
 }
 
-.docs-nav .cai-sidebar__link {
+.docs-nav .luz-sidebar__link {
   border-inline-start: 3px solid transparent;
 }
 
@@ -813,37 +813,37 @@
   font-weight: 600;
 }
 
-.docs-nav__pages .cai-sidebar__link {
-  padding-inline-start: var(--cai-space-xl);
+.docs-nav__pages .luz-sidebar__link {
+  padding-inline-start: var(--luz-space-xl);
 }
 
-.docs-nav__pages .docs-nav__pages .cai-sidebar__link {
-  padding-inline-start: calc(var(--cai-space-xl) + var(--cai-space-sm));
+.docs-nav__pages .docs-nav__pages .luz-sidebar__link {
+  padding-inline-start: calc(var(--luz-space-xl) + var(--luz-space-sm));
 }
 
-.docs-nav__group > .cai-sidebar__section-label {
+.docs-nav__group > .luz-sidebar__section-label {
   display: block;
-  margin: var(--cai-space-sm) 0 0;
-  padding-inline-start: var(--cai-space-xl);
+  margin: var(--luz-space-sm) 0 0;
+  padding-inline-start: var(--luz-space-xl);
 }
 
 /* The area of the current page: a thinner cue than the page itself */
-.docs-nav .cai-sidebar__link[aria-current="true"] {
-  border-inline-start-color: var(--cai-sidebar-label);
-  color: var(--cai-sidebar-text-hover);
+.docs-nav .luz-sidebar__link[aria-current="true"] {
+  border-inline-start-color: var(--luz-sidebar-label);
+  color: var(--luz-sidebar-text-hover);
 }
 
-.docs-nav .cai-sidebar__link[aria-current="page"] {
-  border-inline-start-color: var(--cai-sidebar-text-hover);
-  background: var(--cai-sidebar-hover);
-  color: var(--cai-sidebar-text-hover);
+.docs-nav .luz-sidebar__link[aria-current="page"] {
+  border-inline-start-color: var(--luz-sidebar-text-hover);
+  background: var(--luz-sidebar-hover);
+  color: var(--luz-sidebar-text-hover);
   font-weight: 600;
 }
 
 /* Rows of 44px on touch screens (2.5.5) */
 @media (pointer: coarse) {
-  .docs-nav .cai-sidebar__link {
-    min-block-size: var(--cai-control-lg);
+  .docs-nav .luz-sidebar__link {
+    min-block-size: var(--luz-control-lg);
   }
 }
 
@@ -851,8 +851,8 @@
    Snippet (label bar + code block) and copy buttons
    -------------------------------------------------------------------------- */
 
-.cai-code-block:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-code-block:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
@@ -860,33 +860,33 @@
    strong surface, then a copy button, in a row that wraps. Docs-only since
    the site package dropped it. */
 .docs-command-block {
-  background: var(--cai-surface-strong);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  padding: var(--cai-space-md) var(--cai-space-lg);
-  margin-bottom: var(--cai-space-lg);
+  background: var(--luz-surface-strong);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  padding: var(--luz-space-md) var(--luz-space-lg);
+  margin-bottom: var(--luz-space-lg);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
   flex-wrap: wrap;
 }
 
-/* --cai-focus-ring falls to 2.3:1 on --cai-surface-strong in dark mode */
-.docs-command-block .cai-copy-btn:focus-visible {
-  outline-color: var(--cai-text-primary);
+/* --luz-focus-ring falls to 2.3:1 on --luz-surface-strong in dark mode */
+.docs-command-block .luz-copy-btn:focus-visible {
+  outline-color: var(--luz-text-primary);
 }
 
 .docs-command-block__cmd {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-primary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-md);
+  color: var(--luz-text-primary);
   min-width: 0;
   overflow-wrap: anywhere;
 }
 
 .docs-command-block__prefix {
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
   /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
   -webkit-user-select: none;
   user-select: none;
@@ -897,18 +897,18 @@
     align-items: stretch;
   }
 
-  .docs-command-block .cai-copy-btn {
+  .docs-command-block .luz-copy-btn {
     width: 100%;
     justify-content: center;
   }
 }
 
-/* .cai-copy-btn has a subtle border and no fill: on the command block
-   (--cai-surface-strong) it reads as plain text. Give it a surface and a boundary;
+/* .luz-copy-btn has a subtle border and no fill: on the command block
+   (--luz-surface-strong) it reads as plain text. Give it a surface and a boundary;
    hover and .is-copied keep the component's own colors. */
-.docs-command-block .cai-copy-btn:not(:hover, .is-copied) {
-  background: var(--cai-surface);
-  border-color: var(--cai-outline);
+.docs-command-block .luz-copy-btn:not(:hover, .is-copied) {
+  background: var(--luz-surface);
+  border-color: var(--luz-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -919,24 +919,24 @@
 .docs-toc a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cai-control-sm);
+  min-height: var(--luz-control-sm);
 }
 
 .docs-toc {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: var(--cai-space-md);
-  padding: var(--cai-space-md);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  gap: var(--luz-space-md);
+  padding: var(--luz-space-md);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
 }
 
 .docs-toc ul {
   list-style: none;
   display: grid;
-  gap: var(--cai-space-2xs);
-  margin-top: var(--cai-space-xs);
-  font-size: var(--cai-text-md);
+  gap: var(--luz-space-2xs);
+  margin-top: var(--luz-space-xs);
+  font-size: var(--luz-text-md);
 }
 
 /* A single group reads better as one wrapping row */
@@ -947,25 +947,25 @@
 .docs-toc--inline ul {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-2xs) var(--cai-space-lg);
+  gap: var(--luz-space-2xs) var(--luz-space-lg);
 }
 
 .docs-toc a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cai-control-sm);
+  min-height: var(--luz-control-sm);
 }
 
 .docs-demo__head {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: var(--cai-space-2xs) var(--cai-space-sm);
+  gap: var(--luz-space-2xs) var(--luz-space-sm);
 }
 
 .docs-demo__title {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-base);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-base);
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: 0;
@@ -973,22 +973,22 @@
 
 /* A component title is an h2: it outranks the six guidance h3s below it */
 h2.docs-demo__title {
-  font-family: var(--cai-font-heading);
-  font-size: var(--cai-text-2xl);
+  font-family: var(--luz-font-heading);
+  font-size: var(--luz-text-2xl);
   font-weight: 400;
   line-height: 1.2;
 }
 
 .docs-demo__file {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
   overflow-wrap: anywhere;
 }
 
 .docs-demo__stage {
   display: grid;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   align-content: start;
 }
 
@@ -1000,7 +1000,7 @@ h2.docs-demo__title {
 /* Room above the button for the tooltip */
 .docs-demo__stage--tooltip {
   justify-items: start;
-  padding-top: calc(var(--cai-space-xl) + var(--cai-space-xs));
+  padding-top: calc(var(--luz-space-xl) + var(--luz-space-xs));
 }
 
 .docs-demo__stage > figure {
@@ -1008,8 +1008,8 @@ h2.docs-demo__title {
 }
 
 .docs-demo__note {
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
 .docs-cols-2,
@@ -1051,14 +1051,14 @@ h2.docs-demo__title {
 
 .docs-fold > summary {
   margin: 0;
-  padding: var(--cai-space-2xs) var(--cai-space-xs);
-  font-size: var(--cai-text-md);
+  padding: var(--luz-space-2xs) var(--luz-space-xs);
+  font-size: var(--luz-text-md);
   font-weight: 500;
-  background: var(--cai-surface-muted);
+  background: var(--luz-surface-muted);
 }
 
 .docs-fold[open] > summary {
-  margin-bottom: var(--cai-space-md);
+  margin-bottom: var(--luz-space-md);
 }
 
 /* --------------------------------------------------------------------------
@@ -1070,24 +1070,24 @@ h2.docs-demo__title {
    token name and its value are always written next to it as text. */
 .docs-swatch {
   display: block;
-  height: var(--cai-control-xl);
-  background: linear-gradient(var(--v), var(--v)), var(--cai-surface-page);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  height: var(--luz-control-xl);
+  background: linear-gradient(var(--v), var(--v)), var(--luz-surface-page);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
   forced-color-adjust: none;
 }
 
 .docs-ramp {
   display: grid;
-  grid-template-columns: calc(var(--cai-space-3xl) + var(--cai-space-md)) minmax(0, 1fr);
-  gap: var(--cai-space-sm);
+  grid-template-columns: calc(var(--luz-space-3xl) + var(--luz-space-md)) minmax(0, 1fr);
+  gap: var(--luz-space-sm);
   align-items: center;
 }
 
 .docs-ramp__label {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-sm);
-  color: var(--cai-text-primary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-primary);
 }
 
 .docs-ramp ul {
@@ -1099,9 +1099,9 @@ h2.docs-demo__title {
   flex: 1;
   min-width: 0;
   text-align: center;
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
 }
 
 /* The colour gallery: one card per token, its name, its job, then its value
@@ -1110,53 +1110,53 @@ h2.docs-demo__title {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
-  gap: var(--cai-space-sm) var(--cai-space-md);
-  margin-bottom: var(--cai-space-sm);
+  gap: var(--luz-space-sm) var(--luz-space-md);
+  margin-bottom: var(--luz-space-sm);
 }
 
 .docs-token {
   display: grid;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
   align-content: start;
-  padding: var(--cai-space-sm);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  background: var(--cai-surface);
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-sm);
+  padding: var(--luz-space-sm);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  background: var(--luz-surface);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
   overflow-wrap: anywhere;
 }
 
 .docs-token > code {
-  font-family: var(--cai-font-mono);
+  font-family: var(--luz-font-mono);
   font-weight: 600;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
 }
 
 .docs-token__role {
-  margin-block-end: var(--cai-space-2xs);
-  color: var(--cai-text-secondary);
+  margin-block-end: var(--luz-space-2xs);
+  color: var(--luz-text-secondary);
 }
 
 .docs-token__mode {
   display: flex;
   align-items: center;
-  gap: var(--cai-space-xs);
-  color: var(--cai-text-secondary);
+  gap: var(--luz-space-xs);
+  color: var(--luz-text-secondary);
 }
 
 .docs-token__mode .docs-swatch {
   flex-shrink: 0;
-  width: var(--cai-space-lg);
-  height: var(--cai-space-lg);
-  border-color: var(--cai-outline);
+  width: var(--luz-space-lg);
+  height: var(--luz-space-lg);
+  border-color: var(--luz-outline);
 }
 
 .docs-token__mode code {
   margin-inline-start: auto;
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-primary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-primary);
 }
 
 .docs-scopes {
@@ -1167,16 +1167,16 @@ h2.docs-demo__title {
    on this element, but nothing repaints it unless it asks for them. */
 .docs-scope {
   display: grid;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   align-content: start;
-  padding: var(--cai-space-md);
-  background: var(--cai-surface-page);
-  color: var(--cai-text-primary);
-  border: 1px solid var(--cai-outline);
-  border-radius: var(--cai-radius-md);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface-page);
+  color: var(--luz-text-primary);
+  border: 1px solid var(--luz-outline);
+  border-radius: var(--luz-radius-md);
 }
 
-.docs-scope .cai-alert {
+.docs-scope .luz-alert {
   margin-bottom: 0;
 }
 
@@ -1189,22 +1189,22 @@ h2.docs-demo__title {
 
 .docs-scale-list {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
 .docs-scale {
   display: grid;
-  grid-template-columns: calc(var(--cai-space-4xl) * 2) var(--cai-space-2xl) minmax(0, 1fr);
-  gap: var(--cai-space-sm);
+  grid-template-columns: calc(var(--luz-space-4xl) * 2) var(--luz-space-2xl) minmax(0, 1fr);
+  gap: var(--luz-space-sm);
   align-items: center;
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
   overflow-wrap: anywhere;
 }
 
 .docs-scale--easing {
-  grid-template-columns: calc(var(--cai-space-4xl) * 2) minmax(0, 1fr);
+  grid-template-columns: calc(var(--luz-space-4xl) * 2) minmax(0, 1fr);
 }
 
 .docs-scale--easing > :last-child {
@@ -1213,83 +1213,83 @@ h2.docs-demo__title {
 
 /* name, value, what it is used for */
 .docs-scale--note {
-  grid-template-columns: calc(var(--cai-space-4xl) * 1.5) calc(var(--cai-space-4xl) * 1.5) minmax(0, 1fr);
+  grid-template-columns: calc(var(--luz-space-4xl) * 1.5) calc(var(--luz-space-4xl) * 1.5) minmax(0, 1fr);
 }
 
 .docs-scale--note code {
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
 }
 
 .docs-scale__note {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-sm);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
 }
 
 .docs-scale__bar {
   display: block;
   width: var(--v);
   max-width: 100%;
-  height: var(--cai-space-sm);
-  background: var(--cai-brand-primary);
+  height: var(--luz-space-sm);
+  background: var(--luz-brand-primary);
 }
 
 .docs-scale__type {
   font-size: var(--v);
-  font-family: var(--cai-font-sans);
-  color: var(--cai-text-primary);
+  font-family: var(--luz-font-sans);
+  color: var(--luz-text-primary);
   line-height: 1.2;
 }
 
 .docs-font {
   display: grid;
-  gap: var(--cai-space-2xs);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+  gap: var(--luz-space-2xs);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
 }
 
 .docs-font__sample,
 .docs-font__weights {
   font-family: var(--v);
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
 }
 
 .docs-font__sample {
-  font-size: var(--cai-text-xl);
+  font-size: var(--luz-text-xl);
   line-height: 1.2;
 }
 
 .docs-font__weights {
-  font-size: var(--cai-text-base);
+  font-size: var(--luz-text-base);
 }
 
 .docs-specimens {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
 }
 
 .docs-specimens li {
   display: grid;
-  gap: var(--cai-space-2xs);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+  gap: var(--luz-space-2xs);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
 }
 
 .docs-shadows {
-  gap: var(--cai-space-lg);
-  padding: var(--cai-space-md);
-  background: var(--cai-surface-muted);
+  gap: var(--luz-space-lg);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface-muted);
 }
 
 .docs-box {
-  padding: var(--cai-space-sm);
-  background: var(--cai-surface-muted);
-  border: 1px dashed var(--cai-outline);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+  padding: var(--luz-space-sm);
+  background: var(--luz-surface-muted);
+  border: 1px dashed var(--luz-outline);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
   overflow-wrap: anywhere;
 }
 
@@ -1303,15 +1303,15 @@ h2.docs-demo__title {
 
 .docs-box--radius {
   display: block;
-  width: var(--cai-space-3xl);
-  height: var(--cai-space-3xl);
+  width: var(--luz-space-3xl);
+  height: var(--luz-space-3xl);
   border-style: solid;
   border-radius: var(--v);
 }
 
 .docs-box--shadow {
-  padding: var(--cai-space-lg);
-  background: var(--cai-surface);
+  padding: var(--luz-space-lg);
+  background: var(--luz-surface);
   border: 0;
   box-shadow: var(--v);
 }
@@ -1323,17 +1323,17 @@ h2.docs-demo__title {
 .docs-motion__track {
   display: block;
   position: relative;
-  height: var(--cai-space-md);
-  background: var(--cai-surface-muted);
+  height: var(--luz-space-md);
+  background: var(--luz-surface-muted);
 }
 
 .docs-motion__dot {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
-  width: var(--cai-space-md);
-  background: var(--cai-brand-primary);
-  transition: inset-inline-start var(--cai-duration-lazy) var(--cai-easing-standard);
+  width: var(--luz-space-md);
+  background: var(--luz-brand-primary);
+  transition: inset-inline-start var(--luz-duration-lazy) var(--luz-easing-standard);
 }
 
 .docs-motion__dot--duration {
@@ -1344,8 +1344,8 @@ h2.docs-demo__title {
   transition-timing-function: var(--v);
 }
 
-.docs-motion:has(.cai-toggle__input:checked) .docs-motion__dot {
-  inset-inline-start: calc(100% - var(--cai-space-md));
+.docs-motion:has(.luz-toggle__input:checked) .docs-motion__dot {
+  inset-inline-start: calc(100% - var(--luz-space-md));
 }
 
 .docs-motion__reduced {
@@ -1354,11 +1354,11 @@ h2.docs-demo__title {
 
 .docs-anim__tile {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   justify-items: center;
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
 }
 
 .docs-anim__stage {
@@ -1366,52 +1366,52 @@ h2.docs-demo__title {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: calc(var(--cai-space-3xl) + var(--cai-space-md));
-  background: var(--cai-surface-muted);
+  height: calc(var(--luz-space-3xl) + var(--luz-space-md));
+  background: var(--luz-surface-muted);
 }
 
 .docs-anim__spin {
-  width: var(--cai-space-xl);
-  height: var(--cai-space-xl);
-  border: 2px solid var(--cai-divider);
-  border-top-color: var(--cai-brand-primary);
-  border-radius: var(--cai-radius-full);
+  width: var(--luz-space-xl);
+  height: var(--luz-space-xl);
+  border: 2px solid var(--luz-divider);
+  border-top-color: var(--luz-brand-primary);
+  border-radius: var(--luz-radius-full);
 }
 
 .docs-anim__shimmer {
   width: 70%;
-  height: var(--cai-space-md);
-  background: linear-gradient(90deg, var(--cai-surface-strong) 25%, var(--cai-surface) 50%, var(--cai-surface-strong) 75%);
+  height: var(--luz-space-md);
+  background: linear-gradient(90deg, var(--luz-surface-strong) 25%, var(--luz-surface) 50%, var(--luz-surface-strong) 75%);
   background-size: 200% 100%;
 }
 
 .docs-anim__pulse {
-  width: var(--cai-space-sm);
-  height: var(--cai-space-sm);
-  border-radius: var(--cai-radius-full);
-  background: var(--cai-color-success);
+  width: var(--luz-space-sm);
+  height: var(--luz-space-sm);
+  border-radius: var(--luz-radius-full);
+  background: var(--luz-color-success);
 }
 
 .docs-anim__slide {
-  font-family: var(--cai-font-heading);
-  font-size: var(--cai-text-xl);
-  color: var(--cai-text-primary);
+  font-family: var(--luz-font-heading);
+  font-size: var(--luz-text-xl);
+  color: var(--luz-text-primary);
 }
 
-.docs-anim:has(.cai-toggle__input:checked) .docs-anim__spin {
-  animation: cai-spin var(--cai-duration-lazy) var(--cai-easing-linear) infinite;
+.docs-anim:has(.luz-toggle__input:checked) .docs-anim__spin {
+  animation: luz-spin var(--luz-duration-lazy) var(--luz-easing-linear) infinite;
 }
 
-.docs-anim:has(.cai-toggle__input:checked) .docs-anim__shimmer {
-  animation: cai-shimmer calc(var(--cai-duration-lazy) * 2) var(--cai-easing-linear) infinite;
+.docs-anim:has(.luz-toggle__input:checked) .docs-anim__shimmer {
+  animation: luz-shimmer calc(var(--luz-duration-lazy) * 2) var(--luz-easing-linear) infinite;
 }
 
-.docs-anim:has(.cai-toggle__input:checked) .docs-anim__pulse {
-  animation: cai-pulse calc(var(--cai-duration-lazy) * 2) var(--cai-easing-standard) infinite;
+.docs-anim:has(.luz-toggle__input:checked) .docs-anim__pulse {
+  animation: luz-pulse calc(var(--luz-duration-lazy) * 2) var(--luz-easing-standard) infinite;
 }
 
-.docs-anim:has(.cai-toggle__input:checked) .docs-anim__slide {
-  animation: cai-slide-up var(--cai-duration-slower) var(--cai-easing-enter) both;
+.docs-anim:has(.luz-toggle__input:checked) .docs-anim__slide {
+  animation: luz-slide-up var(--luz-duration-slower) var(--luz-easing-enter) both;
 }
 
 /* --------------------------------------------------------------------------
@@ -1421,34 +1421,34 @@ h2.docs-demo__title {
 .docs-decision-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-md);
+  gap: var(--luz-space-md);
 }
 
 .docs-decision-card {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   align-content: start;
-  padding: var(--cai-space-md);
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
 }
 
 .docs-decision-card__title {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-base);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-base);
   font-weight: 600;
 }
 
 .docs-decision-card ul {
   display: grid;
-  gap: var(--cai-space-2xs);
-  padding-inline-start: var(--cai-space-lg);
+  gap: var(--luz-space-2xs);
+  padding-inline-start: var(--luz-space-lg);
 }
 
 .docs-ref-table td:first-child {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-sm);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-sm);
   overflow-wrap: anywhere;
 }
 
@@ -1459,64 +1459,64 @@ h2.docs-demo__title {
 .docs-anatomy,
 .docs-anatomy .docs-box {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
 /* The page modifier on a small box: enough height to see both gradients */
 .docs-gradient-sample {
   display: flex;
   align-items: flex-end;
-  min-height: calc(var(--cai-space-4xl) * 1.5);
-  margin-top: var(--cai-space-xs);
-  padding: var(--cai-space-sm);
-  border: 1px dashed var(--cai-outline);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
-  color: var(--cai-text-secondary);
+  min-height: calc(var(--luz-space-4xl) * 1.5);
+  margin-top: var(--luz-space-xs);
+  padding: var(--luz-space-sm);
+  border: 1px dashed var(--luz-outline);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
 }
 
 .docs-sidebar-demo {
   grid-template-columns: auto minmax(0, 1fr);
-  gap: var(--cai-space-lg);
+  gap: var(--luz-space-lg);
 }
 
 /* The sidebar is a full-height sticky column, and a fixed drawer at 768px and
    below: pin it in place so it can be shown inline. (0,2,0) beats the core
    rules inside their media query too. */
-.docs-demo__stage .cai-sidebar {
+.docs-demo__stage .luz-sidebar {
   position: relative;
-  height: calc(var(--cai-space-4xl) * 4);
+  height: calc(var(--luz-space-4xl) * 4);
   max-width: 100%;
   transform: none;
-  z-index: var(--cai-z-base);
+  z-index: var(--luz-z-base);
 }
 
 /* Not in a site header specimen: there the toggle shows only where the
    header collapses its links, as it does in a page */
-.docs-demo__stage .cai-nav-toggle:not(.cai-site-header *) {
+.docs-demo__stage .luz-nav-toggle:not(.luz-site-header *) {
   position: static;
   display: flex;
 }
 
 .docs-util-narrow {
   display: block;
-  max-width: calc(var(--cai-space-4xl) * 1.5);
+  max-width: calc(var(--luz-space-4xl) * 1.5);
 }
 
 /* A narrow box for a full-width button: the width of a card in a three-up grid */
 .docs-narrow-frame {
-  max-inline-size: calc(var(--cai-space-4xl) * 3);
+  max-inline-size: calc(var(--luz-space-4xl) * 3);
 }
 
 .docs-util-frame {
-  width: calc(var(--cai-space-4xl) * 2);
+  width: calc(var(--luz-space-4xl) * 2);
   max-width: 100%;
-  border: 1px dashed var(--cai-outline);
+  border: 1px dashed var(--luz-outline);
 }
 
 .docs-util-margins {
   display: inline-block;
-  border: 1px dashed var(--cai-outline);
+  border: 1px dashed var(--luz-outline);
 }
 
 .docs-util-margins .docs-box {
@@ -1529,32 +1529,32 @@ h2.docs-demo__title {
 
 /* The toggle here is a specimen with nothing to open: it is disabled, and core
    has no disabled style for it. */
-.docs-demo__stage .cai-nav-toggle:disabled {
+.docs-demo__stage .luz-nav-toggle:disabled {
   cursor: default;
 }
 
-/* A sticky first column paints itself with --cai-surface-page: a grey band on any
+/* A sticky first column paints itself with --luz-surface-page: a grey band on any
    other surface. Hover keeps the component's own color (higher specificity). */
-.docs-demo__stage .cai-table--sticky-col td:first-child {
-  background: var(--cai-surface);
+.docs-demo__stage .luz-table--sticky-col td:first-child {
+  background: var(--luz-surface);
 }
 
 /* A closed <details> keeps the bottom margin of its summary: empty space
    under the label. */
 .docs-demo__stage details:not([open]) > summary {
-  margin-bottom: calc(-1 * var(--cai-space-sm));
+  margin-bottom: calc(-1 * var(--luz-space-sm));
 }
 
 /* When a table stacks into cards its <caption> stays a table-caption inside
    a block, and shrinks to one word per line. */
 @container (max-width: 480px) {
-  .docs-demo__stage .cai-table caption {
+  .docs-demo__stage .luz-table caption {
     display: block;
   }
 }
 
 /* The sidebar sticks below the sticky site header, not under it */
-.docs-page > .cai-sidebar {
+.docs-page > .luz-sidebar {
   inset-block-start: var(--site-header-h);
   height: calc(100vh - var(--site-header-h));
 }
@@ -1581,7 +1581,7 @@ h2.docs-demo__title {
     grid-template-rows: auto auto 1fr auto;
   }
 
-  .docs-page > .cai-sidebar {
+  .docs-page > .luz-sidebar {
     grid-row: 2;
   }
 
@@ -1609,20 +1609,20 @@ h2.docs-demo__title {
   /* Table of contents: each group becomes one wrapping row of links */
   .docs-toc {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--cai-space-sm);
+    gap: var(--luz-space-sm);
   }
 
   .docs-toc ul {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--cai-space-2xs) var(--cai-space-md);
-    margin-top: var(--cai-space-2xs);
+    gap: var(--luz-space-2xs) var(--luz-space-md);
+    margin-top: var(--luz-space-2xs);
   }
 }
 
 @media (max-width: 640px) {
   .docs-main > * {
-    padding-inline: var(--cai-space-md);
+    padding-inline: var(--luz-space-md);
   }
 
   /* Two columns of a 320px page are 106px: a datetime-local does not fit */
@@ -1639,25 +1639,25 @@ h2.docs-demo__title {
   }
 
   .docs-title {
-    font-size: var(--cai-text-2xl);
+    font-size: var(--luz-text-2xl);
   }
 
   .docs-chapter__title {
-    font-size: var(--cai-text-xl);
+    font-size: var(--luz-text-xl);
   }
 
   .docs-lead {
-    font-size: var(--cai-text-base);
+    font-size: var(--luz-text-base);
   }
 
   .docs-ramp {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--cai-space-2xs);
+    gap: var(--luz-space-2xs);
   }
 
   .docs-scale {
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: var(--cai-space-2xs) var(--cai-space-sm);
+    gap: var(--luz-space-2xs) var(--luz-space-sm);
   }
 
   .docs-scale > :last-child {
@@ -1670,29 +1670,29 @@ h2.docs-demo__title {
 
   /* Denser token chips */
   .docs-token-grid {
-    gap: var(--cai-space-2xs);
+    gap: var(--luz-space-2xs);
   }
 
   .docs-token__modes .docs-swatch {
-    width: var(--cai-space-md);
-    height: var(--cai-space-md);
+    width: var(--luz-space-md);
+    height: var(--luz-space-md);
   }
 
   /* Page footer: three short links fit on one row */
-  body > footer .cai-site-actions {
+  body > footer .luz-site-actions {
     flex-direction: row;
     align-items: center;
   }
 
-  body > footer .cai-site-actions > * {
+  body > footer .luz-site-actions > * {
     width: auto;
   }
 }
 
 /* Stacked footer: line the ghost links' text up with the line above */
 @media (max-width: 768px) {
-  body > footer .cai-site-actions {
-    margin-inline-start: calc(-1 * var(--cai-space-sm));
+  body > footer .luz-site-actions {
+    margin-inline-start: calc(-1 * var(--luz-space-sm));
   }
 }
 
@@ -1704,7 +1704,7 @@ h2.docs-demo__title {
 
 /* --------------------------------------------------------------------------
    Print
-   Core's cai.print layer sets the colors, the breaks and hides the generic
+   Core's luz.print layer sets the colors, the breaks and hides the generic
    controls. This file's rules are not in a layer, so they win over it: the
    docs shell hides what only works on a screen.
    -------------------------------------------------------------------------- */
@@ -1729,12 +1729,12 @@ h2.docs-demo__title {
 /* The Submenu example: from 769px a submenu opens over what follows it, so
    the stage keeps room for the tallest one (three 44px links) */
 @media (min-width: 769px) {
-  .docs-demo__stage:has(.cai-site-submenu) {
-    padding-block-end: calc(3 * var(--cai-control-lg) + var(--cai-space-lg));
+  .docs-demo__stage:has(.luz-site-submenu) {
+    padding-block-end: calc(3 * var(--luz-control-lg) + var(--luz-space-lg));
   }
 }
 
 /* Do and don't of the submenu: the open box is drawn in place, in its frame */
-.docs-dodont__stage .cai-site-submenu > ul {
+.docs-dodont__stage .luz-site-submenu > ul {
   position: static;
 }

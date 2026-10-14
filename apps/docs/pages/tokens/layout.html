@@ -1,6 +1,6 @@
-<!-- cai:page
+<!-- luz:page
 title: Layout and breakpoints
-description: How wide content gets, and where the layout changes. Ships with @cai-ds/core.
+description: How wide content gets, and where the layout changes. Ships with @luz-ds/core.
 area: tokens
 order: 9
 group: families
@@ -11,26 +11,26 @@ files: settings/_settings.css
             <div>
               <h2 id="widths" class="docs-subhead">Widths</h2>
               <ul class="docs-scale-list">
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-sidebar-width</code><span>256px</span><span class="docs-scale__note">Sidebar and app-shell column</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-content-max</code><span>1100px</span><span class="docs-scale__note">Maximum content width</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-scrollbar-size</code><span>4px</span><span class="docs-scale__note">Scrollbar thickness</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-sidebar-width</code><span>256px</span><span class="docs-scale__note">Sidebar and app-shell column</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-content-max</code><span>1100px</span><span class="docs-scale__note">Maximum content width</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-scrollbar-size</code><span>4px</span><span class="docs-scale__note">Scrollbar thickness</span></li>
               </ul>
             </div>
             <div>
               <h2 id="breakpoints" class="docs-subhead">Breakpoints</h2>
               <ul class="docs-scale-list">
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-sm</code><span>640px</span><span class="docs-scale__note">Mobile</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-md</code><span>768px</span><span class="docs-scale__note">Tablet, sidebar collapse</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-lg</code><span>1024px</span><span class="docs-scale__note">Narrow desktop</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-xl</code><span>1280px</span><span class="docs-scale__note">Standard desktop</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-xxl</code><span>1536px</span><span class="docs-scale__note">Wide screen</span></li>
-                <li class="docs-scale docs-scale--note"><code class="u-select-all">--cai-mq-xxxl</code><span>1920px</span><span class="docs-scale__note">Full HD</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-mq-sm</code><span>640px</span><span class="docs-scale__note">Mobile</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-mq-md</code><span>768px</span><span class="docs-scale__note">Tablet, sidebar collapse</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-mq-lg</code><span>1024px</span><span class="docs-scale__note">Narrow desktop</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-mq-xl</code><span>1280px</span><span class="docs-scale__note">Standard desktop</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-mq-xxl</code><span>1536px</span><span class="docs-scale__note">Wide screen</span></li>
+                <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-mq-xxxl</code><span>1920px</span><span class="docs-scale__note">Full HD</span></li>
               </ul>
             </div>
           </div>
           <p class="docs-demo__note">Ships with core, not with tokens.</p>
           <ul>
-            <li>Breakpoints are reference values: media queries cannot read custom properties, so write the number, such as <code class="cai-code-inline">@media (max-width: 768px)</code>.</li>
+            <li>Breakpoints are reference values: media queries cannot read custom properties, so write the number, such as <code class="luz-code-inline">@media (max-width: 768px)</code>.</li>
             <li>Safari on a Mac with always-visible scrollbars does not count the scrollbar in width media queries (WebKit bug 52653), so a breakpoint is crossed when the window is up to about 15 px wider than its value.</li>
           </ul>
         

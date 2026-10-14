@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * Sorting a table in the browser: `th[data-cai-sort]`, the lazy chunk
+ * Sorting a table in the browser: `th[data-luz-sort]`, the lazy chunk
  * `table-sort.js` (.claude/plans/specs/table-sort.md and its accessibility
  * review, T1 to T4). The fixture holds a table with links, plain headings,
  * formatted numbers (`data-sort-value`) and ties. Runs in `chromium` and in
@@ -17,7 +17,7 @@ const column = (page, table, index) =>
 
 async function ready(page, query = '') {
   await page.goto(`${FIXTURE}${query}`);
-  await page.waitForSelector(`${ROUTES} th[data-cai-sort] > button`);
+  await page.waitForSelector(`${ROUTES} th[data-luz-sort] > button`);
 }
 
 test.describe('table sort', () => {
@@ -33,10 +33,10 @@ test.describe('table sort', () => {
 
   test('the status line exists, empty, before the first press, one per table, outside the scroll wrapper (4.1.3)', async ({ page }) => {
     await ready(page);
-    const info = await page.evaluate(() => [...document.querySelectorAll('output[data-cai-sort-status]')].map((o) => ({
+    const info = await page.evaluate(() => [...document.querySelectorAll('output[data-luz-sort-status]')].map((o) => ({
       text: o.textContent,
-      after: o.previousElementSibling?.classList.contains('cai-table-wrap'),
-      inWrap: !!o.closest('.cai-table-wrap'),
+      after: o.previousElementSibling?.classList.contains('luz-table-wrap'),
+      inWrap: !!o.closest('.luz-table-wrap'),
       hidden: o.classList.contains('u-sr-only'),
     })));
     expect(info).toHaveLength(4);
@@ -77,7 +77,7 @@ test.describe('table sort', () => {
   test('the status line says what changed, in the language of the table (T2)', async ({ page }) => {
     await ready(page);
     await page.locator(`${ROUTES} th > button`, { hasText: 'Parcels' }).click();
-    const status = page.locator('output[data-cai-sort-status]').first();
+    const status = page.locator('output[data-luz-sort-status]').first();
     await expect(status).toHaveText('Sorted by Parcels, ascending');
     await page.locator(`${ROUTES} th > button`, { hasText: 'Parcels' }).click();
     await expect(status).toHaveText('Sorted by Parcels, descending');
@@ -85,7 +85,7 @@ test.describe('table sort', () => {
     await expect(status).toHaveAttribute('lang', 'en');
 
     await page.locator('#es th > button', { hasText: 'Peso' }).click();
-    const es = page.locator('#es').locator('xpath=ancestor::div[contains(@class,"cai-table-wrap")]/following-sibling::output[1]');
+    const es = page.locator('#es').locator('xpath=ancestor::div[contains(@class,"luz-table-wrap")]/following-sibling::output[1]');
     await expect(es).toHaveText('Ordenado por Peso, ascendente');
     await expect(es).toHaveAttribute('lang', 'es');
     expect(await column(page, '#es', 1)).toEqual(['3', '12']);
@@ -117,7 +117,7 @@ test.describe('table sort', () => {
     });
     await expect(page.locator(`${ROUTES} th > button`)).toHaveCount(3);
     await expect(page.locator(`${ROUTES} th > button > button`)).toHaveCount(0);
-    await expect(page.locator('output[data-cai-sort-status]')).toHaveCount(4);
+    await expect(page.locator('output[data-luz-sort-status]')).toHaveCount(4);
     // One press, one sort: the handler was not added twice
     await page.locator(`${ROUTES} th > button`, { hasText: 'Parcels' }).click();
     await expect(page.locator(`${ROUTES} th[aria-sort]`)).toHaveAttribute('aria-sort', 'ascending');
@@ -153,7 +153,7 @@ test.describe('table sort', () => {
     });
     await page.locator(`${ROUTES} th > button`, { hasText: 'Weight' }).click();
     expect(await column(page, ROUTES, 2)).toEqual(['-3', '9', '406.3', '1912', '8430.5']);
-    await expect(page.locator('output[data-cai-sort-status]').first()).toHaveText('');
+    await expect(page.locator('output[data-luz-sort-status]').first()).toHaveText('');
   });
 
   test('the chunk is loaded only on a page with a sortable heading', async ({ page }) => {
@@ -163,7 +163,7 @@ test.describe('table sort', () => {
     await page.waitForLoadState('networkidle');
     expect(requested).toEqual([]);
     await page.goto(FIXTURE);
-    await page.waitForSelector(`${ROUTES} th[data-cai-sort] > button`);
+    await page.waitForSelector(`${ROUTES} th[data-luz-sort] > button`);
     expect(requested.length).toBeGreaterThan(0);
   });
 

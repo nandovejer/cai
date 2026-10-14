@@ -85,12 +85,12 @@ jobs:
         run: pnpm build
 
       # After the build: the dist-dependent suites are skipped without dist/.
-      # CAI_RELEASE: on main (and PRs into it) the red-line debt register
+      # LUZ_RELEASE: on main (and PRs into it) the red-line debt register
       # must be empty (PRINCIPLES.md, Migration)
       - name: Run unit tests
         run: pnpm test:unit
         env:
-          CAI_RELEASE: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
+          LUZ_RELEASE: ${{ github.ref == 'refs/heads/main' || github.base_ref == 'main' }}
 
       - name: Check tarball contents
         run: pnpm check:pack

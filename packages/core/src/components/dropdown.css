@@ -1,8 +1,8 @@
 /* --------------------------------------------------------------------------
-   CAI Component: dropdown
+   LUZ Component: dropdown
    A button that opens a short list of actions or links
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
@@ -13,97 +13,97 @@
    disclosure of actions and not an ARIA menu, so it needs no arrow keys.
    In a browser without the popover API the list simply stays in the flow,
    under the button. */
-.cai-dropdown {
+.luz-dropdown {
   display: inline-block;
 }
 
-.cai-dropdown__list {
+.luz-dropdown__list {
   display: grid;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.cai-dropdown__item {
+.luz-dropdown__item {
   display: flex;
   align-items: center;
   inline-size: 100%;
-  min-block-size: var(--cai-control-lg);
+  min-block-size: var(--luz-control-lg);
   margin: 0;
-  padding-inline: var(--cai-space-sm);
+  padding-inline: var(--luz-space-sm);
   border: 0;
-  border-radius: var(--cai-radius-sm);
+  border-radius: var(--luz-radius-sm);
   background: transparent;
-  color: var(--cai-text-primary);
+  color: var(--luz-text-primary);
   font: inherit;
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
-  font-size: var(--cai-text-md);
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
+  font-size: var(--luz-text-md);
   text-align: start;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color var(--cai-duration-fast);
+  transition: background-color var(--luz-duration-fast);
 }
 
-.cai-dropdown__item:hover {
-  background: var(--cai-surface-hover);
+.luz-dropdown__item:hover {
+  background: var(--luz-surface-hover);
   text-decoration: none;
 }
 
-.cai-dropdown__item:active {
-  background: var(--cai-surface-pressed);
+.luz-dropdown__item:active {
+  background: var(--luz-surface-pressed);
 }
 
 /* Inside the panel, so the ring is not clipped by its edge */
-.cai-dropdown__item:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-dropdown__item:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: -2px;
 }
 
 /* Danger is said in words as well as in color: the label names the action */
-.cai-dropdown__item--danger {
-  color: var(--cai-color-danger);
+.luz-dropdown__item--danger {
+  color: var(--luz-color-danger);
 }
 
-.cai-dropdown__item[aria-disabled="true"],
-.cai-dropdown__item:disabled {
-  color: var(--cai-text-disabled);
+.luz-dropdown__item[aria-disabled="true"],
+.luz-dropdown__item:disabled {
+  color: var(--luz-text-disabled);
   cursor: not-allowed;
 }
 
-.cai-dropdown__item[aria-disabled="true"]:hover,
-.cai-dropdown__item:disabled:hover {
+.luz-dropdown__item[aria-disabled="true"]:hover,
+.luz-dropdown__item:disabled:hover {
   background: transparent;
 }
 
 /* A rule between groups of actions */
-.cai-dropdown__separator {
-  margin-block: var(--cai-space-2xs);
+.luz-dropdown__separator {
+  margin-block: var(--luz-space-2xs);
   border: 0;
-  border-block-start: 1px solid var(--cai-divider);
+  border-block-start: 1px solid var(--luz-divider);
 }
 
 /* The panel. Where there is no popover API it is a plain block in the flow,
    so these rules wait for it. */
 @supports selector(:popover-open) {
-  .cai-dropdown__menu {
+  .luz-dropdown__menu {
     inline-size: auto;
     min-inline-size: 12rem;
     max-block-size: min(24rem, 70dvb);
     margin: 0;
-    padding: var(--cai-space-2xs);
-    border: 1px solid var(--cai-outline);
-    border-radius: var(--cai-radius-md);
-    background: var(--cai-surface);
-    color: var(--cai-text-primary);
-    box-shadow: var(--cai-shadow-md);
+    padding: var(--luz-space-2xs);
+    border: 1px solid var(--luz-outline);
+    border-radius: var(--luz-radius-md);
+    background: var(--luz-surface);
+    color: var(--luz-text-primary);
+    box-shadow: var(--luz-shadow-md);
     overflow: auto;
   }
 
   /* Without anchor positioning it is a sheet at the bottom of the screen: the
      whole width, always in reach of a thumb */
-  .cai-dropdown__menu:popover-open {
+  .luz-dropdown__menu:popover-open {
     position: fixed;
-    inset: auto var(--cai-space-md) var(--cai-space-md);
+    inset: auto var(--luz-space-md) var(--luz-space-md);
   }
 }
 
@@ -112,34 +112,34 @@
    the panel opens under its button, at its start edge, and flips above when
    there is no room below. Same parts as the tooltip: anchor-name,
    anchor-scope, position-anchor, anchor() and position-try-fallbacks. */
-@supports selector(:popover-open) and (anchor-name: --cai-dropdown) and (inset-block-start: anchor(end)) {
+@supports selector(:popover-open) and (anchor-name: --luz-dropdown) and (inset-block-start: anchor(end)) {
   /* Each dropdown sees only its own button */
-  .cai-dropdown {
-    anchor-scope: --cai-dropdown;
+  .luz-dropdown {
+    anchor-scope: --luz-dropdown;
   }
 
-  .cai-dropdown > :not(.cai-dropdown__menu) {
-    anchor-name: --cai-dropdown;
+  .luz-dropdown > :not(.luz-dropdown__menu) {
+    anchor-name: --luz-dropdown;
   }
 
-  .cai-dropdown__menu:popover-open {
-    position-anchor: --cai-dropdown;
+  .luz-dropdown__menu:popover-open {
+    position-anchor: --luz-dropdown;
     inset: auto;
     inset-block-start: anchor(end);
     inset-inline-start: anchor(start);
-    margin-block: var(--cai-space-2xs);
+    margin-block: var(--luz-space-2xs);
     position-try-fallbacks: flip-block;
   }
 }
 
 /* Forced colors: the hover fill is dropped, so say it with an underline */
 @media (forced-colors: active) {
-  .cai-dropdown__item:hover {
+  .luz-dropdown__item:hover {
     text-decoration: underline;
   }
 
-  .cai-dropdown__item[aria-disabled="true"],
-  .cai-dropdown__item:disabled {
+  .luz-dropdown__item[aria-disabled="true"],
+  .luz-dropdown__item:disabled {
     color: GrayText;
   }
 }

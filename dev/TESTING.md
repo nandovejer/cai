@@ -1,4 +1,4 @@
-# Testing Guide — CAI Design System
+# Testing Guide — LUZ Design System
 
 This guide covers how to run tests locally and understand the testing setup.
 
@@ -135,7 +135,7 @@ Validates JavaScript in `packages/**/*.js` and `scripts/**/*.js` using ESLint.
 pnpm tokens:build
 ```
 
-Regenerates `packages/tokens/dist/cai-tokens.css` primitives from `tokens.json`.
+Regenerates `packages/tokens/dist/luz-tokens.css` primitives from `tokens.json`.
 
 ### Core
 
@@ -144,8 +144,8 @@ pnpm core:build
 ```
 
 Regenerates:
-- `packages/core/dist/cai.css` (from `src/`)
-- `packages/core/dist/cai.js` (copy of `src/cai.js`)
+- `packages/core/dist/luz.css` (from `src/`)
+- `packages/core/dist/luz.js` (copy of `src/luz.js`)
 - `packages/core/dist/midi.js` (copy of `src/midi.js`)
 - Theme CSS files in `packages/core/dist/themes/`
 
@@ -267,5 +267,5 @@ Run `pnpm install` to install Playwright.
 
 - [Vitest Documentation](https://vitest.dev/)
 - [Playwright Documentation](https://playwright.dev/)
-- [CAI Design System Architecture](../AGENTS.md)
+- [LUZ Design System Architecture](../AGENTS.md)
 - [Contributing Guide](../CONTRIBUTING.md)

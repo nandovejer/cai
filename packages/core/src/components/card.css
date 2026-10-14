@@ -1,25 +1,25 @@
 /* --------------------------------------------------------------------------
-   CAI Component: card
+   LUZ Component: card
    Card surface. A link in the title makes the whole card one link: the
    link's ::after is stretched over the card, which takes the hover and the
    focus ring; other links and controls in it are raised above that link.
    One modifier, --featured, for the one card to look at first in a group.
    No JavaScript.
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
 /* Positioned always, so a stretched link never escapes the card, even in a
    browser without :has() */
-.cai-card {
+.luz-card {
   position: relative;
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
-  padding: var(--cai-space-md);
-  transition: box-shadow var(--cai-duration-fast) var(--cai-easing-enter),
-    border-color var(--cai-duration-fast), background var(--cai-duration-base);
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  padding: var(--luz-space-md);
+  transition: box-shadow var(--luz-duration-fast) var(--luz-easing-enter),
+    border-color var(--luz-duration-fast), background var(--luz-duration-base);
 }
 
 /* One card to look at first in a group. The weight of the border is the cue
@@ -27,74 +27,74 @@
    stay); the padding gives back the extra pixel, so it is as tall as its
    neighbours. Say it in words too (a tag, "Most chosen"): the class tells
    assistive technology nothing. */
-.cai-card--featured {
+.luz-card--featured {
   border-width: 2px;
-  border-color: var(--cai-brand-primary);
-  padding: calc(var(--cai-space-md) - 1px);
+  border-color: var(--luz-brand-primary);
+  padding: calc(var(--luz-space-md) - 1px);
 }
 
-/* Only a linked card answers the pointer: --cai-input-border is 3:1 or more
+/* Only a linked card answers the pointer: --luz-input-border is 3:1 or more
    on the surface and the page in every mode (WCAG 1.4.11) */
-.cai-card:has(.cai-card__title a):hover {
-  box-shadow: var(--cai-shadow-sm);
-  border-color: var(--cai-input-border);
+.luz-card:has(.luz-card__title a):hover {
+  box-shadow: var(--luz-shadow-sm);
+  border-color: var(--luz-input-border);
 }
 
 /* A linked featured card keeps the brand colour, a step darker, on hover */
-.cai-card--featured:has(.cai-card__title a):hover {
-  border-color: var(--cai-brand-hover);
+.luz-card--featured:has(.luz-card__title a):hover {
+  border-color: var(--luz-brand-hover);
 }
 
-.cai-card__title {
-  font-size: var(--cai-text-base);
+.luz-card__title {
+  font-size: var(--luz-text-base);
   font-weight: 600;
-  margin-block-end: var(--cai-space-2xs);
-  color: var(--cai-text-primary);
+  margin-block-end: var(--luz-space-2xs);
+  color: var(--luz-text-primary);
 }
 
-.cai-card__body {
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
-  margin-block-end: var(--cai-space-sm);
+.luz-card__body {
+  font-size: var(--luz-text-md);
+  color: var(--luz-text-secondary);
+  margin-block-end: var(--luz-space-sm);
 }
 
 /* A linked title is navigation, so it is in sans, as a nav or a list of
    links is; the content stays in the heading face */
-.cai-card__title:has(a) {
-  font-family: var(--cai-font-sans);
+.luz-card__title:has(a) {
+  font-family: var(--luz-font-sans);
 }
 
 /* The price outranks the description: primary text, semibold, figures of
    equal width so a column of cards lines up. A previous price is <s>, in
    the secondary color (the line through it is not color alone). */
-.cai-card__price {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-base);
+.luz-card__price {
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-base);
   font-weight: 600;
   font-variant-numeric: tabular-nums;
-  margin-block-end: var(--cai-space-sm);
-  color: var(--cai-text-primary);
+  margin-block-end: var(--luz-space-sm);
+  color: var(--luz-text-primary);
 }
 
-.cai-card__price s {
+.luz-card__price s {
   font-weight: 400;
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 /* The padding is the card's last space */
-.cai-card__title:last-child,
-.cai-card__body:last-child,
-.cai-card__price:last-child {
+.luz-card__title:last-child,
+.luz-card__body:last-child,
+.luz-card__price:last-child {
   margin-block-end: 0;
 }
 
 /* The title link covers the card: one tab stop, named by the title. Other
    links and controls are raised above it (below) */
-.cai-card__title a::after {
+.luz-card__title a::after {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: var(--cai-radius-md);
+  border-radius: var(--luz-radius-md);
 }
 
 /* A link or control in the card, other than the title link, sits above the
@@ -103,14 +103,14 @@
    (a "save" button over the image). The title link is never raised: that
    would take the card's click from it. Each has its own tab stop, in
    source order. */
-.cai-card :where(a, button, input, select, textarea, summary):not(.cai-card__title a) {
+.luz-card :where(a, button, input, select, textarea, summary):not(.luz-card__title a) {
   position: relative;
   z-index: 1;
 }
 
 /* A button's label wraps in a card, which can be narrow, and a long word
    breaks (WCAG 1.4.4, 1.4.10) */
-.cai-card .cai-btn {
+.luz-card .luz-btn {
   white-space: normal;
   overflow-wrap: anywhere;
   text-align: center;
@@ -118,13 +118,13 @@
 
 /* The link keeps its own ring; the card gets one too. An outline, so it
    stays in forced-colors mode */
-.cai-card__title a:focus-visible::after {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-card__title a:focus-visible::after {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
 /* On a 2px border the ring would touch it and read as a thicker border: it
    stands off by the border's width and a little more */
-.cai-card--featured .cai-card__title a:focus-visible::after {
-  outline-offset: var(--cai-space-2xs);
+.luz-card--featured .luz-card__title a:focus-visible::after {
+  outline-offset: var(--luz-space-2xs);
 }

@@ -1,5 +1,5 @@
 /**
- * CAI docs site generator (scripts/docs-site): front matter, routes, relative
+ * LUZ docs site generator (scripts/docs-site): front matter, routes, relative
  * URLs per depth, includes and placeholders, the strict HTML reader, the link
  * check and the security rules of .claude/plans/docs-redesign/security.md
  * (SEC-PLG-*). The real site is checked too: it must build with no problem.
@@ -10,7 +10,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { readHtml } from "../scripts/docs-site/html.js";
-import { SITE_KINDS } from "../scripts/cai-packages.js";
+import { SITE_KINDS } from "../scripts/luz-packages.js";
 import { readIndex, search } from "../packages/site/src/search.js";
 import {
   SEARCH_INDEX_ROUTE,
@@ -47,7 +47,7 @@ afterEach(() => {
 });
 
 const PAGE = (title, body = "<p>Hello.</p>", extra = "") =>
-  `<!-- cai:page\ntitle: ${title}\ndescription: About ${title}.\narea: components\n${extra}-->\n${body}\n`;
+  `<!-- luz:page\ntitle: ${title}\ndescription: About ${title}.\narea: components\n${extra}-->\n${body}\n`;
 
 const LAYOUT = `<!DOCTYPE html>
 <html lang="en">
@@ -56,7 +56,7 @@ const LAYOUT = `<!DOCTYPE html>
   <meta name="description" content="{{description}}">
 </head>
 <body>
-  <!-- cai:include header -->
+  <!-- luz:include header -->
   <main id="main-content">
 {{content}}
   </main>
@@ -65,7 +65,7 @@ const LAYOUT = `<!DOCTYPE html>
 `;
 
 const HEADER = `<header id="site-header">
-  <a class="brand" href="/">CAI</a>
+  <a class="brand" href="/">LUZ</a>
   <nav aria-label="Site">
     <a href="/">Home</a>
     <a href="/docs/">Docs</a>
@@ -75,7 +75,7 @@ const HEADER = `<header id="site-header">
 
 /** Write a docs folder: { "pages/index.html": "...", ... } plus defaults. */
 function fixture(files = {}) {
-  const repoRoot = mkdtempSync(join(tmpdir(), "cai-docs-site-"));
+  const repoRoot = mkdtempSync(join(tmpdir(), "luz-docs-site-"));
   temps.push(repoRoot);
   const docsDir = join(repoRoot, "apps/docs");
   const all = {
@@ -134,11 +134,11 @@ describe("routes", () => {
     );
     expect(relativizeLinks('<a href="/docs/#x">b</a>', "/", routes)).toBe('<a href="./docs/#x">b</a>');
     // The not-found page: from the site's path
-    expect(relativizeLinks('<a href="/">a</a><a href="/docs/#x">b</a>', "/404.html", routes, "/cai/")).toBe('<a href="/cai/">a</a><a href="/cai/docs/#x">b</a>');
+    expect(relativizeLinks('<a href="/">a</a><a href="/docs/#x">b</a>', "/404.html", routes, "/luz/")).toBe('<a href="/luz/">a</a><a href="/luz/docs/#x">b</a>');
     // The search index URL of the dialog, from any depth
-    const dialog = '<dialog data-cai-search data-cai-search-src="/docs/search-index.json"></dialog>';
-    expect(relativizeLinks(dialog, "/docs/components/button/", routes)).toContain('data-cai-search-src="../../../docs/search-index.json"');
-    expect(relativizeLinks(dialog, "/", routes)).toContain('data-cai-search-src="./docs/search-index.json"');
+    const dialog = '<dialog data-luz-search data-luz-search-src="/docs/search-index.json"></dialog>';
+    expect(relativizeLinks(dialog, "/docs/components/button/", routes)).toContain('data-luz-search-src="../../../docs/search-index.json"');
+    expect(relativizeLinks(dialog, "/", routes)).toContain('data-luz-search-src="./docs/search-index.json"');
   });
 });
 
@@ -157,7 +157,7 @@ describe("front matter", () => {
   it("fails on a missing comment, unknown key, missing required key or unknown area", () => {
     expect(() => parseFrontMatter("<p>x</p>", "x.html")).toThrow(/front matter/);
     expect(() => parseFrontMatter(PAGE("A", "", "colour: red\n"), "x.html")).toThrow(/unknown front matter key "colour"/);
-    expect(() => parseFrontMatter("<!-- cai:page\ntitle: A\narea: components\n-->\n", "x.html")).toThrow(/needs "description"/);
+    expect(() => parseFrontMatter("<!-- luz:page\ntitle: A\narea: components\n-->\n", "x.html")).toThrow(/needs "description"/);
     expect(() => parseFrontMatter(PAGE("A").replace("components", "widgets"), "x.html", areas)).toThrow(/unknown area "widgets"/);
     expect(() => parseFrontMatter(PAGE("A", "", "layout: ../evil\n"), "x.html")).toThrow(/layout/);
   });
@@ -187,16 +187,16 @@ describe("HTML reader", () => {
 
   it("collects the short <code> names: their section, their own id and their table cell, never a sample or a demo", () => {
     const html = `<h2 id="v">Variants</h2>
-<table><tr><td data-label="Class"><div><code>.cai-btn</code></div></td></tr></table>
-<ul><li id="cai-brand-primary"><code>--cai-brand-primary</code></li></ul>
+<table><tr><td data-label="Class"><div><code>.luz-btn</code></div></td></tr></table>
+<ul><li id="luz-brand-primary"><code>--luz-brand-primary</code></li></ul>
 <pre><code>.not-a-name</code></pre>
-<div data-docs-specimen><h3 id="demo">Demo</h3><code>.cai-demo</code></div>
+<div data-docs-specimen><h3 id="demo">Demo</h3><code>.luz-demo</code></div>
 <p><code>a &amp; b</code></p>`;
     const { codes } = readHtml(html, "f.html");
     expect(codes).toEqual([
-      { text: ".cai-btn", line: 2, heading: "v", own: null, cell: "Class", specimen: false },
-      { text: "--cai-brand-primary", line: 3, heading: "v", own: "cai-brand-primary", cell: null, specimen: false },
-      { text: ".cai-demo", line: 5, heading: "v", own: null, cell: null, specimen: true },
+      { text: ".luz-btn", line: 2, heading: "v", own: null, cell: "Class", specimen: false },
+      { text: "--luz-brand-primary", line: 3, heading: "v", own: "luz-brand-primary", cell: null, specimen: false },
+      { text: ".luz-demo", line: 5, heading: "v", own: null, cell: null, specimen: true },
       { text: "a & b", line: 6, heading: "v", own: null, cell: null, specimen: false },
     ]);
   });
@@ -204,12 +204,12 @@ describe("HTML reader", () => {
   it("collects the swatches: a colour drawn without a <code>, linked to the label of its scale", () => {
     const html = `<h2 id="r">Ramps</h2>
 <span id="ramp-blue">blue</span>
-<ul aria-labelledby="ramp-blue"><li><span class="docs-swatch" style="--v: var(--cai-blue-60)" aria-hidden="true"></span>60</li></ul>
-<div id="box"><span class="docs-swatch u-x" style="--v: var(--cai-gray-10)"></span><span class="docs-box" style="--v: var(--cai-space-md)"></span></div>`;
+<ul aria-labelledby="ramp-blue"><li><span class="docs-swatch" style="--v: var(--luz-blue-60)" aria-hidden="true"></span>60</li></ul>
+<div id="box"><span class="docs-swatch u-x" style="--v: var(--luz-gray-10)"></span><span class="docs-box" style="--v: var(--luz-space-md)"></span></div>`;
     const { swatches } = readHtml(html, "f.html");
     expect(swatches).toEqual([
-      { token: "--cai-blue-60", line: 3, heading: "r", own: "ramp-blue" },
-      { token: "--cai-gray-10", line: 4, heading: "r", own: "box" },
+      { token: "--luz-blue-60", line: 3, heading: "r", own: "ramp-blue" },
+      { token: "--luz-gray-10", line: 4, heading: "r", own: "box" },
     ]);
   });
 
@@ -234,7 +234,7 @@ describe("On this page", () => {
     const html = renderToc(page("h2,h3"), body);
     const items = readHtml(html, "toc").links.map((l) => l.href);
     expect(items).toEqual(["#a", "#b", "#b1", "#b2", "#c"]);
-    expect(html.replace(/\s+/g, " ")).toContain('href="#b">B</a> <ul class="docs-onpage__sub"> <li><a class="cai-sidebar__link docs-onpage__link" href="#b1">B one</a></li> <li><a class="cai-sidebar__link docs-onpage__link" href="#b2">B two</a></li> </ul> </li>');
+    expect(html.replace(/\s+/g, " ")).toContain('href="#b">B</a> <ul class="docs-onpage__sub"> <li><a class="luz-sidebar__link docs-onpage__link" href="#b1">B one</a></li> <li><a class="luz-sidebar__link docs-onpage__link" href="#b2">B two</a></li> </ul> </li>');
     expect(html).not.toContain("Demo");
   });
 
@@ -255,9 +255,9 @@ describe("On this page", () => {
 describe("includes and placeholders", () => {
   const partials = {
     header: "<header>\n  <nav>\n    <a href=\"/\">Home</a>\n    <a href=\"/docs/\">Docs</a>\n  </nav>\n</header>\n",
-    outer: "<div>\n  <!-- cai:include inner -->\n</div>",
+    outer: "<div>\n  <!-- luz:include inner -->\n</div>",
     inner: "<span>{{title}}</span>",
-    loop: "<!-- cai:include loop -->",
+    loop: "<!-- luz:include loop -->",
   };
   const ctx = (extra = {}) => ({
     file: "t.html",
@@ -265,23 +265,23 @@ describe("includes and placeholders", () => {
       if (!(name in partials)) throw new Error(`no partial ${name}`);
       return { text: partials[name], file: `_partials/${name}.html` };
     },
-    values: { title: 'A "quoted" <title>', description: "d", root: "../", content: "<p>{{title}} <!-- cai:include header --></p>" },
+    values: { title: 'A "quoted" <title>', description: "d", root: "../", content: "<p>{{title}} <!-- luz:include header --></p>" },
     placeholders: true,
     current: new Map([["/docs/", "page"]]),
     ...extra,
   });
 
   it("indents an included partial to its line and marks the current link in the nav", () => {
-    expect(expand("<body>\n  <!-- cai:include header -->\n</body>", ctx())).toBe(
+    expect(expand("<body>\n  <!-- luz:include header -->\n</body>", ctx())).toBe(
       '<body>\n  <header>\n    <nav>\n      <a href="/">Home</a>\n      <a href="/docs/" aria-current="page">Docs</a>\n    </nav>\n  </header>\n</body>',
     );
-    expect(expand("  <!-- cai:include outer -->", ctx())).toBe("  <div>\n    <span>A &quot;quoted&quot; &lt;title&gt;</span>\n  </div>");
+    expect(expand("  <!-- luz:include outer -->", ctx())).toBe("  <div>\n    <span>A &quot;quoted&quot; &lt;title&gt;</span>\n  </div>");
   });
 
   it("escapes values for attributes and expands in a single pass (SEC-PLG-7)", () => {
     expect(expand('<meta content="{{title}}">', ctx())).toBe('<meta content="A &quot;quoted&quot; &lt;title&gt;">');
     // Raw content is inserted as it is, and what it contains is never expanded again
-    expect(expand("{{content}}", ctx())).toBe("<p>{{title}} <!-- cai:include header --></p>");
+    expect(expand("{{content}}", ctx())).toBe("<p>{{title}} <!-- luz:include header --></p>");
     expect(escapeHtml(`"><script>'`)).toBe("&quot;&gt;&lt;script&gt;&#39;");
   });
 
@@ -291,16 +291,16 @@ describe("includes and placeholders", () => {
 
   it("fails on an unknown placeholder or include, a bad name, a cycle (SEC-PLG-3)", () => {
     expect(() => expand("{{nope}}", ctx())).toThrow(/unknown placeholder/);
-    expect(() => expand("<!-- cai:include missing -->", ctx())).toThrow(/no partial missing/);
-    expect(() => expand("<!-- cai:include ../../.npmrc -->", ctx())).toThrow(/not valid/);
-    expect(() => expand("<!-- cai:include Header -->", ctx())).toThrow(/not valid/);
-    expect(() => expand("<!-- cai:include loop -->", ctx())).toThrow(/cycle/);
+    expect(() => expand("<!-- luz:include missing -->", ctx())).toThrow(/no partial missing/);
+    expect(() => expand("<!-- luz:include ../../.npmrc -->", ctx())).toThrow(/not valid/);
+    expect(() => expand("<!-- luz:include Header -->", ctx())).toThrow(/not valid/);
+    expect(() => expand("<!-- luz:include loop -->", ctx())).toThrow(/cycle/);
   });
 
   it("marks only links inside a <nav>, never the brand link", () => {
-    const html = '<a class="brand" href="/">CAI</a><nav><a href="/">Home</a></nav>';
-    expect(markCurrent(html, new Map([["/", "page"]]))).toBe('<a class="brand" href="/">CAI</a><nav><a href="/" aria-current="page">Home</a></nav>');
-    expect(markCurrent(html, new Map([["/", "true"]]))).toBe('<a class="brand" href="/">CAI</a><nav><a href="/" aria-current="true">Home</a></nav>');
+    const html = '<a class="brand" href="/">LUZ</a><nav><a href="/">Home</a></nav>';
+    expect(markCurrent(html, new Map([["/", "page"]]))).toBe('<a class="brand" href="/">LUZ</a><nav><a href="/" aria-current="page">Home</a></nav>');
+    expect(markCurrent(html, new Map([["/", "true"]]))).toBe('<a class="brand" href="/">LUZ</a><nav><a href="/" aria-current="true">Home</a></nav>');
     expect(markCurrent(html, new Map())).toBe(html);
   });
 });
@@ -320,7 +320,7 @@ describe("link check", () => {
         { href: "/docs/components/button", file: "a.html", line: 5 },
         { href: "/docs/nope/", file: "a.html", line: 6 },
         { href: "/docs/components/button/#gone", file: "a.html", line: 7 },
-        { href: "/packages/core/dist/cai.css", file: "a.html", line: 8 },
+        { href: "/packages/core/dist/luz.css", file: "a.html", line: 8 },
         { href: "https://example.com/docs/", file: "a.html", line: 9 },
         { href: "/site/#anything", file: "a.html", line: 10 },
         { href: "//evil.example/", file: "a.html", line: 11 },
@@ -391,7 +391,7 @@ describe("scanning and building a site", () => {
   });
 
   it("fails on a symlink anywhere under pages/ or as a partial (SEC-PLG-2)", () => {
-    const secret = join(tmpdir(), "cai-docs-site-secret.html");
+    const secret = join(tmpdir(), "luz-docs-site-secret.html");
     writeFileSync(secret, "<p>secret</p>");
     try {
       const one = fixture();
@@ -400,7 +400,7 @@ describe("scanning and building a site", () => {
 
       const two = fixture();
       symlinkSync(secret, join(two.docsDir, "_partials/leak.html"));
-      writeFileSync(join(two.docsDir, "pages/index.html"), PAGE("Home", "<!-- cai:include leak -->"));
+      writeFileSync(join(two.docsDir, "pages/index.html"), PAGE("Home", "<!-- luz:include leak -->"));
       const site = scanSite(two.docsDir, two.repoRoot);
       expect(() => renderPage(site.pages[0], site)).toThrow(/symlinks are not allowed/);
     } finally {
@@ -410,7 +410,7 @@ describe("scanning and building a site", () => {
 
   it("refuses a partials or layouts folder that is a symlink out of the docs (SEC-PLG-1)", () => {
     // The folder's own real path follows the link: the root must be apps/docs
-    const outside = mkdtempSync(join(tmpdir(), "cai-docs-site-outside-"));
+    const outside = mkdtempSync(join(tmpdir(), "luz-docs-site-outside-"));
     temps.push(outside);
     writeFileSync(join(outside, "header.html"), "<p>secret</p>");
     writeFileSync(join(outside, "page.html"), LAYOUT);
@@ -446,9 +446,9 @@ describe("scanning and building a site", () => {
 
   it("fails, instead of hanging, on partials that include each other", () => {
     const { repoRoot, docsDir } = fixture({
-      "_partials/a.html": "<!-- cai:include b -->",
-      "_partials/b.html": "<!-- cai:include a -->",
-      "pages/index.html": PAGE("Home", "<!-- cai:include a -->"),
+      "_partials/a.html": "<!-- luz:include b -->",
+      "_partials/b.html": "<!-- luz:include a -->",
+      "pages/index.html": PAGE("Home", "<!-- luz:include a -->"),
     });
     expect(() => buildSite(scanSite(docsDir, repoRoot), { unchecked: ["/"] })).toThrow(/include cycle a → b → a/);
   });
@@ -461,7 +461,7 @@ describe("scanning and building a site", () => {
 
 /* ---- The real site ------------------------------------------------------ */
 
-describe("the CAI docs site", () => {
+describe("the LUZ docs site", () => {
   const site = scanSite(join(repo, "apps/docs"), repo);
   const landing = landingDocuments(site, "apps/landing/index.html", readFileSync(join(repo, "apps/landing/index.html"), "utf-8"));
   const homes = landing.map((d) => d.route);
@@ -480,13 +480,13 @@ describe("the CAI docs site", () => {
     const flat = (html) =>
       html
         .replace(/ aria-current="(page|true)"/g, "")
-        .replace(/<div class="cai-site-lang-switcher">[\s\S]*?<\/nav>\s*<\/div>/, "")
+        .replace(/<div class="luz-site-lang-switcher">[\s\S]*?<\/nav>\s*<\/div>/, "")
         .replace(/\s+/g, " ");
     const docsHeader = flat(header(rendered.get("/docs/")));
     for (const [route, html] of rendered) {
       const own = header(html);
       if (route === "/" || !homes.includes(route)) expect(flat(own), route).toBe(docsHeader);
-      expect(own.includes("cai-site-lang-switcher"), route).toBe(homes.includes(route));
+      expect(own.includes("luz-site-lang-switcher"), route).toBe(homes.includes(route));
       // The site links (Home and Docs; the brand is not a navigation item) and the switcher's current language
       const marked = [...own.matchAll(/<a[^>]* href="([^"]*)"[^>]* aria-current="(page|true)">/g)].map(([, href, value]) => [href, value]);
       const expected = [...currentOf(route, homes)].filter(([href]) => href === "/docs/" || homes.includes(href));
@@ -494,7 +494,7 @@ describe("the CAI docs site", () => {
     }
   });
 
-  it("titles every page as \"<h1> – <area> – CAI documentation\" and gives it one h1 (NAV-2)", () => {
+  it("titles every page as \"<h1> – <area> – LUZ documentation\" and gives it one h1 (NAV-2)", () => {
     const titles = new Set();
     for (const [route, html] of pages) {
       const title = html.match(/<title>([^<]*)<\/title>/)[1];
@@ -502,7 +502,7 @@ describe("the CAI docs site", () => {
       const h1 = [...html.matchAll(/<h1 class="docs-title">([\s\S]*?)<\/h1>/g)].map((m) => m[1]);
       expect(h1, route).toHaveLength(1);
       expect(title.startsWith(h1[0].replace(/&amp;/g, "&")), `${route}: ${title}`).toBe(true);
-      expect(title.endsWith("CAI documentation"), route).toBe(true);
+      expect(title.endsWith("LUZ documentation"), route).toBe(true);
       expect(titles.has(title), `${route}: ${title} is not unique`).toBe(false);
       titles.add(title);
     }
@@ -519,7 +519,7 @@ describe("the CAI docs site", () => {
       expect(parents, route).toEqual(area && route !== `/docs/${area.slug}/` ? [`/docs/${area.slug}/`] : []);
       expect(nav, route).not.toContain("is-active");
       // One nested list at most: the current area
-      expect((nav.match(/<li><a class="cai-sidebar__link docs-nav__area"[^>]*>[^<]*<\/a>\n/g) ?? []).length, route).toBeLessThanOrEqual(1);
+      expect((nav.match(/<li><a class="luz-sidebar__link docs-nav__area"[^>]*>[^<]*<\/a>\n/g) ?? []).length, route).toBeLessThanOrEqual(1);
     }
   });
 
@@ -563,19 +563,19 @@ describe("the CAI docs site", () => {
       const h2 = headings.filter((h) => h.level === 2 && !h.specimen).map((h) => h.id);
       expect(h2, where).toEqual(["example", "known-issues", "code", "design"]);
       // The tab row: Code then Design, named after the page, linking the two panels
-      const tabs = [...page.body.matchAll(/<a class="cai-tab" href="#([a-z-]+)" data-docs-view="([a-z]+)">([^<]*)<\/a>/g)].map((m) => m.slice(1).join(" "));
+      const tabs = [...page.body.matchAll(/<a class="luz-tab" href="#([a-z-]+)" data-docs-view="([a-z]+)">([^<]*)<\/a>/g)].map((m) => m.slice(1).join(" "));
       expect(tabs, where).toEqual(["code-panel code Code", "design-panel design Design"]);
-      expect(page.body, where).toContain(`<nav class="cai-tabs docs-view-tabs" aria-label="${page.meta.title} documentation">`);
+      expect(page.body, where).toContain(`<nav class="luz-tabs docs-view-tabs" aria-label="${page.meta.title} documentation">`);
       // Known issues before the tab row, so never inside a panel, and never empty
       const at = (text) => page.body.indexOf(text);
-      expect(at('<h2 id="known-issues">'), where).toBeLessThan(at('<nav class="cai-tabs docs-view-tabs"'));
+      expect(at('<h2 id="known-issues">'), where).toBeLessThan(at('<nav class="luz-tabs docs-view-tabs"'));
       expect(page.body, where).toMatch(/<h2 id="known-issues">Known issues<\/h2>\s*<p>[^<]{5,}/);
       // Each panel: its h2, then its sections in the template's order
       for (const [panel, heading, ids, required] of [
         ["code-panel", "code", CODE, CODE],
         ["design-panel", "design", DESIGN, DESIGN],
       ]) {
-        const start = at(`<div class="cai-tabpanel docs-view" id="${panel}">`);
+        const start = at(`<div class="luz-tabpanel docs-view" id="${panel}">`);
         expect(start, `${where} #${panel}`).toBeGreaterThan(0);
         const inner = page.body.slice(start).match(/^<div[^>]*>([\s\S]*?)\n {10}<\/div>/)[1];
         expect(inner.trim().startsWith(`<h2 class="docs-view__title" id="${heading}">`), `${where} #${heading}`).toBe(true);
@@ -617,7 +617,7 @@ describe("the CAI docs site", () => {
     for (const entry of indexEntries(site)) expect(urls.has(entry.href), entry.href).toBe(true);
     // Pages, with their area
     expect(index.pages).toContainEqual(["Button", "components/button/", "Components"]);
-    expect(index.pages).toContainEqual(["CAI documentation", "./"]);
+    expect(index.pages).toContainEqual(["LUZ documentation", "./"]);
     expect(index.pages.find(([title]) => title === "A–Z index")).toBeUndefined();
     // Template headings are kept, their page and tab in the meta; the tab row is not
     expect(index.sections).toContainEqual(["When to use", "components/button/#when", "Button › Design"]);
@@ -632,19 +632,19 @@ describe("the CAI docs site", () => {
   it("lists each class and token once, at the part of the page that defines it, and a page's other names after its area", () => {
     const index = buildSearchIndex(site);
     // A class or a token is a section: its text, its page and tab, the id of the part that names it
-    expect(index.sections).toContainEqual([".cai-btn--primary", "components/button/#variants", "Button › Code"]);
+    expect(index.sections).toContainEqual([".luz-btn--primary", "components/button/#variants", "Button › Code"]);
     expect(index.sections).toContainEqual([".o-container", "components/layout/#objects-reference", "Layout objects"]);
-    expect(index.sections).toContainEqual(["--cai-brand-primary", "tokens/color/#cai-brand-primary", "Color"]);
+    expect(index.sections).toContainEqual(["--luz-brand-primary", "tokens/color/#luz-brand-primary", "Color"]);
     // A primitive is drawn as a swatch, with no <code>: it is listed at the label of its scale on the palette page
     const { color } = JSON.parse(readFileSync(new URL("../packages/tokens/tokens.json", import.meta.url), "utf-8"));
     for (const [family, steps] of Object.entries(color)) {
       for (const step of Object.keys(steps)) {
-        expect(index.sections, `--cai-${family}-${step}`).toContainEqual([`--cai-${family}-${step}`, `tokens/palette/#ramp-${family}`, "Color palette"]);
+        expect(index.sections, `--luz-${family}-${step}`).toContainEqual([`--luz-${family}-${step}`, `tokens/palette/#ramp-${family}`, "Color palette"]);
       }
     }
     // A name a page only mentions goes to the page that documents it, never to an area index
-    expect(index.sections).toContainEqual([".cai-select", "components/select/#variants", "Select › Code"]);
-    expect(index.sections.filter(([text, url]) => /^(\.|--cai-)/.test(text) && url.startsWith("tokens/#"))).toEqual([]);
+    expect(index.sections).toContainEqual([".luz-select", "components/select/#variants", "Select › Code"]);
+    expect(index.sections.filter(([text, url]) => /^(\.|--luz-)/.test(text) && url.startsWith("tokens/#"))).toEqual([]);
     const names = indexData(site).flatMap((e) => e.names.map((n) => n.text));
     expect(new Set(names).size).toBe(names.length);
     expect(names.length).toBeGreaterThan(250);
@@ -658,18 +658,18 @@ describe("the CAI docs site", () => {
     expect(indexEntries(site)).toContainEqual({ name: "navbar", href: "/docs/site/site-header/", kind: "Another name for Site header" });
   });
 
-  it("answers what a developer types: class names, tokens, other names, and a part of a title (the search of @cai-ds/site)", () => {
+  it("answers what a developer types: class names, tokens, other names, and a part of a title (the search of @luz-ds/site)", () => {
     const results = readIndex(buildSearchIndex(site), `https://example.org${SEARCH_INDEX_ROUTE}`);
     const [PAGES, SECTIONS] = [0, 1];
     const first = (query, group = SECTIONS) => search(results, query)[group].map((r) => r.text);
-    expect(first("btn-primary")).toEqual([".cai-btn--primary"]);
-    expect(first("--cai-brand-primary")).toEqual(["--cai-brand-primary"]);
-    expect(first("--cai-blue-60")).toEqual(["--cai-blue-60"]);
-    expect(first("blue-60")).toEqual(["--cai-blue-60"]);
+    expect(first("btn-primary")).toEqual([".luz-btn--primary"]);
+    expect(first("--luz-brand-primary")).toEqual(["--luz-brand-primary"]);
+    expect(first("--luz-blue-60")).toEqual(["--luz-blue-60"]);
+    expect(first("blue-60")).toEqual(["--luz-blue-60"]);
     expect(first("navbar", PAGES)).toEqual(["Site header"]);
     expect(first("container")).toContain(".o-container");
     expect(first("input", PAGES)).toEqual(["Form fields"]);
-    expect(first("input")).toContain(".cai-input");
+    expect(first("input")).toContain(".luz-input");
     // "grid" means the layout objects before it means the template headings of Icon grid
     const grid = search(results, "grid")[SECTIONS].slice(0, 8);
     expect(grid.map((r) => r.text)).toContain(".o-grid");

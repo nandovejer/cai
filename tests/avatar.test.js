@@ -15,7 +15,7 @@ describe("avatar.css", () => {
   });
 
   it("fills the box with the photo and rounds it with the box's own corners", () => {
-    const img = rules.find((r) => /\.cai-avatar\s+:where\(img\)/.test(r.selector));
+    const img = rules.find((r) => /\.luz-avatar\s+:where\(img\)/.test(r.selector));
     expect(img, "img rule").toBeDefined();
     expect(img.body).toMatch(/inline-size:\s*100%/);
     expect(img.body).toMatch(/block-size:\s*100%/);

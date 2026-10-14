@@ -1,5 +1,0 @@
----
-"@cai-ds/core": minor
----
-
-Table: sort in the browser. A `<th scope="col" data-cai-sort>` becomes a button that sorts the rows of its table: text in the order of the table's language (`Room 2` before `Room 10`), plain numbers as numbers, anything else by `td[data-sort-value]`; equal rows keep their order; `aria-sort` on the one sorted heading, a triangle drawn by CSS (a shape, never text), and a status line (`<output>`) that says "Sorted by Parcels, ascending" in the table's language. A heading that holds a link keeps sorting on the server without JavaScript; the script moves the link's content into the button and keeps the focus the link had. `cai.js` loads the new lazy chunk `@cai-ds/core/table-sort` (`initTableSort(root, t)`, no imports, 0.76 kB min+gzip against a 2 kB ceiling of its own) only on a page that has a sortable heading. New strings `sortedAsc` and `sortedDesc` in English and Spanish (`data-cai-label-sorted-asc` and `-desc` override them). In a table that sorts in the browser the caption and the headings do not state the direction: they would be wrong after one press. A heading button is at least 24 px high. Page: `/docs/components/table/`.

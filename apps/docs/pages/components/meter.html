@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Meter
 description: Draws a value in a known range as a bar, next to its figure, with the native meter element.
 area: components
@@ -10,16 +10,16 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <div class="cai-table-wrap" role="region" aria-label="Parcels per route" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Parcels per route" tabindex="0">
+              <table class="luz-table">
                 <caption>Parcels per route, this week</caption>
                 <thead>
-                  <tr><th scope="col">Route</th><th scope="col" class="cai-table__numeric">Parcels</th></tr>
+                  <tr><th scope="col">Route</th><th scope="col" class="luz-table__numeric">Parcels</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Route">Sevilla to Madrid</td><td class="cai-table__numeric" data-label="Parcels">1,204<meter class="cai-meter" value="1204" min="0" max="1500" aria-hidden="true">1,204 of 1,500</meter></td></tr>
-                  <tr><td data-label="Route">Cádiz to Málaga</td><td class="cai-table__numeric" data-label="Parcels">312<meter class="cai-meter" value="312" min="0" max="1500" aria-hidden="true">312 of 1,500</meter></td></tr>
-                  <tr><td data-label="Route">Huelva to Faro</td><td class="cai-table__numeric" data-label="Parcels">58<meter class="cai-meter" value="58" min="0" max="1500" aria-hidden="true">58 of 1,500</meter></td></tr>
+                  <tr><td data-label="Route">Sevilla to Madrid</td><td class="luz-table__numeric" data-label="Parcels">1,204<meter class="luz-meter" value="1204" min="0" max="1500" aria-hidden="true">1,204 of 1,500</meter></td></tr>
+                  <tr><td data-label="Route">Cádiz to Málaga</td><td class="luz-table__numeric" data-label="Parcels">312<meter class="luz-meter" value="312" min="0" max="1500" aria-hidden="true">312 of 1,500</meter></td></tr>
+                  <tr><td data-label="Route">Huelva to Faro</td><td class="luz-table__numeric" data-label="Parcels">58<meter class="luz-meter" value="58" min="0" max="1500" aria-hidden="true">58 of 1,500</meter></td></tr>
                 </tbody>
               </table>
             </div>
@@ -27,34 +27,34 @@ toc: h2,h3
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Meter documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Meter documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <p>A bar in the cell of its figure, in a table. The figure is text, so the bar is a picture of it and is hidden from assistive technology:</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-meter-table" aria-label="Copy the meter in a table cell markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-meter-table" aria-label="Copy the meter in a table cell markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Meter in a table cell markup"><code id="code-meter-table">&lt;td class=&quot;cai-table__numeric&quot; data-label=&quot;Parcels&quot;&gt;1,204&lt;meter class=&quot;cai-meter&quot; value=&quot;1204&quot; min=&quot;0&quot; max=&quot;1500&quot; aria-hidden=&quot;true&quot;&gt;1,204 of 1,500&lt;/meter&gt;&lt;/td&gt;</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Meter in a table cell markup"><code id="code-meter-table">&lt;td class=&quot;luz-table__numeric&quot; data-label=&quot;Parcels&quot;&gt;1,204&lt;meter class=&quot;luz-meter&quot; value=&quot;1204&quot; min=&quot;0&quot; max=&quot;1500&quot; aria-hidden=&quot;true&quot;&gt;1,204 of 1,500&lt;/meter&gt;&lt;/td&gt;</code></pre>
             </div>
             <p>A bar on its own, with a visible name and the figure in it:</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-meter" aria-label="Copy the meter with a visible label markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-meter" aria-label="Copy the meter with a visible label markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Meter with a visible label markup"><code id="code-meter">&lt;label for=&quot;storage&quot;&gt;Storage used, 6 of 10 GB&lt;/label&gt;
-&lt;meter class=&quot;cai-meter&quot; id=&quot;storage&quot; value=&quot;6&quot; min=&quot;0&quot; max=&quot;10&quot;&gt;6 of 10 GB&lt;/meter&gt;</code></pre>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Meter with a visible label markup"><code id="code-meter">&lt;label for=&quot;storage&quot;&gt;Storage used, 6 of 10 GB&lt;/label&gt;
+&lt;meter class=&quot;luz-meter&quot; id=&quot;storage&quot; value=&quot;6&quot; min=&quot;0&quot; max=&quot;10&quot;&gt;6 of 10 GB&lt;/meter&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>One class. The bar comes from the native attributes.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Meter attributes" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Meter attributes" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Attribute</th><th scope="col">Effect</th></tr>
                 </thead>
@@ -86,14 +86,14 @@ toc: h2,h3
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a meter for a value in a known range, next to its figure, in a few to a few dozen rows that share a scale: a share of a total, a count against a quota.</p>
             <h3 id="when-not">When not to use</h3>
             <p>Do not use a meter for a task that is running: use <a href="/docs/components/progress/">progress</a>.</p>
             <ul>
-              <li>For a trend over time, use a chart library; keep the <a href="/docs/components/table/">table</a> as its text alternative. CAI draws no line, area or pie chart.</li>
+              <li>For a trend over time, use a chart library; keep the <a href="/docs/components/table/">table</a> as its text alternative. LUZ draws no line, area or pie chart.</li>
               <li>When exact values matter more than the shape, leave the bar out: the figure is already there.</li>
               <li>Do not use the bar's colour to say good or bad: it is always the brand colour.</li>
             </ul>
@@ -102,15 +102,15 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> One scale for every row, and the figure beside each bar: the length compares, the number says how much.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <p class="docs-dodont__label">Sevilla to Madrid, 1,204</p><meter class="cai-meter" value="1204" min="0" max="1500"></meter>
-                  <p class="docs-dodont__label">Cádiz to Málaga, 312</p><meter class="cai-meter" value="312" min="0" max="1500"></meter>
+                  <p class="docs-dodont__label">Sevilla to Madrid, 1,204</p><meter class="luz-meter" value="1204" min="0" max="1500"></meter>
+                  <p class="docs-dodont__label">Cádiz to Málaga, 312</p><meter class="luz-meter" value="312" min="0" max="1500"></meter>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> A scale of its own in each row: 312 of 400 looks longer than 1,204 of 1,500, and the figure is nowhere to check it.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <meter class="cai-meter" value="1204" min="0" max="1500"></meter>
-                  <meter class="cai-meter" value="312" min="0" max="400"></meter>
+                  <meter class="luz-meter" value="1204" min="0" max="1500"></meter>
+                  <meter class="luz-meter" value="312" min="0" max="400"></meter>
                 </div>
               </figure>
             </div>
@@ -123,15 +123,15 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The fill is the brand colour on a muted track. The track has an edge in the field border colour, so you can see where the bar ends.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Meter contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Meter contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Fill against the track</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Edge of the track against the page</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Edge of the track against a card</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Fill against the track</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of the track against the page</div></td><td data-label="Colour on background"><div><code>--luz-input-border</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>3.7:1</div></td><td data-label="Dark"><div>4.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of the track against a card</div></td><td data-label="Colour on background"><div><code>--luz-input-border</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -143,8 +143,8 @@ toc: h2,h3
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 4 tokens that <code>components/meter.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-input-border"><code>--luz-input-border</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-sm</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

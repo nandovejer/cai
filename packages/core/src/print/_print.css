@@ -1,6 +1,6 @@
 /* ==========================================================================
-   CAI — PRINT
-   What changes on paper. One block, in its own layer (cai.print, the last of
+   LUZ — PRINT
+   What changes on paper. One block, in its own layer (luz.print, the last of
    all) so it wins over screen styles of core and site by order.
    Element rules are in :where() (specificity 0), so any rule of yours wins.
    To opt out, restyle in your own layer or in no layer at all.
@@ -15,50 +15,50 @@
   :root {
     color-scheme: light;
 
-    --cai-surface-page: Canvas;
-    --cai-surface: Canvas;
-    --cai-surface-hover: Canvas;
-    --cai-surface-pressed: Canvas;
-    --cai-surface-muted: Canvas;
-    --cai-surface-strong: Canvas;
-    --cai-input-bg: Canvas;
-    --cai-text-primary: CanvasText;
-    --cai-text-secondary: CanvasText;
-    --cai-text-muted: CanvasText;
-    --cai-text-disabled: GrayText;
-    --cai-text-on-fill: CanvasText;
-    --cai-divider: GrayText;
-    --cai-outline: GrayText;
-    --cai-input-border: GrayText;
-    --cai-focus-ring: CanvasText;
-    --cai-brand-primary: LinkText;
-    --cai-brand-hover: LinkText;
-    --cai-brand-active: LinkText;
-    --cai-brand-subtle: Canvas;
-    --cai-brand-fill: Canvas;
-    --cai-brand-fill-hover: Canvas;
-    --cai-brand-fill-active: Canvas;
-    --cai-color-success: CanvasText;
-    --cai-color-success-bg: Canvas;
-    --cai-color-danger: CanvasText;
-    --cai-color-danger-bg: Canvas;
-    --cai-color-danger-fill: Canvas;
-    --cai-color-warning: CanvasText;
-    --cai-color-warning-bg: Canvas;
-    --cai-color-warning-accent: CanvasText;
-    --cai-color-info: CanvasText;
-    --cai-color-info-bg: Canvas;
-    --cai-color-teal: CanvasText;
-    --cai-color-teal-bg: Canvas;
-    --cai-color-purple: CanvasText;
-    --cai-color-purple-bg: Canvas;
-    --cai-color-code: CanvasText;
-    --cai-code-comment: GrayText;
-    --cai-code-keyword: CanvasText;
-    --cai-code-name: CanvasText;
-    --cai-code-property: CanvasText;
-    --cai-code-string: CanvasText;
-    --cai-code-literal: CanvasText;
+    --luz-surface-page: Canvas;
+    --luz-surface: Canvas;
+    --luz-surface-hover: Canvas;
+    --luz-surface-pressed: Canvas;
+    --luz-surface-muted: Canvas;
+    --luz-surface-strong: Canvas;
+    --luz-input-bg: Canvas;
+    --luz-text-primary: CanvasText;
+    --luz-text-secondary: CanvasText;
+    --luz-text-muted: CanvasText;
+    --luz-text-disabled: GrayText;
+    --luz-text-on-fill: CanvasText;
+    --luz-divider: GrayText;
+    --luz-outline: GrayText;
+    --luz-input-border: GrayText;
+    --luz-focus-ring: CanvasText;
+    --luz-brand-primary: LinkText;
+    --luz-brand-hover: LinkText;
+    --luz-brand-active: LinkText;
+    --luz-brand-subtle: Canvas;
+    --luz-brand-fill: Canvas;
+    --luz-brand-fill-hover: Canvas;
+    --luz-brand-fill-active: Canvas;
+    --luz-color-success: CanvasText;
+    --luz-color-success-bg: Canvas;
+    --luz-color-danger: CanvasText;
+    --luz-color-danger-bg: Canvas;
+    --luz-color-danger-fill: Canvas;
+    --luz-color-warning: CanvasText;
+    --luz-color-warning-bg: Canvas;
+    --luz-color-warning-accent: CanvasText;
+    --luz-color-info: CanvasText;
+    --luz-color-info-bg: Canvas;
+    --luz-color-teal: CanvasText;
+    --luz-color-teal-bg: Canvas;
+    --luz-color-purple: CanvasText;
+    --luz-color-purple-bg: Canvas;
+    --luz-color-code: CanvasText;
+    --luz-code-comment: GrayText;
+    --luz-code-keyword: CanvasText;
+    --luz-code-name: CanvasText;
+    --luz-code-property: CanvasText;
+    --luz-code-string: CanvasText;
+    --luz-code-literal: CanvasText;
   }
 
   :where(html, body) {
@@ -82,41 +82,41 @@
 
   /* Navigation, controls that only work on a screen, and the player */
   :where(nav, audio),
-  .cai-sidebar,
-  .cai-tabs,
-  .cai-copy-btn,
-  .cai-mode-switcher,
-  .cai-mode-cycle,
-  .cai-player,
-  .cai-toast,
-  .cai-tooltip__text {
+  .luz-sidebar,
+  .luz-tabs,
+  .luz-copy-btn,
+  .luz-mode-switcher,
+  .luz-mode-cycle,
+  .luz-player,
+  .luz-toast,
+  .luz-tooltip__text {
     display: none;
   }
 
   /* Every tab panel prints, one after the other. An inactive panel is
      hidden="until-found", which skips its content on a screen */
-  .cai-tabpanel[hidden="until-found"] {
+  .luz-tabpanel[hidden="until-found"] {
     content-visibility: visible;
   }
 
   /* A browser without until-found (Safari before 26.2, Firefox before 139)
      reads the attribute as plain hidden */
-  .cai-tabpanel[hidden]:not([hidden="until-found"]) {
+  .luz-tabpanel[hidden]:not([hidden="until-found"]) {
     display: block;
   }
 
   /* A control that sets its own color-scheme (select, date and time fields)
      would keep the dark mode's system colors on paper */
-  :where(.cai-select, .cai-input, select, input, textarea) {
+  :where(.luz-select, .luz-input, select, input, textarea) {
     color-scheme: light;
   }
 
   /* Nothing scrolls on paper: show what would scroll, and wrap what would not fit */
-  .cai-table-wrap {
+  .luz-table-wrap {
     overflow: visible;
   }
 
-  .cai-code-block {
+  .luz-code-block {
     overflow: visible;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
@@ -124,8 +124,8 @@
 
   /* The address of a link, where the reader cannot click it. A button-like
      link is an action, not a reference, and shows no address.
-     cai-exception: EX-006 — content-bearing pseudo-element, print only */
-  :where(a[href^="http"]:not(.cai-btn))::after {
+     luz-exception: EX-006 — content-bearing pseudo-element, print only */
+  :where(a[href^="http"]:not(.luz-btn))::after {
     position: static; /* in the flow, also in a linked card's title */
     content: " (" attr(href) ")";
     font-size: 0.85em;
@@ -134,8 +134,8 @@
 
   /* No break inside a block that is read as one thing */
   :where(figure, pre, table, tr, blockquote, img),
-  .cai-card,
-  .cai-alert {
+  .luz-card,
+  .luz-alert {
     break-inside: avoid;
   }
 

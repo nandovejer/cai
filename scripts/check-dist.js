@@ -7,8 +7,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // One sentinel per package: a missing dist in ANY of them triggers a build
 const sentinels = [
-  "../packages/tokens/dist/cai-tokens.css",
-  "../packages/core/dist/cai.css",
+  "../packages/tokens/dist/luz-tokens.css",
+  "../packages/core/dist/luz.css",
   "../packages/site/dist/site.css",
   "../packages/landing/dist/landing.css",
   "../packages/cms/dist/cms.css",

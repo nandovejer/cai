@@ -1,5 +1,5 @@
 /**
- * CAI — the contrast check as a function of parsed stylesheets, shared by the
+ * LUZ — the contrast check as a function of parsed stylesheets, shared by the
  * command line (lib/cli.js) and the docs page's in-browser tool.
  * No file access and no DOM.
  */
@@ -7,7 +7,7 @@ import { createResolver, measure, pairsFor } from "./contrast.js";
 import { targetsOf, valuesFor } from "./theme.js";
 
 /**
- * @param {{ file: string, rules: object[] }[]} sources CAI's tokens first
+ * @param {{ file: string, rules: object[] }[]} sources LUZ's tokens first
  *   (file "tokens"), then the consumer's files in load order
  * @param {{ strict?: boolean }} [options] strict: advisory pairs fail too
  */

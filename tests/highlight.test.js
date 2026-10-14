@@ -1,5 +1,5 @@
 /**
- * CAI — syntax highlight: one pass, every piece escaped once, no rule
+ * LUZ — syntax highlight: one pass, every piece escaped once, no rule
  * matching inside markup another rule added.
  * Run with: pnpm test:unit
  */
@@ -40,9 +40,9 @@ describe("highlightBlock", () => {
   });
 
   it("CSS: comments, custom properties and colours", () => {
-    const html = block("css", "/* var */\n:root { --cai-x: #fff; color: var(--cai-x); }");
+    const html = block("css", "/* var */\n:root { --luz-x: #fff; color: var(--luz-x); }");
     expect(html).toContain('<span class="tok-comment">/* var */</span>');
-    expect(html).toContain('<span class="tok-property">--cai-x</span>');
+    expect(html).toContain('<span class="tok-property">--luz-x</span>');
     expect(html).toContain('<span class="tok-literal">#fff</span>');
     expect(html).toContain('<span class="tok-name">:root </span>');
     expect(html).toContain('<span class="tok-property">color</span>');
@@ -77,9 +77,9 @@ describe("highlightBlock", () => {
   });
 
   it("JSON: keys are properties, values are strings and literals", () => {
-    const html = block("json", '{ "name": "cai", "private": true, "size": 3 }');
+    const html = block("json", '{ "name": "luz", "private": true, "size": 3 }');
     expect(html).toContain('<span class="tok-property">&quot;name&quot;</span>');
-    expect(html).toContain('<span class="tok-string">&quot;cai&quot;</span>');
+    expect(html).toContain('<span class="tok-string">&quot;luz&quot;</span>');
     expect(html).toContain('<span class="tok-literal">true</span>');
     expect(html).toContain('<span class="tok-literal">3</span>');
   });

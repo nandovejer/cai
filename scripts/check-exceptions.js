@@ -1,6 +1,6 @@
 /**
- * CAI — exceptions register (PRINCIPLES.md, "Exceptions").
- * Every `cai-exception: EX-nnn` comment in the source must have a row in
+ * LUZ — exceptions register (PRINCIPLES.md, "Exceptions").
+ * Every `luz-exception: EX-nnn` comment in the source must have a row in
  * EXCEPTIONS.md; every row that names a file must find its comment there;
  * no row may except a red line (RL-n), only a strong rule (SR-n).
  *
@@ -16,7 +16,7 @@ const SCAN = ["packages", "apps", "scripts", "tests"];
 const ROOT_FILES = ["package.json", "vite.config.js", "eslint.config.js", "stylelint.config.js", "playwright.config.js"];
 const SKIP = new Set(["node_modules", "dist", "fonts"]);
 const EXTENSIONS = new Set([".js", ".css", ".html", ".json"]);
-const COMMENT = /cai-exception:\s*(EX-\d{3})/g;
+const COMMENT = /luz-exception:\s*(EX-\d{3})/g;
 
 function* files(dir) {
   for (const name of readdirSync(dir)) {
@@ -65,7 +65,7 @@ for (const name of ROOT_FILES) {
 
 for (const [id, where] of rows) {
   if (!where || where === "—" || where === "-") continue;
-  if (!found.get(id)?.has(where)) problems.push(`EXCEPTIONS.md: ${id} points at ${where}, which has no "cai-exception: ${id}" comment`);
+  if (!found.get(id)?.has(where)) problems.push(`EXCEPTIONS.md: ${id} points at ${where}, which has no "luz-exception: ${id}" comment`);
 }
 
 if (problems.length) {

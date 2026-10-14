@@ -1,6 +1,6 @@
 // @ts-check
 /**
- * The submenu of the site header (@cai-ds/site, .cai-site-submenu): a native
+ * The submenu of the site header (@luz-ds/site, .luz-site-submenu): a native
  * <details name> in the header's list of links. On the page of
  * tests/fixtures/site-top.html, under a notice and the cookie banner, so the
  * header is not at the top of the window. Runs in `chromium` and

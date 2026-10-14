@@ -1,7 +1,7 @@
 // @ts-check
 /**
- * The cookie consent of @cai-ds/site: the banner (.cai-site-consent) and
- * its module, consent.js (<cai-site-consent>), loaded on its own as
+ * The cookie consent of @luz-ds/site: the banner (.luz-site-consent) and
+ * its module, consent.js (<luz-site-consent>), loaded on its own as
  * dist/consent.min.js by tests/fixtures/site-top.html. Runs in `chromium`
  * and `chromium-nojs`: without JavaScript the banner and the button that
  * reopens it stay hidden, and the page reads as if they were not there.
@@ -10,7 +10,7 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const FIXTURE = '/tests/fixtures/site-top.html';
-const KEY = 'cai-consent';
+const KEY = 'luz-consent';
 
 async function open(page, width = 1280, dir = 'ltr') {
   await page.setViewportSize({ width, height: 900 });
@@ -18,10 +18,10 @@ async function open(page, width = 1280, dir = 'ltr') {
   if (dir === 'rtl') await page.evaluate(() => { document.documentElement.dir = 'rtl'; });
 }
 
-/** Record the cai:consent events from the first script on. */
+/** Record the luz:consent events from the first script on. */
 const listen = (page) => page.addInitScript(() => {
   window.__events = [];
-  document.addEventListener('cai:consent', (e) => window.__events.push(e.detail));
+  document.addEventListener('luz:consent', (e) => window.__events.push(e.detail));
 });
 
 const stored = (page) => page.evaluate((k) => JSON.parse(localStorage.getItem(k)), KEY);
@@ -91,13 +91,13 @@ test.describe('cookie consent', () => {
   });
 
   for (const [button, granted] of [['accept', ['analytics', 'marketing']], ['reject', []]]) {
-    test(`${button}: stores the choice, dispatches cai:consent, and the confirmation takes focus; the next page does not ask`, async ({ page }) => {
+    test(`${button}: stores the choice, dispatches luz:consent, and the confirmation takes focus; the next page does not ask`, async ({ page }) => {
       await listen(page);
       await open(page);
       await page.click(`#${button}`);
       await expect(page.locator('#done')).toBeVisible();
       await expect(page.locator('#done')).toBeFocused();
-      await expect(page.locator('[data-cai-consent-ask]')).toBeHidden();
+      await expect(page.locator('[data-luz-consent-ask]')).toBeHidden();
       const value = await stored(page);
       expect(value).toMatchObject({ version: 1, asked: ['analytics', 'marketing'], granted });
       // 180 days by default
@@ -137,7 +137,7 @@ test.describe('cookie consent', () => {
     await page.keyboard.press('Escape');
     expect(await stored(page)).toBeNull();
     await expect(page.locator('#consent')).toBeVisible();
-    await expect(page.locator('[data-cai-consent-ask]')).toBeVisible();
+    await expect(page.locator('[data-luz-consent-ask]')).toBeVisible();
   });
 
   test('asks again when the choice has expired, is malformed, or was not asked about a category the banner now offers', async ({ page }) => {

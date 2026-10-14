@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Toast
 description: Confirms a small result, such as "Draft saved", without interrupting the reader.
 area: components
@@ -11,61 +11,61 @@ keywords: snackbar, notification
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <div class="cai-toast" role="status">
-              <div class="cai-toast__content">
-                <div class="cai-toast__kind">Success</div>
-                <div class="cai-toast__msg">File exported.</div>
+            <div class="luz-toast" role="status">
+              <div class="luz-toast__content">
+                <div class="luz-toast__kind">Success</div>
+                <div class="luz-toast__msg">File exported.</div>
               </div>
-              <button class="cai-toast__close" type="button" aria-label="Dismiss notification">×</button>
+              <button class="luz-toast__close" type="button" aria-label="Dismiss notification">×</button>
             </div>
           </div>
 
-          <p class="docs-demo__note">A static specimen: CAI draws the toast, and you place it, show it and hide it.</p>
+          <p class="docs-demo__note">A static specimen: LUZ draws the toast, and you place it, show it and hide it.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>CAI ships the look only. The live region, the placement, the timing and the close button's behaviour are yours to build, and to make accessible.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Toast documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <p>LUZ ships the look only. The live region, the placement, the timing and the close button's behaviour are yours to build, and to make accessible.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Toast documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <p>Keep an empty live region on the page, and put the toast inside it when the result happens.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-toast" aria-label="Copy the toast in its live region markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-toast" aria-label="Copy the toast in its live region markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Toast in its live region markup"><code id="code-toast">&lt;div role=&quot;status&quot;&gt;
-  &lt;div class=&quot;cai-toast&quot;&gt;
-    &lt;div class=&quot;cai-toast__content&quot;&gt;
-      &lt;div class=&quot;cai-toast__kind&quot;&gt;Saved&lt;/div&gt;
-      &lt;div class=&quot;cai-toast__msg&quot;&gt;Draft saved.&lt;/div&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Toast in its live region markup"><code id="code-toast">&lt;div role=&quot;status&quot;&gt;
+  &lt;div class=&quot;luz-toast&quot;&gt;
+    &lt;div class=&quot;luz-toast__content&quot;&gt;
+      &lt;div class=&quot;luz-toast__kind&quot;&gt;Saved&lt;/div&gt;
+      &lt;div class=&quot;luz-toast__msg&quot;&gt;Draft saved.&lt;/div&gt;
     &lt;/div&gt;
-    &lt;button class=&quot;cai-toast__close&quot; type=&quot;button&quot; aria-label=&quot;Dismiss notification&quot;&gt;×&lt;/button&gt;
+    &lt;button class=&quot;luz-toast__close&quot; type=&quot;button&quot; aria-label=&quot;Dismiss notification&quot;&gt;×&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <p>There are no modifiers.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Toast parts" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Toast parts" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class"><div><code>.cai-toast</code></div></td><td data-label="What it does"><div>A raised box on the strong surface, 320 px wide at most and never wider than its container</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-toast__kind</code></div></td><td data-label="What it does"><div>A small mono label above the message</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-toast__msg</code></div></td><td data-label="What it does"><div>The message</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.cai-toast__close</code></div></td><td data-label="What it does"><div>The × button, 28 px at least</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-toast</code></div></td><td data-label="What it does"><div>A raised box on the strong surface, 320 px wide at most and never wider than its container</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-toast__kind</code></div></td><td data-label="What it does"><div>A small mono label above the message</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-toast__msg</code></div></td><td data-label="What it does"><div>The message</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-toast__close</code></div></td><td data-label="What it does"><div>The × button, 28 px at least</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>A styled block from <code>components/toast.css</code>. CAI has no toast script.</p>
+            <p>A styled block from <code>components/toast.css</code>. LUZ has no toast script.</p>
             <ul>
-              <li>Position it with your own CSS, for example fixed at the bottom of the screen, above the page with <code>--cai-z-toast</code>.</li>
+              <li>Position it with your own CSS, for example fixed at the bottom of the screen, above the page with <code>--luz-z-toast</code>.</li>
               <li>If it hides by itself, leave it on screen for at least 5 seconds and keep it while it has focus or the pointer is over it.</li>
               <li>The close button needs your script to remove the toast.</li>
             </ul>
@@ -79,7 +79,7 @@ keywords: snackbar, notification
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a toast to confirm a small result that needs no answer: "Draft saved", "Link copied".</p>
@@ -95,13 +95,13 @@ keywords: snackbar, notification
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> A short confirmation the reader can miss without harm: “File exported.”</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-toast"><div class="cai-toast__content"><div class="cai-toast__kind">Success</div><div class="cai-toast__msg">File exported.</div></div><button class="cai-toast__close" type="button">×</button></div>
+                  <div class="luz-toast"><div class="luz-toast__content"><div class="luz-toast__kind">Success</div><div class="luz-toast__msg">File exported.</div></div><button class="luz-toast__close" type="button">×</button></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> A failed payment in a toast: it goes away before the reader acts. Use an alert next to what failed.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-toast"><div class="cai-toast__content"><div class="cai-toast__kind">Error</div><div class="cai-toast__msg">Payment failed. Update your card.</div></div><button class="cai-toast__close" type="button">×</button></div>
+                  <div class="luz-toast"><div class="luz-toast__content"><div class="luz-toast__kind">Error</div><div class="luz-toast__msg">Payment failed. Update your card.</div></div><button class="luz-toast__close" type="button">×</button></div>
                 </div>
               </figure>
             </div>
@@ -113,34 +113,34 @@ keywords: snackbar, notification
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The toast is the strong surface with primary text, so it stands out from the page in every mode.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Toast contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Toast contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Kind label</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Message</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>13.5:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Close button</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Kind label</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Message</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>13.5:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Close button</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> the toast does not take it when it appears. The close button has a 2 px <code>--cai-focus-ring</code> outline, 2 px outside.</li>
+              <li><strong>Focus:</strong> the toast does not take it when it appears. The close button has a 2 px <code>--luz-focus-ring</code> outline, 2 px outside.</li>
               <li><strong>Not colour alone:</strong> the kind is a word (“Success”), not a colour.</li>
               <li><strong>Target:</strong> the close button is at least 28 px square.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 18 tokens that <code>components/toast.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-sm</code>, <code>--cai-space-3xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-lg</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code>, <code>--cai-radius-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-md</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-base</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-surface-strong"><code>--luz-surface-strong</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-sm</code>, <code>--luz-space-3xs</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-mono</code>, <code>--luz-text-lg</code>, <code>--luz-text-sm</code>, <code>--luz-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code>, <code>--luz-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--luz-shadow-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-base</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

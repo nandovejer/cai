@@ -1,73 +1,73 @@
 /* --------------------------------------------------------------------------
-   CAI Component: pagination
+   LUZ Component: pagination
    Page links of a list that goes on over several pages
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-/* nav[aria-label] > ul.cai-pagination > li > a|span: plain links, so it works
+/* nav[aria-label] > ul.luz-pagination > li > a|span: plain links, so it works
    with no JavaScript and every page is a real address. The current page is
    text with aria-current="page"; Previous and Next are links, or text with
    aria-disabled="true" at either end. */
-.cai-pagination {
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
+.luz-pagination {
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   margin: 0;
   padding: 0;
   list-style: none;
-  font-size: var(--cai-text-md);
+  font-size: var(--luz-text-md);
 }
 
-.cai-pagination__link {
+.luz-pagination__link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   /* A target of at least 44 px, whatever the number of digits */
-  min-block-size: var(--cai-control-lg);
-  min-inline-size: var(--cai-control-lg);
-  padding-inline: var(--cai-space-sm);
-  border-radius: var(--cai-radius-md);
-  color: var(--cai-text-secondary);
+  min-block-size: var(--luz-control-lg);
+  min-inline-size: var(--luz-control-lg);
+  padding-inline: var(--luz-space-sm);
+  border-radius: var(--luz-radius-md);
+  color: var(--luz-text-secondary);
   text-decoration: none;
   white-space: nowrap;
-  transition: background-color var(--cai-duration-fast),
-    color var(--cai-duration-fast);
+  transition: background-color var(--luz-duration-fast),
+    color var(--luz-duration-fast);
 }
 
-.cai-pagination__link[href]:not([aria-current="page"]):hover {
-  background: var(--cai-surface-hover);
-  color: var(--cai-text-primary);
+.luz-pagination__link[href]:not([aria-current="page"]):hover {
+  background: var(--luz-surface-hover);
+  color: var(--luz-text-primary);
 }
 
-.cai-pagination__link[href]:not([aria-current="page"]):active {
-  background: var(--cai-surface-pressed);
+.luz-pagination__link[href]:not([aria-current="page"]):active {
+  background: var(--luz-surface-pressed);
 }
 
 /* The current page: a solid fill and a heavier weight, so it is not colour
    alone */
-.cai-pagination__link[aria-current="page"] {
-  background: var(--cai-brand-fill);
-  color: var(--cai-text-on-fill);
+.luz-pagination__link[aria-current="page"] {
+  background: var(--luz-brand-fill);
+  color: var(--luz-text-on-fill);
   font-weight: 600;
 }
 
 /* Previous or Next at the end of the list: text, not a link */
-.cai-pagination__link[aria-disabled="true"] {
-  color: var(--cai-text-disabled);
+.luz-pagination__link[aria-disabled="true"] {
+  color: var(--luz-text-disabled);
   cursor: not-allowed;
 }
 
 /* The gap in a long list ("1 … 8 9 10 … 40"): a mark, not a control */
-.cai-pagination__gap {
+.luz-pagination__gap {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding-inline: var(--cai-space-xs);
-  color: var(--cai-text-muted);
+  padding-inline: var(--luz-space-xs);
+  color: var(--luz-text-muted);
 }
 
 /* Forced colors: the fill is dropped, so the current page takes the system
@@ -75,17 +75,17 @@
    page's own color, so it is drawn in CanvasText. An end that is not a link
    reads as disabled text, and a hovered link is underlined. */
 @media (forced-colors: active) {
-  .cai-pagination__link[aria-current="page"] {
+  .luz-pagination__link[aria-current="page"] {
     background: Highlight;
     color: HighlightText;
     outline-color: CanvasText;
   }
 
-  .cai-pagination__link[aria-disabled="true"] {
+  .luz-pagination__link[aria-disabled="true"] {
     color: GrayText;
   }
 
-  .cai-pagination__link[href]:hover {
+  .luz-pagination__link[href]:hover {
     text-decoration: underline;
   }
 }

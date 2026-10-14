@@ -1,5 +1,5 @@
 /**
- * CAI Design System — Adoption level smoke tests
+ * LUZ Design System — Adoption level smoke tests
  * Each fixture loads only the dist/ files a consumer of that level would:
  * tokens only, tokens + core, tokens + core + site.
  * Run with: pnpm test:ui
@@ -35,9 +35,9 @@ test.describe('Adoption levels', () => {
 
     expect(failed).toEqual([]);
     expect(warnings).toEqual([]);
-    expect(await cssVar(page, '--cai-surface-page')).not.toBe('');
+    expect(await cssVar(page, '--luz-surface-page')).not.toBe('');
     // Core-only settings must not leak into the tokens layer
-    expect(await cssVar(page, '--cai-z-modal')).toBe('');
+    expect(await cssVar(page, '--luz-z-modal')).toBe('');
     // The one bundled font (ET Book) is declared and its file loads
     const etBookLoaded = await page.evaluate(() =>
       document.fonts
@@ -52,7 +52,7 @@ test.describe('Adoption levels', () => {
 
     expect(failed).toEqual([]);
     expect(warnings).toEqual([]);
-    expect(await cssVar(page, '--cai-z-modal')).not.toBe('');
+    expect(await cssVar(page, '--luz-z-modal')).not.toBe('');
     const background = await page
       .locator('#probe')
       .evaluate((el) => getComputedStyle(el).backgroundColor);
@@ -80,6 +80,6 @@ test.describe('Adoption levels', () => {
   test('core without tokens warns about the missing layer', async ({ page }) => {
     const { warnings } = await open(page, 'core-without-tokens.html');
 
-    expect(warnings.some((w) => w.includes('@cai-ds/tokens is not loaded'))).toBe(true);
+    expect(warnings.some((w) => w.includes('@luz-ds/tokens is not loaded'))).toBe(true);
   });
 });

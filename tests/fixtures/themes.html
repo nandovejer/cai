@@ -1,18 +1,18 @@
 <!doctype html>
-<html lang="en" data-theme="light" data-cai-themes="brand not_valid Dark">
+<html lang="en" data-theme="light" data-luz-themes="brand not_valid Dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CAI themes fixture</title>
-  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
-  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <title>LUZ themes fixture</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
   <link rel="stylesheet" href="/tests/fixtures/theme-brand.css">
 </head>
 <body>
   <p id="probe">Text</p>
   <script type="module">
     import { initThemeSystem, applyTheme, getCustomThemes, getStoredTheme } from "/packages/core/dist/theme.js";
-    window.cai = { applyTheme, getCustomThemes, getStoredTheme };
+    window.luz = { applyTheme, getCustomThemes, getStoredTheme };
     initThemeSystem();
   </script>
 </body>

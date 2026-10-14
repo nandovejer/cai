@@ -1,30 +1,30 @@
 /**
- * CAI Site — site search: a native <dialog> with grouped links, in a
- * custom element, <cai-site-search> (light DOM, no Shadow DOM).
+ * LUZ Site — site search: a native <dialog> with grouped links, in a
+ * custom element, <luz-site-search> (light DOM, no Shadow DOM).
  *
  * Markup (every fixed text is authored in the HTML; the docs page,
  * /docs/site/search/, has the full example):
  *
- *   <a href="a-z/" data-cai-search-fallback>A–Z index</a>
- *   <button class="cai-site-search-trigger" type="button" data-cai-search-open
+ *   <a href="a-z/" data-luz-search-fallback>A–Z index</a>
+ *   <button class="luz-site-search-trigger" type="button" data-luz-search-open
  *           aria-keyshortcuts="Control+K Meta+K" hidden>…</button>
- *   <cai-site-search>
- *     <dialog class="cai-modal cai-site-search" data-cai-search
- *             data-cai-search-src="search-index.json"
- *             aria-labelledby="…" data-cai-label-results="{n} results" …>
- *       <div class="cai-site-search__field"><svg aria-hidden="true" …>…</svg>
+ *   <luz-site-search>
+ *     <dialog class="luz-modal luz-site-search" data-luz-search
+ *             data-luz-search-src="search-index.json"
+ *             aria-labelledby="…" data-luz-label-results="{n} results" …>
+ *       <div class="luz-site-search__field"><svg aria-hidden="true" …>…</svg>
  *         <input type="text" autofocus aria-describedby="…"></div>
- *       <p class="cai-site-search__status" role="status"></p>
- *       <div data-cai-search-results>
- *         <div data-cai-search-show="idle">…shown while the field is empty…</div>
- *         <div hidden><h3>Pages</h3><ul data-cai-search-list="pages"></ul></div>
+ *       <p class="luz-site-search__status" role="status"></p>
+ *       <div data-luz-search-results>
+ *         <div data-luz-search-show="idle">…shown while the field is empty…</div>
+ *         <div hidden><h3>Pages</h3><ul data-luz-search-list="pages"></ul></div>
  *         … "sections", "elements"
  *       </div>
- *       <p data-cai-search-show="none" hidden>…shown when nothing matches…</p>
+ *       <p data-luz-search-show="none" hidden>…shown when nothing matches…</p>
  *     </dialog>
- *   </cai-site-search>
+ *   </luz-site-search>
  *
- * The index is a JSON file on the same origin (data-cai-search-src),
+ * The index is a JSON file on the same origin (data-luz-search-src),
  * format version 1: { "version": 1, "pages": [[text, url, meta?, lang?]],
  * "sections": [...], "elements": [...] }, URLs relative to the file.
  *
@@ -149,14 +149,14 @@ const wire = (host) => {
   const $ = (selector) => box.querySelector(selector);
   const input = $("input");
   const status = $("[role=status]");
-  const results = $("[data-cai-search-results]");
-  // cai-exception: EX-005 — what the script writes is read from the
-  // dialog's data-cai-label-<key> attributes, authored in the page's
+  const results = $("[data-luz-search-results]");
+  // luz-exception: EX-005 — what the script writes is read from the
+  // dialog's data-luz-label-<key> attributes, authored in the page's
   // language. Split and joined, never String.replace() with the query
   // (SEC-IDX-10); a missing label writes nothing.
   const say = (key, vars = {}) =>
     status.replaceChildren(
-      ...(box.getAttribute(`data-cai-label-${key}`) ?? "").split(/\{(\w+)\}/).map((part, i) => (i % 2 ? (Object.hasOwn(vars, part) ? vars[part] : "") : part)),
+      ...(box.getAttribute(`data-luz-label-${key}`) ?? "").split(/\{(\w+)\}/).map((part, i) => (i % 2 ? (Object.hasOwn(vars, part) ? vars[part] : "") : part)),
     );
   let index;
   let loading;
@@ -168,7 +168,7 @@ const wire = (host) => {
     let shown = 0;
     let total = 0;
     search(index, q).forEach((hits, g) => {
-      const list = $(`[data-cai-search-list="${GROUPS[g]}"]`);
+      const list = $(`[data-luz-search-list="${GROUPS[g]}"]`);
       if (!list) return;
       list.replaceChildren();
       for (const r of hits.slice(0, 8)) {
@@ -184,9 +184,9 @@ const wire = (host) => {
       total += hits.length;
       list.parentElement.hidden = !hits.length;
     });
-    // The state names the label of the status and what [data-cai-search-show] shows
+    // The state names the label of the status and what [data-luz-search-show] shows
     const state = q ? (total ? (shown < total ? "capped" : total > 1 ? "results" : "result") : "none") : "idle";
-    for (const el of box.querySelectorAll("[data-cai-search-show]")) el.hidden = el.dataset.caiSearchShow !== state;
+    for (const el of box.querySelectorAll("[data-luz-search-show]")) el.hidden = el.dataset.luzSearchShow !== state;
     // The count, once the reader stops typing (a11y.md SRCH-24); an empty
     // field empties the status at once
     clearTimeout(timer);
@@ -200,7 +200,7 @@ const wire = (host) => {
     try {
       // This origin only, over http(s), and no redirect away from it
       // (SEC-NET-1/2); credentials stay the default, "same-origin"
-      const url = safeUrl(box.dataset.caiSearchSrc, document.baseURI);
+      const url = safeUrl(box.dataset.luzSearchSrc, document.baseURI);
       if (url.origin === location.origin) {
         const res = await fetch(url, { redirect: "error" });
         index = res.ok && parseIndex(await res.text(), url);
@@ -226,8 +226,8 @@ const wire = (host) => {
 
   input.addEventListener("input", update);
 
-  for (const link of document.querySelectorAll("[data-cai-search-fallback]")) link.hidden = true;
-  for (const button of document.querySelectorAll("[data-cai-search-open]")) {
+  for (const link of document.querySelectorAll("[data-luz-search-fallback]")) link.hidden = true;
+  for (const button of document.querySelectorAll("[data-luz-search-open]")) {
     button.hidden = false;
     button.addEventListener("click", open);
   }
@@ -253,7 +253,7 @@ const wire = (host) => {
     } else if (at > 0 && (key.length === 1 || key === "Backspace") && !(e.ctrlKey || e.metaKey)) {
       input.focus();
     }
-    if (!at && key === "Enter" && input.value.trim()) $("[data-cai-search-list] a")?.click();
+    if (!at && key === "Enter" && input.value.trim()) $("[data-luz-search-list] a")?.click();
   });
 
   // A result on this page: close, let the link scroll (core's tabs.js opens
@@ -293,10 +293,10 @@ const wire = (host) => {
   wired = box;
 };
 
-// <cai-site-search> wraps the dialog. Defined once, and only where there
+// <luz-site-search> wraps the dialog. Defined once, and only where there
 // is a DOM, so importing this module in Node is harmless.
-if (typeof customElements < "u" && !customElements.get("cai-site-search")) {
-  customElements.define("cai-site-search", class extends HTMLElement {
+if (typeof customElements < "u" && !customElements.get("luz-site-search")) {
+  customElements.define("luz-site-search", class extends HTMLElement {
     connectedCallback() {
       wire(this);
     }

@@ -1,5 +1,5 @@
 /**
- * CAI Design System — Tarball contract check
+ * LUZ Design System — Tarball contract check
  * Verifies what each publishable package would ship, without publishing:
  *   - the file list matches the committed snapshot (packages/<name>/pack-files.txt)
  *   - LICENSE is present, and every font folder carries a font licence text
@@ -15,7 +15,7 @@ import { execFileSync } from "child_process";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
-import { PACKAGES } from "./cai-packages.js";
+import { PACKAGES } from "./luz-packages.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");

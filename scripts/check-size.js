@@ -1,5 +1,5 @@
 /**
- * CAI — size budgets (PRINCIPLES.md §7, red line 17). Fails when a built
+ * LUZ — size budgets (PRINCIPLES.md §7, red line 17). Fails when a built
  * artifact is larger than its min+gzip `max` in budgets.json; warns when it
  * is above `ideal` or below `floor`. Run after `pnpm build`.
  *
@@ -75,7 +75,7 @@ for (const { file } of budgets.filter((b) => b.file?.endsWith(".js"))) {
 }
 
 // --- No published .min.js imports another package (RL-1) ---
-// A bare specifier ("@cai-ds/core/…", "lit") in a file a CDN serves would
+// A bare specifier ("@luz-ds/core/…", "lit") in a file a CDN serves would
 // fail there, or pull in a dependency. Every packages/*/dist/*.min.js may
 // import only its own relative files, and the site bundles (one
 // <script> each, security.md phase 4 review 5b) import nothing at all.

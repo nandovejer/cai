@@ -1,5 +1,5 @@
 /**
- * CAI Design System — HTML elements reference checks
+ * LUZ Design System — HTML elements reference checks
  * The HTML elements area of the documentation (apps/docs, served at
  * /docs/html/: an overview and one page per category) lists every current
  * (non-deprecated) HTML element from MDN with a live example or a snippet. The inventory lives
@@ -110,8 +110,8 @@ test.describe('Element styles match the inventory', () => {
     }
   }
 
-  // Red line 11; stylelint (cai/no-bare-element) enforces it for every file in packages/
-  test('element rules have zero specificity, so any .cai-* class wins', () => {
+  // Red line 11; stylelint (luz/no-bare-element) enforces it for every file in packages/
+  test('element rules have zero specificity, so any .luz-* class wins', () => {
     const offenders = [];
     for (const [file, preludes] of selectorsByFile) {
       for (const raw of preludes) {
@@ -159,9 +159,9 @@ test.describe('HTML elements reference, in the documentation', () => {
           expect(await card.locator(`.elements-stage ${e.name}`).count(), e.name).toBeGreaterThan(0);
         }
         // Every element, live or not, shows its markup
-        await expect(card.locator('pre.cai-code-block'), e.name).not.toHaveCount(0);
-        await expect(card.locator('.cai-copy-btn'), e.name).not.toHaveCount(0);
-        if (e.status === 'experimental') await expect(card.locator('.cai-tag'), e.name).toContainText(/experimental/i);
+        await expect(card.locator('pre.luz-code-block'), e.name).not.toHaveCount(0);
+        await expect(card.locator('.luz-copy-btn'), e.name).not.toHaveCount(0);
+        if (e.status === 'experimental') await expect(card.locator('.luz-tag'), e.name).toContainText(/experimental/i);
         seen.push(e.name);
       }
       // No element on a page of another category
@@ -231,7 +231,7 @@ test.describe('HTML elements reference, in the documentation', () => {
     await expect(page.locator(`.docs-nav a[href="${OVERVIEW}"]`)).toHaveCount(1);
     // The footer's cycle button: light, then dark, high contrast and light again
     for (const mode of ['dark', 'high-contrast', 'light']) {
-      await page.click('footer .cai-mode-cycle');
+      await page.click('footer .luz-mode-cycle');
       expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(mode);
     }
   });
@@ -249,7 +249,7 @@ test.describe('HTML elements reference, in the documentation', () => {
       page.evaluate(() => [...document.getElementById('d-canvas').getContext('2d').getImageData(60, 60, 1, 1).data].join());
     const light = await pixel();
     expect(light).not.toBe('0,0,0,0');
-    await page.click('footer .cai-mode-cycle');
+    await page.click('footer .luz-mode-cycle');
     await expect.poll(pixel).not.toBe(light);
   });
 

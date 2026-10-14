@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CAI cascade layers fixture</title>
+  <title>LUZ cascade layers fixture</title>
   <!-- The order a consumer declares first (VERSIONING and the layers page of the docs) -->
   <style>
-    @layer reset, components, cai, app;
+    @layer reset, components, luz, app;
   </style>
-  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
-  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
   <link rel="stylesheet" href="/tests/fixtures/theme-brand.css">
   <link rel="stylesheet" href="/packages/site/dist/site.css">
   <style>
@@ -17,27 +17,27 @@
     body { padding: 80px; }
 
     /* Unlayered, and written before the app layer: it still wins */
-    .cai-btn.probe-unlayered { min-height: 21px; }
+    .luz-btn.probe-unlayered { min-height: 21px; }
 
-    /* The consumer's own layer called "components": not CAI's (cai.components) */
+    /* The consumer's own layer called "components": not LUZ's (luz.components) */
     @layer components {
-      .cai-btn--primary.probe-own-layer { color: rgb(5, 6, 7); }
+      .luz-btn--primary.probe-own-layer { color: rgb(5, 6, 7); }
     }
 
     @layer app {
       /* A token of core, of a theme, and a component rule */
-      :root { --cai-brand-fill: rgb(1, 2, 3); --cai-surface-page: rgb(250, 251, 252); }
-      .cai-btn { padding-inline-start: 7px; }
-      .cai-btn.probe-unlayered { min-height: 99px; }
-      .cai-site-section.probe-site { padding-block-start: 13px; }
+      :root { --luz-brand-fill: rgb(1, 2, 3); --luz-surface-page: rgb(250, 251, 252); }
+      .luz-btn { padding-inline-start: 7px; }
+      .luz-btn.probe-unlayered { min-height: 99px; }
+      .luz-site-section.probe-site { padding-block-start: 13px; }
     }
   </style>
 </head>
 <body>
-  <p><button class="cai-btn cai-btn--primary" id="probe-component" type="button">Save changes</button></p>
-  <p><button class="cai-btn cai-btn--primary probe-unlayered" id="probe-unlayered" type="button">Save changes</button></p>
-  <p><button class="cai-btn cai-btn--primary probe-own-layer" id="probe-own-layer" type="button">Save changes</button></p>
-  <div class="cai-site-section probe-site" id="probe-site"><p>Site pattern</p></div>
+  <p><button class="luz-btn luz-btn--primary" id="probe-component" type="button">Save changes</button></p>
+  <p><button class="luz-btn luz-btn--primary probe-unlayered" id="probe-unlayered" type="button">Save changes</button></p>
+  <p><button class="luz-btn luz-btn--primary probe-own-layer" id="probe-own-layer" type="button">Save changes</button></p>
+  <div class="luz-site-section probe-site" id="probe-site"><p>Site pattern</p></div>
   <p class="u-sr-only" id="probe-utility">Hidden text</p>
 </body>
 </html>

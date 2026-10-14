@@ -1,7 +1,7 @@
 // @ts-check
 /**
  * The speakers block of Page templates (.claude/plans/specs/speakers-block.md):
- * a `ul.o-grid--auto` of `li.cai-card`, each a square image frame, an h3 and
+ * a `ul.o-grid--auto` of `li.luz-card`, each a square image frame, an h3 and
  * a role. The page shows it as a snippet, so the test renders the snippet's
  * markup (the text of its <code>) inside the page, where the site's CSS styles
  * it, and checks what the spec asks for:
@@ -40,13 +40,13 @@ test.describe('speakers block', () => {
     const block = page.locator('#speakers-test section');
     await expect(block.locator('h2')).toHaveCount(1);
     await expect(block).toHaveAttribute('aria-labelledby', 'speakers-title');
-    const cards = block.locator('ul > li.cai-card');
+    const cards = block.locator('ul > li.luz-card');
     const count = await cards.count();
     expect(count).toBeGreaterThanOrEqual(2);
     for (let i = 0; i < count; i++) {
       const card = cards.nth(i);
-      await expect(card.locator('h3.cai-card__title')).toHaveCount(1);
-      await expect(card.locator('.cai-card__body')).toHaveCount(1);
+      await expect(card.locator('h3.luz-card__title')).toHaveCount(1);
+      await expect(card.locator('.luz-card__body')).toHaveCount(1);
       const heading = ((await card.locator('h3').textContent()) ?? '').trim();
       for (const alt of await card.locator('img').evaluateAll((list) => list.map((img) => img.getAttribute('alt')))) {
         expect(alt, `speaker ${i + 1}: img without alt`).not.toBeNull();
@@ -71,7 +71,7 @@ test.describe('speakers block', () => {
   for (const width of [320, 1280]) {
     test(`at ${width} px the frames are square and the page does not scroll sideways`, async ({ page }) => {
       await render(page, width);
-      const frames = page.locator('#speakers-test .cai-site-image--1x1');
+      const frames = page.locator('#speakers-test .luz-site-image--1x1');
       const boxes = await frames.evaluateAll((list) => list.map((el) => el.getBoundingClientRect()).map((r) => [r.width, r.height]));
       expect(boxes.length).toBeGreaterThanOrEqual(2);
       for (const [w, h] of boxes) {
@@ -79,7 +79,7 @@ test.describe('speakers block', () => {
         expect(Math.abs(w - h), `${w} x ${h}`).toBeLessThanOrEqual(1);
       }
       // 320 px: one column; 1280 px: more than one
-      const lefts = await page.locator('#speakers-test li.cai-card').evaluateAll((list) => list.map((el) => Math.round(el.getBoundingClientRect().left)));
+      const lefts = await page.locator('#speakers-test li.luz-card').evaluateAll((list) => list.map((el) => Math.round(el.getBoundingClientRect().left)));
       if (width === 320) expect(new Set(lefts).size).toBe(1);
       else expect(new Set(lefts).size).toBeGreaterThan(1);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);

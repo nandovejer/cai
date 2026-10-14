@@ -1,12 +1,12 @@
 /* ==========================================================================
-   CAI — 3. ELEMENTS · document
+   LUZ — 3. ELEMENTS · document
    Document root: html, body. Specificity: type (0,0,1).
    ========================================================================== */
 
 :where(html) {
-  background: var(--cai-surface-page);
+  background: var(--luz-surface-page);
   scroll-behavior: smooth;
-  transition: background var(--cai-duration-base);
+  transition: background var(--luz-duration-base);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -16,16 +16,16 @@
 }
 
 :where(body) {
-  font-family: var(--cai-font-body);
+  font-family: var(--luz-font-body);
   /* ET Book has a small x-height: a size up and more leading */
   font-size: 1.0625rem; /* 17px at a 16px root */
-  background: var(--cai-surface-page);
-  color: var(--cai-text-primary);
+  background: var(--luz-surface-page);
+  color: var(--luz-text-primary);
   line-height: 1.6;
   /* App-shell layout (sidebar + main) is opt-in via class="o-shell" —
      see objects/_objects.css. The bare <body> stays layout-neutral. */
   transition:
-    background var(--cai-duration-base),
-    color      var(--cai-duration-base);
+    background var(--luz-duration-base),
+    color      var(--luz-duration-base);
 }
 

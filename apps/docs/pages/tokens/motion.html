@@ -1,18 +1,18 @@
-<!-- cai:page
+<!-- luz:page
 title: Motion
-description: The durations and easings of every transition, which drop to zero when the reader asks for reduced motion. Ships with @cai-ds/core.
+description: The durations and easings of every transition, which drop to zero when the reader asks for reduced motion. Ships with @luz-ds/core.
 area: tokens
 order: 7
 group: families
 files: settings/_settings.css
 -->
     <div class="docs-block" id="c-motion">
-          <p>Take every duration from a token. Under <code class="cai-code-inline">prefers-reduced-motion: reduce</code> all the durations become <code class="cai-code-inline">0s</code>, so motion stops everywhere with no extra CSS.</p>
+          <p>Take every duration from a token. Under <code class="luz-code-inline">prefers-reduced-motion: reduce</code> all the durations become <code class="luz-code-inline">0s</code>, so motion stops everywhere with no extra CSS.</p>
           <div class="docs-demo__stage docs-motion">
-            <label class="cai-toggle">
-              <input class="cai-toggle__input" type="checkbox" role="switch">
-              <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
-              <span class="cai-toggle__label">Run transitions</span>
+            <label class="luz-toggle">
+              <input class="luz-toggle__input" type="checkbox" role="switch">
+              <span class="luz-toggle__track" aria-hidden="true"><span class="luz-toggle__thumb"></span></span>
+              <span class="luz-toggle__label">Run transitions</span>
             </label>
             <p class="docs-motion__reduced docs-demo__note">Reduced motion is on, so the dots jump instead of travelling.</p>
             <div class="o-grid docs-cols-2">
@@ -20,34 +20,34 @@ files: settings/_settings.css
                 <h2 id="durations" class="docs-subhead">Durations</h2>
                 <ul class="docs-scale-list">
                   <li class="docs-scale">
-                    <code>--cai-duration-instant</code>
+                    <code>--luz-duration-instant</code>
                     <span>0.05s</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-instant)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--luz-duration-instant)"></span></span>
                   </li>
                   <li class="docs-scale">
-                    <code>--cai-duration-fast</code>
+                    <code>--luz-duration-fast</code>
                     <span>0.1s</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-fast)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--luz-duration-fast)"></span></span>
                   </li>
                   <li class="docs-scale">
-                    <code>--cai-duration-base</code>
+                    <code>--luz-duration-base</code>
                     <span>0.2s</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-base)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--luz-duration-base)"></span></span>
                   </li>
                   <li class="docs-scale">
-                    <code>--cai-duration-slow</code>
+                    <code>--luz-duration-slow</code>
                     <span>0.3s</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-slow)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--luz-duration-slow)"></span></span>
                   </li>
                   <li class="docs-scale">
-                    <code>--cai-duration-slower</code>
+                    <code>--luz-duration-slower</code>
                     <span>0.5s</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-slower)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--luz-duration-slower)"></span></span>
                   </li>
                   <li class="docs-scale">
-                    <code>--cai-duration-lazy</code>
+                    <code>--luz-duration-lazy</code>
                     <span>0.8s</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--cai-duration-lazy)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--duration" style="--v: var(--luz-duration-lazy)"></span></span>
                   </li>
                 </ul>
               </div>
@@ -55,37 +55,37 @@ files: settings/_settings.css
                 <h2 id="easings" class="docs-subhead">Easings</h2>
                 <ul class="docs-scale-list">
                   <li class="docs-scale docs-scale--easing">
-                    <code>--cai-easing-standard</code>
+                    <code>--luz-easing-standard</code>
                     <span>cubic-bezier(0.3, 0, 0.1, 1)</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-standard)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--luz-easing-standard)"></span></span>
                   </li>
                   <li class="docs-scale docs-scale--easing">
-                    <code>--cai-easing-enter</code>
+                    <code>--luz-easing-enter</code>
                     <span>cubic-bezier(0.15, 0.6, 0.3, 1)</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-enter)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--luz-easing-enter)"></span></span>
                   </li>
                   <li class="docs-scale docs-scale--easing">
-                    <code>--cai-easing-exit</code>
+                    <code>--luz-easing-exit</code>
                     <span>cubic-bezier(0.5, 0, 0.85, 0.4)</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-exit)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--luz-easing-exit)"></span></span>
                   </li>
                   <li class="docs-scale docs-scale--easing">
-                    <code>--cai-easing-spring</code>
+                    <code>--luz-easing-spring</code>
                     <span>cubic-bezier(0.3, 1.35, 0.55, 1)</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-spring)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--luz-easing-spring)"></span></span>
                   </li>
                   <li class="docs-scale docs-scale--easing">
-                    <code>--cai-easing-linear</code>
+                    <code>--luz-easing-linear</code>
                     <span>linear</span>
-                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--cai-easing-linear)"></span></span>
+                    <span class="docs-motion__track" aria-hidden="true"><span class="docs-motion__dot docs-motion__dot--easing" style="--v: var(--luz-easing-linear)"></span></span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
           <p class="docs-demo__note">Ships with core, not with tokens.</p>
-          <pre class="cai-code-block" data-lang="css" tabindex="0" role="region" aria-label="A transition with motion tokens"><code>.panel {
-  transition: opacity var(--cai-duration-base) var(--cai-easing-standard);
+          <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="A transition with motion tokens"><code>.panel {
+  transition: opacity var(--luz-duration-base) var(--luz-easing-standard);
 }</code></pre>
           <ul>
             <li><strong>Standard</strong> for movement within the page, <strong>enter</strong> for things that arrive, <strong>exit</strong> for things that leave.</li>

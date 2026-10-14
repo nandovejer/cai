@@ -2,7 +2,7 @@
 /**
  * The classless layer (packages/core/src/classless/_classless.css) gives a
  * bare button, text field, textarea, select and table the look of its
- * component, inside [data-cai-classless] only, at specificity 0.
+ * component, inside [data-luz-classless] only, at specificity 0.
  *
  * It is written by hand next to the components, so this file is what keeps
  * the two from drifting: each bare element is compared, property by
@@ -81,7 +81,7 @@ test.describe('classless: the same look as the component', () => {
     }
   });
 
-  test('a select has the closed box of .cai-select', async ({ page }) => {
+  test('a select has the closed box of .luz-select', async ({ page }) => {
     // The open list of the component needs appearance: base-select; only the closed box is compared
     const props = ['min-block-size', 'padding-top', 'padding-bottom', 'padding-left', 'border-top-width', 'border-bottom-width', 'border-bottom-style', 'border-bottom-color', 'border-radius', 'color', 'font-family', 'font-size', 'cursor', 'color-scheme', 'inline-size'];
     await expectParity(page, 'select', 'ref-select', props);
@@ -89,7 +89,7 @@ test.describe('classless: the same look as the component', () => {
     await expectParity(page, 'select-multiple', 'ref-select-multiple', multiple);
   });
 
-  test('a table has the look of .cai-table, and no scroll box of its own', async ({ page }) => {
+  test('a table has the look of .luz-table, and no scroll box of its own', async ({ page }) => {
     await expectParity(page, 'table', 'ref-table', ['width', 'border-collapse', 'font-family', 'font-size']);
     for (const part of ['caption', 'thead th', 'tbody td']) {
       const pick = (id) => page.locator(`#${id} ${part}`).first().evaluate((el) => {
@@ -143,7 +143,7 @@ test.describe('classless: the scope', () => {
     await page.goto(FIXTURE);
   });
 
-  test('elements outside [data-cai-classless] are untouched', async ({ page }) => {
+  test('elements outside [data-luz-classless] are untouched', async ({ page }) => {
     expect((await read(page, 'out-button', ['min-height', 'padding-left', 'background-color']))['padding-left']).not.toBe(
       (await read(page, 'button', ['padding-left']))['padding-left'],
     );
@@ -152,7 +152,7 @@ test.describe('classless: the scope', () => {
     expect((await read(page, 'out-table', ['border-collapse']))['border-collapse']).toBe('separate');
   });
 
-  test('an element with a CAI class is left to its component', async ({ page }) => {
+  test('an element with a LUZ class is left to its component', async ({ page }) => {
     // The button of a component is the component's, not the secondary button
     const copy = await read(page, 'copy', ['min-height', 'padding-left']);
     const bare = await read(page, 'button', ['min-height', 'padding-left']);
@@ -167,8 +167,8 @@ test.describe('classless: the scope', () => {
 
   test('the attribute can sit on any element: only its descendants change', async ({ page }) => {
     await page.evaluate(() => {
-      document.getElementById('scope').removeAttribute('data-cai-classless');
-      document.getElementById('outside').setAttribute('data-cai-classless', '');
+      document.getElementById('scope').removeAttribute('data-luz-classless');
+      document.getElementById('outside').setAttribute('data-luz-classless', '');
     });
     const outside = await read(page, 'out-button', ['min-height']);
     const inside = await read(page, 'button', ['min-height']);

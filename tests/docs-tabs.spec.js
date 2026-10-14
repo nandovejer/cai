@@ -1,5 +1,5 @@
 /**
- * CAI — the Code and Design tabs of the component pages, and the core tabs
+ * LUZ — the Code and Design tabs of the component pages, and the core tabs
  * fixes they rely on (a11y.md TAB-4 to TAB-17, NAV-13, findings F1, F2, F3
  * and F7; ia.md §6 and §8).
  * Core tabs.js: a fragment that names an element inside a hidden panel opens
@@ -7,7 +7,7 @@
  * are hidden="until-found" and "beforematch" opens them; Space selects; Left
  * and Right follow the reading direction.
  * Docs glue (apps/docs/view.js): the last tab chosen is remembered under
- * "cai-docs-view"; the fragment beats it, restoring is silent, and only a
+ * "luz-docs-view"; the fragment beats it, restoring is silent, and only a
  * click or a key press on a tab is stored.
  * Run with: pnpm test:ui
  */
@@ -15,7 +15,7 @@ import { test, expect } from '@playwright/test';
 import { routeOf } from './helpers/docs-site.js';
 
 const BUTTON = routeOf('c-button');
-const KEY = 'cai-docs-view';
+const KEY = 'luz-docs-view';
 
 const tab = (page, name) => page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab', { name });
 const stored = (page) => page.evaluate((key) => localStorage.getItem(key), KEY);
@@ -180,7 +180,7 @@ test.describe('Code and Design tabs on a component page', () => {
 test.describe('core tabs', () => {
   test('Left and Right follow the reading direction in right-to-left text (F7)', async ({ page }) => {
     await page.goto(routeOf('tab-summary'));
-    await page.locator('#tab-summary').evaluate((t) => t.closest('.cai-tabs').setAttribute('dir', 'rtl'));
+    await page.locator('#tab-summary').evaluate((t) => t.closest('.luz-tabs').setAttribute('dir', 'rtl'));
     await page.focus('#tab-summary');
     await page.keyboard.press('ArrowLeft');
     await expect(page.locator('#tab-settings')).toBeFocused();

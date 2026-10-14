@@ -1,4 +1,4 @@
-<!-- cai:page
+<!-- luz:page
 title: Player
 description: Plays a video, a sound or a MIDI file in the page, with the same controls for all three.
 area: components
@@ -13,37 +13,37 @@ toc: h2,h3
           <div class="docs-demo__stage o-grid docs-cols-2">
             <div class="docs-demo__stage">
             <!-- Public domain: NASA, "Earth Views from the ISS - No Music", NASA ID NHQ_2020_1221_Earth Views, 15 s from 6:35, no audio -->
-            <div class="cai-player" data-type="video" role="group" aria-label="Earth from the space station">
-              <div class="cai-player-media-wrap is-paused">
-                <video class="cai-player-video" preload="metadata" controls playsinline aria-label="The curved edge of the Earth seen from the International Space Station: brown land under thin cloud, below black space. No sound.">
+            <div class="luz-player" data-type="video" role="group" aria-label="Earth from the space station">
+              <div class="luz-player-media-wrap is-paused">
+                <video class="luz-player-video" preload="metadata" controls playsinline aria-label="The curved edge of the Earth seen from the International Space Station: brown land under thin cloud, below black space. No sound.">
                   <source src="/apps/docs/assets/nasa-earth.mp4" type="video/mp4">
                   <track kind="captions" srclang="en" label="English" data-asset="nasa-captions" default>
                   <track kind="subtitles" srclang="es" label="Español" data-asset="nasa-captions-es">
                 </video>
-                <div class="cai-player-overlay" aria-hidden="true">
-                  <svg class="cai-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
+                <div class="luz-player-overlay" aria-hidden="true">
+                  <svg class="luz-play-icon" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,3 20,12 6,21"/></svg>
                 </div>
               </div>
-              <div class="cai-player-controls">
-                <div class="cai-player-progress-row">
-                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+              <div class="luz-player-controls">
+                <div class="luz-player-progress-row">
+                  <button class="luz-player-btn luz-player-playpause" type="button" aria-label="Play">
                     <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
                     <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
                   </button>
-                  <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek Earth video">
+                  <input class="luz-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek Earth video">
                 </div>
-                <div class="cai-player-btns">
-                  <span class="cai-player-time cai-player-current">0:00</span>
-                  <span class="cai-player-spacer"></span>
-                  <span class="cai-player-time cai-player-duration">0:00</span>
-                  <div class="cai-player-vol-wrap">
-                    <button class="cai-player-btn cai-player-mute" type="button" aria-label="Mute">
+                <div class="luz-player-btns">
+                  <span class="luz-player-time luz-player-current">0:00</span>
+                  <span class="luz-player-spacer"></span>
+                  <span class="luz-player-time luz-player-duration">0:00</span>
+                  <div class="luz-player-vol-wrap">
+                    <button class="luz-player-btn luz-player-mute" type="button" aria-label="Mute">
                       <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 8a5 5 0 0 1 0 8" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                       <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><path d="M3 9h4l5-5v16l-5-5H3z"/><path d="M16 9l5 6M21 9l-5 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
                     </button>
-                    <input class="cai-player-seekbar cai-player-volbar" type="range" min="0" max="100" step="5" value="100" style="--cai-seek: 100%" aria-label="Earth video volume">
+                    <input class="luz-player-seekbar luz-player-volbar" type="range" min="0" max="100" step="5" value="100" style="--luz-seek: 100%" aria-label="Earth video volume">
                   </div>
-                  <select class="cai-input cai-player-tracks" aria-label="Captions"></select>
+                  <select class="luz-input luz-player-tracks" aria-label="Captions"></select>
                 </div>
               </div>
             </div>
@@ -52,137 +52,137 @@ toc: h2,h3
 
             <div class="docs-demo__stage">
               <!-- Public domain: NASA, Apollo 11 launch countdown and lift-off, 16 July 1969, 25 s (nasa.gov/historical-sounds); ID3/XMP metadata stripped -->
-              <div class="cai-player" data-type="audio" role="group" aria-label="Apollo 11 countdown player">
-                <audio class="cai-player-audio" preload="none" controls>
+              <div class="luz-player" data-type="audio" role="group" aria-label="Apollo 11 countdown player">
+                <audio class="luz-player-audio" preload="none" controls>
                   <source src="/apps/docs/assets/nasa-apollo11-countdown.mp3" type="audio/mpeg">
                 </audio>
-                <div class="cai-player-controls cai-player-controls--audio">
-                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play">
+                <div class="luz-player-controls luz-player-controls--audio">
+                  <button class="luz-player-btn luz-player-playpause" type="button" aria-label="Play">
                     <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
                     <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
                   </button>
-                  <div class="cai-player-progress-row cai-player-progress-row--audio">
-                    <span class="cai-player-time cai-player-current">0:00</span>
-                    <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek audio">
-                    <span class="cai-player-time cai-player-duration">0:00</span>
+                  <div class="luz-player-progress-row luz-player-progress-row--audio">
+                    <span class="luz-player-time luz-player-current">0:00</span>
+                    <input class="luz-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek audio">
+                    <span class="luz-player-time luz-player-duration">0:00</span>
                   </div>
                 </div>
               </div>
               <p class="docs-demo__note">Audio, MP3, 25 seconds. Nothing is downloaded until you press play. Recording: <a href="https://www.nasa.gov/historical-sounds/">NASA, Apollo 11 launch countdown and lift-off</a>, in the public domain.</p>
 
               <!-- data-src is set by reference.js (the build does not rewrite data-* URLs) -->
-              <div class="cai-player" data-type="midi" role="group" aria-label="MIDI player">
-                <p class="cai-player-fallback">MIDI playback needs JavaScript.</p>
-                <div class="cai-player-controls cai-player-controls--audio">
-                  <button class="cai-player-btn cai-player-playpause" type="button" aria-label="Play" disabled>
+              <div class="luz-player" data-type="midi" role="group" aria-label="MIDI player">
+                <p class="luz-player-fallback">MIDI playback needs JavaScript.</p>
+                <div class="luz-player-controls luz-player-controls--audio">
+                  <button class="luz-player-btn luz-player-playpause" type="button" aria-label="Play" disabled>
                     <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
                     <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
                   </button>
-                  <div class="cai-player-progress-row cai-player-progress-row--audio">
-                    <span class="cai-player-time cai-player-current">0:00</span>
-                    <input class="cai-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek MIDI">
-                    <span class="cai-player-time cai-player-duration">0:00</span>
+                  <div class="luz-player-progress-row luz-player-progress-row--audio">
+                    <span class="luz-player-time luz-player-current">0:00</span>
+                    <input class="luz-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek MIDI">
+                    <span class="luz-player-time luz-player-duration">0:00</span>
                   </div>
-                  <span class="cai-player-midi-status"></span>
+                  <span class="luz-player-midi-status"></span>
                 </div>
               </div>
-              <p class="docs-demo__note">MIDI, parsed and played with Web Audio by <code class="cai-code-inline">midi.js</code>, which loads only when a MIDI player is on the page.</p>
+              <p class="docs-demo__note">MIDI, parsed and played with Web Audio by <code class="luz-code-inline">midi.js</code>, which loads only when a MIDI player is on the page.</p>
             </div>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example. A MIDI file has no player without JavaScript: offer a download link in the fallback text.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Player documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Player documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>An audio player. The video player adds a <code>.cai-player-media-wrap</code> around the <code>&lt;video&gt;</code> and a mute button and volume slider: copy it from the example above.</p>
+            <p>An audio player. The video player adds a <code>.luz-player-media-wrap</code> around the <code>&lt;video&gt;</code> and a mute button and volume slider: copy it from the example above.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-player-audio" aria-label="Copy the audio player markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-player-audio" aria-label="Copy the audio player markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Audio player markup"><code id="code-player-audio">&lt;div class=&quot;cai-player&quot; data-type=&quot;audio&quot; role=&quot;group&quot; aria-label=&quot;Episode 12 player&quot;&gt;
-  &lt;audio class=&quot;cai-player-audio&quot; preload=&quot;none&quot; controls&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Audio player markup"><code id="code-player-audio">&lt;div class=&quot;luz-player&quot; data-type=&quot;audio&quot; role=&quot;group&quot; aria-label=&quot;Episode 12 player&quot;&gt;
+  &lt;audio class=&quot;luz-player-audio&quot; preload=&quot;none&quot; controls&gt;
     &lt;source src=&quot;episode-12.mp3&quot; type=&quot;audio/mpeg&quot;&gt;
   &lt;/audio&gt;
-  &lt;div class=&quot;cai-player-controls cai-player-controls--audio&quot;&gt;
-    &lt;button class=&quot;cai-player-btn cai-player-playpause&quot; type=&quot;button&quot; aria-label=&quot;Play&quot;&gt;
+  &lt;div class=&quot;luz-player-controls luz-player-controls--audio&quot;&gt;
+    &lt;button class=&quot;luz-player-btn luz-player-playpause&quot; type=&quot;button&quot; aria-label=&quot;Play&quot;&gt;
       &lt;svg class=&quot;icon-play&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot;&gt;&lt;polygon points=&quot;6,3 20,12 6,21&quot;/&gt;&lt;/svg&gt;
       &lt;svg class=&quot;icon-pause&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;currentColor&quot; aria-hidden=&quot;true&quot; style=&quot;display:none&quot;&gt;&lt;rect x=&quot;5&quot; y=&quot;3&quot; width=&quot;4&quot; height=&quot;18&quot;/&gt;&lt;rect x=&quot;15&quot; y=&quot;3&quot; width=&quot;4&quot; height=&quot;18&quot;/&gt;&lt;/svg&gt;
     &lt;/button&gt;
-    &lt;div class=&quot;cai-player-progress-row cai-player-progress-row--audio&quot;&gt;
-      &lt;span class=&quot;cai-player-time cai-player-current&quot;&gt;0:00&lt;/span&gt;
-      &lt;input class=&quot;cai-player-seekbar&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;1000&quot; step=&quot;1&quot; value=&quot;0&quot; aria-label=&quot;Seek audio&quot;&gt;
-      &lt;span class=&quot;cai-player-time cai-player-duration&quot;&gt;0:00&lt;/span&gt;
+    &lt;div class=&quot;luz-player-progress-row luz-player-progress-row--audio&quot;&gt;
+      &lt;span class=&quot;luz-player-time luz-player-current&quot;&gt;0:00&lt;/span&gt;
+      &lt;input class=&quot;luz-player-seekbar&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;1000&quot; step=&quot;1&quot; value=&quot;0&quot; aria-label=&quot;Seek audio&quot;&gt;
+      &lt;span class=&quot;luz-player-time luz-player-duration&quot;&gt;0:00&lt;/span&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
             </div>
-            <p>Captions and subtitles: one <code>&lt;track&gt;</code> per file inside the <code>&lt;video&gt;</code>, and one control in <code>.cai-player-btns</code>. Use the button for one track and the select for several; the script fills the select.</p>
+            <p>Captions and subtitles: one <code>&lt;track&gt;</code> per file inside the <code>&lt;video&gt;</code>, and one control in <code>.luz-player-btns</code>. Use the button for one track and the select for several; the script fills the select.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-player-captions" aria-label="Copy the captions markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-player-captions" aria-label="Copy the captions markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Captions markup"><code id="code-player-captions">&lt;video class=&quot;cai-player-video&quot; preload=&quot;metadata&quot; controls playsinline&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Captions markup"><code id="code-player-captions">&lt;video class=&quot;luz-player-video&quot; preload=&quot;metadata&quot; controls playsinline&gt;
   &lt;source src=&quot;interview.mp4&quot; type=&quot;video/mp4&quot;&gt;
   &lt;track kind=&quot;captions&quot; srclang=&quot;en&quot; label=&quot;English&quot; src=&quot;interview-en.vtt&quot; default&gt;
   &lt;track kind=&quot;subtitles&quot; srclang=&quot;es&quot; label=&quot;Español&quot; src=&quot;interview-es.vtt&quot;&gt;
 &lt;/video&gt;
 
 &lt;!-- One track: a button that turns it on and off --&gt;
-&lt;button class=&quot;cai-player-btn cai-player-captions&quot; type=&quot;button&quot; aria-pressed=&quot;false&quot; aria-label=&quot;Captions&quot;&gt;
+&lt;button class=&quot;luz-player-btn luz-player-captions&quot; type=&quot;button&quot; aria-pressed=&quot;false&quot; aria-label=&quot;Captions&quot;&gt;
   &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; aria-hidden=&quot;true&quot;&gt;&lt;rect x=&quot;2&quot; y=&quot;5&quot; width=&quot;20&quot; height=&quot;14&quot; rx=&quot;2&quot;/&gt;&lt;path d=&quot;M6 11h12M6 15h7&quot;/&gt;&lt;/svg&gt;
 &lt;/button&gt;
 
 &lt;!-- Several tracks: a select, filled by the script --&gt;
-&lt;select class=&quot;cai-input cai-player-tracks&quot; aria-label=&quot;Captions&quot;&gt;&lt;/select&gt;</code></pre>
+&lt;select class=&quot;luz-input luz-player-tracks&quot; aria-label=&quot;Captions&quot;&gt;&lt;/select&gt;</code></pre>
             </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">JS</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-player-js" aria-label="Copy the player script code">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-player-js" aria-label="Copy the player script code">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Player script code"><code id="code-player-js">import { initPlayers } from &quot;@cai-ds/core/player&quot;;
+              <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="Player script code"><code id="code-player-js">import { initPlayers } from &quot;@luz-ds/core/player&quot;;
 initPlayers();</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <div class="cai-table-wrap" role="region" aria-label="Player options" tabindex="0">
-              <table class="cai-table">
+            <div class="luz-table-wrap" role="region" aria-label="Player options" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>data-type="video"</code></div></td><td data-label="Effect"><div>A <code>&lt;video class="cai-player-video"&gt;</code>; a click on the picture plays or pauses</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-type="audio"</code></div></td><td data-label="Effect"><div>An <code>&lt;audio class="cai-player-audio"&gt;</code> with a compact control row (<code>.cai-player-controls--audio</code>)</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-type="video"</code></div></td><td data-label="Effect"><div>A <code>&lt;video class="luz-player-video"&gt;</code>; a click on the picture plays or pauses</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-type="audio"</code></div></td><td data-label="Effect"><div>An <code>&lt;audio class="luz-player-audio"&gt;</code> with a compact control row (<code>.luz-player-controls--audio</code>)</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>data-type="midi"</code> and <code>data-src</code></div></td><td data-label="Effect"><div>A MIDI file, played with Web Audio by <code>midi.js</code>, loaded only when needed</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-player-mute</code>, <code>.cai-player-volbar</code></div></td><td data-label="Effect"><div>A mute button and a volume slider</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-player-fullscreen</code>, <code>.cai-player-pip</code></div></td><td data-label="Effect"><div>Optional full-screen and picture-in-picture buttons for video</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-player-mute</code>, <code>.luz-player-volbar</code></div></td><td data-label="Effect"><div>A mute button and a volume slider</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-player-fullscreen</code>, <code>.luz-player-pip</code></div></td><td data-label="Effect"><div>Optional full-screen and picture-in-picture buttons for video</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>&lt;track kind="captions"&gt;</code>, <code>kind="subtitles"</code></div></td><td data-label="Effect"><div>A WebVTT file with <code>srclang</code> and <code>label</code>; <code>default</code> shows it from the start</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-player-captions</code></div></td><td data-label="Effect"><div>A button that turns captions on and off: the default track, else the first</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-player-tracks</code></div></td><td data-label="Effect"><div>A select, with <code>.cai-input</code>, to pick one track or none</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-player-fallback</code></div></td><td data-label="Effect"><div>Text shown only when the script does not run</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-player-captions</code></div></td><td data-label="Effect"><div>A button that turns captions on and off: the default track, else the first</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-player-tracks</code></div></td><td data-label="Effect"><div>A select, with <code>.luz-input</code>, to pick one track or none</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-player-fallback</code></div></td><td data-label="Effect"><div>Text shown only when the script does not run</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>The native media element plays the file; <code>player.js</code> drives the CAI controls, styled by <code>components/player.css</code>.</p>
+            <p>The native media element plays the file; <code>player.js</code> drives the LUZ controls, styled by <code>components/player.css</code>.</p>
             <ul>
-              <li><code>initPlayers()</code> mounts every <code>.cai-player</code> on the page, or inside the element you pass it. <code>cai.js</code> runs it. A player already mounted is left as it is, so running it again is safe.</li>
-              <li>On mount, the script removes the native <code>controls</code> and binds the CAI ones: play and pause, time, seek and volume. They start from the media's own state: a <code>muted</code> video shows as muted, and a length the browser already knows shows at once.</li>
+              <li><code>initPlayers()</code> mounts every <code>.luz-player</code> on the page, or inside the element you pass it. <code>luz.js</code> runs it. A player already mounted is left as it is, so running it again is safe.</li>
+              <li>On mount, the script removes the native <code>controls</code> and binds the LUZ ones: play and pause, time, seek and volume. They start from the media's own state: a <code>muted</code> video shows as muted, and a length the browser already knows shows at once.</li>
               <li>Seek and volume are native <code>&lt;input type="range"&gt;</code> sliders. Once the length is known, the seek slider has one step per second, whatever its <code>max</code> in the markup.</li>
               <li>A full-screen or picture-in-picture button is hidden where the browser cannot do it.</li>
-              <li>Captions and subtitles are the browser's: each <code>&lt;track&gt;</code> is a text track, and the browser draws its cues. The CAI controls only set which track shows, so a choice made in the browser's own menu shows in them too. <code>::cue</code> gives the cues light text on the media surface. Nothing is stored. A control with no track to show is hidden.</li>
+              <li>Captions and subtitles are the browser's: each <code>&lt;track&gt;</code> is a text track, and the browser draws its cues. The LUZ controls only set which track shows, so a choice made in the browser's own menu shows in them too. <code>::cue</code> gives the cues light text on the media surface. Nothing is stored. A control with no track to show is hidden.</li>
               <li><code>mountPlayer(root)</code> and <code>mountMidiPlayer(root)</code> mount one player.</li>
               <li>The player is a size-query container: below 480 px of its own width the audio controls stack and the volume bar is hidden, wherever the player is placed. A parent that sizes it to its content (an inline-flex item, a float) needs a width of its own.</li>
               <li>In right-to-left text the timeline follows the reading direction: the seek bar starts at the right and fills towards the left, the controls row mirrors, and the slider's keys are the browser's own. The play, pause and volume icons are not mirrored: they do not point anywhere.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Audio and video show the browser's own controls, and the CAI controls stay hidden. The browser's controls offer the captions and subtitles, and a track with <code>default</code> shows from the start. A MIDI player shows its fallback text instead.</p>
+            <p>Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with <code>default</code> shows from the start. A MIDI player shows its fallback text instead.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab moves through the controls; each one keeps its native keys.</p>
             <ul>
@@ -194,7 +194,7 @@ initPlayers();</code></pre>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use a player to play a video, a sound or a MIDI file inside the page, when the reader starts it.</p>
@@ -208,11 +208,11 @@ initPlayers();</code></pre>
             <div class="docs-dodont">
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Controls the reader starts, and a name that says what plays. Shortened: the full markup is under Copy the markup.</figcaption>
-                <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Do: player markup"><code>&lt;div class="cai-player" data-type="audio" role="group" aria-label="Episode 12 player"&gt;&#10;  &lt;audio class="cai-player-audio" preload="metadata" controls src="episode-12.mp3"&gt;&lt;/audio&gt;&#10;&lt;/div&gt;</code></pre>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Do: player markup"><code>&lt;div class="luz-player" data-type="audio" role="group" aria-label="Episode 12 player"&gt;&#10;  &lt;audio class="luz-player-audio" preload="metadata" controls src="episode-12.mp3"&gt;&lt;/audio&gt;&#10;&lt;/div&gt;</code></pre>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Media that starts on its own. Sound that plays for more than 3 seconds must have a way to stop it (WCAG 1.4.2), so it is shown as code only.</figcaption>
-                <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Don't: player markup"><code>&lt;video autoplay loop src="intro.mp4"&gt;&lt;/video&gt;</code></pre>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Don't: player markup"><code>&lt;video autoplay loop src="intro.mp4"&gt;&lt;/video&gt;</code></pre>
               </figure>
             </div>
             <h3 id="content">Writing the content</h3>
@@ -225,28 +225,28 @@ initPlayers();</code></pre>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The controls sit on the strong surface. The seek bar's thumb and played part are the brand colour, and the bar has an edge in the field border colour, so its whole length shows.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Player contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Player contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Time and status</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Button icon</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>13.5:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Button icon, hover</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-hover</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.4:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Captions button when on: icon and underline</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Seek bar thumb</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Played part against the loaded part</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-pressed</code></div></td><td data-label="Light"><div>4.6:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Played part against the part not loaded yet</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Edge of the seek bar</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>3.2:1</div></td><td data-label="Dark"><div>3.0:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Caption text</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-surface-media</code></div></td><td data-label="Light"><div>21.0:1</div></td><td data-label="Dark"><div>21.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-strong</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Time and status</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>5.4:1</div></td><td data-label="High contrast"><div>16.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Button icon</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>13.5:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Button icon, hover</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-hover</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.4:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Captions button when on: icon and underline</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Seek bar thumb</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Played part against the loaded part</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-pressed</code></div></td><td data-label="Light"><div>4.6:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>12.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Played part against the part not loaded yet</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of the seek bar</div></td><td data-label="Colour on background"><div><code>--luz-input-border</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>3.2:1</div></td><td data-label="Dark"><div>3.0:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Caption text</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-surface-media</code></div></td><td data-label="Light"><div>21.0:1</div></td><td data-label="Dark"><div>21.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>4.8:1</div></td><td data-label="Dark"><div>5.6:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> buttons, sliders and the track select get a 2 px <code>--cai-focus-ring</code> outline 2 px outside, as every CAI control.</li>
+              <li><strong>Focus:</strong> buttons, sliders and the track select get a 2 px <code>--luz-focus-ring</code> outline 2 px outside, as every LUZ control.</li>
               <li><strong>Not colour alone:</strong> play and pause swap their icon and their name; the seek bar's thumb shows the position; the captions button, when on, gets an underline as well as the brand colour.</li>
               <li><strong>Track select:</strong> the form field's colours, from <a href="/docs/components/form/#contrast">Form</a>.</li>
               <li><strong>Target:</strong> the buttons are 32 px square.</li>
@@ -254,12 +254,12 @@ initPlayers();</code></pre>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 25 tokens that <code>components/player.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="/docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="/docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="/docs/tokens/color/#cai-surface-media"><code>--cai-surface-media</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="/docs/tokens/color/#cai-surface-pressed"><code>--cai-surface-pressed</code></a>, <a href="/docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="/docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="/docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-md</code>, <code>--cai-space-2xs</code>, <code>--cai-space-3xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-mono</code>, <code>--cai-text-sm</code>, <code>--cai-text-xs</code></dd></div>
-              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-md</code>, <code>--cai-radius-sm</code></dd></div>
-              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--cai-shadow-icon</code></dd></div>
-              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-fast</code></dd></div>
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-input-border"><code>--luz-input-border</code></a>, <a href="/docs/tokens/color/#luz-surface-hover"><code>--luz-surface-hover</code></a>, <a href="/docs/tokens/color/#luz-surface-media"><code>--luz-surface-media</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="/docs/tokens/color/#luz-surface-pressed"><code>--luz-surface-pressed</code></a>, <a href="/docs/tokens/color/#luz-surface-strong"><code>--luz-surface-strong</code></a>, <a href="/docs/tokens/color/#luz-text-on-fill"><code>--luz-text-on-fill</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-md</code>, <code>--luz-space-2xs</code>, <code>--luz-space-3xs</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-mono</code>, <code>--luz-text-sm</code>, <code>--luz-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code>, <code>--luz-radius-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--luz-shadow-icon</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-fast</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

@@ -1,75 +1,75 @@
 /* --------------------------------------------------------------------------
-   CAI Component: mode-switcher
+   LUZ Component: mode-switcher
    Color mode switcher (radio group or one icon button)
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-/* Native radio group: <fieldset class="cai-mode-switcher"> with a <legend>
-   and one <label class="cai-mode-btn"><input type="radio" name="cai-theme">
+/* Native radio group: <fieldset class="luz-mode-switcher"> with a <legend>
+   and one <label class="luz-mode-btn"><input type="radio" name="luz-theme">
    per mode. The browser owns the state and the arrow-key behavior, and
    tokens/semantic.css re-scopes the page from the checked radio with
    :root:has(), so it works without JavaScript. */
-.cai-mode-switcher {
+.luz-mode-switcher {
   /* Colours come from the surface the switcher sits on: the page by
-     default, the sidebar inside .cai-sidebar (below). Declared here, so
+     default, the sidebar inside .luz-sidebar (below). Declared here, so
      each button's own data-theme does not re-scope them. */
-  --cai-switcher-label: var(--cai-text-secondary);
-  --cai-switcher-border: var(--cai-outline);
-  --cai-switcher-hover-bg: var(--cai-surface-hover);
-  --cai-switcher-hover-text: var(--cai-text-primary);
-  --cai-switcher-focus: var(--cai-focus-ring);
-  --cai-switcher-on-bg: var(--cai-brand-fill);
-  --cai-switcher-on-text: var(--cai-text-on-fill);
+  --luz-switcher-label: var(--luz-text-secondary);
+  --luz-switcher-border: var(--luz-outline);
+  --luz-switcher-hover-bg: var(--luz-surface-hover);
+  --luz-switcher-hover-text: var(--luz-text-primary);
+  --luz-switcher-focus: var(--luz-focus-ring);
+  --luz-switcher-on-bg: var(--luz-brand-fill);
+  --luz-switcher-on-text: var(--luz-text-on-fill);
 
   display: flex;
   flex-wrap: wrap;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
   border: 0;
   min-inline-size: 0;
 }
 
-.cai-mode-switcher__label {
-  font-size: var(--cai-text-xs);
+.luz-mode-switcher__label {
+  font-size: var(--luz-text-xs);
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--cai-switcher-label);
-  margin-bottom: var(--cai-space-xs);
+  color: var(--luz-switcher-label);
+  margin-bottom: var(--luz-space-xs);
   display: block;
   padding: 0;
 }
 
 /* Spacing between letters breaks the joins of Arabic script */
-.cai-mode-switcher__label:lang(ar) {
+.luz-mode-switcher__label:lang(ar) {
   letter-spacing: 0;
 }
 
-.cai-mode-btn {
+.luz-mode-btn {
   position: relative;
   flex: 1;
   min-height: 28px;
-  border: 1px solid var(--cai-switcher-border);
-  border-radius: var(--cai-radius-md);
+  border: 1px solid var(--luz-switcher-border);
+  border-radius: var(--luz-radius-md);
   background: transparent;
   /* inherit, not a token: each button carries its own data-theme, which
      re-scopes the tokens to that mode. The label must follow the surface it
      sits on (2.2:1 on a light sidebar). */
   color: inherit;
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
   cursor: pointer;
-  transition: background var(--cai-duration-fast),
-    color var(--cai-duration-fast), border-color var(--cai-duration-fast);
+  transition: background var(--luz-duration-fast),
+    color var(--luz-duration-fast), border-color var(--luz-duration-fast);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
 }
 
 /* The radio is visually hidden but stays focusable and clickable */
-.cai-mode-btn__input {
+.luz-mode-btn__input {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -79,50 +79,50 @@
   clip-path: inset(50%);
 }
 
-.cai-mode-btn:hover {
-  background: var(--cai-switcher-hover-bg);
-  color: var(--cai-switcher-hover-text);
+.luz-mode-btn:hover {
+  background: var(--luz-switcher-hover-bg);
+  color: var(--luz-switcher-hover-text);
 }
 
-.cai-mode-btn:has(.cai-mode-btn__input:focus-visible),
-.cai-mode-btn:focus-visible {
-  outline: 2px solid var(--cai-switcher-focus);
+.luz-mode-btn:has(.luz-mode-btn__input:focus-visible),
+.luz-mode-btn:focus-visible {
+  outline: 2px solid var(--luz-switcher-focus);
   outline-offset: 2px;
 }
 
-.cai-mode-btn.is-active,
-.cai-mode-btn:has(.cai-mode-btn__input:checked) {
-  background: var(--cai-switcher-on-bg);
-  color: var(--cai-switcher-on-text);
-  border-color: var(--cai-switcher-on-bg);
+.luz-mode-btn.is-active,
+.luz-mode-btn:has(.luz-mode-btn__input:checked) {
+  background: var(--luz-switcher-on-bg);
+  color: var(--luz-switcher-on-text);
+  border-color: var(--luz-switcher-on-bg);
 }
 
 /* Disabled (a specimen, or a mode the page cannot offer): a dashed border,
    so the state does not rest on colour (RL-6, RL-7) */
-.cai-mode-btn:has(.cai-mode-btn__input:disabled) {
+.luz-mode-btn:has(.luz-mode-btn__input:disabled) {
   border-style: dashed;
   cursor: not-allowed;
 }
 
 /* Optional icon before each mode name: an inline <svg> in currentColor */
-.cai-mode-btn__icon {
+.luz-mode-btn__icon {
   inline-size: 1em;
   block-size: 1em;
   flex-shrink: 0;
 }
 
-/* Cycle variant (.cai-mode-switcher--cycle): the radios above are the
+/* Cycle variant (.luz-mode-switcher--cycle): the radios above are the
    control and the source of truth. The markup may also carry the button
-   (.cai-mode-cycle) with one icon per mode; with scripting on, the button
+   (.luz-mode-cycle) with one icon per mode; with scripting on, the button
    shows and the radios hide, so nothing flickers while the script loads.
    Without scripting the radios show and the button hides. If the markup has
    no button, initThemeCycle() adds one. */
 @media (scripting: enabled) {
-  .cai-mode-switcher--cycle:has(> .cai-mode-cycle) > .cai-mode-btn {
+  .luz-mode-switcher--cycle:has(> .luz-mode-cycle) > .luz-mode-btn {
     display: none;
   }
 
-  .cai-mode-switcher--cycle:has(> .cai-mode-cycle) > .cai-mode-switcher__label {
+  .luz-mode-switcher--cycle:has(> .luz-mode-cycle) > .luz-mode-switcher__label {
     position: absolute;
     inline-size: 1px;
     block-size: 1px;
@@ -133,7 +133,7 @@
   }
 }
 
-.cai-mode-cycle__status {
+.luz-mode-cycle__status {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -145,80 +145,80 @@
 
 /* The button shows the icon of the checked mode, with no script: each icon
    carries data-mode-icon and only the one matching the checked radio displays */
-.cai-mode-cycle > [data-mode-icon] {
+.luz-mode-cycle > [data-mode-icon] {
   display: none;
 }
 
-.cai-mode-switcher--cycle:has(input[value="light"]:checked) > .cai-mode-cycle > [data-mode-icon="light"],
-.cai-mode-switcher--cycle:has(input[value="dark"]:checked) > .cai-mode-cycle > [data-mode-icon="dark"],
-.cai-mode-switcher--cycle:has(input[value="high-contrast"]:checked) > .cai-mode-cycle > [data-mode-icon="high-contrast"] {
+.luz-mode-switcher--cycle:has(input[value="light"]:checked) > .luz-mode-cycle > [data-mode-icon="light"],
+.luz-mode-switcher--cycle:has(input[value="dark"]:checked) > .luz-mode-cycle > [data-mode-icon="dark"],
+.luz-mode-switcher--cycle:has(input[value="high-contrast"]:checked) > .luz-mode-cycle > [data-mode-icon="high-contrast"] {
   display: block;
 }
 
-.cai-mode-cycle {
+.luz-mode-cycle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   inline-size: 2.25rem;
   block-size: 2.25rem;
   padding: 0;
-  border: 1px solid var(--cai-switcher-border);
-  border-radius: var(--cai-radius-md);
+  border: 1px solid var(--luz-switcher-border);
+  border-radius: var(--luz-radius-md);
   background: transparent;
   color: inherit;
   cursor: pointer;
-  transition: background var(--cai-duration-fast),
-    color var(--cai-duration-fast);
+  transition: background var(--luz-duration-fast),
+    color var(--luz-duration-fast);
 }
 
-.cai-mode-cycle .cai-mode-btn__icon {
+.luz-mode-cycle .luz-mode-btn__icon {
   inline-size: 1.25rem;
   block-size: 1.25rem;
 }
 
-.cai-mode-cycle:hover {
-  background: var(--cai-switcher-hover-bg);
-  color: var(--cai-switcher-hover-text);
+.luz-mode-cycle:hover {
+  background: var(--luz-switcher-hover-bg);
+  color: var(--luz-switcher-hover-text);
 }
 
-.cai-mode-cycle:focus-visible {
-  outline: 2px solid var(--cai-switcher-focus);
+.luz-mode-cycle:focus-visible {
+  outline: 2px solid var(--luz-switcher-focus);
   outline-offset: 2px;
 }
 
 @media (scripting: none) {
-  .cai-mode-cycle {
+  .luz-mode-cycle {
     display: none;
   }
 }
 
 @media (forced-colors: active) {
-  .cai-mode-cycle {
+  .luz-mode-cycle {
     border-color: ButtonText;
   }
 }
 
-/* On the sidebar surface. --cai-focus-ring would be black on a
+/* On the sidebar surface. --luz-focus-ring would be black on a
    black sidebar in high contrast. */
-.cai-sidebar .cai-mode-switcher {
-  --cai-switcher-label: var(--cai-sidebar-label);
-  --cai-switcher-border: var(--cai-sidebar-border);
-  --cai-switcher-hover-bg: var(--cai-sidebar-hover);
-  --cai-switcher-hover-text: var(--cai-sidebar-text-hover);
-  --cai-switcher-focus: var(--cai-sidebar-text-hover);
-  --cai-switcher-on-bg: var(--cai-sidebar-active-bg);
-  --cai-switcher-on-text: var(--cai-sidebar-active-text);
+.luz-sidebar .luz-mode-switcher {
+  --luz-switcher-label: var(--luz-sidebar-label);
+  --luz-switcher-border: var(--luz-sidebar-border);
+  --luz-switcher-hover-bg: var(--luz-sidebar-hover);
+  --luz-switcher-hover-text: var(--luz-sidebar-text-hover);
+  --luz-switcher-focus: var(--luz-sidebar-text-hover);
+  --luz-switcher-on-bg: var(--luz-sidebar-active-bg);
+  --luz-switcher-on-text: var(--luz-sidebar-active-text);
 }
 
 /* Forced colors drop the backgrounds: the checked mode keeps a system
    highlight and a thicker border, so the state is not lost. */
 @media (forced-colors: active) {
-  .cai-mode-btn {
+  .luz-mode-btn {
     border-color: ButtonText;
   }
 
-  .cai-mode-btn.is-active,
-  .cai-mode-btn:has(.cai-mode-btn__input:checked) {
+  .luz-mode-btn.is-active,
+  .luz-mode-btn:has(.luz-mode-btn__input:checked) {
     forced-color-adjust: none;
     background: Highlight;
     color: HighlightText;
@@ -229,44 +229,44 @@
 /* When a custom theme is active, mode buttons step back visually. A dashed
    border instead of opacity: they stay operable, so their label keeps its
    text contrast (WCAG 1.4.3). */
-.cai-mode-btn.is-dimmed {
+.luz-mode-btn.is-dimmed {
   border-style: dashed;
 }
 
 /* The custom-theme buttons need JavaScript (they persist a choice): hide
    them until it runs */
-:root:not([data-cai-js]) :is(.cai-theme-apply-btn, .cai-theme-mode-btn) {
+:root:not([data-luz-js]) :is(.luz-theme-apply-btn, .luz-theme-mode-btn) {
   display: none;
 }
 
 /* Apply button for custom themes (sidebar themes section) */
-.cai-theme-apply-btn {
+.luz-theme-apply-btn {
   width: 100%;
   min-height: 26px;
-  border: 1px solid var(--cai-focus-ring);
+  border: 1px solid var(--luz-focus-ring);
   background: transparent;
-  color: var(--cai-brand-primary);
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
+  color: var(--luz-brand-primary);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
   font-weight: 600;
   letter-spacing: 0.05em;
   cursor: pointer;
-  border-radius: var(--cai-radius-md);
-  transition: background var(--cai-duration-fast), color var(--cai-duration-fast);
-  margin-top: var(--cai-space-xs);
+  border-radius: var(--luz-radius-md);
+  transition: background var(--luz-duration-fast), color var(--luz-duration-fast);
+  margin-top: var(--luz-space-xs);
 }
 
-.cai-theme-apply-btn:hover {
-  background: var(--cai-brand-subtle);
+.luz-theme-apply-btn:hover {
+  background: var(--luz-brand-subtle);
 }
 
-.cai-theme-apply-btn:focus-visible {
-  outline: 2px solid var(--cai-sidebar-text-hover);
+.luz-theme-apply-btn:focus-visible {
+  outline: 2px solid var(--luz-sidebar-text-hover);
   outline-offset: 2px;
 }
 
-.cai-theme-apply-btn.is-active {
-  background: var(--cai-brand-fill);
-  color: var(--cai-text-on-fill);
-  border-color: var(--cai-brand-fill);
+.luz-theme-apply-btn.is-active {
+  background: var(--luz-brand-fill);
+  color: var(--luz-text-on-fill);
+  border-color: var(--luz-brand-fill);
 }

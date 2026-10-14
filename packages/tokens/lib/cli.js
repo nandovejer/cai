@@ -1,7 +1,7 @@
 /**
- * CAI — `cai-tokens` command line (npx @cai-ds/tokens check-contrast <file.css>).
+ * LUZ — `luz-tokens` command line (npx @luz-ds/tokens check-contrast <file.css>).
  * The commands live here as functions of (argv, files) → { code, stdout,
- * stderr }, so the tests run them without a shell; bin/cai-tokens.js only
+ * stderr }, so the tests run them without a shell; bin/luz-tokens.js only
  * connects them to the process.
  *
  * Exit codes: 0 every pair meets its minimum; 1 a pair fails, or a colour
@@ -12,18 +12,18 @@ import { analyze } from "./check.js";
 import { formatRatio } from "./contrast.js";
 import { parseRules } from "./theme.js";
 
-export const USAGE = `Usage: cai-tokens check-contrast <file.css> [more.css…] [--json]
+export const USAGE = `Usage: luz-tokens check-contrast <file.css> [more.css…] [--json]
 
-Checks the colour pairs CAI promises to keep readable, in light, dark and
+Checks the colour pairs LUZ promises to keep readable, in light, dark and
 high-contrast (and in every [data-theme="name"] your files define), with the
---cai-* tokens your files override, against WCAG 2.x: 4.5:1 for text, 3:1 for
+--luz-* tokens your files override, against WCAG 2.x: 4.5:1 for text, 3:1 for
 text that is disabled, and for focus rings, field borders and icons.
 
-  <file.css>   a stylesheet with your --cai-* overrides; list several in the
+  <file.css>   a stylesheet with your --luz-* overrides; list several in the
                order your page loads them
   --json       print the result as JSON (ok, checked, failures, warnings, unreadable, ignored)
-  --strict     treat warnings (aims CAI sets itself, stricter than WCAG) as failures
-  --tokens <f> read CAI's tokens from this file instead of the installed
+  --strict     treat warnings (aims LUZ sets itself, stricter than WCAG) as failures
+  --tokens <f> read LUZ's tokens from this file instead of the installed
                dist/tokens.css
   --help       show this text
 
@@ -91,7 +91,7 @@ export function run(argv, env) {
   const grouped = group(failures);
   for (const [mark, list] of [["✗", grouped], ["!", group(warnings)]]) {
     for (const f of list) {
-      lines.push(`${mark} ${f.modes.join(", ")}: ${f.foreground} on ${f.background} is ${formatRatio(f.ratio)}, ${mark === "!" ? "CAI aims for" : "needs"} ${f.minimum}:1 (${f.kind})`);
+      lines.push(`${mark} ${f.modes.join(", ")}: ${f.foreground} on ${f.background} is ${formatRatio(f.ratio)}, ${mark === "!" ? "LUZ aims for" : "needs"} ${f.minimum}:1 (${f.kind})`);
       for (const o of f.overrides) lines.push(`    ${o.token}: ${o.value} is set in ${o.file}:${o.line}`);
     }
   }

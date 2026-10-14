@@ -11,7 +11,7 @@ globalThis.localStorage = {
   setItem: (k, v) => items.set(k, String(v)),
 };
 const later = Date.now() + 1e9;
-const put = (value, key = "cai-consent") => localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
+const put = (value, key = "luz-consent") => localStorage.setItem(key, typeof value === "string" ? value : JSON.stringify(value));
 
 describe("getConsent", () => {
   afterEach(() => items.clear());
@@ -22,9 +22,9 @@ describe("getConsent", () => {
   });
 
   it("reads another key when given one", () => {
-    put({ version: 1, expires: later, asked: ["analytics"], granted: [] }, "cai-consent-demo");
+    put({ version: 1, expires: later, asked: ["analytics"], granted: [] }, "luz-consent-demo");
     expect(getConsent()).toBeNull();
-    expect(getConsent("cai-consent-demo")).toEqual({ asked: ["analytics"], granted: [], expires: later });
+    expect(getConsent("luz-consent-demo")).toEqual({ asked: ["analytics"], granted: [], expires: later });
   });
 
   it.each([

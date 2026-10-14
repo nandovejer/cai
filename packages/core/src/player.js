@@ -1,10 +1,10 @@
 /**
- * CAI Design System — Media players
+ * LUZ Design System — Media players
  * Video & audio (native HTMLMediaElement API, captions from <track>) and MIDI (midi.js, loaded
  * lazily) sharing the same UI: seekbar, volume, keyboard shortcuts.
  *
  * Importing this module has no side effects; call initPlayers() to mount
- * every .cai-player on the page, or mountPlayer()/mountMidiPlayer()
+ * every .luz-player on the page, or mountPlayer()/mountMidiPlayer()
  * for a single one.
  */
 
@@ -22,17 +22,17 @@ function rangeShare(bar) {
   return Math.max(0, Math.min(1, Number(bar.value) / max));
 }
 
-/** Put a range input at `share` (0-1) and mirror it in --cai-seek. */
+/** Put a range input at `share` (0-1) and mirror it in --luz-seek. */
 function setRange(bar, share, valueText) {
   const clamped = Math.max(0, Math.min(1, share));
   bar.value = String(clamped * (Number(bar.max) || 1));
   // The value the browser kept (it snaps to the step): fill and thumb agree
-  bar.style.setProperty("--cai-seek", rangeShare(bar) * 100 + "%");
+  bar.style.setProperty("--luz-seek", rangeShare(bar) * 100 + "%");
   if (valueText) bar.setAttribute("aria-valuetext", valueText);
 }
 
 /**
- * Seek and volume bars are native <input type="range" class="cai-player-seekbar">.
+ * Seek and volume bars are native <input type="range" class="luz-player-seekbar">.
  * Pointer, touch and keyboard handling belong to the browser; this only
  * reports the new position as a share from 0 to 1.
  * @param {HTMLInputElement} bar
@@ -40,7 +40,7 @@ function setRange(bar, share, valueText) {
  */
 export function initSeekbar(bar, onSeek) {
   bar.addEventListener("input", () => {
-    bar.style.setProperty("--cai-seek", rangeShare(bar) * 100 + "%");
+    bar.style.setProperty("--luz-seek", rangeShare(bar) * 100 + "%");
     onSeek(rangeShare(bar));
   });
 }
@@ -99,19 +99,19 @@ export function wrapHTMLMedia(el) {
  * Video-only controls (PiP, fullscreen, captions, mediaWrap click) are handled
  * separately in mountPlayer since MidiPlayer has no video element.
  *
- * @param {HTMLElement} root         - .cai-player element
- * @param {HTMLElement} controls     - .cai-player-controls element
+ * @param {HTMLElement} root         - .luz-player element
+ * @param {HTMLElement} controls     - .luz-player-controls element
  * @param {object}      mediaLike    - wrapHTMLMedia() or MidiPlayer instance
  */
 export function bindPlayerUI(root, controls, mediaLike) {
-  const playPauseBtn = root.querySelector(".cai-player-playpause");
-  const muteBtn = root.querySelector(".cai-player-mute");
+  const playPauseBtn = root.querySelector(".luz-player-playpause");
+  const muteBtn = root.querySelector(".luz-player-mute");
   const seekbar = controls.querySelector(
-    ".cai-player-progress-row .cai-player-seekbar",
+    ".luz-player-progress-row .luz-player-seekbar",
   );
-  const volbar = controls.querySelector(".cai-player-volbar");
-  const currentEl = controls.querySelector(".cai-player-current");
-  const durationEl = controls.querySelector(".cai-player-duration");
+  const volbar = controls.querySelector(".luz-player-volbar");
+  const currentEl = controls.querySelector(".luz-player-current");
+  const durationEl = controls.querySelector(".luz-player-duration");
 
   // ---- UI helpers ----
 
@@ -231,27 +231,27 @@ export function bindPlayerUI(root, controls, mediaLike) {
 
 /**
  * Mount a single media player (video or audio).
- * @param {HTMLElement} root - .cai-player element
+ * @param {HTMLElement} root - .luz-player element
  */
 export function mountPlayer(root) {
   if (mounted.has(root)) return;
   const isVideo = root.dataset.type === "video";
   const media = root.querySelector(
-    isVideo ? ".cai-player-video" : ".cai-player-audio",
+    isVideo ? ".luz-player-video" : ".luz-player-audio",
   );
   if (!media) return;
   mounted.add(root);
-  // The CAI controls show only under data-cai-js: mounting one player
+  // The LUZ controls show only under data-luz-js: mounting one player
   // without initPlayers() must not leave it with no controls at all
   enableJs();
 
-  const controls = root.querySelector(".cai-player-controls");
-  const mediaWrap = root.querySelector(".cai-player-media-wrap"); // video only
+  const controls = root.querySelector(".luz-player-controls");
+  const mediaWrap = root.querySelector(".luz-player-media-wrap"); // video only
   const seekbar = controls?.querySelector(
-    ".cai-player-progress-row .cai-player-seekbar",
+    ".luz-player-progress-row .luz-player-seekbar",
   );
-  const pipBtn = root.querySelector(".cai-player-pip");
-  const fsBtn = root.querySelector(".cai-player-fullscreen");
+  const pipBtn = root.querySelector(".luz-player-pip");
+  const fsBtn = root.querySelector(".luz-player-fullscreen");
 
   // The native controls were the no-JavaScript interface; the custom UI
   // replaces them now that it is about to be bound.
@@ -279,7 +279,7 @@ export function mountPlayer(root) {
       const buf = media.buffered;
       if (buf.length > 0) {
         seekbar.style.setProperty(
-          "--cai-buf",
+          "--luz-buf",
           (buf.end(buf.length - 1) / media.duration) * 100 + "%",
         );
       }
@@ -300,7 +300,7 @@ export function mountPlayer(root) {
       if (
         e.target === mediaWrap ||
         e.target === media ||
-        e.target.classList.contains("cai-player-overlay")
+        e.target.classList.contains("luz-player-overlay")
       ) {
         media.paused ? media.play() : media.pause();
       }
@@ -330,8 +330,8 @@ export function mountPlayer(root) {
   // A track's mode is the state and the browser draws the cues. The button
   // turns them on (the default track, else the first) or off; the select
   // picks one track or none.
-  const ccBtn = root.querySelector(".cai-player-captions");
-  const ccMenu = root.querySelector(".cai-player-tracks");
+  const ccBtn = root.querySelector(".luz-player-captions");
+  const ccMenu = root.querySelector(".luz-player-tracks");
   const tracks = [...(media.textTracks || [])].filter((tk) =>
     /^(captions|subtitles)$/.test(tk.kind),
   );
@@ -412,22 +412,22 @@ export function mountPlayer(root) {
  * Mount a MIDI player. Uses MidiPlayer (midi.js, imported lazily) but
  * drives the exact same UI as the audio player — same CSS classes,
  * same seekbar, same controls.
- * @param {HTMLElement} root - .cai-player[data-type="midi"] element
+ * @param {HTMLElement} root - .luz-player[data-type="midi"] element
  */
 export async function mountMidiPlayer(root) {
   const src = root.dataset.src;
   if (mounted.has(root)) return;
   if (!src) {
     console.warn(
-      '[CAI] .cai-player[data-type="midi"] missing data-src attribute',
+      '[LUZ] .luz-player[data-type="midi"] missing data-src attribute',
     );
     return;
   }
   mounted.add(root);
 
-  const controls = root.querySelector(".cai-player-controls");
-  const playPauseBtn = root.querySelector(".cai-player-playpause");
-  const statusEl = root.querySelector(".cai-player-midi-status");
+  const controls = root.querySelector(".luz-player-controls");
+  const playPauseBtn = root.querySelector(".luz-player-playpause");
+  const statusEl = root.querySelector(".luz-player-midi-status");
 
   // Loading state
   if (statusEl) {
@@ -444,7 +444,7 @@ export async function mountMidiPlayer(root) {
     player = await MidiPlayer.load(src);
   } catch (err) {
     if (statusEl) statusEl.textContent = t("midiError", root);
-    console.error("[CAI] MIDI load error:", err);
+    console.error("[LUZ] MIDI load error:", err);
     return;
   }
 
@@ -457,13 +457,13 @@ export async function mountMidiPlayer(root) {
 }
 
 /**
- * Mount every .cai-player in `root` (video, audio, and MIDI). Idempotent:
+ * Mount every .luz-player in `root` (video, audio, and MIDI). Idempotent:
  * a player already mounted is left as it is.
  * @param {ParentNode} [root=document]
  */
 export function initPlayers(root = document) {
   enableJs();
-  root.querySelectorAll(".cai-player").forEach((player) => {
+  root.querySelectorAll(".luz-player").forEach((player) => {
     if (player.dataset.type === "midi") {
       mountMidiPlayer(player);
     } else {

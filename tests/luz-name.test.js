@@ -92,7 +92,7 @@ describe("the old name is gone", () => {
 });
 
 describe("no old package versions", () => {
-  it("no @luz-ds/<package>@2.x or @3.x and no v2.0.0 / v3.0.0 in any file", () => {
+  it(`no @luz-ds/<package>@2.x or @3.x and no ${["v2", "0", "0"].join(".")} / ${["v3", "0", "0"].join(".")} in any file`, () => {
     const pinned = /@luz-ds\/[a-z-]+@[23]\.\d+\.\d+/;
     const tags = /\bv[23]\.0\.0\b/;
     const hits = [];

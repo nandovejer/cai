@@ -1,12 +1,12 @@
 /* ==========================================================================
-	 CAI Landing: feature grid.
+	 LUZ Landing: feature grid.
 	 A short set of features or options of equal weight, usually cards.
 	 ========================================================================== */
 
 /* Two columns at most; one when two do not fit 16rem each. Intrinsic: it
    follows the room the grid has, not the window, and needs no query. */
-.cai-landing-feature-grid {
+.luz-landing-feature-grid {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(min(100%, max(16rem, 45%)), 1fr));
-	gap: var(--cai-space-sm);
+	gap: var(--luz-space-sm);
 }

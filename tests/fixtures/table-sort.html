@@ -4,54 +4,54 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Table sort</title>
-  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
-  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
 </head>
 <body>
   <main>
     <h1>Table sort</h1>
 
     <!-- A link (server sort), plain text, a formatted number with data-sort-value, plain numbers -->
-    <div class="cai-table-wrap" role="region" aria-label="Parcels per route" tabindex="0">
-      <table class="cai-table" id="routes">
+    <div class="luz-table-wrap" role="region" aria-label="Parcels per route" tabindex="0">
+      <table class="luz-table" id="routes">
         <caption>Parcels per route</caption>
         <thead>
           <tr>
-            <th scope="col" data-cai-sort><a id="l-route" href="?sort=route#routes">Route</a></th>
-            <th scope="col" class="cai-table__numeric" data-cai-sort aria-sort="descending"><a id="l-parcels" href="?sort=parcels&amp;dir=asc#routes">Parcels</a></th>
-            <th scope="col" class="cai-table__numeric" data-cai-sort>Weight (kg)</th>
+            <th scope="col" data-luz-sort><a id="l-route" href="?sort=route#routes">Route</a></th>
+            <th scope="col" class="luz-table__numeric" data-luz-sort aria-sort="descending"><a id="l-parcels" href="?sort=parcels&amp;dir=asc#routes">Parcels</a></th>
+            <th scope="col" class="luz-table__numeric" data-luz-sort>Weight (kg)</th>
             <th scope="col">Notes</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td data-label="Route">Sevilla to Madrid</td><td class="cai-table__numeric" data-label="Parcels" data-sort-value="1204">1,204</td><td class="cai-table__numeric" data-label="Weight (kg)">8430.5</td><td data-label="Notes">Daily</td></tr>
-          <tr><td data-label="Route">Álava to Bilbao</td><td class="cai-table__numeric" data-label="Parcels" data-sort-value="58">58</td><td class="cai-table__numeric" data-label="Weight (kg)">406.3</td><td data-label="Notes">Monday</td></tr>
-          <tr><td data-label="Route">Alava to Bilbao</td><td class="cai-table__numeric" data-label="Parcels" data-sort-value="58">58</td><td class="cai-table__numeric" data-label="Weight (kg)">9</td><td data-label="Notes">Tuesday</td></tr>
-          <tr><td data-label="Route">Room 10</td><td class="cai-table__numeric" data-label="Parcels" data-sort-value="312">312</td><td class="cai-table__numeric" data-label="Weight (kg)">1912</td><td data-label="Notes">Daily</td></tr>
-          <tr><td data-label="Route">Room 2</td><td class="cai-table__numeric" data-label="Parcels" data-sort-value="999">999</td><td class="cai-table__numeric" data-label="Weight (kg)">-3</td><td data-label="Notes">Daily</td></tr>
+          <tr><td data-label="Route">Sevilla to Madrid</td><td class="luz-table__numeric" data-label="Parcels" data-sort-value="1204">1,204</td><td class="luz-table__numeric" data-label="Weight (kg)">8430.5</td><td data-label="Notes">Daily</td></tr>
+          <tr><td data-label="Route">Álava to Bilbao</td><td class="luz-table__numeric" data-label="Parcels" data-sort-value="58">58</td><td class="luz-table__numeric" data-label="Weight (kg)">406.3</td><td data-label="Notes">Monday</td></tr>
+          <tr><td data-label="Route">Alava to Bilbao</td><td class="luz-table__numeric" data-label="Parcels" data-sort-value="58">58</td><td class="luz-table__numeric" data-label="Weight (kg)">9</td><td data-label="Notes">Tuesday</td></tr>
+          <tr><td data-label="Route">Room 10</td><td class="luz-table__numeric" data-label="Parcels" data-sort-value="312">312</td><td class="luz-table__numeric" data-label="Weight (kg)">1912</td><td data-label="Notes">Daily</td></tr>
+          <tr><td data-label="Route">Room 2</td><td class="luz-table__numeric" data-label="Parcels" data-sort-value="999">999</td><td class="luz-table__numeric" data-label="Weight (kg)">-3</td><td data-label="Notes">Daily</td></tr>
         </tbody>
       </table>
     </div>
 
     <!-- The language of the table is not the page's -->
     <div lang="es">
-      <div class="cai-table-wrap" role="region" aria-label="Paquetes" tabindex="0">
-        <table class="cai-table" id="es">
+      <div class="luz-table-wrap" role="region" aria-label="Paquetes" tabindex="0">
+        <table class="luz-table" id="es">
           <caption>Paquetes por ruta</caption>
-          <thead><tr><th scope="col" data-cai-sort>Ruta</th><th scope="col" class="cai-table__numeric" data-cai-sort>Peso</th></tr></thead>
+          <thead><tr><th scope="col" data-luz-sort>Ruta</th><th scope="col" class="luz-table__numeric" data-luz-sort>Peso</th></tr></thead>
           <tbody>
-            <tr><td data-label="Ruta">Sevilla</td><td class="cai-table__numeric" data-label="Peso">12</td></tr>
-            <tr><td data-label="Ruta">Cádiz</td><td class="cai-table__numeric" data-label="Peso">3</td></tr>
+            <tr><td data-label="Ruta">Sevilla</td><td class="luz-table__numeric" data-label="Peso">12</td></tr>
+            <tr><td data-label="Ruta">Cádiz</td><td class="luz-table__numeric" data-label="Peso">3</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
     <!-- Two bodies and a foot: each body sorts within itself, the foot stays -->
-    <div class="cai-table-wrap" role="region" aria-label="Groups" tabindex="0">
-      <table class="cai-table" id="groups">
+    <div class="luz-table-wrap" role="region" aria-label="Groups" tabindex="0">
+      <table class="luz-table" id="groups">
         <caption>Groups</caption>
-        <thead><tr><th scope="col" data-cai-sort>Name</th></tr></thead>
+        <thead><tr><th scope="col" data-luz-sort>Name</th></tr></thead>
         <tbody><tr><td>b</td></tr><tr><td>a</td></tr></tbody>
         <tbody><tr><td>z</td></tr><tr><td>y</td></tr></tbody>
         <tfoot><tr><td>total</td></tr></tfoot>
@@ -60,21 +60,21 @@
 
     <!-- A malformed lang must not throw -->
     <div lang="en_US">
-      <div class="cai-table-wrap" role="region" aria-label="Bad language" tabindex="0">
-        <table class="cai-table" id="bad-lang">
+      <div class="luz-table-wrap" role="region" aria-label="Bad language" tabindex="0">
+        <table class="luz-table" id="bad-lang">
           <caption>Bad language</caption>
-          <thead><tr><th scope="col" data-cai-sort>Name</th></tr></thead>
+          <thead><tr><th scope="col" data-luz-sort>Name</th></tr></thead>
           <tbody><tr><td>b</td></tr><tr><td>a</td></tr></tbody>
         </table>
       </div>
     </div>
   </main>
   <script type="module">
-    // ?manual: no cai.js, the test calls initTableSort() itself.
-    // ?nosort: the page has no sortable heading, so cai.js must not load the chunk.
+    // ?manual: no luz.js, the test calls initTableSort() itself.
+    // ?nosort: the page has no sortable heading, so luz.js must not load the chunk.
     const params = new URLSearchParams(location.search);
-    if (params.has("nosort")) document.querySelectorAll("[data-cai-sort]").forEach((el) => el.removeAttribute("data-cai-sort"));
-    if (!params.has("manual")) await import("/packages/core/dist/cai.js");
+    if (params.has("nosort")) document.querySelectorAll("[data-luz-sort]").forEach((el) => el.removeAttribute("data-luz-sort"));
+    if (!params.has("manual")) await import("/packages/core/dist/luz.js");
   </script>
 </body>
 </html>

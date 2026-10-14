@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
-   CAI Component: meter
-   Meter — native <meter class="cai-meter" value min max>, drawn as a bar, for
+   LUZ Component: meter
+   Meter — native <meter class="luz-meter" value min max>, drawn as a bar, for
    a value in a known range (a share, a count against a maximum), next to its
    figure in a table cell or a list. The figure and the scale say what it
    means: every state is the brand colour, never a green or a red, so do not
@@ -10,12 +10,12 @@
    Contrast (WCAG 1.4.11, 3:1 in every mode): the fill is the brand colour on a
    surface-muted track, and the track's edge is the field border colour, as
    in progress.css.
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-meter {
+.luz-meter {
   appearance: none;
   display: block;
   inline-size: 100%;
@@ -23,49 +23,49 @@
      figure beside it */
   min-inline-size: 8rem;
   block-size: 8px;
-  border: 1px solid var(--cai-input-border);
-  border-radius: var(--cai-radius-sm);
-  background: var(--cai-surface-muted);
+  border: 1px solid var(--luz-input-border);
+  border-radius: var(--luz-radius-sm);
+  background: var(--luz-surface-muted);
   overflow: hidden;
 }
 
-.cai-meter::-webkit-meter-bar {
-  background: var(--cai-surface-muted);
+.luz-meter::-webkit-meter-bar {
+  background: var(--luz-surface-muted);
   border: 0;
 }
 
 /* The three states of the engine, one colour. One rule per engine: a
    selector list with a pseudo-element the browser does not know is dropped
    whole. */
-.cai-meter::-webkit-meter-optimum-value,
-.cai-meter::-webkit-meter-suboptimum-value,
-.cai-meter::-webkit-meter-even-less-good-value {
-  background: var(--cai-brand-primary);
+.luz-meter::-webkit-meter-optimum-value,
+.luz-meter::-webkit-meter-suboptimum-value,
+.luz-meter::-webkit-meter-even-less-good-value {
+  background: var(--luz-brand-primary);
 }
 
-.cai-meter::-moz-meter-bar {
-  background: var(--cai-brand-primary);
+.luz-meter::-moz-meter-bar {
+  background: var(--luz-brand-primary);
 }
 
 /* Forced colors flatten backgrounds to Canvas: keep the bar and its fill */
 @media (forced-colors: active) {
-  .cai-meter {
+  .luz-meter {
     border-color: CanvasText;
     background: Canvas;
     forced-color-adjust: none;
   }
 
-  .cai-meter::-webkit-meter-bar {
+  .luz-meter::-webkit-meter-bar {
     background: Canvas;
   }
 
-  .cai-meter::-webkit-meter-optimum-value,
-  .cai-meter::-webkit-meter-suboptimum-value,
-  .cai-meter::-webkit-meter-even-less-good-value {
+  .luz-meter::-webkit-meter-optimum-value,
+  .luz-meter::-webkit-meter-suboptimum-value,
+  .luz-meter::-webkit-meter-even-less-good-value {
     background: Highlight;
   }
 
-  .cai-meter::-moz-meter-bar {
+  .luz-meter::-moz-meter-bar {
     background: Highlight;
   }
 }
@@ -74,11 +74,11 @@
    and its figure: the bar takes a line of its own under them, the width of the
    card and no longer, so it never pushes the row wider at a large text size */
 @container (max-width: 480px) {
-  .cai-table td:has(> .cai-meter) {
+  .luz-table td:has(> .luz-meter) {
     flex-wrap: wrap;
   }
 
-  .cai-table td > .cai-meter {
+  .luz-table td > .luz-meter {
     flex-basis: 100%;
     min-inline-size: 0;
   }

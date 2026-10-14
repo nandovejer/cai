@@ -1,19 +1,19 @@
 /* --------------------------------------------------------------------------
-   CAI Component: sidebar
+   LUZ Component: sidebar
    Sidebar navigation + mobile drawer (nav-toggle, popover)
-   Layer: components (ITCSS 5) · Prefix: .cai-
-   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
    -------------------------------------------------------------------------- */
 
 
-.cai-sidebar {
-  font-family: var(--cai-font-sans); /* UI text: never the body serif */
+.luz-sidebar {
+  font-family: var(--luz-font-sans); /* UI text: never the body serif */
   /* The browser gives every [popover] a border: the sidebar has none */
   border: 0;
-  width: var(--cai-sidebar-width);
-  min-width: var(--cai-sidebar-width);
-  background: var(--cai-sidebar-bg);
-  color: var(--cai-sidebar-text);
+  width: var(--luz-sidebar-width);
+  min-width: var(--luz-sidebar-width);
+  background: var(--luz-sidebar-bg);
+  color: var(--luz-sidebar-text);
   position: sticky;
   inset: auto;
   inset-block-start: 0;
@@ -22,127 +22,127 @@
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  transition: transform var(--cai-duration-slow) var(--cai-easing-standard),
-    background var(--cai-duration-base);
-  z-index: var(--cai-z-sidebar);
+  transition: transform var(--luz-duration-slow) var(--luz-easing-standard),
+    background var(--luz-duration-base);
+  z-index: var(--luz-z-sidebar);
 }
 
-.cai-sidebar__brand {
-  padding: var(--cai-space-md) var(--cai-space-md) var(--cai-space-sm);
-  border-bottom: 1px solid var(--cai-sidebar-border);
+.luz-sidebar__brand {
+  padding: var(--luz-space-md) var(--luz-space-md) var(--luz-space-sm);
+  border-bottom: 1px solid var(--luz-sidebar-border);
 }
 
-.cai-sidebar__brand-name {
-  font-size: var(--cai-text-xl);
+.luz-sidebar__brand-name {
+  font-size: var(--luz-text-xl);
   font-weight: 600;
   letter-spacing: -0.5px;
-  color: var(--cai-sidebar-text-hover);
+  color: var(--luz-sidebar-text-hover);
   display: flex;
   align-items: center;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
 }
 
-.cai-sidebar__logo {
+.luz-sidebar__logo {
   width: 28px;
   height: 28px;
-  background: var(--cai-sidebar-logo-bg);
-  border-radius: var(--cai-radius-md);
+  background: var(--luz-sidebar-logo-bg);
+  border-radius: var(--luz-radius-md);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--cai-text-sm);
-  font-family: var(--cai-font-mono);
+  font-size: var(--luz-text-sm);
+  font-family: var(--luz-font-mono);
   font-weight: 500;
   /* The logo shares its background with the active link in every theme;
-     --cai-text-on-fill was white on white in high contrast */
-  color: var(--cai-sidebar-active-text);
+     --luz-text-on-fill was white on white in high contrast */
+  color: var(--luz-sidebar-active-text);
   flex-shrink: 0;
 }
 
-.cai-sidebar__version {
-  font-size: var(--cai-text-xs);
-  font-family: var(--cai-font-mono);
-  color: var(--cai-sidebar-label);
-  margin-top: var(--cai-space-2xs);
+.luz-sidebar__version {
+  font-size: var(--luz-text-xs);
+  font-family: var(--luz-font-mono);
+  color: var(--luz-sidebar-label);
+  margin-top: var(--luz-space-2xs);
 }
 
-.cai-sidebar__section {
-  padding: var(--cai-space-md) 0 var(--cai-space-sm);
+.luz-sidebar__section {
+  padding: var(--luz-space-md) 0 var(--luz-space-sm);
 }
 
-.cai-sidebar__section-label {
-  font-size: var(--cai-text-xs);
+.luz-sidebar__section-label {
+  font-size: var(--luz-text-xs);
   font-weight: 500;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: var(--cai-sidebar-label);
-  padding: 0 var(--cai-space-md) var(--cai-space-xs);
-  margin-bottom: var(--cai-space-2xs);
+  color: var(--luz-sidebar-label);
+  padding: 0 var(--luz-space-md) var(--luz-space-xs);
+  margin-bottom: var(--luz-space-2xs);
 }
 
 /* Spacing between letters breaks the joins of Arabic script */
-.cai-sidebar__brand-name:lang(ar),
-.cai-sidebar__section-label:lang(ar) {
+.luz-sidebar__brand-name:lang(ar),
+.luz-sidebar__section-label:lang(ar) {
   letter-spacing: 0;
 }
 
-.cai-sidebar__link {
+.luz-sidebar__link {
   display: block;
-  padding: var(--cai-space-xs) var(--cai-space-md);
-  font-size: var(--cai-text-md);
-  color: var(--cai-sidebar-text);
+  padding: var(--luz-space-xs) var(--luz-space-md);
+  font-size: var(--luz-text-md);
+  color: var(--luz-sidebar-text);
   text-decoration: none;
-  transition: background var(--cai-duration-fast),
-    color var(--cai-duration-fast);
+  transition: background var(--luz-duration-fast),
+    color var(--luz-duration-fast);
   cursor: pointer;
-  scroll-margin-top: var(--cai-space-xl);
+  scroll-margin-top: var(--luz-space-xl);
   position: relative;
 }
 
-.cai-sidebar__link:hover {
-  background: var(--cai-sidebar-hover);
-  color: var(--cai-sidebar-text-hover);
+.luz-sidebar__link:hover {
+  background: var(--luz-sidebar-hover);
+  color: var(--luz-sidebar-text-hover);
 }
 
-.cai-sidebar__link.is-active {
-  background: var(--cai-sidebar-active-bg);
-  color: var(--cai-sidebar-active-text);
+.luz-sidebar__link.is-active {
+  background: var(--luz-sidebar-active-bg);
+  color: var(--luz-sidebar-active-text);
   font-weight: 500;
 }
 
-/* Focus rings on the sidebar surface: --cai-focus-ring is black on
+/* Focus rings on the sidebar surface: --luz-focus-ring is black on
    the black sidebar in high contrast. Links draw the ring inside themselves,
    in their own text color, which contrasts with their background in every
    state (default, hover, active). */
-.cai-sidebar :is(a, button, [tabindex]):focus-visible {
-  outline-color: var(--cai-sidebar-text-hover);
+.luz-sidebar :is(a, button, [tabindex]):focus-visible {
+  outline-color: var(--luz-sidebar-text-hover);
 }
 
-.cai-sidebar .cai-sidebar__link:focus-visible {
+.luz-sidebar .luz-sidebar__link:focus-visible {
   outline: 2px solid currentcolor;
   outline-offset: -2px;
 }
 
 /* Ghost buttons (e.g. footer links) take the sidebar text colors: the brand
    color is below 4.5:1 on the sidebar surface */
-.cai-sidebar .cai-btn--ghost {
-  color: var(--cai-sidebar-text);
+.luz-sidebar .luz-btn--ghost {
+  color: var(--luz-sidebar-text);
 }
 
-.cai-sidebar .cai-btn--ghost:hover {
-  background: var(--cai-sidebar-hover);
-  color: var(--cai-sidebar-text-hover);
+.luz-sidebar .luz-btn--ghost:hover {
+  background: var(--luz-sidebar-hover);
+  color: var(--luz-sidebar-text-hover);
 }
 
-.cai-sidebar__footer {
+.luz-sidebar__footer {
   margin-top: auto;
-  padding: var(--cai-space-sm) var(--cai-space-md);
-  border-top: 1px solid var(--cai-sidebar-border);
+  padding: var(--luz-space-sm) var(--luz-space-md);
+  border-top: 1px solid var(--luz-sidebar-border);
 }
 
 /* --------------------------------------------------------------------------
    HAMBURGER + DRAWER (mobile)
-   The drawer is a native popover: <nav class="cai-sidebar" popover> opened by
+   The drawer is a native popover: <nav class="luz-sidebar" popover> opened by
    <button popovertarget>. The browser gives Escape, light dismiss (click on
    the backdrop), the top layer, focus return and the expanded state for
    assistive technology. Without JavaScript, or in a browser without the
@@ -153,65 +153,65 @@
    order follows what is on screen (WCAG 2.4.3). A bordered button on the
    page surface, like the other header controls. --fixed pins it to the top
    start corner instead, for a page with no header. */
-.cai-nav-toggle {
+.luz-nav-toggle {
   display: none;
   flex-shrink: 0;
-  inline-size: var(--cai-control-lg);
-  block-size: var(--cai-control-lg);
+  inline-size: var(--luz-control-lg);
+  block-size: var(--luz-control-lg);
   background: transparent;
-  border: 1px solid var(--cai-outline);
-  border-radius: var(--cai-radius-md);
-  color: var(--cai-text-primary);
+  border: 1px solid var(--luz-outline);
+  border-radius: var(--luz-radius-md);
+  color: var(--luz-text-primary);
   cursor: pointer;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: var(--cai-space-2xs);
-  padding: var(--cai-space-xs);
-  transition: background var(--cai-duration-fast);
+  gap: var(--luz-space-2xs);
+  padding: var(--luz-space-xs);
+  transition: background var(--luz-duration-fast);
 }
 
-.cai-nav-toggle:hover {
-  background: var(--cai-surface-hover);
+.luz-nav-toggle:hover {
+  background: var(--luz-surface-hover);
 }
 
-.cai-nav-toggle--fixed {
+.luz-nav-toggle--fixed {
   position: fixed;
-  inset-block-start: var(--cai-space-sm);
-  inset-inline-start: var(--cai-space-sm);
-  z-index: var(--cai-z-modal);
-  background: var(--cai-surface-page);
+  inset-block-start: var(--luz-space-sm);
+  inset-inline-start: var(--luz-space-sm);
+  z-index: var(--luz-z-modal);
+  background: var(--luz-surface-page);
 }
 
-.cai-nav-toggle:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-nav-toggle:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-.cai-nav-toggle__bar {
+.luz-nav-toggle__bar {
   display: block;
   width: 100%;
   height: 1.5px;
   background: currentcolor;
-  transition: transform var(--cai-duration-base),
-    opacity var(--cai-duration-base);
+  transition: transform var(--luz-duration-base),
+    opacity var(--luz-duration-base);
 }
 
 /* The bars are backgrounds: forced colors drop them, and the button would
    be an empty box. Paint them in a system color. */
 @media (forced-colors: active) {
-  .cai-nav-toggle__bar {
+  .luz-nav-toggle__bar {
     background: ButtonText;
   }
 }
 
 @supports selector(:popover-open) {
   @media (max-width: 768px) {
-    .cai-nav-toggle {
+    .luz-nav-toggle {
       display: flex;
     }
 
-    .cai-sidebar[popover] {
+    .luz-sidebar[popover] {
       position: fixed;
       inset: 0 auto;
       inset-inline-start: 0;
@@ -220,16 +220,16 @@
       height: 100dvh;
     }
 
-    .cai-sidebar[popover]:not(:popover-open) {
+    .luz-sidebar[popover]:not(:popover-open) {
       display: none;
     }
 
-    .cai-sidebar[popover]:popover-open {
-      box-shadow: var(--cai-shadow-lg);
+    .luz-sidebar[popover]:popover-open {
+      box-shadow: var(--luz-shadow-lg);
     }
 
-    .cai-sidebar[popover]::backdrop {
-      background: var(--cai-scrim);
+    .luz-sidebar[popover]::backdrop {
+      background: var(--luz-scrim);
     }
   }
 }

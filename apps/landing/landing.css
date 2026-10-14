@@ -1,13 +1,13 @@
 /* ==========================================================================
-   CAI — LANDING PAGE
+   LUZ — LANDING PAGE
    Consumer-side styles for apps/landing, written the way any level-3 consumer
    would: on top of tokens + core + site.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
-     - media queries use the literal values of --cai-mq-* (640, 768, 1024),
+     - media queries use the literal values of --luz-mq-* (640, 768, 1024),
        max-width like core and site, so both collapse at the same widths;
      - the token a specimen illustrates arrives as an inline custom property,
-       style="--v: var(--cai-…)", and is consumed here as var(--v).
+       style="--v: var(--luz-…)", and is consumed here as var(--v).
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -18,62 +18,62 @@
    the same as the header's and the documentation's */
 .landing-wrap {
   width: 100%;
-  padding-inline: calc(var(--site-edge) + var(--cai-space-xl));
+  padding-inline: calc(var(--site-edge) + var(--luz-space-xl));
 }
 
 /* Grid and flex items default to min-width: auto, which lets a long <pre> or
    a table widen the whole page. Zero specificity: any core rule still wins. */
-:where(.cai-site-page)
+:where(.luz-site-page)
   :where(main, section, article, header, footer, nav, div, figure, fieldset, form, ul, ol, li, dl) {
   min-width: 0;
 }
 
 .landing-levels {
   display: grid;
-  gap: var(--cai-space-lg);
+  gap: var(--luz-space-lg);
 }
 
 .landing-h2 {
-  font-size: var(--cai-text-2xl);
+  font-size: var(--luz-text-2xl);
 }
 
 .landing-eyebrow,
 .landing-subhead {
-  font-family: var(--cai-font-mono);
-  font-size: var(--cai-text-xs);
+  font-family: var(--luz-font-mono);
+  font-size: var(--luz-text-xs);
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 /* Arabic: the mono has no Arabic letters, and spacing between letters
    breaks the joins of the script */
 .landing-eyebrow:lang(ar),
 .landing-subhead:lang(ar) {
-  font-family: var(--cai-font-sans);
+  font-family: var(--luz-font-sans);
   letter-spacing: 0;
 }
 
 .landing-lead {
-  font-size: var(--cai-text-lg);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-lg);
+  color: var(--luz-text-secondary);
   max-width: 65ch;
 }
 
 /* --------------------------------------------------------------------------
-   What CAI is
+   What LUZ is
    -------------------------------------------------------------------------- */
 
 .landing-points {
   list-style: none;
-  gap: var(--cai-space-lg);
+  gap: var(--luz-space-lg);
 }
 
 .landing-point__title {
-  font-family: var(--cai-font-sans);
-  font-size: var(--cai-text-base);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-base);
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: 0;
@@ -81,11 +81,11 @@
 
 .landing-render {
   display: grid;
-  gap: var(--cai-space-sm);
-  padding: var(--cai-space-md);
-  background: var(--cai-surface);
-  border: 1px dashed var(--cai-outline);
-  border-radius: var(--cai-radius-md);
+  gap: var(--luz-space-sm);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface);
+  border: 1px dashed var(--luz-outline);
+  border-radius: var(--luz-radius-md);
 }
 
 /* --------------------------------------------------------------------------
@@ -94,39 +94,39 @@
 
 .landing-snippet {
   display: grid;
-  gap: var(--cai-space-2xs);
+  gap: var(--luz-space-2xs);
 }
 
 .landing-snippet__bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
 }
 
 /* The bar carries the label; the absolute language badge would sit on top of
    the first line of code. */
-.landing-snippet .cai-code-block::before {
+.landing-snippet .luz-code-block::before {
   content: none;
 }
 
-.cai-code-block:focus-visible {
-  outline: 2px solid var(--cai-focus-ring);
+.luz-code-block:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
 /* No width jump when the label becomes "✓ Copied" */
-.landing-snippet .cai-copy-btn {
-  min-width: calc(var(--cai-space-3xl) + var(--cai-space-md) + var(--cai-space-xs));
+.landing-snippet .luz-copy-btn {
+  min-width: calc(var(--luz-space-3xl) + var(--luz-space-md) + var(--luz-space-xs));
   justify-content: center;
 }
 
-/* .cai-copy-btn has a subtle border and no fill: on a snippet bar
-   (--cai-surface-strong) it reads as plain text. Give it a surface and a boundary;
+/* .luz-copy-btn has a subtle border and no fill: on a snippet bar
+   (--luz-surface-strong) it reads as plain text. Give it a surface and a boundary;
    hover and .is-copied keep the component's own colors. */
-.landing-snippet .cai-copy-btn:not(:hover, .is-copied) {
-  background: var(--cai-surface);
-  border-color: var(--cai-outline);
+.landing-snippet .luz-copy-btn:not(:hover, .is-copied) {
+  background: var(--luz-surface);
+  border-color: var(--luz-outline);
 }
 
 /* --------------------------------------------------------------------------
@@ -146,78 +146,78 @@
   grid-row: span 3;
   grid-template-rows: subgrid;
   row-gap: 0;
-  background: var(--cai-surface);
-  border: 1px solid var(--cai-divider);
-  border-radius: var(--cai-radius-md);
+  background: var(--luz-surface);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
   overflow: clip;
 }
 
 .landing-level__intro {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   align-content: start;
   justify-items: start;
-  padding: var(--cai-space-lg) var(--cai-space-lg) 0;
+  padding: var(--luz-space-lg) var(--luz-space-lg) 0;
 }
 
 .landing-level__title {
-  font-size: var(--cai-text-2xl);
+  font-size: var(--luz-text-2xl);
   text-wrap: balance;
 }
 
 /* "Level N" is part of the heading, on a line of its own */
 .landing-level__title .landing-eyebrow {
   display: block;
-  margin-block-end: var(--cai-space-2xs);
+  margin-block-end: var(--luz-space-2xs);
 }
 
 .landing-level__intro p {
   max-inline-size: 65ch;
-  font-size: var(--cai-text-md);
-  color: var(--cai-text-secondary);
+  font-size: var(--luz-text-md);
+  color: var(--luz-text-secondary);
 }
 
 .landing-level__body {
   display: grid;
-  gap: var(--cai-space-sm);
+  gap: var(--luz-space-sm);
   align-content: start;
-  padding: var(--cai-space-lg) var(--cai-space-lg) 0;
-  font-size: var(--cai-text-md);
+  padding: var(--luz-space-lg) var(--luz-space-lg) 0;
+  font-size: var(--luz-text-md);
 }
 
 /* The rule above the list sits at the same height in the three cards */
 .landing-level__body h4 {
   margin: 0;
-  padding-block-start: var(--cai-space-md);
-  border-block-start: 1px solid var(--cai-divider);
+  padding-block-start: var(--luz-space-md);
+  border-block-start: 1px solid var(--luz-divider);
 }
 
 .landing-level__get {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   max-inline-size: 65ch;
   margin: 0;
-  padding-inline-start: var(--cai-space-md);
+  padding-inline-start: var(--luz-space-md);
   list-style: "✓";
 }
 
 .landing-level__get li {
-  padding-inline-start: var(--cai-space-xs);
+  padding-inline-start: var(--luz-space-xs);
 }
 
 .landing-level__get li::marker {
-  color: var(--cai-text-secondary);
+  color: var(--luz-text-secondary);
 }
 
 .landing-level__actions {
   display: grid;
-  gap: var(--cai-space-xs);
+  gap: var(--luz-space-xs);
   align-self: end;
   justify-items: center;
-  padding: var(--cai-space-lg);
+  padding: var(--luz-space-lg);
 }
 
-.landing-level__actions .cai-btn {
+.landing-level__actions .luz-btn {
   inline-size: 100%;
   justify-content: center;
 }
@@ -227,25 +227,25 @@
 .landing-level__actions a {
   display: inline-flex;
   align-items: center;
-  min-height: var(--cai-control-sm);
+  min-height: var(--luz-control-sm);
 }
 
 /* The packages for one kind of site, under the level cards: a short list
    and the package tree. Not cards, since none of them is published yet. */
 .landing-next {
-  margin-top: var(--cai-space-2xl);
+  margin-top: var(--luz-space-2xl);
   max-width: 48rem;
 }
 
 .landing-next__title {
-  font-size: var(--cai-text-xl);
-  margin-bottom: var(--cai-space-sm);
+  font-size: var(--luz-text-xl);
+  margin-bottom: var(--luz-space-sm);
 }
 
 .landing-next__list {
   display: grid;
-  gap: var(--cai-space-sm);
-  margin-bottom: var(--cai-space-lg);
+  gap: var(--luz-space-sm);
+  margin-bottom: var(--luz-space-lg);
 }
 
 /* --------------------------------------------------------------------------
@@ -253,39 +253,39 @@
    -------------------------------------------------------------------------- */
 
 .landing-subtitle {
-  font-size: var(--cai-text-lg);
-  margin-block: var(--cai-space-xl) var(--cai-space-xs);
+  font-size: var(--luz-text-lg);
+  margin-block: var(--luz-space-xl) var(--luz-space-xs);
 }
 
 .landing-fit {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--cai-space-xl);
+  gap: var(--luz-space-xl);
 }
 
 .landing-fit__list {
   display: grid;
-  gap: var(--cai-space-xs);
-  padding-inline-start: var(--cai-space-lg);
-  color: var(--cai-text-secondary);
+  gap: var(--luz-space-xs);
+  padding-inline-start: var(--luz-space-lg);
+  color: var(--luz-text-secondary);
 }
 
 /* --------------------------------------------------------------------------
    Local patches for gaps in core. Remove each one when core fixes it.
    -------------------------------------------------------------------------- */
 
-/* .cai-site-footer (768px and below) and .cai-site-actions (640px and
+/* .luz-site-footer (768px and below) and .luz-site-actions (640px and
    below) become columns but keep flex-wrap: wrap. A wrapping column nested in
    grids makes Chromium's layout take tens of seconds: the page freezes while
    it loads. */
 @media (max-width: 768px) {
-  .cai-site-page .cai-site-footer {
+  .luz-site-page .luz-site-footer {
     flex-wrap: nowrap;
   }
 }
 
 @media (max-width: 640px) {
-  .cai-site-page .cai-site-actions {
+  .luz-site-page .luz-site-actions {
     flex-wrap: nowrap;
   }
 }
@@ -309,7 +309,7 @@
     justify-items: start;
   }
 
-  .landing-level__actions .cai-btn {
+  .landing-level__actions .luz-btn {
     inline-size: auto;
   }
 }
@@ -322,50 +322,50 @@
 
 @media (max-width: 640px) {
   .landing-wrap {
-    padding-inline: var(--cai-space-md);
+    padding-inline: var(--luz-space-md);
   }
 
   .landing-h2 {
-    font-size: var(--cai-text-xl);
+    font-size: var(--luz-text-xl);
   }
 
   .landing-lead {
-    font-size: var(--cai-text-base);
+    font-size: var(--luz-text-base);
   }
 
   .landing-level__intro,
   .landing-level__body {
-    padding: var(--cai-space-md) var(--cai-space-md) 0;
+    padding: var(--luz-space-md) var(--luz-space-md) 0;
   }
 
   .landing-level__actions {
     justify-items: center;
-    padding: var(--cai-space-md);
+    padding: var(--luz-space-md);
   }
 
-  .landing-level__actions .cai-btn {
+  .landing-level__actions .luz-btn {
     inline-size: 100%;
   }
 
   /* Page footer: three short links on one row; a row may wrap (a longer
      name in another language, larger text), only a wrapping column freezes */
-  body > footer .cai-site-actions {
+  body > footer .luz-site-actions {
     flex-direction: row;
     align-items: center;
   }
 
-  .cai-site-page > footer .cai-site-actions {
+  .luz-site-page > footer .luz-site-actions {
     flex-wrap: wrap;
   }
 
-  body > footer .cai-site-actions > * {
+  body > footer .luz-site-actions > * {
     width: auto;
   }
 }
 
 /* Stacked footer: line the ghost links' text up with the line above */
 @media (max-width: 768px) {
-  body > footer .cai-site-actions {
-    margin-inline-start: calc(-1 * var(--cai-space-sm));
+  body > footer .luz-site-actions {
+    margin-inline-start: calc(-1 * var(--luz-space-sm));
   }
 }

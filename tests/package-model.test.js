@@ -58,11 +58,7 @@ describe("layering: tokens < core < site < a kind of site", () => {
   // meet: no shared class (spec §1.8)
   const other = (kind) => SITE_KINDS.filter((k) => k !== kind).join("|");
   for (const kind of SITE_KINDS) {
-    // The cms TOC still reads site's sticky header (cms/src/components/article.css:80-81).
-    // It turns green at step 11, when the TOC sticks under core's .o-sticky: then
-    // vitest fails this test as "expected to fail", and the `.fails` goes
-    const check = kind === "cms" ? it.fails : it;
-    check(`${kind} names no \`luz-site-*\` class or property and no other kind of site`, () => {
+    it(`${kind} names no \`luz-site-*\` class or property and no other kind of site`, () => {
       expect(offenders([kind], new RegExp(`luz-site-|luz-(?:${other(kind)})-`))).toEqual([]);
     });
   }

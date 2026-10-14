@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CMS header: the masthead</title>
+  <!-- tests/cms-header.spec.js: .luz-cms-header--masthead (the newspaper header: date and search, the
+       publication name, the sections row), not sticky. Site loaded, no script -->
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <link rel="stylesheet" href="/packages/cms/dist/cms.css">
+</head>
+<body class="o-page">
+  <a class="luz-skip-link" href="#top">Skip to content</a>
+  <header class="luz-cms-header luz-cms-header--masthead" id="hdr">
+    <div class="o-container o-container--inline o-stack" id="inner">
+      <div class="o-row luz-cms-header__top" id="top-row">
+        <p class="luz-cms-header__date" id="date"><time datetime="2026-10-14">Wednesday, 14 October 2026</time></p>
+        <div class="o-row luz-cms-header__actions" id="actions">
+          <luz-search id="search">
+            <a class="luz-search__fallback" id="fallback" href="#top" data-luz-search-fallback>
+              <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <span class="luz-search__fallback-label">A–Z index</span>
+            </a>
+            <button class="luz-search__trigger luz-search__trigger--compact" id="trigger" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+              <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <span class="luz-search__trigger-label">Search</span>
+              <kbd class="luz-search__trigger-key" aria-hidden="true">Ctrl K</kbd>
+            </button>
+            <dialog class="luz-modal luz-search" data-luz-search data-luz-search-src="/tests/fixtures/search-index.json" aria-label="Search">
+              <input type="text" aria-label="Query">
+            </dialog>
+          </luz-search>
+        </div>
+      </div>
+      <a class="luz-cms-header__brand" id="brand" href="#top">The Vejer Review</a>
+      <div class="o-row luz-cms-header__sections" id="sections">
+        <button class="luz-nav-toggle" id="toggle" type="button" popovertarget="cms-nav" aria-label="Sections">
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+        </button>
+        <nav class="luz-navbar" id="cms-nav" aria-label="Sections" popover>
+          <ul class="luz-navbar__list">
+            <li><a class="luz-navbar__link" href="#top" aria-current="page">News</a></li>
+            <li><a class="luz-navbar__link" href="#top">Culture</a></li>
+            <li><a class="luz-navbar__link" href="#top">Opinion</a></li>
+            <li><a class="luz-navbar__link" href="#top">Sport</a></li>
+            <li><a class="luz-navbar__link" href="#top">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <main id="top" class="o-container" tabindex="-1">
+    <h1>Tide records</h1>
+    <p>Something under the header.</p>
+    <p style="block-size: 2400px">A tall page, to scroll.</p>
+  </main>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CMS page without site</title>
+  <!-- tests/cms-optional-site.spec.js and tests/cms-page-header.spec.js: tokens + core + cms ONLY. No site
+       stylesheet, no site script: @luz-ds/site is an optional peer of a kind of site
+       (.claude/plans/specs/f3-package-model.md, section 5) -->
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/cms/dist/cms.css">
+</head>
+<body class="o-page">
+  <a class="luz-skip-link" href="#main-content">Skip to content</a>
+  <header class="luz-cms-header o-sticky" id="hdr">
+    <div class="o-container o-container--inline o-row" id="hdr-row">
+      <button class="luz-nav-toggle" id="toggle" type="button" popovertarget="cms-nav" aria-label="Sections">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+      </button>
+      <a class="luz-cms-header__brand" id="brand" href="#top">The Vejer Review</a>
+      <nav class="luz-navbar" id="cms-nav" aria-label="Sections" popover>
+        <ul class="luz-navbar__list">
+          <li><a class="luz-navbar__link" href="#top">News</a></li>
+          <li><a class="luz-navbar__link" href="#top" aria-current="page">About</a></li>
+          <li><a class="luz-navbar__link" href="#top">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="o-row luz-cms-header__actions" id="actions">
+        <a class="luz-btn luz-btn--ghost" id="subscribe" href="#top">Subscribe</a>
+      </div>
+    </div>
+  </header>
+  <main id="main-content" class="o-container" tabindex="-1">
+    <div class="luz-cms-page-header" id="page-header">
+      <h1 class="luz-cms-page-header__title" id="page-title">About the Review</h1>
+      <p class="luz-cms-page-header__lead" id="page-lead">An independent paper for Vejer and the coast, written by the people who live here and read by the people who do not yet.</p>
+    </div>
+    <div class="luz-prose" id="body">
+      <p>The Review began in 2016 as a four-page sheet pinned to the door of the harbour office. It has been a website since 2019.</p>
+      <p>We are paid by readers and by no one else.</p>
+    </div>
+  </main>
+  <footer class="luz-cms-footer" id="ftr">
+    <div class="o-container o-container--inline o-row" id="ftr-row">
+      <p id="ftr-note">The Vejer Review is published by a cooperative.</p>
+      <nav class="o-actions" aria-label="Links">
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="#top">Privacy</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="#top">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

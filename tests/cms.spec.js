@@ -2,13 +2,15 @@
 /**
  * @luz-ds/cms: the article header and the article layout with its table of
  * contents. The page is tests/fixtures/cms-article.html, a whole story as a
- * consumer builds it (site's sticky header, the article, the author box and
- * related posts, which are templates of core and site classes), served at
+ * consumer builds it with tokens, core and cms only (the sticky `.luz-cms-header`
+ * on core's `.o-sticky`, the article, the author box and related posts, which
+ * are templates of core classes; @luz-ds/site is an optional peer), served at
  * /__cms__ with the language and direction each test needs.
  *
  * The table of contents follows the room the article has (a size
  * container): beside the text, at the inline end, when the article is 46rem
- * wide or more, and staying in view under the sticky header; above the text
+ * wide or more, and staying in view under the sticky bar (core's `.o-sticky`,
+ * by core's `--luz-bar-h`); above the text
  * below that, and with larger text. Core's scroll spy marks the section in
  * view with JavaScript only. Runs in `chromium` and `chromium-nojs`.
  */
@@ -99,6 +101,61 @@ test.describe('cms article page', () => {
     // Under the header, by --luz-space-lg
     expect(stuck.top).toBeGreaterThanOrEqual(header.bottom);
     expect(stuck.top - header.bottom).toBeLessThanOrEqual(32);
+  });
+
+  // The offset is core's --luz-bar-h plus --luz-space-lg under a `.o-sticky` bar; the header
+  // does not need to be a block of site (its class is `.luz-cms-header`)
+  test('the contents stick --luz-bar-h + --luz-space-lg from the top when the page has an `.o-sticky` bar', async ({ page: p }) => {
+    await open(p, 1280);
+    await p.evaluate(() => window.scrollTo({ top: document.getElementById('level').getBoundingClientRect().top + window.scrollY, behavior: 'instant' }));
+    await expect.poll(() => p.evaluate(() => window.scrollY)).toBeGreaterThan(800);
+    const offset = await p.evaluate(() => {
+      const probe = Object.assign(document.createElement('div'), { style: 'position:absolute;visibility:hidden;inline-size:calc(var(--luz-bar-h) + var(--luz-space-lg))' });
+      document.body.append(probe);
+      const width = probe.getBoundingClientRect().width;
+      probe.remove();
+      return width;
+    });
+    expect(await p.locator('#hdr').evaluate((el) => el.classList.contains('o-sticky'))).toBe(true);
+    expect(Math.abs((await box(p, 'toc')).top - offset)).toBeLessThanOrEqual(1);
+  });
+
+  test('the contents read core\'s --luz-bar-h, not a property of site', async ({ page: p }) => {
+    await open(p, 1280);
+    await style(p, ':root { --luz-bar-h: 120px }');
+    await p.evaluate(() => window.scrollTo({ top: document.getElementById('level').getBoundingClientRect().top + window.scrollY, behavior: 'instant' }));
+    await expect.poll(() => p.evaluate(() => window.scrollY)).toBeGreaterThan(800);
+    const lg = await p.evaluate(() => {
+      const probe = Object.assign(document.createElement('div'), { style: 'position:absolute;visibility:hidden;inline-size:var(--luz-space-lg)' });
+      document.body.append(probe);
+      const width = probe.getBoundingClientRect().width;
+      probe.remove();
+      return width;
+    });
+    expect(Math.abs((await box(p, 'toc')).top - (120 + lg))).toBeLessThanOrEqual(1);
+  });
+
+  test('without an `.o-sticky` bar the contents stick --luz-space-lg from the top', async ({ page: p }) => {
+    await open(p, 1280);
+    await p.evaluate(() => document.getElementById('hdr').classList.remove('o-sticky'));
+    await p.evaluate(() => window.scrollTo({ top: document.getElementById('level').getBoundingClientRect().top + window.scrollY, behavior: 'instant' }));
+    await expect.poll(() => p.evaluate(() => window.scrollY)).toBeGreaterThan(800);
+    const lg = await p.evaluate(() => {
+      const probe = Object.assign(document.createElement('div'), { style: 'position:absolute;visibility:hidden;inline-size:var(--luz-space-lg)' });
+      document.body.append(probe);
+      const width = probe.getBoundingClientRect().width;
+      probe.remove();
+      return width;
+    });
+    expect(Math.abs((await box(p, 'toc')).top - lg)).toBeLessThanOrEqual(1);
+  });
+
+  test('the page asks for no file of site', async ({ page: p }) => {
+    const requests = [];
+    p.on('request', (req) => requests.push(req.url()));
+    await open(p, 1280);
+    await p.waitForLoadState('networkidle');
+    expect(requests.filter((url) => url.includes('/packages/site/'))).toEqual([]);
   });
 
   for (const width of [768, 320]) {

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUZ site loader fixture: no site element on the page</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <script type="module" src="/packages/site/dist/site.min.js"></script>
+</head>
+<body>
+  <main id="main">
+    <h1>No site element</h1>
+    <p>Text of the page.</p>
+    <textarea id="notes" aria-label="Notes"></textarea>
+    <div id="slot"></div>
+  </main>
+  <template id="markup">
+    <luz-search>
+      <a class="luz-search__fallback" id="fallback" href="/a-z/" data-luz-search-fallback>A–Z index</a>
+      <button class="luz-search__trigger" id="trigger" type="button" data-luz-search-open hidden>Search</button>
+      <dialog class="luz-modal luz-search" data-luz-search data-luz-search-src="/tests/fixtures/search-index.json" aria-label="Search" data-luz-label-loading="Loading" data-luz-label-error="Error">
+        <input type="text" aria-label="Query">
+        <p role="status"></p>
+        <div data-luz-search-results>
+          <div hidden><ul data-luz-search-list="pages"></ul></div>
+        </div>
+      </dialog>
+    </luz-search>
+  </template>
+</body>
+</html>

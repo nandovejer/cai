@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUZ site loader fixture: a search and a consent banner</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <style>
+    .bar { display: flex; align-items: center; gap: 1rem; padding: 0.5rem 1rem; }
+  </style>
+  <script type="module" src="/packages/site/dist/site.min.js"></script>
+</head>
+<body>
+  <div class="bar">
+    <luz-search>
+      <a class="luz-search__fallback" id="fallback" href="/a-z/" data-luz-search-fallback>
+        <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="luz-search__fallback-label">A–Z index</span>
+      </a>
+      <button class="luz-search__trigger luz-search__trigger--compact" id="trigger" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+        <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="luz-search__trigger-label">Search docs</span>
+        <kbd class="luz-search__trigger-key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+      <dialog class="luz-modal luz-search" id="dialog" data-luz-search data-luz-search-src="/tests/fixtures/search-index.json" aria-label="Search" data-luz-label-loading="Loading" data-luz-label-error="Error">
+        <input type="text" aria-label="Query">
+        <p role="status"></p>
+        <div data-luz-search-results>
+          <div hidden><ul data-luz-search-list="pages"></ul></div>
+        </div>
+      </dialog>
+    </luz-search>
+    <span id="brand">Brand</span>
+  </div>
+  <a id="after" href="#after">After</a>
+  <main id="main">
+    <h1>Site loader</h1>
+    <p>Text of the page.</p>
+    <textarea id="notes" aria-label="Notes"></textarea>
+  </main>
+  <button class="luz-btn luz-btn--ghost" id="external" type="button" data-luz-search-open hidden>Search from here</button>
+  <luz-consent>
+    <section class="luz-consent" id="consent" data-luz-consent aria-labelledby="consent-title" hidden>
+      <div data-luz-consent-ask id="consent-ask">
+        <h2 class="luz-consent__title" id="consent-title">Cookies</h2>
+        <p>We use cookies that this site needs to work.</p>
+        <form>
+          <button class="luz-btn luz-btn--primary" id="accept" type="submit" value="all">Accept</button>
+          <button class="luz-btn luz-btn--primary" id="reject" type="submit" value="none">Reject</button>
+        </form>
+      </div>
+      <p data-luz-consent-done tabindex="-1" hidden>Saved.</p>
+    </section>
+  </luz-consent>
+</body>
+</html>

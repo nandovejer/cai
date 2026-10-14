@@ -1,8 +1,9 @@
 // @ts-check
 /**
- * The cookie consent of @luz-ds/site: the banner (.luz-site-consent) and
- * its module, consent.js (<luz-site-consent>), loaded on its own as
- * dist/consent.min.js by tests/fixtures/site-top.html. Runs in `chromium`
+ * The cookie consent of @luz-ds/site: the banner (.luz-consent) and
+ * its module, consent.js (<luz-consent>; D5 of .claude/plans/specs/f3-package-model.md:
+ * no `site-` in the names), loaded on its own as dist/consent.min.js by
+ * tests/fixtures/site-top.html. Its position is unchanged here (D7 is step 9). Runs in `chromium`
  * and `chromium-nojs`: without JavaScript the banner and the button that
  * reopens it stay hidden, and the page reads as if they were not there.
  */
@@ -12,9 +13,11 @@ import AxeBuilder from '@axe-core/playwright';
 const FIXTURE = '/tests/fixtures/site-top.html';
 const KEY = 'luz-consent';
 
-async function open(page, width = 1280, dir = 'ltr') {
+/** Open the fixture; with JavaScript, wait for <luz-consent> to be defined, so a missing element fails here. */
+async function open(page, width = 1280, dir = 'ltr', { withScript = true } = {}) {
   await page.setViewportSize({ width, height: 900 });
   await page.goto(FIXTURE);
+  if (withScript) await expect.poll(() => page.evaluate(() => !!customElements.get('luz-consent'))).toBe(true);
   if (dir === 'rtl') await page.evaluate(() => { document.documentElement.dir = 'rtl'; });
 }
 
@@ -38,7 +41,7 @@ const sideways = (page) => page.evaluate(() => document.documentElement.scrollWi
 test.describe('cookie consent without JavaScript', () => {
   test('the banner and the reopen button stay hidden; the cookie policy is a plain link', async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== 'chromium-nojs', 'the state without JavaScript');
-    await open(page);
+    await open(page, 1280, 'ltr', { withScript: false });
     await expect(page.locator('#consent')).toBeHidden();
     await expect(page.locator('#settings')).toBeHidden();
     await expect(page.getByRole('link', { name: 'Cookie policy' })).toBeVisible();
@@ -51,6 +54,30 @@ test.describe('cookie consent without JavaScript', () => {
 
 test.describe('cookie consent', () => {
   test.skip(({ javaScriptEnabled }) => javaScriptEnabled === false, 'needs JavaScript');
+
+  test('is <luz-consent> with .luz-consent parts; the old names are gone', async ({ page }) => {
+    await open(page);
+    await expect(page.locator('#consent')).toBeVisible();
+    const names = await page.evaluate(() => ({
+      defined: !!customElements.get('luz-consent'),
+      oldDefined: !!customElements.get('luz-site-consent'),
+      host: document.querySelector('#consent')?.parentElement?.localName,
+      title: !!document.querySelector('#consent .luz-consent__title'),
+      choices: !!document.querySelector('#consent .luz-consent__choices'),
+      oldClass: !!document.querySelector('[class*="luz-site-consent"]'),
+    }));
+    expect(names).toEqual({ defined: true, oldDefined: false, host: 'luz-consent', title: true, choices: true, oldClass: false });
+  });
+
+  // SEC-CHUNK-5 (R7): a CDN copy and a bundled copy of the chunk on one page
+  test('loaded from two copies of the module, one answer is one luz:consent event', async ({ page }) => {
+    await listen(page);
+    await open(page);
+    await page.evaluate(() => import('/packages/site/dist/consent.js'));
+    await page.click('#accept');
+    await expect(page.locator('#done')).toBeVisible();
+    expect(await page.evaluate(() => window.__events)).toHaveLength(1);
+  });
 
   for (const theme of ['light', 'dark', 'high-contrast']) {
     test(`axe finds nothing serious in ${theme}, asking, with the choices open, and saved`, async ({ page }) => {

@@ -1,8 +1,11 @@
 /**
- * LUZ — the site search of @luz-ds/site, in the docs (a11y.md §2 SRCH-*,
- * TEST-5; security.md SEC-IDX, SEC-NET-6). The pure half (index checks,
- * matching, the shortcut filter) is tests/search.test.js; the no-JavaScript
- * state is in tests/nojs.spec.js.
+ * LUZ — the site search of @luz-ds/site (<luz-search>), in the docs (a11y.md
+ * §2 SRCH-*, TEST-5; security.md SEC-IDX, SEC-NET-6). The pure half (index
+ * checks, matching, the shortcut filter) is tests/search.test.js; the
+ * no-JavaScript state is in tests/nojs.spec.js; the loading of the chunk is
+ * in tests/site-loader.spec.js and tests/search-upgrade.spec.js. Test ids
+ * (SRCH-*, SEC-IDX-*, SEC-NET-*) are kept as they were: the names changed,
+ * the rules did not (F3, D5; security requirement R8).
  * Run with: pnpm test:ui
  */
 import { test, expect } from '@playwright/test';
@@ -453,5 +456,53 @@ test.describe('search: rendering', () => {
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('End');
     await expect(results(page).last()).toBeInViewport();
+  });
+});
+
+test.describe('search: <luz-search> in the header (F3, D5)', () => {
+  test('the trigger, the fallback link and the dialog are inside one <luz-search>, under the new names', async ({ page }) => {
+    await open(page);
+    const parts = await page.evaluate(() => {
+      const host = document.querySelectorAll('luz-search');
+      const el = host[0];
+      return {
+        hosts: host.length,
+        trigger: !!el?.querySelector('button.luz-search__trigger[data-luz-search-open]'),
+        fallback: !!el?.querySelector('a.luz-search__fallback[data-luz-search-fallback]'),
+        dialog: !!el?.querySelector('dialog.luz-search[data-luz-search]'),
+        oldTag: customElements.get('luz-site-search') !== undefined || !!document.querySelector('luz-site-search'),
+        oldClass: !!document.querySelector('[class*="luz-site-search"]'),
+      };
+    });
+    expect(parts).toEqual({ hosts: 1, trigger: true, fallback: true, dialog: true, oldTag: false, oldClass: false });
+  });
+
+  test('the trigger is named by its visible label, and the key hint is hidden from assistive technology (S5)', async ({ page }) => {
+    await open(page);
+    const trigger = page.locator('luz-search .luz-search__trigger');
+    await expect(trigger).toBeVisible();
+    const label = (await trigger.locator('.luz-search__trigger-label').textContent()).trim();
+    expect(label).not.toBe('');
+    await expect(trigger).toHaveAccessibleName(new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+    await expect(trigger.locator('kbd')).toHaveAttribute('aria-hidden', 'true');
+  });
+
+  test('the trigger and the fallback are at least 24px, and a control high at 320px (S5)', async ({ page }) => {
+    await page.setViewportSize({ width: 320, height: 640 });
+    await open(page);
+    const control = await page.evaluate(() => {
+      const probe = document.createElement('div');
+      probe.style.cssText = 'position:absolute;visibility:hidden;inline-size:var(--luz-control-lg)';
+      document.body.append(probe);
+      const width = probe.getBoundingClientRect().width;
+      probe.remove();
+      return width;
+    });
+    await expect(page.locator('luz-search .luz-search__trigger')).toBeVisible();
+    const box = await page.locator('luz-search .luz-search__trigger').boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(24);
+    expect(box.height).toBeGreaterThanOrEqual(24);
+    expect(box.width).toBeGreaterThanOrEqual(control - 0.5);
+    expect(box.height).toBeGreaterThanOrEqual(control - 0.5);
   });
 });

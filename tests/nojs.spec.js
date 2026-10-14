@@ -31,7 +31,7 @@ for (const app of APPS) {
       '.luz-theme-apply-btn',
       '.luz-theme-mode-btn',
       '.luz-player button',
-      '.luz-site-search-trigger',
+      '.luz-search__trigger',
       '[role="switch"]:not(input)',
       '[role="slider"]:not(input)',
     ].join(', ');

@@ -144,23 +144,6 @@ test.describe('site hero', () => {
 });
 
 test.describe('home page hero', () => {
-  test('in Arabic the copy starts at the right edge of the hero, in the sans with no letter-spacing', async ({ page: p }) => {
-    await p.setViewportSize({ width: 1280, height: 900 });
-    await p.goto('/ar/');
-    const geometry = await p.evaluate(() => {
-      const hero = document.querySelector('.luz-site-hero');
-      const cs = getComputedStyle(hero);
-      const inner = hero.getBoundingClientRect().right - parseFloat(cs.paddingRight);
-      const title = document.querySelector('.luz-site-hero__title');
-      // The text, not the block: in RTL its lines start at the right
-      const range = document.createRange();
-      range.selectNodeContents(title);
-      return { inner, right: Math.max(...[...range.getClientRects()].map((r) => r.right)), spacing: getComputedStyle(title).letterSpacing };
-    });
-    expect(Math.abs(geometry.inner - geometry.right)).toBeLessThanOrEqual(1);
-    expect(['normal', '0px']).toContain(geometry.spacing);
-  });
-
   test('at 320 px the home page does not scroll sideways', async ({ page: p }) => {
     await p.setViewportSize({ width: 320, height: 900 });
     await p.goto('/');

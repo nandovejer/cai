@@ -220,7 +220,7 @@
 /* Bottom-right corner of the footer. The auto margin takes the free space
    (the footer wraps, and is a column on small screens), so the switcher
    never overlaps the text or the links. */
-.luz-site-footer > .site-modes {
+.luz-landing-footer .o-row > .site-modes {
   justify-content: flex-end;
   margin-inline-start: auto;
 }
@@ -230,17 +230,17 @@
    footer is two rows, never three. Without JavaScript the radios are too
    wide for a column: they take a row of their own, at the end. */
 @media (max-width: 768px) {
-  .luz-site-footer:has(> .site-modes) {
+  .luz-landing-footer .o-row:has(> .site-modes) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
   }
 
-  .luz-site-footer:has(> .site-modes) > :not(.site-modes) {
+  .luz-landing-footer .o-row:has(> .site-modes) > :not(.site-modes) {
     grid-column: 1;
   }
 
-  .luz-site-footer > .site-modes {
+  .luz-landing-footer .o-row > .site-modes {
     grid-column: 2;
     grid-row: 1 / span 2;
     align-self: end;
@@ -248,7 +248,7 @@
 }
 
 @media (scripting: none) and (max-width: 768px) {
-  .luz-site-footer > .site-modes {
+  .luz-landing-footer .o-row > .site-modes {
     grid-column: 1 / -1;
     grid-row: auto;
   }

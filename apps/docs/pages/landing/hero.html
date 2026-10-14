@@ -1,0 +1,171 @@
+<!-- luz:page
+title: Hero
+description: Opens a home or landing page with its title, one sentence, the main actions and an optional picture.
+area: landing
+order: 2
+group: patterns
+files: .luz-landing-hero, __copy, __eyebrow, __title, __lead, __media
+keywords: jumbotron, splash, intro
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-landing-hero">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage" id="demo-hero">
+            <section class="luz-landing-hero o-grid o-grid--split" aria-labelledby="demo-hero-title">
+              <div class="luz-landing-hero__copy">
+                <p class="luz-landing-hero__eyebrow">12 and 13 May 2027 · Seville</p>
+                <p class="luz-landing-hero__title" id="demo-hero-title">Acme Summit 2027</p>
+                <p class="luz-landing-hero__lead">Two days of talks and workshops for retail teams.</p>
+                <div class="o-actions">
+                  <a class="luz-btn luz-btn--primary" href="#markup">Register</a>
+                  <a class="luz-btn luz-btn--outline" href="#variants">See the options</a>
+                </div>
+              </div>
+              <div class="luz-landing-hero__media">
+                <div class="luz-image luz-image--4x3"></div>
+              </div>
+            </section>
+          </div>
+          <p class="docs-demo__note">This column is narrower than 51rem, so the picture goes under the text; on a page of full width it sits beside it. The frame is empty, so it shows its flat surface, and the title is a paragraph: this page already has its <code class="luz-code-inline">&lt;h1&gt;</code>.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Hero documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-hero" aria-label="Copy the hero markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Hero markup"><code id="code-hero">&lt;section class=&quot;luz-landing-hero o-grid o-grid--split&quot; aria-labelledby=&quot;hero-title&quot;&gt;
+  &lt;div class=&quot;luz-landing-hero__copy&quot;&gt;
+    &lt;p class=&quot;luz-landing-hero__eyebrow&quot;&gt;12 and 13 May 2027 · Seville&lt;/p&gt;
+    &lt;h1 class=&quot;luz-landing-hero__title&quot; id=&quot;hero-title&quot;&gt;Acme Summit 2027&lt;/h1&gt;
+    &lt;p class=&quot;luz-landing-hero__lead&quot;&gt;Two days of talks and workshops for retail teams.&lt;/p&gt;
+    &lt;div class=&quot;o-actions&quot;&gt;
+      &lt;a class=&quot;luz-btn luz-btn--primary&quot; href=&quot;#register&quot;&gt;Register&lt;/a&gt;
+      &lt;a class=&quot;luz-btn luz-btn--outline&quot; href=&quot;#programme&quot;&gt;See the programme&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;luz-landing-hero__media&quot;&gt;
+    &lt;div class=&quot;luz-image luz-image--4x3&quot;&gt;
+      &lt;img src=&quot;/img/venue-1280.jpg&quot; width=&quot;1280&quot; height=&quot;960&quot; alt=&quot;The main hall, full, before the opening talk&quot; fetchpriority=&quot;high&quot; decoding=&quot;async&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers. The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width. The block is a class of the landing on core's split grid.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Hero parts" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-landing-hero</code></div></td><td data-label="What it does"><div>On a <code>&lt;section&gt;</code> with core's <code>.o-grid.o-grid--split</code>: space above it, the gaps, and columns of at least 24rem (<code>--luz-grid-min</code>), so two equal columns when each gets 24rem, one below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-hero__copy</code></div></td><td data-label="What it does"><div>The text and the actions, first in the source</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-hero__eyebrow</code></div></td><td data-label="What it does"><div>A short line above the title, in small capitals of the mono face; the sans in Arabic</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-hero__title</code></div></td><td data-label="What it does"><div>The title: heading font, 4xl size, balanced lines; 3xl below 1024 px and 2xl at 640 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-hero__lead</code></div></td><td data-label="What it does"><div>One or two sentences in the secondary text colour, 70 characters wide at most; xl, lg below 1024 px and base at 640 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-hero__media</code></div></td><td data-label="What it does"><div>The second column, holding core's <a href="/docs/components/image/">image frame</a></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>A <code>&lt;section&gt;</code> named by its title, laid out by core's split grid and styled by <code>@luz-ds/landing</code>. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
+            <ul>
+              <li>The columns are core's <a href="/docs/components/layout/#objects-actions">split grid</a>, intrinsic: they follow the room the hero has, not the window. A hero as wide as the page splits from about 900 px of window; in a narrow column, or with larger text, it stays one column.</li>
+              <li>The order is the source order: the copy comes first, on the left in a left-to-right page and on the right in a right-to-left one.</li>
+              <li>The actions are core's <a href="/docs/components/layout/#objects-actions">action group</a>, <code>.o-actions</code>: at 640 px and below its buttons stack and take the whole width.</li>
+              <li>The classes change the look only. The title must be the page's <code>&lt;h1&gt;</code>.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the hero is HTML and CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The hero has no interaction of its own: Tab reaches its links in the order of the source.</p>
+            <ul>
+              <li><code>aria-labelledby</code> on the <code>&lt;section&gt;</code> points at the title, so the hero is a region with the page's name.</li>
+              <li>Keep it first inside <code>&lt;main&gt;</code>, so the skip link lands right before it.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a hero at the top of a home page, a landing page or a front page, to say in a few words what the site or the event is and what to do first.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it on a page whose reader came to read or to do a task: use a plain <code>&lt;h1&gt;</code> and a lead paragraph, which are smaller.</p>
+            <ul>
+              <li>One hero per page, and only at the top.</li>
+              <li>Not for a message in the middle of a page: use a <a href="/docs/landing/section/">section</a>, with core's <a href="/docs/components/band/">band</a> if it must stand out.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> One primary action, and a second one as an outline button.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-hero o-grid o-grid--split"><div class="luz-landing-hero__copy"><p class="luz-landing-hero__title">Acme Summit 2027</p><p class="luz-landing-hero__lead">Two days of talks for retail teams.</p><div class="o-actions"><span class="luz-btn luz-btn--primary">Register</span><span class="luz-btn luz-btn--outline">See the programme</span></div></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Three primary buttons: the reader cannot tell which one comes first.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-hero o-grid o-grid--split"><div class="luz-landing-hero__copy"><p class="luz-landing-hero__title">Acme Summit 2027</p><p class="luz-landing-hero__lead">Two days of talks for retail teams.</p><div class="o-actions"><span class="luz-btn luz-btn--primary">Register</span><span class="luz-btn luz-btn--primary">Programme</span><span class="luz-btn luz-btn--primary">Venue</span></div></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A title that names the thing, and a lead that says what it gives the reader.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-hero o-grid o-grid--split"><div class="luz-landing-hero__copy"><p class="luz-landing-hero__title">Acme Summit 2027</p><p class="luz-landing-hero__lead">Two days of talks and workshops for retail teams.</p></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A slogan for a title, and a lead that repeats it without saying what it is.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-hero o-grid o-grid--split"><div class="luz-landing-hero__copy"><p class="luz-landing-hero__title">The future starts here</p><p class="luz-landing-hero__lead">Be part of the future, starting today.</p></div></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The title says what the site or the event is, in sentence case and in fewer than ten words.</p>
+            <ul>
+              <li>The eyebrow is a fact the reader needs at once (a date and a place, a product name), not a slogan. Leave it out if there is none.</li>
+              <li>The lead is one or two short sentences: what the reader gets.</li>
+              <li>Buttons start with a verb and say where they go: "Register", "See the programme".</li>
+              <li>The picture's <code>alt</code> says what it shows, or is empty if it only decorates. It is the first thing on the page: no <code>loading="lazy"</code>.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The title is primary text, and the eyebrow and the lead secondary text, on the page. The buttons are core's.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Hero contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Eyebrow</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Lead</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the hero takes none; its buttons keep the focus ring of the <a href="/docs/components/button/">button</a>.</li>
+              <li>Do not put the text over the picture: its contrast would depend on the picture, which no token controls.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 19 tokens that the <code>.luz-landing-hero</code> rules of landing's <code>components/hero.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xl</code>, <code>--luz-space-3xl</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code>, <code>--luz-space-xl</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-heading</code>, <code>--luz-font-mono</code>, <code>--luz-font-sans</code>, <code>--luz-text-2xl</code>, <code>--luz-text-3xl</code>, <code>--luz-text-4xl</code>, <code>--luz-text-base</code>, <code>--luz-text-lg</code>, <code>--luz-text-xl</code>, <code>--luz-text-xs</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

@@ -1,0 +1,154 @@
+<!-- luz:page
+title: Main and sections
+description: Gives a landing page its rhythm: wide room between the blocks of the main, a closer one inside each section, and an optional glow behind the page.
+area: landing
+order: 3
+group: patterns
+files: .luz-landing-main, .luz-landing-section, .luz-landing-glow
+keywords: rhythm, page background, gradient
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-landing-section">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="o-stack luz-landing-main">
+              <div class="o-stack luz-landing-section">
+                <div class="docs-box">Heading</div>
+                <div class="docs-box">Lead</div>
+                <div class="docs-box">Content</div>
+              </div>
+              <div class="o-stack luz-landing-section">
+                <div class="docs-box">Heading</div>
+                <div class="docs-box">Content</div>
+              </div>
+            </div>
+            <p class="docs-demo__note">Sections are 64 px (<code class="luz-code-inline">--luz-space-3xl</code>) apart in the main; their blocks, 16 px (<code class="luz-code-inline">--luz-space-md</code>).</p>
+            <div class="luz-landing-glow docs-gradient-sample">.luz-landing-glow</div>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known for the main and the sections. A section on core's <a href="/docs/components/band/#known-issues">band</a> has the band's.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Main and sections documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-landing-section" aria-label="Copy the main and sections markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Main and sections markup"><code id="code-landing-section">&lt;body class=&quot;o-page luz-landing-glow&quot;&gt;
+  &lt;a class=&quot;luz-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to content&lt;/a&gt;
+  &lt;!-- the header --&gt;
+  &lt;main id=&quot;main-content&quot; class=&quot;o-container o-stack luz-landing-main&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;!-- the hero --&gt;
+    &lt;section class=&quot;o-stack luz-landing-section&quot; aria-labelledby=&quot;programme-title&quot;&gt;
+      &lt;h2 id=&quot;programme-title&quot;&gt;Programme&lt;/h2&gt;
+      &lt;p&gt;Twelve talks and six workshops over two days.&lt;/p&gt;
+    &lt;/section&gt;
+    &lt;section class=&quot;o-stack luz-landing-section luz-band&quot; aria-labelledby=&quot;last-seats-title&quot;&gt;
+      &lt;h2 id=&quot;last-seats-title&quot;&gt;Registration closes on 30 April&lt;/h2&gt;
+      &lt;div class=&quot;o-actions&quot;&gt;
+        &lt;a class=&quot;luz-btn luz-btn--primary&quot; href=&quot;#register&quot;&gt;Register now&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  &lt;/main&gt;
+  &lt;!-- the footer --&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>Three classes of the landing, each on top of a core object. A section stands out on core's <a href="/docs/components/band/">band</a>.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Main and sections classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-landing-main</code></div></td><td data-label="Effect"><div>On <code>main.o-container.o-stack</code>: 64 px (<code>--luz-space-3xl</code>) between the blocks and under the last one; none above the first, as the hero brings its own</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-section</code></div></td><td data-label="Effect"><div>On <code>section.o-stack</code>: 16 px (<code>--luz-space-md</code>) between its children</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-glow</code></div></td><td data-label="Effect"><div>On the <code>.o-page</code> element: the brand's subtle tint in the corner where reading starts, over a fade from the page surface to the muted one; none in print</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/landing</code> on core's objects. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
+            <ul>
+              <li>Core's <code>.o-container</code> gives the main its width and gutters, and <code>.o-stack</code> the column; the landing's layer comes after core's objects, so its gaps win over the stack's.</li>
+              <li>The glow's tint sits top left in a left-to-right page and top right in a right-to-left one: a gradient's position is physical, so the class flips it with <code>:dir(rtl)</code>.</li>
+              <li>Use a section on a <code>&lt;section&gt;</code> when the group has its own heading, or on a <code>&lt;div&gt;</code> when it does not.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the main, the sections and the glow are CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>None of the three has an interaction or a role of its own.</p>
+            <ul>
+              <li>The <code>&lt;main&gt;</code> is the main landmark, and the target of the skip link: give it <code>id</code> and <code>tabindex="-1"</code>.</li>
+              <li>A <code>&lt;section&gt;</code> named with <code>aria-labelledby</code> becomes a region landmark; name only the sections people would jump to.</li>
+              <li>The glow carries no meaning: without it (forced colors, print) nothing is lost.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the main and its sections for every page of a landing site, so the space between blocks is the same everywhere. Use the glow on a short page, such as a home page or a sign-up page, to give it some warmth.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use a section to space the paragraphs of running text: the text styles already do.</p>
+            <ul>
+              <li>For blocks side by side, use core's <a href="/docs/components/layout/">grid objects</a>, such as <code>ul.o-grid.o-grid--split</code> for a few features of equal weight.</li>
+              <li>Do not use the glow on a long page or behind a band: the tint competes with the band's.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Blocks of different kinds, spaced as one group: a heading, a lead, the content.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-stack luz-landing-section"><div class="docs-box">Heading</div><div class="docs-box">Lead</div><div class="docs-box">Content</div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Running text in a section: every paragraph gets the section's gap, and the text reads as separate blocks.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-stack luz-landing-section"><p class="u-mb-0">The plan renews on the first of the month.</p><p class="u-mb-0">You can cancel before then.</p><p class="u-mb-0">Unused days are not refunded.</p></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Start each section with a heading that says what the section is for.</p>
+            <ul>
+              <li>Use the next heading level after the page title: <code>&lt;h2&gt;</code> under the hero's <code>&lt;h1&gt;</code>.</li>
+              <li>Keep one idea per section; a second idea is a second section.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The main and the sections are spacing only: they add no colour. The glow puts the page's text on the brand's subtle tint in one corner, and on the muted surface at the bottom.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Glow contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Text in the tinted corner</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>14.3:1</div></td><td data-label="Dark"><div>12.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary text in the tinted corner</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.3:1</div></td><td data-label="High contrast"><div>18.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text at the bottom</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary text at the bottom</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text.</p>
+            <ul>
+              <li><strong>Focus:</strong> none of the three takes focus; what is inside keeps its own ring.</li>
+              <li><strong>Forced colors:</strong> the glow is removed, and the page is the system's background.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 5 tokens that the <code>.luz-landing-main</code>, <code>.luz-landing-section</code> and <code>.luz-landing-glow</code> rules of landing's <code>components/main.css</code>, <code>section.css</code> and <code>glow.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-subtle"><code>--luz-brand-subtle</code></a>, <a href="/docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="/docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-3xl</code>, <code>--luz-space-md</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

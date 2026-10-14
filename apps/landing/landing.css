@@ -1,7 +1,7 @@
 /* ==========================================================================
    LUZ — LANDING PAGE
    Consumer-side styles for apps/landing, written the way any level-3 consumer
-   would: on top of tokens + core + site.
+   would: on top of tokens + core + site + landing.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
      - media queries use the literal values of --luz-mq-* (640, 768, 1024),
@@ -15,15 +15,27 @@
    -------------------------------------------------------------------------- */
 
 /* The site frame (--site-max, --site-edge: apps/landing/site-header.css),
-   the same as the header's and the documentation's */
+   the same as the header's and the documentation's. On the main it
+   replaces the width and the gutters of core's .o-container */
 .landing-wrap {
-  width: 100%;
+  max-inline-size: none;
   padding-inline: calc(var(--site-edge) + var(--luz-space-xl));
+}
+
+/* Landing's footer, inset by the same gutters so its divider spans the
+   frame, as in the documentation; its row has no gutters of its own */
+.o-page > .luz-landing-footer {
+  margin-inline: calc(var(--site-edge) + var(--luz-space-xl));
+}
+
+.luz-landing-footer > .o-container {
+  max-inline-size: none;
+  padding-inline: 0;
 }
 
 /* Grid and flex items default to min-width: auto, which lets a long <pre> or
    a table widen the whole page. Zero specificity: any core rule still wins. */
-:where(.luz-site-page)
+:where(.o-page)
   :where(main, section, article, header, footer, nav, div, figure, fieldset, form, ul, ol, li, dl) {
   min-width: 0;
 }
@@ -274,18 +286,12 @@
    Local patches for gaps in core. Remove each one when core fixes it.
    -------------------------------------------------------------------------- */
 
-/* .luz-site-footer (768px and below) and .luz-site-actions (640px and
-   below) become columns but keep flex-wrap: wrap. A wrapping column nested in
-   grids makes Chromium's layout take tens of seconds: the page freezes while
-   it loads. */
-@media (max-width: 768px) {
-  .luz-site-page .luz-site-footer {
-    flex-wrap: nowrap;
-  }
-}
-
+/* .o-actions (640px and below) becomes a column but keeps flex-wrap: wrap.
+   A wrapping column nested in grids makes Chromium's layout take tens of
+   seconds: the page freezes while it loads. (The landing footer's column
+   does not wrap.) */
 @media (max-width: 640px) {
-  .luz-site-page .luz-site-actions {
+  .o-page .o-actions {
     flex-wrap: nowrap;
   }
 }
@@ -325,6 +331,10 @@
     padding-inline: var(--luz-space-md);
   }
 
+  .o-page > .luz-landing-footer {
+    margin-inline: var(--luz-space-md);
+  }
+
   .landing-h2 {
     font-size: var(--luz-text-xl);
   }
@@ -349,23 +359,23 @@
 
   /* Page footer: three short links on one row; a row may wrap (a longer
      name in another language, larger text), only a wrapping column freezes */
-  body > footer .luz-site-actions {
+  body > footer .o-actions {
     flex-direction: row;
     align-items: center;
   }
 
-  .luz-site-page > footer .luz-site-actions {
+  .o-page > footer .o-actions {
     flex-wrap: wrap;
   }
 
-  body > footer .luz-site-actions > * {
+  body > footer .o-actions > * {
     width: auto;
   }
 }
 
 /* Stacked footer: line the ghost links' text up with the line above */
 @media (max-width: 768px) {
-  body > footer .luz-site-actions {
+  body > footer .o-actions {
     margin-inline-start: calc(-1 * var(--luz-space-sm));
   }
 }

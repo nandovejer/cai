@@ -167,7 +167,7 @@ const PAGE = (base, label) => `<!doctype html>
   <button class="luz-btn luz-btn--primary" type="button" id="probe-button">Save changes</button>
   <div id="probe-fill" style="background: var(--luz-brand-fill)"></div>
   <div class="luz-site-section" id="probe-section"></div>
-  <div class="luz-landing-feature-grid" id="probe-grid"></div>
+  <footer class="luz-landing-footer" id="probe-landing"></footer>
   <div class="luz-cms-article-header" id="probe-article"></div>
   <script type="module">
     const core = ${JSON.stringify(base.core)};
@@ -197,6 +197,27 @@ const PAGE = (base, label) => `<!doctype html>
 </html>
 `;
 
+// A package for one kind of site works without site, its optional peer
+// (f3-package-model §5): tokens, core and the kind, nothing else
+const ALONE = (base) => `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUZ smoke test: landing without site</title>
+  <link rel="stylesheet" href="${base.tokens}/dist/luz-tokens.css">
+  <link rel="stylesheet" href="${base.core}/dist/luz.css">
+  <link rel="stylesheet" href="${base.landing}/dist/landing.css">
+</head>
+<body class="o-page">
+  <main class="o-container o-stack luz-landing-main">
+    <section class="luz-landing-hero o-grid o-grid--split" id="probe-hero" aria-labelledby="probe-title"><div class="luz-landing-hero__copy"><h1 class="luz-landing-hero__title" id="probe-title">Smoke test</h1></div></section>
+  </main>
+  <footer class="luz-landing-footer" id="probe-landing"><div class="o-container o-container--inline o-row"><p>Footer</p></div></footer>
+</body>
+</html>
+`;
+
 const local = {
   tokens: "/node_modules/@luz-ds/tokens",
   core: "/node_modules/@luz-ds/core",
@@ -215,6 +236,7 @@ const server = createServer((req, res) => {
   };
   if (path === "/npm.html") return send(200, PAGE(local, "installed files"), TYPES[".html"]);
   if (path === "/cdn.html") return send(200, PAGE(cdn, "CDN paths"), TYPES[".html"]);
+  if (path === "/landing-alone.html") return send(200, ALONE(local), TYPES[".html"]);
   // jsDelivr layout: /npm/@luz-ds/<name>@<version>/<file>
   const cdnPath = path.match(/^\/npm\/@luz-ds\/([\w-]+)@([^/]+)\/(.+)$/);
   let file;
@@ -257,7 +279,7 @@ if (browser) {
       const button = getComputedStyle(document.getElementById("probe-button"));
       const fill = getComputedStyle(document.getElementById("probe-fill"));
       const section = getComputedStyle(document.getElementById("probe-section"));
-      const grid = getComputedStyle(document.getElementById("probe-grid"));
+      const landing = getComputedStyle(document.getElementById("probe-landing"));
       const article = getComputedStyle(document.getElementById("probe-article"));
       const sheets = [...document.styleSheets].map((s) => {
         try {
@@ -272,8 +294,7 @@ if (browser) {
         tokenBackground: fill.backgroundColor,
         buttonHeight: parseFloat(button.height),
         sectionDisplay: section.display,
-        gridDisplay: grid.display,
-        gridColumns: grid.gridTemplateColumns,
+        landingBorder: landing.borderTopStyle,
         articleDisplay: article.display,
         sheets,
         missing: window.__smoke?.missing ?? ["no result"],
@@ -284,10 +305,28 @@ if (browser) {
     check(`${label2} tokens loaded (--luz-brand-fill is defined)`, state.token !== "", "the custom property is empty");
     check(`${label2} core CSS applied (.luz-btn--primary uses the token)`, state.buttonBackground === state.tokenBackground && state.buttonBackground !== "rgba(0, 0, 0, 0)", `${state.buttonBackground} vs ${state.tokenBackground}`);
     check(`${label2} site CSS applied (.luz-site-section is a grid)`, state.sectionDisplay === "grid", state.sectionDisplay);
-    check(`${label2} landing CSS applied (.luz-landing-feature-grid is a grid with columns)`, state.gridDisplay === "grid" && state.gridColumns !== "none", `${state.gridDisplay} / ${state.gridColumns}`);
+    check(`${label2} landing CSS applied (.luz-landing-footer has its rule)`, state.landingBorder === "solid", state.landingBorder);
     check(`${label2} cms CSS applied (.luz-cms-article-header is a grid)`, state.articleDisplay === "grid", state.articleDisplay);
     check(`${label2} ${PACKAGES.length} stylesheets with rules`, state.sheets.length === PACKAGES.length && state.sheets.every((n) => n > 0), JSON.stringify(state.sheets));
     check(`${label2} JS entries import and export what the docs name`, state.missing.length === 0, state.missing.join("\n"));
+    await page.close();
+  }
+
+  // landing with tokens and core only: no request for site, the probes apply
+  {
+    const page = await browser.newPage();
+    const problems = [];
+    page.on("response", (r) => r.status() >= 400 && problems.push(`${r.status()} ${new URL(r.url()).pathname}`));
+    page.on("request", (r) => r.url().includes("/@luz-ds/site") && problems.push(`asked for site: ${new URL(r.url()).pathname}`));
+    page.on("console", (m) => ["error", "warning"].includes(m.type()) && problems.push(`console ${m.type()}: ${m.text()}`));
+    await page.goto(origin + "/landing-alone.html");
+    const state = await page.evaluate(() => ({
+      border: getComputedStyle(document.getElementById("probe-landing")).borderTopStyle,
+      gridMin: getComputedStyle(document.getElementById("probe-hero")).getPropertyValue("--luz-grid-min").trim(),
+      display: getComputedStyle(document.getElementById("probe-hero")).display,
+    }));
+    check("landing without site: no failed request, no request for site, no console message", problems.length === 0, problems.join("\n"));
+    check("landing without site: the footer has its rule and the hero is core's grid with the landing's measure", state.border === "solid" && state.display === "grid" && state.gridMin === "24rem", JSON.stringify(state));
     await page.close();
   }
   await browser.close();

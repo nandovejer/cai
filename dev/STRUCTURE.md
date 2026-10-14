@@ -87,7 +87,7 @@ luz-design-system/
 │   │
 │   ├── landing/                   ← @luz-ds/landing (publishable, its own version, 0.x)
 │   │   ├── src/                       ← EDIT HERE
-│   │   │   ├── components/feature-grid.css
+│   │   │   ├── components/{header,hero,main,section,footer,glow}.css
 │   │   │   └── index.css
 │   │   └── dist/                      ← GENERATED (do not edit)
 │   │       ├── landing.css

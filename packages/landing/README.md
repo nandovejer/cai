@@ -1,15 +1,15 @@
 # @luz-ds/landing
 
-Patterns for one kind of site, a landing page: the page of a product, a service or an event that asks the visitor to act. It builds on `@luz-ds/site`, which holds what every site needs (page shell, site header, sections, footer, search).
+The page structure of one kind of site, a landing page: the page of a product, a service or an event that asks the visitor to act. Its header, hero, main, sections, footer and glow are classes on native elements, laid out in the markup by core's objects (`.o-page`, `.o-sticky`, `.o-container`, `.o-row`, `.o-stack`, `.o-grid--split`) and core's navbar; this package adds only their skin and rhythm. `@luz-ds/site` is optional: load it for the search, the language switch or the cookie banner.
 
 > **Beta, version 0.x.** Landing has a version of its own, apart from tokens, core and site, and grows in minor versions while it is 0.x: any of them may change a class. Pin an exact version and read the changelog before you upgrade.
 
 ## When to use it
 
-- You build the page of a product, a service or an event, with features to show side by side.
-- Not for articles, documentation or an app: `@luz-ds/site` alone has what they need.
+- You build the page of a product, a service or an event, with a hero and features to show side by side.
+- Not for articles or an app: `@luz-ds/cms` and core's shell have what they need.
 
-The blocks of an event landing page (hero, programme, speakers, tickets, call to action, registration) are markup to copy, on the [Landing page templates](https://nandovejer.github.io/luz/docs/landing/templates/) page of the docs. They use the classes of core, site and this package.
+The blocks of an event landing page (hero, programme, speakers, tickets, call to action, registration) are markup to copy, on the [Landing page templates](https://nandovejer.github.io/luz/docs/landing/templates/) page of the docs. They use the classes of core and this package; a block of features of equal weight is a list on core's split grid, `ul.o-grid.o-grid--split`.
 
 ## Prerequisites
 
@@ -50,7 +50,10 @@ There is no script. Add core's and site's if you use their behaviours.
 
 ## Classes included
 
-- `.luz-landing-feature-grid` — A short set of features or options of equal weight, usually cards: two columns at most, one when two do not fit 16rem each. It follows the room the grid has, not the window. [Docs](https://nandovejer.github.io/luz/docs/landing/feature-grid/)
+- `.luz-landing-header`, `__brand`, `__actions` — The header: on `header.o-sticky > .o-container.o-container--inline.o-row`, with core's `.luz-nav-toggle` and `.luz-navbar`. The page surface, a rule underneath, the brand and the row's gaps; its panels open under it. [Docs](https://nandovejer.github.io/luz/docs/landing/header/)
+- `.luz-landing-hero`, `__copy`, `__eyebrow`, `__title`, `__lead`, `__media` — The first block: on `section.o-grid.o-grid--split`, two equal columns when each gets 24rem, one below. [Docs](https://nandovejer.github.io/luz/docs/landing/hero/)
+- `.luz-landing-main`, `.luz-landing-section`, `.luz-landing-glow` — The rhythm of the page, on `main.o-container.o-stack` and `section.o-stack`, and a tint behind the `.o-page`. [Docs](https://nandovejer.github.io/luz/docs/landing/section/)
+- `.luz-landing-footer` — The footer: on `footer > .o-container.o-container--inline.o-row`, a rule on top and its items at the two ends of the row. [Docs](https://nandovejer.github.io/luz/docs/landing/footer/)
 
 ## License
 

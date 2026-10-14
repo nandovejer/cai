@@ -1,0 +1,170 @@
+<!-- luz:page
+title: Header
+description: Starts every page of a landing site with its name, its main links and a few controls, in one row that stays at the top.
+area: landing
+order: 1
+group: patterns
+files: .luz-landing-header, __brand, __actions
+keywords: top bar, masthead
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-landing-header">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <header class="luz-landing-header">
+              <div class="o-container o-container--inline o-row">
+                <button class="luz-nav-toggle" type="button" popovertarget="demo-landing-nav" aria-label="Menu of the example site">
+                  <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+                </button>
+                <a class="luz-landing-header__brand" href="#p-landing-header">Acme Summit</a>
+                <nav class="luz-navbar" id="demo-landing-nav" aria-label="Example site" popover>
+                  <ul class="luz-navbar__list">
+                    <li><a class="luz-navbar__link" href="#p-landing-header" aria-current="page">Programme</a></li>
+                    <li><a class="luz-navbar__link" href="#p-landing-header">Speakers</a></li>
+                    <li><a class="luz-navbar__link" href="#p-landing-header">Tickets</a></li>
+                  </ul>
+                </nav>
+                <div class="o-row luz-landing-header__actions">
+                  <a class="luz-btn luz-btn--ghost" href="#p-landing-header">Log in</a>
+                </div>
+              </div>
+            </header>
+          </div>
+          <p class="docs-demo__note">At 768 px of window width and below the links collapse into a menu, core's <a href="/docs/components/navbar/">navbar</a>. Its panel opens under this example where the browser supports CSS anchor positioning, and under the top of the window, where a header sits, elsewhere. The example is not sticky: in a page, <code class="luz-code-inline">.o-sticky</code> keeps it at the top.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>The header's own issues are those of the pieces of core it is made of.</p>
+          <ul>
+            <li><strong>The menu panel.</strong> If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it; Escape closes it. Without CSS anchor positioning the panel and the language list open at the height of a one-row header from the top of the window, so with enlarged text they can cover part of the header. See the <a href="/docs/components/navbar/#known-issues">navbar's known issues</a>.</li>
+            <li><strong>Sticky header and enlarged text.</strong> The scroll padding of <code>.o-sticky</code> is a minimum: at 300% text, with the header wrapped to several rows, Safari can leave a field reached with Tab under it. Set <code>scroll-padding-block-start</code> on <code>html</code> to your header's real height, or leave out <code>.o-sticky</code>.</li>
+          </ul>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Header documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-landing-header" aria-label="Copy the header markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Header markup"><code id="code-landing-header">&lt;header class=&quot;luz-landing-header o-sticky&quot;&gt;
+  &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+    &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;site-nav&quot; aria-label=&quot;Menu&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z&quot;/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;a class=&quot;luz-landing-header__brand&quot; href=&quot;/&quot;&gt;Acme Summit&lt;/a&gt;
+    &lt;nav class=&quot;luz-navbar&quot; id=&quot;site-nav&quot; aria-label=&quot;Main&quot; popover&gt;
+      &lt;ul class=&quot;luz-navbar__list&quot;&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/programme/&quot; aria-current=&quot;page&quot;&gt;Programme&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/speakers/&quot;&gt;Speakers&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/tickets/&quot;&gt;Tickets&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+    &lt;div class=&quot;o-row luz-landing-header__actions&quot;&gt;
+      &lt;a class=&quot;luz-btn luz-btn--ghost&quot; href=&quot;/account/&quot;&gt;Log in&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers. The header is a class of the landing on a native <code>&lt;header&gt;</code>, laid out by core's objects in the markup.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Header classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-landing-header</code></div></td><td data-label="Effect"><div>On <code>&lt;header&gt;</code>: the page surface, a rule underneath, the gaps of its row, and the anchor its panels open under</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-header__brand</code></div></td><td data-label="Effect"><div>The site's name as a link to the home page: semibold, not underlined, at least 44 px tall; it takes the free room of the row</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-header__actions</code></div></td><td data-label="Effect"><div>On a <code>.o-row</code> at the end of the row: a search, a <a href="/docs/site/lang-switch/">language switch</a>, a button</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-sticky</code> (core)</div></td><td data-label="Effect"><div>Keeps the header at the top while the page scrolls, in a window at least 30 rem tall; see <a href="/docs/components/layout/#objects-page">the page and its bars</a></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-container.o-container--inline.o-row</code> (core)</div></td><td data-label="Effect"><div>The row: the width and gutters of the page, wrapping rather than overflowing</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-nav-toggle</code>, <code>.luz-navbar</code> (core)</div></td><td data-label="Effect"><div>The menu button and the links: see the <a href="/docs/components/navbar/">navbar</a></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/landing</code> on core's objects and navbar. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
+            <ul>
+              <li>The landing adds the skin only: the page surface, the rule underneath, the brand, and the gaps of the row (8 px between rows, 16 px between items, 24 px from 769 px). Core gives the rest: <code>.o-sticky</code> the stickiness and the scroll padding, <code>.o-container--inline</code> the gutters, <code>.o-row</code> the wrapping row, and the navbar the links and their panel.</li>
+              <li>A one-row header is core's <code>--luz-bar-h</code> tall: 44 px controls, 4 px above and below, and the 1 px rule. With enlarged text the row wraps and the header grows.</li>
+              <li>The header names itself the anchor <code>--luz-bar</code>, scoped to itself. Where the browser supports CSS anchor positioning, the navbar's panel and the list of site's <code>&lt;luz-lang-switch&gt;</code> open under it on one row or on two. Elsewhere they open at <code>--luz-bar-h</code> from the top of the window.</li>
+              <li>Without <code>@luz-ds/site</code> nothing changes: its rules that refine site's elements match nothing.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the menu is a popover opened by the button's <code>popovertarget</code>, with no script, and the links are plain links.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the menu button, the brand, the links, then the actions, in the order of the source. With the menu open, the next Tab after the button goes into the panel's links.</li>
+              <li><strong>Keys:</strong> Enter or Space on the button opens and closes the panel; Escape closes it and returns focus to the button.</li>
+              <li><strong>Names:</strong> the <code>&lt;nav&gt;</code> has an <code>aria-label</code> ("Main"). The button's name is "Menu"; the browser exposes its expanded state. The current link has <code>aria-current="page"</code> and an underline.</li>
+              <li><strong>Landmarks:</strong> a <code>&lt;header&gt;</code> that is a direct child of <code>&lt;body&gt;</code> is the banner. Put the <a href="/docs/components/skip-link/">skip link</a> before it.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the header at the top of every page of a landing site: the visitor sees which site this is and reaches its main parts from any page.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it on a blog or a newspaper, or in an app: their packages have headers of their own.</p>
+            <ul>
+              <li>One header per page, never inside a component: it is the page's banner.</li>
+              <li>A single page that fits one screen needs a heading and a skip link, not a header.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Three to six links, each a noun that names its part of the site, with the current one marked.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <header class="luz-landing-header"><div class="o-container o-container--inline o-row"><a class="luz-landing-header__brand" href="#">Acme Summit</a><nav class="luz-navbar" aria-label="Main"><ul class="luz-navbar__list"><li><a class="luz-navbar__link" href="#" aria-current="page">Programme</a></li><li><a class="luz-navbar__link" href="#">Speakers</a></li><li><a class="luz-navbar__link" href="#">Tickets</a></li></ul></nav></div></header>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A dozen links, some of them vague: the row wraps into a wall and the visitor reads every word to choose.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <header class="luz-landing-header"><div class="o-container o-container--inline o-row"><a class="luz-landing-header__brand" href="#">Acme Summit</a><nav class="luz-navbar" aria-label="Main"><ul class="luz-navbar__list"><li><a class="luz-navbar__link" href="#" aria-current="page">Programme</a></li><li><a class="luz-navbar__link" href="#">Speakers</a></li><li><a class="luz-navbar__link" href="#">Tickets</a></li><li><a class="luz-navbar__link" href="#">Offers</a></li><li><a class="luz-navbar__link" href="#">Blog</a></li><li><a class="luz-navbar__link" href="#">News</a></li><li><a class="luz-navbar__link" href="#">About us</a></li><li><a class="luz-navbar__link" href="#">Press</a></li><li><a class="luz-navbar__link" href="#">Misc</a></li></ul></nav></div></header>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The brand is the site's name; the links are the names of its main parts.</p>
+            <ul>
+              <li>Brand: the name as people say it, one to three words. A logo is decorative: the name stays as text in the link.</li>
+              <li>Links: three to six, one or two words each, the same words as the titles of the pages they go to. No "Home" beside a brand that already goes home.</li>
+              <li>Actions: a verb that says what happens, such as "Log in". Menu button: "Menu", translated like the rest of the page.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Text sits on the page surface, in the row and in the open panel. The scrim starts under the header, so the header is never dimmed.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Header contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Brand and current link</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Links</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> every link and button in the header keeps core's ring, 2 px of <code>--luz-focus-ring</code>. The current link has an underline as well as its colour, so the mark does not depend on colour.</li>
+              <li><strong>Edges:</strong> the rule under the header (<code>--luz-divider</code>) is decorative and has no minimum; forced colours keep it.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 11 tokens that the <code>.luz-landing-header</code> rules of landing's <code>components/header.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-base</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-bar-h</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

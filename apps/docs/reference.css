@@ -54,7 +54,7 @@
   }
 
   .docs-page > .docs-footer {
-    padding-inline-end: calc(var(--site-edge) + var(--luz-space-xl));
+    margin-inline-end: calc(var(--site-edge) + var(--luz-space-xl));
   }
 }
 
@@ -778,8 +778,16 @@
   margin-block-start: var(--luz-space-md);
 }
 
+/* Landing's footer, inset from the column's edges so its divider spans
+   the content only; its row (core's .o-container--inline) takes the whole
+   width left, with no gutters of its own */
 .docs-footer {
-  padding-inline: var(--luz-space-xl);
+  margin-inline: var(--luz-space-xl);
+}
+
+.docs-footer > .o-container {
+  max-inline-size: none;
+  padding-inline: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -1487,7 +1495,7 @@ h2.docs-demo__title {
 
 /* Not in a header specimen: there the toggle shows only where the
    header collapses its links, as it does in a page */
-.docs-demo__stage .luz-nav-toggle:not(.luz-site-header *, .docs-bar *) {
+.docs-demo__stage .luz-nav-toggle:not(.luz-site-header *, .luz-landing-header *, .docs-bar *) {
   position: static;
   display: flex;
 }
@@ -1694,19 +1702,19 @@ h2.docs-demo__title {
   }
 
   /* Page footer: three short links fit on one row */
-  body > footer .luz-site-actions {
+  body > footer .o-actions {
     flex-direction: row;
     align-items: center;
   }
 
-  body > footer .luz-site-actions > * {
+  body > footer .o-actions > * {
     width: auto;
   }
 }
 
 /* Stacked footer: line the ghost links' text up with the line above */
 @media (max-width: 768px) {
-  body > footer .luz-site-actions {
+  body > footer .o-actions {
     margin-inline-start: calc(-1 * var(--luz-space-sm));
   }
 }

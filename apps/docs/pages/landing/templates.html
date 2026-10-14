@@ -10,7 +10,7 @@ group: reference
           <p>They use the classes of core, site and landing. Where LUZ has nothing for a part, <a href="#not-here">the last section</a> says so.</p>
           <div class="docs-prose">
             <h2 id="hero-with-image" class="docs-prose__title">Hero with an image</h2>
-            <p>The first block of an event page: what it is, when and where, the main action and a picture. It is the <a href="/docs/site/hero/">hero</a> with its image. The text comes first in the source, so it comes first for a screen reader and when the columns stack.</p>
+            <p>The first block of an event page: what it is, when and where, the main action and a picture. It is the <a href="/docs/landing/hero/">hero</a> with its image. The text comes first in the source, so it comes first for a screen reader and when the columns stack.</p>
             <ul>
               <li>The hero gives two equal columns when each gets 24rem (the hero is 51rem wide or more: from about 900 px of window on a full-width page) and one column below. The picture is the <a href="/docs/site/image/">image frame</a>: it keeps its ratio, crops the picture to it and draws a placeholder until you have one.</li>
               <li>Give the image its real <code>width</code> and <code>height</code> and an <code>alt</code> that says what it shows, or <code>alt=""</code> if it only decorates. Do not set <code>loading="lazy"</code> on it: it is the first thing on the page.</li>
@@ -21,17 +21,17 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-hero" aria-label="Copy the hero with an image markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Hero with an image markup"><code id="code-tpl-hero">&lt;section class=&quot;luz-site-hero&quot; aria-labelledby=&quot;event-title&quot;&gt;
-  &lt;div class=&quot;luz-site-hero__copy&quot;&gt;
-    &lt;p class=&quot;luz-site-hero__eyebrow&quot;&gt;12 and 13 May 2027 · Seville&lt;/p&gt;
-    &lt;h1 class=&quot;luz-site-hero__title&quot; id=&quot;event-title&quot;&gt;Acme Summit 2027&lt;/h1&gt;
-    &lt;p class=&quot;luz-site-hero__lead&quot;&gt;Two days of talks and workshops for retail teams.&lt;/p&gt;
-    &lt;div class=&quot;luz-site-actions&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Hero with an image markup"><code id="code-tpl-hero">&lt;section class=&quot;luz-landing-hero o-grid o-grid--split&quot; aria-labelledby=&quot;event-title&quot;&gt;
+  &lt;div class=&quot;luz-landing-hero__copy&quot;&gt;
+    &lt;p class=&quot;luz-landing-hero__eyebrow&quot;&gt;12 and 13 May 2027 · Seville&lt;/p&gt;
+    &lt;h1 class=&quot;luz-landing-hero__title&quot; id=&quot;event-title&quot;&gt;Acme Summit 2027&lt;/h1&gt;
+    &lt;p class=&quot;luz-landing-hero__lead&quot;&gt;Two days of talks and workshops for retail teams.&lt;/p&gt;
+    &lt;div class=&quot;o-actions&quot;&gt;
       &lt;a class=&quot;luz-btn luz-btn--primary&quot; href=&quot;#register&quot;&gt;Register&lt;/a&gt;
       &lt;a class=&quot;luz-btn luz-btn--outline&quot; href=&quot;#programme&quot;&gt;See the programme&lt;/a&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div class=&quot;luz-site-hero__media&quot;&gt;
+  &lt;div class=&quot;luz-landing-hero__media&quot;&gt;
     &lt;div class=&quot;luz-site-image luz-site-image--4x3&quot;&gt;
       &lt;picture&gt;
         &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/venue-640.avif 640w, /img/venue-1280.avif 1280w&quot; sizes=&quot;(min-width: 1024px) 50vw, 100vw&quot;&gt;
@@ -55,7 +55,7 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-programme" aria-label="Copy the programme markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Programme markup"><code id="code-tpl-programme">&lt;section class=&quot;luz-site-section&quot; id=&quot;programme&quot; aria-labelledby=&quot;programme-title&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Programme markup"><code id="code-tpl-programme">&lt;section class=&quot;o-stack luz-landing-section&quot; id=&quot;programme&quot; aria-labelledby=&quot;programme-title&quot;&gt;
   &lt;h2 id=&quot;programme-title&quot;&gt;Programme&lt;/h2&gt;
   &lt;div class=&quot;luz-table-wrap&quot; role=&quot;region&quot; aria-label=&quot;Programme, Wednesday 12 May&quot; tabindex=&quot;0&quot;&gt;
     &lt;table class=&quot;luz-table&quot;&gt;
@@ -88,7 +88,7 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-speakers" aria-label="Copy the speakers markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Speakers markup"><code id="code-tpl-speakers">&lt;section class=&quot;luz-site-section&quot; id=&quot;speakers&quot; aria-labelledby=&quot;speakers-title&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Speakers markup"><code id="code-tpl-speakers">&lt;section class=&quot;o-stack luz-landing-section&quot; id=&quot;speakers&quot; aria-labelledby=&quot;speakers-title&quot;&gt;
   &lt;h2 id=&quot;speakers-title&quot;&gt;Speakers&lt;/h2&gt;
   &lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
     &lt;li class=&quot;luz-card&quot;&gt;
@@ -131,7 +131,7 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-tickets" aria-label="Copy the ticket plans markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Ticket plans markup"><code id="code-tpl-tickets">&lt;section class=&quot;luz-site-section&quot; id=&quot;tickets&quot; aria-labelledby=&quot;tickets-title&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Ticket plans markup"><code id="code-tpl-tickets">&lt;section class=&quot;o-stack luz-landing-section&quot; id=&quot;tickets&quot; aria-labelledby=&quot;tickets-title&quot;&gt;
   &lt;h2 id=&quot;tickets-title&quot;&gt;Tickets&lt;/h2&gt;
   &lt;div class=&quot;o-grid o-grid--3&quot;&gt;
     &lt;article class=&quot;luz-card&quot;&gt;
@@ -158,7 +158,7 @@ group: reference
           </div>
           <div class="docs-prose">
             <h2 id="call-to-action" class="docs-prose__title">Call to action</h2>
-            <p>A reason to act now and one action, repeated near the end of a long page. It is a <a href="/docs/site/section/">section on a band</a>: the tint runs from edge to edge of the page, and the heading, one sentence and the action group keep the page's column.</p>
+            <p>A reason to act now and one action, repeated near the end of a long page. It is a <a href="/docs/landing/section/">section</a> on core's <a href="/docs/components/band/">band</a>: the tint runs from edge to edge of the page, and the heading, one sentence and the action group keep the page's column.</p>
             <ul>
               <li>One primary button, and it points at the form or the page where the visitor acts (<code>#register</code>). The heading says why now, not "Register".</li>
               <li>Use a heading level that follows the page: <code>&lt;h2&gt;</code> here, because it sits beside the other sections.</li>
@@ -169,10 +169,10 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-cta" aria-label="Copy the call to action markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Call to action markup"><code id="code-tpl-cta">&lt;section class=&quot;luz-site-section luz-site-section--band&quot; aria-labelledby=&quot;last-seats-title&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Call to action markup"><code id="code-tpl-cta">&lt;section class=&quot;o-stack luz-landing-section luz-band&quot; aria-labelledby=&quot;last-seats-title&quot;&gt;
   &lt;h2 id=&quot;last-seats-title&quot;&gt;Registration closes on 30 April&lt;/h2&gt;
   &lt;p&gt;The hall holds 400 people, and the Two days ticket sold out last year.&lt;/p&gt;
-  &lt;div class=&quot;luz-site-actions&quot;&gt;
+  &lt;div class=&quot;o-actions&quot;&gt;
     &lt;a class=&quot;luz-btn luz-btn--primary&quot; href=&quot;#register&quot;&gt;Register now&lt;/a&gt;
   &lt;/div&gt;
 &lt;/section&gt;</code></pre>
@@ -192,7 +192,7 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-register" aria-label="Copy the registration form markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Registration form markup"><code id="code-tpl-register">&lt;section class=&quot;luz-site-section&quot; id=&quot;register&quot; aria-labelledby=&quot;register-title&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Registration form markup"><code id="code-tpl-register">&lt;section class=&quot;o-stack luz-landing-section&quot; id=&quot;register&quot; aria-labelledby=&quot;register-title&quot;&gt;
   &lt;div class=&quot;o-grid o-grid--2&quot;&gt;
     &lt;div class=&quot;o-stack&quot;&gt;
       &lt;h2 id=&quot;register-title&quot;&gt;Register&lt;/h2&gt;
@@ -222,7 +222,7 @@ group: reference
         &lt;input type=&quot;checkbox&quot; id=&quot;reg-privacy&quot; name=&quot;privacy&quot; required&gt;
         &lt;label for=&quot;reg-privacy&quot;&gt;I have read the &lt;a href=&quot;/privacy/&quot;&gt;privacy notice&lt;/a&gt;&lt;/label&gt;
       &lt;/div&gt;
-      &lt;div class=&quot;luz-site-actions&quot;&gt;
+      &lt;div class=&quot;o-actions&quot;&gt;
         &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot;&gt;Complete registration&lt;/button&gt;
       &lt;/div&gt;
     &lt;/form&gt;
@@ -232,32 +232,32 @@ group: reference
           </div>
           <div class="docs-prose">
             <h2 id="feature-grid-block" class="docs-prose__title">Feature grid block</h2>
-            <p>Features or benefits, two columns at most, one when two do not fit. See <a href="/docs/landing/feature-grid/">Feature grid</a>.</p>
+            <p>Features or benefits of equal weight, two columns at most, one when two do not fit 16rem each. It is a list on core's <a href="/docs/components/layout/#objects-actions">split grid</a>, <code>ul.o-grid.o-grid--split</code>: it follows the room the list has, not the window, and the items stay a list, so a screen reader says how many there are.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-features" aria-label="Copy the feature grid block markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Feature grid block markup"><code id="code-tpl-features">&lt;section class=&quot;luz-site-section&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Feature grid block markup"><code id="code-tpl-features">&lt;section class=&quot;o-stack luz-landing-section&quot;&gt;
   &lt;h2&gt;Key capabilities&lt;/h2&gt;
-  &lt;div class=&quot;luz-landing-feature-grid&quot;&gt;
-    &lt;article class=&quot;luz-card&quot;&gt;
-      &lt;h3&gt;Capability one&lt;/h3&gt;
-      &lt;p&gt;Short explanation.&lt;/p&gt;
-    &lt;/article&gt;
-    &lt;article class=&quot;luz-card&quot;&gt;
-      &lt;h3&gt;Capability two&lt;/h3&gt;
-      &lt;p&gt;Short explanation.&lt;/p&gt;
-    &lt;/article&gt;
-    &lt;article class=&quot;luz-card&quot;&gt;
-      &lt;h3&gt;Capability three&lt;/h3&gt;
-      &lt;p&gt;Short explanation.&lt;/p&gt;
-    &lt;/article&gt;
-    &lt;article class=&quot;luz-card&quot;&gt;
-      &lt;h3&gt;Capability four&lt;/h3&gt;
-      &lt;p&gt;Short explanation.&lt;/p&gt;
-    &lt;/article&gt;
-  &lt;/div&gt;
+  &lt;ul class=&quot;o-grid o-grid--split&quot;&gt;
+    &lt;li class=&quot;luz-card&quot;&gt;
+      &lt;h3 class=&quot;luz-card__title&quot;&gt;Capability one&lt;/h3&gt;
+      &lt;p class=&quot;luz-card__body&quot;&gt;Short explanation.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-card&quot;&gt;
+      &lt;h3 class=&quot;luz-card__title&quot;&gt;Capability two&lt;/h3&gt;
+      &lt;p class=&quot;luz-card__body&quot;&gt;Short explanation.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-card&quot;&gt;
+      &lt;h3 class=&quot;luz-card__title&quot;&gt;Capability three&lt;/h3&gt;
+      &lt;p class=&quot;luz-card__body&quot;&gt;Short explanation.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-card&quot;&gt;
+      &lt;h3 class=&quot;luz-card__title&quot;&gt;Capability four&lt;/h3&gt;
+      &lt;p class=&quot;luz-card__body&quot;&gt;Short explanation.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
 &lt;/section&gt;</code></pre>
             </div>
           </div>

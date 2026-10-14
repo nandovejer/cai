@@ -1,0 +1,25 @@
+/* ==========================================================================
+	 LUZ Landing: glow.
+	 On the .o-page element: the brand's subtle tint in the corner where
+	 reading starts, over a fade from the page surface to the muted one.
+	 Decoration only: it carries no meaning, and paper does not get it.
+	 ========================================================================== */
+
+.luz-landing-glow {
+	background:
+		radial-gradient(circle at top left, var(--luz-brand-subtle), transparent 28%),
+		linear-gradient(180deg, var(--luz-surface-page) 0%, var(--luz-surface-muted) 100%);
+}
+
+/* Top right in right-to-left text: a gradient's position is physical */
+.luz-landing-glow:dir(rtl) {
+	background:
+		radial-gradient(circle at top right, var(--luz-brand-subtle), transparent 28%),
+		linear-gradient(180deg, var(--luz-surface-page) 0%, var(--luz-surface-muted) 100%);
+}
+
+@media print {
+	.luz-landing-glow {
+		background: none;
+	}
+}

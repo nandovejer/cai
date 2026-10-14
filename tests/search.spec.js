@@ -196,7 +196,10 @@ test.describe('search: results', () => {
     await page.keyboard.press('Control+k');
     for (const p of titles) {
       await field(page).fill(p.meta.title);
-      await expect(results(page).first(), p.meta.title).toHaveAttribute('href', new RegExp(`${p.route}$`));
+      // A title shared by two pages (site's and landing's Footer and Hero, until step 12 deletes
+      // site's) accepts either page; a unique title must be its own page
+      const routes = sample.concat(site.pages).filter((q, i, all) => q.meta.search !== 'false' && q.meta.title === p.meta.title && all.indexOf(q) === i).map((q) => q.route);
+      await expect(results(page).first(), p.meta.title).toHaveAttribute('href', new RegExp(`(${routes.join('|')})$`));
     }
   });
 });

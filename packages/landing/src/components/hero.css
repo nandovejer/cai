@@ -1,0 +1,86 @@
+/* ==========================================================================
+	 LUZ Landing: hero.
+	 The first block of a home or a landing page:
+	 section.luz-landing-hero.o-grid.o-grid--split > __copy (+ __media). Core's
+	 split grid gives two equal columns when each gets 24rem and one below:
+	 intrinsic, so it stacks in a narrow column and with larger text. Copy
+	 first in the source, so first in reading order in both directions.
+	 ========================================================================== */
+
+.luz-landing-hero {
+	--luz-grid-min: 24rem;
+
+	gap: var(--luz-space-xl) var(--luz-space-2xl);
+	align-items: center;
+	padding-block-start: var(--luz-space-3xl);
+}
+
+/* Grid items: a long word or a wide child never widens the column */
+.luz-landing-hero__copy,
+.luz-landing-hero__media {
+	min-inline-size: 0;
+}
+
+.luz-landing-hero__eyebrow {
+	margin-block-end: var(--luz-space-sm);
+	font-family: var(--luz-font-mono);
+	font-size: var(--luz-text-xs);
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--luz-text-secondary);
+}
+
+.luz-landing-hero__title {
+	font-family: var(--luz-font-heading);
+	font-size: var(--luz-text-4xl);
+	font-weight: 300;
+	line-height: 1.1;
+	letter-spacing: -0.02em;
+	text-wrap: balance;
+	color: var(--luz-text-primary);
+}
+
+/* The mono has no Arabic letters; spacing between letters breaks the joins */
+.luz-landing-hero__eyebrow:lang(ar) {
+	font-family: var(--luz-font-sans);
+}
+
+.luz-landing-hero__eyebrow:lang(ar),
+.luz-landing-hero__title:lang(ar) {
+	letter-spacing: 0;
+}
+
+.luz-landing-hero__lead {
+	margin-block: var(--luz-space-md) var(--luz-space-lg);
+	max-inline-size: 70ch;
+	font-size: var(--luz-text-xl);
+	line-height: 1.4;
+	text-wrap: pretty;
+	color: var(--luz-text-secondary);
+}
+
+@media (max-width: 1023px) {
+	.luz-landing-hero {
+		padding-block-start: calc(var(--luz-space-xl) + var(--luz-space-xs));
+	}
+
+	.luz-landing-hero__title {
+		font-size: var(--luz-text-3xl);
+	}
+
+	.luz-landing-hero__lead {
+		font-size: var(--luz-text-lg);
+	}
+}
+
+@media (max-width: 640px) {
+	.luz-landing-hero__title {
+		font-size: var(--luz-text-2xl);
+	}
+
+	.luz-landing-hero__lead {
+		font-size: var(--luz-text-base);
+	}
+}

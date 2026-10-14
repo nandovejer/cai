@@ -40,7 +40,7 @@ The name stands for Light, Usable & Zero-dependency: light in weight (plain CSS 
 - [`@luz-ds/tokens`](./packages/tokens): design tokens (CSS custom properties), the three color modes and the font.
 - [`@luz-ds/core`](./packages/core): the components, the layout objects, the styles of bare HTML elements and optional JavaScript.
 - [`@luz-ds/site`](./packages/site): page patterns (page shell, site header, footer, image frame) and the site search.
-- [`@luz-ds/landing`](./packages/landing): patterns for a landing page (the feature grid). It has its own version, 0.x, and needs `^0.1.0` of the other three.
+- [`@luz-ds/landing`](./packages/landing): the page structure of a landing page (header, hero, sections, footer). It has its own version, 0.x, and needs `^0.1.0` of tokens and core, and of site if you use it.
 - [`@luz-ds/cms`](./packages/cms): patterns for a blog, a newspaper or any CMS, with any stack (the article header and the table of contents). It has its own version, 0.x, and needs `^0.1.0` of tokens, core and site.
 
 ## Install and load
@@ -124,7 +124,7 @@ Published modules: `theme`, `sidebar`, `clipboard`, `modal`, `highlight`, `playe
 
 ## What each package needs
 
-The page shell of a whole page is site; the layout objects of an app with a sidebar are core; the feature grid is landing. The full table, checked against the CSS, is on [How LUZ is organised](https://nandovejer.github.io/luz/docs/get-started/structure/#needs).
+The page shell of a whole page is site; the layout objects of an app with a sidebar are core; the hero of a landing page is landing. The full table, checked against the CSS, is on [How LUZ is organised](https://nandovejer.github.io/luz/docs/get-started/structure/#needs).
 
 ## Color modes and themes
 

@@ -267,26 +267,25 @@ test.describe('Landing page', () => {
       await page.setViewportSize({ width: 1440, height: 900 });
       await open(page);
 
-      // The wraps pad by the site frame's free space: measure their content box
-      const boxes = await page.locator('.landing-wrap').evaluateAll((wraps) =>
-        wraps
-          .filter((el) => el.checkVisibility())
-          .map((el) => {
-            const rect = el.getBoundingClientRect();
-            const cs = getComputedStyle(el);
-            return {
-              left: rect.left + parseFloat(cs.paddingLeft),
-              right: document.documentElement.clientWidth - rect.right + parseFloat(cs.paddingRight),
-            };
-          }),
-      );
+      // The frame is the page's own: main.o-container pads its inline ends by the gutters,
+      // so measure the content boxes of the main and of the footer row, and the brand
+      const edges = (selector) =>
+        page.locator(selector).evaluate((el) => {
+          const rect = el.getBoundingClientRect();
+          const cs = getComputedStyle(el);
+          return {
+            left: rect.left + parseFloat(cs.paddingLeft),
+            right: document.documentElement.clientWidth - rect.right + parseFloat(cs.paddingRight),
+          };
+        });
+      const main = await edges('main.o-container');
+      const footer = await edges('footer.luz-landing-footer > .o-container.o-container--inline.o-row');
       const brand = await page.locator('.site-header__brand').evaluate((el) => el.getBoundingClientRect().left);
-      expect(boxes.length).toBeGreaterThan(5);
-      for (const { left, right } of boxes) {
-        expect(left).toBeGreaterThan(100);
-        expect(Math.abs(left - right)).toBeLessThanOrEqual(1);
-        expect(Math.abs(left - brand), 'content starts under the brand').toBeLessThanOrEqual(1);
-      }
+      expect(main.left).toBeGreaterThan(100);
+      expect(Math.abs(main.left - main.right), 'main is centred').toBeLessThanOrEqual(1);
+      expect(Math.abs(main.left - brand), 'main starts under the brand').toBeLessThanOrEqual(1);
+      expect(Math.abs(footer.left - main.left), 'footer row starts where main does').toBeLessThanOrEqual(1);
+      expect(Math.abs(footer.right - main.right), 'footer row ends where main does').toBeLessThanOrEqual(1);
     });
 
     test('the page stays short: five screens or fewer at 1280px', async ({ page }) => {

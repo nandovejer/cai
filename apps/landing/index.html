@@ -21,7 +21,7 @@
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
      dictionary, which has no Arabic -->
-<body class="luz-site-page"
+<body class="o-page"
       data-luz-label-change-mode="{{t:js.change-mode}}"
       data-luz-label-mode-changed="{{t:js.mode-changed}}"
       data-luz-label-copied="{{t:js.copied}}"
@@ -54,15 +54,15 @@
     </div>
   </nav>
 
-  <main id="main-content" class="luz-site-main" tabindex="-1">
+  <main id="main-content" class="o-container o-stack luz-landing-main landing-wrap" tabindex="-1">
 
     <!-- ====================== HERO ====================== -->
-    <section class="luz-site-hero landing-wrap" aria-labelledby="hero-title">
-      <div class="luz-site-hero__copy">
-        <p class="luz-site-hero__eyebrow" lang="en">Light, Usable & Zero-dependency</p>
-        <h1 class="luz-site-hero__title" id="hero-title">{{t:hero.title}}</h1>
-        <p class="luz-site-hero__lead">{{html:hero.lead}}</p>
-        <div class="luz-site-actions">
+    <section class="luz-landing-hero o-grid o-grid--split" aria-labelledby="hero-title">
+      <div class="luz-landing-hero__copy">
+        <p class="luz-landing-hero__eyebrow" lang="en">Light, Usable & Zero-dependency</p>
+        <h1 class="luz-landing-hero__title" id="hero-title">{{t:hero.title}}</h1>
+        <p class="luz-landing-hero__lead">{{html:hero.lead}}</p>
+        <div class="o-actions">
           <a class="luz-btn luz-btn--primary luz-btn--lg" href="#adopt">{{t:hero.start}}</a>
           <a class="luz-btn luz-btn--outline luz-btn--lg" href="/docs/components/">{{t:hero.browse}}</a>
         </div>
@@ -70,11 +70,11 @@
     </section>
 
     <!-- ====================== WHY ====================== -->
-    <section class="luz-site-section landing-wrap" id="what" aria-labelledby="what-title">
+    <section class="o-stack luz-landing-section" id="what" aria-labelledby="what-title">
       <h2 class="landing-h2" id="what-title">{{t:what.title}}</h2>
       <p class="landing-lead">{{t:what.lead}}</p>
 
-      <ul class="luz-landing-feature-grid landing-points">
+      <ul class="o-grid o-grid--split landing-points">
         <li class="o-media">
           <span class="luz-avatar luz-avatar--md" aria-hidden="true">01</span>
           <div class="o-media__body">
@@ -100,7 +100,7 @@
     </section>
 
     <!-- ====================== SEE IT ====================== -->
-    <section class="luz-site-section landing-wrap" id="see" aria-labelledby="see-title">
+    <section class="o-stack luz-landing-section" id="see" aria-labelledby="see-title">
       <h2 class="landing-h2" id="see-title">{{t:see.title}}</h2>
       <p class="landing-lead">{{t:see.lead}}</p>
 
@@ -126,7 +126,7 @@
     </section>
 
     <!-- ====================== ADOPT ====================== -->
-    <section class="luz-site-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
+    <section class="o-stack luz-landing-section" id="adopt" aria-labelledby="adopt-title">
       <h2 class="landing-h2" id="adopt-title">{{t:adopt.title}}</h2>
       <p class="landing-lead">{{t:adopt.lead}}</p>
 
@@ -212,7 +212,7 @@
     </section>
 
     <!-- ====================== FIT ====================== -->
-    <section class="luz-site-section landing-wrap" id="fit" aria-labelledby="fit-title">
+    <section class="o-stack luz-landing-section" id="fit" aria-labelledby="fit-title">
       <h2 class="landing-h2" id="fit-title">{{t:fit.title}}</h2>
       <div class="landing-fit">
         <div>
@@ -235,20 +235,20 @@
     </section>
 
     <!-- ====================== CLOSING CTA ====================== -->
-    <section class="luz-site-section landing-wrap" id="start" aria-labelledby="cta-title">
+    <section class="o-stack luz-landing-section" id="start" aria-labelledby="cta-title">
       <h2 class="landing-h2" id="cta-title">{{t:start.title}}</h2>
       <p class="landing-lead">{{t:start.lead}}</p>
-      <div class="luz-site-actions">
+      <div class="o-actions">
         <a class="luz-btn luz-btn--primary" href="#adopt">{{t:hero.start}}</a>
         <a class="luz-btn luz-btn--outline" href="/docs/">{{t:start.docs}}</a>
       </div>
     </section>
   </main>
 
-  <footer class="landing-wrap">
-    <div class="luz-site-footer">
+  <footer class="luz-landing-footer">
+    <div class="o-container o-container--inline o-row">
       <p class="u-text-muted">{{t:footer.note}}</p>
-      <nav class="luz-site-actions" aria-label="{{t:footer.links}}">
+      <nav class="o-actions" aria-label="{{t:footer.links}}">
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="/docs/">{{t:site.docs}}</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="/docs/site/">{{t:nav.site}}</a>

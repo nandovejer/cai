@@ -125,7 +125,8 @@ test.describe('landing header', () => {
   test('narrow: the open panel hangs under the header, and the header is not dimmed by the scrim (H3)', async ({ page }) => {
     const clip = await page.evaluate(() => ({ x: 0, y: 0, width: 600, height: Math.ceil(document.getElementById('hdr').getBoundingClientRect().bottom) }));
     const before = await page.screenshot({ clip });
-    await page.click('#toggle');
+    // showPopover(), not a click: the toggle's hover fill would change the header's pixels
+    await page.evaluate(() => document.getElementById('site-nav').showPopover());
     await expect(page.locator('#site-nav')).toBeVisible();
     const after = await page.screenshot({ clip });
     expect(Buffer.compare(before, after), 'header pixels unchanged under the scrim').toBe(0);

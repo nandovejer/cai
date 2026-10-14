@@ -1,0 +1,67 @@
+/* ==========================================================================
+	 LUZ Landing: header.
+	 header.luz-landing-header.o-sticky > div.o-container.o-container--inline.o-row
+	 holding core's .luz-nav-toggle, the __brand link, core's
+	 nav.luz-navbar[popover] and a div.o-row.__actions (search, language,
+	 a login link). Core gives the stickiness, the width and the row; the
+	 landing adds the surface, the divider, the brand and the gaps.
+	 ========================================================================== */
+
+/* A one-row bar of 44px controls is core's --luz-bar-h tall: two 2xs
+   paddings, the row and the divider. With enlarged text the row wraps
+   and the bar grows. */
+.luz-landing-header {
+	padding-block: var(--luz-space-2xs);
+	border-block-end: 1px solid var(--luz-divider);
+	background: var(--luz-surface-page);
+}
+
+/* The row wraps rather than overflow (WCAG 1.4.4, 1.4.10); its gutters are
+   the page's, so the brand starts where the content starts */
+.luz-landing-header > .o-row {
+	gap: var(--luz-space-xs) var(--luz-space-md);
+}
+
+/* A link outside a <nav>, so core would underline it. It takes the free
+   room of the row, which pushes the links and the actions to the end */
+.luz-landing-header__brand {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--luz-space-xs);
+	min-block-size: var(--luz-control-lg);
+	margin-inline-end: auto;
+	color: var(--luz-text-primary);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-base);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.luz-landing-header__actions {
+	gap: var(--luz-space-xs);
+}
+
+/* The language list of site's <luz-lang-switch> opens under this bar */
+.luz-landing-header :where(luz-lang-switch) {
+	--luz-lang-switch-top: var(--luz-bar-h);
+}
+
+@media (min-width: 769px) {
+	.luz-landing-header > .o-row {
+		column-gap: var(--luz-space-lg);
+	}
+}
+
+/* With anchor positioning the panels opened inside the bar (core's navbar,
+   the language list) open at its block end, on two rows as on one. Scoped,
+   so with two bars on a page each panel finds its own */
+@supports (anchor-name: --luz-bar) {
+	.luz-landing-header {
+		anchor-name: --luz-bar;
+		anchor-scope: --luz-bar;
+	}
+
+	.luz-landing-header :where(luz-lang-switch) {
+		--luz-lang-switch-top: anchor(--luz-bar end, var(--luz-bar-h));
+	}
+}

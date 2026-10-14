@@ -12,10 +12,10 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-BRPDqqNi.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CeD1sUH7.css">
+  <script type="module" crossorigin src="../../../assets/reference-CnsliLMO.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BXC-bg4u.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-D6dp99Hi.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CN1X4AIk.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DW-HxMXL.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -152,7 +152,7 @@
 @luz-ds/site     -> page patterns and the site search
       ↓ required by, each on its own
 @luz-ds/landing  -> patterns for a landing page (own version, 0.x)
-@luz-ds/cms      -> patterns for a blog, a newspaper or any CMS (own version, 0.x)</code></pre>
+@luz-ds/cms      -> page structure of a blog, a newspaper or any CMS (own version, 0.x)</code></pre>
       <ul>
         <li>Landing and cms can use site, core and tokens, never each other; site can use core and tokens; core can use tokens; tokens uses nothing.</li>
         <li>Tokens, core and site share one version. A package for one kind of site, such as landing or cms, has its own, and names the major of the others it needs.</li>
@@ -179,7 +179,7 @@
           <tr><td data-label="Piece"><div>A page with no sidebar</div></td><td data-label="Classes or attributes"><div><code>.luz-site-page</code>, <code>-main</code>, <code>-content</code>, <code>-section</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Instead of <code>.o-shell</code>, for a page with no sidebar</div></td></tr>
           <tr><td data-label="Piece"><div>Hero, page header, action group</div></td><td data-label="Classes or attributes"><div><code>.luz-site-hero</code>, <code>-page-header</code>, <code>-actions</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>The buttons inside them are core's</div></td></tr>
           <tr><td data-label="Piece"><div>The header, hero, sections and footer of a landing page</div></td><td data-label="Classes or attributes"><div><code>.luz-landing-header</code>, <code>-hero</code>, <code>-main</code>, <code>-section</code>, <code>-footer</code>, <code>-glow</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="Notes"><div>On core's objects (<code>.o-page</code>, <code>.o-sticky</code>, <code>.o-container</code>, <code>.o-grid--split</code>) and core's navbar; site is optional. A feature grid is <code>ul.o-grid.o-grid--split</code>, core's</div></td></tr>
-          <tr><td data-label="Piece"><div>Article header, table of contents</div></td><td data-label="Classes or attributes"><div><code>.luz-cms-article-header</code>, <code>.luz-cms-article</code>, <code>.luz-cms-toc</code></div></td><td data-label="Package"><div>cms</div></td><td data-label="Notes"><div>Post cards, listings and the author box are core's card: <a href="../../../docs/cms/templates/">CMS templates</a></div></td></tr>
+          <tr><td data-label="Piece"><div>The header, page header, article header, table of contents and footer of a blog or a newspaper</div></td><td data-label="Classes or attributes"><div><code>.luz-cms-header</code> (<code>--masthead</code>), <code>-page-header</code>, <code>-article-header</code>, <code>-article</code>, <code>-toc</code>, <code>-footer</code></div></td><td data-label="Package"><div>cms</div></td><td data-label="Notes"><div>On core's objects and navbar; site is optional. Post cards, listings and the author box are core's card: <a href="../../../docs/cms/templates/">CMS templates</a></div></td></tr>
           <tr><td data-label="Piece"><div>Site header</div></td><td data-label="Classes or attributes"><div><code>.luz-site-header</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Its menu button, <code>.luz-nav-toggle</code>, is core's</div></td></tr>
           <tr><td data-label="Piece"><div>Submenu, banner</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-submenu&gt;</code>, <code>&lt;luz-banner&gt;</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Tags with no script and no class: the submenu is a native <code>&lt;details&gt;</code> in the site header's links, the banner a <code>&lt;section&gt;</code></div></td></tr>
           <tr><td data-label="Piece"><div>Cookie consent</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-consent&gt;</code>, <code>.luz-consent</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div><code>site.js</code> loads its script, <code>consent.js</code>, when the page has one; a band fixed at the bottom of the window; without the script it stays hidden</div></td></tr>

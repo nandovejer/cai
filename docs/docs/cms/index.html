@@ -5,17 +5,17 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CMS – LUZ documentation</title>
-  <meta name="description" content="What a blog, a newspaper or any site of articles needs on top of site, from the article header to the post listing, and how to tell whether you need it.">
+  <meta name="description" content="The page structure of a blog, a newspaper or any site of articles, from the header to the post listing, and how to tell whether you need it.">
   <link rel="icon" href="../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../assets/site-header-etw6QrnT.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-BRPDqqNi.js"></script>
-  <link rel="stylesheet" crossorigin href="../../assets/reference-CeD1sUH7.css">
+  <script type="module" crossorigin src="../../assets/reference-CnsliLMO.js"></script>
+  <link rel="stylesheet" crossorigin href="../../assets/reference-BXC-bg4u.css">
   <link rel="stylesheet" crossorigin href="../../assets/site-header-D6dp99Hi.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-CN1X4AIk.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-DW-HxMXL.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -105,8 +105,11 @@
       <li><a class="luz-sidebar__link docs-nav__area" href="../../docs/landing/">Landing</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" aria-current="page" href="../../docs/cms/">CMS</a>
         <ul class="docs-nav__pages">
+          <li><a class="luz-sidebar__link" href="../../docs/cms/header/">Header</a></li>
+          <li><a class="luz-sidebar__link" href="../../docs/cms/page-header/">Page header</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/cms/article-header/">Article header</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/cms/toc/">Table of contents</a></li>
+          <li><a class="luz-sidebar__link" href="../../docs/cms/footer/">Footer</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/cms/templates/">CMS templates</a></li>
         </ul>
       </li>
@@ -129,7 +132,7 @@
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
         <li><a class="luz-sidebar__link docs-onpage__link" href="#use-cms-when">Use cms when</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#use-site-alone-when">Use site alone when</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#use-another-kind-when">Use another package when</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#group-patterns">Patterns</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#group-reference">Reference</a></li>
       </ul>
@@ -138,13 +141,13 @@
   <div class="docs-body">
     <p class="docs-eyebrow">For one kind of site · @luz-ds/cms</p>
 
-    <p class="docs-lead">What a blog, a newspaper or any site of articles needs on top of site, from the article header to the post listing, and how to tell whether you need it.</p>
-    <p>A site of articles publishes many pages of the same shape: a story with its header, its text and its author, and lists that lead to them. This package holds the patterns only that kind of site uses. Everything every site needs, from the page shell to the site header, stays in <a href="../../docs/site/">Site</a>.</p>
+    <p class="docs-lead">The page structure of a blog, a newspaper or any site of articles, from the header to the post listing, and how to tell whether you need it.</p>
+    <p>A site of articles publishes many pages of the same shape: a story with its header, its text and its author, and lists that lead to them. This package holds the page structure of that kind of site: its header (a bar or a masthead), the page header, the article header with its table of contents, and the footer. The layout every page needs (the page, the sticky bar, the navbar) is core's, and the pieces that act for the whole site (search, language, cookie consent) are in <a href="../../docs/site/">Site</a>.</p>
     <ul>
       <li>It works with any CMS and any stack. The classes go on any element, so a template of WordPress, Drupal, Ghost, Hugo or your own code can write them.</li>
-      <li>Every class starts with <code class="luz-code-inline">.luz-cms-</code>, uses semantic tokens only and sits in the cascade layer <code class="luz-code-inline">luz.cms</code>, after site's.</li>
-      <li>It has no script. Load <code class="luz-code-inline">cms.css</code> after the CSS of tokens, core and site: <a href="../../docs/get-started/#site-kinds">Install LUZ</a> has the command and the CDN tags. With core's script, the table of contents marks the section in view.</li>
-      <li>It has a version of its own, 0.x while it grows, and needs version <code>^0.1.0</code> of tokens, core and site, declared as peer dependencies.</li>
+      <li>Every class starts with <code class="luz-code-inline">.luz-cms-</code>, uses semantic tokens only and sits in the cascade layer <code class="luz-code-inline">luz.cms</code>, after site's. Each pattern is a class on a native element, laid out in the markup by core's objects.</li>
+      <li>It has no script. Load <code class="luz-code-inline">cms.css</code> after the CSS of tokens and core (and site's, if you use it): <a href="../../docs/get-started/#site-kinds">Install LUZ</a> has the command and the CDN tags. With core's script, the table of contents marks the section in view.</li>
+      <li>It has a version of its own, 0.x while it grows, and needs version <code>^0.1.0</code> of tokens and core, declared as peer dependencies. Site is an optional peer: without it the patterns render the same, and the rules that refine site's elements match nothing.</li>
       <li>The post card, the post listing, related posts and the author box need no CSS of their own: they are core's card, avatar and pagination, put together on <a href="../../docs/cms/templates/">CMS templates</a>.</li>
     </ul>
 
@@ -154,19 +157,28 @@
           <ul>
             <li>You publish articles, posts or stories, each with a title, an author and a date.</li>
             <li>Your articles are long enough to need a table of contents beside the text.</li>
+            <li>You want a header that names the publication and its sections, as a bar or as a newspaper's masthead.</li>
           </ul>
         </div>
         <div class="docs-decision-card">
-          <h2 id="use-site-alone-when" class="docs-decision-card__title">Use site alone when</h2>
+          <h2 id="use-another-kind-when" class="docs-decision-card__title">Use another package when</h2>
           <ul>
-            <li>Your pages are documentation, a landing page or an app.</li>
-            <li>You have a few pages with no author or date: the <a href="../../docs/site/page-header/">page header</a> is enough.</li>
+            <li>Your site is a landing page: <a href="../../docs/landing/">Landing</a> has its header, hero and footer.</li>
+            <li>Your pages are documentation or an app, with no author or date: core's <a href="../../docs/components/layout/">layout</a> and <a href="../../docs/components/navbar/">navbar</a> are the start.</li>
           </ul>
         </div>
       </div>
   <section class="docs-gallery" aria-labelledby="group-patterns">
     <h2 id="group-patterns">Patterns</h2>
     <ul class="docs-gallery__cards">
+      <li class="luz-card docs-card">
+        <h3 class="luz-card__title docs-card__title"><a href="../../docs/cms/header/">Header</a></h3>
+        <p class="luz-card__body docs-card__desc">Starts every page of a blog or a newspaper with the publication&#39;s name, its sections and a search: one row that stays at the top, or a masthead of three rows.</p>
+      </li>
+      <li class="luz-card docs-card">
+        <h3 class="luz-card__title docs-card__title"><a href="../../docs/cms/page-header/">Page header</a></h3>
+        <p class="luz-card__body docs-card__desc">Gives a page that is not an article, such as About or Contact, its title and one sentence about what it is for.</p>
+      </li>
       <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/cms/article-header/">Article header</a></h3>
         <p class="luz-card__body docs-card__desc">Opens a story with its section, its title, a standfirst, who wrote it and when, and an optional lead picture.</p>
@@ -175,12 +187,16 @@
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/cms/toc/">Table of contents</a></h3>
         <p class="luz-card__body docs-card__desc">Lists the sections of a long article, beside the text when there is room and above it when there is not.</p>
       </li>
+      <li class="luz-card docs-card">
+        <h3 class="luz-card__title docs-card__title"><a href="../../docs/cms/footer/">Footer</a></h3>
+        <p class="luz-card__body docs-card__desc">Ends every page of a blog or a newspaper with who publishes it and a few secondary links, under a rule.</p>
+      </li>
     </ul>
   </section>
   <section class="docs-gallery" aria-labelledby="group-reference">
     <h2 id="group-reference">Reference</h2>
     <ul class="docs-gallery__rows">
-      <li><a href="../../docs/cms/templates/">CMS templates</a> <span class="docs-gallery__desc">The pieces of a blog or a newspaper that need no CSS of their own, to paste in and adapt: the article page, a post card, post listings, related posts and the author box.</span></li>
+      <li><a href="../../docs/cms/templates/">CMS templates</a> <span class="docs-gallery__desc">The pieces of a blog or a newspaper that need no CSS of their own, to paste in and adapt: the content page, the article page, a post card, post listings, related posts and the author box.</span></li>
     </ul>
   </section>
   </div>
@@ -193,7 +209,7 @@
     </ul>
     <ul class="docs-pager">
       <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../docs/landing/templates/" aria-label="Previous: Landing page templates"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Landing page templates</span></a></li>
-      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../docs/cms/article-header/" aria-label="Next: Article header"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Article header</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../docs/cms/header/" aria-label="Next: Header"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Header</span></a></li>
     </ul>
   </nav>
   </main>

@@ -12,10 +12,10 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-BRPDqqNi.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CeD1sUH7.css">
+  <script type="module" crossorigin src="../../../assets/reference-CnsliLMO.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BXC-bg4u.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-D6dp99Hi.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CN1X4AIk.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DW-HxMXL.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -105,8 +105,11 @@
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/landing/">Landing</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/cms/">CMS</a>
         <ul class="docs-nav__pages">
+          <li><a class="luz-sidebar__link" href="../../../docs/cms/header/">Header</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/cms/page-header/">Page header</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/cms/article-header/">Article header</a></li>
           <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/cms/toc/">Table of contents</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/cms/footer/">Footer</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/cms/templates/">CMS templates</a></li>
         </ul>
       </li>
@@ -244,7 +247,7 @@
                   <tr><td data-label="Class or property"><div><code>data-luz-spy</code> on <code>.luz-cms-toc</code></div></td><td data-label="What it does"><div>Core's scroll spy marks the link of the section in view. Optional</div></td></tr>
                   <tr><td data-label="Class or property"><div><code>.luz-cms-toc__title</code></div></td><td data-label="What it does"><div>The heading of the contents, in the sans, semibold</div></td></tr>
                   <tr><td data-label="Class or property"><div><code>.luz-cms-toc__list</code></div></td><td data-label="What it does"><div>The list, with no markers and a rule along its inline start; one link a line</div></td></tr>
-                  <tr><td data-label="Class or property"><div><code>--luz-cms-toc-top</code></div></td><td data-label="What it does"><div>The space above the contents while they stay in view: 24 px, or 24 px under site's sticky header (<code>.luz-site-header--sticky</code>). Set it on <code>.luz-cms-toc</code> for a header of your own</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>--luz-cms-toc-top</code></div></td><td data-label="What it does"><div>The space above the contents while they stay in view: 24 px, or 24 px under a sticky bar (core's <code>.o-sticky</code>, one row of <code>--luz-bar-h</code>, such as the <a href="../../../docs/cms/header/">header</a>). Set it on <code>.luz-cms-toc</code> for a header of another height</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -263,7 +266,7 @@
             <ul>
               <li>A <code>&lt;nav&gt;</code> named by its heading: screen reader users find it in the list of landmarks as "Contents". Use an <code>&lt;ol&gt;</code>: the sections have an order.</li>
               <li><code>aria-current="true"</code> names the section in view; the script moves it. Without the script, nothing claims to be current.</li>
-              <li>Under a sticky header, site's scroll padding keeps the section's heading clear of the header when a link is followed.</li>
+              <li>Under a sticky header, the scroll padding of core's <code>.o-sticky</code> keeps the section's heading clear of the header when a link is followed.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
@@ -274,7 +277,7 @@
             <h3 id="when-not">When not to use</h3>
             <p>Do not use it in a short post: three paragraphs need no map.</p>
             <ul>
-              <li>Not for links to other pages: that is navigation, in the site header or a <a href="../../../docs/components/sidebar/">sidebar</a>.</li>
+              <li>Not for links to other pages: that is navigation, in the <a href="../../../docs/cms/header/">header</a> or a <a href="../../../docs/components/sidebar/">sidebar</a>.</li>
               <li>Not for the steps of a task done in order: number the steps in the text.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>
@@ -319,11 +322,12 @@
               <li>The current link is marked by the bar and the weight, not by colour alone. The links are not underlined: inside a <code>&lt;nav&gt;</code>, their place says they are links, as in every LUZ navigation.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 14 tokens that the <code>.luz-cms-article</code> and <code>.luz-cms-toc</code> rules of cms's <code>components/article.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 15 tokens that the <code>.luz-cms-article</code> and <code>.luz-cms-toc</code> rules of cms's <code>components/article.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="../../../docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="../../../docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="../../../docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="../../../docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
               <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xl</code>, <code>--luz-space-2xs</code>, <code>--luz-space-lg</code>, <code>--luz-space-sm</code>, <code>--luz-space-xl</code>, <code>--luz-space-xs</code></dd></div>
               <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-base</code>, <code>--luz-text-md</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-bar-h</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
@@ -333,12 +337,13 @@
   <nav class="docs-end" aria-labelledby="docs-end-title">
     <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
     <ul class="docs-end__links">
+      <li><a href="../../../docs/cms/templates/">CMS templates</a></li>
       <li><a href="../../../docs/components/">Components</a></li>
       <li><a href="../../../docs/site/">Site</a></li>
     </ul>
     <ul class="docs-pager">
       <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/cms/article-header/" aria-label="Previous: Article header"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Article header</span></a></li>
-      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/cms/templates/" aria-label="Next: CMS templates"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">CMS templates</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/cms/footer/" aria-label="Next: Footer"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Footer</span></a></li>
     </ul>
   </nav>
   </main>

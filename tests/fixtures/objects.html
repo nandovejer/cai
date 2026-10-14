@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Objects</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <!-- A kind of site's skin on the bare objects (what .luz-landing-header adds): a surface, one row of padding, a divider -->
+  <style>
+    .skin { background: var(--luz-surface-page); border-block-end: 1px solid var(--luz-divider); padding-block: var(--luz-space-2xs); }
+    .banner { padding: var(--luz-space-xs) var(--luz-space-md); background: var(--luz-surface-muted); }
+  </style>
+</head>
+<body>
+  <!-- tests/objects.spec.js: o-page, o-container--inline, o-sticky, o-grid--split, o-actions, --luz-bar-h -->
+  <div class="o-page" id="page">
+    <div class="banner" id="band-1"><p>First band before the header (a notice)</p></div>
+    <div class="banner" id="band-2"><p>Second band before the header (the cookie question)</p></div>
+    <header class="o-sticky skin" id="hdr">
+      <div class="o-container o-container--inline o-row" id="bar">
+        <a id="brand" href="#top">Bodega Albar</a>
+      </div>
+    </header>
+    <main id="top">
+      <div id="probes">
+        <div class="o-container" id="plain"><p id="plain-first">Plain container</p></div>
+        <div class="o-container o-container--inline" id="inline"><p id="inline-first">Inline container</p></div>
+
+        <div class="o-grid o-grid--split" id="split">
+          <div id="split-a"><p>One</p></div>
+          <div id="split-b"><p>Two</p></div>
+        </div>
+        <div class="o-grid o-grid--split" id="split-wide" style="--luz-grid-min: 24rem">
+          <div id="wide-a"><p>One</p></div>
+          <div id="wide-b"><p>Two</p></div>
+        </div>
+
+        <div class="o-actions" id="actions">
+          <a class="luz-btn luz-btn--primary" id="act-1" href="#top">Register now</a>
+          <a class="luz-btn luz-btn--outline" id="act-2" href="#top">Programme of the two days of talks</a>
+        </div>
+      </div>
+      <form id="fields" action="#top">
+      <p><label for="f1">Field 1</label> <input class="luz-input" id="f1" type="text"></p>
+      <p><label for="f2">Field 2</label> <input class="luz-input" id="f2" type="text"></p>
+      <p><label for="f3">Field 3</label> <input class="luz-input" id="f3" type="text"></p>
+      <p><label for="f4">Field 4</label> <input class="luz-input" id="f4" type="text"></p>
+      <p><label for="f5">Field 5</label> <input class="luz-input" id="f5" type="text"></p>
+      <p><label for="f6">Field 6</label> <input class="luz-input" id="f6" type="text"></p>
+      <p><label for="f7">Field 7</label> <input class="luz-input" id="f7" type="text"></p>
+      <p><label for="f8">Field 8</label> <input class="luz-input" id="f8" type="text"></p>
+      <p><label for="f9">Field 9</label> <input class="luz-input" id="f9" type="text"></p>
+      <p><label for="f10">Field 10</label> <input class="luz-input" id="f10" type="text"></p>
+      <p><label for="f11">Field 11</label> <input class="luz-input" id="f11" type="text"></p>
+      <p><label for="f12">Field 12</label> <input class="luz-input" id="f12" type="text"></p>
+      <p><label for="f13">Field 13</label> <input class="luz-input" id="f13" type="text"></p>
+      <p><label for="f14">Field 14</label> <input class="luz-input" id="f14" type="text"></p>
+      <p><label for="f15">Field 15</label> <input class="luz-input" id="f15" type="text"></p>
+      <p><label for="f16">Field 16</label> <input class="luz-input" id="f16" type="text"></p>
+      <p><label for="f17">Field 17</label> <input class="luz-input" id="f17" type="text"></p>
+      <p><label for="f18">Field 18</label> <input class="luz-input" id="f18" type="text"></p>
+      <p><label for="f19">Field 19</label> <input class="luz-input" id="f19" type="text"></p>
+      <p><label for="f20">Field 20</label> <input class="luz-input" id="f20" type="text"></p>
+      <p><label for="f21">Field 21</label> <input class="luz-input" id="f21" type="text"></p>
+      <p><label for="f22">Field 22</label> <input class="luz-input" id="f22" type="text"></p>
+      <p><label for="f23">Field 23</label> <input class="luz-input" id="f23" type="text"></p>
+      <p><label for="f24">Field 24</label> <input class="luz-input" id="f24" type="text"></p>
+      <p><label for="f25">Field 25</label> <input class="luz-input" id="f25" type="text"></p>
+      <p><label for="f26">Field 26</label> <input class="luz-input" id="f26" type="text"></p>
+      <p><label for="f27">Field 27</label> <input class="luz-input" id="f27" type="text"></p>
+      <p><label for="f28">Field 28</label> <input class="luz-input" id="f28" type="text"></p>
+      <p><label for="f29">Field 29</label> <input class="luz-input" id="f29" type="text"></p>
+      <p><label for="f30">Field 30</label> <input class="luz-input" id="f30" type="text"></p>
+      </form>
+    </main>
+    <footer id="footer"><p>Footer</p></footer>
+  </div>
+</body>
+</html>

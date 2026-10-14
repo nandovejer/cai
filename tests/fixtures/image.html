@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+</head>
+<body>
+  <!-- tests/image.spec.js: one empty frame per ratio, and one whose image is missing -->
+  <div class="luz-image" data-ratio="16x9"></div>
+  <div class="luz-image luz-image--4x3" data-ratio="4x3"></div>
+  <div class="luz-image luz-image--3x2" data-ratio="3x2"></div>
+  <div class="luz-image luz-image--1x1" data-ratio="1x1"></div>
+  <div class="luz-image luz-image--21x9" data-ratio="21x9"></div>
+  <div class="luz-image luz-image--9x16" data-ratio="9x16"></div>
+  <div class="luz-image" id="broken"><picture><img src="/tests/fixtures/no-such-image.jpg" width="640" height="360" alt="A photo that does not exist"></picture></div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Skip link</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" media="print" href="/packages/core/dist/print.css">
+  <style>
+    .skin { background: var(--luz-surface-page); border-block-end: 1px solid var(--luz-divider); padding-block: var(--luz-space-2xs); }
+    .banner { padding: var(--luz-space-xs) var(--luz-space-md); background: var(--luz-surface-muted); }
+    #tall { block-size: 3000px; }
+  </style>
+</head>
+<body>
+  <!-- tests/skip-link.spec.js: the skip link first, then a cookie band, a notice and a sticky bar -->
+  <a class="luz-skip-link" id="skip" href="#main-content">Skip to main content</a>
+  <section class="banner" id="consent" aria-labelledby="consent-title">
+    <p id="consent-title"><strong>Cookies</strong></p>
+    <a href="#main-content">Policy</a> <button class="luz-btn luz-btn--primary" type="button">Accept</button> <button class="luz-btn luz-btn--outline" type="button">Reject</button>
+  </section>
+  <section class="banner" id="notice" aria-labelledby="notice-title">
+    <p><strong id="notice-title">Open day.</strong> <a href="#main-content">Book a visit</a></p>
+  </section>
+  <header class="o-sticky skin" id="hdr">
+    <div class="o-container o-container--inline o-row">
+      <a id="brand" href="#main-content">Bodega Albar</a>
+      <a id="login" href="#main-content">Log in</a>
+    </div>
+  </header>
+  <main id="main-content" tabindex="-1">
+    <h1>Page</h1>
+    <p><a id="first-in-main" href="#main-content">First link in main</a></p>
+    <div id="tall"></div>
+  </main>
+</body>
+</html>

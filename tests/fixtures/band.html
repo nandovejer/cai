@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Band</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+</head>
+<body>
+<!-- tests/band.spec.js: a page built like a consumer's, from core only (the objects and .luz-band). The labels are short on
+     purpose: a .luz-btn does not wrap its label outside a card, so a long one is wider than 288px at 200 % text. -->
+<div class="o-page">
+<main id="main-content" class="o-container o-stack">
+  <section class="o-stack" aria-labelledby="before-title">
+    <h2 id="before-title">Programme</h2>
+    <p>Two days of talks and workshops for retail teams.</p>
+  </section>
+  <section class="o-stack luz-band" aria-labelledby="last-seats-title" id="band">
+    <h2 id="last-seats-title">Registration closes on 30 April</h2>
+    <p>The hall holds 400 people, and the Two days ticket sold out last year.</p>
+    <div class="o-actions">
+      <a class="luz-btn luz-btn--primary" href="#after-title">Register now</a>
+      <a class="luz-btn luz-btn--outline" href="#after-title">Programme</a>
+    </div>
+  </section>
+  <section class="o-stack" aria-labelledby="after-title">
+    <h2 id="after-title">Venue</h2>
+    <p>The main hall, in Seville.</p>
+  </section>
+  <!-- Not a section: any block can be a band -->
+  <div class="luz-band" id="band-div"><p>A plain block on the tint.</p></div>
+</main>
+</div>
+</body>
+</html>

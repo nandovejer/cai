@@ -1,7 +1,7 @@
 /**
- * CAI site — color mode before the first paint.
+ * LUZ site — color mode before the first paint.
  *
- * cai-exception: EX-009 — a classic, render-blocking script in <head>
+ * luz-exception: EX-009 — a classic, render-blocking script in <head>
  * (PRINCIPLES §3: no JS on the critical rendering path). The pages start
  * as data-theme="light" and site-header.js, a deferred module, applies the
  * visitor's mode only after the first paint, so a dark page flashed light
@@ -16,7 +16,7 @@
   const modes = ["light", "dark", "high-contrast"];
   let mode = null;
   try {
-    mode = localStorage.getItem("cai-site-mode");
+    mode = localStorage.getItem("luz-site-mode");
   } catch (_) {}
   if (!modes.includes(mode)) {
     const matches = (query) => window.matchMedia?.(query).matches;

@@ -4,178 +4,178 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CAI: واجهات مصمَّمة لإمكانية الوصول على HTML أصلي، بلا إطار عمل</title>
-  <meta name="description" content="CAI ‏(Consistent Adaptive Identity) نظام تصميم للويب ينطلق من CSS ولا يحتاج إلى خطوة بناء: رموز تصميم ومكونات وتخطيطات صفحات على HTML أصلي، وثلاثة أوضاع للألوان، وطبقة تتالٍ واحدة يمكنك تجاوزها دائمًا، وJavaScript تحسينًا فقط.">
-  <link rel="canonical"  href="https://nandovejer.github.io/cai/ar/">
-  <link rel="alternate"  hreflang="en" href="https://nandovejer.github.io/cai/">
-  <link rel="alternate"  hreflang="es" href="https://nandovejer.github.io/cai/es/">
-  <link rel="alternate"  hreflang="ar" href="https://nandovejer.github.io/cai/ar/">
-  <link rel="alternate"  hreflang="x-default" href="https://nandovejer.github.io/cai/">
-  <link rel="icon" href="../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
-  <link rel="icon" href="../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="../assets/apple-touch-icon-CU59whWG.png">
+  <title>LUZ: واجهات مصمَّمة لإمكانية الوصول على HTML أصلي، بلا إطار عمل</title>
+  <meta name="description" content="LUZ ‏(Light, Usable &amp; Zero-dependency) نظام تصميم للويب ينطلق من CSS ولا يحتاج إلى خطوة بناء: رموز تصميم ومكونات وتخطيطات صفحات على HTML أصلي، وثلاثة أوضاع للألوان، وطبقة تتالٍ واحدة يمكنك تجاوزها دائمًا، وJavaScript تحسينًا فقط.">
+  <link rel="canonical"  href="https://nandovejer.github.io/luz/ar/">
+  <link rel="alternate"  hreflang="en" href="https://nandovejer.github.io/luz/">
+  <link rel="alternate"  hreflang="es" href="https://nandovejer.github.io/luz/es/">
+  <link rel="alternate"  hreflang="ar" href="https://nandovejer.github.io/luz/ar/">
+  <link rel="alternate"  hreflang="x-default" href="https://nandovejer.github.io/luz/">
+  <link rel="icon" href="../assets/favicon-CLiQtzsm.ico" sizes="32x32">
+  <link rel="icon" href="../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../assets/site-header-AGCTJ7l9.js"></script>
-  <script type="module" crossorigin src="../assets/landing-B9x-5SsZ.js"></script>
-  <link rel="stylesheet" crossorigin href="../assets/site-header-DL44kyQO.css">
-  <link rel="stylesheet" crossorigin href="../assets/landing-J58pe5hy.css">
-  <link rel="stylesheet" crossorigin href="../assets/site-header-BWTXsvj2.css">
+  <script type="module" crossorigin src="../assets/site-header-B6MN3Cx-.js"></script>
+  <script type="module" crossorigin src="../assets/landing-CL2gJjV-.js"></script>
+  <link rel="stylesheet" crossorigin href="../assets/site-header-B6t6HMAm.css">
+  <link rel="stylesheet" crossorigin href="../assets/landing-B6mUbAG5.css">
+  <link rel="stylesheet" crossorigin href="../assets/site-header-BP2pzL6X.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
      dictionary, which has no Arabic -->
-<body class="cai-site-page"
-      data-cai-label-change-mode="تغيير وضع الألوان. الوضع الحالي: {mode}"
-      data-cai-label-mode-changed="وضع الألوان: {mode}"
-      data-cai-label-copied="تم النسخ"
-      data-cai-label-copied-status="تم النسخ إلى الحافظة"
-      data-cai-label-copy-failed="تعذّر النسخ. حدّد النص وانسخه يدويًا.">
+<body class="luz-site-page"
+      data-luz-label-change-mode="تغيير وضع الألوان. الوضع الحالي: {mode}"
+      data-luz-label-mode-changed="وضع الألوان: {mode}"
+      data-luz-label-copied="تم النسخ"
+      data-luz-label-copied-status="تم النسخ إلى الحافظة"
+      data-luz-label-copy-failed="تعذّر النسخ. حدّد النص وانسخه يدويًا.">
   <!-- The search dialog comes first: closed, it is not focusable; after
        Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
-  <cai-site-search>
-  <dialog class="cai-modal cai-site-search" id="cai-search" aria-labelledby="cai-search-title"
-          data-cai-search data-cai-search-src="../docs/search-index.json"
-          data-cai-label-results="عدد النتائج: {n}"
-          data-cai-label-result="نتيجة واحدة"
-          data-cai-label-capped="تُعرض {shown} من أصل {n}. اكتب المزيد لتضييق النتائج."
-          data-cai-label-none="لا توجد نتائج لـ «{query}». تحقّق من الإملاء أو جرّب كلمة أقصر."
-          data-cai-label-loading="جارٍ تحميل فهرس البحث…"
-          data-cai-label-error="البحث غير متاح الآن.">
-    <search class="cai-site-search__body">
-      <div class="cai-site-search__head">
-        <h2 class="cai-site-search__title" id="cai-search-title"><label for="cai-search-q">ابحث في التوثيق (باللغة الإنجليزية)</label></h2>
-        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-site-search__close" aria-label="إغلاق البحث"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+  <luz-site-search>
+  <dialog class="luz-modal luz-site-search" id="luz-search" aria-labelledby="luz-search-title"
+          data-luz-search data-luz-search-src="../docs/search-index.json"
+          data-luz-label-results="عدد النتائج: {n}"
+          data-luz-label-result="نتيجة واحدة"
+          data-luz-label-capped="تُعرض {shown} من أصل {n}. اكتب المزيد لتضييق النتائج."
+          data-luz-label-none="لا توجد نتائج لـ «{query}». تحقّق من الإملاء أو جرّب كلمة أقصر."
+          data-luz-label-loading="جارٍ تحميل فهرس البحث…"
+          data-luz-label-error="البحث غير متاح الآن.">
+    <search class="luz-site-search__body">
+      <div class="luz-site-search__head">
+        <h2 class="luz-site-search__title" id="luz-search-title"><label for="luz-search-q">ابحث في التوثيق (باللغة الإنجليزية)</label></h2>
+        <form method="dialog"><button class="luz-btn luz-btn--ghost luz-site-search__close" aria-label="إغلاق البحث"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
       </div>
-      <div class="cai-site-search__field">
+      <div class="luz-site-search__field">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+        <input class="luz-input" id="luz-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="luz-search-hint">
       </div>
-      <p class="cai-field__helper" id="cai-search-hint">تتغيّر النتائج أثناء الكتابة. استخدم مفاتيح الأسهم للتنقل بينها.</p>
-      <p class="cai-site-search__status" role="status"></p>
-      <div class="cai-site-search__results" data-cai-search-results>
-        <div data-cai-search-show="idle">
+      <p class="luz-field__helper" id="luz-search-hint">تتغيّر النتائج أثناء الكتابة. استخدم مفاتيح الأسهم للتنقل بينها.</p>
+      <p class="luz-site-search__status" role="status"></p>
+      <div class="luz-site-search__results" data-luz-search-results>
+        <div data-luz-search-show="idle">
           <h3>الأكثر زيارة</h3>
           <ul lang="en">
-            <li><a href="../docs/get-started/" hreflang="en"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
+            <li><a href="../docs/get-started/" hreflang="en"><span>Install LUZ</span><span>, </span><span>Get started</span></a></li>
             <li><a href="../docs/components/button/" hreflang="en"><span>Button</span><span>, </span><span>Components</span></a></li>
             <li><a href="../docs/components/form/" hreflang="en"><span>Form fields</span><span>, </span><span>Components</span></a></li>
             <li><a href="../docs/tokens/color/" hreflang="en"><span>Color</span><span>, </span><span>Tokens</span></a></li>
             <li><a href="../docs/tokens/modes/" hreflang="en"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
           </ul>
         </div>
-        <div hidden><h3>الصفحات</h3><ul data-cai-search-list="pages" lang="en"></ul></div>
-        <div hidden><h3>الأقسام</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
-        <div hidden><h3>عناصر HTML</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
+        <div hidden><h3>الصفحات</h3><ul data-luz-search-list="pages" lang="en"></ul></div>
+        <div hidden><h3>الأقسام</h3><ul data-luz-search-list="sections" lang="en"></ul></div>
+        <div hidden><h3>عناصر HTML</h3><ul data-luz-search-list="elements" lang="en"></ul></div>
       </div>
-      <p class="cai-site-search__foot">لم تجد ما تبحث عنه؟ <a href="../docs/a-z/" hreflang="en">تصفّح الفهرس من A إلى Z</a></p>
+      <p class="luz-site-search__foot">لم تجد ما تبحث عنه؟ <a href="../docs/a-z/" hreflang="en">تصفّح الفهرس من A إلى Z</a></p>
     </search>
   </dialog>
-  </cai-site-search>
-  <a class="cai-site-skip-link" href="#main-content">انتقل إلى المحتوى الرئيسي</a>
+  </luz-site-search>
+  <a class="luz-site-skip-link" href="#main-content">انتقل إلى المحتوى الرئيسي</a>
 
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="القائمة" popovertarget="page-nav">
+      <button class="luz-nav-toggle site-header__menu" type="button" aria-label="القائمة" popovertarget="page-nav">
         <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
           <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../ar/"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <a class="site-header__brand" href="../ar/"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
       <nav class="site-header__nav" aria-label="الموقع">
         <a href="../ar/" aria-current="page">الرئيسية</a>
         <a href="../docs/" hreflang="en">التوثيق</a>
-        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+        <a class="site-header__github" href="https://github.com/nandovejer/luz"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
       </nav>
-      <a class="site-header__az" href="../docs/a-z/" hreflang="en" data-cai-search-fallback><span class="u-sr-only">فهرس </span>A–Z</a>
-      <button class="cai-site-search-trigger cai-site-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="ابحث في التوثيق (Ctrl K)" hidden>
-        <svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-site-search-trigger__label">ابحث في التوثيق…</span>
-        <kbd class="cai-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      <a class="site-header__az" href="../docs/a-z/" hreflang="en" data-luz-search-fallback><span class="u-sr-only">فهرس </span>A–Z</a>
+      <button class="luz-site-search-trigger luz-site-search-trigger--compact site-header__search" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="ابحث في التوثيق (Ctrl K)" hidden>
+        <svg class="luz-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="luz-site-search-trigger__label">ابحث في التوثيق…</span>
+        <kbd class="luz-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
       </button>
-      <div class="cai-site-lang-switcher">
-    <button class="cai-site-lang-switcher__button" type="button" popovertarget="cai-lang-menu"><svg class="cai-site-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">اللغة: </span><span class="cai-site-lang-switcher__name">العربية</span></button>
-    <nav class="cai-site-lang-switcher__menu" id="cai-lang-menu" popover aria-labelledby="cai-lang-title">
-      <p class="cai-site-lang-switcher__title" id="cai-lang-title">اللغة</p>
-      <ul class="cai-site-lang-switcher__list">
-        <li><a class="cai-site-lang-switcher__link" href="../" hreflang="en" lang="en">English</a></li>
-        <li><a class="cai-site-lang-switcher__link" href="../es/" hreflang="es" lang="es">Español</a></li>
-        <li><a class="cai-site-lang-switcher__link" href="../ar/" hreflang="ar" lang="ar" aria-current="page">العربية</a></li>
+      <div class="luz-site-lang-switcher">
+    <button class="luz-site-lang-switcher__button" type="button" popovertarget="luz-lang-menu"><svg class="luz-site-lang-switcher__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg><span class="u-sr-only">اللغة: </span><span class="luz-site-lang-switcher__name">العربية</span></button>
+    <nav class="luz-site-lang-switcher__menu" id="luz-lang-menu" popover aria-labelledby="luz-lang-title">
+      <p class="luz-site-lang-switcher__title" id="luz-lang-title">اللغة</p>
+      <ul class="luz-site-lang-switcher__list">
+        <li><a class="luz-site-lang-switcher__link" href="../" hreflang="en" lang="en">English</a></li>
+        <li><a class="luz-site-lang-switcher__link" href="../es/" hreflang="es" lang="es">Español</a></li>
+        <li><a class="luz-site-lang-switcher__link" href="../ar/" hreflang="ar" lang="ar" aria-current="page">العربية</a></li>
       </ul>
     </nav>
   </div>
     </div>
   </header>
 
-  <nav class="cai-sidebar page-nav page-nav--drawer" id="page-nav" popover aria-label="الصفحة الرئيسية" tabindex="-1">
-    <div class="cai-sidebar__section page-nav__site">
-      <span class="cai-sidebar__section-label" id="nav-site">الموقع</span>
+  <nav class="luz-sidebar page-nav page-nav--drawer" id="page-nav" popover aria-label="الصفحة الرئيسية" tabindex="-1">
+    <div class="luz-sidebar__section page-nav__site">
+      <span class="luz-sidebar__section-label" id="nav-site">الموقع</span>
       <ul aria-labelledby="nav-site">
-        <li><a class="cai-sidebar__link" href="../ar/" aria-current="page">الرئيسية</a></li>
-        <li><a class="cai-sidebar__link" href="../docs/" hreflang="en">التوثيق</a></li>
-        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+        <li><a class="luz-sidebar__link" href="../ar/" aria-current="page">الرئيسية</a></li>
+        <li><a class="luz-sidebar__link" href="../docs/" hreflang="en">التوثيق</a></li>
+        <li><a class="luz-sidebar__link" href="https://github.com/nandovejer/luz">GitHub</a></li>
       </ul>
     </div>
 
-    <div class="cai-sidebar__section">
-      <div class="cai-sidebar__section-label">في هذه الصفحة</div>
-      <a class="cai-sidebar__link" href="#what">لماذا تستخدم الفرق CAI</a>
-      <a class="cai-sidebar__link" href="#see">شاهده وهو يعمل</a>
-      <a class="cai-sidebar__link" href="#adopt">اعتمده طبقةً تلو الأخرى</a>
-      <a class="cai-sidebar__link" href="#fit">متى يناسبك CAI</a>
-      <a class="cai-sidebar__link" href="#start">ابدأ بوسم link واحد لكل طبقة</a>
+    <div class="luz-sidebar__section">
+      <div class="luz-sidebar__section-label">في هذه الصفحة</div>
+      <a class="luz-sidebar__link" href="#what">لماذا تستخدم الفرق LUZ</a>
+      <a class="luz-sidebar__link" href="#see">شاهده وهو يعمل</a>
+      <a class="luz-sidebar__link" href="#adopt">اعتمده طبقةً تلو الأخرى</a>
+      <a class="luz-sidebar__link" href="#fit">متى يناسبك LUZ</a>
+      <a class="luz-sidebar__link" href="#start">ابدأ بوسم link واحد لكل طبقة</a>
     </div>
 
-    <div class="cai-sidebar__section">
-      <div class="cai-sidebar__section-label">التوثيق، باللغة الإنجليزية</div>
-      <a class="cai-sidebar__link" href="../docs/get-started/" hreflang="en">البدء</a>
-      <a class="cai-sidebar__link" href="../docs/tokens/" hreflang="en">رموز التصميم</a>
-      <a class="cai-sidebar__link" href="../docs/components/" hreflang="en">Core</a>
-      <a class="cai-sidebar__link" href="../docs/site/" hreflang="en">Site</a>
-      <a class="cai-sidebar__link" href="../docs/html/" hreflang="en">عناصر HTML</a>
-      <a class="cai-sidebar__link" href="../docs/accessibility/" hreflang="en">إمكانية الوصول</a>
+    <div class="luz-sidebar__section">
+      <div class="luz-sidebar__section-label">التوثيق، باللغة الإنجليزية</div>
+      <a class="luz-sidebar__link" href="../docs/get-started/" hreflang="en">البدء</a>
+      <a class="luz-sidebar__link" href="../docs/tokens/" hreflang="en">رموز التصميم</a>
+      <a class="luz-sidebar__link" href="../docs/components/" hreflang="en">Core</a>
+      <a class="luz-sidebar__link" href="../docs/site/" hreflang="en">Site</a>
+      <a class="luz-sidebar__link" href="../docs/html/" hreflang="en">عناصر HTML</a>
+      <a class="luz-sidebar__link" href="../docs/accessibility/" hreflang="en">إمكانية الوصول</a>
     </div>
   </nav>
 
-  <main id="main-content" class="cai-site-main" tabindex="-1">
+  <main id="main-content" class="luz-site-main" tabindex="-1">
 
     <!-- ====================== HERO ====================== -->
-    <section class="cai-site-hero landing-wrap" aria-labelledby="hero-title">
-      <div class="cai-site-hero__copy">
-        <p class="cai-site-hero__eyebrow" lang="en">Consistent Adaptive Identity</p>
-        <h1 class="cai-site-hero__title" id="hero-title">CAI، نظام تصميم أصلي ومنسّق، مبني لإمكانية الوصول.</h1>
-        <p class="cai-site-hero__lead">نظام تصميم للويب ينطلق من CSS ولا يحتاج إلى خطوة بناء. ثلاثة أوضاع للألوان، وCSS الخاص بك يغلب دائمًا، وJavaScript تحسينًا فقط.</p>
-        <div class="cai-site-actions">
-          <a class="cai-btn cai-btn--primary cai-btn--lg" href="#adopt">ابدأ الآن</a>
-          <a class="cai-btn cai-btn--outline cai-btn--lg" href="../docs/components/" hreflang="en">تصفّح المكونات</a>
+    <section class="luz-site-hero landing-wrap" aria-labelledby="hero-title">
+      <div class="luz-site-hero__copy">
+        <p class="luz-site-hero__eyebrow" lang="en">Light, Usable & Zero-dependency</p>
+        <h1 class="luz-site-hero__title" id="hero-title">LUZ، نظام تصميم أصلي ومنسّق، مبني لإمكانية الوصول.</h1>
+        <p class="luz-site-hero__lead">نظام تصميم للويب ينطلق من CSS ولا يحتاج إلى خطوة بناء. ثلاثة أوضاع للألوان، وCSS الخاص بك يغلب دائمًا، وJavaScript تحسينًا فقط.</p>
+        <div class="luz-site-actions">
+          <a class="luz-btn luz-btn--primary luz-btn--lg" href="#adopt">ابدأ الآن</a>
+          <a class="luz-btn luz-btn--outline luz-btn--lg" href="../docs/components/" hreflang="en">تصفّح المكونات</a>
         </div>
       </div>
     </section>
 
     <!-- ====================== WHY ====================== -->
-    <section class="cai-site-section landing-wrap" id="what" aria-labelledby="what-title">
-      <h2 class="landing-h2" id="what-title">لماذا تستخدم الفرق CAI</h2>
+    <section class="luz-site-section landing-wrap" id="what" aria-labelledby="what-title">
+      <h2 class="landing-h2" id="what-title">لماذا تستخدم الفرق LUZ</h2>
       <p class="landing-lead">للمواقع والأدوات التي يجب أن تعمل للجميع، على أي جهاز، لسنوات، دون إطار عمل تضطر إلى مواكبته.</p>
 
-      <ul class="cai-landing-feature-grid landing-points">
+      <ul class="luz-landing-feature-grid landing-points">
         <li class="o-media">
-          <span class="cai-avatar cai-avatar--md" aria-hidden="true">01</span>
+          <span class="luz-avatar luz-avatar--md" aria-hidden="true">01</span>
           <div class="o-media__body">
             <h3 class="landing-point__title">يعمل دون JavaScript</h3>
-            <p class="u-text-muted">المكونات عناصر HTML أصلية: <code class="cai-code-inline">&lt;dialog&gt;</code> و<code class="cai-code-inline">&lt;details&gt;</code> وعناصر التحكم في النماذج والنوافذ المنبثقة. ولا تضيف JavaScript إلا لمسات تحسين، لذلك تظل الصفحات تعمل حين يتعطل نص برمجي.</p>
+            <p class="u-text-muted">المكونات عناصر HTML أصلية: <code class="luz-code-inline">&lt;dialog&gt;</code> و<code class="luz-code-inline">&lt;details&gt;</code> وعناصر التحكم في النماذج والنوافذ المنبثقة. ولا تضيف JavaScript إلا لمسات تحسين، لذلك تظل الصفحات تعمل حين يتعطل نص برمجي.</p>
           </div>
         </li>
         <li class="o-media">
-          <span class="cai-avatar cai-avatar--md" aria-hidden="true">02</span>
+          <span class="luz-avatar luz-avatar--md" aria-hidden="true">02</span>
           <div class="o-media__body">
             <h3 class="landing-point__title">مصمَّم لإمكانية الوصول</h3>
             <p class="u-text-muted">دعم لوحة المفاتيح، والتركيز المرئي، وتباين النص بنسبة 4.5:1، ووضع التباين العالي جزء من كل مكوّن، وتُشغَّل فحوص آلية مع كل تغيير. ويذكر <a href="../docs/accessibility/" hreflang="en">بيان إمكانية الوصول</a>، باللغة الإنجليزية، ما لم يُختبر بعد، بما في ذلك قارئات الشاشة.</p>
           </div>
         </li>
         <li class="o-media">
-          <span class="cai-avatar cai-avatar--md" aria-hidden="true">03</span>
+          <span class="luz-avatar luz-avatar--md" aria-hidden="true">03</span>
           <div class="o-media__body">
             <h3 class="landing-point__title">لا شيء لتثبيته كي تجربه</h3>
             <p class="u-text-muted">CSS عادي ووحدات ES صغيرة من شبكة CDN أو من npm. بلا معالج مسبق، وبلا مترجم، وبلا اعتماديات: ما تقرؤه في الملفات هو ما يشغّله المتصفح.</p>
@@ -185,33 +185,33 @@
     </section>
 
     <!-- ====================== SEE IT ====================== -->
-    <section class="cai-site-section landing-wrap" id="see" aria-labelledby="see-title">
+    <section class="luz-site-section landing-wrap" id="see" aria-labelledby="see-title">
       <h2 class="landing-h2" id="see-title">شاهده وهو يعمل</h2>
       <p class="landing-lead">هذا هو الإعداد كله. والنتيجة أدناه يرسمها CSS نفسه.</p>
 
       <div class="landing-snippet">
         <div class="landing-snippet__bar">
           <span class="landing-eyebrow">الإعداد كله</span>
-          <button class="cai-copy-btn" type="button" data-copy-from="snip-what" aria-label="نسخ مقتطف الإعداد كله">نسخ</button>
+          <button class="luz-copy-btn" type="button" data-copy-from="snip-what" aria-label="نسخ مقتطف الإعداد كله">نسخ</button>
         </div>
-        <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="مقتطف الإعداد كله"><code id="snip-what">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/core@3.0.0/dist/cai.min.css&quot;&gt;
+        <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="مقتطف الإعداد كله"><code id="snip-what">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css&quot;&gt;
 
-&lt;button class=&quot;cai-btn cai-btn--primary&quot;&gt;حفظ التغييرات&lt;/button&gt;
-&lt;span class=&quot;cai-tag cai-tag--green cai-tag--dot&quot;&gt;منشور&lt;/span&gt;</code></pre>
+&lt;button class=&quot;luz-btn luz-btn--primary&quot;&gt;حفظ التغييرات&lt;/button&gt;
+&lt;span class=&quot;luz-tag luz-tag--green luz-tag--dot&quot;&gt;منشور&lt;/span&gt;</code></pre>
       </div>
 
       <div class="landing-render">
         <p class="landing-eyebrow">النتيجة</p>
         <div class="o-row">
-          <button class="cai-btn cai-btn--primary" type="button">حفظ التغييرات</button>
-          <span class="cai-tag cai-tag--green cai-tag--dot">منشور</span>
+          <button class="luz-btn luz-btn--primary" type="button">حفظ التغييرات</button>
+          <span class="luz-tag luz-tag--green luz-tag--dot">منشور</span>
         </div>
       </div>
     </section>
 
     <!-- ====================== ADOPT ====================== -->
-    <section class="cai-site-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
+    <section class="luz-site-section landing-wrap" id="adopt" aria-labelledby="adopt-title">
       <h2 class="landing-h2" id="adopt-title">اعتمده طبقةً تلو الأخرى</h2>
       <p class="landing-lead">اتجاه واحد: كل حزمة تحتاج إلى ما تحتها ولا شيء مما فوقها، وتثبيتها يجلب ما تحتها. اختر المستوى الذي تحتاجه وتوقف عنده.</p>
 
@@ -220,7 +220,7 @@
         <article class="landing-level" aria-labelledby="level-1-title">
           <div class="landing-level__intro">
             <h3 class="landing-level__title" id="level-1-title"><span class="landing-eyebrow">المستوى 1</span> رموز التصميم فقط</h3>
-            <span class="cai-tag cai-tag--gray">مستقل</span>
+            <span class="luz-tag luz-tag--gray">مستقل</span>
             <p>اختره إذا كانت لديك مكونات أو إطار عمل بالفعل ولا تريد إلا قيمًا متسقة وأوضاعًا للألوان.</p>
           </div>
           <div class="landing-level__body">
@@ -234,7 +234,7 @@
             </ul>
           </div>
           <div class="landing-level__actions">
-            <a class="cai-btn cai-btn--outline" href="../docs/get-started/#level-1-tokens-only" hreflang="en">ثبّت المستوى 1</a>
+            <a class="luz-btn luz-btn--outline" href="../docs/get-started/#level-1-tokens-only" hreflang="en">ثبّت المستوى 1</a>
             <a href="../docs/tokens/" hreflang="en">اعرض رموز التصميم</a>
           </div>
         </article>
@@ -242,7 +242,7 @@
         <article class="landing-level" aria-labelledby="level-2-title">
           <div class="landing-level__intro">
             <h3 class="landing-level__title" id="level-2-title"><span class="landing-eyebrow">المستوى 2</span> Tokens + Core</h3>
-            <span class="cai-tag cai-tag--gray">يتطلب tokens</span>
+            <span class="luz-tag luz-tag--gray">يتطلب tokens</span>
             <p>اختره إذا كنت تبني صفحات أو تطبيقًا وتستخدم تخطيط صفحاتك الخاص.</p>
           </div>
           <div class="landing-level__body">
@@ -252,11 +252,11 @@
               <li><span data-count="objects">7</span> كائنات تخطيط، ومجموعة صغيرة من الأدوات المساعدة، وأنماط عناصر HTML المجردة</li>
               <li>JavaScript اختيارية لعلامات التبويب ومربعات الحوار وأزرار النسخ والمشغلات؛ وكل صفحة تعمل بدونها</li>
               <li>أنماط للطباعة وتخطيطات من اليمين إلى اليسار، بلا ملف إضافي</li>
-              <li>كل شيء في <a href="../docs/get-started/layers/" hreflang="en">طبقة تتالٍ</a> واحدة، <code class="cai-code-inline">cai</code>: أنماط CSS الخاصة بك تتقدّم دون <code class="cai-code-inline">!important</code></li>
+              <li>كل شيء في <a href="../docs/get-started/layers/" hreflang="en">طبقة تتالٍ</a> واحدة، <code class="luz-code-inline">luz</code>: أنماط CSS الخاصة بك تتقدّم دون <code class="luz-code-inline">!important</code></li>
             </ul>
           </div>
           <div class="landing-level__actions">
-            <a class="cai-btn cai-btn--outline" href="../docs/get-started/#level-2-tokens-and-core" hreflang="en">ثبّت المستوى 2</a>
+            <a class="luz-btn luz-btn--outline" href="../docs/get-started/#level-2-tokens-and-core" hreflang="en">ثبّت المستوى 2</a>
             <a href="../docs/components/" hreflang="en">اعرض المكونات</a>
           </div>
         </article>
@@ -264,7 +264,7 @@
         <article class="landing-level" aria-labelledby="level-3-title">
           <div class="landing-level__intro">
             <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">المستوى 3</span> Tokens + Core + Site</h3>
-            <span class="cai-tag cai-tag--gray">يتطلب core وtokens</span>
+            <span class="luz-tag luz-tag--gray">يتطلب core وtokens</span>
             <p>اختره إذا كنت تبني مواقع كاملة وتريد هيكل الصفحة والترويسة والتذييل والبحث. هذه الصفحة مبنية بهذا المستوى.</p>
           </div>
           <div class="landing-level__body">
@@ -277,7 +277,7 @@
             </ul>
           </div>
           <div class="landing-level__actions">
-            <a class="cai-btn cai-btn--outline" href="../docs/get-started/#level-3-tokens-core-and-site" hreflang="en">ثبّت المستوى 3</a>
+            <a class="luz-btn luz-btn--outline" href="../docs/get-started/#level-3-tokens-core-and-site" hreflang="en">ثبّت المستوى 3</a>
             <a href="../docs/site/" hreflang="en">اعرض الأنماط</a>
           </div>
         </article>
@@ -288,18 +288,17 @@
         <h3 class="landing-next__title" id="next-title">التالي: حزمة لنوع موقعك</h3>
         <p>تُبنى فوق site حزم لنوع واحد من المواقع. ثبّت الحزمة العليا: فهي تجلب كل ما تحتها.</p>
         <ul class="landing-next__list" aria-labelledby="next-title">
-          <li><a href="../docs/cms/" hreflang="en"><code class="cai-code-inline">cms</code></a>: مدونة أو صحيفة أو أي نظام لإدارة المحتوى، بأي تقنية. ترويسة المقال وقوائم التدوينات وفهرس المقال وبطاقة الكاتب.</li>
-          <li><a href="../docs/landing/" hreflang="en"><code class="cai-code-inline">landing</code></a>: صفحة هبوط. شبكة الميزات والمتحدثون ودعوات الإجراء.</li>
-          <li><code class="cai-code-inline">wordpress</code>: موقع على ووردبريس. حزمة cms مهيأة لمحرر الكتل، وملف <code class="cai-code-inline">theme.json</code> مولَّد من الرموز، وقوالب صفحات أساسية للنسخ. <span class="cai-tag cai-tag--gray">قريبًا</span></li>
+          <li><a href="../docs/cms/" hreflang="en"><code class="luz-code-inline">cms</code></a>: مدونة أو صحيفة أو أي نظام لإدارة المحتوى، بأي تقنية. ترويسة المقال وقوائم التدوينات وفهرس المقال وبطاقة الكاتب.</li>
+          <li><a href="../docs/landing/" hreflang="en"><code class="luz-code-inline">landing</code></a>: صفحة هبوط. شبكة الميزات والمتحدثون ودعوات الإجراء.</li>
         </ul>
-        <pre class="cai-code-block landing-next__tree" dir="ltr" tabindex="0" role="region" aria-label="شجرة الحزم"><code>tokens → core → site ─┬─ cms ── wordpress
+        <pre class="luz-code-block landing-next__tree" dir="ltr" tabindex="0" role="region" aria-label="شجرة الحزم"><code>tokens → core → site ─┬─ cms
                       └─ landing</code></pre>
       </div>
     </section>
 
     <!-- ====================== FIT ====================== -->
-    <section class="cai-site-section landing-wrap" id="fit" aria-labelledby="fit-title">
-      <h2 class="landing-h2" id="fit-title">متى يناسبك CAI</h2>
+    <section class="luz-site-section landing-wrap" id="fit" aria-labelledby="fit-title">
+      <h2 class="landing-h2" id="fit-title">متى يناسبك LUZ</h2>
       <div class="landing-fit">
         <div>
           <h3 class="landing-subtitle">يناسبك</h3>
@@ -313,39 +312,39 @@
           <h3 class="landing-subtitle">لا يناسبك</h3>
           <ul class="landing-fit__list">
             <li>تحتاج إلى مكونات React أو Vue جاهزة.</li>
-            <li>تحتاج إلى جدول بيانات متقدم أو رسوم بيانية أو أداة لاختيار نطاق تواريخ: لا يوفّر CAI أيًّا منها.</li>
-            <li>تحتاج إلى واجهة برمجية مستقرة اليوم: CAI في مرحلة تجريبية، وقد تتغير الأسماء.</li>
+            <li>تحتاج إلى جدول بيانات متقدم أو رسوم بيانية أو أداة لاختيار نطاق تواريخ: لا يوفّر LUZ أيًّا منها.</li>
+            <li>تحتاج إلى واجهة برمجية مستقرة اليوم: LUZ في مرحلة تجريبية، وقد تتغير الأسماء.</li>
           </ul>
         </div>
       </div>
     </section>
 
     <!-- ====================== CLOSING CTA ====================== -->
-    <section class="cai-site-section landing-wrap" id="start" aria-labelledby="cta-title">
+    <section class="luz-site-section landing-wrap" id="start" aria-labelledby="cta-title">
       <h2 class="landing-h2" id="cta-title">ابدأ بوسم link واحد لكل طبقة</h2>
-      <p class="landing-lead">اختر مستوى، وانسخ المقتطف، وانشر. ثبّت رقم إصدار محددًا ما دام CAI في مرحلة تجريبية.</p>
-      <div class="cai-site-actions">
-        <a class="cai-btn cai-btn--primary" href="#adopt">ابدأ الآن</a>
-        <a class="cai-btn cai-btn--outline" href="../docs/" hreflang="en">اقرأ التوثيق، باللغة الإنجليزية</a>
+      <p class="landing-lead">اختر مستوى، وانسخ المقتطف، وانشر. ثبّت رقم إصدار محددًا ما دام LUZ في مرحلة تجريبية.</p>
+      <div class="luz-site-actions">
+        <a class="luz-btn luz-btn--primary" href="#adopt">ابدأ الآن</a>
+        <a class="luz-btn luz-btn--outline" href="../docs/" hreflang="en">اقرأ التوثيق، باللغة الإنجليزية</a>
       </div>
     </section>
   </main>
 
   <footer class="landing-wrap">
-    <div class="cai-site-footer">
-      <p class="u-text-muted">نظام تصميم CAI · الإصدار v3.0.0 · تجريبي · ترخيص MIT</p>
-      <nav class="cai-site-actions" aria-label="روابط المشروع">
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../docs/" hreflang="en">التوثيق</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../docs/site/" hreflang="en">Site</a>
+    <div class="luz-site-footer">
+      <p class="u-text-muted">نظام تصميم LUZ · الإصدار v0.1.0 · تجريبي · ترخيص MIT</p>
+      <nav class="luz-site-actions" aria-label="روابط المشروع">
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../docs/" hreflang="en">التوثيق</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../docs/site/" hreflang="en">Site</a>
       </nav>
-      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
-        <legend class="cai-mode-switcher__label">وضع الألوان</legend>
-        <button class="cai-mode-cycle" type="button" aria-label="تغيير وضع الألوان"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
-        <span class="cai-mode-cycle__status" role="status"></span>
-        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>فاتح</label>
-        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>داكن</label>
-        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>تباين عالٍ</label>
+      <fieldset class="luz-mode-switcher luz-mode-switcher--cycle site-modes">
+        <legend class="luz-mode-switcher__label">وضع الألوان</legend>
+        <button class="luz-mode-cycle" type="button" aria-label="تغيير وضع الألوان"><svg class="luz-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="luz-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="luz-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="luz-mode-cycle__status" role="status"></span>
+        <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light" checked><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>فاتح</label>
+        <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>داكن</label>
+        <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>تباين عالٍ</label>
       </fieldset>
     </div>
   </footer>

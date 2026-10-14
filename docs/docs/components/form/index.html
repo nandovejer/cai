@@ -4,154 +4,154 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Form fields – Components – CAI documentation</title>
+  <title>Form fields – Components – LUZ documentation</title>
   <meta name="description" content="Collect input with native fields, choices and pickers, each with a visible label, a hint and an error.">
-  <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
-  <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <link rel="icon" href="../../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-AGCTJ7l9.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-BJm9YLwG.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DL44kyQO.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CSpLyGNe.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWTXsvj2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BFxxRBJR.css">
+  <script type="module" crossorigin src="../../../assets/site-header-B6MN3Cx-.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BA0nbESF.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-B6t6HMAm.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CeD1sUH7.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BP2pzL6X.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-B7a4Hh2f.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
        Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
-  <cai-site-search>
-  <dialog class="cai-modal cai-site-search" id="cai-search" aria-labelledby="cai-search-title"
-          data-cai-search data-cai-search-src="../../../docs/search-index.json"
-          data-cai-label-results="{n} results"
-          data-cai-label-result="1 result"
-          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
-          data-cai-label-none="No results for “{query}”. Check the spelling or try a shorter word."
-          data-cai-label-loading="Loading the search index…"
-          data-cai-label-error="Search is not available right now.">
-    <search class="cai-site-search__body">
-      <div class="cai-site-search__head">
-        <h2 class="cai-site-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
-        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-site-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+  <luz-site-search>
+  <dialog class="luz-modal luz-site-search" id="luz-search" aria-labelledby="luz-search-title"
+          data-luz-search data-luz-search-src="../../../docs/search-index.json"
+          data-luz-label-results="{n} results"
+          data-luz-label-result="1 result"
+          data-luz-label-capped="{shown} of {n} results. Type more to narrow."
+          data-luz-label-none="No results for “{query}”. Check the spelling or try a shorter word."
+          data-luz-label-loading="Loading the search index…"
+          data-luz-label-error="Search is not available right now.">
+    <search class="luz-site-search__body">
+      <div class="luz-site-search__head">
+        <h2 class="luz-site-search__title" id="luz-search-title"><label for="luz-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="luz-btn luz-btn--ghost luz-site-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
       </div>
-      <div class="cai-site-search__field">
+      <div class="luz-site-search__field">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+        <input class="luz-input" id="luz-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="luz-search-hint">
       </div>
-      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Arrow keys move through them.</p>
-      <p class="cai-site-search__status" role="status"></p>
-      <div class="cai-site-search__results" data-cai-search-results>
-        <div data-cai-search-show="idle">
+      <p class="luz-field__helper" id="luz-search-hint">Results update as you type. Arrow keys move through them.</p>
+      <p class="luz-site-search__status" role="status"></p>
+      <div class="luz-site-search__results" data-luz-search-results>
+        <div data-luz-search-show="idle">
           <h3>Popular</h3>
           <ul lang="en">
-            <li><a href="../../../docs/get-started/"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
+            <li><a href="../../../docs/get-started/"><span>Install LUZ</span><span>, </span><span>Get started</span></a></li>
             <li><a href="../../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
             <li><a href="../../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
             <li><a href="../../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
             <li><a href="../../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
           </ul>
         </div>
-        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages" lang="en"></ul></div>
-        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
-        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
+        <div hidden><h3>Pages</h3><ul data-luz-search-list="pages" lang="en"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-luz-search-list="sections" lang="en"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-luz-search-list="elements" lang="en"></ul></div>
       </div>
-      <p class="cai-site-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
+      <p class="luz-site-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
     </search>
   </dialog>
-  </cai-site-search>
-  <a class="cai-site-skip-link" href="#main-content">Skip to main content</a>
+  </luz-site-search>
+  <a class="luz-site-skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
-      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+      <button class="luz-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
         <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
           <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
       <nav class="site-header__nav" aria-label="Site">
         <a href="../../../">Home</a>
         <a href="../../../docs/" aria-current="true">Docs</a>
-        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+        <a class="site-header__github" href="https://github.com/nandovejer/luz"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
-      <button class="cai-site-search-trigger cai-site-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
-        <svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="cai-site-search-trigger__label">Search docs…</span>
-        <kbd class="cai-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      <a class="site-header__az" href="../../../docs/a-z/" data-luz-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
+      <button class="luz-site-search-trigger luz-site-search-trigger--compact site-header__search" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+        <svg class="luz-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="luz-site-search-trigger__label">Search docs…</span>
+        <kbd class="luz-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
       </button>
       
     </div>
   </header>
 
-  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
-    <div class="cai-sidebar__section page-nav__site">
-      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+  <nav class="luz-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
+    <div class="luz-sidebar__section page-nav__site">
+      <span class="luz-sidebar__section-label" id="nav-site">Site</span>
       <ul aria-labelledby="nav-site">
-        <li><a class="cai-sidebar__link" href="../../../">Home</a></li>
-        <li><a class="cai-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
-        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+        <li><a class="luz-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="luz-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="luz-sidebar__link" href="https://github.com/nandovejer/luz">GitHub</a></li>
       </ul>
     </div>
     <ul class="docs-nav">
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/tokens/">Tokens</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/components/">Components</a>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/tokens/">Tokens</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/components/">Components</a>
         <ul class="docs-nav__pages">
-          <li><a class="cai-sidebar__link" href="../../../docs/components/accordion/">Accordion</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/alert/">Alert</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/avatar/">Avatar</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/breadcrumb/">Breadcrumb</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/button/">Button</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/card/">Card</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/code/">Code</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/mode-switcher/">Color mode switcher</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/copy-button/">Copy button</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/dropdown/">Dropdown</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/figure/">Figure</a></li>
-          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/components/form/">Form fields</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/icon-grid/">Icon grid</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/meta/">Meta line</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/meter/">Meter</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/modal/">Modal</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/pagination/">Pagination</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/player/">Player</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/progress/">Progress</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/prose/">Prose</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/select/">Select</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/sidebar/">Sidebar</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/table/">Table</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/tabs/">Tabs</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/tag/">Tag and badge</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/toast/">Toast</a></li>
-          <li><a class="cai-sidebar__link" href="../../../docs/components/tooltip/">Tooltip</a></li>
-          <li class="docs-nav__group"><span class="cai-sidebar__section-label" id="nav-helpers">Helpers</span>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/accordion/">Accordion</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/alert/">Alert</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/avatar/">Avatar</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/breadcrumb/">Breadcrumb</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/button/">Button</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/card/">Card</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/code/">Code</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/mode-switcher/">Color mode switcher</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/copy-button/">Copy button</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/dropdown/">Dropdown</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/figure/">Figure</a></li>
+          <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/components/form/">Form fields</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/icon-grid/">Icon grid</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/meta/">Meta line</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/meter/">Meter</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/modal/">Modal</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/pagination/">Pagination</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/player/">Player</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/progress/">Progress</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/prose/">Prose</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/select/">Select</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/sidebar/">Sidebar</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/table/">Table</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/tabs/">Tabs</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/tag/">Tag and badge</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/toast/">Toast</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/components/tooltip/">Tooltip</a></li>
+          <li class="docs-nav__group"><span class="luz-sidebar__section-label" id="nav-helpers">Helpers</span>
             <ul class="docs-nav__pages" aria-labelledby="nav-helpers">
-              <li><a class="cai-sidebar__link" href="../../../docs/components/layout/">Layout objects</a></li>
-              <li><a class="cai-sidebar__link" href="../../../docs/components/utilities/">Utility classes</a></li>
-              <li><a class="cai-sidebar__link" href="../../../docs/components/keyframes/">Keyframes</a></li>
+              <li><a class="luz-sidebar__link" href="../../../docs/components/layout/">Layout objects</a></li>
+              <li><a class="luz-sidebar__link" href="../../../docs/components/utilities/">Utility classes</a></li>
+              <li><a class="luz-sidebar__link" href="../../../docs/components/keyframes/">Keyframes</a></li>
             </ul>
           </li>
         </ul>
       </li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/site/">Site</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/landing/">Landing</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/cms/">CMS</a></li>
-      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/site/">Site</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/landing/">Landing</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/cms/">CMS</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
 
   <main class="o-main docs-main" id="main-content" tabindex="-1">
   <div class="docs-page-head">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
-      <ol class="cai-breadcrumb">
-        <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
-        <li><a class="cai-breadcrumb__item" href="../../../docs/components/">Components</a></li>
-        <li><span class="cai-breadcrumb__item" aria-current="page">Form fields</span></li>
+      <ol class="luz-breadcrumb">
+        <li><a class="luz-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="luz-breadcrumb__item" href="../../../docs/components/">Components</a></li>
+        <li><span class="luz-breadcrumb__item" aria-current="page">Form fields</span></li>
       </ol>
     </nav>
     <div class="docs-page-head__title">
@@ -164,25 +164,25 @@
     <details class="docs-onpage__fold">
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#example">Example</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#code">Code</a>
           <ul class="docs-onpage__sub">
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
           </ul>
         </li>
-        <li><a class="cai-sidebar__link docs-onpage__link" href="#design">Design</a>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#design">Design</a>
           <ul class="docs-onpage__sub">
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
-            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
           </ul>
         </li>
       </ul>
@@ -196,106 +196,106 @@
             <div class="o-grid docs-cols-3">
               <div>
                 <h3 class="docs-subhead">Text</h3>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-name">Project name</label>
-                  <input class="cai-input" id="f-name" type="text" placeholder="My project" aria-describedby="f-name-help">
-                  <div class="cai-field__helper" id="f-name-help">Shown on the dashboard.</div>
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-name">Project name</label>
+                  <input class="luz-input" id="f-name" type="text" placeholder="My project" aria-describedby="f-name-help">
+                  <div class="luz-field__helper" id="f-name-help">Shown on the dashboard.</div>
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label cai-field__label--required" for="f-email">Email</label>
-                  <input class="cai-input" id="f-email" type="email" placeholder="jane@example.com" required autocomplete="off">
+                <div class="luz-field">
+                  <label class="luz-field__label luz-field__label--required" for="f-email">Email</label>
+                  <input class="luz-input" id="f-email" type="email" placeholder="jane@example.com" required autocomplete="off">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-slug">Slug</label>
-                  <input class="cai-input cai-input--error" id="f-slug" type="text" value="my project" aria-invalid="true" aria-describedby="f-slug-error">
-                  <div class="cai-field__error" id="f-slug-error"><span class="u-sr-only">Error: </span>Use letters, numbers and dashes only.</div>
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-slug">Slug</label>
+                  <input class="luz-input luz-input--error" id="f-slug" type="text" value="my project" aria-invalid="true" aria-describedby="f-slug-error">
+                  <div class="luz-field__error" id="f-slug-error"><span class="u-sr-only">Error: </span>Use letters, numbers and dashes only.</div>
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-disabled">Disabled</label>
-                  <input class="cai-input" id="f-disabled" type="text" value="Not editable" disabled>
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-disabled">Disabled</label>
+                  <input class="luz-input" id="f-disabled" type="text" value="Not editable" disabled>
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-readonly">Read-only</label>
-                  <input class="cai-input" id="f-readonly" type="text" value="cai-7f3a" readonly>
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-readonly">Read-only</label>
+                  <input class="luz-input" id="f-readonly" type="text" value="luz-7f3a" readonly>
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-notes">Notes</label>
-                  <textarea class="cai-input cai-input--textarea" id="f-notes" rows="3" placeholder="Anything else?"></textarea>
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-notes">Notes</label>
+                  <textarea class="luz-input luz-input--textarea" id="f-notes" rows="3" placeholder="Anything else?"></textarea>
                 </div>
               </div>
 
               <div>
                 <h3 class="docs-subhead">Choice</h3>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-role">Role</label>
-                  <select class="cai-select" id="f-role">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-role">Role</label>
+                  <select class="luz-select" id="f-role">
                     <option value="">Select a role</option>
                     <option value="dev">Developer</option>
                     <option value="design">Designer</option>
                     <option value="pm">Product manager</option>
                   </select>
                 </div>
-                <div class="cai-field">
-                  <div class="cai-field__label" id="f-notify-label">Notifications</div>
-                  <div class="cai-check-group" role="group" aria-labelledby="f-notify-label">
-                    <div class="cai-check-item"><input type="checkbox" id="f-check-1" checked><label for="f-check-1">Email</label></div>
-                    <div class="cai-check-item"><input type="checkbox" id="f-check-2"><label for="f-check-2">Push</label></div>
-                    <div class="cai-check-item"><input type="checkbox" id="f-check-3" disabled><label for="f-check-3">SMS (disabled)</label></div>
+                <div class="luz-field">
+                  <div class="luz-field__label" id="f-notify-label">Notifications</div>
+                  <div class="luz-check-group" role="group" aria-labelledby="f-notify-label">
+                    <div class="luz-check-item"><input type="checkbox" id="f-check-1" checked><label for="f-check-1">Email</label></div>
+                    <div class="luz-check-item"><input type="checkbox" id="f-check-2"><label for="f-check-2">Push</label></div>
+                    <div class="luz-check-item"><input type="checkbox" id="f-check-3" disabled><label for="f-check-3">SMS (disabled)</label></div>
                   </div>
                 </div>
-                <div class="cai-field">
-                  <fieldset class="cai-fieldset">
+                <div class="luz-field">
+                  <fieldset class="luz-fieldset">
                     <legend>Plan</legend>
-                    <div class="cai-check-group">
-                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-1" checked><label for="f-radio-1">Free</label></div>
-                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-2"><label for="f-radio-2">Team</label></div>
-                      <div class="cai-check-item"><input type="radio" name="f-plan" id="f-radio-3"><label for="f-radio-3">Enterprise</label></div>
+                    <div class="luz-check-group">
+                      <div class="luz-check-item"><input type="radio" name="f-plan" id="f-radio-1" checked><label for="f-radio-1">Free</label></div>
+                      <div class="luz-check-item"><input type="radio" name="f-plan" id="f-radio-2"><label for="f-radio-2">Team</label></div>
+                      <div class="luz-check-item"><input type="radio" name="f-plan" id="f-radio-3"><label for="f-radio-3">Enterprise</label></div>
                     </div>
                   </fieldset>
                 </div>
                 <div class="o-stack">
-                  <label class="cai-toggle">
-                    <input class="cai-toggle__input" type="checkbox" role="switch" checked>
-                    <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
-                    <span class="cai-toggle__label">Public profile</span>
+                  <label class="luz-toggle">
+                    <input class="luz-toggle__input" type="checkbox" role="switch" checked>
+                    <span class="luz-toggle__track" aria-hidden="true"><span class="luz-toggle__thumb"></span></span>
+                    <span class="luz-toggle__label">Public profile</span>
                   </label>
-                  <label class="cai-toggle">
-                    <input class="cai-toggle__input" type="checkbox" role="switch">
-                    <span class="cai-toggle__track" aria-hidden="true"><span class="cai-toggle__thumb"></span></span>
-                    <span class="cai-toggle__label">Weekly digest</span>
+                  <label class="luz-toggle">
+                    <input class="luz-toggle__input" type="checkbox" role="switch">
+                    <span class="luz-toggle__track" aria-hidden="true"><span class="luz-toggle__thumb"></span></span>
+                    <span class="luz-toggle__label">Weekly digest</span>
                   </label>
                 </div>
               </div>
 
               <div>
                 <h3 class="docs-subhead">Pickers and values</h3>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-date">Date</label>
-                  <input class="cai-input" id="f-date" type="date">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-date">Date</label>
+                  <input class="luz-input" id="f-date" type="date">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-time">Time</label>
-                  <input class="cai-input" id="f-time" type="time">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-time">Time</label>
+                  <input class="luz-input" id="f-time" type="time">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-color">Color</label>
-                  <input class="cai-input" id="f-color" type="color" value="#0066cf">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-color">Color</label>
+                  <input class="luz-input" id="f-color" type="color" value="#0066cf">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-file">File</label>
-                  <input class="cai-input" id="f-file" type="file">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-file">File</label>
+                  <input class="luz-input" id="f-file" type="file">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-range">Volume <output class="cai-output" id="f-range-out" for="f-range">50</output></label>
-                  <input class="cai-input" id="f-range" type="range" min="0" max="100" value="50" data-output="f-range-out">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-range">Volume <output class="luz-output" id="f-range-out" for="f-range">50</output></label>
+                  <input class="luz-input" id="f-range" type="range" min="0" max="100" value="50" data-output="f-range-out">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-meter">Storage used, 6 of 10 GB</label>
-                  <meter class="cai-meter" id="f-meter" min="0" max="10" value="6">6 of 10 GB</meter>
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-meter">Storage used, 6 of 10 GB</label>
+                  <meter class="luz-meter" id="f-meter" min="0" max="10" value="6">6 of 10 GB</meter>
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-list">Browser</label>
-                  <input class="cai-input" id="f-list" list="f-browsers" placeholder="Start typing">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-list">Browser</label>
+                  <input class="luz-input" id="f-list" list="f-browsers" placeholder="Start typing">
                   <datalist id="f-browsers">
                     <option value="Chrome"></option>
                     <option value="Edge"></option>
@@ -309,37 +309,37 @@
             <details>
               <summary>More input types (8)</summary>
               <div class="o-grid docs-cols-4">
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-number">number</label>
-                  <input class="cai-input" id="f-number" type="number" value="3" min="0" max="10">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-number">number</label>
+                  <input class="luz-input" id="f-number" type="number" value="3" min="0" max="10">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-password">password</label>
-                  <input class="cai-input" id="f-password" type="password" value="secret" autocomplete="off">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-password">password</label>
+                  <input class="luz-input" id="f-password" type="password" value="secret" autocomplete="off">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-tel">tel</label>
-                  <input class="cai-input" id="f-tel" type="tel" placeholder="+34 600 000 000" autocomplete="off">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-tel">tel</label>
+                  <input class="luz-input" id="f-tel" type="tel" placeholder="+34 600 000 000" autocomplete="off">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-url">url</label>
-                  <input class="cai-input" id="f-url" type="url" placeholder="https://example.com" autocomplete="off">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-url">url</label>
+                  <input class="luz-input" id="f-url" type="url" placeholder="https://example.com" autocomplete="off">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-search">search</label>
-                  <input class="cai-input" id="f-search" type="search" placeholder="Search">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-search">search</label>
+                  <input class="luz-input" id="f-search" type="search" placeholder="Search">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-datetime">datetime-local</label>
-                  <input class="cai-input" id="f-datetime" type="datetime-local">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-datetime">datetime-local</label>
+                  <input class="luz-input" id="f-datetime" type="datetime-local">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-month">month</label>
-                  <input class="cai-input" id="f-month" type="month" placeholder="YYYY-MM">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-month">month</label>
+                  <input class="luz-input" id="f-month" type="month" placeholder="YYYY-MM">
                 </div>
-                <div class="cai-field">
-                  <label class="cai-field__label" for="f-week">week</label>
-                  <input class="cai-input" id="f-week" type="week" placeholder="YYYY-Www">
+                <div class="luz-field">
+                  <label class="luz-field__label" for="f-week">week</label>
+                  <input class="luz-input" id="f-week" type="week" placeholder="YYYY-Www">
                 </div>
               </div>
             </details>
@@ -347,81 +347,81 @@
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
-          <nav class="cai-tabs docs-view-tabs" aria-label="Form fields documentation">
-            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
-            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Form fields documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
-          <div class="cai-tabpanel docs-view" id="code-panel">
+          <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-field" aria-label="Copy the text field with a hint markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-field" aria-label="Copy the text field with a hint markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Text field with a hint markup"><code id="code-field">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;project-name&quot;&gt;Project name&lt;/label&gt;
-  &lt;input class=&quot;cai-input&quot; id=&quot;project-name&quot; type=&quot;text&quot; aria-describedby=&quot;project-name-hint&quot;&gt;
-  &lt;div class=&quot;cai-field__helper&quot; id=&quot;project-name-hint&quot;&gt;Shown on the dashboard.&lt;/div&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Text field with a hint markup"><code id="code-field">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;project-name&quot;&gt;Project name&lt;/label&gt;
+  &lt;input class=&quot;luz-input&quot; id=&quot;project-name&quot; type=&quot;text&quot; aria-describedby=&quot;project-name-hint&quot;&gt;
+  &lt;div class=&quot;luz-field__helper&quot; id=&quot;project-name-hint&quot;&gt;Shown on the dashboard.&lt;/div&gt;
 &lt;/div&gt;</code></pre>
             </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-field-error" aria-label="Copy the field with an error markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-field-error" aria-label="Copy the field with an error markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Field with an error markup"><code id="code-field-error">&lt;div class=&quot;cai-field&quot;&gt;
-  &lt;label class=&quot;cai-field__label&quot; for=&quot;slug&quot;&gt;Slug&lt;/label&gt;
-  &lt;input class=&quot;cai-input cai-input--error&quot; id=&quot;slug&quot; type=&quot;text&quot; aria-invalid=&quot;true&quot; aria-describedby=&quot;slug-error&quot;&gt;
-  &lt;div class=&quot;cai-field__error&quot; id=&quot;slug-error&quot;&gt;&lt;span class=&quot;u-sr-only&quot;&gt;Error: &lt;/span&gt;Use letters, numbers and dashes only.&lt;/div&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Field with an error markup"><code id="code-field-error">&lt;div class=&quot;luz-field&quot;&gt;
+  &lt;label class=&quot;luz-field__label&quot; for=&quot;slug&quot;&gt;Slug&lt;/label&gt;
+  &lt;input class=&quot;luz-input luz-input--error&quot; id=&quot;slug&quot; type=&quot;text&quot; aria-invalid=&quot;true&quot; aria-describedby=&quot;slug-error&quot;&gt;
+  &lt;div class=&quot;luz-field__error&quot; id=&quot;slug-error&quot;&gt;&lt;span class=&quot;u-sr-only&quot;&gt;Error: &lt;/span&gt;Use letters, numbers and dashes only.&lt;/div&gt;
 &lt;/div&gt;</code></pre>
             </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-radios" aria-label="Copy the radio group markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-radios" aria-label="Copy the radio group markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Radio group markup"><code id="code-radios">&lt;fieldset class=&quot;cai-fieldset&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Radio group markup"><code id="code-radios">&lt;fieldset class=&quot;luz-fieldset&quot;&gt;
   &lt;legend&gt;Plan&lt;/legend&gt;
-  &lt;div class=&quot;cai-check-group&quot;&gt;
-    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;plan&quot; id=&quot;plan-free&quot; checked&gt;&lt;label for=&quot;plan-free&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;
-    &lt;div class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;plan&quot; id=&quot;plan-team&quot;&gt;&lt;label for=&quot;plan-team&quot;&gt;Team&lt;/label&gt;&lt;/div&gt;
+  &lt;div class=&quot;luz-check-group&quot;&gt;
+    &lt;div class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;plan&quot; id=&quot;plan-free&quot; checked&gt;&lt;label for=&quot;plan-free&quot;&gt;Free&lt;/label&gt;&lt;/div&gt;
+    &lt;div class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;plan&quot; id=&quot;plan-team&quot;&gt;&lt;label for=&quot;plan-team&quot;&gt;Team&lt;/label&gt;&lt;/div&gt;
   &lt;/div&gt;
 &lt;/fieldset&gt;</code></pre>
             </div>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="cai-copy-btn" type="button" data-copy-from="code-switch" aria-label="Copy the switch markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-switch" aria-label="Copy the switch markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Switch markup"><code id="code-switch">&lt;label class=&quot;cai-toggle&quot;&gt;
-  &lt;input class=&quot;cai-toggle__input&quot; type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;
-  &lt;span class=&quot;cai-toggle__track&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;cai-toggle__thumb&quot;&gt;&lt;/span&gt;&lt;/span&gt;
-  &lt;span class=&quot;cai-toggle__label&quot;&gt;Weekly digest&lt;/span&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Switch markup"><code id="code-switch">&lt;label class=&quot;luz-toggle&quot;&gt;
+  &lt;input class=&quot;luz-toggle__input&quot; type=&quot;checkbox&quot; role=&quot;switch&quot;&gt;
+  &lt;span class=&quot;luz-toggle__track&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;luz-toggle__thumb&quot;&gt;&lt;/span&gt;&lt;/span&gt;
+  &lt;span class=&quot;luz-toggle__label&quot;&gt;Weekly digest&lt;/span&gt;
 &lt;/label&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>Every control is a native element with a CAI class. The state comes from native attributes.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Form classes and states" tabindex="0">
-              <table class="cai-table">
+            <p>Every control is a native element with a LUZ class. The state comes from native attributes.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Form classes and states" tabindex="0">
+              <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-field</code></div></td><td data-label="Effect"><div>Wraps one label, its control, its hint and its error</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-field__label</code></div></td><td data-label="Effect"><div>The visible label</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-field__label--required</code></div></td><td data-label="Effect"><div>Adds a red " *" after the label</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-field__helper</code></div></td><td data-label="Effect"><div>A hint under the control</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-field__error</code></div></td><td data-label="Effect"><div>An error under the control, in the danger colour</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-input</code></div></td><td data-label="Effect"><div>Text, email, number, date, time, colour, file and range inputs and <code>&lt;textarea&gt;</code>; 44 px high</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-input--error</code></div></td><td data-label="Effect"><div>A 2 px danger underline; pair it with <code>aria-invalid="true"</code></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-input--textarea</code></div></td><td data-label="Effect"><div>Auto height, at least 80 px, resizes vertically</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-select</code></div></td><td data-label="Effect"><div>A <code>&lt;select&gt;</code>, on its own page: <a href="../../../docs/components/select/">Select</a></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-check-group</code>, <code>.cai-check-item</code></div></td><td data-label="Effect"><div>A list of checkboxes or radios, each with its label</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-fieldset</code></div></td><td data-label="Effect"><div>A bordered group with an upper-case <code>&lt;legend&gt;</code></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-toggle</code></div></td><td data-label="Effect"><div>A switch: a checkbox with <code>role="switch"</code> drawn as a track and a thumb</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-meter</code></div></td><td data-label="Effect"><div>A <code>&lt;meter&gt;</code> bar, in the brand colour in every state: see <a href="../../../docs/components/meter/">Meter</a></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.cai-output</code></div></td><td data-label="Effect"><div>A computed value</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-field</code></div></td><td data-label="Effect"><div>Wraps one label, its control, its hint and its error</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-field__label</code></div></td><td data-label="Effect"><div>The visible label</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-field__label--required</code></div></td><td data-label="Effect"><div>Adds a red " *" after the label</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-field__helper</code></div></td><td data-label="Effect"><div>A hint under the control</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-field__error</code></div></td><td data-label="Effect"><div>An error under the control, in the danger colour</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-input</code></div></td><td data-label="Effect"><div>Text, email, number, date, time, colour, file and range inputs and <code>&lt;textarea&gt;</code>; 44 px high</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-input--error</code></div></td><td data-label="Effect"><div>A 2 px danger underline; pair it with <code>aria-invalid="true"</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-input--textarea</code></div></td><td data-label="Effect"><div>Auto height, at least 80 px, resizes vertically</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-select</code></div></td><td data-label="Effect"><div>A <code>&lt;select&gt;</code>, on its own page: <a href="../../../docs/components/select/">Select</a></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-check-group</code>, <code>.luz-check-item</code></div></td><td data-label="Effect"><div>A list of checkboxes or radios, each with its label</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-fieldset</code></div></td><td data-label="Effect"><div>A bordered group with an upper-case <code>&lt;legend&gt;</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-toggle</code></div></td><td data-label="Effect"><div>A switch: a checkbox with <code>role="switch"</code> drawn as a track and a thumb</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-meter</code></div></td><td data-label="Effect"><div>A <code>&lt;meter&gt;</code> bar, in the brand colour in every state: see <a href="../../../docs/components/meter/">Meter</a></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-output</code></div></td><td data-label="Effect"><div>A computed value</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>disabled</code>, <code>readonly</code></div></td><td data-label="Effect"><div>Faded; read-only also gets a dashed underline</div></td></tr>
                 </tbody>
               </table>
@@ -430,7 +430,7 @@
             <p>Native form controls, styled by <code>components/form.css</code>. No JavaScript: the browser owns the state, the keyboard, validation and submission.</p>
             <ul>
               <li>Each control gets its name from its <code>&lt;label&gt;</code>; the hint and the error are tied to it with <code>aria-describedby</code>.</li>
-              <li>CAI does not mark a field as invalid for you: add <code>.cai-input--error</code>, <code>aria-invalid="true"</code> and the error text when your validation fails.</li>
+              <li>LUZ does not mark a field as invalid for you: add <code>.luz-input--error</code>, <code>aria-invalid="true"</code> and the error text when your validation fails.</li>
               <li>Field text is 16 px at 768 px and below and on touch screens, so iOS Safari does not zoom in.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
@@ -445,7 +445,7 @@
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
-          <div class="cai-tabpanel docs-view" id="design-panel">
+          <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
             <p>Use these fields to collect input, with the native control that fits the data.</p>
@@ -466,15 +466,15 @@
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> A checkbox in a form that is sent with a button: nothing changes until “Save preferences”.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="cai-check-item"><input type="checkbox" id="dd-form-do" checked><label for="dd-form-do">Email me about new releases</label></div>
-                  <div class="o-row"><button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Save preferences</button></div>
+                  <div class="luz-check-item"><input type="checkbox" id="dd-form-do" checked><label for="dd-form-do">Email me about new releases</label></div>
+                  <div class="o-row"><button class="luz-btn luz-btn--primary luz-btn--sm" type="button">Save preferences</button></div>
                 </div>
               </figure>
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> A switch in the same form: a switch promises an instant change, so the reader does not know the button is still needed.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <label class="cai-toggle"><input class="cai-toggle__input" type="checkbox" role="switch" checked><span class="cai-toggle__track"><span class="cai-toggle__thumb"></span></span><span class="cai-toggle__label">Email me about new releases</span></label>
-                  <div class="o-row"><button class="cai-btn cai-btn--primary cai-btn--sm" type="button">Save preferences</button></div>
+                  <label class="luz-toggle"><input class="luz-toggle__input" type="checkbox" role="switch" checked><span class="luz-toggle__track"><span class="luz-toggle__thumb"></span></span><span class="luz-toggle__label">Email me about new releases</span></label>
+                  <div class="o-row"><button class="luz-btn luz-btn--primary luz-btn--sm" type="button">Save preferences</button></div>
                 </div>
               </figure>
             </div>
@@ -488,39 +488,39 @@
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>Labels and hints are secondary text on the page; what the reader types is primary text on the field.</p>
-            <div class="cai-table-wrap" role="region" aria-label="Form fields contrast in each mode" tabindex="0">
-              <table class="cai-table docs-contrast">
+            <div class="luz-table-wrap" role="region" aria-label="Form fields contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Part"><div>Label and hint</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Typed text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Placeholder</div></td><td data-label="Colour on background"><div><code>--cai-text-muted</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>5.2:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Error message</div></td><td data-label="Colour on background"><div><code>--cai-color-danger</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>11.7:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Field bottom border</div></td><td data-label="Colour on background"><div><code>--cai-input-border</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Checkbox and radio border</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Checked box and switch on</div></td><td data-label="Colour on background"><div><code>--cai-brand-fill</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Switch track, off</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Switch thumb, on</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
-                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Label and hint</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Typed text</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-input-bg</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Placeholder</div></td><td data-label="Colour on background"><div><code>--luz-text-muted</code> on <code>--luz-input-bg</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>5.2:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Error message</div></td><td data-label="Colour on background"><div><code>--luz-color-danger</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>11.7:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Field bottom border</div></td><td data-label="Colour on background"><div><code>--luz-input-border</code> on <code>--luz-input-bg</code></div></td><td data-label="Light"><div>3.9:1</div></td><td data-label="Dark"><div>3.9:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checkbox and radio border</div></td><td data-label="Colour on background"><div><code>--luz-outline</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checked box and switch on</div></td><td data-label="Colour on background"><div><code>--luz-brand-fill</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Switch track, off</div></td><td data-label="Colour on background"><div><code>--luz-outline</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Switch thumb, on</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
                 </tbody>
               </table>
             </div>
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
-              <li><strong>Focus:</strong> a 2 px <code>--cai-focus-ring</code> outline, 2 px outside the field; the bottom border of a text field also turns to the ring colour, 2 px thick. Checkboxes, radios and the switch track get the same outline.</li>
+              <li><strong>Focus:</strong> a 2 px <code>--luz-focus-ring</code> outline, 2 px outside the field; the bottom border of a text field also turns to the ring colour, 2 px thick. Checkboxes, radios and the switch track get the same outline.</li>
               <li><strong>Not colour alone:</strong> an invalid field has a 2 px bottom border and an error message in words; a read-only field has a dashed bottom border; the switch thumb moves.</li>
               <li><strong>Target:</strong> text fields are 44 px high.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
             <p>The 31 tokens that <code>components/form.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-brand-fill"><code>--cai-brand-fill</code></a>, <a href="../../../docs/tokens/color/#cai-brand-primary"><code>--cai-brand-primary</code></a>, <a href="../../../docs/tokens/color/#cai-color-danger"><code>--cai-color-danger</code></a>, <a href="../../../docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="../../../docs/tokens/color/#cai-focus-ring"><code>--cai-focus-ring</code></a>, <a href="../../../docs/tokens/color/#cai-input-bg"><code>--cai-input-bg</code></a>, <a href="../../../docs/tokens/color/#cai-input-border"><code>--cai-input-border</code></a>, <a href="../../../docs/tokens/color/#cai-outline"><code>--cai-outline</code></a>, <a href="../../../docs/tokens/color/#cai-surface-hover"><code>--cai-surface-hover</code></a>, <a href="../../../docs/tokens/color/#cai-surface-strong"><code>--cai-surface-strong</code></a>, <a href="../../../docs/tokens/color/#cai-text-muted"><code>--cai-text-muted</code></a>, <a href="../../../docs/tokens/color/#cai-text-on-fill"><code>--cai-text-on-fill</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a>, <a href="../../../docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
-              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-control-lg</code>, <code>--cai-control-md</code>, <code>--cai-space-2xs</code>, <code>--cai-space-3xs</code>, <code>--cai-space-lg</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xs</code></dd></div>
-              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-control</code>, <code>--cai-text-md</code>, <code>--cai-text-sm</code></dd></div>
-              <div><dt><a href="../../../docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-full</code>, <code>--cai-radius-md</code>, <code>--cai-radius-sm</code></dd></div>
-              <div><dt><a href="../../../docs/tokens/motion/">Motion</a></dt><dd><code>--cai-duration-base</code>, <code>--cai-duration-fast</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#luz-brand-fill"><code>--luz-brand-fill</code></a>, <a href="../../../docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="../../../docs/tokens/color/#luz-color-danger"><code>--luz-color-danger</code></a>, <a href="../../../docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="../../../docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="../../../docs/tokens/color/#luz-input-bg"><code>--luz-input-bg</code></a>, <a href="../../../docs/tokens/color/#luz-input-border"><code>--luz-input-border</code></a>, <a href="../../../docs/tokens/color/#luz-outline"><code>--luz-outline</code></a>, <a href="../../../docs/tokens/color/#luz-surface-hover"><code>--luz-surface-hover</code></a>, <a href="../../../docs/tokens/color/#luz-surface-strong"><code>--luz-surface-strong</code></a>, <a href="../../../docs/tokens/color/#luz-text-muted"><code>--luz-text-muted</code></a>, <a href="../../../docs/tokens/color/#luz-text-on-fill"><code>--luz-text-on-fill</code></a>, <a href="../../../docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="../../../docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-control-md</code>, <code>--luz-space-2xs</code>, <code>--luz-space-3xs</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-control</code>, <code>--luz-text-md</code>, <code>--luz-text-sm</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-full</code>, <code>--luz-radius-md</code>, <code>--luz-radius-sm</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-base</code>, <code>--luz-duration-fast</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>
@@ -530,7 +530,7 @@
   <nav class="docs-end" aria-labelledby="docs-end-title">
     <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
     <ul class="docs-end__links">
-      <li><a href="../../../docs/get-started/">Install CAI</a></li>
+      <li><a href="../../../docs/get-started/">Install LUZ</a></li>
       <li><a href="../../../docs/tokens/color/">Color tokens</a></li>
       <li><a href="../../../docs/site/templates/">Page templates</a></li>
     </ul>
@@ -542,22 +542,22 @@
   </main>
 
   <footer class="docs-footer" id="site-footer">
-    <div class="cai-site-footer">
-      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
-      <nav class="cai-site-actions" aria-label="Project links">
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../">Home</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/a-z/">A–Z index</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
-        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+    <div class="luz-site-footer">
+      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
+      <nav class="luz-site-actions" aria-label="Project links">
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz/issues">Report a problem</a>
       </nav>
-      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
-        <legend class="cai-mode-switcher__label">Color mode</legend>
-        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
-        <span class="cai-mode-cycle__status" role="status"></span>
-        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
-        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
-        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      <fieldset class="luz-mode-switcher luz-mode-switcher--cycle site-modes">
+        <legend class="luz-mode-switcher__label">Color mode</legend>
+        <button class="luz-mode-cycle" type="button" aria-label="Change color mode"><svg class="luz-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="luz-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="luz-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="luz-mode-cycle__status" role="status"></span>
+        <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light" checked><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
       </fieldset>
     </div>
   </footer>

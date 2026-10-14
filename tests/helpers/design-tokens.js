@@ -122,7 +122,7 @@ const FAMILIES = [
   ["Shadows", "/docs/tokens/shadows/", (t) => t.startsWith("--luz-shadow-")],
   ["Motion", "/docs/tokens/motion/", (t) => /^--luz-(duration|easing)-/.test(t)],
   ["Layers", "/docs/tokens/layers/", (t) => t.startsWith("--luz-z-")],
-  ["Layout and breakpoints", "/docs/tokens/layout/", (t) => /^--luz-(mq-|content-max|sidebar-width|scrollbar-size)/.test(t)],
+  ["Layout and breakpoints", "/docs/tokens/layout/", (t) => /^--luz-(mq-|content-max|sidebar-width|scrollbar-size|bar-h)/.test(t)],
 ];
 
 /** The family of a token: [label, route] of the token page that documents it. */

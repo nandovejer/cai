@@ -119,7 +119,7 @@ test.describe('Site docs: keyboard', () => {
     await gotoId(page, 'p-skip');
     await page.keyboard.press('Tab');
     // The page's own link: the Design tab's examples are spans, never links
-    const skip = page.locator('a.luz-site-skip-link[href="#main-content"]');
+    const skip = page.locator('a.luz-skip-link[href="#main-content"]');
     await expect(skip).toBeFocused();
     await expect(skip).toBeInViewport();
     await page.keyboard.press('Enter');

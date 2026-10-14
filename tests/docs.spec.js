@@ -401,7 +401,7 @@ test.describe('Documentation site', () => {
     test('a gallery card is one link, named like its heading (HUB-1)', async ({ page }) => {
       await open(page, '/docs/components/');
       const cards = page.locator('.docs-card');
-      await expect(cards).toHaveCount(28);
+      await expect(cards).toHaveCount(32);
       for (const card of await cards.all()) {
         await expect(card.getByRole('link')).toHaveCount(1);
       }
@@ -843,7 +843,7 @@ test.describe('Documentation site', () => {
       await open(page, routeOf('docs-modal'));
 
       await page.keyboard.press('Tab');
-      await expect(page.locator('.luz-site-skip-link')).toBeFocused();
+      await expect(page.locator('.luz-skip-link')).toBeFocused();
       await page.keyboard.press('Enter');
       await expect(page.locator('#main-content')).toBeFocused();
 
@@ -986,9 +986,9 @@ test.describe('Site header and navigation toggle', () => {
     });
 
     for (const [width, order] of [
-      [360, ['.luz-site-skip-link', '.site-header__menu', '.site-header__brand', '.site-header__search']],
+      [360, ['.luz-skip-link', '.site-header__menu', '.site-header__brand', '.site-header__search']],
       [1440, [
-        '.luz-site-skip-link',
+        '.luz-skip-link',
         '.site-header__brand',
         '.site-header__nav a >> nth=0',
         '.site-header__nav a >> nth=1',

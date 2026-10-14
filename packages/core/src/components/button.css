@@ -119,3 +119,14 @@
   overflow-wrap: anywhere;
   text-align: center;
 }
+
+/* At 640px and below an action group (.o-actions) is a column of
+   full-width actions: its buttons wrap there as --block does */
+@media (max-width: 640px) {
+  .o-actions > .luz-btn {
+    padding-block: var(--luz-space-2xs);
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+}

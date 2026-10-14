@@ -1,0 +1,154 @@
+<!-- luz:page
+title: Image
+description: Shows a picture in a frame of fixed shape, on a flat surface while it loads or when it is missing.
+area: components
+group: media
+files: components/image.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-image">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="o-grid o-grid--2">
+              <figure>
+                <div class="luz-image">
+                  <picture>
+                    <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif 640w, /apps/docs/assets/desert-1280.avif 1280w" sizes="(min-width: 768px) 50vw, 100vw">
+                    <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp 640w, /apps/docs/assets/desert-1280.webp 1280w" sizes="(min-width: 768px) 50vw, 100vw">
+                    <img src="/apps/docs/assets/desert-1280.jpg" srcset="/apps/docs/assets/desert-640.jpg 640w, /apps/docs/assets/desert-1280.jpg 1280w" sizes="(min-width: 768px) 50vw, 100vw" width="1280" height="720" alt="Out-of-focus sand dunes under a low sun and a blue sky" loading="lazy" decoding="async">
+                  </picture>
+                </div>
+                <figcaption>With an image</figcaption>
+              </figure>
+              <figure>
+                <div class="luz-image"></div>
+                <figcaption>With no image: the flat surface</figcaption>
+              </figure>
+            </div>
+            <p class="docs-demo__note">Ratios: 16:9, <code class="luz-code-inline">--4x3</code>, <code class="luz-code-inline">--3x2</code>, <code class="luz-code-inline">--1x1</code>, <code class="luz-code-inline">--21x9</code>, <code class="luz-code-inline">--9x16</code>.</p>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>If an image fails to load, some browsers add a broken-image icon next to its alt text. In forced-colors mode the surface takes the page's colour, and the frame shows a thin border instead.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Image documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-image" aria-label="Copy the image frame markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Image frame markup"><code id="code-image">&lt;div class=&quot;luz-image&quot;&gt;
+  &lt;picture&gt;
+    &lt;source type=&quot;image/avif&quot; srcset=&quot;dunes-640.avif 640w, dunes-1280.avif 1280w&quot; sizes=&quot;(min-width: 768px) 50vw, 100vw&quot;&gt;
+    &lt;source type=&quot;image/webp&quot; srcset=&quot;dunes-640.webp 640w, dunes-1280.webp 1280w&quot; sizes=&quot;(min-width: 768px) 50vw, 100vw&quot;&gt;
+    &lt;img src=&quot;dunes-1280.jpg&quot; srcset=&quot;dunes-640.jpg 640w, dunes-1280.jpg 1280w&quot; sizes=&quot;(min-width: 768px) 50vw, 100vw&quot;
+      width=&quot;1280&quot; height=&quot;720&quot; alt=&quot;Sand dunes under a low sun&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
+  &lt;/picture&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One modifier sets the shape. Without one, the frame is 16:9.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Image ratios" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Ratio</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-image</code></div></td><td data-label="Ratio"><div>16:9</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-image--4x3</code></div></td><td data-label="Ratio"><div>4:3</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-image--3x2</code></div></td><td data-label="Ratio"><div>3:2</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-image--1x1</code></div></td><td data-label="Ratio"><div>Square</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-image--21x9</code></div></td><td data-label="Ratio"><div>21:9, for wide banners</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-image--9x16</code></div></td><td data-label="Ratio"><div>9:16, portrait</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>A <code>&lt;div&gt;</code> of fixed aspect ratio around a native <code>&lt;picture&gt;</code>, styled by <code>@luz-ds/core</code>. No JavaScript.</p>
+            <ul>
+              <li>The image fills the frame and is cropped to it.</li>
+              <li>The frame is a flat <code>--luz-surface-strong</code> surface: with no image, while an image loads, or when it fails. A failed image's alt text is drawn on it, and transparent PNG and SVG images sit on it too.</li>
+              <li>LUZ ships no placeholder picture: the page asks for nothing it did not name.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the frame and the image are HTML and CSS. Without CSS the image shows at its own size.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The frame has no interaction of its own.</p>
+            <ul>
+              <li>Screen readers announce the <code>&lt;img&gt;</code> by its alt text; an empty frame announces nothing.</li>
+              <li>Do not add a role or an <code>aria-label</code> to the frame.</li>
+              <li>If the image is a link, the link takes its name from the alt text, which must then say where it goes.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the image frame for a picture in a box of fixed shape, such as a card cover or an article header, when the picture may be missing.</p>
+            <ul>
+              <li>Content from people or from a content system.</li>
+              <li>A page built before its images exist.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it for an image that must keep its own shape, such as a chart or a screenshot: the frame crops it.</p>
+            <ul>
+              <li>For a chart or a diagram with a caption, use a <a href="/docs/components/figure/">figure</a>.</li>
+              <li>For icons and logos, use an <code>&lt;img&gt;</code> or an SVG at its own size.</li>
+              <li>Never let an empty frame stand in for an image that carries information: if it is missing, say so in text.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A real image, with an alt text that says what it shows.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-image"><img src="/apps/docs/assets/desert-640.jpg" width="640" height="360" alt="Out-of-focus sand dunes under a low sun"></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> An empty frame where the content is the image: a floor plan nobody can see, with nothing in words.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <figure class="u-mb-0"><div class="luz-image"></div><figcaption>Floor plan of the ground floor</figcaption></figure>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Give every real image an alt text that says what it shows, in one plain sentence.</p>
+            <ul>
+              <li>Use <code>alt=""</code> when the image is decorative, or the text next to it already says the same.</li>
+              <li>The frame crops: keep text and essential detail away from the edges, and describe what stays visible.</li>
+              <li>Set <code>width</code> and <code>height</code> to the image's own size, so the page does not jump while it loads.</li>
+              <li>Add <code>loading="lazy"</code> only below the fold; an image visible when the page opens should load at once.</li>
+              <li>Do not put text in images.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The frame is the strong surface; if an image fails to load, its alt text shows in primary text on it.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Image contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Alt text of a broken image</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-strong</code></div></td><td data-label="Light"><div>13.5:1</div></td><td data-label="Dark"><div>10.9:1</div></td><td data-label="High contrast"><div>18.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the frame takes none.</li>
+              <li><strong>Images:</strong> their own colours are yours.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 3 tokens that <code>components/image.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-surface-strong"><code>--luz-surface-strong</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

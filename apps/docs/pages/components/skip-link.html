@@ -1,0 +1,122 @@
+<!-- luz:page
+title: Skip link
+description: Lets keyboard users jump past the header to the main content.
+area: components
+group: navigation
+files: components/skip-link.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-skip-link">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <p class="docs-demo__note">This page has one: press Tab at the top of the page to see it.</p>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Skip link documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-skip-link" aria-label="Copy the skip link markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Skip link markup"><code id="code-skip-link">&lt;body&gt;
+  &lt;a class=&quot;luz-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+  &lt;header class=&quot;o-sticky&quot;&gt;…&lt;/header&gt;
+  &lt;main id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;…&lt;/main&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no variants: one class on one link.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Skip link class" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-skip-link</code></div></td><td data-label="Effect"><div>Off screen until it has focus, then fixed at the top start corner, in the brand fill, above everything, a sticky bar included. Not printed</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>A normal link to the <code>id</code> of <code>&lt;main&gt;</code>, first in <code>&lt;body&gt;</code>, before a cookie banner, a notice or the header. CSS only.</p>
+            <ul>
+              <li>It slides in when it receives focus, over <code>--luz-duration-fast</code>; under reduced motion it appears at once.</li>
+              <li>The browser does the jump. <code>tabindex="-1"</code> on <code>&lt;main&gt;</code> lets it take the focus, so the next Tab starts inside it in every browser.</li>
+              <li>Under a sticky bar (<a href="/docs/components/layout/#objects-page">.o-sticky</a>) the page's scroll padding keeps the start of <code>&lt;main&gt;</code> below the bar after the jump.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the skip link is a link and CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>Press Tab once from the top of the page and the link appears; Enter follows it to the main content.</p>
+            <ul>
+              <li>It must be the first focusable element of the page, before a cookie banner or a notice.</li>
+              <li>No ARIA: its text is its name.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Put a skip link on every page that has a header, a banner or navigation before the main content.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not rely on it alone: the page still needs landmarks and a logical heading order.</p>
+            <ul>
+              <li>Do not add a list of skip links to every section: one to the main content is enough.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> One link, that says where it goes: “Skip to main content”.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <span class="luz-skip-link docs-dodont__skip">Skip to main content</span>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A row of skip links: the reader has to read them all before the page starts, which is what the link was meant to avoid.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-row"><span class="luz-skip-link docs-dodont__skip">Skip to navigation</span><span class="luz-skip-link docs-dodont__skip">Skip to search</span><span class="luz-skip-link docs-dodont__skip">Skip to footer</span></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Say where it goes: "Skip to main content".</p>
+            <ul>
+              <li>Use the same text on every page.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The link is white text on the brand fill, over the page.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Skip link contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Link text</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the link slides into view when it takes focus, with the link ring, a 2 px <code>--luz-focus-ring</code> outline 2 px outside.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 8 tokens that <code>components/skip-link.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-fill"><code>--luz-brand-fill</code></a>, <a href="/docs/tokens/color/#luz-text-on-fill"><code>--luz-text-on-fill</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-sm</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-fast</code>, <code>--luz-easing-enter</code></dd></div>
+              <div><dt><a href="/docs/tokens/layers/">Layers</a></dt><dd><code>--luz-z-toast</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

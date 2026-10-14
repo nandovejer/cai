@@ -208,8 +208,8 @@
 }
 
 /* A band bleeds to the edge of the frame it is shown in, not of the page */
-.docs-example:has(.luz-site-section--band),
-.docs-dodont__stage:has(.luz-site-section--band) {
+.docs-example:has(.luz-site-section--band, .luz-band),
+.docs-dodont__stage:has(.luz-site-section--band, .luz-band) {
   overflow: clip;
 }
 
@@ -1496,11 +1496,32 @@ h2.docs-demo__title {
   z-index: var(--luz-z-base);
 }
 
-/* Not in a site header specimen: there the toggle shows only where the
+/* Not in a header specimen: there the toggle shows only where the
    header collapses its links, as it does in a page */
-.docs-demo__stage .luz-nav-toggle:not(.luz-site-header *) {
+.docs-demo__stage .luz-nav-toggle:not(.luz-site-header *, .docs-bar *) {
   position: static;
   display: flex;
+}
+
+/* The bar of the navbar demo: what a kind of site's header adds (a surface,
+   one row of padding, a divider), and the anchor its panel opens under */
+.docs-bar {
+  padding: var(--luz-space-2xs) var(--luz-space-md);
+  border-block-end: 1px solid var(--luz-divider);
+  background: var(--luz-surface-page);
+  anchor-name: --luz-bar;
+  anchor-scope: --luz-bar;
+}
+
+.docs-bar__brand {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--luz-control-lg);
+  margin-inline-end: auto;
+  color: var(--luz-text-primary);
+  font-family: var(--luz-font-sans);
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .docs-util-narrow {

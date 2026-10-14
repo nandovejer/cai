@@ -1,0 +1,147 @@
+<!-- luz:page
+title: Band
+description: Sets one block of a page on a tint that runs from edge to edge, while its content keeps the column.
+area: components
+group: content
+files: components/band.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-band">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <section class="o-stack luz-band" aria-labelledby="band-demo-title">
+              <h2 id="band-demo-title">Registration closes on 30 April</h2>
+              <p>The hall holds 400 people, and the Two days ticket sold out last year.</p>
+              <div class="o-actions">
+                <a class="luz-btn luz-btn--primary" href="#band-demo-title">Register now</a>
+              </div>
+            </section>
+            <p class="docs-demo__note">The tint runs to the edges of this frame; in a page, to the edges of the window. The content keeps the column.</p>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>The band has three, all from the way it draws the tint.</p>
+          <ul>
+            <li><strong>A tooltip at its top edge is clipped.</strong> The band cuts off whatever sticks out above or below it. A CSS tooltip on a control that is the first thing in a band is cut at 200 percent text and larger. Start the band with its heading, and keep tooltips off the first control. Dropdown menus and other popovers are not clipped.</li>
+            <li><strong>Outline and ghost buttons.</strong> Their hover colour is the band's own tint, so the hover shows no change. The label and the outline still identify them. Use one primary button, and an outline button for a second way.</li>
+            <li><strong>Forced colors.</strong> The tint is removed, so the band is its heading, text and buttons between two thin rules in the system text colour.</li>
+          </ul>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Band documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-band" aria-label="Copy the band markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Band markup"><code id="code-band">&lt;main id=&quot;main-content&quot; class=&quot;o-container o-stack&quot;&gt;
+  &lt;!-- other sections --&gt;
+  &lt;section class=&quot;o-stack luz-band&quot; aria-labelledby=&quot;last-seats-title&quot;&gt;
+    &lt;h2 id=&quot;last-seats-title&quot;&gt;Registration closes on 30 April&lt;/h2&gt;
+    &lt;p&gt;The hall holds 400 people, and the Two days ticket sold out last year.&lt;/p&gt;
+    &lt;div class=&quot;o-actions&quot;&gt;
+      &lt;a class=&quot;luz-btn luz-btn--primary&quot; href=&quot;/register/&quot;&gt;Register now&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no variants: one class on any block. The layout inside is yours: <code>.o-stack</code> above spaces its children.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Band class" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-band</code></div></td><td data-label="Effect"><div>The block on a <code>--luz-brand-subtle</code> tint that runs from edge to edge of the page, with 48 px (<code>--luz-space-2xl</code>) above and below its content. The content keeps the page's column</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/core</code>. No JavaScript.</p>
+            <ul>
+              <li>The band stays inside the page's column, so its text keeps the column's start edge. The tint is a <code>box-shadow</code> that spreads past the block, cut off above and below by <code>clip-path</code>. A shadow adds no scrollable width; <code>100vw</code> would, whenever the page has a scrollbar. In an <code>.o-shell</code> the tint stops at <code>.o-main</code>.</li>
+              <li>Any block can be a band: a <code>&lt;section&gt;</code> with its heading, or a plain <code>&lt;div&gt;</code>.</li>
+              <li>Put it on the page itself, inside the main column. Inside a card or an element with its own background the tint is drawn over that surface, and it runs out of the element when that element is wider than the window.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the band is CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The band has no interaction, and adds no role.</p>
+            <ul>
+              <li>A <code>&lt;section&gt;</code> named with <code>aria-labelledby</code> becomes a region landmark; a <code>&lt;div&gt;</code> band is just a block.</li>
+              <li>The tint carries no meaning, and it is not what groups the band: the section and its heading are. Without the tint (forced colors, print) the grouping stays.</li>
+              <li>Controls inside the band keep their own focus ring. The 48 px above and below leaves room for it at 200 percent text and at 320 px wide.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a band for a call to act near the end of a long page, or for one pause in the middle of it.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not band every section: when everything stands out, nothing does.</p>
+            <ul>
+              <li>One band for each screen height at most; two in a row read as a new background, not as a call to act.</li>
+              <li>Do not use the tint to say something (a warning, a status): it carries no meaning, and forced colors remove it. Use an <a href="/docs/components/alert/">alert</a>.</li>
+              <li>Do not put a band inside a card or on a <code>--luz-surface</code> area, or around the whole page. In dark mode the primary button falls to 2.7:1 against a tint laid over <code>--luz-surface</code>, under the 3:1 a control's edge needs.</li>
+              <li>Do not put a <code>.luz-btn--secondary</code> on the band: its fill is the tint's own colour, and it reads as plain text.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> One band, with a heading that says why now and one primary button.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-stack luz-band"><h2 class="u-mb-0">Registration closes on 30 April</h2><div class="o-actions"><button class="luz-btn luz-btn--primary" type="button">Register now</button></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Two bands in a row: the second reads as a new background, and neither stands out as the call to act.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-band"><h2 class="u-mb-0">Registration closes on 30 April</h2></div>
+                  <div class="luz-band"><h2 class="u-mb-0">Questions?</h2></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>On a band, the heading says why now, not the action: "Registration closes on 30 April", not "Register".</p>
+            <ul>
+              <li>Add one sentence of support, one primary button and, if you need a second way, one outline button.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The band sets its content on <code>--luz-brand-subtle</code>, laid over the page.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Band contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Heading and text</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>14.3:1</div></td><td data-label="Dark"><div>12.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Secondary text</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.3:1</div></td><td data-label="High contrast"><div>18.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link, outline button label and border</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Primary button fill</div></td><td data-label="Colour on background"><div><code>--luz-brand-fill</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>3.0:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Primary button label</div></td><td data-label="Colour on background"><div><code>--luz-text-on-fill</code> on <code>--luz-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings and the edges of controls.</p>
+            <ul>
+              <li><strong>Focus:</strong> the band takes none; what is inside keeps its own ring, <code>--luz-focus-ring</code>, drawn 4 px out. The band's 48 px of padding keeps it inside the tint.</li>
+              <li><strong>Thin pair:</strong> the primary button's fill is 3.0:1 against the tint in dark mode. Its label is 4.9:1 and names the control, so the control is still identified; keep the band on the page, never on a surface.</li>
+              <li><strong>Forced colors:</strong> the tint is removed and two 1 px <code>CanvasText</code> rules mark the band's top and bottom.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 2 tokens that <code>components/band.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-subtle"><code>--luz-brand-subtle</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xl</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

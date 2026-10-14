@@ -1,0 +1,24 @@
+/* --------------------------------------------------------------------------
+   LUZ Component: band
+   .luz-band on any block (a section with its heading, or a plain div): a
+   tint from edge to edge of the page while the content keeps the column.
+   The tint is a spread shadow, which adds no scrollable width (100vw
+   would), cut off above and below by clip-path; anything that sticks out
+   above or below the band is clipped too. The tint carries no meaning:
+   forced colours drop it, and two rules keep the band's edges.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+.luz-band {
+  padding-block: var(--luz-space-2xl);
+  background: var(--luz-brand-subtle);
+  box-shadow: 0 0 0 100vmax var(--luz-brand-subtle);
+  clip-path: inset(0 -100vmax);
+}
+
+@media (forced-colors: active) {
+  .luz-band {
+    border-block: 1px solid CanvasText;
+  }
+}

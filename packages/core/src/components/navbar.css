@@ -1,0 +1,120 @@
+/* --------------------------------------------------------------------------
+   LUZ Component: navbar
+   The links of a header: nav.luz-navbar[popover] > ul.luz-navbar__list >
+   li > a.luz-navbar__link, after core's .luz-nav-toggle
+   (popovertarget = the nav's id) in a bar's row. From 769px the links are a
+   row of the bar. At 768px and below they collapse into a native popover
+   panel under the bar, the width of the window: the browser gives Escape,
+   light dismiss, focus order and the expanded state. No JavaScript.
+   Without the popover API the links stay in the row and wrap.
+   The panel opens under the nearest anchor-name: --luz-bar (a kind of
+   site's header sets it, with anchor-scope) where anchor positioning is
+   supported, and at --luz-bar-h from the top of the window elsewhere.
+   What it makes obsolete: the nav of site's header, and a copy per header.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+/* The row wraps rather than overflow when text is enlarged (WCAG 1.4.4, 1.4.10) */
+.luz-navbar__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--luz-space-md);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Targets of at least 44px */
+.luz-navbar__link {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--luz-control-lg);
+  color: var(--luz-text-secondary);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-md);
+}
+
+.luz-navbar__link:hover {
+  color: var(--luz-text-primary);
+}
+
+/* The current page: an underline as well as colour (RL-6), which forced
+   colours keep, and the weight unchanged, so the links do not move */
+.luz-navbar__link[aria-current] {
+  color: var(--luz-text-primary);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: var(--luz-space-2xs);
+}
+
+/* 769px and up: a row of the bar. A closed popover is display: none to the
+   browser, so this wins by being author CSS. The open state is styled at
+   every width, so a panel left open when the window grows keeps its place */
+@media (min-width: 769px) {
+  .luz-navbar__list {
+    gap: var(--luz-space-lg);
+  }
+
+  .luz-navbar[popover]:not(:popover-open) {
+    display: flex;
+    position: static;
+    inset: auto;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    overflow: visible;
+    inline-size: auto;
+    block-size: auto;
+  }
+}
+
+@supports selector(:popover-open) {
+  /* The open panel, under the bar, the width of the window. The shadow
+     falls downward only: upward it would dim the bar */
+  .luz-navbar[popover]:popover-open {
+    position: fixed;
+    inset-block: var(--luz-bar-h) auto;
+    inset-inline: 0;
+    inline-size: auto;
+    block-size: auto;
+    max-block-size: calc(100dvh - var(--luz-bar-h));
+    margin: 0;
+    padding: var(--luz-space-xs) var(--luz-space-md);
+    border: 0;
+    border-block-end: 1px solid var(--luz-divider);
+    background: var(--luz-surface-page);
+    box-shadow: var(--luz-shadow-lg);
+    clip-path: inset(0 -100vw -100vh);
+  }
+
+  /* The scrim starts under the bar: its controls stay at full contrast
+     (WCAG 1.4.3, 1.4.11) */
+  .luz-navbar[popover]::backdrop {
+    background: linear-gradient(transparent var(--luz-bar-h), var(--luz-scrim) var(--luz-bar-h));
+  }
+
+  .luz-navbar[popover]:popover-open .luz-navbar__list {
+    flex-flow: column nowrap;
+    gap: 0;
+  }
+}
+
+/* With anchor positioning the panel opens at the block end of the bar
+   wherever it is (below a band, or on two rows with enlarged text), sized
+   to its links and never past the window; with no --luz-bar on the page,
+   at --luz-bar-h. The scrim is the panel's own spread shadow, below it, so
+   it never dims the bar */
+@supports (anchor-name: --luz-bar) {
+  .luz-navbar[popover]:popover-open {
+    inset-block: anchor(--luz-bar end, var(--luz-bar-h)) 0;
+    block-size: fit-content;
+    max-block-size: none;
+    box-shadow: var(--luz-shadow-lg), 0 0 0 100vmax var(--luz-scrim);
+  }
+
+  .luz-navbar[popover]::backdrop {
+    background: none;
+  }
+}

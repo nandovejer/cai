@@ -32,7 +32,7 @@ const components = readdirSync(fromRepo('packages/core/src/components')).filter(
 );
 
 const objectsCss = readFileSync(fromRepo('packages/core/src/objects/_objects.css'), 'utf-8');
-const layoutObjects = new Set([...objectsCss.matchAll(/^\.(o-[a-z]+)\b/gm)].map((m) => m[1]));
+const layoutObjects = new Set([...objectsCss.matchAll(/^\s*\.(o-[a-z]+)\b/gm)].map((m) => m[1]));
 
 const MODES = ['light', 'dark', 'high-contrast'];
 
@@ -719,7 +719,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       await page.keyboard.press('Tab');
-      await expect(page.locator('.luz-site-skip-link')).toBeFocused();
+      await expect(page.locator('.luz-skip-link')).toBeFocused();
       await page.keyboard.press('Enter');
       await expect(page.locator('#main-content')).toBeFocused();
     });

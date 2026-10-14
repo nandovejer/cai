@@ -26,6 +26,10 @@
   /* Layout */
   --luz-sidebar-width: 256px;
   --luz-content-max: 1100px;
+  /* A one-row bar of 44px controls: the control, two 4px paddings and a
+     1px divider. Read by .o-sticky's scroll padding and the navbar panel.
+     Exact at the default text size only: a bar that wraps is taller. */
+  --luz-bar-h: calc(var(--luz-control-lg) + var(--luz-space-xs) + 1px);
 
   /* Breakpoints — using @media (max-width: var()) does not work in native CSS,
      but they are documented here as a canonical reference for JS and preprocessors */

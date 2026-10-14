@@ -1,0 +1,166 @@
+<!-- luz:page
+title: Navbar
+description: Puts the main links of a site in a header's row, and in a panel under it on a narrow screen.
+area: components
+group: navigation
+files: components/navbar.css
+toc: h2,h3
+keywords: nav bar, navigation bar
+-->
+    <div class="docs-component" id="c-navbar">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="docs-bar">
+              <div class="o-row">
+                <button class="luz-nav-toggle" type="button" popovertarget="demo-navbar" aria-label="Menu of the example site">
+                  <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+                </button>
+                <a class="docs-bar__brand" href="#c-navbar">Acme</a>
+                <nav class="luz-navbar" id="demo-navbar" aria-label="Example site" popover>
+                  <ul class="luz-navbar__list">
+                    <li><a class="luz-navbar__link" href="#c-navbar" aria-current="page">Products</a></li>
+                    <li><a class="luz-navbar__link" href="#c-navbar">Pricing</a></li>
+                    <li><a class="luz-navbar__link" href="#c-navbar">Support</a></li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+          <p class="docs-demo__note">At 768 px of window width and below the links collapse into a menu. Its panel opens under this example's bar where the browser supports CSS anchor positioning, and under the top of the window, where a header sits, elsewhere.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it. This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA).</p>
+          <ul>
+            <li><strong>Browsers without anchor positioning.</strong> Where CSS anchor positioning is supported (Chrome and Edge 125, Safari 26, Firefox 147) the panel opens under the bar wherever it ends, even with a notice or the cookie banner above it. Elsewhere it opens at <code>--luz-bar-h</code> from the top of the window: with enlarged text and a bar that wraps to a second row, or with a band above the bar before the page scrolls, it can cover part of the bar. Escape or a click outside closes it.</li>
+            <li><strong>Forced colors in Firefox.</strong> The dim layer behind the open menu is not drawn, so the page is not dimmed. The panel keeps its border, so it is still set apart.</li>
+            <li><strong>Breakpoints in Safari on a Mac.</strong> With always-visible scrollbars, Safari does not count the scrollbar in width media queries (WebKit bug 52653), so the menu collapses, or the links return to the row, when the window is up to about 15 px wider than 768 px.</li>
+          </ul>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Navbar documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>The navbar goes in a bar's row, after core's menu button and the site's name. The bar is yours, or the header of a package for one kind of site, which also sets the anchor the panel opens under.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-navbar" aria-label="Copy the navbar markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Navbar markup"><code id="code-navbar">&lt;header class=&quot;o-sticky&quot;&gt;
+  &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+    &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;site-nav&quot; aria-label=&quot;Menu&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z&quot;/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;a href=&quot;/&quot;&gt;Acme&lt;/a&gt;
+    &lt;nav class=&quot;luz-navbar&quot; id=&quot;site-nav&quot; aria-label=&quot;Main&quot; popover&gt;
+      &lt;ul class=&quot;luz-navbar__list&quot;&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/products/&quot; aria-current=&quot;page&quot;&gt;Products&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/pricing/&quot;&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/support/&quot;&gt;Support&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <div class="luz-table-wrap" role="region" aria-label="Navbar classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class or property</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or property"><div><code>.luz-navbar</code></div></td><td data-label="Effect"><div>On the <code>&lt;nav popover&gt;</code>: a row of the bar from 769 px; a panel under the bar, the width of the window, at 768 px and below</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>.luz-navbar__list</code></div></td><td data-label="Effect"><div>The <code>&lt;ul&gt;</code>: a row that wraps, with no markers; a column in the open panel</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>.luz-navbar__link</code></div></td><td data-label="Effect"><div>Each link, at least 44 px tall; with <code>aria-current</code>, the primary text colour and a 2 px underline</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>anchor-name: --luz-bar</code></div></td><td data-label="Effect"><div>Set on the bar, with <code>anchor-scope: --luz-bar</code>, by the header of a kind of site or by you: the panel opens under it. Without it, the panel opens at <code>--luz-bar-h</code> from the top of the window</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>A native <code>popover</code> on the <code>&lt;nav&gt;</code>, opened by core's <code>.luz-nav-toggle</code> with <code>popovertarget</code>. No JavaScript: the browser gives Escape, light dismiss, the place of the open panel in the Tab order and the expanded state of the button.</p>
+            <ul>
+              <li>From 769 px the closed popover is shown as a row of the bar, and the menu button is hidden.</li>
+              <li>At 768 px and below the panel is fixed under the bar, the width of the window, with a shadow, and a dim layer that starts under the bar so the bar is never dimmed.</li>
+              <li>A panel left open when the window grows stays under the bar until it is closed.</li>
+              <li>Without the popover API the links stay in the row and wrap, and the menu button stays hidden.</li>
+              <li>The submenu of site (<a href="/docs/site/submenu/">Submenu</a>) can go in a list item.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the navbar is HTML, a native popover and CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>Every link is reached with Tab in the order of the page.</p>
+            <ul>
+              <li>Narrow and closed, the links are not in the Tab order. Enter or Space on the menu button opens the panel, and the next Tab reaches its first link.</li>
+              <li>Escape, or a click outside, closes the panel and puts focus back on the button. The button says whether it is expanded.</li>
+              <li>Give the <code>&lt;nav&gt;</code> a name that no other navigation of the page has, such as "Main".</li>
+              <li>Mark the current page with <code>aria-current="page"</code>, or <code>"true"</code> for the section a page belongs to.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the navbar for the few main links of a site, in the header every page shares.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it for an app with many sections, or for links in the page.</p>
+            <ul>
+              <li>For many sections, or a hierarchy, use the <a href="/docs/components/sidebar/">sidebar</a>.</li>
+              <li>For the place of a page in a hierarchy, use a <a href="/docs/components/breadcrumb/">breadcrumb</a>.</li>
+              <li>For the sections of one page, use <a href="/docs/components/tabs/">tabs</a> or a list of in-page links.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A few links with short names, the current one underlined: the row reads in one glance.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <ul class="luz-navbar__list"><li><a class="luz-navbar__link" href="#c-navbar" aria-current="page">Products</a></li><li><a class="luz-navbar__link" href="#c-navbar">Pricing</a></li><li><a class="luz-navbar__link" href="#c-navbar">Support</a></li></ul>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Every page of the site in the bar: the row wraps, and nothing stands out as the way in.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <ul class="luz-navbar__list"><li><a class="luz-navbar__link" href="#c-navbar">Products</a></li><li><a class="luz-navbar__link" href="#c-navbar">Pricing</a></li><li><a class="luz-navbar__link" href="#c-navbar">Support</a></li><li><a class="luz-navbar__link" href="#c-navbar">Blog</a></li><li><a class="luz-navbar__link" href="#c-navbar">About us</a></li><li><a class="luz-navbar__link" href="#c-navbar">Careers</a></li><li><a class="luz-navbar__link" href="#c-navbar">Press</a></li><li><a class="luz-navbar__link" href="#c-navbar">Partners</a></li><li><a class="luz-navbar__link" href="#c-navbar">Contact</a></li></ul>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Name each link after the page it opens, in one or two words.</p>
+            <ul>
+              <li>Five links or fewer; put the rest in the footer, or a <a href="/docs/site/submenu/">submenu</a>.</li>
+              <li>Name the menu button after what it opens: "Menu".</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Links are secondary text on the page; the current one is primary text with an underline.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Navbar contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current link and its underline</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> each link takes the link ring, a 2 px <code>--luz-focus-ring</code> outline 2 px outside.</li>
+              <li><strong>Current link:</strong> the underline says it as well as the colour (red line 6), and forced colors keep it.</li>
+              <li><strong>Panel:</strong> it is the page surface with a divider at its foot and a shadow; the dim layer behind it never covers the bar.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 14 tokens that <code>components/navbar.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-scrim"><code>--luz-scrim</code></a>, <a href="/docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/shadows/">Shadows</a></dt><dd><code>--luz-shadow-lg</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-bar-h</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

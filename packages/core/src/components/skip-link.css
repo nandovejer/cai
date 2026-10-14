@@ -1,0 +1,28 @@
+/* --------------------------------------------------------------------------
+   LUZ Component: skip link
+   a.luz-skip-link, the first thing in <body>, pointing at the id of <main>.
+   Off screen until it takes focus, then fixed at the top start corner, in
+   the brand fill, above everything (a sticky bar included). The browser
+   does the jump; tabindex="-1" on <main> lets every browser move the
+   sequential focus there. Not printed (print/_print.css).
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+.luz-skip-link {
+  position: fixed;
+  inset-block-start: var(--luz-space-sm);
+  inset-inline-start: var(--luz-space-sm);
+  z-index: var(--luz-z-toast);
+  padding: var(--luz-space-xs) var(--luz-space-sm);
+  border-radius: var(--luz-radius-md);
+  background: var(--luz-brand-fill);
+  color: var(--luz-text-on-fill);
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--luz-duration-fast) var(--luz-easing-enter);
+}
+
+.luz-skip-link:focus {
+  transform: none;
+}

@@ -175,13 +175,19 @@ test.describe('band: any block', () => {
 });
 
 test.describe('band: the docs', () => {
-  test('core has a Band component page with a live example and the Code and Design tabs', async ({ page }) => {
+  test('core has a Band component page with a live example and the Code and Design tabs', async ({ page }, testInfo) => {
     // Needs apps/docs/pages/components/band.html (§1.9)
     expect(routes()).toContain('/docs/components/band/');
     await page.goto('/docs/components/band/');
     await expect(page.locator('h1.docs-title')).toHaveText(/band/i);
     await expect(page.locator('.docs-example .luz-band')).not.toHaveCount(0);
-    await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab')).toHaveText(['Code', 'Design']);
+    if (testInfo.project.name === 'chromium-nojs') {
+      // No tablist without JavaScript, by design: both panels show, stacked, and the two links reach them
+      await expect(page.locator('nav.docs-view-tabs a[href="#code-panel"]')).toHaveText('Code');
+      await expect(page.locator('nav.docs-view-tabs a[href="#design-panel"]')).toHaveText('Design');
+    } else {
+      await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab')).toHaveText(['Code', 'Design']);
+    }
   });
 
   test('the page says the tint carries no meaning and that forced colors draw two rules', () => {

@@ -224,13 +224,19 @@ test.describe('navbar', () => {
 });
 
 test.describe('navbar: the docs', () => {
-  test('core has a Navbar component page with a live example and the Code and Design tabs', async ({ page }) => {
+  test('core has a Navbar component page with a live example and the Code and Design tabs', async ({ page }, testInfo) => {
     // Needs apps/docs/pages/components/navbar.html (§1.9: the collapse mechanics)
     expect(routes()).toContain('/docs/components/navbar/');
     await page.goto('/docs/components/navbar/');
     await expect(page.locator('h1.docs-title')).toHaveText(/navbar/i);
     await expect(page.locator('.docs-example .luz-navbar')).toHaveCount(1);
-    await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab')).toHaveText(['Code', 'Design']);
+    if (testInfo.project.name === 'chromium-nojs') {
+      // No tablist without JavaScript, by design: both panels show, stacked, and the two links reach them
+      await expect(page.locator('nav.docs-view-tabs a[href="#code-panel"]')).toHaveText('Code');
+      await expect(page.locator('nav.docs-view-tabs a[href="#design-panel"]')).toHaveText('Design');
+    } else {
+      await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab')).toHaveText(['Code', 'Design']);
+    }
   });
 
   test('the page documents its class, the popover panel and the forced colors', () => {

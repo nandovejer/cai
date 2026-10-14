@@ -534,7 +534,7 @@ describe("the LUZ docs site", () => {
     // Links shown at every width: the content of main (the header's site
     // links are in the closed drawer on a phone, "On this page" is closed).
     const components = site.pages.filter((p) => p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers");
-    expect(components).toHaveLength(28);
+    expect(components).toHaveLength(32);
     const visible = (html) => {
       const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<nav class="docs-onpage"[\s\S]*?<\/nav>/, "");
       return new Set([...[...main.matchAll(/href="(\/docs\/[^"#]*)/g)].map((m) => m[1])]);
@@ -553,7 +553,7 @@ describe("the LUZ docs site", () => {
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", ...SITE_KINDS].includes(p.meta.area) && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(45);
+    expect(viewPages).toHaveLength(49);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {
@@ -649,13 +649,13 @@ describe("the LUZ docs site", () => {
     expect(new Set(names).size).toBe(names.length);
     expect(names.length).toBeGreaterThan(250);
     // Keywords: after the area, not already in the title; the page keeps its place
-    expect(index.pages).toContainEqual(["Site header", "site/site-header/", "Site · navbar, nav bar"]);
+    expect(index.pages).toContainEqual(["Navbar", "components/navbar/", "Components · nav bar, navigation bar"]);
     expect(index.pages).toContainEqual(["Language switcher", "site/lang-switcher/", "Site · translation, locale, i18n, hreflang"]);
     // A keyword is never the title of another page: that page would come second in its own search
     const titles = new Set(site.pages.map((p) => p.meta.title.toLowerCase()));
     for (const { keywords, title } of indexData(site)) for (const k of keywords) expect(titles.has(k.toLowerCase()), `${title}: ${k}`).toBe(false);
     // The A–Z index lists them too, as "Another name for"
-    expect(indexEntries(site)).toContainEqual({ name: "navbar", href: "/docs/site/site-header/", kind: "Another name for Site header" });
+    expect(indexEntries(site)).toContainEqual({ name: "nav bar", href: "/docs/components/navbar/", kind: "Another name for Navbar" });
   });
 
   it("answers what a developer types: class names, tokens, other names, and a part of a title (the search of @luz-ds/site)", () => {
@@ -666,7 +666,7 @@ describe("the LUZ docs site", () => {
     expect(first("--luz-brand-primary")).toEqual(["--luz-brand-primary"]);
     expect(first("--luz-blue-60")).toEqual(["--luz-blue-60"]);
     expect(first("blue-60")).toEqual(["--luz-blue-60"]);
-    expect(first("navbar", PAGES)).toEqual(["Site header"]);
+    expect(first("navbar", PAGES)).toEqual(["Navbar"]);
     expect(first("container")).toContain(".o-container");
     expect(first("input", PAGES)).toEqual(["Form fields"]);
     expect(first("input")).toContain(".luz-input");

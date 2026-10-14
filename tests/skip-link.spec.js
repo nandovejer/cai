@@ -69,8 +69,8 @@ test.describe('skip link', () => {
     expect(await page.evaluate(() => getComputedStyle(document.getElementById('hdr')).position), 'the bar is .o-sticky').toBe('sticky');
     await page.evaluate(() => { window.history.replaceState(null, '', window.location.pathname); window.scrollTo({ top: 0, behavior: 'instant' }); document.getElementById('skip').focus(); });
     await page.keyboard.press('Enter');
+    await expect.poll(() => page.evaluate(() => window.scrollY), { message: 'the jump scrolled' }).toBeGreaterThan(0);
     await page.waitForTimeout(300);
-    expect(await page.evaluate(() => window.scrollY), 'the jump scrolled').toBeGreaterThan(0);
     const { main, bar } = await page.evaluate(() => ({
       main: document.querySelector('#main-content h1')?.getBoundingClientRect().top ?? 0,
       bar: document.getElementById('hdr').getBoundingClientRect().bottom,
@@ -99,12 +99,18 @@ test.describe('skip link', () => {
 });
 
 test.describe('skip link: the docs', () => {
-  test('core has a Skip link component page with the Code and Design tabs', async ({ page }) => {
+  test('core has a Skip link component page with the Code and Design tabs', async ({ page }, testInfo) => {
     // Needs apps/docs/pages/components/skip-link.html (§1.9)
     expect(routes()).toContain('/docs/components/skip-link/');
     await page.goto('/docs/components/skip-link/');
     await expect(page.locator('h1.docs-title')).toHaveText(/skip link/i);
-    await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab')).toHaveText(['Code', 'Design']);
+    if (testInfo.project.name === 'chromium-nojs') {
+      // No tablist without JavaScript, by design: both panels show, stacked, and the two links reach them
+      await expect(page.locator('nav.docs-view-tabs a[href="#code-panel"]')).toHaveText('Code');
+      await expect(page.locator('nav.docs-view-tabs a[href="#design-panel"]')).toHaveText('Design');
+    } else {
+      await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab')).toHaveText(['Code', 'Design']);
+    }
   });
 
   test('the docs page has the skip link first, and it moves focus to the main area', async ({ page }) => {

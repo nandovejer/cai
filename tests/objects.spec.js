@@ -19,15 +19,15 @@ const FIXTURE = '/tests/fixtures/objects.html';
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
 /** Resolve a CSS length expression (`var(--luz-space-md)`, `calc(...)`) to pixels, in the page. */
-const px = (page, expression) =>
-  page.evaluate((value) => {
+const px = (page, expression, onRoot = false) =>
+  page.evaluate(([value, root]) => {
     const probe = document.createElement('div');
     probe.style.cssText = `position:absolute;visibility:hidden;inline-size:${value}`;
-    document.body.append(probe);
+    (root ? document.documentElement : document.body).append(probe);
     const width = probe.getBoundingClientRect().width;
     probe.remove();
     return width;
-  }, expression);
+  }, [expression, onRoot]);
 
 const box = (page, selector) =>
   page.evaluate((s) => {
@@ -213,7 +213,7 @@ test.describe('objects: .o-sticky', () => {
   test('the scroll padding is the bar height or 3.5em, whichever is more, plus half a control', async ({ page }) => {
     await page.setViewportSize({ width: 1000, height: 700 });
     await page.goto(FIXTURE);
-    const expected = await px(page, 'calc(max(var(--luz-bar-h), 3.5em) + var(--luz-control-lg) / 2)');
+    const expected = await px(page, 'calc(max(var(--luz-bar-h), 3.5em) + var(--luz-control-lg) / 2)', true);
     const padding = await page.evaluate(() => parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop));
     expect(padding).toBeCloseTo(expected, 0);
   });

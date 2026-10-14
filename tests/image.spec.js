@@ -123,11 +123,17 @@ test.describe('image: a failed image', () => {
 
 // The docs: the component page of core (§1.9, components/image.html)
 test.describe('image: the docs page', () => {
-  test('core has an Image component page with the Code and Design tabs', async ({ page }) => {
+  test('core has an Image component page with the Code and Design tabs', async ({ page }, testInfo) => {
     expect(routes()).toContain('/docs/components/image/');
     await page.goto('/docs/components/image/');
     await expect(page.locator('h1.docs-title')).toHaveText(/image/i);
-    await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab')).toHaveText(['Code', 'Design']);
+    if (testInfo.project.name === 'chromium-nojs') {
+      // No tablist without JavaScript, by design: both panels show, stacked, and the two links reach them
+      await expect(page.locator('nav.docs-view-tabs a[href="#code-panel"]')).toHaveText('Code');
+      await expect(page.locator('nav.docs-view-tabs a[href="#design-panel"]')).toHaveText('Design');
+    } else {
+      await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab')).toHaveText(['Code', 'Design']);
+    }
   });
 
   test('the demos use a picture with AVIF and WebP sources and a sized img', async ({ page }) => {

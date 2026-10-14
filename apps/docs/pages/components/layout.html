@@ -1,6 +1,6 @@
 <!-- luz:page
 title: Layout objects
-description: Lay out blocks in a stack, a row, a grid or beside an image, and the page itself, with the o-* classes.
+description: Lay out blocks in a stack, a row, a grid or beside an image, a group of actions, and the page itself with its sticky bar, with the o-* classes.
 area: components
 order: 2000
 group: helpers
@@ -62,13 +62,79 @@ files: objects/_objects.css
                 <tr><td data-label="Class"><div><code>.o-grid</code></div></td><td data-label="What it does"><div>A grid with 16 px gaps; set the columns with your own <code>grid-template-columns</code>, or with one of the modifiers below</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-grid--auto</code></div></td><td data-label="What it does"><div>As many equal columns as fit, none narrower than <code>--luz-grid-min</code> (16 rem by default): the grid reflows by itself and needs no breakpoint</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-grid--2</code>, <code>.o-grid--3</code>, <code>.o-grid--4</code></div></td><td data-label="What it does"><div>That many equal columns above 768 px; one column at 768 px and below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-grid--split</code></div></td><td data-label="What it does"><div>Two equal columns when each gets <code>--luz-grid-min</code> (16 rem by default), one below: a hero with its image, or two features side by side. It stacks by itself with larger text</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-media</code>, <code>.o-media__body</code></div></td><td data-label="What it does"><div>A fixed item, such as an avatar, beside content that takes the remaining width</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-container</code></div></td><td data-label="What it does"><div>The content width (<code>--luz-content-max</code>, 1100 px) and page padding; less padding at 640 px and below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-container--inline</code></div></td><td data-label="What it does"><div>The container's width and side gutters only, with no padding above or below: the row of a bar, so its content starts where the page's content starts</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-page</code></div></td><td data-label="What it does"><div>A page without a sidebar: a column at least as tall as the window, whose <code>&lt;main&gt;</code> grows, so the footer rests on the bottom of a short page. Any number of bands can come before the header</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-sticky</code></div></td><td data-label="What it does"><div>A bar that stays at the top while the page scrolls, in a window at least 30 rem tall, with the scroll padding that keeps what Tab reaches out from under it</div></td></tr>
+                <tr><td data-label="Class"><div><code>.o-actions</code></div></td><td data-label="What it does"><div>Two or three related buttons or links in a row that wraps, 8 px apart; at 640 px and below, a column of full-width actions whose labels wrap</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-shell</code></div></td><td data-label="What it does"><div>The app layout: a sidebar column (<code>--luz-sidebar-width</code>) beside the main area, a footer across the bottom; one column at 768 px and below</div></td></tr>
                 <tr><td data-label="Class"><div><code>.o-main</code></div></td><td data-label="What it does"><div>The main area inside <code>.o-shell</code></div></td></tr>
               </tbody>
             </table>
           </div>
+          <h2 id="objects-page">The page and its bars</h2>
+          <p>A page without a sidebar is <code>.o-page</code>: any bands first (a notice, the cookie question), then the header, <code>&lt;main&gt;</code> and the footer. The header's row is <code>.o-container.o-container--inline</code>, so the site's name starts where the content starts, and <code>.o-sticky</code> keeps the header at the top.</p>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-objects-page" aria-label="Copy the page markup">Copy</button>
+            </div>
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page markup"><code id="code-objects-page">&lt;body&gt;
+  &lt;a class=&quot;luz-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to main content&lt;/a&gt;
+  &lt;div class=&quot;o-page&quot;&gt;
+    &lt;header class=&quot;o-sticky&quot;&gt;
+      &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;…&lt;/div&gt;
+    &lt;/header&gt;
+    &lt;main id=&quot;main-content&quot; class=&quot;o-container o-stack&quot; tabindex=&quot;-1&quot;&gt;…&lt;/main&gt;
+    &lt;footer&gt;
+      &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;…&lt;/div&gt;
+    &lt;/footer&gt;
+  &lt;/div&gt;
+&lt;/body&gt;</code></pre>
+          </div>
+          <ul>
+            <li>The objects lay out only: the header's surface and divider are the job of your CSS, or of the header of a package for one kind of site.</li>
+            <li><code>--luz-bar-h</code> is the height of a one-row bar of 44 px controls at the default text size: the control, two 4 px paddings and a 1 px divider. The <a href="/docs/components/navbar/">navbar</a> panel opens at that height when nothing anchors it.</li>
+            <li>With <code>.o-sticky</code> on the page, the scroll padding of <code>&lt;html&gt;</code> is <code>--luz-bar-h</code> or 3.5em, whichever is more, plus half a control: a field reached with Tab, or the target of the <a href="/docs/components/skip-link/">skip link</a>, stops below the bar. It is a minimum: a bar that wraps to several rows with enlarged text is taller, and Safari can leave a field partly under it at 300 percent text.</li>
+            <li>Below 30 rem of window height the bar scrolls away with the page, so it never takes most of a short screen.</li>
+          </ul>
+          <h2 id="objects-actions">Actions and the split grid</h2>
+          <div class="docs-demo__stage o-stack">
+            <div class="o-grid o-grid--split">
+              <div class="docs-box">Copy</div>
+              <div class="docs-box">Image</div>
+            </div>
+            <div class="o-actions">
+              <a class="luz-btn luz-btn--primary" href="#objects-actions">Register now</a>
+              <a class="luz-btn luz-btn--outline" href="#objects-actions">See the programme</a>
+            </div>
+          </div>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="luz-copy-btn" type="button" data-copy-from="code-objects-actions" aria-label="Copy the split grid and actions markup">Copy</button>
+            </div>
+            <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Split grid and actions markup"><code id="code-objects-actions">&lt;section class=&quot;o-grid o-grid--split&quot;&gt;
+  &lt;div class=&quot;o-stack&quot;&gt;
+    &lt;h1&gt;…&lt;/h1&gt;
+    &lt;div class=&quot;o-actions&quot;&gt;
+      &lt;a class=&quot;luz-btn luz-btn--primary&quot; href=&quot;/register/&quot;&gt;Register now&lt;/a&gt;
+      &lt;a class=&quot;luz-btn luz-btn--outline&quot; href=&quot;/programme/&quot;&gt;See the programme&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;luz-image&quot;&gt;…&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;!-- two columns only when each gets 24 rem --&gt;
+&lt;section class=&quot;o-grid o-grid--split hero&quot;&gt;…&lt;/section&gt;
+&lt;style&gt;.hero { --luz-grid-min: 24rem; }&lt;/style&gt;</code></pre>
+          </div>
+          <ul>
+            <li>One primary action per group, and a second, outline one if there is another way. In the narrow column the primary comes first, as in the source.</li>
+            <li>A <code>.luz-btn</code> in <code>.o-actions</code> wraps its label in the narrow column, so a long label never runs out of the window.</li>
+          </ul>
           <h2 id="objects-grid">The grid</h2>
           <p>LUZ has no 12-column system: a content grid is a handful of equal columns, and <code>.o-grid</code> draws them. Use <code>.o-grid--auto</code> when the items decide how many fit, such as cards; use <code>.o-grid--2</code> to <code>--4</code> when the number is part of the design.</p>
           <div class="docs-snippet">
@@ -133,5 +199,5 @@ files: objects/_objects.css
   &lt;footer&gt;…&lt;/footer&gt;
 &lt;/body&gt;</code></pre>
           </div>
-          <p>The footer is a plain <code>&lt;footer&gt;</code>, which core places across the bottom: nothing here needs site. To give it the look of site's footer, use <code>.luz-site-footer</code> on it. For whole pages without a sidebar, the <a href="/docs/site/shell/">page shell</a> of site does the same job. <a href="/docs/get-started/structure/#needs">What each package needs</a> lists every piece.</p>
+          <p>The footer is a plain <code>&lt;footer&gt;</code>, which core places across the bottom: nothing here needs site. For whole pages without a sidebar, use <a href="#objects-page"><code>.o-page</code></a>. <a href="/docs/get-started/structure/#needs">What each package needs</a> lists every piece.</p>
     </div>

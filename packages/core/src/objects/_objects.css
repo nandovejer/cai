@@ -79,6 +79,42 @@
   }
 }
 
+/* Only the gutters, on the inline axis: the width of a bar's row, so its
+   content starts where the page's content starts */
+.o-container--inline {
+  padding-block: 0;
+}
+
+/* A page without a sidebar: a column at least as tall as the window. Any
+   number of bands may come before the header; main grows, so the footer
+   rests on the bottom of a short page */
+.o-page {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 100dvh;
+}
+
+.o-page > :where(main) {
+  flex: 1 0 auto;
+}
+
+/* A bar that stays at the top while the page scrolls, only in a window
+   tall enough to keep most of it for the page. The scroll padding keeps
+   what Tab reaches out from under it (WCAG 2.4.11): at least 3.5em of the
+   root, so it grows with enlarged text when the bar wraps, plus half a
+   control, as WebKit puts a field at the padding minus half its height */
+@media (min-height: 30rem) {
+  .o-sticky {
+    position: sticky;
+    inset-block-start: 0;
+    z-index: var(--luz-z-overlay);
+  }
+
+  :root:has(.o-sticky) {
+    scroll-padding-block-start: calc(max(var(--luz-bar-h), 3.5em) + var(--luz-control-lg) / 2);
+  }
+}
+
 /* Generic grid: the columns are yours (grid-template-columns), or a
    modifier's below */
 .o-grid {
@@ -90,6 +126,13 @@
    default; set it on the grid or on an ancestor) */
 .o-grid--auto {
   grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--luz-grid-min, 16rem)), 1fr));
+}
+
+/* Two equal columns when each gets --luz-grid-min, one below: intrinsic,
+   so it stacks with larger text and needs no query. A single child takes
+   the whole row */
+.o-grid--split {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, max(var(--luz-grid-min, 16rem), 45%)), 1fr));
 }
 
 /* A fixed number of equal columns above 768px; one column at 768px and below,
@@ -114,6 +157,26 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--luz-space-sm);
+}
+
+/* Two or three related actions in a row. At 640px and below, a column of
+   full-width actions (a .luz-btn there wraps its label: button.css) */
+.o-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--luz-space-xs);
+}
+
+@media (max-width: 640px) {
+  .o-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .o-actions > * {
+    inline-size: 100%;
+    justify-content: center;
+  }
 }
 
 /* Stack vertical */

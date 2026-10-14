@@ -1,0 +1,61 @@
+/* --------------------------------------------------------------------------
+   LUZ Component: image
+   .luz-image around a native <picture>: a frame of fixed ratio (16:9, or a
+   modifier) on the flat --luz-surface-strong surface. The image fills the
+   frame and is cropped to it; its width and height attributes reserve the
+   space before the CSS loads. With no image, or while it loads, the frame
+   is the surface; a failed image draws its alt text on it, at the contrast
+   of text on --luz-surface-strong (red line 7). No placeholder image.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+.luz-image {
+  display: block;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--luz-radius-md);
+  background: var(--luz-surface-strong);
+}
+
+.luz-image--4x3 {
+  aspect-ratio: 4 / 3;
+}
+
+.luz-image--3x2 {
+  aspect-ratio: 3 / 2;
+}
+
+.luz-image--1x1 {
+  aspect-ratio: 1;
+}
+
+.luz-image--21x9 {
+  aspect-ratio: 21 / 9;
+}
+
+.luz-image--9x16 {
+  aspect-ratio: 9 / 16;
+}
+
+.luz-image :where(picture, img) {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* The surface behind the image: a failed one shows its alt text here, and a
+   transparent PNG or SVG sits on it */
+.luz-image :where(img) {
+  object-fit: cover;
+  background: var(--luz-surface-strong);
+  color: var(--luz-text-primary);
+}
+
+/* Forced colours paint the surface as the page: a system-colour edge keeps
+   an empty frame visible as a box */
+@media (forced-colors: active) {
+  .luz-image {
+    border: 1px solid CanvasText;
+  }
+}

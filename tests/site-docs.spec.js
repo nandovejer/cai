@@ -14,6 +14,7 @@ import { test, expect } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf } from './helpers/docs-site.js';
+import { blocksOfCss } from './helpers/css-blocks.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -21,33 +22,22 @@ const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url))
 // classes start with .luz-<name>-, and each block maps to the id of its
 // pattern page (p-<pattern>)
 const PACKAGES = {
+  // F3 step 12: site is five self-contained components, each a `<luz-*>` tag that is the
+  // block (`.luz-<tag>__<part>`, D5). The page structure moved to the kinds and to core
   site: {
     label: 'Site',
     patternOf: {
-      page: 'shell',
-      main: 'shell',
-      content: 'shell',
-      'skip-link': 'shell',
-      'page-header': 'header',
-      hero: 'hero',
-      header: 'site-header',
-      section: 'section',
-      actions: 'actions',
-      footer: 'footer',
-      image: 'image',
       search: 'search',
-      'search-trigger': 'search',
-      'lang-switcher': 'lang-switch',
-      submenu: 'submenu',
-      notice: 'banner',
       consent: 'consent',
+      'lang-switch': 'lang-switch',
+      submenu: 'submenu',
+      banner: 'banner',
     },
   },
   landing: {
     label: 'Landing',
     // F3 step 10: the feature grid is gone (a template on `ul.o-grid.o-grid--split`, D10);
-    // the page structure moved here from site. The ids are `p-landing-*` while site still
-    // ships its own header, hero, footer and section pages (they go at step 12)
+    // the page structure moved here from site
     patternOf: {
       header: 'landing-header',
       hero: 'landing-hero',
@@ -70,13 +60,18 @@ const PACKAGES = {
   },
 };
 
-/** Block names of the package's classes: elements (__) and modifiers (--) are covered by their block. */
+/**
+ * Block names of the package's classes: elements (__) and modifiers (--) are covered by their block.
+ * A kind's blocks are `.luz-<name>-<block>`; site's are its `<luz-*>` tags and the classes of the same
+ * name (`luz-search`, `.luz-search__trigger`), read from the leftmost compound of each selector.
+ */
 function blocksOf(name) {
   const dir = fromRepo(`packages/${name}/src/components`);
   const css = readdirSync(dir)
     .filter((file) => file.endsWith('.css'))
     .map((file) => readFileSync(`${dir}/${file}`, 'utf-8'))
     .join('\n');
+  if (name === 'site') return [...blocksOfCss(css)].filter((block) => block.startsWith('luz-')).map((block) => block.slice('luz-'.length));
   return [...new Set([...css.matchAll(new RegExp(`\\.luz-${name}-([\\w-]+)`, 'g'))].map((m) => m[1].split(/__|--/)[0]))];
 }
 
@@ -89,11 +84,25 @@ for (const [name, { label, patternOf }] of Object.entries(PACKAGES)) {
   test.describe(`${label} docs`, () => {
     test(`every ${name} class belongs to a pattern`, () => {
       const blocks = blocksOf(name);
-      expect(blocks.length, `packages/${name} has no .luz-${name}-* class`).toBeGreaterThan(0);
+      expect(blocks.length, `packages/${name} has no ${name === 'site' ? '<luz-*> block' : `.luz-${name}-* class`}`).toBeGreaterThan(0);
       for (const block of blocks) {
-        expect(patternOf[block], `.luz-${name}-${block} has no pattern in tests/site-docs.spec.js`).toBeTruthy();
+        expect(patternOf[block], `${name === 'site' ? `luz-${block}` : `.luz-${name}-${block}`} has no pattern in tests/site-docs.spec.js`).toBeTruthy();
       }
     });
+
+    if (name === 'site') {
+      test('site ships exactly its five components: search, consent, lang-switch, submenu and banner', () => {
+        expect(blocksOf('site').sort()).toEqual(['banner', 'consent', 'lang-switch', 'search', 'submenu']);
+      });
+
+      test('the Site gallery lists the five components and the class reference, and nothing of the page structure that moved out', async ({ page }) => {
+        await page.goto('/docs/site/');
+        const cards = await page.locator('.docs-gallery a').evaluateAll((links) => links.map((link) => new URL(link.href).pathname));
+        expect(cards.filter((href) => href.startsWith('/docs/site/')).sort()).toEqual(
+          ['banner', 'classes', 'consent', 'lang-switch', 'search', 'submenu'].map((slug) => `/docs/site/${slug}/`),
+        );
+      });
+    }
 
     test(`every ${name} pattern has its page: example, known issues, Code and Design`, async ({ page }) => {
       for (const pattern of patterns) {

@@ -29,7 +29,7 @@
       :root { --luz-brand-fill: rgb(1, 2, 3); --luz-surface-page: rgb(250, 251, 252); }
       .luz-btn { padding-inline-start: 7px; }
       .luz-btn.probe-unlayered { min-height: 99px; }
-      .luz-site-section.probe-site { padding-block-start: 13px; }
+      luz-banner.probe-site { padding-block-start: 13px; }
     }
   </style>
 </head>
@@ -37,7 +37,7 @@
   <p><button class="luz-btn luz-btn--primary" id="probe-component" type="button">Save changes</button></p>
   <p><button class="luz-btn luz-btn--primary probe-unlayered" id="probe-unlayered" type="button">Save changes</button></p>
   <p><button class="luz-btn luz-btn--primary probe-own-layer" id="probe-own-layer" type="button">Save changes</button></p>
-  <div class="luz-site-section probe-site" id="probe-site"><p>Site pattern</p></div>
+  <luz-banner class="probe-site" id="probe-site"><section aria-labelledby="probe-site-label"><p><strong id="probe-site-label">Site component.</strong></p></section></luz-banner>
   <p class="u-sr-only" id="probe-utility">Hidden text</p>
 </body>
 </html>

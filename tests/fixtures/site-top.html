@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
   <link rel="stylesheet" href="/packages/core/dist/luz.css">
   <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <link rel="stylesheet" href="/packages/landing/dist/landing.css">
   <script type="module" src="/packages/site/dist/consent.min.js"></script>
 </head>
 <body>
@@ -17,7 +18,7 @@
       <div data-luz-consent-ask>
         <h2 class="luz-consent__title" id="consent-title">Cookies on Bodega Albar</h2>
         <p>We use cookies that this site needs to work. We would also like to measure how you use it, to improve it. <a id="policy" href="#cookies">Read the cookie policy</a>.</p>
-        <form class="luz-site-actions">
+        <form class="o-actions">
           <button class="luz-btn luz-btn--primary" id="accept" type="submit" value="all">Accept optional cookies</button>
           <button class="luz-btn luz-btn--primary" id="reject" type="submit" value="none">Reject optional cookies</button>
         </form>
@@ -31,7 +32,7 @@
                 <label class="luz-check-item"><input type="checkbox" id="c-marketing" value="marketing"> Adverts on other sites</label>
               </div>
             </fieldset>
-            <div class="luz-site-actions">
+            <div class="o-actions">
               <button class="luz-btn luz-btn--secondary" id="save" type="submit">Save my choices</button>
             </div>
           </form>
@@ -50,15 +51,15 @@
     </section>
   </luz-banner>
 
-  <header class="luz-site-header luz-site-header--sticky" id="hdr">
-    <div class="luz-site-header__inner">
+  <header class="luz-landing-header o-sticky" id="hdr">
+    <div class="o-container o-container--inline o-row">
       <button class="luz-nav-toggle" id="toggle" type="button" popovertarget="site-nav" aria-label="Menu">
         <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
       </button>
-      <a class="luz-site-header__brand" id="brand" href="#top">Bodega Albar</a>
-      <nav class="luz-site-header__nav" id="site-nav" aria-label="Main" popover>
-        <ul>
-          <li><a href="#top" aria-current="page">Home</a></li>
+      <a class="luz-landing-header__brand" id="brand" href="#top">Bodega Albar</a>
+      <nav class="luz-navbar" id="site-nav" aria-label="Main" popover>
+        <ul class="luz-navbar__list">
+          <li><a class="luz-navbar__link" href="#top" aria-current="page">Home</a></li>
           <li>
             <luz-submenu>
               <details id="wines" name="site-menu">
@@ -71,7 +72,7 @@
               </details>
             </luz-submenu>
           </li>
-          <li><a href="#visits">Visits</a></li>
+          <li><a class="luz-navbar__link" href="#visits">Visits</a></li>
           <li>
             <luz-submenu>
               <details id="about" name="site-menu">
@@ -85,7 +86,7 @@
           </li>
         </ul>
       </nav>
-      <div class="luz-site-header__actions">
+      <div class="o-row luz-landing-header__actions">
         <a class="luz-btn luz-btn--ghost" id="login" href="#top">Log in</a>
       </div>
     </div>
@@ -96,7 +97,7 @@
       <h1 id="top">Wines from the coast</h1>
       <p><a id="first" href="#top">The first link of the page</a></p>
       <p>Text of the page.</p>
-      <p class="luz-site-actions"><button class="luz-btn luz-btn--outline" id="settings" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
+      <p class="o-actions"><button class="luz-btn luz-btn--outline" id="settings" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
       <p id="cookies"><a href="#cookies">Cookie policy</a></p>
     </div>
   </main>

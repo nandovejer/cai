@@ -4,7 +4,7 @@
  * Each test says what the page must still do without scripts.
  */
 import { test, expect } from '@playwright/test';
-import { gotoId, notFoundRoute, routes, routesWith } from './helpers/docs-site.js';
+import { notFoundRoute, routes, routesWith } from './helpers/docs-site.js';
 import { px } from './helpers/site-loader.js';
 
 // The home page in each of its languages (apps/landing/i18n)
@@ -141,13 +141,6 @@ test('docs: the home shows the A–Z link in place of the big search button', as
   await page.goto('/docs/');
   await expect(page.getByRole('main').getByRole('link', { name: 'Browse the A–Z index' })).toBeVisible();
   await expect(page.getByRole('main').getByRole('button', { name: /^Search docs/ })).toBeHidden();
-});
-
-test('docs: the image placeholder shows without JavaScript', async ({ page }) => {
-  await gotoId(page, 'demo-image-empty');
-  const empty = page.locator('#demo-image-empty');
-  await expect(empty).toBeVisible();
-  expect(await empty.evaluate((el) => getComputedStyle(el).backgroundImage)).toMatch(/placeholder-16x9-1920\.avif/);
 });
 
 test('docs: the color mode switcher is three radios that set the mode', async ({ page }) => {

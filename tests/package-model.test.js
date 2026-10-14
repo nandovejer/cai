@@ -5,12 +5,15 @@
  *   (a) layering: a lower package never names a higher one
  *   (b) names: no block is shipped by two packages
  *   (c) peers: a kind of site takes site as an optional peer
+ *   (d) site after F3: five components, the exports of spec §1.3, no placeholders
  */
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { SITE_KINDS } from "../scripts/luz-packages.js";
+import { JPEG_LONG_SIDES, LONG_SIDES, RATIOS, VARIANTS, sizeOf } from "../scripts/build-placeholders.js";
+import { LAYER_ORDER } from "../scripts/luz-layers.js";
 import { blocksOfCss } from "./helpers/css-blocks.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -127,4 +130,132 @@ describe("peers: a kind of site works without site", () => {
       expect(manifest.devDependencies["@luz-ds/site"]).toBe("workspace:*");
     });
   }
+});
+
+/* ---- (d) site after F3: five components and nothing else (step 12) -------- */
+
+describe("site after F3: five `<luz-*>` components", () => {
+  const read = (path) => readFileSync(`${root}${path}`, "utf-8");
+  const manifest = JSON.parse(read("packages/site/package.json"));
+  const components = SITE_TAGS.map((name) => `${name}.css`).sort();
+  const minified = components.map((f) => f.replace(/\.css$/, ".min.css"));
+  const list = (dir, keep) => (existsSync(`${root}${dir}`) ? readdirSync(`${root}${dir}`).filter(keep).sort() : []);
+  const isCss = (f) => f.endsWith(".css") && !f.endsWith(".min.css");
+
+  it("src/components holds the five components and `_print.css`, nothing else", () => {
+    expect(list("packages/site/src/components", (f) => f.endsWith(".css"))).toEqual([...components, "_print.css"].sort());
+  });
+
+  it("index.css imports exactly those six files", () => {
+    const imports = [...read("packages/site/src/index.css").matchAll(/@import url\("\.\/components\/([^"]+)"\)/g)].map((m) => m[1]);
+    expect(imports.sort()).toEqual([...components, "_print.css"].sort());
+  });
+
+  const built = existsSync(`${root}packages/site/dist/site.css`);
+
+  it.skipIf(!built)("dist/components is exactly {search, consent, lang-switch, submenu, banner}.css, plain and minified", () => {
+    expect(list("packages/site/dist/components", isCss)).toEqual(components);
+    expect(list("packages/site/dist/components", (f) => f.endsWith(".min.css"))).toEqual(minified);
+  });
+
+  it.skipIf(!built)("each built component starts with the layer order and has one `luz.site` block", () => {
+    for (const f of components) {
+      const css = existsSync(`${root}packages/site/dist/components/${f}`) ? read(`packages/site/dist/components/${f}`) : "";
+      expect(css.startsWith(LAYER_ORDER), f).toBe(true);
+      expect(css.match(/^@layer luz\.site \{$/gm) ?? [], f).toHaveLength(1);
+    }
+  });
+
+  it("`exports` is exactly the list of spec 1.3, with no `./placeholders/*`", () => {
+    expect(manifest.exports).toEqual({
+      ".": "./dist/site.js",
+      "./search": "./dist/search.js",
+      "./consent": "./dist/consent.js",
+      "./css": "./dist/site.css",
+      "./css/min": "./dist/site.min.css",
+      "./print.css": "./dist/print.css",
+      "./components/*": "./dist/components/*",
+      "./package.json": "./package.json",
+    });
+  });
+
+  it("`sideEffects` is the stylesheets and the three files that define or load an element", () => {
+    expect([...manifest.sideEffects].sort()).toEqual(
+      ["*.css", "./dist/site.js", "./dist/site.min.js", "./dist/search.js", "./dist/search.min.js", "./dist/consent.js", "./dist/consent.min.js"].sort(),
+    );
+  });
+
+  it("ships `dist` and the licence only, and describes the five components", () => {
+    expect(manifest.files).toEqual(["dist", "LICENSE"]);
+    for (const word of ["search", "consent", "language", "submenu", "banner"]) expect(manifest.description.toLowerCase(), word).toContain(word);
+    for (const word of ["shell", "header", "footer", "hero", "placeholder"]) expect(manifest.description.toLowerCase(), word).not.toContain(word);
+  });
+
+  it("pack-files.txt lists the five components, plain and minified, and no placeholder", () => {
+    const packed = read("packages/site/pack-files.txt").split("\n").filter(Boolean);
+    expect(packed.filter((f) => f.startsWith("dist/components/")).sort()).toEqual([...components, ...minified].sort().map((f) => `dist/components/${f}`));
+    expect(packed.filter((f) => /placeholder/.test(f))).toEqual([]);
+  });
+
+  it("no source of site names a `luz-site-*` class or property: the page structure left in steps 4 to 11", () => {
+    expect(offenders(["site"], /luz-site-/)).toEqual([]);
+  });
+
+  it("the print stylesheet hides what only works on a screen: the search, the consent band and the fallback link", () => {
+    const css = read("packages/site/src/components/_print.css");
+    for (const hidden of ["luz-search", "luz-consent", ".luz-search__trigger"]) expect(css, hidden).toContain(hidden);
+  });
+});
+
+/* ---- (d) The placeholders are docs-only (D2, security: placeholders) ------- */
+
+describe("the image placeholders are docs-only", () => {
+  const read = (path) => readFileSync(`${root}${path}`, "utf-8");
+  const dir = "apps/docs/assets/placeholders";
+
+  it("site ships none: no source folder, no export, no build step, no file in the tarball list", () => {
+    expect(existsSync(`${root}packages/site/src/placeholders`), "packages/site/src/placeholders").toBe(false);
+    expect(/placeholder/.test(read("packages/site/package.json")), "package.json").toBe(false);
+    expect(/placeholders/.test(read("scripts/build-site.js")), "scripts/build-site.js").toBe(false);
+    expect(/placeholder/.test(read("packages/site/pack-files.txt")), "pack-files.txt").toBe(false);
+    expect(existsSync(`${root}packages/site/dist/placeholders`) && readdirSync(`${root}packages/site/dist/placeholders`).length, "built site").toBeFalsy();
+  });
+
+  it("every placeholder the build promises is under apps/docs/assets/placeholders/", () => {
+    const files = [];
+    for (const prefix of Object.values(VARIANTS)) {
+      files.push(`${prefix}.svg`);
+      for (const [name, ratio] of Object.entries(RATIOS)) {
+        for (const long of LONG_SIDES) {
+          const [width] = sizeOf(ratio, long);
+          files.push(`${prefix}-${name}-${width}.avif`, `${prefix}-${name}-${width}.webp`);
+          if (JPEG_LONG_SIDES.includes(long)) files.push(`${prefix}-${name}-${width}.jpg`);
+        }
+      }
+    }
+    expect(files.filter((f) => !existsSync(`${root}${dir}/${f}`))).toEqual([]);
+  });
+
+  it("their MIT notice stays next to them: a LICENSE file in the same folder", () => {
+    expect(existsSync(`${root}${dir}/LICENSE`), `${dir}/LICENSE`).toBe(true);
+    const licence = existsSync(`${root}${dir}/LICENSE`) ? read(`${dir}/LICENSE`) : "";
+    expect(/MIT License/.test(licence), "says MIT License").toBe(true);
+    expect(/Creative Commons|SIL Open Font|Apache License|GNU/i.test(licence), "only MIT").toBe(false);
+  });
+
+  it("the script that renders them writes there, not into a package", () => {
+    const script = read("scripts/build-placeholders.js");
+    expect(script.includes("apps/docs/assets/placeholders"), "writes to apps/docs/assets/placeholders").toBe(true);
+    expect(script.includes("packages/site"), "names no package").toBe(false);
+  });
+
+  it("no published stylesheet or package list points at them: no `url()` to a placeholder, no export", () => {
+    const bad = [];
+    for (const name of ["tokens", "core", "site", ...SITE_KINDS]) {
+      for (const { path, text } of sources(name, [".css"])) if (/url\([^)]*placeholder/.test(text)) bad.push(path);
+      const manifest = JSON.parse(read(`packages/${name}/package.json`));
+      if (JSON.stringify(manifest.exports ?? {}).includes("placeholder")) bad.push(`packages/${name}/package.json exports`);
+    }
+    expect(bad).toEqual([]);
+  });
 });

@@ -71,10 +71,11 @@ test.describe('Adoption levels', () => {
 
     expect(failed).toEqual([]);
     expect(warnings).toEqual([]);
-    const maxWidth = await page
+    // A custom element is inline until site.css styles its tag: block means the stylesheet is there
+    const display = await page
       .locator('#probe')
-      .evaluate((el) => getComputedStyle(el).maxWidth);
-    expect(maxWidth).not.toBe('none');
+      .evaluate((el) => getComputedStyle(el).display);
+    expect(display).toBe('block');
   });
 
   test('core without tokens warns about the missing layer', async ({ page }) => {

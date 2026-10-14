@@ -196,9 +196,9 @@ test.describe('search: results', () => {
     await page.keyboard.press('Control+k');
     for (const p of titles) {
       await field(page).fill(p.meta.title);
-      // A title shared by two pages (site's and landing's Footer and Hero, until step 12 deletes
-      // site's) accepts either page; a unique title must be its own page
-      const routes = sample.concat(site.pages).filter((q, i, all) => q.meta.search !== 'false' && q.meta.title === p.meta.title && all.indexOf(q) === i).map((q) => q.route);
+      // Every title is one page's own (tests/docs-site.test.js): the first result is that page. The one
+      // name two pages share by design is a landing's and a cms' Header or Footer: either page will do
+      const routes = site.pages.filter((q) => q.meta.search !== 'false' && q.meta.title === p.meta.title && (q === p || (SITE_KINDS.includes(q.meta.area) && SITE_KINDS.includes(p.meta.area)))).map((q) => q.route);
       await expect(results(page).first(), p.meta.title).toHaveAttribute('href', new RegExp(`(${routes.join('|')})$`));
     }
   });

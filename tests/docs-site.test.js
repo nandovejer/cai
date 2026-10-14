@@ -4,7 +4,7 @@
  * check and the security rules of .claude/plans/docs-redesign/security.md
  * (SEC-PLG-*). The real site is checked too: it must build with no problem.
  */
-import { mkdirSync, mkdtempSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, statSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -553,7 +553,7 @@ describe("the LUZ docs site", () => {
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", ...SITE_KINDS].includes(p.meta.area) && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(54);
+    expect(viewPages).toHaveLength(46);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {
@@ -754,6 +754,70 @@ describe("the LUZ docs site", () => {
     // Data, not code: the Tokens list, on its index and on one of its own targets
     expect(endOf(rendered.get("/docs/tokens/")).links).toEqual(["/docs/tokens/modes/", "/docs/components/", "/docs/tokens/figma/"]);
     expect(endOf(rendered.get("/docs/tokens/modes/")).links).toEqual(["/docs/components/", "/docs/tokens/figma/"]);
+  });
+
+  // F3 step 12: what moved out of site leaves its pages behind. Each went to core (shell and
+  // actions to `layout`, section to `band`, image, skip link), to landing (hero, footer, header,
+  // section) or to cms (header, footer, page header); the old URLs fall to the 404 page
+  const LEFT_SITE = ["actions", "footer", "hero", "image", "lang-switcher", "notice", "page-header", "section", "shell", "site-header", "skip-link", "templates"];
+
+  it("the Site area holds its five components and its class reference, and nothing of the page structure that moved out", () => {
+    const routes = site.pages.filter((p) => p.meta.area === "site").map((p) => p.route).sort();
+    expect(routes).toEqual(["/docs/site/", ...["banner", "classes", "consent", "lang-switch", "search", "submenu"].map((slug) => `/docs/site/${slug}/`)]);
+    const patterns = site.pages.filter((p) => p.meta.area === "site" && p.meta.group === "patterns").map((p) => p.route);
+    expect(patterns.sort()).toEqual(["banner", "consent", "lang-switch", "search", "submenu"].map((slug) => `/docs/site/${slug}/`));
+  });
+
+  it("every title of a page is its own: one page per name, except a header or footer of two different kinds of site", () => {
+    const byTitle = new Map();
+    for (const p of site.pages.filter((q) => q.meta.search !== "false")) byTitle.set(p.meta.title, [...(byTitle.get(p.meta.title) ?? []), p.meta.area]);
+    const shared = [...byTitle].filter(([, areas]) => areas.length > 1 && !areas.every((a) => SITE_KINDS.includes(a)));
+    expect(shared.map(([title, areas]) => `${title}: ${areas.join(" and ")}`)).toEqual([]);
+  });
+
+  it("nothing links to a page that left site: pages, partials, layouts, the home page, its catalogs and site.json", () => {
+    const old = new RegExp(`/docs/site/(?:${LEFT_SITE.join("|")})/`);
+    const files = [];
+    const walk = (dir) => {
+      for (const entry of readdirSync(dir)) {
+        if (entry === "node_modules") continue;
+        const path = join(dir, entry);
+        if (statSync(path).isDirectory()) walk(path);
+        else if (/\.(html|json|js|css|md)$/.test(entry)) files.push(path);
+      }
+    };
+    walk(join(repo, "apps"));
+    for (const dir of ["packages/site", "packages/landing", "packages/cms", "packages/core"]) {
+      for (const entry of ["README.md"]) if (existsSync(join(repo, dir, entry))) files.push(join(repo, dir, entry));
+    }
+    files.push(join(repo, "README.md"));
+    const offenders = files.flatMap((file) =>
+      readFileSync(file, "utf-8").split("\n").flatMap((line, i) => (old.test(line) ? [`${file.slice(repo.length + 1)}:${i + 1}`] : [])),
+    );
+    expect(offenders).toEqual([]);
+  });
+
+  it("no page, partial, layout, home page or stylesheet of the apps uses a class or property of site's old blocks", () => {
+    // `luz-site-mode` is the key of the stored colour mode. A sentence that says what a class was called before
+    // F3 is fine; a `class` attribute (in a demo or in a snippet) or a selector is not
+    const inMarkup = /\bclass=(?:"|&quot;)[^"&]*\bluz-site-(?!mode)/;
+    const inCode = /\.luz-site-(?!mode)[a-z]|--luz-site-(?!mode)[a-z]/;
+    const offenders = [];
+    const walk = (dir) => {
+      for (const entry of readdirSync(dir)) {
+        if (entry === "node_modules") continue;
+        const path = join(dir, entry);
+        if (statSync(path).isDirectory()) walk(path);
+        else if (/\.(html|css|js|json)$/.test(entry)) {
+          const code = /\.(css|js)$/.test(entry);
+          readFileSync(path, "utf-8").split("\n").forEach((line, i) => {
+            if ((code ? inCode : inMarkup).test(line)) offenders.push(`${path.slice(repo.length + 1)}:${i + 1}`);
+          });
+        }
+      }
+    };
+    walk(join(repo, "apps"));
+    expect(offenders).toEqual([]);
   });
 
   it("renders the not-found page with no <base> and no script (SEC-MISC-3/5)", () => {

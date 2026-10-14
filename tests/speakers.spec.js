@@ -71,7 +71,7 @@ test.describe('speakers block', () => {
   for (const width of [320, 1280]) {
     test(`at ${width} px the frames are square and the page does not scroll sideways`, async ({ page }) => {
       await render(page, width);
-      const frames = page.locator('#speakers-test .luz-site-image--1x1');
+      const frames = page.locator('#speakers-test .luz-image--1x1');
       const boxes = await frames.evaluateAll((list) => list.map((el) => el.getBoundingClientRect()).map((r) => [r.width, r.height]));
       expect(boxes.length).toBeGreaterThanOrEqual(2);
       for (const [w, h] of boxes) {

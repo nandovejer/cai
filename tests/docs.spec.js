@@ -13,7 +13,7 @@
 
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import { readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
 import { SITE_KINDS } from '../scripts/luz-packages.js';
@@ -51,16 +51,17 @@ const settingsCss = readFileSync(fromRepo('packages/core/src/settings/_settings.
 const settingNames = (prefix) =>
   [...settingsCss.matchAll(new RegExp(`^\\s*(--luz-${prefix}-[\\w-]+):`, 'gm'))].map((m) => m[1]);
 
-// Every CSS file of a package of patterns (site: the shell patterns and the
-// search; landing: the patterns of a landing page; cms: the patterns of a
-// blog or a newspaper), and its classes
+// Every CSS file of a package of patterns (site: the five `<luz-*>` components,
+// whose classes are `.luz-<tag>__<part>` (F3, D5); landing: the patterns of a
+// landing page; cms: the patterns of a blog or a newspaper), and its classes
+const SITE_CLASS = /\.luz-(?:search|consent|lang-switch)(?:__[a-z_-]+|--[a-z_-]+)?/g;
 const classesOf = (name) => {
   const dir = fromRepo(`packages/${name}/src/components`);
   const css = readdirSync(dir)
     .filter((file) => file.endsWith('.css'))
     .map((file) => readFileSync(`${dir}/${file}`, 'utf-8'))
     .join('\n');
-  return [...new Set(css.match(new RegExp(`\\.luz-${name}-[a-z_-]+`, 'g')))];
+  return [...new Set(css.match(name === 'site' ? SITE_CLASS : new RegExp(`\\.luz-${name}-[a-z_-]+`, 'g')))];
 };
 const PATTERN_PACKAGES = ['site', ...SITE_KINDS];
 
@@ -928,9 +929,18 @@ test.describe('Site header and navigation toggle', () => {
       // tabindex="-1": a scrollable nav is a Tab stop of its own in Firefox
       expect(read(file), file).toMatch(/<nav class="luz-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+" tabindex="-1">/);
     }
-    for (const file of ['apps/landing/index.html', 'apps/docs/_layouts/page.html']) {
-      expect(read(file), file).toContain('href="/apps/landing/site-header.css"');
+    // F3 step 13 (D9 a): the header's stylesheet and script are the docs app's, shared with the home page
+    for (const file of ['apps/landing/index.html', 'apps/docs/_layouts/page.html', 'apps/docs/_layouts/not-found.html']) {
+      expect(read(file).includes('href="/apps/docs/site-header.css"'), `${file} links /apps/docs/site-header.css`).toBe(true);
+      expect(read(file).includes('/apps/landing/site-header.css'), `${file} no longer links the old path`).toBe(false);
     }
+  });
+
+  test('the header\'s stylesheet and script live in apps/docs, and the home page and the docs import them from there', () => {
+    for (const file of ['apps/docs/site-header.css', 'apps/docs/site-header.js']) expect(existsSync(fromRepo(file)), file).toBe(true);
+    for (const file of ['apps/landing/site-header.css', 'apps/landing/site-header.js']) expect(existsSync(fromRepo(file)), `${file} moved`).toBe(false);
+    expect(/from\s+["']\.\/site-header\.js["']/.test(read('apps/docs/reference.js')), 'reference.js imports ./site-header.js').toBe(true);
+    expect(/from\s+["']\.\.\/docs\/site-header\.js["']/.test(read('apps/landing/landing.js')), 'landing.js imports ../docs/site-header.js').toBe(true);
   });
 
   const PAGES = [

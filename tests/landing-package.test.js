@@ -149,7 +149,7 @@ describe("the home page and the docs footer are built on landing and core classe
     const files = [
       "apps/landing/index.html",
       "apps/landing/landing.css",
-      "apps/landing/site-header.css",
+      "apps/docs/site-header.css",
       "apps/docs/_partials/footer.html",
       "apps/docs/_partials/footer-links.html",
       "apps/docs/_layouts/not-found.html",

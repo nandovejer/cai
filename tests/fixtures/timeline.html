@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timeline</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <style>
+    /* Fixture only: the vertical timeline must be taller than the viewport to scroll. */
+    #vertical .luz-timeline__item { min-height: 70vh; }
+    .spacer { height: 80vh; }
+    #many-box { max-width: 320px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Timeline</h1>
+
+    <!-- Horizontal, no autoplay: four items -->
+    <h2>Horizontal</h2>
+    <luz-timeline id="horizontal" aria-label="History of LUZ">
+      <ol class="luz-timeline">
+        <li class="luz-timeline__item">
+          <time class="luz-timeline__date" datetime="2020-03">March 2020</time>
+          <p class="luz-timeline__title">First sketch</p>
+          <p class="luz-timeline__text">The tokens are drawn.</p>
+        </li>
+        <li class="luz-timeline__item">
+          <time class="luz-timeline__date" datetime="2021-06">June 2021</time>
+          <p class="luz-timeline__title">Core</p>
+          <p class="luz-timeline__text">Components without a build step.</p>
+        </li>
+        <li class="luz-timeline__item">
+          <time class="luz-timeline__date" datetime="2022-05">May 2022</time>
+          <h3 class="luz-timeline__title">Site</h3>
+          <p class="luz-timeline__text">Patterns for a whole page. <a href="#after">A link in a card</a>.</p>
+        </li>
+        <li class="luz-timeline__item">
+          <time class="luz-timeline__date" datetime="2023-10">October 2023</time>
+          <p class="luz-timeline__title">Release</p>
+          <p class="luz-timeline__text">Version 0.1.0.</p>
+        </li>
+      </ol>
+    </luz-timeline>
+
+    <!-- Horizontal, opted in to autoplay every 2 s -->
+    <h2>Autoplay</h2>
+    <luz-timeline id="autoplay" aria-label="Autoplay history" autoplay interval="2000">
+      <ol class="luz-timeline">
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2020">2020</time><p class="luz-timeline__title">One</p><p class="luz-timeline__text">First.</p></li>
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2021">2021</time><p class="luz-timeline__title">Two</p><p class="luz-timeline__text">Second.</p></li>
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2022">2022</time><p class="luz-timeline__title">Three</p><p class="luz-timeline__text">Third.</p></li>
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2023">2023</time><p class="luz-timeline__title">Four</p><p class="luz-timeline__text">Fourth.</p></li>
+      </ol>
+    </luz-timeline>
+
+    <!-- Many items in a narrow box: the rail overflows and must scroll -->
+    <h2>Many</h2>
+    <div id="many-box">
+      <luz-timeline id="many" aria-label="Many items">
+        <ol class="luz-timeline">
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2001">Year 2001</time><p class="luz-timeline__title">A</p><p class="luz-timeline__text">a</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2002">Year 2002</time><p class="luz-timeline__title">B</p><p class="luz-timeline__text">b</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2003">Year 2003</time><p class="luz-timeline__title">C</p><p class="luz-timeline__text">c</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2004">Year 2004</time><p class="luz-timeline__title">D</p><p class="luz-timeline__text">d</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2005">Year 2005</time><p class="luz-timeline__title">E</p><p class="luz-timeline__text">e</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2006">Year 2006</time><p class="luz-timeline__title">F</p><p class="luz-timeline__text">f</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2007">Year 2007</time><p class="luz-timeline__title">G</p><p class="luz-timeline__text">g</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2008">Year 2008</time><p class="luz-timeline__title">H</p><p class="luz-timeline__text">h</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2009">Year 2009</time><p class="luz-timeline__title">I</p><p class="luz-timeline__text">i</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2010">Year 2010</time><p class="luz-timeline__title">J</p><p class="luz-timeline__text">j</p></li>
+        </ol>
+      </luz-timeline>
+    </div>
+
+    <!-- Right to left -->
+    <h2>Right to left</h2>
+    <div dir="rtl">
+      <luz-timeline id="rtl" aria-label="History, right to left">
+        <ol class="luz-timeline">
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2020">2020</time><p class="luz-timeline__title">One</p><p class="luz-timeline__text">First.</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2021">2021</time><p class="luz-timeline__title">Two</p><p class="luz-timeline__text">Second.</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2022">2022</time><p class="luz-timeline__title">Three</p><p class="luz-timeline__text">Third.</p></li>
+          <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2023">2023</time><p class="luz-timeline__title">Four</p><p class="luz-timeline__text">Fourth.</p></li>
+        </ol>
+      </luz-timeline>
+    </div>
+
+    <!-- The labels of the buttons are overridden by attributes -->
+    <h2>Labels</h2>
+    <luz-timeline id="labels" aria-label="Labels" data-luz-label-previous="Back one" data-luz-label-next="Forward one">
+      <ol class="luz-timeline">
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2020">2020</time><p class="luz-timeline__title">One</p><p class="luz-timeline__text">First.</p></li>
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2021">2021</time><p class="luz-timeline__title">Two</p><p class="luz-timeline__text">Second.</p></li>
+      </ol>
+    </luz-timeline>
+
+    <!-- Vertical: taller than the viewport, so it scrolls -->
+    <h2 id="after">Vertical</h2>
+    <div class="spacer"></div>
+    <luz-timeline id="vertical" layout="vertical" aria-label="Vertical history">
+      <ol class="luz-timeline">
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2020">2020</time><p class="luz-timeline__title">One</p><p class="luz-timeline__text">First.</p></li>
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2021">2021</time><p class="luz-timeline__title">Two</p><p class="luz-timeline__text">Second.</p></li>
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2022">2022</time><p class="luz-timeline__title">Three</p><p class="luz-timeline__text">Third.</p></li>
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2023">2023</time><p class="luz-timeline__title">Four</p><p class="luz-timeline__text">Fourth.</p></li>
+      </ol>
+    </luz-timeline>
+    <div class="spacer"></div>
+  </main>
+  <script type="module">
+    // ?none: the page has no timeline, so luz.js must not load the chunk.
+    const params = new URLSearchParams(location.search);
+    if (params.has("none")) document.querySelectorAll("luz-timeline").forEach((el) => el.remove());
+    await import("/packages/core/dist/luz.js");
+  </script>
+</body>
+</html>

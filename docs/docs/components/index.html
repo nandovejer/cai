@@ -15,8 +15,8 @@
   <script type="module" crossorigin src="../../assets/reference-Dl7sRzgr.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/site-header-B6t6HMAm.css">
   <link rel="stylesheet" crossorigin href="../../assets/reference-CeD1sUH7.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-CPBI7ipt.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-pxSe5p3P.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-C9NQQl_D.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-Ze4rmHPB.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -60,7 +60,7 @@
     </search>
   </dialog>
   </luz-site-search>
-  <a class="luz-site-skip-link" href="#main-content">Skip to main content</a>
+  <a class="luz-skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" id="site-header">
     <div class="site-header__inner">
@@ -105,6 +105,7 @@
           <li><a class="luz-sidebar__link" href="../../docs/components/accordion/">Accordion</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/alert/">Alert</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/avatar/">Avatar</a></li>
+          <li><a class="luz-sidebar__link" href="../../docs/components/band/">Band</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/breadcrumb/">Breadcrumb</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/button/">Button</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/card/">Card</a></li>
@@ -115,15 +116,18 @@
           <li><a class="luz-sidebar__link" href="../../docs/components/figure/">Figure</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/form/">Form fields</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/icon-grid/">Icon grid</a></li>
+          <li><a class="luz-sidebar__link" href="../../docs/components/image/">Image</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/meta/">Meta line</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/meter/">Meter</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/modal/">Modal</a></li>
+          <li><a class="luz-sidebar__link" href="../../docs/components/navbar/">Navbar</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/pagination/">Pagination</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/player/">Player</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/progress/">Progress</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/prose/">Prose</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/select/">Select</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/sidebar/">Sidebar</a></li>
+          <li><a class="luz-sidebar__link" href="../../docs/components/skip-link/">Skip link</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/table/">Table</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/tabs/">Tabs</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/components/tag/">Tag and badge</a></li>
@@ -198,6 +202,10 @@
       <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/avatar/">Avatar</a></h3>
         <p class="luz-card__body docs-card__desc">Shows who a person or a team is, with their initials or a photo, in three sizes.</p>
+      </li>
+      <li class="luz-card docs-card">
+        <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/band/">Band</a></h3>
+        <p class="luz-card__body docs-card__desc">Sets one block of a page on a tint that runs from edge to edge, while its content keeps the column.</p>
       </li>
       <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/card/">Card</a></h3>
@@ -278,12 +286,20 @@
         <p class="luz-card__body docs-card__desc">Lets readers choose light, dark or high contrast: radios that work without JavaScript, or one button that cycles.</p>
       </li>
       <li class="luz-card docs-card">
+        <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/navbar/">Navbar</a></h3>
+        <p class="luz-card__body docs-card__desc">Puts the main links of a site in a header&#39;s row, and in a panel under it on a narrow screen.</p>
+      </li>
+      <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/pagination/">Pagination</a></h3>
         <p class="luz-card__body docs-card__desc">Links to the pages of a list that goes on over several, with the current page marked.</p>
       </li>
       <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/sidebar/">Sidebar</a></h3>
         <p class="luz-card__body docs-card__desc">Holds the main navigation of a site or an app, and becomes a drawer on small screens.</p>
+      </li>
+      <li class="luz-card docs-card">
+        <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/skip-link/">Skip link</a></h3>
+        <p class="luz-card__body docs-card__desc">Lets keyboard users jump past the header to the main content.</p>
       </li>
       <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/tabs/">Tabs</a></h3>
@@ -295,6 +311,10 @@
     <h2 id="group-media">Media</h2>
     <ul class="docs-gallery__cards">
       <li class="luz-card docs-card">
+        <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/image/">Image</a></h3>
+        <p class="luz-card__body docs-card__desc">Shows a picture in a frame of fixed shape, on a flat surface while it loads or when it is missing.</p>
+      </li>
+      <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/components/player/">Player</a></h3>
         <p class="luz-card__body docs-card__desc">Plays a video, a sound or a MIDI file in the page, with the same controls for all three.</p>
       </li>
@@ -303,7 +323,7 @@
   <section class="docs-gallery" aria-labelledby="group-helpers">
     <h2 id="group-helpers">Helpers</h2>
     <ul class="docs-gallery__rows">
-      <li><a href="../../docs/components/layout/">Layout objects</a> <span class="docs-gallery__desc">Lay out blocks in a stack, a row, a grid or beside an image, and the page itself, with the o-* classes.</span></li>
+      <li><a href="../../docs/components/layout/">Layout objects</a> <span class="docs-gallery__desc">Lay out blocks in a stack, a row, a grid or beside an image, a group of actions, and the page itself with its sticky bar, with the o-* classes.</span></li>
       <li><a href="../../docs/components/utilities/">Utility classes</a> <span class="docs-gallery__desc">Small u-* classes that do one thing each, for the cases a component does not cover.</span></li>
       <li><a href="../../docs/components/keyframes/">Keyframes</a> <span class="docs-gallery__desc">Five shared animations for your own components, which stop when the reader asks for reduced motion.</span></li>
     </ul>

@@ -5,7 +5,7 @@
  * Then lists what no script can decide: the manual and the browser reviews.
  *
  * It never runs the `firefox` or `webkit` Playwright projects: those need the
- * owner's permission (AGENTS.md section 5) and go through front-firefox and
+ * owner's permission (AGENTS.md section 6) and go through front-firefox and
  * front-safari.
  *
  * Usage: node scripts/qa-release.js [--skip-ui] [--fast]
@@ -75,7 +75,7 @@ const dirty = git("status", "--short").split("\n").filter(Boolean);
 const uiFiles = changed.filter((f) => /^packages\/(core|site|landing|cms|tokens)\/src\//.test(f) || /^packages\/core\/src\/(components|elements)\//.test(f));
 const components = [...new Set(uiFiles.filter((f) => /components\/[\w-]+\.(css|js)$/.test(f)).map((f) => f.match(/components\/([\w-]+)\./)[1]).filter((n) => !n.startsWith("_") && n !== "index"))].sort();
 const changesets = existsSync(join(root, ".changeset")) ? readdirSync(join(root, ".changeset")).filter((f) => f.endsWith(".md") && f !== "README.md") : [];
-// Open Safari and Firefox reviews live in Claude's memory for this repo (AGENTS.md section 5).
+// Open Safari and Firefox reviews live in Claude's memory for this repo (AGENTS.md section 6).
 const ledgerFile = join(homedir(), ".claude", "projects", root.replace(/[\\/]/g, "-"), "memory", "cai-browser-review-pending.md");
 const ledger = existsSync(ledgerFile) ? readFileSync(ledgerFile, "utf-8") : null;
 const openRows = ledger
@@ -103,7 +103,7 @@ for (const r of failed) out.push(`### Failure: ${r.name}`, "", "```text", r.outp
 
 out.push("## Needs a person", "");
 out.push("Nothing below was decided by a script.", "");
-out.push("### Browsers (AGENTS.md section 5)", "");
+out.push("### Browsers (AGENTS.md section 6)", "");
 out.push("- **Not run here:** the `firefox` and `webkit` Playwright projects. They run only with the owner's permission, through `front-firefox` and `front-safari`.");
 if (ledger === null) out.push("- The pending list `cai-browser-review-pending.md` was not found in Claude's memory: ask what has not been reviewed.");
 else if (openRows.length === 0) out.push("- The pending list has **no open rows**.");

@@ -1,6 +1,6 @@
 # CAI — Principles and red lines
 
-Inspired by the [GOV.UK Design System](https://design-system.service.gov.uk/). These rules govern every change to `packages/`, `apps/` and the docs. They sit above [VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md) (which covers *how* we build) and tell you *what* we accept.
+Inspired by the [GOV.UK Design System](https://design-system.service.gov.uk/). These rules govern every change to `packages/`, `apps/` and the docs. They sit above [VANILLA-FIRST.md](./dev/VANILLA-FIRST.md) (which covers *how* we build) and tell you *what* we accept.
 
 CAI is npm packages for developers who install it without talking to us: `@cai-ds/tokens` (standalone), `@cai-ds/core` (needs tokens) and `@cai-ds/site` (needs core and tokens), which share one version, and packages for one kind of site on top of them, each with its own version: `@cai-ds/landing` and `@cai-ds/cms` (each needs site, core and tokens).
 
@@ -136,6 +136,7 @@ Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without
 - **Decisions are written down.** A new component, a removed one, a changed default: each gets a changeset entry.
 - **Accessibility statement.** The docs app publishes which WCAG 2.2 criteria and EN 301 549 clauses are met, which are not, and which assistive technologies were tested for the current release. Update it on every release.
 - **Tests encode the rules.** Every rule here that a machine can check has a check in `tests/`, stylelint, ESLint or `scripts/check-*.js`.
+- **Tests first (`SR-9`).** Every change to `packages/`, `apps/` or `scripts/` starts with a test that fails without it: a commit `test: …` that is red, then the change that makes it green. A bug fix starts with the test that reproduces it. A change no machine can check (wording, a docs page's prose) says so in its PR. The person or agent who writes the change does not write its test alone: the test is read before the code.
 - **Docs per component (`SR-5`).** Every core component and site pattern has its own page with, in this order: a one-line summary, a live example, *Known issues* (always visible; "None known." when empty), and two tabs, **Code** and **Design**, that stack as plain sections without JavaScript. **Code**: *Copy the markup* · *Variants and options* · *How it works* · *Without JavaScript* · *Keyboard and ARIA*. **Design**: *When to use* · *When not to use* · *Do and don't* · *Writing the content* · *Contrast and focus* · *Tokens it uses*. Plus an axe and a keyboard test. *When to use* and *When not to use* are red line 18.
 - **Beta.** CAI is in beta: any release may break anything, always with a changeset that explains how to migrate. It leaves beta when every red line is checked by a tool, the EN 301 549 mapping is published, the public API (`.cai-*` classes, `data-cai-*` hooks, semantic tokens, JS exports) is frozen, the backlog in AGENTS.md is done, and the maintainer considers it stable. From then on, semantic versioning applies strictly: [VERSIONING.md](./VERSIONING.md) says what the public API is, how a deprecation runs, and the checklist for leaving beta.
 
@@ -157,12 +158,13 @@ Absolute. A PR that crosses one is closed, not reviewed.
 10. **No primitive token or literal colour/space value in a component.** Semantic tokens only.
 11. **No bare-element rule outside `:where()`** in `packages/`.
 12. **No third-party network request** (fonts, scripts, images, analytics) from a package or an app.
-13. **No bundled font unless its only licence is the repository's (MIT).** Dual-licensed fonts are not accepted, even when MIT is one of the options. The notice ships next to it as `LICENSE-<Font>.txt`.
+13. **Nothing published or served under a licence other than the repository's (MIT), and MIT only.** It covers every file a package ships and every file the Pages site serves: code, fonts, icons, images, audio, examples. Dual-licensed work is not accepted, even when MIT is one of the options, and neither is OFL or Creative Commons. Third-party MIT work keeps its notice next to it (a font as `LICENSE-<Font>.txt`).
 14. **No hand edits to `dist/` or `docs/`.**
 15. **No new status colour, no new meaning for an existing one.**
 16. **No browser sniffing.** Feature detection only.
 17. **No artifact over its size ceiling** in budgets.json. Ceilings are never raised: optimise or remove instead.
 18. **No component or pattern merged without its docs page, and that page says *When to use* and *When not to use*.**
+19. **Nothing only for AI agents.** What CAI publishes for an agent to read (`llms.txt`, manifests of classes and elements, examples, the "For AI agents" section of a README) is generated from the docs and the source a person reads, never written by hand on the side. An agent and a person always get the same facts.
 
 ### Which check covers which red line
 
@@ -182,12 +184,13 @@ Each red line has at least one check that fails when it is broken. The table is 
 | RL-10 | `stylelint.config.js` | Apps and docs CSS (the rule covers `packages/`) |
 | RL-11 | `scripts/stylelint/no-bare-element.js` | Nothing known |
 | RL-12 | `eslint.config.js`, `tests/red-lines.test.js`, `tests/red-lines.spec.js` | A request made by a browser extension, or by an embedded `iframe` a consumer adds |
-| RL-13 | `scripts/check-pack.js`, `tests/red-lines.test.js` | The licence text being correct for the file: it checks that one is there |
+| RL-13 | `scripts/check-pack.js`, `tests/red-lines.test.js` | For now it checks fonts only: code or images copied into the repo without their origin, and the licence text being correct for the file |
 | RL-14 | `scripts/check-generated.js` | A hand edit to `dist/`: it is ignored by git and a later build overwrites it, so only `docs/` can be committed edited, and that is what the check compares |
 | RL-15 | `tests/red-lines.test.js` | Whether a *new use* of a status colour has the right meaning |
 | RL-16 | `eslint.config.js` | Sniffing written through a library: there are none (RL-1) |
 | RL-17 | `scripts/check-size.js` | Anything that is not in `budgets.json` |
 | RL-18 | `tests/docs-site.test.js`, `tests/docs.spec.js` | Whether the text of *When to use* is true |
+| RL-19 | `scripts/check-generated.js` | It compares `docs/` with a fresh build; the files for agents, and the test that regenerates them, do not exist yet. Text inside a docs page that only an agent would read |
 
 ## Strong rules
 
@@ -203,6 +206,7 @@ Mandatory unless an exception is registered in [EXCEPTIONS.md](./EXCEPTIONS.md).
 | SR-6 | Manual testing with the four screen reader and browser pairs before a release that changes UI | §1 |
 | SR-7 | Text generated by JS comes from the i18n dictionary | §5 |
 | SR-8 | Every other rule in sections 1–9 | — |
+| SR-9 | Tests first: the failing test is committed before the change that makes it pass | §9 |
 
 ---
 
@@ -222,7 +226,7 @@ Copy into the PR description and tick every line. An unticked line needs an EXCE
 - [ ] Generated strings come from the i18n dictionary, in English and Spanish
 - [ ] Strings: sentence case, verb-first buttons, meaningful links, visible labels
 - [ ] Docs page: summary · example · Known issues · Code (markup, variants, how it works, without JS, keyboard and ARIA) · Design (when to use, when not to use, do and don't, writing the content, contrast and focus, tokens it uses)
-- [ ] Tests added (axe + keyboard) and `pnpm test:ui` green
+- [ ] Failing test committed first (`test: …`), then the change; axe + keyboard tests added and `pnpm test:ui` green
 - [ ] `pnpm check:size` and `pnpm check:exceptions` green
 - [ ] dist/ regenerated, `check-pack` updated, changeset added
 ```

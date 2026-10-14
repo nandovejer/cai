@@ -185,7 +185,7 @@ Everything above is for people who install the packages. The rest is for people 
 
 ### Workspace
 
-See [STRUCTURE.md](./.claude/STRUCTURE.md) for the full annotated directory layout. Summary:
+See [STRUCTURE.md](./dev/STRUCTURE.md) for the full annotated directory layout. Summary:
 
 ```text
 cai-design-system/
@@ -271,11 +271,11 @@ pnpm changeset       # Describe a change for the next release
 - **UI (Playwright):** theme and mode switching, sidebar, modal focus trap, tabs keyboard behavior, the three adoption levels loaded as a consumer would load them, and the home and documentation pages (axe, no horizontal overflow, works without JavaScript, contrast of text).
 - **Tarball contract (`pnpm check:pack`):** file list per package, `LICENSE` and font licences present, no sources or dotfiles, exports targets exist, no `workspace:` ranges.
 
-See [TESTING.md](./.claude/TESTING.md) for the detailed guide. Test tooling is dev-only and does not conflict with the vanilla-first runtime principle.
+See [TESTING.md](./dev/TESTING.md) for the detailed guide. Test tooling is dev-only and does not conflict with the vanilla-first runtime principle.
 
 ### Build flow
 
-For the complete workflow see [DIST-RULES.md](./.claude/DIST-RULES.md). The short version: edit `src/`, run the package's build, never edit `dist/`. Every build starts from a clean `dist/`.
+For the complete workflow see [DIST-RULES.md](./dev/DIST-RULES.md). The short version: edit `src/`, run the package's build, never edit `dist/`. Every build starts from a clean `dist/`.
 
 **Tokens.** `packages/tokens/dist/` is composed from tracked sources: the primitives (Layer 1), generated from `packages/tokens/tokens.json`, and the handwritten `light`, `dark` and `high-contrast` blocks of `packages/tokens/src/semantic.css` (Layer 2). Outputs: `cai-tokens.css` (fonts + tokens), `tokens.css` (no `@font-face`), `fonts.css`, `tokens.json`, the DTCG files and `fonts/`.
 
@@ -350,11 +350,11 @@ Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) 
 | File | Purpose |
 | --- | --- |
 | **[PRINCIPLES.md](./PRINCIPLES.md)** | Red lines and strong rules every change must respect |
-| **[VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md)** | Architectural philosophy: why vanilla, decision framework |
-| **[STRUCTURE.md](./.claude/STRUCTURE.md)** | Annotated monorepo directory layout |
-| **[DIST-RULES.md](./.claude/DIST-RULES.md)** | Build workflow: `src/` to `dist/` regeneration steps |
-| **[QUICK-REFERENCE.md](./.claude/QUICK-REFERENCE.md)** | Commands, naming conventions, token structure, component inventory |
-| **[TESTING.md](./.claude/TESTING.md)** | Test infrastructure and coverage strategy |
+| **[VANILLA-FIRST.md](./dev/VANILLA-FIRST.md)** | Architectural philosophy: why vanilla, decision framework |
+| **[STRUCTURE.md](./dev/STRUCTURE.md)** | Annotated monorepo directory layout |
+| **[DIST-RULES.md](./dev/DIST-RULES.md)** | Build workflow: `src/` to `dist/` regeneration steps |
+| **[QUICK-REFERENCE.md](./dev/QUICK-REFERENCE.md)** | Commands, naming conventions, token structure, component inventory |
+| **[TESTING.md](./dev/TESTING.md)** | Test infrastructure and coverage strategy |
 | **[AGENTS.md](./AGENTS.md)** | Project context and rules for AI agents |
 | **[CONTRIBUTING.md](./CONTRIBUTING.md)** | PR guidelines, checklist, releases |
 | **[SECURITY.md](./SECURITY.md)** | Reporting, supply-chain practices, CDN/SRI guidance, audit history |

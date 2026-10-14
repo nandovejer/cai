@@ -33,7 +33,12 @@ npm-debug.log*
 .aws/
 .ssh/
 
-# Claude Code: local agent config and docs, at any depth
-.claude/
+# Claude Code: agents, hooks, settings.json and skills are versioned;
+# the maintainer's private notes (OWNER.md, CLAUDE.md, plans, reports) are not
+.claude/*
+!.claude/agents/
+!.claude/hooks/
+!.claude/settings.json
+!.claude/skills/
 CLAUDE.md
 CLAUDE.local.md

@@ -1,6 +1,6 @@
 # CAI Design System — agent context
 
-**See [PRINCIPLES.md](./PRINCIPLES.md) for the principles and red lines every change must respect, [VANILLA-FIRST.md](./.claude/VANILLA-FIRST.md) for architectural principles, [STRUCTURE.md](./.claude/STRUCTURE.md) for directory layout, and [QUICK-REFERENCE.md](./.claude/QUICK-REFERENCE.md) for naming, tokens, and commands.**
+**See [PRINCIPLES.md](./PRINCIPLES.md) for the principles and red lines every change must respect, [VANILLA-FIRST.md](./dev/VANILLA-FIRST.md) for architectural principles, [STRUCTURE.md](./dev/STRUCTURE.md) for directory layout, and [QUICK-REFERENCE.md](./dev/QUICK-REFERENCE.md) for naming, tokens, and commands.**
 
 ---
 
@@ -8,32 +8,27 @@
 
 ### 1. `dist/` is generated, never edited directly
 
-See [DIST-RULES.md](./.claude/DIST-RULES.md) for full regeneration steps.
+See [DIST-RULES.md](./dev/DIST-RULES.md) for full regeneration steps.
 
 ### 2. `docs/` is the generated GitHub Pages site
 
 `docs/` at the repo root is the output of `pnpm pages:build` (Vite, `--mode pages`, relative URLs) and is committed so GitHub Pages can serve it. Never edit it by hand: change `apps/` or `packages/`, rebuild, and commit the result.
 
-### 3. Bundled fonts must be MIT licensed, and only MIT
+### 3. Everything published or served is MIT, and only MIT
 
-Every font file shipped by a package must have the repository's licence (MIT) as its only licence, with its notice next to it as `LICENSE-<Font>.txt` (`pnpm check:pack` enforces the notice). Dual-licensed fonts are not accepted, even when MIT is one of the options, and neither is OFL. Sans and mono use the system stacks; prefer them to bundling a face (PRINCIPLES.md red line 13).
+Every file a package ships and every file the Pages site serves (code, fonts, icons, images, audio, examples) has the repository's licence (MIT) as its only licence (PRINCIPLES.md red line 13). Dual-licensed work is not accepted, even when MIT is one of the options, and neither is OFL or Creative Commons. Third-party MIT work keeps its notice next to it; a font's is `LICENSE-<Font>.txt` (`pnpm check:pack` enforces it). Sans and mono use the system stacks; prefer them to bundling a face.
 
 ### 4. Two levels of rules
 
 PRINCIPLES.md has red lines (`RL-n`, absolute, never excepted) and strong rules (`SR-n`). A strong rule may be broken only with a `cai-exception: EX-nnn` comment next to the code and a row in [EXCEPTIONS.md](./EXCEPTIONS.md); `pnpm check:exceptions` keeps them in step. Size ceilings in `budgets.json` are a red line: never raise one.
 
-### 5. Safari and Firefox reviews run only with the owner's permission
+### 5. Tests first
 
-The `front-safari` and `front-firefox` agents are consulted only on behalf of `frontend`, and never without the owner's say-so. `frontend` does not ask for them and does not interrupt the work: when it changes CSS, HTML or JS it adds what Safari and Firefox have not seen to the pending list in Claude's memory, `cai-browser-review-pending.md` (the `memory/` folder of this repo's Claude project), and carries on. The orchestrator asks the owner only when `npm-security-auditor` reports rows of that list as blocking (§6), or when the owner asks for the review.
+Every change to `packages/`, `apps/` or `scripts/` starts with a test that fails without it (PRINCIPLES.md SR-9): commit it red (`test: …`), then the change that makes it green. A bug fix starts with the test that reproduces it. Every recipe below starts there. See [TESTING.md](./dev/TESTING.md).
 
-- **Now:** run both in parallel on the rows concerned, with the row as their brief, and hand their findings back to `frontend`. They may apply fixes; if both touch the same file, run them in turn instead. A row is closed only when both have reviewed it: remove it from the list and add it to "Closed" in the ledger, `.claude/BROWSER-REVIEWS.md` (history, in the repo).
-- **Later:** nothing to write; the rows stay in the pending list.
+### 6. Browsers
 
-Test runs use `--project=chromium --project=chromium-nojs`. The `firefox` and `webkit` Playwright projects run only with the owner's permission, through these two agents. Do not launch them for work that does not come from `frontend`.
-
-### 6. The security audit's OK needs both browser reviews
-
-`npm-security-auditor` is the only agent that reads the pending list. It never gives its OK while that list, the git history or the ledger shows a component, file or change that `front-safari` and `front-firefox` have not both reviewed. It lists those items as blocking and asks the orchestrator to request the owner's permission to run both agents on them. Its OK comes only after both reviews are done and their must-fix findings are fixed or listed as known issues.
+Test runs use `--project=chromium --project=chromium-nojs`. The `firefox` and `webkit` Playwright projects, and the Safari and Firefox reviews, are run by the maintainer before a release; the record is [BROWSER-REVIEWS.md](./dev/BROWSER-REVIEWS.md).
 
 ---
 
@@ -83,7 +78,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
   - **Layer:** `LAYERS` in `scripts/cai-layers.js` (say why it goes where it goes), then the same statement in `packages/core/src/index.css` and `tests/fixtures/theme-brand.css`, the file in `tests/layers.test.js`, and the list in VERSIONING.md, `packages/core/README.md`, this file and `get-started/layers.html`. Tokens and core get a minor changeset: their dist repeats the statement.
   - **Rules and budget:** the stylelint glob of the RL-10 override, a row in `budgets.json` and the PRINCIPLES.md §8 table (a new row, never a raised ceiling).
   - **Docs:** its area in `apps/docs/site.json`, its kind in `AREA_KIND` of `scripts/docs-site/site.js`, its blocks in `PACKAGES` of `tests/site-docs.spec.js`, the area list in `tests/docs.spec.js` (sidebar test), the count of pattern pages in `tests/docs-design.test.js` and `tests/docs-site.test.js`; its `<link>` in `apps/docs/_layouts/page.html` and its dependency in `apps/docs/package.json` (and in `apps/landing/package.json` only if the home page uses it); `pages/<name>/index.html` (gallery), a page per pattern, `pages/<name>/templates.html`, the "Packages for one kind of site" section of `get-started/index.html`, `get-started/structure.html`, the accessibility statement for any known issue, and the home page's `adopt.next.<name>` in the three catalogs.
-  - **Repo:** README.md, PRINCIPLES.md (intro), `.github/CODEOWNERS`, the two issue templates, and STRUCTURE, QUICK-REFERENCE and DIST-RULES in `.claude/`; a minor changeset for the package (out of `fixed`, so it releases as 0.1.0).
+  - **Repo:** README.md, PRINCIPLES.md (intro), `.github/CODEOWNERS`, the two issue templates, and STRUCTURE, QUICK-REFERENCE and DIST-RULES in `dev/`; a minor changeset for the package (out of `fixed`, so it releases as 0.1.0).
 - The look: the default values of `semantic.css` are Vejer (warm surfaces, ET Book running text, sky-blue actions, soft radii), in the three modes. CAI ships no theme; `packages/core/src/themes/_template.css` is the starting point of a consumer's own, and `tests/theme-template.test.js` keeps it in step with `semantic.css`.
 - Cascade layers: every published stylesheet is in a layer of the container `cai` (`cai.tokens`, `cai.themes`, `cai.settings`, `cai.generic`, `cai.elements`, `cai.objects`, `cai.components`, `cai.utilities`, `cai.site`, `cai.landing`, `cai.cms`, `cai.print`), declared by `scripts/cai-layers.js`, which every build script uses. The names are public API; a new layer or a new file goes through `LAYERS` there, and `tests/layers.test.js` fails on a top-level layer name or an unlayered rule in `dist/`.
 - Classless: `packages/core/src/classless/_classless.css` is a file of its own (`dist/classless.css`, exported `@cai-ds/core/classless.css`), not in `cai.css`. It styles a bare button, text field, select and table inside `[data-cai-classless]`, in `cai.elements`, every selector inside `:where()` and `:not([class*="cai-"])`. It copies the components' declarations by hand; `tests/classless.spec.js` compares each element with its component.
@@ -99,9 +94,10 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 ### Adding a new component
 
 1. **Check first:** is there a native HTML element or browser API that solves this? (`dialog`, `details`, `popover`, `<input type="...">`, CSS `:has()`, etc.). If so, use it as the base.
-2. Create `packages/core/src/components/<name>.css` (use the standard header of the sibling files) and add its `@import` to `packages/core/src/components/index.css` in cascade order
-3. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./.claude/DIST-RULES.md)), then `node scripts/check-pack.js --update`
-4. Give it a page: `apps/docs/pages/components/<slug>.html` with front matter (`title`, a one-line `description` — the summary under the h1 —, `area: components`, `group` of the gallery, `files: components/<name>.css`, `module` if it has JS, `toc: h2,h3`), then a `<div class="docs-component" id="c-<name>">` holding, in this order (PRINCIPLES.md red line 18 and SR-5; `.claude/plans/docs-redesign/ia.md` §6):
+2. **Test first:** write `tests/<name>.spec.js` (what it renders, the keyboard, the no-JS state, axe) and, for logic or values, `tests/<name>.test.js`, from a fixture in `tests/fixtures/` or the docs page's demo. Run it, see it fail for the missing behaviour, and commit it (`test: …`).
+3. Create `packages/core/src/components/<name>.css` (use the standard header of the sibling files) and add its `@import` to `packages/core/src/components/index.css` in cascade order
+4. Run `pnpm core:build` — regenerates `dist/cai.css` AND `dist/components/<name>.css` (see [DIST-RULES.md](./dev/DIST-RULES.md)), then `node scripts/check-pack.js --update`
+5. Give it a page: `apps/docs/pages/components/<slug>.html` with front matter (`title`, a one-line `description` — the summary under the h1 —, `area: components`, `group` of the gallery, `files: components/<name>.css`, `module` if it has JS, `toc: h2,h3`), then a `<div class="docs-component" id="c-<name>">` holding, in this order (PRINCIPLES.md red line 18 and SR-5; `.claude/plans/docs-redesign/ia.md` §6):
    - `<h2 id="example">Example</h2>` and the live demo in `<div class="docs-example" data-docs-specimen>`;
    - `<h2 id="known-issues">Known issues</h2>`, always, with "None known." when empty;
    - the tab row `<nav class="cai-tabs docs-view-tabs" aria-label="<Title> documentation">` with `<a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>` then the same for `design`;
@@ -109,7 +105,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
    - `<div class="cai-tabpanel docs-view" id="design-panel">`: `<h2 class="docs-view__title" id="design">Design</h2>`, then `#when` When to use, `#when-not` When not to use, `#do-dont` Do and don't, `#content` Writing the content, `#contrast` Contrast and focus, `#tokens` Tokens it uses, and last a `docs-view__xref` line linking to `#keyboard`.
 
    Copy `components/button.html` as a model. Write *Copy the markup* with the `docs-snippet` block (a label bar, a copy button with `data-copy-from` pointing at the `<code>` id, then the `pre.cai-code-block`) and *Variants and options* as a `cai-table`. *Do and don't* is a `div.docs-dodont` with two `figure`s, `docs-dodont__item--do` then `--dont`, each starting with `<figcaption><strong class="docs-dodont__verdict">Do</strong>` (or `Don't`) and a reason; the example is real CAI markup in `<div class="docs-dodont__stage" inert aria-hidden="true">` (no `id` it does not need), or a `pre.cai-code-block` when the mistake would itself be a barrier (a11y.md TAB-20): never a live contrast or semantics failure. *Contrast and focus* is a `cai-table.docs-contrast` (Part, colour on background as `<code>--cai-…</code> on <code>--cai-…</code>` with ` over ` for a translucent layer, Light, Dark, High contrast, Needs) and a list that starts with `<strong>Focus:</strong>`; *Tokens it uses* is a `dl.docs-uses` of the tokens the component's CSS reads, grouped under links to their token pages. Never type a ratio, a value or a token list: compute them with `tests/helpers/design-tokens.js` (`contrast`, `formatRatio`, `tokensUsedBy`, `familyOf`); `tests/docs-design.test.js` recomputes every one and fails on drift. Without JavaScript both panels show, stacked, under their visible `h2`; with it, core `tabs.js` shows one and `apps/docs/view.js` remembers the reader's last tab. The sidebar, the gallery, "On this page", Previous / Next and the A–Z index pick the page up. `tests/docs-site.test.js` checks the structure of every component and pattern page, and `tests/docs.spec.js` finds the new page from the CSS file name. State the no-JS behavior and any known issue in the accessibility statement (`pages/accessibility.html`). A pattern page of site or of a package for one kind of site (`pages/site/<slug>.html`, `pages/landing/<slug>.html`, `pages/cms/<slug>.html`, `group: patterns`) has the same structure.
-5. If the styles are docs-only (grids, prop tables), put them in `apps/docs/reference.css`
+6. If the styles are docs-only (grids, prop tables), put them in `apps/docs/reference.css`
 
 **Before delivering anything, read [PRINCIPLES.md](./PRINCIPLES.md): its red lines are enforced by stylelint, ESLint, `pnpm check:size`, `pnpm check:strings`, `pnpm check:exceptions` and the Playwright suites (axe, no-JS, reduced motion, forced colors).**
 
@@ -122,31 +118,36 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 
 ### Adding a new semantic token
 
-1. Add it to `packages/tokens/src/semantic.css` in all three theme blocks (`:root, [data-theme="light"]`, `[data-theme="dark"]`, `[data-theme="high-contrast"]`)
-2. If it references a new primitive, also add that to `tokens.json`
-3. Run `pnpm tokens:build`
-4. Document it on the Tokens pages of the docs site (`apps/docs/pages/tokens/`; the semantic colours are on `tokens/color.html`)
+1. **Test first:** add the pair it must meet to `scripts/check-contrast.js` (or the assertion of the component that reads it) and see it fail.
+2. Add it to `packages/tokens/src/semantic.css` in all three theme blocks (`:root, [data-theme="light"]`, `[data-theme="dark"]`, `[data-theme="high-contrast"]`)
+3. If it references a new primitive, also add that to `tokens.json`
+4. Run `pnpm tokens:build`
+5. Document it on the Tokens pages of the docs site (`apps/docs/pages/tokens/`; the semantic colours are on `tokens/color.html`)
 
 ### Adding a new primitive color
 
-1. Add it to `tokens.json` under `color.{family}.{scale}`
-2. Run `pnpm tokens:build` — adds `--cai-{family}-{scale}` to Layer 1
-3. Reference from semantic tokens in Layer 2 if needed in any theme
+1. **Test first:** the semantic token or the contrast pair that will use it (a primitive alone is never read by a component, red line 10).
+2. Add it to `tokens.json` under `color.{family}.{scale}`
+3. Run `pnpm tokens:build` — adds `--cai-{family}-{scale}` to Layer 1
+4. Reference from semantic tokens in Layer 2 if needed in any theme
 
 ### Modifying a breakpoint or motion token
 
-Edit `packages/core/src/settings/_settings.css` only, then regenerate `dist/cai.css`.
+**Test first:** the spec of what the change must do (a layout at the new width, a duration under reduced motion). Then edit `packages/core/src/settings/_settings.css` only, and regenerate `dist/cai.css`.
 
 ### Adding a style for a bare HTML element
 
-1. Put the rule in the file of its MDN category under `packages/core/src/elements/` (`document`, `sections`, `text`, `inline`, `media`, `forms`, `interactive`).
-2. Wrap the whole selector in `:where()` (specificity 0), so any `.cai-*` class or the consumer's own rule wins. A pseudo-element goes outside: `:where(dialog)::backdrop`. There is no exception (red line 11): stylelint's `cai/no-bare-element` rule fails on any bare type selector in `packages/`.
-3. Elements that already have a component (`table`, `input`, `select`, `button`) are styled through its class, not here.
-4. Update the element's `styledBy` in `tests/fixtures/html-elements.json` and its card on the page of its category, `apps/docs/pages/html/<category>.html` (the A–Z table is on `html/index.html`), then run `pnpm core:build` and `pnpm test:ui`.
+1. **Test first:** update the element's `styledBy` in `tests/fixtures/html-elements.json` and run `pnpm test:ui`: it fails until the rule exists.
+2. Put the rule in the file of its MDN category under `packages/core/src/elements/` (`document`, `sections`, `text`, `inline`, `media`, `forms`, `interactive`).
+3. Wrap the whole selector in `:where()` (specificity 0), so any `.cai-*` class or the consumer's own rule wins. A pseudo-element goes outside: `:where(dialog)::backdrop`. There is no exception (red line 11): stylelint's `cai/no-bare-element` rule fails on any bare type selector in `packages/`.
+4. Elements that already have a component (`table`, `input`, `select`, `button`) are styled through its class, not here.
+5. Update the element's card on the page of its category, `apps/docs/pages/html/<category>.html` (the A–Z table is on `html/index.html`), then run `pnpm core:build` and `pnpm test:ui`.
 
 ### Adding a language to the home page
 
 The home page's text is not in `apps/landing/index.html`: the template says `{{t:key}}` (escaped text) or `{{html:key}}` (trusted inline HTML: only `<a href>`, `<code>`, `<span>`, `<strong>`, `<em>`, with `class`, `href`, `lang`, `data-count`), and the strings live in one flat catalog per language, `apps/landing/i18n/<code>.json`. The shared partials it includes (`header`, `site-links`, `search`) use the same keys; the docs pages render them with the English catalog. `{{lang}}`, `{{dir}}`, `{{home}}`, `{{alternates}}` and `{{langswitch}}` are written by the generator (`scripts/docs-site/i18n.js`).
+
+The build is the test here: it fails on a missing or extra key.
 
 1. Add a row to `apps/landing/i18n/locales.json`: `{ "code": "fr", "name": "Français", "dir": "ltr", "route": "/fr/" }` (the name in that language; `route` is `/<code>/`; the first row is the default, at `/`).
 2. Copy `en.json` to `fr.json` and translate every value. Keep `{n}`, `{mode}`… as they are, and the markup of the HTML keys.

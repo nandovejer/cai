@@ -196,7 +196,7 @@ Notes:
 
 - These tools are development-only dependencies (not runtime dependencies).
 - Keep UI tests small and high-value; do not enforce full pixel-perfect snapshots.
-- **For detailed instructions, see [TESTING.md](./.claude/TESTING.md)**
+- **For detailed instructions, see [TESTING.md](./dev/TESTING.md)**
 
 ### Keyboard Testing
 - Tab through all interactive elements

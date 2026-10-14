@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookie consent – Site – CAI documentation</title>
+  <meta name="description" content="Asks a visitor once whether the site may use optional cookies, with Accept and Reject side by side, and remembers the answer.">
+  <link rel="icon" href="../../../assets/favicon-hS-7Z-u-.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-DjoNoCFt.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
+  <!-- Before the first paint: the visitor's color mode (EX-009) -->
+  <script src="../../../theme-boot.js" ></script>
+  <script type="module" crossorigin src="../../../assets/site-header-AGCTJ7l9.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BJm9YLwG.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DL44kyQO.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CSpLyGNe.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWTXsvj2.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BFxxRBJR.css">
+</head>
+<body class="o-shell docs-page">
+  <!-- The search dialog comes first: closed, it is not focusable; after
+       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
+  <cai-site-search>
+  <dialog class="cai-modal cai-site-search" id="cai-search" aria-labelledby="cai-search-title"
+          data-cai-search data-cai-search-src="../../../docs/search-index.json"
+          data-cai-label-results="{n} results"
+          data-cai-label-result="1 result"
+          data-cai-label-capped="{shown} of {n} results. Type more to narrow."
+          data-cai-label-none="No results for “{query}”. Check the spelling or try a shorter word."
+          data-cai-label-loading="Loading the search index…"
+          data-cai-label-error="Search is not available right now.">
+    <search class="cai-site-search__body">
+      <div class="cai-site-search__head">
+        <h2 class="cai-site-search__title" id="cai-search-title"><label for="cai-search-q">Search the documentation</label></h2>
+        <form method="dialog"><button class="cai-btn cai-btn--ghost cai-site-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+      </div>
+      <div class="cai-site-search__field">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <input class="cai-input" id="cai-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="cai-search-hint">
+      </div>
+      <p class="cai-field__helper" id="cai-search-hint">Results update as you type. Arrow keys move through them.</p>
+      <p class="cai-site-search__status" role="status"></p>
+      <div class="cai-site-search__results" data-cai-search-results>
+        <div data-cai-search-show="idle">
+          <h3>Popular</h3>
+          <ul lang="en">
+            <li><a href="../../../docs/get-started/"><span>Install CAI</span><span>, </span><span>Get started</span></a></li>
+            <li><a href="../../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
+            <li><a href="../../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
+            <li><a href="../../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
+          </ul>
+        </div>
+        <div hidden><h3>Pages</h3><ul data-cai-search-list="pages" lang="en"></ul></div>
+        <div hidden><h3>Sections</h3><ul data-cai-search-list="sections" lang="en"></ul></div>
+        <div hidden><h3>HTML elements</h3><ul data-cai-search-list="elements" lang="en"></ul></div>
+      </div>
+      <p class="cai-site-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
+    </search>
+  </dialog>
+  </cai-site-search>
+  <a class="cai-site-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="cai-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M24 8v32a16 16 0 0 1 0-32ZM28 20l6-12 6 12ZM28 24h12v16H28Z"/></svg></span><span class="site-header__name">CAI</span> <span class="cai-tag cai-tag--purple site-header__tag">v3.0.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__github" href="https://github.com/nandovejer/cai"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+      </nav>
+      <a class="site-header__az" href="../../../docs/a-z/" data-cai-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
+      <button class="cai-site-search-trigger cai-site-search-trigger--compact site-header__search" type="button" data-cai-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+        <svg class="cai-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+        <span class="cai-site-search-trigger__label">Search docs…</span>
+        <kbd class="cai-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
+      </button>
+      
+    </div>
+  </header>
+
+  <nav class="cai-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
+    <div class="cai-sidebar__section page-nav__site">
+      <span class="cai-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="cai-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="cai-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="cai-sidebar__link" href="https://github.com/nandovejer/cai">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/tokens/">Tokens</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/site/">Site</a>
+        <ul class="docs-nav__pages">
+          <li><a class="cai-sidebar__link" href="../../../docs/site/shell/">Page shell</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/site-header/">Site header</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/submenu/">Submenu</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/hero/">Hero</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/page-header/">Page header</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/section/">Section</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/footer/">Footer</a></li>
+          <li><a class="cai-sidebar__link" aria-current="page" href="../../../docs/site/consent/">Cookie consent</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/notice/">Notice</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/skip-link/">Skip link</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/actions/">Action group</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/image/">Image</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/lang-switcher/">Language switcher</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/search/">Search</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/templates/">Page templates</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/classes/">Class reference</a></li>
+        </ul>
+      </li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/landing/">Landing</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/cms/">CMS</a></li>
+      <li><a class="cai-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <ol class="cai-breadcrumb">
+        <li><a class="cai-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="cai-breadcrumb__item" href="../../../docs/site/">Site</a></li>
+        <li><span class="cai-breadcrumb__item" aria-current="page">Cookie consent</span></li>
+      </ol>
+    </nav>
+    <div class="docs-page-head__title">
+      <h1 class="docs-title">Cookie consent</h1>
+      <code class="docs-demo__file">.cai-site-consent</code>
+      <code class="docs-demo__file">__title</code>
+      <code class="docs-demo__file">__choices</code>
+      <span class="cai-tag cai-tag--purple">JS: consent.js</span>
+    </div>
+    <p class="docs-lead">Asks a visitor once whether the site may use optional cookies, with Accept and Reject side by side, and remembers the answer.</p>
+  </div>
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#example">Example</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#code">Code</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#design">Design</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="cai-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
+          </ul>
+        </li>
+      </ul>
+    </details>
+  </nav>
+  <div class="docs-body">
+    <div class="docs-component" id="p-consent">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <cai-site-consent>
+              <section class="cai-site-consent" data-cai-consent data-cai-consent-key="cai-consent-demo" aria-labelledby="consent-demo-title" hidden>
+                <div data-cai-consent-ask>
+                  <h2 class="cai-site-consent__title" id="consent-demo-title">Cookies on Bodega Albar</h2>
+                  <p>We use cookies that this site needs to work. We would also like to measure how you use it, to improve it. <a href="#how">Read the cookie policy</a>.</p>
+                  <form class="cai-site-actions">
+                    <button class="cai-btn cai-btn--primary" type="submit" value="all">Accept optional cookies</button>
+                    <button class="cai-btn cai-btn--primary" type="submit" value="none">Reject optional cookies</button>
+                  </form>
+                  <details class="cai-site-consent__choices">
+                    <summary>Choose which cookies to allow</summary>
+                    <form class="o-stack">
+                      <fieldset class="cai-fieldset">
+                        <legend>Optional cookies</legend>
+                        <div class="cai-check-group">
+                          <label class="cai-check-item"><input type="checkbox" value="analytics"> Measuring visits</label>
+                          <label class="cai-check-item"><input type="checkbox" value="marketing"> Adverts on other sites</label>
+                        </div>
+                      </fieldset>
+                      <div class="cai-site-actions">
+                        <button class="cai-btn cai-btn--secondary" type="submit">Save my choices</button>
+                      </div>
+                    </form>
+                  </details>
+                </div>
+                <p data-cai-consent-done tabindex="-1" hidden>Your choice is saved. You can change it at any time on the <a href="#how">cookie policy</a> page.</p>
+              </section>
+            </cai-site-consent>
+            <p class="cai-site-actions"><button class="cai-btn cai-btn--outline" type="button" data-cai-consent-open hidden>Change cookie settings</button></p>
+            <p class="docs-demo__note">The answer of this example is stored under its own key, <code>cai-consent-demo</code>, so it does not count as an answer for this site. Without JavaScript the banner and its button stay hidden.</p>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way. The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the site header’s menu at 768 px and below opens at the top of the window, so while the banner is shown and before the page scrolls it covers part of the header; Escape or a click outside closes it. It has not been tested with a screen reader.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Cookie consent documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>Right after the <a href="../../../docs/site/skip-link/">skip link</a>, before a <a href="../../../docs/site/notice/">notice</a> and the <a href="../../../docs/site/site-header/">site header</a>. One checkbox per category of optional cookies, its <code>value</code> the category’s name. Load the module on its own: <code>site.js</code> does not include it.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-consent" aria-label="Copy the cookie consent markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cookie consent markup"><code id="code-consent">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@cai-ds/site@3.0.0/dist/consent.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;a class=&quot;cai-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+&lt;cai-site-consent&gt;
+  &lt;section class=&quot;cai-site-consent&quot; data-cai-consent aria-labelledby=&quot;consent-title&quot; hidden&gt;
+    &lt;div data-cai-consent-ask&gt;
+      &lt;h2 class=&quot;cai-site-consent__title&quot; id=&quot;consent-title&quot;&gt;Cookies on Bodega Albar&lt;/h2&gt;
+      &lt;p&gt;We use cookies that this site needs to work. We would also like to measure how you
+        use it, to improve it. &lt;a href=&quot;/cookies/&quot;&gt;Read the cookie policy&lt;/a&gt;.&lt;/p&gt;
+      &lt;form class=&quot;cai-site-actions&quot;&gt;
+        &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot; value=&quot;all&quot;&gt;Accept optional cookies&lt;/button&gt;
+        &lt;button class=&quot;cai-btn cai-btn--primary&quot; type=&quot;submit&quot; value=&quot;none&quot;&gt;Reject optional cookies&lt;/button&gt;
+      &lt;/form&gt;
+      &lt;details class=&quot;cai-site-consent__choices&quot;&gt;
+        &lt;summary&gt;Choose which cookies to allow&lt;/summary&gt;
+        &lt;form class=&quot;o-stack&quot;&gt;
+          &lt;fieldset class=&quot;cai-fieldset&quot;&gt;
+            &lt;legend&gt;Optional cookies&lt;/legend&gt;
+            &lt;div class=&quot;cai-check-group&quot;&gt;
+              &lt;label class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; value=&quot;analytics&quot;&gt; Measuring visits&lt;/label&gt;
+              &lt;label class=&quot;cai-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; value=&quot;marketing&quot;&gt; Adverts on other sites&lt;/label&gt;
+            &lt;/div&gt;
+          &lt;/fieldset&gt;
+          &lt;div class=&quot;cai-site-actions&quot;&gt;
+            &lt;button class=&quot;cai-btn cai-btn--secondary&quot; type=&quot;submit&quot;&gt;Save my choices&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/form&gt;
+      &lt;/details&gt;
+    &lt;/div&gt;
+    &lt;p data-cai-consent-done tabindex=&quot;-1&quot; hidden&gt;Your choice is saved. You can change it at any
+      time on the &lt;a href=&quot;/cookies/&quot;&gt;cookie policy&lt;/a&gt; page.&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/cai-site-consent&gt;
+&lt;header class=&quot;cai-site-header&quot;&gt;…&lt;/header&gt;
+
+&lt;!-- On the cookie policy page --&gt;
+&lt;button class=&quot;cai-btn cai-btn--outline&quot; type=&quot;button&quot; data-cai-consent-open hidden&gt;Change cookie settings&lt;/button&gt;</code></pre>
+            </div>
+            <p>Your scripts read the answer and listen for a new one. Load an optional script only for a category the visitor granted:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-consent-js" aria-label="Copy the script that reads the answer">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="js" tabindex="0" role="region" aria-label="Script that reads the answer"><code id="code-consent-js">import { getConsent } from &quot;@cai-ds/site/consent&quot;;
+
+const granted = (answer) =&gt; answer?.granted.includes(&quot;analytics&quot;);
+
+if (granted(getConsent())) startMeasuring();
+document.addEventListener(&quot;cai:consent&quot;, (event) =&gt; {
+  if (granted(event.detail)) startMeasuring();
+  // Withdrawn: the simplest correct answer is to reload the page
+  else location.reload();
+});</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no variants. The hooks are <code>data-cai-consent-*</code> attributes.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Cookie consent classes and attributes" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-site-consent</code></div></td><td data-label="Effect"><div>The banner: a band as wide as its container, its text in the site header’s column, in the sans. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-site-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.cai-site-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>&lt;cai-site-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-cai-consent</code></div></td><td data-label="Effect"><div>On the <code>&lt;section&gt;</code>: the banner. Optional <code>data-cai-consent-days</code>, how long an answer lasts (180 days by default, 395 at most), and <code>data-cai-consent-key</code>, the storage key (it must start with <code>cai-</code>)</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-cai-consent-ask</code>, <code>data-cai-consent-done</code></div></td><td data-label="Effect"><div>The question, and the confirmation that takes its place. The confirmation has <code>tabindex="-1"</code>: it takes focus</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>value="all"</code>, <code>value="none"</code></div></td><td data-label="Effect"><div>On the submit buttons: Accept grants every category, Reject none. A submit button with another value, or none, grants the ticked ones of its form</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-cai-consent-open</code></div></td><td data-label="Effect"><div>On a button anywhere, with <code>hidden</code>: the script shows it, and it shows the banner again, with the stored answer ticked</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@cai-ds/site</code>, two native forms and a module of its own, <code>@cai-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed). <code>site.js</code> does not import it, so only the pages that ask load it.</p>
+            <ul>
+              <li><strong>When it asks:</strong> when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, in the flow above the header: it covers nothing, traps nothing and takes no focus, so the page can be read and used before answering.</li>
+              <li><strong>The answer:</strong> Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read.</li>
+              <li><strong>Where it is kept:</strong> in the browser’s <code>localStorage</code>, under <code>cai-consent</code>, as JSON: <code>{"version":1,"expires":…,"asked":["analytics","marketing"],"granted":["analytics"]}</code>, with <code>expires</code> in milliseconds since 1970. Not in a cookie: a cookie would travel to the server with every request, and asking about cookies should not need one. No personal data, and nothing leaves the browser. A malformed value counts as no answer. If storage is blocked, the answer holds for the page and the next page asks again.</li>
+              <li><strong>Your scripts:</strong> <code>getConsent()</code> returns the stored answer, <code>{ asked, granted, expires }</code>, or <code>null</code>. Each new answer dispatches <code>cai:consent</code> on <code>document</code>, with the same object as <code>detail</code>. Category names are a lowercase letter, then lowercase letters, digits or hyphens, 32 at most.</li>
+              <li><strong>Changing the answer:</strong> as easy as giving it. A button with <code>data-cai-consent-open</code>, on the cookie policy page, shows the banner again. Put one banner on a page: every such button opens it.</li>
+              <li>The script writes no text: every word is in your markup, in the page’s language.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>The banner and the button that shows it again stay hidden, by their <code>hidden</code> attribute. Without a script none of the site’s own scripts run, so there is nothing to ask about, and buttons that would do nothing are never shown. Link the cookie policy from the footer of every page, so it can always be read.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the skip link stays first, so a returning visitor can still jump to the content. The banner comes next, before the header: the policy link, Accept, Reject, then the button that opens the categories.</li>
+              <li><strong>Keys:</strong> Enter or Space on a button; Space ticks a checkbox. Escape does nothing.</li>
+              <li><strong>Landmark:</strong> a <code>&lt;section&gt;</code> named by its heading is a region, listed among the landmarks, before the banner landmark of the header. It is not a dialog: it does not block the page, so it needs no <code>role="dialog"</code>.</li>
+              <li><strong>Focus:</strong> none when the page loads. After an answer, the confirmation; after the button that shows it again, the banner.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use it when your site sets cookies, or stores data in the browser, that it does not need to work, such as measuring visits or adverts: the law in the EU and the UK asks for the visitor’s consent before that.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it when the site sets only the cookies it needs to work (a session, a basket, a language or colour choice): those need no consent. Say so in the cookie policy and show no banner.</p>
+            <ul>
+              <li>Do not use it as a wall that hides or blocks the page until the visitor answers.</li>
+              <li>Do not use it for news or a sale: that is a <a href="../../../docs/site/notice/">notice</a>.</li>
+            </ul>
+            <p>It replaces a third-party consent script. Nothing in CAI is removed.</p>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Give Accept and Reject the same style, side by side, with words that say what each one does.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-actions">
+                    <span class="cai-btn cai-btn--primary">Accept optional cookies</span>
+                    <span class="cai-btn cai-btn--primary">Reject optional cookies</span>
+                  </div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Make Accept a big button and hide Reject in a small link or behind settings: an answer pushed one way is not free consent.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-site-actions">
+                    <span class="cai-btn cai-btn--primary cai-btn--lg">Accept all</span>
+                    <span class="cai-btn cai-btn--ghost cai-btn--sm">Manage options</span>
+                  </div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Say in a sentence what the site needs and what it would like, and why, in plain words. Name the heading after the site: “Cookies on Bodega Albar”.</p>
+            <ul>
+              <li>Write the buttons as the action and the thing: “Accept optional cookies”, “Reject optional cookies”; never “OK”, “Got it” or “Agree”.</li>
+              <li>Name each category after what it does for whom: “Measuring visits”, “Adverts on other sites”, not “Performance” or “Targeting”.</li>
+              <li>Link the cookie policy by its name, and say in the confirmation where the answer can be changed.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The banner is a muted band; its buttons and the categories are core’s.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Cookie consent contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Heading and text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link to the cookie policy</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Accept and Reject</div></td><td data-label="Colour on background"><div><code>--cai-text-on-fill</code> on <code>--cai-brand-fill</code></div></td><td data-label="Light"><div>6.0:1</div></td><td data-label="Dark"><div>4.9:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Edge of Accept and Reject</div></td><td data-label="Colour on background"><div><code>--cai-brand-fill</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>3.5:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Categories and their button</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Checkbox edge</div></td><td data-label="Colour on background"><div><code>--cai-outline</code> on <code>--cai-input-bg</code></div></td><td data-label="Light"><div>4.5:1</div></td><td data-label="Dark"><div>3.4:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring on the band</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, edges and borders.</p>
+            <ul>
+              <li><strong>Focus:</strong> core’s 2 px <code>--cai-focus-ring</code> outline on the link, the buttons and the checkboxes.</li>
+              <li>Accept and Reject look the same: neither is pushed by colour or size.</li>
+              <li>A ticked category shows a check mark, not only a fill.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 11 tokens that the rules of site’s <code>components/banners.css</code> read for the banner, by family; the buttons, the box of the categories and the checkboxes are core’s. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="../../../docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a>, <a href="../../../docs/tokens/color/#cai-text-primary"><code>--cai-text-primary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-xs</code>, <code>--cai-space-md</code>, <code>--cai-space-xl</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-sm</code>, <code>--cai-text-md</code>, <code>--cai-text-lg</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--cai-content-max</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>
+
+  </div>
+  <nav class="docs-end" aria-labelledby="docs-end-title">
+    <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
+    <ul class="docs-end__links">
+      <li><a href="../../../docs/site/templates/">Page templates</a></li>
+      <li><a href="../../../docs/components/">Components</a></li>
+      <li><a href="../../../docs/get-started/">Install CAI</a></li>
+    </ul>
+    <ul class="docs-pager">
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/site/footer/" aria-label="Previous: Footer"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Footer</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/site/notice/" aria-label="Next: Notice"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Notice</span></a></li>
+    </ul>
+  </nav>
+  </main>
+
+  <footer class="docs-footer" id="site-footer">
+    <div class="cai-site-footer">
+      <p class="u-text-muted">CAI Design System · v3.0.0 · Beta · MIT License</p>
+      <nav class="cai-site-actions" aria-label="Project links">
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../">Home</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai">GitHub</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
+        <a class="cai-btn cai-btn--ghost cai-btn--sm" href="https://github.com/nandovejer/cai/issues">Report a problem</a>
+      </nav>
+      <fieldset class="cai-mode-switcher cai-mode-switcher--cycle site-modes">
+        <legend class="cai-mode-switcher__label">Color mode</legend>
+        <button class="cai-mode-cycle" type="button" aria-label="Change color mode"><svg class="cai-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="cai-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="cai-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="cai-mode-cycle__status" role="status"></span>
+        <label class="cai-mode-btn" data-theme="light"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="light" checked><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="cai-mode-btn" data-theme="dark"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="dark"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="cai-mode-btn" data-theme="high-contrast"><input class="cai-mode-btn__input" type="radio" name="cai-theme" value="high-contrast"><svg class="cai-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

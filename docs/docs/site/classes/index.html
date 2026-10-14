@@ -12,11 +12,11 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-AGCTJ7l9.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DJKXdV8E.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-BJm9YLwG.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DL44kyQO.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CSpLyGNe.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-J6fYF-Dp.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CGDw9oUc.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-BWTXsvj2.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BFxxRBJR.css">
 </head>
 <body class="o-shell docs-page">
   <!-- The search dialog comes first: closed, it is not focusable; after
@@ -105,10 +105,13 @@
         <ul class="docs-nav__pages">
           <li><a class="cai-sidebar__link" href="../../../docs/site/shell/">Page shell</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/site/site-header/">Site header</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/submenu/">Submenu</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/site/hero/">Hero</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/site/page-header/">Page header</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/site/section/">Section</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/site/footer/">Footer</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/consent/">Cookie consent</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/site/notice/">Notice</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/site/skip-link/">Skip link</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/site/actions/">Action group</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/site/image/">Image</a></li>
@@ -139,6 +142,8 @@
       <code class="docs-demo__file">components/search.css</code>
       <code class="docs-demo__file">components/lang-switcher.css</code>
       <code class="docs-demo__file">components/site-header.css</code>
+      <code class="docs-demo__file">components/submenu.css</code>
+      <code class="docs-demo__file">components/banners.css</code>
     </div>
     <p class="docs-lead">Every cai-site class, what element it goes on and what it does, in one place.</p>
   </div>
@@ -151,6 +156,7 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#content-patterns">Content patterns</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#search">Search</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#language-switcher">Language switcher</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#notice-and-consent">Notice and cookie consent</a></li>
       </ul>
     </details>
   </nav>
@@ -239,6 +245,11 @@
                 <td data-label="Class"><div>.cai-site-header__actions</div></td>
                 <td data-label="Element"><div>&lt;div&gt;</div></td>
                 <td data-label="Description"><div>The controls at the end of the row: search, language switcher, a button.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-submenu</div></td>
+                <td data-label="Element"><div>&lt;details&gt;</div></td>
+                <td data-label="Description"><div>An item of the header’s links that holds more links: its <code class="cai-code-inline">&lt;summary&gt;</code> is the button, with a chevron; its list opens under it, in the flow in the menu panel and in a box from 769 px. Give every submenu the same <code class="cai-code-inline">name</code>.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.cai-site-hero</div></td>
@@ -462,6 +473,47 @@
                 <td data-label="Class"><div>.cai-site-lang-switcher__link</div></td>
                 <td data-label="Element"><div>&lt;a&gt;</div></td>
                 <td data-label="Description"><div>A language, named in itself, with <code class="cai-code-inline">lang</code> and <code class="cai-code-inline">hreflang</code>; bold and underlined with <code class="cai-code-inline">aria-current</code>.</div></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="notice-and-consent" class="docs-prose__title">Notice and cookie consent</h2>
+            <div class="cai-table-wrap" tabindex="0" role="region" aria-label="Site classes: notice and cookie consent">
+          <table class="cai-table docs-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Element</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Class"><div>.cai-site-notice</div></td>
+                <td data-label="Element"><div>&lt;section&gt;</div></td>
+                <td data-label="Description"><div>A band above the site header with one short announcement and one link, its text in the header’s column. No script, no close button.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-notice--warning</div></td>
+                <td data-label="Element"><div>&lt;section&gt;</div></td>
+                <td data-label="Description"><div>The warning colours, for something that stops the visitor; the words say it too.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-consent</div></td>
+                <td data-label="Element"><div>&lt;section hidden&gt;</div></td>
+                <td data-label="Description"><div>The cookie banner, above the site header, in a <code class="cai-code-inline">&lt;cai-site-consent&gt;</code>. Hidden in the markup: <code class="cai-code-inline">consent.js</code> shows it when no answer is stored.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-consent__title</div></td>
+                <td data-label="Element"><div>&lt;h2&gt;</div></td>
+                <td data-label="Description"><div>The banner’s heading, in the sans; it names the region.</div></td>
+              </tr>
+              <tr>
+                <td data-label="Class"><div>.cai-site-consent__choices</div></td>
+                <td data-label="Element"><div>&lt;details&gt;</div></td>
+                <td data-label="Description"><div>The categories of optional cookies, as checkboxes in a form, under Accept and Reject.</div></td>
               </tr>
             </tbody>
           </table>

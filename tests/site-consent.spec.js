@@ -3,12 +3,18 @@
  * The cookie consent of @luz-ds/site: the banner (.luz-consent) and
  * its module, consent.js (<luz-consent>; D5 of .claude/plans/specs/f3-package-model.md:
  * no `site-` in the names), loaded on its own as dist/consent.min.js by
- * tests/fixtures/site-top.html. Its position is unchanged here (D7 is step 9). Runs in `chromium`
+ * tests/fixtures/site-top.html. A band fixed at the block end of the window
+ * (D7, step 9): where it sits, what it shifts and the reopen button's space
+ * are here; the rest of the band (C1 to C11: Tab stops, the saved state and
+ * its Close button, --luz-consent-h, short windows) is in
+ * tests/consent-band.spec.js. Runs in `chromium`
  * and `chromium-nojs`: without JavaScript the banner and the button that
  * reopens it stay hidden, and the page reads as if they were not there.
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+
+import { hold, layoutShift, watchLayoutShift } from './helpers/site-loader.js';
 
 const FIXTURE = '/tests/fixtures/site-top.html';
 const KEY = 'luz-consent';
@@ -94,18 +100,61 @@ test.describe('cookie consent', () => {
     });
   }
 
-  test('with no stored choice it shows, in the flow above the header, without taking focus; the skip link stays first', async ({ page }) => {
+  test('with no stored choice it shows as a band fixed at the block end of the window, without taking focus; the skip link stays first', async ({ page }) => {
     await open(page);
     await expect(page.locator('#consent')).toBeVisible();
     await expect(page.getByRole('region', { name: 'Cookies on Bodega Albar' })).toHaveCount(1);
     expect(await page.evaluate(() => document.activeElement === document.body)).toBe(true);
-    expect(await page.locator('#consent').evaluate((el) => getComputedStyle(el).position)).toBe('static');
+    const band = await page.locator('#consent').evaluate((el) => {
+      const r = el.getBoundingClientRect();
+      return { position: getComputedStyle(el).position, bottom: r.bottom, left: r.left, width: r.width, window: window.innerHeight };
+    });
+    expect(band.position).toBe('fixed');
+    expect(band.bottom).toBeCloseTo(band.window, 0);
+    expect(band.left).toBe(0);
+    expect(band.width).toBe(1280);
+    // Still first in the page after the skip link (C1), whatever its place on screen
+    expect(await page.evaluate(() => document.getElementById('skip').nextElementSibling?.localName)).toBe('luz-consent');
     const order = [];
     for (let i = 0; i < 6; i++) {
       await page.keyboard.press('Tab');
       order.push(await page.evaluate(() => document.activeElement.id));
     }
     expect(order).toEqual(['skip', 'policy', 'accept', 'reject', 'choose', 'notice-link']);
+  });
+
+  /**
+   * Open the page with the module held until the page has been painted, as
+   * the presence loader delivers it (on idle, after first paint): what the
+   * module then shows or un-hides must shift nothing.
+   */
+  async function openLate(page, width) {
+    const release = await hold(page, /consent\.min\.js/);
+    await watchLayoutShift(page);
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(FIXTURE, { waitUntil: 'commit' });
+    await expect(page.locator('h1')).toBeVisible();
+    await page.waitForTimeout(300);
+    release();
+    await expect.poll(() => page.evaluate(() => !!customElements.get('luz-consent'))).toBe(true);
+    await page.waitForTimeout(500);
+  }
+
+  for (const width of [320, 1440]) {
+    test(`${width} px: showing it after the first paint moves nothing (layout shift 0), with the reopen button in view (C11)`, async ({ page }) => {
+      await openLate(page, width);
+      await expect(page.locator('#consent')).toBeVisible();
+      await expect(page.locator('#settings')).toBeVisible();
+      expect(await layoutShift(page)).toBe(0);
+    });
+  }
+
+  test('C11: the reopen button has its space before the script un-hides it: at 320 px, with no band to show, nothing moves', async ({ page }) => {
+    await store(page, { version: 1, expires: Date.now() + 1e9, asked: ['analytics', 'marketing'], granted: [] });
+    await openLate(page, 320);
+    await expect(page.locator('#consent')).toBeHidden();
+    await expect(page.locator('#settings')).toBeVisible();
+    expect(await layoutShift(page)).toBe(0);
   });
 
   test('Accept and Reject have equal weight: same colours, same size of text, the same height', async ({ page }) => {

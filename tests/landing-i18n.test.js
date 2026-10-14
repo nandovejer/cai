@@ -193,16 +193,20 @@ describe("languages of the home page: generated markup", () => {
 
   it("builds the switcher from the registry: links named in their own language, the current one marked, no flags, no script", () => {
     const html = renderSwitcher(i18n, i18n.byCode.get("es"), "Idioma");
-    const links = [...html.matchAll(/<a class="luz-site-lang-switcher__link" href="([^"]*)" hreflang="([^"]*)" lang="([^"]*)"( aria-current="page")?>([^<]*)<\/a>/g)].map((m) => [m[1], m[2], m[3], Boolean(m[4]), m[5]]);
+    const links = [...html.matchAll(/<a class="luz-lang-switch__link" href="([^"]*)" hreflang="([^"]*)" lang="([^"]*)"( aria-current="page")?>([^<]*)<\/a>/g)].map((m) => [m[1], m[2], m[3], Boolean(m[4]), m[5]]);
     expect(links).toEqual([
       ["/", "en", "en", false, "English"],
       ["/es/", "es", "es", true, "Español"],
       ["/ar/", "ar", "ar", false, "العربية"],
     ]);
+    // The tag is the block (<luz-lang-switch>, CSS-only): no wrapper div, no class on it
+    expect(html.startsWith("<luz-lang-switch>")).toBe(true);
+    expect(html.trimEnd().endsWith("</luz-lang-switch>")).toBe(true);
+    expect(html).not.toContain("luz-site-lang-switcher");
     // A native popover: the button names it, says what it is and shows the current language
-    expect(html).toContain('<button class="luz-site-lang-switcher__button" type="button" popovertarget="luz-lang-menu">');
-    expect(html).toContain('<span class="u-sr-only">Idioma: </span><span class="luz-site-lang-switcher__name">Español</span></button>');
-    expect(html).toContain('<nav class="luz-site-lang-switcher__menu" id="luz-lang-menu" popover aria-labelledby="luz-lang-title">');
+    expect(html).toContain('<button class="luz-lang-switch__button" type="button" popovertarget="luz-lang-menu">');
+    expect(html).toContain('<span class="u-sr-only">Idioma: </span><span class="luz-lang-switch__name">Español</span></button>');
+    expect(html).toContain('<nav class="luz-lang-switch__menu" id="luz-lang-menu" popover aria-labelledby="luz-lang-title">');
     expect(html).not.toMatch(/<script|onclick|🇪|flag/i);
   });
 

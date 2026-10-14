@@ -37,13 +37,18 @@
           </form>
         </details>
       </div>
-      <p id="done" data-luz-consent-done tabindex="-1" hidden>Your choice is saved. You can change it at any time on the <a href="#cookies">cookie policy</a> page.</p>
+      <div id="done" data-luz-consent-done tabindex="-1" hidden>
+        <p>Your choice is saved. You can change it at any time on the <a id="done-policy" href="#cookies">cookie policy</a> page.</p>
+        <button class="luz-btn luz-btn--secondary" id="close" type="button" data-luz-consent-close>Close</button>
+      </div>
     </section>
   </luz-consent>
 
-  <section class="luz-site-notice" id="notice" aria-labelledby="notice-label">
-    <p><strong id="notice-label">Open day.</strong> Visit the winery on Saturday 25 October, from 11:00 to 18:00. <a id="notice-link" href="#visits">Book a visit</a></p>
-  </section>
+  <luz-banner>
+    <section id="notice" aria-labelledby="notice-label">
+      <p><strong id="notice-label">Open day.</strong> Visit the winery on Saturday 25 October, from 11:00 to 18:00. <a id="notice-link" href="#visits">Book a visit</a></p>
+    </section>
+  </luz-banner>
 
   <header class="luz-site-header luz-site-header--sticky" id="hdr">
     <div class="luz-site-header__inner">
@@ -55,24 +60,28 @@
         <ul>
           <li><a href="#top" aria-current="page">Home</a></li>
           <li>
-            <details class="luz-site-submenu" id="wines" name="site-menu">
-              <summary id="wines-button">Wines</summary>
-              <ul>
-                <li><a href="#red">Red wines</a></li>
-                <li><a href="#white">White wines</a></li>
-                <li><a href="#sweet">Sweet wines</a></li>
-              </ul>
-            </details>
+            <luz-submenu>
+              <details id="wines" name="site-menu">
+                <summary id="wines-button">Wines</summary>
+                <ul>
+                  <li><a href="#red">Red wines</a></li>
+                  <li><a href="#white">White wines</a></li>
+                  <li><a href="#sweet">Sweet wines</a></li>
+                </ul>
+              </details>
+            </luz-submenu>
           </li>
           <li><a href="#visits">Visits</a></li>
           <li>
-            <details class="luz-site-submenu" id="about" name="site-menu">
-              <summary id="about-button">About us</summary>
-              <ul>
-                <li><a href="#history">Our history</a></li>
-                <li><a href="#team">The people of the winery</a></li>
-              </ul>
-            </details>
+            <luz-submenu>
+              <details id="about" name="site-menu">
+                <summary id="about-button">About us</summary>
+                <ul>
+                  <li><a href="#history">Our history</a></li>
+                  <li><a href="#team">The people of the winery</a></li>
+                </ul>
+              </details>
+            </luz-submenu>
           </li>
         </ul>
       </nav>

@@ -1,10 +1,16 @@
 // @ts-check
 /**
- * The submenu of the site header (@luz-ds/site, .luz-site-submenu): a native
- * <details name> in the header's list of links. On the page of
- * tests/fixtures/site-top.html, under a notice and the cookie banner, so the
+ * The submenu of the site header (@luz-ds/site, <luz-submenu>, a CSS-only
+ * tag: .claude/plans/specs/f3-package-model.md section 2.2, step 8): a native
+ * <details name> in the header's list of links, wrapped in a tag that no
+ * script defines and that has no classes inside it. On the page of
+ * tests/fixtures/site-top.html, under a banner and the cookie band, so the
  * header is not at the top of the window. Runs in `chromium` and
  * `chromium-nojs`: the pattern has no script, and works the same in both.
+ *
+ * O1 (accessibility requirements): the accessibility tree of the links is the
+ * one that `<details class="luz-site-submenu">` gave before the rename. The
+ * two snapshots below were taken from that markup, at 1280 px.
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
@@ -39,7 +45,86 @@ async function expanded(page, selector) {
   return nodes[0].properties?.find((p) => p.name === 'expanded')?.value.value;
 }
 
+/** The tree of `nav[aria-label=Main]` as `details.luz-site-submenu` rendered it, closed. */
+const NAV_CLOSED = `
+- /children: equal
+- navigation "Main":
+  - list:
+    - listitem:
+      - link "Home":
+        - /url: "#top"
+    - listitem:
+      - group: Wines
+    - listitem:
+      - link "Visits":
+        - /url: "#visits"
+    - listitem:
+      - group: About us
+`;
+
+/** The same with the first submenu open. */
+const NAV_WINES_OPEN = `
+- /children: equal
+- navigation "Main":
+  - list:
+    - listitem:
+      - link "Home":
+        - /url: "#top"
+    - listitem:
+      - group:
+        - text: Wines
+        - list:
+          - listitem:
+            - link "Red wines":
+              - /url: "#red"
+          - listitem:
+            - link "White wines":
+              - /url: "#white"
+          - listitem:
+            - link "Sweet wines":
+              - /url: "#sweet"
+    - listitem:
+      - link "Visits":
+        - /url: "#visits"
+    - listitem:
+      - group: About us
+`;
+
 test.describe('site submenu', () => {
+  test('is <luz-submenu> around a native details: no class on any part, the old class gone, display: contents', async ({ page }) => {
+    await open(page, 1280);
+    const shape = await page.evaluate(() => ({
+      hosts: [...document.querySelectorAll('luz-submenu')].map((host) => ({
+        child: [...host.children].map((c) => c.localName),
+        parentIs: host.parentElement.localName,
+        details: host.firstElementChild.hasAttribute('name'),
+        classes: [host, ...host.querySelectorAll('*')].filter((el) => el.hasAttribute('class')).length,
+        display: getComputedStyle(host).display,
+      })),
+      oldClass: document.querySelectorAll('[class*="luz-site-submenu"]').length,
+    }));
+    expect(shape).toEqual({
+      hosts: [
+        { child: ['details'], parentIs: 'li', details: true, classes: 0, display: 'contents' },
+        { child: ['details'], parentIs: 'li', details: true, classes: 0, display: 'contents' },
+      ],
+      oldClass: 0,
+    });
+  });
+
+  test('O1: the accessibility tree of the links is what the classed details gave, closed and open', async ({ page }) => {
+    await open(page, 1280);
+    await expect(page.locator('#site-nav')).toMatchAriaSnapshot(NAV_CLOSED);
+    await page.click('#wines-button');
+    await expect(page.locator('#site-nav')).toMatchAriaSnapshot(NAV_WINES_OPEN);
+  });
+
+  test('the tag adds no role and no name: the button is the summary, the links are in a list', async ({ page }) => {
+    await open(page, 1280);
+    const added = await page.locator('luz-submenu').evaluateAll((hosts) => hosts.map((h) => h.getAttributeNames()));
+    expect(added).toEqual([[], []]);
+  });
+
   for (const theme of ['light', 'dark', 'high-contrast']) {
     test(`axe finds nothing serious with a submenu open, in ${theme}`, async ({ page }, testInfo) => {
       test.skip(testInfo.project.name === 'chromium-nojs', 'axe needs JavaScript');

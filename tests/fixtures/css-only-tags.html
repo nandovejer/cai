@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUZ site: the CSS-only tags next to the two elements</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <script type="module" src="/packages/site/dist/site.min.js"></script>
+</head>
+<body>
+  <luz-banner tone="warning">
+    <section aria-labelledby="b1"><p><strong id="b1">Planned maintenance.</strong> The shop is closed on Sunday.</p></section>
+  </luz-banner>
+  <header>
+    <luz-search>
+      <a class="luz-search__fallback" href="/a-z/" data-luz-search-fallback>A–Z index</a>
+      <button class="luz-search__trigger" type="button" data-luz-search-open hidden>Search</button>
+      <dialog class="luz-modal luz-search" data-luz-search data-luz-search-src="/tests/fixtures/search-index.json" aria-label="Search" data-luz-label-loading="Loading" data-luz-label-error="Error">
+        <input type="text" aria-label="Query">
+        <p role="status"></p>
+        <div data-luz-search-results>
+          <div hidden><ul data-luz-search-list="pages"></ul></div>
+        </div>
+      </dialog>
+    </luz-search>
+    <luz-lang-switch id="lang">
+      <button class="luz-lang-switch__button" type="button" popovertarget="lang-menu"><span class="u-sr-only">Language: </span><span class="luz-lang-switch__name">English</span></button>
+      <nav class="luz-lang-switch__menu" id="lang-menu" popover aria-labelledby="lang-title">
+        <p class="luz-lang-switch__title" id="lang-title">Language</p>
+        <ul class="luz-lang-switch__list">
+          <li><a class="luz-lang-switch__link" href="/" hreflang="en" lang="en" aria-current="page">English</a></li>
+          <li><a class="luz-lang-switch__link" href="/es/" hreflang="es" lang="es">Español</a></li>
+        </ul>
+      </nav>
+    </luz-lang-switch>
+    <nav aria-label="Main">
+      <ul>
+        <li><luz-submenu><details name="menu"><summary>Wines</summary><ul><li><a href="#red">Red wines</a></li></ul></details></luz-submenu></li>
+      </ul>
+    </nav>
+  </header>
+  <main id="main">
+    <h1>CSS-only tags</h1>
+    <p>Text of the page.</p>
+  </main>
+  <luz-consent>
+    <section class="luz-consent" id="consent" data-luz-consent aria-labelledby="consent-title" hidden>
+      <div data-luz-consent-ask>
+        <h2 class="luz-consent__title" id="consent-title">Cookies</h2>
+        <p>We use cookies that this site needs to work.</p>
+        <form>
+          <button class="luz-btn luz-btn--primary" type="submit" value="all">Accept</button>
+          <button class="luz-btn luz-btn--primary" type="submit" value="none">Reject</button>
+        </form>
+      </div>
+      <div data-luz-consent-done tabindex="-1" hidden><p>Saved.</p><button type="button" data-luz-consent-close>Close</button></div>
+    </section>
+  </luz-consent>
+</body>
+</html>

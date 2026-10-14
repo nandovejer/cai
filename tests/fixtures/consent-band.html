@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The cookie band: a shell with a long sidebar, a long page, a footer, a modal and a popover</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <script type="module" src="/packages/site/dist/site.min.js"></script>
+</head>
+<body>
+  <a class="luz-skip-link" id="skip" href="#main">Skip to main content</a>
+
+  <luz-consent>
+    <section class="luz-consent" id="consent" data-luz-consent aria-labelledby="consent-title" hidden>
+      <div data-luz-consent-ask>
+        <h2 class="luz-consent__title" id="consent-title">Cookies on Bodega Albar</h2>
+        <p>We use cookies that this site needs to work. We would also like to measure how you use it, to improve it. <a id="policy" href="#cookies">Read the cookie policy</a>.</p>
+        <form class="o-actions">
+          <button class="luz-btn luz-btn--primary" id="accept" type="submit" value="all">Accept optional cookies</button>
+          <button class="luz-btn luz-btn--primary" id="reject" type="submit" value="none">Reject optional cookies</button>
+        </form>
+        <details class="luz-consent__choices" id="choices">
+          <summary id="choose">Choose which cookies to allow</summary>
+          <form class="o-stack">
+            <fieldset class="luz-fieldset">
+              <legend>Optional cookies</legend>
+              <div class="luz-check-group">
+                <label class="luz-check-item"><input type="checkbox" id="c-analytics" value="analytics"> Measuring visits</label>
+                <label class="luz-check-item"><input type="checkbox" id="c-marketing" value="marketing"> Adverts on other sites</label>
+              </div>
+            </fieldset>
+            <div class="o-actions">
+              <button class="luz-btn luz-btn--secondary" id="save" type="submit">Save my choices</button>
+            </div>
+          </form>
+        </details>
+      </div>
+      <div id="done" data-luz-consent-done tabindex="-1" hidden>
+        <p>Your choice is saved. You can change it at any time on the <a id="done-policy" href="#cookies">cookie policy</a> page.</p>
+        <button class="luz-btn luz-btn--secondary" id="close" type="button" data-luz-consent-close>Close</button>
+      </div>
+    </section>
+  </luz-consent>
+
+  <div class="o-shell">
+    <nav class="luz-sidebar" aria-label="Sections">
+      <a class="luz-sidebar__link" href="#s1" id="side-1">Section 1</a>
+      <a class="luz-sidebar__link" href="#s2" id="side-2">Section 2</a>
+      <a class="luz-sidebar__link" href="#s3" id="side-3">Section 3</a>
+      <a class="luz-sidebar__link" href="#s4" id="side-4">Section 4</a>
+      <a class="luz-sidebar__link" href="#s5" id="side-5">Section 5</a>
+      <a class="luz-sidebar__link" href="#s6" id="side-6">Section 6</a>
+      <a class="luz-sidebar__link" href="#s7" id="side-7">Section 7</a>
+      <a class="luz-sidebar__link" href="#s8" id="side-8">Section 8</a>
+      <a class="luz-sidebar__link" href="#s9" id="side-9">Section 9</a>
+      <a class="luz-sidebar__link" href="#s10" id="side-10">Section 10</a>
+      <a class="luz-sidebar__link" href="#s11" id="side-11">Section 11</a>
+      <a class="luz-sidebar__link" href="#s12" id="side-12">Section 12</a>
+      <a class="luz-sidebar__link" href="#s13" id="side-13">Section 13</a>
+      <a class="luz-sidebar__link" href="#s14" id="side-14">Section 14</a>
+      <a class="luz-sidebar__link" href="#s15" id="side-15">Section 15</a>
+      <a class="luz-sidebar__link" href="#s16" id="side-16">Section 16</a>
+      <a class="luz-sidebar__link" href="#s17" id="side-17">Section 17</a>
+      <a class="luz-sidebar__link" href="#s18" id="side-18">Section 18</a>
+      <a class="luz-sidebar__link" href="#s19" id="side-19">Section 19</a>
+      <a class="luz-sidebar__link" href="#s20" id="side-20">Section 20</a>
+      <a class="luz-sidebar__link" href="#s21" id="side-21">Section 21</a>
+      <a class="luz-sidebar__link" href="#s22" id="side-22">Section 22</a>
+      <a class="luz-sidebar__link" href="#s23" id="side-23">Section 23</a>
+      <a class="luz-sidebar__link" href="#s24" id="side-24">Section 24</a>
+      <a class="luz-sidebar__link" href="#s25" id="side-25">Section 25</a>
+      <a class="luz-sidebar__link" href="#s26" id="side-26">Section 26</a>
+      <a class="luz-sidebar__link" href="#s27" id="side-27">Section 27</a>
+      <a class="luz-sidebar__link" href="#s28" id="side-28">Section 28</a>
+      <a class="luz-sidebar__link" href="#s29" id="side-29">Section 29</a>
+      <a class="luz-sidebar__link" href="#s30" id="side-30">Section 30</a>
+      <a class="luz-sidebar__link" href="#s31" id="side-31">Section 31</a>
+      <a class="luz-sidebar__link" href="#s32" id="side-32">Section 32</a>
+      <a class="luz-sidebar__link" href="#s33" id="side-33">Section 33</a>
+      <a class="luz-sidebar__link" href="#s34" id="side-34">Section 34</a>
+      <a class="luz-sidebar__link" href="#s35" id="side-35">Section 35</a>
+      <a class="luz-sidebar__link" href="#s36" id="side-36">Section 36</a>
+      <a class="luz-sidebar__link" href="#s37" id="side-37">Section 37</a>
+      <a class="luz-sidebar__link" href="#s38" id="side-38">Section 38</a>
+      <a class="luz-sidebar__link" href="#s39" id="side-39">Section 39</a>
+      <a class="luz-sidebar__link" href="#s40" id="side-last">Section 40</a>
+    </nav>
+    <div class="o-main">
+      <main id="main" tabindex="-1">
+        <div class="o-container">
+          <h1 id="top">A long page</h1>
+          <p><button class="luz-btn luz-btn--outline" id="settings" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
+          <p>Text of the page, under the button that reopens the cookie band.</p>
+      <p>Paragraph 1. Text that fills the page so that it scrolls, with <a href="#p1">a link 1</a> in it.</p>
+      <p>Paragraph 2. Text that fills the page so that it scrolls, with <a href="#p2">a link 2</a> in it.</p>
+      <p>Paragraph 3. Text that fills the page so that it scrolls, with <a href="#p3">a link 3</a> in it.</p>
+      <p>Paragraph 4. Text that fills the page so that it scrolls, with <a href="#p4">a link 4</a> in it.</p>
+      <p>Paragraph 5. Text that fills the page so that it scrolls, with <a href="#p5">a link 5</a> in it.</p>
+      <p>Paragraph 6. Text that fills the page so that it scrolls, with <a href="#p6">a link 6</a> in it.</p>
+      <p>Paragraph 7. Text that fills the page so that it scrolls, with <a href="#p7">a link 7</a> in it.</p>
+      <p>Paragraph 8. Text that fills the page so that it scrolls, with <a href="#p8">a link 8</a> in it.</p>
+      <p>Paragraph 9. Text that fills the page so that it scrolls, with <a href="#p9">a link 9</a> in it.</p>
+      <p>Paragraph 10. Text that fills the page so that it scrolls, with <a href="#p10">a link 10</a> in it.</p>
+      <p>Paragraph 11. Text that fills the page so that it scrolls, with <a href="#p11">a link 11</a> in it.</p>
+      <p>Paragraph 12. Text that fills the page so that it scrolls, with <a href="#p12">a link 12</a> in it.</p>
+      <p>Paragraph 13. Text that fills the page so that it scrolls, with <a href="#p13">a link 13</a> in it.</p>
+      <p>Paragraph 14. Text that fills the page so that it scrolls, with <a href="#p14">a link 14</a> in it.</p>
+      <p>Paragraph 15. Text that fills the page so that it scrolls, with <a href="#p15">a link 15</a> in it.</p>
+      <p>Paragraph 16. Text that fills the page so that it scrolls, with <a href="#p16">a link 16</a> in it.</p>
+      <p>Paragraph 17. Text that fills the page so that it scrolls, with <a href="#p17">a link 17</a> in it.</p>
+      <p>Paragraph 18. Text that fills the page so that it scrolls, with <a href="#p18">a link 18</a> in it.</p>
+      <p>Paragraph 19. Text that fills the page so that it scrolls, with <a href="#p19">a link 19</a> in it.</p>
+      <p>Paragraph 20. Text that fills the page so that it scrolls, with <a href="#p20">a link 20</a> in it.</p>
+      <p>Paragraph 21. Text that fills the page so that it scrolls, with <a href="#p21">a link 21</a> in it.</p>
+      <p>Paragraph 22. Text that fills the page so that it scrolls, with <a href="#p22">a link 22</a> in it.</p>
+      <p>Paragraph 23. Text that fills the page so that it scrolls, with <a href="#p23">a link 23</a> in it.</p>
+      <p>Paragraph 24. Text that fills the page so that it scrolls, with <a href="#p24">a link 24</a> in it.</p>
+      <p>Paragraph 25. Text that fills the page so that it scrolls, with <a href="#p25">a link 25</a> in it.</p>
+      <p>Paragraph 26. Text that fills the page so that it scrolls, with <a href="#p26">a link 26</a> in it.</p>
+      <p>Paragraph 27. Text that fills the page so that it scrolls, with <a href="#p27">a link 27</a> in it.</p>
+      <p>Paragraph 28. Text that fills the page so that it scrolls, with <a href="#p28">a link 28</a> in it.</p>
+      <p>Paragraph 29. Text that fills the page so that it scrolls, with <a href="#p29">a link 29</a> in it.</p>
+      <p>Paragraph 30. Text that fills the page so that it scrolls, with <a href="#p30">a link 30</a> in it.</p>
+      <p>Paragraph 31. Text that fills the page so that it scrolls, with <a href="#p31">a link 31</a> in it.</p>
+      <p>Paragraph 32. Text that fills the page so that it scrolls, with <a href="#p32">a link 32</a> in it.</p>
+      <p>Paragraph 33. Text that fills the page so that it scrolls, with <a href="#p33">a link 33</a> in it.</p>
+      <p>Paragraph 34. Text that fills the page so that it scrolls, with <a href="#p34">a link 34</a> in it.</p>
+      <p>Paragraph 35. Text that fills the page so that it scrolls, with <a href="#p35">a link 35</a> in it.</p>
+      <p>Paragraph 36. Text that fills the page so that it scrolls, with <a href="#p36">a link 36</a> in it.</p>
+      <p>Paragraph 37. Text that fills the page so that it scrolls, with <a href="#p37">a link 37</a> in it.</p>
+      <p>Paragraph 38. Text that fills the page so that it scrolls, with <a href="#p38">a link 38</a> in it.</p>
+      <p>Paragraph 39. Text that fills the page so that it scrolls, with <a href="#p39">a link 39</a> in it.</p>
+      <p>Paragraph 40. Text that fills the page so that it scrolls, with <a href="#p40">a link 40</a> in it.</p>
+      <p>Paragraph 41. Text that fills the page so that it scrolls, with <a href="#p41">a link 41</a> in it.</p>
+      <p>Paragraph 42. Text that fills the page so that it scrolls, with <a href="#p42">a link 42</a> in it.</p>
+      <p>Paragraph 43. Text that fills the page so that it scrolls, with <a href="#p43">a link 43</a> in it.</p>
+      <p>Paragraph 44. Text that fills the page so that it scrolls, with <a href="#p44">a link 44</a> in it.</p>
+      <p>Paragraph 45. Text that fills the page so that it scrolls, with <a href="#p45">a link 45</a> in it.</p>
+      <p>Paragraph 46. Text that fills the page so that it scrolls, with <a href="#p46">a link 46</a> in it.</p>
+      <p>Paragraph 47. Text that fills the page so that it scrolls, with <a href="#p47">a link 47</a> in it.</p>
+      <p>Paragraph 48. Text that fills the page so that it scrolls, with <a href="#p48">a link 48</a> in it.</p>
+      <p>Paragraph 49. Text that fills the page so that it scrolls, with <a href="#p49">a link 49</a> in it.</p>
+      <p>Paragraph 50. Text that fills the page so that it scrolls, with <a href="#p50">a link 50</a> in it.</p>
+      <p>Paragraph 51. Text that fills the page so that it scrolls, with <a href="#p51">a link 51</a> in it.</p>
+      <p>Paragraph 52. Text that fills the page so that it scrolls, with <a href="#p52">a link 52</a> in it.</p>
+      <p>Paragraph 53. Text that fills the page so that it scrolls, with <a href="#p53">a link 53</a> in it.</p>
+      <p>Paragraph 54. Text that fills the page so that it scrolls, with <a href="#p54">a link 54</a> in it.</p>
+      <p>Paragraph 55. Text that fills the page so that it scrolls, with <a href="#p55">a link 55</a> in it.</p>
+      <p>Paragraph 56. Text that fills the page so that it scrolls, with <a href="#p56">a link 56</a> in it.</p>
+      <p>Paragraph 57. Text that fills the page so that it scrolls, with <a href="#p57">a link 57</a> in it.</p>
+      <p>Paragraph 58. Text that fills the page so that it scrolls, with <a href="#p58">a link 58</a> in it.</p>
+      <p>Paragraph 59. Text that fills the page so that it scrolls, with <a href="#p59">a link 59</a> in it.</p>
+      <p>Paragraph 60. Text that fills the page so that it scrolls, with <a href="#p60">a link 60</a> in it.</p>
+          <p><label for="field">A field near the end</label> <input class="luz-input" id="field" type="text"></p>
+          <p><a id="main-last" href="#main-last">The last link of the main part</a></p>
+        </div>
+      </main>
+      <footer class="luz-fixture-footer">
+        <p><a id="foot-1" href="#cookies">Cookie policy</a> <a id="foot-2" href="#terms">Terms</a></p>
+        <p><button class="luz-btn luz-btn--ghost" id="settings-2" type="button" data-luz-consent-open hidden>Cookie settings</button></p>
+        <p><a id="foot-last" href="#foot-last">The last link of the page</a></p>
+      </footer>
+    </div>
+  </div>
+
+  <dialog class="luz-modal" id="modal" aria-label="A dialog">
+    <p>A dialog in the top layer.</p>
+    <button class="luz-btn luz-btn--secondary" id="modal-close" type="button" onclick="this.closest('dialog').close()">Close</button>
+  </dialog>
+  <div popover id="pop" style="inset: auto 0 0 0; margin: 0; block-size: 6rem; inline-size: auto;">A popover over the foot of the window.</div>
+</body>
+</html>

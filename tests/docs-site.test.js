@@ -480,13 +480,13 @@ describe("the LUZ docs site", () => {
     const flat = (html) =>
       html
         .replace(/ aria-current="(page|true)"/g, "")
-        .replace(/<div class="luz-site-lang-switcher">[\s\S]*?<\/nav>\s*<\/div>/, "")
+        .replace(/<luz-lang-switch>[\s\S]*?<\/luz-lang-switch>/, "")
         .replace(/\s+/g, " ");
     const docsHeader = flat(header(rendered.get("/docs/")));
     for (const [route, html] of rendered) {
       const own = header(html);
       if (route === "/" || !homes.includes(route)) expect(flat(own), route).toBe(docsHeader);
-      expect(own.includes("luz-site-lang-switcher"), route).toBe(homes.includes(route));
+      expect(own.includes("<luz-lang-switch>"), route).toBe(homes.includes(route));
       // The site links (Home and Docs; the brand is not a navigation item) and the switcher's current language
       const marked = [...own.matchAll(/<a[^>]* href="([^"]*)"[^>]* aria-current="(page|true)">/g)].map(([, href, value]) => [href, value]);
       const expected = [...currentOf(route, homes)].filter(([href]) => href === "/docs/" || homes.includes(href));
@@ -650,7 +650,11 @@ describe("the LUZ docs site", () => {
     expect(names.length).toBeGreaterThan(250);
     // Keywords: after the area, not already in the title; the page keeps its place
     expect(index.pages).toContainEqual(["Navbar", "components/navbar/", "Components · nav bar, navigation bar"]);
-    expect(index.pages).toContainEqual(["Language switcher", "site/lang-switcher/", "Site · translation, locale, i18n, hreflang"]);
+    // The page of the language switch is site/lang-switch/ (the tag is the block); its title is the page's own
+    expect(index.pages.filter(([, url]) => url === "site/lang-switch/").map(([, , keywords]) => keywords)).toEqual(["Site · translation, locale, i18n, hreflang"]);
+    expect(index.pages.filter(([, url]) => url === "site/lang-switcher/")).toEqual([]);
+    expect(index.pages.filter(([, url]) => url === "site/notice/")).toEqual([]);
+    expect(index.pages.filter(([, url]) => url === "site/banner/")).toHaveLength(1);
     // A keyword is never the title of another page: that page would come second in its own search
     const titles = new Set(site.pages.map((p) => p.meta.title.toLowerCase()));
     for (const { keywords, title } of indexData(site)) for (const k of keywords) expect(titles.has(k.toLowerCase()), `${title}: ${k}`).toBe(false);

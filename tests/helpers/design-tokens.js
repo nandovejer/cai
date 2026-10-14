@@ -10,7 +10,7 @@
  *   - tokensUsedBy(page): the --luz-* tokens the component's own CSS reads;
  *   - familyOf(token): the token page that documents it.
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { formatRatio as format, over, parseColor as parse, ratio } from "../../packages/tokens/lib/contrast.js";
 import { SITE_KINDS } from "../../scripts/luz-packages.js";
@@ -92,7 +92,10 @@ function sourceOf(page) {
     return { css: readdirSync(`${repo}${dir}`).filter((f) => f.endsWith(".css")).sort().map((f) => read(`${dir}/${f}`)).join("\n"), classes };
   }
   // The shell patterns, and the patterns with a file of their own (the language switcher, the site header, the submenu, the notice and the cookie banner)
-  const files = ["_components.css", "lang-switcher.css", "site-header.css", "submenu.css", "banners.css"].map((f) => read(`packages/site/src/components/${f}`));
+  // (renamed in F3: lang-switcher.css to lang-switch.css, banners.css split into banner.css and consent.css; whichever exist)
+  const files = ["_components.css", "lang-switcher.css", "lang-switch.css", "site-header.css", "submenu.css", "banners.css", "banner.css", "consent.css"]
+    .filter((f) => existsSync(`${repo}packages/site/src/components/${f}`))
+    .map((f) => read(`packages/site/src/components/${f}`));
   return { css: files.join("\n"), classes };
 }
 

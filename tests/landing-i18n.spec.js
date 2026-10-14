@@ -1,7 +1,9 @@
 // @ts-check
 /**
  * The home page in English (/), Spanish (/es/) and Arabic (/ar/), and the
- * language switcher of @luz-ds/site in its header. Each language is a
+ * language switch of @luz-ds/site in its header (<luz-lang-switch>, a CSS-only
+ * tag that no script defines: .claude/plans/specs/f3-package-model.md section
+ * 2.2, step 8). Each language is a
  * static page: its own lang, dir, title and alternates, no redirect and no
  * text swapped by a script. The switcher is links in a native popover, so
  * it is checked with JavaScript and, in chromium-nojs, without it.
@@ -33,7 +35,39 @@ async function open(page, path) {
   return { failed, problems };
 }
 
-const switcher = (page) => page.locator('.site-header .luz-site-lang-switcher');
+const switcher = (page) => page.locator('.site-header luz-lang-switch');
+
+/**
+ * O1 (accessibility requirements): the accessibility tree of the switch is the
+ * one `div.luz-site-lang-switcher` gave before the rename, closed and open;
+ * taken from that markup, for each language.
+ */
+const LINKS = `
+    - listitem:
+      - link "English":
+        - /url: /
+    - listitem:
+      - link "Español":
+        - /url: /es/
+    - listitem:
+      - link "العربية":
+        - /url: /ar/
+`;
+const TREES = {
+  '/': { button: 'Language: English', label: 'Language' },
+  '/es/': { button: 'Idioma: Español', label: 'Idioma' },
+  '/ar/': { button: 'اللغة: العربية', label: 'اللغة' },
+};
+const closedTree = (route) => `
+- /children: equal
+- 'button "${TREES[route].button}"'
+`;
+const openTree = (route) => `
+- /children: equal
+- 'button "${TREES[route].button}"'
+- navigation "${TREES[route].label}":
+  - paragraph: ${TREES[route].label}
+  - list:${LINKS}`;
 
 for (const { route, lang, dir, name, label } of LANGUAGES) {
   test.describe(`home page ${route}`, () => {
@@ -72,6 +106,13 @@ for (const { route, lang, dir, name, label } of LANGUAGES) {
       expect(underline).toContain('underline');
     });
 
+    test('O1: the accessibility tree of the switch is what the classed div gave, closed and open', async ({ page }) => {
+      await open(page, route);
+      await expect(switcher(page)).toMatchAriaSnapshot(closedTree(route));
+      await switcher(page).getByRole('button').click();
+      await expect(switcher(page)).toMatchAriaSnapshot(openTree(route));
+    });
+
     test('Home in the header is this language’s home page, marked current', async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
       await open(page, route);
@@ -82,7 +123,39 @@ for (const { route, lang, dir, name, label } of LANGUAGES) {
   });
 }
 
-test.describe('the language switcher', () => {
+test.describe('the language switch', () => {
+  test('is <luz-lang-switch> around a button and its popover nav, with .luz-lang-switch__* parts; the old names are gone', async ({ page }) => {
+    await open(page, '/es/');
+    const shape = await page.evaluate(() => {
+      const host = document.querySelector('.site-header luz-lang-switch');
+      return {
+        host: !!host,
+        children: host ? [...host.children].map((c) => `${c.localName}.${c.className}`) : [],
+        menuIsPopoverNav: host?.querySelector('nav')?.hasAttribute('popover'),
+        links: host ? [...host.querySelectorAll('a')].map((a) => a.className) : [],
+        classesOnTag: host?.hasAttribute('class'),
+        oldClass: document.querySelectorAll('[class*="luz-site-lang-switcher"]').length,
+      };
+    });
+    expect(shape).toEqual({
+      host: true,
+      children: ['button.luz-lang-switch__button', 'nav.luz-lang-switch__menu'],
+      menuIsPopoverNav: true,
+      links: ['luz-lang-switch__link', 'luz-lang-switch__link', 'luz-lang-switch__link'],
+      classesOnTag: false,
+      oldClass: 0,
+    });
+  });
+
+  test('the list opens at --luz-lang-switch-top, the renamed property, which a header sets on the tag', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await open(page, '/');
+    await switcher(page).evaluate((el) => el.style.setProperty('--luz-lang-switch-top', '123px'));
+    await switcher(page).getByRole('button').click();
+    const top = await page.locator('#luz-lang-menu').evaluate((el) => el.getBoundingClientRect().top);
+    expect(top).toBe(123);
+  });
+
   test('goes to another language by following a link, with or without JavaScript', async ({ page }) => {
     await open(page, '/es/');
     await switcher(page).getByRole('button').click();
@@ -143,7 +216,7 @@ test.describe('the language switcher', () => {
       const button = switcher(page).getByRole('button');
       await expect(button).toHaveAccessibleName(`${label}: ${name}`);
       // No visible text: the name is clipped to 1px
-      const shown = await button.locator('.luz-site-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width);
+      const shown = await button.locator('.luz-lang-switch__name').evaluate((el) => el.getBoundingClientRect().width);
       expect(shown).toBeLessThanOrEqual(1);
       expect((await button.boundingBox())?.width).toBeGreaterThanOrEqual(44);
     });
@@ -152,8 +225,8 @@ test.describe('the language switcher', () => {
   test('from 360px the button shows the language\'s name', async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 700 });
     await open(page, '/es/');
-    await expect(switcher(page).locator('.luz-site-lang-switcher__name')).toBeVisible();
-    expect(await switcher(page).locator('.luz-site-lang-switcher__name').evaluate((el) => el.getBoundingClientRect().width)).toBeGreaterThan(20);
+    await expect(switcher(page).locator('.luz-lang-switch__name')).toBeVisible();
+    expect(await switcher(page).locator('.luz-lang-switch__name').evaluate((el) => el.getBoundingClientRect().width)).toBeGreaterThan(20);
   });
 
   test('a browser without the popover API gets the languages as a row of links', async ({ page }) => {

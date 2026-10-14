@@ -1,6 +1,6 @@
 /**
  * The table "Which check covers which red line" in PRINCIPLES.md names, for
- * each of RL-1 to RL-18, the files that check it. This test keeps the table
+ * each of RL-1 to RL-19, the files that check it. This test keeps the table
  * honest: every line appears once, and every file it names exists.
  */
 import { describe, it, expect } from "vitest";
@@ -23,13 +23,13 @@ describe("PRINCIPLES.md: which check covers which red line", () => {
     expect(rows.length).toBeGreaterThan(0);
   });
 
-  it("lists RL-1 to RL-18 once each, in order, as many as the red lines of the file", () => {
+  it("lists RL-1 to RL-19 once each, in order, as many as the red lines of the file", () => {
     const listed = rows.map((r) => r.line);
-    expect(listed).toEqual(Array.from({ length: 18 }, (_, i) => `RL-${i + 1}`));
-    // The numbered red lines above the table are the same eighteen
+    expect(listed).toEqual(Array.from({ length: 19 }, (_, i) => `RL-${i + 1}`));
+    // The numbered red lines above the table are the same nineteen
     const block = principles.split("## Red lines")[1].split("### Which check")[0];
     const numbered = [...block.matchAll(/^(\d+)\. \*\*/gm)].map((m) => Number(m[1]));
-    expect(numbered).toEqual(Array.from({ length: 18 }, (_, i) => i + 1));
+    expect(numbered).toEqual(Array.from({ length: 19 }, (_, i) => i + 1));
   });
 
   it("names at least one existing file for every line, and says what the check does not see", () => {

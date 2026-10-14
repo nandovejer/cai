@@ -11,11 +11,11 @@
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-C0xG4dRb.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DoKJvCcB.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-AGCTJ7l9.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJKXdV8E.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DL44kyQO.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-3fvlZ3H2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DuWysHha.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CSpLyGNe.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-J6fYF-Dp.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CGDw9oUc.css">
 </head>
 <body class="o-shell docs-page">
@@ -220,6 +220,7 @@ import "@cai-ds/core/classless.css";</code></pre>
         <li><code>div</code>, <code>span</code> and inline elements are left alone: their layout is yours. For a column of blocks you build yourself, use <a href="../../../docs/components/layout/"><code>.o-stack</code></a>.</li>
         <li>A button that follows a field gets the same step, so it does not touch it. Buttons side by side stay together.</li>
         <li>It is a margin at specificity zero: any class of yours wins, and a CAI component that sets its own margin keeps it.</li>
+        <li>For an article, core's <a href="../../../docs/components/prose/"><code>.cai-prose</code></a> takes the same three steps between the blocks of one wrapper and adds the line length and the indent of lists. The two work together: put both on the element that holds the text, and classless mode adds the look of its tables and controls.</li>
       </ul>
     </section>
 

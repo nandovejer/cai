@@ -11,11 +11,11 @@
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-C0xG4dRb.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DoKJvCcB.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-AGCTJ7l9.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJKXdV8E.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DL44kyQO.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-3fvlZ3H2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DuWysHha.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CSpLyGNe.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-J6fYF-Dp.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CGDw9oUc.css">
 </head>
 <body class="o-shell docs-page">
@@ -215,7 +215,7 @@
             <ul>
               <li>The photo has <code>alt=""</code>: the name is in the heading beside it and says the same. If a photo shows something the name does not carry, give it an <code>alt</code> that says that, never the name again.</li>
               <li>The name is an <code>&lt;h3&gt;</code>, one level under the section's <code>&lt;h2&gt;</code>, so people can move through the speakers by headings. The role is the card's body: "Role, Organisation", one line.</li>
-              <li>The <code>&lt;ul&gt;</code> tells a screen reader how many people there are. Core styles no list: take off the bullets and the indent with the one rule of your own in the snippet. Safari can drop the list role from a list whose markers you remove; the headings still lead through the speakers.</li>
+              <li>The <code>&lt;ul&gt;</code> tells a screen reader how many people there are. Core's <code>.o-grid</code> on the list takes off the bullets and the indent. Safari can drop the list role from a list without markers; the headings still lead through the speakers.</li>
               <li><code>.o-grid--auto</code> puts as many columns as fit, none narrower than 16rem. Set <code>--cai-grid-min</code> on the list for narrower cards: <code>12rem</code> gives five across a 1100 px container, and one column below 336 px stays one column.</li>
               <li>No photo yet: leave the frame empty (<code>&lt;div class="cai-site-image cai-site-image--1x1 u-mb-sm"&gt;&lt;/div&gt;</code>) and it draws the placeholder. To link a speaker to a page of their own, put a link in the heading, <code>&lt;h3 class="cai-card__title"&gt;&lt;a href="/speakers/luis-ortega/"&gt;Luis Ortega&lt;/a&gt;&lt;/h3&gt;</code>: the whole card becomes the link. Link all the speakers or none, and do not add a second link or a button.</li>
             </ul>
@@ -224,14 +224,9 @@
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="cai-copy-btn" type="button" data-copy-from="code-tpl-speakers" aria-label="Copy the speakers markup">Copy</button>
               </div>
-              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Speakers markup"><code id="code-tpl-speakers">&lt;style&gt;
-  /* Your own rule: core styles no list */
-  .speakers { list-style: none; margin: 0; padding: 0; }
-&lt;/style&gt;
-
-&lt;section class=&quot;cai-site-section&quot; id=&quot;speakers&quot; aria-labelledby=&quot;speakers-title&quot;&gt;
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Speakers markup"><code id="code-tpl-speakers">&lt;section class=&quot;cai-site-section&quot; id=&quot;speakers&quot; aria-labelledby=&quot;speakers-title&quot;&gt;
   &lt;h2 id=&quot;speakers-title&quot;&gt;Speakers&lt;/h2&gt;
-  &lt;ul class=&quot;o-grid o-grid--auto speakers&quot;&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
     &lt;li class=&quot;cai-card&quot;&gt;
       &lt;div class=&quot;cai-site-image cai-site-image--1x1 u-mb-sm&quot;&gt;
         &lt;picture&gt;

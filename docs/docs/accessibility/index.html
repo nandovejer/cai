@@ -11,11 +11,11 @@
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../assets/site-header-C0xG4dRb.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-DoKJvCcB.js"></script>
+  <script type="module" crossorigin src="../../assets/site-header-AGCTJ7l9.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-DJKXdV8E.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/site-header-DL44kyQO.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-3fvlZ3H2.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-DuWysHha.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-CSpLyGNe.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-J6fYF-Dp.css">
   <link rel="stylesheet" crossorigin href="../../assets/reference-CGDw9oUc.css">
 </head>
 <body class="o-shell docs-page">
@@ -179,7 +179,10 @@
         <li><strong>Site header menu.</strong> On narrow screens the site menu opens as a panel under the header. If you keep pressing Tab after its last link, focus moves into the page and the panel stays open over it. Press Escape to close it. (WCAG 2.2 success criterion 2.4.12, level AAA; level AA 2.4.11 is met.) The panel opens under the header's height at the default text size: with enlarged text and a header that wraps to a second row, it can cover that row.</li>
         <li><strong>Site header, enlarged text.</strong> A sticky header keeps a field reached with Tab clear of it by a minimum height. That works at 100 and 200 percent text. At 300 percent text, when the header wraps to several rows, Safari can still leave the field partly under it; Chrome, Edge and Firefox keep it clear. The Site header page says how to set the padding for your own header. In Firefox with forced colors the dim layer behind the open menu is not drawn; the panel keeps its border.</li>
         <li><strong>Section band.</strong> A band cuts off whatever sticks out of it above or below, so a tooltip on the first control of a band is clipped at 200 percent text and larger; start the band with its heading. The hover of an outline or ghost button on a band shows no change. In forced colors the band has no tint, only two thin rules above and below it.</li>
-        <li><strong>Table of contents (cms).</strong> The mark on the section in view comes from core's script; without it, no link is marked, and the links still work. Next to the text, the contents list the sections at the inline end but come first in the source, so Tab reaches them before the text. It has not been tested with a screen reader.</li>
+        <li><strong>Prose.</strong> A table that is wider than the text column and has no <code class="cai-code-inline">.cai-table-wrap</code> around it makes the whole page scroll sideways on a narrow screen. A long preformatted block scrolls inside itself; give it <code class="cai-code-inline">tabindex="0"</code> and a name, as the code block has, or Safari users cannot scroll it with the keyboard.</li>
+        <li><strong>Meta line.</strong> The dots between the facts are hidden from screen readers with alternative text for generated content. In a browser without it (Firefox before 128, Safari before 17.4) a screen reader reads each dot.</li>
+        <li><strong>Lists laid out as a grid, stack or row.</strong> Safari does not announce a list whose markers are removed, outside a navigation landmark, as a list. Its items are still read in order, and the headings in them still lead through it.</li>
+        <li><strong>Table of contents (cms).</strong> The mark on the section in view comes from core's script (<code class="cai-code-inline">data-cai-spy</code>); without it, no link is marked, and the links still work. Next to the text, the contents list the sections at the inline end but come first in the source, so Tab reaches them before the text. It has not been tested with a screen reader.</li>
         <li><strong>Copy button.</strong> When the browser refuses to copy, the failure is announced to screen readers, but the button shows no message.</li>
       </ul>
 

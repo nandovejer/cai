@@ -11,11 +11,11 @@
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-CU59whWG.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-C0xG4dRb.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DoKJvCcB.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-AGCTJ7l9.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DJKXdV8E.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-DL44kyQO.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-3fvlZ3H2.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-DuWysHha.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CSpLyGNe.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-J6fYF-Dp.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CGDw9oUc.css">
 </head>
 <body class="o-shell docs-page">
@@ -115,11 +115,13 @@
           <li><a class="cai-sidebar__link" href="../../../docs/components/figure/">Figure</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/form/">Form fields</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/icon-grid/">Icon grid</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/components/meta/">Meta line</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/meter/">Meter</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/modal/">Modal</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/pagination/">Pagination</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/player/">Player</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/progress/">Progress</a></li>
+          <li><a class="cai-sidebar__link" href="../../../docs/components/prose/">Prose</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/select/">Select</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/sidebar/">Sidebar</a></li>
           <li><a class="cai-sidebar__link" href="../../../docs/components/table/">Table</a></li>
@@ -165,6 +167,7 @@
         <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-examples">Examples</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-reference">Pick an object</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-grid">The grid</a></li>
+        <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-lists">Lists</a></li>
         <li><a class="cai-sidebar__link docs-onpage__link" href="#objects-markup">Copy the markup</a></li>
       </ul>
     </details>
@@ -254,6 +257,22 @@
             <li>Items keep their source order: the grid reorders nothing, so reading order and tab order are the page's.</li>
             <li>Columns are <code>minmax(0, 1fr)</code>, so a long word or a wide table inside an item cannot push the grid wider than its container.</li>
             <li>For a layout that depends on the width of a card and not of the window, put the grid in a container and size the items there; the objects do not read the container.</li>
+          </ul>
+          <h2 id="objects-lists">Lists</h2>
+          <p>When the items are a list (posts, speakers, tags), put <code>.o-grid</code>, <code>.o-stack</code> or <code>.o-row</code> on the <code>&lt;ul&gt;</code> or <code>&lt;ol&gt;</code> itself. The object takes off the markers and the indent, and the items stay a list: a screen reader says how many there are and lets the reader skip past them.</p>
+          <div class="docs-snippet">
+            <div class="docs-snippet__bar">
+              <span class="docs-snippet__lang">HTML</span>
+              <button class="cai-copy-btn" type="button" data-copy-from="code-objects-list" aria-label="Copy the list grid markup">Copy</button>
+            </div>
+            <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="List grid markup"><code id="code-objects-list">&lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
+  &lt;li class=&quot;cai-card&quot;&gt;…&lt;/li&gt;
+  &lt;li class=&quot;cai-card&quot;&gt;…&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+          </div>
+          <ul>
+            <li>Safari can drop the list role from a list without markers, outside a <code>&lt;nav&gt;</code>. Give each item a heading, as cards have, so the reader can still move through them.</li>
+            <li>No rule of yours is needed. Inside <a href="../../../docs/components/prose/">prose</a>, which gives lists their markers back, a list with an object keeps none.</li>
           </ul>
           <h2 id="objects-markup">Copy the markup</h2>
           <div class="docs-snippet">

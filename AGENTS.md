@@ -34,7 +34,7 @@ Test runs use `--project=chromium --project=chromium-nojs`. The `firefox` and `w
 
 ## JS in `packages/core/src/`
 
-Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `luz.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@luz-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/i18n`, `/midi`, `/table-sort`.
+Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `luz.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@luz-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/i18n`, `/midi`, `/table-sort`, `/timeline`.
 
 | Module         | Key exports                                                    |
 | -------------- | -------------------------------------------------------------- |
@@ -49,6 +49,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 | `i18n.js`      | `t(key, el, vars?)` — string for the language of `el` (nearest `lang`, then subtag, then English; `data-luz-label-<key>` overrides), `getLang(el)`, `registerLocale(lang, messages)`; ships `en` and `es` |
 | `midi.js`      | `MidiPlayer` — MIDI Format 0/1 parser + Web Audio scheduler (lazy-loaded chunk) |
 | `table-sort.js` | `initTableSort(root, translate)` — sorts a table with `th[data-luz-sort]` in the browser (lazy-loaded chunk, no imports: `luz.js` passes its `t`) |
+| `timeline.js`  | `<luz-timeline>` — a rail of dates, Previous / Next, opt-in autoplay with a visible Pause / Play, or a vertical layout that marks the item in view (lazy-loaded chunk: `luz.js` imports it only on a page with a `luz-timeline` and passes its `t` to `initTimeline(root, translate)`; importing it defines the element and imports nothing, its four strings travel with it, EX-010) |
 
 ---
 

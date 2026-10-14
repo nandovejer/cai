@@ -9,7 +9,8 @@
  * @returns {string} Formatted time string (e.g., "1:23")
  */
 export function formatTime(seconds) {
-  if (isNaN(seconds) || !isFinite(seconds) || seconds < 0) return "0:00";
+  // isFinite is false for NaN too
+  if (!isFinite(seconds) || seconds < 0) return "0:00";
   const m = Math.floor(seconds / 60);
   const s = Math.floor(seconds % 60);
   return `${m}:${s.toString().padStart(2, "0")}`;

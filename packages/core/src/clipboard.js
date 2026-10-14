@@ -52,22 +52,15 @@ export async function copyToClipboard(text, el, type = "btn") {
     await navigator.clipboard.writeText(text);
     announce(t("copiedStatus", el));
 
-    if (type === "swatch") {
-      el.classList.add("is-copied");
-      setTimeout(() => el.classList.remove("is-copied"), 1000);
-    } else if (type === "token") {
-      // .token elements show feedback via class only (text stays as token name)
-      el.classList.add("is-copied");
-      setTimeout(() => el.classList.remove("is-copied"), 1200);
-    } else {
-      const original = el.textContent;
-      el.textContent = t("copied", el);
-      el.classList.add("is-copied");
-      setTimeout(() => {
-        el.textContent = original;
-        el.classList.remove("is-copied");
-      }, 1200);
-    }
+    // A swatch and a token show the feedback by class only (the text stays)
+    const keepText = type === "swatch" || type === "token";
+    const original = el.textContent;
+    if (!keepText) el.textContent = t("copied", el);
+    el.classList.add("is-copied");
+    setTimeout(() => {
+      if (!keepText) el.textContent = original;
+      el.classList.remove("is-copied");
+    }, type === "swatch" ? 1000 : 1200);
   } catch (err) {
     announce(t("copyFailed", el));
     console.error("Failed to copy:", err);

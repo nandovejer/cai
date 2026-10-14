@@ -81,6 +81,8 @@ function boot() {
   if (document.querySelector("th[data-luz-sort]")) {
     import("./table-sort.js").then((m) => m.initTableSort(document, t));
   }
+  // So does a timeline: the chunk defines <luz-timeline>; t gives it the strings of registerLocale()
+  if (document.querySelector("luz-timeline")) import("./timeline.js").then((m) => m.initTimeline(document, t));
 }
 
 if (typeof document !== "undefined") {

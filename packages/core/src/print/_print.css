@@ -89,8 +89,40 @@
   .luz-mode-cycle,
   .luz-player,
   .luz-toast,
-  .luz-tooltip__text {
+  .luz-tooltip__text,
+  .luz-timeline__rail,
+  .luz-timeline__arrow,
+  .luz-timeline__toggle {
     display: none;
+  }
+
+  /* A timeline prints as its list: every card, one under another, with its
+     date */
+  :where(luz-timeline[data-luz-ready]) .luz-timeline {
+    display: block;
+    padding: 0;
+  }
+
+  :where(luz-timeline[data-luz-ready]) .luz-timeline::before,
+  :where(luz-timeline[data-luz-ready]) .luz-timeline::after {
+    content: none;
+  }
+
+  .luz-timeline__stage {
+    display: block;
+  }
+
+  :where(luz-timeline[data-luz-ready]) .luz-timeline__item {
+    visibility: visible;
+    opacity: 1;
+    margin-block-end: var(--luz-space-sm);
+  }
+
+  :where(luz-timeline[data-luz-ready]) .luz-timeline__date {
+    position: static;
+    inline-size: auto;
+    block-size: auto;
+    clip-path: none;
   }
 
   /* Every tab panel prints, one after the other. An inactive panel is

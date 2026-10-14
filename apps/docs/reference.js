@@ -193,3 +193,6 @@ if (document.querySelector("th[data-luz-sort]")) {
     sort.initTableSort(document, i18n.t),
   );
 }
+// The Timeline page defines <luz-timeline> with the chunk on its own, as a
+// consumer who imports @luz-ds/core/timeline does (its strings travel with it)
+if (document.querySelector("luz-timeline")) import("/packages/core/dist/timeline.js");

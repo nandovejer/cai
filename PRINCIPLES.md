@@ -122,6 +122,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `core` JS entry (lazy chunks excluded) | — | ≤ 5 kB | 5 kB | 8 kB |
 | `core` JS lazy chunk: `midi` | — | ≤ 3 kB | 3 kB | 4 kB |
 | `core` JS lazy chunk: `table-sort` | — | ≤ 1 kB | 1 kB | 2 kB |
+| `core` JS lazy chunk: `timeline` | — | ≤ 2 kB | 2 kB | 3 kB |
 | `site` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | `site` JS | — | ≤ 1 kB | 1 kB | 2 kB |
 | `site` JS module: `consent` (a file of its own, not imported by `site.js`) | — | ≤ 1 kB | 1 kB | 1.5 kB |

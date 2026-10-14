@@ -80,7 +80,7 @@ import { registerLocale } from "@luz-ds/core/i18n";
 registerLocale("fr", { play: "Lire", pause: "Pause", copy: "Copier" });
 ```
 
-Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captions`, `captionsOff`, `loading`, `midiError`, `timeOf` (`{current}`, `{total}`), `copy`, `copied`, `copiedStatus`, `copyFailed`, `codeExample` (`{lang}`), `copyCode` (`{n}`), `applyTheme`, `themeApplied`, `sortedAsc` and `sortedDesc` (`{column}`). A key in camelCase becomes kebab-case in the attribute: `data-luz-label-exit-fullscreen`. Missing keys fall back to English.
+Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captions`, `captionsOff`, `loading`, `midiError`, `timeOf` (`{current}`, `{total}`), `copy`, `copied`, `copiedStatus`, `copyFailed`, `codeExample` (`{lang}`), `copyCode` (`{n}`), `applyTheme`, `themeApplied`, `sortedAsc` and `sortedDesc` (`{column}`), `previous` and `next`. A key in camelCase becomes kebab-case in the attribute: `data-luz-label-exit-fullscreen`. Missing keys fall back to English.
 
 `registerLocale()` must reach the same module instance the components use: with the auto-initializing entry import it from `@luz-ds/core`, with the individual modules from `@luz-ds/core/i18n`. Strings written later (play/pause, copied, status messages) use it right away; the ones written when a component initializes (code block names) need it registered before the `init*()` call.
 
@@ -100,6 +100,7 @@ Every stylesheet puts its rules in a layer of one container layer, `luz`: `luz.t
 - **`./i18n`** → Strings for the JS-generated text (`t`, `getLang`, `registerLocale`)
 - **`./midi`** → `midi.js` — MIDI player (lazy-loaded)
 - **`./table-sort`** → `table-sort.js` — `initTableSort(root, t)`: sorts a table whose headings carry `data-luz-sort` (lazy-loaded by `luz.js`; no imports, so pass the `t` of `./i18n` when you load it on its own)
+- **`./timeline`** → `timeline.js` — defines `<luz-timeline>`, the timeline with a rail of dates (lazy-loaded by `luz.js` on a page that has one; import it yourself for a timeline added later, with or without the entry; it loads nothing else and carries its own English and Spanish strings. `initTimeline(root, translate)` is what `luz.js` calls to hand it core's `t`)
 - **`./utils`** → Pure helper functions (`formatTime`, `escapeHtml`, …)
 - **`./themes/*`** → `_template.css`, the starting point for a theme of your own
 

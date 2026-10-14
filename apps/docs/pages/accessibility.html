@@ -1,11 +1,11 @@
 <!-- luz:page
 title: Accessibility statement
-description: LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 13 October 2026.
+description: LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 14 October 2026.
 area: accessibility
 lead: false
 -->
     <div class="docs-block docs-prose-chapter" id="accessibility">
-      <p class="docs-lead">LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 13 October 2026.</p>
+      <p class="docs-lead">LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 14 October 2026.</p>
       <h2 id="h-a11y-target">Target</h2>
       <p>LUZ aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to.</p>
       <p>A design system cannot make a service accessible by itself: how you use the components decides the result. Each component page says what is yours to do, under <em>Keyboard and ARIA</em> and <em>Writing the content</em>.</p>
@@ -16,6 +16,7 @@ lead: false
         <li>Keyboard use of the sidebar drawer, the modal dialog, the tabs, the Code and Design tabs of the component pages, the "On this page" index, whose links open the tab of the section they point at, and the search: Ctrl+K, the arrow keys through the results, Enter and Escape.</li>
         <li>The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, the search button is a link to the A–Z index, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as three radio buttons, which still set the mode. The language switcher of the home page opens its list of languages, which are links, with the popover API and no script.</li>
         <li>Reduced motion: no transition or animation runs when the visitor asks for less motion.</li>
+        <li>The timeline: its keys (arrows, Home and End on the dates, mirrored right to left), the Previous and Next buttons, the names of the buttons, that autoplay is opt-in with a visible Pause / Play button, and that with reduced motion autoplay never starts and the button is not shown.</li>
         <li>Forced colors: a focused button and a focused search result keep a visible outline, the selected tab keeps its underline, and the search dialog keeps its border.</li>
         <li>The home page in Arabic, right to left: it must not overflow at 320 pixels wide, with JavaScript or without it.</li>
         <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="luz-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
@@ -59,6 +60,7 @@ lead: false
         <li><strong>Meta line.</strong> The dots between the facts are hidden from screen readers with alternative text for generated content. In a browser without it (Firefox before 128, Safari before 17.4) a screen reader reads each dot.</li>
         <li><strong>Lists laid out as a grid, stack or row.</strong> Safari does not announce a list whose markers are removed, outside a navigation landmark, as a list. Its items are still read in order, and the headings in them still lead through it.</li>
         <li><strong>Table of contents (cms).</strong> The mark on the section in view comes from core's script (<code class="luz-code-inline">data-luz-spy</code>); without it, no link is marked, and the links still work. Next to the text, the contents list the sections at the inline end but come first in the source, so Tab reaches them before the text. It has not been tested with a screen reader.</li>
+        <li><strong>Timeline.</strong> Without JavaScript it is an ordered list with a line and a dot per item, and every item is visible. With it, only the current card is read and reached with Tab; the other cards are inert. The Previous and Next buttons are named only “Previous” and “Next”: the name does not say which date they lead to. Whether a screen reader announces the card that appears when you change the item has not been tested, and the timeline has not been tested with a screen reader at all. Autoplay is off unless the page asks for it. When it is on, it moves a card every few seconds, and a visible Pause / Play button stops and resumes it. It also holds while the pointer moves over the timeline, while the keyboard focus is inside it, while less than half of it is on screen and while the tab is hidden, and it never starts with reduced motion. While it runs, the card is not announced.</li>
         <li><strong>Copy button.</strong> When the browser refuses to copy, the failure is announced to screen readers, but the button shows no message.</li>
       </ul>
 

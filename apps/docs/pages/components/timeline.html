@@ -1,0 +1,297 @@
+<!-- luz:page
+title: Timeline
+description: Shows dated events in order, one card at a time on a rail of dates or all at once down a line; without JavaScript it is a list.
+area: components
+group: content
+files: components/timeline.css
+module: timeline.js
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-timeline">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <p class="docs-demo__note">Horizontal, the default. Pick a date, or use Previous and Next, the arrow keys on the dates, or swipe.</p>
+            <luz-timeline role="group" aria-label="Releases of an example app">
+              <ol class="luz-timeline">
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2025-03">March 2025</time>
+                  <p class="luz-timeline__title">First beta</p>
+                  <p class="luz-timeline__text">Ten teams try the app.</p>
+                </li>
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2025-06">June 2025</time>
+                  <p class="luz-timeline__title">Public launch</p>
+                  <p class="luz-timeline__text">Sign-up opens to everyone.</p>
+                </li>
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2025-11">November 2025</time>
+                  <p class="luz-timeline__title">Offline mode</p>
+                  <p class="luz-timeline__text">Notes sync when the connection returns.</p>
+                </li>
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2026-04">April 2026</time>
+                  <p class="luz-timeline__title">Version 2</p>
+                  <p class="luz-timeline__text">A new editor and shared folders.</p>
+                </li>
+              </ol>
+            </luz-timeline>
+            <p class="docs-demo__note">With <code>autoplay</code>: it moves on by itself while it is on screen. Pause stops it; it also waits while you point at it or use the keyboard in it.</p>
+            <luz-timeline role="group" aria-label="Milestones of an example project" autoplay interval="4000">
+              <ol class="luz-timeline">
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2023">2023</time>
+                  <p class="luz-timeline__title">The idea</p>
+                  <p class="luz-timeline__text">Two people sketch the first screens.</p>
+                </li>
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2024">2024</time>
+                  <p class="luz-timeline__title">The team</p>
+                  <p class="luz-timeline__text">Five people work on it full time.</p>
+                </li>
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2025">2025</time>
+                  <p class="luz-timeline__title">The first customers</p>
+                  <p class="luz-timeline__text">Fifty schools use it every week.</p>
+                </li>
+              </ol>
+            </luz-timeline>
+            <p class="docs-demo__note">With <code>layout="vertical"</code>: scroll, and the item in the middle of the screen becomes active.</p>
+            <luz-timeline role="group" layout="vertical" aria-label="Versions of an example library">
+              <ol class="luz-timeline">
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2024-02">February 2024</time>
+                  <p class="luz-timeline__title">Version 0.1</p>
+                  <p class="luz-timeline__text">Buttons, forms and tables.</p>
+                </li>
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2024-09">September 2024</time>
+                  <h3 class="luz-timeline__title">Version 0.2</h3>
+                  <p class="luz-timeline__text">Dark mode and a print stylesheet.</p>
+                </li>
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2025-05">May 2025</time>
+                  <h3 class="luz-timeline__title">Version 0.3</h3>
+                  <p class="luz-timeline__text">Right-to-left layouts.</p>
+                </li>
+                <li class="luz-timeline__item">
+                  <time class="luz-timeline__date" datetime="2026-01">January 2026</time>
+                  <h3 class="luz-timeline__title">Version 1.0</h3>
+                  <p class="luz-timeline__text">The API is stable.</p>
+                </li>
+              </ol>
+            </luz-timeline>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>Three things are not done yet, and none has been tested with a screen reader.</p>
+          <ul>
+            <li>The Previous and Next buttons are named only "Previous" and "Next". The name does not say which date they lead to.</li>
+            <li>Whether a screen reader announces the card that appears when you change the item has not been tested.</li>
+            <li>The timeline has not been tested with any screen reader: no result is claimed for NVDA, JAWS, VoiceOver, TalkBack or Orca.</li>
+          </ul>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Timeline documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>An ordered list inside <code>&lt;luz-timeline&gt;</code>. Give the element <code>role="group"</code> and a name with <code>aria-label</code>, so the name is read without JavaScript too.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-timeline" aria-label="Copy the timeline markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Timeline markup"><code id="code-timeline">&lt;luz-timeline role=&quot;group&quot; aria-label=&quot;Releases of the app&quot;&gt;
+  &lt;ol class=&quot;luz-timeline&quot;&gt;
+    &lt;li class=&quot;luz-timeline__item&quot;&gt;
+      &lt;time class=&quot;luz-timeline__date&quot; datetime=&quot;2025-03&quot;&gt;March 2025&lt;/time&gt;
+      &lt;p class=&quot;luz-timeline__title&quot;&gt;First beta&lt;/p&gt;
+      &lt;p class=&quot;luz-timeline__text&quot;&gt;Ten teams try the app.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-timeline__item&quot;&gt;
+      &lt;time class=&quot;luz-timeline__date&quot; datetime=&quot;2025-06&quot;&gt;June 2025&lt;/time&gt;
+      &lt;p class=&quot;luz-timeline__title&quot;&gt;Public launch&lt;/p&gt;
+      &lt;p class=&quot;luz-timeline__text&quot;&gt;Sign-up opens to everyone.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/luz-timeline&gt;</code></pre>
+            </div>
+            <p>With autoplay, every four seconds:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-timeline-autoplay" aria-label="Copy the timeline with autoplay markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Timeline with autoplay markup"><code id="code-timeline-autoplay">&lt;luz-timeline role=&quot;group&quot; aria-label=&quot;Milestones&quot; autoplay interval=&quot;4000&quot;&gt;
+  &lt;ol class=&quot;luz-timeline&quot;&gt;…&lt;/ol&gt;
+&lt;/luz-timeline&gt;</code></pre>
+            </div>
+            <p>The vertical layout:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-timeline-vertical" aria-label="Copy the vertical timeline markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Vertical timeline markup"><code id="code-timeline-vertical">&lt;luz-timeline role=&quot;group&quot; layout=&quot;vertical&quot; aria-label=&quot;Versions of the library&quot;&gt;
+  &lt;ol class=&quot;luz-timeline&quot;&gt;…&lt;/ol&gt;
+&lt;/luz-timeline&gt;</code></pre>
+            </div>
+            <p>For a timeline added to the page after it has loaded, import the module once. It defines the element, and there is no <code>init</code> to call:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">JS</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-timeline-js" aria-label="Copy the timeline script code">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="Timeline script code"><code id="code-timeline-js">import &quot;@luz-ds/core/timeline&quot;;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>The options are attributes of <code>&lt;luz-timeline&gt;</code>. Each item has a date, a title and a text.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Timeline attributes and parts" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Attribute or class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Attribute or class"><div><code>aria-label</code></div></td><td data-label="Effect"><div>The name of the timeline. Write it with <code>role="group"</code>: a name on an element without a role is not read. If you leave the role out, the script adds it</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>layout="vertical"</code></div></td><td data-label="Effect"><div>Every item stays visible down a line. The item in the middle of the screen is active, the ones before it are past</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>autoplay</code></div></td><td data-label="Effect"><div>Opts in to moving on by itself, with a visible Pause and Play button. Horizontal only; off unless you write it</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>interval</code></div></td><td data-label="Effect"><div>Milliseconds between items with <code>autoplay</code>. The default is 5000; a value under 2000 is raised to 2000</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>data-luz-label-previous</code>, <code>-next</code>, <code>-pause</code>, <code>-play</code></div></td><td data-label="Effect"><div>The names of the buttons, when the language of the page is not English or Spanish or you want other words</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>--luz-timeline-paper</code></div></td><td data-label="Effect"><div>The colour behind the timeline, which the hump on the rail and the empty dots are painted with. The default is <code>--luz-surface-page</code>; on a card, set it on the element to the card's surface: <code>style="--luz-timeline-paper: var(--luz-surface)"</code></div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__date</code></div></td><td data-label="Effect"><div>A <code>&lt;time&gt;</code>. Its text is the label of the date button on the rail, so give each item a different one. Without it the button shows the item's number</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__title</code></div></td><td data-label="Effect"><div>A <code>&lt;p&gt;</code>, or a heading of the level your page needs: the class stays the same</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__text</code></div></td><td data-label="Effect"><div>One or two sentences; a link is allowed</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code>data-luz-state</code></div></td><td data-label="Effect"><div>Written by the script on the items of a vertical timeline: <code>active</code> or <code>past</code>. Do not set it yourself</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>A custom element around a native ordered list, with styles from <code>components/timeline.css</code> and a script, <code>timeline.js</code>. <code>luz.js</code> loads the script only on a page that has a <code>&lt;luz-timeline&gt;</code>. The element looks for the first <code>.luz-timeline</code> inside it; with none, it does nothing.</p>
+            <ul>
+              <li><strong>Horizontal.</strong> The script builds, with DOM methods only, Previous and Next at the sides of the card and a rail of dates under it: one button per item, with the text of its date. The cards share one grid cell, so the band is as tall as the longest card and nothing jumps when you change the item. The cards that are not current are <code>inert</code> and hidden. In the current card the date is hidden from sight, because the rail shows it.</li>
+              <li><strong>Changing the item.</strong> Click a date, use Previous and Next, the arrow keys, Home and End on the rail, or swipe more than 40 px sideways with a finger or the mouse. Toward the start of the line is the next item. Past either end it wraps round. A swipe that ends on a link is not a click on it.</li>
+              <li><strong>The rail.</strong> The current date is scrolled to the middle, with a smooth scroll only if the visitor has not asked for reduced motion. A keyboard move keeps the focus on the new current date, and so does a change that hides the card the focus was in.</li>
+              <li><strong>Vertical.</strong> The script marks the item crossing the middle of the screen <code>data-luz-state="active"</code> and the ones before it <code>past</code>. The line behind a past item takes the brand colour, and the active dot is filled and larger. It runs with reduced motion too, without the transition.</li>
+              <li><strong>Autoplay.</strong> With <code>autoplay</code>, the item changes every <code>interval</code> milliseconds, in a loop. The Pause button under the rail stops it; it then reads Play and starts it again. The timeline also waits, without a change to the button, while the pointer moves over it (it goes on after 4 seconds still, or when the pointer leaves), while the keyboard focus is inside it, while less than half of it is on screen and while the tab is hidden. With reduced motion it never starts and the button is not shown.</li>
+              <li><strong>Text.</strong> "Previous", "Next", "Pause" and "Play" are in English and Spanish, chosen by the nearest <code>lang</code>, and travel with the script, so <code>@luz-ds/core/timeline</code> works on its own. With <code>luz.js</code> on the page, a language you add with <code>registerLocale()</code> reaches them too. See <a href="/docs/get-started/javascript/">the JavaScript modules</a>.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does. Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>Tab reaches, in this order: Previous, the links in the current card, Next, the current date on the rail and the Pause or Play button. The other dates are not in the Tab order: the arrow keys move between them.</p>
+            <ul>
+              <li><strong>Left and Right</strong> on the rail move to the previous and the next date, and the focus goes with them. In right-to-left text they swap. Past either end it wraps.</li>
+              <li><strong>Home and End</strong> go to the first and the last date.</li>
+              <li><strong>Enter or Space</strong> on a date, Previous, Next or Pause presses it: they are native buttons.</li>
+              <li>The element has <code>role="group"</code> and your <code>aria-label</code>. The current date has <code>aria-current="true"</code>; only that date is tabbable (a roving <code>tabindex</code>).</li>
+              <li>The cards are one live region. It is <code>aria-live="polite"</code> when the visitor changes the item, and <code>off</code> while autoplay runs, so a card that changes by itself is not announced.</li>
+              <li>The Pause or Play button's name is its action. The arrows' names are "Previous" and "Next": see the known issues.</li>
+              <li>The cards that are not current are <code>inert</code>: they take no focus and are not read. If the focus was in the card that goes, it moves to the new current date.</li>
+              <li>Each card has <code>aria-posinset</code> and <code>aria-setsize</code>, so a screen reader can say "2 of 4" when only one card is shown.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a timeline for a short run of events with dates, where the order is the point: releases, milestones, a company's history.</p>
+            <ul>
+              <li>Horizontal, when each event needs a card and the reader goes through them one by one.</li>
+              <li>Vertical, when the reader should see every event as they scroll.</li>
+              <li>Four to ten items. Beyond that the rail needs a lot of scrolling.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use a timeline for steps the reader has to follow in order, or for events without dates.</p>
+            <ul>
+              <li>For a process, use a numbered list.</li>
+              <li>To compare events across attributes, use a <a href="/docs/components/table/">table</a>.</li>
+              <li>When the reader needs to see every item at once, use the vertical layout: the horizontal one shows a single card.</li>
+              <li>Do not turn on autoplay for content the reader must not miss. Nobody has to wait for the next card.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A title that says what happened, with the date in one format.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <ol class="luz-timeline">
+                    <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2025-06">June 2025</time><p class="luz-timeline__title">Public launch</p></li>
+                    <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2025-11">November 2025</time><p class="luz-timeline__title">Offline mode</p></li>
+                  </ol>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A vague title and dates in different formats: the reader has to open the card to learn what happened, and cannot compare the dates.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <ol class="luz-timeline">
+                    <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2025-06">6/25</time><p class="luz-timeline__title">News</p></li>
+                    <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2025-11">Autumn, last year</time><p class="luz-timeline__title">Update</p></li>
+                  </ol>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A <code>&lt;time&gt;</code> with a different text in each item: it is the name of the button on the rail.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <ol class="luz-timeline">
+                    <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2025-06">June 2025</time><p class="luz-timeline__title">Public launch</p></li>
+                    <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2025-11">November 2025</time><p class="luz-timeline__title">Offline mode</p></li>
+                  </ol>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Leave out the date: the rail then has buttons named "1" and "2", and the reader cannot tell them apart.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <ol class="luz-timeline">
+                    <li class="luz-timeline__item"><p class="luz-timeline__title">Public launch</p></li>
+                    <li class="luz-timeline__item"><p class="luz-timeline__title">Offline mode</p></li>
+                  </ol>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Put the date first, then what happened, in few words.</p>
+            <ul>
+              <li>The date: the same format in every item, and a different text in each. It is the name of a button.</li>
+              <li>The title: two to five words, sentence case, no full stop. Say the event: "Public launch", not "News".</li>
+              <li>The text: one sentence, a few lines at most. In the horizontal layout the band is as tall as the longest card, so keep the cards about the same length.</li>
+              <li>Use the <code>datetime</code> attribute so the date can be read by machines, such as <code>2025-06</code>.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Text is secondary or primary text on the page or on the card. The marks (line, dots, hump, arrows) are borders and strokes.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Timeline contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Date and text in the list, dates on the rail</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title in the list, date on the rail on hover</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title in a card, Previous and Next arrows</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Text in a card</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current date, Pause and Play</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border of the arrows, line and dots</div></td><td data-label="Colour on background"><div><code>--luz-outline</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Past line, active dot and hump</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> a 2 px <code>--luz-focus-ring</code> outline, 2 px outside, on the dates and on Previous and Next. Pause and Play is a ghost button and has the button's own focus ring.</li>
+              <li><strong>Not colour alone:</strong> the current date is also larger and heavier, and has <code>aria-current</code>. In the vertical layout the active dot is filled and larger, besides the brand colour of the past line.</li>
+              <li><strong>Forced colors:</strong> the marks are borders and the hump takes the system text colour, so the line, the dots and the current state stay visible.</li>
+              <li><strong>Target:</strong> Previous and Next are 44 px round buttons; each date is a button the width of its slot, 7 rem (10 rem in a band 600 px wide or more).</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 26 tokens that <code>components/timeline.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-brand-primary"><code>--luz-brand-primary</code></a>, <a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-focus-ring"><code>--luz-focus-ring</code></a>, <a href="/docs/tokens/color/#luz-outline"><code>--luz-outline</code></a>, <a href="/docs/tokens/color/#luz-surface"><code>--luz-surface</code></a>, <a href="/docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-3xs</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code>, <code>--luz-space-xl</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/motion/">Motion</a></dt><dd><code>--luz-duration-base</code>, <code>--luz-duration-fast</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-heading</code>, <code>--luz-font-sans</code>, <code>--luz-text-lg</code>, <code>--luz-text-md</code>, <code>--luz-text-sm</code>, <code>--luz-text-xl</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-full</code>, <code>--luz-radius-md</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

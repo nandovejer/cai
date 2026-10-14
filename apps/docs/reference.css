@@ -202,6 +202,11 @@
   background: var(--luz-surface);
 }
 
+/* The timeline paints its hump and dots with the ground behind it: here the frame's */
+.docs-example luz-timeline {
+  --luz-timeline-paper: var(--luz-surface);
+}
+
 /* A band bleeds to the edge of the frame it is shown in, not of the page */
 .docs-example:has(.luz-site-section--band),
 .docs-dodont__stage:has(.luz-site-section--band) {

@@ -1,0 +1,416 @@
+/* --------------------------------------------------------------------------
+   LUZ Component: timeline
+   <luz-timeline> around an ordered list, ol.luz-timeline >
+   li.luz-timeline__item (time.luz-timeline__date, .luz-timeline__title,
+   .luz-timeline__text).
+
+   Without JavaScript, before the element is defined and in the vertical
+   layout: the list, every item visible, a line down the inline-start side
+   with a dot per item. Vertical, with JavaScript: data-luz-state="past" turns
+   the line and the dot of an item the brand colour; "active" also fills its
+   dot and makes it larger (a second cue besides colour).
+
+   Horizontal, with JavaScript (timeline.js sets data-luz-ready once it has
+   built the rail): every card in one grid cell, so the band is as tall as
+   the longest and nothing jumps; the current one shows, held by a stem over
+   a soft hump in the middle of the rail of dates; the others are inert and
+   hidden. Previous / Next sit on the sides of the card.
+   Layer: components (ITCSS 5) · Prefix: .luz-
+   Requires: @luz-ds/tokens (luz-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+
+/* The same box before and after it is defined: the list look below is all an
+   undefined element gets, so the upgrade adds the rail and changes nothing
+   else until data-luz-ready */
+:where(luz-timeline:not(:defined)),
+:where(luz-timeline) {
+  display: block;
+}
+
+/* Sizes of the marks, for this component only: on the element, so the rail
+   it builds reads them too, and on the list, which works without it */
+:where(luz-timeline),
+.luz-timeline {
+  --luz-timeline-dot: 0.5625rem;
+  --luz-timeline-dot-x: calc(var(--luz-timeline-dot) / 4); /* room for the active dot, 1.5 times larger */
+  --luz-timeline-dot-y: calc(var(--luz-text-sm) * 0.75); /* the middle of the date's line */
+  --luz-timeline-card: 20rem;
+  --luz-timeline-stem: 1.25rem;
+  --luz-timeline-hump: 2.5rem;
+}
+
+/* The ground under the hump and inside the dots: a default on the element
+   only, so a value set on it wins (a timeline on a card); a bare list falls
+   back to the page */
+:where(luz-timeline) {
+  --luz-timeline-paper: var(--luz-surface-page);
+}
+
+.luz-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.luz-timeline__item {
+  position: relative;
+  padding-inline-start: var(--luz-space-xl);
+  padding-block-end: var(--luz-space-lg);
+}
+
+/* The line, from this dot down to the next one */
+.luz-timeline__item::before {
+  content: "";
+  position: absolute;
+  inset-block: var(--luz-timeline-dot-y) calc(-1 * var(--luz-timeline-dot-y));
+  inset-inline-start: calc(var(--luz-timeline-dot-x) + var(--luz-timeline-dot) / 2 - 0.5px);
+  border-inline-start: 1px solid var(--luz-outline);
+}
+
+.luz-timeline__item:last-child::before {
+  content: none;
+}
+
+/* The dot: a ring (a border, so forced colors keep it) */
+.luz-timeline__item::after {
+  content: "";
+  position: absolute;
+  inset-block-start: calc(var(--luz-timeline-dot-y) - var(--luz-timeline-dot) / 2);
+  inset-inline-start: var(--luz-timeline-dot-x);
+  inline-size: var(--luz-timeline-dot);
+  block-size: var(--luz-timeline-dot);
+  border: 1px solid var(--luz-outline);
+  border-radius: var(--luz-radius-full);
+  background: var(--luz-timeline-paper, var(--luz-surface-page));
+  transition: border-color var(--luz-duration-base), border-width var(--luz-duration-base), scale var(--luz-duration-base);
+}
+
+.luz-timeline__date {
+  display: block;
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--luz-text-secondary);
+}
+
+.luz-timeline__title {
+  margin-block-start: var(--luz-space-3xs);
+  font-family: var(--luz-font-heading);
+  font-size: var(--luz-text-lg);
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--luz-text-primary);
+}
+
+.luz-timeline__text {
+  margin-block-start: var(--luz-space-2xs);
+  font-size: var(--luz-text-md);
+  color: var(--luz-text-secondary);
+}
+
+/* Vertical: the line already travelled and the active dot */
+.luz-timeline__item[data-luz-state="past"]::before {
+  border-color: var(--luz-brand-primary);
+}
+
+.luz-timeline__item:is([data-luz-state="past"], [data-luz-state="active"])::after {
+  border-color: var(--luz-brand-primary);
+}
+
+.luz-timeline__item[data-luz-state="active"]::after {
+  border-width: calc(var(--luz-timeline-dot) / 2);
+  background: var(--luz-brand-primary);
+  scale: 1.5;
+}
+
+/* ---- Horizontal, once the rail is built ---------------------------------- */
+
+:where(luz-timeline[data-luz-ready]) {
+  container-type: inline-size;
+}
+
+.luz-timeline__stage {
+  display: grid;
+  /* The arrows close to the card, however wide the band */
+  grid-template-columns: 1fr minmax(0, var(--luz-timeline-card)) 1fr;
+  align-items: center;
+  gap: var(--luz-space-sm);
+  touch-action: pan-y;
+}
+
+/* The swipe is the script's, a pinch stays the browser's (Safari has no
+   pinch-zoom value: pan-y alone there) */
+@supports (touch-action: pan-y pinch-zoom) {
+  .luz-timeline__stage {
+    touch-action: pan-y pinch-zoom;
+  }
+}
+
+/* The cards, one cell; the stem and the current dot under them */
+:where(luz-timeline[data-luz-ready]) .luz-timeline {
+  position: relative;
+  display: grid;
+  place-items: end center;
+  padding-block-end: var(--luz-timeline-stem);
+}
+
+:where(luz-timeline[data-luz-ready]) .luz-timeline::after {
+  content: "";
+  position: absolute;
+  inset-block-end: 0;
+  inset-inline: 0;
+  margin-inline: auto;
+  inline-size: 0;
+  block-size: var(--luz-timeline-stem);
+  border-inline-start: 1px solid var(--luz-brand-primary);
+}
+
+:where(luz-timeline[data-luz-ready]) .luz-timeline::before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset-block-end: 0;
+  inset-inline: 0;
+  margin-inline: auto;
+  inline-size: var(--luz-timeline-dot);
+  block-size: var(--luz-timeline-dot);
+  border: calc(var(--luz-timeline-dot) / 2) solid var(--luz-brand-primary);
+  border-radius: var(--luz-radius-full);
+  background: var(--luz-brand-primary);
+  translate: 0 50%;
+}
+
+/* The card: core's card surface, border and radius */
+:where(luz-timeline[data-luz-ready]) .luz-timeline__item {
+  grid-area: 1 / 1;
+  inline-size: 100%;
+  padding: var(--luz-space-md);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  background: var(--luz-surface);
+  transition: opacity var(--luz-duration-base), visibility 0s;
+}
+
+:where(luz-timeline[data-luz-ready]) .luz-timeline__item[inert] {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--luz-duration-base), visibility 0s linear var(--luz-duration-base);
+}
+
+:where(luz-timeline[data-luz-ready]) .luz-timeline__item::before,
+:where(luz-timeline[data-luz-ready]) .luz-timeline__item::after {
+  content: none;
+}
+
+/* The date is on the rail; in the card it is for assistive technology only */
+:where(luz-timeline[data-luz-ready]) .luz-timeline__date {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+:where(luz-timeline[data-luz-ready]) .luz-timeline__title {
+  margin-block-start: 0;
+}
+
+/* Previous and Next: round buttons, a chevron drawn with two borders */
+.luz-timeline__arrow {
+  display: grid;
+  place-items: center;
+  inline-size: var(--luz-control-lg);
+  block-size: var(--luz-control-lg);
+  padding: 0;
+  border: 1px solid var(--luz-outline);
+  border-radius: var(--luz-radius-full);
+  background: var(--luz-surface);
+  color: var(--luz-text-primary);
+  cursor: pointer;
+  transition: border-color var(--luz-duration-fast);
+}
+
+.luz-timeline__arrow::before {
+  content: "";
+  inline-size: 0.5em;
+  block-size: 0.5em;
+  border: 0 solid;
+  rotate: 45deg;
+}
+
+.luz-timeline__arrow--previous {
+  justify-self: end;
+}
+
+.luz-timeline__arrow--next {
+  justify-self: start;
+}
+
+.luz-timeline__arrow--previous::before {
+  border-block-end-width: 2px;
+  border-inline-start-width: 2px;
+  margin-inline-start: 0.2em;
+}
+
+.luz-timeline__arrow--next::before {
+  border-block-start-width: 2px;
+  border-inline-end-width: 2px;
+  margin-inline-end: 0.2em;
+}
+
+/* Right to left the borders swap sides: turn the other way */
+.luz-timeline__arrow:dir(rtl)::before {
+  rotate: -45deg;
+}
+
+.luz-timeline__arrow:hover {
+  border-color: var(--luz-text-primary);
+}
+
+.luz-timeline__arrow:focus-visible,
+.luz-timeline__stop:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
+  outline-offset: 2px;
+}
+
+/* The rail: the hump, the line on its base, the dates */
+.luz-timeline__rail {
+  --luz-timeline-slot: 7rem;
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@container (min-width: 37.5rem) {
+  .luz-timeline__rail {
+    --luz-timeline-slot: 10rem;
+  }
+}
+
+.luz-timeline__rail::before {
+  content: "";
+  position: absolute;
+  inset-block-start: var(--luz-timeline-hump);
+  inset-inline: 0;
+  border-block-start: 1px solid var(--luz-outline);
+  translate: 0 -50%;
+}
+
+.luz-timeline__hump {
+  position: relative;
+  z-index: 1;
+  display: block;
+  inline-size: var(--luz-timeline-slot);
+  block-size: var(--luz-timeline-hump);
+  overflow: visible;
+  fill: none;
+  stroke: var(--luz-brand-primary);
+}
+
+.luz-timeline__hump path {
+  vector-effect: non-scaling-stroke;
+}
+
+/* A stroke of the ground hides the straight line under the hump */
+.luz-timeline__hump path:first-child {
+  stroke: var(--luz-timeline-paper, var(--luz-surface-page));
+  stroke-width: 12;
+}
+
+/* A scrolling row clips what sticks out above it, so it starts a dot
+   higher and gives the room back: the dots stay whole. Below, room for the
+   date's focus ring (2px outline at 2px) */
+.luz-timeline__track {
+  display: flex;
+  inline-size: 100%;
+  margin-block-start: calc(-1 * var(--luz-timeline-dot));
+  padding: var(--luz-timeline-dot) calc(50% - var(--luz-timeline-slot) / 2) var(--luz-space-2xs);
+  overflow-x: auto;
+  scrollbar-width: none;
+  /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari has only the prefixed name */
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.luz-timeline__track::-webkit-scrollbar {
+  display: none;
+}
+
+.luz-timeline__stop {
+  position: relative;
+  flex: none;
+  inline-size: var(--luz-timeline-slot);
+  padding: var(--luz-space-sm) var(--luz-space-2xs) var(--luz-space-xs);
+  border: 0;
+  background: none;
+  color: var(--luz-text-secondary);
+  font-family: var(--luz-font-heading);
+  font-size: var(--luz-text-lg);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: color var(--luz-duration-fast);
+}
+
+/* Each date's dot, on the line */
+.luz-timeline__stop::before {
+  content: "";
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: 0;
+  margin-inline: auto;
+  inline-size: 5px;
+  block-size: 5px;
+  border: 2.5px solid var(--luz-outline);
+  border-radius: var(--luz-radius-full);
+  translate: 0 -50%;
+}
+
+/* The focus ring over the hump, whose ground stroke would hide its top edge */
+.luz-timeline__stop:focus-visible {
+  z-index: 2;
+}
+
+.luz-timeline__stop:hover {
+  color: var(--luz-text-primary);
+}
+
+/* The current date: the brand colour, larger and heavier (not colour alone);
+   its dot is the one on the stem */
+.luz-timeline__stop[aria-current="true"] {
+  color: var(--luz-brand-primary);
+  font-size: var(--luz-text-xl);
+  font-weight: 600;
+}
+
+.luz-timeline__stop[aria-current="true"]::before {
+  visibility: hidden;
+}
+
+/* Pause / Play: a small ghost button (.luz-btn) under the rail */
+.luz-timeline__toggle {
+  display: flex;
+  margin: var(--luz-space-xs) auto 0;
+}
+
+.luz-timeline__toggle[hidden] {
+  display: none;
+}
+
+/* Forced colors flatten backgrounds; the marks are borders, the hump a
+   stroke: keep them in system colours */
+@media (forced-colors: active) {
+  .luz-timeline__hump {
+    stroke: CanvasText;
+  }
+
+  .luz-timeline__hump path:first-child {
+    stroke: Canvas;
+  }
+}

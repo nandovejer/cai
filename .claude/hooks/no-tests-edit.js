@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 /*
- * PreToolUse on Edit|Write|NotebookEdit: frontend, ux and accessibility
+ * PreToolUse on Edit|Write|NotebookEdit: frontend-engineer, ux-designer and accessibility-engineer
  * implement; they do not write the tests their change must pass. Tests are
  * test-writer's (TDD: the red test comes first, from someone else).
  */
 import path from 'node:path';
 
-const IMPLEMENTERS = new Set(['frontend', 'ux', 'accessibility']);
+const IMPLEMENTERS = new Set(['frontend-engineer', 'ux-designer', 'accessibility-engineer']);
 
 let raw = '';
 process.stdin.on('data', (c) => (raw += c));

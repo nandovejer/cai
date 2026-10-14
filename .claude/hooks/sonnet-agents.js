@@ -4,7 +4,7 @@
  * frontmatter says so). A call that overrides `model` with anything else
  * is blocked, so a session on Opus cannot spend Opus on them by mistake.
  */
-const SONNET_ONLY = new Set(['test-writer', 'chore', 'docs-writer', 'tester']);
+const SONNET_ONLY = new Set(['test-writer', 'chore-runner', 'docs-writer', 'test-runner']);
 const SONNET = /^(sonnet|claude-sonnet-5-5)$/;
 
 let raw = '';

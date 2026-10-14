@@ -30,7 +30,7 @@ Runs the same gates as CI plus the Playwright suites, and writes an evidence rep
 
 ## Never
 
-- Run the `firefox` or `webkit` Playwright projects, or launch `front-firefox` or `front-safari`. Report the open rows of the pending list as blocking and ask the owner for permission (OWNER.md §3); do not add rows yourself, `frontend` does.
+- Run the `firefox` or `webkit` Playwright projects, or launch `firefox-reviewer` or `safari-reviewer`. Report the open rows of the pending list as blocking and ask the owner for permission (OWNER.md §3); do not add rows yourself, `frontend-engineer` does.
 - Say a release is ready. Say which steps passed, which failed, and what still needs a person.
 
 ## Also useful

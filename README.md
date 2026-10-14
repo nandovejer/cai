@@ -337,13 +337,13 @@ Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) 
 
 | Agent | Role |
 | --- | --- |
-| `frontend` | Architecture and packaging, token and component coherence, docs and microcopy |
-| `ux` | UX reviews and handoff specs: tokens, states, keyboard and ARIA, Figma mapping |
-| `accessibility` | WCAG 2.2 and EN 301 549 audits of components and pages |
-| `tester` | Runs the gates and the unit and Playwright suites and reports the result |
-| `npm-security-auditor` | Supply chain, published tarballs, CI/CD hardening, code review for security |
-| `front-safari`, `front-firefox` | Browser reviews, only with the owner's permission |
-| `sincero` | An outside reviewer's report, only when the owner asks |
+| `frontend-engineer` | Architecture and packaging, token and component coherence, docs and microcopy |
+| `ux-designer` | UX reviews and handoff specs: tokens, states, keyboard and ARIA, Figma mapping |
+| `accessibility-engineer` | WCAG 2.2 and EN 301 549 audits of components and pages |
+| `test-runner` | Runs the gates and the unit and Playwright suites and reports the result |
+| `security-auditor` | Supply chain, published tarballs, CI/CD hardening, code review for security |
+| `safari-reviewer`, `firefox-reviewer` | Browser reviews, only with the owner's permission |
+| `outside-reviewer` | An outside reviewer's report, only when the owner asks |
 
 ### Documentation index
 

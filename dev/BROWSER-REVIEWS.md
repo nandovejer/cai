@@ -1,6 +1,8 @@
 # Safari and Firefox review ledger
 
-The history of what `front-safari` and `front-firefox` have reviewed (AGENTS.md section 6). **Open rows no longer live here**: they are in Claude's memory, `cai-browser-review-pending.md` (the `memory/` folder of this repo's Claude project). `frontend` adds a row there after each change; `npm-security-auditor` is the only one that reads it, and gives no OK while a row in its scope is open.
+The history of what `safari-reviewer` and `firefox-reviewer` have reviewed (AGENTS.md section 6). **Open rows no longer live here**: they are in Claude's memory, `cai-browser-review-pending.md` (the `memory/` folder of this repo's Claude project). `frontend-engineer` adds a row there after each change; `security-auditor` is the only one that reads it, and gives no OK while a row in its scope is open.
+
+Rows before 2026-10-14 name the agents by their old names: front-safari is safari-reviewer, front-firefox is firefox-reviewer, frontend is frontend-engineer.
 
 A row is closed only when **both** have reviewed it: remove it from the memory list and add it below with the date and the result.
 

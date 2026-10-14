@@ -5,8 +5,8 @@
  * Then lists what no script can decide: the manual and the browser reviews.
  *
  * It never runs the `firefox` or `webkit` Playwright projects: those need the
- * owner's permission (AGENTS.md section 6) and go through front-firefox and
- * front-safari.
+ * owner's permission (AGENTS.md section 6) and go through firefox-reviewer and
+ * safari-reviewer.
  *
  * Usage: node scripts/qa-release.js [--skip-ui] [--fast]
  *   --skip-ui  skip the Playwright suites (lint, checks and unit tests only)
@@ -104,7 +104,7 @@ for (const r of failed) out.push(`### Failure: ${r.name}`, "", "```text", r.outp
 out.push("## Needs a person", "");
 out.push("Nothing below was decided by a script.", "");
 out.push("### Browsers (AGENTS.md section 6)", "");
-out.push("- **Not run here:** the `firefox` and `webkit` Playwright projects. They run only with the owner's permission, through `front-firefox` and `front-safari`.");
+out.push("- **Not run here:** the `firefox` and `webkit` Playwright projects. They run only with the owner's permission, through `firefox-reviewer` and `safari-reviewer`.");
 if (ledger === null) out.push("- The pending list `cai-browser-review-pending.md` was not found in Claude's memory: ask what has not been reviewed.");
 else if (openRows.length === 0) out.push("- The pending list has **no open rows**.");
 else {

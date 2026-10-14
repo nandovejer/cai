@@ -11,55 +11,14 @@
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../assets/site-header-Bp4uOpym.js"></script>
-  <script type="module" crossorigin src="../../assets/reference-Dl7sRzgr.js"></script>
+  <script type="module" crossorigin src="../../assets/site-header-CmwPuUcT.js"></script>
+  <script type="module" crossorigin src="../../assets/reference-CKNYgApZ.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/site-header-B6t6HMAm.css">
   <link rel="stylesheet" crossorigin href="../../assets/reference-CeD1sUH7.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-C9NQQl_D.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-Ze4rmHPB.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-PXDzkWMK.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-bvVC2Sbg.css">
 </head>
 <body class="o-shell docs-page">
-  <!-- The search dialog comes first: closed, it is not focusable; after
-       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
-  <luz-site-search>
-  <dialog class="luz-modal luz-site-search" id="luz-search" aria-labelledby="luz-search-title"
-          data-luz-search data-luz-search-src="../../docs/search-index.json"
-          data-luz-label-results="{n} results"
-          data-luz-label-result="1 result"
-          data-luz-label-capped="{shown} of {n} results. Type more to narrow."
-          data-luz-label-none="No results for “{query}”. Check the spelling or try a shorter word."
-          data-luz-label-loading="Loading the search index…"
-          data-luz-label-error="Search is not available right now.">
-    <search class="luz-site-search__body">
-      <div class="luz-site-search__head">
-        <h2 class="luz-site-search__title" id="luz-search-title"><label for="luz-search-q">Search the documentation</label></h2>
-        <form method="dialog"><button class="luz-btn luz-btn--ghost luz-site-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
-      </div>
-      <div class="luz-site-search__field">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <input class="luz-input" id="luz-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="luz-search-hint">
-      </div>
-      <p class="luz-field__helper" id="luz-search-hint">Results update as you type. Arrow keys move through them.</p>
-      <p class="luz-site-search__status" role="status"></p>
-      <div class="luz-site-search__results" data-luz-search-results>
-        <div data-luz-search-show="idle">
-          <h3>Popular</h3>
-          <ul lang="en">
-            <li><a href="../../docs/get-started/"><span>Install LUZ</span><span>, </span><span>Get started</span></a></li>
-            <li><a href="../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
-            <li><a href="../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
-            <li><a href="../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
-            <li><a href="../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
-          </ul>
-        </div>
-        <div hidden><h3>Pages</h3><ul data-luz-search-list="pages" lang="en"></ul></div>
-        <div hidden><h3>Sections</h3><ul data-luz-search-list="sections" lang="en"></ul></div>
-        <div hidden><h3>HTML elements</h3><ul data-luz-search-list="elements" lang="en"></ul></div>
-      </div>
-      <p class="luz-site-search__foot">Can’t find it? <a href="../../docs/a-z/">Browse the A–Z index</a></p>
-    </search>
-  </dialog>
-  </luz-site-search>
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" id="site-header">
@@ -77,12 +36,54 @@
         <a href="../../docs/" aria-current="true">Docs</a>
         <a class="site-header__github" href="https://github.com/nandovejer/luz"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
       </nav>
-      <a class="site-header__az" href="../../docs/a-z/" data-luz-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
-      <button class="luz-site-search-trigger luz-site-search-trigger--compact site-header__search" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
-        <svg class="luz-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="luz-site-search-trigger__label">Search docs…</span>
-        <kbd class="luz-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
+      <luz-search>
+        <a class="luz-search__fallback site-header__az" href="../../docs/a-z/" data-luz-search-fallback>
+          <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <span class="luz-search__fallback-label">A–Z<span class="u-sr-only"> index</span></span>
+        </a>
+        <button class="luz-search__trigger luz-search__trigger--compact site-header__search" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+          <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <span class="luz-search__trigger-label">Search docs…</span>
+          <kbd class="luz-search__trigger-key" aria-hidden="true">Ctrl K</kbd>
+        </button>
+        <dialog class="luz-modal luz-search" id="luz-search" aria-labelledby="luz-search-title"
+                data-luz-search data-luz-search-src="../../docs/search-index.json"
+                data-luz-label-results="{n} results"
+                data-luz-label-result="1 result"
+                data-luz-label-capped="{shown} of {n} results. Type more to narrow."
+                data-luz-label-none="No results for “{query}”. Check the spelling or try a shorter word."
+                data-luz-label-loading="Loading the search index…"
+                data-luz-label-error="Search is not available right now.">
+          <search class="luz-search__body">
+            <div class="luz-search__head">
+              <h2 class="luz-search__title" id="luz-search-title"><label for="luz-search-q">Search the documentation</label></h2>
+              <form method="dialog"><button class="luz-btn luz-btn--ghost luz-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+            </div>
+            <div class="luz-search__field">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <input class="luz-input" id="luz-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="luz-search-hint">
+            </div>
+            <p class="luz-field__helper" id="luz-search-hint">Results update as you type. Arrow keys move through them.</p>
+            <p class="luz-search__status" role="status"></p>
+            <div class="luz-search__results" data-luz-search-results>
+              <div data-luz-search-show="idle">
+                <h3>Popular</h3>
+                <ul lang="en">
+                  <li><a href="../../docs/get-started/"><span>Install LUZ</span><span>, </span><span>Get started</span></a></li>
+                  <li><a href="../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
+                  <li><a href="../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
+                  <li><a href="../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
+                  <li><a href="../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
+                </ul>
+              </div>
+              <div hidden><h3>Pages</h3><ul data-luz-search-list="pages" lang="en"></ul></div>
+              <div hidden><h3>Sections</h3><ul data-luz-search-list="sections" lang="en"></ul></div>
+              <div hidden><h3>HTML elements</h3><ul data-luz-search-list="elements" lang="en"></ul></div>
+            </div>
+            <p class="luz-search__foot">Can’t find it? <a href="../../docs/a-z/">Browse the A–Z index</a></p>
+          </search>
+        </dialog>
+      </luz-search>
       
     </div>
   </header>
@@ -173,8 +174,8 @@
         <li><strong>Avatar with a photo.</strong> If the photo does not load, the browser draws its text alternative inside the box, in capitals, and a long name can spill past it.</li>
         <li><strong>Code and Design tabs.</strong> The tab you chose last opens after the page has loaded, so the content below the tabs can move once.</li>
         <li><strong>Find in page.</strong> In browsers that do not support <code class="luz-code-inline">hidden="until-found"</code> (Safari before 26.2, Firefox before 139), find in page (Ctrl+F) does not find text in the tab that is not open. In Safari 26.2 and later it opens the tab but does not scroll to the match. Open the other tab, or turn JavaScript off to see both.</li>
-        <li><strong>Search shortcut.</strong> Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there.</li>
-        <li><strong>Search.</strong> It has not been tested with a screen reader. The number of results is announced once you stop typing.</li>
+        <li><strong>Search shortcut.</strong> Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there. On a site that loads the search with <code class="luz-code-inline">site.js</code>, the search’s own script loads when the page is idle, or when you point at or move to the search: a Ctrl+K pressed before that loads it and then opens the search, after a short wait on a slow connection. On a page without a search, Ctrl+K stays the browser’s.</li>
+        <li><strong>Search.</strong> It has not been tested with a screen reader. The number of results is announced once you stop typing. Until its script has loaded, the search is a link to the A–Z index, in the same place; if you are on that link when the script arrives, it stays until you leave it, and the focus is never moved. If the script cannot load, the link stays. Closing the search returns the focus to where it was; if nothing had the focus, as after Ctrl+K on a page just loaded, it goes to the search button, and the next Tab continues from there.</li>
         <li><strong>Search at 400 percent zoom.</strong> The whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.</li>
         <li><strong>Language switcher.</strong> The list of languages opens at a fixed place under the header, not next to its button. Below 360 pixels wide its button shows a globe only; the language’s name is still the button’s accessible name. It has not been tested with a screen reader.</li>
         <li><strong>Navbar and site header menu.</strong> On narrow screens the menu of a navbar, and of the site header, opens as a panel under the header. If you keep pressing Tab after its last link, focus moves into the page and the panel stays open over it. Press Escape to close it. (WCAG 2.2 success criterion 2.4.12, level AAA; level AA 2.4.11 is met.) Where CSS anchor positioning is supported (Chrome and Edge 125, Safari 26, Firefox 147) the panel opens under the header wherever it ends. In older browsers it opens at the height of a one-row bar at the default text size (<code class="luz-code-inline">--luz-bar-h</code>), from the top of the window: with enlarged text and a header that wraps to a second row, or with a notice or the cookie banner above the header before the page scrolls, it can cover part of the header.</li>

@@ -11,55 +11,14 @@
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
-  <script type="module" crossorigin src="../../../assets/site-header-Bp4uOpym.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-Dl7sRzgr.js"></script>
+  <script type="module" crossorigin src="../../../assets/site-header-CmwPuUcT.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CKNYgApZ.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-B6t6HMAm.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CeD1sUH7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-C9NQQl_D.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-Ze4rmHPB.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-PXDzkWMK.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-bvVC2Sbg.css">
 </head>
 <body class="o-shell docs-page">
-  <!-- The search dialog comes first: closed, it is not focusable; after
-       Ctrl+K with nothing focused, Tab after closing starts at the skip link -->
-  <luz-site-search>
-  <dialog class="luz-modal luz-site-search" id="luz-search" aria-labelledby="luz-search-title"
-          data-luz-search data-luz-search-src="../../../docs/search-index.json"
-          data-luz-label-results="{n} results"
-          data-luz-label-result="1 result"
-          data-luz-label-capped="{shown} of {n} results. Type more to narrow."
-          data-luz-label-none="No results for “{query}”. Check the spelling or try a shorter word."
-          data-luz-label-loading="Loading the search index…"
-          data-luz-label-error="Search is not available right now.">
-    <search class="luz-site-search__body">
-      <div class="luz-site-search__head">
-        <h2 class="luz-site-search__title" id="luz-search-title"><label for="luz-search-q">Search the documentation</label></h2>
-        <form method="dialog"><button class="luz-btn luz-btn--ghost luz-site-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
-      </div>
-      <div class="luz-site-search__field">
-        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <input class="luz-input" id="luz-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="luz-search-hint">
-      </div>
-      <p class="luz-field__helper" id="luz-search-hint">Results update as you type. Arrow keys move through them.</p>
-      <p class="luz-site-search__status" role="status"></p>
-      <div class="luz-site-search__results" data-luz-search-results>
-        <div data-luz-search-show="idle">
-          <h3>Popular</h3>
-          <ul lang="en">
-            <li><a href="../../../docs/get-started/"><span>Install LUZ</span><span>, </span><span>Get started</span></a></li>
-            <li><a href="../../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
-            <li><a href="../../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
-            <li><a href="../../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
-            <li><a href="../../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
-          </ul>
-        </div>
-        <div hidden><h3>Pages</h3><ul data-luz-search-list="pages" lang="en"></ul></div>
-        <div hidden><h3>Sections</h3><ul data-luz-search-list="sections" lang="en"></ul></div>
-        <div hidden><h3>HTML elements</h3><ul data-luz-search-list="elements" lang="en"></ul></div>
-      </div>
-      <p class="luz-site-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
-    </search>
-  </dialog>
-  </luz-site-search>
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
 
   <header class="site-header" id="site-header">
@@ -77,12 +36,54 @@
         <a href="../../../docs/" aria-current="true">Docs</a>
         <a class="site-header__github" href="https://github.com/nandovejer/luz"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
       </nav>
-      <a class="site-header__az" href="../../../docs/a-z/" data-luz-search-fallback>A–Z<span class="u-sr-only"> index</span></a>
-      <button class="luz-site-search-trigger luz-site-search-trigger--compact site-header__search" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
-        <svg class="luz-site-search-trigger__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-        <span class="luz-site-search-trigger__label">Search docs…</span>
-        <kbd class="luz-site-search-trigger__key" aria-hidden="true">Ctrl K</kbd>
-      </button>
+      <luz-search>
+        <a class="luz-search__fallback site-header__az" href="../../../docs/a-z/" data-luz-search-fallback>
+          <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <span class="luz-search__fallback-label">A–Z<span class="u-sr-only"> index</span></span>
+        </a>
+        <button class="luz-search__trigger luz-search__trigger--compact site-header__search" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+          <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <span class="luz-search__trigger-label">Search docs…</span>
+          <kbd class="luz-search__trigger-key" aria-hidden="true">Ctrl K</kbd>
+        </button>
+        <dialog class="luz-modal luz-search" id="luz-search" aria-labelledby="luz-search-title"
+                data-luz-search data-luz-search-src="../../../docs/search-index.json"
+                data-luz-label-results="{n} results"
+                data-luz-label-result="1 result"
+                data-luz-label-capped="{shown} of {n} results. Type more to narrow."
+                data-luz-label-none="No results for “{query}”. Check the spelling or try a shorter word."
+                data-luz-label-loading="Loading the search index…"
+                data-luz-label-error="Search is not available right now.">
+          <search class="luz-search__body">
+            <div class="luz-search__head">
+              <h2 class="luz-search__title" id="luz-search-title"><label for="luz-search-q">Search the documentation</label></h2>
+              <form method="dialog"><button class="luz-btn luz-btn--ghost luz-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+            </div>
+            <div class="luz-search__field">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <input class="luz-input" id="luz-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="luz-search-hint">
+            </div>
+            <p class="luz-field__helper" id="luz-search-hint">Results update as you type. Arrow keys move through them.</p>
+            <p class="luz-search__status" role="status"></p>
+            <div class="luz-search__results" data-luz-search-results>
+              <div data-luz-search-show="idle">
+                <h3>Popular</h3>
+                <ul lang="en">
+                  <li><a href="../../../docs/get-started/"><span>Install LUZ</span><span>, </span><span>Get started</span></a></li>
+                  <li><a href="../../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
+                  <li><a href="../../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
+                  <li><a href="../../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
+                  <li><a href="../../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
+                </ul>
+              </div>
+              <div hidden><h3>Pages</h3><ul data-luz-search-list="pages" lang="en"></ul></div>
+              <div hidden><h3>Sections</h3><ul data-luz-search-list="sections" lang="en"></ul></div>
+              <div hidden><h3>HTML elements</h3><ul data-luz-search-list="elements" lang="en"></ul></div>
+            </div>
+            <p class="luz-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
+          </search>
+        </dialog>
+      </luz-search>
       
     </div>
   </header>
@@ -137,7 +138,7 @@
     </nav>
     <div class="docs-page-head__title">
       <h1 class="docs-title">Cookie consent</h1>
-      <code class="docs-demo__file">.luz-site-consent</code>
+      <code class="docs-demo__file">.luz-consent</code>
       <code class="docs-demo__file">__title</code>
       <code class="docs-demo__file">__choices</code>
       <span class="luz-tag luz-tag--purple">JS: consent.js</span>
@@ -177,16 +178,16 @@
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <luz-site-consent>
-              <section class="luz-site-consent" data-luz-consent data-luz-consent-key="luz-consent-demo" aria-labelledby="consent-demo-title" hidden>
+            <luz-consent>
+              <section class="luz-consent" data-luz-consent data-luz-consent-key="luz-consent-demo" aria-labelledby="consent-demo-title" hidden>
                 <div data-luz-consent-ask>
-                  <h2 class="luz-site-consent__title" id="consent-demo-title">Cookies on Bodega Albar</h2>
+                  <h2 class="luz-consent__title" id="consent-demo-title">Cookies on Bodega Albar</h2>
                   <p>We use cookies that this site needs to work. We would also like to measure how you use it, to improve it. <a href="#how">Read the cookie policy</a>.</p>
                   <form class="luz-site-actions">
                     <button class="luz-btn luz-btn--primary" type="submit" value="all">Accept optional cookies</button>
                     <button class="luz-btn luz-btn--primary" type="submit" value="none">Reject optional cookies</button>
                   </form>
-                  <details class="luz-site-consent__choices">
+                  <details class="luz-consent__choices">
                     <summary>Choose which cookies to allow</summary>
                     <form class="o-stack">
                       <fieldset class="luz-fieldset">
@@ -204,7 +205,7 @@
                 </div>
                 <p data-luz-consent-done tabindex="-1" hidden>Your choice is saved. You can change it at any time on the <a href="#how">cookie policy</a> page.</p>
               </section>
-            </luz-site-consent>
+            </luz-consent>
             <p class="luz-site-actions"><button class="luz-btn luz-btn--outline" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
             <p class="docs-demo__note">The answer of this example is stored under its own key, <code>luz-consent-demo</code>, so it does not count as an answer for this site. Without JavaScript the banner and its button stay hidden.</p>
           </div>
@@ -218,26 +219,26 @@
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>Right after the <a href="../../../docs/components/skip-link/">skip link</a>, before a <a href="../../../docs/site/notice/">notice</a> and the <a href="../../../docs/site/site-header/">site header</a>. One checkbox per category of optional cookies, its <code>value</code> the category’s name. Load the module on its own: <code>site.js</code> does not include it.</p>
+            <p>Right after the <a href="../../../docs/components/skip-link/">skip link</a>, before a <a href="../../../docs/site/notice/">notice</a> and the <a href="../../../docs/site/site-header/">site header</a>. One checkbox per category of optional cookies, its <code>value</code> the category’s name. <code>site.min.js</code> loads the banner’s own file, <code>consent.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-consent" aria-label="Copy the cookie consent markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cookie consent markup"><code id="code-consent">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js&quot;&gt;&lt;/script&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cookie consent markup"><code id="code-consent">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js&quot;&gt;&lt;/script&gt;
 
 &lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
-&lt;luz-site-consent&gt;
-  &lt;section class=&quot;luz-site-consent&quot; data-luz-consent aria-labelledby=&quot;consent-title&quot; hidden&gt;
+&lt;luz-consent&gt;
+  &lt;section class=&quot;luz-consent&quot; data-luz-consent aria-labelledby=&quot;consent-title&quot; hidden&gt;
     &lt;div data-luz-consent-ask&gt;
-      &lt;h2 class=&quot;luz-site-consent__title&quot; id=&quot;consent-title&quot;&gt;Cookies on Bodega Albar&lt;/h2&gt;
+      &lt;h2 class=&quot;luz-consent__title&quot; id=&quot;consent-title&quot;&gt;Cookies on Bodega Albar&lt;/h2&gt;
       &lt;p&gt;We use cookies that this site needs to work. We would also like to measure how you
         use it, to improve it. &lt;a href=&quot;/cookies/&quot;&gt;Read the cookie policy&lt;/a&gt;.&lt;/p&gt;
       &lt;form class=&quot;luz-site-actions&quot;&gt;
         &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot; value=&quot;all&quot;&gt;Accept optional cookies&lt;/button&gt;
         &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot; value=&quot;none&quot;&gt;Reject optional cookies&lt;/button&gt;
       &lt;/form&gt;
-      &lt;details class=&quot;luz-site-consent__choices&quot;&gt;
+      &lt;details class=&quot;luz-consent__choices&quot;&gt;
         &lt;summary&gt;Choose which cookies to allow&lt;/summary&gt;
         &lt;form class=&quot;o-stack&quot;&gt;
           &lt;fieldset class=&quot;luz-fieldset&quot;&gt;
@@ -256,7 +257,7 @@
     &lt;p data-luz-consent-done tabindex=&quot;-1&quot; hidden&gt;Your choice is saved. You can change it at any
       time on the &lt;a href=&quot;/cookies/&quot;&gt;cookie policy&lt;/a&gt; page.&lt;/p&gt;
   &lt;/section&gt;
-&lt;/luz-site-consent&gt;
+&lt;/luz-consent&gt;
 &lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;
 
 &lt;!-- On the cookie policy page --&gt;
@@ -287,10 +288,10 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent</code></div></td><td data-label="Effect"><div>The banner: a band as wide as its container, its text in the site header’s column, in the sans. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-site-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>&lt;luz-site-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-consent</code></div></td><td data-label="Effect"><div>The banner: a band as wide as its container, its text in the site header’s column, in the sans. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>&lt;luz-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>data-luz-consent</code></div></td><td data-label="Effect"><div>On the <code>&lt;section&gt;</code>: the banner. Optional <code>data-luz-consent-days</code>, how long an answer lasts (180 days by default, 395 at most), and <code>data-luz-consent-key</code>, the storage key (it must start with <code>luz-</code>)</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>data-luz-consent-ask</code>, <code>data-luz-consent-done</code></div></td><td data-label="Effect"><div>The question, and the confirmation that takes its place. The confirmation has <code>tabindex="-1"</code>: it takes focus</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>value="all"</code>, <code>value="none"</code></div></td><td data-label="Effect"><div>On the submit buttons: Accept grants every category, Reject none. A submit button with another value, or none, grants the ticked ones of its form</div></td></tr>
@@ -299,7 +300,7 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@luz-ds/site</code>, two native forms and a module of its own, <code>@luz-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed). <code>site.js</code> does not import it, so only the pages that ask load it.</p>
+            <p>CSS from <code>@luz-ds/site</code>, two native forms and a file of its own, <code>@luz-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed), which defines <code>&lt;luz-consent&gt;</code>. <code>site.min.js</code> loads it when the browser is idle, and only on a page with a <code>&lt;luz-consent&gt;</code>, so no other page pays for it. A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.</p>
             <ul>
               <li><strong>When it asks:</strong> when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, in the flow above the header: it covers nothing, traps nothing and takes no focus, so the page can be read and used before answering.</li>
               <li><strong>The answer:</strong> Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read.</li>

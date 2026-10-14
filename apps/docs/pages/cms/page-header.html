@@ -1,0 +1,127 @@
+<!-- luz:page
+title: Page header
+description: Gives a page that is not an article, such as About or Contact, its title and one sentence about what it is for.
+area: cms
+order: 2
+group: patterns
+files: .luz-cms-page-header, __title, __lead
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-cms-page-header">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="luz-cms-page-header u-mb-0">
+              <p class="luz-cms-page-header__title">About the Review</p>
+              <p class="luz-cms-page-header__lead">An independent paper for Vejer and the coast, paid for by its readers.</p>
+            </div>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Page header documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-cms-page-header" aria-label="Copy the page header markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page header markup"><code id="code-cms-page-header">&lt;div class=&quot;luz-cms-page-header&quot;&gt;
+  &lt;h1 class=&quot;luz-cms-page-header__title&quot;&gt;About the Review&lt;/h1&gt;
+  &lt;p class=&quot;luz-cms-page-header__lead&quot;&gt;An independent paper for Vejer and the coast, paid for by its readers.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers. The lead is optional.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Page header parts" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-cms-page-header</code></div></td><td data-label="What it does"><div>The block, with 32 px of space below it</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-page-header__title</code></div></td><td data-label="What it does"><div>The title: heading font, 3xl size, light weight; 2xl at 640 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-page-header__lead</code></div></td><td data-label="What it does"><div>One paragraph in the secondary text colour, 600 px wide at most</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>A wrapper with a title and a lead, styled by <code>@luz-ds/cms</code>. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
+            <ul>
+              <li>The classes change the look only. The title must be the page's <code>&lt;h1&gt;</code>.</li>
+              <li>In Arabic the title has no letter-spacing, which would break the joins of the script.</li>
+              <li>A story has the <a href="/docs/cms/article-header/">article header</a> instead, with its section, standfirst and byline.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the page header is HTML and CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The page header has no interaction.</p>
+            <ul>
+              <li>An <code>&lt;h1&gt;</code> title lets screen reader users find the page title from the heading list.</li>
+              <li>Keep it inside <code>&lt;main&gt;</code>, so the skip link lands right before it.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a page header at the top of a page of a blog or a newspaper that is not a story (About, Contact, a section's index) to give its title and one sentence about what it is for.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it for a section inside the page: use a plain heading of the right level.</p>
+            <ul>
+              <li>One page header per page.</li>
+              <li>A story takes the <a href="/docs/cms/article-header/">article header</a>, which has its author and date.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A title of a few words and a lead that says what the reader can do here.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-cms-page-header u-mb-0"><p class="luz-cms-page-header__title">Contact</p><p class="luz-cms-page-header__lead">How to send us a story, a correction or a letter.</p></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A title padded with words the reader skips, and a lead that says nothing new.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-cms-page-header u-mb-0"><p class="luz-cms-page-header__title">Welcome to our contact page</p><p class="luz-cms-page-header__lead">This is the page where you can find how to contact us.</p></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The title names the page in a few words, in sentence case.</p>
+            <ul>
+              <li>The lead is one sentence, under 25 words, that says what the reader can do here.</li>
+              <li>Match the title to the link that led here and to the start of <code>&lt;title&gt;</code>.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The title is primary text and the lead secondary text, on the page.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Page header contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Title</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Lead</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> the header takes none.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 8 tokens that the <code>.luz-cms-page-header</code> rules of cms's <code>components/page-header.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xs</code>, <code>--luz-space-xl</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-heading</code>, <code>--luz-text-2xl</code>, <code>--luz-text-3xl</code>, <code>--luz-text-base</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

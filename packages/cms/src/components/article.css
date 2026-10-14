@@ -75,9 +75,10 @@
 	}
 }
 
-/* Under site's sticky header, where it sticks (the same query) */
+/* Under a sticky bar (core's .o-sticky, one row of --luz-bar-h), where it
+   sticks (the same query) */
 @media (min-height: 30rem) {
-	:root:has(.luz-site-header--sticky) .luz-cms-toc {
-		--luz-cms-toc-top: calc(var(--luz-site-header-h) + var(--luz-space-lg));
+	:root:has(.o-sticky) .luz-cms-toc {
+		--luz-cms-toc-top: calc(var(--luz-bar-h) + var(--luz-space-lg));
 	}
 }

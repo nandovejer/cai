@@ -1,0 +1,37 @@
+/* ==========================================================================
+	 LUZ CMS: page header.
+	 The title of a page that is not an article (about, contact):
+	 .luz-cms-page-header > h1.__title + p.__lead, the one sentence that says
+	 what the page is for. An article has .luz-cms-article-header instead.
+	 ========================================================================== */
+
+.luz-cms-page-header {
+	margin-block-end: var(--luz-space-xl);
+}
+
+.luz-cms-page-header__title {
+	margin-block-end: var(--luz-space-2xs);
+	color: var(--luz-text-primary);
+	font-family: var(--luz-font-heading);
+	font-size: var(--luz-text-3xl);
+	font-weight: 300;
+	letter-spacing: -1px;
+}
+
+.luz-cms-page-header__lead {
+	max-inline-size: 600px;
+	color: var(--luz-text-secondary);
+	font-size: var(--luz-text-base);
+}
+
+@media (max-width: 640px) {
+	.luz-cms-page-header__title {
+		font-size: var(--luz-text-2xl);
+		letter-spacing: -0.5px;
+	}
+}
+
+/* Spacing between letters breaks the joins of Arabic script */
+.luz-cms-page-header__title:lang(ar) {
+	letter-spacing: 0;
+}

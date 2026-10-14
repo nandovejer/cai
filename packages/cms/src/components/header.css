@@ -1,0 +1,151 @@
+/* ==========================================================================
+	 LUZ CMS: header.
+	 The blog bar: header.luz-cms-header.o-sticky >
+	 div.o-container.o-container--inline.o-row holding core's .luz-nav-toggle,
+	 the __brand link, core's nav.luz-navbar[popover] and a div.o-row.__actions
+	 (site's <luz-search>, then an optional <luz-lang-switch>). Core gives the
+	 stickiness, the width, the row and the collapsing links; cms adds the
+	 surface, the divider, the masthead brand and the gaps.
+	 --masthead, the newspaper: three rows in an .o-stack (__top with the
+	 __date and the __actions, the large centred __brand, and __sections with
+	 the toggle and the navbar between two rules), not sticky.
+	 ========================================================================== */
+
+/* A one-row bar of 44px controls is core's --luz-bar-h tall: two 2xs
+   paddings, the row and the divider. With enlarged text the row wraps
+   and the bar grows. */
+.luz-cms-header {
+	padding-block: var(--luz-space-2xs);
+	border-block-end: 1px solid var(--luz-divider);
+	background: var(--luz-surface-page);
+}
+
+/* The row wraps rather than overflow (WCAG 1.4.4, 1.4.10); its gutters are
+   the page's, so the brand starts where the content starts */
+.luz-cms-header > .o-row {
+	gap: var(--luz-space-xs) var(--luz-space-md);
+}
+
+/* The publication's name: a link, never a heading (the story's title is
+   the h1). It wraps, never ellipsised, and takes the free room of the row,
+   which pushes the links and the actions to the end */
+.luz-cms-header__brand {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: var(--luz-control-lg);
+	margin-inline-end: auto;
+	color: var(--luz-text-primary);
+	font-family: var(--luz-font-heading);
+	font-size: var(--luz-text-xl);
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.luz-cms-header__brand:hover {
+	text-decoration: underline;
+}
+
+/* A logo: an <img> whose alt is the publication's name */
+.luz-cms-header__brand :where(img) {
+	block-size: var(--luz-control-lg);
+	inline-size: auto;
+}
+
+.luz-cms-header__actions {
+	gap: var(--luz-space-xs);
+}
+
+/* The language list of site's <luz-lang-switch> opens under this bar */
+.luz-cms-header :where(luz-lang-switch) {
+	--luz-lang-switch-top: var(--luz-bar-h);
+}
+
+/* --masthead: room around three rows that scroll away with the page */
+.luz-cms-header--masthead {
+	padding-block: var(--luz-space-md);
+	border-block-end: 0;
+}
+
+/* The date gives way to the search: it shrinks and wraps, the search keeps
+   its row */
+.luz-cms-header__top {
+	flex-wrap: nowrap;
+	justify-content: space-between;
+}
+
+.luz-cms-header__date {
+	flex: 1 1 0;
+	min-inline-size: 0;
+	margin: 0;
+	color: var(--luz-text-secondary);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-sm);
+}
+
+.luz-cms-header--masthead .luz-cms-header__brand {
+	display: block;
+	margin: 0;
+	font-size: var(--luz-text-4xl);
+	line-height: 1.1;
+	text-align: center;
+}
+
+.luz-cms-header--masthead .luz-cms-header__brand :where(img) {
+	block-size: calc(var(--luz-control-lg) * 2);
+}
+
+/* The rules keep clear of the menu button's border */
+.luz-cms-header__sections {
+	padding-block: var(--luz-space-2xs);
+	border-block: 1px solid var(--luz-divider);
+}
+
+@media (min-width: 769px) {
+	.luz-cms-header > .o-row {
+		column-gap: var(--luz-space-lg);
+	}
+
+	.luz-cms-header__sections {
+		justify-content: center;
+	}
+}
+
+/* With the links in the panel, the brand fills the room between the toggle
+   and the actions and wraps there, so the bar stays one row of controls */
+@media (max-width: 768px) {
+	.luz-cms-header > .o-row > .luz-cms-header__brand {
+		flex: 1 1 0;
+	}
+}
+
+@media (max-width: 1023px) {
+	.luz-cms-header--masthead .luz-cms-header__brand {
+		font-size: var(--luz-text-3xl);
+	}
+}
+
+@media (max-width: 640px) {
+	.luz-cms-header__brand {
+		font-size: var(--luz-text-lg);
+	}
+
+	.luz-cms-header--masthead .luz-cms-header__brand {
+		font-size: var(--luz-text-2xl);
+	}
+}
+
+/* With anchor positioning the panels opened inside the bar (core's navbar,
+   the language list) open at its block end, on two rows as on one; in the
+   masthead, the navbar's panel opens under the sections row. Scoped, so
+   with two bars on a page each panel finds its own */
+@supports (anchor-name: --luz-bar) {
+	.luz-cms-header,
+	.luz-cms-header__sections {
+		anchor-name: --luz-bar;
+		anchor-scope: --luz-bar;
+	}
+
+	.luz-cms-header :where(luz-lang-switch) {
+		--luz-lang-switch-top: anchor(--luz-bar end, var(--luz-bar-h));
+	}
+}

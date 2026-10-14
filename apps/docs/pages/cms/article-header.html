@@ -2,7 +2,7 @@
 title: Article header
 description: Opens a story with its section, its title, a standfirst, who wrote it and when, and an optional lead picture.
 area: cms
-order: 1
+order: 3
 group: patterns
 files: .luz-cms-article-header, __kicker, __title, __standfirst, __byline, __media
 toc: h2,h3
@@ -23,7 +23,7 @@ toc: h2,h3
                 </div>
               </div>
               <figure class="luz-cms-article-header__media">
-                <div class="luz-site-image"></div>
+                <div class="luz-image"></div>
                 <figcaption>The tide gauge in the port, at low tide.</figcaption>
               </figure>
             </header>
@@ -55,7 +55,7 @@ toc: h2,h3
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;figure class=&quot;luz-cms-article-header__media&quot;&gt;
-    &lt;div class=&quot;luz-site-image&quot;&gt;
+    &lt;div class=&quot;luz-image&quot;&gt;
       &lt;img src=&quot;/img/tide-gauge-1280.jpg&quot; width=&quot;1280&quot; height=&quot;720&quot; alt=&quot;A green gauge post marked in centimetres, standing in shallow water by a stone quay&quot; fetchpriority=&quot;high&quot; decoding=&quot;async&quot;&gt;
     &lt;/div&gt;
     &lt;figcaption&gt;The tide gauge in the port, at low tide. Photo: Ana Ruiz.&lt;/figcaption&gt;
@@ -71,11 +71,11 @@ toc: h2,h3
                 </thead>
                 <tbody>
                   <tr><td data-label="Class"><div><code>.luz-cms-article-header</code></div></td><td data-label="What it does"><div>The block: its parts one under another, 12 px apart, and 32 px of space below it</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.luz-cms-article-header__kicker</code></div></td><td data-label="What it does"><div>The section above the title, small capitals in the mono, like the eyebrow of the <a href="/docs/site/hero/">hero</a>. Optional</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-article-header__kicker</code></div></td><td data-label="What it does"><div>The section above the title, small capitals in the mono, like the eyebrow of the <a href="/docs/landing/hero/">hero</a>. Optional</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-cms-article-header__title</code></div></td><td data-label="What it does"><div>The title: heading font, 3xl size, light weight, balanced lines; 2xl at 640 px and below</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-cms-article-header__standfirst</code></div></td><td data-label="What it does"><div>One or two sentences in the secondary text colour, a size up from the body, 70 characters wide at most. Optional</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-cms-article-header__byline</code></div></td><td data-label="What it does"><div>A row in the sans that wraps: an <a href="/docs/components/avatar/">avatar</a>, then the author and a <a href="/docs/components/meta/">meta line</a> with the date. Optional</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.luz-cms-article-header__media</code></div></td><td data-label="What it does"><div>A <code>&lt;figure&gt;</code> with no panel around it, for an <a href="/docs/site/image/">image frame</a> and its caption. Optional</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-article-header__media</code></div></td><td data-label="What it does"><div>A <code>&lt;figure&gt;</code> with no panel around it, for an <a href="/docs/components/image/">image frame</a> and its caption. Optional</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -84,7 +84,7 @@ toc: h2,h3
             <ul>
               <li>Each part styles its text through inheritance, so the class can go on the element that holds the text or on a wrapper around it. A CMS template that wraps the standfirst in a <code>&lt;div&gt;</code> works as well as a bare <code>&lt;p&gt;</code>. In a WordPress block template, give each block its class in <code>className</code>.</li>
               <li>The kicker is a link when your sections have pages, or plain text. The title must be the page's <code>&lt;h1&gt;</code>; the classes change the look only.</li>
-              <li>The lead picture is the <a href="/docs/site/image/">image frame</a> of site: it keeps its ratio and draws a placeholder until there is a picture. Do not set <code>loading="lazy"</code> on it: it is near the top of the page.</li>
+              <li>The lead picture is the <a href="/docs/components/image/">image frame</a> of core: it keeps its ratio and shows a flat surface until the picture loads. Do not set <code>loading="lazy"</code> on it: it is near the top of the page.</li>
               <li>A date the reader sees is a <code>&lt;time&gt;</code> with a machine-readable <code>datetime</code>. For a story updated after it was published, add a second line: <code>Updated &lt;time datetime="…"&gt;…&lt;/time&gt;</code>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
@@ -103,9 +103,9 @@ toc: h2,h3
             <h3 id="when">When to use</h3>
             <p>Use an article header at the top of a story, a post or a report: a page with an author and a date, that people read from start to end.</p>
             <h3 id="when-not">When not to use</h3>
-            <p>Do not use it for a page with no author or date, such as a contact or a section page: use the <a href="/docs/site/page-header/">page header</a>.</p>
+            <p>Do not use it for a page with no author or date, such as a contact or a section page: use the <a href="/docs/cms/page-header/">page header</a>.</p>
             <ul>
-              <li>For the first block of a home or a landing page, use the <a href="/docs/site/hero/">hero</a>.</li>
+              <li>For the first block of a home or a landing page, use the <a href="/docs/landing/hero/">hero</a>.</li>
               <li>For a story in a list, use a <a href="/docs/cms/templates/#post-card">post card</a>: the header is for the story's own page.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>

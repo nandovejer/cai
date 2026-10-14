@@ -1,0 +1,233 @@
+<!-- luz:page
+title: Header
+description: Starts every page of a blog or a newspaper with the publication's name, its sections and a search: one row that stays at the top, or a masthead of three rows.
+area: cms
+order: 1
+group: patterns
+files: .luz-cms-header, __brand, __actions, --masthead, __top, __date, __sections
+keywords: top bar, masthead, newspaper, blog header
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-cms-header">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <header class="luz-cms-header">
+              <div class="o-container o-container--inline o-row">
+                <button class="luz-nav-toggle" type="button" popovertarget="demo-cms-nav" aria-label="Sections of the example blog">
+                  <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+                </button>
+                <a class="luz-cms-header__brand" href="#p-cms-header">The Vejer Review</a>
+                <nav class="luz-navbar" id="demo-cms-nav" aria-label="Example blog" popover>
+                  <ul class="luz-navbar__list">
+                    <li><a class="luz-navbar__link" href="#p-cms-header" aria-current="true">News</a></li>
+                    <li><a class="luz-navbar__link" href="#p-cms-header">Culture</a></li>
+                    <li><a class="luz-navbar__link" href="#p-cms-header">Opinion</a></li>
+                  </ul>
+                </nav>
+                <div class="o-row luz-cms-header__actions">
+                  <a class="luz-btn luz-btn--ghost" href="#p-cms-header">Subscribe</a>
+                </div>
+              </div>
+            </header>
+          </div>
+          <div class="docs-demo__stage">
+            <header class="luz-cms-header luz-cms-header--masthead">
+              <div class="o-container o-container--inline o-stack">
+                <div class="o-row luz-cms-header__top">
+                  <p class="luz-cms-header__date"><time datetime="2026-10-14">Wednesday, 14 October 2026</time></p>
+                  <div class="o-row luz-cms-header__actions">
+                    <a class="luz-btn luz-btn--ghost" href="#p-cms-header">Subscribe</a>
+                  </div>
+                </div>
+                <a class="luz-cms-header__brand" href="#p-cms-header">The Vejer Review</a>
+                <div class="o-row luz-cms-header__sections">
+                  <button class="luz-nav-toggle" type="button" popovertarget="demo-cms-masthead-nav" aria-label="Sections of the example newspaper">
+                    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+                  </button>
+                  <nav class="luz-navbar" id="demo-cms-masthead-nav" aria-label="Example newspaper" popover>
+                    <ul class="luz-navbar__list">
+                      <li><a class="luz-navbar__link" href="#p-cms-header" aria-current="page">News</a></li>
+                      <li><a class="luz-navbar__link" href="#p-cms-header">Culture</a></li>
+                      <li><a class="luz-navbar__link" href="#p-cms-header">Opinion</a></li>
+                      <li><a class="luz-navbar__link" href="#p-cms-header">Sport</a></li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </header>
+          </div>
+          <p class="docs-demo__note">The blog bar, then the masthead. At 768 px of window width and below the sections collapse into a menu, core's <a href="/docs/components/navbar/">navbar</a>. The examples are not sticky: in a page, <code class="luz-code-inline">.o-sticky</code> keeps the blog bar at the top; the masthead never sticks.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>The header's own issues are those of the pieces of core it is made of, and one of the masthead.</p>
+          <ul>
+            <li><strong>The masthead's menu without anchor positioning.</strong> In browsers without CSS anchor positioning, the sections menu of the masthead header opens near the top of the window and covers the publication name and the menu button while it is open. Escape, or a click outside the menu, closes it and returns to the page.</li>
+            <li><strong>The menu panel.</strong> If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it; Escape closes it. See the <a href="/docs/components/navbar/#known-issues">navbar's known issues</a>.</li>
+            <li><strong>Sticky bar and enlarged text.</strong> The scroll padding of <code>.o-sticky</code> is a minimum: at 300% text, with the bar wrapped to several rows, Safari can leave a field reached with Tab under it. Set <code>scroll-padding-block-start</code> on <code>html</code> to your header's real height, or leave out <code>.o-sticky</code>.</li>
+          </ul>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Header documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>The blog bar, with site's search and language switch in its actions:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-cms-header" aria-label="Copy the blog bar markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Blog bar markup"><code id="code-cms-header">&lt;header class=&quot;luz-cms-header o-sticky&quot;&gt;
+  &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+    &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;cms-nav&quot; aria-label=&quot;Sections&quot;&gt;
+      &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z&quot;/&gt;&lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;a class=&quot;luz-cms-header__brand&quot; href=&quot;/&quot;&gt;The Vejer Review&lt;/a&gt;
+    &lt;nav class=&quot;luz-navbar&quot; id=&quot;cms-nav&quot; aria-label=&quot;Sections&quot; popover&gt;
+      &lt;ul class=&quot;luz-navbar__list&quot;&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/news/&quot; aria-current=&quot;true&quot;&gt;News&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/culture/&quot;&gt;Culture&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/opinion/&quot;&gt;Opinion&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+    &lt;div class=&quot;o-row luz-cms-header__actions&quot;&gt;
+      &lt;luz-search&gt;…&lt;/luz-search&gt;
+      &lt;luz-lang-switch&gt;…&lt;/luz-lang-switch&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+            </div>
+            <p>The masthead:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-cms-masthead" aria-label="Copy the masthead markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Masthead markup"><code id="code-cms-masthead">&lt;header class=&quot;luz-cms-header luz-cms-header--masthead&quot;&gt;
+  &lt;div class=&quot;o-container o-container--inline o-stack&quot;&gt;
+    &lt;div class=&quot;o-row luz-cms-header__top&quot;&gt;
+      &lt;p class=&quot;luz-cms-header__date&quot;&gt;&lt;time datetime=&quot;2026-10-14&quot;&gt;Wednesday, 14 October 2026&lt;/time&gt;&lt;/p&gt;
+      &lt;div class=&quot;o-row luz-cms-header__actions&quot;&gt;
+        &lt;luz-search&gt;…&lt;/luz-search&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;a class=&quot;luz-cms-header__brand&quot; href=&quot;/&quot;&gt;The Vejer Review&lt;/a&gt;
+    &lt;div class=&quot;o-row luz-cms-header__sections&quot;&gt;
+      &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;cms-nav&quot; aria-label=&quot;Sections&quot;&gt;…&lt;/button&gt;
+      &lt;nav class=&quot;luz-navbar&quot; id=&quot;cms-nav&quot; aria-label=&quot;Sections&quot; popover&gt;…&lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One modifier. The header is a class of cms on a native <code>&lt;header&gt;</code>, laid out by core's objects in the markup.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Header classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-cms-header</code></div></td><td data-label="Effect"><div>On <code>&lt;header&gt;</code>: the blog bar. The page surface, a rule underneath, the gaps of its row, and the anchor its panels open under</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-header--masthead</code></div></td><td data-label="Effect"><div>The newspaper's masthead: three rows in an <code>.o-stack</code>, 16 px above and below, not sticky</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-header__brand</code></div></td><td data-label="Effect"><div>The publication's name as a link to the home page, in the heading font, semibold, underlined on hover only. In the bar it takes the free room of the row; in the masthead it is large and centred. A logo <code>&lt;img&gt;</code> inside it is 44 px tall in the bar, 88 px in the masthead</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-header__actions</code></div></td><td data-label="Effect"><div>On a <code>.o-row</code>: site's <a href="/docs/site/search/">search</a>, then its <a href="/docs/site/lang-switch/">language switch</a></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-header__top</code></div></td><td data-label="Effect"><div>Masthead only, on a <code>.o-row</code>: the date at the start and the actions at the end, on one row</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-header__date</code></div></td><td data-label="Effect"><div>Masthead only: today's date in a <code>&lt;time datetime&gt;</code>, small and secondary; it wraps to give the actions their room</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-cms-header__sections</code></div></td><td data-label="Effect"><div>Masthead only, on a <code>.o-row</code>: the menu button and the navbar between two rules, centred from 769 px; its panel opens under this row</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-sticky</code> (core)</div></td><td data-label="Effect"><div>Keeps the blog bar at the top while the page scrolls, in a window at least 30 rem tall; see <a href="/docs/components/layout/#objects-page">the page and its bars</a>. Never on the masthead</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-container.o-container--inline</code> (core)</div></td><td data-label="Effect"><div>The width and gutters of the page, so the header starts where the content starts</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-nav-toggle</code>, <code>.luz-navbar</code> (core)</div></td><td data-label="Effect"><div>The menu button and the sections: see the <a href="/docs/components/navbar/">navbar</a></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/cms</code> on core's objects and navbar. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
+            <ul>
+              <li>cms adds the skin only: the page surface, the rule underneath, the brand, and the gaps of the row (8 px between rows, 16 px between items, 24 px from 769 px). Core gives the rest: <code>.o-sticky</code> the stickiness and the scroll padding, <code>.o-container--inline</code> the gutters, <code>.o-row</code> and <code>.o-stack</code> the rows, and the navbar the links and their panel.</li>
+              <li>A one-row bar is core's <code>--luz-bar-h</code> tall: 44 px controls, 4 px above and below, and the 1 px rule. At 768 px and below the brand fills the room between the menu button and the actions and wraps there, so the controls stay on one row; with enlarged text the row wraps and the bar grows.</li>
+              <li>The masthead is not sticky: three rows stuck to the top would take a third of a phone's screen. Its brand is 49 px from 1024 px, 39 px below and 31 px at 640 px and below (<code>--luz-text-4xl</code>, <code>-3xl</code> and <code>-2xl</code>, the steps of the landing hero).</li>
+              <li>The bar, and in the masthead the sections row, name themselves the anchor <code>--luz-bar</code>, scoped to themselves. Where the browser supports CSS anchor positioning, the navbar's panel opens under them. Elsewhere it opens at <code>--luz-bar-h</code> from the top of the window (see Known issues).</li>
+              <li>With <code>@luz-ds/site</code>, the list of its <code>&lt;luz-lang-switch&gt;</code> opens under the bar. Without it nothing changes: the rules that refine site's elements match nothing.</li>
+              <li>The <a href="/docs/cms/toc/">table of contents</a> of an article sticks under a bar with <code>.o-sticky</code>.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the menu is a popover opened by the button's <code>popovertarget</code>, with no script, the links are plain links, and site's search shows its link to the A–Z index.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the order of the source. In the bar: the menu button, the brand, the sections, then the actions. In the masthead: the actions of the top row, the brand, then the menu button and the sections.</li>
+              <li><strong>Keys:</strong> Enter or Space on the menu button opens and closes the panel; Escape closes it and returns focus to the button. The panel is not modal: Tab after its last link moves on.</li>
+              <li><strong>Names:</strong> the <code>&lt;nav&gt;</code> and the menu button are both named "Sections"; the browser exposes the button's expanded state. The section of an article has <code>aria-current="true"</code>, the section's own index <code>aria-current="page"</code>; both are underlined.</li>
+              <li><strong>Brand:</strong> a link, never a heading: the story's title is the page's one <code>h1</code>. A logo is an <code>&lt;img&gt;</code> whose <code>alt</code> is the publication's name, with no text beside it.</li>
+              <li><strong>Landmarks:</strong> a <code>&lt;header&gt;</code> that is a direct child of <code>&lt;body&gt;</code> is the banner. Put the <a href="/docs/components/skip-link/">skip link</a> before it.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the header at the top of every page of a blog or a newspaper: a reader who lands on a story from a search sees which publication it is and reaches its sections and its search.</p>
+            <ul>
+              <li>The blog bar for most sites: one row that stays at the top while the reader reads.</li>
+              <li>The masthead for a newspaper's front page and sections, where the name and the date set the tone.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it on a landing page or in an app: their packages have headers of their own.</p>
+            <ul>
+              <li>One header per page, never inside a component or an article: it is the page's banner.</li>
+              <li>Do not make the masthead sticky, and do not put the date in the bar: in one row it competes with the name.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> The publication's name as text, and a few sections named as the reader knows them.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <header class="luz-cms-header"><div class="o-container o-container--inline o-row"><a class="luz-cms-header__brand" href="#">The Vejer Review</a><nav class="luz-navbar" aria-label="Sections"><ul class="luz-navbar__list"><li><a class="luz-navbar__link" href="#" aria-current="true">News</a></li><li><a class="luz-navbar__link" href="#">Culture</a></li><li><a class="luz-navbar__link" href="#">Opinion</a></li></ul></nav></div></header>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The name cut short with an ellipsis, or every tag of the site as a section: the reader cannot tell where they are.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <header class="luz-cms-header"><div class="o-container o-container--inline o-row"><a class="luz-cms-header__brand" href="#">The Vejer Re…</a><nav class="luz-navbar" aria-label="Sections"><ul class="luz-navbar__list"><li><a class="luz-navbar__link" href="#">News</a></li><li><a class="luz-navbar__link" href="#">Local</a></li><li><a class="luz-navbar__link" href="#">Tides</a></li><li><a class="luz-navbar__link" href="#">Beaches</a></li><li><a class="luz-navbar__link" href="#">Food</a></li><li><a class="luz-navbar__link" href="#">Wine</a></li><li><a class="luz-navbar__link" href="#">Misc</a></li><li><a class="luz-navbar__link" href="#">Weather</a></li></ul></nav></div></header>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The brand is the publication's name; the sections are the names readers use for its parts.</p>
+            <ul>
+              <li>Brand: the name in full, as it appears on the publication. It wraps at a narrow width; never shorten it with an ellipsis.</li>
+              <li>Sections: four to seven, one or two words each, the same words as the titles of their index pages.</li>
+              <li>Date (masthead): written out in the language of the page, "Wednesday, 14 October 2026", with the same day in <code>datetime</code>.</li>
+              <li>Menu button: "Sections", translated like the rest of the page.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Text sits on the page surface, in the row and in the open panel. The scrim starts under the bar, so the bar is never dimmed.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Header contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Brand and current section</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Sections and date</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> every link and button in the header keeps core's ring, 2 px of <code>--luz-focus-ring</code>. The current section has an underline as well as its colour, so the mark does not depend on colour.</li>
+              <li><strong>Edges:</strong> the rule under the bar and the two rules of the masthead's sections row (<code>--luz-divider</code>) are decorative and have no minimum; forced colours keep them.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 18 tokens that the <code>.luz-cms-header</code> rules of cms's <code>components/header.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-heading</code>, <code>--luz-font-sans</code>, <code>--luz-text-2xl</code>, <code>--luz-text-3xl</code>, <code>--luz-text-4xl</code>, <code>--luz-text-lg</code>, <code>--luz-text-sm</code>, <code>--luz-text-xl</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-bar-h</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

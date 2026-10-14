@@ -63,6 +63,9 @@ const PACKAGES = {
       'article-header': 'article-header',
       article: 'toc',
       toc: 'toc',
+      header: 'cms-header',
+      footer: 'cms-footer',
+      'page-header': 'cms-page-header',
     },
   },
 };

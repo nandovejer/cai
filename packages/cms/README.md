@@ -1,13 +1,13 @@
 # @luz-ds/cms
 
-Patterns for one kind of site, a blog, a newspaper or any site of articles, built with any CMS and any stack: the article header and the table of contents beside the text. It builds on `@luz-ds/site`, which holds what every site needs (page shell, site header, sections, footer, search).
+The page structure of one kind of site, a blog, a newspaper or any site of articles, built with any CMS and any stack: the header (a bar or a newspaper's masthead), the page header, the article header, the table of contents beside the text, and the footer. Each is a class on a native element, laid out in the markup by `@luz-ds/core`'s objects (`.o-page`, `.o-sticky`, `.o-container`, `.o-row`, `.o-stack`) and its navbar; cms adds only its skin. `@luz-ds/site` is optional: its search and language switch go in the header's actions.
 
 > **Beta, version 0.x.** CMS has a version of its own, apart from tokens, core and site, and grows in minor versions while it is 0.x: any of them may change a class. Pin an exact version and read the changelog before you upgrade.
 
 ## When to use it
 
 - You publish articles, posts or stories, each with a title, an author and a date, some long enough to need a table of contents.
-- Not for documentation, a landing page or an app: `@luz-ds/site` alone (or `@luz-ds/landing`) has what they need.
+- Not for a landing page (`@luz-ds/landing`), documentation or an app.
 
 The classes go on any element, so a template of any CMS can write them (in a block-editor template, a block's `className`). The post card, the post listing, related posts and the author box need no CSS of their own: they are markup to copy, built from core's card, avatar and pagination, on the [CMS templates](https://nandovejer.github.io/luz/docs/cms/templates/) page of the docs.
 
@@ -41,7 +41,7 @@ import '@luz-ds/cms/css'
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/cms@0.1.0/dist/cms.min.css">
 ```
 
-There is no script. Core's script is optional: with it, the table of contents marks the section in view (core's scroll spy, on the in-page links inside an element with `data-luz-spy`).
+There is no script: the header's menu is a native popover. Core's script is optional: with it, the table of contents marks the section in view (core's scroll spy, on the in-page links inside an element with `data-luz-spy`).
 
 The body of a story is core's `.luz-prose` (line length and the space between blocks) and its date and reading time are core's `.luz-meta`; lists of posts are core's `.o-grid` or `.o-stack` on a `<ul>`. None of them needs a rule of yours.
 
@@ -52,8 +52,12 @@ The body of a story is core's `.luz-prose` (line length and the space between bl
 
 ## Classes included
 
+- `.luz-cms-header` (`__brand`, `__actions`; `--masthead` with `__top`, `__date`, `__sections`) — The top of every page: the publication's name, its sections in core's navbar and the actions, in one row that stays at the top with core's `.o-sticky`; or, with `--masthead`, a newspaper's three rows (date and search, the name, the sections), not sticky. [Docs](https://nandovejer.github.io/luz/docs/cms/header/)
+- `.luz-cms-page-header` (`__title`, `__lead`) — The title of a page that is not an article (about, contact) and one sentence about what it is for. [Docs](https://nandovejer.github.io/luz/docs/cms/page-header/)
+
 - `.luz-cms-article-header` (`__kicker`, `__title`, `__standfirst`, `__byline`, `__media`) — The top of a story: its section, the title, the standfirst, who wrote it and when, and an optional lead picture. [Docs](https://nandovejer.github.io/luz/docs/cms/article-header/)
-- `.luz-cms-article` (`__layout`) and `.luz-cms-toc` (`__title`, `__list`) — The story and its table of contents: beside the text, staying in view, when the article is 46rem wide or more; above it below that. `--luz-cms-toc-top` sets the space above it while it stays in view. [Docs](https://nandovejer.github.io/luz/docs/cms/toc/)
+- `.luz-cms-article` (`__layout`) and `.luz-cms-toc` (`__title`, `__list`) — The story and its table of contents: beside the text, staying in view, when the article is 46rem wide or more; above it below that. `--luz-cms-toc-top` sets the space above it while it stays in view (by default under a `.o-sticky` bar of core's `--luz-bar-h`). [Docs](https://nandovejer.github.io/luz/docs/cms/toc/)
+- `.luz-cms-footer` — The end of every page: a rule above, who publishes it and a few links at the two ends of a row; a column at 768 px and below. [Docs](https://nandovejer.github.io/luz/docs/cms/footer/)
 
 ## License
 

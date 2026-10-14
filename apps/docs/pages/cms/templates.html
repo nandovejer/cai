@@ -1,16 +1,70 @@
 <!-- luz:page
 title: CMS templates
-description: The pieces of a blog or a newspaper that need no CSS of their own, to paste in and adapt: the article page, a post card, post listings, related posts and the author box.
+description: The pieces of a blog or a newspaper that need no CSS of their own, to paste in and adapt: the content page, the article page, a post card, post listings, related posts and the author box.
 area: cms
 order: 10
 group: reference
 -->
     <div class="docs-block" id="p-cms-templates">
-          <p>Each template is markup to copy into the template of your CMS, with your own fields in place of the example text. They use the classes of core, site and cms only: a piece that would need CSS of its own is a pattern, with its page, and <a href="#not-here">the last section</a> says what LUZ does not have yet.</p>
+          <p>Each template is markup to copy into the template of your CMS, with your own fields in place of the example text. They use the classes of core and cms only (and site's elements, where a search or a language switch goes): a piece that would need CSS of its own is a pattern, with its page, and <a href="#not-here">the last section</a> says what LUZ does not have yet.</p>
           <p>A list of posts is a <code>&lt;ul&gt;</code> with core's <code>.o-grid</code> or <code>.o-stack</code>, which take off the markers and the indent. Safari can drop the list role from a list without markers; the headings still lead through the posts.</p>
           <div class="docs-prose">
+            <h2 id="content-page" class="docs-prose__title">Content page</h2>
+            <p>The whole page of a blog: the skip link, the sticky <a href="/docs/cms/header/">header</a>, a <a href="/docs/cms/page-header/">page header</a> and its sections, then the <a href="/docs/cms/footer/">footer</a>. For a story, the <a href="#article-page">article page</a> goes in place of the <code>&lt;main&gt;</code>.</p>
+            <ul>
+              <li><code>.o-page</code> makes the body a column at least as tall as the window, so the footer rests on the bottom of a short page.</li>
+              <li>For a newspaper, use the masthead (<code>.luz-cms-header--masthead</code>, not sticky) in place of the bar.</li>
+              <li>The search and the language switch are site's elements; leave them out, or the whole of <code>__actions</code>, if you do not load site.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-content" aria-label="Copy the content page markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Content page markup"><code id="code-tpl-content">&lt;body class=&quot;o-page&quot;&gt;
+  &lt;a class=&quot;luz-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to content&lt;/a&gt;
+
+  &lt;header class=&quot;luz-cms-header o-sticky&quot;&gt;
+    &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+      &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;cms-nav&quot; aria-label=&quot;Sections&quot;&gt;…&lt;/button&gt;
+      &lt;a class=&quot;luz-cms-header__brand&quot; href=&quot;/&quot;&gt;The Vejer Review&lt;/a&gt;
+      &lt;nav class=&quot;luz-navbar&quot; id=&quot;cms-nav&quot; aria-label=&quot;Sections&quot; popover&gt;
+        &lt;ul class=&quot;luz-navbar__list&quot;&gt;
+          &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/news/&quot;&gt;News&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/about/&quot; aria-current=&quot;page&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/nav&gt;
+      &lt;div class=&quot;o-row luz-cms-header__actions&quot;&gt;
+        &lt;luz-search&gt;…&lt;/luz-search&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;main id=&quot;main-content&quot; class=&quot;o-container&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;div class=&quot;luz-cms-page-header&quot;&gt;
+      &lt;h1 class=&quot;luz-cms-page-header__title&quot;&gt;About the Review&lt;/h1&gt;
+      &lt;p class=&quot;luz-cms-page-header__lead&quot;&gt;An independent paper for Vejer and the coast, paid for by its readers.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;luz-prose&quot;&gt;
+      &lt;p&gt;The text.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;luz-cms-footer&quot;&gt;
+    &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+      &lt;p&gt;The Vejer Review is published by a cooperative.&lt;/p&gt;
+      &lt;nav class=&quot;o-actions&quot; aria-label=&quot;Links&quot;&gt;
+        &lt;a class=&quot;luz-btn luz-btn--ghost luz-btn--sm&quot; href=&quot;/corrections/&quot;&gt;Corrections&lt;/a&gt;
+        &lt;a class=&quot;luz-btn luz-btn--ghost luz-btn--sm&quot; href=&quot;/contact/&quot;&gt;Contact&lt;/a&gt;
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
             <h2 id="article-page" class="docs-prose__title">Article page</h2>
-            <p>The <code>&lt;main&gt;</code> of a story: the <a href="/docs/cms/article-header/">article header</a>, the <a href="/docs/cms/toc/">table of contents</a> beside the text, then the author and related posts. Start from the <a href="/docs/site/templates/">page shell of site</a>.</p>
+            <p>The <code>&lt;main&gt;</code> of a story: the <a href="/docs/cms/article-header/">article header</a>, the <a href="/docs/cms/toc/">table of contents</a> beside the text, then the author and related posts. Put it in the <a href="#content-page">content page</a> in place of its <code>&lt;main&gt;</code>.</p>
             <ul>
               <li>The <code>&lt;article&gt;</code> holds the story only: the header and the text. The author box and the related posts come after it, inside <code>&lt;main&gt;</code>.</li>
               <li>The text is core's <a href="/docs/components/prose/">prose</a>: lines of about 70 characters and the space between its blocks, whatever the CMS writes inside. Leave out the table of contents in a short post, and the layout is the text alone.</li>
@@ -21,7 +75,7 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-article" aria-label="Copy the article page markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Article page markup"><code id="code-tpl-article">&lt;main id=&quot;main-content&quot; class=&quot;luz-site-main o-container&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Article page markup"><code id="code-tpl-article">&lt;main id=&quot;main-content&quot; class=&quot;o-container&quot;&gt;
   &lt;article class=&quot;luz-cms-article&quot;&gt;
     &lt;header class=&quot;luz-cms-article-header&quot;&gt;
       &lt;p class=&quot;luz-cms-article-header__kicker&quot;&gt;&lt;a href=&quot;/coast/&quot;&gt;Coast&lt;/a&gt;&lt;/p&gt;
@@ -58,7 +112,7 @@ group: reference
           </div>
           <div class="docs-prose">
             <h2 id="post-card" class="docs-prose__title">Post card</h2>
-            <p>One post in a list: a picture, its section, the title, a line of summary and the date. It is a <a href="/docs/components/card/">card</a> with an <a href="/docs/site/image/">image frame</a>; the link on the title makes the whole card one link, with one tab stop.</p>
+            <p>One post in a list: a picture, its section, the title, a line of summary and the date. It is a <a href="/docs/components/card/">card</a> with an <a href="/docs/components/image/">image frame</a>; the link on the title makes the whole card one link, with one tab stop.</p>
             <ul>
               <li>The picture has <code>alt=""</code>: the title says what the card is. Give it <code>loading="lazy"</code>, except on cards at the top of the page.</li>
               <li>The section is a <a href="/docs/components/tag/">tag</a>, not a link: a second link in the card would be a second tab stop with a small target. Link the section from the story's own header.</li>
@@ -70,7 +124,7 @@ group: reference
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-card" aria-label="Copy the post card markup">Copy</button>
               </div>
               <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Post card markup"><code id="code-tpl-card">&lt;article class=&quot;luz-card&quot;&gt;
-  &lt;div class=&quot;luz-site-image luz-site-image--3x2 u-mb-sm&quot;&gt;
+  &lt;div class=&quot;luz-image luz-image--3x2 u-mb-sm&quot;&gt;
     &lt;img src=&quot;/img/tide-gauge-640.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
   &lt;/div&gt;
   &lt;p class=&quot;luz-tag luz-tag--gray u-mb-sm&quot;&gt;Coast&lt;/p&gt;
@@ -93,11 +147,11 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-listing" aria-label="Copy the post listing markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Post listing markup"><code id="code-tpl-listing">&lt;section class=&quot;luz-site-section&quot; aria-labelledby=&quot;latest-title&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Post listing markup"><code id="code-tpl-listing">&lt;section class=&quot;o-stack&quot; aria-labelledby=&quot;latest-title&quot;&gt;
   &lt;h2 id=&quot;latest-title&quot;&gt;Latest stories&lt;/h2&gt;
   &lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
     &lt;li class=&quot;luz-card&quot;&gt;
-      &lt;div class=&quot;luz-site-image luz-site-image--3x2 u-mb-sm&quot;&gt;
+      &lt;div class=&quot;luz-image luz-image--3x2 u-mb-sm&quot;&gt;
         &lt;img src=&quot;/img/tide-gauge-640.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
       &lt;/div&gt;
       &lt;p class=&quot;luz-tag luz-tag--gray u-mb-sm&quot;&gt;Coast&lt;/p&gt;
@@ -130,11 +184,11 @@ group: reference
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-related" aria-label="Copy the related posts markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Related posts markup"><code id="code-tpl-related">&lt;section class=&quot;luz-site-section&quot; aria-labelledby=&quot;related-title&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Related posts markup"><code id="code-tpl-related">&lt;section class=&quot;o-stack&quot; aria-labelledby=&quot;related-title&quot;&gt;
   &lt;h2 id=&quot;related-title&quot;&gt;More on the coast&lt;/h2&gt;
   &lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
     &lt;li class=&quot;luz-card&quot;&gt;
-      &lt;div class=&quot;luz-site-image luz-site-image--3x2 u-mb-sm&quot;&gt;
+      &lt;div class=&quot;luz-image luz-image--3x2 u-mb-sm&quot;&gt;
         &lt;img src=&quot;/img/beach-road-640.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
       &lt;/div&gt;
       &lt;h3 class=&quot;luz-card__title&quot;&gt;&lt;a href=&quot;/2026/09/beach-road/&quot;&gt;The beach road closes from May to September&lt;/a&gt;&lt;/h3&gt;

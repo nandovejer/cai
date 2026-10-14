@@ -1,0 +1,125 @@
+<!-- luz:page
+title: Footer
+description: Ends every page of a blog or a newspaper with who publishes it and a few secondary links, under a rule.
+area: cms
+order: 5
+group: patterns
+files: .luz-cms-footer
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-cms-footer">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="luz-cms-footer">
+              <div class="o-container o-container--inline o-row">
+                <p class="u-text-muted">The Vejer Review · Published by a cooperative</p>
+                <div class="o-actions">
+                  <button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Corrections</button>
+                  <button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Contact</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="docs-demo__note">A <code class="luz-code-inline">&lt;div&gt;</code> here: a page has one footer landmark, and this one has its own.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Footer documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-cms-footer" aria-label="Copy the footer markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Footer markup"><code id="code-cms-footer">&lt;footer class=&quot;luz-cms-footer&quot;&gt;
+  &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+    &lt;p&gt;The Vejer Review is published by a cooperative.&lt;/p&gt;
+    &lt;nav class=&quot;o-actions&quot; aria-label=&quot;Links&quot;&gt;
+      &lt;a class=&quot;luz-btn luz-btn--ghost luz-btn--sm&quot; href=&quot;/corrections/&quot;&gt;Corrections&lt;/a&gt;
+      &lt;a class=&quot;luz-btn luz-btn--ghost luz-btn--sm&quot; href=&quot;/accessibility/&quot;&gt;Accessibility statement&lt;/a&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers. The footer is a class of cms on a native <code>&lt;footer&gt;</code>, with a row of core's inside.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Footer classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-cms-footer</code></div></td><td data-label="Effect"><div>On <code>&lt;footer&gt;</code>: a rule on top, 24 px above its row and 32 px below; its row spreads its children to the two ends, and is a column aligned to the start at 768 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-container.o-container--inline.o-row</code> (core)</div></td><td data-label="Effect"><div>The row: the width and gutters of the page, so its content starts where the main's does</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-actions</code> (core)</div></td><td data-label="Effect"><div>The links, as an <a href="/docs/components/layout/#objects-actions">action group</a></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/cms</code> on core's objects. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
+            <ul>
+              <li>cms adds the rule, the room around the row and how the row spreads its children; <code>.o-container--inline</code> lines the row up with the page's content.</li>
+              <li>On an <code>.o-page</code> the main grows, so the footer rests on the bottom of a page shorter than the window.</li>
+              <li>The column at 768 px and below does not wrap, so its children stay one under the other.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the footer is HTML and CSS. A <a href="/docs/components/mode-switcher/">color mode switcher</a> inside it keeps working as radios.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The footer has no interaction of its own; its links keep theirs.</p>
+            <ul>
+              <li>A <code>&lt;footer&gt;</code> that is a direct child of <code>&lt;body&gt;</code> is the contentinfo landmark.</li>
+              <li>Name a <code>&lt;nav&gt;</code> of links with <code>aria-label</code>, and keep the links in the same order on every page.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the footer at the end of every page of a blog or a newspaper, for who publishes it and a few secondary links: corrections, contact, the accessibility statement.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not put the main navigation, or anything needed to finish a task, in the footer.</p>
+            <ul>
+              <li>The sections go in the <a href="/docs/cms/header/">header</a>.</li>
+              <li>A landing page has a <a href="/docs/landing/footer/">footer</a> of its own.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Two to four links that say where they go.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-cms-footer"><div class="o-container o-container--inline o-row"><p class="u-text-muted">The Vejer Review</p><div class="o-actions"><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Accessibility statement</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Corrections</button></div></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> The main navigation in the footer: the reader has to reach the end of the page to move around.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-cms-footer"><div class="o-container o-container--inline o-row"><p class="u-text-muted">The Vejer Review</p><div class="o-actions"><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">News</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Culture</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Opinion</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Sport</button><button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Contact</button></div></div></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Keep it short: who publishes it, and two to four links.</p>
+            <ul>
+              <li>Each link says where it goes: "Accessibility statement", not "Legal".</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The footer adds only a top rule (<code>--luz-divider</code>), which is decorative; its text and links keep their own colours.</p>
+            <ul>
+              <li><strong>Focus:</strong> links and buttons in it keep their own ring.</li>
+              <li><strong>Forced colors:</strong> the rule is a border, so it stays.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 4 tokens that the <code>.luz-cms-footer</code> rules of cms's <code>components/footer.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

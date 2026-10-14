@@ -1,0 +1,25 @@
+/* ==========================================================================
+	 LUZ CMS: footer.
+	 footer.luz-cms-footer > div.o-container.o-container--inline.o-row: a
+	 divider above, its items at the two ends of the row; at 768px and below
+	 a column aligned to the start.
+	 ========================================================================== */
+
+.luz-cms-footer {
+	padding-block: var(--luz-space-lg) var(--luz-space-xl);
+	border-block-start: 1px solid var(--luz-divider);
+}
+
+.luz-cms-footer > .o-row {
+	justify-content: space-between;
+	gap: var(--luz-space-md);
+}
+
+/* A column that does not wrap: a wrapping column nested in grids makes
+   Chromium's layout take tens of seconds */
+@media (max-width: 768px) {
+	.luz-cms-footer > .o-row {
+		flex-flow: column nowrap;
+		align-items: flex-start;
+	}
+}

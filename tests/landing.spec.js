@@ -1,6 +1,6 @@
 /**
- * CAI Design System — Landing page checks
- * The landing (apps/landing, served at /) says what CAI is for and why to
+ * LUZ Design System — Landing page checks
+ * The landing (apps/landing, served at /) says what LUZ is for and why to
  * use it, and how to adopt it. It is a level-3 consumer with the base color
  * modes only. The documentation, with every component and its guidance,
  * lives on its own pages (tests/docs.spec.js).
@@ -17,7 +17,7 @@ const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url))
 
 const tokens = JSON.parse(readFileSync(fromRepo('packages/tokens/tokens.json'), 'utf-8'));
 const primitiveColors = Object.entries(tokens.color).flatMap(([family, steps]) =>
-  Object.keys(steps).map((step) => `--cai-${family}-${step}`),
+  Object.keys(steps).map((step) => `--luz-${family}-${step}`),
 );
 
 const semanticCss = readFileSync(fromRepo('packages/tokens/src/semantic.css'), 'utf-8');
@@ -25,7 +25,7 @@ const lightBlock = semanticCss.slice(
   semanticCss.indexOf('[data-theme="light"] {'),
   semanticCss.indexOf('[data-theme="dark"],'),
 );
-const semanticTokens = [...lightBlock.matchAll(/^\s*(--cai-[\w-]+):/gm)].map((m) => m[1]);
+const semanticTokens = [...lightBlock.matchAll(/^\s*(--luz-[\w-]+):/gm)].map((m) => m[1]);
 
 const components = readdirSync(fromRepo('packages/core/src/components')).filter(
   (file) => file.endsWith('.css') && file !== 'index.css' && !file.startsWith('_'),
@@ -72,30 +72,30 @@ test.describe('Landing page', () => {
       expect(await page.locator('[data-mode]').count()).toBe(0);
       expect(await page.evaluate(() => document.documentElement.dataset.mode)).toBeUndefined();
       expect(MODES).toContain(await theme(page));
-      // The core behaviors are imported one by one: cai.js would apply its own theme
-      expect(requests.filter((url) => /\/cai(\.min)?\.js/.test(url))).toEqual([]);
+      // The core behaviors are imported one by one: luz.js would apply its own theme
+      expect(requests.filter((url) => /\/luz(\.min)?\.js/.test(url))).toEqual([]);
     });
 
     test('the header switcher is a radio group that becomes one cycle button', async ({ page }) => {
       await open(page);
 
       // The native radio group stays in the page, under the button
-      const switcher = page.locator('footer fieldset.cai-mode-switcher--cycle');
+      const switcher = page.locator('footer fieldset.luz-mode-switcher--cycle');
       await expect(switcher).toHaveCount(1);
       await expect(switcher.locator('legend')).toHaveText('Color mode');
-      await expect(switcher.locator('input[type="radio"][name="cai-theme"]')).toHaveCount(3);
+      await expect(switcher.locator('input[type="radio"][name="luz-theme"]')).toHaveCount(3);
       expect(await theme(page)).toBe('light');
 
-      const button = switcher.locator('button.cai-mode-cycle');
+      const button = switcher.locator('button.luz-mode-cycle');
       await expect(button).toHaveCount(1);
       await expect(button).toHaveAccessibleName('Change color mode. Current: Light');
-      await expect(switcher.locator('.cai-mode-btn').first()).toBeHidden();
+      await expect(switcher.locator('.luz-mode-btn').first()).toBeHidden();
 
       for (const [mode, label] of [['dark', 'Dark'], ['high-contrast', 'High contrast'], ['light', 'Light']]) {
         await button.click();
         expect(await theme(page)).toBe(mode);
         expect(await page.evaluate(() => document.documentElement.dataset.mode)).toBeUndefined();
-        await expect(page.locator('input[name="cai-theme"]:checked')).toHaveValue(mode);
+        await expect(page.locator('input[name="luz-theme"]:checked')).toHaveValue(mode);
         await expect(button).toHaveAccessibleName(`Change color mode. Current: ${label}`);
         await expect(switcher.locator('[role="status"]')).toHaveText(`Color mode: ${label}`);
       }
@@ -104,7 +104,7 @@ test.describe('Landing page', () => {
     test('the cycle button works from the keyboard', async ({ page }) => {
       await open(page);
 
-      await page.locator('footer .cai-mode-cycle').focus();
+      await page.locator('footer .luz-mode-cycle').focus();
       await page.keyboard.press('Enter');
       expect(await theme(page)).toBe('dark');
       await page.keyboard.press('Space');
@@ -114,12 +114,12 @@ test.describe('Landing page', () => {
     test('the chosen mode survives a reload, under the site key', async ({ page }) => {
       await open(page);
       // light → dark → high contrast
-      await page.click('footer .cai-mode-cycle');
-      await page.click('footer .cai-mode-cycle');
+      await page.click('footer .luz-mode-cycle');
+      await page.click('footer .luz-mode-cycle');
 
-      expect(await page.evaluate(() => localStorage.getItem('cai-site-mode'))).toBe('high-contrast');
-      // cai.js (core's theme module) reads cai-theme: the site must not touch it
-      expect(await page.evaluate(() => localStorage.getItem('cai-theme'))).toBeNull();
+      expect(await page.evaluate(() => localStorage.getItem('luz-site-mode'))).toBe('high-contrast');
+      // luz.js (core's theme module) reads luz-theme: the site must not touch it
+      expect(await page.evaluate(() => localStorage.getItem('luz-theme'))).toBeNull();
 
       await page.reload();
       expect(await theme(page)).toBe('high-contrast');
@@ -152,7 +152,7 @@ test.describe('Landing page', () => {
 
     for (const path of ['/', '/docs/']) {
       test(`${path} applies the stored mode before any module runs`, async ({ page }) => {
-        await page.addInitScript(() => localStorage.setItem('cai-site-mode', 'high-contrast'));
+        await page.addInitScript(() => localStorage.setItem('luz-site-mode', 'high-contrast'));
         await page.route(/\/apps\/(landing\/landing|docs\/reference)\.js/, (route) => route.abort());
         await page.goto(path);
         expect(await theme(page)).toBe('high-contrast');
@@ -182,7 +182,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       const boxes = await page
-        .locator('footer .cai-mode-cycle')
+        .locator('footer .luz-mode-cycle')
         .evaluateAll((buttons) => buttons.map((el) => el.getBoundingClientRect()));
       expect(boxes).toHaveLength(1);
       for (const box of boxes) {
@@ -193,7 +193,7 @@ test.describe('Landing page', () => {
 
     test('footer: the cycle button ships in the markup and shows only the icon of the checked mode', async ({ page }) => {
       await open(page);
-      const button = page.locator('footer .cai-mode-cycle');
+      const button = page.locator('footer .luz-mode-cycle');
       for (const mode of ['light', 'dark', 'high-contrast']) {
         await expect(page.locator(`footer input[value="${mode}"]`)).toBeChecked();
         await expect(button.locator(`[data-mode-icon="${mode}"]`)).toBeVisible();
@@ -206,10 +206,10 @@ test.describe('Landing page', () => {
       test(`footer: the color mode switcher sits bottom-right and overlaps nothing at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
         await open(page);
-        const footer = page.locator('footer .cai-site-footer');
+        const footer = page.locator('footer .luz-site-footer');
         const box = (el) => el.evaluate((node) => node.getBoundingClientRect().toJSON());
         const parent = await box(footer);
-        const modes = await box(page.locator('footer .cai-mode-switcher'));
+        const modes = await box(page.locator('footer .luz-mode-switcher'));
         expect(parent.right - modes.right).toBeLessThanOrEqual(1);
         const siblings = await footer.locator('> p, > nav').evaluateAll((els) => els.map((el) => el.getBoundingClientRect().toJSON()));
         for (const other of siblings) {
@@ -292,15 +292,15 @@ test.describe('Landing page', () => {
   });
 
   test.describe('first screen', () => {
-    test('says what CAI is for, then offers one primary action', async ({ page }) => {
+    test('says what LUZ is for, then offers one primary action', async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 900 });
       await open(page);
 
-      await expect(page.locator('h1')).toHaveText('CAI, a native, styled design system built for accessibility.');
-      const hero = page.locator('.cai-site-hero');
-      await expect(hero.locator('.cai-btn--primary')).toHaveCount(1);
-      await expect(hero.locator('.cai-site-hero__copy .cai-btn--primary')).toHaveText('Get started');
-      await expect(hero.locator('.cai-site-hero__copy .cai-btn--primary')).toBeInViewport();
+      await expect(page.locator('h1')).toHaveText('LUZ, a native, styled design system built for accessibility.');
+      const hero = page.locator('.luz-site-hero');
+      await expect(hero.locator('.luz-btn--primary')).toHaveCount(1);
+      await expect(hero.locator('.luz-site-hero__copy .luz-btn--primary')).toHaveText('Get started');
+      await expect(hero.locator('.luz-site-hero__copy .luz-btn--primary')).toBeInViewport();
     });
   });
 
@@ -323,7 +323,7 @@ test.describe('Landing page', () => {
         await expect(card.locator('.landing-level__intro p')).toContainText(/^Choose this if /);
         await expect(card.locator('h4')).toHaveCount(1);
         // The install commands live in one place: the guide
-        await expect(card.locator('pre, .docs-command-block, .cai-copy-btn')).toHaveCount(0);
+        await expect(card.locator('pre, .docs-command-block, .luz-copy-btn')).toHaveCount(0);
         const install = card.getByRole('link', { name: `Install level ${index + 1}` });
         await expect(install).toHaveAttribute('href', new RegExp(`${anchor}$`));
       }
@@ -333,7 +333,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       const tags = await page
-        .locator('#adopt .landing-level .cai-tag')
+        .locator('#adopt .landing-level .luz-tag')
         .evaluateAll((els) => els.map((el) => el.textContent.trim()));
       expect(tags).toEqual(['Standalone', 'Requires tokens', 'Requires core + tokens']);
     });
@@ -348,7 +348,7 @@ test.describe('Landing page', () => {
           .evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().top)));
       const cards = await tops('#adopt .landing-level');
       expect(new Set(cards).size).toBe(1);
-      const installs = await tops('#adopt .landing-level__actions .cai-btn');
+      const installs = await tops('#adopt .landing-level__actions .luz-btn');
       expect(installs).toHaveLength(3);
       expect(new Set(installs).size).toBe(1);
 
@@ -390,7 +390,7 @@ test.describe('Landing page', () => {
       await button.click();
 
       await expect(button).toHaveClass(/is-copied/);
-      await expect(page.locator('#cai-live-region')).toHaveText('Copied to clipboard');
+      await expect(page.locator('#luz-live-region')).toHaveText('Copied to clipboard');
       const expected = (await page.locator('#snip-what').textContent()).trim();
       expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(expected);
     });
@@ -400,29 +400,29 @@ test.describe('Landing page', () => {
     const levels = [
       {
         id: 'level-1-tokens-only',
-        install: 'pnpm add @cai-ds/tokens',
-        files: ['@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css'],
-        absent: ['@cai-ds/core', '@cai-ds/site'],
+        install: 'pnpm add @luz-ds/tokens',
+        files: ['@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css'],
+        absent: ['@luz-ds/core', '@luz-ds/site'],
       },
       {
         id: 'level-2-tokens-and-core',
-        install: 'pnpm add @cai-ds/tokens @cai-ds/core',
+        install: 'pnpm add @luz-ds/tokens @luz-ds/core',
         files: [
-          '@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css',
-          '@cai-ds/core@3.0.0/dist/cai.min.css',
-          '@cai-ds/core@3.0.0/dist/cai.min.js',
+          '@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css',
+          '@luz-ds/core@0.1.0/dist/luz.min.css',
+          '@luz-ds/core@0.1.0/dist/luz.min.js',
         ],
-        absent: ['@cai-ds/site'],
+        absent: ['@luz-ds/site'],
       },
       {
         id: 'level-3-tokens-core-and-site',
-        install: 'pnpm add @cai-ds/tokens @cai-ds/core @cai-ds/site',
+        install: 'pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site',
         files: [
-          '@cai-ds/tokens@3.0.0/dist/cai-tokens.min.css',
-          '@cai-ds/core@3.0.0/dist/cai.min.css',
-          '@cai-ds/site@3.0.0/dist/site.min.css',
-          '@cai-ds/core@3.0.0/dist/cai.min.js',
-          '@cai-ds/site@3.0.0/dist/site.min.js',
+          '@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css',
+          '@luz-ds/core@0.1.0/dist/luz.min.css',
+          '@luz-ds/site@0.1.0/dist/site.min.css',
+          '@luz-ds/core@0.1.0/dist/luz.min.js',
+          '@luz-ds/site@0.1.0/dist/site.min.js',
         ],
         absent: [],
       },
@@ -434,16 +434,16 @@ test.describe('Landing page', () => {
       for (const [index, level] of levels.entries()) {
         const section = page.locator('.docs-prose').filter({ has: page.locator(`#${level.id}`) });
         await expect(section.locator('.docs-command-block')).toHaveCount(1);
-        await expect(section.locator('pre.cai-code-block')).toHaveCount(2);
+        await expect(section.locator('pre.luz-code-block')).toHaveCount(2);
 
         const command = await section.locator('.docs-command-block__cmd').textContent();
         expect(command.replace(/\s+/g, ' ').replace(/^\s*\$\s*/, '').trim()).toBe(level.install);
-        await expect(section.locator('.docs-command-block .cai-copy-btn')).toHaveAttribute('data-copy', level.install);
+        await expect(section.locator('.docs-command-block .luz-copy-btn')).toHaveAttribute('data-copy', level.install);
         // Each snippet has its own Copy button, pointing at its code
         for (const kind of ['cdn', 'bundler']) {
-          const button = section.locator(`.docs-snippet .cai-copy-btn[data-copy-from="code-${kind}-level-${index + 1}"]`);
+          const button = section.locator(`.docs-snippet .luz-copy-btn[data-copy-from="code-${kind}-level-${index + 1}"]`);
           await expect(button).toHaveCount(1);
-          await expect(section.locator(`pre.cai-code-block code#code-${kind}-level-${index + 1}`)).toHaveCount(1);
+          await expect(section.locator(`pre.luz-code-block code#code-${kind}-level-${index + 1}`)).toHaveCount(1);
         }
 
         const snippet = await section.locator(`code#code-cdn-level-${index + 1}`).textContent();
@@ -458,7 +458,7 @@ test.describe('Landing page', () => {
         // Every CDN URL pins the exact version
         const urls = snippet.match(/https:\/\/cdn\.jsdelivr\.net\/npm\/\S+?(?=")/g);
         expect(urls).toHaveLength(level.files.length);
-        for (const url of urls) expect(url).toMatch(/@cai-ds\/(tokens|core|site)@3\.0\.0\//);
+        for (const url of urls) expect(url).toMatch(/@luz-ds\/(tokens|core|site)@3\.0\.0\//);
         for (const script of snippet.match(/<script[^>]*>/g) ?? []) {
           expect(script).toMatch(/^<script type="module" src="[^"]+\.min\.js">$/);
         }
@@ -470,7 +470,7 @@ test.describe('Landing page', () => {
     test('a unique title, one h1 and no skipped heading level', async ({ page }) => {
       await open(page);
 
-      expect(await page.title()).toMatch(/^CAI: /);
+      expect(await page.title()).toMatch(/^LUZ: /);
       await expect(page.locator('h1')).toHaveCount(1);
       const levels = await page
         .locator('h1, h2, h3, h4, h5, h6')
@@ -534,8 +534,8 @@ test.describe('Landing page', () => {
     test('code blocks are highlighted without an injected copy button', async ({ page }) => {
       await open(page);
 
-      expect(await page.locator('pre.cai-code-block .tok-name').count()).toBeGreaterThan(0);
-      await expect(page.locator('.cai-code-block__copy')).toHaveCount(0);
+      expect(await page.locator('pre.luz-code-block .tok-name').count()).toBeGreaterThan(0);
+      await expect(page.locator('.luz-code-block__copy')).toHaveCount(0);
     });
   });
 
@@ -566,9 +566,9 @@ test.describe('Landing page', () => {
       await page.setViewportSize({ width: 360, height: 800 });
       await page.goto('/');
 
-      await expect(page.locator('footer .cai-mode-cycle')).toBeHidden();
+      await expect(page.locator('footer .luz-mode-cycle')).toBeHidden();
       const boxes = await page
-        .locator('footer .cai-mode-btn')
+        .locator('footer .luz-mode-btn')
         .evaluateAll((labels) => labels.map((el) => el.getBoundingClientRect()));
       expect(boxes).toHaveLength(3);
       for (const box of boxes) {
@@ -582,9 +582,9 @@ test.describe('Landing page', () => {
       const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       const light = await background();
 
-      await page.focus('.cai-mode-switcher input[value="light"]');
+      await page.focus('.luz-mode-switcher input[value="light"]');
       await page.keyboard.press('ArrowRight');
-      await expect(page.locator('.cai-mode-switcher input[value="dark"]')).toBeChecked();
+      await expect(page.locator('.luz-mode-switcher input[value="dark"]')).toBeChecked();
       await expect.poll(background).not.toBe(light);
     });
 
@@ -592,7 +592,7 @@ test.describe('Landing page', () => {
       await page.goto('/');
       const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
       const light = await background();
-      await page.click('footer .cai-mode-btn:has(input[value="dark"])');
+      await page.click('footer .luz-mode-btn:has(input[value="dark"])');
       await expect.poll(background).not.toBe(light);
     });
   });
@@ -610,7 +610,7 @@ test.describe('Landing page', () => {
           if (!/theme/i.test(node.textContent)) continue;
           if (node.parentElement.closest('code, pre, script, style')) continue;
           // The site search's dialog names docs pages by their titles ("Color modes and themes")
-          if (node.parentElement.closest('[data-cai-search]')) continue;
+          if (node.parentElement.closest('[data-luz-search]')) continue;
           found.push(node.textContent.trim());
         }
         document.querySelectorAll('[aria-label], [title], [alt]').forEach((el) => {
@@ -626,7 +626,7 @@ test.describe('Landing page', () => {
     test('the beta and version tags are text', async ({ page }) => {
       await open(page);
 
-      await expect(page.locator('.site-header__brand .site-header__tag')).toHaveText('v3.0.0 beta');
+      await expect(page.locator('.site-header__brand .site-header__tag')).toHaveText('v0.1.0 beta');
     });
 
     test('the page background is one flat color', async ({ page }) => {
@@ -650,7 +650,7 @@ test.describe('Landing page', () => {
     for (const mode of MODES) {
       test(`landing-local text has a contrast of 4.5:1 or more in ${mode}`, async ({ page }) => {
         await page.addInitScript((value) => {
-          localStorage.setItem('cai-site-mode', value);
+          localStorage.setItem('luz-site-mode', value);
         }, mode);
         await open(page);
         expect(await theme(page)).toBe(mode);
@@ -719,7 +719,7 @@ test.describe('Landing page', () => {
       await open(page);
 
       await page.keyboard.press('Tab');
-      await expect(page.locator('.cai-site-skip-link')).toBeFocused();
+      await expect(page.locator('.luz-site-skip-link')).toBeFocused();
       await page.keyboard.press('Enter');
       await expect(page.locator('#main-content')).toBeFocused();
     });

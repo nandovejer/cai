@@ -63,6 +63,53 @@ describe("the old name is gone", () => {
     const hits = files.filter((f) => new RegExp(OLD.source, "i").test(f));
     expect(hits.length, report(hits)).toBe(0);
   });
+
+  it("no camelCase leftover of the old name (dataset.<old>Theme)", () => {
+    const camel = new RegExp(`(?<![a-zA-Z])${old}(?=[A-Z])`, "g");
+    const hits = [];
+    for (const [file, content] of texts) {
+      content.split("\n").forEach((line, i) => {
+        if (line.match(camel)) hits.push(`${file}:${i + 1}: ${line.trim().slice(0, 160)}`);
+      });
+    }
+    expect(hits.length, report(hits)).toBe(0);
+  });
+
+  it("no file spells out the old acronym", () => {
+    const phrase = ["Consistent", "Adaptive", "Identity"].join(" ");
+    const hits = [];
+    for (const [file, content] of texts) {
+      content.split("\n").forEach((line, i) => {
+        if (line.includes(phrase)) hits.push(`${file}:${i + 1}: ${line.trim().slice(0, 160)}`);
+      });
+    }
+    expect(hits.length, report(hits)).toBe(0);
+  });
+
+  it("the README gives the new expansion of LUZ", () => {
+    expect(text("README.md")).toContain("Light, Usable & Zero-dependency");
+  });
+});
+
+describe("no old package versions", () => {
+  it("no @luz-ds/<package>@2.x or @3.x and no v2.0.0 / v3.0.0 in any file", () => {
+    const pinned = /@luz-ds\/[a-z-]+@[23]\.\d+\.\d+/;
+    const tags = /\bv[23]\.0\.0\b/;
+    const hits = [];
+    for (const [file, content] of texts) {
+      if (file === "pnpm-lock.yaml") continue;
+      content.split("\n").forEach((line, i) => {
+        if (pinned.test(line) || tags.test(line)) hits.push(`${file}:${i + 1}: ${line.trim().slice(0, 160)}`);
+      });
+    }
+    expect(hits.length, report(hits)).toBe(0);
+  });
+
+  it("the root and the apps are at version 0.0.0", () => {
+    const manifests = ["package.json", ...files.filter((f) => /^apps\/[^/]+\/package\.json$/.test(f))];
+    expect(manifests.length).toBeGreaterThan(1);
+    for (const m of manifests) expect(json(m).version, `${m} version`).toBe("0.0.0");
+  });
 });
 
 describe("packages", () => {

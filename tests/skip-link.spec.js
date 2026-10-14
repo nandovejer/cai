@@ -58,6 +58,11 @@ test.describe('skip link', () => {
   });
 
   test('O3: Enter moves to main, the next Tab starts inside it, and main is not under the sticky bar', async ({ page }) => {
+    // The page is loaded and laid out before any key, and the jump is not animated: no smooth-scroll timing to race
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.waitForLoadState('networkidle');
+    await page.evaluate(() => document.fonts.ready);
+    expect(await page.evaluate(() => document.documentElement.scrollHeight - innerHeight), 'tall enough for the jump to scroll').toBeGreaterThan(500);
     await page.keyboard.press('Tab');
     await expect(page.locator('#skip')).toBeFocused();
     await page.keyboard.press('Enter');
@@ -69,8 +74,11 @@ test.describe('skip link', () => {
     expect(await page.evaluate(() => getComputedStyle(document.getElementById('hdr')).position), 'the bar is .o-sticky').toBe('sticky');
     await page.evaluate(() => { window.history.replaceState(null, '', window.location.pathname); window.scrollTo({ top: 0, behavior: 'instant' }); document.getElementById('skip').focus(); });
     await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(/#main-content$/);
     await expect.poll(() => page.evaluate(() => window.scrollY), { message: 'the jump scrolled' }).toBeGreaterThan(0);
-    await page.waitForTimeout(300);
+    // Settled: the position is the same on two reads
+    let last = -1;
+    await expect.poll(async () => { const y = await page.evaluate(() => window.scrollY); const same = y === last; last = y; return same; }, { intervals: [100] }).toBe(true);
     const { main, bar } = await page.evaluate(() => ({
       main: document.querySelector('#main-content h1')?.getBoundingClientRect().top ?? 0,
       bar: document.getElementById('hdr').getBoundingClientRect().bottom,

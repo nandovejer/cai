@@ -27,7 +27,7 @@ const PACKAGES = {
       page: 'shell',
       main: 'shell',
       content: 'shell',
-      'skip-link': 'skip',
+      'skip-link': 'shell',
       'page-header': 'header',
       hero: 'hero',
       header: 'site-header',
@@ -113,19 +113,3 @@ for (const [name, { label, patternOf }] of Object.entries(PACKAGES)) {
     });
   });
 }
-
-test.describe('Site docs: keyboard', () => {
-  test('the skip link is first and moves focus to the main area', async ({ page }) => {
-    await gotoId(page, 'p-skip');
-    await page.keyboard.press('Tab');
-    // The page's own link: the Design tab's examples are spans, never links
-    const skip = page.locator('a.luz-skip-link[href="#main-content"]');
-    await expect(skip).toBeFocused();
-    await expect(skip).toBeInViewport();
-    await page.keyboard.press('Enter');
-    await expect(page).toHaveURL(/#main-content$/);
-    // The next Tab starts inside main, not back at the top of the page
-    await page.keyboard.press('Tab');
-    expect(await page.evaluate(() => !!document.activeElement.closest('#main-content'))).toBe(true);
-  });
-});

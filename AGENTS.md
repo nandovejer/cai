@@ -44,7 +44,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 | Module         | Key exports                                                    |
 | -------------- | -------------------------------------------------------------- |
 | `theme.js`     | `applyTheme(theme)` (sets `data-theme` on `<html>`, persists), `applyMode`, `getInitialTheme`, `getCustomThemes()` (the names in `<html data-cai-themes="…">`; CAI ships none), `initThemeSystem()`, `initThemeCycle()` (one button for a `.cai-mode-switcher--cycle` group) |
-| `sidebar.js`   | `initSidebar()` — scroll-spy active link; closes the popover drawer on navigation |
+| `sidebar.js`   | `initSidebar()` — scroll-spy active link (`.cai-sidebar__link`, and every in-page link inside `[data-cai-spy]`); closes the popover drawer on navigation |
 | `clipboard.js` | `copyToClipboard(text, el, type)` (visual feedback), `initCopyButtons()` |
 | `modal.js`     | `initModals()` — fallback for `command`/`commandfor` on a native `<dialog>`; `supportsCommands()` |
 | `highlight.js` | `highlightBlock(pre)` — dependency-free highlight for `pre.cai-code-block`, `initHighlight()` |

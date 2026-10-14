@@ -1,0 +1,77 @@
+/* --------------------------------------------------------------------------
+   CAI Component: prose
+   Long-form text on one wrapper: the body of an article, a post or a page
+   whose blocks you do not mark up one by one (Markdown, a CMS editor).
+   - Lines of about 70 characters; figures, tables, code and media take the
+     whole width of the wrapper, never more.
+   - The space between blocks: one step, more before a heading, less after
+     it. The same three steps as classless mode's flow, so the two agree
+     when both apply.
+   - Lists get their indent and markers back, with or without a class
+     (ul.wp-block-list), except a layout object (.o-*) or a component list.
+   Every selector is inside :where() (specificity 0): any .cai-* component
+   inside, and any rule of yours, wins. Margins, not gap, so the wrapper
+   stays a block and a component's own margin collapses with the step.
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+/* Set --cai-prose-measure on the wrapper for another line length. A long
+   word or address breaks rather than push the page sideways. */
+:where(.cai-prose) {
+  --cai-prose-measure: 70ch;
+
+  overflow-wrap: break-word;
+}
+
+:where(.cai-prose > *) {
+  max-inline-size: var(--cai-prose-measure);
+  margin-block: 0;
+}
+
+/* Wider than a line of text, up to the wrapper */
+:where(.cai-prose > :is(figure, table, pre, img, video, iframe, .cai-table-wrap)) {
+  max-inline-size: 100%;
+}
+
+/* ---- Rhythm --------------------------------------------------------------- */
+
+:where(.cai-prose > * + *) {
+  margin-block-start: var(--cai-space-md);
+}
+
+:where(.cai-prose > * + :is(h1, h2, h3, h4, h5, h6), .cai-prose > hr, .cai-prose > hr + *) {
+  margin-block-start: var(--cai-space-xl);
+}
+
+:where(.cai-prose > :is(h1, h2, h3, h4, h5, h6) + *) {
+  margin-block-start: var(--cai-space-sm);
+}
+
+/* Paragraphs inside a quotation or a list item: a smaller step */
+:where(.cai-prose :is(blockquote, li) > * + *) {
+  margin-block-start: var(--cai-space-xs);
+}
+
+/* ---- Lists ---------------------------------------------------------------- */
+
+/* The reset removes the indent of every list, which puts the markers outside
+   the box; core's bare elements give it back to lists without a class only. */
+:where(.cai-prose :is(ul, ol):not([class^="o-"], [class*=" o-"], [class*="cai-"])) {
+  padding-inline-start: 1.25em;
+}
+
+:where(.cai-prose li + li) {
+  margin-block-start: var(--cai-space-2xs);
+}
+
+/* ---- Inline code: the look of .cai-code-inline ---------------------------- */
+
+:where(.cai-prose :not(pre) > code) {
+  background: var(--cai-surface-muted);
+  color: var(--cai-color-code);
+  font-size: max(0.9em, var(--cai-text-xs));
+  padding: var(--cai-space-3xs) var(--cai-space-2xs);
+  border-radius: var(--cai-radius-sm);
+  border: 1px solid var(--cai-divider);
+}

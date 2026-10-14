@@ -98,6 +98,7 @@ initSidebar();</code></pre>
                   <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__brand</code>, <code>__brand-name</code>, <code>__logo</code>, <code>__version</code></div></td><td data-label="What it does"><div>An optional brand block at the top</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__section</code>, <code>__section-label</code></div></td><td data-label="What it does"><div>A group of links and its label</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__link</code></div></td><td data-label="What it does"><div>A link</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>data-cai-spy</code> on any element</div></td><td data-label="What it does"><div>Not part of the sidebar: the scroll spy also marks the links to sections of the page inside it, such as a table of contents styled your own way</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.is-active</code> on a link</div></td><td data-label="What it does"><div>Marks the current link with weight and colour; pair it with <code>aria-current="page"</code></div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-sidebar__footer</code></div></td><td data-label="What it does"><div>Pinned to the bottom, for example for the <a href="/docs/components/mode-switcher/">color mode switcher</a></div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.cai-nav-toggle</code></div></td><td data-label="What it does"><div>The menu button, shown at 768 px and below; put it first in your header row</div></td></tr>
@@ -110,6 +111,7 @@ initSidebar();</code></pre>
             <ul>
               <li>The menu button opens it with <code>popovertarget</code>, with no script. The browser gives Escape, a click outside to close, the top layer and the expanded state.</li>
               <li><code>initSidebar()</code> from <code>sidebar.js</code> is optional: it marks the link of the section in view on a long page (<code>aria-current="true"</code>) and closes the drawer when a link is followed. <code>cai.js</code> runs it.</li>
+              <li>The scroll spy finds its links by <code>.cai-sidebar__link</code>, and by <code>data-cai-spy</code>: on any element (a <code>&lt;nav&gt;</code> of contents), it spies every link inside that points at a section of the page (<code>href="#…"</code>). The attribute is the hook; the look of those links is yours.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>The sidebar and the drawer work. The current link is the one your markup marks; it does not follow the scroll.</p>

@@ -46,13 +46,17 @@ function isOpenPopover(el) {
   }
 }
 
+/** The links it spies: core's sidebar links, and every in-page link inside
+ * an element with data-cai-spy (a table of contents styled your own way). */
+const SPY = '.cai-sidebar__link,[data-cai-spy] a[href^="#"]';
+
 /**
  * Wire up nav active state, drawer controls, and section observation.
  * @param {ParentNode} [root=document] - Limit it to one sidebar, for a page
  *   that also shows a sidebar specimen whose links must stay inert.
  */
 export function initSidebar(root = document) {
-  const navLinks = Array.from(root.querySelectorAll(".cai-sidebar__link"));
+  const navLinks = Array.from(root.querySelectorAll(SPY));
   const isInPage = (link) => link.getAttribute("href")?.startsWith("#");
   const linkMap = new Map(
     navLinks.map((link) => [link.getAttribute("href"), link]),
@@ -124,7 +128,7 @@ export function initSidebar(root = document) {
   // reduced motion, see elements/document.css). This only keeps the active
   // link in step and closes the drawer, which a popover does not do itself.
   document.addEventListener("click", (e) => {
-    const link = e.target.closest?.(".cai-sidebar__link");
+    const link = e.target.closest?.(SPY);
     if (!link || !navLinks.includes(link)) return;
 
     const targetId = link.getAttribute("href");

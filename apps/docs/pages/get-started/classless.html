@@ -81,6 +81,7 @@ import "@cai-ds/core/classless.css";</code></pre>
         <li><code>div</code>, <code>span</code> and inline elements are left alone: their layout is yours. For a column of blocks you build yourself, use <a href="/docs/components/layout/"><code>.o-stack</code></a>.</li>
         <li>A button that follows a field gets the same step, so it does not touch it. Buttons side by side stay together.</li>
         <li>It is a margin at specificity zero: any class of yours wins, and a CAI component that sets its own margin keeps it.</li>
+        <li>For an article, core's <a href="/docs/components/prose/"><code>.cai-prose</code></a> takes the same three steps between the blocks of one wrapper and adds the line length and the indent of lists. The two work together: put both on the element that holds the text, and classless mode adds the look of its tables and controls.</li>
       </ul>
     </section>
 

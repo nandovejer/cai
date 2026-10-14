@@ -1,0 +1,125 @@
+<!-- cai:page
+title: Meta line
+description: Shows a few facts about something on one line, such as its date, its reading time and its author, with a dot between them.
+area: components
+group: content
+files: components/meta.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-meta">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <p class="cai-meta"><span>By <a href="#example">Ana Ruiz</a></span> <time datetime="2026-10-12">12 October 2026</time> <span>6 min read</span></p>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>The dots are hidden from screen readers with alternative text for generated content, which Firefox has since version 128 and Safari since 17.4. An older browser lets a screen reader read each dot. Not yet tested with a screen reader.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Meta line documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-meta" aria-label="Copy the meta line markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Meta line markup"><code id="code-meta">&lt;p class=&quot;cai-meta&quot;&gt;
+  &lt;span&gt;By &lt;a href=&quot;/authors/ana-ruiz/&quot;&gt;Ana Ruiz&lt;/a&gt;&lt;/span&gt;
+  &lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt;
+  &lt;span&gt;6 min read&lt;/span&gt;
+&lt;/p&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Meta line parts" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or element</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or element"><div><code>.cai-meta</code></div></td><td data-label="What it does"><div>The line: facts in a row that wraps, in the sans, in the secondary text colour</div></td></tr>
+                  <tr><td data-label="Class or element"><div>Each child</div></td><td data-label="What it does"><div>One fact: a <code>&lt;time&gt;</code>, a link, or a <code>&lt;span&gt;</code> of text. Every child after the first gets a dot before it</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS only, in <code>components/meta.css</code>: a flex row that wraps, and a dot drawn by <code>::before</code> on each fact after the first.</p>
+            <ul>
+              <li>The dot sits in the gap before its fact. The line clips its start and end edges, so a fact that wraps to the start of a new line leaves its dot outside: no line starts with a dot.</li>
+              <li>The line has 4 px of padding at each end, room for a link's focus ring inside the clip, and a negative margin of the same size, so its text lines up with the text above it.</li>
+              <li>The dot is written <code>content: "·" / ""</code>: an empty alternative text, so screen readers do not read it.</li>
+              <li>Nothing in it is positioned, so in a card whose title link covers the card, the whole card stays one link.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the meta line is CSS. Without CSS, the facts run together on one line with the spaces of your markup between them: keep a space or a line break between the elements.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The line takes no focus and adds no role. Tab reaches the links in it, in order.</p>
+            <ul>
+              <li>A screen reader reads the facts one after another, without the dots. Write each fact so it makes sense alone: "6 min read", not "6".</li>
+              <li>Give a date a <code>&lt;time datetime&gt;</code>, so software can read it.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a meta line for two to four short facts about a post, a story or an item: the author, the date, the reading time, the section.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it for a sentence, or for facts the reader needs to compare across items.</p>
+            <ul>
+              <li>Facts with labels, such as a price and a size, are a description list (<code>&lt;dl&gt;</code>) or a <a href="/docs/components/table/">table</a>.</li>
+              <li>A path of pages is a <a href="/docs/components/breadcrumb/">breadcrumb</a>; a set of labels is a row of <a href="/docs/components/tag/">tags</a>.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Each fact in its own element, and the dots left to CSS.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <p class="cai-meta"><time datetime="2026-10-12">12 October 2026</time> <span>6 min read</span></p>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Dots typed into the text: a screen reader reads each one, and a wrapped line can start with one.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <p class="cai-meta"><span>12 October 2026 · 6 min read</span></p>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Short facts, the most useful first: usually the author, then the date.</p>
+            <ul>
+              <li>Write the date in words, with the month spelled out, in the reader's language.</li>
+              <li>Two to four facts. More than that is a list, not a line.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The facts and the dots are secondary text; a link in the line keeps the link colour.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Meta line contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Fact and dot</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> a link keeps core's 2 px <code>--cai-focus-ring</code> outline, inside the line's clip.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 5 tokens that <code>components/meta.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-text-secondary"><code>--cai-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-font-sans</code>, <code>--cai-text-md</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

@@ -1,0 +1,153 @@
+<!-- cai:page
+title: Prose
+description: Sets long text in lines of about 70 characters, with space between its blocks, whatever markup an editor writes inside.
+area: components
+group: content
+files: components/prose.css
+toc: h2,h3
+-->
+    <div class="docs-component" id="c-prose">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="cai-prose">
+              <p>Since March 2016, a group of volunteers has read the tide gauge in the port at six in the morning and six in the evening. Their sheets are the longest record of the sea in the bay that anyone has kept by hand, and the council will publish them as <a href="/docs/components/table/">a table of open data</a>.</p>
+              <h3>How the readings were taken</h3>
+              <p>Each reading is the height of the water against the gauge, to the nearest centimetre. The sheet calls it <code>level_cm</code>.</p>
+              <ul class="wp-block-list">
+                <li>Two readings a day, every day of the year.</li>
+                <li>41 volunteers over ten years.</li>
+                <li>Fewer than one reading in a hundred left out.</li>
+              </ul>
+              <blockquote><p>We did not set out to measure the climate. We wanted to know when to take the boats out.</p></blockquote>
+              <h3>Four centimetres in ten years</h3>
+              <p>The average height at high tide was 4 cm higher in 2025 than in 2016, close to what the national gauges record along the coast.</p>
+            </div>
+          </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>A table without a wrapper that is wider than the column pushes the page sideways on a narrow screen. Put a wide table in core's <a href="/docs/components/table/">table</a> wrapper, <code>.cai-table-wrap</code>, which scrolls inside itself. Not yet tested with a screen reader.</p>
+          <nav class="cai-tabs docs-view-tabs" aria-label="Prose documentation">
+            <a class="cai-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="cai-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="cai-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="cai-copy-btn" type="button" data-copy-from="code-prose" aria-label="Copy the prose markup">Copy</button>
+              </div>
+              <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Prose markup"><code id="code-prose">&lt;div class=&quot;cai-prose&quot;&gt;
+  &lt;!-- What the editor or the Markdown writes, as it is --&gt;
+  &lt;p&gt;Since March 2016, a group of volunteers has read the tide gauge…&lt;/p&gt;
+  &lt;h2 id=&quot;method&quot;&gt;How the readings were taken&lt;/h2&gt;
+  &lt;p&gt;…&lt;/p&gt;
+  &lt;ul class=&quot;wp-block-list&quot;&gt;
+    &lt;li&gt;…&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;figure&gt;
+    &lt;img src=&quot;gauge.jpg&quot; width=&quot;1200&quot; height=&quot;800&quot; alt=&quot;The tide gauge in the port, a post marked in centimetres&quot;&gt;
+    &lt;figcaption&gt;The gauge at low tide.&lt;/figcaption&gt;
+  &lt;/figure&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>There are no modifiers.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Prose options" tabindex="0">
+              <table class="cai-table">
+                <thead>
+                  <tr><th scope="col">Class or property</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class or property"><div><code>.cai-prose</code></div></td><td data-label="What it does"><div>On the element that holds the text: lines of about 70 characters, the space between its blocks, the indent and markers of its lists, inline code as a chip</div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>--cai-prose-measure</code></div></td><td data-label="What it does"><div>The longest line, <code>70ch</code> by default. Set it on the wrapper, between <code>60ch</code> and <code>80ch</code></div></td></tr>
+                  <tr><td data-label="Class or property"><div><code>data-cai-classless</code> on the same element</div></td><td data-label="What it does"><div>With <a href="/docs/get-started/classless/">classless mode</a> loaded, its tables, buttons and fields take the look of core's components</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS only, in <code>components/prose.css</code>. Every selector is inside <code>:where()</code>, so a CAI component inside the text, or a rule of yours, wins.</p>
+            <ul>
+              <li><strong>Line length.</strong> Each block of the wrapper is at most <code>--cai-prose-measure</code> wide. Figures, tables, code blocks, images, videos and <code>.cai-table-wrap</code> take the whole width of the wrapper, never more.</li>
+              <li><strong>Space between blocks.</strong> A block starts <code>--cai-space-md</code> below the one before it. A heading or a rule starts further down (<code>--cai-space-xl</code>), and the block after a heading sits closer (<code>--cai-space-sm</code>). Margins, not a gap: a component inside keeps its own margin, and the two collapse.</li>
+              <li><strong>Lists.</strong> Every list gets its indent and markers back, with a class or without one (an editor's <code>ul.wp-block-list</code>), except a list with a layout object (<code>.o-grid</code>, <code>.o-stack</code>) or a CAI component class.</li>
+              <li><strong>Inline code</strong> has the look of <code>.cai-code-inline</code>. Long words and addresses break rather than push the page sideways.</li>
+              <li><strong>Classless mode</strong> takes the same three steps between blocks, so the two agree; prose is in a later layer, so it wins where they meet. Prose adds the line length and the lists; classless mode adds the look of tables and controls.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: prose is CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>Prose takes no focus and adds no role. Tab reaches the links and controls inside it, in source order.</p>
+            <ul>
+              <li>A long <code>&lt;pre&gt;</code> scrolls sideways inside itself. To scroll it with the keyboard, give it <code>tabindex="0"</code>, <code>role="region"</code> and a name, as core's <a href="/docs/components/code/">code block</a> does.</li>
+              <li>The headings inside make the outline of the text: start at the level under the page's title, and do not skip one.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="cai-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use prose around running text whose markup you do not write block by block: the body of a post or a page from a CMS editor, Markdown, a help article.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not put prose around a whole page or an interface: the header, the navigation, forms and cards lay themselves out.</p>
+            <ul>
+              <li>For a column of blocks you build yourself, use <a href="/docs/components/layout/"><code>.o-stack</code></a>.</li>
+              <li>For one or two lines inside a component, such as a card's text, use the component's own classes.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Short paragraphs under headings that say what follows, so a reader can scan and find their place.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-prose"><p><strong>How the readings were taken</strong></p><p>Two people read the gauge, to the nearest centimetre.</p><p>A third checks the sheet the same week.</p></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> One long paragraph with no heading: the reader cannot tell what it covers without reading all of it.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="cai-prose"><p>Two people read the gauge, to the nearest centimetre, and a third checks the sheet the same week, and a reading that two people do not agree on is left out, and the port checks the gauge against a survey mark every spring.</p></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>Write for someone who reads the first words of each line and skips the rest.</p>
+            <ul>
+              <li>One idea a paragraph. Put the point first.</li>
+              <li>Headings in order, in sentence case, that say what the section is about.</li>
+              <li>A list for three or more things of the same kind; a sentence for two.</li>
+              <li>Links that say where they go, and figures with a caption that says what they show.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The text and the links keep the colours of core's elements; inline code is the code colour on a muted surface.</p>
+            <div class="cai-table-wrap" role="region" aria-label="Prose contrast in each mode" tabindex="0">
+              <table class="cai-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Text</div></td><td data-label="Colour on background"><div><code>--cai-text-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link</div></td><td data-label="Colour on background"><div><code>--cai-brand-primary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Quotation</div></td><td data-label="Colour on background"><div><code>--cai-text-secondary</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Inline code</div></td><td data-label="Colour on background"><div><code>--cai-color-code</code> on <code>--cai-surface-muted</code></div></td><td data-label="Light"><div>5.3:1</div></td><td data-label="Dark"><div>8.1:1</div></td><td data-label="High contrast"><div>9.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--cai-focus-ring</code> on <code>--cai-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> links keep core's 2 px <code>--cai-focus-ring</code> outline, 2 px outside the text.</li>
+              <li><strong>Links:</strong> underlined, so they are not marked by colour alone (WCAG 1.4.1).</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 11 tokens that <code>components/prose.css</code> reads, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#cai-color-code"><code>--cai-color-code</code></a>, <a href="/docs/tokens/color/#cai-divider"><code>--cai-divider</code></a>, <a href="/docs/tokens/color/#cai-surface-muted"><code>--cai-surface-muted</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--cai-space-2xs</code>, <code>--cai-space-3xs</code>, <code>--cai-space-md</code>, <code>--cai-space-sm</code>, <code>--cai-space-xl</code>, <code>--cai-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--cai-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--cai-radius-sm</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

@@ -5,9 +5,9 @@
 	 room is 46rem or more, and above the text below that; beside it, the
 	 contents stay in view while the text scrolls. The contents come first in
 	 the source, so they are read and reached first in both layouts.
-	 No JavaScript of its own: links with core's .cai-sidebar__link get core's
-	 scroll spy (initSidebar, run by cai.js), which marks the section in view
-	 with aria-current="true".
+	 No JavaScript of its own: with data-cai-spy on the contents, core's
+	 scroll spy (initSidebar, run by cai.js) marks the link of the section in
+	 view with aria-current="true".
 	 ========================================================================== */
 
 .cai-cms-article {
@@ -34,8 +34,9 @@
 	border-inline-start: 1px solid var(--cai-divider);
 }
 
-/* Core's sidebar link, on the page's colours instead of the sidebar's */
-.cai-cms-toc .cai-sidebar__link {
+/* One link a line, on the page's colours */
+.cai-cms-toc__list a {
+	display: block;
 	margin-inline-start: -1px;
 	padding: var(--cai-space-2xs) var(--cai-space-sm);
 	border-inline-start: 2px solid transparent;
@@ -43,15 +44,14 @@
 	color: var(--cai-text-secondary);
 }
 
-.cai-cms-toc .cai-sidebar__link:hover {
+.cai-cms-toc__list a:hover {
 	background: var(--cai-surface-muted);
 	color: var(--cai-text-primary);
 }
 
 /* The section in view: a bar and the weight, never colour alone */
-.cai-cms-toc .cai-sidebar__link[aria-current="true"] {
+.cai-cms-toc__list a[aria-current="true"] {
 	border-inline-start-color: var(--cai-brand-primary);
-	background: none;
 	color: var(--cai-text-primary);
 	font-weight: 600;
 }

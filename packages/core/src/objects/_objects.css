@@ -125,6 +125,17 @@
   gap: var(--cai-space-sm);
 }
 
+/* A list laid out as a grid, a stack or a row: the layout replaces the
+   markers and the indent. The items stay a list: a screen reader says how
+   many there are (Safari drops that for a list without markers outside a
+   <nav>; the headings in the items still lead through it). */
+.o-grid:where(ul, ol),
+.o-stack:where(ul, ol),
+.o-row:where(ul, ol) {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
 /* Media object (icon + content) */
 .o-media {
   display: flex;

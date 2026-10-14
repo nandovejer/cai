@@ -1,0 +1,43 @@
+/* --------------------------------------------------------------------------
+   CAI Component: meta
+   A line of facts about something: a date, a reading time, an author, a
+   section. Each fact is its own element (time, a, span); CSS draws a dot
+   between them, which screen readers do not read.
+   - Each dot is drawn in the gap before its fact, outside the fact's box.
+     The line is clipped at its inline edges, so a fact that wraps to the
+     start of a line leaves its dot outside the clip: no line starts with
+     a dot.
+   - The inline padding is room for a link's focus ring inside the clip; the
+     negative margin of the same size keeps the text where it was.
+   - Nothing is positioned, so the line stays under the link of a card that
+     covers the card (.cai-card__title a).
+   Layer: components (ITCSS 5) · Prefix: .cai-
+   Requires: @cai-ds/tokens (cai-tokens.css), then base.css, loaded first.
+   -------------------------------------------------------------------------- */
+
+.cai-meta {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: var(--cai-space-md);
+  margin-inline: calc(-1 * var(--cai-space-2xs));
+  padding-inline: var(--cai-space-2xs);
+  overflow-x: clip;
+  font-family: var(--cai-font-sans);
+  font-size: var(--cai-text-md);
+  line-height: 1.5;
+  color: var(--cai-text-secondary);
+}
+
+/* As wide as the gap, pulled back into it. The first content is for a
+   browser without alternative text in content, which reads the dot. */
+.cai-meta > * + *::before {
+  content: "·";
+  content: "·" / "";
+  display: inline-block;
+  inline-size: var(--cai-space-md);
+  margin-inline-start: calc(-1 * var(--cai-space-md));
+  text-align: center;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--cai-text-secondary);
+}

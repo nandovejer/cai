@@ -9,10 +9,6 @@
   <link rel="stylesheet" href="/packages/site/dist/site.css">
   <link rel="stylesheet" href="/packages/cms/dist/cms.css">
   <script type="module" src="/packages/core/dist/cai.js"></script>
-  <style>
-    /* The page's own rule, as in the templates: core styles no list */
-    .posts { list-style: none; margin: 0; padding: 0; }
-  </style>
 </head>
 <body class="cai-site-page">
   <a class="cai-site-skip-link" href="#main-content">Skip to content</a>
@@ -31,7 +27,7 @@
           <span class="cai-avatar cai-avatar--lg" aria-hidden="true">AR</span>
           <div>
             <p>By <a href="#author">Ana Ruiz</a></p>
-            <p><time datetime="2026-10-12">12 October 2026</time> · 6 min read</p>
+            <p class="cai-meta" id="meta"><time datetime="2026-10-12">12 October 2026</time> <span>6 min read</span></p>
           </div>
         </div>
         <figure class="cai-cms-article-header__media" id="media">
@@ -40,20 +36,20 @@
         </figure>
       </header>
       <div class="cai-cms-article__layout" id="layout">
-        <nav class="cai-cms-toc" id="toc" aria-labelledby="toc-title">
+        <nav class="cai-cms-toc" id="toc" aria-labelledby="toc-title" data-cai-spy>
           <h2 class="cai-cms-toc__title" id="toc-title">Contents</h2>
           <ol class="cai-cms-toc__list">
-            <li><a class="cai-sidebar__link" href="#method">How the readings were taken</a></li>
-            <li><a class="cai-sidebar__link" href="#level">Four centimetres in ten years</a></li>
-            <li><a class="cai-sidebar__link" href="#storms">Storms that reach the walls</a></li>
-            <li><a class="cai-sidebar__link" href="#next">What the council plans next</a></li>
+            <li><a href="#method">How the readings were taken</a></li>
+            <li><a href="#level">Four centimetres in ten years</a></li>
+            <li><a href="#storms">Storms that reach the walls</a></li>
+            <li><a href="#next">What the council plans next</a></li>
           </ol>
         </nav>
-        <div class="o-stack" id="body">
+        <div class="cai-prose" id="body">
           <p>Since March 2016, a group of volunteers has read the tide gauge in the port at six in the morning and six in the evening, every day of the year. Their sheets, now ten years of them, are the longest record of the sea in the bay that anyone has kept by hand.</p>
           <h2 id="method">How the readings were taken</h2>
           <p>Each reading is the height of the water against the gauge, to the nearest centimetre, with the time, the wind and the state of the sea. Two people read it, and a third checks the sheet the same week. A reading that two people do not agree on is left out.</p>
-          <ul>
+          <ul class="wp-block-list" id="readings">
             <li>7,300 readings a year, two a day.</li>
             <li>41 volunteers over ten years, nine of them from the start.</li>
             <li>Fewer than one reading in a hundred left out.</li>
@@ -86,21 +82,21 @@
 
     <section class="cai-site-section" id="related" aria-labelledby="related-title">
       <h2 id="related-title">More on the coast</h2>
-      <ul class="o-grid o-grid--auto posts">
+      <ul class="o-grid o-grid--auto">
         <li class="cai-card">
           <div class="cai-site-image cai-site-image--3x2 u-mb-sm"></div>
           <h3 class="cai-card__title"><a href="#top">The beach road closes from May to September</a></h3>
-          <p class="cai-card__body"><time datetime="2026-09-28">28 September 2026</time> · 3 min read</p>
+          <p class="cai-meta"><time datetime="2026-09-28">28 September 2026</time> <span>3 min read</span></p>
         </li>
         <li class="cai-card">
           <div class="cai-site-image cai-site-image--3x2 u-mb-sm"></div>
           <h3 class="cai-card__title"><a href="#top">Seagrass returns to the inner bay</a></h3>
-          <p class="cai-card__body"><time datetime="2026-09-14">14 September 2026</time> · 5 min read</p>
+          <p class="cai-meta"><time datetime="2026-09-14">14 September 2026</time> <span>5 min read</span></p>
         </li>
         <li class="cai-card">
           <div class="cai-site-image cai-site-image--3x2 u-mb-sm"></div>
           <h3 class="cai-card__title"><a href="#top">Who reads the gauge at six in the morning</a></h3>
-          <p class="cai-card__body"><time datetime="2026-08-30">30 August 2026</time> · 4 min read</p>
+          <p class="cai-meta"><time datetime="2026-08-30">30 August 2026</time> <span>4 min read</span></p>
         </li>
       </ul>
     </section>

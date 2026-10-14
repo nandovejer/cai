@@ -41,7 +41,9 @@ import '@cai-ds/cms/css'
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@cai-ds/cms@0.1.0/dist/cms.min.css">
 ```
 
-There is no script. Core's script is optional: with it, the table of contents marks the section in view (core's scroll spy, on links with `.cai-sidebar__link`).
+There is no script. Core's script is optional: with it, the table of contents marks the section in view (core's scroll spy, on the in-page links inside an element with `data-cai-spy`).
+
+The body of a story is core's `.cai-prose` (line length and the space between blocks) and its date and reading time are core's `.cai-meta`; lists of posts are core's `.o-grid` or `.o-stack` on a `<ul>`. None of them needs a rule of yours.
 
 ## Package exports
 

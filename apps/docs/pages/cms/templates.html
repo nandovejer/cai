@@ -7,13 +7,14 @@ group: reference
 -->
     <div class="docs-block" id="p-cms-templates">
           <p>Each template is markup to copy into the template of your CMS, with your own fields in place of the example text. They use the classes of core, site and cms only: a piece that would need CSS of its own is a pattern, with its page, and <a href="#not-here">the last section</a> says what CAI does not have yet.</p>
-          <p>Lists of posts take one rule of your own, <code>.posts { list-style: none; margin: 0; padding: 0; }</code>: core styles no list. Safari can drop the list role from a list whose markers you remove; the headings still lead through the posts.</p>
+          <p>A list of posts is a <code>&lt;ul&gt;</code> with core's <code>.o-grid</code> or <code>.o-stack</code>, which take off the markers and the indent. Safari can drop the list role from a list without markers; the headings still lead through the posts.</p>
           <div class="docs-prose">
             <h2 id="article-page" class="docs-prose__title">Article page</h2>
             <p>The <code>&lt;main&gt;</code> of a story: the <a href="/docs/cms/article-header/">article header</a>, the <a href="/docs/cms/toc/">table of contents</a> beside the text, then the author and related posts. Start from the <a href="/docs/site/templates/">page shell of site</a>.</p>
             <ul>
               <li>The <code>&lt;article&gt;</code> holds the story only: the header and the text. The author box and the related posts come after it, inside <code>&lt;main&gt;</code>.</li>
-              <li>Core spaces the elements of long text only inside components, so <code>.o-stack</code> spaces the paragraphs here. Leave out the table of contents in a short post, and the layout is the text alone.</li>
+              <li>The text is core's <a href="/docs/components/prose/">prose</a>: lines of about 70 characters and the space between its blocks, whatever the CMS writes inside. Leave out the table of contents in a short post, and the layout is the text alone.</li>
+              <li>The date and the reading time are core's <a href="/docs/components/meta/">meta line</a>: one element for each fact, and CSS draws the dot between them.</li>
             </ul>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
@@ -30,19 +31,19 @@ group: reference
         &lt;span class=&quot;cai-avatar cai-avatar--lg&quot;&gt;&lt;img src=&quot;/authors/ana-ruiz-96.jpg&quot; width=&quot;48&quot; height=&quot;48&quot; alt=&quot;&quot;&gt;&lt;/span&gt;
         &lt;div&gt;
           &lt;p&gt;By &lt;a href=&quot;/authors/ana-ruiz/&quot;&gt;Ana Ruiz&lt;/a&gt;&lt;/p&gt;
-          &lt;p&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; · 6 min read&lt;/p&gt;
+          &lt;p class=&quot;cai-meta&quot;&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; &lt;span&gt;6 min read&lt;/span&gt;&lt;/p&gt;
         &lt;/div&gt;
       &lt;/div&gt;
     &lt;/header&gt;
     &lt;div class=&quot;cai-cms-article__layout&quot;&gt;
-      &lt;nav class=&quot;cai-cms-toc&quot; aria-labelledby=&quot;toc-title&quot;&gt;
+      &lt;nav class=&quot;cai-cms-toc&quot; aria-labelledby=&quot;toc-title&quot; data-cai-spy&gt;
         &lt;h2 class=&quot;cai-cms-toc__title&quot; id=&quot;toc-title&quot;&gt;Contents&lt;/h2&gt;
         &lt;ol class=&quot;cai-cms-toc__list&quot;&gt;
-          &lt;li&gt;&lt;a class=&quot;cai-sidebar__link&quot; href=&quot;#method&quot;&gt;How the readings were taken&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a class=&quot;cai-sidebar__link&quot; href=&quot;#level&quot;&gt;Four centimetres in ten years&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#method&quot;&gt;How the readings were taken&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#level&quot;&gt;Four centimetres in ten years&lt;/a&gt;&lt;/li&gt;
         &lt;/ol&gt;
       &lt;/nav&gt;
-      &lt;div class=&quot;o-stack&quot;&gt;
+      &lt;div class=&quot;cai-prose&quot;&gt;
         &lt;p&gt;Since March 2016, a group of volunteers has read the tide gauge…&lt;/p&gt;
         &lt;h2 id=&quot;method&quot;&gt;How the readings were taken&lt;/h2&gt;
         &lt;p&gt;…&lt;/p&gt;
@@ -75,7 +76,7 @@ group: reference
   &lt;p class=&quot;cai-tag cai-tag--gray u-mb-sm&quot;&gt;Coast&lt;/p&gt;
   &lt;h3 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/2026/10/tide-records/&quot;&gt;What ten years of tide records say about the bay&lt;/a&gt;&lt;/h3&gt;
   &lt;p class=&quot;cai-card__body&quot;&gt;Volunteers have read the gauge in the port twice a day since 2016.&lt;/p&gt;
-  &lt;p class=&quot;cai-card__body&quot;&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; · 6 min read&lt;/p&gt;
+  &lt;p class=&quot;cai-meta&quot;&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; &lt;span&gt;6 min read&lt;/span&gt;&lt;/p&gt;
 &lt;/article&gt;</code></pre>
             </div>
           </div>
@@ -94,7 +95,7 @@ group: reference
               </div>
               <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Post listing markup"><code id="code-tpl-listing">&lt;section class=&quot;cai-site-section&quot; aria-labelledby=&quot;latest-title&quot;&gt;
   &lt;h2 id=&quot;latest-title&quot;&gt;Latest stories&lt;/h2&gt;
-  &lt;ul class=&quot;o-grid o-grid--auto posts&quot;&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
     &lt;li class=&quot;cai-card&quot;&gt;
       &lt;div class=&quot;cai-site-image cai-site-image--3x2 u-mb-sm&quot;&gt;
         &lt;img src=&quot;/img/tide-gauge-640.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
@@ -102,7 +103,7 @@ group: reference
       &lt;p class=&quot;cai-tag cai-tag--gray u-mb-sm&quot;&gt;Coast&lt;/p&gt;
       &lt;h3 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/2026/10/tide-records/&quot;&gt;What ten years of tide records say about the bay&lt;/a&gt;&lt;/h3&gt;
       &lt;p class=&quot;cai-card__body&quot;&gt;Volunteers have read the gauge in the port twice a day since 2016.&lt;/p&gt;
-      &lt;p class=&quot;cai-card__body&quot;&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; · 6 min read&lt;/p&gt;
+      &lt;p class=&quot;cai-meta&quot;&gt;&lt;time datetime=&quot;2026-10-12&quot;&gt;12 October 2026&lt;/time&gt; &lt;span&gt;6 min read&lt;/span&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;!-- One &lt;li&gt; for each post --&gt;
   &lt;/ul&gt;
@@ -131,13 +132,13 @@ group: reference
               </div>
               <pre class="cai-code-block" data-lang="html" tabindex="0" role="region" aria-label="Related posts markup"><code id="code-tpl-related">&lt;section class=&quot;cai-site-section&quot; aria-labelledby=&quot;related-title&quot;&gt;
   &lt;h2 id=&quot;related-title&quot;&gt;More on the coast&lt;/h2&gt;
-  &lt;ul class=&quot;o-grid o-grid--auto posts&quot;&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
     &lt;li class=&quot;cai-card&quot;&gt;
       &lt;div class=&quot;cai-site-image cai-site-image--3x2 u-mb-sm&quot;&gt;
         &lt;img src=&quot;/img/beach-road-640.jpg&quot; width=&quot;640&quot; height=&quot;427&quot; alt=&quot;&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;
       &lt;/div&gt;
       &lt;h3 class=&quot;cai-card__title&quot;&gt;&lt;a href=&quot;/2026/09/beach-road/&quot;&gt;The beach road closes from May to September&lt;/a&gt;&lt;/h3&gt;
-      &lt;p class=&quot;cai-card__body&quot;&gt;&lt;time datetime=&quot;2026-09-28&quot;&gt;28 September 2026&lt;/time&gt; · 3 min read&lt;/p&gt;
+      &lt;p class=&quot;cai-meta&quot;&gt;&lt;time datetime=&quot;2026-09-28&quot;&gt;28 September 2026&lt;/time&gt; &lt;span&gt;3 min read&lt;/span&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;!-- Two more --&gt;
   &lt;/ul&gt;
@@ -172,7 +173,6 @@ group: reference
             <h2 id="not-here" class="docs-prose__title">What is not here</h2>
             <p>A blog or a newspaper often asks for things CAI does not have yet. They are not faked in the templates above.</p>
             <ul>
-              <li><strong>Spacing and line length for long text.</strong> Core styles each element of a story (headings, lists, quotes, figures, tables), but not the space between them nor the width of a line. <code>.o-stack</code> spaces the blocks evenly; set your own width for the text column until core has it.</li>
               <li><strong>Comments, share buttons and a newsletter form.</strong> Build a form with <a href="/docs/components/form/">core's fields</a>. Share buttons from a social network load its scripts, which CAI never does: use plain links.</li>
               <li><strong>A reading progress bar.</strong> It needs a script and tells the reader little the scroll bar does not.</li>
             </ul>

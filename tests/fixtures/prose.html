@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prose and meta line · CAI test page</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/cai-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/cai.css">
+</head>
+<body>
+  <main class="o-container" id="main">
+    <h1>What ten years of tide records say about the bay</h1>
+    <p class="cai-meta" id="meta"><span id="m-author">By <a href="#main" id="m-link">Ana Ruiz</a></span> <time datetime="2026-10-12" id="m-date">12 October 2026</time> <span id="m-time">6 min read</span> <span id="m-section">Coast and climate</span></p>
+
+    <div class="cai-prose" id="prose">
+      <p id="p1">Since March 2016, a group of volunteers has read the tide gauge in the port at six in the morning and six in the evening, every day of the year. Their sheets, now ten years of them, are the longest record of the sea in the bay that anyone has kept by hand, and the council will publish them as open data.</p>
+      <p id="p2">The records are at <a href="#main">https://example.org/a-very-long-address/that-goes-on/and-on/tide-records-2016-2026.csv</a>, in a file whose columns are <code id="code">level_cm</code> and <code>read_at</code>.</p>
+      <h2 id="h-method">How the readings were taken</h2>
+      <p id="after-h2">Each reading is the height of the water against the gauge, to the nearest centimetre, with the time, the wind and the state of the sea.</p>
+      <ul class="wp-block-list" id="wp-list">
+        <li>7,300 readings a year, two a day.</li>
+        <li>41 volunteers over ten years.
+          <ul id="nested">
+            <li>Nine of them from the start.</li>
+          </ul>
+        </li>
+        <li>Fewer than one reading in a hundred left out.</li>
+      </ul>
+      <ol id="bare-list">
+        <li>Read the gauge.</li>
+        <li>Write the height.</li>
+      </ol>
+      <ul class="o-stack" id="object-list">
+        <li>A stack, not a list with markers.</li>
+        <li>Its items keep their list role.</li>
+      </ul>
+      <blockquote id="quote"><p>We did not set out to measure the climate.</p><p>We wanted to know when to take the boats out.</p></blockquote>
+      <figure id="figure">
+        <div style="block-size: 4rem"></div>
+        <figcaption>The tide gauge in the port, at low tide.</figcaption>
+      </figure>
+      <figure class="cai-figure" id="cai-figure">
+        <div class="cai-figure__media" style="block-size: 4rem"></div>
+        <figcaption class="cai-figure__caption">Readings by month.</figcaption>
+      </figure>
+      <pre id="pre"><code>date,level_cm,read_at
+2016-03-01,212,06:00</code></pre>
+      <div class="cai-table-wrap" role="region" aria-label="Readings by year" tabindex="0" id="table-wrap">
+        <table class="cai-table">
+          <thead><tr><th scope="col">Year</th><th scope="col">Average at high tide</th><th scope="col">Storms at the wall</th></tr></thead>
+          <tbody><tr><td>2016</td><td>212 cm</td><td>0</td></tr><tr><td>2025</td><td>216 cm</td><td>3</td></tr></tbody>
+        </table>
+      </div>
+      <hr id="hr">
+      <p id="after-hr">Anyone can join the readings. The group meets at the harbour office on the first Monday of each month.</p>
+      <p><code class="cai-code-inline" id="code-component">level_cm</code></p>
+    </div>
+
+    <ul class="o-grid o-grid--auto" id="cards">
+      <li class="cai-card" id="card">
+        <h2 class="cai-card__title"><a href="#main" id="card-link">The beach road closes from May to September</a></h2>
+        <p class="cai-meta" id="card-meta"><time datetime="2026-09-28">28 September 2026</time> <span>3 min read</span></p>
+      </li>
+      <li class="cai-card">
+        <h2 class="cai-card__title"><a href="#main">Seagrass returns to the inner bay</a></h2>
+        <p class="cai-meta"><time datetime="2026-09-14">14 September 2026</time> <span>5 min read</span></p>
+      </li>
+    </ul>
+  </main>
+</body>
+</html>

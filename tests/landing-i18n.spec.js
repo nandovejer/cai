@@ -261,14 +261,15 @@ test.describe('Arabic typography', () => {
       expect(['normal', '0px'], `${selector} letter-spacing`).toContain(spacing);
     }
     // English text on the same page keeps its own face
-    const { font } = await style('.luz-site-hero__copy > .luz-site-hero__eyebrow[lang="en"]');
+    await expect(page.locator('.luz-landing-hero__copy > .luz-landing-hero__eyebrow[lang="en"]')).toHaveCount(1);
+    const { font } = await style('.luz-landing-hero__copy > .luz-landing-hero__eyebrow[lang="en"]');
     expect(font).toMatch(/mono/i);
   });
 
   test('the page tint sits in the top right corner', async ({ page }) => {
     await open(page, '/ar/');
     const background = await page.evaluate(() => {
-      document.body.classList.add('luz-site-page--gradient');
+      document.body.classList.add('luz-landing-glow');
       return getComputedStyle(document.body).backgroundImage;
     });
     expect(background).toMatch(/at right top|at top right|at 100% 0%/);

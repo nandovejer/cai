@@ -206,9 +206,15 @@ test.describe('Landing page', () => {
       test(`footer: the color mode switcher sits bottom-right and overlaps nothing at ${width}px`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
         await open(page);
-        const footer = page.locator('footer .luz-site-footer');
+        // The row of the footer (spec f3-package-model §1.5): footer.luz-landing-footer > .o-container.o-container--inline.o-row
+        const footer = page.locator('footer.luz-landing-footer > .o-container.o-container--inline.o-row');
+        await expect(footer).toHaveCount(1);
         const box = (el) => el.evaluate((node) => node.getBoundingClientRect().toJSON());
-        const parent = await box(footer);
+        // The row pads its inline ends (the gutters of the page): the switcher sits at the end of its content box
+        const parent = await footer.evaluate((node) => {
+          const r = node.getBoundingClientRect();
+          return { right: r.right - parseFloat(getComputedStyle(node).paddingRight) };
+        });
         const modes = await box(page.locator('footer .luz-mode-switcher'));
         expect(parent.right - modes.right).toBeLessThanOrEqual(1);
         const siblings = await footer.locator('> p, > nav').evaluateAll((els) => els.map((el) => el.getBoundingClientRect().toJSON()));
@@ -297,10 +303,10 @@ test.describe('Landing page', () => {
       await open(page);
 
       await expect(page.locator('h1')).toHaveText('LUZ, a native, styled design system built for accessibility.');
-      const hero = page.locator('.luz-site-hero');
+      const hero = page.locator('.luz-landing-hero');
       await expect(hero.locator('.luz-btn--primary')).toHaveCount(1);
-      await expect(hero.locator('.luz-site-hero__copy .luz-btn--primary')).toHaveText('Get started');
-      await expect(hero.locator('.luz-site-hero__copy .luz-btn--primary')).toBeInViewport();
+      await expect(hero.locator('.luz-landing-hero__copy .luz-btn--primary')).toHaveText('Get started');
+      await expect(hero.locator('.luz-landing-hero__copy .luz-btn--primary')).toBeInViewport();
     });
   });
 

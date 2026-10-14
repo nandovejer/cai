@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Landing page without site</title>
+  <!-- tests/landing-optional-site.spec.js: tokens + core + landing ONLY. No site stylesheet, no site script:
+       @luz-ds/site is an optional peer of a kind of site (.claude/plans/specs/f3-package-model.md, §5) -->
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/landing/dist/landing.css">
+</head>
+<body class="o-page luz-landing-glow">
+  <a class="luz-skip-link" href="#main-content">Skip to content</a>
+  <header class="luz-landing-header o-sticky" id="hdr">
+    <div class="o-container o-container--inline o-row" id="hdr-row">
+      <button class="luz-nav-toggle" id="toggle" type="button" popovertarget="site-nav" aria-label="Menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+      </button>
+      <a class="luz-landing-header__brand" id="brand" href="#top">Acme Summit</a>
+      <nav class="luz-navbar" id="site-nav" aria-label="Main" popover>
+        <ul class="luz-navbar__list">
+          <li><a class="luz-navbar__link" href="#top" aria-current="page">Programme</a></li>
+          <li><a class="luz-navbar__link" href="#top">Speakers</a></li>
+          <li><a class="luz-navbar__link" href="#top">Tickets</a></li>
+        </ul>
+      </nav>
+      <div class="o-row luz-landing-header__actions" id="actions">
+        <a class="luz-btn luz-btn--ghost" id="login" href="#top">Log in</a>
+      </div>
+    </div>
+  </header>
+  <main id="main-content" class="o-container o-stack luz-landing-main" tabindex="-1">
+    <section class="luz-landing-hero o-grid o-grid--split" id="hero" aria-labelledby="hero-title">
+      <div class="luz-landing-hero__copy" id="copy">
+        <p class="luz-landing-hero__eyebrow">12 and 13 May 2027 · Seville</p>
+        <h1 class="luz-landing-hero__title" id="hero-title">Acme Summit 2027</h1>
+        <p class="luz-landing-hero__lead">Two days of talks and workshops for retail teams.</p>
+        <div class="o-actions">
+          <a class="luz-btn luz-btn--primary" href="#register">Register</a>
+          <a class="luz-btn luz-btn--outline" href="#programme">Programme</a>
+        </div>
+      </div>
+      <div class="luz-landing-hero__media" id="media">
+        <div class="luz-image luz-image--4x3" role="img" aria-label="The main hall"></div>
+      </div>
+    </section>
+    <section class="o-stack luz-landing-section" id="programme" aria-labelledby="programme-title">
+      <h2 id="programme-title">Programme</h2>
+      <p id="register">Registration opens in March.</p>
+      <ul class="o-grid o-grid--split" id="features">
+        <li class="luz-card"><h3 class="luz-card__title">Talks</h3><p class="luz-card__body">Twelve talks on stage.</p></li>
+        <li class="luz-card"><h3 class="luz-card__title">Workshops</h3><p class="luz-card__body">Six hands-on workshops.</p></li>
+      </ul>
+    </section>
+    <section class="o-stack luz-landing-section luz-band" id="band" aria-labelledby="band-title">
+      <h2 id="band-title">Last seats</h2>
+      <p>Forty seats are left.</p>
+    </section>
+  </main>
+  <footer class="luz-landing-footer" id="ftr">
+    <div class="o-container o-container--inline o-row" id="ftr-row">
+      <p id="ftr-note">Acme Summit is a retail event.</p>
+      <nav class="o-actions" aria-label="Links">
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="#top">Privacy</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="#top">Contact</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

@@ -45,8 +45,16 @@ const PACKAGES = {
   },
   landing: {
     label: 'Landing',
+    // F3 step 10: the feature grid is gone (a template on `ul.o-grid.o-grid--split`, D10);
+    // the page structure moved here from site. The ids are `p-landing-*` while site still
+    // ships its own header, hero, footer and section pages (they go at step 12)
     patternOf: {
-      'feature-grid': 'features',
+      header: 'landing-header',
+      hero: 'landing-hero',
+      footer: 'landing-footer',
+      main: 'landing-section',
+      section: 'landing-section',
+      glow: 'landing-section',
     },
   },
   cms: {

@@ -401,7 +401,7 @@ test.describe('Documentation site', () => {
     test('a gallery card is one link, named like its heading (HUB-1)', async ({ page }) => {
       await open(page, '/docs/components/');
       const cards = page.locator('.docs-card');
-      await expect(cards).toHaveCount(27);
+      await expect(cards).toHaveCount(28);
       for (const card of await cards.all()) {
         await expect(card.getByRole('link')).toHaveCount(1);
       }

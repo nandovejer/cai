@@ -312,6 +312,22 @@ test.describe('timeline autoplay', () => {
     await expect.poll(() => current(host), { timeout: 8000 }).not.toBe(held);
   });
 
+  test('a programmatic click on Next while autoplay runs (pointer outside, no focus ring) leaves the list polite, and the next autoplay step turns it off', async ({ page }) => {
+    await ready(page);
+    const host = tl(page, 'autoplay');
+    await host.scrollIntoViewIfNeeded();
+    await page.mouse.move(0, 0);
+    const live = host.locator('[aria-live]');
+    await expect(live).toHaveAttribute('aria-live', 'off');
+    const first = await current(host);
+    // el.click(): no mousemove, no focus, so :focus-visible does not match
+    await host.getByRole('button', { name: 'Next', exact: true }).evaluate((b) => b.click());
+    expect(await current(host)).toBe((first + 1) % 4);
+    await expect(live).toHaveAttribute('aria-live', 'polite');
+    await expect.poll(() => current(host), { timeout: 6000 }).toBe((first + 2) % 4);
+    await expect(live).toHaveAttribute('aria-live', 'off');
+  });
+
   test.describe('with reduced motion', () => {
     test.use({ reducedMotion: 'reduce' });
 
@@ -381,6 +397,102 @@ test.describe('timeline, accessibility', () => {
   }
 });
 
+test.describe('timeline: focus, rail clipping, touch, position, paper', () => {
+  test.skip(({ javaScriptEnabled }) => javaScriptEnabled === false, 'needs JavaScript');
+
+  /** Open the third card (it holds a link), put the focus on the link. */
+  async function focusLinkInThirdCard(page) {
+    await ready(page);
+    const host = tl(page, 'horizontal');
+    await RAIL_BUTTON_FOR(page, 'horizontal', DATES[2]).click();
+    expect(await current(host)).toBe(2);
+    await host.getByRole('link', { name: 'A link in a card' }).evaluate((a) => a.focus());
+    expect(await page.evaluate(() => document.activeElement.tagName)).toBe('A');
+    return host;
+  }
+
+  test('focus is not lost when Next changes the card the focus was in: it goes to the new current date', async ({ page }) => {
+    const host = await focusLinkInThirdCard(page);
+    // dispatchEvent: the click does not move the focus by itself
+    await host.getByRole('button', { name: 'Next', exact: true }).dispatchEvent('click');
+    expect(await current(host)).toBe(3);
+    expect(await page.evaluate(() => document.activeElement.tagName)).not.toBe('BODY');
+    expect((await state(host)).focused).toBe(3);
+  });
+
+  test('focus is not lost when Previous changes the card the focus was in: it goes to the new current date', async ({ page }) => {
+    const host = await focusLinkInThirdCard(page);
+    await host.getByRole('button', { name: 'Previous', exact: true }).dispatchEvent('click');
+    expect(await current(host)).toBe(1);
+    expect(await page.evaluate(() => document.activeElement.tagName)).not.toBe('BODY');
+    expect((await state(host)).focused).toBe(1);
+  });
+
+  test('the focus ring of the current date is not clipped by the rail: at least 4px of room under the button', async ({ page }) => {
+    await ready(page);
+    const host = tl(page, 'horizontal');
+    await RAIL_BUTTON_FOR(page, 'horizontal', DATES[0]).focus();
+    const room = await host.evaluate((el) => {
+      const button = el.querySelector('button[aria-current="true"]');
+      const track = button.parentElement;
+      const box = track.getBoundingClientRect();
+      const bottom = box.top + track.clientTop + track.clientHeight; // the bottom of the scroll box
+      return bottom - button.getBoundingClientRect().bottom;
+    });
+    // outline-width 2px + outline-offset 2px
+    expect(room).toBeGreaterThanOrEqual(4);
+  });
+
+  test('the stage lets the browser pinch-zoom: touch-action keeps pinch-zoom next to pan-y', async ({ page }) => {
+    await ready(page);
+    const action = await tl(page, 'horizontal').locator('.luz-timeline__stage').evaluate((el) => getComputedStyle(el).touchAction);
+    expect(action).toContain('pinch-zoom');
+    expect(action).toContain('pan-y');
+  });
+
+  test('every card says where it is in the set: aria-posinset and aria-setsize on the list items', async ({ page }) => {
+    await ready(page);
+    for (const id of ['horizontal', 'many']) {
+      const positions = await tl(page, id).locator('.luz-timeline__item').evaluateAll((list) =>
+        list.map((li) => [li.getAttribute('aria-posinset'), li.getAttribute('aria-setsize')]),
+      );
+      const n = positions.length;
+      expect(positions, id).toEqual(positions.map((_, i) => [String(i + 1), String(n)]));
+    }
+  });
+
+  test('--luz-timeline-paper set on the luz-timeline element reaches the hump and the dots', async ({ page }) => {
+    await ready(page);
+    const PAPER = 'rgb(1, 2, 3)';
+    await page.evaluate((paper) => document.querySelectorAll('luz-timeline').forEach((el) => el.style.setProperty('--luz-timeline-paper', paper)), PAPER);
+    // Horizontal: the stroke of the ground under the hump
+    const stroke = await tl(page, 'horizontal').locator('.luz-timeline__hump path').first().evaluate((p) => getComputedStyle(p).stroke);
+    expect(stroke).toBe(PAPER);
+    // Vertical: the fill of a dot that is neither past nor active
+    const dot = await tl(page, 'vertical').locator('.luz-timeline__item').last().evaluate((li) => getComputedStyle(li, '::after').backgroundColor);
+    expect(dot).toBe(PAPER);
+  });
+});
+
+test.describe('timeline imported on its own', () => {
+  test.skip(({ javaScriptEnabled }) => javaScriptEnabled === false, 'needs JavaScript');
+
+  for (const [mode, file] of [['', 'timeline.js'], ['min', 'timeline.min.js']]) {
+    test(`${file} alone defines the element and builds the rail, without loading luz.js, with English names`, async ({ page }) => {
+      const requested = [];
+      page.on('request', (r) => { if (/\/luz(\.min)?\.js/.test(new URL(r.url()).pathname)) requested.push(r.url()); });
+      await ready(page, mode ? `?standalone=${mode}` : '?standalone');
+      expect(requested, 'the entry is not loaded').toEqual([]);
+      const host = tl(page, 'horizontal');
+      expect((await state(host)).rail).toEqual(DATES);
+      await expect(host.getByRole('button', { name: 'Previous', exact: true })).toHaveCount(1);
+      await expect(host.getByRole('button', { name: 'Next', exact: true })).toHaveCount(1);
+      await host.getByRole('button', { name: 'Next', exact: true }).click();
+      expect(await current(host)).toBe(1);
+    });
+  }
+});
+
 test.describe('timeline loading', () => {
   test.skip(({ javaScriptEnabled }) => javaScriptEnabled === false, 'needs JavaScript');
 
@@ -419,7 +531,7 @@ test.describe('timeline without JavaScript', () => {
       );
       expect(dots).toEqual([true, true, true, true]);
       // Stacked down the page
-      const tops = await items.evaluateAll((list) => list.map((li) => li.getBoundingClientRect().top + scrollY));
+      const tops = await items.evaluateAll((list) => list.map((li) => li.getBoundingClientRect().top + window.scrollY));
       expect([...tops].sort((a, b) => a - b)).toEqual(tops);
       expect(new Set(tops).size).toBe(4);
     });

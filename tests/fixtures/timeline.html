@@ -113,7 +113,12 @@
     // ?none: the page has no timeline, so luz.js must not load the chunk.
     const params = new URLSearchParams(location.search);
     if (params.has("none")) document.querySelectorAll("luz-timeline").forEach((el) => el.remove());
-    await import("/packages/core/dist/luz.js");
+    // ?standalone: only the chunk, as a consumer who imports @luz-ds/core/timeline
+    // (?standalone=min: the minified one); no luz.js on the page.
+    const standalone = params.get("standalone");
+    if (standalone === null) await import("/packages/core/dist/luz.js");
+    else if (standalone === "min") await import("/packages/core/dist/timeline.min.js");
+    else await import("/packages/core/dist/timeline.js");
   </script>
 </body>
 </html>

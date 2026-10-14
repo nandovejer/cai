@@ -41,7 +41,7 @@ describe("timeline: sources", () => {
   it("has its module and its stylesheet, and the stylesheet is imported by the components", () => {
     expect(existsSync(resolve(root, "packages/core/src/timeline.js"))).toBe(true);
     expect(existsSync(resolve(root, "packages/core/src/components/timeline.css"))).toBe(true);
-    expect(read("packages/core/src/components/index.css")).toMatch(/@import\s+["']\.\/timeline\.css["']/);
+    expect(read("packages/core/src/components/index.css")).toMatch(/@import\s+url\(\s*["']\.\/timeline\.css["']\s*\)/);
   });
 
   it("styles the element before it is defined, so nothing jumps when it upgrades", () => {
@@ -61,6 +61,14 @@ describe.skipIf(!distBuilt)("timeline: dist", () => {
     expect(read("packages/core/dist/luz.js")).toMatch(/querySelector\(["']luz-timeline["']\)/);
     expect(read("packages/core/dist/luz.js")).toMatch(/import\(["']\.\/timeline\.js["']\)/);
     expect(read("packages/core/dist/luz.min.js")).toContain("./timeline.min.js");
+  });
+
+  it("is standalone: neither chunk imports the entry, so importing it has none of the entry's side effects", () => {
+    for (const file of ["timeline.js", "timeline.min.js"]) {
+      const code = read(`packages/core/dist/${file}`);
+      expect(code, `${file} imports luz.js or luz.min.js`).not.toMatch(/(?:from|import)\s*\(?\s*["'][^"']*\/?luz(?:\.min)?\.js["']/);
+      expect(code, `${file} still defines the element`).toContain("luz-timeline");
+    }
   });
 
   it("puts the stylesheet in luz.css", () => {

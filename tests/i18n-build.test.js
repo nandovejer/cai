@@ -139,7 +139,12 @@ describe("a dictionary that breaks the schema fails the build, naming the file a
     ["a bare ://", (d) => ({ ...d, copy: "Copiar ://x" }), "copy"],
     ["a www address", (d) => ({ ...d, copy: "Copiar www.x.test" }), "copy"],
     ["an at sign", (d) => ({ ...d, copy: "Copiar a@b" }), "copy"],
-    ["a header that names an e-mail", (d) => ({ $header: { author: "someone@example.com" }, ...d }), "header"],
+    // $header goes after ...d: a $header already in es.json must not win over the one under test
+    ["a header that names an e-mail", (d) => ({ ...d, $header: { author: "someone@example.com" } }), "header"],
+    ["a header that names an e-mail as its reviewer", (d) => ({ ...d, $header: { author: "nandovejer", reviewer: "a@b.test" } }), "header"],
+    ["a header whose author is not a GitHub handle", (d) => ({ ...d, $header: { author: "Not A Handle" } }), "header"],
+    ["a header that is not an object", (d) => ({ ...d, $header: "nandovejer" }), "header"],
+    ["a header with a value that is not a string", (d) => ({ ...d, $header: { author: 7 } }), "header"],
     ["text that is not JSON", () => "export default {};", ""],
     ["a JSON array", () => "[]", ""],
   ])("%s", (_, edit, key) => {
@@ -151,6 +156,30 @@ describe("a dictionary that breaks the schema fails the build, naming the file a
 
   it("builds again once the file is valid (the copy is restored between cases)", () => {
     expect(buildWith((d) => d).status).toBe(0);
+  });
+});
+
+describe("$header, when a language file has one", () => {
+  const HEADER = { language: "Español", tag: "es", author: "nandovejer", reviewer: "a-reader" };
+  const stripped = stringsOf;
+
+  it("is validated (a GitHub handle, never an address) and stripped: the built module has the strings only", async () => {
+    // Whatever es.json has (with or without a header of its own), the copy is built with a valid one
+    const { status, output } = buildWith((d) => ({ ...stripped(d), $header: HEADER }));
+    expect(status, output).toBe(0);
+    const text = tree.read("packages/core/dist/i18n-es.js");
+    for (const word of ["$header", HEADER.author, HEADER.reviewer]) {
+      expect(text.includes(word), `dist/i18n-es.js carries "${word}"`).toBe(false);
+    }
+    expect((await importBuilt("packages/core/dist/i18n-es.js")).default).toEqual(stringsOf(JSON.parse(esText())));
+    const min = tree.read("packages/core/dist/i18n-es.min.js");
+    expect(min.includes("$header"), "dist/i18n-es.min.js carries $header").toBe(false);
+  });
+
+  it("is optional: the file without one builds and has no $header in the module", () => {
+    const { status, output } = buildWith((d) => stripped(d));
+    expect(status, output).toBe(0);
+    expect(tree.read("packages/core/dist/i18n-es.js")).not.toContain("$header");
   });
 });
 

@@ -9,6 +9,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 /* global EventTarget */
 import { mountPlayer } from "../packages/core/src/player.js";
+import { registerLocale } from "../packages/core/src/i18n.js";
 
 class FakeElement extends EventTarget {
   constructor(tagName = "DIV", lang = "") {
@@ -156,6 +157,8 @@ describe("player captions — the button", () => {
 
   it("is named from the dictionary in the language of the player", () => {
     expect(player([EN]).ccBtn.getAttribute("aria-label")).toBe("Captions");
+    // Spanish is a lazy chunk, not built in: the page (or loadLocales()) registers it before the player starts
+    registerLocale("es", { captions: "Subtítulos" });
     expect(player([EN], { lang: "es" }).ccBtn.getAttribute("aria-label")).toBe("Subtítulos");
   });
 

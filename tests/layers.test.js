@@ -21,6 +21,7 @@ const files = [
   "packages/site/dist/site.css",
   "packages/landing/dist/landing.css",
   "packages/cms/dist/cms.css",
+  "packages/app/dist/app.css",
   "packages/core/dist/print.css",
   "packages/core/dist/classless.css",
   ...listed("packages/core/dist/components").filter((f) => !f.endsWith(".min.css")),
@@ -56,6 +57,7 @@ describe.skipIf(files.length === 0)("published stylesheets and the luz layers", 
     expect(files.some((f) => f.endsWith("site.css"))).toBe(true);
     expect(files.some((f) => f.endsWith("landing.css"))).toBe(true);
     expect(files.some((f) => f.endsWith("cms.css"))).toBe(true);
+    expect(files.some((f) => f.endsWith("app.css")), "packages/app/dist/app.css (pnpm app:build)").toBe(true);
   });
 
   for (const file of files) {
@@ -80,5 +82,27 @@ describe.skipIf(files.length === 0)("published stylesheets and the luz layers", 
     const css = readFileSync(dist("packages/core/dist/luz.css"), "utf-8");
     const order = [...css.matchAll(/^@layer (luz\.[\w-]+) \{/gm)].map((m) => m[1]);
     expect(order).toEqual(["luz.settings", "luz.generic", "luz.elements", "luz.objects", "luz.components", "luz.utilities", "luz.print"]);
+  });
+});
+
+/* F3 step 14: @luz-ds/app joins the container as `luz.app`, after `luz.cms`, so adding it moves
+   no existing layer (.claude/plans/specs/f3-package-model.md, §1.8). Landing, cms and app never
+   share a class: their order among themselves decides nothing. */
+describe("the luz.app layer", () => {
+  it("comes right after luz.cms and before luz.print, and no other layer moved", () => {
+    expect(LAYERS).toEqual(["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "landing", "cms", "app", "print"]);
+    expect(LAYER_ORDER).toContain("luz.landing, luz.cms, luz.app, luz.print;");
+  });
+
+  it("is repeated, in the same order, by core's index.css and by the brand fixture", () => {
+    const statement = "@layer luz.tokens, luz.themes, luz.settings, luz.generic, luz.elements, luz.objects, luz.components, luz.utilities, luz.site, luz.landing, luz.cms, luz.app, luz.print;";
+    expect(readFileSync(dist("packages/core/src/index.css"), "utf-8")).toContain(statement);
+    expect(readFileSync(dist("tests/fixtures/theme-brand.css"), "utf-8")).toContain(statement);
+  });
+
+  it.skipIf(!existsSync(dist("packages/app/dist/app.css")))("app.css has its rules in luz.app and repeats the order statement first", () => {
+    const css = readFileSync(dist("packages/app/dist/app.css"), "utf-8");
+    expect(css.startsWith(LAYER_ORDER)).toBe(true);
+    expect(css).toMatch(/^@layer luz\.app \{$/m);
   });
 });

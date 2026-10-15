@@ -250,10 +250,10 @@ test.describe('Documentation site', () => {
   });
 
   test.describe('navigation', () => {
-    test('the sidebar shows the eight areas and expands only the current one', async ({ page }) => {
+    test('the sidebar shows the nine areas and expands only the current one', async ({ page }) => {
       await gotoId(page, 'c-button');
       const areas = page.locator('.docs-nav > li > a');
-      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Landing', 'CMS', 'Accessibility']);
+      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Landing', 'CMS', 'App', 'Accessibility']);
       await expect(page.locator('.docs-nav > li > ul')).toHaveCount(1);
       await expect(page.locator('.docs-nav a[aria-current="true"]')).toHaveText('Components');
       await expect(page.locator('.docs-nav a[aria-current="page"]')).toHaveText('Button');

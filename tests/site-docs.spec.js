@@ -1,9 +1,9 @@
 /**
  * LUZ Design System — Pattern docs guidance, per package
  * Every block class that a package of patterns ships (@luz-ds/site,
- * @luz-ds/landing, @luz-ds/cms) belongs to a pattern, and every pattern has
+ * @luz-ds/landing, @luz-ds/cms, @luz-ds/app) belongs to a pattern, and every pattern has
  * its page in the documentation, in the area of its package (/docs/site/,
- * /docs/landing/, /docs/cms/), with the same structure as a component page: example,
+ * /docs/landing/, /docs/cms/, /docs/app/), with the same structure as a component page: example,
  * known issues, then the Code and Design tabs (PRINCIPLES.md red line 18 and
  * strong rule SR-5). The class list is read from each package's source, so
  * a new class without a pattern fails.
@@ -56,6 +56,14 @@ const PACKAGES = {
       header: 'cms-header',
       footer: 'cms-footer',
       'page-header': 'cms-page-header',
+    },
+  },
+  app: {
+    label: 'App',
+    // F3 step 14: the bar of an application and its dashboard; the sidebar is core's
+    patternOf: {
+      header: 'app-header',
+      dashboard: 'app-dashboard',
     },
   },
 };

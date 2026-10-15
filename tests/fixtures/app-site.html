@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>App: header and dashboard with site</title>
+  <!-- tests/app.spec.js: the same page as app.html, with @luz-ds/site loaded and <luz-search> in the bar's actions.
+       No script at all: the header, the drawer, the account list and the dashboard need none
+       (.claude/plans/specs/f3-package-model.md, section 6; f3-ux.md, section 2) -->
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <link rel="stylesheet" href="/packages/app/dist/app.css">
+</head>
+<body>
+  <a class="luz-skip-link" id="skip" href="#main-content">Skip to content</a>
+  <div class="o-shell" id="shell">
+    <nav class="luz-sidebar" id="app-nav" aria-label="Main" popover>
+      <a class="luz-sidebar__brand" id="side-brand" href="#main-content"><span class="luz-sidebar__brand-name">Bodega</span></a>
+      <div class="luz-sidebar__section">
+        <a class="luz-sidebar__link" id="side-overview" href="#main-content" aria-current="page">Overview</a>
+        <a class="luz-sidebar__link" id="side-reports" href="#main-content">Reports</a>
+        <a class="luz-sidebar__link" id="side-stock" href="#main-content">Stock</a>
+      </div>
+    </nav>
+    <div class="o-main" id="main">
+      <header class="luz-app-header o-sticky" id="hdr">
+        <div class="o-row" id="row">
+          <button class="luz-nav-toggle luz-app-header__toggle" id="toggle" type="button" popovertarget="app-nav" aria-label="Menu">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+          </button>
+          <p class="luz-app-header__product" id="product">Bodega</p>
+          <div class="o-row luz-app-header__actions" id="actions">
+        <luz-search id="search">
+          <a class="luz-search__fallback" id="fallback" href="#main-content" data-luz-search-fallback>
+            <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <span class="luz-search__fallback-label">A–Z index</span>
+          </a>
+          <button class="luz-search__trigger luz-search__trigger--compact" id="trigger" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>
+            <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <span class="luz-search__trigger-label">Search</span>
+            <kbd class="luz-search__trigger-key" aria-hidden="true">Ctrl K</kbd>
+          </button>
+          <dialog class="luz-modal luz-search" data-luz-search data-luz-search-src="/tests/fixtures/search-index.json" aria-label="Search">
+            <input type="text" aria-label="Query">
+          </dialog>
+        </luz-search>
+            <div class="luz-dropdown" id="account">
+              <button class="luz-btn luz-btn--ghost luz-app-header__account" id="account-btn" type="button" popovertarget="account-menu"><span class="luz-avatar luz-avatar--sm" id="avatar">AM</span> <span class="luz-app-header__account-name" id="account-name">Ana Martín</span></button>
+              <div class="luz-dropdown__menu" id="account-menu" popover>
+                <ul class="luz-dropdown__list">
+                  <li><a class="luz-dropdown__item" id="settings" href="#main-content">Account settings</a></li>
+                  <li><a class="luz-dropdown__item" id="signout" href="#main-content">Sign out</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <main class="luz-app-dashboard" id="main-content" tabindex="-1">
+        <div class="luz-app-dashboard__head" id="head">
+          <h1 class="luz-app-dashboard__title" id="title">Overview</h1>
+          <div class="o-actions" id="head-actions">
+            <a class="luz-btn luz-btn--primary" id="new-report" href="#main-content">New report</a>
+            <a class="luz-btn luz-btn--secondary" id="export" href="#main-content">Export data</a>
+          </div>
+        </div>
+        <!-- Two narrow panels, then a wide one, then more: at three columns the wide panel does not fit in
+             what is left of the first row, so a `dense` layout would pull panel 4 up before it. -->
+        <ul class="o-grid o-grid--auto" id="grid">
+          <li class="luz-card luz-app-dashboard__panel" id="p1"><h2 class="luz-card__title">Stock alerts</h2><p class="luz-card__body">Three products are below their minimum.</p><a href="#main-content" id="p1-link">Review stock</a></li>
+          <li class="luz-card luz-app-dashboard__panel" id="p2"><h2 class="luz-card__title">Open orders</h2><p class="luz-card__body">Twelve orders wait for a label.</p><a href="#main-content" id="p2-link">See orders</a></li>
+          <li class="luz-card luz-app-dashboard__panel luz-app-dashboard__panel--wide" id="p3"><h2 class="luz-card__title">Sales this month</h2><p class="luz-card__body">The most important number gets the room of two columns.</p><a href="#main-content" id="p3-link">Open the sales report</a></li>
+          <li class="luz-card luz-app-dashboard__panel" id="p4"><h2 class="luz-card__title">Deliveries</h2><p class="luz-card__body">Four deliveries today.</p><a href="#main-content" id="p4-link">See deliveries</a></li>
+          <li class="luz-card luz-app-dashboard__panel" id="p5"><h2 class="luz-card__title">Returns</h2><p class="luz-card__body">One return to inspect.</p><a href="#main-content" id="p5-link">See returns</a></li>
+          <li class="luz-card luz-app-dashboard__panel" id="p6"><h2 class="luz-card__title">Latest import</h2><pre class="luz-code-block" id="long" tabindex="0"><code>SKU-0001;SKU-0002;SKU-0003;SKU-0004;SKU-0005;SKU-0006;SKU-0007;SKU-0008;SKU-0009;SKU-0010;SKU-0011;SKU-0012;SKU-0013;SKU-0014;SKU-0015;SKU-0016</code></pre></li>
+          <li class="luz-card luz-app-dashboard__panel luz-app-dashboard__panel--wide" id="p7"><h2 class="luz-card__title">Suppliers</h2><p class="luz-card__body">A second wide panel, the last one in a row of its own on a narrow page.</p><a href="#main-content" id="p7-link">See suppliers</a></li>
+          <li class="luz-card luz-app-dashboard__panel" id="p8" style="min-block-size: 900px"><h2 class="luz-card__title">Activity</h2><p class="luz-card__body">A tall panel, so the page has to scroll.</p><a href="#main-content" id="p8-link">See activity</a></li>
+        </ul>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

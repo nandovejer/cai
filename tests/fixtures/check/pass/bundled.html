@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bundled</title>
+  <!-- No LUZ link: a bundler imports the stylesheets from /src/main.js (import "@luz-ds/core/css"). -->
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Welcome</h1>
+    <article class="luz-card">
+      <h2 class="luz-card__title">Start here</h2>
+      <p class="luz-card__body">The styles come from the bundle.</p>
+    </article>
+    <button class="luz-btn luz-btn--primary" type="button">Continue</button>
+  </main>
+</body>
+</html>

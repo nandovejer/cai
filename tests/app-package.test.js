@@ -118,12 +118,12 @@ describe("@luz-ds/app: the build, the release scripts and the layer", () => {
     expect(script).toMatch(/buildPackage\(\{ name: "app", label: "App" \}\)/);
     const pkg = json("package.json");
     expect(pkg.scripts?.["app:build"]).toBe("node scripts/build-app.js");
-    expect(pkg.scripts?.build).toMatch(/pnpm cms:build && pnpm app:build$/);
+    expect(pkg.scripts?.build).toMatch(/pnpm cms:build && pnpm app:build( && pnpm luzcheck:build)?$/);
   });
 
   it("is a sentinel of check-dist, a pattern of qa-release and a probe of smoke-consumer", () => {
     expect(readOr("scripts/check-dist.js")).toContain("../packages/app/dist/app.css");
-    expect(readOr("scripts/qa-release.js")).toMatch(/\(core\|site\|landing\|cms\|app\|tokens\)|\(core\|site\|landing\|cms\|tokens\|app\)/);
+    expect(readOr("scripts/qa-release.js")).toMatch(/\(core\|site\|landing\|cms\|(?:app\|tokens|tokens\|app)(?:\|check)?\)/);
     const smoke = readOr("scripts/smoke-consumer.js");
     expect(smoke).toContain("/node_modules/@luz-ds/app");
     expect(smoke).toContain("/dist/app.css");

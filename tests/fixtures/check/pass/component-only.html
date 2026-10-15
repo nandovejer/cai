@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Components only</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Your plan</h1>
+    <p><a class="luz-btn luz-btn--secondary" href="#plan">Compare plans</a></p>
+    <form class="o-stack" action="#" method="post">
+      <div class="luz-field">
+        <label class="luz-field__label luz-field__label--required" for="name">Project name</label>
+        <input class="luz-input" id="name" name="name" type="text" aria-describedby="name-help" required>
+        <div class="luz-field__helper" id="name-help">Shown on the dashboard.</div>
+      </div>
+      <button class="luz-btn luz-btn--primary" type="submit">Save changes</button>
+    </form>
+    <div class="luz-table-wrap" role="region" aria-label="Plans" tabindex="0">
+      <table class="luz-table" id="plan">
+        <caption>Plans and prices</caption>
+        <thead><tr><th scope="col">Plan</th><th scope="col">Price</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Free</th><td>0</td></tr>
+          <tr><th scope="row">Team</th><td>12</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+  <script type="module" src="node_modules/@luz-ds/core/dist/luz.min.js"></script>
+</body>
+</html>

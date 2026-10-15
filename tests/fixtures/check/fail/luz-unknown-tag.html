@@ -1,0 +1,26 @@
+<!-- expect: element/unknown 14:5 -->
+<!-- expect: element/unknown-attribute 17:28 -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>A tag LUZ does not have, and an attribute a tag does not read</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Timeline</h1>
+    <luz-carousel>
+      <p>Slides</p>
+    </luz-carousel>
+    <luz-timeline autoplay speed="2">
+      <ol>
+        <li>2026</li>
+        <li>2027</li>
+      </ol>
+    </luz-timeline>
+  </main>
+  <script type="module" src="node_modules/@luz-ds/core/dist/luz.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Templates, components and inert stages</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+</head>
+<body>
+  <!-- Nothing here is a LUZ mistake: the checker reads what it can know and leaves the rest. -->
+  <main class="o-container o-stack">
+    <Button class="luz-btn luz-btn--primary">A component of a framework</Button>
+    <router-link class="luz-btn" to="/pricing/">A custom element that is not LUZ's</router-link>
+    <div class="{{ classes }}">A class computed by the template</div>
+    <a class="luz-btn {{ extra }}" href="/pricing/">A class beside a placeholder</a>
+    <a :class="state" class="luz-btn" href="/pricing/">A bound class</a>
+    <button class="luz-{{ kind }}" type="button">A class built at run time</button>
+    <div inert>
+      <div class="luz-btn luz-btn--primary">A stage a documentation page shows, not a button</div>
+    </div>
+  </main>
+</body>
+</html>

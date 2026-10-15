@@ -1,0 +1,18 @@
+<!-- expect: load/layer-statement 9:3 -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The page's layers declared after LUZ's</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+  <style>
+    @layer reset, luz, app;
+  </style>
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Layers</h1>
+  </main>
+</body>
+</html>

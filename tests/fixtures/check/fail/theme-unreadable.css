@@ -1,0 +1,5 @@
+/* expect: theme/unreadable */
+/* A colour the check cannot measure: oklch() and color-mix() are never reported as fine. */
+:root {
+  --luz-text-primary: oklch(0.2 0.02 250);
+}

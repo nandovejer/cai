@@ -1,0 +1,17 @@
+<!-- expect: load/package-missing 12:14 -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>A landing class without the landing stylesheet</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <section class="luz-landing-hero" aria-labelledby="hero-title">
+      <h1 class="luz-landing-hero__title" id="hero-title">Acme Summit 2027</h1>
+    </section>
+  </main>
+</body>
+</html>

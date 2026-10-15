@@ -1,0 +1,26 @@
+<!-- expect: misuse/state-class 18:11 -->
+<!-- expect: misuse/part-orphan 20:9 -->
+<!-- expect: a11y/role-on-generic 21:10 -->
+<!-- expect: a11y/link-no-href 22:5 -->
+<!-- expect: attr/unknown-hook 23:8 -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Markup that works but is not LUZ's contract</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Markup</h1>
+    <ul class="luz-tabs">
+      <li class="is-active">Written by hand, not by the script</li>
+    </ul>
+    <h2 class="luz-card__title">A card part with no card around it</h2>
+    <div role="button" tabindex="0">A button that is a div</div>
+    <a class="luz-btn">A link with no destination</a>
+    <p data-luz-sparkle="on">An attribute LUZ does not read</p>
+  </main>
+</body>
+</html>

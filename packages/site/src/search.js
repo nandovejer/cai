@@ -58,6 +58,21 @@
  * is the URL the index gives, resolved and checked (http or https), never
  * the raw string; the JSON comes from this origin, without redirects, and
  * has size limits.
+ *
+ * @element luz-search - A button that opens a dialog which finds a page, a section or an HTML element of the site by name, from a JSON index.
+ * @attr {string} data-luz-search-src - On the dialog: the JSON index of the site, on the same origin; links in it are relative to the file.
+ * @attr {string} data-luz-search-show - On a block of the dialog: the state that shows it (idle, none); the others are hidden.
+ * @attr {"pages" | "sections" | "elements"} data-luz-search-list - On a list of the dialog: the group of results it receives.
+ * @attr {boolean} data-luz-search-results - On the block that holds the groups; the arrow keys move between its links.
+ * @attr {boolean} data-luz-search-open - On a button, in the element or anywhere on the page: it opens the dialog; hidden until the script works.
+ * @attr {boolean} data-luz-search-fallback - On the link to the A-Z index: it shows until the script works, then the trigger takes its place.
+ * @attr {string} data-luz-label-idle - What the status says while the field is empty.
+ * @attr {string} data-luz-label-loading - What the status says while the index loads.
+ * @attr {string} data-luz-label-error - What the status says when the index could not be loaded.
+ * @attr {string} data-luz-label-none - What the status says when nothing matches; {query} is the text typed.
+ * @attr {string} data-luz-label-result - What the status says for one result; {n} is the count.
+ * @attr {string} data-luz-label-results - What the status says for several results; {n} is the count.
+ * @attr {string} data-luz-label-capped - What the status says when more results match than are shown; {n} is the count and {shown} the number listed.
  */
 
 /** Result groups, in their order on screen. */

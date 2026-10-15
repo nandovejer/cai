@@ -42,6 +42,15 @@
  * added with registerLocale() reaches the timeline too.
  *
  * Importing this module defines the element (once).
+ *
+ * @element luz-timeline - A rail of dates, Previous / Next and opt-in autoplay around an ordered list.
+ * @attr {"vertical"} layout - Every item stays visible down a line; the item in the middle of the screen is active.
+ * @attr {boolean} autoplay - Opt in to moving on by itself, with a visible Pause and Play.
+ * @attr {number} [interval=5000] - Milliseconds between items, at least 2000.
+ * @attr {string} data-luz-label-previous - The text of the Previous button, on the element or an ancestor; the language's own by default.
+ * @attr {string} data-luz-label-next - The text of the Next button, on the element or an ancestor; the language's own by default.
+ * @attr {string} data-luz-label-pause - The text of the Pause button of autoplay, on the element or an ancestor; the language's own by default.
+ * @attr {string} data-luz-label-play - The text of the Play button of autoplay, on the element or an ancestor; the language's own by default.
  */
 // luz-exception: EX-010 — the chunk's own four strings, so it loads without the entry
 const strings = {

@@ -59,6 +59,16 @@
  * Categories are the checkboxes' values: a lowercase letter, then letters,
  * digits or hyphens, 32 at most. A choice lasts data-luz-consent-days days
  * (180 by default, 395 at most: 13 months).
+ *
+ * @element luz-consent - A cookie banner that asks once, stores the answer on the device and tells the page with an event.
+ * @attr {boolean} data-luz-consent - On the section inside the element: the banner itself; hidden until a choice is due.
+ * @attr {boolean} data-luz-consent-ask - On the block with the question and the buttons; it gives way to the confirmation.
+ * @attr {boolean} data-luz-consent-done - On the confirmation block, hidden until a choice is saved; it takes focus.
+ * @attr {boolean} data-luz-consent-close - On the confirmation's Close button: it hides the banner.
+ * @attr {boolean} data-luz-consent-open - On a button anywhere on the page: it shows the banner again with the stored choice; hidden until the script works.
+ * @attr {string} data-luz-consent-key - On the banner: the storage key, which must start with "luz-"; "luz-consent" by default.
+ * @attr {number} data-luz-consent-days - On the banner: days a choice lasts, 180 by default and 395 at most.
+ * @fires luz:consent {CustomEvent} - On document when a choice is saved; detail is { asked, granted, expires } (category names and a time in ms).
  */
 
 const KEY = /^luz-[\w-]+$/;

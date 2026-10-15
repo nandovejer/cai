@@ -8,18 +8,23 @@ A command line that reads the HTML and CSS of a project that uses LUZ and says w
 
 ```bash
 npx @luz-ds/check --help
-npx @luz-ds/check --version
+npx @luz-ds/check index.html css/site.css
+npx @luz-ds/check src --json
 ```
 
 Say `npx @luz-ds/check`, with the scope. The bare name `luz-check` is the command the package installs, not the name to run with `npx`.
 
-In this version the command has its options and its exit codes; the rules that read your files arrive before the first release.
+A path is a file, a folder (read recursively: `.html`, `.htm` and `.css`) or a quoted glob such as `"src/**/*.html"`; with no path it reads the current folder. `--ext .astro,.vue` reads those extensions as HTML, `--json` prints the report as JSON, `--strict` fails on a warning too, and `--config <file>` reads a configuration other than `luz-check.json`.
+
+In this version the command reads your files, reports a file it cannot read as HTML or CSS (`parse/error`) and one it did not read (`file/skipped`: a link, a file over 1 MiB, one it may not open), and has its exit codes, its text and its JSON report. It never follows a link and never quotes your files. The rules about LUZ classes, elements, load order and theme colours, and the accessibility reviewer (`agent`), arrive before the first release.
 
 | Exit code | Meaning |
 | --- | --- |
 | 0 | nothing blocks |
-| 1 | at least one finding blocks |
-| 2 | the command was used wrongly, or there is nothing to read |
+| 1 | at least one finding blocks (with `--strict`, any warning) |
+| 2 | the command was used wrongly, a configuration cannot be read, or there is nothing to read |
+
+It reads source files only. It does not check names, labels, alt text, headings or the language of a page, and a run with no findings says nothing about them.
 
 ## Requirements
 

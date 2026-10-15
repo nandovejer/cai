@@ -15,8 +15,8 @@
  *      served from the same tarballs by a local server: no network is used;
  *   4. the `luz-tokens` command runs from the installed package;
  *   5. the `luz-check` bin of @luz-ds/check, a tool with no CSS, runs from the
- *      installed package (its version, its help, and, once they exist,
- *      tests/fixtures/check/pass and /fail from the packed tarball).
+ *      installed package (its version, its help, tests/fixtures/check/pass,
+ *      and the files of /fail whose rules this version has).
  *
  * Needs the packages built (`pnpm build`) and Chromium
  * (`pnpm test:ui:install`). Nothing leaves the machine: the install is
@@ -414,7 +414,22 @@ if (existsSync(checkFile)) {
   check("luz-check with an unknown option exits 2", wrong.status === 2, `exit ${wrong.status}\n${wrong.stdout}${wrong.stderr}`);
 
   // The fixtures of step 8 are copied next to the installed packages, so the
-  // run finds node_modules/@luz-ds from them as a project's files do
+  // run finds node_modules/@luz-ds from them as a project's files do. Every
+  // file of pass/ must exit 0. A file of fail/ must exit 1 only for a rule
+  // this version of luz-check has: its `expect:` comments name the rules
+  // (<!-- expect: rule line:column --> or /* … */), and a file that names one
+  // that is not in IMPLEMENTED_RULES is skipped with the step that brings it.
+  // Steps 9, 10 and 11 of .claude/plans/specs/f5-ai-ready.md add their rule
+  // ids to IMPLEMENTED_RULES, and nothing else in this block changes.
+  const IMPLEMENTED_RULES = new Set(["parse/error"]);
+  const STEP_OF = [
+    [/^(?:class|element|attr)\//, "step 9"],
+    [/^(?:load|misuse|a11y)\//, "step 10"],
+    [/^(?:theme|css)\//, "step 11"],
+  ];
+  const stepOf = (rule) => STEP_OF.find(([pattern]) => pattern.test(rule))?.[1] ?? "a later step";
+  const expectedRules = (text) => [...text.matchAll(/(?:<!--|\/\*)\s*expect:\s*(\S+)/g)].map((m) => m[1]);
+
   for (const [folder, wanted] of [["pass", 0], ["fail", 1]]) {
     const from = join(root, "tests", "fixtures", "check", folder);
     if (!existsSync(from)) {
@@ -423,12 +438,18 @@ if (existsSync(checkFile)) {
     }
     const to = join(project, "check-fixtures", folder);
     cpSync(from, to, { recursive: true });
-    const files = readdirSync(to, { withFileTypes: true }).filter((e) => e.isFile()).map((e) => e.name).sort();
+    const named = readdirSync(to, { withFileTypes: true }).filter((e) => e.isFile()).map((e) => e.name).sort();
+    const files = [];
+    for (const file of named) {
+      const missingRules = folder === "pass" ? [] : [...new Set(expectedRules(readFileSync(join(to, file), "utf-8")))].filter((rule) => !IMPLEMENTED_RULES.has(rule));
+      if (missingRules.length === 0) files.push(file);
+      else console.log(`– luz-check on ${folder}/${file}: ${missingRules.join(", ")} arrives in ${stepOf(missingRules[0])}, skipped`);
+    }
     const wrongExit = files.map((file) => ({ file, run: luzCheck([`check-fixtures/${folder}/${file}`]) })).filter(({ run }) => run.status !== wanted);
     check(
-      `luz-check exits ${wanted} on each of the ${files.length} files of ${folder}/`,
+      `luz-check exits ${wanted} on each of the ${files.length} files of ${folder}/${files.length < named.length ? " that this version can judge" : ""}`,
       files.length > 0 && wrongExit.length === 0,
-      files.length === 0 ? "the folder is empty" : wrongExit.map(({ file, run }) => `${file}: exit ${run.status}\n${run.stdout}${run.stderr}`).join("\n"),
+      files.length === 0 ? "no file to judge" : wrongExit.map(({ file, run }) => `${file}: exit ${run.status}\n${run.stdout}${run.stderr}`).join("\n"),
     );
   }
 }

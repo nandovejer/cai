@@ -148,17 +148,18 @@
       <p>The name stands for Light, Usable &amp; Zero-dependency: light in weight (plain CSS and ES modules, nothing to build for the people who use it), usable by everyone (native HTML, three color modes, tested for accessibility), and with zero runtime dependencies.</p>
       <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="Package dependency chain"><code>@luz-ds/tokens   -> primitive and semantic tokens (standalone)
       ↓ required by
-@luz-ds/core     -> components, bare-element styles, optional JS
+@luz-ds/core     -> components, objects, bare-element styles, optional JS
       ↓ required by
-@luz-ds/site     -> page patterns and the site search
-      ↓ required by, each on its own
-@luz-ds/landing  -> patterns for a landing page (own version, 0.x)
+@luz-ds/site     -> search, consent, lang-switch, submenu and banner
+
+Each of these needs tokens and core, and takes site as an optional peer:
+@luz-ds/landing  -> header, hero, sections and footer of a landing page (own version, 0.x)
 @luz-ds/cms      -> page structure of a blog, a newspaper or any CMS (own version, 0.x)
 @luz-ds/app      -> header and dashboard of a web application (own version, 0.x)</code></pre>
       <ul>
-        <li>Landing, cms and app can use site, core and tokens, never each other; site can use core and tokens; core can use tokens; tokens uses nothing.</li>
+        <li>Landing, cms and app need tokens and core, and can use site when you load it, never each other; site needs core and tokens; core needs tokens; tokens needs nothing.</li>
         <li>Tokens, core and site share one version. A package for one kind of site, such as landing, cms or app, has its own, and names the major of the others it needs.</li>
-        <li>The packages say so as required peer dependencies, and the core and site scripts warn in the console when a level is missing.</li>
+        <li>The packages say so as peer dependencies: required for tokens and core, optional for site in landing, cms and app. The core and site scripts warn in the console when a level is missing.</li>
       </ul>
     </section>
 

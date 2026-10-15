@@ -166,7 +166,7 @@ test.describe('search: results', () => {
     await open(page);
     await page.keyboard.press('Control+k');
     const changes = await page.evaluate(() => {
-      const region = document.querySelector('[data-luz-search] [role="status"]');
+      const region = document.querySelector('dialog.luz-search [role="status"]');
       const seen = [];
       new MutationObserver(() => seen.push(region.textContent)).observe(region, { childList: true, characterData: true, subtree: true });
       window.__statusChanges = seen;
@@ -324,7 +324,7 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
       return route.fulfill({ status: 500, body: 'no' });
     });
     await open(page);
-    await page.locator('[data-luz-search]').evaluate((d) => {
+    await page.locator('luz-search dialog.luz-search').evaluate((d) => {
       d.setAttribute('data-luz-label-error', 'Down {n}');
       d.setAttribute('data-luz-label-loading', 'Loading {n}');
     });
@@ -377,7 +377,7 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
         return route.abort();
       });
       await open(page);
-      await page.locator('[data-luz-search]').evaluate((d, value) => d.setAttribute('data-luz-search-src', value), src);
+      await page.locator('luz-search dialog.luz-search').evaluate((d, value) => d.setAttribute('data-luz-search-src', value), src);
       await page.keyboard.press('Control+k');
       await expect(status(page), src).toHaveText('Search is not available right now.');
       expect(external, src).toEqual([]);
@@ -399,7 +399,7 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
     expect(sent.filter((url) => new URL(url).origin !== new URL(page.url()).origin)).toEqual([]);
     // Control: a plain fetch() of the same URL follows the 302 (the dev
     // server has no CSP), so the empty list above is the search's redirect: "error"
-    const src = await page.locator('[data-luz-search]').evaluate((d) => new URL(d.dataset.luzSearchSrc, document.baseURI).href);
+    const src = await page.locator('luz-search dialog.luz-search').evaluate((d) => new URL(d.dataset.luzSearchSrc, document.baseURI).href);
     await page.evaluate((url) => fetch(url).catch(() => {}), src);
     await expect.poll(() => sent).toContain(OTHER);
   });
@@ -442,7 +442,7 @@ test.describe('search: rendering', () => {
         await searchFor(page, query);
         await page.waitForTimeout(400);
         const { violations } = await new AxeBuilder({ page })
-          .include('[data-luz-search]')
+          .include('luz-search dialog.luz-search')
           .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
           .analyze();
         const blocking = violations.filter((v) => ['serious', 'critical'].includes(v.impact)).map((v) => `${v.id}: ${v.nodes[0]?.target.join(' ')}`);
@@ -501,12 +501,14 @@ test.describe('search: <luz-search> in the header (F3, D5)', () => {
         hosts: host.length,
         trigger: !!el?.querySelector('button.luz-search__trigger[data-luz-search-open]'),
         fallback: !!el?.querySelector('a.luz-search__fallback[data-luz-search-fallback]'),
-        dialog: !!el?.querySelector('dialog.luz-search[data-luz-search]'),
+        dialog: !!el?.querySelector('dialog.luz-search'),
+        // The dialog is found by its class: a bare data-luz-search attribute is not part of the contract
+        dialogMarker: !!el?.querySelector('dialog.luz-search[data-luz-search]'),
         oldTag: customElements.get('luz-site-search') !== undefined || !!document.querySelector('luz-site-search'),
         oldClass: !!document.querySelector('[class*="luz-site-search"]'),
       };
     });
-    expect(parts).toEqual({ hosts: 1, trigger: true, fallback: true, dialog: true, oldTag: false, oldClass: false });
+    expect(parts).toEqual({ hosts: 1, trigger: true, fallback: true, dialog: true, dialogMarker: false, oldTag: false, oldClass: false });
   });
 
   test('the trigger is named by its visible label, and the key hint is hidden from assistive technology (S5)', async ({ page }) => {

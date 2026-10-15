@@ -136,7 +136,7 @@ describe("routes", () => {
     // The not-found page: from the site's path
     expect(relativizeLinks('<a href="/">a</a><a href="/docs/#x">b</a>', "/404.html", routes, "/luz/")).toBe('<a href="/luz/">a</a><a href="/luz/docs/#x">b</a>');
     // The search index URL of the dialog, from any depth
-    const dialog = '<dialog data-luz-search data-luz-search-src="/docs/search-index.json"></dialog>';
+    const dialog = '<dialog class="luz-search" data-luz-search-src="/docs/search-index.json"></dialog>';
     expect(relativizeLinks(dialog, "/docs/components/button/", routes)).toContain('data-luz-search-src="../../../docs/search-index.json"');
     expect(relativizeLinks(dialog, "/", routes)).toContain('data-luz-search-src="./docs/search-index.json"');
   });

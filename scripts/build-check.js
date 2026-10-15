@@ -7,7 +7,9 @@
  *
  * esbuild, as scripts/build-package.js: Node, ESM, node20, every `node:`
  * built-in left as an import. Not minified (people and the security audit
- * read it), no source map, and nothing in it that changes between runs: the
+ * read it), no source map, and the `sample` of each message of messages.js
+ * left out (it is what tests/check-messages.test.js renders, never what the
+ * tool says), and nothing in it that changes between runs: the
  * paths in its comments are relative to the repository, and the shebang is
  * the one line esbuild writes first. `packages: "external"` keeps a bare
  * import an import, which tests/check-capabilities.test.js then rejects,
@@ -108,6 +110,17 @@ function writeData(folder) {
   writeFileSync(resolve(data, "index.json"), `${JSON.stringify({ schema: 1, packages }, null, 2)}\n`, "utf-8");
 }
 
+/** The `sample: {…},` lines of messages.js, which only the tests read: out of the shipped bundle. */
+const withoutSamples = {
+  name: "luz-check-no-samples",
+  setup(build) {
+    build.onLoad({ filter: /[\\/]check[\\/]src[\\/]messages\.js$/ }, (args) => ({
+      contents: readFileSync(args.path, "utf-8").replace(/\n[ \t]*sample: \{[^\n]*\},(?=\n)/g, ""),
+      loader: "js",
+    }));
+  },
+};
+
 /**
  * @param {object} [options]
  * @param {string} [options.outdir] where luz-check.js and data/ are written (default: packages/check/dist, emptied first)
@@ -130,6 +143,7 @@ export async function buildCheck({ outdir = defaultOutdir } = {}) {
     target: "node20",
     packages: "external",
     metafile: true,
+    plugins: [withoutSamples],
     banner: { js: "#!/usr/bin/env node" },
     minify: false,
     legalComments: "inline",

@@ -167,7 +167,7 @@ function* tokenize(html, file, lenient, detail) {
       } else attrs.set(attrName, value);
     }
     const name = open[1].toLowerCase();
-    const token = { type: "start", name, attrs, selfClosing, line, column, index: lt, end: j + 1 };
+    const token = { type: "start", name, written: open[1], attrs, selfClosing, line, column, index: lt, end: j + 1 };
     if (lenient) token.problems = problems;
     i = j + 1;
     if (RAW_TEXT_END[name] && !selfClosing) {
@@ -188,7 +188,8 @@ function* tokenize(html, file, lenient, detail) {
 }
 
 /**
- * Split `html` into tags. Yields { type: "start" | "end", name, attrs (Map of
+ * Split `html` into tags. Yields { type: "start" | "end", name, written (a
+ * start tag: the name as the file spells it), attrs (Map of
  * name -> value), selfClosing, line, column, index, end }. Text, comments and
  * the doctype are skipped; raw-text elements (script, style, textarea, title)
  * are skipped to their end tag. A start tag has `problems` in lenient mode.
@@ -204,16 +205,20 @@ export function* tags(html, file = "<html>", { lenient = false } = {}) {
 
 /**
  * The records the rules read, in document order, lenient. Yields
- *   { type: "element", name, attrs, parentChain, selfClosing, line, column, problems, text? }
+ *   { type: "element", name, written, attrs, parentChain, parent, inert, selfClosing, line, column, problems, text? }
  * for each start tag (`attrs`: Map of name -> { value, line, column }, the
- * first of a duplicate wins; `parentChain`: the names of the open ancestors,
- * outermost first; `text`: the content of a raw-text element, as written), and
+ * first of a duplicate wins; `written`: the name as the file spells it, `name`
+ * being lowercase; `parentChain`: the names of the open ancestors, outermost
+ * first; `parent`: the record of the nearest one, or null, so a rule walks the
+ * ancestors without a copy; `inert`: the element or an ancestor has the
+ * `inert` attribute; `text`: the content of a raw-text element, as written), and
  * finally { type: "error", line, column, message } when the file stops making
  * sense. The ancestor stack is best effort: an end tag pops to its element, a
  * stray end tag is ignored, implied end tags (<li>, <p>) are not modelled.
  */
 export function* scan(html, file = "<html>") {
   const stack = [];
+  const owners = []; // the record of each name in `stack`
   let foreign = 0;
   for (const token of tokenize(html, file, true, true)) {
     if (token.type === "error") {
@@ -222,11 +227,15 @@ export function* scan(html, file = "<html>") {
     }
     const { name } = token;
     if (token.type === "start") {
+      const parent = owners.length > 0 ? owners[owners.length - 1] : null;
       const record = {
         type: "element",
         name,
+        written: token.written,
         attrs: token.attrs,
         parentChain: stack.slice(),
+        parent,
+        inert: token.attrs.has("inert") || (parent !== null && parent.inert),
         selfClosing: token.selfClosing,
         line: token.line,
         column: token.column,
@@ -237,10 +246,12 @@ export function* scan(html, file = "<html>") {
       if (VOID.has(name) || stack.length >= MAX_DEPTH) continue;
       if (token.selfClosing && (foreign > 0 || FOREIGN.has(name))) continue;
       stack.push(name);
+      owners.push(record);
       if (FOREIGN.has(name)) foreign++;
     } else {
       const at = stack.lastIndexOf(name);
       if (at === -1) continue;
+      owners.length = at;
       while (stack.length > at) if (FOREIGN.has(stack.pop())) foreign--;
     }
   }

@@ -14,8 +14,10 @@
  * `file:line:column`), except `*.min.css`: the same rules in one line.
  *
  * Shape (schema 1): { schema, package, version, classes, properties, hooks? }.
- *   classes     [{ name, kind, layer, files, defined, block?, modifier?, part? }]
+ *   classes     [{ name, kind, layer, files, defined, block?, modifier?, part?, hosts? }]
  *               by name. Only the LUZ namespace: `luz-*`, `o-*`, `u-*`, `is-*`.
+ *               `hosts` (the last key) is the list of a `@host` line of a
+ *               stylesheet comment, as written, in order: see `hostsOf`.
  *   properties  [{ name, scope, layer, files? }] by name. Only `--luz-*`;
  *               `files` only for a property a component sets for itself.
  *   hooks       ["data-luz-…"] (the last key, and only when the package reads
@@ -100,6 +102,58 @@ function unminified(dir, ext, prefix = "") {
     else if (entry.endsWith(ext) && !entry.endsWith(`.min${ext}`)) out.push(rel);
   }
   return out;
+}
+
+const HOST_LINE = /^@host(?![\w-])/;
+const HOST_DECLARATION = /^@host\s+([A-Za-z0-9_-]+)\s*:\s*(\S.*)$/;
+const HOST_SELECTOR = /^[a-z][a-z0-9]*(?:\[[a-z][a-z-]*(?:=[A-Za-z0-9_-]+)?\])?$/;
+
+/**
+ * The `@host <block>: <selector>, …` lines of the block comments of a
+ * stylesheet (D13-A): a tag with at most one attribute test, `a`,
+ * `input[type=submit]`, `a[href]`. A `@host` in a string or a declaration is
+ * not read. Throws, `file:line`, on a line that does not follow the grammar.
+ * @returns {{ block: string, hosts: string[], line: number }[]}
+ */
+function hostsOf(text, file) {
+  const found = [];
+  let line = 1;
+  let counted = 0;
+  const lineOf = (index) => {
+    for (let i = text.indexOf("\n", counted); i !== -1 && i < index; i = text.indexOf("\n", counted)) {
+      line++;
+      counted = i + 1;
+    }
+    return line;
+  };
+  for (let i = 0; i < text.length; ) {
+    const c = text[i];
+    if (c === "/" && text[i + 1] === "*") {
+      const close = text.indexOf("*/", i + 2);
+      const end = close === -1 ? text.length : close;
+      const body = text.slice(i + 2, end);
+      if (body.includes("@host")) {
+        const first = lineOf(i);
+        body.split("\n").forEach((raw, offset) => {
+          const source = raw.replace(/^[\s*]*/, "").trimEnd();
+          if (!HOST_LINE.test(source)) return;
+          const at = `${file}:${first + offset}`;
+          const m = HOST_DECLARATION.exec(source);
+          const hosts = m ? m[2].split(",").map((item) => item.trim()) : [];
+          if (!m || !hosts.every((host) => HOST_SELECTOR.test(host))) {
+            throw new Error(`${at}: "${source.slice(0, 100)}" does not follow "@host <block>: <tag>[, <tag>[attribute=value]]"; each host is a lowercase tag with at most one attribute test`);
+          }
+          found.push({ block: m[1], hosts, line: first + offset });
+        });
+      }
+      i = end + 2;
+    } else if (c === '"' || c === "'") {
+      let j = i + 1;
+      while (j < text.length && text[j] !== c && text[j] !== "\n") j += text[j] === "\\" ? 2 : 1;
+      i = j + 1;
+    } else i++;
+  }
+  return found;
 }
 
 const HOOK_IN_CSS = /\[\s*(data-luz-[a-z0-9]+(?:-[a-z0-9]+)*)(?![-a-z0-9])/g;
@@ -315,8 +369,17 @@ export function buildClassManifest(name, { root = repoRoot } = {}) {
 
   const classes = new Map();
   const properties = new Map();
+  const hosted = new Map(); // block -> { hosts, at }
   for (const file of files) {
-    const read = readCss(readFileSync(join(dist, file), "utf-8"), `packages/${name}/dist/${file}`, { strict: true });
+    const source = readFileSync(join(dist, file), "utf-8");
+    const at = `packages/${name}/dist/${file}`;
+    const read = readCss(source, at, { strict: true });
+    for (const declared of hostsOf(source, at)) {
+      const known = hosted.get(declared.block);
+      const here = { hosts: declared.hosts, at: `${at}:${declared.line}`, file };
+      if (known === undefined) hosted.set(declared.block, here);
+      else if (known.hosts.join() !== here.hosts.join()) throw new Error(`${here.at}: @host ${declared.block} lists ${here.hosts.join(", ")}; ${known.at} lists ${known.hosts.join(", ")}; give the block one list`);
+    }
     for (const c of read.classes) {
       if (!CLASS_NAMESPACE.test(c.name)) continue;
       let entry = classes.get(c.name);
@@ -347,6 +410,12 @@ export function buildClassManifest(name, { root = repoRoot } = {}) {
     }
   }
 
+  // A block that carries hosts is a class a stylesheet of the package defines, and not a modifier or a part
+  for (const [block, { at }] of hosted) {
+    if (block.includes("--") || block.includes("__")) throw new Error(`${at}: @host ${block} is a modifier or a part; a list of hosts belongs to the block`);
+    if (classes.get(block)?.defined !== true) throw new Error(`${at}: @host ${block}: no stylesheet of ${pkg.name} defines .${block}`);
+  }
+
   // What the unminified scripts name that no stylesheet lists
   const exportedScript = typeof pkg.exports?.["."] === "string" ? pkg.exports["."] : pkg.exports?.["."]?.default;
   const script = typeof exportedScript === "string" && exportedScript.startsWith("./dist/") && exportedScript.endsWith(".js") ? exportedScript.slice("./dist/".length) : null;
@@ -373,6 +442,8 @@ export function buildClassManifest(name, { root = repoRoot } = {}) {
         if (modifier !== undefined) out.modifier = modifier;
         if (part !== undefined) out.part = part;
       }
+      const hosts = hosted.get(className)?.hosts;
+      if (hosts !== undefined) out.hosts = hosts;
       return out;
     })
     .sort(byName);

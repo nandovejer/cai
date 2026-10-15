@@ -22,6 +22,9 @@
  * pass MAX_MESSAGE shortens its values (with …) until it fits, so the
  * fix clause is never the part that is cut.
  *
+ * A rule that counts files has a `:one` entry that `message()` takes when the
+ * count is "1" (`load/no-stylesheet:one`).
+ *
  * A key of a rule that blocks may be a variant that only warns
  * (`parse/error:template`: a template file is not HTML a browser reads;
  * `class/unknown:newer`: the page loads a LUZ release newer than the checker
@@ -94,6 +97,11 @@ export const MESSAGES = {
     template: ".{name} is in @luz-ds/{package}, which this page does not load; add its stylesheet after core",
     sample: { name: "luz-banner", package: "site" },
   },
+  "load/package-missing:tag": {
+    severity: "block",
+    template: "<{tag}> is in @luz-ds/{package}, which this page does not load; add its stylesheet after core",
+    sample: { tag: "luz-banner", package: "site" },
+  },
   "load/layer-statement": {
     severity: "block",
     template: "<{tag}> declares the layers after the LUZ link; move it before the first LUZ stylesheet",
@@ -131,6 +139,11 @@ export const MESSAGES = {
     template: "{count} checked files load no LUZ stylesheet; add the LUZ links to the page or its layout",
     sample: { count: "3" },
   },
+  "load/no-stylesheet:one": {
+    severity: "warn",
+    template: "{count} checked file loads no LUZ stylesheet; add the LUZ links to the page or its layout",
+    sample: { count: "1" },
+  },
   "class/unknown-in-css": {
     severity: "warn",
     template: ".{name} is not a LUZ class; the closest is .{closest}",
@@ -160,6 +173,11 @@ export const MESSAGES = {
     severity: "warn",
     template: "{role} is a role set on <{tag}>; use <{element}> instead",
     sample: { role: "button", tag: "div", element: "button" },
+  },
+  "a11y/role-on-generic:onclick": {
+    severity: "warn",
+    template: "{attribute} on <{tag}> does not work from the keyboard; use <button> instead",
+    sample: { attribute: "onclick", tag: "div" },
   },
   "a11y/link-no-href": {
     severity: "warn",
@@ -284,8 +302,10 @@ function fit(values, room) {
  */
 export function message(key, vars) {
   if (typeof key !== "string" || !Object.hasOwn(MESSAGES, key)) throw new Error(`no message for the key ${echoName(key)}`);
-  const { template } = MESSAGES[key];
   const given = vars && typeof vars === "object" ? vars : {};
+  // A count of 1 reads in the singular, from the `:one` entry of the same rule
+  const one = `${key}:one`;
+  const { template } = MESSAGES[given.count === "1" && Object.hasOwn(MESSAGES, one) ? one : key];
   const parts = template.split(/\{([A-Za-z][A-Za-z0-9]*)\}/);
   // parts alternates text, name, text, name…
   let values = [];

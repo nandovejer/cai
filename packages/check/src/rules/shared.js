@@ -4,6 +4,12 @@
  *   packageOfName(name)       the package a name's prefix points at, for the
  *                             "see classes.json of @luz-ds/<package>" text
  *   isEcho(name)              is it a name that may be written in a message
+ *   classAttribute(record, template)  the `class` attribute of an element
+ *                             record ({ value, line, column }; `className` in
+ *                             a template file), or undefined
+ *   classTokens(value, template)      the tokens of a class value a rule may
+ *                             judge: none for a template's computed value, and
+ *                             not a token that holds `{ } $ : @ [`
  *   createBudget()            how many suggestions are worked out: a finding
  *                             past the caps of report.js is never printed, so
  *                             it does not need its nearest name
@@ -27,6 +33,17 @@ export function packageOfName(name) {
 }
 
 export const isEcho = (name) => echoName(name) === name;
+
+const TOKEN_SKIP = /[{}$:@[]/;
+const VALUE_SKIP = /[{}$<%@(]/;
+const SPACE = /[ \t\n\r\f]+/;
+
+export const classAttribute = (record, template) => record.attrs.get("class") ?? (template ? record.attrs.get("classname") : undefined);
+
+export function classTokens(value, template) {
+  if (template && VALUE_SKIP.test(value)) return [];
+  return value.split(SPACE).filter((token) => token.length >= 3 && !TOKEN_SKIP.test(token));
+}
 
 /** @returns {() => (rule: string) => boolean} a function that starts a file's count */
 export function createBudget() {

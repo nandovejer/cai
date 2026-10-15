@@ -18,11 +18,8 @@
  */
 import { finding } from "../report.js";
 import { closest } from "../suggest.js";
-import { isEcho, packageOfName } from "./shared.js";
+import { classAttribute, classTokens, isEcho, packageOfName } from "./shared.js";
 
-const TOKEN_SKIP = /[{}$:@[]/;
-const VALUE_SKIP = /[{}$<%@(]/;
-const SPACE = /[ \t\n\r\f]+/;
 const LINK = /@luz-ds\/(tokens|core|site|landing|cms|app)@(\d{1,9})\.(\d{1,9})\.(\d{1,9})/g;
 const SEMVER = /^(\d{1,9})\.(\d{1,9})\.(\d{1,9})/;
 
@@ -86,12 +83,9 @@ export function unknownClasses(ctx) {
   const memo = memoOf(world);
   let newer; // the newer release the page links, looked up at the first unknown class
   for (const record of records) {
-    const attribute = record.attrs.get("class") ?? (template ? record.attrs.get("classname") : undefined);
+    const attribute = classAttribute(record, template);
     if (attribute === undefined) continue;
-    const { value } = attribute;
-    if (template && VALUE_SKIP.test(value)) continue;
-    for (const token of value.split(SPACE)) {
-      if (token.length < 3 || TOKEN_SKIP.test(token)) continue;
+    for (const token of classTokens(attribute.value, template)) {
       if (!token.startsWith("luz-") && !token.startsWith("o-") && !token.startsWith("u-")) continue;
       let entry = memo.get(token);
       if (entry === undefined) {

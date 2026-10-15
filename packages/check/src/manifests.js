@@ -20,7 +20,10 @@
  *   packages   [{ package, version, source: "node_modules" | "bundled" }] in
  *              dependency order, one per package that has a manifest
  *   classes    Set of every class name; `byPrefix` the sorted names of
- *              `luz-`, `o-` and `u-`; `blocks` the BEM blocks
+ *              `luz-`, `o-` and `u-`; `blocks` the BEM blocks; `info` Map
+ *              name -> { kind, defined, block, modifier, part, hosts, package }
+ *              (what the manifest says; `hosts` is an array of selectors, a
+ *              tag with at most one attribute test, or undefined)
  *   tags       Map tag -> { attributes: Set, package }; `tagNames` the tags, sorted
  *   hooks      Set of the data-luz-* names LUZ reads (manifest hooks plus
  *              every attribute of every element)
@@ -42,6 +45,8 @@ const MAX_HOOKS = 2000;
 const NAME = /^[A-Za-z0-9_:.\-/]{1,64}$/;
 const TAG = /^[a-z][a-z0-9-]{0,63}$/;
 const HOOK = /^data-luz-[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const HOST = /^[a-z][a-z0-9]{0,31}(?:\[[a-z][a-z-]{0,31}(?:=[A-Za-z0-9_-]{1,32})?\])?$/;
+const MAX_HOSTS = 16;
 const VERSION = /^[0-9A-Za-z.+_-]{1,40}$/;
 const FORBIDDEN = new Set(["__proto__", "constructor", "prototype"]);
 
@@ -58,7 +63,7 @@ function readJson(path, max) {
   }
 }
 
-/** classes.json of schema 1 -> { version, classes: [{ name, block }], hooks } or null. */
+/** classes.json of schema 1 -> { version, classes: [{ name, block, kind, defined, modifier, part, hosts }], hooks } or null. */
 function parseClasses(data, pkg) {
   if (!isObject(data) || data.schema !== 1 || data.package !== `@luz-ds/${pkg}`) return null;
   if (typeof data.version !== "string" || !VERSION.test(data.version)) return null;
@@ -66,8 +71,10 @@ function parseClasses(data, pkg) {
   const classes = [];
   for (const entry of data.classes) {
     if (!isObject(entry) || !isName(entry.name)) return null;
-    if (entry.block !== undefined && !isName(entry.block)) return null;
-    classes.push({ name: entry.name, block: entry.block });
+    for (const key of ["block", "modifier", "part"]) if (entry[key] !== undefined && !isName(entry[key])) return null;
+    const { hosts } = entry;
+    if (hosts !== undefined && !(Array.isArray(hosts) && hosts.length > 0 && hosts.length <= MAX_HOSTS && hosts.every((host) => typeof host === "string" && HOST.test(host)))) return null;
+    classes.push({ name: entry.name, block: entry.block, kind: entry.kind, defined: entry.defined, modifier: entry.modifier, part: entry.part, hosts });
   }
   if (data.properties !== undefined && !Array.isArray(data.properties)) return null;
   let hooks = [];
@@ -135,14 +142,14 @@ function buildWorld(parts) {
   const versions = new Map();
   const packages = [];
   const names = { luz: [], o: [], u: [] };
-  const packageOf = new Map();
+  const info = new Map();
   for (const part of parts) {
     packages.push({ package: `@luz-ds/${part.name}`, version: part.version, source: part.source });
     versions.set(part.name, { version: part.version, source: part.source });
-    for (const { name, block } of part.classes) {
+    for (const { name, block, ...rest } of part.classes) {
       if (!classes.has(name)) {
         classes.add(name);
-        packageOf.set(name, part.name);
+        info.set(name, { block, ...rest, package: part.name });
         if (name.startsWith("luz-")) names.luz.push(name);
         else if (name.startsWith("o-")) names.o.push(name);
         else if (name.startsWith("u-")) names.u.push(name);
@@ -163,7 +170,7 @@ function buildWorld(parts) {
     }
   }
   for (const list of Object.values(names)) list.sort();
-  return { packages, classes, blocks, tags, tagNames: [...tags.keys()].sort(), hooks, versions, byPrefix: names, packageOf };
+  return { packages, classes, blocks, tags, tagNames: [...tags.keys()].sort(), hooks, versions, byPrefix: names, info };
 }
 
 /**

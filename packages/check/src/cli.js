@@ -30,6 +30,7 @@ import { readCss } from "./css.js";
 import { scan } from "./html.js";
 import { PACKAGES as PACKAGE_ORDER, createFacts } from "./manifests.js";
 import { buildReport, finding, formatJson, formatText } from "./report.js";
+import { documentOf, importsOf, reachesLuz } from "./rules/load.js";
 import { checkParsed, namesLuz } from "./rules/index.js";
 import { createBudget } from "./rules/shared.js";
 import { cleanText, displayPath } from "./sanitize.js";
@@ -157,6 +158,13 @@ function definedClasses(files) {
   };
 }
 
+/** The `@import` URLs of each stylesheet of the run, by path: where a <link> to the project's own CSS leads. */
+function importsOfRun(files) {
+  const imports = new Map();
+  for (const file of files) if (file.kind === "css" && file.text.includes("@import")) imports.set(file.path, importsOf(file.text));
+  return imports;
+}
+
 /** luz-check.json of the working directory, or the file --config names. -> { config, file } */
 function loadConfig(cwd, option) {
   const wanted = option === null ? resolve(cwd, "luz-check.json") : resolve(cwd, option);
@@ -226,17 +234,28 @@ function execute(argv, env) {
   const data = typeof env.data === "string" && env.data !== "" ? env.data : BUNDLED_DATA;
   const facts = createFacts({ data });
   const defined = definedClasses(files);
+  const imports = importsOfRun(files);
   const startFile = createBudget();
   const manifests = [];
   const seen = new Set();
   const findings = [];
+  // load/no-stylesheet: the pages that name LUZ (a fragment or a file of --ext has no head to link from), and whether any file of the run brings a stylesheet
+  const named = [];
+  let reached = false;
   for (const file of files) {
     const parsed = parseFile(file);
     for (const error of parsed.errors) {
       const key = file.kind === "template" ? "parse/error:template" : "parse/error";
       findings.push(finding(key, { file: file.path, line: error.line, column: error.column, vars: { kind: error.kind } }));
     }
+    let doc = null;
+    if (file.kind === "css") reached = reached || reachesLuz(file.path, imports);
+    else {
+      doc = documentOf(parsed.records, file.path, imports);
+      reached = reached || doc.bundled || doc.dynamic || doc.inline || doc.entries.length > 0;
+    }
     if (!namesLuz(parsed)) continue;
+    if (doc !== null && doc.page && file.kind === "html" && parsed.errors.length === 0) named.push(file.path);
     const world = facts.forDirectory(dirname(resolve(cwd, file.path)));
     if (world.packages.length === 0) return usageError(NO_MANIFEST);
     for (const entry of world.packages) {
@@ -246,8 +265,9 @@ function execute(argv, env) {
         manifests.push(entry);
       }
     }
-    for (const found of checkParsed(parsed, { world, defined, take: startFile() })) findings.push(found);
+    for (const found of checkParsed(parsed, { world, defined, take: startFile(), doc })) findings.push(found);
   }
+  if (named.length > 0 && !reached) findings.push(finding("load/no-stylesheet", { file: named[0], vars: { count: String(named.length) } }));
   // A warning a config switched off is not reported; a blocking rule cannot be switched off
   const kept = findings.filter((found) => !(found.severity === "warn" && config.rules[found.rule] === "off"));
   const order = new Map(PACKAGE_ORDER.map((name, index) => [`@luz-ds/${name}`, index]));

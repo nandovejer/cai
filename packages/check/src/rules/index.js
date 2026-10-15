@@ -10,14 +10,20 @@
  *   checkParsed(parsed, ctx) the findings of one file
  *
  * `parsed` is { path, kind, records, error, css, styleClasses } as cli.js
- * reads a file once; `ctx` is { world, defined, take }.
+ * reads a file once; `ctx` is { world, defined, take, doc } where `doc` is
+ * what a markup file links (rules/load.js documentOf). load/no-stylesheet is
+ * about the whole run and is cli.js's.
  */
 import { elementRules } from "./element.js";
 import { stylesheetClasses, unknownClasses } from "./class.js";
+import { loadRules } from "./load.js";
+import { misuseRules } from "./misuse.js";
 
 export const RULES = Object.freeze({
   class: ["class/unknown", "class/unknown-in-css", "class/reserved-prefix"],
   element: ["element/unknown", "element/unknown-attribute", "attr/unknown-hook"],
+  load: ["load/tokens-missing", "load/package-missing", "load/layer-statement", "load/order", "load/no-stylesheet"],
+  misuse: ["misuse/host-element", "misuse/modifier-alone", "misuse/part-orphan", "misuse/state-class", "a11y/role-on-generic", "a11y/link-no-href"],
 });
 
 const LUZ_FILE = /(?:^|[/@])luz[-.a-z]*\.(?:css|js)(?:[?#]|$)/i;
@@ -41,6 +47,6 @@ export function namesLuz(parsed) {
 export function checkParsed(parsed, ctx) {
   const base = { file: parsed.path, world: ctx.world, defined: ctx.defined, take: ctx.take };
   if (parsed.css !== null) return stylesheetClasses({ ...base, css: parsed.css });
-  const markup = { ...base, records: parsed.records, template: parsed.kind === "template" };
-  return [...unknownClasses(markup), ...elementRules(markup)];
+  const markup = { ...base, records: parsed.records, template: parsed.kind === "template", doc: ctx.doc };
+  return [...unknownClasses(markup), ...elementRules(markup), ...loadRules(markup), ...misuseRules(markup)];
 }

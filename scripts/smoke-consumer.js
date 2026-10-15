@@ -421,7 +421,8 @@ if (existsSync(checkFile)) {
   // that is not in IMPLEMENTED_RULES is skipped with the step that brings it.
   // Steps 9, 10 and 11 of .claude/plans/specs/f5-ai-ready.md add their rule
   // ids to IMPLEMENTED_RULES, and nothing else in this block changes. Step 9:
-  // the rules of names (classes, elements, attributes).
+  // the rules of names (classes, elements, attributes). Step 10: loading,
+  // misuse and accessibility.
   const IMPLEMENTED_RULES = new Set([
     "parse/error",
     "class/unknown",
@@ -430,6 +431,17 @@ if (existsSync(checkFile)) {
     "element/unknown",
     "element/unknown-attribute",
     "attr/unknown-hook",
+    "load/tokens-missing",
+    "load/package-missing",
+    "load/layer-statement",
+    "load/order",
+    "load/no-stylesheet",
+    "misuse/host-element",
+    "misuse/modifier-alone",
+    "misuse/part-orphan",
+    "misuse/state-class",
+    "a11y/role-on-generic",
+    "a11y/link-no-href",
   ]);
   const STEP_OF = [
     [/^(?:class|element|attr)\//, "step 9"],

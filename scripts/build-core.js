@@ -10,6 +10,8 @@
  *   and dist/base.css (settings + reset + elements) as their prerequisite
  * - JS: bundle with Rollup — utils.js inlined, midi.js, table-sort.js and timeline.js as lazy chunks;
  *   individual modules copied verbatim (browser-native ESM)
+ * - Languages: src/i18n/<code>.json is validated (scripts/i18n-languages.js) and written as
+ *   dist/i18n-<code>.js, `export default` of its strings: the lazy chunk i18n.js loads by a literal
  * - Themes: copy src/themes/*.css → dist/themes/
  * - classes.json: the class manifest, read back from the CSS (scripts/ai-manifests.js)
  */
@@ -29,12 +31,20 @@ import { rollup } from "rollup";
 import * as esbuild from "esbuild";
 import { writeManifests } from "./ai-manifests.js";
 import { LAYER_ORDER, inLuzLayer } from "./luz-layers.js";
+import { moduleOf, readLanguages } from "./i18n-languages.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
 const coreRoot = resolve(repoRoot, "packages/core");
 const srcRoot = resolve(coreRoot, "src");
 const distRoot = resolve(coreRoot, "dist");
+
+// A language that breaks the schema fails the build before anything is written
+const { languages, failures } = readLanguages(srcRoot);
+if (failures.length) {
+  for (const failure of failures) console.error(`❌ ${failure}`);
+  process.exit(1);
+}
 
 // Start from a clean dist so removed sources never linger in the tarball
 rmSync(distRoot, { recursive: true, force: true });
@@ -118,7 +128,9 @@ async function buildJS() {
   try {
     const bundle = await rollup({
       input: resolve(srcRoot, "luz.js"),
-      external: [], // Nothing is external — all modules must be resolved
+      // Nothing is external but the language files: i18n.js names them by a literal
+      // (SEC-CHUNK-1) and the build writes them below, from the JSON
+      external: (id) => /^\.\/i18n-[a-z]{2,3}\.js$/.test(id),
     });
 
     await bundle.write({
@@ -131,6 +143,13 @@ async function buildJS() {
 
     await bundle.close();
     console.log(`✓ Core JS bundled → ${resolve(distRoot, "luz.js")}`);
+
+    // Each language: exactly `export default {…}` of its JSON, written here and
+    // not by Rollup, so the module a page runs is never a contributor's own bytes
+    for (const { code, strings } of languages) {
+      writeFileSync(resolve(distRoot, `i18n-${code}.js`), moduleOf(strings), "utf-8");
+    }
+    console.log(`✓ ${languages.length} language chunk(s) → dist/i18n-<code>.js`);
 
     // Individual modules: the source IS the artifact (browser-native ESM
     // with relative imports only) — copy verbatim next to the bundle.
@@ -156,7 +175,7 @@ async function buildJS() {
     // Minify JS outputs with esbuild. A minified file imports the minified
     // siblings, so luz.min.js lazy-loads midi.min.js, table-sort.min.js and
     // timeline.min.js, not the unminified chunks (red line 17: the chunk a page loads is the one budgeted).
-    const minified = ["luz.js", "midi.js", "table-sort.js", "timeline.js", ...jsModules];
+    const minified = ["luz.js", "midi.js", "table-sort.js", "timeline.js", ...languages.map((l) => `i18n-${l.code}.js`), ...jsModules];
     for (const jsFile of minified) {
       const jsPath = resolve(distRoot, jsFile);
       if (!existsSync(jsPath)) continue;

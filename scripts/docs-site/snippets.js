@@ -22,7 +22,7 @@ import { join } from "node:path";
 /** The files of each package that a snippet or the chunks table names (spec 3.4.1). */
 export const FILES = {
   tokens: { css: "luz-tokens.min.css", js: null, chunks: [] },
-  core: { css: "luz.min.css", js: "luz.min.js", chunks: ["midi.min.js", "table-sort.min.js", "timeline.min.js"] },
+  core: { css: "luz.min.css", js: "luz.min.js", chunks: ["midi.min.js", "table-sort.min.js", "timeline.min.js", "i18n-es.min.js"] },
   site: { css: "site.min.css", js: "site.min.js", chunks: ["search.min.js", "consent.min.js"] },
   landing: { css: "landing.min.css", js: null, chunks: [] },
   cms: { css: "cms.min.css", js: null, chunks: [] },
@@ -48,6 +48,7 @@ const CHUNK_WHEN = {
   "midi.min.js": ["core", "a <code>.luz-player</code> with <code>data-type=\"midi\"</code>"],
   "table-sort.min.js": ["core", "a sortable table, with <code>th[data-luz-sort]</code>"],
   "timeline.min.js": ["core", "a <code>&lt;luz-timeline&gt;</code>"],
+  "i18n-es.min.js": ["core", "an element with <code>lang=\"es\"</code>, on <code>&lt;html&gt;</code> or in the page, outside a link or an option"],
   "search.min.js": ["site", "a <code>&lt;luz-search&gt;</code>"],
   "consent.min.js": ["site", "a <code>&lt;luz-consent&gt;</code>"],
 };
@@ -221,7 +222,7 @@ function renderChunks(data) {
   });
   return `    <section class="docs-block" aria-labelledby="chunks">
       <h2 class="docs-chapter__title" id="chunks">Lazy chunks</h2>
-      <p>Core and site load some files only when the page needs them: a sortable table, a timeline, a MIDI player, the search, the cookie banner. A hash on a script covers that file only, so give each chunk its own hash in a <code>modulepreload</code> link before the script that loads it. The browser checks the file there, and a file with a wrong hash never runs.</p>
+      <p>Core and site load some files only when the page needs them: a sortable table, a timeline, a MIDI player, a page in Spanish, the search, the cookie banner. A hash on a script covers that file only, so give each chunk its own hash in a <code>modulepreload</code> link before the script that loads it. The browser checks the file there, and a file with a wrong hash never runs.</p>
       <p>These lines are not in the snippets above on purpose: a <code>modulepreload</code> fetches at once, so one in every snippet would download a MIDI parser for a page with no player. Add a line only if the page has what its row names.</p>
       <div class="luz-table-wrap" role="region" aria-label="Lazy chunks" tabindex="0">
         <table class="luz-table">

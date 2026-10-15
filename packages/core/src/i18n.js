@@ -5,11 +5,16 @@
  * is written to.
  *
  * Language: the nearest `lang` attribute, then <html lang>. A full tag
- * (es-MX) falls back to its primary subtag (es), then to English.
+ * (es-MX) falls back to its primary subtag, then to English.
  * Precedence: data-luz-label-<key> on the element or an ancestor >
  * dictionary for the resolved language > English.
  *
- * Importing this module has no side effects.
+ * English is here. Every other language LUZ ships is a lazy file beside
+ * this one, built from src/i18n/<code>.json; loadLocales() fetches the ones
+ * a page uses. The consumer's own languages come from registerLocale().
+ *
+ * Importing this module has no side effects: nothing is fetched until
+ * loadLocales() is called.
  */
 
 const locales = {
@@ -37,34 +42,15 @@ const locales = {
     modeChanged: "Color mode: {mode}",
     sortedAsc: "Sorted by {column}, ascending",
     sortedDesc: "Sorted by {column}, descending",
-  },
-  es: {
-    play: "Reproducir",
-    pause: "Pausar",
-    mute: "Silenciar",
-    unmute: "Activar sonido",
-    fullscreen: "Ver a pantalla completa",
-    exitFullscreen: "Salir de pantalla completa",
-    captions: "Subtítulos",
-    captionsOff: "Desactivados",
-    loading: "Cargando…",
-    midiError: "No se pudo cargar el archivo MIDI. Recarga la página para intentarlo de nuevo.",
-    timeOf: "{current} de {total}",
-    copy: "Copiar",
-    copied: "Copiado",
-    copiedStatus: "Copiado al portapapeles",
-    copyFailed: "No se pudo copiar. Selecciona el texto y cópialo a mano.",
-    codeExample: "Ejemplo de {lang}",
-    copyCode: "Copiar el ejemplo de código {n}",
-    applyTheme: "Aplicar tema",
-    themeApplied: "Aplicado",
-    changeMode: "Cambiar el modo de color. Actual: {mode}",
-    modeChanged: "Modo de color: {mode}",
-    sortedAsc: "Ordenado por {column}, ascendente",
-    sortedDesc: "Ordenado por {column}, descendente",
+    previous: "Previous",
+    next: "Next",
   },
 };
 
+// SEC-CHUNK-1: the only files this module loads, each by a literal. A language is one line here.
+const files = { es: () => import("./i18n-es.js") };
+// Codes whose file was asked for: kept after a failure, so a failed file is not fetched again
+const loaded = new Set();
 const warned = new Set();
 
 function warnOnce(lang, message) {
@@ -87,6 +73,36 @@ export function registerLocale(lang, messages) {
   locales[tag] = { ...(Object.hasOwn(locales, tag) ? locales[tag] : {}), ...messages };
 }
 
+/**
+ * Fetch the strings LUZ ships for the languages in use under `root`: <html lang>,
+ * the nearest lang of `root`, and any [lang] below it that is not a link or an
+ * option (a language switcher names languages, it does not use them). English,
+ * a language with no file and one already fetched are skipped. A language named
+ * twice is asked for twice: one import, one evaluation.
+ * @param {ParentNode} [root=document]
+ * @returns {Promise<void[]>|undefined} resolves when every file has loaded or
+ *   failed (a failure is a warning, never an exception); undefined when there
+ *   is nothing to fetch, so a page in English stays synchronous
+ */
+export function loadLocales(root = document) {
+  const wanted = [getLang(root), ...[...root.querySelectorAll("[lang]:not(a, option)")].map((el) => el.getAttribute("lang"))]
+    .map((lang) => lang.toLowerCase().split("-")[0])
+    .filter((code) => Object.hasOwn(files, code) && !loaded.has(code));
+  if (!wanted.length) return;
+  return Promise.all(
+    wanted.map((code) => {
+      loaded.add(code);
+      return files[code]().then(
+        // what was registered before wins, what is registered later merges over it
+        (m) => {
+          locales[code] = { ...m.default, ...locales[code] };
+        },
+        () => warnOnce(code, `Could not load lang="${code}"; using English.`),
+      );
+    }),
+  );
+}
+
 /** Language of `el`: nearest lang attribute, then <html lang>. */
 export function getLang(el) {
   return (
@@ -101,16 +117,18 @@ function dictionaryFor(el) {
   if (!lang) {
     warnOnce(
       "",
-      'No lang attribute found; using English. Set <html lang="…"> (WCAG 2.2 SC 3.1.1 Language of Page).',
+      'No lang attribute; using English. Set <html lang="…"> (WCAG 3.1.1).',
     );
     return locales.en;
   }
   const own = (key) => (Object.hasOwn(locales, key) ? locales[key] : undefined);
-  const dict = own(lang) || own(lang.split("-")[0]);
-  if (!dict) {
+  const code = lang.split("-")[0];
+  const dict = own(lang) || own(code);
+  // A file on its way, or one that failed (and said so), is not "no strings"
+  if (!dict && !loaded.has(code)) {
     warnOnce(
       lang,
-      `No strings for lang="${lang}"; using English. Add them with registerLocale().`,
+      `No strings for lang="${lang}"; using English. Use registerLocale(), or loadLocales() if LUZ ships it.`,
     );
   }
   return dict || locales.en;

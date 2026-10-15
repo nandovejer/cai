@@ -86,7 +86,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 
 ## 5. Language
 
-- **Generated text comes from the dictionary (`SR-7`).** Any visible text or accessible name that LUZ's JS writes comes from `@luz-ds/core/i18n`, never a literal in a module. English and Spanish ship built in; consumers register more with `registerLocale()`.
+- **Generated text comes from the dictionary (`SR-7`).** Any visible text or accessible name that LUZ's JS writes comes from `@luz-ds/core/i18n`, never a literal in a module. English is in the entry; every other language LUZ ships is a lazy file, fetched only for the pages that declare it (`loadLocales()`). Consumers register more with `registerLocale()`.
 - **The language is the page's.** Components read the nearest `lang` attribute, so a page declares its language once (WCAG 3.1.1) and multilingual fragments work by marking them with their own `lang` (WCAG 3.1.2). With no `lang`, LUZ falls back to English and warns in the console.
 - **Authored HTML wins.** Text in the markup and `data-luz-label-*` attributes override the dictionary, which overrides English.
 - **Works in any writing direction:** logical properties (`SR-4`: `margin-inline-start`, not `margin-left`); test with `dir="rtl"` and with 30 % longer strings.
@@ -134,10 +134,11 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `check` CLI bundle, `luz-check.js` (gzip, not minified so it can be read) | — | ≤ 36 kB | 36 kB | 40 kB |
 | `llms.txt` and `llms-full.txt`, each uncompressed | — | ≤ 400 kB | 400 kB | 448 kB |
 | Each manifest on Pages (`docs/manifests/**/*.json`), uncompressed | — | ≤ 48 kB | 48 kB | 64 kB |
+| `core` JS lazy chunk: `i18n-es` (loaded by `luz.js` when the page's `lang` is `es`; one row per language) | — | ≤ 0.75 kB | 0.75 kB | 1 kB |
 
 Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).
 
-The last three rows are the AI-ready artifacts. The CLI bundle is measured gzipped but not minified, because a tool that reads your files should be readable; it is a command you run, no page downloads it. Its row was fixed once, on 2026-10-15, from the measured 33.9 kB of the first complete version (it had been an estimate before anything shipped) and is never raised afterwards. `llms-full.txt` and each manifest are measured as the raw bytes of the built `docs/**/*.txt` and `docs/manifests/**/*.json`.
+The three rows after the docs pages are the AI-ready artifacts. The CLI bundle is measured gzipped but not minified, because a tool that reads your files should be readable; it is a command you run, no page downloads it. Its row was fixed once, on 2026-10-15, from the measured 33.9 kB of the first complete version (it had been an estimate before anything shipped) and is never raised afterwards. `llms-full.txt` and each manifest are measured as the raw bytes of the built `docs/**/*.txt` and `docs/manifests/**/*.json`. The last row of the table is a language file of core: one row per language, 0.75 kB ideal and 1 kB ceiling, fixed once from the first one (`es`) and never raised; a language that does not fit shortens its strings.
 
 ## 9. Evidence, transparency and stability
 
@@ -231,7 +232,7 @@ Copy into the PR description and tick every line. An unticked line needs an EXCE
 - [ ] forced-colors and prefers-reduced-motion checked
 - [ ] Contrast ≥ 4.5:1 text, ≥ 3:1 UI, in light, dark and high-contrast
 - [ ] Only semantic tokens; logical properties; no !important
-- [ ] Generated strings come from the i18n dictionary, in English and Spanish
+- [ ] Generated strings come from the i18n dictionary, in the page's language
 - [ ] Strings: sentence case, verb-first buttons, meaningful links, visible labels
 - [ ] Docs page: summary · example · Known issues · Code (markup, variants, how it works, without JS, keyboard and ARIA) · Design (when to use, when not to use, do and don't, writing the content, contrast and focus, tokens it uses)
 - [ ] Failing test committed first (`test: …`), then the change; axe + keyboard tests added and `pnpm test:ui` green

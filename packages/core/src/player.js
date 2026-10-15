@@ -255,13 +255,17 @@ export function mountPlayer(root) {
 
   // The native controls were the no-JavaScript interface; the custom UI
   // replaces them now that it is about to be bound.
-  media.controls = false;
-  media.removeAttribute("controls");
+  const hadFocus = document.activeElement === media;
+  media.controls = false; // reflects the attribute: it is removed
 
   const wrapped = wrapHTMLMedia(media);
 
   // Bind shared UI (play/pause, mute, seek, volume, keyboard)
   const { setPlayState } = bindPlayerUI(root, controls, wrapped);
+
+  // A keyboard user in the native controls would be dropped on the page when
+  // they go (a late mount: the language file was slow): keep them on the player
+  if (hadFocus) root.focus();
 
   // ---- Video-specific: mediaWrap class sync ----
   if (mediaWrap) {

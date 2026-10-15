@@ -128,12 +128,15 @@ for (const name of PUBLISHED) {
     if (key.includes("*")) {
       // Expand the pattern against the files that are installed
       const [prefix, suffix = ""] = file.split("*");
-      const dir = join(installed(name), prefix);
-      if (!existsSync(dir)) problems.push(`${key}: ${prefix} is not installed`);
+      // The prefix may end in the start of a file name (./dist/i18n-*.js)
+      const folder = prefix.slice(0, prefix.lastIndexOf("/") + 1);
+      const stem = prefix.slice(folder.length);
+      const dir = join(installed(name), folder);
+      if (!existsSync(dir)) problems.push(`${key}: ${folder} is not installed`);
       else {
         // A pattern matches nested paths too (./fonts/serif/ETBook-Bold.woff2)
         const walk = (d) => readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(join(d, e.name)) : [relative(dir, join(d, e.name)).split(sep).join("/")]));
-        for (const f of walk(dir).filter((f) => f.endsWith(suffix))) keys.push(key.replace("*", f.slice(0, f.length - suffix.length)));
+        for (const f of walk(dir).filter((f) => f.startsWith(stem) && f.endsWith(suffix))) keys.push(key.replace("*", f.slice(stem.length, f.length - suffix.length)));
       }
       if (existsSync(dir) && keys.length === 0) problems.push(`${key}: the pattern matches nothing`);
     } else keys.push(key);
@@ -178,10 +181,11 @@ const PAGE = (base, label) => `<!doctype html>
     const core = ${JSON.stringify(base.core)};
     const site = ${JSON.stringify(base.site)};
     const wanted = {
-      [core + "/dist/luz.js"]: [],
+      [core + "/dist/luz.js"]: ["loadLocales"],
       [core + "/dist/tabs.js"]: ["initTabs"],
       [core + "/dist/theme.js"]: ["applyTheme"],
-      [core + "/dist/i18n.js"]: ["t", "registerLocale"],
+      [core + "/dist/i18n.js"]: ["t", "registerLocale", "loadLocales"],
+      [core + "/dist/i18n-es.js"]: ["default"],
       [core + "/dist/clipboard.js"]: ["initCopyButtons"],
       [site + "/dist/search.js"]: ["search"],
       [site + "/dist/consent.js"]: ["getConsent"],
@@ -191,7 +195,11 @@ const PAGE = (base, label) => `<!doctype html>
     for (const [url, names] of Object.entries(wanted)) {
       try {
         const module = await import(url);
-        for (const name of names) if (typeof module[name] !== "function") missing.push(url + " has no " + name + "()");
+        for (const name of names) {
+          // a language file is data: its default export is the dictionary
+          const kind = name === "default" ? "object" : "function";
+          if (typeof module[name] !== kind) missing.push(url + " has no " + name + (kind === "function" ? "()" : " object"));
+        }
       } catch (error) {
         missing.push(url + ": " + error.message);
       }

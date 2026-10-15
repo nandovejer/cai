@@ -122,9 +122,10 @@ let bound = false;
  * Upgrade every .luz-tabs in `root` and wire delegated click + keyboard
  * handling once. The tab whose panel holds the URL fragment's target opens
  * first; then a tab marked aria-selected="true" or .is-active; then the first.
+ * `defer = true` leaves data-luz-js to a later call of an init*().
  */
-export function initTabs(root = document) {
-  enableJs();
+export function initTabs(root = document, defer = false) {
+  defer || enableJs();
   const target = byHash(location.hash);
   const lists = root.querySelectorAll(".luz-tabs");
 

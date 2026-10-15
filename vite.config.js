@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { readFileSync } from "fs";
 import { resolve, sep } from "path";
 import { tmpdir } from "os";
 import { fileURLToPath } from "url";
@@ -68,6 +69,30 @@ function pagesCsp() {
   };
 }
 
+/**
+ * packages/core/src/i18n.js names each language file by a literal
+ * (`import("./i18n-es.js")`, SEC-CHUNK-1), and the build writes that file from
+ * src/i18n/<code>.json: it is not in src/. A page that imports the source in
+ * dev (tests/player.spec.js) gets the module from the JSON, as the build would.
+ */
+function coreLanguages() {
+  const prefix = "\0luz-core-language:";
+  return {
+    name: "core-languages",
+    apply: "serve",
+    resolveId(source, importer) {
+      const code = /^\.\/i18n-([a-z]{2,3})\.js$/.exec(source)?.[1];
+      if (code && importer?.replaceAll("\\", "/").endsWith("/packages/core/src/i18n.js")) return prefix + code;
+    },
+    load(id) {
+      if (!id.startsWith(prefix)) return;
+      const strings = JSON.parse(readFileSync(resolve(__dirname, "packages/core/src/i18n", `${id.slice(prefix.length)}.json`), "utf-8"));
+      delete strings.$header;
+      return `export default ${JSON.stringify(strings)};`;
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const pages = mode === "pages";
   const outRoot = pages ? pagesRoot : distRoot;
@@ -79,7 +104,7 @@ export default defineConfig(({ mode }) => {
     publicDir: false,
     // The site's routes, dev server, layouts and partials, link check and the
     // move of each HTML file to its route: scripts/docs-site/plugin.js
-    plugins: [docsSite({ repoRoot: __dirname, relative: pages, outRoot, pagesBase: PAGES_BASE, siteUrl: SITE_URL, csp: PAGES_CSP }), ...(pages ? [pagesCsp()] : [])],
+    plugins: [coreLanguages(), docsSite({ repoRoot: __dirname, relative: pages, outRoot, pagesBase: PAGES_BASE, siteUrl: SITE_URL, csp: PAGES_CSP }), ...(pages ? [pagesCsp()] : [])],
     server: {
       open: "/",
       fs: {

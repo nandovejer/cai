@@ -9,7 +9,7 @@
  */
 
 import { enableJs } from "./utils.js";
-import { t } from "./i18n.js";
+import { getLang, t } from "./i18n.js";
 
 const LIVE_REGION_ID = "luz-live-region";
 let clearAnnouncement;
@@ -38,8 +38,10 @@ function getLiveRegion() {
   return region;
 }
 
-function announce(message) {
+function announce(message, el) {
   const region = getLiveRegion();
+  // The region lives in <body>: say which language the message is in (WCAG 3.1.2)
+  region.lang = getLang(el);
   region.textContent = message;
   clearTimeout(clearAnnouncement);
   clearAnnouncement = setTimeout(() => {
@@ -50,7 +52,7 @@ function announce(message) {
 export async function copyToClipboard(text, el, type = "btn") {
   try {
     await navigator.clipboard.writeText(text);
-    announce(t("copiedStatus", el));
+    announce(t("copiedStatus", el), el);
 
     // A swatch and a token show the feedback by class only (the text stays)
     const keepText = type === "swatch" || type === "token";
@@ -62,7 +64,7 @@ export async function copyToClipboard(text, el, type = "btn") {
       el.classList.remove("is-copied");
     }, type === "swatch" ? 1000 : 1200);
   } catch (err) {
-    announce(t("copyFailed", el));
+    announce(t("copyFailed", el), el);
     console.error("Failed to copy:", err);
   }
 }
@@ -77,9 +79,10 @@ async function onCopyClick(e) {
 /**
  * Wire up delegated click handling for all copy buttons. Idempotent: a
  * second call adds no second listener, so one click copies once.
+ * `defer = true` leaves data-luz-js to a later call of an init*().
  */
-export function initCopyButtons() {
-  enableJs();
+export function initCopyButtons(defer = false) {
+  defer || enableJs();
   // Create the live region up front: some screen readers ignore a region
   // that is inserted and filled at the same time.
   getLiveRegion();

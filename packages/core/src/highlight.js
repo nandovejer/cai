@@ -94,6 +94,7 @@ export function highlightBlock(pre) {
   const raw = code.textContent;
 
   try {
+    // luz-exception: EX-011 — the one HTML sink in core: the code of a block, escaped by tokenize()
     // eslint-disable-next-line no-restricted-syntax -- SEC-IDX-1: tokenize() passes every slice of the source through escapeHtml(); its only markup is <span class="…"> with a constant class from LANGS
     code.innerHTML = LANGS[lang] ? tokenize(raw, LANGS[lang]) : escapeHtml(raw);
   } catch {

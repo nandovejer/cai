@@ -184,11 +184,16 @@ const wiredGroups = new WeakSet();
  * Turn each fieldset.luz-mode-switcher--cycle into one button that steps
  * through its modes, showing the icon of the current one. Uses the
  * .luz-mode-cycle button already in the markup, or adds one. Idempotent.
+ * `defer = true` wires the buttons the markup has and writes no name and no
+ * data-luz-js: call it again without it when the page's strings are ready.
  */
-export function initThemeCycle(root = document) {
-  enableJs();
-  const fresh = [...root.querySelectorAll(".luz-mode-switcher--cycle")].filter(
-    (group) => !wiredGroups.has(group),
+export function initThemeCycle(root = document, defer = false) {
+  defer || enableJs();
+  const groups = [...root.querySelectorAll(".luz-mode-switcher--cycle")];
+  // Deferred: wire the buttons the markup has (their click needs no string);
+  // the button the script would add, and every name, wait for the second call
+  const fresh = groups.filter(
+    (group) => !wiredGroups.has(group) && (!defer || group.querySelector(":scope > .luz-mode-cycle")),
   );
   fresh.forEach((group) => {
     wiredGroups.add(group);
@@ -207,8 +212,8 @@ export function initThemeCycle(root = document) {
     }
     button.addEventListener("click", () => cycle(group));
     group.addEventListener("change", () => renderCycle(group));
-    renderCycle(group);
   });
+  if (!defer) groups.forEach(renderCycle);
   // Scripts that set the mode check the radios without a change event;
   // they set data-theme in the same task, so re-render after it.
   if (fresh.length) {
@@ -221,9 +226,10 @@ export function initThemeCycle(root = document) {
 
 /**
  * Wire up theme buttons and the initial theme.
+ * `defer = true` leaves data-luz-js to a later call of an init*().
  */
-export function initThemeSystem() {
-  enableJs();
+export function initThemeSystem(defer = false) {
+  defer || enableJs();
   // Apply initial theme without forcing persistence when it comes from the OS
   applyTheme(getInitialTheme(), { persist: !!getStoredTheme() });
 

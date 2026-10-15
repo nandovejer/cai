@@ -911,6 +911,72 @@
   border-color: var(--luz-outline);
 }
 
+/* Choose your snippet: the picker that replaces the index table (reference.js,
+   initSnippetPicker). Two groups of native radios side by side when there is
+   room, one under the other when there is not, and the status line under both. */
+.docs-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: var(--luz-space-md) var(--luz-space-lg);
+  align-items: start;
+}
+
+.docs-picker fieldset {
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.docs-picker legend {
+  padding: 0;
+  margin-block-end: var(--luz-space-2xs);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+  font-weight: 600;
+  color: var(--luz-text-secondary);
+}
+
+.docs-picker label {
+  display: flex;
+  align-items: center;
+  gap: var(--luz-space-xs);
+  min-block-size: var(--luz-control-lg);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-md);
+  cursor: pointer;
+}
+
+.docs-picker input[type="radio"] {
+  margin: 0;
+  accent-color: var(--luz-brand-primary);
+}
+
+.docs-picker input[type="radio"]:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
+  outline-offset: 2px;
+}
+
+.docs-picker output {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+/* The snippets stacked under the picker: room above each heading, so one
+   does not run into the block before it */
+[data-snippet-kind] [data-snippet] > h3 {
+  margin-block: var(--luz-space-lg) var(--luz-space-sm);
+}
+
+/* The sizes demo of Make it yours: its ranges and reset button keep their own width */
+.docs-example:has(input[type="range"]) {
+  justify-items: start;
+}
+
+.docs-example:has(input[type="range"]) > .luz-field {
+  margin-block-end: 0;
+}
+
 /* --------------------------------------------------------------------------
    Demos: contents lists, demo heads and stages, guidance
    -------------------------------------------------------------------------- */

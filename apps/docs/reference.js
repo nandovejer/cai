@@ -66,6 +66,83 @@ function initRangeOutputs() {
   });
 }
 
+/* ---- Choose your snippet: the picker ------------------------------------ */
+
+function initSnippetPicker() {
+  // The form is in a <template>: without a script the table is the index and
+  // every snippet shows. State lives in the DOM (checked, hidden) and the URL.
+  const template = document.querySelector("template[data-docs-picker]");
+  const index = document.querySelector('[role="region"][aria-label="Every snippet"]');
+  if (!template || !index) return;
+  template.after(template.content.cloneNode(true));
+  const form = template.nextElementSibling;
+  const snippets = [...document.querySelectorAll("[data-snippet]")];
+  const status = form.querySelector("[data-picker-status]");
+  const radio = (name, value) => form.querySelector(`input[name="${name}"][value="${value}"]`);
+  const show = () => {
+    const kind = form.querySelector('input[name="kind"]:checked').value;
+    const via = form.querySelector('input[name="via"]:checked').value;
+    snippets.forEach((el) => {
+      el.hidden = el.dataset.kind !== kind || el.dataset.via !== via;
+    });
+    document.querySelectorAll("[data-snippet-kind]").forEach((section) => {
+      section.hidden = !section.querySelector("[data-snippet]:not([hidden])");
+    });
+    status.textContent = document.getElementById(`${kind}-${via}`).querySelector("h3").textContent.trim();
+  };
+  // A hash that is not a snippet leaves the choice alone
+  const fromHash = () => {
+    const target = document.getElementById(location.hash.slice(1));
+    if (!target?.matches("[data-snippet]") || !radio("kind", target.dataset.kind) || !radio("via", target.dataset.via)) return;
+    radio("kind", target.dataset.kind).checked = true;
+    radio("via", target.dataset.via).checked = true;
+    show();
+    // The browser could not scroll to it while it was hidden
+    target.scrollIntoView();
+  };
+  form.addEventListener("change", () => {
+    show();
+    const chosen = snippets.find((el) => !el.hidden);
+    window.history.replaceState(null, "", `#${chosen.id}`);
+  });
+  index.hidden = true;
+  show();
+  fromHash();
+  window.addEventListener("hashchange", fromHash);
+}
+
+/* ---- Make it yours: the sizes demo -------------------------------------- */
+
+// The two knobs, in the order of the ranges: the base (in rem) and the ratio
+const KNOBS = [
+  ["--luz-type-base", "rem"],
+  ["--luz-type-ratio", ""],
+];
+
+function initSizesDemo() {
+  // A <template> of the page: without a script there is no control of nothing,
+  // and the table of presets is what the reader has
+  const template = [...document.querySelectorAll("template")].find((t) => t.content.querySelector('input[type="range"][data-output]'));
+  if (!template) return;
+  template.after(template.content.cloneNode(true));
+  const form = template.nextElementSibling;
+  const ranges = [...form.querySelectorAll('input[type="range"]')];
+  const outputOf = (input) => document.getElementById(input.dataset.output);
+  // It re-scales this page itself, on <html>; nothing is stored
+  form.addEventListener("input", (e) => {
+    const i = ranges.indexOf(e.target);
+    if (i >= 0) document.documentElement.style.setProperty(KNOBS[i][0], e.target.value + KNOBS[i][1]);
+  });
+  form.addEventListener("reset", () => {
+    // The browser resets the controls after this event: do the same, now
+    ranges.forEach((input, i) => {
+      input.value = input.defaultValue;
+      outputOf(input).textContent = input.value;
+      document.documentElement.style.removeProperty(KNOBS[i][0]);
+    });
+  });
+}
+
 /* ---- Assets the build cannot see in markup ---------------------------- */
 
 /* Vite rewrites src on img, source and video, not on track, embed, object or
@@ -180,6 +257,9 @@ document.querySelectorAll("pre.luz-code-block").forEach(highlightBlock);
 initDocsView();
 initTabs();
 initModals();
+initSnippetPicker();
+// Before the outputs: it binds the ranges of the demo it clones in
+initSizesDemo();
 initRangeOutputs();
 initPlayers();
 initDemoGuards();

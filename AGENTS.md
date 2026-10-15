@@ -132,6 +132,14 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 3. Run `pnpm tokens:build` — adds `--luz-{family}-{scale}` to Layer 1
 4. Reference from semantic tokens in Layer 2 if needed in any theme
 
+### Modifying a type or space scale
+
+The scales are computed from three knobs in `tokens.json`: `--luz-type-base`, `--luz-type-ratio` and `--luz-space-unit`. A step carries its chain in `from` (and, for type, `fromRounded`, the `round()` form emitted inside `@supports`); `value` is the resolved default. A component reads the steps (`--luz-text-*`, `--luz-space-*`), never a knob.
+
+1. **Test first:** the golden list in `tests/helpers/scale-golden.js` and `tests/type-space-scale.test.js`; a deliberate change to a default edits the golden and carries a changeset.
+2. Edit `tokens.json` (`from`, `fromRounded`, `value` together), then run `pnpm tokens:build`.
+3. Update the typed values on `tokens/typography.html`, `tokens/spacing.html` and the presets table of `get-started/make-it-yours.html`: `tests/docs-tokens-scale.test.js` and `tests/make-it-yours.test.js` recompute them with `evalLength` and fail on drift.
+
 ### Modifying a breakpoint or motion token
 
 **Test first:** the spec of what the change must do (a layout at the new width, a duration under reduced motion). Then edit `packages/core/src/settings/_settings.css` only, and regenerate `dist/luz.css`.

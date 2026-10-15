@@ -5,6 +5,134 @@ area: get-started
 order: 4
 keywords: naming, prefix, bem, data attributes, custom elements, public api
 -->
-    <div class="docs-block" id="status">
-      <p>This page is being written. Until then, <a href="/docs/get-started/">Install LUZ</a> and <a href="/docs/get-started/snippet/">Choose your snippet</a> cover how to load LUZ.</p>
-    </div>
+    <section class="docs-block" aria-labelledby="classes">
+      <h2 class="docs-chapter__title" id="classes">Class names</h2>
+      <p class="docs-lead">The start of a class name tells you what it is and which package it comes from.</p>
+      <div class="luz-table-wrap" role="region" aria-label="Class name prefixes" tabindex="0">
+        <table class="luz-table">
+          <caption>What each class prefix means</caption>
+          <thead>
+            <tr><th scope="col">Prefix</th><th scope="col">What it is</th><th scope="col">Package</th><th scope="col">Example</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Prefix"><div><code>.luz-</code></div></td><td data-label="What it is"><div>A component, or a part of one</div></td><td data-label="Package"><div>core</div></td><td data-label="Example"><div><code>.luz-btn</code></div></td></tr>
+            <tr><td data-label="Prefix"><div><code>.o-</code></div></td><td data-label="What it is"><div>A layout object: it arranges things and has no look of its own</div></td><td data-label="Package"><div>core</div></td><td data-label="Example"><div><code>.o-stack</code></div></td></tr>
+            <tr><td data-label="Prefix"><div><code>.u-</code></div></td><td data-label="What it is"><div>A utility: one job, with no component around it</div></td><td data-label="Package"><div>core</div></td><td data-label="Example"><div><code>.u-sr-only</code></div></td></tr>
+            <tr><td data-label="Prefix"><div><code>.luz-landing-</code></div></td><td data-label="What it is"><div>A piece of a landing page</div></td><td data-label="Package"><div>landing</div></td><td data-label="Example"><div><code>.luz-landing-hero</code></div></td></tr>
+            <tr><td data-label="Prefix"><div><code>.luz-cms-</code></div></td><td data-label="What it is"><div>A piece of a blog, a newspaper or any CMS</div></td><td data-label="Package"><div>cms</div></td><td data-label="Example"><div><code>.luz-cms-header</code></div></td></tr>
+            <tr><td data-label="Prefix"><div><code>.luz-app-</code></div></td><td data-label="What it is"><div>A piece of a web application</div></td><td data-label="Package"><div>app</div></td><td data-label="Example"><div><code>.luz-app-header</code></div></td></tr>
+            <tr><td data-label="Prefix"><div><code>.is-</code></div></td><td data-label="What it is"><div>A state a script mirrors onto an element. Read it, but do not style from outside: it is not part of what you can rely on</div></td><td data-label="Package"><div>core</div></td><td data-label="Example"><div><code>.is-active</code></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Inside a component, two separators say how the pieces fit. A double underscore names a part of the component: <code>.luz-card__title</code> is the title of a card. A double hyphen names a variant of it: <code>.luz-btn--primary</code> is the primary button.</p>
+      <p>Read this markup from left to right, one class at a time.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">HTML</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-read-example" aria-label="Copy the example markup">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="A card with a primary button"><code id="code-read-example">&lt;div class=&quot;o-stack&quot;&gt;
+  &lt;article class=&quot;luz-card&quot;&gt;
+    &lt;h3 class=&quot;luz-card__title&quot;&gt;Team plan&lt;/h3&gt;
+    &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;button&quot;&gt;Choose plan&lt;/button&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre>
+      </div>
+      <ul>
+        <li><code>o-stack</code> is a layout object: it spaces its children in a column.</li>
+        <li><code>luz-card</code> is a component, a card.</li>
+        <li><code>luz-card__title</code> is a part of the card: its title.</li>
+        <li><code>luz-btn</code> is another component, a button, and <code>luz-btn--primary</code> is its primary variant.</li>
+      </ul>
+    </section>
+
+    <section class="docs-block" aria-labelledby="tokens">
+      <h2 class="docs-chapter__title" id="tokens">Token names</h2>
+      <p class="docs-lead">A token is a CSS custom property that starts with <code>--luz-</code>. The next word says what kind of value it holds.</p>
+      <div class="luz-table-wrap" role="region" aria-label="Kinds of token" tabindex="0">
+        <table class="luz-table">
+          <caption>One token of each kind</caption>
+          <thead>
+            <tr><th scope="col">Name</th><th scope="col">Kind</th><th scope="col">What it is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Name"><div><code>--luz-blue-60</code></div></td><td data-label="Kind"><div>Primitive</div></td><td data-label="What it is"><div>A raw color: a family and a step. It has no role and never changes with the mode</div></td></tr>
+            <tr><td data-label="Name"><div><code>--luz-brand-primary</code></div></td><td data-label="Kind"><div>Semantic token</div></td><td data-label="What it is"><div>A role: the color of links and actions. It has a value for each mode</div></td></tr>
+            <tr><td data-label="Name"><div><code>--luz-space-md</code></div></td><td data-label="Kind"><div>Scale step</div></td><td data-label="What it is"><div>One step of the space scale</div></td></tr>
+            <tr><td data-label="Name"><div><code>--luz-text-lg</code></div></td><td data-label="Kind"><div>Scale step</div></td><td data-label="What it is"><div>One step of the type scale</div></td></tr>
+            <tr><td data-label="Name"><div><code>--luz-type-base</code></div></td><td data-label="Kind"><div>Knob</div></td><td data-label="What it is"><div>The value a whole scale is worked out from. Change it to resize every step</div></td></tr>
+            <tr><td data-label="Name"><div><code>--luz-z-modal</code></div></td><td data-label="Kind"><div>Setting</div></td><td data-label="What it is"><div>A value core uses to lay out the page: stacking order, motion and breakpoints</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li>LUZ's own components read semantic tokens and scale steps. They never read a primitive or a knob.</li>
+        <li>You can set any token in your own CSS. <a href="/docs/get-started/make-it-yours/">Make it yours</a> shows how.</li>
+      </ul>
+      <p>Each family has a page: <a href="/docs/tokens/color/">color</a>, <a href="/docs/tokens/typography/">typography</a>, <a href="/docs/tokens/spacing/">spacing and sizing</a>, <a href="/docs/tokens/radius/">radius</a>, <a href="/docs/tokens/shadows/">shadows</a>, <a href="/docs/tokens/motion/">motion</a> and <a href="/docs/tokens/layout/">layout and breakpoints</a>.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="attributes">
+      <h2 class="docs-chapter__title" id="attributes">Attributes</h2>
+      <p class="docs-lead">Classes are for style. Attributes that start with <code>data-</code> are how a script and your markup talk to each other.</p>
+      <ul>
+        <li><code>data-theme</code> on <code>&lt;html&gt;</code> picks the color mode (<code>light</code>, <code>dark</code> or <code>high-contrast</code>) or the name of a look of your own.</li>
+        <li><code>data-mode</code> on <code>&lt;html&gt;</code> picks the color mode inside a look of your own: <code>data-theme="my-brand"</code> with <code>data-mode="dark"</code>.</li>
+        <li><code>data-luz-*</code> are the hooks of LUZ's scripts, such as <code>data-luz-js</code>, which the script sets on <code>&lt;html&gt;</code> once it runs. A script binds to these, never to a class.</li>
+        <li><code>data-luz-classless</code> turns on <a href="/docs/get-started/classless/">classless styles</a> for the markup inside it.</li>
+        <li><code>data-luz-label-*</code> overrides one string a script writes.</li>
+      </ul>
+      <p>These are examples, not the full list: each component's page names the attributes it uses.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="elements">
+      <h2 class="docs-chapter__title" id="elements">Elements that start with luz</h2>
+      <p class="docs-lead">A tag that starts with <code>luz-</code> is a custom element. LUZ's are in the light DOM, so your CSS reaches inside them, and their parts are classes: <code>.luz-&lt;tag&gt;__&lt;part&gt;</code>.</p>
+      <ul>
+        <li><strong>With a script:</strong> <code>&lt;luz-search&gt;</code>, <code>&lt;luz-consent&gt;</code> and <code>&lt;luz-timeline&gt;</code> need their script to do their job.</li>
+        <li><strong>CSS only:</strong> <code>&lt;luz-lang-switch&gt;</code>, <code>&lt;luz-submenu&gt;</code> and <code>&lt;luz-banner&gt;</code> have no script at all. They are a tag you can style before and without its script.</li>
+      </ul>
+      <p>Which package holds each one is in <a href="/docs/get-started/structure/">How LUZ is organised</a>.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="layers">
+      <h2 class="docs-chapter__title" id="layers">Layers, in one paragraph</h2>
+      <p>All of LUZ's CSS is in one cascade layer called <code>luz</code>, with named layers inside it, and any CSS of yours that is not in a layer wins over all of it, with no <code>!important</code>. <a href="/docs/get-started/layers/">Cascade layers</a> lists them in order and shows how to override one.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="public">
+      <h2 class="docs-chapter__title" id="public">What you can rely on</h2>
+      <p class="docs-lead">Not every name is a promise. These four parts of LUZ are public API: a change to them is announced.</p>
+      <ul>
+        <li><strong>Tokens</strong>: every <code>--luz-</code> custom property in <code>tokens.css</code>, not the ones a component declares for itself.</li>
+        <li><strong>Classes</strong>: <code>.luz-</code>, <code>.o-</code> and <code>.u-</code> classes in the markup the docs show, with their parts and variants. Not <code>.is-</code> classes.</li>
+        <li><strong>Attributes</strong>: <code>data-theme</code>, <code>data-mode</code>, <code>data-luz-*</code> and <code>data-luz-label-*</code>. Not the attributes the docs site's own scripts use.</li>
+        <li><strong>Packages</strong>: the <code>exports</code> map of each package and the paths of the files it publishes.</li>
+      </ul>
+      <p>In beta, anything may break, and the changeset of the release says how to migrate. Read <a href="https://github.com/nandovejer/luz/blob/main/VERSIONING.md">What is public API, in VERSIONING.md on GitHub</a> for the whole table.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="files">
+      <h2 class="docs-chapter__title" id="files">Reading a file name</h2>
+      <p class="docs-lead">A file name says what is in it. Every CSS file also has a <code>.min</code> twin that holds the same rules, minified: <code>luz.css</code> and <code>luz.min.css</code>.</p>
+      <div class="luz-table-wrap" role="region" aria-label="The files LUZ publishes" tabindex="0">
+        <table class="luz-table">
+          <caption>Files in the dist folder of each package</caption>
+          <thead>
+            <tr><th scope="col">File</th><th scope="col">Package</th><th scope="col">When to load it</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="File"><div><code>luz-tokens.css</code></div></td><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="When to load it"><div>Always, unless you bring your own font. It has the tokens and the <code>@font-face</code> rules of ET Book</div></td></tr>
+            <tr><td data-label="File"><div><code>tokens.css</code></div></td><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="When to load it"><div>Instead of <code>luz-tokens.css</code>, when you bring your own font: the same tokens, with no <code>@font-face</code></div></td></tr>
+            <tr><td data-label="File"><div><code>luz.css</code></div></td><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="When to load it"><div>For the reset, the bare elements, the layout objects, the components and the utilities, all at once</div></td></tr>
+            <tr><td data-label="File"><div><code>base.css</code></div></td><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="When to load it"><div>When you want only a few components: the reset and the bare elements, then one file per component</div></td></tr>
+            <tr><td data-label="File"><div><code>components/&lt;name&gt;.css</code></div></td><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="When to load it"><div>After <code>base.css</code>, for each component you use</div></td></tr>
+            <tr><td data-label="File"><div><code>classless.css</code></div></td><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="When to load it"><div>For markup you cannot add classes to, inside <code>data-luz-classless</code>. It is a file of its own, not in <code>luz.css</code></div></td></tr>
+            <tr><td data-label="File"><div><code>themes/_template.css</code></div></td><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="When to load it"><div>Never as it is: copy it as the start of a look of your own</div></td></tr>
+            <tr><td data-label="File"><div><code>site.css</code></div></td><td data-label="Package"><div><code>@luz-ds/site</code></div></td><td data-label="When to load it"><div>When the page uses a site element such as <code>&lt;luz-search&gt;</code></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>To pick the lines for your build, <a href="/docs/get-started/snippet/">choose your snippet</a>.</p>
+    </section>

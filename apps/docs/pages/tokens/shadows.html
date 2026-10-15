@@ -7,7 +7,8 @@ group: families
 files: tokens.json → shadow
 -->
     <div class="docs-block" id="t-shadow">
-          <p>The higher the surface, the larger the shadow. Never use a shadow as the only edge of a surface: pair it with a border, because shadows disappear in forced colors. Shadows are the same in every mode.</p>
+          <p>The higher the surface, the larger the shadow. Never use a shadow as the only edge of a surface: pair it with a border, because shadows disappear in forced colors. </p>
+          <p>The values below are the light ones. In dark mode the small, medium and large shadows are redrawn heavier, with a black of 40, 50 and 60 percent, because a pale shadow does not show on a dark surface. In high contrast they are replaced by outlines: the small shadow is none, the medium one is a 1px black line and the large one a 2px black line, since a blur is invisible there. <code class="luz-code-inline">--luz-shadow-icon</code> is written once, so every mode reads the same value.</p>
           <ul>
             <li><code class="luz-code-inline">--luz-shadow-sm</code>: a card under the pointer.</li>
             <li><code class="luz-code-inline">--luz-shadow-md</code>: tooltips and toasts.</li>

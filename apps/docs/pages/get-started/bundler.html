@@ -1,10 +1,229 @@
 <!-- luz:page
 title: With a bundler or framework
-description: Import LUZ's CSS and script in Vite, Astro or any tool that resolves package names, and keep the layer order and the fonts.
+description: Import LUZ's CSS and script in Astro or any tool that resolves package names, and keep the layer order and the fonts.
 area: get-started
 order: 6
 keywords: vite, astro, bundler, framework, import
 -->
-    <div class="docs-block" id="status">
-      <p>This page is being written. Until then, <a href="/docs/get-started/">Install LUZ</a> and <a href="/docs/get-started/snippet/">Choose your snippet</a> cover how to load LUZ.</p>
-    </div>
+    <section class="docs-block" aria-labelledby="imports">
+      <h2 class="docs-chapter__title" id="imports">The imports</h2>
+      <p class="docs-lead">Import the CSS of each package you use, tokens first, and the script if you want behaviour. A bundler resolves these names from <code>node_modules</code>; a <code>&lt;link&gt;</code> in HTML cannot.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">JS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-imports" aria-label="Copy the imports">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="The imports"><code id="code-imports">import "@luz-ds/tokens/css";
+import "@luz-ds/core/css";
+import "@luz-ds/core";
+
+// Only if the page uses a site element: search, consent, language switch
+import "@luz-ds/site/css";
+import "@luz-ds/site";
+
+// Only for one kind of site: landing, cms or app
+import "@luz-ds/landing/css";</code></pre>
+      </div>
+      <ul>
+        <li>The tokens come first: every other package needs them.</li>
+        <li><code>import "@luz-ds/core"</code> is the script. It is optional: every LUZ page works without it.</li>
+        <li>To load less CSS, import <code>@luz-ds/core/base.css</code> and then one file per component, for example <code>@luz-ds/core/components/button.css</code>.</li>
+        <li>To load one script module, import it by name and call its function: see <a href="/docs/get-started/javascript/">JavaScript modules</a>.</li>
+      </ul>
+      <p>For the lines that match what you are building, with the CDN tags and their integrity hashes, <a href="/docs/get-started/snippet/">choose your snippet</a>.</p>
+      <p>Every name above is an entry of the <code>exports</code> map of its package. This table lists all of them.</p>
+      <div class="luz-table-wrap" role="region" aria-label="The exports of each package" tabindex="0">
+        <table class="luz-table">
+          <caption>The exports of each package</caption>
+          <thead>
+            <tr><th scope="col">Package</th><th scope="col">Export</th><th scope="col">What it is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>.</code></div></td><td data-label="What it is"><div><code>luz-tokens.css</code>, the same file as <code>./css</code>, for tools that look for the main stylesheet of a package</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>./css</code></div></td><td data-label="What it is"><div><code>luz-tokens.css</code>: every token, with the <code>@font-face</code> rules of ET Book</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>./css/min</code></div></td><td data-label="What it is"><div><code>luz-tokens.min.css</code>: the same, minified</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>./tokens.css</code></div></td><td data-label="What it is"><div><code>tokens.css</code>: every token, with no <code>@font-face</code>. For when you bring your own font</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>./fonts.css</code></div></td><td data-label="What it is"><div>The <code>@font-face</code> rules alone</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>./tokens.json</code></div></td><td data-label="What it is"><div>The tokens as JSON, for tooling</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>./dtcg</code></div></td><td data-label="What it is"><div>The tokens in the W3C Design Tokens format, for Figma and other design tools</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>./dtcg/resolver</code></div></td><td data-label="What it is"><div>A resolver document for the same tokens, with their three color modes</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/tokens</code></div></td><td data-label="Export"><div><code>./fonts/*</code></div></td><td data-label="What it is"><div>The ET Book font files that the stylesheets point to</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>.</code></div></td><td data-label="What it is"><div><code>luz.js</code>: the script, which starts every behaviour on the page. Import it in the browser</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./css</code></div></td><td data-label="What it is"><div><code>luz.css</code>: the reset, the bare elements, the layout objects, the components and the utilities</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./css/min</code></div></td><td data-label="What it is"><div><code>luz.min.css</code>: the same, minified</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./base.css</code></div></td><td data-label="What it is"><div>The settings, the reset and the bare elements, for loading components one by one</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./print.css</code></div></td><td data-label="What it is"><div>The print styles alone. <code>luz.css</code> already has them</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./classless.css</code></div></td><td data-label="What it is"><div>Styles for markup you cannot add classes to, inside <code>data-luz-classless</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./components/*</code></div></td><td data-label="What it is"><div>One stylesheet per component, such as <code>@luz-ds/core/components/button.css</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./themes/*</code></div></td><td data-label="What it is"><div>The template of a look of your own, <code>themes/_template.css</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./theme</code></div></td><td data-label="What it is"><div>Color mode and theme: <code>initThemeSystem</code>, <code>applyTheme</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./sidebar</code></div></td><td data-label="What it is"><div>Scroll spy and the drawer: <code>initSidebar</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./clipboard</code></div></td><td data-label="What it is"><div>Copy buttons: <code>initCopyButtons</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./modal</code></div></td><td data-label="What it is"><div>The fallback for <code>command</code> and <code>commandfor</code> on a dialog: <code>initModals</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./highlight</code></div></td><td data-label="What it is"><div>Code highlighting: <code>initHighlight</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./player</code></div></td><td data-label="What it is"><div>Audio and video players: <code>initPlayers</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./tabs</code></div></td><td data-label="What it is"><div>Tabs: <code>initTabs</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./midi</code></div></td><td data-label="What it is"><div>The MIDI player: <code>MidiPlayer</code>, loaded on demand</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./table-sort</code></div></td><td data-label="What it is"><div>Sortable tables: <code>initTableSort</code>, loaded on demand</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./timeline</code></div></td><td data-label="What it is"><div>The <code>&lt;luz-timeline&gt;</code> element, loaded on demand</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./utils</code></div></td><td data-label="What it is"><div>Helpers such as <code>formatTime</code> and <code>enableJs</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/core</code></div></td><td data-label="Export"><div><code>./i18n</code></div></td><td data-label="What it is"><div>The strings of the scripts: <code>t</code>, <code>registerLocale</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/site</code></div></td><td data-label="Export"><div><code>.</code></div></td><td data-label="What it is"><div><code>site.js</code>: loads the script of each site element the page has</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/site</code></div></td><td data-label="Export"><div><code>./search</code></div></td><td data-label="What it is"><div>The <code>&lt;luz-search&gt;</code> element</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/site</code></div></td><td data-label="Export"><div><code>./consent</code></div></td><td data-label="What it is"><div>The <code>&lt;luz-consent&gt;</code> element, and <code>getConsent</code></div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/site</code></div></td><td data-label="Export"><div><code>./css</code></div></td><td data-label="What it is"><div><code>site.css</code>: the styles of the site elements</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/site</code></div></td><td data-label="Export"><div><code>./css/min</code></div></td><td data-label="What it is"><div><code>site.min.css</code>: the same, minified</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/site</code></div></td><td data-label="Export"><div><code>./print.css</code></div></td><td data-label="What it is"><div>The print rules of the site elements, alone</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/site</code></div></td><td data-label="Export"><div><code>./components/*</code></div></td><td data-label="What it is"><div>One stylesheet per site element: banner, consent, language switch, search and submenu</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/landing</code></div></td><td data-label="Export"><div><code>./css</code></div></td><td data-label="What it is"><div><code>landing.css</code>: the pieces of a landing page</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/landing</code></div></td><td data-label="Export"><div><code>./css/min</code></div></td><td data-label="What it is"><div><code>landing.min.css</code>: the same, minified</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/landing</code></div></td><td data-label="Export"><div><code>./components/*</code></div></td><td data-label="What it is"><div>One stylesheet per piece</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/cms</code></div></td><td data-label="Export"><div><code>./css</code></div></td><td data-label="What it is"><div><code>cms.css</code>: the pieces of a blog or CMS</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/cms</code></div></td><td data-label="Export"><div><code>./css/min</code></div></td><td data-label="What it is"><div><code>cms.min.css</code>: the same, minified</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/cms</code></div></td><td data-label="Export"><div><code>./components/*</code></div></td><td data-label="What it is"><div>One stylesheet per piece</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/app</code></div></td><td data-label="Export"><div><code>./css</code></div></td><td data-label="What it is"><div><code>app.css</code>: the pieces of a web application</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/app</code></div></td><td data-label="Export"><div><code>./css/min</code></div></td><td data-label="What it is"><div><code>app.min.css</code>: the same, minified</div></td></tr>
+            <tr><td data-label="Package"><div><code>@luz-ds/app</code></div></td><td data-label="Export"><div><code>./components/*</code></div></td><td data-label="What it is"><div>One stylesheet per piece</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="docs-block" aria-labelledby="order">
+      <h2 class="docs-chapter__title" id="order">The layer order survives bundling</h2>
+      <p>Every CSS file LUZ publishes starts with the same <code>@layer</code> statement, which declares the order of all of LUZ's layers. So the order is the same however your tool splits, reorders or joins the files: the first one to load sets it.</p>
+      <p>In the Astro build below, the layers came out in the declared order, <code>luz.tokens</code> first and <code>luz.print</code> last, and an unlayered rule of the consumer came last.</p>
+      <p>CSS of your own that is outside any layer wins over every layer of LUZ, in any position, with no <code>!important</code>. <a href="/docs/get-started/layers/">Cascade layers</a> has the full list and how to override one.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="astro">
+      <h2 class="docs-chapter__title" id="astro">Astro, step by step</h2>
+      <p class="docs-lead">A new Astro project with LUZ's tokens and core, a layout that loads them, and CSS of your own that comes last.</p>
+      <p><strong>Built with Astro 7.3 on 2026-10-15.</strong> LUZ is in beta and Astro changes between releases, so this page is dated: if a step fails on a newer Astro, check that release's notes first.</p>
+      <p>The build used packages packed from the LUZ repository at version 0.0.0, installed with <code>npm install --legacy-peer-deps</code>, because the peer ranges of <code>^0.1.0</code> do not resolve until 0.1.0 is published. After that, the command below needs no flag.</p>
+      <h3 class="docs-subhead" id="astro-project">The project</h3>
+      <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="The files of the project"><code>my-site/
+├─ package.json
+├─ astro.config.mjs            (empty config: defineConfig({}))
+└─ src/
+   ├─ layouts/Base.astro       the two CSS imports, the script
+   ├─ styles/site.css          your own CSS, last, outside any layer
+   └─ pages/index.astro</code></pre>
+      <p><code>astro.config.mjs</code> stays as Astro creates it. LUZ needed no setting in it.</p>
+      <h3 class="docs-subhead" id="astro-commands">The commands</h3>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Shell</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-astro-commands" aria-label="Copy the Astro commands">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="bash" tabindex="0" role="region" aria-label="The commands"><code id="code-astro-commands">npm create astro@latest my-site
+cd my-site
+npm install @luz-ds/tokens @luz-ds/core
+npm run dev</code></pre>
+      </div>
+      <h3 class="docs-subhead" id="astro-layout">The layout</h3>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Astro</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-astro-layout" aria-label="Copy the layout">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="src/layouts/Base.astro"><code id="code-astro-layout">---
+// src/layouts/Base.astro
+import "@luz-ds/tokens/css";
+import "@luz-ds/core/css";
+import "../styles/site.css";
+---
+&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8" /&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1" /&gt;
+    &lt;title&gt;My site&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;slot /&gt;
+    &lt;script&gt;
+      import "@luz-ds/core";
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+      </div>
+      <h3 class="docs-subhead" id="astro-css">Your CSS and the page</h3>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-astro-css" aria-label="Copy your CSS">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="src/styles/site.css"><code id="code-astro-css">/* src/styles/site.css */
+:root { --luz-type-base: 1.125rem; }</code></pre>
+      </div>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Astro</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-astro-page" aria-label="Copy the page">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="src/pages/index.astro"><code id="code-astro-page">---
+// src/pages/index.astro
+import Base from "../layouts/Base.astro";
+---
+&lt;Base&gt;
+  &lt;main class="o-container"&gt;
+    &lt;h1&gt;My site&lt;/h1&gt;
+    &lt;button class="luz-btn luz-btn--primary" type="button"&gt;Save changes&lt;/button&gt;
+  &lt;/main&gt;
+&lt;/Base&gt;</code></pre>
+      </div>
+      <p>The rule in <code>site.css</code> sets the type knob to 1.125rem and wins over LUZ's default without a layer and without <code>!important</code>. <a href="/docs/get-started/make-it-yours/">Make it yours</a> has the other knobs.</p>
+      <h3 class="docs-subhead" id="astro-seen">What the build showed</h3>
+      <ul>
+        <li><code>astro build</code> and <code>astro dev</code> both worked with the two CSS imports in the frontmatter of a layout and no setting in <code>astro.config.mjs</code>.</li>
+        <li>Astro bundled the <code>&lt;script&gt;</code> with <code>import "@luz-ds/core"</code> into one module file and split the lazy chunks off it.</li>
+        <li>The fonts came out as hashed files, and the layers and your own rule came out in the order described above.</li>
+      </ul>
+      <p>The build output was inspected, and the built page was not opened in a browser. Astro with a view transition router (<code>&lt;ClientRouter /&gt;</code>) was not tried, and neither was Windows. The <code>landing</code>, <code>cms</code> and <code>app</code> imports have the same shape as the ones above, and were not built.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="others">
+      <h2 class="docs-chapter__title" id="others">Vite, Next, Nuxt and SvelteKit</h2>
+      <p>Only Astro was built for this page; Vite on its own, Next, Nuxt and SvelteKit were not built or tested. The imports are the same ones, in the root layout or the entry file of the app. Each tool's own documentation says where CSS from a package goes:</p>
+      <ul>
+        <li><a href="https://vite.dev/guide/">Vite documentation</a></li>
+        <li><a href="https://nextjs.org/docs">Next.js documentation</a></li>
+        <li><a href="https://nuxt.com/docs">Nuxt documentation</a></li>
+        <li><a href="https://svelte.dev/docs/kit">SvelteKit documentation</a></li>
+      </ul>
+      <p>One fact is the same for all of them. A LUZ module has no side effect when it is imported, until you call its <code>init</code> function, and <code>luz.js</code> and <code>site.js</code> check that <code>document</code> exists first. So a framework that renders on the server can import them. In plain Node, with no <code>document</code>, ten modules of core and site were imported with no error.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="fonts">
+      <h2 class="docs-chapter__title" id="fonts">Fonts and assets</h2>
+      <p><code>@luz-ds/tokens/css</code> is <code>luz-tokens.css</code>, and its <code>@font-face</code> rules point at the ET Book files with <code>url()</code>. Your bundler resolves those paths: Astro emitted the files as hashed <code>woff2</code> assets.</p>
+      <p>To skip ET Book, import <code>@luz-ds/tokens/tokens.css</code> instead. It has the same tokens and no <code>@font-face</code>, so no font is downloaded. Then set <code>--luz-font-body</code> to the font you use: <a href="/docs/get-started/make-it-yours/">Make it yours</a> shows how.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="cdn">
+      <h2 class="docs-chapter__title" id="cdn">A CDN in a framework</h2>
+      <p>You can load LUZ from a CDN in a framework layout instead of importing it. In an Astro layout, a <code>&lt;link rel="stylesheet"&gt;</code> in the <code>&lt;head&gt;</code> and a <code>&lt;script type="module" src="https://…"&gt;</code>, each with <code>integrity</code> and <code>crossorigin</code>, stay as written. So does a script with <code>is:inline</code>. Astro only processes a <code>&lt;script&gt;</code> that has no attribute other than <code>src</code>.</p>
+      <p>Use the CDN or the imports, not both: LUZ would load twice. <a href="/docs/get-started/snippet/">Choose your snippet</a> gives the tags with their hashes.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="problems">
+      <h2 class="docs-chapter__title" id="problems">If something does not work</h2>
+      <ul>
+        <li><strong>A warning about a peer dependency.</strong> <code>@luz-ds/core</code> asks for <code>@luz-ds/tokens</code> at <code>^0.1.0</code>. Install both, at the same version: <code>npm install @luz-ds/tokens @luz-ds/core</code>.</li>
+        <li><strong>The tool cannot resolve <code>@luz-ds/core/css</code>.</strong> The export is <code>./css</code>, with no file extension. If your tool reports an unresolved import, add the package to <code>vite.ssr.noExternal</code>, as <a href="https://docs.astro.build/en/guides/styling/">Astro's styling guide</a> describes.</li>
+        <li><strong>The styles come out in the wrong order.</strong> Two copies of LUZ on the page, for example one from a CDN and one from your bundler, put their rules in the same layers: load it once. An <code>@import</code> with <code>layer(luz)</code> nests the names as <code>luz.luz.components</code>: drop the <code>layer()</code>. <a href="/docs/get-started/layers/">Cascade layers</a> explains the order.</li>
+      </ul>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">JS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-astro-noexternal" aria-label="Copy the Astro setting">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="astro.config.mjs with the package left to the bundler"><code id="code-astro-noexternal">// astro.config.mjs
+import { defineConfig } from "astro/config";
+
+export default defineConfig({
+  vite: { ssr: { noExternal: ["@luz-ds/tokens", "@luz-ds/core"] } },
+});</code></pre>
+      </div>
+    </section>

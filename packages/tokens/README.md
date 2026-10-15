@@ -83,6 +83,20 @@ The default look is Vejer. A theme of your own sets `data-theme="<theme-name>"` 
 <html data-theme="my-brand" data-mode="dark">
 ```
 
+## Sizes
+
+Three tokens set the size of the whole type and space scales. Set them on `:root`, in CSS of your own that is not inside a layer, and write the lengths in rem so the reader's browser font size keeps working:
+
+```css
+:root {
+  --luz-type-base: 1.125rem; /* default 1rem: the size of --luz-text-base */
+  --luz-type-ratio: 1.2;     /* default 1.25: the multiple between two steps */
+  --luz-space-unit: 0.1875rem; /* default 0.25rem: the 4px grid of --luz-space-* */
+}
+```
+
+Every `--luz-text-*` and `--luz-space-*` step is computed from them. At the defaults the sizes are the same as before the knobs existed. A knob set on `body` or on a section changes nothing: the steps are resolved on `:root`. Components read the steps, never the knobs. The page [Make it yours](https://nandovejer.github.io/luz/docs/get-started/make-it-yours/) has the tested ranges and a table of presets.
+
 ## Fonts
 
 `luz-tokens.css` includes the `@font-face` declarations for ET Book. The files ship in `dist/fonts/` next to the stylesheet, so they load with no extra setup from npm and from a CDN.

@@ -20,7 +20,7 @@ Everything below is public from 1.0. Everything not in this list is internal and
 
 | Surface | Public | Not public |
 | --- | --- | --- |
-| **Tokens** | Every `--luz-*` custom property in `dist/tokens.css`: names, meaning and the roles they play (semantic tokens in the three base modes, primitives, space, type, radius, shadow). The DTCG file's group and token names | Custom properties a component declares for itself (`--luz-seek`, `--luz-seek-to`) |
+| **Tokens** | Every `--luz-*` custom property in `dist/tokens.css`: names, meaning and the roles they play (semantic tokens in the three base modes, primitives, space, type, radius, shadow), including the three size knobs `--luz-type-base`, `--luz-type-ratio` and `--luz-space-unit` (set them on `:root`, in rem). The DTCG file's group and token names | Custom properties a component declares for itself (`--luz-seek`, `--luz-seek-to`) |
 | **Classes** | `.luz-*`, `.o-*`, `.u-*`, in the markup the docs show, with their elements and modifiers (`--`, `__`) | `.is-*` state mirrors, selectors inside a component's CSS, descendant selectors the docs do not show |
 | **Attributes** | `data-theme`, `data-mode`, `data-luz-themes`, `data-luz-*`, `data-luz-label-*`, `data-copy`, `data-copy-from`, and the ARIA the docs require | Attributes the docs site's own scripts use (`data-docs-*`) |
 | **JS** | Every export of `@luz-ds/core` and `@luz-ds/site` named in the docs and in AGENTS.md: the module paths, the function names and their arguments and return values; the elements `<luz-search>` and `<luz-consent>` and the markup they expect, and the chunk files `site.min.js` loads (`search.min.js`, `consent.min.js`) | Anything not exported, and any export the docs do not name |

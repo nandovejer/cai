@@ -1,6 +1,6 @@
 # @luz-ds/site
 
-Five self-contained site components, each a light-DOM `<luz-*>` tag: search, cookie consent, language switch, submenu and banner. A piece is here when it needs data of the site (its search index, its cookie policy, its languages, its menu); everything else is in `@luz-ds/core`. The page structure (header, hero, page header, footer) is in the packages for one kind of site, which work without this one: [`@luz-ds/landing`](../landing) for a landing page, [`@luz-ds/cms`](../cms) for a blog, a newspaper or any CMS.
+Five self-contained site components, each a light-DOM `<luz-*>` tag: search, cookie consent, language switch, submenu and banner. A piece is here when it can go in any section of a page of any kind of site and acts for the site as a whole; everything else is in `@luz-ds/core`. The page structure (header, hero, page header, footer) is never here: it is in the packages for one kind of site, which work without this one. [`@luz-ds/landing`](../landing) is for a landing page, [`@luz-ds/cms`](../cms) for a blog, a newspaper or any CMS, and [`@luz-ds/app`](../app) for a web application.
 
 > **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
 
@@ -85,7 +85,7 @@ Each item is `[text, url, meta?, lang?]`. The component fetches it only from the
 
 ## Cookie consent
 
-A banner above the header asks once whether the site may use optional cookies: Accept and Reject side by side, with the same style, and a `<details>` with one checkbox per category. It is `hidden` in the markup and `consent.js` shows it when no answer is stored, when the stored one has expired (180 days by default, `data-luz-consent-days`, 395 at most), or when it offers a category the stored answer was not asked about. It covers nothing and takes no focus; Escape is not an answer. Without JavaScript it stays hidden: none of your scripts run either, and the cookie policy is a link on every page.
+A band fixed at the bottom of the window asks once whether the site may use optional cookies: Accept and Reject side by side, with the same style, and a `<details>` with one checkbox per category. It is `hidden` in the markup and `consent.js` shows it when no answer is stored, when the stored one has expired (180 days by default, `data-luz-consent-days`, 395 at most), or when it offers a category the stored answer was not asked about. It does not take focus, and while it shows it reserves the page's height, so it covers nothing; Escape is not an answer. Without JavaScript it stays hidden: none of your scripts run either, and the cookie policy is a link on every page.
 
 The answer is stored in `localStorage` under `luz-consent` (or `data-luz-consent-key`, starting with `luz-`), as `{"version":1,"expires":<ms>,"asked":[…],"granted":[…]}`. Read it with `getConsent()`, which returns `{ asked, granted, expires }` or `null`, and listen for `luz:consent` on `document`, dispatched with the same object as `detail` on every new answer. A button with `data-luz-consent-open` (and `hidden`) shows the banner again. The script writes no text. Full markup on the [Cookie consent page of the docs](https://nandovejer.github.io/luz/docs/site/consent/).
 

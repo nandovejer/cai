@@ -10,6 +10,12 @@
  *   htmlToText(fragment, { file })     a page fragment as Markdown-ish text;
  *       it throws `file:line` on an element it does not know, so a new element
  *       on a docs page is a decision, never a silent loss.
+ *   exampleDocuments(site, { csp, versions })  one standalone page per docs
+ *       page with a `#markup` section: its `html` blocks as live markup,
+ *       styled by LUZ from relative files beside it (`../dist/<pkg>/<file>`).
+ *   exampleAssets(root), manifestAssets(root)  the files those documents load
+ *       and the manifests of every package, copied to /examples/dist/ and
+ *       /manifests/ by the build: [{ route, from }], `from` relative to root.
  *
  * `siteUrl` is the site's root URL with its trailing slash (SITE_URL in the
  * pages build) or "" (root-absolute links, as in dev): the URL of a page is
@@ -21,17 +27,22 @@
  *     the demo, the computed tables (`#contrast`, `#tokens`) or the stages of
  *     "Do and don't" (only their captions).
  *   - a page of templates (`/templates/`): its summary and a pointer to it.
- *   - a tokens page: its prose; the tables of values are `tokens.json`'s.
+ *   - a tokens page: its prose; the tables of values are `tokens.json`'s
+ *     (the Figma import page, a workflow outside markup: summary and pointer).
  *   - an HTML elements page: its summary and the outline of its headings.
  *   - every other page: all of it, outside the demos.
  * Never: [data-docs-specimen], [inert], [aria-hidden="true"], <dialog>,
  * <template>, <script>, <style>, <svg>, the copy buttons, the tab row.
  */
-import { BASE, SITE_KINDS } from "../luz-packages.js";
+import { existsSync, readFileSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { BASE, PACKAGES, SITE_KINDS } from "../luz-packages.js";
 import { HtmlError, VOID, decodeEntities, tags } from "./html.js";
 import { readingOrder } from "./site.js";
+import { FILES } from "./snippets.js";
 
-/** The routes of the AI files at the Pages root (step 5 adds the other two). */
+/** The routes of the AI files at the Pages root. */
 export const AI_ROUTES = { llms: "/llms.txt", llmsFull: "/llms-full.txt", examples: "/examples/", manifests: "/manifests/" };
 
 /** The ceiling of llms-full.txt in bytes, fixed once and never raised (RL-17). */
@@ -56,6 +67,13 @@ const PACKAGE_OF_AREA = { components: "core", site: "site", landing: "landing", 
 const listed = (page) => page.meta.search !== "false";
 
 const urlOf = (route, siteUrl) => (siteUrl ? `${siteUrl}${route.slice(1)}` : route);
+
+/** A page with a "Copy the markup" section has an example document (its h3 has the id `markup`). */
+const MARKUP_HEADING = /<h3\b[^>]*\bid="markup"/;
+const hasMarkup = (page) => MARKUP_HEADING.test(page.body);
+
+/** `/docs/<area>/<slug>/` is `/examples/<area>/<slug>.html` (D2-A). */
+const exampleRouteOf = (page) => page.route.replace(/^\/docs\//, "/examples/").replace(/\/$/, ".html");
 
 const summaryOf = (site) => `> ${site.byRoute.get("/docs/")?.meta.description ?? SUMMARY_FALLBACK} ${SUMMARY_TAIL}`;
 
@@ -92,6 +110,12 @@ export function renderLlmsTxt(site, { siteUrl = "" } = {}) {
   }
   out.push("## Optional");
   out.push(`- [Full documentation for agents](${urlOf(AI_ROUTES.llmsFull, siteUrl)}): The same pages, as text: markup, variants, when to use, keyboard.`);
+  const sample = site.byRoute.get("/docs/components/button/") ?? site.pages.find(hasMarkup);
+  if (sample && hasMarkup(sample)) {
+    out.push(`- [Markup example: ${sample.meta.title}](${urlOf(exampleRouteOf(sample), siteUrl)}): A page of the markup of ${sample.meta.title}, styled by LUZ; every component and pattern page has one under /examples/.`);
+  }
+  out.push(`- [Classes of @luz-ds/core](${urlOf(`${AI_ROUTES.manifests}core/classes.json`, siteUrl)}): Every class, element and custom property of the package; each package has its own folder under /manifests/.`);
+  out.push(`- [Elements of @luz-ds/site](${urlOf(`${AI_ROUTES.manifests}site/custom-elements.json`, siteUrl)}): The custom elements the package defines or declares, with their attributes; core has one too, in its own folder.`);
   out.push("");
   return out.join("\n");
 }
@@ -488,6 +512,12 @@ const filesOf = (page, packageName) => {
 const TEMPLATES_ROUTE = /\/templates\/$/;
 const TEMPLATES_POINTER = "This page is a library of whole-page templates: open its URL for the markup of each.";
 
+// A page about a workflow outside the markup (importing the tokens file into a design tool), whose steps
+// an agent that writes HTML does not need: its summary, its files and a pointer, so the file keeps its ideal.
+const SUMMARY_POINTERS = new Map([
+  ["/docs/tokens/figma/", "This page explains how to import the tokens file into Figma and other design tools, step by step: open its URL for the steps."],
+]);
+
 const TOKENS_POINTER =
   "The values are not repeated here: the primitives are in `tokens.json` of @luz-ds/tokens, and every custom property of a package, with the file that declares it, is in the `properties` of its `classes.json`.";
 
@@ -500,6 +530,7 @@ function bodyOf(page, options) {
   const lineOf = (offset) => page.bodyLine + (page.body.slice(0, offset).match(/\n/g) ?? []).length;
 
   if (PACKAGE_OF_AREA[area] && TEMPLATES_ROUTE.test(page.route)) return TEMPLATES_POINTER;
+  if (SUMMARY_POINTERS.has(page.route)) return SUMMARY_POINTERS.get(page.route);
 
   if (area === "html") {
     const items = headings.filter((h) => h.level === 2 && h.text).map((h) => `- ${/[<>]/.test(h.text) ? codeSpan(h.text) : h.text}`);
@@ -535,8 +566,8 @@ function bodyOf(page, options) {
 
 /**
  * llms-full.txt: `# LUZ`, then one entry per page of every area but the hub,
- * in the order of llms.txt: `## title`, `URL:`, `Files:` and package, the
- * description, and the page's sections as text. Throws over LLMS_FULL_MAX.
+ * in the order of llms.txt: `## title`, `URL:`, `Example:` (a page with
+ * markup), `Files:` and package, the description, and the page's sections as text. Throws over LLMS_FULL_MAX.
  */
 export function renderLlmsFull(site, { siteUrl = "" } = {}) {
   const out = ["# LUZ", "", summaryOf(site), "", DETAILS, "", "One entry per page of the documentation, in reading order. The markup of an entry shows its classes and elements; the `classes.json` of each package lists them all.", ""];
@@ -546,6 +577,7 @@ export function renderLlmsFull(site, { siteUrl = "" } = {}) {
     for (const page of pages) {
       const url = urlOf(page.route, siteUrl);
       const header = [`## ${page.meta.title}`, `URL: ${url}`];
+      if (hasMarkup(page)) header.push(`Example: ${urlOf(exampleRouteOf(page), siteUrl)}`);
       const files = filesOf(page, packageName);
       if (files) header.push(files);
       out.push(header.join("\n"), "", page.meta.description, "");
@@ -560,4 +592,172 @@ export function renderLlmsFull(site, { siteUrl = "" } = {}) {
     );
   }
   return text;
+}
+
+/* ---- examples/ and manifests/ ----------------------------------------------- */
+
+const REPO_ROOT = fileURLToPath(new URL("../../", import.meta.url));
+
+/**
+ * What an example loads from each package: the stylesheet (the tokens one is
+ * `tokens.min.css`, which has no @font-face, so no font is copied and none
+ * needs its licence beside it), the entry script and the chunks it imports by
+ * name, beside it.
+ */
+const exampleFilesOf = (pkg) => [pkg === "tokens" ? "tokens.min.css" : FILES[pkg].css, FILES[pkg].js, ...FILES[pkg].chunks].filter(Boolean);
+const exampleCssOf = (pkg) => exampleFilesOf(pkg)[0];
+const exampleJsOf = (pkg) => FILES[pkg].js;
+
+const missing = (from) => new Error(`${from} is missing: run pnpm build`);
+
+/**
+ * The files an example loads, beside the examples (D1-A): one per css, js and
+ * chunk of FILES, flat at `/examples/dist/<pkg>/<file>`, so a chunk is beside
+ * the entry that imports it by name. [{ route, from }], `from` relative to
+ * `root`; throws, naming the file, when a package is not built.
+ */
+export function exampleAssets(root) {
+  const assets = [];
+  for (const pkg of PACKAGES) {
+    for (const file of exampleFilesOf(pkg)) {
+      const from = `packages/${pkg}/dist/${file}`;
+      if (!existsSync(join(root, from))) throw missing(from);
+      assets.push({ route: `${AI_ROUTES.examples}dist/${pkg}/${file}`, from });
+    }
+  }
+  return assets;
+}
+
+/**
+ * The manifests of every package, copied to `/manifests/<pkg>/` (D4-A): the
+ * `classes.json` of each, and the `custom-elements.json` of the packages that
+ * have one. Byte for byte the files the package ships.
+ */
+export function manifestAssets(root) {
+  const assets = [];
+  for (const pkg of PACKAGES) {
+    for (const file of ["classes.json", "custom-elements.json"]) {
+      const from = `packages/${pkg}/dist/${file}`;
+      if (!existsSync(join(root, from))) {
+        if (file === "classes.json") throw missing(from);
+        continue;
+      }
+      assets.push({ route: `${AI_ROUTES.manifests}${pkg}/${file}`, from });
+    }
+  }
+  return assets;
+}
+
+const PRE_HTML = /<pre\b([^>]*\bdata-lang="html"[^>]*)>\s*<code[^>]*>([\s\S]*?)<\/code>\s*<\/pre>/g;
+
+/**
+ * The `html` blocks of a page's `#markup` section, in page order: { kept,
+ * skipped }, each [{ label (the pre's aria-label), code (decoded once, trimmed) }].
+ * A block with a <script> or an on*= attribute is skipped: the example has
+ * no inline script and its policy says `script-src 'self'`.
+ */
+function markupBlocks(page) {
+  const start = page.body.search(MARKUP_HEADING);
+  const rest = page.body.slice(start + 1);
+  const end = rest.search(/<h[23]\b/);
+  const section = rest.slice(0, end === -1 ? undefined : end);
+  const kept = [];
+  const skipped = [];
+  for (const [, attrs, code] of section.matchAll(PRE_HTML)) {
+    const label = collapse(decodeEntities(/\baria-label="([^"]*)"/.exec(attrs)?.[1] ?? ""));
+    const block = { label, code: decodeEntities(code).trim() };
+    (/<script\b/i.test(block.code) || /\son[a-z]+\s*=/i.test(block.code) ? skipped : kept).push(block);
+  }
+  return { kept, skipped };
+}
+
+const KIND_AREAS = new Set(SITE_KINDS);
+
+/** The tags of the elements `@luz-ds/site` declares, from the manifest it ships. */
+function siteElements(root) {
+  const file = join(root, "packages/site/dist/custom-elements.json");
+  if (!existsSync(file)) throw missing("packages/site/dist/custom-elements.json");
+  const modules = JSON.parse(readFileSync(file, "utf-8")).modules ?? [];
+  return modules
+    .flatMap((m) => m.declarations ?? [])
+    .map((d) => d.tagName)
+    .filter((tag) => typeof tag === "string" && /^[a-z][a-z0-9-]*$/.test(tag));
+}
+
+const escText = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const escAttr = (text) => escText(text).replace(/"/g, "&quot;");
+/** Text for a comment: `--` would end it. */
+const inComment = (text) => text.replace(/-{2,}/g, "-");
+
+/**
+ * One document: the shell of f5-ai-ready.md 1.4 around the kept blocks.
+ * `packages` are the stylesheets to link (load order); `site` adds its script.
+ */
+function exampleDocument(page, { csp, versions, packages }) {
+  const { kept, skipped } = markupBlocks(page);
+  const title = page.meta.title;
+  const route = exampleRouteOf(page);
+  // `../dist/` and `../../docs/`: the document is at /examples/<area>/<slug>.html
+  const docsUrl = `../..${page.route}#markup`;
+  const snippetUrl = "../../docs/get-started/snippet/";
+  const links = packages.map((pkg) => `  <link rel="stylesheet" href="../dist/${pkg}/${exampleCssOf(pkg)}">`);
+  const scripts = ["core", ...packages.filter((pkg) => pkg === "site")].map((pkg) => `  <script type="module" src="../dist/${pkg}/${exampleJsOf(pkg)}"></script>`);
+  const sections = kept.map(
+    (block, i) =>
+      `    <section class="o-stack" aria-labelledby="ex-${i + 1}">\n      <h2 id="ex-${i + 1}">${escText(block.label)}</h2>\n${block.code}\n    </section>`,
+  );
+  const lines = [
+    "<!doctype html>",
+    '<html lang="en">',
+    "<head>",
+    '  <meta charset="utf-8">',
+    `  <meta http-equiv="Content-Security-Policy" content="${escAttr(csp)}">`,
+    '  <meta name="viewport" content="width=device-width, initial-scale=1">',
+    `  <title>${escText(title)}: markup examples – LUZ</title>`,
+    `  <!-- Generated from ${docsUrl} by scripts/docs-site/ai.js. Do not edit. MIT licence, github.com/nandovejer/luz.`,
+    `       Loads LUZ ${versions.core} from ../dist/, copied from the packages: the tokens file with no web font, so text uses the system serif.`,
+    "       Links in the markup are placeholders. For npm or a CDN, with integrity hashes, see " + `${snippetUrl} -->`,
+    ...links,
+    "</head>",
+    "<body>",
+    '  <main class="o-container o-stack">',
+    `    <h1>${escText(title)}</h1>`,
+    `    <p>Markup copied from <a href="${docsUrl}">${escText(title)} in the LUZ documentation</a>.</p>`,
+    ...sections,
+    "  </main>",
+  ];
+  if (skipped.length) {
+    lines.push(
+      `  <!-- Left out, because the block has a script or an event handler and the policy of this page is script-src 'self': ${skipped
+        .map((b) => inComment(b.label))
+        .join("; ")}. Copy them from ${docsUrl} -->`,
+    );
+  }
+  lines.push(...scripts, "</body>", "</html>", "");
+  return { route, page, html: lines.join("\n") };
+}
+
+/**
+ * One standalone document per page that has a `#markup` section, whatever its
+ * area (48 today), at `/examples/<area>/<slug>.html`. `csp` is the string of
+ * its CSP <meta>; `versions` maps each package to its version.
+ *
+ * The packages an example links, in load order: tokens, core, site when the
+ * page's area is site or a kept block names a <luz-*> element that site's
+ * custom-elements.json declares, then the kind's when the area is one.
+ */
+export function exampleDocuments(site, { csp, versions, root = REPO_ROOT }) {
+  if (typeof csp !== "string" || !csp) throw new Error("exampleDocuments needs the csp of the pages build");
+  if (typeof versions?.core !== "string") throw new Error("exampleDocuments needs versions.core");
+  const tags = siteElements(root).map((tag) => new RegExp(`<${tag}[\\s>/]`));
+  const documents = [];
+  for (const page of site.pages) {
+    if (!hasMarkup(page)) continue;
+    const area = page.route.split("/")[2];
+    const { kept } = markupBlocks(page);
+    const withSite = area === "site" || kept.some((b) => tags.some((tag) => tag.test(b.code)));
+    const packages = ["tokens", "core", ...(withSite ? ["site"] : []), ...(KIND_AREAS.has(area) ? [area] : [])];
+    documents.push(exampleDocument(page, { csp, versions, packages }));
+  }
+  return documents;
 }

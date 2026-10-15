@@ -79,7 +79,7 @@ export default defineConfig(({ mode }) => {
     publicDir: false,
     // The site's routes, dev server, layouts and partials, link check and the
     // move of each HTML file to its route: scripts/docs-site/plugin.js
-    plugins: [docsSite({ repoRoot: __dirname, relative: pages, outRoot, pagesBase: PAGES_BASE, siteUrl: SITE_URL }), ...(pages ? [pagesCsp()] : [])],
+    plugins: [docsSite({ repoRoot: __dirname, relative: pages, outRoot, pagesBase: PAGES_BASE, siteUrl: SITE_URL, csp: PAGES_CSP }), ...(pages ? [pagesCsp()] : [])],
     server: {
       open: "/",
       fs: {

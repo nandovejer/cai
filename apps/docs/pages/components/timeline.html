@@ -125,7 +125,23 @@ toc: h2,h3
                 <button class="luz-copy-btn" type="button" data-copy-from="code-timeline-autoplay" aria-label="Copy the timeline with autoplay markup">Copy</button>
               </div>
               <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Timeline with autoplay markup"><code id="code-timeline-autoplay">&lt;luz-timeline role=&quot;group&quot; aria-label=&quot;Milestones&quot; autoplay interval=&quot;4000&quot;&gt;
-  &lt;ol class=&quot;luz-timeline&quot;&gt;…&lt;/ol&gt;
+  &lt;ol class=&quot;luz-timeline&quot;&gt;
+    &lt;li class=&quot;luz-timeline__item&quot;&gt;
+      &lt;time class=&quot;luz-timeline__date&quot; datetime=&quot;2023&quot;&gt;2023&lt;/time&gt;
+      &lt;p class=&quot;luz-timeline__title&quot;&gt;The idea&lt;/p&gt;
+      &lt;p class=&quot;luz-timeline__text&quot;&gt;Two people sketch the first screens.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-timeline__item&quot;&gt;
+      &lt;time class=&quot;luz-timeline__date&quot; datetime=&quot;2024&quot;&gt;2024&lt;/time&gt;
+      &lt;p class=&quot;luz-timeline__title&quot;&gt;The team&lt;/p&gt;
+      &lt;p class=&quot;luz-timeline__text&quot;&gt;Five people work on it full time.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-timeline__item&quot;&gt;
+      &lt;time class=&quot;luz-timeline__date&quot; datetime=&quot;2025&quot;&gt;2025&lt;/time&gt;
+      &lt;p class=&quot;luz-timeline__title&quot;&gt;The first customers&lt;/p&gt;
+      &lt;p class=&quot;luz-timeline__text&quot;&gt;Fifty schools use it every week.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
 &lt;/luz-timeline&gt;</code></pre>
             </div>
             <p>The vertical layout:</p>
@@ -135,7 +151,23 @@ toc: h2,h3
                 <button class="luz-copy-btn" type="button" data-copy-from="code-timeline-vertical" aria-label="Copy the vertical timeline markup">Copy</button>
               </div>
               <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Vertical timeline markup"><code id="code-timeline-vertical">&lt;luz-timeline role=&quot;group&quot; layout=&quot;vertical&quot; aria-label=&quot;Versions of the library&quot;&gt;
-  &lt;ol class=&quot;luz-timeline&quot;&gt;…&lt;/ol&gt;
+  &lt;ol class=&quot;luz-timeline&quot;&gt;
+    &lt;li class=&quot;luz-timeline__item&quot;&gt;
+      &lt;time class=&quot;luz-timeline__date&quot; datetime=&quot;2024-02&quot;&gt;February 2024&lt;/time&gt;
+      &lt;h3 class=&quot;luz-timeline__title&quot;&gt;Version 0.1&lt;/h3&gt;
+      &lt;p class=&quot;luz-timeline__text&quot;&gt;Buttons, forms and tables.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-timeline__item&quot;&gt;
+      &lt;time class=&quot;luz-timeline__date&quot; datetime=&quot;2024-09&quot;&gt;September 2024&lt;/time&gt;
+      &lt;h3 class=&quot;luz-timeline__title&quot;&gt;Version 0.2&lt;/h3&gt;
+      &lt;p class=&quot;luz-timeline__text&quot;&gt;Dark mode and a print stylesheet.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-timeline__item&quot;&gt;
+      &lt;time class=&quot;luz-timeline__date&quot; datetime=&quot;2025-05&quot;&gt;May 2025&lt;/time&gt;
+      &lt;h3 class=&quot;luz-timeline__title&quot;&gt;Version 0.3&lt;/h3&gt;
+      &lt;p class=&quot;luz-timeline__text&quot;&gt;Right-to-left layouts.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
 &lt;/luz-timeline&gt;</code></pre>
             </div>
             <p>For a timeline added to the page after it has loaded, import the module once. It defines the element, and there is no <code>init</code> to call:</p>

@@ -26,6 +26,11 @@
  *   curated text for an AI agent, from the same scan; written at the root of
  *   the build, served as plain text in dev (root-absolute links there,
  *   absolute under the site URL in the pages build).
+ * - examples/ and manifests/ (ai.js): a standalone page per docs page with a
+ *   "Copy the markup" section, the CSS and JS they load from relative files
+ *   beside them, and the manifests of every package. Written by the build
+ *   (`csp` is the policy of their <meta>; without it none is written) and
+ *   served in dev from a route -> body table, never a path joined from the URL.
  * - The color-mode boot script (apps/landing/theme-boot.js, EX-009) is a
  *   classic script, which Vite does not bundle: the build copies it to
  *   /theme-boot.js and points every page at it.
@@ -35,7 +40,7 @@
  * Security: .claude/plans/docs-redesign/security.md, SEC-PLG-1…12.
  */
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { dirname, join, relative, resolve, sep } from "node:path";
+import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import {
   I18N_DIR,
   NOT_FOUND_ROUTE,
@@ -51,10 +56,19 @@ import {
   rootOf,
   scanSite,
 } from "./site.js";
-import { AI_ROUTES, renderLlmsFull, renderLlmsTxt } from "./ai.js";
+import { PACKAGES } from "../luz-packages.js";
+import { AI_ROUTES, exampleAssets, exampleDocuments, manifestAssets, renderLlmsFull, renderLlmsTxt } from "./ai.js";
 import { SITE_URL } from "./i18n.js";
 
 const LANDING = { route: "/", file: "apps/landing/index.html" };
+
+/** The Content-Type of what examples/ and manifests/ serve, by extension. */
+const CONTENT_TYPES = {
+  ".html": "text/html; charset=utf-8",
+  ".css": "text/css; charset=utf-8",
+  ".js": "text/javascript; charset=utf-8",
+  ".json": "application/json; charset=utf-8",
+};
 
 /** The render-blocking color-mode script: its source and its file in the build. */
 const THEME_BOOT = { src: "/apps/landing/theme-boot.js", out: "theme-boot.js" };
@@ -76,8 +90,10 @@ export const BASE_PATH = /^\/([A-Za-z0-9_-][A-Za-z0-9._-]*\/)?$/;
  * @param {string} [options.pagesBase] pages build: the site's path, "/<repo>/"
  * @param {string} [options.siteUrl]   pages build: the published site's root URL,
  *   for the home pages' absolute canonical and hreflang alternates
+ * @param {string} [options.csp]       the Content-Security-Policy of the pages build:
+ *   the <meta> of every example document; without it no example is written
  */
-export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase = "/", siteUrl = "" }) {
+export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase = "/", siteUrl = "", csp = "" }) {
   // An absolute URL here would make every asset of the 404 page a third-party request (SEC-MISC-3)
   if (!BASE_PATH.test(pagesBase)) throw new Error(`pagesBase must be "/" or "/<name>/", got ${pagesBase}`);
   if (siteUrl && !(SITE_URL.test(siteUrl) && new URL(siteUrl).pathname === pagesBase)) {
@@ -129,6 +145,26 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
       [AI_ROUTES.llms, () => renderLlmsTxt(scan(), options)],
       [AI_ROUTES.llmsFull, () => renderLlmsFull(scan(), options)],
     ]);
+  };
+
+  /**
+   * examples/ and manifests/ by route: { type, body() }. The documents are
+   * made from the scan, the assets are read from the table's own `from`
+   * (a repository path built by ai.js, never by the URL). Empty without a csp.
+   */
+  const exampleFiles = () => {
+    const files = new Map();
+    if (!csp) return files;
+    const versions = Object.fromEntries(
+      PACKAGES.map((name) => [name, JSON.parse(readFileSync(resolve(repoRoot, "packages", name, "package.json"), "utf-8")).version]),
+    );
+    for (const doc of exampleDocuments(scan(), { csp, versions, root: repoRoot })) {
+      files.set(doc.route, { type: CONTENT_TYPES[".html"], body: () => doc.html });
+    }
+    for (const { route, from } of [...exampleAssets(repoRoot), ...manifestAssets(repoRoot)]) {
+      files.set(route, { type: CONTENT_TYPES[extname(route)], body: () => readFileSync(resolve(repoRoot, from)) });
+    }
+    return files;
   };
 
   /** Render everything and check it; returns the link problems. */
@@ -198,6 +234,8 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
           if (problems.length) logger.warn(`[luz-docs-site] broken links:\n  ${problems.join("\n  ")}`);
           // An element ai.js cannot say as text, or a page over the ceiling of llms-full.txt
           for (const render of aiFiles().values()) render();
+          // An example whose page cannot be written as a document
+          if (csp) exampleDocuments(scan(), { csp, versions: { core: "0.0.0" }, root: repoRoot });
         } catch (error) {
           logger.error(`[luz-docs-site] ${error.message}`);
         }
@@ -252,6 +290,19 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
             logger.error(`[luz-docs-site] ${error.message}`);
             return next();
           }
+        }
+        // examples/ and manifests/: from a table of what is generated, never a path (SEC-PLG-5/6)
+        if (csp && (path.startsWith(AI_ROUTES.examples) || path.startsWith(AI_ROUTES.manifests))) {
+          try {
+            const generated = exampleFiles().get(path);
+            if (generated) {
+              res.setHeader("Content-Type", generated.type);
+              return res.end(generated.body());
+            }
+          } catch (error) {
+            logger.error(`[luz-docs-site] ${error.message}`);
+          }
+          return next();
         }
         const file = map.get(path);
         // Another language of the landing: rendered from the template, as Vite would a file
@@ -335,6 +386,8 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
       this.emitFile({ type: "asset", fileName: SEARCH_INDEX_ROUTE.slice(1), source: searchIndex() });
       // The files for an AI agent, at the root of the site (discovery is by link, not by convention)
       for (const [route, render] of aiFiles()) this.emitFile({ type: "asset", fileName: route.slice(1), source: render() });
+      // The examples, the files they load and the manifests of the packages, next to them
+      for (const [route, { body }] of exampleFiles()) this.emitFile({ type: "asset", fileName: route.slice(1), source: body() });
       // Unhashed too: a classic script, which Vite leaves alone (EX-009)
       this.emitFile({
         type: "asset",

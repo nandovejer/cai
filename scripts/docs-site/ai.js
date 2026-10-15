@@ -16,6 +16,11 @@
  *   exampleAssets(root), manifestAssets(root)  the files those documents load
  *       and the manifests of every package, copied to /examples/dist/ and
  *       /manifests/ by the build: [{ route, from }], `from` relative to root.
+ *   aiArtifacts(site, { siteUrl })     the files above as rows of a table:
+ *       [{ file, url, what, madeBy }]; the page "Working with AI" shows them.
+ *   fillAiMarkers(html, site, { file }) the two generated tables of that page:
+ *       `<!-- luz:ai files -->` and `<!-- luz:ai rules -->` become the table
+ *       of aiArtifacts() and the two tables of the rules of @luz-ds/check.
  *
  * `siteUrl` is the site's root URL with its trailing slash (SITE_URL in the
  * pages build) or "" (root-absolute links, as in dev): the URL of a page is
@@ -39,6 +44,8 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { BASE, PACKAGES, SITE_KINDS } from "../luz-packages.js";
 import { HtmlError, VOID, decodeEntities, tags } from "./html.js";
+import { SITE_URL } from "../../packages/check/src/messages.js";
+import { ruleRows } from "./ai-rules.js";
 import { readingOrder } from "./site.js";
 import { FILES } from "./snippets.js";
 
@@ -518,6 +525,51 @@ const SUMMARY_POINTERS = new Map([
   ["/docs/tokens/figma/", "This page explains how to import the tokens file into Figma and other design tools, step by step: open its URL for the steps."],
 ]);
 
+// The page "Working with AI" (generate: ai): most of it is data. The files are in llms.txt and its
+// siblings, the rules are `messages.js`, the options and the exit codes are `--help`, the fields of
+// --json are the report. The entry keeps the prose (the prompt, what the check is, the reviewer, the
+// limits) and says in a line where each table is, so the file stays under its ideal; the page itself
+// is not trimmed.
+const AI_ROUTE = "/docs/get-started/ai/";
+const AI_POINTER =
+  "The files an agent can read are linked from `llms.txt`. The commands with paths, the options and exit codes (`npx @luz-ds/check --help`), a sample of the output, the fields of `--json` and the tables of the files and of the rules are on the page at the URL above.";
+
+/** The first `<p>` of a piece of markup, as markup. */
+const firstParagraph = (html) => /<p\b[\s\S]*?<\/p>/.exec(html)?.[0] ?? "";
+
+const AI_AGENT_POINTER = "The other notes on the reviewer are on the page at the URL above.";
+
+/** The first two items of the first list of a piece of markup, and nothing after the list. */
+function twoItems(html) {
+  const list = /<ul\b[^>]*>([\s\S]*?)<\/ul>/.exec(html);
+  if (!list) return html;
+  const items = list[1].match(/<li\b[\s\S]*?<\/li>/g) ?? [];
+  return `${html.slice(0, list.index)}<ul>${items.slice(0, 2).join("")}</ul>`;
+}
+
+/**
+ * The body of the AI page for llms-full.txt, by the id of its h2. The prompt
+ * of `start` is the one the head of the file already gives, so it is left out,
+ * and so is the table of `files`. `check` is its first paragraph and a line
+ * that says where the commands, the options and the tables are; `rules` its lead; `agent` its lead,
+ * the command and the two items that are about overwriting and reading; the
+ * rest whole.
+ */
+function aiBodyOf(body, headings) {
+  const h2 = headings.filter((h) => h.level === 2);
+  const parts = [];
+  for (const [i, h] of h2.entries()) {
+    const section = body.slice(h.end, h2[i + 1]?.start ?? body.length);
+    const head = body.slice(h.start, h.end);
+    if (h.id === "start" || h.id === "files") continue;
+    if (h.id === "check") parts.push(head, firstParagraph(section), `<p>${AI_POINTER}</p>`);
+    else if (h.id === "rules") parts.push(head, firstParagraph(section));
+    else if (h.id === "agent") parts.push(head, twoItems(section), `<p>${AI_AGENT_POINTER}</p>`);
+    else parts.push(head, section);
+  }
+  return parts.join("\n");
+}
+
 const TOKENS_POINTER =
   "The values are not repeated here: the primitives are in `tokens.json` of @luz-ds/tokens, and every custom property of a package, with the file that declares it, is in the `properties` of its `classes.json`.";
 
@@ -531,6 +583,11 @@ function bodyOf(page, options) {
 
   if (PACKAGE_OF_AREA[area] && TEMPLATES_ROUTE.test(page.route)) return TEMPLATES_POINTER;
   if (SUMMARY_POINTERS.has(page.route)) return SUMMARY_POINTERS.get(page.route);
+
+  if (page.route === AI_ROUTE && page.meta.generate === "ai") {
+    const { text } = convert(aiBodyOf(page.body, headings), { file, line: lineOf(0), shift: 1, siteUrl, base });
+    return text.startsWith(page.meta.description) ? text.slice(page.meta.description.length).replace(/^\s+/, "") : text;
+  }
 
   if (area === "html") {
     const items = headings.filter((h) => h.level === 2 && h.text).map((h) => `- ${/[<>]/.test(h.text) ? codeSpan(h.text) : h.text}`);
@@ -760,4 +817,105 @@ export function exampleDocuments(site, { csp, versions, root = REPO_ROOT }) {
     documents.push(exampleDocument(page, { csp, versions, packages }));
   }
   return documents;
+}
+
+/* ---- aiArtifacts: the table of "What an agent can read" ---------------------- */
+
+const WHAT = {
+  "llms.txt": "The index of the documentation for an agent: every page with its description, in reading order.",
+  "llms-full.txt": "The same pages as plain text: the markup, the variants, when to use and the keyboard of each one.",
+  example: "The markup of one component or pattern page, styled by LUZ; every page that has a markup section has its own under /examples/.",
+  "classes.json": "Every class, custom property and attribute hook of the package: the names an agent may use.",
+  "custom-elements.json": "The custom elements the package defines or declares, with the attributes each one reads.",
+};
+
+const MADE_BY = {
+  pages: "scripts/docs-site/ai.js, in the pages build",
+  manifests: "scripts/ai-manifests.js, in the build of each package",
+};
+
+/**
+ * The AI files of the Pages site as table rows, in this order: `llms.txt`,
+ * `llms-full.txt`, the example of Button (a file name that is a pattern:
+ * `examples/<area>/<slug>.html`), then the manifests of every package as
+ * `manifestAssets()` copies them. `url` is the route, or `siteUrl` + the route
+ * without its first slash. Pure: it reads the manifests' routes, not the files.
+ */
+export function aiArtifacts(site, { siteUrl = "" } = {}) {
+  const rows = [
+    { file: "llms.txt", url: urlOf(AI_ROUTES.llms, siteUrl), what: WHAT["llms.txt"], madeBy: MADE_BY.pages },
+    { file: "llms-full.txt", url: urlOf(AI_ROUTES.llmsFull, siteUrl), what: WHAT["llms-full.txt"], madeBy: MADE_BY.pages },
+  ];
+  const sample = site.byRoute.get("/docs/components/button/") ?? site.pages.find(hasMarkup);
+  if (sample && hasMarkup(sample)) {
+    rows.push({ file: "examples/<area>/<slug>.html", url: urlOf(exampleRouteOf(sample), siteUrl), what: WHAT.example, madeBy: MADE_BY.pages });
+  }
+  for (const { route } of manifestAssets(site.repoRoot ?? REPO_ROOT)) {
+    const [, pkg, name] = /^\/manifests\/([a-z]+)\/([a-z.-]+)$/.exec(route);
+    rows.push({ file: route.slice(1), url: urlOf(route, siteUrl), what: `${WHAT[name]} Package: @luz-ds/${pkg}.`, madeBy: MADE_BY.manifests });
+  }
+  return rows;
+}
+
+/* ---- the generated tables of the page, in place of its markers ---------------- */
+
+const MARKER = /^([ \t]*)<!-- luz:ai ([a-z]+) -->[ \t]*$/gm;
+
+/** A scrollable, labelled luz-table: `columns` are the headers, `rows` arrays of cell HTML. */
+function tableOf(label, columns, rows) {
+  const head = columns.map((c) => `<th scope="col">${c}</th>`).join("");
+  const body = rows.map((cells) => `<tr>${cells.map((cell, i) => `<td data-label="${columns[i]}"><div>${cell}</div></td>`).join("")}</tr>`);
+  return [
+    `<div class="luz-table-wrap" role="region" aria-label="${escAttr(label)}" tabindex="0">`,
+    '  <table class="luz-table">',
+    `    <caption>${escText(label)}</caption>`,
+    `    <thead><tr>${head}</tr></thead>`,
+    "    <tbody>",
+    ...body.map((line) => `      ${line}`),
+    "    </tbody>",
+    "  </table>",
+    "</div>",
+  ].join("\n");
+}
+
+const generated = {
+  files(site) {
+    const rows = aiArtifacts(site, { siteUrl: SITE_URL }).map((r) => [
+      `<code>${escText(r.file)}</code>`,
+      `<code>${escText(r.url)}</code>`,
+      escText(r.what),
+      escText(r.madeBy),
+    ]);
+    return tableOf("Files an agent can read", ["File", "URL", "What it is", "Made by"], rows);
+  },
+  rules() {
+    const rows = ruleRows();
+    const table = (label, severity) =>
+      tableOf(
+        label,
+        ["Rule", "What it finds", "Severity"],
+        rows.filter((r) => r.severity === severity).map((r) => [`<code>${r.id}</code>`, escText(r.finds), severity]),
+      );
+    return [table("Rules that block", "block"), table("Rules that warn", "warn")].join("\n");
+  },
+};
+
+/**
+ * The page with `generate: ai`: each `<!-- luz:ai files -->` and
+ * `<!-- luz:ai rules -->` on a line of its own becomes its table(s), indented
+ * as the marker was. Throws on another kind, and on a page that lacks one of
+ * the two, naming the file.
+ */
+export function fillAiMarkers(html, site, { file = "<page>" } = {}) {
+  const seen = new Set();
+  const out = html.replace(MARKER, (_, indent, kind) => {
+    if (!Object.hasOwn(generated, kind)) throw new Error(`${file}: <!-- luz:ai ${kind} --> is not a table of the page; use "files" or "rules"`);
+    if (seen.has(kind)) throw new Error(`${file}: <!-- luz:ai ${kind} --> is there twice`);
+    seen.add(kind);
+    return generated[kind](site).replace(/^/gm, indent).replace(/^[ \t]+$/gm, "");
+  });
+  for (const kind of Object.keys(generated)) {
+    if (!seen.has(kind)) throw new Error(`${file}: generate is "ai" and the page has no <!-- luz:ai ${kind} --> line on its own`);
+  }
+  return out;
 }

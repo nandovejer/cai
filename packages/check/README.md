@@ -16,7 +16,7 @@ Say `npx @luz-ds/check`, with the scope. The bare name `luz-check` is the comman
 
 A path is a file, a folder (read recursively: `.html`, `.htm` and `.css`) or a quoted glob such as `"src/**/*.html"`; with no path it reads the current folder. `--ext .astro,.vue` reads those extensions as HTML, `--json` prints the report as JSON, `--strict` fails on a warning too, and `--config <file>` reads a configuration other than `luz-check.json`.
 
-In this version the command reads your files, reports a file it cannot read as HTML or CSS (`parse/error`) and one it did not read (`file/skipped`: a link, a file over 1 MiB, one it may not open), and has its exit codes, its text and its JSON report. It never follows a link and never quotes your files. The rules about LUZ classes, elements, load order and theme colours arrive before the first release.
+The rules are in this version. They find a class or an element that LUZ does not have (`class/unknown`, `element/unknown`), a stylesheet that is not loaded or is loaded in the wrong order (`load/package-missing`, `load/order`), a class on an element it does not belong on (`misuse/host-element`) and, in a theme file, a colour pair that is below its contrast minimum (`theme/contrast`). A file it cannot read as HTML or CSS is reported as `parse/error`, and one it did not read as `file/skipped`: a link, a file over 1 MiB, one it may not open. A rule either blocks, and the exit code is 1, or warns. Every rule, what it finds and whether it blocks is listed on [Working with AI](https://nandovejer.github.io/luz/docs/get-started/ai/#rules). The command never follows a link and never quotes your files.
 
 | Exit code | Meaning |
 | --- | --- |

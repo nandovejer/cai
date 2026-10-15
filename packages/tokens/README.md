@@ -37,7 +37,7 @@ import '@luz-ds/tokens'
 
 ## Check your own colors
 
-`luz-tokens check-contrast` reads the `--luz-*` overrides of your stylesheet, puts them over LUZ's tokens as the browser would, and measures the pairs LUZ promises to keep readable (WCAG 2.x: 4.5:1 for text, 3:1 for disabled text, focus rings, field borders and icons) in light, dark, high contrast and every `[data-theme]` you define. It needs Node 18 or later and has no dependencies.
+`luz-tokens check-contrast` reads the `--luz-*` overrides of your stylesheet, puts them over LUZ's tokens as the browser would, and measures the pairs LUZ promises to keep readable (WCAG 2.x: 4.5:1 for text, 3:1 for disabled text, focus rings, field borders and icons) in light, dark, high contrast and every `[data-theme]` you define. It needs Node 20 or later and has no dependencies.
 
 ```bash
 npx @luz-ds/tokens check-contrast my-theme.css

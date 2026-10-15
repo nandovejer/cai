@@ -1,0 +1,173 @@
+<!-- luz:page
+title: Working with AI
+description: What an AI coding agent can read, how to check what it wrote, and the accessibility reviewer you can give it.
+area: get-started
+order: 10
+generate: ai
+keywords: llms.txt, agent, claude, copilot, cursor, manifest, check
+-->
+    <section class="docs-block" aria-labelledby="start">
+      <h2 class="docs-chapter__title" id="start">Give your agent LUZ</h2>
+      <p class="docs-lead">LUZ is plain HTML and CSS, so an AI coding agent can write it when it knows which class names exist. Paste this prompt into your agent. It points the agent at the files below and asks it to run the checker on what it wrote. What the checker does not do is in <a href="#limits">What this does not do</a>.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Prompt</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-prompt" aria-label="Copy the prompt">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="Prompt for your agent"><code id="code-prompt">Use LUZ for the markup. Read https://nandovejer.github.io/luz/llms.txt first and use only the classes in each package's classes.json. After you write HTML or CSS, run `npx @luz-ds/check` on the files and fix every finding before you answer.</code></pre>
+      </div>
+    </section>
+
+    <section class="docs-block" aria-labelledby="files">
+      <h2 class="docs-chapter__title" id="files">What an agent can read</h2>
+      <p class="docs-lead">Every file below is written by the build of this site from the pages you are reading, so an agent and a person get the same facts. Give an agent the URL of <code>llms.txt</code>: it lists the rest.</p>
+      <!-- luz:ai files -->
+    </section>
+
+    <section class="docs-block" aria-labelledby="check">
+      <h2 class="docs-chapter__title" id="check">Check what an agent wrote</h2>
+      <p class="docs-lead"><code>npx @luz-ds/check</code> reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and theme colors are wrong. It reads files and writes nothing. It needs Node 20 or later.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Shell</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-check-run" aria-label="Copy the commands">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="bash" tabindex="0" role="region" aria-label="The commands"><code id="code-check-run">npx @luz-ds/check
+npx @luz-ds/check index.html css/site.css
+npx @luz-ds/check src --json</code></pre>
+      </div>
+      <p>Say <code>npx @luz-ds/check</code>, with the scope. A path is a file, a folder (read recursively: <code>.html</code>, <code>.htm</code> and <code>.css</code>) or a quoted glob such as <code>"src/**/*.html"</code>. With no path it reads the current folder.</p>
+      <div class="luz-table-wrap" role="region" aria-label="The options of the command" tabindex="0">
+        <table class="luz-table">
+          <caption>The options of the command</caption>
+          <thead>
+            <tr><th scope="col">Option</th><th scope="col">What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Option"><div><code>--json</code></div></td><td data-label="What it does"><div>Prints the report as JSON</div></td></tr>
+            <tr><td data-label="Option"><div><code>--strict</code></div></td><td data-label="What it does"><div>Fails on a warning as well as on a finding that blocks</div></td></tr>
+            <tr><td data-label="Option"><div><code>--config &lt;file&gt;</code></div></td><td data-label="What it does"><div>Reads this configuration instead of <code>luz-check.json</code></div></td></tr>
+            <tr><td data-label="Option"><div><code>--theme &lt;file.css&gt;</code></div></td><td data-label="What it does"><div>Names a theme stylesheet whose colors are measured; repeat it for each file, in the order the page loads them</div></td></tr>
+            <tr><td data-label="Option"><div><code>--ext &lt;list&gt;</code></div></td><td data-label="What it does"><div>Also reads these extensions as HTML, such as <code>.astro,.vue</code></div></td></tr>
+            <tr><td data-label="Option"><div><code>--version</code></div></td><td data-label="What it does"><div>Prints the version</div></td></tr>
+            <tr><td data-label="Option"><div><code>--help</code></div></td><td data-label="What it does"><div>Shows the options and the limits of the command</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>A <code>luz-check.json</code> in the folder you run it from sets <code>ignore</code>, <code>rules</code>, <code>themes</code> and <code>strict</code>. A rule that warns can be switched off there; a rule that blocks is silenced only with <code>ignore</code>, and the summary says how many findings were ignored and how many rules are off.</p>
+      <h3 class="docs-subhead" id="check-exit">Exit codes</h3>
+      <div class="luz-table-wrap" role="region" aria-label="Exit codes" tabindex="0">
+        <table class="luz-table">
+          <caption>The exit codes of the command</caption>
+          <thead>
+            <tr><th scope="col">Code</th><th scope="col">Meaning</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Code"><div><code>0</code></div></td><td data-label="Meaning"><div>Nothing blocks. Warnings may still have been printed</div></td></tr>
+            <tr><td data-label="Code"><div><code>1</code></div></td><td data-label="Meaning"><div>At least one finding blocks, or, with <code>--strict</code>, a warning was found</div></td></tr>
+            <tr><td data-label="Code"><div><code>2</code></div></td><td data-label="Meaning"><div>The command was used wrongly, a configuration cannot be read, or there is nothing to read</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3 class="docs-subhead" id="check-output">What it prints</h3>
+      <p>One line for each finding, in the order of the files and lines: a mark (<code>✗</code> blocks, <code>!</code> warns), the place, the rule and one sentence that says what is wrong and what to do. A theme finding is followed by the lines where the colors were set. The last line counts what it found in the files it read.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Output</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-check-out" aria-label="Copy the example output">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="Example output"><code id="code-check-out">✗ index.html:14:8 class/unknown  .luz-btn-primary is not a LUZ class; the closest is .luz-btn--primary
+✗ index.html:22:5 load/package-missing  .luz-banner is in @luz-ds/site, which this page does not load; add its stylesheet after core
+! site.css:8:3 css/literal-colour  color is set to #1a5fb4; use a token, such as var(--luz-brand-fill)
+✗ theme.css:3:3 theme/contrast  light: --luz-text-secondary on surface-page is 2.8:1, needs 4.5:1 (text); change one of the two
+    --luz-text-secondary: #999999 is set in theme.css:3
+✗ 3 blocking and 1 warning in 3 files (manifests: @luz-ds/core 0.1.0 from node_modules)</code></pre>
+      </div>
+      <p>The <code>(manifests: …)</code> part says which LUZ version the names were checked against, and from where: your <code>node_modules</code> or the copy that ships with the command.</p>
+      <h3 class="docs-subhead" id="check-json">The JSON report</h3>
+      <p><code>--json</code> prints one object with these fields. A field that is not in this table is not part of the report.</p>
+      <div class="luz-table-wrap" role="region" aria-label="The fields of the JSON report" tabindex="0">
+        <table class="luz-table">
+          <caption>The fields of the JSON report</caption>
+          <thead>
+            <tr><th scope="col">Field</th><th scope="col">Type</th><th scope="col">What it is</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Field"><div><code>tool</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>Always <code>@luz-ds/check</code></div></td></tr>
+            <tr><td data-label="Field"><div><code>version</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The version of the checker</div></td></tr>
+            <tr><td data-label="Field"><div><code>ok</code></div></td><td data-label="Type"><div>boolean</div></td><td data-label="What it is"><div>True when nothing blocks and, with <code>--strict</code>, nothing warns. It is not an accessibility result</div></td></tr>
+            <tr><td data-label="Field"><div><code>files</code></div></td><td data-label="Type"><div>list of strings</div></td><td data-label="What it is"><div>The files it read, sorted</div></td></tr>
+            <tr><td data-label="Field"><div><code>manifests</code></div></td><td data-label="Type"><div>list of objects</div></td><td data-label="What it is"><div>The LUZ data it checked against, one entry for each package</div></td></tr>
+            <tr><td data-label="Field"><div><code>manifests[].package</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The package, such as <code>@luz-ds/core</code></div></td></tr>
+            <tr><td data-label="Field"><div><code>manifests[].version</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The version of that package's data</div></td></tr>
+            <tr><td data-label="Field"><div><code>manifests[].source</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div><code>node_modules</code> when your project has the package, <code>bundled</code> when the command's own copy was used</div></td></tr>
+            <tr><td data-label="Field"><div><code>summary</code></div></td><td data-label="Type"><div>object</div></td><td data-label="What it is"><div>The counts of the run</div></td></tr>
+            <tr><td data-label="Field"><div><code>summary.files</code></div></td><td data-label="Type"><div>number</div></td><td data-label="What it is"><div>How many files it read</div></td></tr>
+            <tr><td data-label="Field"><div><code>summary.blocking</code></div></td><td data-label="Type"><div>number</div></td><td data-label="What it is"><div>How many findings block</div></td></tr>
+            <tr><td data-label="Field"><div><code>summary.warnings</code></div></td><td data-label="Type"><div>number</div></td><td data-label="What it is"><div>How many findings warn</div></td></tr>
+            <tr><td data-label="Field"><div><code>summary.skipped</code></div></td><td data-label="Type"><div>number</div></td><td data-label="What it is"><div>How many paths it did not read</div></td></tr>
+            <tr><td data-label="Field"><div><code>summary.ignored</code></div></td><td data-label="Type"><div>number</div></td><td data-label="What it is"><div>How many findings the configuration's <code>ignore</code> removed</div></td></tr>
+            <tr><td data-label="Field"><div><code>summary.off</code></div></td><td data-label="Type"><div>number</div></td><td data-label="What it is"><div>How many rules the configuration switched off</div></td></tr>
+            <tr><td data-label="Field"><div><code>summary.truncated</code></div></td><td data-label="Type"><div>boolean</div></td><td data-label="What it is"><div>True when the list of findings was cut; the counts above are complete</div></td></tr>
+            <tr><td data-label="Field"><div><code>config</code></div></td><td data-label="Type"><div>object</div></td><td data-label="What it is"><div>The configuration that was read</div></td></tr>
+            <tr><td data-label="Field"><div><code>config.file</code></div></td><td data-label="Type"><div>string or null</div></td><td data-label="What it is"><div>The configuration file, or null when there was none</div></td></tr>
+            <tr><td data-label="Field"><div><code>config.off</code></div></td><td data-label="Type"><div>list of strings</div></td><td data-label="What it is"><div>The rules the configuration switched off</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings</code></div></td><td data-label="Type"><div>list of objects</div></td><td data-label="What it is"><div>What it found, in the order of files and lines</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].rule</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The rule, such as <code>class/unknown</code></div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].severity</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div><code>block</code> or <code>warn</code></div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].file</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The path, relative to where you ran the command</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].line</code></div></td><td data-label="Type"><div>number or null</div></td><td data-label="What it is"><div>The line, when the finding has a place in the file</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].column</code></div></td><td data-label="Type"><div>number or null</div></td><td data-label="What it is"><div>The column, when the finding has a place in the file</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].message</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The sentence that says what is wrong and what to do, in English</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].suggestion</code></div></td><td data-label="Type"><div>string or null</div></td><td data-label="What it is"><div>The closest LUZ name, when there is one close enough</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].docs</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The URL of the page that explains the rule</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].details</code></div></td><td data-label="Type"><div>object</div></td><td data-label="What it is"><div>Only on some findings. A theme finding names the mode, the colors, the ratio and the places where the colors were set</div></td></tr>
+            <tr><td data-label="Field"><div><code>skipped</code></div></td><td data-label="Type"><div>list of objects</div></td><td data-label="What it is"><div>The paths it did not read</div></td></tr>
+            <tr><td data-label="Field"><div><code>skipped[].file</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The path</div></td></tr>
+            <tr><td data-label="Field"><div><code>skipped[].reason</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>Why: a link, a file that is not a regular file, a file over 1 MiB, one it could not open, or a limit of the run</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The same two things hold for the text and for the JSON: a path or a name that is not made of ordinary characters is written escaped, and the command never quotes the text of your files.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="rules">
+      <h2 class="docs-chapter__title" id="rules">What check blocks and what it warns about</h2>
+      <p class="docs-lead">Each rule has an id such as <code>class/unknown</code>, shown in every finding. A rule that blocks makes the exit code 1. A rule that warns does not, unless you pass <code>--strict</code>. The two tables are written from the list of rules the command has.</p>
+      <!-- luz:ai rules -->
+    </section>
+
+    <section class="docs-block" aria-labelledby="agent">
+      <h2 class="docs-chapter__title" id="agent">The accessibility reviewer</h2>
+      <p class="docs-lead">The same package prints an agent definition for an AI coding assistant: a reviewer that reads the source of a page and gives advice on accessibility. Copy it into your project.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">Shell</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-agent" aria-label="Copy the command">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="bash" tabindex="0" role="region" aria-label="The command that copies the reviewer"><code id="code-agent">npx @luz-ds/check agent &gt; .claude/agents/luz-accessibility-reviewer.md</code></pre>
+      </div>
+      <ul>
+        <li><strong>It overwrites.</strong> The <code>&gt;</code> replaces a file that is already there. Use another path, or put your copy under version control first, if you edited it.</li>
+        <li><strong>It is read-only.</strong> It has three tools, <code>Read</code>, <code>Grep</code> and <code>Glob</code>: it reads, searches and lists files, and writes nothing. Read-only does not mean harmless, because <code>Read</code> has no path limit. Read the file before you use it, and review any change to it as you would code.</li>
+        <li><strong>It gives advice.</strong> It reviews source against WCAG 2.2 level AA and EN 301 549, and labels each finding as confirmed in the source or as one that needs a browser or assistive technology. Its findings are suggestions from reading code, not test results.</li>
+        <li><strong>It does not use assistive technology.</strong> It does not open a page or run a script, and it does not look at how a page renders, so it does not replace a test with a keyboard and a screen reader.</li>
+      </ul>
+      <p>The file is also in the package as <code>@luz-ds/check/agents/accessibility.md</code>, for a build step that copies it.</p>
+    </section>
+
+    <section class="docs-block" aria-labelledby="limits">
+      <h2 class="docs-chapter__title" id="limits">What this does not do</h2>
+      <p class="docs-lead">A run with no findings says what the checker did not find in the files it read. It is not a test of the page.</p>
+      <ul>
+        <li><strong>It does not run a browser.</strong> It reads files, so anything that depends on how a page renders, such as layout, focus order or the colors a browser works out, is not seen.</li>
+        <li><strong>Contrast is measured for your tokens only.</strong> It measures the <code>--luz-*</code> colors you set in a theme file. A color written straight into a rule is not measured against anything. How the pairs are read is on <a href="/docs/tokens/contrast/">Contrast check</a>.</li>
+        <li><strong>A class built at run time is not seen.</strong> A name put together in a script, such as <code>"luz-" + name</code>, or written by a template, is not in the file, so it is not checked.</li>
+        <li><strong>It does not check names, labels, alt text, headings and language.</strong> Whether a button has a name, an image a useful alternative, the headings an order and the page a language is not read, and a run with no findings says nothing about them.</li>
+        <li><strong>It does not replace testing with a screen reader.</strong> No assistive technology is used, by the command or by the reviewer. What has not been tested is listed in <a href="/docs/accessibility/#h-a11y-not-tested">the accessibility statement</a>.</li>
+        <li><strong>It does not call a network.</strong> It runs offline, with the data in your <code>node_modules</code> or in its own package.</li>
+        <li><strong>Discovery by <code>llms.txt</code> is by link.</strong> This site is not at the root of a host, so an agent does not find the file by itself: give it the URL, as the prompt above does.</li>
+        <li><strong>Exit code 0 is not an accessibility result.</strong> It says that no rule above blocks in the files that were read.</li>
+        <li><strong>The messages are in English.</strong> They are not translated, whatever the language of the page.</li>
+      </ul>
+    </section>

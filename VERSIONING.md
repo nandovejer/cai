@@ -20,7 +20,7 @@ Everything below is public from 1.0. Everything not in this list is internal and
 
 | Surface | Public | Not public |
 | --- | --- | --- |
-| **Tokens** | Every `--luz-*` custom property in `dist/tokens.css`: names, meaning and the roles they play (semantic tokens in the three base modes, primitives, space, type, radius, shadow), including the three size knobs `--luz-type-base`, `--luz-type-ratio` and `--luz-space-unit` (set them on `:root`, in rem). The DTCG file's group and token names | Custom properties a component declares for itself (`--luz-seek`, `--luz-seek-to`) |
+| **Tokens** | Every `--luz-*` custom property declared at root scope (`:root`, `html` or a `[data-theme]` rule), in any package: names, meaning and the roles they play (semantic tokens in the three base modes, primitives, space, type, radius, shadow, and the settings of core such as `--luz-font-body`), including the three size knobs `--luz-type-base`, `--luz-type-ratio` and `--luz-space-unit` (set them on `:root`, in rem). The DTCG file's group and token names | Custom properties a component declares for itself, in a selector other than the root (`--luz-seek`, `--luz-seek-to`) |
 | **Classes** | `.luz-*`, `.o-*`, `.u-*`, in the markup the docs show, with their elements and modifiers (`--`, `__`) | `.is-*` state mirrors, selectors inside a component's CSS, descendant selectors the docs do not show |
 | **Attributes** | `data-theme`, `data-mode`, `data-luz-themes`, `data-luz-*`, `data-luz-label-*`, `data-copy`, `data-copy-from`, and the ARIA the docs require | Attributes the docs site's own scripts use (`data-docs-*`) |
 | **JS** | Every export of `@luz-ds/core` and `@luz-ds/site` named in the docs and in AGENTS.md: the module paths, the function names and their arguments and return values; the elements `<luz-search>` and `<luz-consent>` and the markup they expect, and the chunk files `site.min.js` loads (`search.min.js`, `consent.min.js`) | Anything not exported, and any export the docs do not name |
@@ -28,6 +28,8 @@ Everything below is public from 1.0. Everything not in this list is internal and
 | **Layers** | The names `luz`, `luz.tokens`, `luz.themes`, `luz.settings`, `luz.generic`, `luz.elements`, `luz.objects`, `luz.components`, `luz.utilities`, `luz.site`, `luz.landing`, `luz.cms`, `luz.app`, `luz.print`, and their order | The rules inside a layer |
 | **Text** | The i18n keys of `@luz-ds/core/i18n` and the `data-luz-label-*` attributes that override them | The wording of a string |
 | **Packages** | The `exports` map of each package, the paths of the files it publishes, and the `luz-tokens` command: its arguments, its exit codes and its `--json` shape | The files under `scripts/`, `tests/` and `apps/` |
+| **Manifests** | `classes.json` of each package (its `schema` number, and the names, kinds and layers it lists) and `custom-elements.json` of core and site (the Custom Elements Manifest schema it declares), as shipped in the package and copied to `/manifests/` on the site | Anything a manifest holds that its schema does not name |
+| **Commands** | The `luz-check` command of `@luz-ds/check`: its arguments, its exit codes, the rule ids in its text and in its `--json` shape, and the `agent` subcommand that prints the accessibility reviewer | The wording of a message, which is English and may be rewritten, and the text of the reviewer |
 
 Markup is part of the API: a class that no longer does what the docs showed is a break, even if its name did not change.
 

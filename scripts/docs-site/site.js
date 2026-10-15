@@ -35,6 +35,7 @@ import { lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
 import { SITE_KINDS } from "../luz-packages.js";
+import { fillAiMarkers } from "./ai.js";
 import { renderSnippets, snippetData } from "./snippets.js";
 import { assertInlineHtml, loadLocales, lookup, markDocsLinks, renderAlternates, renderSwitcher, unusedKeys } from "./i18n.js";
 
@@ -73,7 +74,8 @@ const FRONT_MATTER = {
   module: { default: "" },
   // "false" when the page's content starts with its own lead paragraph
   lead: { default: "true" },
-  // A block the generator writes after the content: "gallery", "a-z" or "snippets"
+  // A block the generator writes after the content: "gallery", "a-z" or "snippets"; "ai" writes
+  // its tables where the content has `<!-- luz:ai files -->` and `<!-- luz:ai rules -->`
   generate: { default: "" },
 };
 
@@ -208,7 +210,7 @@ export function parseFrontMatter(source, file, areas = null) {
     if (!["true", "false"].includes(meta[key])) throw new Error(`${file}: ${key} is "true" or "false"`);
   }
   if (!["h2", "h2,h3", "false"].includes(meta.toc)) throw new Error(`${file}: toc is "h2", "h2,h3" or "false"`);
-  if (!["", "gallery", "a-z", "snippets"].includes(meta.generate)) throw new Error(`${file}: generate is "gallery", "a-z" or "snippets"`);
+  if (!["", "gallery", "a-z", "snippets", "ai"].includes(meta.generate)) throw new Error(`${file}: generate is "gallery", "a-z", "snippets" or "ai"`);
   if (meta.group && !NAME.test(meta.group)) throw new Error(`${file}: group "${meta.group}" is not a valid name`);
   if (areas && meta.area !== HUB_AREA) {
     const area = areas.find((a) => a.id === meta.area);
@@ -901,7 +903,9 @@ export function renderPage(page, site, options = {}) {
   // The documentation is English only: the default catalog, no switcher
   const locale = site.i18n?.default;
   const strings = { locale, used: options.used };
-  const content = expand(page.body, { file: page.file, firstLine: page.bodyLine, partial: reader.partial, current, placeholders: false, ...strings });
+  const expanded = expand(page.body, { file: page.file, firstLine: page.bodyLine, partial: reader.partial, current, placeholders: false, ...strings });
+  // "ai" is written inside the content, at its two markers, so it is known to the table of contents
+  const content = page.meta.generate === "ai" ? fillAiMarkers(expanded, site, { file: page.file }) : expanded;
   const generated = renderGenerated(page, site, options);
   const layout = reader.layout(page.meta.layout);
   return expand(layout.text, {

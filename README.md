@@ -44,6 +44,7 @@ The name stands for Light, Usable & Zero-dependency: light in weight (plain CSS 
 - [`@luz-ds/landing`](./packages/landing): the page structure of a landing page (header, hero, sections, footer). It has its own version, 0.x, and needs `^0.1.0` of tokens and core, and of site if you use it.
 - [`@luz-ds/cms`](./packages/cms): patterns for a blog, a newspaper or any CMS, with any stack (the article header and the table of contents). It has its own version, 0.x, and needs `^0.1.0` of tokens, core and site.
 - [`@luz-ds/app`](./packages/app): the header and the dashboard of a web application, on core's shell and sidebar. It has its own version, 0.x, and needs `^0.1.0` of tokens and core, and of site if you use its search.
+- [`@luz-ds/check`](./packages/check): a tool, not a stylesheet. The `luz-check` command reads the HTML and CSS of your project, offline, and says which LUZ classes, elements, load order and theme colors are wrong. It has its own version, 0.x, and needs no other package.
 
 ## Install and load
 
@@ -164,6 +165,12 @@ Every component has a page in the documentation with a live example, the markup 
 - **Navigation:** breadcrumb, pagination, sidebar, tabs, color mode switcher
 - **Media:** video, audio and MIDI player
 - **Helpers:** layout objects (`.o-*`), utility classes (`.u-*`) and keyframes
+
+## For AI agents
+
+LUZ is plain HTML and CSS, so an AI coding agent can write it when it knows which names exist. Give it this: read [`llms.txt`](https://nandovejer.github.io/luz/llms.txt) first, use only the classes in the `classes.json` of each package, and run `npx @luz-ds/check` on every HTML and CSS file it writes.
+
+What an agent can read, what the check reports and what it does not do are on [Working with AI](https://nandovejer.github.io/luz/docs/get-started/ai/). The same page has a prompt you can paste.
 
 ## Accessibility
 

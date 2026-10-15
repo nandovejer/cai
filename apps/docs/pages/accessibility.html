@@ -1,11 +1,11 @@
 <!-- luz:page
 title: Accessibility statement
-description: LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 14 October 2026.
+description: LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 15 October 2026.
 area: accessibility
 lead: false
 -->
     <div class="docs-block docs-prose-chapter" id="accessibility">
-      <p class="docs-lead">LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 14 October 2026.</p>
+      <p class="docs-lead">LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 15 October 2026.</p>
       <h2 id="h-a11y-target">Target</h2>
       <p>LUZ aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to.</p>
       <p>A design system cannot make a service accessible by itself: how you use the components decides the result. Each component page says what is yours to do, under <em>Keyboard and ARIA</em> and <em>Writing the content</em>.</p>
@@ -32,6 +32,7 @@ lead: false
         <li>Right-to-left text by a person who reads it, or with a screen reader. Only the layout is measured by a script, and the player's controls are not part of that measurement.</li>
         <li>Zoom to 400 percent by hand. Only the 320 pixel width is measured.</li>
         <li>Research with disabled people.</li>
+        <li>The accessibility reviewer that <code class="luz-code-inline">@luz-ds/check</code> prints, and <code class="luz-code-inline">luz-check</code> itself. They read source files and give advice; they do not open a page, measure on screen or use assistive technology. A run with no findings does not mean a page is accessible.</li>
       </ul>
       <p>Automated tools find only part of the problems. Treat this list as the gap, and test your own pages.</p>
 

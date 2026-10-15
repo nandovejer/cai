@@ -14,8 +14,8 @@
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-CnsliLMO.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-BXC-bg4u.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D6dp99Hi.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DW-HxMXL.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-rXop7IvZ.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CHFgVE8I.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -103,20 +103,11 @@
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/site/">Site</a>
         <ul class="docs-nav__pages">
-          <li><a class="luz-sidebar__link" href="../../../docs/site/shell/">Page shell</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/site-header/">Site header</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/submenu/">Submenu</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/hero/">Hero</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/page-header/">Page header</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/section/">Section</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/footer/">Footer</a></li>
           <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/site/banner/">Banner</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/consent/">Cookie consent</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/actions/">Action group</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/image/">Image</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/lang-switch/">Language switch</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/search/">Search</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/templates/">Page templates</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/classes/">Class reference</a></li>
         </ul>
       </li>
@@ -186,10 +177,10 @@
               </section>
             </luz-banner>
           </div>
-          <p class="docs-demo__note">On a site the banner goes above the site header, as wide as the window, and its text starts where the header’s row starts. Here it is as wide as the example.</p>
+          <p class="docs-demo__note">On a site the banner goes above the header, as wide as the window, and its text starts where the header’s row starts. Here it is as wide as the example.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the banner short and remove it from the markup when it ends. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the site header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a banner; Escape or a click outside closes it.</p>
+          <p>It cannot be closed: a close button needs a script, and a choice that lasts from page to page needs storage. Keep the banner short and remove it from the markup when it ends. In a browser without CSS anchor positioning (before Chrome and Edge 125, Safari 26, Firefox 147), the header’s menu at 768 px and below opens at the top of the window, so before the page scrolls it covers part of the header under a banner; Escape or a click outside closes it.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Banner documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -197,20 +188,20 @@
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>A <code>&lt;luz-banner&gt;</code> around one <code>&lt;section&gt;</code> named by its first words, after the <a href="../../../docs/components/skip-link/">skip link</a> and the <a href="../../../docs/site/consent/">cookie consent</a>, before the <a href="../../../docs/site/site-header/">site header</a>.</p>
+            <p>A <code>&lt;luz-banner&gt;</code> around one <code>&lt;section&gt;</code> named by its first words, after the <a href="../../../docs/components/skip-link/">skip link</a> and the <a href="../../../docs/site/consent/">cookie consent</a>, before the header of the page (a <a href="../../../docs/landing/header/">landing</a> or <a href="../../../docs/cms/header/">CMS</a> header).</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-banner" aria-label="Copy the banner markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Banner markup"><code id="code-banner">&lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Banner markup"><code id="code-banner">&lt;a class=&quot;luz-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
 &lt;luz-banner&gt;
   &lt;section aria-labelledby=&quot;banner-label&quot;&gt;
     &lt;p&gt;&lt;strong id=&quot;banner-label&quot;&gt;Open day.&lt;/strong&gt; Visit the winery on Saturday 25 October,
       from 11:00 to 18:00. &lt;a href=&quot;/visits/&quot;&gt;Book a visit&lt;/a&gt;&lt;/p&gt;
   &lt;/section&gt;
 &lt;/luz-banner&gt;
-&lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;</code></pre>
+&lt;header&gt;…&lt;/header&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
             <div class="luz-table-wrap" role="region" aria-label="Banner tag and attribute" tabindex="0">
@@ -219,7 +210,7 @@
                   <tr><th scope="col">Tag or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Tag or attribute"><div><code>&lt;luz-banner&gt;</code></div></td><td data-label="Effect"><div>Around one <code>&lt;section&gt;</code>, which becomes a band as wide as its container, on a muted surface with a rule under it, in small sans text. Its text starts where the site header’s row starts. A tag that no script defines: no class, no role of its own</div></td></tr>
+                  <tr><td data-label="Tag or attribute"><div><code>&lt;luz-banner&gt;</code></div></td><td data-label="Effect"><div>Around one <code>&lt;section&gt;</code>, which becomes a band as wide as its container, on a muted surface with a rule under it, in small sans text. Its text starts where the header’s row starts. A tag that no script defines: no class, no role of its own</div></td></tr>
                   <tr><td data-label="Tag or attribute"><div><code>tone="warning"</code></div></td><td data-label="Effect"><div>On the tag, the one tone: The warning colours: for something that stops the visitor doing what they came to do, such as maintenance. Say it in the words too: “Planned maintenance.” Any other value leaves the plain band</div></td></tr>
                 </tbody>
               </table>
@@ -227,8 +218,8 @@
             <h3 id="how">How it works</h3>
             <p>CSS from <code>@luz-ds/site</code>. No JavaScript: <code>&lt;luz-banner&gt;</code> is a tag that no script ever defines.</p>
             <ul>
-              <li>It is a band of the page, in the flow: it scrolls away with the page, and a <code>--sticky</code> site header stays at the top under it. Nothing covers the page.</li>
-              <li>Its inline padding lines its text up with the site header’s row, up to <code>--luz-content-max</code> wide, in either direction of text.</li>
+              <li>It is a band of the page, in the flow: it scrolls away with the page, and an <code>.o-sticky</code> header stays at the top under it. Nothing covers the page.</li>
+              <li>Its inline padding lines its text up with the header’s row, up to <code>--luz-content-max</code> wide, in either direction of text.</li>
               <li>There is no close button. Closing it for good needs a script and a value stored in the browser, and a button that does nothing without a script is never shown. A banner is short-lived: remove it from the markup when the event is over.</li>
               <li>There is no success or error tone: a banner is not the answer to something the visitor did. For that use an <a href="../../../docs/components/alert/">alert</a> in the page.</li>
             </ul>
@@ -236,7 +227,7 @@
             <p>Nothing changes: there is no script.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
-              <li><strong>Order:</strong> its link comes after the skip link and before the site header.</li>
+              <li><strong>Order:</strong> its link comes after the skip link and before the header.</li>
               <li><strong>Landmark:</strong> a <code>&lt;section&gt;</code> with a name is a region, so a screen reader lists it among the landmarks; name it with <code>aria-labelledby</code> pointing at its first words. If it says nothing more than its sentence, a <code>&lt;div&gt;</code> with no name is fine.</li>
               <li><strong>Not a live region:</strong> it is there when the page loads, so it needs no <code>role="status"</code> or <code>role="alert"</code>; a screen reader reads it with the rest of the page.</li>
             </ul>
@@ -323,12 +314,12 @@
   <nav class="docs-end" aria-labelledby="docs-end-title">
     <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
     <ul class="docs-end__links">
-      <li><a href="../../../docs/site/templates/">Page templates</a></li>
+      <li><a href="../../../docs/site/classes/">Class reference</a></li>
       <li><a href="../../../docs/components/">Components</a></li>
       <li><a href="../../../docs/get-started/">Install LUZ</a></li>
     </ul>
     <ul class="docs-pager">
-      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/site/footer/" aria-label="Previous: Footer"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Footer</span></a></li>
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/site/submenu/" aria-label="Previous: Submenu"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Submenu</span></a></li>
       <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/site/consent/" aria-label="Next: Cookie consent"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Cookie consent</span></a></li>
     </ul>
   </nav>

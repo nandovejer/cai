@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Class reference – Site – LUZ documentation</title>
-  <meta name="description" content="Every luz-site class and every site tag, what element it goes on and what it does, in one place.">
+  <meta name="description" content="Every tag and class of the five site components, what element it goes on and what it does, in one place.">
   <link rel="icon" href="../../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-QPTLZskv.png">
@@ -14,8 +14,8 @@
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-CnsliLMO.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-BXC-bg4u.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D6dp99Hi.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DW-HxMXL.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-rXop7IvZ.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CHFgVE8I.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -103,20 +103,11 @@
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/site/">Site</a>
         <ul class="docs-nav__pages">
-          <li><a class="luz-sidebar__link" href="../../../docs/site/shell/">Page shell</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/site-header/">Site header</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/submenu/">Submenu</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/hero/">Hero</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/page-header/">Page header</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/section/">Section</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/footer/">Footer</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/banner/">Banner</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/consent/">Cookie consent</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/actions/">Action group</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/image/">Image</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/lang-switch/">Language switch</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/site/search/">Search</a></li>
-          <li><a class="luz-sidebar__link" href="../../../docs/site/templates/">Page templates</a></li>
           <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/site/classes/">Class reference</a></li>
         </ul>
       </li>
@@ -137,205 +128,28 @@
     </nav>
     <div class="docs-page-head__title">
       <h1 class="docs-title">Class reference</h1>
-      <code class="docs-demo__file">components/_components.css</code>
       <code class="docs-demo__file">components/search.css</code>
+      <code class="docs-demo__file">components/consent.css</code>
       <code class="docs-demo__file">components/lang-switch.css</code>
-      <code class="docs-demo__file">components/site-header.css</code>
       <code class="docs-demo__file">components/submenu.css</code>
       <code class="docs-demo__file">components/banner.css</code>
-      <code class="docs-demo__file">components/consent.css</code>
     </div>
-    <p class="docs-lead">Every luz-site class and every site tag, what element it goes on and what it does, in one place.</p>
+    <p class="docs-lead">Every tag and class of the five site components, what element it goes on and what it does, in one place.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#page-structure">Page structure</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#header-and-footer">Header and footer</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#content-patterns">Content patterns</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#search">Search</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#language-switch">Language switch</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#submenu">Submenu</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#banner-and-consent">Banner and cookie consent</a></li>
       </ul>
     </details>
   </nav>
   <div class="docs-body">
     <div class="docs-block" id="p-reference">
-          <p>Look up a class by name. Each pattern's own page has its markup and guidance.</p>
-          <div class="docs-prose">
-            <h2 id="page-structure" class="docs-prose__title">Page structure</h2>
-            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: page structure">
-          <table class="luz-table docs-ref-table">
-            <thead>
-              <tr>
-                <th scope="col">Class</th>
-                <th scope="col">Element</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td data-label="Class"><div>.luz-site-page</div></td>
-                <td data-label="Element"><div>&lt;body&gt;</div></td>
-                <td data-label="Description"><div>Three rows: header, main (takes the free space), footer. At least the height of the screen.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-page--gradient</div></td>
-                <td data-label="Element"><div>&lt;body&gt;</div></td>
-                <td data-label="Description"><div>Modifier. A soft brand tint in the top corner. For short pages such as a landing page.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-skip-link</div></td>
-                <td data-label="Element"><div>&lt;a&gt;</div></td>
-                <td data-label="Description"><div>Off screen until it has focus. Links to the <code class="luz-code-inline">id</code> of <code class="luz-code-inline">&lt;main&gt;</code>. First in <code class="luz-code-inline">&lt;body&gt;</code> on every page.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-main</div></td>
-                <td data-label="Element"><div>&lt;main&gt;</div></td>
-                <td data-label="Description"><div>Main content area. Grid with <code class="luz-code-inline">gap: --luz-space-3xl</code> between sections. Combine with <code class="luz-code-inline">.o-container</code> for the content width and padding.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-content</div></td>
-                <td data-label="Element"><div>&lt;div&gt; / &lt;main&gt;</div></td>
-                <td data-label="Description"><div>Padded content wrapper with max-width cap. For app-shell layouts where the sidebar handles its own width.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-section</div></td>
-                <td data-label="Element"><div>&lt;section&gt;</div></td>
-                <td data-label="Description"><div>Grid container with vertical gap between child elements. Use as the direct child of <code class="luz-code-inline">.luz-site-main</code>.</div></td>
-              </tr>
-            </tbody>
-          </table>
-            </div>
-          </div>
-          <div class="docs-prose">
-            <h2 id="header-and-footer" class="docs-prose__title">Header and footer</h2>
-            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: header and footer">
-          <table class="luz-table docs-ref-table">
-            <thead>
-              <tr>
-                <th scope="col">Class</th>
-                <th scope="col">Element</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td data-label="Class"><div>.luz-site-header</div></td>
-                <td data-label="Element"><div>&lt;header&gt;</div></td>
-                <td data-label="Description"><div>The site's banner: page surface and a rule underneath. <code class="luz-code-inline">--sticky</code> keeps it at the top in a window at least 30 rem tall. Sets <code class="luz-code-inline">--luz-site-header-h</code>, where the menu panel and the language list open.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-header__inner</div></td>
-                <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The row: wraps, centred, with the gutters of <code class="luz-code-inline">.o-container</code>.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-header__brand</div></td>
-                <td data-label="Element"><div>&lt;a&gt;</div></td>
-                <td data-label="Description"><div>The site's name, linked to the home page, not underlined; takes the free space of the row.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-header__nav</div></td>
-                <td data-label="Element"><div>&lt;nav popover&gt;</div></td>
-                <td data-label="Description"><div>The links: a row from 769 px, a panel under the header below it, opened by <code class="luz-code-inline">.luz-nav-toggle</code>.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-header__actions</div></td>
-                <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The controls at the end of the row: search, language switch, a button.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>&lt;luz-submenu&gt;</div></td>
-                <td data-label="Element"><div>around a &lt;details&gt;</div></td>
-                <td data-label="Description"><div>A tag, no class: an item of the header’s links that holds more links. The <code class="luz-code-inline">&lt;details&gt;</code> inside it is selected by its place; its <code class="luz-code-inline">&lt;summary&gt;</code> is the button, with a chevron; its list opens under it, in the flow in the menu panel and in a box from 769 px. Give every submenu the same <code class="luz-code-inline">name</code>.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-hero</div></td>
-                <td data-label="Element"><div>&lt;section&gt;</div></td>
-                <td data-label="Description"><div>The first block of a home or landing page, with space above it. Two equal columns when each gets 24rem and there is a picture; one below.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-hero__copy</div></td>
-                <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The eyebrow, title, lead and actions, first in the source.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-hero__eyebrow</div></td>
-                <td data-label="Element"><div>&lt;p&gt;</div></td>
-                <td data-label="Description"><div>A short line above the title: mono, extra small, small capitals, secondary text color.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-hero__title</div></td>
-                <td data-label="Element"><div>&lt;h1&gt;</div></td>
-                <td data-label="Description"><div>Heading: heading font, size 4xl, weight 300, line height 1.1, balanced lines; 3xl below 1024 px, 2xl at 640 px and below.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-hero__lead</div></td>
-                <td data-label="Element"><div>&lt;p&gt;</div></td>
-                <td data-label="Description"><div>Secondary text color, size xl, max-width 70ch; lg below 1024 px, base at 640 px and below.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-hero__media</div></td>
-                <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>The second column, holding a <code class="luz-code-inline">.luz-site-image</code>.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-page-header</div></td>
-                <td data-label="Element"><div>&lt;div&gt; / &lt;header&gt;</div></td>
-                <td data-label="Description"><div>Hero-style page header block with bottom margin. Contains a title and optional lead.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-page-header__title</div></td>
-                <td data-label="Element"><div>&lt;h1&gt;</div></td>
-                <td data-label="Description"><div>Heading: heading font, size 3xl, weight 300, tight letter-spacing.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-page-header__lead</div></td>
-                <td data-label="Element"><div>&lt;p&gt;</div></td>
-                <td data-label="Description"><div>Subtitle: secondary text color, max-width 600px.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-footer</div></td>
-                <td data-label="Element"><div>&lt;footer&gt;</div></td>
-                <td data-label="Description"><div>Flex row (space-between). Includes a top border and vertical padding. Stacks at 768 px and below. Combine with <code class="luz-code-inline">.o-container</code>.</div></td>
-              </tr>
-            </tbody>
-          </table>
-            </div>
-          </div>
-          <div class="docs-prose">
-            <h2 id="content-patterns" class="docs-prose__title">Content patterns</h2>
-            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: content patterns">
-          <table class="luz-table docs-ref-table">
-            <thead>
-              <tr>
-                <th scope="col">Class</th>
-                <th scope="col">Element</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td data-label="Class"><div>.luz-site-actions</div></td>
-                <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>Flex row with wrapping and gap for CTA button groups. One per line, full width, at 640 px and below.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-image</div></td>
-                <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>16:9 frame around a native <code class="luz-code-inline">&lt;picture&gt;</code>. The image fills it; with no image, an abstract placeholder shows, in a night version in dark mode.</div></td>
-              </tr>
-              <tr>
-                <td data-label="Class"><div>.luz-site-image--4x3, --3x2, --1x1, --21x9, --9x16</div></td>
-                <td data-label="Element"><div>&lt;div&gt;</div></td>
-                <td data-label="Description"><div>Modifiers. Other aspect ratios, each with its own placeholder.</div></td>
-              </tr>
-            </tbody>
-          </table>
-            </div>
-          </div>
+          <p>Look up a tag or a class by name. Each component's own page has its markup and guidance. The page structure that site held before, from the shell to the footer, is in core (<a href="../../../docs/components/layout/">layout</a>, <a href="../../../docs/components/skip-link/">skip link</a>, <a href="../../../docs/components/image/">image</a>, <a href="../../../docs/components/band/">band</a>) and in the packages for one kind of site (<a href="../../../docs/landing/">landing</a>, <a href="../../../docs/cms/">CMS</a>).</p>
           <div class="docs-prose">
             <h2 id="search" class="docs-prose__title">Search</h2>
             <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: search">
@@ -494,6 +308,27 @@
             </div>
           </div>
           <div class="docs-prose">
+            <h2 id="submenu" class="docs-prose__title">Submenu</h2>
+            <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: submenu">
+          <table class="luz-table docs-ref-table">
+            <thead>
+              <tr>
+                <th scope="col">Class</th>
+                <th scope="col">Element</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Class"><div>&lt;luz-submenu&gt;</div></td>
+                <td data-label="Element"><div>around a &lt;details&gt;</div></td>
+                <td data-label="Description"><div>A tag, no class: an item of a header’s links that holds more links. The <code class="luz-code-inline">&lt;summary&gt;</code> is the button, the <code class="luz-code-inline">&lt;ul&gt;</code> after it the links. No script.</div></td>
+              </tr>
+            </tbody>
+          </table>
+            </div>
+          </div>
+          <div class="docs-prose">
             <h2 id="banner-and-consent" class="docs-prose__title">Banner and cookie consent</h2>
             <div class="luz-table-wrap" tabindex="0" role="region" aria-label="Site classes: banner and cookie consent">
           <table class="luz-table docs-ref-table">
@@ -508,7 +343,7 @@
               <tr>
                 <td data-label="Class"><div>&lt;luz-banner&gt;</div></td>
                 <td data-label="Element"><div>around a &lt;section&gt;</div></td>
-                <td data-label="Description"><div>A tag, no class: a band above the site header with one short announcement and one link, its text in the header’s column. No script, no close button.</div></td>
+                <td data-label="Description"><div>A tag, no class: a band above the header with one short announcement and one link, its text in the header’s column. No script, no close button.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>tone="warning"</div></td>
@@ -518,7 +353,7 @@
               <tr>
                 <td data-label="Class"><div>.luz-consent</div></td>
                 <td data-label="Element"><div>&lt;section hidden&gt;</div></td>
-                <td data-label="Description"><div>The cookie banner, in a <code class="luz-code-inline">&lt;luz-consent&gt;</code> before the site header, shown as a band fixed at the bottom of the window. Hidden in the markup: <code class="luz-code-inline">consent.min.js</code> shows it when no answer is stored.</div></td>
+                <td data-label="Description"><div>The cookie banner, in a <code class="luz-code-inline">&lt;luz-consent&gt;</code> before the header, shown as a band fixed at the bottom of the window. Hidden in the markup: <code class="luz-code-inline">consent.min.js</code> shows it when no answer is stored.</div></td>
               </tr>
               <tr>
                 <td data-label="Class"><div>.luz-consent__title</div></td>
@@ -545,7 +380,7 @@
       <li><a href="../../../docs/get-started/">Install LUZ</a></li>
     </ul>
     <ul class="docs-pager">
-      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/site/templates/" aria-label="Previous: Page templates"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Page templates</span></a></li>
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/site/search/" aria-label="Previous: Search"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Search</span></a></li>
       <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/landing/" aria-label="Next: Landing"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Landing</span></a></li>
     </ul>
   </nav>

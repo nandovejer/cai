@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Site – LUZ documentation</title>
-  <meta name="description" content="What every site needs above the components, from the page shell to the site search, and how to tell whether you need it.">
+  <meta name="description" content="Five self-contained components that need data of the site: search, cookie consent, language switch, submenu and banner, and how to tell whether you need them.">
   <link rel="icon" href="../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-QPTLZskv.png">
@@ -14,8 +14,8 @@
   <script type="module" crossorigin src="../../assets/site-header-etw6QrnT.js"></script>
   <script type="module" crossorigin src="../../assets/reference-CnsliLMO.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/reference-BXC-bg4u.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-D6dp99Hi.css">
-  <link rel="stylesheet" crossorigin href="../../assets/reference-DW-HxMXL.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-rXop7IvZ.css">
+  <link rel="stylesheet" crossorigin href="../../assets/reference-CHFgVE8I.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -103,20 +103,11 @@
       <li><a class="luz-sidebar__link docs-nav__area" href="../../docs/components/">Components</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" aria-current="page" href="../../docs/site/">Site</a>
         <ul class="docs-nav__pages">
-          <li><a class="luz-sidebar__link" href="../../docs/site/shell/">Page shell</a></li>
-          <li><a class="luz-sidebar__link" href="../../docs/site/site-header/">Site header</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/site/submenu/">Submenu</a></li>
-          <li><a class="luz-sidebar__link" href="../../docs/site/hero/">Hero</a></li>
-          <li><a class="luz-sidebar__link" href="../../docs/site/page-header/">Page header</a></li>
-          <li><a class="luz-sidebar__link" href="../../docs/site/section/">Section</a></li>
-          <li><a class="luz-sidebar__link" href="../../docs/site/footer/">Footer</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/site/banner/">Banner</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/site/consent/">Cookie consent</a></li>
-          <li><a class="luz-sidebar__link" href="../../docs/site/actions/">Action group</a></li>
-          <li><a class="luz-sidebar__link" href="../../docs/site/image/">Image</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/site/lang-switch/">Language switch</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/site/search/">Search</a></li>
-          <li><a class="luz-sidebar__link" href="../../docs/site/templates/">Page templates</a></li>
           <li><a class="luz-sidebar__link" href="../../docs/site/classes/">Class reference</a></li>
         </ul>
       </li>
@@ -151,11 +142,11 @@
   <div class="docs-body">
     <p class="docs-eyebrow">Level 3 · @luz-ds/site</p>
 
-    <p class="docs-lead">What every site needs above the components, from the page shell to the site search, and how to tell whether you need it.</p>
-    <p>A piece is here when it needs data of the site (its languages, its search index, its menu) or is page structure that holds other pieces: a page shell, a site header, a section. Everything else is a <strong>component</strong>, one reusable piece that fits inside anything; components are in <a href="../../docs/components/">Components</a>.</p>
-    <p>Packages for one kind of site build on this one: <a href="../../docs/landing/">landing</a> for a landing page, and later <code class="luz-code-inline">cms</code> for a blog, a newspaper or any CMS, and <code class="luz-code-inline">wordpress</code> on top of <code class="luz-code-inline">cms</code>.</p>
+    <p class="docs-lead">Five self-contained components that need data of the site: search, cookie consent, language switch, submenu and banner, and how to tell whether you need them.</p>
+    <p>A piece is here when it needs data of the site: its search index, its cookie policy, its languages, its menu, an announcement. Each is a <code class="luz-code-inline">&lt;luz-*&gt;</code> tag that works on its own, in any header or page. Everything else is a <strong>component</strong> of core, one reusable piece that fits inside anything; components are in <a href="../../docs/components/">Components</a>.</p>
+    <p>The page structure (the header, the hero, the footer, the page header) is in the packages for one kind of site: <a href="../../docs/landing/">landing</a> for a landing page and <a href="../../docs/cms/">CMS</a> for a blog, a newspaper or any CMS. They work without this package, and take its components where a search or a language switch goes.</p>
     <ul>
-      <li>Every class starts with <code class="luz-code-inline">.luz-site-</code> and uses semantic tokens only.</li>
+      <li>Each tag is the block, and its parts are <code class="luz-code-inline">.luz-&lt;tag&gt;__&lt;part&gt;</code>; every rule uses semantic tokens only.</li>
       <li><a href="../../">The LUZ home page</a> and these docs are built with them.</li>
       <li>Not sure which package a piece belongs to? <a href="../../docs/get-started/structure/#needs">What each package needs</a> lists every piece, with the package it is in.</li>
     </ul>
@@ -164,16 +155,16 @@
         <div class="docs-decision-card">
           <h2 id="use-site-when" class="docs-decision-card__title">Use site when</h2>
           <ul>
-            <li>You build a site or an app with a header, a main area and a footer on every page.</li>
-            <li>You want the same spacing and layout across many pages.</li>
-            <li>You want a site header, a skip link, a page header and a site search without writing them yourself.</li>
+            <li>You want a site search, a cookie banner or a language switch without writing them yourself.</li>
+            <li>Your header has a few links grouped under one button.</li>
+            <li>You need a short announcement above the header on every page.</li>
           </ul>
         </div>
         <div class="docs-decision-card">
           <h2 id="use-core-alone-when" class="docs-decision-card__title">Use core alone when</h2>
           <ul>
             <li>You only need components such as buttons, forms and cards.</li>
-            <li>You have your own layout system, or a framework that owns the page shell.</li>
+            <li>Your site has no search, no optional cookies and one language.</li>
             <li>You build a single widget, not a whole page.</li>
           </ul>
         </div>
@@ -200,32 +191,8 @@
     <h2 id="group-patterns">Patterns</h2>
     <ul class="docs-gallery__cards">
       <li class="luz-card docs-card">
-        <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/shell/">Page shell</a></h3>
-        <p class="luz-card__body docs-card__desc">Lays out a whole page: header, a main area that grows, and a footer that stays at the bottom.</p>
-      </li>
-      <li class="luz-card docs-card">
-        <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/site-header/">Site header</a></h3>
-        <p class="luz-card__body docs-card__desc">Starts every page with the site&#39;s name, its main links and a few controls; the page header under it says what this page is.</p>
-      </li>
-      <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/submenu/">Submenu</a></h3>
-        <p class="luz-card__body docs-card__desc">Groups a few links of the site header under one button, so the header keeps a short row of links.</p>
-      </li>
-      <li class="luz-card docs-card">
-        <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/hero/">Hero</a></h3>
-        <p class="luz-card__body docs-card__desc">Opens a home or landing page with its title, one sentence, the main actions and an optional picture.</p>
-      </li>
-      <li class="luz-card docs-card">
-        <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/page-header/">Page header</a></h3>
-        <p class="luz-card__body docs-card__desc">Gives a page its title and one sentence about what it is for.</p>
-      </li>
-      <li class="luz-card docs-card">
-        <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/section/">Section</a></h3>
-        <p class="luz-card__body docs-card__desc">Groups the blocks of one part of a page, with the same space between them everywhere, and sets one of them on a tinted band across the page.</p>
-      </li>
-      <li class="luz-card docs-card">
-        <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/footer/">Footer</a></h3>
-        <p class="luz-card__body docs-card__desc">Ends every page with who made the site, its licence and a few secondary links.</p>
+        <p class="luz-card__body docs-card__desc">Groups a few links of a header under one button, so the header keeps a short row of links.</p>
       </li>
       <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/banner/">Banner</a></h3>
@@ -234,14 +201,6 @@
       <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/consent/">Cookie consent</a></h3>
         <p class="luz-card__body docs-card__desc">Asks a visitor once whether the site may use optional cookies, with Accept and Reject side by side, and remembers the answer.</p>
-      </li>
-      <li class="luz-card docs-card">
-        <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/actions/">Action group</a></h3>
-        <p class="luz-card__body docs-card__desc">Keeps two or three related buttons and links together in one row.</p>
-      </li>
-      <li class="luz-card docs-card">
-        <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/image/">Image</a></h3>
-        <p class="luz-card__body docs-card__desc">Shows a picture in a frame of fixed shape, with a placeholder when the picture is missing.</p>
       </li>
       <li class="luz-card docs-card">
         <h3 class="luz-card__title docs-card__title"><a href="../../docs/site/lang-switch/">Language switch</a></h3>
@@ -256,21 +215,20 @@
   <section class="docs-gallery" aria-labelledby="group-reference">
     <h2 id="group-reference">Reference</h2>
     <ul class="docs-gallery__rows">
-      <li><a href="../../docs/site/templates/">Page templates</a> <span class="docs-gallery__desc">Whole pages to paste in and adapt, a landing page shell and a content page, built from the site patterns.</span></li>
-      <li><a href="../../docs/site/classes/">Class reference</a> <span class="docs-gallery__desc">Every luz-site class and every site tag, what element it goes on and what it does, in one place.</span></li>
+      <li><a href="../../docs/site/classes/">Class reference</a> <span class="docs-gallery__desc">Every tag and class of the five site components, what element it goes on and what it does, in one place.</span></li>
     </ul>
   </section>
   </div>
   <nav class="docs-end" aria-labelledby="docs-end-title">
     <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
     <ul class="docs-end__links">
-      <li><a href="../../docs/site/templates/">Page templates</a></li>
+      <li><a href="../../docs/site/classes/">Class reference</a></li>
       <li><a href="../../docs/components/">Components</a></li>
       <li><a href="../../docs/get-started/">Install LUZ</a></li>
     </ul>
     <ul class="docs-pager">
       <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../docs/components/keyframes/" aria-label="Previous: Keyframes"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Keyframes</span></a></li>
-      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../docs/site/shell/" aria-label="Next: Page shell"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Page shell</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../docs/site/submenu/" aria-label="Next: Submenu"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Submenu</span></a></li>
     </ul>
   </nav>
   </main>

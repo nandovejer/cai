@@ -14,8 +14,8 @@
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-CnsliLMO.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-BXC-bg4u.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D6dp99Hi.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DW-HxMXL.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-rXop7IvZ.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CHFgVE8I.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -132,6 +132,7 @@
     <details class="docs-onpage__fold">
       <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
       <ul class="docs-onpage__list">
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#landing-page-shell">Landing page shell</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#hero-with-image">Hero with an image</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#programme">Programme</a></li>
         <li><a class="luz-sidebar__link docs-onpage__link" href="#speakers">Speakers</a></li>
@@ -145,13 +146,53 @@
   </nav>
   <div class="docs-body">
     <div class="docs-block" id="p-landing-templates">
-          <p>Each block is complete markup for the <code>&lt;main&gt;</code> of a page: start from the <a href="../../../docs/site/templates/#landing-page-shell">landing page shell</a>, then add the blocks one after another, in the order a visitor reads them. Change the words and the links; keep one <code>&lt;h1&gt;</code>, in the hero, and an <code>&lt;h2&gt;</code> for each block.</p>
-          <p>They use the classes of core, site and landing. Where LUZ has nothing for a part, <a href="#not-here">the last section</a> says so.</p>
+          <p>Each block is complete markup for the <code>&lt;main&gt;</code> of a page: start from the <a href="#landing-page-shell">landing page shell</a>, then add the blocks one after another, in the order a visitor reads them. Change the words and the links; keep one <code>&lt;h1&gt;</code>, in the hero, and an <code>&lt;h2&gt;</code> for each block.</p>
+          <p>They use the classes of core and landing, and site's elements where a search or a language switch goes. Where LUZ has nothing for a part, <a href="#not-here">the last section</a> says so.</p>
+          <div class="docs-prose">
+            <h2 id="landing-page-shell" class="docs-prose__title">Landing page shell</h2>
+            <p>The page of a product or an event: the skip link, the sticky <a href="../../../docs/landing/header/">header</a>, the <code>&lt;main&gt;</code> that holds the blocks below, and the <a href="../../../docs/landing/footer/">footer</a>.</p>
+            <ul>
+              <li><code>.o-page</code> makes the body a column at least as tall as the window, so the footer rests on the bottom of a short page. <code>.luz-landing-glow</code> adds the soft tint in the corner where reading starts; leave it out for a flat page.</li>
+              <li><code>.luz-landing-main</code> on the <code>&lt;main&gt;</code> spaces the blocks; the hero brings its own room above.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-shell" aria-label="Copy the landing page shell markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Landing page shell markup"><code id="code-tpl-shell">&lt;body class=&quot;o-page luz-landing-glow&quot;&gt;
+  &lt;a class=&quot;luz-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to content&lt;/a&gt;
+
+  &lt;header class=&quot;luz-landing-header o-sticky&quot;&gt;
+    &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+      &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;site-nav&quot; aria-label=&quot;Menu&quot;&gt;…&lt;/button&gt;
+      &lt;a class=&quot;luz-landing-header__brand&quot; href=&quot;/&quot;&gt;Acme Summit&lt;/a&gt;
+      &lt;nav class=&quot;luz-navbar&quot; id=&quot;site-nav&quot; aria-label=&quot;Main&quot; popover&gt;
+        &lt;ul class=&quot;luz-navbar__list&quot;&gt;
+          &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/&quot; aria-current=&quot;page&quot;&gt;Summit&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/tickets/&quot;&gt;Tickets&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/nav&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;main id=&quot;main-content&quot; class=&quot;o-container o-stack luz-landing-main&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;!-- the hero, then one section for each block --&gt;
+  &lt;/main&gt;
+
+  &lt;footer class=&quot;luz-landing-footer&quot;&gt;
+    &lt;div class=&quot;o-container o-container--inline o-row&quot;&gt;
+      &lt;p&gt;Acme Inc.&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+          </div>
           <div class="docs-prose">
             <h2 id="hero-with-image" class="docs-prose__title">Hero with an image</h2>
             <p>The first block of an event page: what it is, when and where, the main action and a picture. It is the <a href="../../../docs/landing/hero/">hero</a> with its image. The text comes first in the source, so it comes first for a screen reader and when the columns stack.</p>
             <ul>
-              <li>The hero gives two equal columns when each gets 24rem (the hero is 51rem wide or more: from about 900 px of window on a full-width page) and one column below. The picture is the <a href="../../../docs/site/image/">image frame</a>: it keeps its ratio, crops the picture to it and draws a placeholder until you have one.</li>
+              <li>The hero gives two equal columns when each gets 24rem (the hero is 51rem wide or more: from about 900 px of window on a full-width page) and one column below. The picture is core's <a href="../../../docs/components/image/">image frame</a>: it keeps its ratio and crops the picture to it.</li>
               <li>Give the image its real <code>width</code> and <code>height</code> and an <code>alt</code> that says what it shows, or <code>alt=""</code> if it only decorates. Do not set <code>loading="lazy"</code> on it: it is the first thing on the page.</li>
               <li>One primary button. The second action is an outline button.</li>
             </ul>
@@ -171,7 +212,7 @@
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div class=&quot;luz-landing-hero__media&quot;&gt;
-    &lt;div class=&quot;luz-site-image luz-site-image--4x3&quot;&gt;
+    &lt;div class=&quot;luz-image luz-image--4x3&quot;&gt;
       &lt;picture&gt;
         &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/venue-640.avif 640w, /img/venue-1280.avif 1280w&quot; sizes=&quot;(min-width: 1024px) 50vw, 100vw&quot;&gt;
         &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/venue-640.webp 640w, /img/venue-1280.webp 1280w&quot; sizes=&quot;(min-width: 1024px) 50vw, 100vw&quot;&gt;
@@ -214,13 +255,13 @@
           </div>
           <div class="docs-prose">
             <h2 id="speakers" class="docs-prose__title">Speakers</h2>
-            <p>A list of people: a photo, the name and what they do. Each speaker is a <a href="../../../docs/components/card/">card</a> with an <a href="../../../docs/site/image/">image frame</a> of ratio 1:1, in a list that fits as many columns as there is room for.</p>
+            <p>A list of people: a photo, the name and what they do. Each speaker is a <a href="../../../docs/components/card/">card</a> with an <a href="../../../docs/components/image/">image frame</a> of ratio 1:1, in a list that fits as many columns as there is room for.</p>
             <ul>
               <li>The photo has <code>alt=""</code>: the name is in the heading beside it and says the same. If a photo shows something the name does not carry, give it an <code>alt</code> that says that, never the name again.</li>
               <li>The name is an <code>&lt;h3&gt;</code>, one level under the section's <code>&lt;h2&gt;</code>, so people can move through the speakers by headings. The role is the card's body: "Role, Organisation", one line.</li>
               <li>The <code>&lt;ul&gt;</code> tells a screen reader how many people there are. Core's <code>.o-grid</code> on the list takes off the bullets and the indent. Safari can drop the list role from a list without markers; the headings still lead through the speakers.</li>
               <li><code>.o-grid--auto</code> puts as many columns as fit, none narrower than 16rem. Set <code>--luz-grid-min</code> on the list for narrower cards: <code>12rem</code> gives five across a 1100 px container, and one column below 336 px stays one column.</li>
-              <li>No photo yet: leave the frame empty (<code>&lt;div class="luz-site-image luz-site-image--1x1 u-mb-sm"&gt;&lt;/div&gt;</code>) and it draws the placeholder. To link a speaker to a page of their own, put a link in the heading, <code>&lt;h3 class="luz-card__title"&gt;&lt;a href="/speakers/luis-ortega/"&gt;Luis Ortega&lt;/a&gt;&lt;/h3&gt;</code>: the whole card becomes the link. Link all the speakers or none, and do not add a second link or a button.</li>
+              <li>No photo yet: leave the frame empty (<code>&lt;div class="luz-image luz-image--1x1 u-mb-sm"&gt;&lt;/div&gt;</code>) and it keeps the square as a flat surface. To link a speaker to a page of their own, put a link in the heading, <code>&lt;h3 class="luz-card__title"&gt;&lt;a href="/speakers/luis-ortega/"&gt;Luis Ortega&lt;/a&gt;&lt;/h3&gt;</code>: the whole card becomes the link. Link all the speakers or none, and do not add a second link or a button.</li>
             </ul>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
@@ -231,7 +272,7 @@
   &lt;h2 id=&quot;speakers-title&quot;&gt;Speakers&lt;/h2&gt;
   &lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
     &lt;li class=&quot;luz-card&quot;&gt;
-      &lt;div class=&quot;luz-site-image luz-site-image--1x1 u-mb-sm&quot;&gt;
+      &lt;div class=&quot;luz-image luz-image--1x1 u-mb-sm&quot;&gt;
         &lt;picture&gt;
           &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/marta-320.avif 320w, /img/marta-640.avif 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
           &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/marta-320.webp 320w, /img/marta-640.webp 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
@@ -242,7 +283,7 @@
       &lt;p class=&quot;luz-card__body&quot;&gt;Head of logistics, Grupo Lumen&lt;/p&gt;
     &lt;/li&gt;
     &lt;li class=&quot;luz-card&quot;&gt;
-      &lt;div class=&quot;luz-site-image luz-site-image--1x1 u-mb-sm&quot;&gt;
+      &lt;div class=&quot;luz-image luz-image--1x1 u-mb-sm&quot;&gt;
         &lt;picture&gt;
           &lt;source type=&quot;image/avif&quot; srcset=&quot;/img/luis-320.avif 320w, /img/luis-640.avif 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;
           &lt;source type=&quot;image/webp&quot; srcset=&quot;/img/luis-320.webp 320w, /img/luis-640.webp 640w&quot; sizes=&quot;(min-width: 769px) 25vw, 100vw&quot;&gt;

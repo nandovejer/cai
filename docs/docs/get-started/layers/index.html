@@ -14,8 +14,8 @@
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
   <script type="module" crossorigin src="../../../assets/reference-CnsliLMO.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-BXC-bg4u.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D6dp99Hi.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DW-HxMXL.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-rXop7IvZ.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CHFgVE8I.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -172,7 +172,7 @@
             <tr><td data-label="Layer"><div><code>luz.objects</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Layout objects: <code>.o-*</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>luz.components</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>The components: <code>.luz-*</code></div></td></tr>
             <tr><td data-label="Layer"><div><code>luz.utilities</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>Single-purpose helpers: <code>.u-*</code>. They win over components by order, not by <code>!important</code></div></td></tr>
-            <tr><td data-label="Layer"><div><code>luz.site</code></div></td><td data-label="Package"><div>site</div></td><td data-label="What it holds"><div>The page patterns: <code>.luz-site-*</code></div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.site</code></div></td><td data-label="Package"><div>site</div></td><td data-label="What it holds"><div>The five site components: <code>&lt;luz-search&gt;</code>, <code>&lt;luz-consent&gt;</code>, <code>&lt;luz-lang-switch&gt;</code>, <code>&lt;luz-submenu&gt;</code>, <code>&lt;luz-banner&gt;</code> and their <code>.luz-&lt;tag&gt;__*</code> classes</div></td></tr>
             <tr><td data-label="Layer"><div><code>luz.landing</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="What it holds"><div>The patterns of a landing page: <code>.luz-landing-*</code>. After site, so they can build on it</div></td></tr>
             <tr><td data-label="Layer"><div><code>luz.cms</code></div></td><td data-label="Package"><div>cms</div></td><td data-label="What it holds"><div>The patterns of a blog, a newspaper or any CMS: <code>.luz-cms-*</code>. After site; landing and cms share no class, so their order decides nothing</div></td></tr>
             <tr><td data-label="Layer"><div><code>luz.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="../../../docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of every package</div></td></tr>
@@ -208,9 +208,9 @@
     min-height: 3rem;
   }
 
-  /* A site pattern */
-  .luz-site-section {
-    padding-block: 4rem;
+  /* A site component */
+  luz-banner {
+    font-size: 1rem;
   }
 }</code></pre>
       <ul>

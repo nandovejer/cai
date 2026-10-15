@@ -139,6 +139,25 @@ describe("luz-check over the repository's own docs and home page", () => {
     expect(result.code).toBe(0);
   });
 
+  it("has no finding of the rules of loading, of misuse that blocks, or about accessibility: the docs are written the way the rules ask", () => {
+    // A legitimate case that a rule flags is a bug in the docs to list, or in the rule: it is never excepted here.
+    // Warnings of the others (misuse/part-orphan in a fragment, misuse/state-class in a demo of a state) are allowed:
+    // a partial is a piece of a page by design, and a demo shows the state it is about.
+    const RULES = [
+      "load/tokens-missing",
+      "load/package-missing",
+      "load/layer-statement",
+      "load/order",
+      "load/no-stylesheet",
+      "misuse/host-element",
+      "misuse/modifier-alone",
+      "a11y/role-on-generic",
+      "a11y/link-no-href",
+    ];
+    expect(result.data, result.stdout.slice(0, 300)).not.toBeNull();
+    expect(result.data.findings.filter((f) => RULES.includes(f.rule)).map(say)).toEqual([]);
+  });
+
   it("has no data-luz-* attribute LUZ does not read (attr/unknown-hook)", () => {
     const hooks = result.data.findings.filter((f) => f.rule === "attr/unknown-hook");
     expect(hooks.map(say)).toEqual([]);

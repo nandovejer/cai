@@ -61,6 +61,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { CssError, readCss } from "../packages/check/src/css.js";
+import { decodeEntities, tags } from "../packages/check/src/html.js";
 import { buildClassManifest, writeManifests } from "../scripts/ai-manifests.js";
 import { LAYERS } from "../scripts/luz-layers.js";
 import { PACKAGES } from "../scripts/luz-packages.js";
@@ -943,5 +944,225 @@ describe("how it enters the packages (§2.2)", () => {
     const source = read(file);
     expect(source).toMatch(/import\s*\{[^}]*\bwriteManifests\b[^}]*\}\s*from\s*["']\.\/ai-manifests\.js["']/);
     expect(source).toMatch(/\bwriteManifests\(/);
+  });
+});
+
+/* ---- hosts: the elements a block may sit on (D13-A; f5-ai-ready.md 5.6 "@host grammar", 2.1 `hosts`) ----
+ *
+ * `@host <block>: <selector>, <selector>, …` on a line of a block comment of a
+ * stylesheet (in practice the header of a component's file; the bundle repeats
+ * the comment, and the two must agree) says which elements the block's class
+ * may sit on. A selector is a tag name with at most one attribute test:
+ * `a`, `input[type=submit]`, `a[href]`. The generator puts the list, as
+ * written and in order, in `hosts` of the block's entry, the last key, and
+ * nowhere else. It fails the build, with `<file>:<line>` of the `@host` line,
+ * on a line that does not follow the grammar, a block no stylesheet of the
+ * package defines (the annotation rotted), a name that is a modifier or a
+ * part, an empty list, and two files that give a block different lists.
+ * Only `luz-btn` declares one today (accessibility-engineer Q1: `a`, `button`
+ * and `input` of type button, submit or reset; no `label`, no `summary`).
+ */
+describe("hosts: the generator reads `@host` from the comments of the stylesheets", () => {
+  const roots = [];
+  afterEach(() => {
+    for (const dir of roots.splice(0)) rmSync(dir, { recursive: true, force: true });
+  });
+
+  function fixtureRoot(files) {
+    const dir = mkdtempSync(join(tmpdir(), "luz-hosts-"));
+    roots.push(dir);
+    const put = (path, text) => {
+      mkdirSync(dirname(join(dir, path)), { recursive: true });
+      writeFileSync(join(dir, path), text);
+    };
+    put("packages/core/package.json", JSON.stringify({ name: "@luz-ds/core", version: "1.2.3", exports: { "./css": "./dist/luz.css", "./components/*": "./dist/components/*" } }));
+    for (const [path, text] of Object.entries(files)) put(`packages/core/dist/${path}`, text);
+    return dir;
+  }
+
+  const ORDER = `@layer ${LAYERS.map((l) => `luz.${l}`).join(", ")};\n`;
+  // line 1 the layer statement, line 2 the layer, line 3 the comment, line 4 the @host line
+  const BUTTON = (host) => `${ORDER}@layer luz.components {\n/* LUZ Component: button\n   ${host}\n*/\n.luz-btn { color: red; }\n.luz-btn--primary { color: blue; }\n.luz-card { margin: 0; }\n}\n`;
+  const HOST_LINE = "@host luz-btn: a, button, input[type=button], input[type=submit], input[type=reset]";
+  const HOSTS = ["a", "button", "input[type=button]", "input[type=submit]", "input[type=reset]"];
+  const entry = (manifest, name) => manifest.classes.find((c) => c.name === name);
+
+  it("puts the list on the block's entry, as written, in order, as its last key, and on no other class", () => {
+    const dir = fixtureRoot({ "components/button.css": BUTTON(HOST_LINE) });
+    const manifest = buildClassManifest("core", { root: dir });
+    expect(entry(manifest, "luz-btn").hosts).toStrictEqual(HOSTS);
+    expect(Object.keys(entry(manifest, "luz-btn"))).toEqual(["name", "kind", "layer", "files", "defined", "block", "hosts"]);
+    expect(entry(manifest, "luz-btn--primary")).not.toHaveProperty("hosts");
+    expect(entry(manifest, "luz-card")).not.toHaveProperty("hosts");
+    expect(Object.keys(manifest)).toEqual(["schema", "package", "version", "classes", "properties"]);
+  });
+
+  it("writes it on the entry's line, as a one-line array", () => {
+    const dir = fixtureRoot({ "components/button.css": BUTTON(HOST_LINE) });
+    writeManifests("core", { root: dir });
+    const text = readFileSync(join(dir, "packages/core/dist/classes.json"), "utf-8");
+    expect(text).toContain('"block": "luz-btn", "hosts": ["a", "button", "input[type=button]", "input[type=submit]", "input[type=reset]"] }');
+  });
+
+  it("takes the same line from the bundle and from the component file, and the selectors of an attribute test", () => {
+    const css = BUTTON("@host luz-btn: a[href], button, input[type=submit]");
+    const dir = fixtureRoot({ "luz.css": css, "components/button.css": css });
+    expect(entry(buildClassManifest("core", { root: dir }), "luz-btn").hosts).toStrictEqual(["a[href]", "button", "input[type=submit]"]);
+  });
+
+  it("reads it from the bundle alone, and from any block comment, not only the first", () => {
+    const css = `${ORDER}@layer luz.components {\n.luz-btn { color: red; }\n/* later in the file\n   @host luz-btn: button\n*/\n.luz-card { margin: 0; }\n}\n`;
+    const dir = fixtureRoot({ "luz.css": css });
+    expect(entry(buildClassManifest("core", { root: dir }), "luz-btn").hosts).toStrictEqual(["button"]);
+  });
+
+  it("is not there for a class whose comment does not say it, or whose @host is in a string or a declaration", () => {
+    const css = `${ORDER}@layer luz.components {\n.luz-btn { color: red; }\n.luz-card::after { content: "@host luz-card: div"; }\n}\n`;
+    const dir = fixtureRoot({ "components/button.css": css });
+    const manifest = buildClassManifest("core", { root: dir });
+    for (const c of manifest.classes) expect(c, c.name).not.toHaveProperty("hosts");
+  });
+
+  it.each([
+    ["has no colon", "@host luz-btn a, button"],
+    ["has an empty list", "@host luz-btn:"],
+    ["has an empty item", "@host luz-btn: a,, button"],
+    ["names a class selector", "@host luz-btn: .a, button"],
+    ["names two tags in one selector", "@host luz-btn: a b"],
+    ["has a descendant combinator", "@host luz-btn: div > a"],
+    ["has an uppercase tag", "@host luz-btn: A, button"],
+    ["has a universal selector", "@host luz-btn: *"],
+    ["has two attribute tests", "@host luz-btn: input[type=button][name=x]"],
+    ["has a quoted value", '@host luz-btn: input[type="button"]'],
+    ["has a value with a space", "@host luz-btn: input[type=a b]"],
+  ])("fails the build, with file and line, on an @host that %s", (_what, host) => {
+    const dir = fixtureRoot({ "components/button.css": BUTTON(host) });
+    expect(() => buildClassManifest("core", { root: dir })).toThrow(/packages\/core\/dist\/components\/button\.css:4\b.*@host/s);
+  });
+
+  it("fails the build for a block no stylesheet of the package defines, and for a name that is not a block", () => {
+    const missing = fixtureRoot({ "components/button.css": BUTTON("@host luz-nothing: a") });
+    expect(() => buildClassManifest("core", { root: missing })).toThrow(/components\/button\.css:4\b.*luz-nothing/s);
+    const modifier = fixtureRoot({ "components/button.css": BUTTON("@host luz-btn--primary: a") });
+    expect(() => buildClassManifest("core", { root: modifier })).toThrow(/components\/button\.css:4\b.*luz-btn--primary/s);
+  });
+
+  it("fails the build when two files give the same block different lists", () => {
+    const dir = fixtureRoot({ "luz.css": BUTTON("@host luz-btn: a"), "components/button.css": BUTTON("@host luz-btn: a, button") });
+    expect(() => buildClassManifest("core", { root: dir })).toThrow(/@host luz-btn/);
+  });
+});
+
+describe("hosts: the built packages, the sources and the docs agree", () => {
+  const SELECTOR = /^[a-z][a-z0-9]*(?:\[[a-z][a-z-]*(?:=[A-Za-z0-9_-]+)?\])?$/;
+  const HOST_LINE = /^[\s*]*@host\s+(luz-[a-z0-9_-]+)\s*:\s*(.+?)\s*$/;
+  const manifests = Object.fromEntries(PACKAGES.map((name) => [name, buildClassManifest(name)]));
+  const hosted = new Map(PACKAGES.flatMap((name) => manifests[name].classes.filter((c) => c.hosts).map((c) => [c.name, { package: name, hosts: c.hosts }])));
+
+  /** [{ file, line, block, hosts }] of the `@host` lines of the sources of the packages. */
+  const declared = PACKAGES.flatMap((name) =>
+    walk(`${root}packages/${name}/src`)
+      .filter((f) => f.endsWith(".css"))
+      .flatMap((file) =>
+        readFileSync(file, "utf-8")
+          .split("\n")
+          .flatMap((text, index) => {
+            const m = HOST_LINE.exec(text);
+            return m ? [{ file: file.slice(root.length), line: index + 1, block: m[1], hosts: m[2].split(",").map((h) => h.trim()), package: name }] : [];
+          }),
+      ),
+  );
+
+  it("is declared for .luz-btn in button.css, with the elements of the accessibility review", () => {
+    const button = declared.filter((d) => d.block === "luz-btn");
+    expect(button.map((d) => d.file)).toEqual(["packages/core/src/components/button.css"]);
+    expect(button[0].hosts).toStrictEqual(["a", "button", "input[type=button]", "input[type=submit]", "input[type=reset]"]);
+  });
+
+  it("is in the manifest of core for luz-btn, and for no class a source does not declare", () => {
+    expect(manifests.core.classes.find((c) => c.name === "luz-btn").hosts).toStrictEqual(["a", "button", "input[type=button]", "input[type=submit]", "input[type=reset]"]);
+    expect([...hosted.keys()].sort()).toEqual([...new Set(declared.map((d) => d.block))].sort());
+    for (const d of declared) expect(hosted.get(d.block), `${d.file}:${d.line} ${d.block}`).toEqual({ package: d.package, hosts: d.hosts });
+  });
+
+  it("follows the grammar in every source: a tag with at most one attribute test, each once, no label and no summary for a button", () => {
+    expect(declared.length).toBeGreaterThan(0);
+    for (const d of declared) {
+      expect(d.hosts.length, `${d.file}:${d.line}`).toBeGreaterThan(0);
+      for (const host of d.hosts) expect(SELECTOR.test(host), `${d.file}:${d.line} ${host}`).toBe(true);
+      expect(new Set(d.hosts).size, `${d.file}:${d.line}`).toBe(d.hosts.length);
+    }
+    expect(hosted.get("luz-btn").hosts.map((h) => h.split("[")[0])).not.toContain("label");
+    expect(hosted.get("luz-btn").hosts.map((h) => h.split("[")[0])).not.toContain("summary");
+  });
+
+  it("is in the built dist/classes.json of core (the build has run since the header changed)", () => {
+    const built = readJson("packages/core/dist/classes.json");
+    expect(built.classes.find((c) => c.name === "luz-btn").hosts).toStrictEqual(["a", "button", "input[type=button]", "input[type=submit]", "input[type=reset]"]);
+  });
+
+  // RL-19, D13-A: what the docs show a reader to copy is what the table says. The live demos, the
+  // partials, the layouts and the home page, outside `inert` stages (the do and don't, which show
+  // a mistake on purpose), and the markup of every <pre> block, decoded.
+  const matches = (selector, name, attrs) => {
+    const [, tag, attribute, value] = /^([a-z0-9]+)(?:\[([a-z-]+)(?:=(.+))?\])?$/.exec(selector);
+    if (tag !== name) return false;
+    if (attribute === undefined) return true;
+    if (!attrs.has(attribute)) return false;
+    return value === undefined || attrs.get(attribute).toLowerCase() === value;
+  };
+
+  function misplaced(html, file) {
+    const found = [];
+    const open = []; // { name, inert }
+    let visited = 0;
+    for (const token of tags(html, file, { lenient: true })) {
+      if (token.type === "error") break;
+      if (token.type === "end") {
+        const at = open.map((o) => o.name).lastIndexOf(token.name);
+        if (at !== -1) open.length = at;
+        continue;
+      }
+      if (token.type !== "start") continue;
+      const own = token.attrs.has("inert");
+      const inert = own || open.some((o) => o.inert);
+      const written = html.slice(token.index + 1, token.index + 1 + token.name.length);
+      if (!/^(?:area|base|br|col|embed|hr|img|input|link|meta|source|track|wbr)$/.test(token.name) && !token.selfClosing) open.push({ name: token.name, inert: inert });
+      if (inert || written !== token.name) continue;
+      for (const name of (token.attrs.get("class") ?? "").split(/\s+/)) {
+        const spec = hosted.get(name);
+        if (spec === undefined) continue;
+        visited += 1;
+        if (!spec.hosts.some((h) => matches(h, token.name, token.attrs))) found.push(`${file}:${token.line} .${name} is on <${token.name}>`);
+      }
+    }
+    return { found, visited };
+  }
+
+  it("has every page, partial, layout and the home page put a class that has hosts only on its hosts, in markup and in the code a page shows", () => {
+    const files = [
+      ...walk(`${root}apps/docs/pages`),
+      ...walk(`${root}apps/docs/_partials`),
+      ...walk(`${root}apps/docs/_layouts`),
+      ...walk(`${root}apps/landing`).filter((f) => !f.includes("node_modules")),
+    ].filter((f) => f.endsWith(".html"));
+    expect(hosted.size, "a class with hosts: the cross-check is not vacuous").toBeGreaterThan(0);
+    let visited = 0;
+    const problems = [];
+    for (const file of files) {
+      const rel = file.slice(root.length);
+      const text = readFileSync(file, "utf-8");
+      const live = misplaced(text, rel);
+      visited += live.visited;
+      problems.push(...live.found);
+      for (const match of text.matchAll(/<pre\b[^>]*>([\s\S]*?)<\/pre>/g)) {
+        const code = decodeEntities(match[1].replace(/<[^>]+>/g, ""));
+        const shown = misplaced(code, `${rel} (a <pre> block)`);
+        visited += shown.visited;
+        problems.push(...shown.found);
+      }
+    }
+    expect(visited, "it looked at the markup of the docs").toBeGreaterThan(100);
+    expect(problems).toEqual([]);
   });
 });

@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Every element a button class may sit on</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Actions</h1>
+    <p><a class="luz-btn luz-btn--secondary" href="#actions">A link that looks like a button</a></p>
+    <form class="o-stack" id="actions" action="#" method="post">
+      <button class="luz-btn luz-btn--primary" type="submit">Save changes</button>
+      <button class="luz-btn" type="button">Cancel</button>
+      <input class="luz-btn" type="button" value="Preview">
+      <input class="luz-btn" type="submit" value="Send">
+      <input class="luz-btn" type="reset" value="Clear">
+    </form>
+    <div class="luz-alert luz-alert--error" role="alert">
+      <p>Nothing was saved.</p>
+    </div>
+  </main>
+  <script type="module" src="node_modules/@luz-ds/core/dist/luz.min.js"></script>
+</body>
+</html>

@@ -217,6 +217,19 @@ describe("dist/data: the snapshot of this release, beside the bundle", () => {
     expect(copy.hooks).toEqual(source.hooks);
   });
 
+  it("carries `hosts` where the manifest has them: luz-btn's list in core, so the misuse rules work for a project that has no node_modules", () => {
+    expect(built.error).toBeNull();
+    const buttons = snapshot("core", "classes.json").classes.find((c) => c.name === "luz-btn");
+    expect(buttons.hosts).toStrictEqual(["a", "button", "input[type=button]", "input[type=submit]", "input[type=reset]"]);
+    expect(Object.keys(buttons).at(-1), "hosts is the last key, as in the manifest").toBe("hosts");
+    for (const name of LIBRARIES) {
+      const from = new Map(manifestOf(name).classes.map((c) => [c.name, c]));
+      for (const c of snapshot(name, "classes.json").classes) {
+        expect("hosts" in c, `${name} ${c.name}`).toBe("hosts" in from.get(c.name));
+      }
+    }
+  });
+
   it.each(["core", "site"])("%s/custom-elements.json keeps the tags and the attribute names of the manifest, with no text", (name) => {
     expect(built.error).toBeNull();
     const source = readJson(`${root}packages/${name}/dist/custom-elements.json`);

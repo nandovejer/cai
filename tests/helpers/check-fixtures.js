@@ -161,6 +161,9 @@ function fullClass(pkg, spec) {
   return entry;
 }
 
+/** What `.luz-btn` may sit on: the `@host` line of button.css, as the manifest lists it (f5-ai-ready.md 5.6, the answer of accessibility-engineer Q1). */
+export const BUTTON_HOSTS = ["a", "button", "input[type=button]", "input[type=submit]", "input[type=reset]"];
+
 /** The small world: what each package knows. Every test names only what is here. */
 export const MINI = {
   tokens: { classes: [], properties: ["--luz-brand-fill", "--luz-text-primary"], elements: [], hooks: [] },
@@ -169,7 +172,7 @@ export const MINI = {
       "is-active",
       "luz-alert",
       "luz-alert--error",
-      "luz-btn",
+      { name: "luz-btn", hosts: BUTTON_HOSTS },
       "luz-btn--block",
       "luz-btn--lg",
       "luz-btn--primary",

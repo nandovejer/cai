@@ -12,9 +12,9 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DROh7RWy.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CtgG2YUA.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Cm1P5x6m.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CCq3K5Z-.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CQWABGDg.css">
 </head>
 <body class="o-shell docs-page">
@@ -206,6 +206,11 @@
               </li>
             </ul>
           </div>
+          <ul class="docs-scale-list">
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-type-base</code><span>1rem · 16px</span><span class="docs-scale__note">The size of <code class="luz-code-inline">--luz-text-base</code>, and the base the other steps are computed from</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-type-ratio</code><span>1.25</span><span class="docs-scale__note">The multiple between two steps above the base, and the divisor below it</span></li>
+          </ul>
+          <p class="docs-demo__note">Two knobs size the whole scale. Set them on <code class="luz-code-inline">:root</code>, in rem, in CSS of your own; a knob set on <code class="luz-code-inline">body</code> or on a section changes nothing. Components read the <code class="luz-code-inline">--luz-text-*</code> steps, never the knobs.</p>
         
     </div>
 
@@ -214,14 +219,15 @@
           <ul class="docs-scale-list">
             <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-font-body</code><span>var(--luz-font-serif)</span><span class="docs-scale__note">Running text: the serif. Controls, labels, tables and navigation keep the sans</span></li>
             <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-font-heading</code><span>var(--luz-font-serif)</span><span class="docs-scale__note">Heading font family</span></li>
-            <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-text-control</code><span>var(--luz-text-md)</span><span class="docs-scale__note">Form field text; --luz-text-base (16px) at 768px and below and on touch screens</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-text-body</code><span>calc(var(--luz-text-base) * 1.0625)</span><span class="docs-scale__note">Running text, 17px at the defaults: a step above the base, because ET Book's x-height is small. It follows the base knob</span></li>
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-text-control</code><span>var(--luz-text-md)</span><span class="docs-scale__note">Form field text; at least 16px (max(1rem, --luz-text-base)) at 768px and below and on touch screens</span></li>
           </ul>
-          <p class="docs-demo__note">These three ship with core, not with tokens.</p>
+          <p class="docs-demo__note">These four ship with core, not with tokens.</p>
     </div>
 
     <div class="docs-prose" id="tokens-typography">
             <h2 id="type-scale-and-minimum-sizes" class="docs-prose__title">Type scale and minimum sizes</h2>
-            <p>Every size is in <code class="luz-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller. Above the 16px base each step is the one before times 1.25, rounded to whole pixels; below it are the readability floors.</p>
+            <p>Every size is in <code class="luz-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller. Above the 16px base each step is the one before times 1.25, rounded to 1/16 rem (a whole pixel at the default); below it are the readability floors.</p>
             <div class="luz-table-wrap" role="region" aria-label="Type scale" tabindex="0">
               <table class="luz-table">
                 <caption>Font-size tokens</caption>
@@ -232,7 +238,7 @@
                   <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-xs</code></td><td data-label="Value">0.75rem</td><td data-label="At 16px root">12px</td><td data-label="Use">Absolute floor. Micro-copy only: badges, tags, counters, version labels. Never running text.</td></tr>
                   <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-sm</code></td><td data-label="Value">0.875rem</td><td data-label="At 16px root">14px</td><td data-label="Use">Floor for secondary and UI text: helper and error text, captions, table headers, breadcrumbs, tooltips.</td></tr>
                   <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-md</code></td><td data-label="Value">0.9375rem</td><td data-label="At 16px root">15px</td><td data-label="Use">Default UI text: buttons, labels, table cells, tabs, navigation.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-base</code></td><td data-label="Value">1rem</td><td data-label="At 16px root">16px</td><td data-label="Use">Body and running text. Form fields on touch screens.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-base</code></td><td data-label="Value">1rem</td><td data-label="At 16px root">16px</td><td data-label="Use">The base of the scale, and UI text at a larger size. Form fields on touch screens. Running text is <code class="luz-code-inline">--luz-text-body</code>, a step above it.</td></tr>
                   <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-lg</code></td><td data-label="Value">1.25rem</td><td data-label="At 16px root">20px</td><td data-label="Use">Lead paragraphs, dialog titles.</td></tr>
                   <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-xl</code></td><td data-label="Value">1.5625rem</td><td data-label="At 16px root">25px</td><td data-label="Use">Headings.</td></tr>
                   <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-2xl</code></td><td data-label="Value">1.9375rem</td><td data-label="At 16px root">31px</td><td data-label="Use">Headings.</td></tr>
@@ -242,10 +248,10 @@
               </table>
             </div>
             <ul>
-              <li><strong>Body text</strong> is never below <code class="luz-code-inline">--luz-text-base</code> (16px), with a line height of 1.5.</li>
+              <li><strong>Body text</strong> is <code class="luz-code-inline">--luz-text-body</code> (17px at the defaults), with a line height of 1.6.</li>
               <li><strong>Secondary and UI text</strong> is never below <code class="luz-code-inline">--luz-text-sm</code> (14px).</li>
               <li><strong>Nothing</strong> goes below <code class="luz-code-inline">--luz-text-xs</code> (12px). Sizes relative to their context (<code class="luz-code-inline">kbd</code>, <code class="luz-code-inline">time</code>, <code class="luz-code-inline">output</code>, inline code, captions) are clamped with <code class="luz-code-inline">max()</code> so they cannot fall below the floor inside small text.</li>
-              <li><strong>Form fields</strong> use <code class="luz-code-inline">--luz-text-control</code> (core setting): <code class="luz-code-inline">--luz-text-md</code> on desktop, <code class="luz-code-inline">--luz-text-base</code> (16px) at 768px and below and on touch screens, where iOS Safari zooms the page into any smaller field.</li>
+              <li><strong>Form fields</strong> use <code class="luz-code-inline">--luz-text-control</code> (core setting): <code class="luz-code-inline">--luz-text-md</code> on desktop, <code class="luz-code-inline">max(1rem, var(--luz-text-base))</code> at 768px and below and on touch screens, never under 16px, where iOS Safari zooms the page into any smaller field.</li>
             </ul>
           </div>
 

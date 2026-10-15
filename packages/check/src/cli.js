@@ -3,9 +3,12 @@
  * stdout, stderr }, the shape of tokens/lib/cli.js, so tests run it without a
  * shell and src/main.js only connects it to the process.
  *
- *   env = { version, cwd }   the version of the package and the working
- *                            directory come in through env; this file reads
- *                            no environment variable.
+ *   env = { version, cwd, data }   the version of the package, the working
+ *                            directory and (optional) the folder of the
+ *                            bundled snapshot come in through env; this file
+ *                            reads no environment variable. `data` defaults
+ *                            to dist/data of this package, which is the
+ *                            folder next to the bundle when it is installed.
  *
  * Exit codes: 0 nothing blocks; 1 at least one blocking finding (with
  * --strict, any warning), a file that could not be read as HTML or CSS
@@ -13,19 +16,29 @@
  * or there is no file to read. run never throws: whatever fails inside it is
  * exit 2 and one sanitised line on stderr, never a stack trace.
  *
- * The rules are steps 9-11 of f5-ai-ready.md: they plug into checkFile(), which
- * today reports what the readers of html.js and css.js report (parse/error).
- * Paths, limits and symlinks are walk.js; the words are messages.js; the
- * escaping of anything that came from a file is sanitize.js.
+ * The rules are steps 9-11 of f5-ai-ready.md: those of names (classes,
+ * elements, attributes) are rules/, the facts they read are manifests.js, and
+ * parseFile() reports what the readers of html.js and css.js report
+ * (parse/error). Paths, limits and symlinks are walk.js; the words are
+ * messages.js; the escaping of anything that came from a file is sanitize.js.
  */
 import { lstatSync } from "node:fs";
-import { relative, resolve, sep } from "node:path";
+import { dirname, relative, resolve, sep } from "node:path";
+import { fileURLToPath } from "node:url";
 import { ConfigError, parseConfig } from "./config.js";
 import { readCss } from "./css.js";
 import { scan } from "./html.js";
+import { PACKAGES as PACKAGE_ORDER, createFacts } from "./manifests.js";
 import { buildReport, finding, formatJson, formatText } from "./report.js";
+import { checkParsed, namesLuz } from "./rules/index.js";
+import { createBudget } from "./rules/shared.js";
 import { cleanText, displayPath } from "./sanitize.js";
 import { collect, readLimited } from "./walk.js";
+
+// dist/data of this package: from src/ and from the bundle in dist/ alike
+const BUNDLED_DATA = fileURLToPath(new URL("../dist/data/", import.meta.url));
+const NO_MANIFEST = "No LUZ manifest to read: the files name LUZ, and neither node_modules/@luz-ds nor the data bundled with luz-check has one; reinstall @luz-ds/check.";
+const STYLE_TAG = /<style\b/i;
 
 export const USAGE = `Usage: luz-check [paths…] [--json] [--strict] [--config <file>] [--theme <file.css>] [--ext .astro,.vue]
        luz-check agent
@@ -101,25 +114,47 @@ function parseArgs(args) {
   return options;
 }
 
-/**
- * The findings of one file. The rules of steps 9-11 are read from here.
- * @param {{ path: string, kind: "html" | "css" | "template", text: string }} file
- */
-function checkFile(file) {
-  const found = [];
+/** What the readers say about one file, and its elements or classes for the rules. */
+function parseFile(file) {
   if (file.kind === "css") {
-    for (const problem of readCss(file.text, file.path).findings) {
-      found.push(finding("parse/error", { file: file.path, line: problem.line, column: problem.column, vars: { kind: "CSS" } }));
-    }
-    return found;
+    const css = readCss(file.text, file.path);
+    const errors = css.findings.map((problem) => ({ line: problem.line, column: problem.column, kind: "CSS" }));
+    return { path: file.path, kind: file.kind, css, records: [], errors };
   }
+  const records = [];
+  const errors = [];
   for (const record of scan(file.text, file.path)) {
     if (record.type === "error") {
-      found.push(finding("parse/error", { file: file.path, line: record.line, column: record.column, vars: { kind: "HTML" } }));
+      errors.push({ line: record.line, column: record.column, kind: "HTML" });
       break;
     }
+    records.push(record);
   }
-  return found;
+  return { path: file.path, kind: file.kind, css: null, records, errors };
+}
+
+/** The classes some stylesheet of the run defines: a .css file or a <style> of a page. Read once, on the first need. */
+function definedClasses(files) {
+  let names = null;
+  const build = () => {
+    names = new Set();
+    for (const file of files) {
+      if (file.kind === "css") {
+        for (const entry of readCss(file.text, file.path).classes) if (entry.defined) names.add(entry.name);
+      } else if (STYLE_TAG.test(file.text)) {
+        for (const record of scan(file.text, file.path)) {
+          if (record.type !== "element" || record.name !== "style" || !record.text) continue;
+          for (const entry of readCss(record.text, file.path).classes) if (entry.defined) names.add(entry.name);
+        }
+      }
+    }
+  };
+  return {
+    has(name) {
+      if (names === null) build();
+      return names.has(name);
+    },
+  };
 }
 
 /** luz-check.json of the working directory, or the file --config names. -> { config, file } */
@@ -188,12 +223,40 @@ function execute(argv, env) {
     return usageError(`No HTML or CSS file to read${left}; luz-check reads .html, .htm and .css files and the extensions of --ext.`);
   }
 
-  const findings = files.flatMap((file) => checkFile(file));
+  const data = typeof env.data === "string" && env.data !== "" ? env.data : BUNDLED_DATA;
+  const facts = createFacts({ data });
+  const defined = definedClasses(files);
+  const startFile = createBudget();
+  const manifests = [];
+  const seen = new Set();
+  const findings = [];
+  for (const file of files) {
+    const parsed = parseFile(file);
+    for (const error of parsed.errors) {
+      const key = file.kind === "template" ? "parse/error:template" : "parse/error";
+      findings.push(finding(key, { file: file.path, line: error.line, column: error.column, vars: { kind: error.kind } }));
+    }
+    if (!namesLuz(parsed)) continue;
+    const world = facts.forDirectory(dirname(resolve(cwd, file.path)));
+    if (world.packages.length === 0) return usageError(NO_MANIFEST);
+    for (const entry of world.packages) {
+      const key = `${entry.package} ${entry.version} ${entry.source}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        manifests.push(entry);
+      }
+    }
+    for (const found of checkParsed(parsed, { world, defined, take: startFile() })) findings.push(found);
+  }
+  // A warning a config switched off is not reported; a blocking rule cannot be switched off
+  const kept = findings.filter((found) => !(found.severity === "warn" && config.rules[found.rule] === "off"));
+  const order = new Map(PACKAGE_ORDER.map((name, index) => [`@luz-ds/${name}`, index]));
+  manifests.sort((a, b) => order.get(a.package) - order.get(b.package));
   const report = buildReport({
     version,
     files: files.map((file) => file.path),
-    manifests: [],
-    findings,
+    manifests,
+    findings: kept,
     skipped,
     config: { file: configFile, off: Object.keys(config.rules) },
     ignored: read.ignored,

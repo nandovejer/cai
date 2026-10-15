@@ -22,6 +22,11 @@
  * pass MAX_MESSAGE shortens its values (with …) until it fits, so the
  * fix clause is never the part that is cut.
  *
+ * A key of a rule that blocks may be a variant that only warns
+ * (`parse/error:template`: a template file is not HTML a browser reads;
+ * `class/unknown:newer`: the page loads a LUZ release newer than the checker
+ * knows). The rule id of its finding is the base id.
+ *
  * The variables of each rule are what its implementation passes (steps 9-11
  * of the plan); a rule may add a variant here with its test.
  */
@@ -39,6 +44,11 @@ export const MESSAGES = {
     template: "{kind} is cut short here; add the missing end of the comment, tag, string or brace",
     sample: { kind: "HTML" },
   },
+  "parse/error:template": {
+    severity: "warn",
+    template: "{kind} may be cut short here, or a template tag breaks it; add the missing end of the tag, comment or string",
+    sample: { kind: "HTML" },
+  },
   "class/unknown": {
     severity: "block",
     template: ".{name} is not a LUZ class; the closest is .{closest}",
@@ -48,6 +58,11 @@ export const MESSAGES = {
     severity: "block",
     template: ".{name} is not a LUZ class; see classes.json of @luz-ds/{package}",
     sample: { name: "luz-btn-primary", package: "core" },
+  },
+  "class/unknown:newer": {
+    severity: "warn",
+    template: ".{name} is not in LUZ {known}, and the page loads {linked}; see classes.json of @luz-ds/{package}",
+    sample: { name: "luz-shiny-new-thing", known: "0.1.0", linked: "0.2.0", package: "core" },
   },
   "element/unknown": {
     severity: "block",

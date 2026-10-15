@@ -420,8 +420,17 @@ if (existsSync(checkFile)) {
   // (<!-- expect: rule line:column --> or /* … */), and a file that names one
   // that is not in IMPLEMENTED_RULES is skipped with the step that brings it.
   // Steps 9, 10 and 11 of .claude/plans/specs/f5-ai-ready.md add their rule
-  // ids to IMPLEMENTED_RULES, and nothing else in this block changes.
-  const IMPLEMENTED_RULES = new Set(["parse/error"]);
+  // ids to IMPLEMENTED_RULES, and nothing else in this block changes. Step 9:
+  // the rules of names (classes, elements, attributes).
+  const IMPLEMENTED_RULES = new Set([
+    "parse/error",
+    "class/unknown",
+    "class/unknown-in-css",
+    "class/reserved-prefix",
+    "element/unknown",
+    "element/unknown-attribute",
+    "attr/unknown-hook",
+  ]);
   const STEP_OF = [
     [/^(?:class|element|attr)\//, "step 9"],
     [/^(?:load|misuse|a11y)\//, "step 10"],

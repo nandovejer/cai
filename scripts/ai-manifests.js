@@ -13,11 +13,17 @@
  * strict (a stylesheet the reader cannot read fails the build with
  * `file:line:column`), except `*.min.css`: the same rules in one line.
  *
- * Shape (schema 1): { schema, package, version, classes, properties }.
+ * Shape (schema 1): { schema, package, version, classes, properties, hooks? }.
  *   classes     [{ name, kind, layer, files, defined, block?, modifier?, part? }]
  *               by name. Only the LUZ namespace: `luz-*`, `o-*`, `u-*`, `is-*`.
  *   properties  [{ name, scope, layer, files? }] by name. Only `--luz-*`;
  *               `files` only for a property a component sets for itself.
+ *   hooks       ["data-luz-…"] (the last key, and only when the package reads
+ *               one): the attribute names the package's own unminified CSS
+ *               selects (`[data-luz-x]`) or its unminified JS reads or writes
+ *               (`dataset.luzFooBar`, a literal `"data-luz-x"`), sorted, once.
+ *               A `data-luz-label-*` is never listed (that family is accepted
+ *               by prefix), and nothing is read from a `.min` file.
  *   files       the stylesheets, as the package's exports name them, that
  *               define the class (or only mention it, when it is never
  *               defined). The bundle (what `./css` exports) is named only for
@@ -76,6 +82,37 @@ function stylesheets(dir, prefix = "") {
     else if (entry.endsWith(".css") && !entry.endsWith(".min.css")) out.push(rel);
   }
   return out;
+}
+
+/** Every unminified file under `dir` with the extension (`.css`, `.js`), as paths relative to it, sorted; none when `dir` is missing. */
+function unminified(dir, ext, prefix = "") {
+  if (!existsSync(join(dir, prefix))) return [];
+  const out = [];
+  for (const entry of readdirSync(join(dir, prefix)).sort()) {
+    const rel = prefix ? `${prefix}/${entry}` : entry;
+    if (statSync(join(dir, rel)).isDirectory()) out.push(...unminified(dir, ext, rel));
+    else if (entry.endsWith(ext) && !entry.endsWith(`.min${ext}`)) out.push(rel);
+  }
+  return out;
+}
+
+const HOOK_IN_CSS = /\[\s*(data-luz-[a-z0-9]+(?:-[a-z0-9]+)*)(?![-a-z0-9])/g;
+const HOOK_IN_JS = /(?<![A-Za-z0-9-])data-luz-[a-z0-9]+(?:-[a-z0-9]+)*(?![-a-z0-9])/g;
+const DATASET_IN_JS = /\bdataset\.(luz[A-Z][A-Za-z0-9]*)/g;
+
+/** The data-luz-* names the unminified CSS and JS of a package's dist/ read, sorted, once, without the label overrides. */
+function hooksOf(dist) {
+  const names = new Set();
+  for (const file of unminified(dist, ".css")) {
+    const css = readFileSync(join(dist, file), "utf-8").replace(/\/\*[\s\S]*?\*\//g, "");
+    for (const m of css.matchAll(HOOK_IN_CSS)) names.add(m[1]);
+  }
+  for (const file of unminified(dist, ".js")) {
+    const code = stripJs(readFileSync(join(dist, file), "utf-8"));
+    for (const m of code.matchAll(HOOK_IN_JS)) names.add(m[0]);
+    for (const m of code.matchAll(DATASET_IN_JS)) names.add(`data-${kebab(m[1])}`);
+  }
+  return [...names].filter((name) => name !== "data-luz-label" && !name.startsWith("data-luz-label-")).sort();
 }
 
 /** The files to name for a class or property: its own stylesheets, else the bundle. */
@@ -157,7 +194,10 @@ export function buildClassManifest(name, { root = repoRoot } = {}) {
     })
     .sort(byName);
 
-  return { schema: 1, package: pkg.name, version: pkg.version, classes: classList, properties: propertyList };
+  const manifest = { schema: 1, package: pkg.name, version: pkg.version, classes: classList, properties: propertyList };
+  const hooks = hooksOf(dist);
+  if (hooks.length > 0) manifest.hooks = hooks;
+  return manifest;
 }
 
 /** `{ "k": v, … }` on one line, arrays as `[a, b]`: one entry, one line. */
@@ -169,16 +209,18 @@ function inline(value) {
   return JSON.stringify(value);
 }
 
-/** The text of dist/classes.json: two-space JSON, one class or property per line, a final newline. */
+/** The text of dist/classes.json: two-space JSON, one class, property or hook per line, a final newline. */
 export function formatClassManifest(manifest) {
   const list = (items) => (items.length ? `[\n${items.map((item) => `    ${inline(item)}`).join(",\n")}\n  ]` : "[]");
+  const hooks = Array.isArray(manifest.hooks) && manifest.hooks.length > 0;
   return [
     "{",
     `  "schema": ${JSON.stringify(manifest.schema)},`,
     `  "package": ${JSON.stringify(manifest.package)},`,
     `  "version": ${JSON.stringify(manifest.version)},`,
     `  "classes": ${list(manifest.classes)},`,
-    `  "properties": ${list(manifest.properties)}`,
+    `  "properties": ${list(manifest.properties)}${hooks ? "," : ""}`,
+    ...(hooks ? [`  "hooks": ${list(manifest.hooks)}`] : []),
     "}",
     "",
   ].join("\n");

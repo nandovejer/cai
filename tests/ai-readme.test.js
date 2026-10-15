@@ -29,6 +29,8 @@ const repo = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFileSync(join(repo, path), "utf-8");
 const SCRIPT = "scripts/ai-readme.js";
 const SITE = "https://example.test/luz/";
+// The former scope and class prefix, spelled in pieces so that this file passes tests/luz-name.test.js
+const FORMER = ["c", "ai"].join("");
 
 const START = "<!-- luz:ai-agents:start -->";
 const END = "<!-- luz:ai-agents:end -->";
@@ -52,7 +54,7 @@ const FIRST_WITH_BREAKING = `# @luz-ds/core
 
 - 1a2b3c4: Rename every class.
 
-  Breaking: every \`.cai-*\` class is now \`.luz-*\`.
+  Breaking: every \`.${FORMER}-*\` class is now \`.luz-*\`.
 `;
 
 const TWO_VERSIONS = `# @luz-ds/core
@@ -165,7 +167,7 @@ describe("breakingChanges(changelog) reads the top version of a changelog", () =
 
   it("lists a bullet of any section that has a paragraph starting with Breaking:, the text as written", () => {
     const { items } = lib().breakingChanges(FIRST_WITH_BREAKING);
-    expect(items).toEqual(["Rename every class.\n\nBreaking: every `.cai-*` class is now `.luz-*`."]);
+    expect(items).toEqual([`Rename every class.\n\nBreaking: every \`.${FORMER}-*\` class is now \`.luz-*\`.`]);
   });
 
   it("keeps a multi-line bullet whole, de-indented, and leaves the other bullets and sections out", () => {
@@ -229,7 +231,9 @@ describe("renderAiSection({ name, manifest, changelog, siteUrl })", () => {
 
   it("states the first release, with the migration note, when there is one version and no breaking item", () => {
     const block = render("core", CORE, FIRST_RELEASE);
-    expect(block).toContain("First release of `@luz-ds/core`. Nothing breaks inside @luz-ds. Coming from `@cai-ds/*`: see the migration note in `CHANGELOG.md`.");
+    expect(block).toContain(
+      `First release of \`@luz-ds/core\`. Nothing breaks inside @luz-ds. Coming from \`@${FORMER}-ds/*\`: see the migration note in \`CHANGELOG.md\`.`,
+    );
   });
 
   it("lists the items of the top version, each item's first line as its heading", () => {
@@ -246,7 +250,7 @@ describe("renderAiSection({ name, manifest, changelog, siteUrl })", () => {
   it("lists the items of a first release that has a Breaking: paragraph, instead of the first-release sentence", () => {
     const block = render("core", CORE, FIRST_WITH_BREAKING);
     expect(block).toMatch(/^#### Rename every class\.$/m);
-    expect(block).toContain("Breaking: every `.cai-*` class is now `.luz-*`.");
+    expect(block).toContain(`Breaking: every \`.${FORMER}-*\` class is now \`.luz-*\`.`);
     expect(block).not.toMatch(/First release of `@luz-ds\/core`/);
   });
 

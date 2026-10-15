@@ -16,7 +16,7 @@ Say `npx @luz-ds/check`, with the scope. The bare name `luz-check` is the comman
 
 A path is a file, a folder (read recursively: `.html`, `.htm` and `.css`) or a quoted glob such as `"src/**/*.html"`; with no path it reads the current folder. `--ext .astro,.vue` reads those extensions as HTML, `--json` prints the report as JSON, `--strict` fails on a warning too, and `--config <file>` reads a configuration other than `luz-check.json`.
 
-In this version the command reads your files, reports a file it cannot read as HTML or CSS (`parse/error`) and one it did not read (`file/skipped`: a link, a file over 1 MiB, one it may not open), and has its exit codes, its text and its JSON report. It never follows a link and never quotes your files. The rules about LUZ classes, elements, load order and theme colours, and the accessibility reviewer (`agent`), arrive before the first release.
+In this version the command reads your files, reports a file it cannot read as HTML or CSS (`parse/error`) and one it did not read (`file/skipped`: a link, a file over 1 MiB, one it may not open), and has its exit codes, its text and its JSON report. It never follows a link and never quotes your files. The rules about LUZ classes, elements, load order and theme colours arrive before the first release.
 
 | Exit code | Meaning |
 | --- | --- |
@@ -25,6 +25,18 @@ In this version the command reads your files, reports a file it cannot read as H
 | 2 | the command was used wrongly, a configuration cannot be read, or there is nothing to read |
 
 It reads source files only. It does not check names, labels, alt text, headings or the language of a page, and a run with no findings says nothing about them.
+
+## The accessibility reviewer
+
+`agent` prints an agent definition for a project that uses an AI coding assistant: a read-only accessibility reviewer (it can read, search and list files, and write nothing) for WCAG 2.2 level AA and EN 301 549. It reads source files, so it gives advice from reading code, not test results. Copy it into your project:
+
+```bash
+npx @luz-ds/check agent > .claude/agents/luz-accessibility-reviewer.md
+```
+
+The `>` overwrites a file that is already there: use another path, or check the file in first, if you edited your copy. The copy is yours to read before you use it, and anyone who can write to your project can change it.
+
+The same file is in the package as the export `@luz-ds/check/agents/accessibility.md`, for a build step that copies it. A folder named `agent` in your project is still read as a path: write `./agent`.
 
 ## Requirements
 

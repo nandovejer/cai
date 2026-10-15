@@ -23,7 +23,7 @@
  * (parse/error). Paths, limits and symlinks are walk.js; the words are
  * messages.js; the escaping of anything that came from a file is sanitize.js.
  */
-import { lstatSync } from "node:fs";
+import { lstatSync, readFileSync } from "node:fs";
 import { dirname, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { ConfigError, parseConfig } from "./config.js";
@@ -41,6 +41,8 @@ import { collect, readLimited } from "./walk.js";
 
 // dist/data of this package: from src/ and from the bundle in dist/ alike
 const BUNDLED_DATA = fileURLToPath(new URL("../dist/data/", import.meta.url));
+// dist/agents/ of this package: the reviewer `luz-check agent` prints, read when asked
+const BUNDLED_AGENT = fileURLToPath(new URL("../dist/agents/luz-accessibility-reviewer.md", import.meta.url));
 const NO_MANIFEST = "No LUZ manifest to read: the files name LUZ, and neither node_modules/@luz-ds nor the data bundled with luz-check has one; reinstall @luz-ds/check.";
 const STYLE_TAG = /<style\b/i;
 
@@ -201,7 +203,14 @@ function execute(argv, env) {
   const { cwd } = env;
 
   if (options.paths.length === 1 && options.paths[0] === "agent") {
-    return usageError("luz-check agent is not available in this version; to read a folder named agent, write ./agent.");
+    // The file is beside the bundle, written by the build and never inlined; a folder named agent is ./agent
+    let reviewer;
+    try {
+      reviewer = readFileSync(BUNDLED_AGENT, "utf-8");
+    } catch {
+      return usageError("luz-check agent could not read the reviewer file that ships with this package; reinstall @luz-ds/check.");
+    }
+    return { code: 0, stdout: reviewer, stderr: "" };
   }
 
   const { config, file: configFile } = loadConfig(cwd, options.config);

@@ -33,9 +33,23 @@
  * build, no date and no path. `pnpm build` runs the packages first, so their
  * manifests are there.
  *
- * buildCheck({ outdir }) writes <outdir>/luz-check.js and <outdir>/data/ and
- * returns esbuild's metafile, so a test reads exactly what `pnpm build` would
- * write; importing this file builds nothing.
+ * and the accessibility reviewer `luz-check agent` prints (f5-ai-ready.md 5.8,
+ * 8 "The published agent"):
+ *
+ *   packages/check/dist/agents/luz-accessibility-reviewer.md
+ *
+ * Built from ONE file, read by its literal path, and never from the rest of
+ * the repo's agent folder or of its private notes: the sections of
+ * the repo's accessibility agent that sit between `luz:publish` fences, copied
+ * verbatim and in order under a frontmatter this script writes (name,
+ * description and tools: read-only, nothing copied from the source). It fails
+ * closed, before anything is written, on a missing file, no fence, a fence
+ * that is not closed or is nested, a forbidden string in what leaves the
+ * repo, or a result over 12 KiB. Never inlined in the bundle.
+ *
+ * buildCheck({ outdir }) writes <outdir>/luz-check.js, <outdir>/data/ and
+ * <outdir>/agents/ and returns esbuild's metafile, so a test reads exactly
+ * what `pnpm build` would write; importing this file builds nothing.
  *
  * Usage: node scripts/build-check.js (from the repo root)
  */
@@ -140,6 +154,105 @@ function writeData(folder) {
   writeFileSync(resolve(data, "index.json"), `${JSON.stringify({ schema: 1, packages }, null, 2)}\n`, "utf-8");
 }
 
+/* ---- The published agent ------------------------------------------------------------------------ */
+
+// The one file the agent is built from, by its literal path
+const AGENT_SOURCE = resolve(repoRoot, ".claude/agents/accessibility-engineer.md");
+const AGENT_NAME = "luz-accessibility-reviewer";
+const FENCE_START = "<!-- luz:publish:start -->";
+const FENCE_END = "<!-- luz:publish:end -->";
+const AGENT_MAX_BYTES = 12288;
+const AGENT_DESCRIPTION =
+  "Reviews the HTML, CSS and JavaScript of a web project for accessibility against WCAG 2.2 level AA and EN 301 549, reading source files only. Use it when a page or a component is written or changed. It reads your files and writes nothing.";
+const AGENT_HEADER = `# Accessibility reviewer
+
+This agent reviews source files for web accessibility. It is advice from reading code: it cannot establish that a page is usable with assistive technology.`;
+
+/**
+ * What must not leave the repo: the paths and files of the repo's own working
+ * notes and rules, its commands and tools, the names of its other agents and
+ * contact details. A line of a fence that matches one stops the build.
+ * tests/check-agent.test.js holds the longer list and checks the result with it.
+ */
+const FORBIDDEN = [
+  ["a red line id", /(?<![A-Za-z])RL-/],
+  ["a strong rule id", /(?<![A-Za-z])SR-/],
+  ["an exception id", /(?<![A-Za-z])EX-\d/],
+  ["a path under tests/", /tests\//],
+  ["a path under .claude/ (the plans, the agents, the private notes)", /\.claude\//],
+  ["the plans folder", /(?<![A-Za-z])plans\/|f5-ai-ready|luz-0\.1/],
+  ["the owner's notes (OWNER)", /OWNER/],
+  ["PRINCIPLES", /PRINCIPLES\.md/],
+  ["AGENTS", /AGENTS\.md/],
+  ["CLAUDE", /CLAUDE\.md/],
+  ["MEMORY", /MEMORY/],
+  ["luz-browser-review", /luz-browser-review/],
+  ["a path of this machine", /\/home\/|~\/|(?:^|[\s"'`(=])\/(?:Users|root|etc|tmp|var|usr|opt|mnt)\/|[A-Za-z]:\\/],
+  ["pnpm", /\bpnpm\b/],
+  ["a folder of this repo (packages/, apps/, dist/)", /(?:packages|apps|dist)\//],
+  ["EXCEPTIONS", /luz-exception|EXCEPTIONS/],
+  ["a model name", /\b(?:Opus|Sonnet)\b/],
+  ["an e-mail address", /[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}/],
+  ...[
+    "accessibility-engineer",
+    "security-auditor",
+    "frontend-engineer",
+    "ux-designer",
+    "test-writer",
+    "test-runner",
+    "chore-runner",
+    "docs-writer",
+    "outside-reviewer",
+    "safari-reviewer",
+    "firefox-reviewer",
+  ].map((name) => [`the repo agent ${name}`, new RegExp(`(?<![A-Za-z0-9-])${name}(?![A-Za-z0-9-])`)]),
+];
+
+/** The fenced sections of a text, each trimmed of blank lines at its edges; throws on a fence that is wrong. */
+function fencedSections(text) {
+  const sections = [];
+  let open = null;
+  const lines = text.split("\n");
+  lines.forEach((line, index) => {
+    const marker = line.trim();
+    if (marker === FENCE_START) {
+      if (open !== null) throw new Error(`accessibility-engineer.md: a luz:publish fence is nested at line ${index + 1}`);
+      open = index;
+    } else if (marker === FENCE_END) {
+      if (open === null) throw new Error(`accessibility-engineer.md: a luz:publish end marker has no start at line ${index + 1}`);
+      const section = lines.slice(open + 1, index).join("\n").replace(/^\n+|\n+$/g, "");
+      if (section.trim() === "") throw new Error(`accessibility-engineer.md: the luz:publish fence at line ${open + 1} is empty`);
+      sections.push(section);
+      open = null;
+    }
+  });
+  if (open !== null) throw new Error(`accessibility-engineer.md: the luz:publish fence at line ${open + 1} is not closed`);
+  if (sections.length === 0) throw new Error(`accessibility-engineer.md has no ${FENCE_START} … ${FENCE_END} fence: nothing to publish`);
+  return sections;
+}
+
+/** The text of the published agent, or a thrown error that names the file or the marker. Reads nothing else. */
+function buildAgent() {
+  if (!existsSync(AGENT_SOURCE)) throw new Error("accessibility-engineer.md is missing: the agent is built from .claude/agents/accessibility-engineer.md, between its luz:publish fences");
+  const source = readFileSync(AGENT_SOURCE, "utf-8").replace(/\r\n?/g, "\n");
+  const sections = fencedSections(source);
+  for (const section of sections) {
+    for (const line of section.split("\n")) {
+      for (const [label, pattern] of FORBIDDEN) {
+        if (pattern.test(line)) throw new Error(`accessibility-engineer.md: a luz:publish section has a forbidden string (${label}); it may not leave the repository`);
+      }
+    }
+  }
+  const text = `---\nname: ${AGENT_NAME}\ndescription: ${AGENT_DESCRIPTION}\ntools: Read, Grep, Glob\n---\n\n${AGENT_HEADER}\n\n${sections.join("\n\n")}\n`;
+  if (/\t|\r|^\uFEFF/.test(text)) throw new Error("accessibility-engineer.md: a luz:publish section has a tab, a carriage return or a byte order mark");
+  const bytes = Buffer.byteLength(text);
+  // The cap only: an agent definition is read into a context each time it runs. The floor is a test of the real file
+  if (bytes > AGENT_MAX_BYTES) {
+    throw new Error(`the luz:publish sections of accessibility-engineer.md make ${bytes} bytes; the published agent is at most ${AGENT_MAX_BYTES}`);
+  }
+  return text;
+}
+
 /** The `sample: {…},` lines of messages.js, which only the tests read: out of the shipped bundle. */
 const withoutSamples = {
   name: "luz-check-no-samples",
@@ -153,11 +266,13 @@ const withoutSamples = {
 
 /**
  * @param {object} [options]
- * @param {string} [options.outdir] where luz-check.js and data/ are written (default: packages/check/dist, emptied first)
+ * @param {string} [options.outdir] where luz-check.js, data/ and agents/ are written (default: packages/check/dist, emptied first)
  * @returns {Promise<{ outfile: string, metafile: object }>}
  */
 export async function buildCheck({ outdir = defaultOutdir } = {}) {
   const folder = resolve(outdir);
+  // First, and before anything is written: a source that may not be published stops the build
+  const agent = buildAgent();
   // Only the package's own dist is emptied, so removed outputs never linger
   if (folder === defaultOutdir) rmSync(folder, { recursive: true, force: true });
   mkdirSync(folder, { recursive: true });
@@ -181,10 +296,12 @@ export async function buildCheck({ outdir = defaultOutdir } = {}) {
   });
   chmodSync(outfile, 0o755);
   writeData(folder);
+  mkdirSync(resolve(folder, "agents"), { recursive: true });
+  writeFileSync(resolve(folder, "agents", `${AGENT_NAME}.md`), agent, "utf-8");
   return { outfile, metafile };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const { outfile } = await buildCheck();
-  console.log(`✓ Check CLI bundled → ${outfile}, with its data/ beside it`);
+  console.log(`✓ Check CLI bundled → ${outfile}, with its data/ and agents/ beside it`);
 }

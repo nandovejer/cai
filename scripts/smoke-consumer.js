@@ -412,6 +412,8 @@ if (existsSync(checkFile)) {
   check("luz-check --help prints its usage (exit 0)", help.status === 0 && /^Usage: luz-check/m.test(help.stdout), `exit ${help.status}\n${help.stdout}${help.stderr}`);
   const wrong = luzCheck(["--no-such-option"]);
   check("luz-check with an unknown option exits 2", wrong.status === 2, `exit ${wrong.status}\n${wrong.stdout}${wrong.stderr}`);
+  const agent = luzCheck(["agent"]);
+  check("luz-check agent prints the accessibility reviewer from the installed package (exit 0, first line ---, nothing on stderr)", agent.status === 0 && agent.stdout.split("\n")[0] === "---" && agent.stderr === "", `exit ${agent.status}\n${agent.stdout.slice(0, 200)}${agent.stderr}`);
 
   // The fixtures of step 8 are copied next to the installed packages, so the
   // run finds node_modules/@luz-ds from them as a project's files do. Every

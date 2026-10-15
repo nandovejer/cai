@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meter: markup examples – LUZ</title>
+  <!-- Generated from ../../docs/components/meter/#markup by scripts/docs-site/ai.js. Do not edit. MIT licence, github.com/nandovejer/luz.
+       Loads LUZ 0.0.0 from ../dist/, copied from the packages: the tokens file with no web font, so text uses the system serif.
+       Links in the markup are placeholders. For npm or a CDN, with integrity hashes, see ../../docs/get-started/snippet/ -->
+  <link rel="stylesheet" href="../dist/tokens/tokens.min.css">
+  <link rel="stylesheet" href="../dist/core/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Meter</h1>
+    <p>Markup copied from <a href="../../docs/components/meter/#markup">Meter in the LUZ documentation</a>.</p>
+    <section class="o-stack" aria-labelledby="ex-1">
+      <h2 id="ex-1">Meter in a table cell markup</h2>
+<td class="luz-table__numeric" data-label="Parcels">1,204<meter class="luz-meter" value="1204" min="0" max="1500" aria-hidden="true">1,204 of 1,500</meter></td>
+    </section>
+    <section class="o-stack" aria-labelledby="ex-2">
+      <h2 id="ex-2">Meter with a visible label markup</h2>
+<label for="storage">Storage used, 6 of 10 GB</label>
+<meter class="luz-meter" id="storage" value="6" min="0" max="10">6 of 10 GB</meter>
+    </section>
+  </main>
+  <script type="module" src="../dist/core/luz.min.js"></script>
+</body>
+</html>

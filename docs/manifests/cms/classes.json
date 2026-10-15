@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "package": "@luz-ds/cms",
+  "version": "0.0.0",
+  "classes": [
+    { "name": "luz-cms-article", "kind": "pattern", "layer": "luz.cms", "files": ["components/article.css"], "defined": true, "block": "luz-cms-article" },
+    { "name": "luz-cms-article-header", "kind": "pattern", "layer": "luz.cms", "files": ["components/article-header.css"], "defined": true, "block": "luz-cms-article-header" },
+    { "name": "luz-cms-article-header__byline", "kind": "pattern", "layer": "luz.cms", "files": ["components/article-header.css"], "defined": true, "block": "luz-cms-article-header", "part": "byline" },
+    { "name": "luz-cms-article-header__kicker", "kind": "pattern", "layer": "luz.cms", "files": ["components/article-header.css"], "defined": true, "block": "luz-cms-article-header", "part": "kicker" },
+    { "name": "luz-cms-article-header__media", "kind": "pattern", "layer": "luz.cms", "files": ["components/article-header.css"], "defined": true, "block": "luz-cms-article-header", "part": "media" },
+    { "name": "luz-cms-article-header__standfirst", "kind": "pattern", "layer": "luz.cms", "files": ["components/article-header.css"], "defined": true, "block": "luz-cms-article-header", "part": "standfirst" },
+    { "name": "luz-cms-article-header__title", "kind": "pattern", "layer": "luz.cms", "files": ["components/article-header.css"], "defined": true, "block": "luz-cms-article-header", "part": "title" },
+    { "name": "luz-cms-article__layout", "kind": "pattern", "layer": "luz.cms", "files": ["components/article.css"], "defined": true, "block": "luz-cms-article", "part": "layout" },
+    { "name": "luz-cms-footer", "kind": "pattern", "layer": "luz.cms", "files": ["components/footer.css"], "defined": true, "block": "luz-cms-footer" },
+    { "name": "luz-cms-header", "kind": "pattern", "layer": "luz.cms", "files": ["components/header.css"], "defined": true, "block": "luz-cms-header" },
+    { "name": "luz-cms-header--masthead", "kind": "pattern", "layer": "luz.cms", "files": ["components/header.css"], "defined": true, "block": "luz-cms-header", "modifier": "masthead" },
+    { "name": "luz-cms-header__actions", "kind": "pattern", "layer": "luz.cms", "files": ["components/header.css"], "defined": true, "block": "luz-cms-header", "part": "actions" },
+    { "name": "luz-cms-header__brand", "kind": "pattern", "layer": "luz.cms", "files": ["components/header.css"], "defined": true, "block": "luz-cms-header", "part": "brand" },
+    { "name": "luz-cms-header__date", "kind": "pattern", "layer": "luz.cms", "files": ["components/header.css"], "defined": true, "block": "luz-cms-header", "part": "date" },
+    { "name": "luz-cms-header__sections", "kind": "pattern", "layer": "luz.cms", "files": ["components/header.css"], "defined": true, "block": "luz-cms-header", "part": "sections" },
+    { "name": "luz-cms-header__top", "kind": "pattern", "layer": "luz.cms", "files": ["components/header.css"], "defined": true, "block": "luz-cms-header", "part": "top" },
+    { "name": "luz-cms-page-header", "kind": "pattern", "layer": "luz.cms", "files": ["components/page-header.css"], "defined": true, "block": "luz-cms-page-header" },
+    { "name": "luz-cms-page-header__lead", "kind": "pattern", "layer": "luz.cms", "files": ["components/page-header.css"], "defined": true, "block": "luz-cms-page-header", "part": "lead" },
+    { "name": "luz-cms-page-header__title", "kind": "pattern", "layer": "luz.cms", "files": ["components/page-header.css"], "defined": true, "block": "luz-cms-page-header", "part": "title" },
+    { "name": "luz-cms-toc", "kind": "pattern", "layer": "luz.cms", "files": ["components/article.css"], "defined": true, "block": "luz-cms-toc" },
+    { "name": "luz-cms-toc__list", "kind": "pattern", "layer": "luz.cms", "files": ["components/article.css"], "defined": true, "block": "luz-cms-toc", "part": "list" },
+    { "name": "luz-cms-toc__title", "kind": "pattern", "layer": "luz.cms", "files": ["components/article.css"], "defined": true, "block": "luz-cms-toc", "part": "title" },
+    { "name": "o-row", "kind": "object", "layer": "luz.cms", "files": ["components/footer.css", "components/header.css"], "defined": false, "block": "o-row" },
+    { "name": "o-sticky", "kind": "object", "layer": "luz.cms", "files": ["components/article.css"], "defined": false, "block": "o-sticky" }
+  ],
+  "properties": [
+    { "name": "--luz-cms-toc-top", "scope": "component", "layer": "luz.cms", "files": ["components/article.css"] },
+    { "name": "--luz-lang-switch-top", "scope": "component", "layer": "luz.cms", "files": ["components/header.css"] }
+  ]
+}

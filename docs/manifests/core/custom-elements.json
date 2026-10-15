@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "2.1.0",
+  "readme": "README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "timeline.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "LuzTimeline",
+          "customElement": true,
+          "tagName": "luz-timeline",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "description": "A rail of dates, Previous / Next and opt-in autoplay around an ordered list.",
+          "attributes": [
+            {
+              "name": "layout",
+              "type": {
+                "text": "\"vertical\""
+              },
+              "description": "Every item stays visible down a line; the item in the middle of the screen is active."
+            },
+            {
+              "name": "autoplay",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Opt in to moving on by itself, with a visible Pause and Play."
+            },
+            {
+              "name": "interval",
+              "type": {
+                "text": "number"
+              },
+              "default": "5000",
+              "description": "Milliseconds between items, at least 2000."
+            },
+            {
+              "name": "data-luz-label-previous",
+              "type": {
+                "text": "string"
+              },
+              "description": "The text of the Previous button, on the element or an ancestor; the language's own by default."
+            },
+            {
+              "name": "data-luz-label-next",
+              "type": {
+                "text": "string"
+              },
+              "description": "The text of the Next button, on the element or an ancestor; the language's own by default."
+            },
+            {
+              "name": "data-luz-label-pause",
+              "type": {
+                "text": "string"
+              },
+              "description": "The text of the Pause button of autoplay, on the element or an ancestor; the language's own by default."
+            },
+            {
+              "name": "data-luz-label-play",
+              "type": {
+                "text": "string"
+              },
+              "description": "The text of the Play button of autoplay, on the element or an ancestor; the language's own by default."
+            }
+          ],
+          "demos": [
+            {
+              "url": "/docs/components/timeline/"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "luz-timeline",
+          "declaration": {
+            "name": "LuzTimeline",
+            "module": "timeline.js"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+# LUZ
+
+> Install LUZ, find a component and copy its markup, or look up a token, a page pattern or an HTML element. MIT licence. In beta: any release may break anything, and the changelog says how to migrate.
+
+Packages, in load order: @luz-ds/tokens, @luz-ds/core, @luz-ds/site, then one for your kind of site (@luz-ds/landing, @luz-ds/cms or @luz-ds/app). Use only the classes listed in each package's classes.json. After you write HTML or CSS, run `npx @luz-ds/check` on the files and fix what it reports; it reads source, so it does not replace testing in a browser.
+
+## Get started
+- [Install LUZ](https://nandovejer.github.io/luz/docs/get-started/): Pick a level, then copy one install command or the CDN tags. Each level needs the ones below it and nothing above.
+- [Choose your snippet](https://nandovejer.github.io/luz/docs/get-started/snippet/): Pick what you are building and how you load it, then copy the lines. The CDN lines carry integrity hashes computed from the published files.
+- [How LUZ is organised](https://nandovejer.github.io/luz/docs/get-started/structure/): Packages that depend in one direction, CSS in cascade layers inside one called luz, and one optional script.
+- [How to read LUZ](https://nandovejer.github.io/luz/docs/get-started/how-to-read/): What the names in LUZ's CSS, markup and tokens tell you, and which of them you can rely on.
+- [Make it yours](https://nandovejer.github.io/luz/docs/get-started/make-it-yours/): Change the colours, fonts, sizes, corners and shadows of LUZ with tokens, and adjust one component with CSS of your own.
+- [With a bundler or framework](https://nandovejer.github.io/luz/docs/get-started/bundler/): Import LUZ's CSS and script in Astro or any tool that resolves package names, and keep the layer order and the fonts.
+- [JavaScript modules](https://nandovejer.github.io/luz/docs/get-started/javascript/): What each optional script adds, how to load only the one you need, and what a page does without them.
+- [Cascade layers](https://nandovejer.github.io/luz/docs/get-started/layers/): How LUZ sits in your cascade: one layer called luz, the order to declare, and how to override it with no !important.
+- [Print styles](https://nandovejer.github.io/luz/docs/get-started/print/): What LUZ changes on paper, and how to keep or change any of it, with one layer and no extra file when you load luz.css.
+- [Classless styles](https://nandovejer.github.io/luz/docs/get-started/classless/): The look of a button, a text field, a select and a table, and the space between paragraphs, headings and lists, on the bare element, inside one element you mark, for markup you cannot add classes to.
+
+## Tokens
+- [Tokens](https://nandovejer.github.io/luz/docs/tokens/): CSS custom properties for every colour, space, size and type value. Use the semantic ones: they change with the color mode.
+- [Color](https://nandovejer.github.io/luz/docs/tokens/color/): Every colour a component may use, named by its job, with its value in light, dark and high contrast side by side.
+- [Spacing and sizing](https://nandovejer.github.io/luz/docs/tokens/spacing/): The space scale for gaps and padding, and the heights of buttons and fields.
+- [Typography](https://nandovejer.github.io/luz/docs/tokens/typography/): The three font stacks, the type scale in rem, and the smallest size each kind of text may use.
+- [Color modes and themes](https://nandovejer.github.io/luz/docs/tokens/modes/): Switch between light, dark and high contrast with one attribute, or make a look of your own.
+- [Radius](https://nandovejer.github.io/luz/docs/tokens/radius/): The corner radius scale: square, 2px, 4px at most, and round.
+- [Shadows](https://nandovejer.github.io/luz/docs/tokens/shadows/): The elevation scale: how far a surface seems to float above the page.
+- [Motion](https://nandovejer.github.io/luz/docs/tokens/motion/): The durations and easings of every transition, which drop to zero when the reader asks for reduced motion. Ships with @luz-ds/core.
+- [Layers](https://nandovejer.github.io/luz/docs/tokens/layers/): Which layer sits on top: the z-index of every overlay, in order. Ships with @luz-ds/core.
+- [Layout and breakpoints](https://nandovejer.github.io/luz/docs/tokens/layout/): How wide content gets, and where the layout changes. Ships with @luz-ds/core.
+- [Color palette](https://nandovejer.github.io/luz/docs/tokens/palette/): The primitive colour scales. For theme authors only: components never use them.
+- [Tokens in Figma](https://nandovejer.github.io/luz/docs/tokens/figma/): The tokens as one design-tokens file for Figma variables and other design tools, with the same names and the three modes.
+- [Contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/): Check your own color overrides against the contrast LUZ promises, with one command or in the page, before they reach a user.
+- [Make your own theme](https://nandovejer.github.io/luz/docs/tokens/themes/): LUZ ships one look in three color modes. A theme of your own is a file of semantic tokens: start from the template, check it, load it.
+
+## HTML elements
+- [HTML elements](https://nandovejer.github.io/luz/docs/html/): How LUZ styles each of the 116 current HTML elements, with a live example and the markup to copy.
+- [Forms](https://nandovejer.github.io/luz/docs/html/forms/): Controls and the structure around them. Fields, selects and buttons get their look from a .luz-* class; textarea, output, meter and progress are styled with no class.
+- [Text blocks](https://nandovejer.github.io/luz/docs/html/text/): Hold the reading content of a page: paragraphs, lists, quotations and preformatted text.
+- [Inline text](https://nandovejer.github.io/luz/docs/html/inline/): Mark up words and phrases inside a block: emphasis, abbreviations, code, time, notes. Pick the element for its meaning; the style follows.
+- [Page structure](https://nandovejer.github.io/luz/docs/html/structure/): Build the big blocks of a page: landmarks, headings and the sections between them. They look like plain boxes; their value is what they tell assistive technology.
+- [Tables](https://nandovejer.github.io/luz/docs/html/tables/): Show data in rows and columns. A bare table has no LUZ style: add .luz-table, and wrap it in .luz-table-wrap so it can scroll.
+- [Images and media](https://nandovejer.github.io/luz/docs/html/media/): Show images, sound and video, with their captions, or make parts of an image clickable.
+- [Built-in widgets](https://nandovejer.github.io/luz/docs/html/widgets/): Open and close content, and show dialogs, with native elements and no script.
+- [Frames and embeds](https://nandovejer.github.io/luz/docs/html/embeds/): Show content that comes from elsewhere: another page in a frame, a file in a viewer, an image that changes with the screen.
+- [SVG and MathML](https://nandovejer.github.io/luz/docs/html/svg-mathml/): Draw graphics and write maths inside HTML. Both are part of the page and take the same tokens.
+- [Script and canvas](https://nandovejer.github.io/luz/docs/html/scripting/): Draw with script, say what happens when script is off, and load the script itself.
+- [Tracked edits](https://nandovejer.github.io/luz/docs/html/edits/): Show what changed in a text: what was taken out and what was put in.
+- [Page metadata](https://nandovejer.github.io/luz/docs/html/metadata/): Tell browsers, search engines and scripts about the page. Readers never see these elements, so the cards show the markup only.
+- [Document root](https://nandovejer.github.io/luz/docs/html/document/): The root of the page and the body that holds everything the reader sees. Shown as markup: LUZ styles both in its document layer.
+- [Web Components](https://nandovejer.github.io/luz/docs/html/web-components/): Build custom elements: a template that is parsed but not shown, and a slot that shows the page's content inside a shadow tree.
+
+## Components
+- [Components](https://nandovejer.github.io/luz/docs/components/): Every core component, grouped by task, with a live example, the markup to copy and when to use it.
+- [Accordion](https://nandovejer.github.io/luz/docs/components/accordion/): Shows and hides sections of content with the native details and summary elements, one at a time if you name the group.
+- [Alert](https://nandovejer.github.io/luz/docs/components/alert/): Tells the reader about the page or a task: information, success, a warning or an error.
+- [Avatar](https://nandovejer.github.io/luz/docs/components/avatar/): Shows who a person or a team is, with their initials or a photo, in three sizes.
+- [Band](https://nandovejer.github.io/luz/docs/components/band/): Sets one block of a page on a tint that runs from edge to edge, while its content keeps the column.
+- [Breadcrumb](https://nandovejer.github.io/luz/docs/components/breadcrumb/): Shows where the page sits in the site, as a trail of links to its parents.
+- [Button](https://nandovejer.github.io/luz/docs/components/button/): Starts an action on the current page, such as saving, sending or opening a dialog.
+- [Card](https://nandovejer.github.io/luz/docs/components/card/): Groups a few facts about one thing on a bordered surface.
+- [Code](https://nandovejer.github.io/luz/docs/components/code/): Shows code inside a sentence, or in a block with syntax colours in every mode.
+- [Color mode switcher](https://nandovejer.github.io/luz/docs/components/mode-switcher/): Lets readers choose light, dark or high contrast: radios that work without JavaScript, or one button that cycles.
+- [Copy button](https://nandovejer.github.io/luz/docs/components/copy-button/): Copies a command or a value to the clipboard, and says it did.
+- [Dropdown](https://nandovejer.github.io/luz/docs/components/dropdown/): A button that opens a short list of actions or links, anchored under it.
+- [Figure](https://nandovejer.github.io/luz/docs/components/figure/): Shows an image, a chart or a diagram with a caption that says what it is.
+- [Form fields](https://nandovejer.github.io/luz/docs/components/form/): Collect input with native fields, choices and pickers, each with a visible label, a hint and an error.
+- [Icon grid](https://nandovejer.github.io/luz/docs/components/icon-grid/): Lets readers browse a set of icons by name and copy the SVG of each one.
+- [Image](https://nandovejer.github.io/luz/docs/components/image/): Shows a picture in a frame of fixed shape, on a flat surface while it loads or when it is missing.
+- [Meta line](https://nandovejer.github.io/luz/docs/components/meta/): Shows a few facts about something on one line, such as its date, its reading time and its author, with a dot between them.
+- [Meter](https://nandovejer.github.io/luz/docs/components/meter/): Draws a value in a known range as a bar, next to its figure, with the native meter element.
+- [Modal](https://nandovejer.github.io/luz/docs/components/modal/): Asks for a decision that must be made before the reader goes on, in a native dialog.
+- [Navbar](https://nandovejer.github.io/luz/docs/components/navbar/): Puts the main links of a site in a header's row, and in a panel under it on a narrow screen.
+- [Pagination](https://nandovejer.github.io/luz/docs/components/pagination/): Links to the pages of a list that goes on over several, with the current page marked.
+- [Player](https://nandovejer.github.io/luz/docs/components/player/): Plays a video, a sound or a MIDI file in the page, with the same controls for all three.
+- [Progress](https://nandovejer.github.io/luz/docs/components/progress/): Shows how far a task that takes time has got, with the native progress element.
+- [Prose](https://nandovejer.github.io/luz/docs/components/prose/): Sets long text in lines of about 70 characters, with space between its blocks, whatever markup an editor writes inside.
+- [Select](https://nandovejer.github.io/luz/docs/components/select/): A native drop-down list for choosing one option from a long list, with the closed box styled by tokens.
+- [Sidebar](https://nandovejer.github.io/luz/docs/components/sidebar/): Holds the main navigation of a site or an app, and becomes a drawer on small screens.
+- [Skip link](https://nandovejer.github.io/luz/docs/components/skip-link/): Lets keyboard users jump past the header to the main content.
+- [Table](https://nandovejer.github.io/luz/docs/components/table/): Compares records across several attributes, in rows and columns that stay readable at 320 px.
+- [Tabs](https://nandovejer.github.io/luz/docs/components/tabs/): Switches between panels of related content in one place; without JavaScript the panels are stacked sections.
+- [Tag and badge](https://nandovejer.github.io/luz/docs/components/tag/): Labels an item with a short status or category (tag), or shows a count (badge).
+- [Timeline](https://nandovejer.github.io/luz/docs/components/timeline/): Shows dated events in order, one card at a time on a rail of dates or all at once down a line; without JavaScript it is a list.
+- [Toast](https://nandovejer.github.io/luz/docs/components/toast/): Confirms a small result, such as "Draft saved", without interrupting the reader.
+- [Tooltip](https://nandovejer.github.io/luz/docs/components/tooltip/): Adds a short hint to a control on hover or focus; never essential content.
+- [Layout objects](https://nandovejer.github.io/luz/docs/components/layout/): Lay out blocks in a stack, a row, a grid or beside an image, a group of actions, and the page itself with its sticky bar, with the o-* classes.
+- [Utility classes](https://nandovejer.github.io/luz/docs/components/utilities/): Small u-* classes that do one thing each, for the cases a component does not cover.
+- [Keyframes](https://nandovejer.github.io/luz/docs/components/keyframes/): Five shared animations for your own components, which stop when the reader asks for reduced motion.
+
+## Site
+- [Site](https://nandovejer.github.io/luz/docs/site/): Five self-contained components that need data of the site: search, cookie consent, language switch, submenu and banner, and how to tell whether you need them.
+- [Submenu](https://nandovejer.github.io/luz/docs/site/submenu/): Groups a few links of a header under one button, so the header keeps a short row of links.
+- [Banner](https://nandovejer.github.io/luz/docs/site/banner/): Tells every visitor one short thing at the top of the page, such as a sale, an event or planned maintenance.
+- [Cookie consent](https://nandovejer.github.io/luz/docs/site/consent/): Asks a visitor once whether the site may use optional cookies, with Accept and Reject side by side, and remembers the answer.
+- [Language switch](https://nandovejer.github.io/luz/docs/site/lang-switch/): Lets readers go to the same page in another language, from a button in the header.
+- [Search](https://nandovejer.github.io/luz/docs/site/search/): Finds a page, a section or an HTML element of a site by name, from a button in the header.
+- [Class reference](https://nandovejer.github.io/luz/docs/site/classes/): Every tag and class of the five site components, what element it goes on and what it does, in one place.
+
+## Landing
+- [Landing](https://nandovejer.github.io/luz/docs/landing/): What a landing page needs on top of core, from its header and hero to the blocks of an event page, and how to tell whether you need it.
+- [Header](https://nandovejer.github.io/luz/docs/landing/header/): Starts every page of a landing site with its name, its main links and a few controls, in one row that stays at the top.
+- [Hero](https://nandovejer.github.io/luz/docs/landing/hero/): Opens a home or landing page with its title, one sentence, the main actions and an optional picture.
+- [Main and sections](https://nandovejer.github.io/luz/docs/landing/section/): Gives a landing page its rhythm: wide room between the blocks of the main, a closer one inside each section, and an optional glow behind the page.
+- [Footer](https://nandovejer.github.io/luz/docs/landing/footer/): Ends every page of a landing site with who made it, its licence and a few secondary links, under a rule.
+- [Landing page templates](https://nandovejer.github.io/luz/docs/landing/templates/): The blocks of an event landing page to paste in and adapt, in the order a visitor reads them: hero, programme, speakers, tickets, call to action, registration and features.
+
+## CMS
+- [CMS](https://nandovejer.github.io/luz/docs/cms/): The page structure of a blog, a newspaper or any site of articles, from the header to the post listing, and how to tell whether you need it.
+- [Header](https://nandovejer.github.io/luz/docs/cms/header/): Starts every page of a blog or a newspaper with the publication's name, its sections and a search: one row that stays at the top, or a masthead of three rows.
+- [Page header](https://nandovejer.github.io/luz/docs/cms/page-header/): Gives a page that is not an article, such as About or Contact, its title and one sentence about what it is for.
+- [Article header](https://nandovejer.github.io/luz/docs/cms/article-header/): Opens a story with its section, its title, a standfirst, who wrote it and when, and an optional lead picture.
+- [Table of contents](https://nandovejer.github.io/luz/docs/cms/toc/): Lists the sections of a long article, beside the text when there is room and above it when there is not.
+- [Footer](https://nandovejer.github.io/luz/docs/cms/footer/): Ends every page of a blog or a newspaper with who publishes it and a few secondary links, under a rule.
+- [CMS templates](https://nandovejer.github.io/luz/docs/cms/templates/): The pieces of a blog or a newspaper that need no CSS of their own, to paste in and adapt: the content page, the article page, a post card, post listings, related posts and the author box.
+
+## App
+- [App](https://nandovejer.github.io/luz/docs/app/): The header and the dashboard of a web application, on core's shell and sidebar, and how to tell whether you need them.
+- [Header](https://nandovejer.github.io/luz/docs/app/header/): The quiet bar at the top of an application's main area: the menu button, the product name on a phone, the search and the account.
+- [Dashboard](https://nandovejer.github.io/luz/docs/app/dashboard/): The view of an application at a glance: its title and main action, then a grid of panels that fills the room the view has.
+- [App templates](https://nandovejer.github.io/luz/docs/app/templates/): The pieces of an application that need no CSS of their own, to paste in and adapt: the app page with its sidebar, an app with no sidebar and an empty dashboard.
+
+## Accessibility
+- [Accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/): LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 14 October 2026.
+
+## Documentation
+- [LUZ documentation](https://nandovejer.github.io/luz/docs/): Install LUZ, find a component and copy its markup, or look up a token, a page pattern or an HTML element.
+
+## Optional
+- [Full documentation for agents](https://nandovejer.github.io/luz/llms-full.txt): The same pages, as text: markup, variants, when to use, keyboard.
+- [Markup example: Button](https://nandovejer.github.io/luz/examples/components/button.html): A page of the markup of Button, styled by LUZ; every component and pattern page has one under /examples/.
+- [Classes of @luz-ds/core](https://nandovejer.github.io/luz/manifests/core/classes.json): Every class, element and custom property of the package; each package has its own folder under /manifests/.
+- [Elements of @luz-ds/site](https://nandovejer.github.io/luz/manifests/site/custom-elements.json): The custom elements the package defines or declares, with their attributes; core has one too, in its own folder.

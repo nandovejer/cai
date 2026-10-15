@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Header: markup examples – LUZ</title>
+  <!-- Generated from ../../docs/cms/header/#markup by scripts/docs-site/ai.js. Do not edit. MIT licence, github.com/nandovejer/luz.
+       Loads LUZ 0.0.0 from ../dist/, copied from the packages: the tokens file with no web font, so text uses the system serif.
+       Links in the markup are placeholders. For npm or a CDN, with integrity hashes, see ../../docs/get-started/snippet/ -->
+  <link rel="stylesheet" href="../dist/tokens/tokens.min.css">
+  <link rel="stylesheet" href="../dist/core/luz.min.css">
+  <link rel="stylesheet" href="../dist/site/site.min.css">
+  <link rel="stylesheet" href="../dist/cms/cms.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Header</h1>
+    <p>Markup copied from <a href="../../docs/cms/header/#markup">Header in the LUZ documentation</a>.</p>
+    <section class="o-stack" aria-labelledby="ex-1">
+      <h2 id="ex-1">Blog bar markup</h2>
+<header class="luz-cms-header o-sticky">
+  <div class="o-container o-container--inline o-row">
+    <button class="luz-nav-toggle" type="button" popovertarget="cms-nav" aria-label="Sections">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+    </button>
+    <a class="luz-cms-header__brand" href="/">The Vejer Review</a>
+    <nav class="luz-navbar" id="cms-nav" aria-label="Sections" popover>
+      <ul class="luz-navbar__list">
+        <li><a class="luz-navbar__link" href="/news/" aria-current="true">News</a></li>
+        <li><a class="luz-navbar__link" href="/culture/">Culture</a></li>
+        <li><a class="luz-navbar__link" href="/opinion/">Opinion</a></li>
+      </ul>
+    </nav>
+    <div class="o-row luz-cms-header__actions">
+      <luz-search>…</luz-search>
+      <luz-lang-switch>…</luz-lang-switch>
+    </div>
+  </div>
+</header>
+    </section>
+    <section class="o-stack" aria-labelledby="ex-2">
+      <h2 id="ex-2">Masthead markup</h2>
+<header class="luz-cms-header luz-cms-header--masthead">
+  <div class="o-container o-container--inline o-stack">
+    <div class="o-row luz-cms-header__top">
+      <p class="luz-cms-header__date"><time datetime="2026-10-14">Wednesday, 14 October 2026</time></p>
+      <div class="o-row luz-cms-header__actions">
+        <luz-search>…</luz-search>
+      </div>
+    </div>
+    <a class="luz-cms-header__brand" href="/">The Vejer Review</a>
+    <div class="o-row luz-cms-header__sections">
+      <button class="luz-nav-toggle" type="button" popovertarget="cms-nav" aria-label="Sections">…</button>
+      <nav class="luz-navbar" id="cms-nav" aria-label="Sections" popover>…</nav>
+    </div>
+  </div>
+</header>
+    </section>
+  </main>
+  <script type="module" src="../dist/core/luz.min.js"></script>
+  <script type="module" src="../dist/site/site.min.js"></script>
+</body>
+</html>

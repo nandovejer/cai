@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Form fields: markup examples – LUZ</title>
+  <!-- Generated from ../../docs/components/form/#markup by scripts/docs-site/ai.js. Do not edit. MIT licence, github.com/nandovejer/luz.
+       Loads LUZ 0.0.0 from ../dist/, copied from the packages: the tokens file with no web font, so text uses the system serif.
+       Links in the markup are placeholders. For npm or a CDN, with integrity hashes, see ../../docs/get-started/snippet/ -->
+  <link rel="stylesheet" href="../dist/tokens/tokens.min.css">
+  <link rel="stylesheet" href="../dist/core/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Form fields</h1>
+    <p>Markup copied from <a href="../../docs/components/form/#markup">Form fields in the LUZ documentation</a>.</p>
+    <section class="o-stack" aria-labelledby="ex-1">
+      <h2 id="ex-1">Text field with a hint markup</h2>
+<div class="luz-field">
+  <label class="luz-field__label" for="project-name">Project name</label>
+  <input class="luz-input" id="project-name" type="text" aria-describedby="project-name-hint">
+  <div class="luz-field__helper" id="project-name-hint">Shown on the dashboard.</div>
+</div>
+    </section>
+    <section class="o-stack" aria-labelledby="ex-2">
+      <h2 id="ex-2">Field with an error markup</h2>
+<div class="luz-field">
+  <label class="luz-field__label" for="slug">Slug</label>
+  <input class="luz-input luz-input--error" id="slug" type="text" aria-invalid="true" aria-describedby="slug-error">
+  <div class="luz-field__error" id="slug-error"><span class="u-sr-only">Error: </span>Use letters, numbers and dashes only.</div>
+</div>
+    </section>
+    <section class="o-stack" aria-labelledby="ex-3">
+      <h2 id="ex-3">Radio group markup</h2>
+<fieldset class="luz-fieldset">
+  <legend>Plan</legend>
+  <div class="luz-check-group">
+    <div class="luz-check-item"><input type="radio" name="plan" id="plan-free" checked><label for="plan-free">Free</label></div>
+    <div class="luz-check-item"><input type="radio" name="plan" id="plan-team"><label for="plan-team">Team</label></div>
+  </div>
+</fieldset>
+    </section>
+    <section class="o-stack" aria-labelledby="ex-4">
+      <h2 id="ex-4">Switch markup</h2>
+<label class="luz-toggle">
+  <input class="luz-toggle__input" type="checkbox" role="switch">
+  <span class="luz-toggle__track" aria-hidden="true"><span class="luz-toggle__thumb"></span></span>
+  <span class="luz-toggle__label">Weekly digest</span>
+</label>
+    </section>
+  </main>
+  <script type="module" src="../dist/core/luz.min.js"></script>
+</body>
+</html>

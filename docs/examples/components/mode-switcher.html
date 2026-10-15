@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Color mode switcher: markup examples – LUZ</title>
+  <!-- Generated from ../../docs/components/mode-switcher/#markup by scripts/docs-site/ai.js. Do not edit. MIT licence, github.com/nandovejer/luz.
+       Loads LUZ 0.0.0 from ../dist/, copied from the packages: the tokens file with no web font, so text uses the system serif.
+       Links in the markup are placeholders. For npm or a CDN, with integrity hashes, see ../../docs/get-started/snippet/ -->
+  <link rel="stylesheet" href="../dist/tokens/tokens.min.css">
+  <link rel="stylesheet" href="../dist/core/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Color mode switcher</h1>
+    <p>Markup copied from <a href="../../docs/components/mode-switcher/#markup">Color mode switcher in the LUZ documentation</a>.</p>
+    <section class="o-stack" aria-labelledby="ex-1">
+      <h2 id="ex-1">Radio group markup</h2>
+<fieldset class="luz-mode-switcher">
+  <legend class="luz-mode-switcher__label">Color mode</legend>
+  <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light" checked>Light</label>
+  <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark">Dark</label>
+  <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast">High contrast</label>
+</fieldset>
+    </section>
+    <section class="o-stack" aria-labelledby="ex-2">
+      <h2 id="ex-2">Cycle variant markup</h2>
+<fieldset class="luz-mode-switcher luz-mode-switcher--cycle">
+  <legend class="luz-mode-switcher__label">Color mode</legend>
+  <button class="luz-mode-cycle" type="button" aria-label="Change color mode">
+    <svg class="luz-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true">…</svg>
+    <!-- the same for data-mode-icon="dark" and "high-contrast" -->
+  </button>
+  <span class="luz-mode-cycle__status" role="status"></span>
+  <label class="luz-mode-btn" data-theme="light">
+    <input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light" checked>
+    <svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>
+    Light
+  </label>
+  <!-- the same for dark and high-contrast -->
+</fieldset>
+    </section>
+  </main>
+  <script type="module" src="../dist/core/luz.min.js"></script>
+</body>
+</html>

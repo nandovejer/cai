@@ -1,0 +1,284 @@
+{
+  "schemaVersion": "2.1.0",
+  "readme": "README.md",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "components/banner.css",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "LuzBanner",
+          "customElement": true,
+          "tagName": "luz-banner",
+          "description": "CSS-only: no script defines this tag. One announcement above the header, with an optional link.",
+          "attributes": [
+            {
+              "name": "tone",
+              "type": {
+                "text": "\"warning\""
+              },
+              "description": "A yellow band and a darker rule; the words say it too."
+            }
+          ],
+          "demos": [
+            {
+              "url": "/docs/site/banner/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "components/lang-switch.css",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "LuzLangSwitch",
+          "customElement": true,
+          "tagName": "luz-lang-switch",
+          "description": "CSS-only: no script defines this tag. A button that opens a popover with one link per language; the links are the switcher.",
+          "demos": [
+            {
+              "url": "/docs/site/lang-switch/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "components/submenu.css",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "LuzSubmenu",
+          "customElement": true,
+          "tagName": "luz-submenu",
+          "description": "CSS-only: no script defines this tag. An item of a header's links that opens a native details with more links.",
+          "demos": [
+            {
+              "url": "/docs/site/submenu/"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "consent.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "LuzConsent",
+          "customElement": true,
+          "tagName": "luz-consent",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "description": "A cookie banner that asks once, stores the answer on the device and tells the page with an event.",
+          "attributes": [
+            {
+              "name": "data-luz-consent",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "On the section inside the element: the banner itself; hidden until a choice is due."
+            },
+            {
+              "name": "data-luz-consent-ask",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "On the block with the question and the buttons; it gives way to the confirmation."
+            },
+            {
+              "name": "data-luz-consent-done",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "On the confirmation block, hidden until a choice is saved; it takes focus."
+            },
+            {
+              "name": "data-luz-consent-close",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "On the confirmation's Close button: it hides the banner."
+            },
+            {
+              "name": "data-luz-consent-open",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "On a button anywhere on the page: it shows the banner again with the stored choice; hidden until the script works."
+            },
+            {
+              "name": "data-luz-consent-key",
+              "type": {
+                "text": "string"
+              },
+              "description": "On the banner: the storage key, which must start with \"luz-\"; \"luz-consent\" by default."
+            },
+            {
+              "name": "data-luz-consent-days",
+              "type": {
+                "text": "number"
+              },
+              "description": "On the banner: days a choice lasts, 180 by default and 395 at most."
+            }
+          ],
+          "events": [
+            {
+              "name": "luz:consent",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "On document when a choice is saved; detail is { asked, granted, expires } (category names and a time in ms)."
+            }
+          ],
+          "demos": [
+            {
+              "url": "/docs/site/consent/"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "luz-consent",
+          "declaration": {
+            "name": "LuzConsent",
+            "module": "consent.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "search.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "LuzSearch",
+          "customElement": true,
+          "tagName": "luz-search",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "description": "A button that opens a dialog which finds a page, a section or an HTML element of the site by name, from a JSON index.",
+          "attributes": [
+            {
+              "name": "data-luz-search-src",
+              "type": {
+                "text": "string"
+              },
+              "description": "On the dialog: the JSON index of the site, on the same origin; links in it are relative to the file."
+            },
+            {
+              "name": "data-luz-search-show",
+              "type": {
+                "text": "string"
+              },
+              "description": "On a block of the dialog: the state that shows it (idle, none); the others are hidden."
+            },
+            {
+              "name": "data-luz-search-list",
+              "type": {
+                "text": "\"pages\" | \"sections\" | \"elements\""
+              },
+              "description": "On a list of the dialog: the group of results it receives."
+            },
+            {
+              "name": "data-luz-search-results",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "On the block that holds the groups; the arrow keys move between its links."
+            },
+            {
+              "name": "data-luz-search-open",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "On a button, in the element or anywhere on the page: it opens the dialog; hidden until the script works."
+            },
+            {
+              "name": "data-luz-search-fallback",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "On the link to the A-Z index: it shows until the script works, then the trigger takes its place."
+            },
+            {
+              "name": "data-luz-label-idle",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the status says while the field is empty."
+            },
+            {
+              "name": "data-luz-label-loading",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the status says while the index loads."
+            },
+            {
+              "name": "data-luz-label-error",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the status says when the index could not be loaded."
+            },
+            {
+              "name": "data-luz-label-none",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the status says when nothing matches; {query} is the text typed."
+            },
+            {
+              "name": "data-luz-label-result",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the status says for one result; {n} is the count."
+            },
+            {
+              "name": "data-luz-label-results",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the status says for several results; {n} is the count."
+            },
+            {
+              "name": "data-luz-label-capped",
+              "type": {
+                "text": "string"
+              },
+              "description": "What the status says when more results match than are shown; {n} is the count and {shown} the number listed."
+            }
+          ],
+          "demos": [
+            {
+              "url": "/docs/site/search/"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "luz-search",
+          "declaration": {
+            "name": "LuzSearch",
+            "module": "search.js"
+          }
+        }
+      ]
+    }
+  ]
+}

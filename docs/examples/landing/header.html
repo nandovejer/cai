@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Header: markup examples – LUZ</title>
+  <!-- Generated from ../../docs/landing/header/#markup by scripts/docs-site/ai.js. Do not edit. MIT licence, github.com/nandovejer/luz.
+       Loads LUZ 0.0.0 from ../dist/, copied from the packages: the tokens file with no web font, so text uses the system serif.
+       Links in the markup are placeholders. For npm or a CDN, with integrity hashes, see ../../docs/get-started/snippet/ -->
+  <link rel="stylesheet" href="../dist/tokens/tokens.min.css">
+  <link rel="stylesheet" href="../dist/core/luz.min.css">
+  <link rel="stylesheet" href="../dist/landing/landing.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Header</h1>
+    <p>Markup copied from <a href="../../docs/landing/header/#markup">Header in the LUZ documentation</a>.</p>
+    <section class="o-stack" aria-labelledby="ex-1">
+      <h2 id="ex-1">Header markup</h2>
+<header class="luz-landing-header o-sticky">
+  <div class="o-container o-container--inline o-row">
+    <button class="luz-nav-toggle" type="button" popovertarget="site-nav" aria-label="Menu">
+      <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+    </button>
+    <a class="luz-landing-header__brand" href="/">Acme Summit</a>
+    <nav class="luz-navbar" id="site-nav" aria-label="Main" popover>
+      <ul class="luz-navbar__list">
+        <li><a class="luz-navbar__link" href="/programme/" aria-current="page">Programme</a></li>
+        <li><a class="luz-navbar__link" href="/speakers/">Speakers</a></li>
+        <li><a class="luz-navbar__link" href="/tickets/">Tickets</a></li>
+      </ul>
+    </nav>
+    <div class="o-row luz-landing-header__actions">
+      <a class="luz-btn luz-btn--ghost" href="/account/">Log in</a>
+    </div>
+  </div>
+</header>
+    </section>
+  </main>
+  <script type="module" src="../dist/core/luz.min.js"></script>
+</body>
+</html>

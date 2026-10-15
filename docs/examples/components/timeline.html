@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Timeline: markup examples – LUZ</title>
+  <!-- Generated from ../../docs/components/timeline/#markup by scripts/docs-site/ai.js. Do not edit. MIT licence, github.com/nandovejer/luz.
+       Loads LUZ 0.0.0 from ../dist/, copied from the packages: the tokens file with no web font, so text uses the system serif.
+       Links in the markup are placeholders. For npm or a CDN, with integrity hashes, see ../../docs/get-started/snippet/ -->
+  <link rel="stylesheet" href="../dist/tokens/tokens.min.css">
+  <link rel="stylesheet" href="../dist/core/luz.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <h1>Timeline</h1>
+    <p>Markup copied from <a href="../../docs/components/timeline/#markup">Timeline in the LUZ documentation</a>.</p>
+    <section class="o-stack" aria-labelledby="ex-1">
+      <h2 id="ex-1">Timeline markup</h2>
+<luz-timeline role="group" aria-label="Releases of the app">
+  <ol class="luz-timeline">
+    <li class="luz-timeline__item">
+      <time class="luz-timeline__date" datetime="2025-03">March 2025</time>
+      <p class="luz-timeline__title">First beta</p>
+      <p class="luz-timeline__text">Ten teams try the app.</p>
+    </li>
+    <li class="luz-timeline__item">
+      <time class="luz-timeline__date" datetime="2025-06">June 2025</time>
+      <p class="luz-timeline__title">Public launch</p>
+      <p class="luz-timeline__text">Sign-up opens to everyone.</p>
+    </li>
+  </ol>
+</luz-timeline>
+    </section>
+    <section class="o-stack" aria-labelledby="ex-2">
+      <h2 id="ex-2">Timeline with autoplay markup</h2>
+<luz-timeline role="group" aria-label="Milestones" autoplay interval="4000">
+  <ol class="luz-timeline">
+    <li class="luz-timeline__item">
+      <time class="luz-timeline__date" datetime="2023">2023</time>
+      <p class="luz-timeline__title">The idea</p>
+      <p class="luz-timeline__text">Two people sketch the first screens.</p>
+    </li>
+    <li class="luz-timeline__item">
+      <time class="luz-timeline__date" datetime="2024">2024</time>
+      <p class="luz-timeline__title">The team</p>
+      <p class="luz-timeline__text">Five people work on it full time.</p>
+    </li>
+    <li class="luz-timeline__item">
+      <time class="luz-timeline__date" datetime="2025">2025</time>
+      <p class="luz-timeline__title">The first customers</p>
+      <p class="luz-timeline__text">Fifty schools use it every week.</p>
+    </li>
+  </ol>
+</luz-timeline>
+    </section>
+    <section class="o-stack" aria-labelledby="ex-3">
+      <h2 id="ex-3">Vertical timeline markup</h2>
+<luz-timeline role="group" layout="vertical" aria-label="Versions of the library">
+  <ol class="luz-timeline">
+    <li class="luz-timeline__item">
+      <time class="luz-timeline__date" datetime="2024-02">February 2024</time>
+      <h3 class="luz-timeline__title">Version 0.1</h3>
+      <p class="luz-timeline__text">Buttons, forms and tables.</p>
+    </li>
+    <li class="luz-timeline__item">
+      <time class="luz-timeline__date" datetime="2024-09">September 2024</time>
+      <h3 class="luz-timeline__title">Version 0.2</h3>
+      <p class="luz-timeline__text">Dark mode and a print stylesheet.</p>
+    </li>
+    <li class="luz-timeline__item">
+      <time class="luz-timeline__date" datetime="2025-05">May 2025</time>
+      <h3 class="luz-timeline__title">Version 0.3</h3>
+      <p class="luz-timeline__text">Right-to-left layouts.</p>
+    </li>
+  </ol>
+</luz-timeline>
+    </section>
+  </main>
+  <script type="module" src="../dist/core/luz.min.js"></script>
+</body>
+</html>

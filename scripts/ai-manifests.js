@@ -33,6 +33,12 @@
  * `kind` follows the name (`pattern` is the `luz-<package>-*` classes of site
  * and the kinds of site); `block`, `modifier` and `part` are its BEM split.
  *
+ * A class no stylesheet lists but an unminified script of dist/ names (a
+ * selector it queries, a class it adds; RL-19) is listed too, `defined: false`,
+ * in the package's own component layer, with `files` naming the script (the
+ * package's bundle, `exports["."]`, only when no other script names it). The
+ * scan is plain text, never run: see `scriptClasses`.
+ *
  * custom-elements.json (Custom Elements Manifest, schema 2.1.0; f5 2.3): one
  * module per tag, from the source tags of the header comment of the file that
  * defines it (a script) or styles it (a CSS-only tag, components/<tag>.css):
@@ -121,6 +127,175 @@ function filesOf(set, bundle) {
   return (own.length ? own : [...set]).sort();
 }
 
+const SCRIPT_CLASS = new RegExp(`\\.((?:luz|o|u|is)-[a-z0-9]+(?:(?:__|--|-)[a-z0-9]+)*)(?![\\w$-])`, "g");
+const SCRIPT_WORD = /^(?:luz|o|u|is)-[a-z0-9]+(?:(?:__|--|-)[a-z0-9]+)*$/;
+const REGEX_AFTER_CHAR = /[(,=:[!&|?{};+\-*%<>~^]/;
+const REGEX_AFTER_WORD = /\b(?:return|typeof|case|in|of|delete|void|throw|new|else|do)$/;
+
+/**
+ * The string and template literals of a script, read as text: comments are
+ * skipped, a regular expression literal is not mistaken for a string, and a
+ * template's `${…}` is code of its own (its static text keeps a `${}` where it
+ * was). Never throws: an unterminated literal ends at the end of its line (a
+ * template, at the end of the file).
+ * @returns {{ code: string, literals: Map<number, { end: number, value: string }> }}
+ *          `code` is the text with every comment blanked, same offsets.
+ */
+function readScript(text) {
+  const n = text.length;
+  const literals = new Map();
+  const comments = [];
+
+  const string = (start, quote) => {
+    let i = start + 1;
+    while (i < n && text[i] !== quote && text[i] !== "\n") i += text[i] === "\\" ? 2 : 1;
+    const end = Math.min(i, n);
+    literals.set(start, { end: text[end] === quote ? end + 1 : end, value: text.slice(start + 1, end) });
+    return text[end] === quote ? end + 1 : end;
+  };
+  const template = (start) => {
+    let i = start + 1;
+    let value = "";
+    while (i < n && text[i] !== "`") {
+      if (text[i] === "\\") {
+        value += text.slice(i, i + 2);
+        i += 2;
+      } else if (text[i] === "$" && text[i + 1] === "{") {
+        i = code(i + 2, true);
+        value += "${}";
+      } else value += text[i++];
+    }
+    const end = Math.min(i + 1, n);
+    literals.set(start, { end, value });
+    return end;
+  };
+  const regex = (start) => {
+    let i = start + 1;
+    let inClass = false;
+    while (i < n && text[i] !== "\n") {
+      const c = text[i];
+      if (c === "\\") i += 2;
+      else if (c === "[" || c === "]") {
+        inClass = c === "[";
+        i++;
+      } else if (c === "/" && !inClass) {
+        i++;
+        while (i < n && /[a-z]/i.test(text[i])) i++;
+        return i;
+      } else i++;
+    }
+    return start + 1; // not a regular expression: a division
+  };
+  /** Code from `i`; in a `${…}`, up to and after its closing brace. */
+  function code(start, inInterpolation) {
+    let i = start;
+    let depth = 0;
+    let prev = "";
+    while (i < n) {
+      const c = text[i];
+      const next = text[i + 1];
+      if (c === "/" && next === "/") {
+        const end = text.indexOf("\n", i);
+        comments.push([i, end < 0 ? n : end]);
+        i = end < 0 ? n : end;
+      } else if (c === "/" && next === "*") {
+        const end = text.indexOf("*/", i + 2);
+        comments.push([i, end < 0 ? n : end + 2]);
+        i = end < 0 ? n : end + 2;
+      } else if (c === '"' || c === "'") {
+        i = string(i, c);
+        prev = c;
+      } else if (c === "`") {
+        i = template(i);
+        prev = c;
+      } else if (c === "/") {
+        const afterWord = /[A-Za-z]/.test(prev) && REGEX_AFTER_WORD.test(text.slice(Math.max(0, i - 10), i).trimEnd());
+        i = prev === "" || REGEX_AFTER_CHAR.test(prev) || afterWord ? regex(i) : i + 1;
+        prev = "/";
+      } else {
+        if (c === "{") depth++;
+        else if (c === "}") {
+          if (inInterpolation && depth === 0) return i + 1;
+          depth--;
+        }
+        if (!/\s/.test(c)) prev = c;
+        i++;
+      }
+    }
+    return n;
+  }
+  code(0, false);
+
+  let masked = "";
+  let at = 0;
+  for (const [from, to] of comments.sort((a, b) => a[0] - b[0])) {
+    if (from < at) continue;
+    masked += text.slice(at, from) + text.slice(from, to).replace(/[^\n]/g, " ");
+    at = to;
+  }
+  return { code: masked + text.slice(at), literals };
+}
+
+/**
+ * The LUZ classes a script names, by a plain scan (RL-19). A class is named
+ * by: a `.name` inside a string or template literal (no `${` next to it); a
+ * literal argument of `classList.add|remove|toggle|contains|replace`; the
+ * words of a literal assigned to `className`, passed to
+ * `setAttribute("class", …)` or `getElementsByClassName(…)`. A name that ends
+ * in `-` or `_`, or touches `${}`, is computed at run time and skipped; a
+ * tag, a `customElements` name, a storage key and a `data-luz-*` have no dot
+ * and are not read by any of the three.
+ */
+function scriptClasses(text) {
+  const { code, literals } = readScript(text);
+  const names = new Set();
+  const words = (value) => {
+    for (const word of value.split(/\s+/)) if (SCRIPT_WORD.test(word)) names.add(word);
+  };
+  for (const { value } of literals.values()) {
+    for (const m of value.matchAll(SCRIPT_CLASS)) names.add(m[1]);
+  }
+  const literalAt = (from) => {
+    let i = from;
+    while (/\s/.test(code[i] ?? "")) i++;
+    return literals.get(i);
+  };
+  for (const m of code.matchAll(/\bclassName\s*\+?=(?!=)\s*/g)) {
+    const literal = literalAt(m.index + m[0].length);
+    if (literal) words(literal.value);
+  }
+  for (const m of code.matchAll(/\bgetElementsByClassName\(\s*/g)) {
+    const literal = literalAt(m.index + m[0].length);
+    if (literal) words(literal.value);
+  }
+  for (const m of code.matchAll(/\bsetAttribute\(\s*(?=["'])/g)) {
+    const key = literalAt(m.index + m[0].length);
+    if (!key || key.value !== "class") continue;
+    const comma = /^\s*,\s*/.exec(code.slice(key.end));
+    const literal = comma ? literals.get(key.end + comma[0].length) : undefined;
+    if (literal) words(literal.value);
+  }
+  for (const m of code.matchAll(/\bclassList\.(?:add|remove|toggle|contains|replace)\(/g)) {
+    let i = m.index + m[0].length;
+    let depth = 1;
+    while (i < code.length && depth > 0) {
+      const literal = literals.get(i);
+      if (literal) {
+        words(literal.value);
+        i = literal.end;
+        continue;
+      }
+      if (code[i] === "(") depth++;
+      else if (code[i] === ")") depth--;
+      i++;
+    }
+  }
+  return names;
+}
+
+/** The layer a package's own scripts' classes belong to: the one its components are in. */
+const ownLayerOf = (name) => (name === "core" ? "luz.components" : `luz.${name}`);
+
 /**
  * The class manifest of a package, read from packages/<name>/dist.
  * @param {string} name   the package folder (`core`, `site`, …)
@@ -172,11 +347,26 @@ export function buildClassManifest(name, { root = repoRoot } = {}) {
     }
   }
 
+  // What the unminified scripts name that no stylesheet lists
+  const exportedScript = typeof pkg.exports?.["."] === "string" ? pkg.exports["."] : pkg.exports?.["."]?.default;
+  const script = typeof exportedScript === "string" && exportedScript.startsWith("./dist/") && exportedScript.endsWith(".js") ? exportedScript.slice("./dist/".length) : null;
+  const named = new Map();
+  for (const file of unminified(dist, ".js")) {
+    for (const className of scriptClasses(readFileSync(join(dist, file), "utf-8"))) {
+      if (!CLASS_NAMESPACE.test(className) || classes.has(className)) continue;
+      if (!named.has(className)) named.set(className, new Set());
+      named.get(className).add(file);
+    }
+  }
+  for (const [className, set] of named) {
+    classes.set(className, { layer: ownLayerOf(name), defined: false, definedIn: new Set(), seenIn: set, fromScript: true });
+  }
+
   const byName = (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
   const classList = [...classes]
     .map(([className, entry]) => {
       const kind = kindOf(className);
-      const out = { name: className, kind, layer: entry.layer, files: filesOf(entry.defined ? entry.definedIn : entry.seenIn, bundle), defined: entry.defined };
+      const out = { name: className, kind, layer: entry.layer, files: filesOf(entry.defined ? entry.definedIn : entry.seenIn, entry.fromScript ? script : bundle), defined: entry.defined };
       if (kind !== "utility" && kind !== "state") {
         const [, block, part, modifier] = BEM.exec(className);
         out.block = block;

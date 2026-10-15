@@ -200,13 +200,13 @@ toc: h2,h3
   &lt;span class=&quot;u-sr-only&quot;&gt;Menu&lt;/span&gt;
 &lt;/button&gt;</code></pre>
             </div>
-            <p>Two icons point to the end of the line: <code>chevron-end</code> and <code>arrow-end</code>, marked with <code>data-luz-flip</code>. In right-to-left text, mirror them with one rule of your own; LUZ ships none.</p>
+            <p>Two icons point to the end of the line: <code>chevron-end</code> and <code>arrow-end</code>, marked with <code>data-luz-flip</code>. In right-to-left text, LUZ mirrors anything with that attribute using the rule below, in core's utilities layer, so you write nothing. Add the attribute to an icon of your own that points to the end of the line.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">CSS</span>
-                <button class="luz-copy-btn" type="button" data-copy-from="code-icon-rtl" aria-label="Copy the right-to-left rule markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-icon-rtl" aria-label="Copy the right-to-left rule">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Right-to-left rule markup"><code id="code-icon-rtl">:dir(rtl) svg[data-luz-flip] {
+              <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Right-to-left rule, shipped in luz.utilities"><code id="code-icon-rtl">:where([data-luz-flip]):dir(rtl) {
   transform: scaleX(-1);
 }</code></pre>
             </div>

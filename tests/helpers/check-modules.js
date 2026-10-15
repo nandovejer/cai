@@ -68,6 +68,15 @@ export const BLOCKING_RULES = [
   "theme/unreadable",
 ];
 
+/**
+ * Keys of a rule that block (a BLOCKING_RULES id) with a variant that only
+ * warns: a template file is not HTML a browser would read, and a page that
+ * loads a LUZ release newer than the snapshot may use a class the checker has
+ * not met. The rule id in a finding stays the base id; the severity comes
+ * from the key (messages.js).
+ */
+export const WARNING_VARIANTS = ["parse/error:template", "class/unknown:newer"];
+
 export const WARNING_RULES = [
   "load/order",
   "load/no-stylesheet",

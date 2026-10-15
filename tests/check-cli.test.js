@@ -395,8 +395,11 @@ describe("luz-check, which files it reads", () => {
     expect(luzJson(["."], dir).data.files).toEqual(["ok.html"]);
     const { code, data } = luzJson([".", "--ext", ".astro,.vue"], dir);
     expect(data.files).toEqual(["ok.html", "page.astro", "view.vue"]);
-    expect(code).toBe(1);
-    expect(data.findings.map((f) => [f.file, f.rule])).toEqual([["page.astro", "parse/error"]]);
+    // step 9 (notes from step 8, decision 6): a template can hold a "<" that is not a tag, so
+    // parse/error is a warning there, and it still fails --strict
+    expect(code).toBe(0);
+    expect(data.findings.map((f) => [f.file, f.rule, f.severity])).toEqual([["page.astro", "parse/error", "warn"]]);
+    expect(luz([".", "--ext", ".astro,.vue", "--strict"], dir).code).toBe(1);
   });
 
   it("takes a glob as the user typed it, so a quoted glob works without the shell", () => {

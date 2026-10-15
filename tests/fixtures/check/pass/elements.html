@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elements, attributes and hooks</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/site/dist/site.min.css">
+</head>
+<body>
+  <!-- Every name here is LUZ's or a framework's: the checker has nothing to say about it. -->
+  <luz-banner tone="warning"><p>Maintenance on Sunday.</p></luz-banner>
+  <main class="o-container o-stack">
+    <h1>Events</h1>
+    <luz-timeline layout="vertical" interval="3000" aria-label="Events" data-luz-label-next="Next" data-testid="events" v-if="visible" :interval="speed" @click="go" x-data hx-get="/events/" onclick="go()" part="rail">
+      <ol>
+        <li>2026</li>
+        <li>2027</li>
+      </ol>
+    </luz-timeline>
+    <LuzCarousel>A component of a framework, not a LUZ element</LuzCarousel>
+    <div data-luz-classless>
+      <table class="luz-table">
+        <caption>Plans</caption>
+        <thead><tr><th scope="col" data-luz-sort>Plan</th><th scope="col">Price</th></tr></thead>
+        <tbody><tr><th scope="row">Free</th><td>0</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+  <script type="module" src="node_modules/@luz-ds/core/dist/luz.min.js"></script>
+  <script type="module" src="node_modules/@luz-ds/site/dist/site.min.js"></script>
+</body>
+</html>

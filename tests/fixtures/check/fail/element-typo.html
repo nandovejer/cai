@@ -1,0 +1,26 @@
+<!-- expect: element/unknown 14:5 suggestion=<luz-search> -->
+<!-- expect: element/unknown-attribute 17:19 suggestion=autoplay -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>A tag and an attribute one letter off</title>
+  <link rel="stylesheet" href="node_modules/@luz-ds/tokens/dist/luz-tokens.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/core/dist/luz.min.css">
+  <link rel="stylesheet" href="node_modules/@luz-ds/site/dist/site.min.css">
+</head>
+<body>
+  <main class="o-container o-stack">
+    <luz-serach>
+      <a href="/search/">Search</a>
+    </luz-serach>
+    <luz-timeline autoplya>
+      <ol>
+        <li>2026</li>
+        <li>2027</li>
+      </ol>
+    </luz-timeline>
+  </main>
+  <script type="module" src="node_modules/@luz-ds/core/dist/luz.min.js"></script>
+</body>
+</html>

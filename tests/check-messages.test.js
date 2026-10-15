@@ -30,7 +30,7 @@
  * none of "did you mean", "please", "should", "invalid", "Error:".
  */
 import { describe, expect, it } from "vitest";
-import { BLOCKING_RULES as BLOCKING, WARNING_RULES as WARNING, checkModule } from "./helpers/check-modules.js";
+import { BLOCKING_RULES as BLOCKING, WARNING_RULES as WARNING, WARNING_VARIANTS, checkModule } from "./helpers/check-modules.js";
 
 const messages = await checkModule("messages");
 
@@ -54,7 +54,7 @@ describe("messages.js: the table", () => {
     const bases = new Set(keys.map(baseOf));
     for (const rule of [...BLOCKING, ...WARNING]) expect(bases.has(rule), `a message for ${rule}`).toBe(true);
     for (const key of keys) {
-      const expected = BLOCKING.includes(baseOf(key)) ? "block" : "warn";
+      const expected = BLOCKING.includes(baseOf(key)) && !WARNING_VARIANTS.includes(key) ? "block" : "warn";
       expect(messages.MESSAGES[key].severity, key).toBe(expected);
     }
   });

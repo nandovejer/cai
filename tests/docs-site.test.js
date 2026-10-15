@@ -161,6 +161,13 @@ describe("front matter", () => {
     expect(() => parseFrontMatter(PAGE("A").replace("components", "widgets"), "x.html", areas)).toThrow(/unknown area "widgets"/);
     expect(() => parseFrontMatter(PAGE("A", "", "layout: ../evil\n"), "x.html")).toThrow(/layout/);
   });
+
+  it("allows generate: gallery, a-z and snippets, and nothing else", () => {
+    for (const value of ["gallery", "a-z", "snippets"]) {
+      expect(parseFrontMatter(PAGE("A", "", `generate: ${value}\n`), "x.html", areas).meta.generate, value).toBe(value);
+    }
+    expect(() => parseFrontMatter(PAGE("A", "", "generate: tokens\n"), "x.html", areas)).toThrow(/generate/);
+  });
 });
 
 /* ---- Strict HTML reader ------------------------------------------------- */
@@ -702,8 +709,50 @@ describe("the LUZ docs site", () => {
       const area = site.areas.find((a) => a.id === site.byRoute.get(route).meta.area);
       expect(order.indexOf(route), route).toBeGreaterThanOrEqual(order.indexOf(`/docs/${area.slug}/`));
     }
-    expect(order.slice(0, 7)).toEqual(["/docs/get-started/", "/docs/get-started/structure/", "/docs/get-started/javascript/", "/docs/get-started/layers/", "/docs/get-started/print/", "/docs/get-started/classless/", "/docs/tokens/"]);
+    // F4 (D7): Install, Choose your snippet, organised, how to read, Make it yours, bundler,
+    // JavaScript, layers, print, Classless last (so `/docs/tokens/` keeps its Previous link)
+    expect(order.slice(0, 11)).toEqual([
+      "/docs/get-started/",
+      "/docs/get-started/snippet/",
+      "/docs/get-started/structure/",
+      "/docs/get-started/how-to-read/",
+      "/docs/get-started/make-it-yours/",
+      "/docs/get-started/bundler/",
+      "/docs/get-started/javascript/",
+      "/docs/get-started/layers/",
+      "/docs/get-started/print/",
+      "/docs/get-started/classless/",
+      "/docs/tokens/",
+    ]);
     expect(order.at(-1)).toBe("/docs/accessibility/");
+  });
+
+  it("numbers the Get started pages 1 to 10 in the reading order, with these titles", () => {
+    const pages = readingOrder(site).filter((p) => p.meta.area === "get-started" && p.route !== "/docs/get-started/");
+    const all = [site.byRoute.get("/docs/get-started/"), ...pages];
+    expect(all.map((p) => [p.meta.order, p.meta.title])).toEqual([
+      ["1", "Install LUZ"],
+      ["2", "Choose your snippet"],
+      ["3", "How LUZ is organised"],
+      ["4", "How to read LUZ"],
+      ["5", "Make it yours"],
+      ["6", "With a bundler or framework"],
+      ["7", "JavaScript modules"],
+      ["8", "Cascade layers"],
+      ["9", "Print styles"],
+      ["10", "Classless styles"],
+    ]);
+  });
+
+  it("generates the snippet selector on its page: generate: snippets, the page after Install", () => {
+    const page = site.byRoute.get("/docs/get-started/snippet/");
+    expect(page?.meta.generate).toBe("snippets");
+    expect(page?.meta.area).toBe("get-started");
+    // the generator wrote the eight snippets under the hand-written intro
+    const html = rendered.get("/docs/get-started/snippet/") ?? "";
+    for (const id of ["atoms-npm", "atoms-cdn", "landing-npm", "landing-cdn", "blog-npm", "blog-cdn", "app-npm", "app-cdn"]) {
+      expect(html, id).toContain(`id="${id}"`);
+    }
   });
 
   it("ends every docs page but the hub and the not-found page with Previous or Next, a consistent chain (A.next = B ⇔ B.prev = A)", () => {

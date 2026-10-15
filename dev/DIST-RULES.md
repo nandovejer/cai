@@ -9,7 +9,7 @@ dist is missing.
 ## Full Build
 
 ```bash
-pnpm build  # Runs tokens:build + core:build + site:build + landing:build + cms:build
+pnpm build  # Runs tokens:build + core:build + site:build + landing:build + cms:build + app:build
 ```
 
 ## @luz-ds/tokens
@@ -68,7 +68,7 @@ builder, `scripts/build-package.js`, which also emits every
 `src/components/*.css` whose name does not start with `_` as
 `dist/components/<name>.css` (+ `.min`), in the package's layer with the same
 rebased `url()`s as the bundle, and `src/components/_print.css` as
-`dist/print.css` (+ `.min`). The same holds for landing and cms.
+`dist/print.css` (+ `.min`). The same holds for landing, cms and app.
 
 ## @luz-ds/landing
 
@@ -98,6 +98,21 @@ and each component as `dist/components/<name>.css` (+ `.min`).
 No JavaScript (the table of contents uses core's scroll spy). CMS has its own
 version (0.x): after adding or removing a published file, run
 `node scripts/check-pack.js --update`.
+
+## @luz-ds/app
+
+After editing `packages/app/src/`:
+
+```bash
+pnpm app:build
+```
+
+This inlines the `@import` graph of `src/index.css` → `dist/app.css`
+(+ `.min`), in the `luz.app` layer, through the same shared builder,
+and each component as `dist/components/<name>.css` (+ `.min`).
+No JavaScript (the sidebar's drawer is a native popover; core's script only
+marks the current link). App has its own version (0.x): after adding or
+removing a published file, run `node scripts/check-pack.js --update`.
 
 ---
 

@@ -37,7 +37,7 @@ const git = (...argv) => (spawnSync("git", argv, { cwd: root, encoding: "utf-8" 
 
 const UI = ["--project=chromium", "--project=chromium-nojs", "--reporter=line", "--workers=3"];
 const steps = [
-  ...(args.has("--fast") ? [] : [{ name: "Build (tokens, core, site, landing, cms)", cmd: [pnpm, "build"] }]),
+  ...(args.has("--fast") ? [] : [{ name: "Build (tokens, core, site, landing, cms, app)", cmd: [pnpm, "build"] }]),
   { name: "Lint CSS (stylelint: RL-5, 8, 10, 11, SR-3, SR-4)", cmd: [pnpm, "lint:css"] },
   { name: "Lint JS (ESLint: RL-3, HTML sinks)", cmd: [pnpm, "lint:js"] },
   { name: "Size budgets (RL-17)", cmd: [pnpm, "check:size"] },
@@ -72,7 +72,7 @@ const lastTag = git("describe", "--tags", "--abbrev=0");
 const base = lastTag || "main";
 const changed = git("diff", "--name-only", `${base}...HEAD`).split("\n").filter(Boolean);
 const dirty = git("status", "--short").split("\n").filter(Boolean);
-const uiFiles = changed.filter((f) => /^packages\/(core|site|landing|cms|tokens)\/src\//.test(f) || /^packages\/core\/src\/(components|elements)\//.test(f));
+const uiFiles = changed.filter((f) => /^packages\/(core|site|landing|cms|app|tokens)\/src\//.test(f) || /^packages\/core\/src\/(components|elements)\//.test(f));
 const components = [...new Set(uiFiles.filter((f) => /components\/[\w-]+\.(css|js)$/.test(f)).map((f) => f.match(/components\/([\w-]+)\./)[1]).filter((n) => !n.startsWith("_") && n !== "index"))].sort();
 const changesets = existsSync(join(root, ".changeset")) ? readdirSync(join(root, ".changeset")).filter((f) => f.endsWith(".md") && f !== "README.md") : [];
 // Open Safari and Firefox reviews live in Claude's memory for this repo (AGENTS.md section 6).

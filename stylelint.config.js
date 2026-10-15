@@ -121,6 +121,7 @@ export default {
         "packages/site/src/**/*.css",
         "packages/landing/src/**/*.css",
         "packages/cms/src/**/*.css",
+        "packages/app/src/**/*.css",
       ],
       rules: {
         "color-no-hex": [true, { message: RL10 }],

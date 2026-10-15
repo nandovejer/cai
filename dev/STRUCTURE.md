@@ -15,6 +15,7 @@ luz-design-system/
 │   │   │   ├── site/                  ← index, one page per pattern, templates, class reference
 │   │   │   ├── landing/               ← index, one page per pattern, landing page templates
 │   │   │   ├── cms/                   ← index, one page per pattern, CMS templates (post card, listing, author box)
+│   │   │   ├── app/                   ← index, header, dashboard, app templates (app page, no sidebar, empty dashboard)
 │   │   │   └── html/                  ← overview with the A–Z table, one page per element category
 │   │   ├── 404.html                   ← /404.html (absolute <base>, no script)
 │   │   ├── _layouts/                  ← page.html and not-found.html: head, header, sidebar, <main>, footer
@@ -94,14 +95,23 @@ luz-design-system/
 │   │       ├── landing.css
 │   │       └── landing.min.css
 │   │
-│   └── cms/                       ← @luz-ds/cms (publishable, its own version, 0.x)
+│   ├── cms/                       ← @luz-ds/cms (publishable, its own version, 0.x)
+│   │   ├── src/                       ← EDIT HERE
+│   │   │   ├── components/article-header.css
+│   │   │   ├── components/article.css   ← article layout and table of contents
+│   │   │   └── index.css
+│   │   └── dist/                      ← GENERATED (do not edit)
+│   │       ├── cms.css
+│   │       └── cms.min.css
+│   │
+│   └── app/                       ← @luz-ds/app (publishable, its own version, 0.x)
 │       ├── src/                       ← EDIT HERE
-│       │   ├── components/article-header.css
-│       │   ├── components/article.css   ← article layout and table of contents
+│       │   ├── components/header.css    ← the bar of an application (search, account)
+│       │   ├── components/dashboard.css ← the view's title row and its grid of panels
 │       │   └── index.css
 │       └── dist/                      ← GENERATED (do not edit)
-│           ├── cms.css
-│           └── cms.min.css
+│           ├── app.css
+│           └── app.min.css
 │
 ├── docs/                              ← GENERATED GitHub Pages site (pnpm pages:build); do not edit
 │
@@ -117,10 +127,11 @@ luz-design-system/
     │   └── plugin.js                  ← Vite glue: build inputs, dev routes (301 without slash), relative URLs, HMR
     ├── build-tokens.js                ← fonts + primitives (tokens.json) + semantic (src/semantic.css)
     ├── build-core.js                  ← inlines src/index.css @imports + per-component dist + JS
-    ├── build-package.js               ← shared builder of site, landing and cms: @import inlining, layer, min, JS bundle, assets
+    ├── build-package.js               ← shared builder of site, landing, cms and app: @import inlining, layer, min, JS bundle, assets
     ├── build-site.js                  ← site: calls build-package.js (CSS, the loader and its two chunks)
     ├── build-landing.js               ← landing: calls build-package.js (CSS only)
     ├── build-cms.js                   ← cms: calls build-package.js (CSS only)
+    ├── build-app.js                   ← app: calls build-package.js (CSS only)
     ├── luz-packages.js                ← the published packages, in dependency order
     ├── check-dist.js                  ← predev guard (rebuilds if any dist missing)
     ├── check-pack.js                  ← tarball contract: file snapshot, licences, exports, no workspace: ranges
@@ -138,14 +149,15 @@ luz-design-system/
     ↓
 @luz-ds/landing  (patterns of a landing page; own version, 0.x)
 @luz-ds/cms      (patterns of a blog or a newspaper, any CMS; own version, 0.x; never depends on landing)
+@luz-ds/app      (header and dashboard of a web application; own version, 0.x; never depends on landing or cms)
 ```
 
-Tokens, core and site share one version; landing and cms have their own and peer ranges on the base's major.
+Tokens, core and site share one version; landing, cms and app have their own and peer ranges on the base's major.
 
 ## Key Rules
 
 - **Never edit `dist/`** — it is generated from `src/`
 - **Layer order lives in `src/index.css`** — build scripts inline its `@import` graph; there is no duplicated file list
-- **What gets published** — `packages/tokens/`, `packages/core/`, `packages/site/`, `packages/landing/`, `packages/cms/` (consumers download these)
+- **What gets published** — `packages/tokens/`, `packages/core/`, `packages/site/`, `packages/landing/`, `packages/cms/`, `packages/app/` (consumers download these)
 - **Where the guides live** — `dev/` holds the contributor guides. `.claude/` holds the Claude Code agents, hooks, `settings.json` and skills (all versioned) plus the maintainer's private notes (not in git)
 - **What does not** — `apps/docs/`, `apps/landing/` (internal apps only)

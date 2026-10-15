@@ -12,6 +12,7 @@ const sentinels = [
   "../packages/site/dist/site.css",
   "../packages/landing/dist/landing.css",
   "../packages/cms/dist/cms.css",
+  "../packages/app/dist/app.css",
 ].map((p) => resolve(__dirname, p));
 
 const missing = sentinels.filter((p) => !existsSync(p));

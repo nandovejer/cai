@@ -18,11 +18,12 @@
   grid-row: 1 / -1;
 }
 
-/* Main content area fills second column */
+/* Main content area fills second column. The page scrolls, not this box (the
+   sidebar sticks to the window the same way): an overflow here would make it
+   the scroller of the sticky bars inside it, which would stick to nothing. */
 .o-main {
   grid-column: 2;
   grid-row: 1;
-  overflow-y: auto;
   min-width: 0;
 }
 

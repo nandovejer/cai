@@ -219,6 +219,22 @@ test.describe('objects: .o-sticky', () => {
   });
 });
 
+test.describe('objects: .o-main', () => {
+  test('does not scroll by itself, so a .o-sticky bar inside it sticks to the window', async ({ page }) => {
+    await page.setViewportSize({ width: 1000, height: 700 });
+    await page.goto('/tests/fixtures/objects-shell.html');
+    const overflowY = await page.evaluate(() => getComputedStyle(document.getElementById('main')).overflowY);
+    expect(overflowY, 'the page scrolls, not .o-main').toBe('visible');
+
+    const scrollable = await page.evaluate(() => document.documentElement.scrollHeight > window.innerHeight + 200);
+    expect(scrollable, 'the fixture is taller than the window').toBe(true);
+    expect((await box(page, '#bar')).top).toBeCloseTo(0, 0);
+    await page.evaluate(() => window.scrollTo({ top: 600, behavior: 'instant' }));
+    expect(await page.evaluate(() => window.scrollY), 'the document scrolled').toBeGreaterThan(0);
+    expect((await box(page, '#bar')).top, 'the bar stays at the top of the window').toBeCloseTo(0, 0);
+  });
+});
+
 test.describe('objects: .o-grid--split', () => {
   const columns = async (page, a, b) => ({ first: await box(page, a), second: await box(page, b) });
 

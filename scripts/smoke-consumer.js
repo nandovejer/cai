@@ -10,7 +10,7 @@
  *      (patterns such as ./components/* are expanded);
  *   2. a minimal page that links the installed files loads in Chromium with
  *      no failed request, no console error or warning, the tokens defined,
- *      core, site, landing and cms CSS applied, and the JS exports importable;
+ *      core, site, landing, cms and app CSS applied, and the JS exports importable;
  *   3. the same page with jsDelivr-style URLs (/npm/@luz-ds/<pkg>@<version>/…),
  *      served from the same tarballs by a local server: no network is used;
  *   4. the `luz-tokens` command runs from the installed package.
@@ -161,14 +161,16 @@ const PAGE = (base, label) => `<!doctype html>
   <link rel="stylesheet" href="${base.site}/dist/site.css">
   <link rel="stylesheet" href="${base.landing}/dist/landing.css">
   <link rel="stylesheet" href="${base.cms}/dist/cms.css">
+  <link rel="stylesheet" href="${base.app}/dist/app.css">
 </head>
 <body>
   <h1>Smoke test</h1>
   <button class="luz-btn luz-btn--primary" type="button" id="probe-button">Save changes</button>
   <div id="probe-fill" style="background: var(--luz-brand-fill)"></div>
-  <div class="luz-site-section" id="probe-section"></div>
+  <luz-banner id="probe-section"></luz-banner>
   <footer class="luz-landing-footer" id="probe-landing"></footer>
   <div class="luz-cms-article-header" id="probe-article"></div>
+  <main class="luz-app-dashboard" id="probe-dashboard"></main>
   <script type="module">
     const core = ${JSON.stringify(base.core)};
     const site = ${JSON.stringify(base.site)};
@@ -218,12 +220,34 @@ const ALONE = (base) => `<!doctype html>
 </html>
 `;
 
+const APP_ALONE = (base) => `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUZ smoke test: app without site</title>
+  <link rel="stylesheet" href="${base.tokens}/dist/luz-tokens.css">
+  <link rel="stylesheet" href="${base.core}/dist/luz.css">
+  <link rel="stylesheet" href="${base.app}/dist/app.css">
+</head>
+<body>
+  <div class="o-shell">
+    <div class="o-main">
+      <header class="luz-app-header o-sticky" id="probe-app-header"><div class="o-row"><p class="luz-app-header__product">App</p></div></header>
+      <main class="luz-app-dashboard" id="probe-app-dashboard"><div class="luz-app-dashboard__head"><h1 class="luz-app-dashboard__title">Smoke test</h1></div></main>
+    </div>
+  </div>
+</body>
+</html>
+`;
+
 const local = {
   tokens: "/node_modules/@luz-ds/tokens",
   core: "/node_modules/@luz-ds/core",
   site: "/node_modules/@luz-ds/site",
   landing: "/node_modules/@luz-ds/landing",
   cms: "/node_modules/@luz-ds/cms",
+  app: "/node_modules/@luz-ds/app",
 };
 const cdn = Object.fromEntries(PACKAGES.map((n) => [n, `/npm/@luz-ds/${n}@${versions[n]}`]));
 
@@ -237,6 +261,7 @@ const server = createServer((req, res) => {
   if (path === "/npm.html") return send(200, PAGE(local, "installed files"), TYPES[".html"]);
   if (path === "/cdn.html") return send(200, PAGE(cdn, "CDN paths"), TYPES[".html"]);
   if (path === "/landing-alone.html") return send(200, ALONE(local), TYPES[".html"]);
+  if (path === "/app-alone.html") return send(200, APP_ALONE(local), TYPES[".html"]);
   // jsDelivr layout: /npm/@luz-ds/<name>@<version>/<file>
   const cdnPath = path.match(/^\/npm\/@luz-ds\/([\w-]+)@([^/]+)\/(.+)$/);
   let file;
@@ -296,6 +321,7 @@ if (browser) {
         sectionDisplay: section.display,
         landingBorder: landing.borderTopStyle,
         articleDisplay: article.display,
+        dashboardType: getComputedStyle(document.getElementById("probe-dashboard")).containerType,
         sheets,
         missing: window.__smoke?.missing ?? ["no result"],
       };
@@ -304,9 +330,10 @@ if (browser) {
     check(`${label2} no failed request, console message or request off the machine`, problems.length === 0, problems.join("\n"));
     check(`${label2} tokens loaded (--luz-brand-fill is defined)`, state.token !== "", "the custom property is empty");
     check(`${label2} core CSS applied (.luz-btn--primary uses the token)`, state.buttonBackground === state.tokenBackground && state.buttonBackground !== "rgba(0, 0, 0, 0)", `${state.buttonBackground} vs ${state.tokenBackground}`);
-    check(`${label2} site CSS applied (.luz-site-section is a grid)`, state.sectionDisplay === "grid", state.sectionDisplay);
+    check(`${label2} site CSS applied (<luz-banner> is a block)`, state.sectionDisplay === "block", state.sectionDisplay);
     check(`${label2} landing CSS applied (.luz-landing-footer has its rule)`, state.landingBorder === "solid", state.landingBorder);
     check(`${label2} cms CSS applied (.luz-cms-article-header is a grid)`, state.articleDisplay === "grid", state.articleDisplay);
+    check(`${label2} app CSS applied (.luz-app-dashboard is a size container)`, state.dashboardType === "inline-size", state.dashboardType);
     check(`${label2} ${PACKAGES.length} stylesheets with rules`, state.sheets.length === PACKAGES.length && state.sheets.every((n) => n > 0), JSON.stringify(state.sheets));
     check(`${label2} JS entries import and export what the docs name`, state.missing.length === 0, state.missing.join("\n"));
     await page.close();
@@ -327,6 +354,24 @@ if (browser) {
     }));
     check("landing without site: no failed request, no request for site, no console message", problems.length === 0, problems.join("\n"));
     check("landing without site: the footer has its rule and the hero is core's grid with the landing's measure", state.border === "solid" && state.display === "grid" && state.gridMin === "24rem", JSON.stringify(state));
+    await page.close();
+  }
+
+  // app with tokens and core only: no request for site, the probes apply
+  {
+    const page = await browser.newPage();
+    const problems = [];
+    page.on("response", (r) => r.status() >= 400 && problems.push(`${r.status()} ${new URL(r.url()).pathname}`));
+    page.on("request", (r) => r.url().includes("/@luz-ds/site") && problems.push(`asked for site: ${new URL(r.url()).pathname}`));
+    page.on("console", (m) => ["error", "warning"].includes(m.type()) && problems.push(`console ${m.type()}: ${m.text()}`));
+    await page.goto(origin + "/app-alone.html");
+    const state = await page.evaluate(() => ({
+      divider: getComputedStyle(document.getElementById("probe-app-header")).borderBlockEndStyle,
+      type: getComputedStyle(document.getElementById("probe-app-dashboard")).containerType,
+      gridMin: getComputedStyle(document.getElementById("probe-app-dashboard")).getPropertyValue("--luz-grid-min").trim(),
+    }));
+    check("app without site: no failed request, no request for site, no console message", problems.length === 0, problems.join("\n"));
+    check("app without site: the header has its rule and the dashboard is a size container with an 18rem column", state.divider === "solid" && state.type === "inline-size" && state.gridMin === "18rem", JSON.stringify(state));
     await page.close();
   }
   await browser.close();

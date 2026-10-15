@@ -15,10 +15,11 @@ order: 2
 @luz-ds/site     -> page patterns and the site search
       ↓ required by, each on its own
 @luz-ds/landing  -> patterns for a landing page (own version, 0.x)
-@luz-ds/cms      -> page structure of a blog, a newspaper or any CMS (own version, 0.x)</code></pre>
+@luz-ds/cms      -> page structure of a blog, a newspaper or any CMS (own version, 0.x)
+@luz-ds/app      -> header and dashboard of a web application (own version, 0.x)</code></pre>
       <ul>
-        <li>Landing and cms can use site, core and tokens, never each other; site can use core and tokens; core can use tokens; tokens uses nothing.</li>
-        <li>Tokens, core and site share one version. A package for one kind of site, such as landing or cms, has its own, and names the major of the others it needs.</li>
+        <li>Landing, cms and app can use site, core and tokens, never each other; site can use core and tokens; core can use tokens; tokens uses nothing.</li>
+        <li>Tokens, core and site share one version. A package for one kind of site, such as landing, cms or app, has its own, and names the major of the others it needs.</li>
         <li>The packages say so as required peer dependencies, and the core and site scripts warn in the console when a level is missing.</li>
       </ul>
     </section>
@@ -43,6 +44,7 @@ order: 2
           <tr><td data-label="Piece"><div>Skip link, band, image frame</div></td><td data-label="Classes or attributes"><div><code>.luz-skip-link</code>, <code>.luz-band</code>, <code>.luz-image</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>The image frame keeps a ratio and crops the picture to it; with no picture it is a flat surface</div></td></tr>
           <tr><td data-label="Piece"><div>The header, hero, sections and footer of a landing page</div></td><td data-label="Classes or attributes"><div><code>.luz-landing-header</code>, <code>-hero</code>, <code>-main</code>, <code>-section</code>, <code>-footer</code>, <code>-glow</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="Notes"><div>On core's objects (<code>.o-page</code>, <code>.o-sticky</code>, <code>.o-container</code>, <code>.o-grid--split</code>) and core's navbar; site is optional. A feature grid is <code>ul.o-grid.o-grid--split</code>, core's</div></td></tr>
           <tr><td data-label="Piece"><div>The header, page header, article header, table of contents and footer of a blog or a newspaper</div></td><td data-label="Classes or attributes"><div><code>.luz-cms-header</code> (<code>--masthead</code>), <code>-page-header</code>, <code>-article-header</code>, <code>-article</code>, <code>-toc</code>, <code>-footer</code></div></td><td data-label="Package"><div>cms</div></td><td data-label="Notes"><div>On core's objects and navbar; site is optional. Post cards, listings and the author box are core's card: <a href="/docs/cms/templates/">CMS templates</a></div></td></tr>
+          <tr><td data-label="Piece"><div>The header and the dashboard of a web application</div></td><td data-label="Classes or attributes"><div><code>.luz-app-header</code> (<code>__product</code>, <code>__actions</code>, <code>__account</code>), <code>.luz-app-dashboard</code> (<code>__head</code>, <code>__title</code>, <code>__panel</code>)</div></td><td data-label="Package"><div>app</div></td><td data-label="Notes"><div>On core's shell, sidebar, sticky bar, grid and card; site is optional, for the search. No script. See <a href="/docs/app/">App</a></div></td></tr>
           <tr><td data-label="Piece"><div>The links of a header, and its menu button</div></td><td data-label="Classes or attributes"><div><code>.luz-navbar</code>, <code>.luz-nav-toggle</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>A popover panel at 768 px and below, with no script</div></td></tr>
           <tr><td data-label="Piece"><div>Submenu, banner</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-submenu&gt;</code>, <code>&lt;luz-banner&gt;</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Tags with no script and no class: the submenu is a native <code>&lt;details&gt;</code> in a header's links, the banner a <code>&lt;section&gt;</code></div></td></tr>
           <tr><td data-label="Piece"><div>Cookie consent</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-consent&gt;</code>, <code>.luz-consent</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div><code>site.js</code> loads its script, <code>consent.js</code>, when the page has one; a band fixed at the bottom of the window; without the script it stays hidden</div></td></tr>
@@ -55,7 +57,7 @@ order: 2
       </div>
       <ul>
         <li><strong>Two ways to lay out a page, both core's.</strong> <code>.o-shell</code> with <code>.o-main</code>: a sidebar column beside the main area. <code>.o-page</code>: a header, the content and a footer in one column. Pick one for the grid of the page: the first when it has a sidebar, the second when it has none. A landing or CMS header and footer work with both; these docs use <code>.o-shell</code>.</li>
-        <li>Site needs core, and core needs tokens, so a row at a level also needs every package under it. Landing and CMS need core and tokens; site is optional for them.</li>
+        <li>Site needs core, and core needs tokens, so a row at a level also needs every package under it. Landing, CMS and app need core and tokens; site is optional for them.</li>
       </ul>
     </section>
 
@@ -71,7 +73,7 @@ order: 2
   utilities/_utilities.css    luz.utilities   single-purpose helpers: .u-*</code></pre>
           <ul>
             <li>The components layer holds <span data-count="components">32</span> components.</li>
-            <li><code>dist/luz.css</code> holds these six layers and <code>luz.print</code>. Tokens are in <code>luz.tokens</code>, site in <code>luz.site</code>, landing in <code>luz.landing</code> and cms in <code>luz.cms</code>; <code>luz.themes</code> is empty, kept for a look of your own. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
+            <li><code>dist/luz.css</code> holds these six layers and <code>luz.print</code>. Tokens are in <code>luz.tokens</code>, site in <code>luz.site</code>, landing in <code>luz.landing</code>, cms in <code>luz.cms</code> and app in <code>luz.app</code>; <code>luz.themes</code> is empty, kept for a look of your own. For a page that needs a few components only, load <code>dist/base.css</code> (settings, reset and elements), then <code>dist/components/&lt;name&gt;.css</code> for each one.</li>
             <li>Rules for bare elements are wrapped in <code>:where()</code>, so any class wins over them.</li>
           </ul>
     </section>

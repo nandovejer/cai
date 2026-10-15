@@ -50,6 +50,9 @@ importers:
 
   apps/docs:
     dependencies:
+      '@luz-ds/app':
+        specifier: workspace:*
+        version: link:../../packages/app
       '@luz-ds/cms':
         specifier: workspace:*
         version: link:../../packages/cms
@@ -80,6 +83,18 @@ importers:
       '@luz-ds/tokens':
         specifier: workspace:*
         version: link:../../packages/tokens
+
+  packages/app:
+    devDependencies:
+      '@luz-ds/core':
+        specifier: workspace:*
+        version: link:../core
+      '@luz-ds/site':
+        specifier: workspace:*
+        version: link:../site
+      '@luz-ds/tokens':
+        specifier: workspace:*
+        version: link:../tokens
 
   packages/cms:
     devDependencies:

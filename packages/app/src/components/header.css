@@ -1,0 +1,90 @@
+/* ==========================================================================
+	 LUZ APP: header.
+	 The bar at the top of the main area: header.luz-app-header.o-sticky >
+	 div.o-row, inside .o-main beside the sidebar. It holds core's
+	 .luz-nav-toggle (it opens the sidebar drawer), the __product name, and
+	 div.o-row.__actions: site's <luz-search> if it is loaded, then a
+	 .luz-dropdown whose button is the __account (initials in a .luz-avatar,
+	 then the __account-name). It is the chrome only: the view's h1 and its
+	 primary action are in the dashboard's title row.
+	 Core gives the stickiness, the row and the drawer; app adds the surface,
+	 the divider and the rhythm.
+	 ========================================================================== */
+
+/* A one-row bar of 44px controls is core's --luz-bar-h tall: two 2xs
+   paddings, the row and the divider. With enlarged text the row wraps
+   and the bar grows. */
+.luz-app-header {
+	padding-block: var(--luz-space-2xs);
+	border-block-end: 1px solid var(--luz-divider);
+	background: var(--luz-surface-page);
+}
+
+/* The gutters are the content's (core's .o-container: md, xl from 641px),
+   so the toggle starts where the view starts */
+.luz-app-header > .o-row {
+	gap: var(--luz-space-xs) var(--luz-space-md);
+	padding-inline: var(--luz-space-xl);
+}
+
+/* The global tools sit together at the inline end */
+.luz-app-header__actions {
+	gap: var(--luz-space-xs);
+	margin-inline-start: auto;
+}
+
+/* The product's name, only while the sidebar is a drawer and its brand is
+   out of sight (so it is never twice in the tree). Without the popover API
+   the sidebar stays in the flow with its brand, and so does this stay out. */
+.luz-app-header__product {
+	display: none;
+	margin: 0;
+	color: var(--luz-text-primary);
+	font-size: var(--luz-text-md);
+	font-weight: 600;
+}
+
+/* The account's button: the initials, then the name, in a 44px target */
+.luz-app-header__account {
+	min-inline-size: var(--luz-control-lg);
+	padding-inline: var(--luz-space-xs);
+}
+
+/* The page is the scroller, so the sticky bar sticks to the window; if an
+   .o-main of yours scrolls on its own, what it focuses stays clear of the bar */
+:root:has(.luz-app-header) .o-main {
+	scroll-padding-block-start: var(--luz-bar-h);
+}
+
+/* The account list opens at the end of its button, so it stays in the
+   window at the inline end of the bar (core's panel opens at the start) */
+@supports selector(:popover-open) and (inset-block-start: anchor(end)) {
+	.luz-app-header .luz-dropdown__menu:popover-open {
+		inset-inline: auto anchor(end);
+	}
+}
+
+@supports selector(:popover-open) {
+	@media (max-width: 768px) {
+		.luz-app-header__product {
+			display: block;
+		}
+	}
+}
+
+/* At 640px and below the name is only in the button's name: clipped to
+   nothing, never display: none, as the search label is */
+@media (max-width: 640px) {
+	.luz-app-header > .o-row {
+		padding-inline: var(--luz-space-md);
+	}
+
+	.luz-app-header__account-name {
+		position: absolute;
+		inline-size: 1px;
+		block-size: 1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+}

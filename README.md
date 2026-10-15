@@ -30,9 +30,10 @@ LUZ (formerly CAI) is built with plain CSS, ES modules and native browser APIs. 
 
 ```text
 @luz-ds/tokens  ->  @luz-ds/core  ->  @luz-ds/site  ->  @luz-ds/landing
-   standalone        needs tokens      needs core +   \->  @luz-ds/cms
-                                       tokens             each needs site,
-                                                          core and tokens
+   standalone        needs tokens      needs core +   |->  @luz-ds/cms
+                                       tokens         \->  @luz-ds/app
+                                                          each needs core and
+                                                          tokens; site is optional
 ```
 
 The name stands for Light, Usable & Zero-dependency: light in weight (plain CSS and ES modules, nothing to build for the people who use it), usable by everyone (native HTML, three color modes, tested for accessibility), and with zero runtime dependencies.
@@ -42,6 +43,7 @@ The name stands for Light, Usable & Zero-dependency: light in weight (plain CSS 
 - [`@luz-ds/site`](./packages/site): page patterns (page shell, site header, footer, image frame) and the site search.
 - [`@luz-ds/landing`](./packages/landing): the page structure of a landing page (header, hero, sections, footer). It has its own version, 0.x, and needs `^0.1.0` of tokens and core, and of site if you use it.
 - [`@luz-ds/cms`](./packages/cms): patterns for a blog, a newspaper or any CMS, with any stack (the article header and the table of contents). It has its own version, 0.x, and needs `^0.1.0` of tokens, core and site.
+- [`@luz-ds/app`](./packages/app): the header and the dashboard of a web application, on core's shell and sidebar. It has its own version, 0.x, and needs `^0.1.0` of tokens and core, and of site if you use its search.
 
 ## Install and load
 
@@ -54,8 +56,9 @@ Each package needs the ones below it and nothing above it. Adopt one level and s
 | Tokens + components + page patterns | `@luz-ds/tokens` `@luz-ds/core` `@luz-ds/site` | `luz-tokens.css`, `luz.css`, `site.css`, optionally `luz.js` and `site.js` |
 | A landing page | the three above and `@luz-ds/landing` | the files of the row above, then `landing.css` |
 | A blog or a newspaper | the three above and `@luz-ds/cms` | the files of level 3, then `cms.css` |
+| A web application | the three above and `@luz-ds/app` | the files of level 3, then `app.css` |
 
-`@luz-ds/core` declares `@luz-ds/tokens` as a required peer dependency; `@luz-ds/site` declares both, and `@luz-ds/landing` and `@luz-ds/cms` require tokens and core and take `@luz-ds/site` as an optional peer (install it if you use its pieces). npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
+`@luz-ds/core` declares `@luz-ds/tokens` as a required peer dependency; `@luz-ds/site` declares both, and `@luz-ds/landing`, `@luz-ds/cms` and `@luz-ds/app` require tokens and core and take `@luz-ds/site` as an optional peer (install it if you use its pieces). npm and pnpm install required peers automatically; Yarn only warns, so list every package explicitly.
 
 ```bash
 npm install @luz-ds/tokens                                   # level 1
@@ -63,6 +66,7 @@ npm install @luz-ds/tokens @luz-ds/core                      # level 2
 npm install @luz-ds/tokens @luz-ds/core @luz-ds/site         # level 3
 npm install @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/landing   # a landing page
 npm install @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/cms       # a blog or a newspaper
+npm install @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/app       # a web application
 ```
 
 ### With a bundler
@@ -73,6 +77,7 @@ import "@luz-ds/core/css";
 import "@luz-ds/site/css"; // level 3 only
 import "@luz-ds/landing/css"; // a landing page only
 import "@luz-ds/cms/css"; // a blog or a newspaper only
+import "@luz-ds/app/css"; // a web application only
 
 import "@luz-ds/core";         // optional: the JavaScript, starts every behavior
 import "@luz-ds/site";     // level 3, only if you use the search
@@ -90,6 +95,7 @@ Drop the lines for the levels you do not use:
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/landing@0.1.0/dist/landing.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/cms@0.1.0/dist/cms.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/app@0.1.0/dist/app.min.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js"></script>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js"></script>
 ```
@@ -211,7 +217,10 @@ luz-design-system/
 │   ├── landing/               # @luz-ds/landing (its own version, 0.x)
 │   │   ├── src/
 │   │   └── dist/
-│   └── cms/                   # @luz-ds/cms (its own version, 0.x)
+│   ├── cms/                   # @luz-ds/cms (its own version, 0.x)
+│   │   ├── src/
+│   │   └── dist/
+│   └── app/                   # @luz-ds/app (its own version, 0.x)
 │       ├── src/
 │       └── dist/
 ├── docs/                      # Generated GitHub Pages site (pnpm pages:build): do not edit
@@ -240,20 +249,21 @@ pnpm dev
 | Landing | `http://localhost:5173/` | `apps/landing/` |
 | Documentation | `http://localhost:5173/docs/` | `apps/docs/` |
 
-Edits to files under `apps/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm site:build` / `pnpm landing:build` / `pnpm cms:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
+Edits to files under `apps/` reload on save. Edits to package sources (`packages/*/src`) need a rebuild (`pnpm build`, or `pnpm tokens:build` / `pnpm core:build` / `pnpm site:build` / `pnpm landing:build` / `pnpm cms:build` / `pnpm app:build`), and then a restart of `pnpm dev`: Vite does not pick up regenerated `dist/` files and keeps serving the old CSS until it restarts. To use a different port, pass it through: `pnpm dev --port 3000`.
 
-To load the packages from this repository in a page of your own, point at `dist/`: `/packages/tokens/dist/luz-tokens.css`, `/packages/core/dist/luz.css`, `/packages/site/dist/site.css`, `/packages/landing/dist/landing.css`, `/packages/cms/dist/cms.css` and `/packages/core/dist/luz.js`.
+To load the packages from this repository in a page of your own, point at `dist/`: `/packages/tokens/dist/luz-tokens.css`, `/packages/core/dist/luz.css`, `/packages/site/dist/site.css`, `/packages/landing/dist/landing.css`, `/packages/cms/dist/cms.css`, `/packages/app/dist/app.css` and `/packages/core/dist/luz.js`.
 
 ### Commands
 
 ```bash
 pnpm dev             # Vite dev server
-pnpm build           # tokens:build + core:build + site:build + landing:build + cms:build
+pnpm build           # tokens:build + core:build + site:build + landing:build + cms:build + app:build
 pnpm tokens:build    # Regenerate packages/tokens/dist
 pnpm core:build      # Regenerate packages/core/dist
 pnpm site:build      # Regenerate packages/site/dist
 pnpm landing:build   # Regenerate packages/landing/dist
 pnpm cms:build       # Regenerate packages/cms/dist
+pnpm app:build       # Regenerate packages/app/dist
 pnpm lint:css        # Stylelint over packages/**/*.css and apps/**/*.css
 pnpm lint:js         # ESLint over the JS of packages, apps, scripts and tests
 pnpm test:unit       # Vitest (run `pnpm build` first: some suites read dist/)
@@ -308,6 +318,12 @@ pnpm landing:build
 
 ```bash
 pnpm cms:build
+```
+
+**App.** `@luz-ds/app` holds the header and the dashboard of a web application, on top of core's shell and sidebar, through the same builder. CSS only: `dist/app.css` and `app.min.css`, in the `luz.app` layer. Landing, cms and app never depend on each other.
+
+```bash
+pnpm app:build
 ```
 
 ### GitHub Pages

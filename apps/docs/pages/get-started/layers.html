@@ -37,6 +37,7 @@ order: 4
             <tr><td data-label="Layer"><div><code>luz.site</code></div></td><td data-label="Package"><div>site</div></td><td data-label="What it holds"><div>The five site components: <code>&lt;luz-search&gt;</code>, <code>&lt;luz-consent&gt;</code>, <code>&lt;luz-lang-switch&gt;</code>, <code>&lt;luz-submenu&gt;</code>, <code>&lt;luz-banner&gt;</code> and their <code>.luz-&lt;tag&gt;__*</code> classes</div></td></tr>
             <tr><td data-label="Layer"><div><code>luz.landing</code></div></td><td data-label="Package"><div>landing</div></td><td data-label="What it holds"><div>The patterns of a landing page: <code>.luz-landing-*</code>. After site, so they can build on it</div></td></tr>
             <tr><td data-label="Layer"><div><code>luz.cms</code></div></td><td data-label="Package"><div>cms</div></td><td data-label="What it holds"><div>The patterns of a blog, a newspaper or any CMS: <code>.luz-cms-*</code>. After site; landing and cms share no class, so their order decides nothing</div></td></tr>
+            <tr><td data-label="Layer"><div><code>luz.app</code></div></td><td data-label="Package"><div>app</div></td><td data-label="What it holds"><div>The header and the dashboard of a web application: <code>.luz-app-*</code>. After cms; landing, cms and app share no class, so their order decides nothing</div></td></tr>
             <tr><td data-label="Layer"><div><code>luz.print</code></div></td><td data-label="Package"><div>core</div></td><td data-label="What it holds"><div>What changes on paper, inside <code>@media print</code>: <a href="/docs/get-started/print/">Print styles</a>. Last, so it wins over the screen styles of every package</div></td></tr>
           </tbody>
         </table>
@@ -102,6 +103,7 @@ order: 4
 @import url("@luz-ds/core/css");
 @import url("@luz-ds/site/css");
 @import url("@luz-ds/landing/css"); /* only for a landing page */
-@import url("@luz-ds/cms/css");     /* only for a blog or a newspaper */</code></pre>
+@import url("@luz-ds/cms/css");     /* only for a blog or a newspaper */
+@import url("@luz-ds/app/css");     /* only for a web application */</code></pre>
       <p>Your own stylesheet imports a file after the statement, so the order is set before LUZ loads.</p>
     </section>

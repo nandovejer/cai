@@ -4,12 +4,13 @@
 
 ```bash
 pnpm dev            # Vite → localhost:5173 (apps/docs/)
-pnpm build          # Full build (tokens + core + site + landing + cms)
+pnpm build          # Full build (tokens + core + site + landing + cms + app)
 pnpm tokens:build   # Regenerate primitives from tokens.json
 pnpm core:build     # Sync @luz-ds/core dist/
 pnpm site:build     # Sync @luz-ds/site dist/
 pnpm landing:build  # Sync @luz-ds/landing dist/
 pnpm cms:build      # Sync @luz-ds/cms dist/
+pnpm app:build      # Sync @luz-ds/app dist/
 pnpm lint:css       # Stylelint
 pnpm lint:js        # ESLint
 ```
@@ -74,7 +75,7 @@ pnpm lint:js        # ESLint
 
 ✓ **Token decimal rule:** Components always use semantic tokens (`--luz-text-primary`), never primitives (`--luz-gray-100`)
 
-✓ **Package boundary:** `core` must never import from `site`, nor `site` from `landing` or `cms`, and `landing` and `cms` never from each other
+✓ **Package boundary:** `core` must never import from `site`, nor `site` from `landing`, `cms` or `app`, and `landing`, `cms` and `app` never from each other
 
 ✓ **No runtime dependencies** — See [VANILLA-FIRST.md](./VANILLA-FIRST.md)
 
@@ -109,8 +110,8 @@ Requires the tokens layer, then `base.css` (core settings such as z-index and mo
 
 ## File Organization
 
-- **Package source:** `packages/{tokens,core,site,landing,cms}/src/`
-- **Package dist:** `packages/{tokens,core,site,landing,cms}/dist/` (generated)
+- **Package source:** `packages/{tokens,core,site,landing,cms,app}/src/`
+- **Package dist:** `packages/{tokens,core,site,landing,cms,app}/dist/` (generated)
 - **Docs app:** pages in `apps/docs/pages/` (front matter + fragment), wrapped by `apps/docs/_layouts/` and `apps/docs/_partials/` through `scripts/docs-site/`; styles in `apps/docs/reference.css` and `elements.css`
 - **Landing app:** `apps/landing/` (external consumer)
 

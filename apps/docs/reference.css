@@ -105,8 +105,6 @@
 /* main: the page head (breadcrumb, h1, lead), "On this page", the content
    and the end of the page ("Keep going", Previous / Next). From 1280px "On this page" is a rail at the end. */
 .docs-main {
-  /* .o-main scrolls on its own; here the document scrolls, so the rail can stick */
-  overflow-y: visible;
   display: grid;
   gap: var(--luz-space-xl);
   align-content: start;
@@ -1495,9 +1493,15 @@ h2.docs-demo__title {
 
 /* Not in a header specimen: there the toggle shows only where the
    header collapses its links, as it does in a page */
-.docs-demo__stage .luz-nav-toggle:not(.luz-landing-header *, .luz-cms-header *, .docs-bar *) {
+.docs-demo__stage .luz-nav-toggle:not(.luz-landing-header *, .luz-cms-header *, .luz-app-header *, .docs-bar *) {
   position: static;
   display: flex;
+}
+
+/* The stage already has its own padding: the dashboard keeps its row and
+   panel rhythm, and a demo needs no second gutter */
+.docs-demo__stage > .luz-app-dashboard {
+  padding: 0;
 }
 
 /* The bar of the navbar demo: what a kind of site's header adds (a surface,

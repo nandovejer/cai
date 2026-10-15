@@ -1,0 +1,67 @@
+/* ==========================================================================
+	 LUZ APP: dashboard.
+	 main.luz-app-dashboard: the view. It holds a __head (a div with the
+	 view's h1, the __title, and core's .o-actions) and a ul.o-grid.o-grid--auto
+	 of li.luz-card.__panel, each starting with its h2. Core gives the grid
+	 and the card; app sets the room, the padding, the column width and the
+	 wide panel. The panels keep the order of the markup: no dense packing,
+	 no order.
+	 ========================================================================== */
+
+/* The container of its own size query: a panel answers to the room the
+   view has, with or without a sidebar, not to the window's. 18rem is the
+   narrowest column of the grid. */
+.luz-app-dashboard {
+	--luz-grid-min: 18rem;
+
+	display: grid;
+	align-content: start;
+	gap: var(--luz-space-lg);
+	padding: var(--luz-space-xl);
+	container-type: inline-size;
+}
+
+/* The view's name and what to do first, in one row that wraps */
+.luz-app-dashboard__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--luz-space-sm) var(--luz-space-md);
+}
+
+.luz-app-dashboard__title {
+	margin: 0;
+	color: var(--luz-text-primary);
+	font-size: var(--luz-text-2xl);
+	font-weight: 600;
+}
+
+/* A wide child never widens its column: it scrolls inside the panel */
+.luz-app-dashboard__panel {
+	min-inline-size: 0;
+}
+
+/* Two columns always exist from 40rem (2 x 18rem and a gap), so it never
+   asks for a column that is not there */
+@container (min-width: 40rem) {
+	.luz-app-dashboard__panel--wide {
+		grid-column: span 2;
+	}
+}
+
+@media (max-width: 640px) {
+	.luz-app-dashboard {
+		padding: var(--luz-space-md);
+	}
+
+	.luz-app-dashboard__title {
+		font-size: var(--luz-text-xl);
+	}
+
+	/* Core's actions are a column here: below the title, not beside it */
+	.luz-app-dashboard__head {
+		flex-flow: column nowrap;
+		align-items: stretch;
+	}
+}

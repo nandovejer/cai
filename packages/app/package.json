@@ -1,0 +1,55 @@
+{
+  "name": "@luz-ds/app",
+  "version": "0.0.0",
+  "description": "LUZ Design System — the header and the dashboard of a web application (a bar with search and the account, a grid of panels), built on @luz-ds/core",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./css": "./dist/app.css",
+    "./css/min": "./dist/app.min.css",
+    "./components/*": "./dist/components/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nandovejer/luz.git",
+    "directory": "packages/app"
+  },
+  "homepage": "https://github.com/nandovejer/luz#readme",
+  "bugs": {
+    "url": "https://github.com/nandovejer/luz/issues"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "app",
+    "dashboard",
+    "patterns",
+    "vanilla"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@luz-ds/core": "^0.1.0",
+    "@luz-ds/site": "^0.1.0",
+    "@luz-ds/tokens": "^0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@luz-ds/site": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@luz-ds/core": "workspace:*",
+    "@luz-ds/site": "workspace:*",
+    "@luz-ds/tokens": "workspace:*"
+  }
+}

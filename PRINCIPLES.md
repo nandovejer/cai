@@ -2,7 +2,7 @@
 
 Inspired by the [GOV.UK Design System](https://design-system.service.gov.uk/). These rules govern every change to `packages/`, `apps/` and the docs. They sit above [VANILLA-FIRST.md](./dev/VANILLA-FIRST.md) (which covers *how* we build) and tell you *what* we accept.
 
-LUZ is npm packages for developers who install it without talking to us: `@luz-ds/tokens` (standalone), `@luz-ds/core` (needs tokens) and `@luz-ds/site` (needs core and tokens), which share one version, and packages for one kind of site on top of them, each with its own version: `@luz-ds/landing` and `@luz-ds/cms` (each needs site, core and tokens).
+LUZ is npm packages for developers who install it without talking to us: `@luz-ds/tokens` (standalone), `@luz-ds/core` (needs tokens) and `@luz-ds/site` (needs core and tokens), which share one version, and packages for one kind of site on top of them, each with its own version: `@luz-ds/landing`, `@luz-ds/cms` and `@luz-ds/app` (each needs core and tokens, and takes site as an optional peer).
 
 ---
 
@@ -96,7 +96,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 - **Do not invent new meanings.** Blue is interactive. Red is error or danger. Green is success. Yellow is warning.
 - **Do not restyle the primitives per app.** Buttons, inputs, links and focus rings look the same in every app and consumer. Apps add layout, not new skins.
 - **One component, one job.** No `.luz-card--as-button`. If you need both, you need two components.
-- **Core or site.** `core` holds pieces that know nothing about the site and fit inside anything (button, form, dialog). `site` holds what needs data of the site (its languages, its index, its menu, its cookie policy) or is page structure that holds other pieces (header, footer, shell, sections). If in doubt, it belongs in the consumer's app. Packages for one kind of site (`cms`, `landing`) build on `site`: `tokens → core → site → cms`, and `site → landing`.
+- **Core or site.** `core` holds pieces that know nothing about the site and fit inside anything (button, form, dialog). `site` holds what needs data of the site (its languages, its index, its menu, its cookie policy) or is page structure that holds other pieces (header, footer, shell, sections). If in doubt, it belongs in the consumer's app. Packages for one kind of site (`cms`, `landing`, `app`) build on `site`: `tokens → core → site → cms`, `site → landing` and `site → app`.
 - **A component must be useful, unique, usable and consistent** (the GOV.UK contribution criteria). "I needed it once" is not a reason to add it.
 - **Prefer removing to adding.** Every new component lists what it makes obsolete.
 
@@ -129,6 +129,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `site` JS lazy chunk: `consent` (loaded by `site.js` when the page has a `<luz-consent>`) | — | ≤ 1 kB | 1 kB | 1.5 kB |
 | `landing` CSS | — | ≤ 1 kB | 1 kB | 2 kB |
 | `cms` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
+| `app` CSS | — | ≤ 1 kB | 1 kB | 2 kB |
 | Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |
 
 Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).

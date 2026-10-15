@@ -116,6 +116,7 @@ const AREA_KIND = {
   site: "Site pattern",
   landing: "Landing pattern",
   cms: "CMS pattern",
+  app: "App pattern",
   html: "HTML elements",
   accessibility: "Accessibility",
   hub: "Documentation",

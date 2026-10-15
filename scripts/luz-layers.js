@@ -23,13 +23,17 @@
  *                   any CMS). Landing and cms never meet (no shared class),
  *                   so their order decides nothing; cms comes after landing
  *                   so adding it moved no existing layer
+ *   luz.app         .luz-app-* patterns of @luz-ds/app (the header and the
+ *                   dashboard of a web application). It shares no class
+ *                   with landing or cms either; it comes after cms so
+ *                   adding it moved no existing layer
  *   luz.print       what changes on paper (@media print): last, so it wins over
  *                   the screen styles of every package by order
  *
  * Every file repeats the statement first, so the order is the same whichever
  * file a page loads first.
  */
-export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "landing", "cms", "print"];
+export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "landing", "cms", "app", "print"];
 
 export const LAYER_ORDER = `@layer ${LAYERS.map((l) => `luz.${l}`).join(", ")};\n`;
 

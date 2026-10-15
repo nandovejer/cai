@@ -1,0 +1,36 @@
+<!-- luz:page
+title: App
+description: The header and the dashboard of a web application, on core's shell and sidebar, and how to tell whether you need them.
+area: app
+order: 0
+lead: false
+generate: gallery
+-->
+    <p class="docs-eyebrow">For one kind of site · @luz-ds/app</p>
+
+    <p class="docs-lead">The header and the dashboard of a web application, on core's shell and sidebar, and how to tell whether you need them.</p>
+    <p>An application is used every day by the same people to check a state and act on one thing. The layout it needs is already core's: the shell with its sidebar, the drawer on a phone, the sticky bar, the grid and the card. This package holds the two pieces that only an application has: the bar at the top of the main area, with the search and the account, and the dashboard, a grid of panels under the view's title.</p>
+    <ul>
+      <li>Every class starts with <code class="luz-code-inline">.luz-app-</code>, uses semantic tokens only and sits in the cascade layer <code class="luz-code-inline">luz.app</code>, after site's, landing's and cms's. Each pattern is a class on a native element, laid out in the markup by core's objects.</li>
+      <li>It has no script. Load <code class="luz-code-inline">app.css</code> after the CSS of tokens and core (and site's, if you use its search): <a href="/docs/get-started/#site-kinds">Install LUZ</a> has the command and the CDN tags. The sidebar is core's, with its own optional script.</li>
+      <li>It has a version of its own, 0.x while it grows, and needs version <code>^0.1.0</code> of tokens and core, declared as peer dependencies. Site is an optional peer: without it the bar has no search, and everything else renders the same.</li>
+      <li>There is no sidebar of its own: <a href="/docs/components/sidebar/">core's sidebar</a> opens as a drawer at 768 px and below, with no script. An icon rail and a collapsible sidebar are not in 0.1.</li>
+      <li>The app page, an empty dashboard and an app with no sidebar need no CSS of their own: they are markup to copy on <a href="/docs/app/templates/">App templates</a>.</li>
+    </ul>
+
+    <div class="docs-decision-grid">
+        <div class="docs-decision-card">
+          <h2 id="use-app-when" class="docs-decision-card__title">Use app when</h2>
+          <ul>
+            <li>You build a tool that people sign in to, with a sidebar of sections and a view for each.</li>
+            <li>You want a quiet bar for the global tools, and a dashboard of panels for the view's state.</li>
+          </ul>
+        </div>
+        <div class="docs-decision-card">
+          <h2 id="use-another-kind-when" class="docs-decision-card__title">Use another package when</h2>
+          <ul>
+            <li>Your site is a landing page or a blog: <a href="/docs/landing/">Landing</a> and <a href="/docs/cms/">CMS</a> have their headers.</li>
+            <li>You only need a sidebar and a content area: core's <a href="/docs/components/layout/">layout</a> and <a href="/docs/components/sidebar/">sidebar</a> are enough.</li>
+          </ul>
+        </div>
+      </div>

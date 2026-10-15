@@ -135,7 +135,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
 
       <div class="docs-prose">
         <h2 id="site-kinds" class="docs-prose__title">Packages for one kind of site</h2>
-        <p>On top of level 3, a package can add what one kind of site needs: <a href="/docs/landing/">Landing</a>, the header, hero, sections and footer of a landing page and blocks to copy for it, and <a href="/docs/cms/">CMS</a>, the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS. Each needs the three packages of level 3, loaded first; install the one you need, or both.</p>
+        <p>On top of level 3, a package can add what one kind of site needs: <a href="/docs/landing/">Landing</a>, the header, hero, sections and footer of a landing page and blocks to copy for it, <a href="/docs/cms/">CMS</a>, the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS, and <a href="/docs/app/">App</a>, the header and the dashboard of a web application. Each needs the packages of level 2, loaded first; site is optional for them, and the commands below add it for its search and its language switch. Install the one you need.</p>
         <div class="docs-command-block">
           <code class="docs-command-block__cmd">
             <span class="docs-command-block__prefix" aria-hidden="true">$</span>
@@ -171,10 +171,28 @@ import &quot;@luz-ds/site&quot;;</code></pre>
 &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/cms@0.1.0/dist/cms.min.css&quot;&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
+        <div class="docs-command-block">
+          <code class="docs-command-block__cmd">
+            <span class="docs-command-block__prefix" aria-hidden="true">$</span>
+            pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/app
+          </code>
+          <button class="luz-copy-btn" type="button" data-copy="pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/app" aria-label="Copy the app install command">Copy</button>
+        </div>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">HTML</span>
+            <button class="luz-copy-btn" type="button" data-copy-from="code-cdn-app" aria-label="Copy the CDN tags for app">Copy</button>
+          </div>
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, app"><code id="code-cdn-app">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/app@0.1.0/dist/app.min.css&quot;&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+        </div>
         <ul>
-          <li>Landing and cms each have their own version, 0.1.0 now, and need <code>^0.1.0</code> of the other three. Pin both numbers.</li>
-          <li>With a bundler, add <code class="luz-code-inline">import "@luz-ds/landing/css";</code> or <code class="luz-code-inline">import "@luz-ds/cms/css";</code> after the imports of level 3.</li>
-          <li>Neither has a script. Core's script is optional: with cms, it marks the section in view in the table of contents.</li>
+          <li>Landing, cms and app each have their own version, 0.1.0 now, and need <code>^0.1.0</code> of the base. Pin both numbers.</li>
+          <li>With a bundler, add <code class="luz-code-inline">import "@luz-ds/landing/css";</code>, <code class="luz-code-inline">import "@luz-ds/cms/css";</code> or <code class="luz-code-inline">import "@luz-ds/app/css";</code> after the imports of level 3.</li>
+          <li>None has a script. Core's script is optional: with cms, it marks the section in view in the table of contents; with app, it marks the current link of the sidebar and closes the drawer when a link is followed.</li>
         </ul>
       </div>
 

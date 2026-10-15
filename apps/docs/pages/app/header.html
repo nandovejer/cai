@@ -1,0 +1,193 @@
+<!-- luz:page
+title: Header
+description: The quiet bar at the top of an application's main area: the menu button, the product name on a phone, the search and the account.
+area: app
+order: 1
+group: patterns
+files: .luz-app-header, __toggle, __product, __actions, __account, __account-name
+keywords: top bar, app bar, account menu, user menu
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-app-header">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <header class="luz-app-header">
+              <div class="o-row">
+                <button class="luz-nav-toggle luz-app-header__toggle" type="button" popovertarget="demo-app-nav" aria-label="Menu of the example application">
+                  <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
+                </button>
+                <p class="luz-app-header__product">Bodega</p>
+                <div class="o-row luz-app-header__actions">
+                  <div class="luz-dropdown">
+                    <button class="luz-btn luz-btn--ghost luz-app-header__account" type="button" popovertarget="demo-app-account-menu"><span class="luz-avatar luz-avatar--sm">AM</span> <span class="luz-app-header__account-name">Ana Martín</span></button>
+                    <div class="luz-dropdown__menu" id="demo-app-account-menu" popover>
+                      <ul class="luz-dropdown__list">
+                        <li><a class="luz-dropdown__item" href="#p-app-header">Account settings</a></li>
+                        <li><a class="luz-dropdown__item" href="#p-app-header">Sign out</a></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </header>
+          </div>
+          <p class="docs-demo__note">The bar at a window of full width: the sidebar is a column beside it, so the product name stays there. At 768 px and below the sidebar is a drawer, the menu button opens it and the product name shows beside it. The example is not sticky: in a page, <code class="luz-code-inline">.o-sticky</code> keeps the bar at the top. The account list opens under the button: press it.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>The header's own issues are those of the pieces of core it is made of.</p>
+          <ul>
+            <li><strong>The account list without anchor positioning.</strong> In browsers without CSS anchor positioning, the list opens as a sheet at the bottom of the window instead of under the button. Escape, or a click outside it, closes it.</li>
+            <li><strong>Sticky bar and enlarged text.</strong> The scroll padding of <code>.o-sticky</code> is a minimum: at 300% text, with the bar wrapped to several rows, Safari can leave a field reached with Tab under it. Set <code>scroll-padding-block-start</code> on <code>html</code> to your header's real height, or leave out <code>.o-sticky</code>.</li>
+          </ul>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Header documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>The bar, in <code>.o-main</code> beside the sidebar, with site's search before the account:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-app-header" aria-label="Copy the app header markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="App header markup"><code id="code-app-header">&lt;div class=&quot;o-shell&quot;&gt;
+  &lt;nav class=&quot;luz-sidebar&quot; id=&quot;app-nav&quot; aria-label=&quot;Main&quot; popover&gt;…&lt;/nav&gt;
+  &lt;div class=&quot;o-main&quot;&gt;
+    &lt;header class=&quot;luz-app-header o-sticky&quot;&gt;
+      &lt;div class=&quot;o-row&quot;&gt;
+        &lt;button class=&quot;luz-nav-toggle luz-app-header__toggle&quot; type=&quot;button&quot; popovertarget=&quot;app-nav&quot; aria-label=&quot;Menu&quot;&gt;
+          &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;24&quot; height=&quot;24&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z&quot;/&gt;&lt;/svg&gt;
+        &lt;/button&gt;
+        &lt;p class=&quot;luz-app-header__product&quot;&gt;Bodega&lt;/p&gt;
+        &lt;div class=&quot;o-row luz-app-header__actions&quot;&gt;
+          &lt;luz-search&gt;…&lt;/luz-search&gt;
+          &lt;div class=&quot;luz-dropdown&quot;&gt;
+            &lt;button class=&quot;luz-btn luz-btn--ghost luz-app-header__account&quot; type=&quot;button&quot; popovertarget=&quot;account-menu&quot;&gt;&lt;span class=&quot;luz-avatar luz-avatar--sm&quot;&gt;AM&lt;/span&gt; &lt;span class=&quot;luz-app-header__account-name&quot;&gt;Ana Martín&lt;/span&gt;&lt;/button&gt;
+            &lt;div class=&quot;luz-dropdown__menu&quot; id=&quot;account-menu&quot; popover&gt;
+              &lt;ul class=&quot;luz-dropdown__list&quot;&gt;
+                &lt;li&gt;&lt;a class=&quot;luz-dropdown__item&quot; href=&quot;/account/&quot;&gt;Account settings&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a class=&quot;luz-dropdown__item&quot; href=&quot;/logout/&quot;&gt;Sign out&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/header&gt;
+    &lt;main class=&quot;luz-app-dashboard&quot; id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;…&lt;/main&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>No modifier. The header is a class of app on a native <code>&lt;header&gt;</code>, laid out by core's objects in the markup.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Header classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-app-header</code></div></td><td data-label="Effect"><div>On <code>&lt;header&gt;</code>, a child of <code>.o-main</code>: the page surface and a rule underneath. It is one row of <code>--luz-bar-h</code>; its <code>.o-row</code> has the gutters of the content</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-header__toggle</code></div></td><td data-label="Effect"><div>Marks the slot of core's <code>.luz-nav-toggle</code>, first in the row. It has no rule of its own: the button, its <code>popovertarget</code> and its name are core's</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-header__product</code></div></td><td data-label="Effect"><div>The product's name in medium text, semibold. It shows only at 768 px and below, where the sidebar is a drawer and its brand is out of sight</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-header__actions</code></div></td><td data-label="Effect"><div>On a <code>.o-row</code>: the global tools at the inline end of the bar. Site's <a href="/docs/site/search/">search</a>, then the account</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-header__account</code></div></td><td data-label="Effect"><div>On the <code>.luz-btn.luz-btn--ghost</code> that opens the account list: at least 44 by 44 px, with its initials in a <code>.luz-avatar</code> and then the name</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-header__account-name</code></div></td><td data-label="Effect"><div>The account's name. At 640 px and below it is clipped to nothing, and stays in the button's name</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-sticky</code> (core)</div></td><td data-label="Effect"><div>Keeps the bar at the top while the page scrolls, in a window at least 30 rem tall; see <a href="/docs/components/layout/#objects-page">the page and its bars</a></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-dropdown</code> (core)</div></td><td data-label="Effect"><div>The account list, a disclosure of links: see the <a href="/docs/components/dropdown/">dropdown</a></div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/app</code> on core's shell, sticky bar, drawer and dropdown. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
+            <ul>
+              <li>App adds the skin only: the page surface, the rule underneath and the gaps of the row (8 px between rows, 16 px between items). Core gives the rest: <code>.o-sticky</code> the stickiness and the scroll padding, <code>.o-row</code> the row, the nav toggle and the sidebar the drawer, and the dropdown the account list.</li>
+              <li>A one-row bar is core's <code>--luz-bar-h</code> tall: 44 px controls, 4 px above and below, and the 1 px rule. With enlarged text the row wraps and the bar grows.</li>
+              <li>The page is what scrolls, not <code>.o-main</code>, so the sticky bar stays at the window's top. If you give <code>.o-main</code> a height of its own and make it scroll, what it focuses stays clear of the bar through its scroll padding.</li>
+              <li>The account list opens under its button and ends where the button ends, so it never leaves the window at the inline end of the bar.</li>
+              <li>Without site there is no search: leave <code>&lt;luz-search&gt;</code> out. Nothing else changes.</li>
+              <li>The view's <code>h1</code> and its main action are not here: they are the first row of the <a href="/docs/app/dashboard/">dashboard</a>. The bar holds only what is the same in every view.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes. The drawer and the account list are popovers opened by the button's <code>popovertarget</code>, with no script, and site's search shows its link to the A–Z index. In a browser without the popover API the sidebar stays in the page above the content, the menu button is not shown, and the account list stays under its button.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the order of the source and of the screen. Skip link, the sidebar (a column from 769 px), the search, the account, then the view. At 768 px and below the closed drawer is out of the order: skip link, menu button, search, account, then the view.</li>
+              <li><strong>Keys:</strong> Enter or Space on the menu button opens the drawer, and on the account button opens the list; Tab reaches each link in order; Escape closes it and returns focus to the button.</li>
+              <li><strong>Names:</strong> the menu button is named "Menu" (<code>aria-label</code>, translated like the rest of the page). The account button's name is its initials, then the name: "AM Ana Martín", so a person who says "click AM" finds it at any width. The browser exposes the buttons' expanded state.</li>
+              <li><strong>Not a menu:</strong> the account list is a list of links in a popover. It has no <code>role="menu"</code>, no <code>aria-haspopup</code> and no arrow keys.</li>
+              <li><strong>Landmarks:</strong> a <code>&lt;header&gt;</code> in <code>.o-main</code>, which is a <code>&lt;div&gt;</code>, is the page's banner, beside the <code>&lt;main&gt;</code>, never inside it. The sidebar is the one navigation, named "Main". Put the <a href="/docs/components/skip-link/">skip link</a> first: it skips the sidebar and the bar.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the header at the top of the main area of every view of an application: the person always finds the search and their account in the same place.</p>
+            <ul>
+              <li>One quiet row of global tools: the menu button, the search and the account.</li>
+              <li>The product's name on a phone, where the sidebar's brand is behind the drawer.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it for the title of the view or for its actions: they go in the first row of the dashboard.</p>
+            <ul>
+              <li>One header per page, in <code>.o-main</code>: it is the page's banner.</li>
+              <li>Do not put a primary button in the bar: the view's main action would be lost among the chrome.</li>
+              <li>For a bar with the site's own sections, use the <a href="/docs/components/navbar/">navbar</a> in the header of <a href="/docs/landing/header/">landing</a> or <a href="/docs/cms/header/">CMS</a>.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Keep the bar to the tools that are the same in every view: the menu, the search and the account.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <header class="luz-app-header"><div class="o-row"><div class="o-row luz-app-header__actions"><a class="luz-btn luz-btn--ghost" href="#">Search</a><button class="luz-btn luz-btn--ghost luz-app-header__account" type="button"><span class="luz-avatar luz-avatar--sm">AM</span> <span class="luz-app-header__account-name">Ana Martín</span></button></div></div></header>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Put the view's main action next to the account: two things to press that are not alike, and the main one is lost among the chrome.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <header class="luz-app-header"><div class="o-row"><div class="o-row luz-app-header__actions"><a class="luz-btn luz-btn--primary" href="#">New report</a><button class="luz-btn luz-btn--ghost luz-app-header__account" type="button"><span class="luz-avatar luz-avatar--sm">AM</span> <span class="luz-app-header__account-name">Ana Martín</span></button></div></div></header>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The product is a name; the account is a person; the list holds what they can do about themselves.</p>
+            <ul>
+              <li>Product: the name as it appears in the sidebar's brand. Never shorten it: it wraps.</li>
+              <li>Account: the person's name in full, and the initials of that name in the avatar. A photo has an empty <code>alt</code>, so the name is the button's name.</li>
+              <li>List: two to four links, each a verb or a noun the person knows: "Account settings", "Sign out". Put "Sign out" last.</li>
+              <li>Menu button: "Menu", translated like the rest of the page.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>Text and controls sit on the page surface; the initials sit on the brand's subtle fill.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Header contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Product name</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Account name</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Initials</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.5:1</div></td><td data-label="High contrast"><div>13.6:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> every control in the bar keeps core's ring, 2 px of <code>--luz-focus-ring</code>. The bar is sticky, and <code>.o-sticky</code> keeps what Tab reaches out from under it.</li>
+              <li><strong>Edges:</strong> the rule under the bar (<code>--luz-divider</code>) is decorative and has no minimum; forced colours keep it.</li>
+              <li><strong>Target:</strong> the account button is at least 44 by 44 px at every width, with its name clipped.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 10 tokens that the <code>.luz-app-header</code> rules of app's <code>components/header.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-text-md</code></dd></div>
+              <div><dt><a href="/docs/tokens/layout/">Layout and breakpoints</a></dt><dd><code>--luz-bar-h</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

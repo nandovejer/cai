@@ -25,7 +25,7 @@ Everything below is public from 1.0. Everything not in this list is internal and
 | **Attributes** | `data-theme`, `data-mode`, `data-luz-themes`, `data-luz-*`, `data-luz-label-*`, `data-copy`, `data-copy-from`, and the ARIA the docs require | Attributes the docs site's own scripts use (`data-docs-*`) |
 | **JS** | Every export of `@luz-ds/core` and `@luz-ds/site` named in the docs and in AGENTS.md: the module paths, the function names and their arguments and return values; the elements `<luz-search>` and `<luz-consent>` and the markup they expect, and the chunk files `site.min.js` loads (`search.min.js`, `consent.min.js`) | Anything not exported, and any export the docs do not name |
 | **Events** | The `change` event, bubbling, that the color-mode cycle button dispatches on the radio it checks | Timing and order of internal updates |
-| **Layers** | The names `luz`, `luz.tokens`, `luz.themes`, `luz.settings`, `luz.generic`, `luz.elements`, `luz.objects`, `luz.components`, `luz.utilities`, `luz.site`, `luz.landing`, `luz.cms`, `luz.print`, and their order | The rules inside a layer |
+| **Layers** | The names `luz`, `luz.tokens`, `luz.themes`, `luz.settings`, `luz.generic`, `luz.elements`, `luz.objects`, `luz.components`, `luz.utilities`, `luz.site`, `luz.landing`, `luz.cms`, `luz.app`, `luz.print`, and their order | The rules inside a layer |
 | **Text** | The i18n keys of `@luz-ds/core/i18n` and the `data-luz-label-*` attributes that override them | The wording of a string |
 | **Packages** | The `exports` map of each package, the paths of the files it publishes, and the `luz-tokens` command: its arguments, its exit codes and its `--json` shape | The files under `scripts/`, `tests/` and `apps/` |
 

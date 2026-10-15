@@ -142,12 +142,13 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     });
   });
 
-  it("budgets llms.txt and llms-full.txt, each uncompressed: ideal 384 KiB, ceiling 448 KiB", () => {
+  it("budgets llms.txt and llms-full.txt, each uncompressed: ideal 400 KiB, ceiling 448 KiB", () => {
+    // Ideal re-fixed once on 2026-10-15 after the F5 pages (was 384 KiB); the ceiling is unchanged and never raised (RL-17).
     expect(budgets[BEFORE.length + 1]).toEqual({
       name: "llms.txt and llms-full.txt (each, uncompressed)",
       glob: "docs/**/*.txt",
       compression: "none",
-      ideal: 384 * KiB,
+      ideal: 400 * KiB,
       max: 448 * KiB,
     });
   });

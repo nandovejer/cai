@@ -92,8 +92,10 @@ const LLMS_TXT_MAX = 32 * 1024;
 // renderLlmsFull() on the real pages (the spec's 300-340 kB was an estimate,
 // not a build; the owner accepted the ideal and the ceiling below). The ceiling
 // goes to ai.js as LLMS_FULL_MAX and to budgets.json in step 6, and it is never
-// raised afterwards (RL-17).
-const LLMS_FULL_IDEAL = 384 * 1024;
+// raised afterwards (RL-17). The ideal was re-fixed once on 2026-10-15 after the
+// F5 pages (it was 384 KiB, measured before "Working with AI" existed); the
+// ceiling is unchanged and never raised.
+const LLMS_FULL_IDEAL = 400 * 1024;
 const LLMS_FULL_CEILING = 448 * 1024;
 // Curated, not empty: a floor that only says the sections are really there.
 const LLMS_FULL_FLOOR = 64 * 1024;

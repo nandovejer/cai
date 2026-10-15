@@ -41,3 +41,23 @@ describe("PRINCIPLES.md: which check covers which red line", () => {
     }
   });
 });
+
+describe("RL-19 (nothing only for AI agents): the row names the drift gate (F5 step 14)", () => {
+  const row = rows.find((r) => r.line === "RL-19");
+  const files = [...(row?.checks ?? "").matchAll(/`([^`]+)`/g)].map((m) => m[1]);
+
+  it("names the three layers: the Pages comparison, the drift gate and the fact tests", () => {
+    expect(row, "the RL-19 row").toBeTruthy();
+    expect(files).toEqual(expect.arrayContaining(["scripts/check-generated.js", "scripts/check-ai.js", "tests/ai-files.test.js"]));
+  });
+
+  it("no longer says the files for agents and the test that regenerates them do not exist", () => {
+    expect(row?.limit).not.toMatch(/do(?:es)? not exist yet/i);
+  });
+
+  it("says what the gate does not see: the prose only an agent would read, and the meaning of a description", () => {
+    expect(row?.limit).toMatch(/only an agent would read/i);
+    expect(row?.limit).toMatch(/meaning of a description/i);
+  });
+});
+

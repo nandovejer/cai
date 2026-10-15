@@ -5,7 +5,7 @@ const S={transparent:[0,0,0,0],white:[255,255,255,1],black:[0,0,0,1]},x=(n,t,r)=
    Generated from tokens.json · Do not edit manually
    ========================================================================== */
 
-@layer luz.tokens, luz.themes, luz.settings, luz.generic, luz.elements, luz.objects, luz.components, luz.utilities, luz.site, luz.landing, luz.cms, luz.print;
+@layer luz.tokens, luz.themes, luz.settings, luz.generic, luz.elements, luz.objects, luz.components, luz.utilities, luz.site, luz.landing, luz.cms, luz.app, luz.print;
 @layer luz.tokens {
 /* -------------------------------------------------------------------------
    LAYER 1: PRIMITIVOS

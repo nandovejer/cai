@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard – App – LUZ documentation</title>
+  <meta name="description" content="The view of an application at a glance: its title and main action, then a grid of panels that fills the room the view has.">
+  <link rel="icon" href="../../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
+  <link rel="icon" href="../../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-QPTLZskv.png">
+  <!-- Before the first paint: the visitor's color mode (EX-009) -->
+  <script src="../../../theme-boot.js" ></script>
+  <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-DROh7RWy.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-Cm1P5x6m.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-CQWABGDg.css">
+</head>
+<body class="o-shell docs-page">
+  <a class="luz-skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+    <div class="site-header__inner">
+      <button class="luz-nav-toggle site-header__menu" type="button" aria-label="Menu" popovertarget="page-nav">
+        <svg class="site-header__menu-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect class="site-header__menu-bar" x="3" y="5" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="11" width="18" height="2" rx="1"/>
+          <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
+        </svg>
+      </button>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
+      <nav class="site-header__nav" aria-label="Site">
+        <a href="../../../">Home</a>
+        <a href="../../../docs/" aria-current="true">Docs</a>
+        <a class="site-header__github" href="https://github.com/nandovejer/luz"><svg class="site-header__github-icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.33c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.71 1.22 1.87.87 2.33.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg><span class="site-header__github-label">GitHub</span></a>
+      </nav>
+      <luz-search>
+        <a class="luz-search__fallback site-header__az" href="../../../docs/a-z/" data-luz-search-fallback>
+          <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <span class="luz-search__fallback-label">A–Z<span class="u-sr-only"> index</span></span>
+        </a>
+        <button class="luz-search__trigger luz-search__trigger--compact site-header__search" type="button" data-luz-search-open aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" title="Search docs (Ctrl K)" hidden>
+          <svg class="luz-search__trigger-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <span class="luz-search__trigger-label">Search docs…</span>
+          <kbd class="luz-search__trigger-key" aria-hidden="true">Ctrl K</kbd>
+        </button>
+        <dialog class="luz-modal luz-search" id="luz-search" aria-labelledby="luz-search-title"
+                data-luz-search data-luz-search-src="../../../docs/search-index.json"
+                data-luz-label-results="{n} results"
+                data-luz-label-result="1 result"
+                data-luz-label-capped="{shown} of {n} results. Type more to narrow."
+                data-luz-label-none="No results for “{query}”. Check the spelling or try a shorter word."
+                data-luz-label-loading="Loading the search index…"
+                data-luz-label-error="Search is not available right now.">
+          <search class="luz-search__body">
+            <div class="luz-search__head">
+              <h2 class="luz-search__title" id="luz-search-title"><label for="luz-search-q">Search the documentation</label></h2>
+              <form method="dialog"><button class="luz-btn luz-btn--ghost luz-search__close" aria-label="Close search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6 6 18"/></svg></button></form>
+            </div>
+            <div class="luz-search__field">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+              <input class="luz-input" id="luz-search-q" type="text" maxlength="100" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="go" autofocus aria-describedby="luz-search-hint">
+            </div>
+            <p class="luz-field__helper" id="luz-search-hint">Results update as you type. Arrow keys move through them.</p>
+            <p class="luz-search__status" role="status"></p>
+            <div class="luz-search__results" data-luz-search-results>
+              <div data-luz-search-show="idle">
+                <h3>Popular</h3>
+                <ul lang="en">
+                  <li><a href="../../../docs/get-started/"><span>Install LUZ</span><span>, </span><span>Get started</span></a></li>
+                  <li><a href="../../../docs/components/button/"><span>Button</span><span>, </span><span>Components</span></a></li>
+                  <li><a href="../../../docs/components/form/"><span>Form fields</span><span>, </span><span>Components</span></a></li>
+                  <li><a href="../../../docs/tokens/color/"><span>Color</span><span>, </span><span>Tokens</span></a></li>
+                  <li><a href="../../../docs/tokens/modes/"><span>Color modes and themes</span><span>, </span><span>Tokens</span></a></li>
+                </ul>
+              </div>
+              <div hidden><h3>Pages</h3><ul data-luz-search-list="pages" lang="en"></ul></div>
+              <div hidden><h3>Sections</h3><ul data-luz-search-list="sections" lang="en"></ul></div>
+              <div hidden><h3>HTML elements</h3><ul data-luz-search-list="elements" lang="en"></ul></div>
+            </div>
+            <p class="luz-search__foot">Can’t find it? <a href="../../../docs/a-z/">Browse the A–Z index</a></p>
+          </search>
+        </dialog>
+      </luz-search>
+      
+    </div>
+  </header>
+
+  <nav class="luz-sidebar page-nav" id="page-nav" popover aria-label="Documentation" tabindex="-1">
+    <div class="luz-sidebar__section page-nav__site">
+      <span class="luz-sidebar__section-label" id="nav-site">Site</span>
+      <ul aria-labelledby="nav-site">
+        <li><a class="luz-sidebar__link" href="../../../">Home</a></li>
+        <li><a class="luz-sidebar__link" href="../../../docs/" aria-current="true">Docs</a></li>
+        <li><a class="luz-sidebar__link" href="https://github.com/nandovejer/luz">GitHub</a></li>
+      </ul>
+    </div>
+    <ul class="docs-nav">
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/get-started/">Get started</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/tokens/">Tokens</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/html/">HTML elements</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/components/">Components</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/site/">Site</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/landing/">Landing</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/cms/">CMS</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" aria-current="true" href="../../../docs/app/">App</a>
+        <ul class="docs-nav__pages">
+          <li><a class="luz-sidebar__link" href="../../../docs/app/header/">Header</a></li>
+          <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/app/dashboard/">Dashboard</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/app/templates/">App templates</a></li>
+        </ul>
+      </li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
+    </ul>
+  </nav>
+
+  <main class="o-main docs-main" id="main-content" tabindex="-1">
+  <div class="docs-page-head">
+    <nav class="docs-breadcrumb" aria-label="Breadcrumb">
+      <ol class="luz-breadcrumb">
+        <li><a class="luz-breadcrumb__item" href="../../../docs/">Docs</a></li>
+        <li><a class="luz-breadcrumb__item" href="../../../docs/app/">App</a></li>
+        <li><span class="luz-breadcrumb__item" aria-current="page">Dashboard</span></li>
+      </ol>
+    </nav>
+    <div class="docs-page-head__title">
+      <h1 class="docs-title">Dashboard</h1>
+      <code class="docs-demo__file">.luz-app-dashboard</code>
+      <code class="docs-demo__file">__head</code>
+      <code class="docs-demo__file">__title</code>
+      <code class="docs-demo__file">__panel</code>
+      <code class="docs-demo__file">__panel--wide</code>
+    </div>
+    <p class="docs-lead">The view of an application at a glance: its title and main action, then a grid of panels that fills the room the view has.</p>
+  </div>
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#example">Example</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#known-issues">Known issues</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#code">Code</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#markup">Copy the markup</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#variants">Variants and options</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#how">How it works</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#no-js">Without JavaScript</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#design">Design</a>
+          <ul class="docs-onpage__sub">
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#when">When to use</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#when-not">When not to use</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#do-dont">Do and don&#39;t</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#content">Writing the content</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="luz-sidebar__link docs-onpage__link" href="#tokens">Tokens it uses</a></li>
+          </ul>
+        </li>
+      </ul>
+    </details>
+  </nav>
+  <div class="docs-body">
+    <div class="docs-component" id="p-app-dashboard">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage">
+            <div class="luz-app-dashboard">
+              <div class="luz-app-dashboard__head">
+                <p class="luz-app-dashboard__title">Overview</p>
+                <div class="o-actions">
+                  <a class="luz-btn luz-btn--primary" href="#p-app-dashboard">New report</a>
+                  <a class="luz-btn luz-btn--secondary" href="#p-app-dashboard">Export data</a>
+                </div>
+              </div>
+              <ul class="o-grid o-grid--auto">
+                <li class="luz-card luz-app-dashboard__panel luz-app-dashboard__panel--wide">
+                  <h3 class="luz-card__title">Sales this month</h3>
+                  <p class="luz-card__body">The most important number gets the room of two columns, when the view has it.</p>
+                  <a href="#p-app-dashboard">Open the sales report</a>
+                </li>
+                <li class="luz-card luz-app-dashboard__panel">
+                  <h3 class="luz-card__title">Stock alerts</h3>
+                  <p class="luz-card__body">Three products are below their minimum.</p>
+                  <a href="#p-app-dashboard">Review stock</a>
+                </li>
+                <li class="luz-card luz-app-dashboard__panel">
+                  <h3 class="luz-card__title">Open orders</h3>
+                  <p class="luz-card__body">Twelve orders wait for a label.</p>
+                  <a href="#p-app-dashboard">See orders</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <p class="docs-demo__note">The dashboard at the width of this column. In a page it is the <code class="luz-code-inline">&lt;main&gt;</code>, and the title is the page's <code class="luz-code-inline">&lt;h1&gt;</code>: here this page already has its own, so the title is a paragraph and the panels' titles are <code class="luz-code-inline">&lt;h3&gt;</code>. The grid answers to the room of the dashboard, not to the window's.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Dashboard documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>The view: a title row, then the panels. The title row is a <code>&lt;div&gt;</code>, and each panel starts with its heading.</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-app-dashboard" aria-label="Copy the dashboard markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Dashboard markup"><code id="code-app-dashboard">&lt;main class=&quot;luz-app-dashboard&quot; id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;
+  &lt;div class=&quot;luz-app-dashboard__head&quot;&gt;
+    &lt;h1 class=&quot;luz-app-dashboard__title&quot;&gt;Overview&lt;/h1&gt;
+    &lt;div class=&quot;o-actions&quot;&gt;
+      &lt;a class=&quot;luz-btn luz-btn--primary&quot; href=&quot;/reports/new/&quot;&gt;New report&lt;/a&gt;
+      &lt;a class=&quot;luz-btn luz-btn--secondary&quot; href=&quot;/export/&quot;&gt;Export data&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;ul class=&quot;o-grid o-grid--auto&quot;&gt;
+    &lt;li class=&quot;luz-card luz-app-dashboard__panel luz-app-dashboard__panel--wide&quot;&gt;
+      &lt;h2 class=&quot;luz-card__title&quot;&gt;Sales this month&lt;/h2&gt;
+      &lt;p class=&quot;luz-card__body&quot;&gt;…&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li class=&quot;luz-card luz-app-dashboard__panel&quot;&gt;
+      &lt;h2 class=&quot;luz-card__title&quot;&gt;Stock alerts&lt;/h2&gt;
+      &lt;p class=&quot;luz-card__body&quot;&gt;…&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/main&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>One modifier, for the panel. The dashboard is a class of app on a native <code>&lt;main&gt;</code>; the grid and the card are core's.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Dashboard classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-app-dashboard</code></div></td><td data-label="Effect"><div>On <code>&lt;main&gt;</code>: the view. 32 px of padding (16 px at 640 px and below), 24 px between its rows, and the container of its own size query</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-dashboard__head</code></div></td><td data-label="Effect"><div>On a <code>&lt;div&gt;</code>: the title at the start and the actions at the end, on one row that wraps; at 640 px and below, a column</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-dashboard__title</code></div></td><td data-label="Effect"><div>The view's one <code>&lt;h1&gt;</code>: 2xl size, semibold, in the text colour; xl at 640 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-dashboard__panel</code></div></td><td data-label="Effect"><div>On a <code>.luz-card</code> in the grid: it can shrink, so a wide child never widens its column</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-app-dashboard__panel--wide</code></div></td><td data-label="Effect"><div>Two columns, when the dashboard is at least 40 rem wide; one column below, so it never asks for a column that is not there</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-grid.o-grid--auto</code> (core)</div></td><td data-label="Effect"><div>On the <code>&lt;ul&gt;</code>: as many equal columns as fit, none narrower than 18 rem</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.o-actions</code> (core)</div></td><td data-label="Effect"><div>Two or three related actions: a row that wraps, a column of full-width actions at 640 px and below</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/app</code> on core's grid and card. No JavaScript.</p>
+            <ul>
+              <li>The dashboard sets <code>--luz-grid-min: 18rem</code> for core's <code>.o-grid--auto</code>, so a column is never narrower than 18 rem and the number of columns follows the room: one at 320 px, two at 768 px, and three at 1280 px beside a sidebar.</li>
+              <li>The dashboard is a size container. The wide panel asks how wide the dashboard is, not the window, so it fits with a sidebar and without one. From 40 rem two columns always exist (two of 18 rem and a gap), and at 200% text both are in rem, so it never overflows.</li>
+              <li>The panels keep the order of the markup. There is no dense packing and no <code>order</code>: a wide panel that does not fit in what is left of a row starts the next one, and the gap stays. Reading order, focus order and what is drawn are the same.</li>
+              <li>A panel can shrink, so a long line of code or a table inside it scrolls in its own wrapper and does not widen the column.</li>
+              <li>Empty, loading and failed panels are the panel's own content: a sentence and a link, core's <a href="../../../docs/components/progress/">progress</a> or <a href="../../../docs/components/alert/">alert</a>. There is no skeleton class in 0.1.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the grid, the container query and the cards are CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the order of the source: the title row's actions, then each panel in turn. A panel that is a card with a link inside is reached by that link.</li>
+              <li><strong>Headings:</strong> the view has one <code>&lt;h1&gt;</code>, in the title row, and each panel starts with an <code>&lt;h2&gt;</code>. The title row is a <code>&lt;div&gt;</code>, not a <code>&lt;header&gt;</code>.</li>
+              <li><strong>List:</strong> the panels are a <code>&lt;ul&gt;</code> of <code>&lt;li&gt;</code>: a screen reader says how many there are. Safari can drop the list role from a list without markers; the headings still lead through the panels.</li>
+              <li><strong>Actions:</strong> an action that goes somewhere is a link (<code>&lt;a href&gt;</code>); one that does something on this page is a <code>&lt;button type="button"&gt;</code>. Never an <code>&lt;a&gt;</code> without <code>href</code>.</li>
+              <li><strong>Landmarks:</strong> the dashboard is the page's <code>&lt;main&gt;</code>, the sibling of the <a href="../../../docs/app/header/">header</a>. It takes the skip link's target, with <code>tabindex="-1"</code>.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the dashboard for a view that shows several things about the same subject, each short enough to read at a glance and each leading to its own page.</p>
+            <ul>
+              <li>An overview, a status page or a home view, where the person checks and then acts on one thing.</li>
+              <li>The most important panel first, wide: it gets the room when the view has it.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it for a view that is one long thing: a table, a form or a document are not panels.</p>
+            <ul>
+              <li>One primary action per view, in the title row, never in a panel.</li>
+              <li>Do not make a panel taller than its neighbours with row spans or dense packing: it moves a panel before the ones that come first in the markup.</li>
+              <li>For a plain grid of cards in a page of content, use core's <a href="../../../docs/components/layout/#objects-grid">grid</a> and <a href="../../../docs/components/card/">card</a>.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Put the title and the one main action in the first row, and one short thing in each panel, under its own heading.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-app-dashboard"><div class="luz-app-dashboard__head"><p class="luz-app-dashboard__title">Overview</p><div class="o-actions"><a class="luz-btn luz-btn--primary" href="#">New report</a></div></div><ul class="o-grid o-grid--auto"><li class="luz-card luz-app-dashboard__panel"><p class="luz-card__title">Stock alerts</p><p class="luz-card__body">Three products are below their minimum.</p></li></ul></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Give every panel a primary button: the person cannot tell which thing to do first.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-app-dashboard"><div class="luz-app-dashboard__head"><p class="luz-app-dashboard__title">Overview</p></div><ul class="o-grid o-grid--auto"><li class="luz-card luz-app-dashboard__panel"><p class="luz-card__title">Stock alerts</p><a class="luz-btn luz-btn--primary" href="#">Review stock</a></li><li class="luz-card luz-app-dashboard__panel"><p class="luz-card__title">Open orders</p><a class="luz-btn luz-btn--primary" href="#">See orders</a></li></ul></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The title names the view; each panel names one subject and says its state in a sentence.</p>
+            <ul>
+              <li>Title: a noun the person knows from the sidebar, "Overview", "Reports". The same words as the sidebar's link.</li>
+              <li>Main action: a verb and what it makes, "New report". One per view.</li>
+              <li>Panel title: the subject, "Stock alerts". Under it, one sentence with the number: "Three products are below their minimum."</li>
+              <li>Link: where it goes, "Review stock", not "More" or "Click here".</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The title sits on the page surface and the panels' text on the card's surface.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Dashboard contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>View title</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Panel title</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Panel text</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.9:1</div></td><td data-label="Dark"><div>7.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> every link and button in a panel keeps core's ring, 2 px of <code>--luz-focus-ring</code>. A panel whose title is a link takes the ring on the whole card.</li>
+              <li><strong>Edges:</strong> a card's border (<code>--luz-divider</code>) is decorative; its text carries the meaning. Forced colours keep the border.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 7 tokens that the <code>.luz-app-dashboard</code> rules of app's <code>components/dashboard.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code>, <code>--luz-space-xl</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--luz-text-2xl</code>, <code>--luz-text-xl</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>
+
+  </div>
+  <nav class="docs-end" aria-labelledby="docs-end-title">
+    <h2 class="docs-end__title" id="docs-end-title">Keep going</h2>
+    <ul class="docs-end__links">
+      <li><a href="../../../docs/components/">Components</a></li>
+      <li><a href="../../../docs/site/">Site</a></li>
+    </ul>
+    <ul class="docs-pager">
+      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/app/header/" aria-label="Previous: Header"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Header</span></a></li>
+      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/app/templates/" aria-label="Next: App templates"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">App templates</span></a></li>
+    </ul>
+  </nav>
+  </main>
+
+  <footer class="docs-footer luz-landing-footer" id="site-footer">
+    <div class="o-container o-container--inline o-row">
+      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
+      <nav class="o-actions" aria-label="Project links">
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../docs/a-z/">A–Z index</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz/issues">Report a problem</a>
+      </nav>
+      <fieldset class="luz-mode-switcher luz-mode-switcher--cycle site-modes">
+        <legend class="luz-mode-switcher__label">Color mode</legend>
+        <button class="luz-mode-cycle" type="button" aria-label="Change color mode"><svg class="luz-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg><svg class="luz-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg><svg class="luz-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg></button>
+        <span class="luz-mode-cycle__status" role="status"></span>
+        <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light" checked><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><g fill="currentColor"><circle cx="12" cy="12" r="4.75"/><circle cx="21.25" cy="12.00" r="1.35"/><circle cx="18.54" cy="18.54" r="1.35"/><circle cx="12.00" cy="21.25" r="1.35"/><circle cx="5.46" cy="18.54" r="1.35"/><circle cx="2.75" cy="12.00" r="1.35"/><circle cx="5.46" cy="5.46" r="1.35"/><circle cx="12.00" cy="2.75" r="1.35"/><circle cx="18.54" cy="5.46" r="1.35"/></g></svg>Light</label>
+        <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+        <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+      </fieldset>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -80,6 +80,7 @@ import {
   where,
   workspace,
 } from "./helpers/check-fixtures.js";
+import { linkTo, links } from "./helpers/check-run.js";
 
 const suggest = await checkModule("suggest");
 const messages = await checkModule("messages");
@@ -228,7 +229,7 @@ describe("class/unknown", () => {
   });
 
   it("reports each unknown class of an attribute, in reading order, at the attribute", () => {
-    const html = page('  <p class="luz-aaaa-one luz-btn luz-bbbb-two">x</p>');
+    const html = page('  <button class="luz-aaaa-one luz-btn luz-bbbb-two" type="button">x</button>');
     const result = check({ "index.html": html });
     const at = where(html, 'class="luz-aaaa-one');
     expect(keysOf(result.findings)).toEqual([`class/unknown ${at.line}:${at.column}`, `class/unknown ${at.line}:${at.column}`]);
@@ -236,7 +237,7 @@ describe("class/unknown", () => {
   });
 
   it("splits the class value on ASCII whitespace only, as HTML does: a tab and a line break split, a no-break space does not", () => {
-    const split = check({ "a.html": page('  <p class="luz-btn\n\tluz-btn-primary\r\nluz-card">x</p>') });
+    const split = check({ "a.html": page('  <button class="luz-btn\n\tluz-btn-primary\r\nluz-card" type="button">x</button>') });
     expect(split.findings.map((f) => f.message.split(" ")[0])).toEqual([".luz-btn-primary"]);
     const glued = check({ "b.html": page(`  <p class="luz-btn${NBSP}luz-btn--primary">x</p>`) });
     expect(glued.findings).toHaveLength(1);
@@ -521,7 +522,8 @@ describe("element/unknown-attribute", () => {
   });
 
   it("blocks every non-global attribute of an element that declares none", () => {
-    const result = check({ "index.html": page('  <luz-lang-switch foo="1" class="x"></luz-lang-switch>') });
+    const withSite = links(linkTo("tokens", "luz-tokens.min.css"), linkTo("core", "luz.min.css"), linkTo("site", "site.min.css"));
+    const result = check({ "index.html": page('  <luz-lang-switch foo="1" class="x"></luz-lang-switch>', withSite) });
     expect(result.findings.map((f) => f.message.split(" ")[0])).toEqual(["foo"]);
   });
 
@@ -884,7 +886,7 @@ describe("the rules cost one pass: a file of 1 MB reads in under a second", () =
   it("1 MB of known classes, in one attribute and in many elements", () => {
     expect(snapshot.error).toBeNull();
     const tokens = "luz-btn luz-btn--primary luz-card o-stack u-sr-only ";
-    const one = timed({ "one.html": `<p class="${tokens.repeat(Math.ceil(SIZE / tokens.length))}">x</p>\n` });
+    const one = timed({ "one.html": `<button class="${tokens.repeat(Math.ceil(SIZE / tokens.length))}" type="button">x</button>\n` });
     expect(one.code, one.stderr).toBe(0);
     expect(one.ms).toBeLessThan(BUDGET_MS);
     const element = '<button class="luz-btn luz-btn--primary">x</button>\n';

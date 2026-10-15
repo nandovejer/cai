@@ -33,6 +33,7 @@ const TYPES = {
   borderRadius: "dimension",
   fontFamily: "fontFamily",
   shadow: "shadow",
+  number: "number",
 };
 
 /** `--luz-surface-page` → ["surface", "page"]; `--luz-scrim` → ["scrim"]. */
@@ -98,7 +99,14 @@ export function shadow(css) {
   return layers.length === 1 ? layers[0] : layers;
 }
 
-const VALUE = { color, dimension, fontFamily, shadow };
+/** "1.25" → 1.25 (a DTCG number: the type ratio). */
+export function number(css) {
+  const n = Number(css);
+  if (!Number.isFinite(n)) throw new Error(`tokens-dtcg: unsupported number "${css}"`);
+  return n;
+}
+
+const VALUE = { color, dimension, fontFamily, shadow, number };
 
 /** tokens.json group → the CSS custom property prefix build-tokens.js uses. */
 function primitiveEntries(tokens) {
@@ -162,6 +170,8 @@ export function buildDtcg(tokens, semanticCss) {
     if (!$type) throw new Error(`tokens-dtcg: no DTCG type for ${prop} (${token.type})`);
     const out = { $type, $value: VALUE[$type](token.value) };
     if (token.description) out.$description = token.description;
+    // A derived size keeps its resolved $value; the formula is for tools that can show it
+    if (token.from) out.$extensions = { "com.luz-ds": { from: token.from } };
     place(primitives, pathOf(prop), out);
     primitiveNames.add(prop);
   }

@@ -53,9 +53,14 @@ function generatePrimitives(tokens) {
     lines.push("");
   }
 
-  lines.push("  /* Spacing (4px base, smallest to largest) */");
+  // A derived size is written as its formula (`from`); `value` stays the
+  // resolved default for dist/tokens.json and the DTCG file. `fromRounded`
+  // is the same formula with round(): it goes in the @supports block below.
+  const rounded = [];
+
+  lines.push("  /* Spacing: --luz-space-unit (0.25rem, the 4px grid) times a step; set the unit on :root */");
   for (const [key, token] of Object.entries(tokens.spacing)) {
-    lines.push(`  --luz-space-${key}: ${token.value};`);
+    lines.push(`  --luz-space-${key}: ${token.from ?? token.value};`);
   }
 
   lines.push("\n  /* Control heights */");
@@ -63,9 +68,10 @@ function generatePrimitives(tokens) {
     lines.push(`  --luz-control-${key}: ${token.value};`);
   }
 
-  lines.push("\n  /* Typography */");
+  lines.push("\n  /* Typography: --luz-type-base and --luz-type-ratio size the --luz-text-* steps; set them on :root */");
   for (const [key, token] of Object.entries(tokens.typography)) {
-    lines.push(`  --luz-${key}: ${token.value};`);
+    lines.push(`  --luz-${key}: ${token.from ?? token.value};`);
+    if (token.fromRounded) rounded.push(`    --luz-${key}: ${token.fromRounded};`);
   }
 
   lines.push("\n  /* Radius */");
@@ -78,7 +84,13 @@ function generatePrimitives(tokens) {
     lines.push(`  --luz-shadow-${key}: ${token.value};`);
   }
 
-  return `:root {\n${lines.join("\n")}\n}`;
+  // round() is Baseline "newly available" (2024): a browser without it keeps
+  // the plain chain, at most 0.25px away on three heading sizes
+  const supports = rounded.length
+    ? `\n\n/* Whole 1/16 rem steps, where round() exists (the plain chain above is the fallback) */\n@supports (width: round(1px, 1px)) {\n  :root {\n${rounded.join("\n")}\n  }\n}`
+    : "";
+
+  return `:root {\n${lines.join("\n")}\n}${supports}`;
 }
 
 // Start from a clean dist so removed sources never linger in the tarball

@@ -62,7 +62,7 @@ files: tokens.json → spacing
               </li>
             </ul>
           </div>
-          <p class="docs-demo__note">A 2px hairline, then the 4px base times 1, 2, 3, 4, 6, 8, 12, 16 and 24: each power of two and its 1.5× half step.</p>
+          <p class="docs-demo__note">A 2px hairline, then the unit <code class="luz-code-inline">--luz-space-unit</code> (0.25rem, 4px at a 16px root) times 1, 2, 3, 4, 6, 8, 12, 16 and 24: each power of two and its 1.5× half step. The unit is in rem, so spacing follows the font size the reader sets in the browser, as text does. Set it on <code class="luz-code-inline">:root</code> to change the whole scale; components read the steps, never the unit.</p>
         
     </div>
 

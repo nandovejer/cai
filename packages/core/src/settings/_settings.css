@@ -12,6 +12,10 @@
      The serif; controls, labels, tables and navigation keep
      --luz-font-sans. A theme of your own can set it to the sans. */
   --luz-font-body: var(--luz-font-serif);
+  /* Running text: a step above --luz-text-base, because ET Book's x-height
+     is small (17px at the default 16px base). It follows the base knob. A
+     theme that sets the sans can set it to var(--luz-text-base). */
+  --luz-text-body: calc(var(--luz-text-base) * 1.0625);
   /* Text inside form fields. Never below 16px on touch screens: iOS Safari
      zooms the page when a focused field is smaller. */
   --luz-text-control: var(--luz-text-md);
@@ -84,6 +88,7 @@
 
 @media (max-width: 768px), (pointer: coarse) {
   :root {
-    --luz-text-control: var(--luz-text-base);
+    /* The size knob may take the base below 16px; a field never does here */
+    --luz-text-control: max(1rem, var(--luz-text-base));
   }
 }

@@ -17,8 +17,9 @@
 
 :where(body) {
   font-family: var(--luz-font-body);
-  /* ET Book has a small x-height: a size up and more leading */
-  font-size: 1.0625rem; /* 17px at a 16px root */
+  /* ET Book has a small x-height: a size up (--luz-text-body, 17px at the
+     defaults) and more leading */
+  font-size: var(--luz-text-body);
   background: var(--luz-surface-page);
   color: var(--luz-text-primary);
   line-height: 1.6;

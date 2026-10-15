@@ -37,15 +37,26 @@ pnpm lint:js        # ESLint
 - Scales: 10–100 (10 = lightest, 100 = darkest)
 
 ### Semantics (Component Usage)
-- `--luz-bg-*`, `--luz-text-*`, `--luz-brand-*`, `--luz-border-*`, `--luz-icon-*`
-- `--luz-color-success`, `--luz-color-danger`, `--luz-color-warning`, `--luz-color-info`
+- Colours: `--luz-surface-*`, `--luz-text-primary|secondary|muted|disabled|on-fill`, `--luz-brand-*`, `--luz-divider`, `--luz-outline`, `--luz-focus-ring`, `--luz-input-*`, `--luz-sidebar-*`, `--luz-code-*`
+- Status: `--luz-color-success`, `--luz-color-danger`, `--luz-color-warning`, `--luz-color-info` (each with a `-bg`)
 
-### Configuration (Theme-Independent)
-- Z-index: `--luz-z-base`, `--luz-z-raised`, `--luz-z-overlay`, `--luz-z-modal`, `--luz-z-toast`
-- Breakpoints: `--luz-bp-sm` (480), `--luz-bp-md` (768), `--luz-bp-lg` (1024), `--luz-bp-xl` (1280), `--luz-bp-2xl` (1440)
-- Motion: `--luz-duration-*`, `--luz-easing-*`
+### Scales (Components Use the Steps)
+- Type: `--luz-text-xs` (12px), `sm` (14px), `md` (15px), `base` (16px), `lg` (20px), `xl` (25px), `2xl` (31px), `3xl` (39px), `4xl` (49px). The sizes at a 16px root: every step is rem.
 - Spacing: `--luz-space-3xs` (2px), `2xs` (4px), `xs` (8px), `sm` (12px), `md` (16px), `lg` (24px), `xl` (32px), `2xl` (48px), `3xl` (64px), `4xl` (96px)
-- Radius: `--luz-radius-sm`, `--luz-radius-md`, `--luz-radius-lg`, `--luz-radius-full`
+- Radius: `--luz-radius-none`, `--luz-radius-sm`, `--luz-radius-md`, `--luz-radius-full`
+- Control heights: `--luz-control-sm` (28px), `md` (36px), `lg` (44px), `xl` (56px); never scaled by a knob (target sizes)
+- Shadows: `--luz-shadow-sm`, `-md`, `-lg`
+
+### Size knobs (Set on `:root`, Never Read by a Component)
+- `--luz-type-base` (`1rem`), `--luz-type-ratio` (`1.25`), `--luz-space-unit` (`0.25rem`): the three inputs of the type and space scales, in `tokens.json`. Write the lengths in rem so the reader's browser font size keeps working. A knob set on `body` or a section changes nothing: the steps are resolved on `:root`.
+- Each derived step has `from` (the plain chain) and, for type, `fromRounded` (the same with `round()` to 1/16 rem, emitted in `@supports (width: round(1px, 1px))`); `value` is the resolved default.
+- `--luz-text-body` (core setting): running text, `calc(var(--luz-text-base) * 1.0625)`, 17px at the defaults.
+
+### Configuration (Theme-Independent, Core Settings)
+- Z-index: `--luz-z-base`, `--luz-z-raised`, `--luz-z-overlay`, `--luz-z-sidebar`, `--luz-z-modal`, `--luz-z-toast`
+- Breakpoints (reference values; a media query cannot read them): `--luz-mq-sm` (640), `--luz-mq-md` (768), `--luz-mq-lg` (1024), `--luz-mq-xl` (1280), `--luz-mq-xxl` (1536), `--luz-mq-xxxl` (1920)
+- Motion: `--luz-duration-*`, `--luz-easing-*`
+- Fonts: `--luz-font-heading`, `--luz-font-body`, `--luz-font-sans|serif|mono`; field text `--luz-text-control`
 
 ## Core Components
 

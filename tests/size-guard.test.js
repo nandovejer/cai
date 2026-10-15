@@ -90,6 +90,96 @@ describe("budgets.json and PRINCIPLES.md section 8", () => {
   });
 });
 
+/* ---- The rows F5 adds (.claude/plans/specs/f5-ai-ready.md section 9) ---- */
+
+describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => {
+  const budgets = JSON.parse(read("budgets.json")).budgets;
+  const principles = read("PRINCIPLES.md").split("\n");
+  const KiB = 1024;
+  const header = principles.findIndex((line) => /^\|\s*Artifact\s*\|.*\|\s*Ceiling\s*\|$/.test(line));
+  const table = principles
+    .slice(header + 2)
+    .filter((line, i, all) => all.slice(0, i + 1).every((l) => l.startsWith("|")))
+    .map((line) => line.split("|").slice(1, -1).map((cell) => cell.trim()));
+  const last = "docs page HTML (each, uncompressed)";
+
+  /** The ceilings committed before F5: RL-17, never raised, never removed. */
+  const BEFORE = [
+    ["tokens CSS", 5 * KiB],
+    ["core CSS", 15 * KiB],
+    ["core classless CSS (a file of its own)", 3 * KiB],
+    ["core JS (entry, lazy chunks excluded)", 8 * KiB],
+    ["core JS lazy chunk: midi", 4 * KiB],
+    ["core JS lazy chunk: table-sort", 2 * KiB],
+    ["core JS lazy chunk: timeline", 3 * KiB],
+    ["site CSS", 4 * KiB],
+    ["site JS", 2 * KiB],
+    ["site JS lazy chunk: search", 2.5 * KiB],
+    ["site JS lazy chunk: consent", 1.5 * KiB],
+    ["landing CSS", 2 * KiB],
+    ["cms CSS", 4 * KiB],
+    ["app CSS", 2 * KiB],
+    [last, 80 * KiB],
+  ];
+
+  it("keeps the ceiling of every row that existed, and its place at the top of the list", () => {
+    expect(budgets.slice(0, BEFORE.length).map((b) => [b.name, b.max])).toEqual(BEFORE);
+  });
+
+  it("appends exactly three rows after the docs page row", () => {
+    expect(budgets).toHaveLength(BEFORE.length + 3);
+    expect(budgets.at(BEFORE.length - 1).name).toBe(last);
+  });
+
+  it("budgets the check CLI bundle, gzipped: ideal 16 kB, ceiling 24 kB", () => {
+    expect(budgets[BEFORE.length]).toEqual({
+      name: "check CLI (packages/check/dist/luz-check.js)",
+      file: "packages/check/dist/luz-check.js",
+      ideal: 16 * KiB,
+      max: 24 * KiB,
+    });
+  });
+
+  it("budgets llms.txt and llms-full.txt, each uncompressed: ideal 384 KiB, ceiling 448 KiB", () => {
+    expect(budgets[BEFORE.length + 1]).toEqual({
+      name: "llms.txt and llms-full.txt (each, uncompressed)",
+      glob: "docs/**/*.txt",
+      compression: "none",
+      ideal: 384 * KiB,
+      max: 448 * KiB,
+    });
+  });
+
+  it("budgets the manifests on Pages, each uncompressed: ideal 48 KiB, ceiling 64 KiB", () => {
+    expect(budgets[BEFORE.length + 2]).toEqual({
+      name: "manifests (each, uncompressed)",
+      glob: "docs/manifests/**/*.json",
+      compression: "none",
+      ideal: 48 * KiB,
+      max: 64 * KiB,
+    });
+  });
+
+  it("repeats the three rows in the PRINCIPLES.md table, in the same order, after \"Each docs page\"", () => {
+    expect(table).toHaveLength(BEFORE.length + 3);
+    expect(table[BEFORE.length - 1][0]).toMatch(/^Each docs page/);
+    const [cli, text, manifests] = table.slice(BEFORE.length);
+    expect(cli[0]).toMatch(/check/);
+    expect(cli[0]).toMatch(/luz-check\.js/);
+    expect(text[0]).toMatch(/llms\.txt/);
+    expect(text[0]).toMatch(/llms-full\.txt/);
+    expect(manifests[0]).toMatch(/manifests/i);
+  });
+
+  it("states in the table the same ceilings and ideals as budgets.json (the units are the table's own)", () => {
+    const kib = (cell) => Math.round(parseFloat(cell) * KiB);
+    const rows = table.slice(BEFORE.length);
+    expect(rows.map((cells) => kib(cells.at(-1)))).toEqual(budgets.slice(BEFORE.length).map((b) => b.max));
+    // column 2 is the ideal ("≤ 16 kB"), column 3 where the warning starts
+    expect(rows.map((cells) => kib(cells[2].replace(/^≤\s*/, "")))).toEqual(budgets.slice(BEFORE.length).map((b) => b.ideal));
+  });
+});
+
 /* ---- The guard on a temporary copy ------------------------------------- */
 
 const LOADER = 'document.querySelector("luz-search")&&import("./search.min.js");document.querySelector("luz-consent")&&import("./consent.min.js");';

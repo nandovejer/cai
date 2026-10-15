@@ -162,8 +162,8 @@ describe("front matter", () => {
     expect(() => parseFrontMatter(PAGE("A", "", "layout: ../evil\n"), "x.html")).toThrow(/layout/);
   });
 
-  it("allows generate: gallery, a-z and snippets, and nothing else", () => {
-    for (const value of ["gallery", "a-z", "snippets"]) {
+  it("allows generate: gallery, a-z, snippets and ai, and nothing else", () => {
+    for (const value of ["gallery", "a-z", "snippets", "ai"]) {
       expect(parseFrontMatter(PAGE("A", "", `generate: ${value}\n`), "x.html", areas).meta.generate, value).toBe(value);
     }
     expect(() => parseFrontMatter(PAGE("A", "", "generate: tokens\n"), "x.html", areas)).toThrow(/generate/);
@@ -709,9 +709,10 @@ describe("the LUZ docs site", () => {
       const area = site.areas.find((a) => a.id === site.byRoute.get(route).meta.area);
       expect(order.indexOf(route), route).toBeGreaterThanOrEqual(order.indexOf(`/docs/${area.slug}/`));
     }
-    // F4 (D7): Install, Choose your snippet, organised, how to read, Make it yours, bundler,
-    // JavaScript, layers, print, Classless last (so `/docs/tokens/` keeps its Previous link)
-    expect(order.slice(0, 11)).toEqual([
+    // F4 (D7) and F5 (f5-ai-ready.md 6): Install, Choose your snippet, organised, how to read,
+    // Make it yours, bundler, JavaScript, layers, print, Working with AI, Classless last (so
+    // `/docs/tokens/` keeps its Previous link)
+    expect(order.slice(0, 12)).toEqual([
       "/docs/get-started/",
       "/docs/get-started/snippet/",
       "/docs/get-started/structure/",
@@ -721,13 +722,14 @@ describe("the LUZ docs site", () => {
       "/docs/get-started/javascript/",
       "/docs/get-started/layers/",
       "/docs/get-started/print/",
+      "/docs/get-started/ai/",
       "/docs/get-started/classless/",
       "/docs/tokens/",
     ]);
     expect(order.at(-1)).toBe("/docs/accessibility/");
   });
 
-  it("numbers the Get started pages 1 to 10 in the reading order, with these titles", () => {
+  it("numbers the Get started pages 1 to 11 in the reading order, with these titles", () => {
     const pages = readingOrder(site).filter((p) => p.meta.area === "get-started" && p.route !== "/docs/get-started/");
     const all = [site.byRoute.get("/docs/get-started/"), ...pages];
     expect(all.map((p) => [p.meta.order, p.meta.title])).toEqual([
@@ -740,8 +742,20 @@ describe("the LUZ docs site", () => {
       ["7", "JavaScript modules"],
       ["8", "Cascade layers"],
       ["9", "Print styles"],
-      ["10", "Classless styles"],
+      ["10", "Working with AI"],
+      ["11", "Classless styles"],
     ]);
+  });
+
+  it("generates the AI files and rules tables on its page: generate: ai, Working with AI, after Print styles", () => {
+    const page = site.byRoute.get("/docs/get-started/ai/");
+    expect(page?.meta.generate).toBe("ai");
+    expect(page?.meta.area).toBe("get-started");
+    expect(page?.meta.title).toBe("Working with AI");
+    // the generator wrote the two tables under the hand-written sections
+    const html = rendered.get("/docs/get-started/ai/") ?? "";
+    expect(html, "the files table").toContain('id="files"');
+    expect(html, "the rules table").toContain('id="rules"');
   });
 
   it("generates the snippet selector on its page: generate: snippets, the page after Install", () => {

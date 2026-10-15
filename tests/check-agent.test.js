@@ -400,9 +400,29 @@ describe("scripts/build-check.js: what it reads for the agent", () => {
     ).toMatch(
       /\.claude\/agents\/accessibility-engineer\.md|["']\.claude["']\s*,\s*["']agents["']\s*,\s*["']accessibility-engineer\.md["']/
     );
-    expect(source).not.toMatch(
-      /readdir|opendir|scandir|\bglob\b|globSync|fast-glob|\bwalk\(/i
-    );
+    // The function use, not the tool name: the builder's literal
+    // `tools: Read, Grep, Glob` must pass, so the pattern is case-sensitive on
+    // `glob` (lower case is the module and the method) and spells out the
+    // camel-case forms of the directory readers.
+    const DIRECTORY_READS =
+      /[Rr]ead[Dd]ir|[Oo]pen[Dd]ir|[Ss]can[Dd]ir|\bglob\b|[Gg]lobSync|fast-glob|\b[Ww]alk\(/;
+    for (const line of [
+      'import { globSync } from "node:fs";',
+      'readdirSync(".claude");',
+      'import { opendir } from "node:fs/promises";',
+      'const files = glob(".claude/**");',
+      'import fg from "fast-glob";',
+      "walk(dir);",
+    ]) {
+      expect(line, "the guard still catches a directory read").toMatch(
+        DIRECTORY_READS
+      );
+    }
+    expect(
+      "const TOOLS = 'tools: Read, Grep, Glob';",
+      "the tool name in the frontmatter literal is not a directory read"
+    ).not.toMatch(DIRECTORY_READS);
+    expect(source).not.toMatch(DIRECTORY_READS);
     expect(source).not.toMatch(
       /\.claude\/plans|["']plans["']|OWNER\.md|settings\.local|memory/
     );

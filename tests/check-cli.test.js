@@ -215,6 +215,42 @@ describe("luz-check, wrong usage is exit 2", () => {
       expect(result.stderr).not.toMatch(STACK_TRACE);
     }
   });
+
+  it("says one fixed line for every internal error and never echoes what the error said (security-auditor, step 8 decision 5)", () => {
+    // A getter that throws is an internal failure at a place no input can reach: whatever it says must not come back
+    const failures = [
+      () => {
+        throw new Error("SECRET-DETAIL-4f9c /home/someone/private/file.html");
+      },
+      () => {
+        throw new TypeError(`${"long ".repeat(60)}\nsecond line`);
+      },
+      () => {
+        throw "a thrown string";
+      },
+      () => {
+        throw { message: "an object with a message" };
+      },
+    ];
+    const lines = failures.map((fail) => {
+      const env = {
+        cwd: tree(),
+        get version() {
+          return fail();
+        },
+      };
+      const result = run(["a.html"], env);
+      expect(result.code).toBe(2);
+      expect(result.stdout).toBe("");
+      expect(result.stderr).toMatch(/^luz-check [^\n]+\n$/);
+      expect(result.stderr).not.toMatch(STACK_TRACE);
+      expect(result.stderr.length).toBeLessThanOrEqual(120);
+      for (const secret of ["SECRET-DETAIL", "/home/someone", "long long", "second line", "a thrown string", "an object with a message"]) expect(result.stderr).not.toContain(secret);
+      return result.stderr;
+    });
+    // the same text for all of them: it is the tool's, not the error's
+    expect(new Set(lines).size).toBe(1);
+  });
 });
 
 /* ---- Exit codes over files ------------------------------------------------------------ */

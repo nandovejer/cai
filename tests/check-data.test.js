@@ -38,6 +38,13 @@
  *          [{ kind, path, declarations: [{ kind, name, customElement, tagName,
  *          attributes: [{ name }] }] }] }: names, no description, type,
  *          default, demos, exports or readme.
+ *      dist/data/tokens/tokens.css                       (step 11)
+ *          LUZ's tokens as the theme rules read them: what the contrast
+ *          engine of packages/tokens/lib reads (the --luz-* declarations,
+ *          the colour ones at least), in the shape its parser reads; the
+ *          tests/check-theme.test.js proves the verdicts are the engine's on
+ *          the full dist/tokens.css. No comments and nothing it does not
+ *          read: with the full file the folder would pass 56 KiB.
  *
  *    The same parser reads it and the package's own dist/ files. Two builds
  *    write the same bytes; the folder is under 56 KiB; packages/check/
@@ -176,7 +183,7 @@ describe("dist/data: the snapshot of this release, beside the bundle", () => {
     expect(existsSync(join(dataDir(), "index.json")), "data/index.json").toBe(true);
   });
 
-  it("holds exactly index.json, the six classes.json and the custom-elements.json of core and site", () => {
+  it("holds exactly index.json, the six classes.json, the custom-elements.json of core and site, and LUZ's tokens for the theme rules", () => {
     expect(built.error).toBeNull();
     expect(filesUnder(dataDir())).toEqual([
       "app/classes.json",
@@ -188,6 +195,7 @@ describe("dist/data: the snapshot of this release, beside the bundle", () => {
       "site/classes.json",
       "site/custom-elements.json",
       "tokens/classes.json",
+      "tokens/tokens.css",
     ]);
   });
 

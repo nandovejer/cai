@@ -214,7 +214,10 @@ export const MINI = {
   app: { classes: ["luz-app-shell", "luz-app-shell__nav"], properties: [], elements: [], hooks: [] },
 };
 
-/** `{ core: { version, classes, elements, hooks }, … }` over MINI: what a test changes in a package. */
+/**
+ * `{ core: { version, classes, elements, hooks }, … }` over MINI: what a test changes in a package.
+ * A property is a name (scope "root") or { name, scope: "root" | "component" }.
+ */
 function worldOf(version, overrides = {}) {
   const world = {};
   for (const name of LIBRARIES) {
@@ -267,7 +270,7 @@ export function installPackages(dir, { version = "0.1.0", overrides = {}, only =
       package: `@luz-ds/${name}`,
       version: pkg.version,
       classes: pkg.classes.map((spec) => fullClass(name, spec)),
-      properties: pkg.properties.map((p) => ({ name: p, scope: "root", layer: "luz.tokens" })),
+      properties: pkg.properties.map((p) => (typeof p === "string" ? { name: p, scope: "root", layer: "luz.tokens" } : { layer: p.scope === "component" ? "luz.components" : "luz.tokens", ...p })),
     };
     if (pkg.hooks.length > 0) manifest.hooks = pkg.hooks;
     put(dir, `${base}/dist/classes.json`, JSON.stringify(manifest, null, 2));
@@ -291,7 +294,7 @@ export function miniSnapshot({ version = "0.1.0", overrides = {}, only = LIBRARI
       const { name: n, defined, block, modifier, part, hosts } = fullClass(name, spec);
       return { name: n, kind: kindOf(n), defined, ...(block === undefined ? {} : { block }), ...(modifier === undefined ? {} : { modifier }), ...(part === undefined ? {} : { part }), ...(hosts ? { hosts } : {}) };
     });
-    const manifest = { schema: 1, package: `@luz-ds/${name}`, version: pkg.version, classes, properties: pkg.properties.map((p) => ({ name: p, scope: "root" })) };
+    const manifest = { schema: 1, package: `@luz-ds/${name}`, version: pkg.version, classes, properties: pkg.properties.map((p) => (typeof p === "string" ? { name: p, scope: "root" } : { name: p.name, scope: p.scope })) };
     if (pkg.hooks.length > 0) manifest.hooks = pkg.hooks;
     put(dir, `${name}/classes.json`, JSON.stringify(manifest));
     if (pkg.elements.length > 0) put(dir, `${name}/custom-elements.json`, JSON.stringify(cem(name, pkg.elements, false)));

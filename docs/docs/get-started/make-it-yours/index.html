@@ -12,10 +12,10 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CtgG2YUA.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-tI-bKOaf.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-CCq3K5Z-.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CQWABGDg.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-2VxXI5Sp.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -133,10 +133,328 @@
     <h1 class="docs-title">Make it yours</h1>
     <p class="docs-lead">Change the colours, fonts, sizes, corners and shadows of LUZ with tokens, and adjust one component with CSS of your own.</p>
   </div>
-
+  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
+    <details class="docs-onpage__fold">
+      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
+      <ul class="docs-onpage__list">
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#how">Change a token, not a component</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#colour">Colours and modes</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#fonts">Fonts</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#sizes">Text and space sizes</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#corners">Corners</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#shadows">Shadows</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#component">Adjust one component</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#icons">Icons</a></li>
+        <li><a class="luz-sidebar__link docs-onpage__link" href="#limits">What not to change</a></li>
+      </ul>
+    </details>
+  </nav>
   <div class="docs-body">
-    <div class="docs-block" id="status">
-      <p>This page is being written. Until then, <a href="../../../docs/get-started/">Install LUZ</a> and <a href="../../../docs/get-started/snippet/">Choose your snippet</a> cover how to load LUZ.</p>
+    <div class="docs-block" id="make-it-yours">
+      <p>LUZ is made to be changed from the outside. You do not edit its files: you write CSS of your own that loads after it, and the rule that matters is that your CSS wins.</p>
+
+      <h2 id="how">Change a token, not a component</h2>
+      <p>LUZ's components read tokens: custom properties that start with <code class="luz-code-inline">--luz-</code>. To change how LUZ looks, write the token again in your own CSS. Every component that reads it follows.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-my-radius" aria-label="Copy the token override">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="The token override"><code id="code-my-radius">:root {
+  --luz-radius-md: 2px;
+}</code></pre>
+      </div>
+      <ul>
+        <li>Write the token on <code class="luz-code-inline">:root</code>, in CSS that is not inside an <code class="luz-code-inline">@layer</code>.</li>
+        <li>CSS outside any layer wins over every LUZ layer, wherever it sits in the file. You do not need <code class="luz-code-inline">!important</code>, or a longer selector.</li>
+        <li>If you use layers of your own, declare their order first. <a href="../../../docs/get-started/layers/">Cascade layers</a> has the order and the three ways to override LUZ.</li>
+        <li>Token names are on <a href="../../../docs/tokens/">the Tokens pages</a>. A token you write that LUZ does not read does nothing.</li>
+      </ul>
+
+      <h2 id="colour">Colours and modes</h2>
+      <p>LUZ ships one look in three modes: light, dark and high contrast. Colours are semantic tokens, such as <code class="luz-code-inline">--luz-brand-fill</code> and <code class="luz-code-inline">--luz-surface-page</code>, and each one has a value for each mode. To change them, <a href="../../../docs/tokens/themes/">make your own theme</a>: it gives you a template, the steps and where to load it. Then run <a href="../../../docs/tokens/contrast/">the contrast check</a> on your colours, which measures the pairs LUZ promises to keep readable.</p>
+
+      <h2 id="fonts">Fonts</h2>
+      <p>Two tokens say which font is used for what. Three more hold the font stacks.</p>
+      <ul>
+        <li><code class="luz-code-inline">--luz-font-body</code>: running text. The serif, ET Book, by default.</li>
+        <li><code class="luz-code-inline">--luz-font-heading</code>: headings. The serif by default.</li>
+        <li><code class="luz-code-inline">--luz-font-sans</code>, <code class="luz-code-inline">--luz-font-serif</code> and <code class="luz-code-inline">--luz-font-mono</code>: the three stacks. Controls, labels and tables use the sans, and code uses the mono.</li>
+      </ul>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-my-fonts" aria-label="Copy the font override">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="The font override"><code id="code-my-fonts">@font-face {
+  font-family: &quot;My Serif&quot;;
+  src: url(&quot;/fonts/my-serif.woff2&quot;) format(&quot;woff2&quot;);
+  font-display: swap;
+}
+
+:root {
+  --luz-font-serif: &quot;My Serif&quot;, georgia, serif;
+}</code></pre>
+      </div>
+      <ul>
+        <li>Your own <code class="luz-code-inline">@font-face</code> goes in your CSS, as above. Setting <code class="luz-code-inline">--luz-font-serif</code> changes the body and the headings, because both use it by default.</li>
+        <li>To drop ET Book, load <code class="luz-code-inline">tokens.css</code> instead of <code class="luz-code-inline">luz-tokens.css</code>: <code class="luz-code-inline">@luz-ds/tokens/tokens.css</code> from a bundler, <code class="luz-code-inline">dist/tokens.min.css</code> from a CDN. It has the same tokens and no <code class="luz-code-inline">@font-face</code>.</li>
+        <li>On an element marked <code class="luz-code-inline">lang="ar"</code>, body and headings already take the sans: ET Book has no Arabic letters. A rule of your own, outside LUZ's layers, still wins.</li>
+        <li>A font you bring has its own licence. Read it before you publish the file.</li>
+      </ul>
+      <p><a href="../../../docs/tokens/typography/">Typography</a> lists the font roles and the type scale.</p>
+
+      <h2 id="sizes">Text and space sizes</h2>
+      <p>Three tokens, called knobs, set the size of the whole type scale and the whole space scale. Every type step, <code class="luz-code-inline">--luz-text-xs</code> to <code class="luz-code-inline">--luz-text-4xl</code>, and every space step, <code class="luz-code-inline">--luz-space-3xs</code> to <code class="luz-code-inline">--luz-space-4xl</code>, is worked out from them, so one line changes the page.</p>
+      <div class="luz-table-wrap" role="region" aria-label="The three size knobs" tabindex="0">
+        <table class="luz-table">
+          <caption>The three size knobs</caption>
+          <thead>
+            <tr><th scope="col">Knob</th><th scope="col">Default</th><th scope="col">What it changes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Knob"><div><code class="luz-code-inline">--luz-type-base</code></div></td><td data-label="Default"><div>1rem</div></td><td data-label="What it changes"><div>The size of <code class="luz-code-inline">--luz-text-base</code>. Every other step is computed from it.</div></td></tr>
+            <tr><td data-label="Knob"><div><code class="luz-code-inline">--luz-type-ratio</code></div></td><td data-label="Default"><div>1.25</div></td><td data-label="What it changes"><div>The multiple between two steps above the base, and the divisor below it.</div></td></tr>
+            <tr><td data-label="Knob"><div><code class="luz-code-inline">--luz-space-unit</code></div></td><td data-label="Default"><div>0.25rem</div></td><td data-label="What it changes"><div>The grid of the spacing scale: every space step is a multiple of it.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-my-sizes" aria-label="Copy the size knobs">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="The size knobs"><code id="code-my-sizes">:root {
+  --luz-type-base: 1.125rem;
+  --luz-type-ratio: 1.2;
+  --luz-space-unit: 0.1875rem;
+}</code></pre>
+      </div>
+      <h3 id="sizes-rules">Rules for the knobs</h3>
+      <ul>
+        <li><strong>Write lengths in rem.</strong> A rem follows the font size the reader chose in their browser settings. A value in px pins the size and ignores that setting. Spacing is in rem too, so it grows with the text.</li>
+        <li><strong>Set them on <code class="luz-code-inline">:root</code>.</strong> The steps are worked out once, on <code class="luz-code-inline">:root</code>, and passed down as finished values. A knob on <code class="luz-code-inline">body</code> or on a section changes nothing. Sizes are a choice for the whole page.</li>
+      </ul>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS, does not work</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-body-knob" aria-label="Copy a knob that does nothing">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="A knob that does nothing"><code id="code-body-knob">/* This changes nothing: the steps are already worked out on :root */
+body {
+  --luz-type-base: 1.5rem;
+}</code></pre>
+      </div>
+      <h3 id="sizes-ranges">The ranges LUZ is tested at</h3>
+      <ul>
+        <li><code class="luz-code-inline">--luz-type-base</code>: 0.875rem to 1.25rem.</li>
+        <li><code class="luz-code-inline">--luz-type-ratio</code>: 1.125 to 1.5.</li>
+        <li><code class="luz-code-inline">--luz-space-unit</code>: 0.1875rem to 0.3125rem, which is 3px to 5px at a 16px root.</li>
+      </ul>
+      <p>Outside these ranges it still works, but nobody has looked at the result. The colour contrast check measures colours only: it does not look at sizes.</p>
+      <h3 id="sizes-held">What does not move</h3>
+      <ul>
+        <li>Small text keeps a floor. <code class="luz-code-inline">--luz-text-xs</code> is never under 0.75rem and <code class="luz-code-inline">--luz-text-sm</code> never under 0.875rem, whatever the base.</li>
+        <li>On a touch screen, and at 768px and below, form text is never under 1rem.</li>
+        <li>Control heights, <code class="luz-code-inline">--luz-control-sm</code> to <code class="luz-code-inline">--luz-control-xl</code> (28, 36, 44 and 56px), are not knobs. A smaller unit never makes a target smaller.</li>
+        <li>Running text is <code class="luz-code-inline">--luz-text-body</code>, 1.0625 times the base, so the base moves it too.</li>
+      </ul>
+      <h3 id="sizes-media">By width, or on paper</h3>
+      <p>The knobs are on <code class="luz-code-inline">:root</code>, so a media query can change them.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-sizes-media" aria-label="Copy knobs in media queries">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Knobs in media queries"><code id="code-sizes-media">@media (min-width: 80em) {
+  :root {
+    --luz-type-base: 1.125rem;
+  }
+}
+
+@media print {
+  :root {
+    --luz-type-base: 0.9375rem;
+  }
+}</code></pre>
+      </div>
+      <h3 id="sizes-try">Try them</h3>
+      <template id="sizes-demo">
+        <form class="docs-example" data-docs-specimen>
+          <p>Move the sliders: this whole page re-scales, because the knobs are written on its <code class="luz-code-inline">:root</code>. Nothing is stored. Reload, or reset, to go back.</p>
+          <div class="luz-field">
+            <label class="luz-field__label" for="sizes-base">Base size, <output class="luz-output" id="sizes-base-out" for="sizes-base">1</output> rem</label>
+            <input class="luz-input" id="sizes-base" type="range" min="0.875" max="1.25" step="0.0625" value="1" data-output="sizes-base-out">
+          </div>
+          <div class="luz-field">
+            <label class="luz-field__label" for="sizes-ratio">Ratio between steps, <output class="luz-output" id="sizes-ratio-out" for="sizes-ratio">1.25</output></label>
+            <input class="luz-input" id="sizes-ratio" type="range" min="1.125" max="1.5" step="0.025" value="1.25" data-output="sizes-ratio-out">
+          </div>
+          <button class="luz-btn luz-btn--secondary" type="reset">Reset sizes</button>
+        </form>
+      </template>
+      <p>These are the nine type sizes of five combinations of the knobs. The steps are <code class="luz-code-inline">--luz-text-xs</code> to <code class="luz-code-inline">--luz-text-4xl</code>, in px.</p>
+      <div class="luz-table-wrap" role="region" aria-label="Type sizes at 16px root" tabindex="0">
+        <table class="luz-table">
+          <caption>Type sizes at 16px root</caption>
+          <thead>
+            <tr><th scope="col">Preset</th><th scope="col">xs</th><th scope="col">sm</th><th scope="col">md</th><th scope="col">base</th><th scope="col">lg</th><th scope="col">xl</th><th scope="col">2xl</th><th scope="col">3xl</th><th scope="col">4xl</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row" data-label="Preset"><div>Default</div></th><td data-label="xs"><div>12</div></td><td data-label="sm"><div>14</div></td><td data-label="md"><div>15</div></td><td data-label="base"><div>16</div></td><td data-label="lg"><div>20</div></td><td data-label="xl"><div>25</div></td><td data-label="2xl"><div>31</div></td><td data-label="3xl"><div>39</div></td><td data-label="4xl"><div>49</div></td></tr>
+            <tr><th scope="row" data-label="Preset"><div>Larger text<br><code class="luz-code-inline">--luz-type-base: 1.125rem</code></div></th><td data-label="xs"><div>12</div></td><td data-label="sm"><div>14</div></td><td data-label="md"><div>16</div></td><td data-label="base"><div>18</div></td><td data-label="lg"><div>23</div></td><td data-label="xl"><div>29</div></td><td data-label="2xl"><div>36</div></td><td data-label="3xl"><div>45</div></td><td data-label="4xl"><div>56</div></td></tr>
+            <tr><th scope="row" data-label="Preset"><div>Tighter steps<br><code class="luz-code-inline">--luz-type-ratio: 1.2</code></div></th><td data-label="xs"><div>12</div></td><td data-label="sm"><div>14</div></td><td data-label="md"><div>15</div></td><td data-label="base"><div>16</div></td><td data-label="lg"><div>19</div></td><td data-label="xl"><div>23</div></td><td data-label="2xl"><div>28</div></td><td data-label="3xl"><div>34</div></td><td data-label="4xl"><div>41</div></td></tr>
+            <tr><th scope="row" data-label="Preset"><div>Small base<br><code class="luz-code-inline">--luz-type-base: 0.875rem</code></div></th><td data-label="xs"><div>12</div></td><td data-label="sm"><div>14</div></td><td data-label="md"><div>14</div></td><td data-label="base"><div>14</div></td><td data-label="lg"><div>18</div></td><td data-label="xl"><div>23</div></td><td data-label="2xl"><div>29</div></td><td data-label="3xl"><div>36</div></td><td data-label="4xl"><div>45</div></td></tr>
+            <tr><th scope="row" data-label="Preset"><div>Large and wide<br><code class="luz-code-inline">--luz-type-base: 1.25rem; --luz-type-ratio: 1.333</code></div></th><td data-label="xs"><div>12</div></td><td data-label="sm"><div>15</div></td><td data-label="md"><div>18</div></td><td data-label="base"><div>20</div></td><td data-label="lg"><div>27</div></td><td data-label="xl"><div>36</div></td><td data-label="2xl"><div>48</div></td><td data-label="3xl"><div>64</div></td><td data-label="4xl"><div>85</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <ul>
+        <li>The table is for a root font size of 16px, the browser default. If the reader's browser is set to 20px, every size is 1.25 times larger. That is why the knobs are in rem.</li>
+        <li>With a base of 0.875rem the floors hold: <code class="luz-code-inline">--luz-text-sm</code>, <code class="luz-code-inline">--luz-text-md</code> and <code class="luz-code-inline">--luz-text-base</code> are all 14px.</li>
+        <li>Each step is rounded to 1/16 rem, which is a whole pixel at a 16px root. A browser without <code class="luz-code-inline">round()</code> uses the plain chain: at the defaults the three largest steps are at most 0.25px away.</li>
+      </ul>
+      <p><a href="../../../docs/tokens/typography/">Typography</a> and <a href="../../../docs/tokens/spacing/">Spacing and sizing</a> list each step with its formula.</p>
+
+      <h2 id="corners">Corners</h2>
+      <p><code class="luz-code-inline">--luz-radius-md</code> is the ceiling: no rectangle is rounder. It is the corner of buttons, cards, alerts, menus and dialogs. Three more steps cover the other cases.</p>
+      <ul>
+        <li><code class="luz-code-inline">--luz-radius-none</code> (0px): a square corner, for a box that joins a neighbour.</li>
+        <li><code class="luz-code-inline">--luz-radius-sm</code> (2px): small marks, such as inline code and a checkbox.</li>
+        <li><code class="luz-code-inline">--luz-radius-full</code> (9999px): a pill or a circle, for shapes that are round by nature. It is not a corner for a box.</li>
+      </ul>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-my-corners" aria-label="Copy square corners">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Square corners"><code id="code-my-corners">:root {
+  --luz-radius-sm: 0;
+  --luz-radius-md: 0;
+}</code></pre>
+      </div>
+      <p><a href="../../../docs/tokens/radius/">Radius</a> says which component uses which step.</p>
+
+      <h2 id="shadows">Shadows</h2>
+      <p>Three tokens set how far a surface seems to float: <code class="luz-code-inline">--luz-shadow-sm</code> for a card, <code class="luz-code-inline">--luz-shadow-md</code> for tooltips and toasts, and <code class="luz-code-inline">--luz-shadow-lg</code> for dialogs and the drawer.</p>
+      <p>LUZ redraws them in dark mode, and in high contrast it draws outlines instead. A rule on <code class="luz-code-inline">:root</code> outside any layer wins in every mode, so one value serves them all. If you want the dark ones heavier, set them for that mode as well.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-my-shadows" aria-label="Copy shadows for light and dark">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Shadows for light and dark"><code id="code-my-shadows">:root {
+  --luz-shadow-md: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme=&quot;dark&quot;] {
+  --luz-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.6);
+}</code></pre>
+      </div>
+      <p>Never let a shadow be the only edge of a surface: it disappears in forced colors. <a href="../../../docs/tokens/shadows/">Shadows</a> has the values, and <a href="../../../docs/tokens/modes/">Color modes</a> how the three modes are chosen.</p>
+
+      <h2 id="component">Adjust one component</h2>
+      <p>Change a token first: every component that reads it follows, in every mode. When one component needs a rule of its own, write it in CSS outside any layer. It wins over every LUZ layer, so the selector can stay short.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-my-button" aria-label="Copy a rule for one component">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="A rule for one component"><code id="code-my-button">.luz-btn {
+  min-height: 3rem;
+}</code></pre>
+      </div>
+      <p>If your own CSS is in layers, declare the order first and put the rule in your layer. <code class="luz-code-inline">app</code> comes after <code class="luz-code-inline">luz</code>, so it wins.</p>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">CSS</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-my-layers" aria-label="Copy your own layers">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="Your own layers"><code id="code-my-layers">@layer reset, luz, app;
+
+@layer app {
+  .luz-btn {
+    min-height: 3rem;
+  }
+}</code></pre>
+      </div>
+      <p>Three things to avoid.</p>
+      <ul>
+        <li><strong><code class="luz-code-inline">!important</code>.</strong> It is never needed: unlayered CSS and the order of layers decide first.</li>
+        <li><strong>A status colour for something else.</strong> Success, warning, danger and info keep their meaning, so do not use them to decorate.</li>
+        <li><strong>Removing the focus ring.</strong> <code class="luz-code-inline">outline: none</code> leaves a keyboard user with no way to see where they are. Change its colour with <code class="luz-code-inline">--luz-focus-ring</code> and check the result with <a href="../../../docs/tokens/contrast/">the contrast check</a>.</li>
+      </ul>
+      <p><a href="../../../docs/get-started/layers/">Cascade layers</a> has the full order of LUZ's layers.</p>
+
+      <h2 id="icons">Icons</h2>
+      <p>LUZ draws 22 icons of its own, on <a href="../../../docs/components/icon-grid/">the Icon grid page</a>, which also has the markup. For hundreds, bring a set. Whatever set you use, the pattern is the same:</p>
+      <ol>
+        <li>Use an inline <code class="luz-code-inline">&lt;svg&gt;</code> that takes <code class="luz-code-inline">currentColor</code>. It follows the text colour and the mode, and it works in forced colors.</li>
+        <li>Mark it decorative with <code class="luz-code-inline">aria-hidden="true"</code> and <code class="luz-code-inline">focusable="false"</code>. Its name comes from the visible text beside it, or from a <code class="luz-code-inline">.u-sr-only</code> span in the button.</li>
+        <li>Size it in em, such as <code class="luz-code-inline">1.25em</code>, so it follows the text and the size knobs. There is no icon-size token on purpose. Inside <code class="luz-code-inline">.luz-btn</code> an icon is 16px already.</li>
+        <li>Draw one icon many times from one <code class="luz-code-inline">&lt;symbol&gt;</code> sprite in the same document, never <code class="luz-code-inline">&lt;use href="https://…"&gt;</code>, which browsers block across origins.</li>
+        <li>An icon never carries meaning alone: a status icon comes with words. Do not use a set's brand logos as a status or an action. They are trademarks, even where the set is MIT.</li>
+      </ol>
+      <div class="docs-snippet">
+        <div class="docs-snippet__bar">
+          <span class="docs-snippet__lang">HTML</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="code-my-icon" aria-label="Copy an icon beside a label">Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="An icon beside a label"><code id="code-my-icon">&lt;button class=&quot;luz-btn luz-btn--secondary&quot; type=&quot;button&quot;&gt;
+  &lt;svg viewBox=&quot;0 0 24 24&quot; width=&quot;1.25em&quot; height=&quot;1.25em&quot; aria-hidden=&quot;true&quot; focusable=&quot;false&quot;&gt;
+    &lt;use href=&quot;#icon-download&quot;&gt;&lt;/use&gt;
+  &lt;/svg&gt;
+  Download
+&lt;/button&gt;</code></pre>
+      </div>
+      <h3 id="icons-recommended">Sets with an MIT licence</h3>
+      <p>These five are under the MIT licence only, the licence LUZ itself uses. Each licence file was read on 2026-10-15.</p>
+      <div class="luz-table-wrap" role="region" aria-label="Recommended icon sets" tabindex="0">
+        <table class="luz-table">
+          <caption>Icon sets under the MIT licence</caption>
+          <thead>
+            <tr><th scope="col">Set</th><th scope="col">Licence</th><th scope="col">Licence file</th><th scope="col">Good to know</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Set"><div><a href="https://github.com/feathericons/feather">Feather</a></div></td><td data-label="Licence"><div>MIT</div></td><td data-label="Licence file"><div><a href="https://github.com/feathericons/feather/blob/HEAD/LICENSE">Feather licence file</a></div></td><td data-label="Good to know"><div>A 24px grid and a 2px stroke, like LUZ's own icons. Check how recently the repository was updated before you choose it.</div></td></tr>
+            <tr><td data-label="Set"><div><a href="https://github.com/tailwindlabs/heroicons">Heroicons</a></div></td><td data-label="Licence"><div>MIT</div></td><td data-label="Licence file"><div><a href="https://github.com/tailwindlabs/heroicons/blob/HEAD/LICENSE">Heroicons licence file</a></div></td><td data-label="Good to know"><div>Outline icons at 24px, solid icons at 24, 20 and 16px.</div></td></tr>
+            <tr><td data-label="Set"><div><a href="https://github.com/tabler/tabler-icons">Tabler Icons</a></div></td><td data-label="Licence"><div>MIT</div></td><td data-label="Licence file"><div><a href="https://github.com/tabler/tabler-icons/blob/HEAD/LICENSE">Tabler Icons licence file</a></div></td><td data-label="Good to know"><div>A very large set. The stroke width can be changed; it is 2px by default.</div></td></tr>
+            <tr><td data-label="Set"><div><a href="https://github.com/phosphor-icons/core">Phosphor</a></div></td><td data-label="Licence"><div>MIT</div></td><td data-label="Licence file"><div><a href="https://github.com/phosphor-icons/core/blob/HEAD/LICENSE">Phosphor licence file</a></div></td><td data-label="Good to know"><div>Six weights. Take one, so the icons match.</div></td></tr>
+            <tr><td data-label="Set"><div><a href="https://github.com/twbs/icons">Bootstrap Icons</a></div></td><td data-label="Licence"><div>MIT</div></td><td data-label="Licence file"><div><a href="https://github.com/twbs/icons/blob/HEAD/LICENSE">Bootstrap Icons licence file</a></div></td><td data-label="Good to know"><div>A 16px grid.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Iconoir, Ionicons, Radix Icons and Fluent UI System Icons are also under MIT, as of 2026-10-15. They are not on this list to keep it short.</p>
+      <p>LUZ does not bundle these and does not test them. MIT asks you to keep the copyright notice: copy the notice of the set you take next to its icons, and check the licence file of the version you take.</p>
+
+      <h3 id="icons-excluded">Sets LUZ does not recommend</h3>
+      <p>These are popular, and each has a licence that is not MIT only. The reason is listed so nobody adds them by mistake.</p>
+      <div class="luz-table-wrap" role="region" aria-label="Icon sets LUZ does not recommend" tabindex="0">
+        <table class="luz-table">
+          <caption>Icon sets that are not MIT only</caption>
+          <thead>
+            <tr><th scope="col">Set</th><th scope="col">Licence</th><th scope="col">Why it is out</th></tr>
+          </thead>
+          <tbody>
+            <tr><td data-label="Set"><div>Lucide</div></td><td data-label="Licence"><div>ISC</div></td><td data-label="Why it is out"><div>ISC is a different licence from MIT.</div></td></tr>
+            <tr><td data-label="Set"><div>Remix Icon</div></td><td data-label="Licence"><div>Its own licence, Remix Icon License v1.0</div></td><td data-label="Why it is out"><div>It is not MIT. The repository and the npm package name different licences, so the set is unclear.</div></td></tr>
+            <tr><td data-label="Set"><div>Material Symbols and Material Design Icons</div></td><td data-label="Licence"><div>Apache-2.0</div></td><td data-label="Why it is out"><div>Apache-2.0 is not MIT.</div></td></tr>
+            <tr><td data-label="Set"><div>Font Awesome Free</div></td><td data-label="Licence"><div>Icons CC BY 4.0, fonts OFL 1.1, code MIT</div></td><td data-label="Why it is out"><div>The icons are under a Creative Commons licence and the fonts under OFL.</div></td></tr>
+            <tr><td data-label="Set"><div>Simple Icons</div></td><td data-label="Licence"><div>CC0-1.0</div></td><td data-label="Why it is out"><div>CC0 is not MIT.</div></td></tr>
+            <tr><td data-label="Set"><div>Octicons</div></td><td data-label="Licence"><div>MIT, with an exception</div></td><td data-label="Why it is out"><div>The licence file is MIT, but the README says the GitHub logos follow GitHub's logo guidelines. The set holds files that are not under MIT.</div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="limits">What not to change</h2>
+      <p>Everything above is safe to change. These are not, and each has a reason.</p>
+      <ul>
+        <li><strong>The colour scales.</strong> Components read semantic tokens. Change those, in <a href="../../../docs/tokens/themes/">a theme of your own</a>, not the palette they are built on.</li>
+        <li><strong>The status colours.</strong> <code class="luz-code-inline">--luz-color-success</code>, <code class="luz-code-inline">--luz-color-warning</code>, <code class="luz-code-inline">--luz-color-danger</code> and <code class="luz-code-inline">--luz-color-info</code> mean what their names say. Do not use them for anything else.</li>
+        <li><strong>The focus ring.</strong> You can set its colour. You cannot remove it.</li>
+        <li><strong>The 44px targets.</strong> The control heights, <code class="luz-code-inline">--luz-control-sm</code> to <code class="luz-code-inline">--luz-control-xl</code>, are not knobs.</li>
+        <li><strong>The files in <code class="luz-code-inline">dist/</code>.</strong> They are generated and replaced on every release. Your changes belong in your own CSS.</li>
+      </ul>
     </div>
 
   </div>

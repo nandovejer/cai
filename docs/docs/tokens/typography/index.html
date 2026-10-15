@@ -12,10 +12,10 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CtgG2YUA.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-tI-bKOaf.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-CCq3K5Z-.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CQWABGDg.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-2VxXI5Sp.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -227,23 +227,23 @@
 
     <div class="docs-prose" id="tokens-typography">
             <h2 id="type-scale-and-minimum-sizes" class="docs-prose__title">Type scale and minimum sizes</h2>
-            <p>Every size is in <code class="luz-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller. Above the 16px base each step is the one before times 1.25, rounded to 1/16 rem (a whole pixel at the default); below it are the readability floors.</p>
+            <p>Every size is in <code class="luz-code-inline">rem</code>, so text follows the font size the reader sets in the browser, not only page zoom (WCAG 1.4.4). The scale is the same at every viewport width: no breakpoint makes text smaller. Above the 16px base each step is the one before times 1.25, rounded to 1/16 rem (a whole pixel at the default); below it are the readability floors. The Formula column is the chain as the stylesheet writes it; a browser that has <code class="luz-code-inline">round()</code> rounds each step to 1/16 rem, which gives the Value column.</p>
             <div class="luz-table-wrap" role="region" aria-label="Type scale" tabindex="0">
               <table class="luz-table">
                 <caption>Font-size tokens</caption>
                 <thead>
-                  <tr><th scope="col">Token</th><th scope="col">Value</th><th scope="col">At 16px root</th><th scope="col">Use</th></tr>
+                  <tr><th scope="col">Token</th><th scope="col">Formula</th><th scope="col">Value</th><th scope="col">At 16px root</th><th scope="col">Use</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-xs</code></td><td data-label="Value">0.75rem</td><td data-label="At 16px root">12px</td><td data-label="Use">Absolute floor. Micro-copy only: badges, tags, counters, version labels. Never running text.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-sm</code></td><td data-label="Value">0.875rem</td><td data-label="At 16px root">14px</td><td data-label="Use">Floor for secondary and UI text: helper and error text, captions, table headers, breadcrumbs, tooltips.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-md</code></td><td data-label="Value">0.9375rem</td><td data-label="At 16px root">15px</td><td data-label="Use">Default UI text: buttons, labels, table cells, tabs, navigation.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-base</code></td><td data-label="Value">1rem</td><td data-label="At 16px root">16px</td><td data-label="Use">The base of the scale, and UI text at a larger size. Form fields on touch screens. Running text is <code class="luz-code-inline">--luz-text-body</code>, a step above it.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-lg</code></td><td data-label="Value">1.25rem</td><td data-label="At 16px root">20px</td><td data-label="Use">Lead paragraphs, dialog titles.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-xl</code></td><td data-label="Value">1.5625rem</td><td data-label="At 16px root">25px</td><td data-label="Use">Headings.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-2xl</code></td><td data-label="Value">1.9375rem</td><td data-label="At 16px root">31px</td><td data-label="Use">Headings.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-3xl</code></td><td data-label="Value">2.4375rem</td><td data-label="At 16px root">39px</td><td data-label="Use">Page titles.</td></tr>
-                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-4xl</code></td><td data-label="Value">3.0625rem</td><td data-label="At 16px root">49px</td><td data-label="Use">Display.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-xs</code></td><td data-label="Formula"><code class="luz-code-inline">max(0.75rem, calc(var(--luz-text-sm) / var(--luz-type-ratio)))</code></td><td data-label="Value">0.75rem</td><td data-label="At 16px root">12px</td><td data-label="Use">Absolute floor. Micro-copy only: badges, tags, counters, version labels. Never running text.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-sm</code></td><td data-label="Formula"><code class="luz-code-inline">max(0.875rem, calc(var(--luz-text-base) / var(--luz-type-ratio)))</code></td><td data-label="Value">0.875rem</td><td data-label="At 16px root">14px</td><td data-label="Use">Floor for secondary and UI text: helper and error text, captions, table headers, breadcrumbs, tooltips.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-md</code></td><td data-label="Formula"><code class="luz-code-inline">calc((var(--luz-text-sm) + var(--luz-text-base)) / 2)</code></td><td data-label="Value">0.9375rem</td><td data-label="At 16px root">15px</td><td data-label="Use">Default UI text: buttons, labels, table cells, tabs, navigation.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-base</code></td><td data-label="Formula"><code class="luz-code-inline">var(--luz-type-base)</code></td><td data-label="Value">1rem</td><td data-label="At 16px root">16px</td><td data-label="Use">The base of the scale, and UI text at a larger size. Form fields on touch screens. Running text is <code class="luz-code-inline">--luz-text-body</code>, a step above it.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-lg</code></td><td data-label="Formula"><code class="luz-code-inline">calc(var(--luz-text-base) * var(--luz-type-ratio))</code></td><td data-label="Value">1.25rem</td><td data-label="At 16px root">20px</td><td data-label="Use">Lead paragraphs, dialog titles.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-xl</code></td><td data-label="Formula"><code class="luz-code-inline">calc(var(--luz-text-lg) * var(--luz-type-ratio))</code></td><td data-label="Value">1.5625rem</td><td data-label="At 16px root">25px</td><td data-label="Use">Headings.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-2xl</code></td><td data-label="Formula"><code class="luz-code-inline">calc(var(--luz-text-xl) * var(--luz-type-ratio))</code></td><td data-label="Value">1.9375rem</td><td data-label="At 16px root">31px</td><td data-label="Use">Headings.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-3xl</code></td><td data-label="Formula"><code class="luz-code-inline">calc(var(--luz-text-2xl) * var(--luz-type-ratio))</code></td><td data-label="Value">2.4375rem</td><td data-label="At 16px root">39px</td><td data-label="Use">Page titles.</td></tr>
+                  <tr><td data-label="Token"><code class="luz-code-inline">--luz-text-4xl</code></td><td data-label="Formula"><code class="luz-code-inline">calc(var(--luz-text-3xl) * var(--luz-type-ratio))</code></td><td data-label="Value">3.0625rem</td><td data-label="At 16px root">49px</td><td data-label="Use">Display.</td></tr>
                 </tbody>
               </table>
             </div>

@@ -12,10 +12,10 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-etw6QrnT.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CtgG2YUA.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-tI-bKOaf.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-CCq3K5Z-.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-CQWABGDg.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-2VxXI5Sp.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -148,56 +148,59 @@
             <ul class="docs-scale-list">
               <li class="docs-scale">
                 <code>--luz-space-3xs</code>
-                <span>2px</span>
+                <span>unit × ½ · 2px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-3xs)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-2xs</code>
-                <span>4px</span>
+                <span>unit × 1 · 4px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-2xs)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-xs</code>
-                <span>8px</span>
+                <span>unit × 2 · 8px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-xs)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-sm</code>
-                <span>12px</span>
+                <span>unit × 3 · 12px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-sm)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-md</code>
-                <span>16px</span>
+                <span>unit × 4 · 16px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-md)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-lg</code>
-                <span>24px</span>
+                <span>unit × 6 · 24px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-lg)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-xl</code>
-                <span>32px</span>
+                <span>unit × 8 · 32px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-xl)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-2xl</code>
-                <span>48px</span>
+                <span>unit × 12 · 48px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-2xl)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-3xl</code>
-                <span>64px</span>
+                <span>unit × 16 · 64px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-3xl)" aria-hidden="true"></span>
               </li>
               <li class="docs-scale">
                 <code>--luz-space-4xl</code>
-                <span>96px</span>
+                <span>unit × 24 · 96px</span>
                 <span class="docs-scale__bar" style="--v: var(--luz-space-4xl)" aria-hidden="true"></span>
               </li>
             </ul>
           </div>
+          <ul class="docs-scale-list">
+            <li class="docs-scale docs-scale--note"><code class="u-select-all">--luz-space-unit</code><span>0.25rem · 4px</span><span class="docs-scale__note">The grid every step is a multiple of, in rem so spacing follows the reader's font size</span></li>
+          </ul>
           <p class="docs-demo__note">A 2px hairline, then the unit <code class="luz-code-inline">--luz-space-unit</code> (0.25rem, 4px at a 16px root) times 1, 2, 3, 4, 6, 8, 12, 16 and 24: each power of two and its 1.5× half step. The unit is in rem, so spacing follows the font size the reader sets in the browser, as text does. Set it on <code class="luz-code-inline">:root</code> to change the whole scale; components read the steps, never the unit.</p>
         
     </div>

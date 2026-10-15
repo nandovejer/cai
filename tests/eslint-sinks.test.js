@@ -4,6 +4,8 @@
  * HTML or code that the phase 4 review found. Each line of the fixture is one
  * sink and must be reported once; the safe lines must not be.
  */
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { describe, it, expect } from "vitest";
 import { ESLint } from "eslint";
 
@@ -58,3 +60,35 @@ describe("no-HTML-sinks rule", () => {
     });
   }
 });
+
+/* ---- Core: the one sink is a registered exception (F6, security review) ---- */
+
+describe("core's one HTML sink is an exception with a row, not a silent disable", () => {
+  const repo = new URL("../", import.meta.url).pathname;
+  const core = join(repo, "packages/core/src");
+  const sinkLines = (text) => text.split("\n").flatMap((line, i) => (/\.(innerHTML|outerHTML|srcdoc)\s*=(?!=)|insertAdjacentHTML|createContextualFragment/.test(line) && !/^\s*(\/\/|\*)/.test(line) ? [i] : []));
+
+  it("is only in packages/core/src/highlight.js, once, over escaped code", () => {
+    const found = readdirSync(core)
+      .filter((f) => f.endsWith(".js"))
+      .flatMap((f) => sinkLines(readFileSync(join(core, f), "utf-8")).map((i) => `${f}:${i + 1}`));
+    expect(found).toHaveLength(1);
+    expect(found[0]).toMatch(/^highlight\.js:/);
+  });
+
+  it("carries `luz-exception: EX-nnn` next to it, and EXCEPTIONS.md has the row for that file", () => {
+    const lines = readFileSync(join(core, "highlight.js"), "utf-8").split("\n");
+    const at = sinkLines(lines.join("\n"))[0];
+    const near = lines.slice(Math.max(0, at - 3), at + 1).join("\n");
+    const id = /luz-exception:\s*(EX-\d{3})/.exec(near)?.[1];
+    expect(id, "a luz-exception comment within three lines above the innerHTML assignment").toBeTruthy();
+    const row = readFileSync(join(repo, "EXCEPTIONS.md"), "utf-8")
+      .split("\n")
+      .find((line) => line.split("|")[1]?.trim() === id);
+    expect(row, `${id} has a row in EXCEPTIONS.md`).toBeTruthy();
+    const [, , rule, where] = row.split("|").map((c) => c.trim());
+    expect(rule).toMatch(/^SR-\d+$/);
+    expect(where.replace(/`/g, "")).toBe("packages/core/src/highlight.js");
+  });
+});
+

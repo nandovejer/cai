@@ -230,6 +230,50 @@ describe.skipIf(!distBuilt)("dist build artifacts (BUG-02)", () => {
   });
 });
 
+describe.skipIf(!distBuilt)("dist: English in the entry, every other language a lazy file (F6)", () => {
+  const text = (name) => readFileSync(resolve(coreDist, name), "utf-8");
+  const source = resolve(process.cwd(), "packages/core/src/i18n/es.json");
+  const loads = (file, target) => new RegExp(`import\\(\\s*["']\\./${target}["']\\s*\\)`).test(text(file));
+
+  it("dist/i18n-es.js and dist/i18n-es.min.js exist, and the unminified one is `export default` of the JSON, with no import", () => {
+    expect(existsSync(resolve(coreDist, "i18n-es.js"))).toBe(true);
+    expect(existsSync(resolve(coreDist, "i18n-es.min.js"))).toBe(true);
+    const chunk = text("i18n-es.js");
+    expect(/^\s*export default \{[\s\S]*\};?\s*$/.test(chunk), "dist/i18n-es.js is exactly `export default {…}`").toBe(true);
+    expect(/\bimport\b/.test(chunk), "dist/i18n-es.js has an import").toBe(false);
+    const body = chunk.trim().replace(/^export default /, "").replace(/;$/, "");
+    const expected = JSON.parse(readFileSync(source, "utf-8"));
+    delete expected.$header;
+    expect(JSON.parse(body)).toEqual(expected);
+  });
+
+  it("neither the entry nor the standalone module carries a Spanish string", () => {
+    const files = ["luz.js", "luz.min.js", "i18n.js", "i18n.min.js"];
+    for (const file of files) expect(text(file).includes("Reproducir"), `${file} has "Reproducir"`).toBe(false);
+    const es = JSON.parse(readFileSync(source, "utf-8"));
+    delete es.$header;
+    for (const file of files) {
+      for (const [key, value] of Object.entries(es)) {
+        if (/\P{ASCII}|\s/u.test(value)) expect(text(file).includes(value), `${file} has the Spanish "${key}"`).toBe(false);
+      }
+    }
+  });
+
+  it("luz.js and i18n.js import ./i18n-es.js by a literal; the minified files import ./i18n-es.min.js", () => {
+    expect(loads("luz.js", "i18n-es\\.js")).toBe(true);
+    expect(loads("i18n.js", "i18n-es\\.js")).toBe(true);
+    expect(text("luz.min.js")).toContain("./i18n-es.min.js");
+    expect(text("i18n.min.js")).toContain("./i18n-es.min.js");
+    expect(loads("luz.min.js", "i18n-es\\.min\\.js")).toBe(true);
+    expect(loads("i18n.min.js", "i18n-es\\.min\\.js")).toBe(true);
+  });
+
+  it("the entry and the standalone module both export loadLocales", () => {
+    expect(/export\s*\{[^}]*\bloadLocales\b[^}]*\}/.test(text("luz.js")), "luz.js").toBe(true);
+    expect(/export\s+(?:async\s+)?function\s+loadLocales\b/.test(text("i18n.js")), "i18n.js").toBe(true);
+  });
+});
+
 describe.skipIf(!distBuilt)("published CSS only references files that ship", () => {
   const cssFiles = [
     tokensDist,

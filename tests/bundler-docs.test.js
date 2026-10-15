@@ -140,6 +140,32 @@ describe("the exports table equals the exports of each package", () => {
   });
 });
 
+describe("the languages of core (F6): ./i18n/* is an export, and the page lists it", () => {
+  it("core exports ./i18n/* as ./dist/i18n-*.js, a pattern like ./components/*", () => {
+    expect(exportsOf("core")["./i18n/*"]).toBe("./dist/i18n-*.js");
+    expect(exportsOf("core")["./i18n"], "the module with loadLocales() is still ./i18n").toBe("./dist/i18n.js");
+  });
+
+  it("the exports table has a row for @luz-ds/core with the export ./i18n/*", () => {
+    const t = tablesOf(section("imports")).find((x) => columnOf(x, /^package/i) >= 0 && columnOf(x, /^export/i) >= 0);
+    const pkgCol = columnOf(t, /^package/i);
+    const keyCol = columnOf(t, /^export/i);
+    const keys = t.rows
+      .filter((r) => r.cells[pkgCol].text.replace(/\s/g, "") === "@luz-ds/core")
+      .map((r) => r.cells[keyCol].codes[0] ?? r.cells[keyCol].text);
+    expect(keys).toContain("./i18n/*");
+  });
+
+  it("@luz-ds/core/i18n/es resolves to a file the package ships, built from src/i18n/es.json", () => {
+    const hit = resolveSpecifier("@luz-ds/core/i18n/es");
+    expect(hit?.rest, "@luz-ds/core/i18n/es is not covered by an export").toBe("es");
+    const target = exportsOf("core")[hit.key].replace("*", hit.rest).replace(/^\.\//, "");
+    expect(target).toBe("dist/i18n-es.js");
+    expect(packFiles("core"), `${target} is not in pack-files.txt`).toContain(target);
+    expect(existsSync(join(repo, "packages/core/src/i18n/es.json"))).toBe(true);
+  });
+});
+
 describe("what the page claims about its own build", () => {
   it("says plainly, in the others section, that only Astro was built", () => {
     const sentences = sentencesOf(textOf(section("others")));

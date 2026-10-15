@@ -12,7 +12,7 @@
  * and the real built files are checked against the same rules.
  */
 import { spawnSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -126,8 +126,8 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     expect(budgets.slice(0, BEFORE.length).map((b) => [b.name, b.max])).toEqual(BEFORE);
   });
 
-  it("appends exactly three rows after the docs page row", () => {
-    expect(budgets).toHaveLength(BEFORE.length + 3);
+  it("appends the three AI-ready rows after the docs page row, then the language chunk row (F6) and nothing else", () => {
+    expect(budgets).toHaveLength(BEFORE.length + 4);
     expect(budgets.at(BEFORE.length - 1).name).toBe(last);
   });
 
@@ -163,8 +163,8 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     });
   });
 
-  it("repeats the three rows in the PRINCIPLES.md table, in the same order, after \"Each docs page\"", () => {
-    expect(table).toHaveLength(BEFORE.length + 3);
+  it("repeats the rows in the PRINCIPLES.md table, in the same order, after \"Each docs page\"", () => {
+    expect(table).toHaveLength(BEFORE.length + 4);
     expect(table[BEFORE.length - 1][0]).toMatch(/^Each docs page/);
     const [cli, text, manifests] = table.slice(BEFORE.length);
     expect(cli[0]).toMatch(/check/);
@@ -180,6 +180,85 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     expect(rows.map((cells) => kib(cells.at(-1)))).toEqual(budgets.slice(BEFORE.length).map((b) => b.max));
     // column 2 is the ideal ("≤ 36 kB"), column 3 where the warning starts
     expect(rows.map((cells) => kib(cells[2].replace(/^≤\s*/, "")))).toEqual(budgets.slice(BEFORE.length).map((b) => b.ideal));
+  });
+});
+
+/* ---- The language chunks of core (F6, f6-languages.md 3, 4 and the review answers) ---- */
+
+describe("the language chunks of core", () => {
+  const budgets = JSON.parse(read("budgets.json")).budgets;
+  const lines = read("PRINCIPLES.md").split("\n");
+  const header = lines.findIndex((line) => /^\|\s*Artifact\s*\|.*\|\s*Ceiling\s*\|$/.test(line));
+  const table = lines
+    .slice(header + 2)
+    .filter((line, i, all) => all.slice(0, i + 1).every((l) => l.startsWith("|")))
+    .map((line) => line.split("|").slice(1, -1).map((cell) => cell.trim()));
+  const KiB = 1024;
+  const kib = (cell) => Math.round(parseFloat(cell.replace(/^\u2264\s*/, "")) * KiB);
+  const present = (path) => {
+    expect(existsSync(join(repo, path)), `${path} is built: run pnpm core:build`).toBe(true);
+    return read(path);
+  };
+
+  it("budgets i18n-es as the row after the last one: ideal 0.75 kB, ceiling 1 kB, fixed once and never raised (RL-17)", () => {
+    // The spec's estimate was 510 B gzip for the 25 keys; x1.5 the ideal, x2 the ceiling, the proportion of table-sort
+    expect(budgets.at(-1)).toEqual({
+      name: "core JS lazy chunk: i18n-es",
+      file: "packages/core/dist/i18n-es.min.js",
+      ideal: 768,
+      max: 1024,
+    });
+  });
+
+  it("repeats it as the last row of the PRINCIPLES.md table: warns above 0.75 kB, ceiling 1 kB", () => {
+    const last = table.at(-1);
+    expect(last[0]).toMatch(/^`core` JS lazy chunk: `i18n-es`/);
+    expect(last[1]).toBe("\u2014");
+    expect(kib(last[2])).toBe(768);
+    expect(kib(last[3])).toBe(768);
+    expect(kib(last.at(-1))).toBe(1024);
+    expect(table).toHaveLength(budgets.length);
+  });
+
+  it("keeps the ceiling of the entry at 8 kB and the entry no larger than before F6: 8,179 B gzip, under 8,192", () => {
+    expect(budgets.find((b) => b.file === "packages/core/dist/luz.min.js").max).toBe(8192);
+    const size = sizeOf("packages/core/dist/luz.min.js");
+    expect(size).toBeLessThanOrEqual(8179);
+    expect(size).toBeLessThan(8192);
+  });
+
+  it("the language file is a chunk: it imports nothing, static or dynamic, and fits its ceiling", () => {
+    const code = present("packages/core/dist/i18n-es.min.js");
+    expect(STATIC.test(code), "a static import or export-from").toBe(false);
+    expect(code.match(IMPORT_CALL)).toBeNull();
+    expect(sizeOf("packages/core/dist/i18n-es.min.js")).toBeLessThanOrEqual(1024);
+  });
+
+  it.each(["luz.min.js", "i18n.min.js"])("%s loads it by a literal specifier, and every import() in it is a literal", (name) => {
+    const code = present(`packages/core/dist/${name}`);
+    expect(dynamicTargets(code)).toContain("./i18n-es.min.js");
+    expect(code.match(IMPORT_CALL)?.length ?? 0, "an import() whose argument is not a literal").toBe(dynamicTargets(code).length);
+  });
+
+  it("the sources follow: i18n.js names the language file as a literal, in the one file the module is", () => {
+    // comments out: the explanation of a rule may say "import()" without calling it
+    const source = read("packages/core/src/i18n.js").replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+    expect(dynamicTargets(source)).toEqual(["./i18n-es.js"]);
+    expect(source.match(IMPORT_CALL)).toHaveLength(1);
+    expect(source).not.toMatch(/^import\b/m);
+    expect(source).not.toMatch(/import\.meta/);
+  });
+
+  it("every file a minified core module loads lazily has a row of its own", () => {
+    const rows = new Set(budgets.filter((b) => b.file).map((b) => b.file));
+    const dist = join(repo, "packages/core/dist");
+    const files = readdirSync(dist).filter((f) => f.endsWith(".min.js"));
+    expect(files).toContain("i18n-es.min.js");
+    for (const name of files) {
+      for (const target of dynamicTargets(read(`packages/core/dist/${name}`))) {
+        expect(rows.has(`packages/core/dist/${target.slice(2)}`), `${name} loads ${target}, which has no row in budgets.json`).toBe(true);
+      }
+    }
   });
 });
 
@@ -270,3 +349,69 @@ describe("scripts/check-size.js on a copy of the repository", () => {
     expect(existsSync(join(dir, "packages/site/dist/site.min.js"))).toBe(true);
   });
 });
+
+describe("scripts/check-size.js on a copy of the repository, with a language chunk of core", () => {
+  let dir;
+  const ENTRY = 'document.querySelector("th[data-luz-sort]")&&import("./table-sort.min.js");document.documentElement.lang&&import("./i18n-es.min.js");';
+  const SORT = "export function initTableSort(){}";
+  const LANGUAGE = 'export default{play:"Reproducir",pause:"Pausar"};';
+
+  /** A repository with core's three files; `files` overrides any; `unbudgeted` lists files without a row. */
+  function build(files = {}, unbudgeted = []) {
+    const content = { "luz.min.js": ENTRY, "table-sort.min.js": SORT, "i18n-es.min.js": LANGUAGE, ...files };
+    mkdirSync(join(dir, "scripts"), { recursive: true });
+    mkdirSync(join(dir, "packages/core/dist"), { recursive: true });
+    cpSync(join(repo, "scripts/check-size.js"), join(dir, "scripts/check-size.js"));
+    const rows = Object.keys(content)
+      .filter((name) => !unbudgeted.includes(name))
+      .map((name, i) => ({ name: `core JS row ${i}`, file: `packages/core/dist/${name}`, max: 2048 }));
+    writeFileSync(join(dir, "budgets.json"), JSON.stringify({ budgets: rows }));
+    writeFileSync(
+      join(dir, "PRINCIPLES.md"),
+      ["| Artifact | Warns below | Ideal | Warns above | Ceiling |", "| --- | --- | --- | --- | --- |", ...rows.map((r) => `| ${r.name} | - | - | - | 2 kB |`)].join("\n") + "\n",
+    );
+    for (const [name, code] of Object.entries(content)) writeFileSync(join(dir, "packages/core/dist", name), code);
+    const run = spawnSync(process.execPath, [join(dir, "scripts/check-size.js")], { encoding: "utf-8" });
+    return { status: run.status, output: run.stdout + run.stderr };
+  }
+
+  beforeEach(() => {
+    dir = mkdtempSync(join(tmpdir(), "luz-size-guard-core-"));
+  });
+  afterEach(() => {
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  it("passes an entry that loads its language by a literal, and a language that is only data", () => {
+    const { status, output } = build();
+    expect(output).not.toMatch(/\u2717/);
+    expect(status).toBe(0);
+  });
+
+  it("fails a language chunk that imports another file, dynamically", () => {
+    const { status, output } = build({ "i18n-es.min.js": `import("./table-sort.min.js");${LANGUAGE}` });
+    expect(status).toBe(1);
+    expect(output).toMatch(/i18n-es\.min\.js/);
+  });
+
+  it("fails a language chunk with a static import, and with a re-export", () => {
+    for (const code of ['import "./table-sort.min.js";', 'export * from "./table-sort.min.js";']) {
+      const { status, output } = build({ "i18n-es.min.js": `${code}${LANGUAGE}` });
+      expect(status, code).toBe(1);
+      expect(output, code).toMatch(/i18n-es\.min\.js/);
+    }
+  });
+
+  it("fails a language chunk that has no budget row, and says which", () => {
+    const { status, output } = build({}, ["i18n-es.min.js"]);
+    expect(status).toBe(1);
+    expect(output).toMatch(/i18n-es\.min\.js[^\n]*no budget/);
+  });
+
+  it("fails a language chosen by the page: an import() built from the language is not a literal (SEC-CHUNK-1)", () => {
+    const { status, output } = build({ "luz.min.js": `${ENTRY}import("./i18n-"+document.documentElement.lang+".min.js");` });
+    expect(status).toBe(1);
+    expect(output).toMatch(/literal/i);
+  });
+});
+

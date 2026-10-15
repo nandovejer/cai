@@ -1,0 +1,174 @@
+<!doctype html>
+<!--
+  F6: one page that holds everything core's scripts write a string into, so a
+  test can see which language each of them wrote (tests/i18n-loader.spec.js).
+  The static page is Spanish: with JavaScript off it is what the visitor gets.
+    ?lang=<tag>   the language of <html> (a script in <head>, so JavaScript only)
+    ?fragment     keep #fragment, a Spanish block (lang="es") of its own; without it, it is removed
+  The markup carries authored English names (aria-label="Play", the cycle
+  button's name): what the page reads at the end is what the scripts wrote.
+  The links and the option that name Spanish are on every page: they must
+  never fetch a language file.
+-->
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Languages</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <style>
+    /* Fixture only: the apply buttons are made for the sidebar. Each carries its own data-theme, so its tokens are
+       that theme's: give it that theme's surface and text, or the dark one is light text on the light page */
+    .luz-theme-apply-btn { width: auto; padding-inline: var(--luz-space-md); }
+    .luz-theme-apply-btn:not(.is-active) { color: var(--luz-text-primary); background: var(--luz-surface-page); }
+  </style>
+  <script>
+    const query = new URLSearchParams(location.search);
+    if (query.has("lang")) document.documentElement.lang = query.get("lang");
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Languages</h1>
+
+    <!-- A switcher: names a language, asks for no file -->
+    <nav aria-label="Languages">
+      <a lang="es" hreflang="es" href="?lang=es">Español</a>
+      <a lang="en" hreflang="en" href="?lang=en">English</a>
+    </nav>
+    <p>
+      <label for="language">Language</label>
+      <select id="language" class="luz-input">
+        <option lang="es" value="es">Español</option>
+        <option lang="en" value="en">English</option>
+      </select>
+    </p>
+
+    <!-- The color mode: the radios, and the button that JavaScript steps them with -->
+    <fieldset class="luz-mode-switcher luz-mode-switcher--cycle" id="modes">
+      <legend class="luz-mode-switcher__label">Color mode</legend>
+      <button class="luz-mode-cycle" type="button" aria-label="Authored mode name" id="cycle">
+        <svg class="luz-mode-btn__icon" data-mode-icon="light" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg>
+        <svg class="luz-mode-btn__icon" data-mode-icon="dark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20 15A8 8 0 0 1 9 4a8 8 0 1 0 11 11Z"/></svg>
+        <svg class="luz-mode-btn__icon" data-mode-icon="high-contrast" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>
+      </button>
+      <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light" checked>Light</label>
+      <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark">Dark</label>
+      <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast">High contrast</label>
+    </fieldset>
+
+    <!-- The legacy apply buttons of a custom theme: written by the first wave, in whatever language is there -->
+    <p>
+      <button type="button" class="luz-theme-apply-btn" data-theme="light" id="apply-light">Apply</button>
+      <button type="button" class="luz-theme-apply-btn" data-theme="dark" id="apply-dark">Apply</button>
+    </p>
+
+    <!-- Tabs: linked panels, upgraded by the first wave -->
+    <nav class="luz-tabs" aria-label="Sections">
+      <a class="luz-tab" href="#panel-a" id="tab-a">First</a>
+      <a class="luz-tab" href="#panel-b" id="tab-b">Second</a>
+    </nav>
+    <div class="luz-tabpanel" id="panel-a"><p>Panel A</p></div>
+    <div class="luz-tabpanel" id="panel-b"><p>Panel B</p></div>
+
+    <!-- A dialog, opened by a declarative command -->
+    <p><button type="button" class="luz-btn" id="open-dialog" commandfor="dialog" command="show-modal">Open the dialog</button></p>
+    <dialog class="luz-modal" id="dialog" aria-labelledby="dialog-title">
+      <div class="luz-modal__header">
+        <h2 class="luz-modal__title" id="dialog-title">A dialog</h2>
+      </div>
+      <div class="luz-modal__footer">
+        <button type="button" class="luz-btn" id="close-dialog" commandfor="dialog" command="close">Close</button>
+      </div>
+    </dialog>
+
+    <!-- A copy button the page wrote itself -->
+    <p><button type="button" class="luz-copy-btn" id="authored-copy" data-copy="LUZ">Copy</button></p>
+
+    <!-- A code block: initHighlight() names it and adds the copy button -->
+    <pre class="luz-code-block" data-lang="html" tabindex="0" id="code-main"><code>&lt;p&gt;Hello&lt;/p&gt;</code></pre>
+
+    <!-- An audio player: native controls without JavaScript, LUZ's with it -->
+    <div class="luz-player" data-type="audio" role="group" aria-label="Audio" id="player-main">
+      <audio class="luz-player-audio" preload="none" controls>
+        <source src="/apps/docs/assets/nasa-apollo11-countdown.mp3" type="audio/mpeg">
+      </audio>
+      <div class="luz-player-controls luz-player-controls--audio">
+        <button class="luz-player-btn luz-player-playpause" type="button" aria-label="Authored play">
+          <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+          <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+        </button>
+        <button class="luz-player-btn luz-player-mute" type="button" aria-label="Authored mute">
+          <svg class="icon-vol-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="3,9 7,9 12,5 12,19 7,15 3,15"/></svg>
+          <svg class="icon-vol-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><polygon points="3,9 7,9 12,5 12,19 7,15 3,15"/></svg>
+        </button>
+        <div class="luz-player-progress-row luz-player-progress-row--audio">
+          <span class="luz-player-time luz-player-current">0:00</span>
+          <input class="luz-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek audio">
+          <span class="luz-player-time luz-player-duration">0:00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- A sortable table: the heading becomes a button, the status says what changed -->
+    <div class="luz-table-wrap" role="region" aria-label="Parcels" tabindex="0">
+      <table class="luz-table" id="table-main">
+        <caption>Parcels per route</caption>
+        <thead><tr><th scope="col" data-luz-sort>Route</th><th scope="col" class="luz-table__numeric" data-luz-sort>Weight</th></tr></thead>
+        <tbody>
+          <tr><td data-label="Route">Sevilla</td><td class="luz-table__numeric" data-label="Weight">12</td></tr>
+          <tr><td data-label="Route">Cádiz</td><td class="luz-table__numeric" data-label="Weight">3</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- A timeline: built by its chunk, in the second wave -->
+    <luz-timeline id="timeline" aria-label="History">
+      <ol class="luz-timeline">
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2020">2020</time><p class="luz-timeline__title">One</p><p class="luz-timeline__text">First.</p></li>
+        <li class="luz-timeline__item"><time class="luz-timeline__date" datetime="2021">2021</time><p class="luz-timeline__title">Two</p><p class="luz-timeline__text">Second.</p></li>
+      </ol>
+    </luz-timeline>
+
+    <!-- A Spanish block on a page that may be in another language -->
+    <div lang="es" id="fragment">
+      <h2>Fragmento</h2>
+      <pre class="luz-code-block" data-lang="html" tabindex="0" id="code-es"><code>&lt;p&gt;Hola&lt;/p&gt;</code></pre>
+      <div class="luz-player" data-type="audio" role="group" aria-label="Audio" id="player-es">
+        <audio class="luz-player-audio" preload="none" controls>
+          <source src="/apps/docs/assets/nasa-apollo11-countdown.mp3" type="audio/mpeg">
+        </audio>
+        <div class="luz-player-controls luz-player-controls--audio">
+          <button class="luz-player-btn luz-player-playpause" type="button" aria-label="Authored play">
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="6,3 20,12 6,21"/></svg>
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display:none"><rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/></svg>
+          </button>
+          <div class="luz-player-progress-row luz-player-progress-row--audio">
+            <span class="luz-player-time luz-player-current">0:00</span>
+            <input class="luz-player-seekbar" type="range" min="0" max="1000" step="1" value="0" aria-label="Buscar en el audio">
+            <span class="luz-player-time luz-player-duration">0:00</span>
+          </div>
+        </div>
+      </div>
+      <div class="luz-table-wrap" role="region" aria-label="Paquetes" tabindex="0">
+        <table class="luz-table" id="table-es">
+          <caption>Paquetes por ruta</caption>
+          <thead><tr><th scope="col" data-luz-sort>Ruta</th><th scope="col" class="luz-table__numeric" data-luz-sort>Peso</th></tr></thead>
+          <tbody>
+            <tr><td data-label="Ruta">Sevilla</td><td class="luz-table__numeric" data-label="Peso">12</td></tr>
+            <tr><td data-label="Ruta">Cádiz</td><td class="luz-table__numeric" data-label="Peso">3</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      if (!query.has("fragment")) document.getElementById("fragment").remove();
+    </script>
+  </main>
+  <script type="module">
+    // window.luz is the entry's namespace: loadLocales, registerLocale and t for the tests
+    window.luz = await import("/packages/core/dist/luz.js");
+  </script>
+</body>
+</html>

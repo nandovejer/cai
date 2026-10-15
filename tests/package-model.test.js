@@ -261,3 +261,32 @@ describe("the image placeholders are docs-only", () => {
     expect(bad).toEqual([]);
   });
 });
+
+/* ---- (e) core after F6: a language is a lazy file, a pattern export --------- */
+
+describe("core after F6: the languages are published as a pattern export and their files are packed", () => {
+  const read = (path) => readFileSync(`${root}${path}`, "utf-8");
+  const manifest = JSON.parse(read("packages/core/package.json"));
+  const packed = read("packages/core/pack-files.txt").split("\n").map((l) => l.trim());
+
+  it('exports "./i18n/*" as "./dist/i18n-*.js", and keeps "./i18n" for the module with loadLocales()', () => {
+    expect(manifest.exports["./i18n/*"]).toBe("./dist/i18n-*.js");
+    expect(manifest.exports["./i18n"]).toBe("./dist/i18n.js");
+  });
+
+  it("packs dist/i18n-es.js and dist/i18n-es.min.js, and not the JSON source", () => {
+    expect(packed).toContain("dist/i18n-es.js");
+    expect(packed).toContain("dist/i18n-es.min.js");
+    expect(packed.filter((f) => f.endsWith(".json") && f.includes("i18n"))).toEqual([]);
+    expect(packed.filter((f) => f.startsWith("src/"))).toEqual([]);
+  });
+
+  it("needs no sideEffects entry: a language file has none and is reached by import() only", () => {
+    expect(manifest.sideEffects.filter((f) => /i18n/.test(f))).toEqual([]);
+  });
+
+  it("the JSON sources are not in the tarball: `files` is dist and LICENSE", () => {
+    expect(manifest.files).toEqual(["dist", "LICENSE"]);
+  });
+});
+

@@ -27,7 +27,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 const FILES = {
   tokens: ["luz-tokens.min.css"],
-  core: ["luz.min.css", "luz.min.js", "midi.min.js", "table-sort.min.js", "timeline.min.js"],
+  core: ["luz.min.css", "luz.min.js", "midi.min.js", "table-sort.min.js", "timeline.min.js", "i18n-es.min.js"],
   site: ["site.min.css", "site.min.js", "search.min.js", "consent.min.js"],
   landing: ["landing.min.css"],
   cms: ["cms.min.css"],
@@ -212,7 +212,7 @@ describe("the snippet generator", () => {
       it("lists, in the chunks table, exactly the lazy chunks that budgets.json budgets, each with its hash and version", () => {
         const budgets = JSON.parse(readFileSync(join(repo, "budgets.json"), "utf-8")).budgets;
         const budgeted = budgets.filter((b) => /lazy chunk:/.test(b.name)).map((b) => b.file.replace(/^packages\//, ""));
-        expect(budgeted.length).toBe(5);
+        expect(budgeted.length).toBe(6); // midi, table-sort, timeline, i18n-es, search, consent
         const section = html.slice(html.search(/\bid="chunks"/));
         const preload = section
           .match(/<code[^>]*>[\s\S]*?<\/code>/g)
@@ -232,6 +232,20 @@ describe("the snippet generator", () => {
         }
         // each row says when to add the line
         for (const element of ["luz-timeline", "luz-search", "luz-consent"]) expect(section, element).toContain(element);
+      });
+
+      it("says, in the row of the Spanish file, to add its line only on a page whose lang is es (F6)", () => {
+        const section = html.slice(html.search(/\bid="chunks"/));
+        const row = section.split(/<tr>/).find((r) => r.includes("<code>i18n-es.min.js</code>"));
+        expect(row, "a row for i18n-es.min.js in the chunks table").toBeTruthy();
+        const when = unescape(row.match(/data-label="Add the line only if the page has"[^>]*>([\s\S]*?)<\/td>/)?.[1].replace(/<[^>]+>/g, "") ?? "");
+        expect(when).toMatch(/\blang\b/);
+        expect(when).toMatch(/\bes\b/);
+        expect(when).toMatch(/\bpage\b/);
+        // the line itself, like every chunk's: modulepreload with integrity and crossorigin
+        const line = unescape(row.match(/<code id="code-chunk-core-i18n-es"[^>]*>([\s\S]*?)<\/code>/)?.[1] ?? "");
+        expect(tagsOf(line).map((t) => [t.rel, t.crossorigin])).toEqual([["modulepreload", "anonymous"]]);
+        expect(line).toContain("i18n-es.min.js");
       });
     });
   }

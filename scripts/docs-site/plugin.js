@@ -286,7 +286,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
             scanned = scan().byFile.get(resolve(repoRoot, file));
           }
           const page = { ...scanned, ...parseFrontMatter(html, file, scan().areas) };
-          out = renderPage(page, scan(), { root: relativeUrls ? rootFor(doc.route) : "/" });
+          out = renderPage(page, scan(), { root: relativeUrls ? rootFor(doc.route) : "/", dev: command !== "build" });
         } else if (doc.kind === "landing") {
           // Errors and line numbers point at the template, for every language
           out = renderDocument(html, LANDING.file, doc.route, scan(), { locale: doc.locale, siteUrl: relativeUrls ? siteUrl : "" });

@@ -8,6 +8,7 @@ keywords: npm, cdn
 -->
     <div class="docs-block" id="installation">
       <p class="docs-lead">Pick a level, then copy one install command or the CDN tags. Each level needs the ones below it and nothing above.</p>
+      <p>Know what you are building? <a href="/docs/get-started/snippet/">Choose your snippet</a> and copy the lines for it, CDN hashes included.</p>
       <div class="luz-alert luz-alert--warning" role="note">
         <div class="luz-alert__icon" aria-hidden="true">!</div>
         <div>
@@ -39,7 +40,7 @@ keywords: npm, cdn
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-cdn-level-1" aria-label="Copy the CDN tags for level 1">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 1"><code id="code-cdn-level-1">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;</code></pre>
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 1"><code id="code-cdn-level-1">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot;&gt;</code></pre>
         </div>
         <p>With a bundler such as Vite, import the files instead of adding tags. A <code class="luz-code-inline">href</code> cannot name a package: these paths are for <code class="luz-code-inline">import</code> only.</p>
         <div class="docs-snippet">
@@ -71,11 +72,11 @@ keywords: npm, cdn
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-cdn-level-2" aria-label="Copy the CDN tags for level 2">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 2"><code id="code-cdn-level-2">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css&quot;&gt;
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 2"><code id="code-cdn-level-2">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot;&gt;
 
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
         <div class="docs-snippet">
           <div class="docs-snippet__bar">
@@ -110,13 +111,13 @@ import &quot;@luz-ds/core&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-cdn-level-3" aria-label="Copy the CDN tags for level 3">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 3"><code id="code-cdn-level-3">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css&quot;&gt;
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, level 3"><code id="code-cdn-level-3">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot;&gt;
 
 &lt;!-- Optional: core behaviours, and the site search and cookie banner --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
         <div class="docs-snippet">
           <div class="docs-snippet__bar">
@@ -148,10 +149,14 @@ import &quot;@luz-ds/site&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-cdn-landing" aria-label="Copy the CDN tags for landing">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, landing"><code id="code-cdn-landing">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/landing@0.1.0/dist/landing.min.css&quot;&gt;</code></pre>
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, landing"><code id="code-cdn-landing">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/landing@0.0.0/dist/landing.min.css&quot;&gt;
+
+&lt;!-- Optional: core behaviours, and the site search and cookie banner --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
         <div class="docs-command-block">
           <code class="docs-command-block__cmd">
@@ -165,11 +170,14 @@ import &quot;@luz-ds/site&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-cdn-cms" aria-label="Copy the CDN tags for cms">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, cms"><code id="code-cdn-cms">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/cms@0.1.0/dist/cms.min.css&quot;&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, cms"><code id="code-cdn-cms">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/cms@0.0.0/dist/cms.min.css&quot;&gt;
+
+&lt;!-- Optional: core behaviours, and the site search and cookie banner --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
         <div class="docs-command-block">
           <code class="docs-command-block__cmd">
@@ -183,14 +191,17 @@ import &quot;@luz-ds/site&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-cdn-app" aria-label="Copy the CDN tags for app">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, app"><code id="code-cdn-app">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/app@0.1.0/dist/app.min.css&quot;&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="CDN tags, app"><code id="code-cdn-app">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/app@0.0.0/dist/app.min.css&quot;&gt;
+
+&lt;!-- Optional: core behaviours, and the site search and cookie banner --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
         <ul>
-          <li>Landing, cms and app each have their own version, 0.1.0 now, and need <code>^0.1.0</code> of the base. Pin both numbers.</li>
+          <li>Landing, cms and app each have their own version and need <code>^0.1.0</code> of the base. Pin both numbers.</li>
           <li>With a bundler, add <code class="luz-code-inline">import "@luz-ds/landing/css";</code>, <code class="luz-code-inline">import "@luz-ds/cms/css";</code> or <code class="luz-code-inline">import "@luz-ds/app/css";</code> after the imports of level 3.</li>
           <li>None has a script. Core's script is optional: with cms, it marks the section in view in the table of contents; with app, it marks the current link of the sidebar and closes the drawer when a link is followed.</li>
         </ul>
@@ -209,7 +220,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
             <span class="docs-snippet__lang">Shell</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-integrity" aria-label="Copy the integrity command">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="Computing the integrity hash"><code id="code-integrity">curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css | openssl dgst -sha384 -binary | openssl base64 -A</code></pre>
+          <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="Computing the integrity hash"><code id="code-integrity">curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css | openssl dgst -sha384 -binary | openssl base64 -A</code></pre>
         </div>
         <p>Write the result as <code class="luz-code-inline">integrity="sha384-…"</code> on the tag that loads that file, and repeat it for each file.</p>
         <p>A hash on a script covers that file only, not the files it loads later. <code class="luz-code-inline">site.min.js</code> loads <code class="luz-code-inline">search.min.js</code> on a page with a search and <code class="luz-code-inline">consent.min.js</code> on a page with a cookie banner. Give each one its own hash in a <code class="luz-code-inline">&lt;link rel="modulepreload"&gt;</code> before the script: the browser checks it there, and a file with a wrong hash never runs.</p>
@@ -218,15 +229,16 @@ import &quot;@luz-ds/site&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-integrity-chunks" aria-label="Copy the tags that check the site scripts">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Integrity for the site scripts"><code id="code-integrity-chunks">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/search.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Integrity for the site scripts"><code id="code-integrity-chunks">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
       </div>
 
       <div class="docs-prose">
         <h2 id="next-steps" class="docs-prose__title">Next steps</h2>
         <ul>
+          <li><a href="/docs/get-started/snippet/">Choose your snippet</a> for your kind of site and the way you load it.</li>
           <li><a href="/docs/components/">Browse the components</a> and copy their markup.</li>
           <li><a href="/docs/tokens/modes/">Set up the color modes</a>: light, dark and high contrast.</li>
           <li><a href="/docs/tokens/">Learn how the tokens work</a> before you write your own components.</li>

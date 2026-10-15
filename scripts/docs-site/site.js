@@ -35,6 +35,7 @@ import { lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
 import { SITE_KINDS } from "../luz-packages.js";
+import { renderSnippets, snippetData } from "./snippets.js";
 import { assertInlineHtml, loadLocales, lookup, markDocsLinks, renderAlternates, renderSwitcher, unusedKeys } from "./i18n.js";
 
 /** Where the docs pages are published. */
@@ -72,7 +73,7 @@ const FRONT_MATTER = {
   module: { default: "" },
   // "false" when the page's content starts with its own lead paragraph
   lead: { default: "true" },
-  // A block the generator writes after the content: "gallery" or "a-z"
+  // A block the generator writes after the content: "gallery", "a-z" or "snippets"
   generate: { default: "" },
 };
 
@@ -207,7 +208,7 @@ export function parseFrontMatter(source, file, areas = null) {
     if (!["true", "false"].includes(meta[key])) throw new Error(`${file}: ${key} is "true" or "false"`);
   }
   if (!["h2", "h2,h3", "false"].includes(meta.toc)) throw new Error(`${file}: toc is "h2", "h2,h3" or "false"`);
-  if (!["", "gallery", "a-z"].includes(meta.generate)) throw new Error(`${file}: generate is "gallery" or "a-z"`);
+  if (!["", "gallery", "a-z", "snippets"].includes(meta.generate)) throw new Error(`${file}: generate is "gallery", "a-z" or "snippets"`);
   if (meta.group && !NAME.test(meta.group)) throw new Error(`${file}: group "${meta.group}" is not a valid name`);
   if (areas && meta.area !== HUB_AREA) {
     const area = areas.find((a) => a.id === meta.area);
@@ -872,6 +873,24 @@ export function sourceReader(site) {
 }
 
 /**
+ * The block a page's `generate` front matter asks for, written after its content.
+ * "snippets" reads the dist/ files of the packages (snippets.js), so a missing
+ * file fails the build and only warns in dev (`options.dev`).
+ */
+function renderGenerated(page, site, options) {
+  switch (page.meta.generate) {
+    case "gallery":
+      return renderGallery(site, page);
+    case "a-z":
+      return renderAZ(site);
+    case "snippets":
+      return renderSnippets(snippetData({ root: site.repoRoot, readFile: readFileSync, dev: options.dev === true }));
+    default:
+      return "";
+  }
+}
+
+/**
  * Render a page: its layout, with the partials, the generated blocks and the
  * page fragment. `options.root` is the {{root}} value (relative in the pages
  * build, the site's path on the not-found page).
@@ -883,8 +902,7 @@ export function renderPage(page, site, options = {}) {
   const locale = site.i18n?.default;
   const strings = { locale, used: options.used };
   const content = expand(page.body, { file: page.file, firstLine: page.bodyLine, partial: reader.partial, current, placeholders: false, ...strings });
-  const generated =
-    page.meta.generate === "gallery" ? renderGallery(site, page) : page.meta.generate === "a-z" ? renderAZ(site) : "";
+  const generated = renderGenerated(page, site, options);
   const layout = reader.layout(page.meta.layout);
   return expand(layout.text, {
     file: layout.file,

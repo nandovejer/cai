@@ -1124,7 +1124,7 @@ What an AI coding agent can read, how to check what it wrote, and the accessibil
 
 ### Check what an agent wrote
 
-`npx @luz-ds/check` reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and theme colors are wrong. It reads files and writes nothing. It needs Node 20 or later.
+`npx @luz-ds/check` reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and color tokens are wrong. It reads files and writes nothing. It needs Node 20 or later.
 
 The files an agent can read are linked from `llms.txt`. The commands with paths, the options and exit codes (`npx @luz-ds/check --help`), a sample of the output, the fields of `--json` and the tables of the files and of the rules are on the page at the URL above.
 
@@ -1151,7 +1151,7 @@ The other notes on the reviewer are on the page at the URL above.
 A run with no findings says what the checker did not find in the files it read. It is not a test of the page.
 
 - **It does not run a browser.** It reads files, so anything that depends on how a page renders, such as layout, focus order or the colors a browser works out, is not seen.
-- **Contrast is measured for your tokens only.** It measures the `--luz-*` colors you set in a theme file. A color written straight into a rule is not measured against anything. How the pairs are read is on [Contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/).
+- **Contrast is measured for your tokens only.** It measures the `--luz-*` colors you set in your own color tokens file. A color written straight into a rule is not measured against anything. How the pairs are read is on [Contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/).
 - **A class built at run time is not seen.** A name put together in a script, such as `"luz-" + name`, or written by a template, is not in the file, so it is not checked.
 - **It does not check names, labels, alt text, headings and language.** Whether a button has a name, an image a useful alternative, the headings an order and the page a language is not read, and a run with no findings says nothing about them.
 - **It does not replace testing with a screen reader.** No assistive technology is used, by the command or by the reviewer. What has not been tested is listed in [the accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/#h-a11y-not-tested).
@@ -1517,7 +1517,7 @@ Check your own color overrides against the contrast LUZ promises, with one comma
 
 ### Run it
 
-LUZ keeps its own colors readable in light, dark and high contrast. The moment you override a token, that promise is yours. `check-contrast` reads the `--luz-*` declarations of your stylesheet, puts them over LUZ's tokens as the browser would, and measures the same pairs the component pages list. It needs Node 20 or later and nothing else. `luz-check`, the command of [@luz-ds/check](https://nandovejer.github.io/luz/docs/get-started/ai/), runs the same check on the theme files you name, next to its rules for the HTML and CSS of a page.
+LUZ keeps its own colors readable in light, dark and high contrast. The moment you override a token, that promise is yours. `check-contrast` reads the `--luz-*` declarations of your stylesheet, puts them over LUZ's tokens as the browser would, and measures the same pairs the component pages list. It needs Node 20 or later and nothing else. `luz-check`, the command of [@luz-ds/check](https://nandovejer.github.io/luz/docs/get-started/ai/), runs the same check on the stylesheets you name, next to its rules for the HTML and CSS of a page.
 
 The command
 ```text

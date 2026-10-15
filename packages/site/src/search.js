@@ -14,7 +14,7 @@
  *       <span class="luz-search__fallback-label">A–Z index</span></a>
  *     <button class="luz-search__trigger" type="button" data-luz-search-open
  *             aria-haspopup="dialog" aria-keyshortcuts="Control+K Meta+K" hidden>…</button>
- *     <dialog class="luz-modal luz-search" data-luz-search
+ *     <dialog class="luz-modal luz-search"
  *             data-luz-search-src="search-index.json"
  *             aria-labelledby="…" data-luz-label-results="{n} results" …>
  *       <div class="luz-search__field"><svg aria-hidden="true" …>…</svg>

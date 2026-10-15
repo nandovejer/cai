@@ -60,6 +60,20 @@
 	margin-block: var(--luz-space-md) 0;
 }
 
+/* The details is already the box: a fieldset inside it is a label and its
+   checkboxes, with no second frame. Its padding is in rem, so at 200 % text
+   a framed fieldset (24 + 16 + the legend's word) did not fit 320 px */
+.luz-consent__choices :where(fieldset) {
+	padding: 0;
+	border: 0;
+	background: none;
+}
+
+.luz-consent__choices :where(legend) {
+	padding: 0;
+	margin-block-end: var(--luz-space-xs);
+}
+
 .luz-consent :where(form) {
 	margin-block-start: var(--luz-space-md);
 }

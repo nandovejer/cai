@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accessibility statement – Accessibility – LUZ documentation</title>
-  <meta name="description" content="LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 14 October 2026.">
+  <meta name="description" content="LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 15 October 2026.">
   <link rel="icon" href="../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
   <link rel="icon" href="../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../assets/apple-touch-icon-QPTLZskv.png">
@@ -14,7 +14,7 @@
   <script type="module" crossorigin src="../../assets/site-header-etw6QrnT.js"></script>
   <script type="module" crossorigin src="../../assets/reference-tI-bKOaf.js"></script>
   <link rel="stylesheet" crossorigin href="../../assets/reference-DrBMOZvQ.css">
-  <link rel="stylesheet" crossorigin href="../../assets/site-header-DmFdpXVE.css">
+  <link rel="stylesheet" crossorigin href="../../assets/site-header-C_tWpcz4.css">
   <link rel="stylesheet" crossorigin href="../../assets/reference-2VxXI5Sp.css">
 </head>
 <body class="o-shell docs-page">
@@ -46,7 +46,7 @@
           <kbd class="luz-search__trigger-key" aria-hidden="true">Ctrl K</kbd>
         </button>
         <dialog class="luz-modal luz-search" id="luz-search" aria-labelledby="luz-search-title"
-                data-luz-search data-luz-search-src="../../docs/search-index.json"
+                data-luz-search-src="../../docs/search-index.json"
                 data-luz-label-results="{n} results"
                 data-luz-label-result="1 result"
                 data-luz-label-capped="{shown} of {n} results. Type more to narrow."
@@ -133,7 +133,7 @@
   </nav>
   <div class="docs-body">
     <div class="docs-block docs-prose-chapter" id="accessibility">
-      <p class="docs-lead">LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 14 October 2026.</p>
+      <p class="docs-lead">LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 15 October 2026.</p>
       <h2 id="h-a11y-target">Target</h2>
       <p>LUZ aims to meet <a href="https://www.w3.org/TR/WCAG22/">WCAG 2.2</a> level AA, the level that EN 301 549 and the European Accessibility Act refer to.</p>
       <p>A design system cannot make a service accessible by itself: how you use the components decides the result. Each component page says what is yours to do, under <em>Keyboard and ARIA</em> and <em>Writing the content</em>.</p>
@@ -150,6 +150,7 @@
         <li>Right-to-left text: the demo of every component, except the player, is laid out with <code class="luz-code-inline">dir="rtl"</code> next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.</li>
         <li>Contrast of the text written for the home and documentation pages, in all three modes.</li>
         <li>Before this release, the same automated suites ran once in Firefox 155 and in WebKit 26.6 and 27.2 (the engine of Safari), on Linux, and their findings were fixed. They do not run on every change, and neither is a test on macOS or iOS.</li>
+        <li><code class="luz-code-inline">llms.txt</code> and <code class="luz-code-inline">classes.json</code> are regenerated on every change; a stale one fails.</li>
         <li>Contrast of every token pair a component draws, by a script, in the three base modes. A theme of your own is measured by the same script, as <a href="../../docs/tokens/themes/">the themes page</a> shows.</li>
       </ul>
 
@@ -160,6 +161,7 @@
         <li>Right-to-left text by a person who reads it, or with a screen reader. Only the layout is measured by a script, and the player's controls are not part of that measurement.</li>
         <li>Zoom to 400 percent by hand. Only the 320 pixel width is measured.</li>
         <li>Research with disabled people.</li>
+        <li>The accessibility reviewer that <code class="luz-code-inline">@luz-ds/check</code> prints, and <code class="luz-code-inline">luz-check</code> itself. They read source files and give advice; they do not open a page, measure on screen or use assistive technology. A run with no findings does not mean a page is accessible.</li>
       </ul>
       <p>Automated tools find only part of the problems. Treat this list as the gap, and test your own pages.</p>
 

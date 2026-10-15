@@ -243,6 +243,7 @@ Which package holds each part of a page
 - Site search: `<luz-search>`, `.luz-search`: site: Needs the script (`site.js`, which loads `search.js` when the page has one) and an index file; without them it is a link
 - Print styles: Nothing to add: core: In `luz.css`; site adds its own print rules
 - Markup you cannot add classes to: `data-luz-classless`: core: `classless.css`, a file of its own
+- Checking what you or an AI agent wrote: `npx @luz-ds/check`, the `luz-check` command: check: A tool with no CSS and no layer, and no other package needed: it reads your HTML and CSS offline. See [Working with AI](https://nandovejer.github.io/luz/docs/get-started/ai/)
 
 - **Two ways to lay out a page, both core's.** `.o-shell` with `.o-main`: a sidebar column beside the main area. `.o-page`: a header, the content and a footer in one column. Pick one for the grid of the page: the first when it has a sidebar, the second when it has none. A landing or CMS header and footer work with both; these docs use `.o-shell`.
 - Site needs core, and core needs tokens, so a row at a level also needs every package under it. Landing, CMS and app need core and tokens; site is optional for them.
@@ -1116,6 +1117,49 @@ Changing the print styles
 - **Backgrounds.** Browsers drop background colors and images when they print unless the reader turns "background graphics" on. LUZ relies on text, borders and weight, not on a filled background, to tell things apart.
 - **Long tables and breaks.** A table taller than a page breaks anyway: the browser ignores "no break" when it cannot keep it. Safari does not honor `break-after: avoid`, so a heading may be left alone at the foot of a page there.
 
+## Working with AI
+URL: https://nandovejer.github.io/luz/docs/get-started/ai/
+
+What an AI coding agent can read, how to check what it wrote, and the accessibility reviewer you can give it.
+
+### Check what an agent wrote
+
+`npx @luz-ds/check` reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and theme colors are wrong. It reads files and writes nothing. It needs Node 20 or later.
+
+The files an agent can read are linked from `llms.txt`. The commands with paths, the options and exit codes (`npx @luz-ds/check --help`), a sample of the output, the fields of `--json` and the tables of the files and of the rules are on the page at the URL above.
+
+### What check blocks and what it warns about
+
+Each rule has an id such as `class/unknown`, shown in every finding. A rule that blocks makes the exit code 1. A rule that warns does not, unless you pass `--strict`. The two tables are written from the list of rules the command has.
+
+### The accessibility reviewer
+
+The same package prints an agent definition for an AI coding assistant: a reviewer that reads the source of a page and gives advice on accessibility. Copy it into your project.
+
+The command that copies the reviewer
+```bash
+npx @luz-ds/check agent > .claude/agents/luz-accessibility-reviewer.md
+```
+
+- **It overwrites.** The `>` replaces a file that is already there. Use another path, or put your copy under version control first, if you edited it.
+- **It is read-only.** It has three tools, `Read`, `Grep` and `Glob`: it reads, searches and lists files, and writes nothing. Read-only does not mean harmless, because `Read` has no path limit. Read the file before you use it, and review any change to it as you would code.
+
+The other notes on the reviewer are on the page at the URL above.
+
+### What this does not do
+
+A run with no findings says what the checker did not find in the files it read. It is not a test of the page.
+
+- **It does not run a browser.** It reads files, so anything that depends on how a page renders, such as layout, focus order or the colors a browser works out, is not seen.
+- **Contrast is measured for your tokens only.** It measures the `--luz-*` colors you set in a theme file. A color written straight into a rule is not measured against anything. How the pairs are read is on [Contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/).
+- **A class built at run time is not seen.** A name put together in a script, such as `"luz-" + name`, or written by a template, is not in the file, so it is not checked.
+- **It does not check names, labels, alt text, headings and language.** Whether a button has a name, an image a useful alternative, the headings an order and the page a language is not read, and a run with no findings says nothing about them.
+- **It does not replace testing with a screen reader.** No assistive technology is used, by the command or by the reviewer. What has not been tested is listed in [the accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/#h-a11y-not-tested).
+- **It does not call a network.** It runs offline, with the data in your `node_modules` or in its own package.
+- **Discovery by `llms.txt` is by link.** This site is not at the root of a host, so an agent does not find the file by itself: give it the URL, as the prompt above does.
+- **Exit code 0 is not an accessibility result.** It says that no rule above blocks in the files that were read.
+- **The messages are in English.** They are not translated, whatever the language of the page.
+
 ## Classless styles
 URL: https://nandovejer.github.io/luz/docs/get-started/classless/
 Files: classless.css
@@ -1473,7 +1517,7 @@ Check your own color overrides against the contrast LUZ promises, with one comma
 
 ### Run it
 
-LUZ keeps its own colors readable in light, dark and high contrast. The moment you override a token, that promise is yours. `check-contrast` reads the `--luz-*` declarations of your stylesheet, puts them over LUZ's tokens as the browser would, and measures the same pairs the component pages list. It needs Node 18 or later and nothing else.
+LUZ keeps its own colors readable in light, dark and high contrast. The moment you override a token, that promise is yours. `check-contrast` reads the `--luz-*` declarations of your stylesheet, puts them over LUZ's tokens as the browser would, and measures the same pairs the component pages list. It needs Node 20 or later and nothing else. `luz-check`, the command of [@luz-ds/check](https://nandovejer.github.io/luz/docs/get-started/ai/), runs the same check on the theme files you name, next to its rules for the HTML and CSS of a page.
 
 The command
 ```text
@@ -2976,11 +3020,11 @@ Icon in a button markup
 </button>
 ```
 
-Two icons point to the end of the line: `chevron-end` and `arrow-end`, marked with `data-luz-flip`. In right-to-left text, mirror them with one rule of your own; LUZ ships none.
+Two icons point to the end of the line: `chevron-end` and `arrow-end`, marked with `data-luz-flip`. In right-to-left text, LUZ mirrors anything with that attribute using the rule below, in core's utilities layer, so you write nothing. Add the attribute to an icon of your own that points to the end of the line.
 
-Right-to-left rule markup
+Right-to-left rule, shipped in luz.utilities
 ```css
-:dir(rtl) svg[data-luz-flip] {
+:where([data-luz-flip]):dir(rtl) {
   transform: scaleX(-1);
 }
 ```
@@ -5149,7 +5193,7 @@ Search markup
     <kbd class="luz-search__trigger-key" aria-hidden="true">Ctrl K</kbd>
   </button>
   <dialog class="luz-modal luz-search" aria-labelledby="search-title"
-          data-luz-search data-luz-search-src="/search-index.json"
+          data-luz-search-src="/search-index.json"
           data-luz-label-results="{n} results"
           data-luz-label-result="1 result"
           data-luz-label-capped="{shown} of {n} results. Type more to narrow."
@@ -6121,7 +6165,7 @@ An application is used every day by the same people to check a state and act on 
 ## Header
 URL: https://nandovejer.github.io/luz/docs/app/header/
 Example: https://nandovejer.github.io/luz/examples/app/header.html
-Files: .luz-app-header, __toggle, __product, __actions, __account, __account-name · Package: @luz-ds/app
+Files: .luz-app-header, __product, __actions, __account, __account-name · Package: @luz-ds/app
 
 The quiet bar at the top of an application's main area: the menu button, the product name on a phone, the search and the account.
 
@@ -6141,7 +6185,7 @@ App header markup
   <div class="o-main">
     <header class="luz-app-header o-sticky">
       <div class="o-row">
-        <button class="luz-nav-toggle luz-app-header__toggle" type="button" popovertarget="app-nav" aria-label="Menu">
+        <button class="luz-nav-toggle" type="button" popovertarget="app-nav" aria-label="Menu">
           <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
         </button>
         <p class="luz-app-header__product">Bodega</p>
@@ -6168,7 +6212,6 @@ App header markup
 No modifier. The header is a class of app on a native `<header>`, laid out by core's objects in the markup.
 
 - `.luz-app-header`: On `<header>`, a child of `.o-main`: the page surface and a rule underneath. It is one row of `--luz-bar-h`; its `.o-row` has the gutters of the content
-- `.luz-app-header__toggle`: Marks the slot of core's `.luz-nav-toggle`, first in the row. It has no rule of its own: the button, its `popovertarget` and its name are core's
 - `.luz-app-header__product`: The product's name in medium text, semibold. It shows only at 768 px and below, where the sidebar is a drawer and its brand is out of sight
 - `.luz-app-header__actions`: On a `.o-row`: the global tools at the inline end of the bar. Site's [search](https://nandovejer.github.io/luz/docs/site/search/), then the account
 - `.luz-app-header__account`: On the `.luz-btn.luz-btn--ghost` that opens the account list: at least 44 by 44 px, with its initials in a `.luz-avatar` and then the name
@@ -6322,7 +6365,7 @@ This page is a library of whole-page templates: open its URL for the markup of e
 ## Accessibility statement
 URL: https://nandovejer.github.io/luz/docs/accessibility/
 
-LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 14 October 2026.
+LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 15 October 2026.
 
 ### Target
 
@@ -6342,6 +6385,7 @@ A design system cannot make a service accessible by itself: how you use the comp
 - Right-to-left text: the demo of every component, except the player, is laid out with `dir="rtl"` next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.
 - Contrast of the text written for the home and documentation pages, in all three modes.
 - Before this release, the same automated suites ran once in Firefox 155 and in WebKit 26.6 and 27.2 (the engine of Safari), on Linux, and their findings were fixed. They do not run on every change, and neither is a test on macOS or iOS.
+- `llms.txt` and `classes.json` are regenerated on every change; a stale one fails.
 - Contrast of every token pair a component draws, by a script, in the three base modes. A theme of your own is measured by the same script, as [the themes page](https://nandovejer.github.io/luz/docs/tokens/themes/) shows.
 
 ### What has not been tested
@@ -6351,6 +6395,7 @@ A design system cannot make a service accessible by itself: how you use the comp
 - Right-to-left text by a person who reads it, or with a screen reader. Only the layout is measured by a script, and the player's controls are not part of that measurement.
 - Zoom to 400 percent by hand. Only the 320 pixel width is measured.
 - Research with disabled people.
+- The accessibility reviewer that `@luz-ds/check` prints, and `luz-check` itself. They read source files and give advice; they do not open a page, measure on screen or use assistive technology. A run with no findings does not mean a page is accessible.
 
 Automated tools find only part of the problems. Treat this list as the gap, and test your own pages.
 

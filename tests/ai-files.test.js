@@ -3,7 +3,9 @@
  * 1.1 to 1.3, 3, 9, 10 row 4, D3, and "Review answers"). The docs generator
  * writes two text files at the Pages root for an AI agent, from the same pages a
  * person reads (RL-19): an index of every page, and the curated text of them.
- * Step 5 adds the `examples/` and `manifests/` cases to this same file.
+ * Step 5 (examples/ and manifests/ on Pages, spec 1.4, 1.5, D1, D2, D4) adds
+ * its cases at the end of this same file; its contract is written there, above
+ * the first of them.
  *
  * THE CONTRACT these tests pin (the spec leaves some names open; the
  * implementer follows them):
@@ -50,11 +52,12 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
-import { decodeEntities, readHtml } from "../scripts/docs-site/html.js";
+import { decodeEntities, readHtml, tags } from "../scripts/docs-site/html.js";
 import { docsSite } from "../scripts/docs-site/plugin.js";
 import { indexData, readingOrder, scanSite } from "../scripts/docs-site/site.js";
 import { PACKAGES } from "../scripts/luz-packages.js";
-import { SITE_URL } from "../vite.config.js";
+import { FILES } from "../scripts/docs-site/snippets.js";
+import { PAGES_CSP, SITE_URL } from "../vite.config.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 
@@ -85,12 +88,12 @@ const htmlToText = (...args) => member("htmlToText")(...args);
 
 // llms.txt: the unit-test guard, tighter than any shared budget (spec 1.2).
 const LLMS_TXT_MAX = 32 * 1024;
-// llms-full.txt: THE SPEC'S ESTIMATES (spec 1.3, 9, D3: 300-340 kB, not built).
-// The implementer measures renderLlmsFull() on the real pages once, fixes the
-// ideal and the ceiling with headroom, and edits ONLY these two constants (the
-// ceiling then goes to ai.js as LLMS_FULL_MAX and to budgets.json in step 6).
-// The ceiling is a red line: it is not raised afterwards (RL-17).
-const LLMS_FULL_IDEAL = 320 * 1024;
+// llms-full.txt: fixed once, on 2026-10-15, from the measured 390,512 B of
+// renderLlmsFull() on the real pages (the spec's 300-340 kB was an estimate,
+// not a build; the owner accepted the ideal and the ceiling below). The ceiling
+// goes to ai.js as LLMS_FULL_MAX and to budgets.json in step 6, and it is never
+// raised afterwards (RL-17).
+const LLMS_FULL_IDEAL = 384 * 1024;
 const LLMS_FULL_CEILING = 448 * 1024;
 // Curated, not empty: a floor that only says the sections are really there.
 const LLMS_FULL_FLOOR = 64 * 1024;
@@ -781,4 +784,640 @@ describe("the Vite plugin emits and serves the two files", () => {
     expect(fullText.headers["content-type"]).toMatch(/^text\/plain; charset=utf-8/);
     expect(fullText.body).toBe(renderLlmsFull(site, { siteUrl: "" }));
   }, 60_000);
+});
+
+/* ======================================================================= *
+ * Step 5: examples/ and manifests/ on Pages (spec 1.4, 1.5, D1, D2, D4)
+ *
+ * THE CONTRACT these tests pin (the names are the spec's 1.1; the shapes the
+ * spec leaves open are fixed here, the implementer follows them):
+ *
+ *   scripts/docs-site/ai.js
+ *     exampleDocuments(site, { csp, versions })
+ *         -> [{ route, page, html }], one per page that has a `#markup`
+ *         section (48 today), whatever its area. `route` is
+ *         `/examples/<area>/<slug>.html` for the page `/docs/<area>/<slug>/`
+ *         (D2-A); `page` is the page of `site`; `html` a complete document.
+ *         `csp` is the string of the CSP <meta> (PAGES_CSP in the pages
+ *         build); `versions` maps each package name of PACKAGES to its
+ *         version ({ tokens: "0.0.0", core: "0.0.0", ... }).
+ *     exampleAssets(root)
+ *         -> [{ route, from }]: the files an example loads, copied beside
+ *         the examples (D1-A). `from` is relative to the repository root
+ *         (`packages/core/dist/luz.min.css`), `route` is
+ *         `/examples/dist/<pkg>/<file>`, flat, so a chunk is beside the entry
+ *         that imports it by name. One per file of FILES of snippets.js (its
+ *         css, js and chunks) with the tokens file `tokens.min.css` (no
+ *         @font-face, no font to carry a licence for), nothing else.
+ *     manifestAssets(root)
+ *         -> [{ route, from }]: `/manifests/<pkg>/classes.json` for each
+ *         package of PACKAGES, and `/manifests/<pkg>/custom-elements.json`
+ *         for each package that has one in dist (core and site), `from` being
+ *         `packages/<pkg>/dist/<file>`.
+ *
+ *   One example document (the shell of spec 1.4):
+ *     <!doctype html>, <html lang="en">, charset and viewport meta, the CSP
+ *     <meta http-equiv> (content === csp) before any <link> or <script>, a
+ *     <title> `<Title>: markup examples – LUZ`, a header comment (it says
+ *     "Do not edit", MIT and the version of core from `versions`), one
+ *     <link rel=stylesheet> per package the page needs in load order (tokens,
+ *     core, then site when the page's area is `site` or a kept block names a
+ *     <luz-*> tag site's custom-elements.json declares, then the kind's when
+ *     the area is landing, cms or app), each `../dist/<pkg>/<file>`; `<h1>`
+ *     the page's title; the first link is to its docs page (relative, ending
+ *     `#markup`); then, for each `html` block of `#markup` that has no
+ *     <script> and no on*= attribute, `<h2 id="ex-<n>">` with the block's
+ *     aria-label and the block's text, decoded once, as markup; the scripts at
+ *     the end: `<script type="module" src="../dist/core/luz.min.js">` and, with
+ *     site, `../dist/site/site.min.js`. Blocks skipped for a <script> or an
+ *     on*= attribute are named (their aria-label) in the last comment of the
+ *     document. No <style>, no inline <script>, no on*= attribute, no <base>,
+ *     no third-party URL; no `style=` outside the blocks' own text.
+ *
+ *   scripts/docs-site/plugin.js: docsSite({ ..., csp }) takes the CSP string
+ *     (vite.config.js passes PAGES_CSP); generateBundle() emits every example,
+ *     every asset of exampleAssets() and every manifest of manifestAssets()
+ *     at `route.slice(1)`; the dev server answers the same routes from a
+ *     route -> body table (never joined from the URL).
+ *
+ *   llms.txt: `## Optional` links an example and the manifests; llms-full.txt:
+ *     the header block of a page that has an example is `URL:`, `Example:`
+ *     (the example's URL), then `Files:`.
+ * ======================================================================= */
+
+const exampleDocuments = (...args) => member("exampleDocuments")(...args);
+const exampleAssets = (...args) => member("exampleAssets")(...args);
+const manifestAssets = (...args) => member("manifestAssets")(...args);
+
+const readJson = (relative) => JSON.parse(readFileSync(join(root, relative), "utf-8"));
+/** Distinct, so a document that writes another package's version is caught. */
+const VERSIONS = Object.fromEntries(PACKAGES.map((name, i) => [name, `${i + 11}.7.3`]));
+const REAL_VERSIONS = Object.fromEntries(PACKAGES.map((name) => [name, readJson(`packages/${name}/package.json`).version]));
+const SITE_ELEMENTS = readJson("packages/site/dist/custom-elements.json")
+  .modules.flatMap((m) => m.declarations ?? [])
+  .map((d) => d.tagName)
+  .filter(Boolean);
+const KIND_AREAS = ["landing", "cms", "app"];
+const EXAMPLE_ENTRY = { tokens: "tokens.min.css" };
+/** The css file of each package an example links (the tokens one is the font-less file). */
+const cssOf = (pkg) => EXAMPLE_ENTRY[pkg] ?? FILES[pkg].css;
+
+/* ---- the oracle: what a page's "Copy the markup" holds ---------------------- */
+
+function markupSection(page) {
+  const start = page.body.search(/<h3\b[^>]*\bid="markup"/);
+  if (start === -1) return null;
+  const rest = page.body.slice(start + 1);
+  const end = rest.search(/<h[23]\b/);
+  return rest.slice(0, end === -1 ? undefined : end);
+}
+
+/** { kept: [{ label, code }], skipped: [{ label, code }] } of the `html` blocks of #markup. */
+function blocksOf(page) {
+  const kept = [];
+  const skipped = [];
+  for (const [, attrs, code] of markupSection(page).matchAll(/<pre\b([^>]*\bdata-lang="html"[^>]*)>\s*<code[^>]*>([\s\S]*?)<\/code>\s*<\/pre>/g)) {
+    const block = { label: decodeEntities(/\baria-label="([^"]*)"/.exec(attrs)?.[1] ?? ""), code: decodeEntities(code).trim() };
+    (/<script\b/i.test(block.code) || /\son[a-z]+\s*=/i.test(block.code) ? skipped : kept).push(block);
+  }
+  return { kept, skipped };
+}
+
+const exampleRouteOf = (page) => page.route.replace(/^\/docs\//, "/examples/").replace(/\/$/, ".html");
+const areaOf = (route) => route.split("/")[2];
+const markupPages = (from = site) => from.pages.filter((p) => markupSection(p) !== null);
+
+/** The packages an example of this page loads, in load order. */
+function packagesFor(page) {
+  const area = areaOf(page.route);
+  const { kept } = blocksOf(page);
+  const useSite = area === "site" || kept.some((b) => SITE_ELEMENTS.some((tag) => new RegExp(`<${tag}[\\s>/]`).test(b.code)));
+  return ["tokens", "core", ...(useSite ? ["site"] : []), ...(KIND_AREAS.includes(area) ? [area] : [])];
+}
+
+/* ---- reading a generated document ------------------------------------------- */
+
+const LOADS = ["src", "srcset", "poster", "data", "action", "formaction", "ping"];
+const SCHEME_OR_HOST = /^(?:[a-z][a-z0-9+.-]*:)?\/\//i;
+
+/** What the tests need of a document; `tags()` throws with file:line if it is not valid. */
+function inspect(html, file) {
+  const doc = { starts: [], links: [], scripts: [], metas: [], anchors: [], h2: [], onAttributes: [], thirdParty: [], title: null, h1: null, lang: null };
+  const textAfter = (tag) => decodeEntities(html.slice(tag.end, html.indexOf("<", tag.end))).trim();
+  for (const tag of tags(html, file)) {
+    if (tag.type !== "start") continue;
+    doc.starts.push(tag);
+    const { name, attrs } = tag;
+    if (name === "html") doc.lang = attrs.get("lang") ?? null;
+    if (name === "title" && doc.title === null) doc.title = textAfter(tag);
+    if (name === "h1" && doc.h1 === null) doc.h1 = textAfter(tag);
+    if (name === "h2" && /^ex-\d+$/.test(attrs.get("id") ?? "")) doc.h2.push({ id: attrs.get("id"), text: textAfter(tag) });
+    if (name === "link") doc.links.push({ rel: attrs.get("rel"), href: attrs.get("href"), index: tag.index });
+    if (name === "script") doc.scripts.push({ src: attrs.get("src") ?? null, type: attrs.get("type") ?? null, index: tag.index });
+    if (name === "meta") doc.metas.push({ attrs, index: tag.index });
+    if (name === "a") doc.anchors.push(attrs.get("href") ?? "");
+    for (const [attr, value] of attrs) {
+      if (/^on/i.test(attr)) doc.onAttributes.push(`${name}[${attr}]`);
+      if ((LOADS.includes(attr) || (name === "link" && attr === "href")) && SCHEME_OR_HOST.test(decodeEntities(value ?? ""))) doc.thirdParty.push(`${name}[${attr}]=${value}`);
+    }
+  }
+  return doc;
+}
+
+/** The comments of a document, in order. */
+const commentsOf = (html) => [...html.matchAll(/<!--([\s\S]*?)-->/g)].map((m) => m[1]);
+/** `href` resolved against the example's own route: the path and the fragment it reaches. */
+const resolved = (route, href) => {
+  const url = new URL(href, `https://example.test${route}`);
+  return { path: url.pathname, hash: url.hash };
+};
+
+const examples = () => once("examples", () => exampleDocuments(site, { csp: PAGES_CSP, versions: VERSIONS }));
+const assets = () => once("assets", () => exampleAssets(root));
+const manifests = () => once("manifests", () => manifestAssets(root));
+
+/* ---- exampleDocuments: the real site ------------------------------------------ */
+
+describe("exampleDocuments: one standalone page per component or pattern page, from its markup", () => {
+  it("makes one document for every page that has a #markup section, at /examples/<area>/<slug>.html", () => {
+    const wanted = markupPages().map((p) => ({ route: exampleRouteOf(p), page: p.route }));
+    // the spec counts 48; the oracle must have found them
+    expect(wanted.length).toBeGreaterThan(40);
+    const got = examples().map((e) => ({ route: e.route, page: e.page.route }));
+    expect([...got].sort((a, b) => a.route.localeCompare(b.route))).toEqual([...wanted].sort((a, b) => a.route.localeCompare(b.route)));
+    expect(new Set(got.map((g) => g.route)).size).toBe(got.length);
+    for (const e of examples()) {
+      expect(e.route, e.route).toMatch(/^\/examples\/[a-z-]+\/[a-z0-9-]+\.html$/);
+      expect(e.page, e.route).toBe(site.byRoute.get(e.page.route));
+      expect(typeof e.html, e.route).toBe("string");
+    }
+  });
+
+  it("is the same documents twice, and from a fresh scan of the site", () => {
+    const again = exampleDocuments(scanSite(docsDir, root), { csp: PAGES_CSP, versions: VERSIONS });
+    expect(again.map((e) => [e.route, e.html])).toEqual(examples().map((e) => [e.route, e.html]));
+  });
+
+  it("is a complete HTML document in English: doctype, lang, charset, viewport, a title and one h1 from the page", () => {
+    for (const e of examples()) {
+      expect(e.html, e.route).toMatch(/^<!doctype html>/i);
+      expect(e.html.trimEnd(), e.route).toMatch(/<\/html>$/i);
+      const doc = inspect(e.html, e.route);
+      expect(doc.lang, e.route).toBe("en");
+      expect(doc.starts.map((t) => t.name), e.route).toEqual(expect.arrayContaining(["html", "head", "body", "main"]));
+      expect(doc.metas.some((m) => m.attrs.has("charset")), `${e.route} charset`).toBe(true);
+      expect(doc.metas.some((m) => m.attrs.get("name") === "viewport"), `${e.route} viewport`).toBe(true);
+      expect(doc.title, e.route).toBe(`${e.page.meta.title}: markup examples – LUZ`);
+      expect(doc.h1, e.route).toBe(e.page.meta.title);
+    }
+  });
+
+  it("carries the CSP the build passes, in a <meta http-equiv> before anything it governs", () => {
+    for (const e of examples()) {
+      const doc = inspect(e.html, e.route);
+      const csp = doc.metas.filter((m) => (m.attrs.get("http-equiv") ?? "").toLowerCase() === "content-security-policy");
+      expect(csp.length, e.route).toBe(1);
+      expect(decodeEntities(csp[0].attrs.get("content")), e.route).toBe(PAGES_CSP);
+      for (const loaded of [...doc.links, ...doc.scripts]) expect(csp[0].index, e.route).toBeLessThan(loaded.index);
+    }
+  });
+
+  it("has no inline style or script, no event handler, no <base>, and loads nothing from another host", () => {
+    for (const e of examples()) {
+      const doc = inspect(e.html, e.route);
+      const names = doc.starts.map((t) => t.name);
+      for (const banned of ["style", "base", "iframe", "object", "embed"]) expect(names, `${e.route} <${banned}>`).not.toContain(banned);
+      for (const script of doc.scripts) {
+        expect(script.src, `${e.route}: an inline script`).toBeTruthy();
+        expect(script.type, e.route).toBe("module");
+      }
+      expect(doc.onAttributes, e.route).toEqual([]);
+      expect(doc.thirdParty, e.route).toEqual([]);
+      // `style=` can only be in a block's own text (the player's markup has one)
+      let shell = e.html;
+      for (const block of blocksOf(e.page).kept) shell = shell.replace(block.code, "");
+      expect(shell, `${e.route}: style= outside a block`).not.toMatch(/\sstyle\s*=/i);
+    }
+  });
+
+  it("links the packages the page needs in load order, and its scripts at the end, all relative to ../dist/", () => {
+    for (const e of examples()) {
+      const doc = inspect(e.html, e.route);
+      const pkgs = packagesFor(e.page);
+      expect(doc.links.map((l) => l.rel), e.route).toEqual(pkgs.map(() => "stylesheet"));
+      expect(doc.links.map((l) => l.href), e.route).toEqual(pkgs.map((pkg) => `../dist/${pkg}/${cssOf(pkg)}`));
+      const js = ["core", ...pkgs.filter((p) => p === "site")];
+      expect(doc.scripts.map((s) => s.src), e.route).toEqual(js.map((pkg) => `../dist/${pkg}/${FILES[pkg].js}`));
+      const bodyAt = e.html.search(/<body\b/i);
+      for (const script of doc.scripts) expect(script.index, e.route).toBeGreaterThan(bodyAt);
+    }
+  });
+
+  it("loads only files that exampleAssets copies: every <link> and <script> resolves to one of its routes", () => {
+    const routes = new Set(assets().map((a) => a.route));
+    for (const e of examples()) {
+      const doc = inspect(e.html, e.route);
+      for (const url of [...doc.links.map((l) => l.href), ...doc.scripts.map((s) => s.src)]) {
+        expect(SCHEME_OR_HOST.test(url) || url.startsWith("/"), `${e.route}: ${url} is relative`).toBe(false);
+        expect(routes.has(resolved(e.route, url).path), `${e.route}: ${url}`).toBe(true);
+      }
+    }
+  });
+
+  it("links back to the docs page, relative, at its #markup section", () => {
+    for (const e of examples()) {
+      const first = inspect(e.html, e.route).anchors[0];
+      expect(first, `${e.route} has a link`).toBeTruthy();
+      expect(SCHEME_OR_HOST.test(first) || first.startsWith("/"), `${e.route}: ${first} is relative`).toBe(false);
+      expect(resolved(e.route, first), e.route).toEqual({ path: e.page.route, hash: "#markup" });
+    }
+  });
+
+  it("holds exactly the html blocks of #markup the page shows, verbatim, each under its aria-label", () => {
+    let kept = 0;
+    let skipped = 0;
+    for (const e of examples()) {
+      const blocks = blocksOf(e.page);
+      const doc = inspect(e.html, e.route);
+      expect(doc.h2.map((h) => h.text), e.route).toEqual(blocks.kept.map((b) => b.label));
+      expect(new Set(doc.h2.map((h) => h.id)).size, e.route).toBe(doc.h2.length);
+      let at = 0;
+      for (const block of blocks.kept) {
+        const found = e.html.indexOf(block.code, at);
+        expect(found, `${e.route}: ${block.label}`).toBeGreaterThanOrEqual(0);
+        at = found + block.code.length;
+        kept += 1;
+      }
+      for (const block of blocks.skipped) {
+        expect(e.html.includes(block.code), `${e.route}: ${block.label} is left out`).toBe(false);
+        skipped += 1;
+      }
+    }
+    // the spec counts 65 html blocks, two of them with a script (consent, search)
+    expect(kept).toBeGreaterThan(55);
+    expect(skipped).toBeGreaterThan(0);
+  });
+
+  it("names, in its last comment, each block it left out for a script or a handler", () => {
+    for (const e of examples()) {
+      const { skipped } = blocksOf(e.page);
+      if (!skipped.length) continue;
+      const last = commentsOf(e.html).at(-1);
+      expect(last, `${e.route} has a closing comment`).toBeTruthy();
+      expect(e.html.trimEnd().endsWith("-->") || e.html.lastIndexOf("-->") > e.html.lastIndexOf("</main>"), `${e.route}: the comment is at the end`).toBe(true);
+      for (const block of skipped) expect(last, `${e.route}: ${block.label}`).toContain(block.label);
+      expect(last, e.route).toMatch(/script/i);
+    }
+  });
+
+  it("opens with a comment that says where it comes from, that it is generated, the licence and the core version", () => {
+    for (const e of examples()) {
+      const head = commentsOf(e.html)[0];
+      expect(head, e.route).toBeTruthy();
+      expect(head, e.route).toMatch(/do not edit/i);
+      expect(head, e.route).toMatch(/\bMIT\b/);
+      expect(head, e.route).toContain(VERSIONS.core);
+      expect(head, e.route).toContain("scripts/docs-site/ai.js");
+      expect(head, e.route).toContain("#markup");
+    }
+  });
+
+  it("is valid for the strict tokenizer, with no template left over and nothing private in it", () => {
+    for (const e of examples()) {
+      expect(() => tags(e.html, e.route), e.route).not.toThrow();
+      for (const pattern of PRIVATE) expect(e.html, `${e.route} ${pattern}`).not.toMatch(pattern);
+      expect(e.html, e.route).not.toMatch(/sha384-\(run|\/home\/|ghp_|npm_|-----BEGIN/);
+      expect(e.html, e.route).not.toMatch(/@[a-z0-9.-]+\.[a-z]{2,}/);
+      expect(e.html, e.route).not.toMatch(/\{\{|\}\}/);
+    }
+  });
+
+  it("takes the CSP from its argument, not from a constant", () => {
+    const own = "default-src 'none'; img-src 'self'";
+    const [first] = exampleDocuments(site, { csp: own, versions: VERSIONS });
+    const csp = inspect(first.html, first.route).metas.find((m) => m.attrs.has("http-equiv"));
+    expect(decodeEntities(csp.attrs.get("content"))).toBe(own);
+    expect(first.html).not.toContain(PAGES_CSP);
+  });
+});
+
+/* ---- exampleDocuments: what it does with the sources, on a fixture ------------ */
+
+describe("exampleDocuments: the rules on a small site", () => {
+  const snippet = (id, label, lang, code) =>
+    `<div class="docs-snippet"><div class="docs-snippet__bar"><span class="docs-snippet__lang">${lang}</span></div>` +
+    `<pre class="luz-code-block" data-lang="${lang}" tabindex="0" role="region" aria-label="${label}"><code id="${id}">${code
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")}</code></pre></div>`;
+  const page = (title, area, blocks, { how = "" } = {}) =>
+    `${FRONT(title, `${title}, for the tests.`, area, `files: components/${title.toLowerCase().replace(/\W+/g, "-")}.css\ntoc: h2,h3\n`)}<div class="docs-component">
+  <h2 id="example">Example</h2>
+  <div class="docs-example" data-docs-specimen><p>DEMO</p></div>
+  <h2 id="known-issues">Known issues</h2>
+  <p>None known.</p>
+  <h2 class="docs-view__title" id="code">Code</h2>
+  <h3 id="markup">Copy the markup</h3>
+  ${blocks.map((b, i) => snippet(`code-${i}`, ...b)).join("\n  ")}
+  <h3 id="how">How it works</h3>
+  <p>HOW-TEXT</p>
+  ${how}
+</div>
+`;
+  const files = {
+    "site.json": JSON.stringify({
+      areas: [
+        { id: "components", label: "Components", slug: "components" },
+        { id: "site", label: "Site", slug: "site" },
+        { id: "landing", label: "Landing", slug: "landing" },
+        { id: "tokens", label: "Tokens", slug: "tokens" },
+      ],
+    }),
+    "pages/components/index.html": FRONT("Components", "Every component, for the tests.", "components", "generate: gallery\nlead: false\n") + "<p>INDEX</p>\n",
+    "pages/components/widget.html": page(
+      "Widget & friends",
+      "components",
+      [
+        ["Widget markup", "html", '<div class="luz-widget">Fish &amp; chips</div>'],
+        ["Widget script", "js", "const widget = 1;"],
+        ["Widget with a handler", "html", '<button class="luz-btn" onclick="go()">Go</button>'],
+        ["Widget with a script", "html", '<script>go()</script>'],
+        ["Second widget", "html", '<p class="luz-widget">Second <strong>one</strong></p>'],
+      ],
+      { how: snippet("code-how", "How only block", "html", '<span class="how-only">HOW-ONLY-BLOCK</span>') },
+    ),
+    "pages/components/timeline.html": page("Timeline", "components", [["Timeline markup", "html", '<luz-timeline role="group" aria-label="Releases"><ol class="luz-timeline"></ol></luz-timeline>']]),
+    "pages/components/plain.html": FRONT("Plain", "A page with no markup section.", "components") + "<h2 id=\"how\">How</h2><p>PLAIN-TEXT</p>\n",
+    "pages/site/banner.html": page("Banner", "site", [["Banner markup", "html", '<luz-banner tone="warning">Closed on Monday</luz-banner>']]),
+    "pages/landing/index.html": FRONT("Landing", "The landing patterns, for the tests.", "landing", "generate: gallery\nlead: false\n") + "<p>LANDING</p>\n",
+    "pages/landing/header.html": page("Header", "landing", [["Header markup", "html", '<header class="luz-landing-header"><luz-search>…</luz-search></header>']]),
+    "pages/tokens/color.html": TOKENS_PAGE,
+  };
+  const build = () => {
+    const fixture = fixtureSite(files);
+    return exampleDocuments(fixture.scan(), { csp: "default-src 'self'", versions: VERSIONS });
+  };
+  const byRoute = (docs, route) => docs.find((d) => d.route === route);
+
+  it("makes a document only for the pages with a #markup section, and names each at its own route", () => {
+    expect(
+      build()
+        .map((d) => d.route)
+        .sort(),
+    ).toEqual(["/examples/components/timeline.html", "/examples/components/widget.html", "/examples/landing/header.html", "/examples/site/banner.html"]);
+  });
+
+  it("writes the kept html blocks as markup, decoded once, and leaves out the js block, the handler, the script and other sections", () => {
+    const widget = byRoute(build(), "/examples/components/widget.html").html;
+    expect(widget).toContain('<div class="luz-widget">Fish &amp; chips</div>');
+    expect(widget).toContain('<p class="luz-widget">Second <strong>one</strong></p>');
+    expect(widget.indexOf("Fish &amp; chips")).toBeLessThan(widget.indexOf("Second <strong>"));
+    for (const left of ["const widget = 1", "go()", "HOW-ONLY-BLOCK", "HOW-TEXT", "DEMO", "None known"]) {
+      expect(widget.replace(/<!--[\s\S]*?-->/g, ""), left).not.toContain(left);
+    }
+    const doc = inspect(widget, "widget");
+    expect(doc.h2.map((h) => h.text)).toEqual(["Widget markup", "Second widget"]);
+    const last = commentsOf(widget).at(-1);
+    expect(last).toContain("Widget with a handler");
+    expect(last).toContain("Widget with a script");
+  });
+
+  it("escapes the title: the text is the page's, the markup is valid", () => {
+    const widget = byRoute(build(), "/examples/components/widget.html").html;
+    const doc = inspect(widget, "widget");
+    expect(doc.title).toBe("Widget & friends: markup examples – LUZ");
+    expect(doc.h1).toBe("Widget & friends");
+    expect(widget).not.toMatch(/<title>[^<]*&[^a-z#]/i);
+  });
+
+  it("loads only tokens and core for a component, and site's too for an element site declares", () => {
+    const docs = build();
+    const hrefs = (route) => inspect(byRoute(docs, route).html, route).links.map((l) => l.href);
+    expect(hrefs("/examples/components/widget.html")).toEqual(["../dist/tokens/tokens.min.css", "../dist/core/luz.min.css"]);
+    // <luz-timeline> is core's tag
+    expect(hrefs("/examples/components/timeline.html")).toEqual(["../dist/tokens/tokens.min.css", "../dist/core/luz.min.css"]);
+    expect(hrefs("/examples/site/banner.html")).toEqual(["../dist/tokens/tokens.min.css", "../dist/core/luz.min.css", "../dist/site/site.min.css"]);
+    expect(hrefs("/examples/landing/header.html")).toEqual([
+      "../dist/tokens/tokens.min.css",
+      "../dist/core/luz.min.css",
+      "../dist/site/site.min.css",
+      "../dist/landing/landing.min.css",
+    ]);
+    const scripts = (route) => inspect(byRoute(docs, route).html, route).scripts.map((s) => s.src);
+    expect(scripts("/examples/components/widget.html")).toEqual(["../dist/core/luz.min.js"]);
+    expect(scripts("/examples/landing/header.html")).toEqual(["../dist/core/luz.min.js", "../dist/site/site.min.js"]);
+  });
+
+  it("takes the kind's stylesheet from the area even when no tag of site is named", () => {
+    const plainLanding = { ...files, "pages/landing/header.html": page("Header", "landing", [["Header markup", "html", '<header class="luz-landing-header">Name</header>']]) };
+    const docs = exampleDocuments(fixtureSite(plainLanding).scan(), { csp: "default-src 'self'", versions: VERSIONS });
+    const links = inspect(byRoute(docs, "/examples/landing/header.html").html, "header").links.map((l) => l.href);
+    expect(links).toEqual(["../dist/tokens/tokens.min.css", "../dist/core/luz.min.css", "../dist/landing/landing.min.css"]);
+  });
+
+  it("follows the page: change a block and the example changes, nothing else holds the old text", () => {
+    const fixture = fixtureSite(files);
+    const render = () => exampleDocuments(fixture.scan(), { csp: "default-src 'self'", versions: VERSIONS });
+    expect(byRoute(render(), "/examples/components/widget.html").html).toContain("Second <strong>one</strong>");
+    const path = join(fixture.docsDir, "pages/components/widget.html");
+    writeFileSync(path, readFileSync(path, "utf-8").replace("Second &lt;strong&gt;one", "Changed &lt;strong&gt;one"));
+    const after = byRoute(render(), "/examples/components/widget.html").html;
+    expect(after).toContain("Changed <strong>one</strong>");
+    expect(after).not.toContain("Second <strong>");
+  });
+});
+
+/* ---- exampleAssets, manifestAssets ------------------------------------------ */
+
+describe("exampleAssets: the CSS and JS an example loads, copied beside the examples", () => {
+  it("names each as { route, from }: a file of the package's dist at /examples/dist/<pkg>/<file>", () => {
+    expect(assets().length).toBeGreaterThan(10);
+    for (const asset of assets()) {
+      const m = /^\/examples\/dist\/(tokens|core|site|landing|cms|app)\/([A-Za-z0-9._-]+\.(?:css|js))$/.exec(asset.route);
+      expect(m, asset.route).toBeTruthy();
+      expect(asset.from, asset.route).toBe(`packages/${m[1]}/dist/${m[2]}`);
+      expect(existsSync(join(root, asset.from)), `${asset.from} exists (run pnpm build)`).toBe(true);
+    }
+    expect(new Set(assets().map((a) => a.route)).size).toBe(assets().length);
+  });
+
+  it("is exactly the css, the js and the chunks of each package, with the font-less tokens file", () => {
+    const expected = PACKAGES.flatMap((pkg) => [cssOf(pkg), FILES[pkg].js, ...FILES[pkg].chunks].filter(Boolean).map((file) => `/examples/dist/${pkg}/${file}`));
+    expect(assets().map((a) => a.route).sort()).toEqual(expected.sort());
+    const routes = assets().map((a) => a.route);
+    expect(routes).toContain("/examples/dist/tokens/tokens.min.css");
+    expect(routes.some((r) => /luz-tokens|fonts/.test(r))).toBe(false);
+  });
+
+  it("only copies files the package publishes (its pack-files.txt)", () => {
+    for (const asset of assets()) {
+      const [, pkg, file] = /^packages\/([a-z]+)\/dist\/(.+)$/.exec(asset.from);
+      const packed = readFileSync(join(root, "packages", pkg, "pack-files.txt"), "utf-8").split("\n");
+      expect(packed, asset.from).toContain(`dist/${file}`);
+    }
+  });
+
+  it("carries every chunk an entry imports by name, beside it", () => {
+    const routes = new Set(assets().map((a) => a.route));
+    for (const asset of assets().filter((a) => /\/(luz|site)\.min\.js$/.test(a.route))) {
+      const text = readFileSync(join(root, asset.from), "utf-8");
+      const chunks = [...text.matchAll(/["']\.\/([A-Za-z0-9._-]+\.js)["']/g)].map((m) => m[1]);
+      expect(chunks.length, asset.route).toBeGreaterThan(0);
+      for (const chunk of chunks) expect(routes.has(`${asset.route.replace(/[^/]+$/, "")}${chunk}`), `${asset.route} imports ${chunk}`).toBe(true);
+    }
+  });
+
+  it("reads the repository it is given, and gives the same list twice", () => {
+    expect(exampleAssets(root)).toEqual(assets());
+  });
+});
+
+describe("manifestAssets: the manifests of every package, served from /manifests/<pkg>/", () => {
+  it("lists classes.json of every package and custom-elements.json of the packages that have one", () => {
+    const expected = PACKAGES.flatMap((pkg) =>
+      ["classes.json", "custom-elements.json"].filter((file) => existsSync(join(root, "packages", pkg, "dist", file))).map((file) => ({ route: `/manifests/${pkg}/${file}`, from: `packages/${pkg}/dist/${file}` })),
+    );
+    expect(expected.map((e) => e.route)).toEqual(expect.arrayContaining(["/manifests/core/classes.json", "/manifests/core/custom-elements.json", "/manifests/site/custom-elements.json", "/manifests/landing/classes.json"]));
+    expect([...manifests()].sort((a, b) => a.route.localeCompare(b.route))).toEqual(expected.sort((a, b) => a.route.localeCompare(b.route)));
+    for (const asset of manifests()) expect(existsSync(join(root, asset.from)), asset.from).toBe(true);
+  });
+});
+
+/* ---- the files for an agent point at them ------------------------------------ */
+
+describe("llms.txt and llms-full.txt name the examples and the manifests", () => {
+  const optional = () => parseTxt(txt()).sections.at(-1);
+  const exampleRoutes = () => new Set(markupPages().map(exampleRouteOf));
+
+  it("links under Optional an example page that is emitted, and the manifests of core and site", () => {
+    const urls = optional().items.map((i) => i.url);
+    const routes = urls.filter((u) => u.startsWith(`${SITE_URL}examples/`)).map((u) => `/${u.slice(SITE_URL.length)}`);
+    expect(routes.length).toBeGreaterThan(0);
+    for (const route of routes) expect(exampleRoutes().has(route), route).toBe(true);
+    expect(urls).toContain(`${SITE_URL}manifests/core/classes.json`);
+    expect(urls).toContain(`${SITE_URL}manifests/site/custom-elements.json`);
+    expect(urls).toContain(`${SITE_URL}llms-full.txt`);
+  });
+
+  it("links every Optional URL to a file the build writes", () => {
+    const emitted = new Set([member("AI_ROUTES").llmsFull, ...[...exampleRoutes()], ...manifests().map((m) => m.route)]);
+    for (const item of optional().items) expect(emitted.has(`/${item.url.slice(SITE_URL.length)}`), item.url).toBe(true);
+  });
+
+  it("is root-absolute in dev, as the rest of the file is", () => {
+    const items = parseTxt(txt("")).sections.at(-1).items.map((i) => i.url);
+    expect(items).toContain("/manifests/core/classes.json");
+    expect(items.some((u) => u.startsWith("/examples/"))).toBe(true);
+  });
+
+  it("gives each entry of a page that has an example an `Example:` line between URL and Files, and the others none", () => {
+    const withExample = new Set(markupPages().map((p) => urlOf(p.route)));
+    let seen = 0;
+    for (const e of entriesOf(full()).filter((x) => x.url)) {
+      const head = e.text.split(/\n\s*\n/)[0].split("\n").filter(Boolean);
+      const route = `/${e.url.slice(SITE_URL.length)}`;
+      if (withExample.has(e.url)) {
+        seen += 1;
+        const page = site.byRoute.get(route);
+        expect(head[0], e.url).toBe(`URL: ${e.url}`);
+        expect(head[1], e.url).toBe(`Example: ${urlOf(exampleRouteOf(page))}`);
+        if (head[2]) expect(head[2], e.url).toMatch(/^Files: /);
+      } else {
+        expect(head.some((l) => l.startsWith("Example:")), e.url).toBe(false);
+      }
+    }
+    expect(seen).toBe(withExample.size);
+  });
+
+  it("writes the example URL root-absolute in dev, absolute under the site URL in the build", () => {
+    expect(full()).toContain(`\nExample: ${SITE_URL}examples/components/button.html\n`);
+    expect(full("")).toContain("\nExample: /examples/components/button.html\n");
+  });
+
+  it("does that on a fixture too: the example of Widget, and nothing for the tokens page", () => {
+    const { scan } = fixtureSite(fixtureFiles());
+    const out = renderLlmsFull(scan(), { siteUrl: FIXTURE_URL });
+    const widget = entriesOf(out).find((e) => e.title === "Widget");
+    expect(widget.text.split("\n").slice(0, 3)).toEqual([`URL: ${FIXTURE_URL}docs/components/widget/`, `Example: ${FIXTURE_URL}examples/components/widget.html`, "Files: components/widget.css · Package: @luz-ds/core"]);
+    expect(entriesOf(out).find((e) => e.title === "Color").text).not.toContain("Example:");
+    expect(renderLlmsFull(scan(), { siteUrl: "" })).toContain("\nExample: /examples/components/widget.html\n");
+  });
+});
+
+/* ---- the plugin emits and serves them ---------------------------------------- */
+
+describe("the Vite plugin emits and serves the examples and the manifests", () => {
+  const plugin = (relative) =>
+    docsSite({ repoRoot: root, relative, outRoot: join(tmpdir(), "luz-ai-files-out"), pagesBase: "/luz/", siteUrl: SITE_URL, csp: PAGES_CSP });
+  const bytesOf = (relative) => readFileSync(join(root, relative));
+  const same = (source, expected) => Buffer.from(source).equals(Buffer.isBuffer(expected) ? expected : Buffer.from(expected));
+
+  it("emits every example, asset and manifest at its route, byte for byte", () => {
+    const emitted = [];
+    plugin(true).generateBundle.call({ emitFile: (file) => emitted.push(file) });
+    const byName = new Map(emitted.map((f) => [f.fileName, f]));
+    const documents = exampleDocuments(site, { csp: PAGES_CSP, versions: REAL_VERSIONS });
+    expect(documents.length).toBeGreaterThan(40);
+    for (const doc of documents) {
+      const file = byName.get(doc.route.slice(1));
+      expect(file, `${doc.route} is emitted`).toBeTruthy();
+      expect(file.type).toBe("asset");
+      expect(file.source).toBe(doc.html);
+    }
+    for (const asset of [...exampleAssets(root), ...manifestAssets(root)]) {
+      const file = byName.get(asset.route.slice(1));
+      expect(file, `${asset.route} is emitted`).toBeTruthy();
+      expect(file.type).toBe("asset");
+      expect(same(file.source, bytesOf(asset.from)), `${asset.route} equals ${asset.from}`).toBe(true);
+    }
+  }, 60_000);
+
+  describe("in the dev server", () => {
+    const serve = async (url) => {
+      const middlewares = [];
+      plugin(false).configureServer({
+        watcher: { on() {} },
+        ws: { send() {} },
+        middlewares: { use: (fn) => middlewares.push(fn) },
+        transformIndexHtml: async (_file, html) => html,
+      });
+      return new Promise((resolve) => {
+        const headers = {};
+        const res = { statusCode: 200, setHeader: (k, v) => (headers[k.toLowerCase()] = v), end: (body) => resolve({ headers, body, statusCode: res.statusCode }) };
+        middlewares[0]({ url, originalUrl: url }, res, () => resolve({ next: true }));
+      });
+    };
+
+    it("answers an example as HTML, from the table of generated documents", async () => {
+      const got = await serve("/examples/components/button.html");
+      expect(got.next, "answered by the plugin").toBeUndefined();
+      expect(got.headers["content-type"]).toMatch(/^text\/html; charset=utf-8/);
+      const doc = exampleDocuments(site, { csp: PAGES_CSP, versions: REAL_VERSIONS }).find((d) => d.route === "/examples/components/button.html");
+      expect(got.body).toBe(doc.html);
+    }, 60_000);
+
+    it("answers an asset with its bytes and a type, and a manifest as JSON", async () => {
+      const css = await serve("/examples/dist/core/luz.min.css");
+      expect(css.next).toBeUndefined();
+      expect(css.headers["content-type"]).toMatch(/^text\/css/);
+      expect(same(css.body, bytesOf("packages/core/dist/luz.min.css"))).toBe(true);
+      const js = await serve("/examples/dist/core/luz.min.js");
+      expect(js.headers["content-type"]).toMatch(/^(text|application)\/javascript/);
+      const json = await serve("/manifests/core/classes.json");
+      expect(json.next).toBeUndefined();
+      expect(json.headers["content-type"]).toMatch(/^application\/json/);
+      expect(same(json.body, bytesOf("packages/core/dist/classes.json"))).toBe(true);
+    }, 60_000);
+
+    it("never builds a path from the URL: a name it does not list, or a way out of the folder, is not answered", async () => {
+      // the table answers what it lists (so the refusals below are not an unwired route)
+      expect((await serve("/examples/components/button.html")).next, "the table answers a listed example").toBeUndefined();
+      for (const url of ["/examples/components/nope.html", "/examples/dist/core/../../../package.json", "/manifests/core/../../../package.json", "/manifests/core/secret.json", "/manifests/../.gitignore"]) {
+        const got = await serve(url);
+        expect(got.next === true || got.statusCode !== 200, url).toBe(true);
+        expect(String(got.body ?? ""), url).not.toContain('"name"');
+      }
+    }, 60_000);
+  });
 });

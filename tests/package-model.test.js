@@ -175,6 +175,7 @@ describe("site after F3: five `<luz-*>` components", () => {
       "./css/min": "./dist/site.min.css",
       "./print.css": "./dist/print.css",
       "./classes.json": "./dist/classes.json",
+      "./custom-elements.json": "./dist/custom-elements.json",
       "./components/*": "./dist/components/*",
       "./package.json": "./package.json",
     });

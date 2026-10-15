@@ -55,6 +55,36 @@ There is no script. Add core's and site's if you use their behaviours.
 - `.luz-landing-main`, `.luz-landing-section`, `.luz-landing-glow` — The rhythm of the page, on `main.o-container.o-stack` and `section.o-stack`, and a tint behind the `.o-page`. [Docs](https://nandovejer.github.io/luz/docs/landing/section/)
 - `.luz-landing-footer` — The footer: on `footer > .o-container.o-container--inline.o-row`, a rule on top and its items at the two ends of the row. [Docs](https://nandovejer.github.io/luz/docs/landing/footer/)
 
+<!-- luz:ai-agents:start -->
+## For AI agents
+
+`@luz-ds/landing` 0.0.0 is in beta: any release may break anything. Read the breaking changes below before you update, and use only what the files under "Read first" list.
+
+### Breaking changes
+
+Not released yet: 0.0.0 is the workspace's placeholder; the first release is 0.1.0. Nothing is deprecated and nothing breaks.
+
+### Read first
+
+1. `dist/classes.json` in this package: the classes and custom properties its CSS defines. Write only those.
+2. https://nandovejer.github.io/luz/llms.txt: the index of the documentation, short enough for a small context.
+3. https://nandovejer.github.io/luz/llms-full.txt: the same pages in full.
+4. https://nandovejer.github.io/luz/examples/: one standalone page of markup for each component and pattern.
+
+### Load order
+
+This package needs `@luz-ds/tokens` and `@luz-ds/core` loaded first.
+
+`@luz-ds/site` is optional: the CSS of this package works with the packages above alone.
+
+### Check what you write
+
+Run `npx @luz-ds/check <files>` on every HTML and CSS file you write, and fix what it reports. To copy the accessibility reviewer into your project: `npx @luz-ds/check agent > .claude/agents/luz-accessibility-reviewer.md`.
+
+`@luz-ds/check` is not on npm yet: it ships with the first release.
+
+<!-- luz:ai-agents:end -->
+
 ## License
 
 MIT

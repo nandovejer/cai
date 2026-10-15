@@ -59,6 +59,36 @@ The body of a story is core's `.luz-prose` (line length and the space between bl
 - `.luz-cms-article` (`__layout`) and `.luz-cms-toc` (`__title`, `__list`) — The story and its table of contents: beside the text, staying in view, when the article is 46rem wide or more; above it below that. `--luz-cms-toc-top` sets the space above it while it stays in view (by default under a `.o-sticky` bar of core's `--luz-bar-h`). [Docs](https://nandovejer.github.io/luz/docs/cms/toc/)
 - `.luz-cms-footer` — The end of every page: a rule above, who publishes it and a few links at the two ends of a row; a column at 768 px and below. [Docs](https://nandovejer.github.io/luz/docs/cms/footer/)
 
+<!-- luz:ai-agents:start -->
+## For AI agents
+
+`@luz-ds/cms` 0.0.0 is in beta: any release may break anything. Read the breaking changes below before you update, and use only what the files under "Read first" list.
+
+### Breaking changes
+
+Not released yet: 0.0.0 is the workspace's placeholder; the first release is 0.1.0. Nothing is deprecated and nothing breaks.
+
+### Read first
+
+1. `dist/classes.json` in this package: the classes and custom properties its CSS defines. Write only those.
+2. https://nandovejer.github.io/luz/llms.txt: the index of the documentation, short enough for a small context.
+3. https://nandovejer.github.io/luz/llms-full.txt: the same pages in full.
+4. https://nandovejer.github.io/luz/examples/: one standalone page of markup for each component and pattern.
+
+### Load order
+
+This package needs `@luz-ds/tokens` and `@luz-ds/core` loaded first.
+
+`@luz-ds/site` is optional: the CSS of this package works with the packages above alone.
+
+### Check what you write
+
+Run `npx @luz-ds/check <files>` on every HTML and CSS file you write, and fix what it reports. To copy the accessibility reviewer into your project: `npx @luz-ds/check agent > .claude/agents/luz-accessibility-reviewer.md`.
+
+`@luz-ds/check` is not on npm yet: it ships with the first release.
+
+<!-- luz:ai-agents:end -->
+
 ## License
 
 MIT

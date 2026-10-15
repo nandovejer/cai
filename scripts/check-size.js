@@ -8,6 +8,10 @@
  * (`"compression": "none"`) in the committed docs/ (which check:generated
  * proves equal to a fresh build).
  *
+ * A `file` budget of a package that does not exist yet (no
+ * packages/<name>/package.json) passes vacuously with a note; once the package
+ * exists, a missing file fails ("run pnpm build first").
+ *
  * Two more guards keep the ceiling honest:
  *   - each `max` equals the ceiling in the PRINCIPLES.md table (same order),
  *     which changes only with its own changeset, so budgets.json cannot be
@@ -188,6 +192,14 @@ for (const { name, glob, compression, floor, ideal, max } of budgets.filter((b) 
 
 for (const { name, file, floor, ideal, max } of budgets.filter((b) => b.file)) {
   const path = resolve(root, file);
+  // A package that is not created yet has nothing to measure: its row passes
+  // vacuously, with a note, until packages/<name>/package.json exists. From
+  // then on a missing file is a failure like any other (the row is not weakened).
+  const pkg = /^packages\/([^/]+)\//.exec(file)?.[1];
+  if (pkg && !existsSync(resolve(root, "packages", pkg, "package.json"))) {
+    console.log(`- ${name}: packages/${pkg} has no package.json yet, not measured`);
+    continue;
+  }
   if (!existsSync(path)) {
     console.error(`✗ ${name}: ${file} not found — run pnpm build first`);
     failed = true;

@@ -130,6 +130,35 @@ The core JS (`luz.js`) provides no-dependency implementations of:
 - Syntax highlighting for code blocks
 - And more...
 
+<!-- luz:ai-agents:start -->
+## For AI agents
+
+`@luz-ds/core` 0.0.0 is in beta: any release may break anything. Read the breaking changes below before you update, and use only what the files under "Read first" list.
+
+### Breaking changes
+
+Not released yet: 0.0.0 is the workspace's placeholder; the first release is 0.1.0. Nothing is deprecated and nothing breaks.
+
+### Read first
+
+1. `dist/classes.json` in this package: the classes and custom properties its CSS defines. Write only those.
+2. `dist/custom-elements.json` in this package: the `<luz-*>` elements it defines, with their attributes.
+3. https://nandovejer.github.io/luz/llms.txt: the index of the documentation, short enough for a small context.
+4. https://nandovejer.github.io/luz/llms-full.txt: the same pages in full.
+5. https://nandovejer.github.io/luz/examples/: one standalone page of markup for each component and pattern.
+
+### Load order
+
+This package needs `@luz-ds/tokens` loaded first.
+
+### Check what you write
+
+Run `npx @luz-ds/check <files>` on every HTML and CSS file you write, and fix what it reports. To copy the accessibility reviewer into your project: `npx @luz-ds/check agent > .claude/agents/luz-accessibility-reviewer.md`.
+
+`@luz-ds/check` is not on npm yet: it ships with the first release.
+
+<!-- luz:ai-agents:end -->
+
 ## License
 
 MIT. Core ships no fonts; the serif used for running text (ET Book, MIT) comes with `@luz-ds/tokens`.

@@ -110,6 +110,34 @@ ET Book ships roman, italic, semi-bold and bold. Sans and mono are system stacks
 
 `@luz-ds/core` ships no fonts. It sets the serif for running text through `--luz-font-body`, using this ET Book.
 
+<!-- luz:ai-agents:start -->
+## For AI agents
+
+`@luz-ds/tokens` 0.0.0 is in beta: any release may break anything. Read the breaking changes below before you update, and use only what the files under "Read first" list.
+
+### Breaking changes
+
+Not released yet: 0.0.0 is the workspace's placeholder; the first release is 0.1.0. Nothing is deprecated and nothing breaks.
+
+### Read first
+
+1. `dist/classes.json` in this package: the classes and custom properties its CSS defines. Write only those.
+2. https://nandovejer.github.io/luz/llms.txt: the index of the documentation, short enough for a small context.
+3. https://nandovejer.github.io/luz/llms-full.txt: the same pages in full.
+4. https://nandovejer.github.io/luz/examples/: one standalone page of markup for each component and pattern.
+
+### Load order
+
+`@luz-ds/tokens` needs no other LUZ package: load it first.
+
+### Check what you write
+
+Run `npx @luz-ds/check <files>` on every HTML and CSS file you write, and fix what it reports. To copy the accessibility reviewer into your project: `npx @luz-ds/check agent > .claude/agents/luz-accessibility-reviewer.md`.
+
+`@luz-ds/check` is not on npm yet: it ships with the first release.
+
+<!-- luz:ai-agents:end -->
+
 ## License
 
 MIT, fonts included. Every bundled font is under the MIT License only, and its notice ships in `dist/fonts/LICENSE-*.txt`:

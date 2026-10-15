@@ -1,0 +1,563 @@
+/**
+ * LUZ docs site: the files written for an AI agent, from the same pages a
+ * person reads (RL-19). Pure, development tooling (nothing here ships):
+ *
+ *   renderLlmsTxt(site, { siteUrl })   llms.txt: an index of every page, as
+ *       llmstxt.org shapes it (H1, blockquote, H2 lists of links).
+ *   renderLlmsFull(site, { siteUrl })  llms-full.txt: the curated text of the
+ *       pages (what an agent needs to write LUZ markup), over a fixed ceiling
+ *       it throws, so the build fails before `pnpm check:size`.
+ *   htmlToText(fragment, { file })     a page fragment as Markdown-ish text;
+ *       it throws `file:line` on an element it does not know, so a new element
+ *       on a docs page is a decision, never a silent loss.
+ *
+ * `siteUrl` is the site's root URL with its trailing slash (SITE_URL in the
+ * pages build) or "" (root-absolute links, as in dev): the URL of a page is
+ * siteUrl + route.slice(1), or the route itself without it.
+ *
+ * What goes into llms-full.txt, by the kind of page (f5-ai-ready.md 1.3):
+ *   - a component or pattern page (it has `#markup`): its summary, files and
+ *     package, "Known issues", then by id the sections a person reads; never
+ *     the demo, the computed tables (`#contrast`, `#tokens`) or the stages of
+ *     "Do and don't" (only their captions).
+ *   - a page of templates (`/templates/`): its summary and a pointer to it.
+ *   - a tokens page: its prose; the tables of values are `tokens.json`'s.
+ *   - an HTML elements page: its summary and the outline of its headings.
+ *   - every other page: all of it, outside the demos.
+ * Never: [data-docs-specimen], [inert], [aria-hidden="true"], <dialog>,
+ * <template>, <script>, <style>, <svg>, the copy buttons, the tab row.
+ */
+import { BASE, SITE_KINDS } from "../luz-packages.js";
+import { HtmlError, VOID, decodeEntities, tags } from "./html.js";
+import { readingOrder } from "./site.js";
+
+/** The routes of the AI files at the Pages root (step 5 adds the other two). */
+export const AI_ROUTES = { llms: "/llms.txt", llmsFull: "/llms-full.txt", examples: "/examples/", manifests: "/manifests/" };
+
+/** The ceiling of llms-full.txt in bytes, fixed once and never raised (RL-17). */
+export const LLMS_FULL_MAX = 448 * 1024;
+
+const bytes = (text) => Buffer.byteLength(text, "utf-8");
+
+/* ---- The parts of the two files, from constants ---------------------------- */
+
+const SUMMARY_FALLBACK = "LUZ is a vanilla CSS and JavaScript design system for plain HTML.";
+const SUMMARY_TAIL = "MIT licence. In beta: any release may break anything, and the changelog says how to migrate.";
+const list = (names) => `${names.slice(0, -1).join(", ")} or ${names.at(-1)}`;
+const DETAILS =
+  `Packages, in load order: ${BASE.map((n) => `@luz-ds/${n}`).join(", ")}, then one for your kind of site ` +
+  `(${list(SITE_KINDS.map((n) => `@luz-ds/${n}`))}). Use only the classes listed in each package's classes.json. ` +
+  "After you write HTML or CSS, run `npx @luz-ds/check` on the files and fix what it reports; it reads source, so it does not replace testing in a browser.";
+
+/** The package a page of these areas documents; the other areas name none. */
+const PACKAGE_OF_AREA = { components: "core", site: "site", landing: "landing", cms: "cms", app: "app" };
+
+/** The pages the A-Z index lists (indexData() keeps exactly these). */
+const listed = (page) => page.meta.search !== "false";
+
+const urlOf = (route, siteUrl) => (siteUrl ? `${siteUrl}${route.slice(1)}` : route);
+
+const summaryOf = (site) => `> ${site.byRoute.get("/docs/")?.meta.description ?? SUMMARY_FALLBACK} ${SUMMARY_TAIL}`;
+
+/**
+ * The pages of the site as the reading order shows them, by area, then the
+ * pages of no area (the hub's home). [{ title, pages }].
+ */
+function sectionsOfSite(site) {
+  const order = readingOrder(site);
+  const sections = [];
+  for (const area of site.areas) {
+    const pages = order.filter((p) => p.meta.area === area.id && listed(p));
+    if (pages.length) sections.push({ area, title: area.label, pages });
+  }
+  const hub = site.pages.filter((p) => !site.areas.some((a) => a.id === p.meta.area) && listed(p));
+  if (hub.length) sections.push({ area: null, title: "Documentation", pages: hub });
+  return sections;
+}
+
+/* ---- llms.txt --------------------------------------------------------------- */
+
+/**
+ * llms.txt: `# LUZ`, a summary, one details paragraph, one `##` per area in
+ * site.json order (each page, in the reading order of Previous / Next, as
+ * `- [title](url): description`), the hub's home under `## Documentation`,
+ * and `## Optional`.
+ */
+export function renderLlmsTxt(site, { siteUrl = "" } = {}) {
+  const out = ["# LUZ", "", summaryOf(site), "", DETAILS, ""];
+  for (const { title, pages } of sectionsOfSite(site)) {
+    out.push(`## ${title}`);
+    for (const page of pages) out.push(`- [${page.meta.title}](${urlOf(page.route, siteUrl)}): ${page.meta.description}`);
+    out.push("");
+  }
+  out.push("## Optional");
+  out.push(`- [Full documentation for agents](${urlOf(AI_ROUTES.llmsFull, siteUrl)}): The same pages, as text: markup, variants, when to use, keyboard.`);
+  out.push("");
+  return out.join("\n");
+}
+
+/* ---- htmlToText: the converter ---------------------------------------------- */
+
+// Never in the text, nothing inside is read (so an unknown element there is fine)
+const DROPPED = new Set(["script", "style", "dialog", "template", "noscript", "svg", "math"]);
+// Inline: part of a line of text
+const INLINE_PLAIN = new Set(["span", "abbr", "small", "mark", "cite", "q", "s", "time", "var", "samp", "sub", "sup", "dfn", "u", "data", "bdi", "bdo", "del", "ins"]);
+// Block containers that say nothing of their own: their children are the text
+const CONTAINERS = new Set(["div", "section", "article", "header", "footer", "nav", "main", "aside", "figure", "hgroup", "search", "address"]);
+const HEADINGS = /^h([1-6])$/;
+const TABLE_PARTS = new Set(["thead", "tbody", "tfoot", "tr", "th", "td", "caption", "colgroup", "col"]);
+
+/** Docs-only furniture that is not content: the copy bar of a snippet, the tab row, the cross-link to the other tab. */
+function isChrome(node) {
+  const cls = node.attrs.get("class") ?? "";
+  if (/(?:^|\s)(?:docs-snippet__bar|docs-view-tabs|docs-view__xref)(?:\s|$)/.test(cls)) return true;
+  if (/(?:^|\s)docs-demo__stage(?:\s|$)/.test(cls) || node.attrs.has("data-contrast-tool")) return true;
+  return node.name === "button" && (node.attrs.has("data-copy-from") || node.attrs.has("data-copy") || /(?:^|\s)luz-copy-btn(?:\s|$)/.test(cls));
+}
+
+/** The lists and tables a tokens page draws to show values: `tokens.json` has them. */
+function isValues(node) {
+  return node.name === "table" || /(?:^|\s)docs-(?:scale|token|token-grid|swatches?)(?:\s|$)/.test(node.attrs.get("class") ?? "");
+}
+
+/** True for an element whose subtree is left out. */
+function isLeftOut(node, ctx) {
+  const { name, attrs } = node;
+  if (DROPPED.has(name) || attrs.has("data-docs-specimen") || attrs.has("inert") || attrs.get("aria-hidden") === "true" || isChrome(node)) return true;
+  return ctx?.values === false && isValues(node);
+}
+
+/** A tree of elements and text from a fragment (tolerant of a fragment cut mid-element). */
+function parse(fragment, file, line) {
+  const html = "\n".repeat(line - 1) + fragment;
+  const root = { type: "root", name: "#root", attrs: new Map(), line: 1, children: [] };
+  const stack = [root];
+  let at = 0;
+  const text = (to) => {
+    const raw = html.slice(at, to).replace(/<!--[\s\S]*?-->/g, "");
+    if (raw) stack.at(-1).children.push({ type: "text", text: raw });
+  };
+  for (const tag of tags(html, file)) {
+    text(tag.index);
+    at = tag.end;
+    if (tag.type === "start") {
+      const node = { type: "el", name: tag.name, attrs: tag.attrs, line: tag.line, children: [] };
+      stack.at(-1).children.push(node);
+      if (!VOID.has(tag.name) && !tag.selfClosing) stack.push(node);
+    } else {
+      const i = stack.findLastIndex((n, k) => k > 0 && n.name === tag.name);
+      if (i > 0) stack.length = i;
+    }
+  }
+  text(html.length);
+  return root;
+}
+
+const collapse = (text) => text.replace(/\s+/g, " ").trim();
+
+/** The text of a subtree with no markup at all, entities decoded once. */
+function plain(nodes) {
+  let raw = "";
+  const walk = (list) => {
+    for (const n of list) {
+      if (n.type === "text") raw += n.text;
+      else if (!DROPPED.has(n.name) && n.attrs.get("aria-hidden") !== "true") walk(n.children);
+    }
+  };
+  walk(nodes);
+  return collapse(decodeEntities(raw));
+}
+
+const codeSpan = (text) => {
+  if (!text) return "";
+  const ticks = text.includes("`") ? "``" : "`";
+  return `${ticks}${text}${ticks}`;
+};
+
+class Context {
+  constructor({ file, shift = 0, siteUrl = "", base = "", values = true }) {
+    Object.assign(this, { file, shift, siteUrl, base, values });
+  }
+
+  unknown(node) {
+    throw new HtmlError(
+      this.file,
+      node.line,
+      `<${node.name}> is not an element docs-site/ai.js can write as text; put it in a demo ([data-docs-specimen]) or teach ai.js what it means`,
+    );
+  }
+
+  href(value) {
+    if (value.startsWith("#")) return this.base ? `${this.base}${value}` : value;
+    if (value.startsWith("/") && !value.startsWith("//") && this.siteUrl) return `${this.siteUrl}${value.slice(1)}`;
+    return value;
+  }
+}
+
+/** A run of text and inline elements, as one line. */
+function inline(nodes, ctx) {
+  let out = "";
+  for (const n of nodes) {
+    if (n.type === "text") {
+      out += decodeEntities(n.text);
+      continue;
+    }
+    if (isLeftOut(n, ctx)) continue;
+    const { name } = n;
+    if (name === "code" || name === "kbd") {
+      out += codeSpan(plain(n.children));
+    } else if (name === "a") {
+      const label = collapse(inline(n.children, ctx));
+      const href = n.attrs.get("href");
+      out += label && href ? `[${label}](${ctx.href(href)})` : label;
+    } else if (name === "strong" || name === "b") {
+      const t = collapse(inline(n.children, ctx));
+      out += t ? `**${t}**` : "";
+    } else if (name === "em" || name === "i") {
+      const t = collapse(inline(n.children, ctx));
+      out += t ? `*${t}*` : "";
+    } else if (name === "br") {
+      out += " ";
+    } else if (name === "wbr") {
+      // a break opportunity, no text
+    } else if (INLINE_PLAIN.has(name)) {
+      out += inline(n.children, ctx);
+    } else {
+      // a block inside a link or a cell: its text, on the line
+      out += ` ${blocksOf([n], ctx).join(" ")} `;
+    }
+  }
+  return out.replace(/\s+/g, " ");
+}
+
+const INLINE_ELEMENTS = new Set(["code", "kbd", "a", "strong", "b", "em", "i", "br", "wbr", ...INLINE_PLAIN]);
+
+/** The blocks of a list of nodes: an array of strings, one per paragraph, list, table, code block. */
+function blocksOf(nodes, ctx) {
+  const out = [];
+  let run = [];
+  const flush = () => {
+    const text = collapse(inline(run, ctx));
+    if (text) out.push(text);
+    run = [];
+  };
+  for (const n of nodes) {
+    if (n.type === "text" || (!isLeftOut(n, ctx) && INLINE_ELEMENTS.has(n.name))) {
+      run.push(n);
+      continue;
+    }
+    if (n.type === "el" && isLeftOut(n, ctx)) continue;
+    flush();
+    block(n, ctx, out);
+  }
+  flush();
+  return out;
+}
+
+function headingLevel(level, shift) {
+  return Math.min(6, Math.max(3, level + shift));
+}
+
+function block(n, ctx, out) {
+  const { name } = n;
+  const heading = HEADINGS.exec(name);
+  if (heading) {
+    const text = plain(n.children);
+    if (text) out.push(`${"#".repeat(headingLevel(Number(heading[1]), ctx.shift))} ${/[<>]/.test(text) ? codeSpan(text) : text}`);
+  } else if (name === "p" || name === "figcaption" || name === "caption") {
+    const text = collapse(inline(n.children, ctx));
+    if (text) out.push(text);
+  } else if (name === "summary") {
+    const text = collapse(inline(n.children, ctx));
+    if (text) out.push(`**${text}**`);
+  } else if (name === "ul" || name === "ol") {
+    const lines = listLines(n, ctx);
+    if (lines) out.push(lines);
+  } else if (name === "li") {
+    out.push(...blocksOf(n.children, ctx));
+  } else if (name === "pre") {
+    out.push(codeBlock(n));
+  } else if (name === "table") {
+    tableBlock(n, ctx, out);
+  } else if (name === "dl") {
+    out.push(...definitions(n, ctx));
+  } else if (name === "blockquote") {
+    const inner = blocksOf(n.children, ctx).join("\n\n");
+    if (inner) out.push(inner.replace(/^/gm, "> "));
+  } else if (name === "hr") {
+    // a rule says nothing as text
+  } else if (name === "details" || CONTAINERS.has(name)) {
+    out.push(...blocksOf(n.children, ctx));
+  } else if (TABLE_PARTS.has(name) || name === "dt" || name === "dd") {
+    // a stray part outside its table or list: its text
+    const text = collapse(inline(n.children, ctx));
+    if (text) out.push(text);
+  } else {
+    ctx.unknown(n);
+  }
+}
+
+/** An ul or ol as lines, nested lists indented. */
+function listLines(list, ctx) {
+  const ordered = list.name === "ol";
+  let count = 1;
+  const lines = [];
+  for (const item of list.children) {
+    if (item.type !== "el" || isLeftOut(item, ctx)) continue;
+    if (item.name !== "li") ctx.unknown(item);
+    const marker = ordered ? `${count}. ` : "- ";
+    count += 1;
+    const body = blocksOf(item.children, ctx).join("\n");
+    if (!body) continue;
+    const indent = " ".repeat(marker.length);
+    lines.push(`${marker}${body.split("\n").join(`\n${indent}`)}`);
+  }
+  return lines.join("\n");
+}
+
+/** A dl as `- term: description` lines. */
+function definitions(dl, ctx) {
+  const lines = [];
+  let term = "";
+  for (const n of dl.children) {
+    if (n.type !== "el" || isLeftOut(n, ctx)) continue;
+    const text = collapse(inline(n.children, ctx));
+    if (n.name === "dt") term = text;
+    else if (n.name === "dd") lines.push(term ? `- ${term}: ${text}` : `- ${text}`);
+    else if (!CONTAINERS.has(n.name)) ctx.unknown(n);
+    else {
+      // a div wrapping dt and dd, as the HTML spec allows
+      lines.push(...definitions(n, ctx).join("\n").split("\n").filter(Boolean));
+    }
+  }
+  return lines.length ? [lines.join("\n")] : [];
+}
+
+/** A pre as a fenced block, its aria-label the line before it, entities decoded once. */
+function codeBlock(pre) {
+  const raw = (nodes) => nodes.map((n) => (n.type === "text" ? n.text : raw(n.children))).join("");
+  const code = decodeEntities(raw(pre.children)).replace(/^\s*\n/, "").replace(/\s+$/, "");
+  if (!code) return "";
+  const longest = Math.max(0, ...[...code.matchAll(/^(`{3,})/gm)].map((m) => m[1].length));
+  const fence = "`".repeat(Math.max(3, longest + 1));
+  const caption = pre.attrs.get("aria-label");
+  const lang = pre.attrs.get("data-lang") ?? "";
+  return `${caption ? `${collapse(caption)}\n` : ""}${fence}${lang}\n${code}\n${fence}`;
+}
+
+/** A table as `- first cell: other cells` per row; the header row is left out. */
+function tableBlock(table, ctx, out) {
+  const rows = [];
+  const walk = (nodes, inHead) => {
+    for (const n of nodes) {
+      if (n.type !== "el" || isLeftOut(n, ctx)) continue;
+      if (n.name === "caption") {
+        const text = collapse(inline(n.children, ctx));
+        if (text) out.push(text);
+      } else if (n.name === "thead") walk(n.children, true);
+      else if (n.name === "tbody" || n.name === "tfoot") walk(n.children, false);
+      else if (n.name === "tr") {
+        if (!inHead) rows.push(n);
+      } else if (n.name !== "colgroup" && n.name !== "col") ctx.unknown(n);
+    }
+  };
+  walk(table.children, false);
+  const lines = [];
+  for (const [i, row] of rows.entries()) {
+    const cells = row.children.filter((c) => c.type === "el" && !isLeftOut(c, ctx));
+    for (const c of cells) if (c.name !== "td" && c.name !== "th") ctx.unknown(c);
+    // a header row written in the body: all th, and the first row
+    if (i === 0 && cells.length && cells.every((c) => c.name === "th") && rows.length > 1) continue;
+    const texts = cells.map((c) => cellText(c, ctx)).filter(Boolean);
+    if (!texts.length) continue;
+    const [first, ...rest] = texts;
+    lines.push(rest.length ? `- ${first}: ${rest.join(": ")}` : `- ${first}`);
+  }
+  if (lines.length) out.push(lines.join("\n"));
+}
+
+/** A cell as one line: its blocks one after another, its list items apart by `;`. */
+function cellText(cell, ctx) {
+  return blocksOf(cell.children, ctx)
+    .map((b) =>
+      b
+        .split("\n")
+        .map((l) => l.replace(/^\s*(?:-|\d+\.)\s+/, ""))
+        .join("; "),
+    )
+    .join(" ");
+}
+
+/**
+ * A page fragment as text. Blocks are apart by a blank line; `p` is a
+ * paragraph, `ul`/`ol` list items, a table row `- first cell: other cells`, a
+ * `pre` a fenced block (its aria-label on the line before), `code`, `a`,
+ * `strong` and `em` as Markdown, h3 and h4 as `###` and `####`.
+ *
+ * Left out, whatever is inside: script, style, dialog, template, svg, the
+ * demos ([data-docs-specimen]) and what is [inert] or [aria-hidden="true"],
+ * and the docs' own furniture. It throws `file:line` on any other element it
+ * has no sentence for.
+ *
+ * @param {string} fragment
+ * @param {object} options
+ * @param {string} options.file     for the error
+ * @param {number} [options.line]   the line of the fragment's first character in `file`
+ * @param {number} [options.shift]  added to the level of a heading (a page's h2 is `###` with 1)
+ * @param {string} [options.siteUrl] makes a link that starts with "/" absolute
+ * @param {string} [options.base]    the page's URL, for a link that starts with "#"
+ * @param {boolean} [options.values] false leaves out the tables and lists of values (the tokens pages)
+ */
+export function htmlToText(fragment, { file = "<html>", line = 1, ...options } = {}) {
+  return convert(fragment, { file, line, ...options }).text;
+}
+
+function convert(fragment, { file, line = 1, ...options }) {
+  const ctx = new Context({ file, ...options });
+  const tree = parse(fragment, file, line);
+  return { text: blocksOf(tree.children, ctx).join("\n\n"), tree };
+}
+
+/* ---- llms-full.txt ---------------------------------------------------------- */
+
+// The sections of a component or pattern page a person reads, by id, in page order
+const GUIDED = new Set(["known-issues", "markup", "variants", "how", "no-js", "keyboard", "when", "when-not", "do-dont", "content"]);
+
+/**
+ * The headings of a page body outside the demos, with where their text ends:
+ * [{ level, id, text, line, start (of the tag), end (after the closing tag),
+ * endLine }], offsets in `body`.
+ */
+function outline(body, bodyLine, file) {
+  const pad = "\n".repeat(bodyLine - 1);
+  const stack = [];
+  let hidden = 0;
+  let open = null;
+  const found = [];
+  for (const tag of tags(pad + body, file)) {
+    if (tag.type === "start") {
+      if (VOID.has(tag.name) || tag.selfClosing) continue;
+      const left = tag.attrs.has("data-docs-specimen") || tag.attrs.has("inert") || tag.attrs.get("aria-hidden") === "true" || tag.name === "dialog";
+      stack.push({ name: tag.name, left });
+      if (left) hidden += 1;
+      const level = HEADINGS.exec(tag.name)?.[1];
+      if (level && !open && hidden === 0) open = { level: Number(level), id: tag.attrs.get("id") ?? null, line: tag.line, start: tag.index - pad.length, textStart: tag.end - pad.length };
+    } else {
+      const i = stack.findLastIndex((s) => s.name === tag.name);
+      if (i === -1) continue;
+      for (const s of stack.splice(i)) if (s.left) hidden -= 1;
+      if (open && tag.name === `h${open.level}`) {
+        const raw = body.slice(open.textStart, tag.index - pad.length);
+        found.push({ ...open, text: collapse(decodeEntities(raw.replace(/<[^>]*>/g, ""))), end: tag.end - pad.length, endLine: tag.line });
+        open = null;
+      }
+    }
+  }
+  return found;
+}
+
+/** The captions of "Do and don't": the verdict and the reason, one list item each. */
+function captions(fragment, ctx, file, line) {
+  const { tree } = convert(fragment, { file, line, siteUrl: ctx.siteUrl, base: ctx.base });
+  const items = [];
+  const walk = (nodes) => {
+    for (const n of nodes) {
+      if (n.type !== "el" || isLeftOut(n, ctx)) continue;
+      if (n.name === "figcaption") {
+        const text = collapse(inline(n.children, ctx));
+        if (text) items.push(`- ${text}`);
+      } else walk(n.children);
+    }
+  };
+  walk(tree.children);
+  return items.join("\n");
+}
+
+const filesOf = (page, packageName) => {
+  const files = page.meta.files
+    .split(";")
+    .map((f) => f.trim())
+    .filter(Boolean)
+    .join(", ");
+  if (!files) return null;
+  return packageName ? `Files: ${files} · Package: @luz-ds/${packageName}` : `Files: ${files}`;
+};
+
+// A page of whole-page templates (landing, cms, app): llms.txt lists it, an entry points at it. Its
+// markup is the longest text of the site (about 35 kB for three pages) and an agent opens the one it needs.
+const TEMPLATES_ROUTE = /\/templates\/$/;
+const TEMPLATES_POINTER = "This page is a library of whole-page templates: open its URL for the markup of each.";
+
+const TOKENS_POINTER =
+  "The values are not repeated here: the primitives are in `tokens.json` of @luz-ds/tokens, and every custom property of a package, with the file that declares it, is in the `properties` of its `classes.json`.";
+
+/** The text of a page's body, by the kind of page. */
+function bodyOf(page, options) {
+  const { siteUrl, base } = options;
+  const file = page.file;
+  const area = page.meta.area;
+  const headings = outline(page.body, page.bodyLine, file);
+  const lineOf = (offset) => page.bodyLine + (page.body.slice(0, offset).match(/\n/g) ?? []).length;
+
+  if (PACKAGE_OF_AREA[area] && TEMPLATES_ROUTE.test(page.route)) return TEMPLATES_POINTER;
+
+  if (area === "html") {
+    const items = headings.filter((h) => h.level === 2 && h.text).map((h) => `- ${/[<>]/.test(h.text) ? codeSpan(h.text) : h.text}`);
+    return items.join("\n");
+  }
+
+  if (headings.some((h) => h.id === "markup")) {
+    const boundaries = headings.filter((h) => h.level <= 3);
+    const sections = [];
+    for (const [i, h] of boundaries.entries()) {
+      if (!GUIDED.has(h.id)) continue;
+      const to = boundaries[i + 1]?.start ?? page.body.length;
+      const fragment = page.body.slice(h.end, to);
+      const line = h.endLine;
+      let text;
+      if (h.id === "do-dont") {
+        const ctx = new Context({ file, siteUrl, base });
+        text = captions(fragment, ctx, file, line);
+      } else {
+        text = convert(fragment, { file, line, siteUrl, base }).text;
+      }
+      if (text) sections.push(`### ${h.text}\n${text}`);
+    }
+    return sections.join("\n\n");
+  }
+
+  const tokens = area === "tokens";
+  const { text } = convert(page.body, { file, line: lineOf(0), shift: 1, siteUrl, base, values: !tokens });
+  // the lead of a page that brings its own is its description: once is enough
+  const rest = text.startsWith(page.meta.description) ? text.slice(page.meta.description.length).replace(/^\s+/, "") : text;
+  return tokens ? [rest, TOKENS_POINTER].filter(Boolean).join("\n\n") : rest;
+}
+
+/**
+ * llms-full.txt: `# LUZ`, then one entry per page of every area but the hub,
+ * in the order of llms.txt: `## title`, `URL:`, `Files:` and package, the
+ * description, and the page's sections as text. Throws over LLMS_FULL_MAX.
+ */
+export function renderLlmsFull(site, { siteUrl = "" } = {}) {
+  const out = ["# LUZ", "", summaryOf(site), "", DETAILS, "", "One entry per page of the documentation, in reading order. The markup of an entry shows its classes and elements; the `classes.json` of each package lists them all.", ""];
+  for (const { area, pages } of sectionsOfSite(site)) {
+    if (!area) continue;
+    const packageName = PACKAGE_OF_AREA[area.id] ?? null;
+    for (const page of pages) {
+      const url = urlOf(page.route, siteUrl);
+      const header = [`## ${page.meta.title}`, `URL: ${url}`];
+      const files = filesOf(page, packageName);
+      if (files) header.push(files);
+      out.push(header.join("\n"), "", page.meta.description, "");
+      const body = bodyOf(page, { siteUrl, base: url });
+      if (body) out.push(body, "");
+    }
+  }
+  const text = `${out.join("\n").trimEnd()}\n`;
+  if (bytes(text) > LLMS_FULL_MAX) {
+    throw new Error(
+      `llms-full.txt is ${bytes(text)} bytes, over its ceiling of ${LLMS_FULL_MAX}: trim what a page contributes (scripts/docs-site/ai.js), never raise the ceiling`,
+    );
+  }
+  return text;
+}

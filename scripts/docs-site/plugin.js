@@ -22,6 +22,10 @@
  * - The search index (@luz-ds/site search, format version 1) is
  *   generated from the same scan as the A–Z page: served at
  *   /docs/search-index.json in dev, written there by the build.
+ * - llms.txt and llms-full.txt (ai.js): the index of the pages and their
+ *   curated text for an AI agent, from the same scan; written at the root of
+ *   the build, served as plain text in dev (root-absolute links there,
+ *   absolute under the site URL in the pages build).
  * - The color-mode boot script (apps/landing/theme-boot.js, EX-009) is a
  *   classic script, which Vite does not bundle: the build copies it to
  *   /theme-boot.js and points every page at it.
@@ -47,6 +51,7 @@ import {
   rootOf,
   scanSite,
 } from "./site.js";
+import { AI_ROUTES, renderLlmsFull, renderLlmsTxt } from "./ai.js";
 import { SITE_URL } from "./i18n.js";
 
 const LANDING = { route: "/", file: "apps/landing/index.html" };
@@ -117,6 +122,15 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
   /** The search index, as the bytes that are published. */
   const searchIndex = () => JSON.stringify(buildSearchIndex(scan()));
 
+  /** The AI files by route: the text, and the links absolute only in the pages build. */
+  const aiFiles = () => {
+    const options = { siteUrl: relativeUrls ? siteUrl : "" };
+    return new Map([
+      [AI_ROUTES.llms, () => renderLlmsTxt(scan(), options)],
+      [AI_ROUTES.llmsFull, () => renderLlmsFull(scan(), options)],
+    ]);
+  };
+
   /** Render everything and check it; returns the link problems. */
   const check = () =>
     buildSite(scan(), {
@@ -182,6 +196,8 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
         try {
           const problems = check();
           if (problems.length) logger.warn(`[luz-docs-site] broken links:\n  ${problems.join("\n  ")}`);
+          // An element ai.js cannot say as text, or a page over the ceiling of llms-full.txt
+          for (const render of aiFiles().values()) render();
         } catch (error) {
           logger.error(`[luz-docs-site] ${error.message}`);
         }
@@ -219,6 +235,18 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
           try {
             const body = searchIndex();
             res.setHeader("Content-Type", "application/json; charset=utf-8");
+            return res.end(body);
+          } catch (error) {
+            logger.error(`[luz-docs-site] ${error.message}`);
+            return next();
+          }
+        }
+        // llms.txt and llms-full.txt: generated from the pages, never a file (SEC-PLG-6)
+        const ai = aiFiles().get(path);
+        if (ai) {
+          try {
+            const body = ai();
+            res.setHeader("Content-Type", "text/plain; charset=utf-8");
             return res.end(body);
           } catch (error) {
             logger.error(`[luz-docs-site] ${error.message}`);
@@ -305,6 +333,8 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
     generateBundle() {
       // Unhashed, next to the pages: every page points at it from its depth
       this.emitFile({ type: "asset", fileName: SEARCH_INDEX_ROUTE.slice(1), source: searchIndex() });
+      // The files for an AI agent, at the root of the site (discovery is by link, not by convention)
+      for (const [route, render] of aiFiles()) this.emitFile({ type: "asset", fileName: route.slice(1), source: render() });
       // Unhashed too: a classic script, which Vite leaves alone (EX-009)
       this.emitFile({
         type: "asset",

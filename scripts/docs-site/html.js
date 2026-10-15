@@ -28,7 +28,7 @@ const CLOSES_P = new Set([
 
 // The tokenizer lives in @luz-ds/check, once: the docs generator reads it
 // strict (its own sources) and the checker reads it lenient (a consumer's)
-export { HtmlError, decodeEntities, tags };
+export { HtmlError, VOID, decodeEntities, tags };
 
 /**
  * Read a document or fragment: check its nesting and collect what the

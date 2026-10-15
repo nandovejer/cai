@@ -745,7 +745,8 @@ The exports of each package
 - `@luz-ds/core`: `./table-sort`: Sortable tables: `initTableSort`, loaded on demand
 - `@luz-ds/core`: `./timeline`: The `<luz-timeline>` element, loaded on demand
 - `@luz-ds/core`: `./utils`: Helpers such as `formatTime` and `enableJs`
-- `@luz-ds/core`: `./i18n`: The strings of the scripts: `t`, `registerLocale`
+- `@luz-ds/core`: `./i18n`: The strings of the scripts: `t`, `registerLocale`, `loadLocales`
+- `@luz-ds/core`: `./i18n/*`: The strings of one language LUZ ships, for example `@luz-ds/core/i18n/es`: its default export is an object of strings, loaded on demand
 - `@luz-ds/core`: `./classes.json`: Every class and custom property the package defines, with its kind and layer, as JSON for tools and AI agents
 - `@luz-ds/core`: `./custom-elements.json`: Every custom element the package defines or styles, with its attributes and events, in the Custom Elements Manifest format, for editors and AI agents
 - `@luz-ds/site`: `.`: `site.js`: loads the script of each site element the page has
@@ -936,6 +937,16 @@ initTabs();
 ### The modules
 
 **All 13 JavaScript modules**
+
+#### Languages and the strings scripts write
+
+English is in the entry. Every other language LUZ ships is a small file, fetched at start for a page whose `<html lang>`, or any `lang` outside a link or an option, names it; a page in English makes no request. With the individual modules, call `loadLocales()` yourself, and `await loadLocales()` before `initHighlight()`, `initPlayers()` and `initThemeCycle()`. A file that cannot load is one console warning, and English.
+
+For a language LUZ does not ship, set `data-luz-label-*` once on `<html>` or `<body>`, or call `registerLocale()` before the scripts start.
+
+To preload the file, add a `modulepreload` link with `integrity` for it, on the pages in that language only.
+
+A language for LUZ is a pull request: the JSON file `packages/core/src/i18n/<code>.json`, one line in the `files` map of `i18n.js` and a budget row. The steps are in AGENTS.md.
 
 ### Without JavaScript
 
@@ -4380,7 +4391,7 @@ The options are attributes of `<luz-timeline>`. Each item has a date, a title an
 - `layout="vertical"`: Every item stays visible down a line. The item in the middle of the screen is active, the ones before it are past
 - `autoplay`: Opts in to moving on by itself, with a visible Pause and Play button. Horizontal only; off unless you write it
 - `interval`: Milliseconds between items with `autoplay`. The default is 5000; a value under 2000 is raised to 2000
-- `data-luz-label-previous`, `-next`, `-pause`, `-play`: The names of the buttons, when the language of the page is not English or Spanish or you want other words
+- `data-luz-label-previous`, `-next`, `-pause`, `-play`: The names of the buttons, when LUZ does not ship the language of the page or you want other words
 - `--luz-timeline-paper`: The colour behind the timeline, which the hump on the rail and the empty dots are painted with. The default is `--luz-surface-page`; on a card, set it on the element to the card's surface: `style="--luz-timeline-paper: var(--luz-surface)"`
 - `.luz-timeline__date`: A `<time>`. Its text is the label of the date button on the rail, so give each item a different one. Without it the button shows the item's number
 - `.luz-timeline__title`: A `<p>`, or a heading of the level your page needs: the class stays the same
@@ -4395,7 +4406,7 @@ A custom element around a native ordered list, with styles from `components/time
 - **The rail.** The current date is scrolled to the middle, with a smooth scroll only if the visitor has not asked for reduced motion. A keyboard move keeps the focus on the new current date, and so does a change that hides the card the focus was in.
 - **Vertical.** The script marks the item crossing the middle of the screen `data-luz-state="active"` and the ones before it `past`. The line behind a past item takes the brand colour, and the active dot is filled and larger. It runs with reduced motion too, without the transition.
 - **Autoplay.** With `autoplay`, the item changes every `interval` milliseconds, in a loop. The Pause button under the rail stops it; it then reads Play and starts it again. The timeline also waits, without a change to the button, while the pointer moves over it (it goes on after 4 seconds still, or when the pointer leaves), while the keyboard focus is inside it, while less than half of it is on screen and while the tab is hidden. With reduced motion it never starts and the button is not shown.
-- **Text.** "Previous", "Next", "Pause" and "Play" are in English and Spanish, chosen by the nearest `lang`, and travel with the script, so `@luz-ds/core/timeline` works on its own. With `luz.js` on the page, a language you add with `registerLocale()` reaches them too. See [the JavaScript modules](https://nandovejer.github.io/luz/docs/get-started/javascript/).
+- **Text.** "Previous", "Next", "Pause" and "Play" are in the language of the page when LUZ ships it (English, Spanish), chosen by the nearest `lang`, or yours through `registerLocale()` and `data-luz-label-*`. They travel with the script, so `@luz-ds/core/timeline` works on its own. With `luz.js` on the page, a language you add with `registerLocale()` reaches them too. See [the JavaScript modules](https://nandovejer.github.io/luz/docs/get-started/javascript/).
 
 ### Without JavaScript
 An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does. Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.
@@ -6430,6 +6441,9 @@ Automated tools find only part of the problems. Treat this list as the gap, and 
 - **Account list (app).** The list of an application's account button is a list of links in a popover, not an ARIA menu: it has no arrow keys, and Tab moves through its links. In browsers without CSS anchor positioning it opens as a sheet at the bottom of the window instead of under the button; Escape, or a click outside it, closes it. The button's name is the initials, then the name, so it reads “AM Ana Martín” at every width. It has not been tested with a screen reader.
 - **Dashboard (app).** The panels keep the order of the markup, so a wide panel that does not fit in what is left of a row starts the next one and leaves a gap; the reading order and the drawn order are always the same. It has not been tested with a screen reader.
 - **Timeline.** Without JavaScript it is an ordered list with a line and a dot per item, and every item is visible. With it, only the current card is read and reached with Tab; the other cards are inert. The Previous and Next buttons are named only “Previous” and “Next”: the name does not say which date they lead to. Whether a screen reader announces the card that appears when you change the item has not been tested, and the timeline has not been tested with a screen reader at all. Autoplay is off unless the page asks for it. When it is on, it moves a card every few seconds, and a visible Pause / Play button stops and resumes it. It also holds while the pointer moves over the timeline, while the keyboard focus is inside it, while less than half of it is on screen and while the tab is hidden, and it never starts with reduced motion. While it runs, the card is not announced.
+- **Languages LUZ does not ship.** On a page in a language LUZ has no strings for, such as French or Arabic, the labels and messages its scripts write (player buttons, copy buttons, code block names, sort status) are in English inside a page marked with another language, so a screen reader reads them with that language's voice (WCAG 3.1.2, Language of parts). The scripts warn once in the console. Set all the `data-luz-label-*` attributes once on `<html>` or `<body>`, or call `registerLocale()` before the scripts start, and they are in your language. The home page does this for Arabic.
+- **Legacy theme buttons.** On a page in another language, the Apply theme / Applied buttons of the legacy custom-theme markup (`luz-theme-apply-btn`) are in English until the first theme change, unless the page sets `data-luz-label-apply-theme` and `data-luz-label-theme-applied`. Not tested with a screen reader.
+- **Strings in a language LUZ ships.** Spanish is a file fetched when a page declares it. If that language file cannot load, the labels LUZ's scripts add are in English inside a page marked with another language, and a screen reader reads them with that language's voice. The page itself, and its authored text, are not affected. The labels are written once the file arrives, or after two seconds without it. A click before the language arrives announces in English, and a late arrival mixes English labels written at start with Spanish labels written on a state change, such as play and pause. Not tested with NVDA, JAWS, VoiceOver, TalkBack or Orca.
 - **Copy button.** When the browser refuses to copy, the failure is announced to screen readers, but the button shows no message.
 
 ### Report a problem

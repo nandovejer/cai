@@ -15,7 +15,7 @@ import { execFileSync } from "child_process";
 import { existsSync, readFileSync, writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
-import { PACKAGES } from "./luz-packages.js";
+import { PUBLISHED } from "./luz-packages.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -32,7 +32,7 @@ function exportTargets(exportsField) {
   return Object.values(exportsField ?? {}).flatMap(exportTargets);
 }
 
-for (const name of PACKAGES) {
+for (const name of PUBLISHED) {
   const pkgRoot = resolve(repoRoot, "packages", name);
   const manifest = JSON.parse(readFileSync(resolve(pkgRoot, "package.json"), "utf-8"));
 

@@ -1,5 +1,6 @@
 ---
 "@luz-ds/site": minor
+"@luz-ds/check": patch
 ---
 
 **Breaking.** Site's two scripted pieces drop `site-` from their names, the search becomes one self-contained element, and `site.js` becomes a loader that loads each piece's script only on a page that has it.

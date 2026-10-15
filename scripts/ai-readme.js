@@ -24,7 +24,7 @@
 import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { PACKAGES } from "./luz-packages.js";
+import { PACKAGES, TOOLS } from "./luz-packages.js";
 
 export const START = "<!-- luz:ai-agents:start -->";
 export const END = "<!-- luz:ai-agents:end -->";
@@ -122,7 +122,11 @@ export function renderAiSection({ name, manifest, changelog, siteUrl }) {
   out.push("");
 
   out.push("### Read first", "");
-  const read = [`${code("dist/classes.json")} in this package: the classes and custom properties its CSS defines. Write only those.`];
+  // A tool has no CSS, so no class list: it is read through its README and its --help
+  const tool = TOOLS.includes(name);
+  const read = tool
+    ? [`${code("README.md")} in this package: what the command does and its exit codes.`, `${code(`npx ${pkg} --help`)}: the command's options, from the version you run.`]
+    : [`${code("dist/classes.json")} in this package: the classes and custom properties its CSS defines. Write only those.`];
   if (WITH_ELEMENTS.has(name)) read.push(`${code("dist/custom-elements.json")} in this package: the \`<luz-*>\` elements it defines, with their attributes.`);
   read.push(
     `${siteUrl}llms.txt: the index of the documentation, short enough for a small context.`,
@@ -138,7 +142,8 @@ export function renderAiSection({ name, manifest, changelog, siteUrl }) {
   const rank = (peer) => PACKAGES.indexOf(peer.replace(/^@luz-ds\//, ""));
   const ordered = peers.filter((p) => p.startsWith("@luz-ds/")).sort((a, b) => rank(a) - rank(b));
   const required = ordered.filter((p) => !optional.has(p));
-  if (required.length) out.push(`This package needs ${list(required.map(code))} loaded first.`);
+  if (tool) out.push(`${code(pkg)} is a command, not a stylesheet: it loads nothing in a page and needs no other LUZ package.`);
+  else if (required.length) out.push(`This package needs ${list(required.map(code))} loaded first.`);
   else out.push(`${code(pkg)} needs no other LUZ package: load it first.`);
   for (const peer of ordered.filter((p) => optional.has(p))) {
     out.push("", `${code(peer)} is optional: the CSS of this package works with the packages above alone.`);

@@ -104,14 +104,19 @@ luz-design-system/
 │   │       ├── cms.css
 │   │       └── cms.min.css
 │   │
-│   └── app/                       ← @luz-ds/app (publishable, its own version, 0.x)
-│       ├── src/                       ← EDIT HERE
-│       │   ├── components/header.css    ← the bar of an application (search, account)
-│       │   ├── components/dashboard.css ← the view's title row and its grid of panels
-│       │   └── index.css
+│   ├── app/                       ← @luz-ds/app (publishable, its own version, 0.x)
+│   │   ├── src/                       ← EDIT HERE
+│   │   │   ├── components/header.css    ← the bar of an application (search, account)
+│   │   │   ├── components/dashboard.css ← the view's title row and its grid of panels
+│   │   │   └── index.css
+│   │   └── dist/                      ← GENERATED (do not edit)
+│   │       ├── app.css
+│   │       └── app.min.css
+│   │
+│   └── check/                     ← @luz-ds/check (publishable tool: a bin, no CSS, no layer; own version, 0.x)
+│       ├── src/                       ← EDIT HERE (Node ESM: main.js is the bin's glue, cli.js is run(argv, env))
 │       └── dist/                      ← GENERATED (do not edit)
-│           ├── app.css
-│           └── app.min.css
+│           └── luz-check.js
 │
 ├── docs/                              ← GENERATED GitHub Pages site (pnpm pages:build); do not edit
 │
@@ -132,7 +137,8 @@ luz-design-system/
     ├── build-landing.js               ← landing: calls build-package.js (CSS only)
     ├── build-cms.js                   ← cms: calls build-package.js (CSS only)
     ├── build-app.js                   ← app: calls build-package.js (CSS only)
-    ├── luz-packages.js                ← the published packages, in dependency order
+    ├── build-check.js                 ← check: esbuild bundle of src/main.js into dist/luz-check.js (a tool, no CSS)
+    ├── luz-packages.js                ← the published packages in dependency order: PACKAGES (CSS libraries), TOOLS (check), PUBLISHED
     ├── check-dist.js                  ← predev guard (rebuilds if any dist missing)
     ├── check-pack.js                  ← tarball contract: file snapshot, licences, exports, no workspace: ranges
     └── publish.js                     ← CI-only: publishes versions missing from npm (OIDC + provenance)
@@ -152,12 +158,12 @@ luz-design-system/
 @luz-ds/app      (header and dashboard of a web application; own version, 0.x; never depends on landing or cms)
 ```
 
-Tokens, core and site share one version; landing, cms and app have their own and peer ranges on the base's major.
+Tokens, core and site share one version; landing, cms and app have their own and peer ranges on the base's major. `@luz-ds/check` is a tool, not a layer: it sits outside the chain, has its own version and no peers, and bundles what it needs at build time.
 
 ## Key Rules
 
 - **Never edit `dist/`** — it is generated from `src/`
 - **Layer order lives in `src/index.css`** — build scripts inline its `@import` graph; there is no duplicated file list
-- **What gets published** — `packages/tokens/`, `packages/core/`, `packages/site/`, `packages/landing/`, `packages/cms/`, `packages/app/` (consumers download these)
+- **What gets published** — `packages/tokens/`, `packages/core/`, `packages/site/`, `packages/landing/`, `packages/cms/`, `packages/app/`, `packages/check/` (consumers download these)
 - **Where the guides live** — `dev/` holds the contributor guides. `.claude/` holds the Claude Code agents, hooks, `settings.json` and skills (all versioned) plus the maintainer's private notes (not in git)
 - **What does not** — `apps/docs/`, `apps/landing/` (internal apps only)

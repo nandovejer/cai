@@ -20,7 +20,7 @@ import { dirname, join, resolve } from "path";
 import { fileURLToPath } from "url";
 // Order matters: a package is only published after the ones it depends on
 // (scripts/luz-packages.js lists them in that order)
-import { PACKAGES } from "./luz-packages.js";
+import { PUBLISHED } from "./luz-packages.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "..");
@@ -58,7 +58,7 @@ function isPublished(name, version) {
   }
 }
 
-for (const dir of PACKAGES) {
+for (const dir of PUBLISHED) {
   const pkgRoot = resolve(repoRoot, "packages", dir);
   const { name, version } = JSON.parse(readFileSync(resolve(pkgRoot, "package.json"), "utf-8"));
 

@@ -13,7 +13,10 @@
  *      core, site, landing, cms and app CSS applied, and the JS exports importable;
  *   3. the same page with jsDelivr-style URLs (/npm/@luz-ds/<pkg>@<version>/…),
  *      served from the same tarballs by a local server: no network is used;
- *   4. the `luz-tokens` command runs from the installed package.
+ *   4. the `luz-tokens` command runs from the installed package;
+ *   5. the `luz-check` bin of @luz-ds/check, a tool with no CSS, runs from the
+ *      installed package (its version, its help, and, once they exist,
+ *      tests/fixtures/check/pass and /fail from the packed tarball).
  *
  * Needs the packages built (`pnpm build`) and Chromium
  * (`pnpm test:ui:install`). Nothing leaves the machine: the install is
@@ -29,7 +32,7 @@ import { createRequire } from "node:module";
 import { tmpdir } from "node:os";
 import { dirname, extname, join, normalize, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { PACKAGES } from "./luz-packages.js";
+import { PACKAGES, PUBLISHED } from "./luz-packages.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const KEEP = process.argv.includes("--keep");
@@ -56,7 +59,7 @@ function fail(message) {
 
 /* ---- 0. Preconditions ------------------------------------------------------ */
 
-for (const name of PACKAGES) {
+for (const name of PUBLISHED) {
   if (!existsSync(join(root, "packages", name, "dist"))) fail(`packages/${name}/dist is missing: run "pnpm build" first`);
 }
 let chromium;
@@ -80,7 +83,7 @@ const npm = process.platform === "win32" ? "npm.cmd" : "npm";
 const plan = join(work, "plan");
 cpSync(join(root, ".changeset"), join(plan, ".changeset"), { recursive: true });
 for (const file of ["package.json", "pnpm-workspace.yaml"]) cpSync(join(root, file), join(plan, file));
-for (const name of PACKAGES) {
+for (const name of PUBLISHED) {
   for (const file of ["package.json", "CHANGELOG.md"]) {
     if (existsSync(join(root, "packages", name, file))) cpSync(join(root, "packages", name, file), join(plan, "packages", name, file));
   }
@@ -91,14 +94,14 @@ check("ran changeset version on a copy of the manifests", versioned.status === 0
 if (versioned.status !== 0) finish();
 
 // Each package is packed from a copy of its folder with the released manifest
-const tarballs = PACKAGES.map((name) => {
+const tarballs = PUBLISHED.map((name) => {
   const copy = join(work, "src", name);
   cpSync(join(root, "packages", name), copy, { recursive: true, filter: (from) => !from.split(sep).includes("node_modules") });
   cpSync(join(plan, "packages", name, "package.json"), join(copy, "package.json"));
   const out = execFileSync(npm, ["pack", "--json", "--pack-destination", packs], { cwd: copy, encoding: "utf-8" });
   return join(packs, JSON.parse(out)[0].filename);
 });
-check(`packed ${PACKAGES.length} tarballs (${tarballs.map((t) => t.split(sep).pop().replace(/^luz-ds-|\.tgz$/g, "")).join(", ")})`, tarballs.every(existsSync));
+check(`packed ${PUBLISHED.length} tarballs (${tarballs.map((t) => t.split(sep).pop().replace(/^luz-ds-|\.tgz$/g, "")).join(", ")})`, tarballs.every(existsSync));
 
 writeFileSync(join(project, "package.json"), JSON.stringify({ name: "luz-smoke", private: true, type: "module" }));
 const install = spawnSync(npm, ["install", "--offline", "--no-audit", "--no-fund", "--ignore-scripts", ...tarballs], { cwd: project, encoding: "utf-8" });
@@ -106,12 +109,12 @@ check("installed the tarballs offline", install.status === 0, install.stderr || 
 if (install.status !== 0) finish();
 
 const installed = (name) => join(project, "node_modules", "@luz-ds", name);
-const versions = Object.fromEntries(PACKAGES.map((n) => [n, JSON.parse(readFileSync(join(installed(n), "package.json"), "utf-8")).version]));
+const versions = Object.fromEntries(PUBLISHED.map((n) => [n, JSON.parse(readFileSync(join(installed(n), "package.json"), "utf-8")).version]));
 
 /* ---- 2. Every export resolves ---------------------------------------------- */
 
 const require = createRequire(join(project, "package.json"));
-for (const name of PACKAGES) {
+for (const name of PUBLISHED) {
   const pkg = JSON.parse(readFileSync(join(installed(name), "package.json"), "utf-8"));
   const problems = [];
   let count = 0;
@@ -389,6 +392,46 @@ if (existsSync(bin)) {
   const bad = spawnSync(process.execPath, [bin, "check-contrast", "bad.css"], { cwd: project, encoding: "utf-8" });
   check("luz-tokens check-contrast fails a low-contrast override (exit 1)", bad.status === 1, `exit ${bad.status}\n${bad.stdout}${bad.stderr}`);
 } else check("luz-tokens is installed", false, `${relative(project, bin)} is missing`);
+
+/* ---- 5. The check bin ------------------------------------------------------ */
+
+// A tool, not a stylesheet: it is run from the installed package, offline,
+// the way `npx @luz-ds/check` runs it. The bin is the link npm made
+const checkPkg = JSON.parse(readFileSync(join(installed("check"), "package.json"), "utf-8"));
+const checkBin = process.platform === "win32" ? null : join(project, "node_modules", ".bin", "luz-check");
+const checkFile = join(installed("check"), checkPkg.bin?.["luz-check"] ?? "dist/luz-check.js");
+const luzCheck = (args) =>
+  checkBin && existsSync(checkBin)
+    ? spawnSync(checkBin, args, { cwd: project, encoding: "utf-8", env: { PATH: process.env.PATH } })
+    : spawnSync(process.execPath, [checkFile, ...args], { cwd: project, encoding: "utf-8", env: { PATH: process.env.PATH } });
+check("luz-check is installed (the bin of @luz-ds/check)", existsSync(checkFile), `${relative(project, checkFile)} is missing`);
+if (existsSync(checkFile)) {
+  const version = luzCheck(["--version"]);
+  check("luz-check --version prints the installed version (exit 0)", version.status === 0 && version.stdout.includes(versions.check), `exit ${version.status}\n${version.stdout}${version.stderr}`);
+  const help = luzCheck(["--help"]);
+  check("luz-check --help prints its usage (exit 0)", help.status === 0 && /^Usage: luz-check/m.test(help.stdout), `exit ${help.status}\n${help.stdout}${help.stderr}`);
+  const wrong = luzCheck(["--no-such-option"]);
+  check("luz-check with an unknown option exits 2", wrong.status === 2, `exit ${wrong.status}\n${wrong.stdout}${wrong.stderr}`);
+
+  // The fixtures of step 8 are copied next to the installed packages, so the
+  // run finds node_modules/@luz-ds from them as a project's files do
+  for (const [folder, wanted] of [["pass", 0], ["fail", 1]]) {
+    const from = join(root, "tests", "fixtures", "check", folder);
+    if (!existsSync(from)) {
+      console.log(`– luz-check on ${folder}/: tests/fixtures/check/${folder} does not exist yet, skipped`);
+      continue;
+    }
+    const to = join(project, "check-fixtures", folder);
+    cpSync(from, to, { recursive: true });
+    const files = readdirSync(to, { withFileTypes: true }).filter((e) => e.isFile()).map((e) => e.name).sort();
+    const wrongExit = files.map((file) => ({ file, run: luzCheck([`check-fixtures/${folder}/${file}`]) })).filter(({ run }) => run.status !== wanted);
+    check(
+      `luz-check exits ${wanted} on each of the ${files.length} files of ${folder}/`,
+      files.length > 0 && wrongExit.length === 0,
+      files.length === 0 ? "the folder is empty" : wrongExit.map(({ file, run }) => `${file}: exit ${run.status}\n${run.stdout}${run.stderr}`).join("\n"),
+    );
+  }
+}
 
 /* ---- Done ------------------------------------------------------------------ */
 

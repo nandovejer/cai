@@ -93,6 +93,33 @@ const NO_HTML_SINKS = [
   },
 ];
 
+// @luz-ds/check is Node code, not page code (f5-ai-ready.md 5.1 and 8): it
+// reads the files of whoever runs it and its output enters a model's context,
+// so what it may do is an allow-list. Imports: node:fs, node:path, node:url
+// and our own files, nothing else (so no child_process, net, dns, dgram, tls,
+// http(s), http2, vm, worker_threads, cluster or module, with or without the
+// `node:` prefix). Calls: no eval, Function, fetch or require, no socket or
+// worker, no process.env, and no import() of a path that is not a literal.
+const NODE_IMPORTS = "^(?!node:(?:fs|path|url)$)(?![./])";
+const NODE_IMPORT_MESSAGE = "@luz-ds/check imports node:fs, node:path, node:url and its own files only: no process, network, vm or thread (f5-ai-ready.md 8).";
+const NODE_CAPABILITY = "@luz-ds/check does not evaluate code, open a connection, read the environment or load a computed path (f5-ai-ready.md 8).";
+const NODE_SYNTAX = [
+  // RL-16, as in the base rules
+  { selector: `MemberExpression[object.name='navigator'][property.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
+  { selector: `MemberExpression[object.property.name='navigator'][property.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
+  { selector: `VariableDeclarator[init.name='navigator'] > ObjectPattern > Property[key.name=${SNIFFING}]`, message: SNIFF_MESSAGE },
+  // A dynamic import() takes a literal from the same allow-list
+  { selector: "ImportExpression[source.type!='Literal']", message: NODE_CAPABILITY },
+  { selector: `ImportExpression > Literal[value=/${NODE_IMPORTS}/]`, message: NODE_IMPORT_MESSAGE },
+  // eval, Function, fetch, require: bare, through a global object or as (0, eval)(s)
+  { selector: "CallExpression[callee.name=/^(eval|Function|fetch|require)$/], NewExpression[callee.name=/^(Function|WebSocket|XMLHttpRequest|Worker|EventSource)$/]", message: NODE_CAPABILITY },
+  { selector: "CallExpression[callee.object.name=/^(globalThis|global|window|self)$/][callee.property.name=/^(eval|fetch|Function)$/]", message: NODE_CAPABILITY },
+  { selector: "CallExpression[callee.type='SequenceExpression']", message: NODE_CAPABILITY },
+  // The environment and the engine's own doors: process.env, process["env"], const { env } = process
+  { selector: "MemberExpression[object.name='process'][property.name=/^(env|binding|dlopen)$/], MemberExpression[object.name='process'][property.value=/^(env|binding|dlopen)$/]", message: NODE_CAPABILITY },
+  { selector: "VariableDeclarator[init.name='process'] > ObjectPattern > Property[key.name=/^(env|binding|dlopen)$/]", message: NODE_CAPABILITY },
+];
+
 export default [
   js.configs.recommended,
   {
@@ -161,6 +188,8 @@ export default [
   {
     // Code that runs in the page: the packages and the four apps
     files: ["packages/*/src/**/*.js", "apps/**/*.js"],
+    // @luz-ds/check has the Node block below
+    ignores: ["packages/check/src/**"],
     rules: {
       // RL-1: no runtime dependency. Only relative or root-absolute imports.
       "no-restricted-imports": [
@@ -175,6 +204,23 @@ export default [
         },
       ],
       "no-restricted-syntax": ["error", ...PAGE_SYNTAX, ...NO_HTML_SINKS],
+    },
+  },
+  {
+    // Node code: a command line that reads files. Not page code, so none of
+    // the HTML-sink and URL-literal rules above; an allow-list instead
+    files: ["packages/check/src/**/*.js"],
+    rules: {
+      "no-restricted-imports": ["error", { patterns: [{ regex: NODE_IMPORTS, message: NODE_IMPORT_MESSAGE }] }],
+      "no-restricted-syntax": ["error", ...NODE_SYNTAX],
+      "no-restricted-globals": [
+        "error",
+        { name: "fetch", message: NODE_CAPABILITY },
+        { name: "WebSocket", message: NODE_CAPABILITY },
+        { name: "XMLHttpRequest", message: NODE_CAPABILITY },
+        { name: "eval", message: NODE_CAPABILITY },
+        { name: "require", message: NODE_CAPABILITY },
+      ],
     },
   },
   {

@@ -72,7 +72,7 @@ const lastTag = git("describe", "--tags", "--abbrev=0");
 const base = lastTag || "main";
 const changed = git("diff", "--name-only", `${base}...HEAD`).split("\n").filter(Boolean);
 const dirty = git("status", "--short").split("\n").filter(Boolean);
-const uiFiles = changed.filter((f) => /^packages\/(core|site|landing|cms|app|tokens)\/src\//.test(f) || /^packages\/core\/src\/(components|elements)\//.test(f));
+const uiFiles = changed.filter((f) => /^packages\/(core|site|landing|cms|app|tokens|check)\/src\//.test(f) || /^packages\/core\/src\/(components|elements)\//.test(f));
 const components = [...new Set(uiFiles.filter((f) => /components\/[\w-]+\.(css|js)$/.test(f)).map((f) => f.match(/components\/([\w-]+)\./)[1]).filter((n) => !n.startsWith("_") && n !== "index"))].sort();
 const changesets = existsSync(join(root, ".changeset")) ? readdirSync(join(root, ".changeset")).filter((f) => f.endsWith(".md") && f !== "README.md") : [];
 // Open Safari and Firefox reviews live in Claude's memory for this repo (AGENTS.md section 6).

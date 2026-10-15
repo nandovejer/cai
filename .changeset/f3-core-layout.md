@@ -1,5 +1,6 @@
 ---
 "@luz-ds/core": minor
+"@luz-ds/check": patch
 ---
 
 Core gains the layout every kind of page needs, so a site no longer needs `@luz-ds/site` for it:

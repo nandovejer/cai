@@ -1,5 +1,6 @@
 ---
 "@luz-ds/site": minor
+"@luz-ds/check": patch
 ---
 
 **Breaking.** Site's three pieces with no script become tags that no script defines (CSS-only tags: the tag is the block, it never upgrades and adds no role), and the cookie banner becomes a band fixed at the bottom of the window.

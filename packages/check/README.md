@@ -1,0 +1,59 @@
+# @luz-ds/check
+
+A command line that reads the HTML and CSS of a project that uses LUZ and says what is wrong with them, offline. It is for the person who writes the page and for the AI agent that writes it for them. It is a tool, not a stylesheet: it loads nothing in a page.
+
+> **Beta, version 0.x.** This package has its own version, apart from tokens, core and site. Pin an exact version and read the changelog before you upgrade.
+
+## Usage
+
+```bash
+npx @luz-ds/check --help
+npx @luz-ds/check --version
+```
+
+Say `npx @luz-ds/check`, with the scope. The bare name `luz-check` is the command the package installs, not the name to run with `npx`.
+
+In this version the command has its options and its exit codes; the rules that read your files arrive before the first release.
+
+| Exit code | Meaning |
+| --- | --- |
+| 0 | nothing blocks |
+| 1 | at least one finding blocks |
+| 2 | the command was used wrongly, or there is nothing to read |
+
+## Requirements
+
+It needs Node 20 or later and nothing else: no dependency, no network, no environment variable, no script on install. It reads files and writes to the terminal only.
+
+<!-- luz:ai-agents:start -->
+## For AI agents
+
+`@luz-ds/check` 0.0.0 is in beta: any release may break anything. Read the breaking changes below before you update, and use only what the files under "Read first" list.
+
+### Breaking changes
+
+Not released yet: 0.0.0 is the workspace's placeholder; the first release is 0.1.0. Nothing is deprecated and nothing breaks.
+
+### Read first
+
+1. `README.md` in this package: what the command does and its exit codes.
+2. `npx @luz-ds/check --help`: the command's options, from the version you run.
+3. https://nandovejer.github.io/luz/llms.txt: the index of the documentation, short enough for a small context.
+4. https://nandovejer.github.io/luz/llms-full.txt: the same pages in full.
+5. https://nandovejer.github.io/luz/examples/: one standalone page of markup for each component and pattern.
+
+### Load order
+
+`@luz-ds/check` is a command, not a stylesheet: it loads nothing in a page and needs no other LUZ package.
+
+### Check what you write
+
+Run `npx @luz-ds/check <files>` on every HTML and CSS file you write, and fix what it reports. To copy the accessibility reviewer into your project: `npx @luz-ds/check agent > .claude/agents/luz-accessibility-reviewer.md`.
+
+`@luz-ds/check` is not on npm yet: it ships with the first release.
+
+<!-- luz:ai-agents:end -->
+
+## License
+
+MIT

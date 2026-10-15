@@ -1,0 +1,51 @@
+{
+  "name": "@luz-ds/check",
+  "version": "0.0.0",
+  "description": "LUZ Design System — a command line that reads your HTML and CSS and says which LUZ classes, elements, load order and theme colours are wrong, offline",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "luz-check": "./dist/luz-check.js"
+  },
+  "exports": {
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nandovejer/luz.git",
+    "directory": "packages/check"
+  },
+  "homepage": "https://github.com/nandovejer/luz#readme",
+  "bugs": {
+    "url": "https://github.com/nandovejer/luz/issues"
+  },
+  "keywords": [
+    "design-system",
+    "cli",
+    "lint",
+    "html",
+    "css",
+    "accessibility",
+    "ai-agents",
+    "vanilla"
+  ],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@luz-ds/app": "workspace:*",
+    "@luz-ds/cms": "workspace:*",
+    "@luz-ds/core": "workspace:*",
+    "@luz-ds/landing": "workspace:*",
+    "@luz-ds/site": "workspace:*",
+    "@luz-ds/tokens": "workspace:*"
+  }
+}

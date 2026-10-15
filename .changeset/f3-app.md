@@ -1,5 +1,6 @@
 ---
 "@luz-ds/app": minor
+"@luz-ds/check": patch
 ---
 
 New package: the header and the dashboard of a web application, on core's shell and sidebar. CSS only (no script), in the cascade layer `luz.app`, after `luz.cms`. Requires `@luz-ds/tokens` and `@luz-ds/core` (`^0.1.0`); `@luz-ds/site` is an optional peer, for the search in the bar. Exports `./css`, `./css/min` and `./components/*`.

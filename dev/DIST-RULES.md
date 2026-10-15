@@ -9,7 +9,7 @@ dist is missing.
 ## Full Build
 
 ```bash
-pnpm build  # Runs tokens:build + core:build + site:build + landing:build + cms:build + app:build
+pnpm build  # Runs tokens:build + core:build + site:build + landing:build + cms:build + app:build + luzcheck:build
 ```
 
 ## @luz-ds/tokens
@@ -113,6 +113,20 @@ and each component as `dist/components/<name>.css` (+ `.min`).
 No JavaScript (the sidebar's drawer is a native popover; core's script only
 marks the current link). App has its own version (0.x): after adding or
 removing a published file, run `node scripts/check-pack.js --update`.
+
+## @luz-ds/check
+
+After editing `packages/check/src/`:
+
+```bash
+pnpm luzcheck:build
+```
+
+This bundles `src/main.js` and the modules it imports into one file,
+`dist/luz-check.js` (the bin; Node, ESM, not minified, a shebang, no source
+map), through `scripts/build-check.js`. It has no CSS and no layer. It has its
+own version (0.x): after adding or removing a published file, run
+`node scripts/check-pack.js --update`.
 
 ---
 

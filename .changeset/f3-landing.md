@@ -1,5 +1,6 @@
 ---
 "@luz-ds/landing": minor
+"@luz-ds/check": patch
 ---
 
 **Breaking.** Landing now holds the page structure of a landing page, moved from site: its header, hero, main, sections, footer and glow. Each is a class of the landing on a native element, laid out in the markup by core's objects (`.o-page`, `.o-sticky`, `.o-container`, `.o-container--inline`, `.o-row`, `.o-stack`, `.o-grid--split`, `.o-actions`) and core's navbar; the landing adds only its skin and its rhythm. Site is an optional peer: with tokens, core and landing alone, the header, hero and footer render, and the rules that refine site's `<luz-lang-switch>` match nothing. The feature grid is gone: it had no CSS of its own after core's split grid, so it is a template, a `ul.o-grid.o-grid--split`.

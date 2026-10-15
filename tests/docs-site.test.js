@@ -768,6 +768,22 @@ describe("the LUZ docs site", () => {
     expect(patterns.sort()).toEqual(["banner", "consent", "lang-switch", "search", "submenu"].map((slug) => `/docs/site/${slug}/`));
   });
 
+  // F3 step 15 (.claude/plans/specs/f3-package-model.md, §7 and §9): the structure page says what site
+  // is now, in its chain of packages, not only in the table of parts below it
+  it("the structure page's package chain lists site's five components and the three kinds, with site optional for them", () => {
+    const body = site.byRoute.get("/docs/get-started/structure/").body;
+    const chain = body
+      .match(/<pre[^>]*aria-label="Package dependency chain"[^>]*><code>([\s\S]*?)<\/code><\/pre>/)[1]
+      .replace(/&gt;/g, ">")
+      .replace(/&lt;/g, "<")
+      .replace(/&amp;/g, "&");
+    for (const tag of ["search", "consent", "lang-switch", "submenu", "banner"]) expect(chain, `site's ${tag}`).toContain(tag);
+    for (const kind of ["landing", "cms", "app"]) expect(chain, `the ${kind} kind`).toContain(`@luz-ds/${kind}`);
+    // Site no longer holds page structure ("page patterns"), and the kinds take it as an optional peer
+    expect(chain).not.toMatch(/page patterns/i);
+    expect(chain).toMatch(/optional/i);
+  });
+
   it("every title of a page is its own: one page per name, except a header or footer of two different kinds of site", () => {
     const byTitle = new Map();
     for (const p of site.pages.filter((q) => q.meta.search !== "false")) byTitle.set(p.meta.title, [...(byTitle.get(p.meta.title) ?? []), p.meta.area]);

@@ -38,9 +38,9 @@ export const RULE_FINDS = {
   "misuse/part-orphan": "A part such as luz-card__title with no element of its block around it.",
   "misuse/state-class": "An is-* class that LUZ's own script sets, written in the markup.",
   "parse/error": "A file that ends inside a comment, tag, string or brace, so the rest of it cannot be read.",
-  "theme/advisory": "A note on how the theme check ran: the file order it used, a token no colour mode can place, a wide-gamut colour it does not measure, or themes past its limit.",
-  "theme/contrast": "A foreground and background pair in your theme files that is under its WCAG contrast minimum in light, dark or high contrast.",
-  "theme/unreadable": "A LUZ colour token in a theme file whose value cannot be read as an sRGB colour, so its contrast cannot be measured.",
+  "theme/advisory": "A note on how the colour check ran: the file order it used, a token no colour mode can place, a wide-gamut colour it does not measure, or sets of colour tokens past its limit.",
+  "theme/contrast": "A foreground and background pair in your colour token files that is under its WCAG contrast minimum in light, dark or high contrast.",
+  "theme/unreadable": "A LUZ colour token, in a file that sets colour tokens, whose value cannot be read as an sRGB colour, so its contrast cannot be measured.",
 };
 
 /**

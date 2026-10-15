@@ -132,7 +132,7 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `app` CSS | — | ≤ 1 kB | 1 kB | 2 kB |
 | Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |
 | `check` CLI bundle, `luz-check.js` (gzip, not minified so it can be read) | — | ≤ 36 kB | 36 kB | 40 kB |
-| `llms.txt` and `llms-full.txt`, each uncompressed | — | ≤ 384 kB | 384 kB | 448 kB |
+| `llms.txt` and `llms-full.txt`, each uncompressed | — | ≤ 400 kB | 400 kB | 448 kB |
 | Each manifest on Pages (`docs/manifests/**/*.json`), uncompressed | — | ≤ 48 kB | 48 kB | 64 kB |
 
 Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).

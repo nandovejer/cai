@@ -26,7 +26,7 @@ keywords: llms.txt, agent, claude, copilot, cursor, manifest, check
 
     <section class="docs-block" aria-labelledby="check">
       <h2 class="docs-chapter__title" id="check">Check what an agent wrote</h2>
-      <p class="docs-lead"><code>npx @luz-ds/check</code> reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and theme colors are wrong. It reads files and writes nothing. It needs Node 20 or later.</p>
+      <p class="docs-lead"><code>npx @luz-ds/check</code> reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and color tokens are wrong. It reads files and writes nothing. It needs Node 20 or later.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">Shell</span>
@@ -47,7 +47,7 @@ npx @luz-ds/check src --json</code></pre>
             <tr><td data-label="Option"><div><code>--json</code></div></td><td data-label="What it does"><div>Prints the report as JSON</div></td></tr>
             <tr><td data-label="Option"><div><code>--strict</code></div></td><td data-label="What it does"><div>Fails on a warning as well as on a finding that blocks</div></td></tr>
             <tr><td data-label="Option"><div><code>--config &lt;file&gt;</code></div></td><td data-label="What it does"><div>Reads this configuration instead of <code>luz-check.json</code></div></td></tr>
-            <tr><td data-label="Option"><div><code>--theme &lt;file.css&gt;</code></div></td><td data-label="What it does"><div>Names a theme stylesheet whose colors are measured; repeat it for each file, in the order the page loads them</div></td></tr>
+            <tr><td data-label="Option"><div><code>--theme &lt;file.css&gt;</code></div></td><td data-label="What it does"><div>Names a stylesheet that sets color tokens, whose colors are measured; repeat it for each file, in the order the page loads them</div></td></tr>
             <tr><td data-label="Option"><div><code>--ext &lt;list&gt;</code></div></td><td data-label="What it does"><div>Also reads these extensions as HTML, such as <code>.astro,.vue</code></div></td></tr>
             <tr><td data-label="Option"><div><code>--version</code></div></td><td data-label="What it does"><div>Prints the version</div></td></tr>
             <tr><td data-label="Option"><div><code>--help</code></div></td><td data-label="What it does"><div>Shows the options and the limits of the command</div></td></tr>
@@ -70,7 +70,7 @@ npx @luz-ds/check src --json</code></pre>
         </table>
       </div>
       <h3 class="docs-subhead" id="check-output">What it prints</h3>
-      <p>One line for each finding, in the order of the files and lines: a mark (<code>✗</code> blocks, <code>!</code> warns), the place, the rule and one sentence that says what is wrong and what to do. A theme finding is followed by the lines where the colors were set. The last line counts what it found in the files it read.</p>
+      <p>One line for each finding, in the order of the files and lines: a mark (<code>✗</code> blocks, <code>!</code> warns), the place, the rule and one sentence that says what is wrong and what to do. A color token finding is followed by the lines where the colors were set. The last line counts what it found in the files it read.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">Output</span>
@@ -121,7 +121,7 @@ npx @luz-ds/check src --json</code></pre>
             <tr><td data-label="Field"><div><code>findings[].message</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The sentence that says what is wrong and what to do, in English</div></td></tr>
             <tr><td data-label="Field"><div><code>findings[].suggestion</code></div></td><td data-label="Type"><div>string or null</div></td><td data-label="What it is"><div>The closest LUZ name, when there is one close enough</div></td></tr>
             <tr><td data-label="Field"><div><code>findings[].docs</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The URL of the page that explains the rule</div></td></tr>
-            <tr><td data-label="Field"><div><code>findings[].details</code></div></td><td data-label="Type"><div>object</div></td><td data-label="What it is"><div>Only on some findings. A theme finding names the mode, the colors, the ratio and the places where the colors were set</div></td></tr>
+            <tr><td data-label="Field"><div><code>findings[].details</code></div></td><td data-label="Type"><div>object</div></td><td data-label="What it is"><div>Only on some findings. A color token finding names the mode, the colors, the ratio and the places where the colors were set</div></td></tr>
             <tr><td data-label="Field"><div><code>skipped</code></div></td><td data-label="Type"><div>list of objects</div></td><td data-label="What it is"><div>The paths it did not read</div></td></tr>
             <tr><td data-label="Field"><div><code>skipped[].file</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>The path</div></td></tr>
             <tr><td data-label="Field"><div><code>skipped[].reason</code></div></td><td data-label="Type"><div>string</div></td><td data-label="What it is"><div>Why: a link, a file that is not a regular file, a file over 1 MiB, one it could not open, or a limit of the run</div></td></tr>
@@ -161,7 +161,7 @@ npx @luz-ds/check src --json</code></pre>
       <p class="docs-lead">A run with no findings says what the checker did not find in the files it read. It is not a test of the page.</p>
       <ul>
         <li><strong>It does not run a browser.</strong> It reads files, so anything that depends on how a page renders, such as layout, focus order or the colors a browser works out, is not seen.</li>
-        <li><strong>Contrast is measured for your tokens only.</strong> It measures the <code>--luz-*</code> colors you set in a theme file. A color written straight into a rule is not measured against anything. How the pairs are read is on <a href="/docs/tokens/contrast/">Contrast check</a>.</li>
+        <li><strong>Contrast is measured for your tokens only.</strong> It measures the <code>--luz-*</code> colors you set in your own color tokens file. A color written straight into a rule is not measured against anything. How the pairs are read is on <a href="/docs/tokens/contrast/">Contrast check</a>.</li>
         <li><strong>A class built at run time is not seen.</strong> A name put together in a script, such as <code>"luz-" + name</code>, or written by a template, is not in the file, so it is not checked.</li>
         <li><strong>It does not check names, labels, alt text, headings and language.</strong> Whether a button has a name, an image a useful alternative, the headings an order and the page a language is not read, and a run with no findings says nothing about them.</li>
         <li><strong>It does not replace testing with a screen reader.</strong> No assistive technology is used, by the command or by the reviewer. What has not been tested is listed in <a href="/docs/accessibility/#h-a11y-not-tested">the accessibility statement</a>.</li>

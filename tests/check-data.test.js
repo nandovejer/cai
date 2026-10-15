@@ -22,7 +22,7 @@
  *    facts of the six packages of this release, for a project that has no
  *    node_modules/@luz-ds (it uses a CDN). It is DATA, read at run time, never
  *    inlined in the bundle, so the bundle stays under the `check CLI` row of
- *    budgets.json (24,576 B gzip) however many classes LUZ has:
+ *    budgets.json (40,960 B gzip) however many classes LUZ has:
  *
  *      dist/data/index.json
  *          { "schema": 1, "packages": [{ "package": "@luz-ds/tokens", "version": "0.0.0" }, ...] }

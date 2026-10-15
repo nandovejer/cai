@@ -108,7 +108,14 @@ function snapshotWithTokens(options) {
 }
 
 const LOW = ":root {\n  --luz-text-secondary: #999999;\n}\n";
-const FINE = ":root {\n  --luz-text-secondary: #404040;\n}\n";
+// A theme that keeps every pair in all three modes: `:root` has the same specificity as `[data-theme="dark"]` and
+// comes later, so a light value alone also lands on the dark and high-contrast surfaces.
+const FINE = [
+  ":root {\n  --luz-text-secondary: #404040;\n}",
+  '[data-theme="dark"] {\n  --luz-text-secondary: #dddddd;\n}',
+  '[data-theme="high-contrast"] {\n  --luz-text-secondary: #000000;\n}',
+  "",
+].join("\n");
 const KNOBS = ":root {\n  --luz-type-base: 1.125rem;\n  --luz-space-unit: 0.25rem;\n  --luz-font-body: system-ui, sans-serif;\n}\n";
 const THREE_MODES = [
   ":root { --luz-text-secondary: #999999; }",

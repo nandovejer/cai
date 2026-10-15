@@ -37,6 +37,9 @@ const READER = `
   p { margin-bottom: 2em !important; }
 `;
 
+/** Add a rule to the page. addStyleTag needs script, and this spec also runs without it (tests/band.spec.js). */
+const style = (page, css) => page.evaluate((text) => document.head.append(Object.assign(document.createElement('style'), { textContent: text })), css);
+
 const probes = (page) =>
   page.evaluate(() => ({
     base: parseFloat(getComputedStyle(document.querySelector('[data-step="base"]')).fontSize),
@@ -57,7 +60,7 @@ for (const width of [320, 1280]) {
 
     test.beforeEach(async ({ page }) => {
       await page.goto(FIXTURE);
-      await page.addStyleTag({ content: READER });
+      await style(page, READER);
       await expectKnobsApplied(page);
     });
 
@@ -112,7 +115,7 @@ for (const width of [320, 1280]) {
 test.describe('forced colours', () => {
   test('the sizes are the same as without them', async ({ page }) => {
     await page.goto(FIXTURE);
-    await page.addStyleTag({ content: READER });
+    await style(page, READER);
     await expectKnobsApplied(page);
     const before = await probes(page);
     await page.emulateMedia({ forcedColors: 'active' });
@@ -124,7 +127,7 @@ test.describe('forced colours', () => {
   test('the page still does not scroll sideways at 320px', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 800 });
     await page.goto(FIXTURE);
-    await page.addStyleTag({ content: READER });
+    await style(page, READER);
     await page.emulateMedia({ forcedColors: 'active' });
     await expectKnobsApplied(page);
     const scroll = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -138,7 +141,7 @@ test.describe('print', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(FIXTURE);
     // A consumer's way to re-scale paper: a media query on :root, outside any layer
-    await page.addStyleTag({ content: `@media print { :root { --luz-type-base: ${PRINT_BASE}rem; } }` });
+    await style(page, `@media print { :root { --luz-type-base: ${PRINT_BASE}rem; } }`);
   });
 
   test('on a screen the base is still 16px', async ({ page }) => {

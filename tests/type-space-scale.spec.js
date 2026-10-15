@@ -37,6 +37,9 @@ const textSizes = (page) =>
 const spaceSizes = (page) =>
   page.evaluate((steps) => steps.map((s) => parseFloat(getComputedStyle(document.querySelector(`[data-space="${s}"]`)).paddingLeft)), SPACE_STEPS);
 
+/** Add a rule to the page. addStyleTag needs script, and this spec also runs without it (tests/band.spec.js). */
+const style = (page, css) => page.evaluate((text) => document.head.append(Object.assign(document.createElement('style'), { textContent: text })), css);
+
 const fontSize = (page, selector) => page.locator(selector).evaluate((el) => parseFloat(getComputedStyle(el).fontSize));
 
 const expectClose = (actual, expected) => {
@@ -51,29 +54,29 @@ test.describe('size knobs: the type scale', () => {
 
   for (const { name, knobs, px } of PRESETS) {
     test(`preset "${name}" gives ${px.join(', ')}px`, async ({ page }) => {
-      await page.addStyleTag({ content: knobsCss(knobs) });
+      await style(page, knobsCss(knobs));
       expectClose(await textSizes(page), px);
     });
   }
 
   test('the default scale at the reader\'s root of 125% is today\'s scale times 1.25', async ({ page }) => {
-    await page.addStyleTag({ content: 'html { font-size: 125%; }' });
+    await style(page, 'html { font-size: 125%; }');
     expectClose(await textSizes(page), TEXT_PX_AT_ROOT_125);
   });
 
   test('the knobs set in rem follow the reader\'s root: base 1.125rem at 125% is 22.5px', async ({ page }) => {
-    await page.addStyleTag({ content: `html { font-size: 125%; } ${knobsCss({ '--luz-type-base': '1.125rem' })}` });
+    await style(page, `html { font-size: 125%; } ${knobsCss({ '--luz-type-base': '1.125rem' })}`);
     expect((await textSizes(page))[STEPS.indexOf('base')]).toBeCloseTo(22.5, 1);
   });
 
   test('a knob set on body changes nothing (the derived tokens are resolved on :root)', async ({ page }) => {
     // This case passes before the knobs exist, and says what the docs must say: sizes are a page-wide choice
-    await page.addStyleTag({ content: 'body { --luz-type-base: 1.5rem; --luz-type-ratio: 1.5; }' });
+    await style(page, 'body { --luz-type-base: 1.5rem; --luz-type-ratio: 1.5; }');
     expectClose(await textSizes(page), TEXT_PX_AT_DEFAULTS);
   });
 
   test('a knob set on a section changes nothing either', async ({ page }) => {
-    await page.addStyleTag({ content: 'main { --luz-type-base: 1.5rem; }' });
+    await style(page, 'main { --luz-type-base: 1.5rem; }');
     expectClose(await textSizes(page), TEXT_PX_AT_DEFAULTS);
   });
 });
@@ -88,17 +91,17 @@ test.describe('size knobs: the space scale', () => {
   });
 
   test('--luz-space-unit: 0.1875rem gives 1.5, 3, 6, 9, 12, 18, 24, 36, 48 and 72px', async ({ page }) => {
-    await page.addStyleTag({ content: knobsCss({ '--luz-space-unit': '0.1875rem' }) });
+    await style(page, knobsCss({ '--luz-space-unit': '0.1875rem' }));
     expectClose(await spaceSizes(page), SPACE_PX_AT_3PX_UNIT);
   });
 
   test('spacing follows the reader\'s font size: at a root of 125% the 16px step is 20px', async ({ page }) => {
-    await page.addStyleTag({ content: 'html { font-size: 125%; }' });
+    await style(page, 'html { font-size: 125%; }');
     expectClose(await spaceSizes(page), SPACE_PX_AT_DEFAULTS.map((n) => n * 1.25));
   });
 
   test('a knob set on body does not move the space steps', async ({ page }) => {
-    await page.addStyleTag({ content: 'body { --luz-space-unit: 0.5rem; }' });
+    await style(page, 'body { --luz-space-unit: 0.5rem; }');
     expectClose(await spaceSizes(page), SPACE_PX_AT_DEFAULTS);
   });
 });
@@ -113,13 +116,13 @@ test.describe('size knobs: running text (--luz-text-body)', () => {
   });
 
   test('the body follows the base: 1.125rem gives 19.125px', async ({ page }) => {
-    await page.addStyleTag({ content: knobsCss({ '--luz-type-base': '1.125rem' }) });
+    await style(page, knobsCss({ '--luz-type-base': '1.125rem' }));
     expect(await fontSize(page, 'body')).toBeCloseTo(19.125, 2);
   });
 
   test('--luz-text-body is a core setting a theme can point at the base', async ({ page }) => {
     expect(await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--luz-text-body').trim())).not.toBe('');
-    await page.addStyleTag({ content: ':root { --luz-text-body: var(--luz-text-base); }' });
+    await style(page, ':root { --luz-text-body: var(--luz-text-base); }');
     expect(await fontSize(page, 'body')).toBe(16);
   });
 });
@@ -136,13 +139,13 @@ test.describe('size knobs: a field is never under 16px on a touch screen', () =>
     });
 
     test('a base of 0.875rem is really 14px, and the field is 16px', async ({ page }) => {
-      await page.addStyleTag({ content: knobsCss({ '--luz-type-base': '0.875rem' }) });
+      await style(page, knobsCss({ '--luz-type-base': '0.875rem' }));
       expect((await textSizes(page))[STEPS.indexOf('base')]).toBe(14);
       expect(await fontSize(page, '.luz-input')).toBe(16);
     });
 
     test('a base of 1.25rem makes the field 20px: it follows the base upward', async ({ page }) => {
-      await page.addStyleTag({ content: knobsCss({ '--luz-type-base': '1.25rem' }) });
+      await style(page, knobsCss({ '--luz-type-base': '1.25rem' }));
       expect(await fontSize(page, '.luz-input')).toBe(20);
     });
 
@@ -162,7 +165,7 @@ test.describe('size knobs: a field is never under 16px on a touch screen', () =>
     });
 
     test('a base of 0.875rem gives a 14px field: the touch floor is not applied to a mouse', async ({ page }) => {
-      await page.addStyleTag({ content: knobsCss({ '--luz-type-base': '0.875rem' }) });
+      await style(page, knobsCss({ '--luz-type-base': '0.875rem' }));
       expect((await textSizes(page))[STEPS.indexOf('base')]).toBe(14);
       expect(await fontSize(page, '.luz-input')).toBe(14);
     });
@@ -173,7 +176,7 @@ test.describe('size knobs: a field is never under 16px on a touch screen', () =>
 
     test('a base of 0.875rem still gives a 16px field', async ({ page }) => {
       await page.goto(FIXTURE);
-      await page.addStyleTag({ content: knobsCss({ '--luz-type-base': '0.875rem' }) });
+      await style(page, knobsCss({ '--luz-type-base': '0.875rem' }));
       expect((await textSizes(page))[STEPS.indexOf('base')]).toBe(14);
       expect(await fontSize(page, '.luz-input')).toBe(16);
     });

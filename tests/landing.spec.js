@@ -402,20 +402,24 @@ test.describe('Landing page', () => {
   });
 
   test.describe('install guide', () => {
+    // The Install page writes each CDN URL with the version of that package.json (owner decision D9),
+    // so the test reads it too: it is 0.0.0 before `changeset version` and 0.1.0 after
+    const version = (pkg) => JSON.parse(readFileSync(fromRepo(`packages/${pkg}/package.json`), 'utf-8')).version;
+    const cdn = (pkg, file) => `@luz-ds/${pkg}@${version(pkg)}/dist/${file}`;
     const levels = [
       {
         id: 'level-1-tokens-only',
         install: 'pnpm add @luz-ds/tokens',
-        files: ['@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css'],
+        files: [cdn('tokens', 'luz-tokens.min.css')],
         absent: ['@luz-ds/core', '@luz-ds/site'],
       },
       {
         id: 'level-2-tokens-and-core',
         install: 'pnpm add @luz-ds/tokens @luz-ds/core',
         files: [
-          '@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css',
-          '@luz-ds/core@0.1.0/dist/luz.min.css',
-          '@luz-ds/core@0.1.0/dist/luz.min.js',
+          cdn('tokens', 'luz-tokens.min.css'),
+          cdn('core', 'luz.min.css'),
+          cdn('core', 'luz.min.js'),
         ],
         absent: ['@luz-ds/site'],
       },
@@ -423,11 +427,11 @@ test.describe('Landing page', () => {
         id: 'level-3-tokens-core-and-site',
         install: 'pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site',
         files: [
-          '@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css',
-          '@luz-ds/core@0.1.0/dist/luz.min.css',
-          '@luz-ds/site@0.1.0/dist/site.min.css',
-          '@luz-ds/core@0.1.0/dist/luz.min.js',
-          '@luz-ds/site@0.1.0/dist/site.min.js',
+          cdn('tokens', 'luz-tokens.min.css'),
+          cdn('core', 'luz.min.css'),
+          cdn('site', 'site.min.css'),
+          cdn('core', 'luz.min.js'),
+          cdn('site', 'site.min.js'),
         ],
         absent: [],
       },
@@ -460,10 +464,14 @@ test.describe('Landing page', () => {
           position = found;
         }
         for (const name of level.absent) expect(snippet).not.toContain(name);
-        // Every CDN URL pins the exact version
+        // Every CDN URL pins the exact version of its package
         const urls = snippet.match(/https:\/\/cdn\.jsdelivr\.net\/npm\/\S+?(?=")/g);
         expect(urls).toHaveLength(level.files.length);
-        for (const url of urls) expect(url).toMatch(/@luz-ds\/(tokens|core|site)@0\.1\.0\//);
+        for (const url of urls) {
+          const [, pkg, pinned] = url.match(/@luz-ds\/(tokens|core|site)@([^/]+)\//) ?? [];
+          expect(pkg, url).toBeTruthy();
+          expect(pinned, url).toBe(version(pkg));
+        }
         for (const script of snippet.match(/<script[^>]*>/g) ?? []) {
           expect(script).toMatch(/^<script type="module" src="[^"]+\.min\.js">$/);
         }

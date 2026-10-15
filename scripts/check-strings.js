@@ -11,12 +11,19 @@
  * vague wording has a list per language, and Title Case is checked in
  * English and Spanish only (Arabic has no letter case).
  *
+ * The strings core's scripts write are read too: the values of `en` in
+ * packages/core/src/i18n.js and of every packages/core/src/i18n/<code>.json
+ * (`$header` aside), as the whole value, against the VAGUE list of their
+ * language (en, es, ar; other codes are not checked). A language file also
+ * has the keys of English (the schema of scripts/i18n-languages.js).
+ *
  * Usage: node scripts/check-strings.js
  */
-import { readFileSync, readdirSync } from "fs";
+import { existsSync, readFileSync, readdirSync } from "fs";
 import { dirname, relative, resolve, sep } from "path";
 import { fileURLToPath } from "url";
 import { tags } from "./docs-site/html.js";
+import { englishOf, languageProblems } from "./i18n-languages.js";
 import { landingDocuments, renderDocument, scanSite } from "./docs-site/site.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -134,6 +141,40 @@ for (const doc of landingDocuments(site, LANDING, template)) {
   const html = renderDocument(doc.html, doc.file, doc.route, site, { locale: doc.locale });
   const code = doc.locale?.code ?? "en";
   check(`${LANDING} as ${doc.route} (${doc.locale?.file ?? LANDING})`, html, code);
+}
+
+// The dictionaries of core: the strings its scripts write
+const CORE_SRC = "packages/core/src";
+const vagueValues = (file, dict, code) => {
+  for (const [key, value] of Object.entries(dict)) {
+    if (key === "$header" || typeof value !== "string") continue;
+    if (VAGUE[code]?.test(value.trim())) problems.push(`${file}: vague "${key}" text "${value.trim()}"`);
+  }
+};
+const englishFile = resolve(root, CORE_SRC, "i18n.js");
+if (existsSync(englishFile)) {
+  let en = null;
+  try {
+    en = englishOf(readFileSync(englishFile, "utf-8"));
+    vagueValues(`${CORE_SRC}/i18n.js`, en, "en");
+  } catch (error) {
+    problems.push(`${CORE_SRC}/i18n.js: ${error.message}`);
+  }
+  const dictionaries = resolve(root, CORE_SRC, "i18n");
+  const names = en && existsSync(dictionaries) ? readdirSync(dictionaries).filter((f) => f.endsWith(".json")).sort() : [];
+  for (const name of names) {
+    const file = `${CORE_SRC}/i18n/${name}`;
+    const code = name.slice(0, -".json".length);
+    let dict;
+    try {
+      dict = JSON.parse(readFileSync(resolve(dictionaries, name), "utf-8"));
+    } catch (error) {
+      problems.push(`${file}: not valid JSON (${error.message})`);
+      continue;
+    }
+    for (const problem of languageProblems(dict, en, { code })) problems.push(`${file}: ${problem}`);
+    if (dict !== null && typeof dict === "object" && !Array.isArray(dict)) vagueValues(file, dict, code);
+  }
 }
 
 if (problems.length) {

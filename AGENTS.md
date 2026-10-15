@@ -34,7 +34,7 @@ Test runs use `--project=chromium --project=chromium-nojs`. The `firefox` and `w
 
 ## JS in `packages/core/src/`
 
-Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `luz.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@luz-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/i18n`, `/midi`, `/table-sort`, `/timeline`.
+Vanilla JS, ES modules — JavaScript only enhances what the browser already does (native `dialog`, `popover`, `input type=range|radio|checkbox`, `progress`, forms). One module per concern, all re-exported (and auto-initialized) by the `luz.js` entry. Importing an individual module has no side effects until you call its `init*()`. Published exports: `@luz-ds/core/theme`, `/sidebar`, `/clipboard`, `/modal`, `/highlight`, `/player`, `/tabs`, `/utils`, `/i18n`, `/i18n/<code>`, `/midi`, `/table-sort`, `/timeline`.
 
 | Module         | Key exports                                                    |
 | -------------- | -------------------------------------------------------------- |
@@ -46,7 +46,7 @@ Vanilla JS, ES modules — JavaScript only enhances what the browser already doe
 | `player.js`    | `initSeekbar(bar, onSeek)`, `wrapHTMLMedia(el)`, `bindPlayerUI(root, controls, mediaLike)`, `mountPlayer(root)`, `mountMidiPlayer(root)` (async), `initPlayers()` |
 | `tabs.js`      | `activateTab(tab)`, `initTabs()` — upgrades linked panels to the ARIA tabs pattern; a fragment or in-page link into a hidden panel opens its tab; inactive panels are `hidden="until-found"` |
 | `utils.js`     | `formatTime(seconds)` (`mm:ss`), `escapeHtml`, `calculateProgress`, `enableJs()` (sets `data-luz-js` on `<html>`), … |
-| `i18n.js`      | `t(key, el, vars?)` — string for the language of `el` (nearest `lang`, then subtag, then English; `data-luz-label-<key>` overrides), `getLang(el)`, `registerLocale(lang, messages)`; ships `en` and `es` |
+| `i18n.js`      | `t(key, el, vars?)` — string for the language of `el` (nearest `lang`, then subtag, then English; `data-luz-label-<key>` overrides), `getLang(el)`, `registerLocale(lang, messages)`, `loadLocales(root?)` (fetches the files of the languages the page uses; `en` is in the entry, every other language is a lazy chunk built from `src/i18n/<code>.json` and exported as `/i18n/<code>`) |
 | `midi.js`      | `MidiPlayer` — MIDI Format 0/1 parser + Web Audio scheduler (lazy-loaded chunk) |
 | `table-sort.js` | `initTableSort(root, translate)` — sorts a table with `th[data-luz-sort]` in the browser (lazy-loaded chunk, no imports: `luz.js` passes its `t`) |
 | `timeline.js`  | `<luz-timeline>` — a rail of dates, Previous / Next, opt-in autoplay with a visible Pause / Play, or a vertical layout that marks the item in view (lazy-loaded chunk: `luz.js` imports it only on a page with a `luz-timeline` and passes its `t` to `initTimeline(root, translate)`; importing it defines the element and imports nothing, its four strings travel with it, EX-010) |
@@ -165,6 +165,25 @@ The build is the test here: it fails on a missing or extra key.
 3. Run `pnpm test:unit` and `pnpm check:strings`, then `pnpm pages:build`. Nothing else: the route, the build entry, the switcher, the alternates and the link check follow the registry.
 
 The build fails with `file:line` on a key a template uses that a catalog lacks, on a catalog that misses a key of `en.json` or has one it does not, and on a key no template uses. Links from another language into the docs get `hreflang="en"` automatically; the search results are English (`lang="en"` on their lists). A language core's i18n does not ship (Arabic) still gets the scripts' strings in its own language: the landing's `<body>` carries `data-luz-label-*` from the catalog. For a right-to-left language check the page at 320 px; for a script ET Book lacks, add its `:lang()` font switch to `packages/core/src/settings/_settings.css`, as Arabic has.
+
+### Adding a language to core's scripts
+
+A language for the text core's scripts write (`t()`) is one JSON file, `packages/core/src/i18n/<code>.json`, never a JavaScript file: `pnpm core:build` validates it and writes `dist/i18n-<code>.js` itself, so the module a page runs is never bytes a contributor wrote. `<code>` is the primary language subtag (two or three letters). English stays in `i18n.js`; every other language is a lazy chunk that `loadLocales()` fetches for the pages that declare it.
+
+1. Copy `packages/core/src/i18n/es.json` to `i18n/<code>.json` and translate the values. The optional `$header` object (language, `author` and `reviewer` as GitHub handles, never an e-mail) never reaches the module.
+2. Add `<code>: () => import("./i18n-<code>.js")` to the literal `files` map in `packages/core/src/i18n.js`.
+3. Add the row `core JS lazy chunk: i18n-<code>` to `budgets.json` and to the table of PRINCIPLES.md §8, and the file to `scripts/docs-site/snippets.js` (`FILES.core.chunks` and a `CHUNK_WHEN` line).
+4. Run `pnpm core:build`, `node scripts/check-pack.js --update` and `pnpm check:size`, then `pnpm test:unit` and `pnpm check:strings`. Add a changeset (`"@luz-ds/core": minor`).
+5. For a right-to-left language, put it in a page with `dir="rtl"` and check it at 320 px.
+
+The rules of a value, which the build enforces:
+
+- The keys are exactly those of `en`, and every value keeps the `{placeholders}` of its English key, no more and no fewer.
+- A value is at most 3 x the English value + 40 characters.
+- No `://`, `www.` or `@` (an address is markup, not a translation), no `<` or `&` (strings are written with `textContent`), no raw U+2028 or U+2029 and no bidi override (U+202A to U+202E).
+- In a right-to-left language, `{column}`, `{mode}` and `{lang}` sit in an isolate (U+2066 to U+2068 before, U+2069 after): the isolates are the only bidi controls allowed.
+
+Say in the pull request that a language for core does not translate `<luz-search>` or `<luz-consent>`: their text is markup and `data-luz-label-*` (EX-005). A machine translation is not accepted without a reader of the language who says so.
 
 ---
 

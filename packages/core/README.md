@@ -67,12 +67,12 @@ import { mountPlayer } from "@luz-ds/core/player";
 
 ## Language
 
-Text that LUZ's JavaScript writes (button names such as "Pause" or "Copy", status messages such as "Copied to clipboard") follows the page language. It ships English (`en`) and Spanish (`es`).
+Text that LUZ's JavaScript writes (button names such as "Pause" or "Copy", status messages such as "Copied to clipboard") follows the page language. English (`en`) is in the entry. Every other language LUZ ships (Spanish today) is a small file, fetched only for the pages that declare it: the entry makes one request for `i18n-es.min.js` on a page in Spanish and none on a page in English.
 
-- **Language** comes from the nearest `lang` attribute of the element, then `<html lang>`. A regional tag falls back to its primary subtag (`es-MX` → `es`), and a language without strings falls back to English. A fragment with its own `lang` (WCAG 3.1.2) gets its own strings.
+- **Language** comes from the nearest `lang` attribute of the element, then `<html lang>`. A regional tag falls back to its primary subtag (`es-MX` → `es`), and a language without strings falls back to English. A fragment with its own `lang` (WCAG 3.1.2) gets its own strings, and its file is fetched too.
 - **No `lang` at all:** English, and one console warning. Set `<html lang="…">` (WCAG 2.2 SC 3.1.1).
 - **Override one string** with `data-luz-label-<key>` on the element or any ancestor, such as the component root: `<div class="luz-player" data-luz-label-pause="Pausar">`. Text and `aria-label`s you write in the HTML are kept, except the names that change with the state (play or pause, mute or unmute, full screen): set those with `data-luz-label-*`.
-- **Add a language:**
+- **A language LUZ does not ship** (a page in French, say): set all the `data-luz-label-*` once on `<html>` or `<body>`, or add the language with `registerLocale()` before the entry runs:
 
 ```js
 import { registerLocale } from "@luz-ds/core/i18n";
@@ -80,7 +80,23 @@ import { registerLocale } from "@luz-ds/core/i18n";
 registerLocale("fr", { play: "Lire", pause: "Pause", copy: "Copier" });
 ```
 
-Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captions`, `captionsOff`, `loading`, `midiError`, `timeOf` (`{current}`, `{total}`), `copy`, `copied`, `copiedStatus`, `copyFailed`, `codeExample` (`{lang}`), `copyCode` (`{n}`), `applyTheme`, `themeApplied`, `sortedAsc` and `sortedDesc` (`{column}`), `previous` and `next`. A key in camelCase becomes kebab-case in the attribute: `data-luz-label-exit-fullscreen`. Missing keys fall back to English.
+- **The files LUZ ships** are fetched by `loadLocales()`, which the entry calls when it starts. With the individual modules, call it yourself and wait for it before the init functions that write text when they start:
+
+```js
+import { loadLocales } from "@luz-ds/core/i18n";
+import { initHighlight } from "@luz-ds/core/highlight";
+import { initPlayers } from "@luz-ds/core/player";
+import { initThemeCycle } from "@luz-ds/core/theme";
+
+await loadLocales();
+initHighlight();
+initPlayers();
+initThemeCycle();
+```
+
+`loadLocales()` returns nothing to wait for on a page in English, and a promise that always resolves otherwise: a file that cannot load is one console warning and the English strings. Strings written on a click (copied, sorted, play or pause) read the dictionary when they are written, so they need no wait. `@luz-ds/core/i18n/es` is the Spanish dictionary alone, as a default export.
+
+Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captions`, `captionsOff`, `loading`, `midiError`, `timeOf` (`{current}`, `{total}`), `copy`, `copied`, `copiedStatus`, `copyFailed`, `codeExample` (`{lang}`), `copyCode` (`{n}`), `applyTheme`, `themeApplied`, `changeMode` and `modeChanged` (`{mode}`), `sortedAsc` and `sortedDesc` (`{column}`), `previous` and `next`. A key in camelCase becomes kebab-case in the attribute: `data-luz-label-exit-fullscreen`. Missing keys fall back to English.
 
 `registerLocale()` must reach the same module instance the components use: with the auto-initializing entry import it from `@luz-ds/core`, with the individual modules from `@luz-ds/core/i18n`. Strings written later (play/pause, copied, status messages) use it right away; the ones written when a component initializes (code block names) need it registered before the `init*()` call.
 
@@ -97,10 +113,10 @@ Every stylesheet puts its rules in a layer of one container layer, `luz`: `luz.t
 - **`./print.css`** → Print styles alone, for pages that load components one by one (`luz.css` already includes them)
 - **`./classless.css`** → The look of a bare button, field, select and table inside `[data-luz-classless]`; not part of `luz.css`
 - **`./theme`**, **`./sidebar`**, **`./clipboard`**, **`./modal`**, **`./highlight`**, **`./player`**, **`./tabs`** → Individual JS behavior modules (no side effects on import)
-- **`./i18n`** → Strings for the JS-generated text (`t`, `getLang`, `registerLocale`)
+- **`./i18n`** → Strings for the JS-generated text (`t`, `getLang`, `registerLocale`, `loadLocales`); **`./i18n/*`** → one language LUZ ships, as a dictionary (`@luz-ds/core/i18n/es`)
 - **`./midi`** → `midi.js` — MIDI player (lazy-loaded)
 - **`./table-sort`** → `table-sort.js` — `initTableSort(root, t)`: sorts a table whose headings carry `data-luz-sort` (lazy-loaded by `luz.js`; no imports, so pass the `t` of `./i18n` when you load it on its own)
-- **`./timeline`** → `timeline.js` — defines `<luz-timeline>`, the timeline with a rail of dates (lazy-loaded by `luz.js` on a page that has one; import it yourself for a timeline added later, with or without the entry; it loads nothing else and carries its own English and Spanish strings. `initTimeline(root, translate)` is what `luz.js` calls to hand it core's `t`)
+- **`./timeline`** → `timeline.js` — defines `<luz-timeline>`, the timeline with a rail of dates (lazy-loaded by `luz.js` on a page that has one; import it yourself for a timeline added later, with or without the entry; it loads nothing else and carries its own four strings, in English and Spanish. `initTimeline(root, translate)` is what `luz.js` calls to hand it core's `t`)
 - **`./utils`** → Pure helper functions (`formatTime`, `escapeHtml`, …)
 - **`./themes/*`** → `_template.css`, the starting point for a theme of your own
 

@@ -94,7 +94,7 @@ Compute each hash from the file you are pinning:
 curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A
 ```
 
-`luz.js` and `site.js` are ES modules and must be loaded with `type="module"`. SRI on an entry file does not cover the lazy chunks it imports on demand: core's `midi.js`, `table-sort.js` and `timeline.js`, and site's `search.js` (on a page with a `<luz-search>`) and `consent.js` (on a page with a `<luz-consent>`). Each chunk imports nothing, and each entry imports its chunks by fixed names next to it, never a URL built from the page. For full integrity coverage, add one `<link rel="modulepreload" integrity crossorigin>` per chunk the page may load, before the entry's `<script>`, as above: the browser checks the hash, and the entry's import uses that result instead of fetching the file again, so a chunk with a wrong hash never runs and the page stays as it is without JavaScript. Import maps with `integrity` are another way, for browsers that support them; they are not yet available in every browser LUZ supports. Self-hosting the files or installing from npm also works.
+`luz.js` and `site.js` are ES modules and must be loaded with `type="module"`. SRI on an entry file does not cover the lazy chunks it imports on demand: core's `midi.js`, `table-sort.js`, `timeline.js` and one language file per language a page declares (`i18n-es.min.js`), and site's `search.js` (on a page with a `<luz-search>`) and `consent.js` (on a page with a `<luz-consent>`). Each chunk imports nothing, and each entry imports its chunks by fixed names next to it, never a URL built from the page. For full integrity coverage, add one `<link rel="modulepreload" integrity crossorigin>` per chunk the page may load, before the entry's `<script>`, as above: the browser checks the hash, and the entry's import uses that result instead of fetching the file again, so a chunk with a wrong hash never runs and the page stays as it is without JavaScript. Import maps with `integrity` are another way, for browsers that support them; they are not yet available in every browser LUZ supports. Self-hosting the files or installing from npm also works.
 
 Range URLs such as `@luz-ds/core@3` are fine for prototypes, but they cannot carry an SRI hash and pick up new releases automatically.
 
@@ -106,6 +106,8 @@ Content-Security-Policy:
   style-src 'self' cdn.jsdelivr.net;
   font-src 'self' cdn.jsdelivr.net;
 ```
+
+LUZ's chunks, the language files among them, are loaded by a dynamic `import()` from the entry. A CSP that allows scripts by hash or nonce, without `'strict-dynamic'`, blocks that `import()`: the language chunk does not load, and the page falls back to English, with one console warning. Add `'strict-dynamic'`, or allow the origin of the files as above. A language file is a module of the same origin as the entry and runs with its authority; the build writes it from a validated JSON file, so the bytes a contributor wrote are never the module.
 
 3. **Use specific versions** (not latest):
 - ✅ Good: `@luz-ds/core@0.1.0`

@@ -73,7 +73,7 @@ toc: h2,h3
                 </div>
               </article>
               <article class="luz-card">
-                <div class="luz-site-image u-mb-sm">
+                <div class="luz-image u-mb-sm">
                   <picture>
                     <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                     <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
@@ -96,7 +96,7 @@ toc: h2,h3
             <ul>
               <li><strong>Linked card:</strong> the <code>&lt;a&gt;</code> goes inside the heading, round its text. A second link or a button in it is allowed, and sits above the title link: see Product card below.</li>
               <li><strong>Avatar or icon:</strong> <code>.o-media</code> puts it beside <code>.o-media__body</code>, which holds the title and the body. Next to a name, hide the avatar with <code>aria-hidden="true"</code>: it repeats the name.</li>
-              <li><strong>Image on top:</strong> the image frame of <code>@luz-ds/site</code> (<code>.luz-site-image</code>), inside the padding, with <code>.u-mb-sm</code> under it. Its alt text says what the picture shows; if it only repeats the title, leave it empty (<code>alt=""</code>). With core alone, use an <code>&lt;img&gt;</code> and your own size rules.</li>
+              <li><strong>Image on top:</strong> the <a href="/docs/components/image/">image frame</a> (<code>.luz-image</code>), inside the padding, with <code>.u-mb-sm</code> under it. Its alt text says what the picture shows; if it only repeats the title, leave it empty (<code>alt=""</code>).</li>
               <li><strong>Actions:</strong> <code>.o-row</code> with small buttons (<code>.luz-btn--sm</code>) or tags (<code>.luz-tag</code>), last in the card. In a linked card, one action at most, as a button after the title.</li>
             </ul>
             <h4 id="product-card">Product card</h4>
@@ -106,7 +106,7 @@ toc: h2,h3
               <h5 id="red-wines">Red wines</h5>
               <ul class="o-grid docs-cols-2 docs-list-plain" aria-labelledby="red-wines">
                 <li class="luz-card">
-                  <div class="luz-site-image luz-site-image--4x3 u-mb-sm">
+                  <div class="luz-image luz-image--4x3 u-mb-sm">
                     <picture>
                       <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                       <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
@@ -122,7 +122,7 @@ toc: h2,h3
                   </form>
                 </li>
                 <li class="luz-card">
-                  <div class="luz-site-image luz-site-image--4x3 u-mb-sm">
+                  <div class="luz-image luz-image--4x3 u-mb-sm">
                     <picture>
                       <source type="image/avif" srcset="/apps/docs/assets/desert-640.avif">
                       <source type="image/webp" srcset="/apps/docs/assets/desert-640.webp">
@@ -150,7 +150,7 @@ toc: h2,h3
   &lt;h4 id=&quot;red-wines&quot;&gt;Red wines&lt;/h4&gt;
   &lt;ul class=&quot;o-grid o-grid--auto&quot; aria-labelledby=&quot;red-wines&quot;&gt;
     &lt;li class=&quot;luz-card&quot;&gt;
-      &lt;div class=&quot;luz-site-image luz-site-image--4x3 u-mb-sm&quot;&gt;
+      &lt;div class=&quot;luz-image luz-image--4x3 u-mb-sm&quot;&gt;
         &lt;picture&gt;…&lt;img src=&quot;malbec.jpg&quot; alt=&quot;&quot; width=&quot;640&quot; height=&quot;480&quot; loading=&quot;lazy&quot; decoding=&quot;async&quot;&gt;&lt;/picture&gt;
       &lt;/div&gt;
       &lt;h5 class=&quot;luz-card__title&quot;&gt;&lt;a href=&quot;/wines/malbec-2021/&quot;&gt;Malbec 2021&lt;/a&gt;&lt;/h5&gt;

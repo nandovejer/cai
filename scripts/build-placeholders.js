@@ -1,12 +1,14 @@
 /**
- * LUZ Site — image placeholders
- * Renders the two masters in packages/site/src/placeholders/ (day:
- * placeholder.svg, night: placeholder-night.svg) to every aspect ratio and
- * width that .luz-site-image uses, in AVIF and WebP, and in JPEG at the
+ * LUZ docs — image placeholders
+ * Renders the two masters in apps/docs/assets/placeholders/ (day:
+ * placeholder.svg, night: placeholder-night.svg) to every aspect ratio of
+ * core's .luz-image and three widths, in AVIF and WebP, and in JPEG at the
  * smaller widths only (the fallback for browsers without either), next to
- * the masters. The rasters are committed: CI and the
- * release only copy them (scripts/build-site.js), so a build never needs
- * ImageMagick. Run this after editing the master and commit the result.
+ * the masters. They are docs-only assets (spec F3, D2): no package ships
+ * them and no published stylesheet points at them. The rasters are
+ * committed, so a build never needs ImageMagick. Run this after editing
+ * the master and commit the result; the MIT notice (LICENSE) stays in the
+ * same folder.
  *
  * Needs ImageMagick 7 (`magick`) with AVIF and WebP write support. No npm
  * dependency (red line 1).
@@ -21,7 +23,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const dir = resolve(repoRoot, "packages/site/src/placeholders");
+const dir = resolve(repoRoot, "apps/docs/assets/placeholders");
 /** Variant → file prefix. The night variant is used in dark mode. */
 export const VARIANTS = { day: "placeholder", night: "placeholder-night" };
 

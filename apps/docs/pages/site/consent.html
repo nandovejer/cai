@@ -18,7 +18,7 @@ toc: h2,h3
                 <div data-luz-consent-ask>
                   <h2 class="luz-consent__title" id="consent-demo-title">Cookies on Bodega Albar</h2>
                   <p>We use cookies that this site needs to work. We would also like to measure how you use it, to improve it. <a href="#how">Read the cookie policy</a>.</p>
-                  <form class="luz-site-actions">
+                  <form class="o-actions">
                     <button class="luz-btn luz-btn--primary" type="submit" value="all">Accept optional cookies</button>
                     <button class="luz-btn luz-btn--primary" type="submit" value="none">Reject optional cookies</button>
                   </form>
@@ -32,7 +32,7 @@ toc: h2,h3
                           <label class="luz-check-item"><input type="checkbox" value="marketing"> Adverts on other sites</label>
                         </div>
                       </fieldset>
-                      <div class="luz-site-actions">
+                      <div class="o-actions">
                         <button class="luz-btn luz-btn--secondary" type="submit">Save my choices</button>
                       </div>
                     </form>
@@ -44,7 +44,7 @@ toc: h2,h3
                 </div>
               </section>
             </luz-consent>
-            <p class="luz-site-actions"><button class="luz-btn luz-btn--outline" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
+            <p class="o-actions"><button class="luz-btn luz-btn--outline" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
             <p class="docs-demo__note">The example is live: until you answer it, it shows as a band at the bottom of this window, as it would on your site. Its answer is stored under its own key, <code>luz-consent-demo</code>, so it does not count as an answer for this site; the button above shows it again. Without JavaScript the banner and its button stay hidden.</p>
           </div>
           </div>
@@ -57,7 +57,7 @@ toc: h2,h3
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>Right after the <a href="/docs/components/skip-link/">skip link</a>, before a <a href="/docs/site/banner/">banner</a> and the <a href="/docs/site/site-header/">site header</a>: it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its <code>value</code> the category’s name. <code>site.min.js</code> loads the banner’s own file, <code>consent.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
+            <p>Right after the <a href="/docs/components/skip-link/">skip link</a>, before a <a href="/docs/site/banner/">banner</a> and the header of the page (a <a href="/docs/landing/header/">landing</a> or <a href="/docs/cms/header/">CMS</a> header): it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its <code>value</code> the category’s name. <code>site.min.js</code> loads the banner’s own file, <code>consent.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
@@ -65,14 +65,14 @@ toc: h2,h3
               </div>
               <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Cookie consent markup"><code id="code-consent">&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js&quot;&gt;&lt;/script&gt;
 
-&lt;a class=&quot;luz-site-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
+&lt;a class=&quot;luz-skip-link&quot; href=&quot;#main&quot;&gt;Skip to main content&lt;/a&gt;
 &lt;luz-consent&gt;
   &lt;section class=&quot;luz-consent&quot; data-luz-consent aria-labelledby=&quot;consent-title&quot; hidden&gt;
     &lt;div data-luz-consent-ask&gt;
       &lt;h2 class=&quot;luz-consent__title&quot; id=&quot;consent-title&quot;&gt;Cookies on Bodega Albar&lt;/h2&gt;
       &lt;p&gt;We use cookies that this site needs to work. We would also like to measure how you
         use it, to improve it. &lt;a href=&quot;/cookies/&quot;&gt;Read the cookie policy&lt;/a&gt;.&lt;/p&gt;
-      &lt;form class=&quot;luz-site-actions&quot;&gt;
+      &lt;form class=&quot;o-actions&quot;&gt;
         &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot; value=&quot;all&quot;&gt;Accept optional cookies&lt;/button&gt;
         &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;submit&quot; value=&quot;none&quot;&gt;Reject optional cookies&lt;/button&gt;
       &lt;/form&gt;
@@ -86,7 +86,7 @@ toc: h2,h3
               &lt;label class=&quot;luz-check-item&quot;&gt;&lt;input type=&quot;checkbox&quot; value=&quot;marketing&quot;&gt; Adverts on other sites&lt;/label&gt;
             &lt;/div&gt;
           &lt;/fieldset&gt;
-          &lt;div class=&quot;luz-site-actions&quot;&gt;
+          &lt;div class=&quot;o-actions&quot;&gt;
             &lt;button class=&quot;luz-btn luz-btn--secondary&quot; type=&quot;submit&quot;&gt;Save my choices&lt;/button&gt;
           &lt;/div&gt;
         &lt;/form&gt;
@@ -99,7 +99,7 @@ toc: h2,h3
     &lt;/div&gt;
   &lt;/section&gt;
 &lt;/luz-consent&gt;
-&lt;header class=&quot;luz-site-header&quot;&gt;…&lt;/header&gt;
+&lt;header&gt;…&lt;/header&gt;
 
 &lt;!-- On the cookie policy page --&gt;
 &lt;button class=&quot;luz-btn luz-btn--outline&quot; type=&quot;button&quot; data-luz-consent-open hidden&gt;Change cookie settings&lt;/button&gt;</code></pre>
@@ -129,7 +129,7 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>.luz-consent</code></div></td><td data-label="Effect"><div>The banner: a band fixed at the bottom of the window, as wide as it, at most half its height and scrolling inside, its text in the site header’s column, in the sans. In a window less than 30 rem tall it is in the flow instead. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>.luz-consent</code></div></td><td data-label="Effect"><div>The banner: a band fixed at the bottom of the window, as wide as it, at most half its height and scrolling inside, its text in the header’s column, in the sans. In a window less than 30 rem tall it is in the flow instead. Keep <code>hidden</code> on it: the script shows it</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.luz-consent__title</code></div></td><td data-label="Effect"><div>Its heading, in the sans; it names the banner’s region through <code>aria-labelledby</code></div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>.luz-consent__choices</code></div></td><td data-label="Effect"><div>The <code>&lt;details&gt;</code> with the categories, under the two buttons</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>&lt;luz-consent&gt;</code></div></td><td data-label="Effect"><div>The custom element the module defines. It wires the banner inside it when it connects</div></td></tr>
@@ -179,7 +179,7 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Give Accept and Reject the same style, side by side, with words that say what each one does.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="luz-site-actions">
+                  <div class="o-actions">
                     <span class="luz-btn luz-btn--primary">Accept optional cookies</span>
                     <span class="luz-btn luz-btn--primary">Reject optional cookies</span>
                   </div>
@@ -188,7 +188,7 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Make Accept a big button and hide Reject in a small link or behind settings: an answer pushed one way is not free consent.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <div class="luz-site-actions">
+                  <div class="o-actions">
                     <span class="luz-btn luz-btn--primary luz-btn--lg">Accept all</span>
                     <span class="luz-btn luz-btn--ghost luz-btn--sm">Manage options</span>
                   </div>

@@ -24,7 +24,7 @@ import "/packages/site/dist/search.js";
 // Defines <luz-consent>, for the live example of the Cookie consent page
 // (its answer is stored under its own key, luz-consent-demo)
 import "/packages/site/dist/consent.js";
-import { initSiteHeader } from "../landing/site-header.js";
+import { initSiteHeader } from "./site-header.js";
 import { initDocsView } from "./view.js";
 
 /* ---- Small enhancements ----------------------------------------------- */

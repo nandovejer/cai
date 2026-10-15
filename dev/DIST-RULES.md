@@ -63,7 +63,7 @@ pnpm site:build
 
 This inlines the `@import` graph of `src/index.css` →
 `dist/site.css` (+ `.min`), syncs `site.js`, `search.js` and `consent.js` and bundles
-each into a `.min.js`, and copies `src/placeholders/`. It runs the shared
+each into a `.min.js`. It runs the shared
 builder, `scripts/build-package.js`, which also emits every
 `src/components/*.css` whose name does not start with `_` as
 `dist/components/<name>.css` (+ `.min`), in the package's layer with the same

@@ -12,6 +12,7 @@
  * - Publishes the sticky header's height as --site-header-h on <html>, so
  *   anchored targets, the docs sidebar and the drawer sit below the header.
  *
+ * Lives in the docs app; the home page imports it from here (F3, D9 a).
  * Not part of any published package.
  */
 

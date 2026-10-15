@@ -1,7 +1,7 @@
 {
   "name": "@luz-ds/site",
   "version": "0.0.0",
-  "description": "LUZ Design System — site-level patterns (shell, header, navigation, notice, cookie consent, footer, search, language switcher) built on @luz-ds/core",
+  "description": "LUZ Design System — self-contained site components (search, cookie consent, language switch, submenu, banner) as light-DOM `<luz-*>` elements, built on @luz-ds/core",
   "license": "MIT",
   "type": "module",
   "main": "dist/site.js",
@@ -11,7 +11,6 @@
     "./consent": "./dist/consent.js",
     "./css": "./dist/site.css",
     "./css/min": "./dist/site.min.css",
-    "./placeholders/*": "./dist/placeholders/*",
     "./print.css": "./dist/print.css",
     "./components/*": "./dist/components/*",
     "./package.json": "./package.json"
@@ -33,9 +32,9 @@
     "design-system",
     "css",
     "site",
-    "patterns",
-    "shell",
-    "layout",
+    "search",
+    "cookie-consent",
+    "custom-elements",
     "vanilla"
   ],
   "sideEffects": [

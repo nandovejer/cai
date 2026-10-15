@@ -1,6 +1,6 @@
 <!-- luz:page
 title: Submenu
-description: Groups a few links of the site header under one button, so the header keeps a short row of links.
+description: Groups a few links of a header under one button, so the header keeps a short row of links.
 area: site
 order: 1
 group: patterns
@@ -12,35 +12,35 @@ toc: h2,h3
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
-            <header class="luz-site-header">
-              <div class="luz-site-header__inner">
+            <header class="luz-landing-header">
+              <div class="o-container o-container--inline o-row">
                 <button class="luz-nav-toggle" type="button" popovertarget="submenu-demo-nav" aria-label="Menu of the example site">
                   <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 5h18v2H3zM3 11h18v2H3zM3 17h18v2H3z"/></svg>
                 </button>
-                <a class="luz-site-header__brand" href="#example">Bodega Albar</a>
-                <nav class="luz-site-header__nav" id="submenu-demo-nav" aria-label="Example site" popover>
-                  <ul>
-                    <li><a href="#example" aria-current="page">Home</a></li>
+                <a class="luz-landing-header__brand" href="#example">Bodega Albar</a>
+                <nav class="luz-navbar" id="submenu-demo-nav" aria-label="Example site" popover>
+                  <ul class="luz-navbar__list">
+                    <li><a class="luz-navbar__link" href="#example" aria-current="page">Home</a></li>
                     <li>
                       <luz-submenu>
                         <details name="submenu-demo">
                           <summary>Wines</summary>
                           <ul>
-                            <li><a href="#example">Red wines</a></li>
-                            <li><a href="#example">White wines</a></li>
-                            <li><a href="#example">Sweet wines</a></li>
+                            <li><a class="luz-navbar__link" href="#example">Red wines</a></li>
+                            <li><a class="luz-navbar__link" href="#example">White wines</a></li>
+                            <li><a class="luz-navbar__link" href="#example">Sweet wines</a></li>
                           </ul>
                         </details>
                       </luz-submenu>
                     </li>
-                    <li><a href="#example">Visits</a></li>
+                    <li><a class="luz-navbar__link" href="#example">Visits</a></li>
                     <li>
                       <luz-submenu>
                         <details name="submenu-demo">
                           <summary>About us</summary>
                           <ul>
-                            <li><a href="#example">Our history</a></li>
-                            <li><a href="#example">The people of the winery</a></li>
+                            <li><a class="luz-navbar__link" href="#example">Our history</a></li>
+                            <li><a class="luz-navbar__link" href="#example">The people of the winery</a></li>
                           </ul>
                         </details>
                       </luz-submenu>
@@ -61,27 +61,27 @@ toc: h2,h3
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>An item of the <a href="/docs/site/site-header/">site header</a>’s list whose content is a <code>&lt;luz-submenu&gt;</code> around a <code>&lt;details&gt;</code>: its <code>&lt;summary&gt;</code> is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place. Give every submenu of the header the same <code>name</code>, so opening one closes the others.</p>
+            <p>An item of the list of core’s <a href="/docs/components/navbar/">navbar</a>, in a <a href="/docs/landing/header/">landing</a> or <a href="/docs/cms/header/">CMS</a> header, whose content is a <code>&lt;luz-submenu&gt;</code> around a <code>&lt;details&gt;</code>: its <code>&lt;summary&gt;</code> is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place. Give every submenu of the header the same <code>name</code>, so opening one closes the others.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-submenu" aria-label="Copy the submenu markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Submenu markup"><code id="code-submenu">&lt;nav class=&quot;luz-site-header__nav&quot; id=&quot;site-nav&quot; aria-label=&quot;Main&quot; popover&gt;
-  &lt;ul&gt;
-    &lt;li&gt;&lt;a href=&quot;/&quot; aria-current=&quot;page&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Submenu markup"><code id="code-submenu">&lt;nav class=&quot;luz-navbar&quot; id=&quot;site-nav&quot; aria-label=&quot;Main&quot; popover&gt;
+  &lt;ul class=&quot;luz-navbar__list&quot;&gt;
+    &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/&quot; aria-current=&quot;page&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;
       &lt;luz-submenu&gt;
         &lt;details name=&quot;site-menu&quot;&gt;
           &lt;summary&gt;Wines&lt;/summary&gt;
           &lt;ul&gt;
-            &lt;li&gt;&lt;a href=&quot;/wines/red/&quot;&gt;Red wines&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a href=&quot;/wines/white/&quot;&gt;White wines&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/wines/red/&quot;&gt;Red wines&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/wines/white/&quot;&gt;White wines&lt;/a&gt;&lt;/li&gt;
           &lt;/ul&gt;
         &lt;/details&gt;
       &lt;/luz-submenu&gt;
     &lt;/li&gt;
-    &lt;li&gt;&lt;a href=&quot;/visits/&quot;&gt;Visits&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a class=&quot;luz-navbar__link&quot; href=&quot;/visits/&quot;&gt;Visits&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/nav&gt;</code></pre>
             </div>
@@ -136,16 +136,16 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--do">
                 <figcaption><strong class="docs-dodont__verdict">Do</strong> Name the group with a word that tells the visitor what is in it, and keep it to a handful of links.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <nav class="luz-site-header__nav">
-                    <ul>
+                  <nav class="luz-navbar">
+                    <ul class="luz-navbar__list">
                       <li>
                         <luz-submenu>
                           <details open>
                             <summary>Wines</summary>
                             <ul>
-                              <li><a href="#example">Red wines</a></li>
-                              <li><a href="#example">White wines</a></li>
-                              <li><a href="#example">Sweet wines</a></li>
+                              <li><a class="luz-navbar__link" href="#example">Red wines</a></li>
+                              <li><a class="luz-navbar__link" href="#example">White wines</a></li>
+                              <li><a class="luz-navbar__link" href="#example">Sweet wines</a></li>
                             </ul>
                           </details>
                         </luz-submenu>
@@ -157,16 +157,16 @@ toc: h2,h3
               <figure class="docs-dodont__item docs-dodont__item--dont">
                 <figcaption><strong class="docs-dodont__verdict">Don't</strong> Use a vague group name such as “Resources” or “More”: the visitor has to open it to know whether what they want is there.</figcaption>
                 <div class="docs-dodont__stage" inert aria-hidden="true">
-                  <nav class="luz-site-header__nav">
-                    <ul>
+                  <nav class="luz-navbar">
+                    <ul class="luz-navbar__list">
                       <li>
                         <luz-submenu>
                           <details open>
                             <summary>Resources</summary>
                             <ul>
-                              <li><a href="#example">Visits</a></li>
-                              <li><a href="#example">Shop</a></li>
-                              <li><a href="#example">Press</a></li>
+                              <li><a class="luz-navbar__link" href="#example">Visits</a></li>
+                              <li><a class="luz-navbar__link" href="#example">Shop</a></li>
+                              <li><a class="luz-navbar__link" href="#example">Press</a></li>
                             </ul>
                           </details>
                         </luz-submenu>
@@ -207,7 +207,7 @@ toc: h2,h3
               <li>The current page’s link is underlined, as in the row.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 14 tokens that the rules of site’s <code>components/submenu.css</code> read, by family. The links in it are styled by the <a href="/docs/site/site-header/">site header</a>. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 14 tokens that the rules of site’s <code>components/submenu.css</code> read, by family. The links in it are core’s <a href="/docs/components/navbar/">navbar</a> links. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface"><code>--luz-surface</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
               <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-lg</code>, <code>--luz-space-2xs</code>, <code>--luz-space-xs</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>

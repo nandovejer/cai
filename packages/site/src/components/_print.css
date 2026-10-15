@@ -1,22 +1,16 @@
 /* ==========================================================================
    LUZ Site — print
-   What a page shell, its search, its skip link and the cookie banner do
-   on paper. Core's print layer (luz.print) sets the colors and the breaks;
-   this hides what only works on a screen. In the luz.site layer, after the screen rules.
+   What the site components do on paper. Core's print layer (luz.print)
+   sets the colors and the breaks, and hides the skip link; this hides what
+   only works on a screen. In the luz.site layer, after the screen rules.
    ========================================================================== */
 
 @media print {
   /* <luz-search> takes its fallback link, its trigger and its dialog
      with it; a trigger elsewhere on the page has the class */
-  .luz-site-skip-link,
   :where(luz-search),
   .luz-search__trigger,
   .luz-consent {
     display: none;
-  }
-
-  /* The soft glow of the shell is a screen decoration */
-  .luz-site-page--gradient {
-    background-image: none;
   }
 }

@@ -22,12 +22,12 @@ luz-design-system/
 │   │   ├── reference.css              ← docs page–only styles
 │   │   ├── elements.css               ← HTML elements chapter styles
 │   │   ├── reference.js               ← docs glue on every page (mode, copy, demos, element cards, "On this page")
-│   │   └── assets/                    ← demo media and images
+│   │   ├── site-header.css, .js       ← the header of the docs and the home page (not published)
+│   │   └── assets/                    ← demo media and images; placeholders/ (docs-only, MIT LICENSE next to them)
 │   ├── landing/                       ← home page
 │   │   ├── index.html                 ← template of the home page in every language; includes the header and site-links partials
 │   │   ├── i18n/                      ← locales.json (languages and routes) + one catalog per language (en, es, ar)
-│   │   ├── landing.css
-│   │   ├── site-header.css            ← header shared with the docs page
+│   │   ├── landing.css, landing.js    ← the home page's own; the header is ../docs/site-header.{css,js}
 │   │   └── assets/                    ← favicon set and LUZ mark
 ├── packages/
 │   ├── tokens/                        ← @luz-ds/tokens (publishable)
@@ -78,12 +78,13 @@ luz-design-system/
 │   │
 │   ├── site/                      ← @luz-ds/site (publishable)
 │   │   ├── src/                       ← EDIT HERE
-│   │   │   ├── components/_components.css
+│   │   │   ├── components/{search,consent,lang-switch,submenu,banner}.css, _print.css
 │   │   │   ├── index.css
-│   │   │   └── site.js
+│   │   │   ├── site.js                ← the presence loader
+│   │   │   └── search.js, consent.js  ← lazy chunks
 │   │   └── dist/                      ← GENERATED (do not edit)
-│   │       ├── site.css
-│   │       └── site.js
+│   │       ├── site.css (+ .min), print.css, components/*.css
+│   │       └── site.js, search.js, consent.js (+ .min)
 │   │
 │   ├── landing/                   ← @luz-ds/landing (publishable, its own version, 0.x)
 │   │   ├── src/                       ← EDIT HERE
@@ -117,7 +118,7 @@ luz-design-system/
     ├── build-tokens.js                ← fonts + primitives (tokens.json) + semantic (src/semantic.css)
     ├── build-core.js                  ← inlines src/index.css @imports + per-component dist + JS
     ├── build-package.js               ← shared builder of site, landing and cms: @import inlining, layer, min, JS bundle, assets
-    ├── build-site.js                  ← site: calls build-package.js (JS modules, placeholders)
+    ├── build-site.js                  ← site: calls build-package.js (CSS, the loader and its two chunks)
     ├── build-landing.js               ← landing: calls build-package.js (CSS only)
     ├── build-cms.js                   ← cms: calls build-package.js (CSS only)
     ├── luz-packages.js                ← the published packages, in dependency order

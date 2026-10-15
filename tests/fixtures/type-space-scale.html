@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>The size knobs: probes for the type and space scales</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+</head>
+<body>
+  <main>
+    <h1>The size knobs</h1>
+    <!-- One probe per step: tests/type-space-scale.spec.js reads their computed size and padding -->
+    <section aria-label="Type scale probes">
+    <p data-step="xs" style="font-size: var(--luz-text-xs); margin: 0">Step xs</p>
+    <p data-step="sm" style="font-size: var(--luz-text-sm); margin: 0">Step sm</p>
+    <p data-step="md" style="font-size: var(--luz-text-md); margin: 0">Step md</p>
+    <p data-step="base" style="font-size: var(--luz-text-base); margin: 0">Step base</p>
+    <p data-step="lg" style="font-size: var(--luz-text-lg); margin: 0">Step lg</p>
+    <p data-step="xl" style="font-size: var(--luz-text-xl); margin: 0">Step xl</p>
+    <p data-step="2xl" style="font-size: var(--luz-text-2xl); margin: 0">Step 2xl</p>
+    <p data-step="3xl" style="font-size: var(--luz-text-3xl); margin: 0">Step 3xl</p>
+    <p data-step="4xl" style="font-size: var(--luz-text-4xl); margin: 0">Step 4xl</p>
+    </section>
+    <section aria-label="Space scale probes">
+    <div data-space="3xs" style="padding-left: var(--luz-space-3xs); padding-right: 0"><span>Space 3xs</span></div>
+    <div data-space="2xs" style="padding-left: var(--luz-space-2xs); padding-right: 0"><span>Space 2xs</span></div>
+    <div data-space="xs" style="padding-left: var(--luz-space-xs); padding-right: 0"><span>Space xs</span></div>
+    <div data-space="sm" style="padding-left: var(--luz-space-sm); padding-right: 0"><span>Space sm</span></div>
+    <div data-space="md" style="padding-left: var(--luz-space-md); padding-right: 0"><span>Space md</span></div>
+    <div data-space="lg" style="padding-left: var(--luz-space-lg); padding-right: 0"><span>Space lg</span></div>
+    <div data-space="xl" style="padding-left: var(--luz-space-xl); padding-right: 0"><span>Space xl</span></div>
+    <div data-space="2xl" style="padding-left: var(--luz-space-2xl); padding-right: 0"><span>Space 2xl</span></div>
+    <div data-space="3xl" style="padding-left: var(--luz-space-3xl); padding-right: 0"><span>Space 3xl</span></div>
+    <div data-space="4xl" style="padding-left: var(--luz-space-4xl); padding-right: 0"><span>Space 4xl</span></div>
+    </section>
+    <p id="running-text">Running text takes its size from the body.</p>
+    <label for="field">A field</label>
+    <input class="luz-input" id="field" type="text" value="Field text">
+    <button class="luz-btn luz-btn--primary" type="button">A button</button>
+  </main>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The size knobs at their largest: a page of components for tests/knobs-reader.spec.js</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+</head>
+<body>
+  <main>
+    <h1>Sizes</h1>
+    <p>Running text, a <a href="#field">link to the field</a>, and a longer sentence so that the line has to wrap at a narrow width and a large size.</p>
+
+    <h2>Buttons</h2>
+    <p>
+      <button class="luz-btn luz-btn--primary" type="button">Save changes</button>
+      <button class="luz-btn luz-btn--secondary" type="button">Cancel</button>
+      <button class="luz-btn luz-btn--outline" type="button">Add to basket</button>
+      <button class="luz-btn luz-btn--ghost luz-btn--sm" type="button">Small</button>
+      <button class="luz-btn luz-btn--danger luz-btn--lg" type="button">Delete all</button>
+    </p>
+
+    <h2>Form</h2>
+    <div class="luz-field">
+      <label class="luz-field__label" for="field">Email address</label>
+      <input class="luz-input" id="field" type="email" value="reader@example.org" autocomplete="off">
+      <p class="luz-field__helper">We never share it.</p>
+    </div>
+    <div class="luz-field">
+      <label class="luz-field__label" for="choice">A choice</label>
+      <select class="luz-select" id="choice">
+        <option>The first option of the list</option>
+        <option>Another option</option>
+      </select>
+    </div>
+
+    <h2>Card and alert</h2>
+    <article class="luz-card">
+      <h3 class="luz-card__title">API gateway</h3>
+      <p class="luz-card__body">1,204 requests per minute, with a sentence long enough to wrap.</p>
+    </article>
+    <div class="luz-alert luz-alert--info">
+      <div class="luz-alert__icon" aria-hidden="true">i</div>
+      <div>
+        <div class="luz-alert__title">Information</div>
+        <div class="luz-alert__body">A new version is available, and this line is long enough to wrap.</div>
+      </div>
+    </div>
+    <p><span class="luz-tag luz-tag--green">Published</span> <span class="luz-badge luz-badge--primary">New</span></p>
+
+    <h2>Table</h2>
+    <div class="luz-table-wrap" role="region" aria-label="Plans" tabindex="0">
+      <table class="luz-table">
+        <caption>Plans</caption>
+        <thead><tr><th scope="col">Plan</th><th scope="col">Seats</th><th scope="col">Price per month</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Starter</th><td>1</td><td>Free</td></tr>
+          <tr><th scope="row">Team</th><td>10</td><td>12 euros per seat</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Probes: the sizes the spec reads back, to prove the knobs were applied -->
+    <p data-step="base" style="font-size: var(--luz-text-base); margin: 0">Base</p>
+    <p data-step="4xl" style="font-size: var(--luz-text-4xl); margin: 0">Big</p>
+    <div data-space="md" style="padding-left: var(--luz-space-md)"><span>Space</span></div>
+  </main>
+</body>
+</html>

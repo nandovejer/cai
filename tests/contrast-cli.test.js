@@ -58,6 +58,22 @@ describe.skipIf(!built)("luz-tokens check-contrast", () => {
     expect(check({ "empty.css": "" }).code).toBe(0);
   });
 
+  it("passes a file that sets only the size knobs, and reads and ignores nothing in it", () => {
+    // Sizes are not colours: a stylesheet of `:root { --luz-type-base: … }` is a "light" target with LUZ's own colours
+    const css = ":root {\n  --luz-type-base: 1.125rem;\n  --luz-type-ratio: 1.2;\n  --luz-space-unit: 0.1875rem;\n}\n";
+    const report = json({ "sizes.css": css });
+    expect(report).toMatchObject({ ok: true, failures: [], unreadable: [], ignored: [] });
+    expect(report.checked).toBeGreaterThan(300);
+    expect(check({ "sizes.css": css }).code).toBe(0);
+  });
+
+  it("passes the same knobs in a media query on :root, as a consumer re-scales paper", () => {
+    const css = "@media print { :root { --luz-type-base: 0.9375rem; } }\n";
+    const report = json({ "print.css": css });
+    expect(report.ok).toBe(true);
+    expect(report.unreadable).toEqual([]);
+  });
+
   it("fails a text pair below 4.5:1, says where the colour was set, and exits 1", () => {
     const css = ":root {\n  --luz-text-secondary: #999;\n}\n";
     const result = check({ "my.css": css });

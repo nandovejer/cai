@@ -129,7 +129,7 @@ export function tokensUsedBy(page) {
 const FAMILIES = [
   ["Color", "/docs/tokens/color/", (t) => colorTokens().includes(t)],
   ["Spacing and sizing", "/docs/tokens/spacing/", (t) => /^--luz-(space|control)-/.test(t)],
-  ["Typography", "/docs/tokens/typography/", (t) => /^--luz-(font-|text-(xs|sm|base|md|lg|xl|2xl|3xl|4xl|control)$|leading-|weight-)/.test(t)],
+  ["Typography", "/docs/tokens/typography/", (t) => /^--luz-(font-|type-(base|ratio)$|text-(xs|sm|base|md|lg|xl|2xl|3xl|4xl|control|body)$|leading-|weight-)/.test(t)],
   ["Radius", "/docs/tokens/radius/", (t) => t.startsWith("--luz-radius-")],
   ["Shadows", "/docs/tokens/shadows/", (t) => t.startsWith("--luz-shadow-")],
   ["Motion", "/docs/tokens/motion/", (t) => /^--luz-(duration|easing)-/.test(t)],
@@ -145,3 +145,89 @@ export function familyOf(token) {
 }
 
 export const FAMILY_ORDER = FAMILIES.map(([label]) => label);
+
+/* ---- Evaluating a length --------------------------------------------------- */
+
+const LENGTH_TOKEN = /\s*(--[\w-]+|\d*\.?\d+(?:rem|px)?|[a-z]+\(|[()+\-*/,])/gy;
+
+/**
+ * A CSS length expression, in px: numbers, `rem` and `px`, `var()` (looked up
+ * in `scope`, a map of `--name` to expression, with its fallback), `calc()`
+ * with `+ - * /`, `max()`, `min()` and `round(value, step)` (nearest, a tie
+ * goes up, like CSS). `rem` is `rootPx` (16 unless the reader changed it).
+ * It is the one evaluator the token pages and the scale tests share.
+ */
+export function evalLength(expr, scope = {}, rootPx = 16) {
+  const seen = [];
+  const evaluate = (source) => {
+    const tokens = [];
+    LENGTH_TOKEN.lastIndex = 0;
+    const text = String(source).trim();
+    while (LENGTH_TOKEN.lastIndex < text.length) {
+      const m = LENGTH_TOKEN.exec(text);
+      if (!m) throw new Error(`evalLength: cannot read "${text}" at ${LENGTH_TOKEN.lastIndex}`);
+      tokens.push(m[1]);
+    }
+    let i = 0;
+    const peek = () => tokens[i];
+    const take = (want) => {
+      if (want !== undefined && tokens[i] !== want) throw new Error(`evalLength: expected "${want}" in "${text}"`);
+      return tokens[i++];
+    };
+    const list = () => {
+      const out = [sum()];
+      while (peek() === ",") { take(); out.push(sum()); }
+      return out;
+    };
+    const call = (name) => {
+      if (name === "var(") {
+        const prop = take();
+        let fallback;
+        if (peek() === ",") { take(); fallback = sum(); }
+        take(")");
+        if (prop in scope) {
+          if (seen.includes(prop)) throw new Error(`evalLength: ${prop} refers to itself`);
+          seen.push(prop);
+          const value = evaluate(scope[prop]);
+          seen.pop();
+          return value;
+        }
+        if (fallback === undefined) throw new Error(`evalLength: ${prop} is not defined`);
+        return fallback;
+      }
+      const args = list();
+      take(")");
+      if (name === "calc(") return args[0];
+      if (name === "max(") return Math.max(...args);
+      if (name === "min(") return Math.min(...args);
+      if (name === "round(") {
+        const [value, step] = args;
+        return Math.floor(value / step + 0.5 + 1e-9) * step;
+      }
+      throw new Error(`evalLength: ${name.slice(0, -1)}() is not supported`);
+    };
+    const factor = () => {
+      const t = take();
+      if (t === "-") return -factor();
+      if (t === "(") { const v = sum(); take(")"); return v; }
+      if (/^[a-z]+\($/.test(t)) return call(t);
+      const n = /^(\d*\.?\d+)(rem|px)?$/.exec(t ?? "");
+      if (!n) throw new Error(`evalLength: unexpected "${t}" in "${text}"`);
+      return Number(n[1]) * (n[2] === "rem" ? rootPx : 1);
+    };
+    const term = () => {
+      let v = factor();
+      while (peek() === "*" || peek() === "/") v = take() === "*" ? v * factor() : v / factor();
+      return v;
+    };
+    const sum = () => {
+      let v = term();
+      while (peek() === "+" || peek() === "-") v = take() === "+" ? v + term() : v - term();
+      return v;
+    };
+    const result = sum();
+    if (i !== tokens.length) throw new Error(`evalLength: unexpected "${tokens[i]}" in "${text}"`);
+    return result;
+  };
+  return evaluate(expr);
+}

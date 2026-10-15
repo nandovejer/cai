@@ -12,6 +12,7 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv from "ajv";
 import { DTCG_VERSION, buildDtcg, buildResolver } from "../scripts/tokens-dtcg.js";
+import { evalLength } from "./helpers/design-tokens.js";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const dist = resolve(root, "packages/tokens/dist");
@@ -122,9 +123,17 @@ describe.skipIf(!built)("DTCG export (packages/tokens/dist/luz-tokens.dtcg.json)
 
   it("has every primitive, with the CSS value", () => {
     expect(primitives.size).toBeGreaterThan(50);
+    // A derived size (--luz-text-lg: calc(…), --luz-space-md: calc(…)) is written
+    // as its formula in the CSS and as its resolved default in DTCG: the two are
+    // compared by evaluating the formula, with the round() block over the plain chain
+    const scope = Object.fromEntries(css.filter((b) => b.selector === ":root").flatMap((b) => [...b.decls]));
     for (const [prop, value] of primitives) {
       const token = at(json.primitives, pathOf(prop));
       expect(token, prop).toBeTruthy();
+      if (/\b(?:var|calc|max|min|round)\(/.test(value)) {
+        expect(evalLength(dtcgToCss(token.$value)), prop).toBeCloseTo(evalLength(`var(${prop})`, scope), 6);
+        continue;
+      }
       expect(dtcgToCss(token.$value), prop).toBe(canon(value));
     }
   });

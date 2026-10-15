@@ -10,6 +10,8 @@
  *   luz-tokens.dtcg.json → primitives + semantic (three modes) in the W3C
  *                    Design Tokens (DTCG) format, for Figma and other tools
  *   fonts/         → woff2 files + their MIT licence texts
+ *   classes.json   → the properties the CSS declares, read back from it
+ *                    (scripts/ai-manifests.js)
  *
  * Usage: node scripts/build-tokens.js (from the repo root)
  */
@@ -28,6 +30,7 @@ import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 import * as esbuild from "esbuild";
 import { buildDtcg, buildResolver } from "./tokens-dtcg.js";
+import { writeManifests } from "./ai-manifests.js";
 import { inLuzLayer } from "./luz-layers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -191,3 +194,6 @@ for (const [key, group] of Object.entries(tokens)) {
   }
 }
 console.log(`✓ ${tokenCount} primitive tokens generated`);
+
+const manifest = writeManifests("tokens");
+console.log(`✓ classes.json → ${manifest.classes.length} classes, ${manifest.properties.length} properties`);

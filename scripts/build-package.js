@@ -23,7 +23,9 @@
  *      <chunk>.min.js. An entry's dynamic import("./<chunk>.js") stays an
  *      import, of "./<chunk>.min.js" in the entry's .min.js, so the chunk is
  *      never inlined and never split (no esbuild `splitting`): each file is
- *      what one <script> or one integrity hash covers (SEC-CHUNK-2).
+ *      what one <script> or one integrity hash covers (SEC-CHUNK-2);
+ *   9. writes dist/classes.json, the class manifest read back from the CSS
+ *      just written (scripts/ai-manifests.js).
  *
  * Usage: import { buildPackage } from "./build-package.js";
  *        await buildPackage({ name: "landing" });
@@ -33,6 +35,7 @@ import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, readFileSync, write
 import { dirname, relative, resolve } from "path";
 import { fileURLToPath } from "url";
 import * as esbuild from "esbuild";
+import { writeManifests } from "./ai-manifests.js";
 import { inLuzLayer } from "./luz-layers.js";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -154,4 +157,6 @@ export async function buildPackage({ name, layer = name, label = name[0].toUpper
     });
   }
   if (modules.length) console.log(`✓ ${label} JS bundled and minified → ${modules.map((f) => f.replace(/\.js$/, ".min.js")).join(", ")}`);
+  const manifest = writeManifests(name);
+  console.log(`✓ ${label} classes.json → ${manifest.classes.length} classes, ${manifest.properties.length} properties`);
 }

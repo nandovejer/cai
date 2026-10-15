@@ -11,6 +11,7 @@
  * - JS: bundle with Rollup — utils.js inlined, midi.js, table-sort.js and timeline.js as lazy chunks;
  *   individual modules copied verbatim (browser-native ESM)
  * - Themes: copy src/themes/*.css → dist/themes/
+ * - classes.json: the class manifest, read back from the CSS (scripts/ai-manifests.js)
  */
 
 import {
@@ -26,6 +27,7 @@ import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 import { rollup } from "rollup";
 import * as esbuild from "esbuild";
+import { writeManifests } from "./ai-manifests.js";
 import { LAYER_ORDER, inLuzLayer } from "./luz-layers.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -190,3 +192,7 @@ if (existsSync(themesSrcDir)) {
     console.log(`✓ Theme minified → ${f.replace(".css", ".min.css")}`);
   }
 }
+
+// --- Manifest: the classes and properties of the CSS just written ---
+const manifest = writeManifests("core");
+console.log(`✓ classes.json → ${manifest.classes.length} classes, ${manifest.properties.length} properties`);

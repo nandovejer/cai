@@ -84,6 +84,11 @@ jobs:
       - name: Run build
         run: pnpm build
 
+      # RL-19: llms.txt, the manifests, the examples, the README blocks and the
+      # agent snapshot are what the generators write; a stale one fails
+      - name: Check the files for AI agents
+        run: pnpm check:ai
+
       # After the build: the dist-dependent suites are skipped without dist/.
       # LUZ_RELEASE: on main (and PRs into it) the red-line debt register
       # must be empty (PRINCIPLES.md, Migration)

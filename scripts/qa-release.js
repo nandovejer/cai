@@ -11,7 +11,7 @@
  * Usage: node scripts/qa-release.js [--skip-ui] [--fast]
  *   --skip-ui  skip the Playwright suites (lint, checks and unit tests only)
  *   --fast     skip `pnpm build` and `check:generated` (the packages are
- *              already built; do not use for a release)
+ *              already built; do not use for a release); `check:ai` always runs
  * Exit code: 0 when every step passed, 1 when one failed.
  */
 import { spawnSync } from "node:child_process";
@@ -46,6 +46,7 @@ const steps = [
   { name: "Tarball contents", cmd: [pnpm, "check:pack"] },
   { name: "Token contrast (RL-7)", cmd: [pnpm, "check:contrast"] },
   ...(args.has("--fast") ? [] : [{ name: "Generated files (RL-14: docs/ is the Pages build)", cmd: [pnpm, "check:generated"] }]),
+  { name: "Files for AI agents (RL-19: manifests, llms.txt, examples, READMEs, agent)", cmd: [pnpm, "check:ai"] },
   { name: "Unit tests", cmd: [pnpm, "test:unit"] },
   ...(args.has("--skip-ui") ? [] : [{ name: "Playwright: chromium and chromium-nojs", cmd: [pnpm, "exec", "playwright", "test", ...UI] }]),
 ];

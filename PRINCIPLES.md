@@ -198,7 +198,7 @@ Each red line has at least one check that fails when it is broken. The table is 
 | RL-16 | `eslint.config.js` | Sniffing written through a library: there are none (RL-1) |
 | RL-17 | `scripts/check-size.js` | Anything that is not in `budgets.json` |
 | RL-18 | `tests/docs-site.test.js`, `tests/docs.spec.js` | Whether the text of *When to use* is true |
-| RL-19 | `scripts/check-generated.js` | It compares `docs/` with a fresh build; the files for agents, and the test that regenerates them, do not exist yet. Text inside a docs page that only an agent would read |
+| RL-19 | `scripts/check-generated.js`, `scripts/check-ai.js`, `tests/ai-files.test.js` | The first compares `docs/` with a fresh build, the second regenerates the manifests, `llms.txt`, the examples, the README blocks and the agent snapshot and compares bytes, the third checks their facts. Prose only an agent would read is not seen, nor is the meaning of a description |
 
 ## Strong rules
 

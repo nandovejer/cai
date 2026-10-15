@@ -231,8 +231,11 @@ function fencedSections(text) {
   return sections;
 }
 
-/** The text of the published agent, or a thrown error that names the file or the marker. Reads nothing else. */
-function buildAgent() {
+/**
+ * The text of the published agent, or a thrown error that names the file or the marker. Reads nothing else.
+ * Exported for scripts/check-ai.js, which compares it with the committed snapshot and writes nothing.
+ */
+export function buildAgent() {
   if (!existsSync(AGENT_SOURCE)) throw new Error("accessibility-engineer.md is missing: the agent is built from .claude/agents/accessibility-engineer.md, between its luz:publish fences");
   const source = readFileSync(AGENT_SOURCE, "utf-8").replace(/\r\n?/g, "\n");
   const sections = fencedSections(source);

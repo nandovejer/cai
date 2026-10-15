@@ -27,6 +27,33 @@
  * after another compound (`.a .b`, `.a > .b`, `:root .b`), inside `:not()` or
  * `:has()`, or before the subject, is known, not defined: the checker does
  * not flag it, and it is not a class to write on its own.
+ *
+ * What a script names (RL-19: what a human is told to copy is what the tool
+ * accepts; `.luz-player-playpause` is real markup the player reads, and no
+ * stylesheet has a rule for it). The unminified `.js` files of dist/ are read
+ * too, by a plain scan (no parser, nothing is executed). A class is NAMED by a
+ * script when it is, in code (never a comment):
+ *
+ *   - a class selector `.name` inside any string or template literal that has
+ *     no interpolation next to the name (`querySelector(".luz-x .luz-y")`,
+ *     `closest("pre.luz-code-block")`, `":scope > .luz-x"`);
+ *   - a literal argument of `classList.add|remove|toggle|contains|replace`;
+ *   - the words of a literal assigned to `className` (`=` or `+=`), of
+ *     `setAttribute("class", "…")` and of `getElementsByClassName("…")`.
+ *
+ * Only `luz-*`, `o-*`, `u-*` and `is-*` count. A bare name in a selector API
+ * (`querySelector("luz-search")`) is a tag, not a class; a `customElements`
+ * name, a storage key and a `data-luz-*` are not classes either. A name
+ * computed at run time is skipped: anything touching `${…}`, and a literal
+ * ending in `-` or `_` (`"luz-btn--" + kind`, `"luz-"`).
+ *
+ * Such a class is listed with `defined: false`, `files` naming the script
+ * (relative to dist/, as for a stylesheet: the files that name it, or the
+ * package's bundle, `exports["."]`, only when no other script does), `kind`,
+ * `block`, `modifier` and `part` as for any class, and `layer` the package's
+ * own component layer (core `luz.components`, site `luz.site`, …). A class a
+ * stylesheet already lists is unchanged: its entry, files and `defined` stay
+ * what the CSS says, never a script. `*.min.js` is not read.
  */
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -338,7 +365,8 @@ describe("the generator, from a built dist/ (a fixture root)", () => {
     // minified copies and other files are not read
     "luz.min.css": ".luz-only-in-min{color:red}",
     "components/button.min.css": ".luz-only-in-min{color:red}",
-    "luz.js": ".luz-in-js { }",
+    "luz.min.js": 'document.querySelector(".luz-only-in-min-js")',
+    "luz.js": "export {};\n",
     "classes.json": '{"stale": true}',
   };
   const CORE_PACKAGE = { name: "@luz-ds/core", version: "1.2.3", exports: { "./css": "./dist/luz.css", "./components/*": "./dist/components/*" } };
@@ -431,6 +459,209 @@ describe("the generator, from a built dist/ (a fixture root)", () => {
     expect(JSON.stringify(buildClassManifest("core", { root: two }))).toBe(text);
     expect(text).not.toContain(one);
     expect(text).not.toContain(two);
+  });
+});
+
+describe("the generator: classes the unminified scripts name (RL-19)", () => {
+  const roots = [];
+  afterEach(() => {
+    for (const dir of roots.splice(0)) rmSync(dir, { recursive: true, force: true });
+  });
+
+  function fixtureRoot(name, packageJson, files) {
+    const dir = mkdtempSync(join(tmpdir(), "luz-manifest-js-"));
+    roots.push(dir);
+    mkdirSync(join(dir, "packages", name), { recursive: true });
+    writeFileSync(join(dir, "packages", name, "package.json"), JSON.stringify(packageJson));
+    for (const [path, text] of Object.entries(files)) {
+      mkdirSync(dirname(join(dir, "packages", name, "dist", path)), { recursive: true });
+      writeFileSync(join(dir, "packages", name, "dist", path), text);
+    }
+    return dir;
+  }
+
+  const ORDER = `@layer ${LAYERS.map((l) => `luz.${l}`).join(", ")};\n`;
+  const CORE_PACKAGE = {
+    name: "@luz-ds/core",
+    version: "1.2.3",
+    exports: { ".": "./dist/luz.js", "./css": "./dist/luz.css", "./player": "./dist/player.js" },
+  };
+  const CSS = `${ORDER}@layer luz.components {\n.luz-btn { color: red; }\n.luz-card .is-active { color: red; }\n}\n`;
+  const PLAYER = [
+    "/** The player. Reads .luz-in-jsdoc and nothing else. */",
+    "// .luz-in-line-comment",
+    "/* .luz-in-block-comment */",
+    'const playPause = root.querySelector(".luz-player-playpause");',
+    'const bars = root.querySelectorAll(".luz-player-seekbar, .luz-player-volbar");',
+    'const row = root.querySelector(".luz-player-progress-row .luz-player-seekbar");',
+    'const block = el.closest("pre.luz-code-block");',
+    'const item = el.matches("li.luz-item:not(.is-hidden)");',
+    'const list = root.getElementsByClassName("luz-by-class o-by-class");',
+    'const scoped = root.querySelector(":scope > .luz-in-const");',
+    'el.classList.add("luz-added", "luz-added-two");',
+    'el.classList.remove("is-gone");',
+    'el.classList.toggle("is-toggled", on);',
+    'el.classList.contains("u-contained");',
+    'el.classList.add("luz-btn");',
+    'el.classList.toggle("is-active");',
+    'el.className = "luz-set luz-set--wide";',
+    'el.className += " luz-appended";',
+    'el.setAttribute("class", "luz-attr-set");',
+    'const shared = el.querySelector(".luz-shared-hook");',
+    // not classes
+    'const tag = document.querySelector("luz-player-tag");',
+    'const inside = document.querySelector("luz-player-tag [data-luz-attr-x]");',
+    'customElements.get("luz-ce-tag");',
+    'localStorage.setItem("luz-storage-key", "1");',
+    'const attr = el.dataset.luzThing;',
+    'el.className = `luz-computed__${name}`;',
+    'el.classList.add(`luz-dyn--${kind}`);',
+    'el.classList.add("luz-prefix-" + kind);',
+    'el.querySelector(".luz-sel-" + kind);',
+    'el.classList.add("docs-thing", "plain", "luz");',
+    'const file = "luz.min.css";',
+    "",
+  ].join("\n");
+  const FILES = {
+    "luz.css": CSS,
+    "player.js": PLAYER,
+    "lib/helper.js": 'document.querySelector(".luz-in-subfolder .luz-shared-hook");\n',
+    // the bundle repeats player.js and adds what is in no file of its own
+    "luz.js": `${PLAYER}\nconst only = ".luz-only-in-bundle";\n`,
+    "luz.min.js": 'document.querySelector(".luz-only-in-min-js")',
+    "classes.json": "{}",
+  };
+  const manifest = () => buildClassManifest("core", { root: fixtureRoot("core", CORE_PACKAGE, FILES) });
+  const find = (list, name) => list.classes.find((c) => c.name === name);
+
+  it("lists a class a script queries with defined: false, in the file that names it, with the BEM split", () => {
+    const m = manifest();
+    expect(find(m, "luz-player-playpause")).toStrictEqual({
+      name: "luz-player-playpause",
+      kind: "component",
+      layer: "luz.components",
+      files: ["player.js"],
+      defined: false,
+      block: "luz-player-playpause",
+    });
+    expect(find(m, "luz-set--wide")).toStrictEqual({
+      name: "luz-set--wide",
+      kind: "component",
+      layer: "luz.components",
+      files: ["player.js"],
+      defined: false,
+      block: "luz-set",
+      modifier: "wide",
+    });
+    expect(find(m, "is-gone")).toStrictEqual({ name: "is-gone", kind: "state", layer: "luz.components", files: ["player.js"], defined: false });
+  });
+
+  it("reads every selector API, the class lists and the dotted names inside a string", () => {
+    const names = new Set(manifest().classes.map((c) => c.name));
+    for (const name of [
+      "luz-player-seekbar", // querySelectorAll, after a comma
+      "luz-player-volbar",
+      "luz-player-progress-row", // descendant selector
+      "luz-code-block", // pre.luz-code-block, a tag then a class
+      "luz-item",
+      "is-hidden", // inside :not()
+      "luz-by-class", // getElementsByClassName, bare words
+      "o-by-class",
+      "luz-in-const", // ":scope > .luz-in-const"
+      "luz-added",
+      "luz-added-two", // every literal argument of classList.add
+      "is-toggled", // toggle("is-toggled", on): the flag is not a class
+      "u-contained",
+      "luz-set",
+      "luz-appended", // className +=
+      "luz-attr-set", // setAttribute("class", …)
+    ]) {
+      expect(names.has(name), name).toBe(true);
+    }
+  });
+
+  it("skips comments, tags, storage keys, attributes, computed names and what is not LUZ's", () => {
+    const names = manifest().classes.map((c) => c.name);
+    const notClasses = [
+      "luz-in-jsdoc",
+      "luz-in-line-comment",
+      "luz-in-block-comment",
+      "luz-player-tag", // a tag selector
+      "luz-ce-tag", // customElements.get
+      "luz-storage-key",
+      "luz-thing",
+      "luz-computed",
+      "luz-computed__",
+      "luz-dyn",
+      "luz-dyn--",
+      "luz-prefix",
+      "luz-prefix-",
+      "luz-sel",
+      "luz-sel-",
+      "docs-thing",
+      "plain",
+      "luz",
+      "luz-only-in-min-js",
+    ];
+    for (const name of notClasses) expect(names, name).not.toContain(name);
+    expect(names.filter((n) => /[$_-]$/.test(n) || n.includes("$"))).toEqual([]);
+  });
+
+  it("names the script that names it, not the bundle that repeats it; the bundle only for what is in no other script", () => {
+    const m = manifest();
+    expect(find(m, "luz-player-playpause").files).toEqual(["player.js"]);
+    expect(find(m, "luz-only-in-bundle").files).toEqual(["luz.js"]);
+    expect(find(m, "luz-in-subfolder").files).toEqual(["lib/helper.js"]);
+    expect(find(m, "luz-shared-hook").files).toEqual(["lib/helper.js", "player.js"]);
+  });
+
+  it("leaves a class the CSS lists exactly as the CSS says, whatever a script does with it", () => {
+    const m = manifest();
+    expect(find(m, "luz-btn")).toStrictEqual({ name: "luz-btn", kind: "component", layer: "luz.components", files: ["luz.css"], defined: true, block: "luz-btn" });
+    expect(find(m, "is-active")).toStrictEqual({ name: "is-active", kind: "state", layer: "luz.components", files: ["luz.css"], defined: false });
+  });
+
+  it("keeps the classes ordered by name, each once, CSS and script names together", () => {
+    const names = manifest().classes.map((c) => c.name);
+    expect(names).toEqual([...names].sort());
+    expect(new Set(names).size).toBe(names.length);
+  });
+
+  it("puts a script class of a package for one kind of site in that package's layer", () => {
+    const dir = fixtureRoot(
+      "site",
+      { name: "@luz-ds/site", version: "0.4.0", exports: { ".": "./dist/site.js", "./search": "./dist/search.js", "./css": "./dist/site.css" } },
+      {
+        "site.css": `${ORDER}@layer luz.site {\n.luz-search { display: grid; }\n}\n`,
+        "search.js": 'el.querySelector(".luz-search__trigger-hook");\n',
+        "site.js": 'import("./search.js");\nel.classList.add("luz-site-loader-hook");\n',
+      },
+    );
+    const { classes } = buildClassManifest("site", { root: dir });
+    expect(classes.find((c) => c.name === "luz-search__trigger-hook")).toStrictEqual({
+      name: "luz-search__trigger-hook",
+      kind: "component",
+      layer: "luz.site",
+      files: ["search.js"],
+      defined: false,
+      block: "luz-search",
+      part: "trigger-hook",
+    });
+    expect(classes.find((c) => c.name === "luz-site-loader-hook")).toMatchObject({ kind: "pattern", layer: "luz.site", files: ["site.js"], defined: false });
+  });
+
+  it("reads a script it cannot make sense of without failing the build", () => {
+    const dir = fixtureRoot("core", CORE_PACKAGE, { "luz.css": CSS, "player.js": '}}{{ "unterminated .luz-after\n`also\n' });
+    expect(() => buildClassManifest("core", { root: dir })).not.toThrow();
+  });
+
+  it("writes the same dist/classes.json twice, with the script classes one per line", () => {
+    const dir = fixtureRoot("core", CORE_PACKAGE, FILES);
+    writeManifests("core", { root: dir });
+    const text = readFileSync(join(dir, "packages/core/dist/classes.json"), "utf-8");
+    expect(text).toContain('{ "name": "luz-player-playpause", "kind": "component", "layer": "luz.components", "files": ["player.js"], "defined": false, "block": "luz-player-playpause" }');
+    writeManifests("core", { root: dir });
+    expect(readFileSync(join(dir, "packages/core/dist/classes.json"), "utf-8")).toBe(text);
   });
 });
 
@@ -530,6 +761,32 @@ describe("the six built packages", () => {
     }
   });
 
+  it("core: a class only its scripts name is listed, defined: false, in the script that names it", () => {
+    const core = byName("core");
+    const ONLY_IN_SCRIPTS = {
+      "luz-code-block__copy": "highlight.js",
+      "luz-player-audio": "player.js",
+      "luz-player-current": "player.js",
+      "luz-player-duration": "player.js",
+      "luz-player-fullscreen": "player.js",
+      "luz-player-mute": "player.js",
+      "luz-player-pip": "player.js",
+      "luz-player-playpause": "player.js",
+    };
+    for (const [name, file] of Object.entries(ONLY_IN_SCRIPTS)) {
+      expect(core.get(name), name).toMatchObject({ kind: "component", layer: "luz.components", files: [file], defined: false });
+    }
+  });
+
+  it.each(PACKAGES)("%s: files are all stylesheets or all scripts, and a script's class is never defined", (name) => {
+    for (const c of manifests[name].classes) {
+      const scripts = c.files.filter((f) => f.endsWith(".js"));
+      if (scripts.length === 0) continue;
+      expect(scripts, c.name).toEqual(c.files);
+      expect(c.defined, c.name).toBe(false);
+    }
+  });
+
   it("tokens has no class and declares its tokens at root scope in luz.tokens, with no files", () => {
     expect(manifests.tokens.classes).toEqual([]);
     const brand = manifests.tokens.properties.find((p) => p.name === "--luz-brand-primary");
@@ -588,27 +845,44 @@ describe("independent oracle: a naive regex over the CSS finds the same classes"
   };
   const css = (dir) => walk(dir).filter((f) => f.endsWith(".css"));
 
-  it.each(PACKAGES)("%s: the manifest has the names of its src/", (name) => {
-    const manifest = new Set(buildClassManifest(name).classes.map((c) => c.name));
+  it.each(PACKAGES)("%s: the classes with a stylesheet in files are the names of its src/", (name) => {
+    const manifest = new Set(buildClassManifest(name).classes.filter((c) => c.files.some((f) => f.endsWith(".css"))).map((c) => c.name));
     expect([...manifest].sort()).toEqual([...union(css(`${root}packages/${name}/src`))].sort());
   });
 
-  it.each(PACKAGES)("%s: and the names of its unminified dist/", (name) => {
+  /** Deliberately simple too: string literals of the code, then three regexes. */
+  const NS = "(?:luz|o|u|is)-";
+  const WORD = /^[a-z0-9]+(?:(?:__|--|-)[a-z0-9]+)*$/;
+  const scriptNames = (source) => {
+    const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|[^:"'`\\])\/\/.*$/gm, "$1");
+    const out = new Set();
+    const dotted = new RegExp(`\\.(${NS}[a-z0-9]+(?:(?:__|--|-)[a-z0-9]+)*)(?![\\w$-])`, "g");
+    for (const literal of code.matchAll(/"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`/g)) {
+      for (const m of literal[0].matchAll(dotted)) out.add(m[1]);
+    }
+    const bare = (words) => {
+      for (const word of words.split(/\s+/)) if (new RegExp(`^${NS}`).test(word) && WORD.test(word)) out.add(word);
+    };
+    for (const call of code.matchAll(/classList\.\w+\(([^)]*)\)/g)) for (const s of call[1].matchAll(/["'`]([^"'`]*)["'`]/g)) bare(s[1]);
+    for (const m of code.matchAll(/className\s*\+?=\s*(["'`])(.*?)\1/g)) bare(m[2]);
+    for (const m of code.matchAll(/getElementsByClassName\(\s*(["'`])(.*?)\1/g)) bare(m[2]);
+    for (const m of code.matchAll(/setAttribute\(\s*["']class["']\s*,\s*(["'`])(.*?)\1/g)) bare(m[2]);
+    return out;
+  };
+  const scripts = (dir) => walk(dir).filter((f) => f.endsWith(".js") && !f.endsWith(".min.js"));
+
+  it.each(PACKAGES)("%s: and the names of its unminified dist/, stylesheets and scripts", (name) => {
     const manifest = new Set(buildClassManifest(name).classes.map((c) => c.name));
-    const files = css(`${root}packages/${name}/dist`).filter((f) => !f.endsWith(".min.css"));
+    const dist = `${root}packages/${name}/dist`;
+    const files = css(dist).filter((f) => !f.endsWith(".min.css"));
     expect(files.length).toBeGreaterThan(0);
-    expect([...manifest].sort()).toEqual([...union(files)].sort());
+    const expected = union(files);
+    for (const file of scripts(dist)) for (const n of scriptNames(readFileSync(file, "utf-8"))) expected.add(n);
+    expect([...manifest].sort()).toEqual([...expected].sort());
   });
 });
 
 describe("RL-19: the classes the docs name are in a manifest", () => {
-  // Classes a page documents that no stylesheet has a rule for: hooks the script
-  // reads (`querySelector(".luz-player-mute")` in player.js) and a slot marker
-  // that "has no rule of its own" (the app header's toggle). They are real, so a
-  // manifest built from CSS cannot hold them; each is named here so the list
-  // cannot grow unnoticed, and this test fails the day a rule defines one.
-  const HOOKS_WITHOUT_A_RULE = ["luz-app-header__toggle", "luz-player-fullscreen", "luz-player-mute", "luz-player-pip"];
-
   const everything = new Set(PACKAGES.flatMap((name) => buildClassManifest(name).classes.map((c) => c.name)));
   const named = indexData(scanSite(`${root}apps/docs`, root))
     .flatMap((entry) => entry.names.map((n) => ({ route: entry.route, text: n.text })))
@@ -619,12 +893,34 @@ describe("RL-19: the classes the docs name are in a manifest", () => {
   });
 
   it("every class a page names in <code> is in the manifest of some package", () => {
-    const missing = named.filter((n) => !everything.has(n.text.slice(1)) && !HOOKS_WITHOUT_A_RULE.includes(n.text.slice(1))).map((n) => `${n.route} ${n.text}`);
+    const missing = named.filter((n) => !everything.has(n.text.slice(1))).map((n) => `${n.route} ${n.text}`);
     expect(missing).toEqual([]);
   });
 
-  it("the hooks without a rule are still without one", () => {
-    expect(HOOKS_WITHOUT_A_RULE.filter((name) => everything.has(name))).toEqual([]);
+  // The markup a reader is told to copy: every class="…" of a page, in the live
+  // demo and in the escaped `#markup` blocks (&quot;). Only LUZ's namespace is
+  // judged: `docs-*` and the like are the site's own, not LUZ's.
+  const pages = walk(`${root}apps/docs/pages`).filter((f) => f.endsWith(".html"));
+  const inMarkup = new Map();
+  for (const file of pages) {
+    const text = readFileSync(file, "utf-8").replace(/&quot;/g, '"').replace(/&#0?39;|&apos;/g, "'");
+    for (const m of text.matchAll(/\bclass\s*=\s*"([^"]*)"/g)) {
+      for (const token of m[1].split(/\s+/)) {
+        if (!NAMESPACE.test(token) || /[^a-z0-9_-]/.test(token)) continue;
+        if (!inMarkup.has(token)) inMarkup.set(token, new Set());
+        inMarkup.get(token).add(file.slice(root.length));
+      }
+    }
+  }
+
+  it("reads the markup of the pages at all", () => {
+    expect(pages.length).toBeGreaterThan(90);
+    expect(inMarkup.size).toBeGreaterThan(200);
+  });
+
+  it("every luz-, o-, u- and is- class in the markup of a page is in the manifest of some package", () => {
+    const missing = [...inMarkup].filter(([token]) => !everything.has(token)).map(([token, files]) => `${token} in ${[...files].join(", ")}`);
+    expect(missing).toEqual([]);
   });
 });
 

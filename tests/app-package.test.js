@@ -45,10 +45,11 @@ describe("@luz-ds/app: the package", () => {
     expect(manifest.repository?.directory).toBe("packages/app");
   });
 
-  it("exports ./css, ./css/min, ./components/* and ./package.json, and nothing else", () => {
+  it("exports ./css, ./css/min, ./classes.json, ./components/* and ./package.json, and nothing else", () => {
     expect(manifest.exports).toEqual({
       "./css": "./dist/app.css",
       "./css/min": "./dist/app.min.css",
+      "./classes.json": "./dist/classes.json",
       "./components/*": "./dist/components/*",
       "./package.json": "./package.json",
     });
@@ -91,6 +92,7 @@ describe("@luz-ds/app: the package", () => {
       "README.md",
       "dist/app.css",
       "dist/app.min.css",
+      "dist/classes.json",
       ...COMPONENTS.flatMap((c) => [`dist/components/${c}.css`, `dist/components/${c}.min.css`]),
       "package.json",
     ].sort();

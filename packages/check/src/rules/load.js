@@ -29,7 +29,7 @@ const IN_DEV = /\/packages\/(tokens|core|site|landing|cms|app)\//;
 const FILE = /^(?:luz(-tokens)?|(site|landing|cms|app))(?:\.min)?\.css$/;
 const IMPORT = /@import\s+(?:url\(\s*)?["']?([^"')\s;]+)/g;
 const LAYER = /@layer\s+([^;{}@]{0,512})([;{}])/g;
-const STYLESHEET = /(?:^|\s)stylesheet(?:\s|$)/i;
+export const STYLESHEET = /(?:^|\s)stylesheet(?:\s|$)/i;
 const REMOTE = /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i;
 // tokens, then core, then site, then the kinds in any order
 const ORDER = ["tokens", "core", "site"];
@@ -45,7 +45,7 @@ function classify(url) {
 }
 
 /** The text without its comments, in one pass. */
-function withoutComments(text) {
+export function withoutComments(text) {
   let out = "";
   for (let from = 0; ; ) {
     const open = text.indexOf("/*", from);
@@ -62,7 +62,7 @@ export function importsOf(css) {
 }
 
 /** The path in the run a URL written in `from` points at, or null (a remote one, or none). */
-function runPath(from, url) {
+export function runPath(from, url) {
   const target = url.split(/[?#]/)[0];
   if (target === "" || REMOTE.test(target)) return null;
   return posix.normalize(target.startsWith("/") ? target.slice(1) : posix.join(posix.dirname(from), target));

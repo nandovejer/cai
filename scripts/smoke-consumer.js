@@ -422,7 +422,7 @@ if (existsSync(checkFile)) {
   // Steps 9, 10 and 11 of .claude/plans/specs/f5-ai-ready.md add their rule
   // ids to IMPLEMENTED_RULES, and nothing else in this block changes. Step 9:
   // the rules of names (classes, elements, attributes). Step 10: loading,
-  // misuse and accessibility.
+  // misuse and accessibility. Step 11: theme colours and the CSS warnings.
   const IMPLEMENTED_RULES = new Set([
     "parse/error",
     "class/unknown",
@@ -442,6 +442,15 @@ if (existsSync(checkFile)) {
     "misuse/state-class",
     "a11y/role-on-generic",
     "a11y/link-no-href",
+    "theme/contrast",
+    "theme/unreadable",
+    "theme/advisory",
+    "css/literal-colour",
+    "css/literal-size",
+    "css/knob-in-px",
+    "css/important",
+    "css/private-token",
+    "css/unknown-token",
   ]);
   const STEP_OF = [
     [/^(?:class|element|attr)\//, "step 9"],

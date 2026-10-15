@@ -19,7 +19,7 @@
  * (^[A-Za-z0-9_:.\-/]{1,64}$) or a #rrggbb colour; anything else is written
  * `<an unreadable name>`. A rule gives a list of element names as an array
  * (`hosts: ["a", "button"]`), written `<a>, <button>`. A message that would
- * pass MAX_MESSAGE shortens its values (with …) until it fits, so the
+ * pass MAX_MESSAGE shortens its longest values (with …) until it fits, so the
  * fix clause is never the part that is cut.
  *
  * A rule that counts files has a `:one` entry that `message()` takes when the
@@ -122,6 +122,11 @@ export const MESSAGES = {
     template: "{mode}: {foreground} on {background} is {ratio}:1, needs {minimum}:1 ({kind}); change one of the two",
     sample: { mode: "light", foreground: "--luz-text-muted", background: "--luz-surface", ratio: "3.1", minimum: "4.5", kind: "text" },
   },
+  "theme/contrast:layers": {
+    severity: "block",
+    template: "{mode}: {foreground} on {background} is {ratio}:1, needs {minimum}:1; change one of the two",
+    sample: { mode: "light", foreground: "--luz-color-danger", background: "color-danger-bg/surface-page", ratio: "3.4", minimum: "4.5" },
+  },
   "theme/unreadable": {
     severity: "block",
     template: "{token} is set to a colour the check cannot read; write the sRGB value as #rrggbb",
@@ -194,6 +199,11 @@ export const MESSAGES = {
     template: "{property} is set to {value}; use a token, such as var({token})",
     sample: { property: "color", value: "#1a5fb4", token: "--luz-brand-fill" },
   },
+  "css/literal-colour:none": {
+    severity: "warn",
+    template: "{property} is set to a literal colour; use a token, such as var({token})",
+    sample: { property: "background", token: "--luz-surface" },
+  },
   "css/literal-size": {
     severity: "warn",
     template: "{property} is {value}; use a --luz-space-*, --luz-text-* or --luz-radius-* token",
@@ -233,6 +243,21 @@ export const MESSAGES = {
     severity: "warn",
     template: "{source} order is used for the theme files; use --theme to set the order",
     sample: { source: "alphabetical" },
+  },
+  "theme/advisory:unplaced": {
+    severity: "warn",
+    template: "{token} is set where no colour mode can place it; move it to :root or a [data-theme] rule",
+    sample: { token: "--luz-text-primary" },
+  },
+  "theme/advisory:wide": {
+    severity: "warn",
+    template: "{token} is a wide-gamut colour in @supports, which is not measured; see the contrast docs for what is read",
+    sample: { token: "--luz-text-secondary" },
+  },
+  "theme/advisory:limit": {
+    severity: "warn",
+    template: "{count} custom themes past the first {limit} are not measured; remove the ones you do not ship",
+    sample: { count: "40", limit: "16" },
   },
 };
 
@@ -281,6 +306,8 @@ export function docsUrl(rule) {
   return `${SITE_URL}${DOCS[base]}`;
 }
 
+const SPLIT = new Map(); // key -> { parts, fixed }: a template split once
+
 /** One value, as it may be echoed. */
 function echoed(value) {
   if (Array.isArray(value)) return value.map((item) => `<${echoName(item)}>`).join(", ");
@@ -289,10 +316,11 @@ function echoed(value) {
   return echoName(text);
 }
 
-/** Cut each value to an equal share of `room` characters, so the fix clause is never the part that goes. */
+/** Cut the longest values first, so a short name is never touched while a long one has characters to give. */
 function fit(values, room) {
-  const share = Math.max(2, Math.floor(room / values.length));
-  return values.map((value) => (value.length > share ? `${value.slice(0, share - 1)}…` : value));
+  let limit = Math.max(...values.map((value) => value.length));
+  while (limit > 2 && values.reduce((sum, value) => sum + Math.min(value.length, limit), 0) > room) limit--;
+  return values.map((value) => (value.length > limit ? `${value.slice(0, limit - 1)}…` : value));
 }
 
 /**
@@ -305,17 +333,22 @@ export function message(key, vars) {
   const given = vars && typeof vars === "object" ? vars : {};
   // A count of 1 reads in the singular, from the `:one` entry of the same rule
   const one = `${key}:one`;
-  const { template } = MESSAGES[given.count === "1" && Object.hasOwn(MESSAGES, one) ? one : key];
-  const parts = template.split(/\{([A-Za-z][A-Za-z0-9]*)\}/);
-  // parts alternates text, name, text, name…
+  const chosen = given.count === "1" && Object.hasOwn(MESSAGES, one) ? one : key;
+  let known = SPLIT.get(chosen);
+  if (known === undefined) {
+    // parts alternates text, name, text, name…; the text is what is fixed
+    const parts = MESSAGES[chosen].template.split(/\{([A-Za-z][A-Za-z0-9]*)\}/);
+    known = { parts, fixed: parts.reduce((sum, text, i) => (i % 2 === 0 ? sum + text.length : sum), 0) };
+    SPLIT.set(chosen, known);
+  }
+  const { parts, fixed } = known;
   let values = [];
   for (let i = 1; i < parts.length; i += 2) {
     const name = parts[i];
     if (!Object.hasOwn(given, name) || given[name] === undefined || given[name] === null) throw new Error(`the message ${key} needs the variable ${name}`);
     values.push(echoed(given[name]));
   }
-  const fixed = parts.reduce((sum, text, i) => (i % 2 === 0 ? sum + text.length : sum), 0);
-  if (fixed + values.reduce((sum, value) => sum + value.length, 0) > MAX_MESSAGE) values = fit(values, Math.max(values.length, MAX_MESSAGE - fixed));
+  if (fixed + values.reduce((sum, value) => sum + value.length, 0) > MAX_MESSAGE) values = fit(values, MAX_MESSAGE - fixed);
   let out = "";
   for (let i = 0; i < parts.length; i++) out += i % 2 === 0 ? parts[i] : values[(i - 1) / 2];
   return out.length > MAX_MESSAGE ? `${out.slice(0, MAX_MESSAGE - 1)}…` : out;

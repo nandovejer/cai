@@ -13,7 +13,12 @@
  *   createBudget()            how many suggestions are worked out: a finding
  *                             past the caps of report.js is never printed, so
  *                             it does not need its nearest name
+ *   toHex(value)              a colour the engine of tokens reads, as #rrggbb;
+ *                             null for what has no such form (translucent,
+ *                             not an sRGB notation): the one way a colour of a
+ *                             file is ever written in a message
  */
+import { parseColor } from "../../../tokens/lib/contrast.js";
 import { echoName } from "../sanitize.js";
 
 /** Per file and per rule, and in all: the caps of report.js, which never print more. */
@@ -59,4 +64,13 @@ export function createBudget() {
       return true;
     };
   };
+}
+
+export function toHex(value) {
+  try {
+    const { r, g, b, a } = parseColor(value);
+    return a === 1 ? `#${[r, g, b].map((n) => Math.round(n).toString(16).padStart(2, "0")).join("")}` : null;
+  } catch {
+    return null;
+  }
 }

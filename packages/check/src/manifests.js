@@ -25,9 +25,16 @@
  *              (what the manifest says; `hosts` is an array of selectors, a
  *              tag with at most one attribute test, or undefined)
  *   tags       Map tag -> { attributes: Set, package }; `tagNames` the tags, sorted
+ *   properties Map --luz-* name -> "root" | "component" (root wins when two
+ *              packages say both); `publicNames` the root ones, sorted
  *   hooks      Set of the data-luz-* names LUZ reads (manifest hooks plus
  *              every attribute of every element)
  *   versions   Map package short name -> { version, source }
+ *
+ * LUZ's tokens for the theme rules are a file, not a package: tokensFor(dir)
+ * is the dist/tokens.css of the nearest node_modules/@luz-ds/tokens that names
+ * itself (at most 1 MiB, read as data), else data/tokens/tokens.css of the
+ * snapshot, else null.
  *
  * No network, no environment, no module loading: node:fs and node:path only.
  */
@@ -41,6 +48,8 @@ const MAX_CLASSES = 50000;
 const MAX_ELEMENTS = 2000;
 const MAX_ATTRIBUTES = 1000;
 const MAX_HOOKS = 2000;
+const MAX_PROPERTIES = 20000;
+const MAX_TOKENS_BYTES = 1024 * 1024;
 
 const NAME = /^[A-Za-z0-9_:.\-/]{1,64}$/;
 const TAG = /^[a-z][a-z0-9-]{0,63}$/;
@@ -77,12 +86,14 @@ function parseClasses(data, pkg) {
     classes.push({ name: entry.name, block: entry.block, kind: entry.kind, defined: entry.defined, modifier: entry.modifier, part: entry.part, hosts });
   }
   if (data.properties !== undefined && !Array.isArray(data.properties)) return null;
+  // An entry that is not a name with a scope is left out; the rest of the manifest stands
+  const properties = (data.properties ?? []).slice(0, MAX_PROPERTIES).filter((entry) => isObject(entry) && isName(entry.name) && (entry.scope === "root" || entry.scope === "component"));
   let hooks = [];
   if (data.hooks !== undefined) {
     if (!Array.isArray(data.hooks) || data.hooks.length > MAX_HOOKS || !data.hooks.every((hook) => typeof hook === "string" && HOOK.test(hook))) return null;
     hooks = data.hooks;
   }
-  return { version: data.version, classes, hooks };
+  return { version: data.version, classes, properties, hooks };
 }
 
 /** A Custom Elements Manifest (or its reduction) -> [{ tag, attributes: string[] }] or null. */
@@ -133,6 +144,12 @@ function readPackage(classesPath, elementsPath, pkg) {
   return { ...classes, elements };
 }
 
+/** The text of a file at most `max` bytes long, or null. */
+function readText(path, max) {
+  const read = readLimited(path, max);
+  return read.reason === undefined ? read.text : null;
+}
+
 /** Group what each package says into the facts a rule reads. */
 function buildWorld(parts) {
   const classes = new Set();
@@ -143,6 +160,7 @@ function buildWorld(parts) {
   const packages = [];
   const names = { luz: [], o: [], u: [] };
   const info = new Map();
+  const properties = new Map();
   for (const part of parts) {
     packages.push({ package: `@luz-ds/${part.name}`, version: part.version, source: part.source });
     versions.set(part.name, { version: part.version, source: part.source });
@@ -157,6 +175,7 @@ function buildWorld(parts) {
       if (block !== undefined) blocks.add(block);
     }
     for (const hook of part.hooks) hooks.add(hook);
+    for (const { name, scope } of part.properties) if (scope === "root" || !properties.has(name)) properties.set(name, scope);
     for (const { tag, attributes } of part.elements) {
       let known = tags.get(tag);
       if (known === undefined) {
@@ -170,7 +189,8 @@ function buildWorld(parts) {
     }
   }
   for (const list of Object.values(names)) list.sort();
-  return { packages, classes, blocks, tags, tagNames: [...tags.keys()].sort(), hooks, versions, byPrefix: names, info };
+  const publicNames = [...properties].filter(([, scope]) => scope === "root").map(([name]) => name).sort();
+  return { packages, classes, blocks, tags, tagNames: [...tags.keys()].sort(), hooks, versions, byPrefix: names, info, properties, publicNames };
 }
 
 /**
@@ -233,5 +253,25 @@ export function createFacts({ data }) {
     return world;
   }
 
-  return { forDirectory };
+  const tokenFiles = new Map(); // absolute package folder -> text | null
+
+  /** LUZ's tokens as text, for the theme rules: the project's own first, unless `bundled`. -> { text, source } | null */
+  function tokensFor(directory, bundled = false) {
+    for (let current = directory; !bundled; ) {
+      const folder = join(current, "node_modules", "@luz-ds", "tokens");
+      if (!tokenFiles.has(folder)) {
+        const named = readJson(join(folder, "package.json"), MAX_PACKAGE_JSON_BYTES);
+        tokenFiles.set(folder, isObject(named) && named.name === "@luz-ds/tokens" ? readText(join(folder, "dist", "tokens.css"), MAX_TOKENS_BYTES) : null);
+      }
+      const text = tokenFiles.get(folder);
+      if (text !== null) return { text, source: "node_modules" };
+      const parent = dirname(current);
+      if (parent === current) break;
+      current = parent;
+    }
+    const text = typeof data === "string" && data !== "" ? readText(join(data, "tokens", "tokens.css"), MAX_TOKENS_BYTES) : null;
+    return text === null ? null : { text, source: "bundled" };
+  }
+
+  return { forDirectory, tokensFor };
 }

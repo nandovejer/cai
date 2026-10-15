@@ -15,7 +15,9 @@
  *       totals before the caps, so a finding that was cut still counts.
  *   formatText(report), formatJson(report)
  *       `mark file:line:column rule  message`, then the summary line; or the
- *       object with two-space indentation and a final newline.
+ *       object with two-space indentation and a final newline. A finding
+ *       with `details.overrides` (theme/contrast, theme/unreadable) is
+ *       followed by one line for each: `    token: #rrggbb is set in file:line`.
  *
  * The text never says a page is accessible or that it passes: it says what
  * it found in the files it read.
@@ -66,10 +68,15 @@ function capped(all) {
 }
 
 export function buildReport({ version, files = [], manifests = [], findings = [], skipped = [], config = {}, ignored = 0, strict = false }) {
-  const shown = (path) => displayPath(path);
+  const escaped = new Map(); // a path is escaped once, however many findings name it
+  const shown = (path) => {
+    let text = escaped.get(path);
+    if (text === undefined) escaped.set(path, (text = displayPath(path)));
+    return text;
+  };
   const skippedList = skipped.map(({ file, reason }) => ({ file: shown(file), reason })).sort((a, b) => byText(a.file, b.file) || byText(a.reason, b.reason));
   const all = [
-    ...findings.map((found) => ({ ...found, file: shown(found.file) })),
+    ...findings.map((found) => (shown(found.file) === found.file ? found : { ...found, file: shown(found.file) })),
     ...skippedList.map(({ file, reason }) => finding("file/skipped", { file, vars: { reason } })),
   ];
   const blocking = all.filter((found) => found.severity === "block").length;
@@ -93,9 +100,12 @@ const MARK = { block: "✗", warn: "!" };
 const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
 
 export function formatText(report) {
-  const lines = report.findings.map((found) => {
+  const lines = report.findings.flatMap((found) => {
     const position = found.line === null ? "" : found.column === null ? `:${found.line}` : `:${found.line}:${found.column}`;
-    return `${MARK[found.severity]} ${found.file}${position} ${found.rule}  ${found.message}`;
+    const head = `${MARK[found.severity]} ${found.file}${position} ${found.rule}  ${found.message}`;
+    // A theme finding goes on to the overrides that made it, one line each, with the colour when it may be written
+    const places = (found.details?.overrides ?? []).map((o) => `    ${o.token}${o.value === undefined || o.value === null ? "" : `: ${o.value}`} is set in ${o.file}:${o.line}`);
+    return [head, ...places];
   });
   const { summary } = report;
   const parts = [`${report.ok ? "✓" : "✗"} ${summary.blocking} blocking and ${plural(summary.warnings, "warning")} in ${plural(summary.files, "file")}`];

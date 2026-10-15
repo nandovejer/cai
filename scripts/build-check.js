@@ -22,11 +22,16 @@
  *   packages/check/dist/data/index.json                    the six packages and their versions
  *   packages/check/dist/data/<pkg>/classes.json            tokens, core, site, landing, cms, app
  *   packages/check/dist/data/<core|site>/custom-elements.json
+ *   packages/check/dist/data/tokens/tokens.css             LUZ's colour tokens, for the theme rules
  *
  * Each is what the package's own dist/ says, reduced to what a rule reads
  * (names, kinds, definitions, the BEM split, hooks; tags and attribute names):
- * no layer, no file, no text. The same bytes on every build, no date and no
- * path. `pnpm build` runs the packages first, so their manifests are there.
+ * no layer, no file, no text. tokens.css is dist/tokens.css of @luz-ds/tokens
+ * reduced to the declarations the contrast engine can read (the colours, whose
+ * var() chains end in one), under the selectors it understands, with no
+ * comment: the verdicts are those of the whole file. The same bytes on every
+ * build, no date and no path. `pnpm build` runs the packages first, so their
+ * manifests are there.
  *
  * buildCheck({ outdir }) writes <outdir>/luz-check.js and <outdir>/data/ and
  * returns esbuild's metafile, so a test reads exactly what `pnpm build` would
@@ -39,6 +44,8 @@ import { chmodSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync }
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as esbuild from "esbuild";
+import { colourTokens } from "../packages/check/src/rules/theme.js";
+import { parseRules } from "../packages/tokens/lib/theme.js";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const entry = resolve(repoRoot, "packages", "check", "src", "main.js");
@@ -93,6 +100,28 @@ function format(manifest) {
   return `{\n${lines.join(",\n")}\n}\n`;
 }
 
+/**
+ * dist/tokens.css reduced to what the contrast engine reads: the declarations
+ * that hold a colour, in the rules that apply to a mode, each rule once in its
+ * place. A selector with a function in it (the no-JavaScript :is(:root:has(…))
+ * path) is one the engine does not read; the layer and @supports around a rule
+ * are ones it takes as true.
+ */
+function reduceTokens(css) {
+  const rules = parseRules(css);
+  const colours = colourTokens(rules);
+  const blocks = [];
+  for (const rule of rules) {
+    const declarations = rule.declarations.filter(({ name }) => colours.has(name));
+    const selectors = rule.selectors.filter((selector) => !selector.includes("("));
+    if (declarations.length === 0 || selectors.length === 0) continue;
+    let block = `${selectors.join(",")}{\n${declarations.map(({ name, value }) => `${name}:${value};`).join("\n")}\n}`;
+    for (const condition of rule.conditions.filter((c) => !/^@(?:layer|supports)\b/i.test(c)).reverse()) block = `${condition}{\n${block}\n}`;
+    blocks.push(block);
+  }
+  return `${blocks.join("\n")}\n`;
+}
+
 /** Write <folder>/data/: the snapshot of this release. */
 function writeData(folder) {
   const data = resolve(folder, "data");
@@ -107,6 +136,7 @@ function writeData(folder) {
     const elements = resolve(dist, "custom-elements.json");
     if (existsSync(elements)) writeFileSync(resolve(data, name, "custom-elements.json"), `${JSON.stringify(reduceElements(readJson(elements)), null, 2)}\n`, "utf-8");
   }
+  writeFileSync(resolve(data, "tokens", "tokens.css"), reduceTokens(readFileSync(resolve(repoRoot, "packages", "tokens", "dist", "tokens.css"), "utf-8")), "utf-8");
   writeFileSync(resolve(data, "index.json"), `${JSON.stringify({ schema: 1, packages }, null, 2)}\n`, "utf-8");
 }
 

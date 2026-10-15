@@ -131,13 +131,13 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `cms` CSS | — | ≤ 2 kB | 2 kB | 4 kB |
 | `app` CSS | — | ≤ 1 kB | 1 kB | 2 kB |
 | Each docs page, HTML uncompressed | — | ≤ 60 kB | 60 kB | 80 kB |
-| `check` CLI bundle, `luz-check.js` (min+gzip; the row passes until `packages/check` has a `package.json`) | — | ≤ 16 kB | 16 kB | 24 kB |
+| `check` CLI bundle, `luz-check.js` (gzip, not minified so it can be read) | — | ≤ 36 kB | 36 kB | 40 kB |
 | `llms.txt` and `llms-full.txt`, each uncompressed | — | ≤ 384 kB | 384 kB | 448 kB |
 | Each manifest on Pages (`docs/manifests/**/*.json`), uncompressed | — | ≤ 48 kB | 48 kB | 64 kB |
 
 Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).
 
-The last three rows are the AI-ready artifacts. The CLI bundle is measured min+gzip like the other JavaScript; `llms-full.txt` and each manifest are measured as the raw bytes of the built `docs/**/*.txt` and `docs/manifests/**/*.json`. Until `packages/check` has a `package.json`, the CLI row passes with a note; after that a missing `dist/luz-check.js` fails like any other file.
+The last three rows are the AI-ready artifacts. The CLI bundle is measured gzipped but not minified, because a tool that reads your files should be readable; it is a command you run, no page downloads it. Its row was fixed once, on 2026-10-15, from the measured 33.9 kB of the first complete version (it had been an estimate before anything shipped) and is never raised afterwards. `llms-full.txt` and each manifest are measured as the raw bytes of the built `docs/**/*.txt` and `docs/manifests/**/*.json`.
 
 ## 9. Evidence, transparency and stability
 

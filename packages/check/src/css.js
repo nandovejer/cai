@@ -9,6 +9,10 @@
  *   readCss(text, file = "<css>", { strict = false } = {})
  *     -> { classes:    [{ name, defined, layer, line, column }],
  *          properties: [{ name, scope, layer, line, column }],
+ *          declarations: [start, colon, end, …]  three offsets into `text` for
+ *                       each declaration (the name starts at `start`, its
+ *                       value runs from `colon + 1` to `end`), in reading
+ *                       order, for the CSS warnings of rules/css.js
  *          findings:   [{ rule: "parse/error", line, column, message }] }
  *
  * Strict (the build of the manifests) throws a CssError, `file:line:column`,
@@ -30,6 +34,7 @@
  *
  * Messages are fixed text: a finding never quotes the source (a file is data,
  * not instructions). One pass over the text; no recursion deeper than the cap.
+ * A declaration is recorded as offsets, never as text: the value is not kept.
  */
 import { lineAt, lineStarts } from "./html.js";
 
@@ -107,6 +112,7 @@ export function readCss(text, file = "<css>", { strict = false } = {}) {
   const classes = new Map();
   const properties = new Map();
   const findings = [];
+  const declarations = [];
   const HALT = new Halt();
   const DECLS = { kind: "decls", layer: null, sel: null };
   let pos = 0;
@@ -500,12 +506,23 @@ export function readCss(text, file = "<css>", { strict = false } = {}) {
     return text.charCodeAt(i) === COLON;
   }
 
+  /** Record the declaration text[from, to): offsets of its name, its colon and its end. */
+  function declare(from, to) {
+    for (let i = from; i < to; i++) {
+      if (text.charCodeAt(i) === COLON) {
+        declarations.push(from, i, to);
+        return;
+      }
+    }
+  }
+
   function customProperty(ctx) {
     const start = pos;
     const end = identEnd(pos);
     addProperty(identText(start, end), start, ctx);
     pos = end;
     const term = scanUntil(end, true);
+    declare(start, pos);
     if (term === SEMI) pos++;
   }
 
@@ -543,6 +560,7 @@ export function readCss(text, file = "<css>", { strict = false } = {}) {
     const start = pos;
     const term = scanUntil(pos, false);
     if (term !== OPEN_BRACE) {
+      if (ctx.kind !== "rules") declare(start, pos);
       if (term === SEMI) pos++;
       return;
     }
@@ -577,5 +595,5 @@ export function readCss(text, file = "<css>", { strict = false } = {}) {
   } catch (error) {
     if (error !== HALT) throw error;
   }
-  return { classes: [...classes.values()], properties: [...properties.values()], findings };
+  return { classes: [...classes.values()], properties: [...properties.values()], declarations, findings };
 }

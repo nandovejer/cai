@@ -1,0 +1,5 @@
+---
+"@luz-ds/check": patch
+---
+
+`luz-check` adds the theme rules and the CSS warnings. `theme/contrast` runs the contrast check of `luz-tokens check-contrast` over the stylesheets that set `--luz-*` colours (and the ones `--theme` or `themes` name), in light, dark, high contrast and each custom theme, and blocks a pair under its minimum with the overrides that made it; `theme/unreadable` blocks a colour it cannot read (`oklch()`, `color-mix()`, a name) and says to write `#rrggbb`; `theme/advisory` warns about colours no mode can place, about a wide-gamut override in `@supports`, which is not measured, and about the order of the theme files. The warnings `css/literal-colour`, `css/literal-size`, `css/knob-in-px`, `css/important`, `css/private-token` and `css/unknown-token` read every stylesheet. LUZ's tokens come from your `node_modules/@luz-ds/tokens` or, for a project that uses a CDN, from the colour tokens of this release that the package carries as data. An internal error now prints one fixed line.

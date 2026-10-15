@@ -3,7 +3,6 @@
  * 5.5, 5.6). One module per family of rules, each a function of a context to
  * findings; the ids, the severity and the words are messages.js.
  *
- *   RULES                  the ids this version implements, by family
  *   namesLuz(parsed)       does this file name anything of LUZ's? A file that
  *                          does not is judged by no rule of names and makes
  *                          the tool read no manifest
@@ -18,13 +17,6 @@ import { elementRules } from "./element.js";
 import { stylesheetClasses, unknownClasses } from "./class.js";
 import { loadRules } from "./load.js";
 import { misuseRules } from "./misuse.js";
-
-export const RULES = Object.freeze({
-  class: ["class/unknown", "class/unknown-in-css", "class/reserved-prefix"],
-  element: ["element/unknown", "element/unknown-attribute", "attr/unknown-hook"],
-  load: ["load/tokens-missing", "load/package-missing", "load/layer-statement", "load/order", "load/no-stylesheet"],
-  misuse: ["misuse/host-element", "misuse/modifier-alone", "misuse/part-orphan", "misuse/state-class", "a11y/role-on-generic", "a11y/link-no-href"],
-});
 
 const LUZ_FILE = /(?:^|[/@])luz[-.a-z]*\.(?:css|js)(?:[?#]|$)/i;
 const PREFIXED = /(?:^|[ \t\n\r\f])(?:luz|o|u)-/;

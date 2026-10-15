@@ -17,7 +17,8 @@
  * exit 2 and one sanitised line on stderr, never a stack trace.
  *
  * The rules are steps 9-11 of f5-ai-ready.md: those of names (classes,
- * elements, attributes) are rules/, the facts they read are manifests.js, and
+ * elements, attributes), loading, misuse, the warnings about a stylesheet and
+ * the theme rules are rules/, the facts they read are manifests.js, and
  * parseFile() reports what the readers of html.js and css.js report
  * (parse/error). Paths, limits and symlinks are walk.js; the words are
  * messages.js; the escaping of anything that came from a file is sanitize.js.
@@ -30,9 +31,11 @@ import { readCss } from "./css.js";
 import { scan } from "./html.js";
 import { PACKAGES as PACKAGE_ORDER, createFacts } from "./manifests.js";
 import { buildReport, finding, formatJson, formatText } from "./report.js";
-import { documentOf, importsOf, reachesLuz } from "./rules/load.js";
+import { documentOf, importsOf, reachesLuz, runPath, STYLESHEET } from "./rules/load.js";
+import { cssRules } from "./rules/css.js";
 import { checkParsed, namesLuz } from "./rules/index.js";
 import { createBudget } from "./rules/shared.js";
+import { themeFindings } from "./rules/theme.js";
 import { cleanText, displayPath } from "./sanitize.js";
 import { collect, readLimited } from "./walk.js";
 
@@ -120,7 +123,7 @@ function parseFile(file) {
   if (file.kind === "css") {
     const css = readCss(file.text, file.path);
     const errors = css.findings.map((problem) => ({ line: problem.line, column: problem.column, kind: "CSS" }));
-    return { path: file.path, kind: file.kind, css, records: [], errors };
+    return { path: file.path, kind: file.kind, text: file.text, css, records: [], errors };
   }
   const records = [];
   const errors = [];
@@ -131,7 +134,7 @@ function parseFile(file) {
     }
     records.push(record);
   }
-  return { path: file.path, kind: file.kind, css: null, records, errors };
+  return { path: file.path, kind: file.kind, text: file.text, css: null, records, errors };
 }
 
 /** The classes some stylesheet of the run defines: a .css file or a <style> of a page. Read once, on the first need. */
@@ -217,7 +220,14 @@ function execute(argv, env) {
   for (const theme of themes) {
     if (!theme.toLowerCase().endsWith(".css")) return usageError(`Theme ${shown(theme)} is not a .css file.`);
   }
-  const themed = themes.length > 0 ? collect(themes, { cwd, ignore: [] }) : { files: [], skipped: [], missing: [], ignored: 0 };
+  // One at a time: the order they are named in is the load order
+  const themed = { files: [], skipped: [], missing: [] };
+  for (const theme of themes) {
+    const one = collect([theme], { cwd, ignore: [] });
+    themed.files.push(...one.files);
+    themed.skipped.push(...one.skipped);
+    themed.missing.push(...one.missing);
+  }
   if (themed.missing.length > 0) return usageError(`No theme file ${themed.missing.map((input) => shown(input)).join(", ")}.`);
 
   const byPath = new Map();
@@ -239,6 +249,24 @@ function execute(argv, env) {
   const manifests = [];
   const seen = new Set();
   const findings = [];
+  // The facts of the packages a folder sees, listed once in the report; null when no manifest is to be had
+  let missing = false;
+  const worldOf = (directory) => {
+    const world = facts.forDirectory(directory);
+    if (world.packages.length === 0) {
+      missing = true;
+      return null;
+    }
+    for (const entry of world.packages) {
+      const key = `${entry.package} ${entry.version} ${entry.source}`;
+      if (!seen.has(key)) {
+        seen.add(key);
+        manifests.push(entry);
+      }
+    }
+    return world;
+  };
+  const linked = []; // the stylesheets the pages of the run link, for the order of the theme files
   // load/no-stylesheet: the pages that name LUZ (a fragment or a file of --ext has no head to link from), and whether any file of the run brings a stylesheet
   const named = [];
   let reached = false;
@@ -248,24 +276,35 @@ function execute(argv, env) {
       const key = file.kind === "template" ? "parse/error:template" : "parse/error";
       findings.push(finding(key, { file: file.path, line: error.line, column: error.column, vars: { kind: error.kind } }));
     }
+    const directory = dirname(resolve(cwd, file.path));
+    const take = startFile();
     let doc = null;
-    if (file.kind === "css") reached = reached || reachesLuz(file.path, imports);
-    else {
+    if (file.kind === "css") {
+      reached = reached || reachesLuz(file.path, imports);
+      // The warnings about a stylesheet are for any stylesheet, whether it names LUZ or not
+      for (const found of cssRules({ file: file.path, css: parsed.css, text: file.text, world: () => worldOf(directory), take })) findings.push(found);
+      if (missing) return usageError(NO_MANIFEST);
+    } else {
       doc = documentOf(parsed.records, file.path, imports);
       reached = reached || doc.bundled || doc.dynamic || doc.inline || doc.entries.length > 0;
+      for (const record of parsed.records) {
+        const rel = record.name === "link" ? record.attrs.get("rel") : undefined;
+        const href = rel !== undefined && STYLESHEET.test(rel.value) ? record.attrs.get("href") : undefined;
+        const target = href === undefined ? null : runPath(file.path, href.value);
+        if (target !== null) linked.push(target);
+      }
     }
     if (!namesLuz(parsed)) continue;
     if (doc !== null && doc.page && file.kind === "html" && parsed.errors.length === 0) named.push(file.path);
-    const world = facts.forDirectory(dirname(resolve(cwd, file.path)));
-    if (world.packages.length === 0) return usageError(NO_MANIFEST);
-    for (const entry of world.packages) {
-      const key = `${entry.package} ${entry.version} ${entry.source}`;
-      if (!seen.has(key)) {
-        seen.add(key);
-        manifests.push(entry);
-      }
-    }
-    for (const found of checkParsed(parsed, { world, defined, take: startFile(), doc })) findings.push(found);
+    const world = worldOf(directory);
+    if (world === null) return usageError(NO_MANIFEST);
+    for (const found of checkParsed(parsed, { world, defined, take, doc })) findings.push(found);
+  }
+  // The theme rules read the stylesheets together, in load order
+  const sheets = files.filter((file) => file.kind === "css");
+  if (sheets.length > 0) {
+    const given = [...new Set(themed.files.map((file) => file.path))];
+    for (const found of themeFindings({ files: sheets, named: given, linked, tokensFor: (path, bundled) => facts.tokensFor(dirname(resolve(cwd, path)), bundled) })) findings.push(found);
   }
   if (named.length > 0 && !reached) findings.push(finding("load/no-stylesheet", { file: named[0], vars: { count: String(named.length) } }));
   // A warning a config switched off is not reported; a blocking rule cannot be switched off
@@ -295,7 +334,7 @@ export function run(argv, env) {
     return execute(argv, env);
   } catch (error) {
     if (error instanceof ConfigError) return usageError(cleanText(error.message, 200));
-    const detail = error && typeof error.message === "string" ? cleanText(error.message, 80) : "no detail";
-    return usageError(`luz-check stopped (${detail}); no file was checked.`);
+    // One fixed line: what the error said may hold a path or text from a file
+    return usageError("luz-check stopped on an internal error; no file was checked.");
   }
 }

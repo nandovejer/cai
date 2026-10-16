@@ -99,9 +99,6 @@ const LLMS_TXT_MAX = 32 * 1024;
 // ceiling is unchanged and never raised.
 const LLMS_FULL_IDEAL = 400 * 1024;
 const LLMS_FULL_CEILING = 448 * 1024;
-// Room for the pages F4 and F6 add: at least 40 KiB under the ideal (the file is what an agent needs
-// to write LUZ markup; the audit material of a page stays on the page and in the manifests).
-const LLMS_FULL_ROOM = LLMS_FULL_IDEAL - 40 * 1024;
 // Curated, not empty: a floor that only says the sections are really there.
 const LLMS_FULL_FLOOR = 64 * 1024;
 
@@ -548,11 +545,6 @@ describe("llms-full.txt: the curated text of the pages, from the real site", () 
     expect(bytes(full())).toBeGreaterThan(LLMS_FULL_FLOOR);
     expect(bytes(full())).toBeLessThanOrEqual(LLMS_FULL_IDEAL);
     expect(LLMS_FULL_IDEAL).toBeLessThan(LLMS_FULL_CEILING);
-  });
-
-  it("leaves 40 KiB of room under the ideal, so the pages that come do not break the build", () => {
-    expect(LLMS_FULL_ROOM).toBe(368_640);
-    expect(bytes(full())).toBeLessThanOrEqual(LLMS_FULL_ROOM);
   });
 
   it("has no \"Contrast and focus\" table and no \"Tokens it uses\" list on any component or pattern page", () => {

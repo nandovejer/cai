@@ -1,313 +1,49 @@
-# Contributing to LUZ Design System
+# Contributing to LUZ
 
-Thank you for your interest in contributing! LUZ is a community-driven project, and we welcome contributions of all kinds.
+LUZ is open source and welcomes contributions of every size. Be kind: the [Code of Conduct](./CODE_OF_CONDUCT.md) applies everywhere in the project.
 
-## Code of Conduct
+## Use or contribute
 
-- Be respectful and inclusive
-- No harassment, discrimination, or hostile behavior
-- Report issues to maintainers privately if needed
+| I want to | How |
+| --- | --- |
+| Use it | LUZ is MIT: no registration, no telemetry. Install the packages from npm or load them from a CDN ([Get started](https://nandovejer.github.io/luz/docs/get-started/)). |
+| Copy it | Copy any markup, style or script you need, and keep the MIT notice with it. |
+| Fork it | MIT lets you fork, rename and ship it. Keep the notice and say what you changed. |
+| Report a bug | [Open an issue](../../issues/new/choose) with the bug or accessibility form. A security problem goes private: see [SECURITY.md](./SECURITY.md). |
+| Propose a change | Start in [Discussions](../../discussions) with the proposal form: the problem, who it affects, and what the platform already does. |
+| Send a pull request | Commit a failing `test:` first, then the change that makes it pass. Run `pnpm check:all`. |
+| Add a language | One JSON file of strings, never JavaScript, checked by a reader of the language ([the recipe](./AGENTS.md#adding-a-language-to-cores-scripts)). |
+| Review in Safari/Firefox | Pick an issue labelled `needs-browser-review`, test the files it names and write what you see. |
 
-## How to Contribute
+## Licence
 
-### Bug Reports & Issues
+By opening a pull request you license your work under the MIT licence, the same as the project: inbound = outbound. If it includes code you did not write, say where it comes from and under which licence. Only MIT work is accepted: no dual licences, no other licence. AI-written code is welcome if you can explain every line of it and it passes the same checks.
 
-1. Search [existing issues](../../issues) first
-2. Include:
-   - Browser/environment details (OS, browser version)
-   - Steps to reproduce
-   - Expected vs actual behavior
-   - Screenshot if relevant
-3. Use descriptive titles
+## Report a bug
 
-**Example:**
-> Button focus outline missing on dark theme in Safari 15
+1. Search the [existing issues](../../issues) first.
+2. Use the bug form, or the accessibility form when someone cannot use, perceive or understand something.
+3. Give the browser and operating system, the steps to reproduce, what you expected and what happened.
 
-### Feature Requests
+## Propose a change
 
-1. Check [ROADMAP.md](./ROADMAP.md) to ensure it aligns with v1.x goals
-2. Features that require dependencies → likely ❌
-3. Features that add complexity → discuss in issue first
+Proposals go to Discussions, work to the public Project. Say what problem you have, who else has it, and what plain HTML, CSS or the browser already do about it. What a new component has to be, and what we do not accept, is in [dev/DEFINITION-OF-DONE.md](./dev/DEFINITION-OF-DONE.md).
 
-**Good candidates:**
-- ✓ New semantic HTML element styling
-- ✓ Keyboard/a11y improvements
-- ✓ Theme refinements
-- ✓ Documentation
+## Send a pull request
 
-**Poor candidates:**
-- ❌ New JS framework wrapper
-- ❌ Add npm dependencies
-- ❌ 100+ new components
-- ❌ Runtime build steps
+1. Fork the repository and make a branch.
+2. Write the test first and commit it on its own: `test: what the change must do`. It must fail without your change. A bug fix starts with the test that reproduces it.
+3. Make the change that turns it green. Do not edit `dist/` or `docs/` by hand: rebuild them.
+4. Run `pnpm check:all`. It runs every check; fix what it reports.
+5. Add a changeset with `pnpm changeset` when you change a published package.
+6. Open the pull request and tick the boxes of its template. A red line crossed closes it.
 
-### What a new component has to be
+Read [PRINCIPLES.md](./PRINCIPLES.md) for the rules and [AGENTS.md](./AGENTS.md) for the architecture. The details are in:
 
-A component is added to `core` only when it is all of these (the same criteria the GOV.UK Design System uses):
+- [dev/TESTING.md](./dev/TESTING.md): how to test, and the accessibility checks.
+- [dev/DEFINITION-OF-DONE.md](./dev/DEFINITION-OF-DONE.md): what a component, a token and a docs page need before they merge.
+- [VERSIONING.md](./VERSIONING.md): versions, releases and what is supported.
 
-- **Useful:** more than one team needs it, and a native element does not already solve it.
-- **Unique:** no existing component covers the same job. Say which component it makes obsolete, if any.
-- **Usable:** it works with a keyboard, with JavaScript off, with reduced motion and in forced-colors mode.
-- **Consistent:** semantic tokens only, the shared focus ring, the shared wording rules in [PRINCIPLES.md](./PRINCIPLES.md).
+## Questions
 
-Something you needed once belongs in your own app.
-
-### Pull Requests
-
-#### Before You Code
-
-1. Fork the repository
-2. Create a branch: `git checkout -b fix/button-focus` or `feat/details-keyboard`
-3. Make sure you've read [PRINCIPLES.md](./PRINCIPLES.md) (principles and red lines) and [AGENTS.md](./AGENTS.md) (architecture)
-
-#### Development
-
-```bash
-pnpm install
-pnpm dev          # Start Vite dev server
-pnpm lint:css     # Check CSS
-pnpm lint:js      # Check JS
-pnpm test:unit    # Unit tests (when configured)
-pnpm test:ui      # UI, axe, no-JS, reduced motion, forced colors (Chromium, Firefox, WebKit)
-pnpm build        # Full build
-pnpm check:size   # Size budgets (PRINCIPLES.md section 8), including 80 kB per docs page
-pnpm check:strings # Shipped strings (sentence case, no "OK" / "click here")
-pnpm pages:build  # Rebuild the GitHub Pages site in docs/ (commit the result)
-```
-
-The build commands of each layer, for working on LUZ itself (moved here from the documentation site, which is for the people who use LUZ):
-
-```bash
-pnpm tokens:build    # packages/tokens/dist
-pnpm core:build      # packages/core/dist
-pnpm site:build  # packages/site/dist
-pnpm build           # all three, in order
-
-# Checks
-pnpm lint:css
-pnpm lint:js
-pnpm check:contrast
-pnpm test:unit
-```
-
-Edit the sources in `packages/<name>/src/` and rebuild: `dist/` is generated and never edited by hand.
-
-#### Adding a token
-
-- **A primitive:** edit `packages/tokens/tokens.json`, run `pnpm tokens:build`, and map it to a semantic token only if a component needs it.
-- **A semantic token:** edit `packages/tokens/src/semantic.css` in all three mode blocks (light, dark, high contrast), then run `pnpm tokens:build`. Keep the name the same in the three modes, and use the semantic token in components. Document it on the Tokens pages of the docs site (`apps/docs/pages/tokens/`).
-
-#### What We Check
-
-- **Code quality:** Stylelint, ESLint pass
-- **Vanilla-first:** No new dependencies added
-- **Backward compatible:** Semantic versioning (no breaking changes in minor releases)
-- **Accessibility:** Keyboard support, focus states, ARIA labels where needed
-- **Documentation:** Update README/docs if API changes
-- **Package boundaries:** `tokens → core → site`, never the reverse
-
-#### Definition of done for a component
-
-Copy this into the PR description. An unticked line blocks the merge.
-
-```
-- [ ] Native element or API used where one exists; any ARIA is justified in the PR
-- [ ] Works with JS disabled (describe the no-JS state)
-- [ ] Keyboard: every action reachable; focus visible; keys documented
-- [ ] Screen reader: tested with NVDA, VoiceOver or TalkBack, or the statement says it was not
-- [ ] 320 px / 400 % zoom: no horizontal scroll, nothing clipped
-- [ ] forced-colors and prefers-reduced-motion checked
-- [ ] Contrast >= 4.5:1 text, >= 3:1 UI, in light, dark and high-contrast
-- [ ] Only semantic tokens; logical properties; no !important
-- [ ] Strings: sentence case, verb-first buttons, meaningful links, visible labels
-- [ ] Docs: When to use, When not to use, How it works, Content guidance, Keyboard and ARIA, Known issues
-- [ ] Tests added (axe and keyboard) and pnpm test:ui green
-- [ ] dist/ regenerated, check:pack updated, changeset added
-```
-
-#### Checklist Before PR
-
-- [ ] Branch name is descriptive (`fix/issue-name` or `feat/feature-name`)
-- [ ] Commits are atomic (one feature/fix per commit)
-- [ ] `pnpm lint:css` and `pnpm lint:js` pass
-- [ ] `pnpm test:unit` passes (if JS behavior was changed)
-- [ ] `pnpm test:ui` passes for affected flows (if UI behavior was changed)
-- [ ] Rebuilt dist: `pnpm build`
-- [ ] Updated docs (if needed)
-- [ ] No dependencies added
-- [ ] A11y: focus states, keyboard support, ARIA if applicable
-- [ ] Tested in at least 1 modern browser (Chrome, Firefox, Safari)
-
-#### PR Template
-
-```markdown
-## What
-
-Brief description of the change.
-
-## Why
-
-Why is this change needed? Link to issue if applicable.
-
-## Testing
-
-How to verify the fix/feature works.
-
-## Screenshots/Demo
-
-If UI change, include screenshot or link to demo.
-```
-
----
-
-## Testing & A11y
-
-### Minimum Automated Baseline (Recommended)
-
-To keep releases stable without heavy maintenance, use this minimum baseline:
-
-- Unit tests for behavior in `packages/core/src/luz.js` and `packages/core/src/midi.js`
-- UI smoke tests for critical flows in the documentation (`/docs/`, source in `apps/docs/pages/`)
-- Automated a11y smoke on key pages/components
-
-If you touch `packages/site/src/`, rebuild Site and verify the consuming apps still render correctly:
-
-```bash
-pnpm site:build
-pnpm build
-```
-
-Suggested commands:
-
-```bash
-pnpm test:unit
-pnpm test:ui
-```
-
-Suggested scope for UI smoke:
-
-- Theme switch and persistence
-- Sidebar open/close on mobile
-- Modal open/close, Escape, focus trap/restore
-- Keyboard navigation in tabs and player controls
-- Core responsive checks at 480px, 768px, 1024px
-
-Notes:
-
-- These tools are development-only dependencies (not runtime dependencies).
-- Keep UI tests small and high-value; do not enforce full pixel-perfect snapshots.
-- **For detailed instructions, see [TESTING.md](./dev/TESTING.md)**
-
-### Keyboard Testing
-- Tab through all interactive elements
-- Escape closes modals/details
-- Enter/Space activate buttons
-- Arrow keys work in tabs/similar components
-- Focus always visible
-
-### Focus Testing
-- All focusable elements have `:focus-visible` styles
-- Focus order matches visual/logical order
-- No focus traps (unless intended)
-
-### Visual Testing
-- Dark mode looks correct
-- High contrast mode readable
-- Responsive at 480px, 768px, 1024px
-
-### A11y Checklist
-
-Before submitting a component:
-
-- [ ] Semantic HTML (no div abuse)
-- [ ] Keyboard accessible
-- [ ] Focus indicators visible (2px outline minimum)
-- [ ] Color contrast ≥4.5:1
-- [ ] ARIA labels/roles where needed
-- [ ] Animations respect `prefers-reduced-motion`
-- [ ] No flashing >3/second
-
-### Modals and dialogs
-
-Use a native `<dialog>` opened with `showModal()`. The browser traps focus, closes on Escape, makes the page behind inert and returns focus to the opener. Do not write a focus trap.
-
-Open and close it declaratively, with no JavaScript:
-
-```html
-<button type="button" commandfor="my-dialog" command="show-modal">Open dialog</button>
-
-<dialog class="luz-modal" id="my-dialog" aria-labelledby="my-dialog-title">
-  <h2 id="my-dialog-title">Delete this draft</h2>
-  <p>This cannot be undone.</p>
-  <button type="button" commandfor="my-dialog" command="close">Cancel</button>
-  <button type="button" commandfor="my-dialog" command="close">Delete draft</button>
-</dialog>
-```
-
-`initModals()` (called by `luz.js`) only supplies the two commands in browsers that do not implement them yet.
-
-## Documentation
-
-- **The docs site** (`apps/docs/`, published at `/docs/`): one page per component, site pattern, token family and HTML element category, generated by `scripts/docs-site/` (see AGENTS.md, "Vite config and the docs site generator"). A new component gets its own page under `apps/docs/pages/components/`; the sidebar, the gallery, the breadcrumb, "On this page" and the A–Z index pick it up from its front matter. No page may exceed 80 kB of HTML: split it instead.
-- **Code comments:** Explain *why*, not what (code is self-documenting)
-- **CSS:** Include BEM class structure and state examples
-- **JS:** Document function parameters, return values, and side effects
-- **README:** Update if public API changes
-- **ROADMAP.md:** Update if planning new features
-
-Example CSS comment:
-
-```css
-/* Button — Primary action
-   Modifiers: --primary, --secondary, --ghost, --outline, --danger
-   States: :hover, :active, :disabled, :focus-visible
-*/
-```
-
----
-
-## Publishing & Versioning
-
-The three packages are versioned together (same version number) with [changesets](https://github.com/changesets/changesets) and published by GitHub Actions. Nobody publishes from a local machine.
-
-**Workflow:**
-
-1. Make your changes on a branch and describe them:
-   ```bash
-   pnpm changeset
-   ```
-   Pick the bump (patch / minor / major) and write the changelog entry. Commit the generated `.changeset/*.md` file with your PR.
-
-2. Merge the PR into `main`. The Release workflow (`.github/workflows/publish.yml`) opens or updates a **"chore(release): version packages"** PR that bumps the versions and writes the changelogs.
-
-3. Merge that PR when you want to release. The workflow then:
-   - runs lint, audit, build, unit tests and the tarball contract check
-   - waits for approval in the `release` environment
-   - publishes every version that is not on npm yet, tokens first, with provenance
-
-Publishing uses npm trusted publishing (OIDC), so there is no npm token to manage.
-
-### Before opening a PR
-
-```bash
-pnpm build
-pnpm test:unit
-pnpm check:pack
-```
-
-`pnpm check:pack` compares what each package would publish against `packages/<name>/pack-files.txt`. If you add or remove a published file on purpose, update the snapshots with `node scripts/check-pack.js --update` and commit them.
-
-### Dependency ranges between packages
-
-`@luz-ds/core` and `@luz-ds/site` declare the layers below them as `peerDependencies` with literal ranges (`^0.1.0`). Do not use the `workspace:` protocol there; changesets updates the ranges on a major release.
-
----
-
-## Questions?
-
-- Open a discussion in [Issues](../../issues)
-- Check [AGENTS.md](./AGENTS.md) for architecture
-
-## Thank You
-
-Every contribution — big or small — helps make LUZ better! 🙏
+Ask in [Discussions](../../discussions). Thank you for helping.

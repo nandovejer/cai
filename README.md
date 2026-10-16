@@ -26,6 +26,8 @@ No framework. No build step for consumers.
 > [!WARNING]
 > **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
 
+**Human-first, AI-ready.** LUZ is made for the people who use the page, and it is plain enough for an AI agent to write correctly. **Every change starts with a failing test.** [How LUZ is built](https://nandovejer.github.io/luz/docs/get-started/how-luz-is-built/) says more.
+
 LUZ (formerly CAI) is built with plain CSS, ES modules and native browser APIs. Adopt only the tokens, add the components, or take whole-page patterns: the three layers are independent packages that stack in one direction. Packages for one kind of site build on top of them.
 
 ```text
@@ -177,6 +179,23 @@ What an agent can read, what the check reports and what it does not do are on [W
 LUZ aims for WCAG 2.2 level AA: keyboard operation, visible focus, 4.5:1 text contrast in the three modes and a high-contrast mode are part of every component. Form controls are native HTML controls where possible.
 
 Automated checks run on every change. No assistive technology has been used to test this release. The [accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/) lists what is checked, what has not been tested and the known issues.
+
+## Use or contribute
+
+LUZ is open source under the MIT licence. Pick the row that fits; [CONTRIBUTING.md](./CONTRIBUTING.md) has the detail, and [VERSIONING.md](./VERSIONING.md#supported) says which browsers, Node.js versions and releases are supported.
+
+| I want to | How |
+| --- | --- |
+| Use it | LUZ is MIT: no registration, no telemetry. Install the packages from npm or load them from a CDN ([Get started](https://nandovejer.github.io/luz/docs/get-started/)). |
+| Copy it | Copy any markup, style or script you need, and keep the MIT notice with it. |
+| Fork it | MIT lets you fork, rename and ship it. Keep the notice and say what you changed. |
+| Report a bug | [Open an issue](../../issues/new/choose) with the bug or accessibility form. A security problem goes private: see [SECURITY.md](./SECURITY.md). |
+| Propose a change | Start in [Discussions](../../discussions) with the proposal form: the problem, who it affects, and what the platform already does. |
+| Send a pull request | Commit a failing `test:` first, then the change that makes it pass. Run `pnpm check:all`. |
+| Add a language | One JSON file of strings, never JavaScript, checked by a reader of the language ([the recipe](./AGENTS.md#adding-a-language-to-cores-scripts)). |
+| Review in Safari/Firefox | Pick an issue labelled `needs-browser-review`, test the files it names and write what you see. |
+
+Everyone taking part follows the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## License
 
@@ -351,7 +370,7 @@ Tokens, core and site share one version and are released together with [changese
 2. Merging to `main` opens a "version packages" PR.
 3. Merging that PR runs CI, waits for approval in the `release` environment and publishes to npm with provenance (trusted publishing, no stored token).
 
-Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) and [SECURITY.md](./SECURITY.md).
+Nobody publishes from a local machine. See [VERSIONING.md](./VERSIONING.md#publishing), [CONTRIBUTING.md](./CONTRIBUTING.md) and [SECURITY.md](./SECURITY.md).
 
 ### Working with AI agents
 
@@ -378,6 +397,9 @@ Nobody publishes from a local machine. See [CONTRIBUTING.md](./CONTRIBUTING.md) 
 | **[QUICK-REFERENCE.md](./dev/QUICK-REFERENCE.md)** | Commands, naming conventions, token structure, component inventory |
 | **[TESTING.md](./dev/TESTING.md)** | Test infrastructure and coverage strategy |
 | **[AGENTS.md](./AGENTS.md)** | Project context and rules for AI agents |
-| **[CONTRIBUTING.md](./CONTRIBUTING.md)** | PR guidelines, checklist, releases |
+| **[CONTRIBUTING.md](./CONTRIBUTING.md)** | How to report, propose and send a pull request |
+| **[DEFINITION-OF-DONE.md](./dev/DEFINITION-OF-DONE.md)** | What a component, a token and a docs page need before they merge |
+| **[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)** | Contributor Covenant 2.1 |
+| **[VERSIONING.md](./VERSIONING.md)** | What is public API, how releases are made, what is supported |
 | **[SECURITY.md](./SECURITY.md)** | Reporting, supply-chain practices, CDN/SRI guidance, audit history |
 | **[CHANGELOG.md](./CHANGELOG.md)** | Version history and migration notes |

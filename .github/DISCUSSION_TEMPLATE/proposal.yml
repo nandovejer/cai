@@ -1,0 +1,32 @@
+title: "Proposal: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Start here before you write code. A proposal is a problem, not a solution: LUZ adds something only when more than one team needs it and the platform does not already do it. Read [PRINCIPLES.md](https://github.com/nandovejer/luz/blob/main/PRINCIPLES.md) first.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is the problem?
+      description: What can you not do today, or do badly? Show a real page or a real case.
+    validations:
+      required: true
+  - type: textarea
+    id: affected
+    attributes:
+      label: Who does it affect?
+      description: Which users or teams, how many of them, and how often. Say if someone cannot use LUZ because of it.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What alternatives use the platform?
+      description: Native HTML, CSS or a browser API that could solve it (`dialog`, `details`, `popover`, an input type, `:has()`). Say why they are not enough.
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What do you suggest?
+      description: Optional. A sketch of the markup or the API, if you have one.

@@ -43,6 +43,7 @@ const steps = [
   { name: "Size budgets (RL-17)", cmd: [pnpm, "check:size"] },
   { name: "Shipped strings (SR-1)", cmd: [pnpm, "check:strings"] },
   { name: "Exceptions register", cmd: [pnpm, "check:exceptions"] },
+  { name: "Licences (RL-1, RL-13: published packages MIT with no dependencies; dev/LICENSES.md)", cmd: [pnpm, "check:license"] },
   { name: "Tarball contents", cmd: [pnpm, "check:pack"] },
   { name: "Token contrast (RL-7)", cmd: [pnpm, "check:contrast"] },
   ...(args.has("--fast") ? [] : [{ name: "Generated files (RL-14: docs/ is the Pages build)", cmd: [pnpm, "check:generated"] }]),

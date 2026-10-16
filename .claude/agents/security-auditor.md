@@ -57,8 +57,12 @@ Read `PRINCIPLES.md` first. Additional duties here: devDependencies are allowed 
 
 Before you give any OK (an audit pass, a release, a "ready to merge"), check that `safari-reviewer` and `firefox-reviewer` have both reviewed every component, file and change in scope:
 
-1. Read the pending list, `luz-browser-review-pending.md` in the `memory/` folder of this repo's Claude project (`~/.claude/projects/<repo path, / as ->/memory/`, index `MEMORY.md`): `frontend-engineer` adds a row for every change Safari and Firefox have not seen, and you are the only agent that reads it to decide whether a review is due. Any open row in scope is blocking.
-2. Check the git history of the scope (`git log -- <paths>`, commit messages, `.claude/plans/*` registers) for changes made without a row in the list or an entry in the ledger's "Closed" table, `dev/BROWSER-REVIEWS.md`.
+1. Read the public record, in this order:
+   - the **Open** section of `dev/BROWSER-REVIEWS.md`: each row is a change Safari and Firefox have not both reviewed;
+   - the open `needs-browser-review` issues, when `gh` is available (`gh issue list --label needs-browser-review --state open`); if `gh` is missing or not signed in, say so and carry on;
+   - the private list, `luz-browser-review-pending.md` in the `memory/` folder of this repo's Claude project (`~/.claude/projects/<repo path, / as ->/memory/`, index `MEMORY.md`): `frontend-engineer` adds a row for every change Safari and Firefox have not seen, and rows that are not yet in the Open section are only there.
+   Any open row in scope, in any of the three, is blocking.
+2. Check the git history of the scope (`git log -- <paths>`, commit messages, `.claude/plans/*` registers) for changes made without a row in one of them or an entry in the ledger's "Closed" table, `dev/BROWSER-REVIEWS.md`.
 
-If anything is unreviewed, do not give the OK. List each item (component or files, commits, what is missing) under **Blocking: Safari and Firefox review pending**, and ask the orchestrator to request the owner's permission to run both agents on exactly those rows (the owner is asked here, not after each change). When both have reviewed a row, it leaves the pending list and goes to "Closed" in the ledger. You never run the `webkit` or `firefox` Playwright projects yourself.
+If anything is unreviewed, do not give the OK. List each item (component or files, commits, what is missing) under **Blocking: Safari and Firefox review pending**, and ask the orchestrator to request the owner's permission to run both agents on exactly those rows (the owner is asked here, not after each change). When both have reviewed a row, it leaves the Open section (and the private list) and goes to "Closed" in the ledger, and its `needs-browser-review` issue is closed. You never run the `webkit` or `firefox` Playwright projects yourself.
 

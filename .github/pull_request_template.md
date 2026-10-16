@@ -2,6 +2,11 @@
 
 <!-- What changes, and why. Link the issue. -->
 
+## Licence and test first
+
+- [ ] I license this work under the MIT licence (inbound = outbound) and I wrote it or say where it comes from
+- [ ] The first commit is `test:` and fails without the change
+
 ## Changeset
 
 - [ ] Added with `pnpm changeset`, saying how to migrate if it breaks something
@@ -44,4 +49,4 @@ Tick every line. An unticked line needs an `EXCEPTIONS.md` row or blocks the mer
 
 ## Browsers
 
-- [ ] Safari and Firefox reviews: done, or the change is in the pending list in Claude's memory (`luz-browser-review-pending.md`; AGENTS.md section 6)
+- [ ] Safari and Firefox: reviewed, or the change is listed under "Open" in [dev/BROWSER-REVIEWS.md](../dev/BROWSER-REVIEWS.md) and its row has a `needs-browser-review` issue (AGENTS.md section 6)

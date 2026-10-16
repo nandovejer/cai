@@ -17,7 +17,7 @@ Runs the same gates as CI plus the Playwright suites, and writes an evidence rep
    node scripts/qa-release.js --skip-ui  # no Playwright
    ```
 
-   It runs, in order: `pnpm build`, `lint:css`, `lint:js`, `check:size`, `check:strings`, `check:exceptions`, `check:pack`, `check:contrast`, `check:generated`, `test:unit`, and Playwright with `--project=chromium --project=chromium-nojs` (3 workers: more can overload the dev server and give false failures).
+   It runs, in order: `pnpm build`, `lint:css`, `lint:js`, `check:size`, `check:strings`, `check:exceptions`, `check:license`, `check:pack`, `check:contrast`, `check:generated`, `test:unit`, and Playwright with `--project=chromium --project=chromium-nojs` (3 workers: more can overload the dev server and give false failures).
 
 2. **Read the report**, `test-results/qa-release/report-<timestamp>.md`. Do not paste the whole file back: give the owner the table and the list of failures.
 

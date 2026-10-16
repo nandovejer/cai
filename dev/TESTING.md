@@ -247,6 +247,98 @@ playwright.config.js   # Playwright configuration
 
 ---
 
+## Testing and accessibility checks
+
+What to cover when you change a component, and what to look at by hand. The first change is always a failing test (see [CONTRIBUTING.md](../CONTRIBUTING.md)).
+
+### Minimum Automated Baseline (Recommended)
+
+To keep releases stable without heavy maintenance, use this minimum baseline:
+
+- Unit tests for behavior in `packages/core/src/luz.js` and `packages/core/src/midi.js`
+- UI smoke tests for critical flows in the documentation (`/docs/`, source in `apps/docs/pages/`)
+- Automated a11y smoke on key pages/components
+
+If you touch `packages/site/src/`, rebuild Site and verify the consuming apps still render correctly:
+
+```bash
+pnpm site:build
+pnpm build
+```
+
+Suggested commands:
+
+```bash
+pnpm test:unit
+pnpm test:ui
+```
+
+Suggested scope for UI smoke:
+
+- Theme switch and persistence
+- Sidebar open/close on mobile
+- Modal open/close, Escape, focus trap/restore
+- Keyboard navigation in tabs and player controls
+- Core responsive checks at 480px, 768px, 1024px
+
+Notes:
+
+- These tools are development-only dependencies (not runtime dependencies).
+- Keep UI tests small and high-value; do not enforce full pixel-perfect snapshots.
+
+### Keyboard Testing
+
+- Tab through all interactive elements
+- Escape closes modals/details
+- Enter/Space activate buttons
+- Arrow keys work in tabs/similar components
+- Focus always visible
+
+### Focus Testing
+
+- All focusable elements have `:focus-visible` styles
+- Focus order matches visual/logical order
+- No focus traps (unless intended)
+
+### Visual Testing
+
+- Dark mode looks correct
+- High contrast mode readable
+- Responsive at 480px, 768px, 1024px
+
+### A11y Checklist
+
+Before submitting a component:
+
+- [ ] Semantic HTML (no div abuse)
+- [ ] Keyboard accessible
+- [ ] Focus indicators visible (2px outline minimum)
+- [ ] Color contrast ≥4.5:1
+- [ ] ARIA labels/roles where needed
+- [ ] Animations respect `prefers-reduced-motion`
+- [ ] No flashing >3/second
+
+### Modals and dialogs
+
+Use a native `<dialog>` opened with `showModal()`. The browser traps focus, closes on Escape, makes the page behind inert and returns focus to the opener. Do not write a focus trap.
+
+Open and close it declaratively, with no JavaScript:
+
+```html
+<button type="button" commandfor="my-dialog" command="show-modal">Open dialog</button>
+
+<dialog class="luz-modal" id="my-dialog" aria-labelledby="my-dialog-title">
+  <h2 id="my-dialog-title">Delete this draft</h2>
+  <p>This cannot be undone.</p>
+  <button type="button" commandfor="my-dialog" command="close">Cancel</button>
+  <button type="button" commandfor="my-dialog" command="close">Delete draft</button>
+</dialog>
+```
+
+`initModals()` (called by `luz.js`) only supplies the two commands in browsers that do not implement them yet.
+
+---
+
 ## Troubleshooting
 
 ### "Cannot find module 'vitest'"

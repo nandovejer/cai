@@ -156,6 +156,50 @@ describe("SPDX expressions", () => {
   });
 });
 
+/* ---- Dev tools accepted by name -------------------------------------------------- */
+
+/**
+ * Exports (decided with the owner, option a): `ACCEPTED_DEV`, an object keyed by package name,
+ * each value `{ licence, why }`; and `acceptedDependency(entry)`, true when
+ * allowedLicence(entry.licence) or ACCEPTED_DEV[entry.name].licence equals entry.licence.
+ * A dev-only tool that is never published or served (RL-13 covers what ships).
+ */
+describe("dev tools accepted by name", () => {
+  it("MPL-2.0 stays off the allowlist", async () => {
+    const { allowedLicence, ALLOWED } = await load();
+    expect(allowedLicence("MPL-2.0")).toBe(false);
+    expect(ALLOWED).not.toContain("MPL-2.0");
+  });
+
+  it("accepts @axe-core/playwright under MPL-2.0 only, with a reason", async () => {
+    const { ACCEPTED_DEV, acceptedDependency } = await load();
+    expect(Object.keys(ACCEPTED_DEV)).toEqual(["@axe-core/playwright"]);
+    expect(ACCEPTED_DEV["@axe-core/playwright"].licence).toBe("MPL-2.0");
+    expect(ACCEPTED_DEV["@axe-core/playwright"].why.length).toBeGreaterThan(20);
+    expect(acceptedDependency({ name: "@axe-core/playwright", version: "4.13.0", licence: "MPL-2.0", usedBy: ["."] })).toBe(true);
+  });
+
+  it("rejects the same name under another licence", async () => {
+    const { acceptedDependency } = await load();
+    for (const licence of ["GPL-3.0", "AGPL-3.0", "MPL-1.1", "UNKNOWN", "(MPL-2.0 AND GPL-3.0)", undefined]) {
+      expect(acceptedDependency({ name: "@axe-core/playwright", version: "4.13.0", licence }), String(licence)).toBe(false);
+    }
+  });
+
+  it("rejects another name under MPL-2.0, including look-alikes", async () => {
+    const { acceptedDependency } = await load();
+    for (const name of ["axe-core", "@axe-core/playwright-extra", "@axe-core/react", "playwright", "x@axe-core/playwright"]) {
+      expect(acceptedDependency({ name, version: "1.0.0", licence: "MPL-2.0", usedBy: ["."] }), name).toBe(false);
+    }
+  });
+
+  it("still accepts an allowed licence under any name", async () => {
+    const { acceptedDependency } = await load();
+    expect(acceptedDependency({ name: "vite", version: "6.4.3", licence: "MIT", usedBy: ["."] })).toBe(true);
+    expect(acceptedDependency({ name: "copyleft", version: "2.0.0", licence: "GPL-3.0", usedBy: ["."] })).toBe(false);
+  });
+});
+
 /* ---- The lock file ----------------------------------------------------------- */
 
 describe("parseImporters", () => {
@@ -243,11 +287,11 @@ describe("collectDependencies", () => {
     ]);
   });
 
-  it("finds an allowed licence for every dependency of this repository", async () => {
-    const { collectDependencies, allowedLicence } = await load();
+  it("finds an allowed licence, or an accepted dev tool, for every dependency of this repository", async () => {
+    const { collectDependencies, allowedLicence, acceptedDependency } = await load();
     const entries = collectDependencies(repo);
     expect(entries.length).toBeGreaterThan(5);
-    expect(entries.filter((e) => !allowedLicence(e.licence)).map((e) => `${e.name}@${e.version}: ${e.licence}`)).toEqual([]);
+    expect(entries.filter((e) => !(allowedLicence(e.licence) || acceptedDependency(e))).map((e) => `${e.name}@${e.version}: ${e.licence}`)).toEqual([]);
   });
 });
 

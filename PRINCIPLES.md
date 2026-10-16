@@ -4,6 +4,8 @@ Inspired by the [GOV.UK Design System](https://design-system.service.gov.uk/). T
 
 LUZ is npm packages for developers who install it without talking to us: `@luz-ds/tokens` (standalone), `@luz-ds/core` (needs tokens) and `@luz-ds/site` (needs core and tokens), which share one version, and packages for one kind of site on top of them, each with its own version: `@luz-ds/landing`, `@luz-ds/cms` and `@luz-ds/app` (each needs core and tokens, and takes site as an optional peer).
 
+**Human-first, AI-ready.** LUZ is made for the people who use the page first, and it is plain HTML and CSS with a closed list of names, so an AI agent can write it correctly too. **Every change starts with a failing test**: the first commit is `test:`, it fails without the change, and a bug fix starts with the test that reproduces it (`SR-9`). [How LUZ is built](https://nandovejer.github.io/luz/docs/get-started/how-luz-is-built/) says more.
+
 ---
 
 ## How the rules work

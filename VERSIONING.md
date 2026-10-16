@@ -83,7 +83,7 @@ LUZ leaves beta when every line is ticked and the maintainer says it is stable. 
 | 1 | Every red line (RL-1 to RL-18) has a check that fails when it is broken, and the list of which check covers which line is written down | **Done, with limits**: the table is in PRINCIPLES.md ("Which check covers which red line"), kept in step by `tests/red-line-map.test.js`, and each row says what its check does not see | The table and the test |
 | 2 | SR-6 done for every component: tested by hand with NVDA + Firefox, VoiceOver + Safari, TalkBack + Chrome and Orca + Firefox, with the evidence kept | **Open**: no assistive technology has been used on any release (the accessibility statement says so) | One filled `tests/manual/SR-6-evidence-template.md` per component |
 | 3 | The EN 301 549 mapping is published, clause by clause | **Open**: the statement names the standard and the WCAG 2.2 target; there is no clause table | A page of the docs |
-| 4 | The browser review pending list is empty: Safari and Firefox have both reviewed every component and file | **Done on 2026-10-11**: Firefox 155 and WebKit 26.6 and 27.2 reviewed every row, the must-fix findings are fixed, and the ledger has no open row. It reopens with every change to CSS or JS | `luz-browser-review-pending.md` in Claude's memory (history in `dev/BROWSER-REVIEWS.md`), and the security audit's OK (AGENTS.md section 6) |
+| 4 | The browser review pending list is empty: Safari and Firefox have both reviewed every component and file | **Open**: it was done on 2026-10-11 (Firefox 155 and WebKit 26.6 and 27.2 reviewed every row, the must-fix findings were fixed) and it reopens with every change to CSS or JS; the rows waiting for review are in the "Open" section of `dev/BROWSER-REVIEWS.md` | The "Open" section and the `needs-browser-review` issues of `dev/BROWSER-REVIEWS.md`, and the security audit's OK (AGENTS.md section 6) |
 | 5 | The contrast check for a consumer's own colors is published and documented | **Built, not released**: `npx @luz-ds/tokens check-contrast` and the page `/docs/tokens/contrast/` exist in the repository | A release that contains them |
 | 6 | The cascade layers are documented and their names are frozen | **Built, not released**: the Cascade layers page and `tests/layers.*` exist | A release that contains them |
 | 7 | No open issue of high severity: no blocker or serious accessibility defect, no broken export, no red-line breach | **Unknown**: the issue tracker has not been read for this | The GitHub issues, with the labels `accessibility` and `bug` |
@@ -102,3 +102,50 @@ When the table is all ticked, the next major is the stable release, and from it 
 - Versions keep counting up (the packages start at 0.1.0). **Every major in beta is allowed to break any surface above**, each with a changeset that says how to migrate.
 - No deprecation window is promised. Where an alias is cheap, it is kept.
 - This file is documentation of intent: no script, no review and no release depends on it before 1.0.
+
+---
+
+## Supported
+
+What you can expect to work, and what gets a fix.
+
+- **Browsers:** the ones that have every feature LUZ uses at Baseline Widely available, which is the date rule of [PRINCIPLES.md](./PRINCIPLES.md): a feature that became Baseline less than 30 months ago is an enhancement with a fallback, never a requirement. Safari and Firefox are reviewed by hand before a release; the open reviews are in [dev/BROWSER-REVIEWS.md](./dev/BROWSER-REVIEWS.md).
+- **Node.js (the tools, not the CSS or the browser scripts):** the active LTS and the maintenance LTS releases. The packages you load in a page need no Node.js at all.
+- **Fixes:** only the latest minor of 0.x gets fixes. If you are on an older 0.x minor, upgrade first; the changeset of each release says how to migrate.
+
+---
+
+## Publishing
+
+The three packages are versioned together (same version number) with [changesets](https://github.com/changesets/changesets) and published by GitHub Actions. Nobody publishes from a local machine.
+
+**Workflow:**
+
+1. Make your changes on a branch and describe them:
+   ```bash
+   pnpm changeset
+   ```
+   Pick the bump (patch / minor / major) and write the changelog entry. Commit the generated `.changeset/*.md` file with your PR.
+
+2. Merge the PR into `main`. The Release workflow (`.github/workflows/publish.yml`) opens or updates a **"chore(release): version packages"** PR that bumps the versions and writes the changelogs.
+
+3. Merge that PR when you want to release. The workflow then:
+   - runs lint, audit, build, unit tests and the tarball contract check
+   - waits for approval in the `release` environment
+   - publishes every version that is not on npm yet, tokens first, with provenance
+
+Publishing uses npm trusted publishing (OIDC), so there is no npm token to manage.
+
+### Before opening a PR
+
+```bash
+pnpm build
+pnpm test:unit
+pnpm check:pack
+```
+
+`pnpm check:pack` compares what each package would publish against `packages/<name>/pack-files.txt`. If you add or remove a published file on purpose, update the snapshots with `node scripts/check-pack.js --update` and commit them.
+
+### Dependency ranges between packages
+
+`@luz-ds/core` and `@luz-ds/site` declare the layers below them as `peerDependencies` with literal ranges (`^0.1.0`). Do not use the `workspace:` protocol there; changesets updates the ranges on a major release.

@@ -1,0 +1,24 @@
+<!-- luz:page
+title: How LUZ is built
+description: Three promises behind every release: it is made for people first and readable by AI agents, every change starts with a failing test, and nothing runs in your page that you did not load.
+area: get-started
+order: 12
+toc: false
+-->
+    <section class="docs-block" id="human-first" aria-labelledby="human-first-title">
+      <h2 class="docs-chapter__title" id="human-first-title">Human-first, AI-ready</h2>
+      <p>LUZ is made for the person who uses the page. It starts from native HTML, works with a keyboard and with JavaScript off, and aims for WCAG 2.2 level AA in three color modes.</p>
+      <p>Plain HTML and CSS with a closed list of class names is also easy for an AI agent to get right. The site publishes the list of names, and a command checks what the agent wrote. <a href="/docs/get-started/ai/">Working with AI</a> has the files and the prompt.</p>
+    </section>
+
+    <section class="docs-block" id="tests-first" aria-labelledby="tests-first-title">
+      <h2 class="docs-chapter__title" id="tests-first-title">Tests first</h2>
+      <p>Every change starts with a failing test. The first commit is a <code>test:</code> commit that fails without the change, and the change that follows makes it pass. A bug fix starts with the test that reproduces it.</p>
+      <p>One command, <code>pnpm check:all</code>, runs every check. The rules those checks enforce are in <a href="https://github.com/nandovejer/luz/blob/main/PRINCIPLES.md">PRINCIPLES.md</a>, and <a href="https://github.com/nandovejer/luz/blob/main/dev/TESTING.md">TESTING.md</a> says how to write the test.</p>
+    </section>
+
+    <section class="docs-block" id="zero-dependencies" aria-labelledby="zero-dependencies-title">
+      <h2 class="docs-chapter__title" id="zero-dependencies-title">Zero dependencies</h2>
+      <p>The packages have no runtime dependency. They ship plain CSS and small ES modules that need no build step, and they use the browser's own elements and APIs before any script.</p>
+      <p>Size budgets are a red line: a check fails when a file grows past its ceiling, and nobody raises a ceiling to make it pass. Everything LUZ ships is under the MIT licence, and only the MIT licence. <a href="/docs/get-started/">Get started</a> shows how to load it.</p>
+    </section>

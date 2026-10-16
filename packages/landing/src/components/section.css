@@ -15,7 +15,8 @@
 	margin-block-end: 0;
 }
 
-.luz-landing-section__title {
+.luz-landing-section__title,
+.luz-landing-stat__value {
 	font-size: var(--luz-text-3xl);
 }
 
@@ -31,13 +32,15 @@
 }
 
 @media (max-width: 1023px) {
-	.luz-landing-section__title {
+	.luz-landing-section__title,
+	.luz-landing-stat__value {
 		font-size: var(--luz-text-2xl);
 	}
 }
 
 @media (max-width: 640px) {
-	.luz-landing-section__title {
+	.luz-landing-section__title,
+	.luz-landing-stat__value {
 		font-size: var(--luz-text-xl);
 	}
 

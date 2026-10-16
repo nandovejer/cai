@@ -499,7 +499,9 @@ test.describe('cms header: --masthead', () => {
       expect(await page.locator('#cms-nav').getAttribute('aria-modal')).toBeNull();
       await page.focus('#cms-nav li:last-child a');
       await page.keyboard.press('Tab');
-      expect(await page.evaluate(() => !!document.activeElement?.closest('#cms-nav'))).toBe(false);
+      // Nothing is tabbable after the nav in the fixture: Chromium wraps to the top of the page, Firefox hands the
+      // focus to the browser's own UI and leaves document.activeElement on the link (document.hasFocus() is false)
+      expect(await page.evaluate(() => !document.hasFocus() || !document.activeElement?.closest('#cms-nav'))).toBe(true);
       // Escape closes it and the focus is back on the button
       await page.focus('#cms-nav a');
       await page.keyboard.press('Escape');

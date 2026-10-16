@@ -218,7 +218,8 @@ test.describe('the language switch', () => {
       // No visible text: the name is clipped to 1px
       const shown = await button.locator('.luz-lang-switch__name').evaluate((el) => el.getBoundingClientRect().width);
       expect(shown).toBeLessThanOrEqual(1);
-      expect((await button.boundingBox())?.width).toBeGreaterThanOrEqual(44);
+      // 43.99999809 in Gecko's layout units is 44 px
+      expect((await button.boundingBox())?.width).toBeGreaterThanOrEqual(43.99);
     });
   }
 

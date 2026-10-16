@@ -17,6 +17,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
+import { settled } from './helpers/settle.js';
 
 const FIXTURE = readFileSync(new URL('./fixtures/cms-article.html', import.meta.url), 'utf-8');
 
@@ -53,6 +54,7 @@ test.describe('cms article page', () => {
       test.skip(testInfo.project.name === 'chromium-nojs', 'axe needs JavaScript');
       await open(p, 1280);
       await p.evaluate((t) => { document.documentElement.dataset.theme = t; }, theme);
+      await settled(p); // axe must not sample a colour mid-transition (Firefox)
       const { violations } = await new AxeBuilder({ page: p }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
       expect(violations.filter((v) => ['serious', 'critical'].includes(v.impact)).map((v) => v.id)).toEqual([]);
     });

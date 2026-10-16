@@ -220,8 +220,9 @@ test.describe('a Spanish fragment on a page in English', () => {
     await expect(statusOf('#table-main')).toHaveAttribute('lang', 'en');
   });
 
-  test('the copy announcement is in the language of the button, and the live region says so (WCAG 3.1.2)', async ({ page, context }) => {
-    await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  test('the copy announcement is in the language of the button, and the live region says so (WCAG 3.1.2)', async ({ page, context, browserName }) => {
+    // Only Chromium knows these permission names (Firefox: unknown; WebKit: no clipboard-write); the copy runs inside a click everywhere
+    if (browserName === 'chromium') await context.grantPermissions(['clipboard-read', 'clipboard-write']);
     await open(page, '?lang=en&fragment');
     await done(page);
     const region = page.locator('#luz-live-region');

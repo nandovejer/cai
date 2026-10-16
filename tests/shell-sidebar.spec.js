@@ -72,7 +72,7 @@ test.describe('shell: a sidebar without popover on a phone', () => {
   });
 
   test('scrolls away with the page', async ({ page }) => {
-    await page.evaluate(() => window.scrollTo(0, 400));
+    await page.evaluate(() => window.scrollTo({ top: 400, behavior: 'instant' }));
     const sidebar = await page.locator('#sidebar').evaluate((el) => el.getBoundingClientRect().bottom);
     expect(sidebar).toBeLessThan(0);
   });

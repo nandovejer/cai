@@ -206,10 +206,12 @@ describe("get-started/javascript.html", () => {
       expect(s).toMatch(/before/i);
     });
 
-    it("says how to preload the file: modulepreload with integrity, on a page in that language only", () => {
+    it("says how to check the file: an import map with integrity (modulepreload is only a hint), on a page in that language only", () => {
       const s = sectionText();
-      expect(s).toMatch(/modulepreload/);
+      expect(s).toMatch(/import map/i);
       expect(s).toMatch(/integrity/);
+      expect(s).toMatch(/modulepreload/);
+      expect(s).toMatch(/hint/i);
     });
 
     it("lists the steps of a language: the JSON file, the files map, the budget row", () => {

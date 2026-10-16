@@ -275,6 +275,27 @@ test.describe('timeline autoplay', () => {
     await expect.poll(() => current(host), { timeout: 12000 }).toBe(first);
   });
 
+  test('the Pause button\'s text is not rewritten while the pointer moves or focus arrives (WebKit drops a click when the node under the pointer is replaced)', async ({ page }) => {
+    await ready(page);
+    const host = tl(page, 'autoplay');
+    await host.scrollIntoViewIfNeeded();
+    const pause = host.getByRole('button', { name: 'Pause', exact: true });
+    await expect(pause).toBeVisible();
+    await pause.evaluate((button) => {
+      window.__rewrites = 0;
+      new MutationObserver((records) => (window.__rewrites += records.length)).observe(button, { childList: true, characterData: true, subtree: true });
+    });
+    const box = await host.boundingBox();
+    await page.mouse.move(box.x + 10, box.y + 10);
+    for (let i = 0; i < 5; i++) await page.mouse.move(box.x + 20 + i * 15, box.y + 20 + i * 5);
+    await pause.focus();
+    await page.waitForTimeout(150);
+    expect(await page.evaluate(() => window.__rewrites)).toBe(0);
+    // the text still changes when the state does
+    await pause.click();
+    await expect(host.getByRole('button', { name: 'Play', exact: true })).toBeVisible();
+  });
+
   test('a visible Pause button stops it, then reads Play, and Play resumes it', async ({ page }) => {
     await ready(page);
     const host = tl(page, 'autoplay');

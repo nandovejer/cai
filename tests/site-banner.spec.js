@@ -13,6 +13,7 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { settled } from './helpers/settle.js';
 
 const FIXTURE = '/tests/fixtures/site-top.html';
 
@@ -92,6 +93,7 @@ test.describe('site banner', () => {
           document.documentElement.dataset.theme = t;
           if (w) document.querySelector('luz-banner').setAttribute('tone', 'warning');
         }, [theme, warning]);
+        await settled(page); // axe must not sample a colour mid-transition (Firefox)
         const { violations } = await new AxeBuilder({ page }).include('luz-banner').withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
         expect(violations.filter((v) => ['serious', 'critical'].includes(v.impact)).map((v) => v.id)).toEqual([]);
       });

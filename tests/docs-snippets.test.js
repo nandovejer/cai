@@ -209,43 +209,77 @@ describe("the snippet generator", () => {
         for (const id of IDS) expect(codeOf(html, id), id).not.toMatch(/modulepreload/);
       });
 
-      it("lists, in the chunks table, exactly the lazy chunks that budgets.json budgets, each with its hash and version", () => {
+      // SEC-CHUNK-4, M1 of the Safari and Firefox reviews (2026-10-16): `modulepreload` with
+      // `integrity` is not a guard in WebKit and Firefox. The full-SRI path is an import map
+      // with an `integrity` section, which blocks a tampered chunk in all three engines.
+      const chunkSection = () => html.slice(html.search(/\bid="chunks"/));
+      const budgetedChunks = () => {
         const budgets = JSON.parse(readFileSync(join(repo, "budgets.json"), "utf-8")).budgets;
-        const budgeted = budgets.filter((b) => /lazy chunk:/.test(b.name)).map((b) => b.file.replace(/^packages\//, ""));
+        return budgets.filter((b) => /lazy chunk:/.test(b.name)).map((b) => b.file.replace(/^packages\//, ""));
+      };
+
+      it("gives, in the chunks section, one import map whose integrity lists exactly the lazy chunks that budgets.json budgets, each with its version and sha384", () => {
+        const budgeted = budgetedChunks();
         expect(budgeted.length).toBe(6); // midi, table-sort, timeline, i18n-es, search, consent
-        const section = html.slice(html.search(/\bid="chunks"/));
-        const preload = section
-          .match(/<code[^>]*>[\s\S]*?<\/code>/g)
-          .map((c) => unescape(c.replace(/<[^>]+>/g, "")))
-          .flatMap(tagsOf)
-          .filter((t) => t.rel === "modulepreload");
-        const listed = preload.map((t) => {
-          const { pkg, file } = parts(t.url);
+        const block = codeOf(html, "chunks-importmap");
+        expect(block, "a code block #code-chunks-importmap in the chunks section").not.toBeNull();
+        expect(chunkSection()).toContain('id="code-chunks-importmap"');
+        const m = /^\s*<script type="importmap">\s*([\s\S]*?)\s*<\/script>\s*$/.exec(block);
+        expect(m, "a <script type=\"importmap\"> element").not.toBeNull();
+        const map = JSON.parse(m[1]);
+        expect(Object.keys(map), "only the integrity section").toEqual(["integrity"]);
+        const listed = Object.keys(map.integrity).map((url) => {
+          const { pkg, file } = parts(url);
           return `${pkg}/dist/${file}`;
         });
         expect(listed.sort()).toEqual([...budgeted].sort());
-        for (const t of preload) {
-          const { pkg, version, file } = parts(t.url);
-          expect(version, t.url).toBe(versionOf(root, pkg));
-          expect(t.integrity, t.url).toBe(sri(root, pkg, file));
-          expect(t.crossorigin, t.url).toBe("anonymous");
+        for (const [url, hash] of Object.entries(map.integrity)) {
+          const { pkg, version, file } = parts(url);
+          expect(version, url).toBe(versionOf(root, pkg));
+          expect(hash, url).toBe(sri(root, pkg, file));
+          expect(hash, url).toMatch(/^sha384-/);
+        }
+      });
+
+      it("gives each chunk's row the import map member to add: \"<url>\": \"<sha384>\", with the same hash", () => {
+        const section = chunkSection();
+        for (const rel of budgetedChunks()) {
+          const [pkg, , file] = rel.split("/");
+          const line = codeOf(html, `chunk-${pkg}-${file.replace(/\.min\.js$/, "")}`);
+          expect(line, `${rel} row`).not.toBeNull();
+          const member = JSON.parse(`{${line.trim().replace(/,$/, "")}}`);
+          const entries = Object.entries(member);
+          expect(entries, rel).toHaveLength(1);
+          const [url, hash] = entries[0];
+          expect(parts(url), rel).toMatchObject({ pkg, file });
+          expect(hash, rel).toBe(sri(root, pkg, file));
         }
         // each row says when to add the line
         for (const element of ["luz-timeline", "luz-search", "luz-consent"]) expect(section, element).toContain(element);
       });
 
+      it("calls the import map the way to check a chunk, and modulepreload only a performance hint (it does not block a bad file in Safari and Firefox)", () => {
+        const text = unescape(chunkSection().split(/<table/)[0].replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ");
+        expect(text).toMatch(/import map/i);
+        expect(text).toMatch(/performance hint/i);
+        expect(text).not.toMatch(/never runs|wrong hash never|uses? (that|the) (verdict|result)/i);
+        // the block comes before a table of members: the map itself is shown whole
+        expect(chunkSection().indexOf('id="code-chunks-importmap"')).toBeLessThan(chunkSection().indexOf("<table"));
+      });
+
       it("says, in the row of the Spanish file, to add its line only on a page whose lang is es (F6)", () => {
-        const section = html.slice(html.search(/\bid="chunks"/));
+        const section = chunkSection();
         const row = section.split(/<tr>/).find((r) => r.includes("<code>i18n-es.min.js</code>"));
         expect(row, "a row for i18n-es.min.js in the chunks table").toBeTruthy();
         const when = unescape(row.match(/data-label="Add the line only if the page has"[^>]*>([\s\S]*?)<\/td>/)?.[1].replace(/<[^>]+>/g, "") ?? "");
         expect(when).toMatch(/\blang\b/);
         expect(when).toMatch(/\bes\b/);
         expect(when).toMatch(/\bpage\b/);
-        // the line itself, like every chunk's: modulepreload with integrity and crossorigin
+        // the line itself, like every chunk's: a member of the import map's integrity section
         const line = unescape(row.match(/<code id="code-chunk-core-i18n-es"[^>]*>([\s\S]*?)<\/code>/)?.[1] ?? "");
-        expect(tagsOf(line).map((t) => [t.rel, t.crossorigin])).toEqual([["modulepreload", "anonymous"]]);
         expect(line).toContain("i18n-es.min.js");
+        expect(line).not.toContain("modulepreload");
+        expect(Object.values(JSON.parse(`{${line.trim().replace(/,$/, "")}}`))[0]).toMatch(/^sha384-/);
       });
     });
   }

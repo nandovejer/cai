@@ -9,7 +9,8 @@
 export async function settled(page) {
   await page.evaluate(async () => {
     for (let round = 0; round < 10; round++) {
-      const running = document.getAnimations().filter((a) => a.playState === 'running' || a.playState === 'pending');
+      // only rendered targets: Firefox keeps animations of closed <details> and hidden dialogs 'running' for good
+      const running = document.getAnimations().filter((a) => (a.playState === 'running' || a.playState === 'pending') && a.effect?.target?.checkVisibility?.() !== false);
       if (!running.length) break;
       await Promise.allSettled(running.map((a) => a.finished));
     }

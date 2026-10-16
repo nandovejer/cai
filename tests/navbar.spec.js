@@ -76,22 +76,24 @@ test.describe('navbar', () => {
     expect(await page.evaluate(() => document.activeElement?.id)).toBe('toggle');
   });
 
-  test('O4: the panel is a labelled navigation, the button says it is expanded when open, and light dismiss closes it', async ({ page }) => {
+  test('O4: the panel is a labelled navigation, the button says it is expanded when open, and light dismiss closes it', async ({ page, browserName }) => {
+    // The expanded state is read from the Chromium accessibility tree (DevTools protocol); the rest runs everywhere
+    const cdp = browserName === 'chromium';
     // Two navigations on the page, two names (WCAG 2.4.1, 1.3.1)
     const names = await page.locator('nav').evaluateAll((navs) => navs.map((n) => n.getAttribute('aria-label')));
     expect(new Set(names).size).toBe(names.length);
     expect(names.every(Boolean)).toBe(true);
 
-    expect(await expandedOf(page), 'closed').toBe(false);
+    if (cdp) expect(await expandedOf(page), 'closed').toBe(false);
     await page.click('#toggle');
     await expect(page.locator('#site-nav')).toBeVisible();
-    expect(await expandedOf(page), 'open').toBe(true);
+    if (cdp) expect(await expandedOf(page), 'open').toBe(true);
     await expect(page.getByRole('navigation', { name: 'Main' })).toBeVisible();
 
     // A click on the page under the panel closes it (light dismiss), and the button is collapsed again
     await page.mouse.click(300, 700);
     await expect(page.locator('#site-nav')).toBeHidden();
-    expect(await expandedOf(page), 'dismissed').toBe(false);
+    if (cdp) expect(await expandedOf(page), 'dismissed').toBe(false);
   });
 
   test('narrow: the panel hangs under the bar, as wide as the window, with a shadow, and its links are at least 44px tall', async ({ page }) => {

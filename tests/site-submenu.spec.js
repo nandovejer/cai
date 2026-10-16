@@ -136,7 +136,9 @@ test.describe('site submenu', () => {
     });
   }
 
-  test('wide: Tab skips a closed submenu; Enter opens it, its links come next, and the state is exposed', async ({ page }) => {
+  test('wide: Tab skips a closed submenu; Enter opens it, its links come next, and the state is exposed', async ({ page, browserName }) => {
+    // The exposed state is read from the Chromium accessibility tree (DevTools protocol); the rest runs everywhere
+    const cdp = browserName === 'chromium';
     await open(page, 1280);
     await page.focus('#brand');
     const order = [];
@@ -145,12 +147,12 @@ test.describe('site submenu', () => {
       order.push(await focused(page));
     }
     expect(order).toEqual(['Home', 'wines-button', 'Visits', 'about-button', 'login']);
-    expect(await expanded(page, '#wines-button')).toBe(false);
+    if (cdp) expect(await expanded(page, '#wines-button')).toBe(false);
 
     await page.focus('#wines-button');
     await page.keyboard.press('Enter');
     await expect(page.locator('#wines > ul')).toBeVisible();
-    expect(await expanded(page, '#wines-button')).toBe(true);
+    if (cdp) expect(await expanded(page, '#wines-button')).toBe(true);
     await page.keyboard.press('Tab');
     expect(await focused(page)).toBe('Red wines');
 
@@ -159,7 +161,7 @@ test.describe('site submenu', () => {
     await page.keyboard.press('Enter');
     await expect(page.locator('#wines > ul')).toBeHidden();
     expect(await focused(page)).toBe('wines-button');
-    expect(await expanded(page, '#wines-button')).toBe(false);
+    if (cdp) expect(await expanded(page, '#wines-button')).toBe(false);
   });
 
   test('wide: a box under its button, over the page, which does not move; hovering opens nothing', async ({ page }) => {

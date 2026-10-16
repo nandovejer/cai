@@ -478,7 +478,8 @@ test.describe('cms header: --masthead', () => {
     await page.evaluate(() => document.activeElement.blur());
     expect(await tabs(page, 8)).toEqual(['Skip to content', 'fallback', 'brand', 'News', 'Culture', 'Opinion', 'Sport', 'Contact']);
     await page.setViewportSize({ width: 600, height: 900 });
-    await page.evaluate(() => document.activeElement.blur());
+    // A new load puts the focus starting point back at the top (blur() keeps it on the last link, and the link after the nav is next)
+    await page.reload();
     expect(await tabs(page, 4)).toEqual(['Skip to content', 'fallback', 'brand', 'toggle']);
   });
 
@@ -499,9 +500,7 @@ test.describe('cms header: --masthead', () => {
       expect(await page.locator('#cms-nav').getAttribute('aria-modal')).toBeNull();
       await page.focus('#cms-nav li:last-child a');
       await page.keyboard.press('Tab');
-      // Nothing is tabbable after the nav in the fixture: Chromium wraps to the top of the page, Firefox hands the
-      // focus to the browser's own UI and leaves document.activeElement on the link (document.hasFocus() is false)
-      expect(await page.evaluate(() => !document.hasFocus() || !document.activeElement?.closest('#cms-nav'))).toBe(true);
+      expect(await page.evaluate(() => !!document.activeElement?.closest('#cms-nav'))).toBe(false);
       // Escape closes it and the focus is back on the button
       await page.focus('#cms-nav a');
       await page.keyboard.press('Escape');

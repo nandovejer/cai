@@ -85,7 +85,8 @@ test.describe('product card', () => {
     expect(button.card, 'no card ring on the button').toBe('none');
   });
 
-  test('every button on the page has its own name, which starts with its visible text (2.5.3)', async ({ page }) => {
+  test('every button on the page has its own name, which starts with its visible text (2.5.3)', async ({ page, browserName }) => {
+    test.skip(browserName !== 'chromium', 'needs the DevTools protocol (the accessible name comes from the Chromium accessibility tree)');
     await open(page);
     const client = await page.context().newCDPSession(page);
     await client.send('DOM.enable');

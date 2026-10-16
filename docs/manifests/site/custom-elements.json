@@ -158,6 +158,76 @@
     },
     {
       "kind": "javascript-module",
+      "path": "mode.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "name": "LuzMode",
+          "customElement": true,
+          "tagName": "luz-mode",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "description": "Core's color mode radios with an Auto state that follows the system or the clock of the day; it stores the choice on request.",
+          "attributes": [
+            {
+              "name": "remember",
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Store the chosen mode under core's luz-theme key; Auto removes it. Without it nothing is stored."
+            },
+            {
+              "name": "by",
+              "type": {
+                "text": "\"clock\""
+              },
+              "description": "What Auto follows: the local hour, which also writes the light attribute; without it (or by=\"system\") the system's preferences."
+            },
+            {
+              "name": "for",
+              "type": {
+                "text": "string"
+              },
+              "description": "The id of the element that gets data-theme and the light attribute; the default is <html>."
+            },
+            {
+              "name": "light-attr",
+              "type": {
+                "text": "string"
+              },
+              "description": "The name of the attribute for the phase of the day, a data-* name; the default is data-light."
+            }
+          ],
+          "events": [
+            {
+              "name": "luz-mode:change",
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Bubbles from the element after the upgrade and on every change, with detail { mode, theme, light, remembered, simulated }."
+            }
+          ],
+          "demos": [
+            {
+              "url": "/docs/site/mode/"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "custom-element-definition",
+          "name": "luz-mode",
+          "declaration": {
+            "name": "LuzMode",
+            "module": "mode.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "search.js",
       "declarations": [
         {

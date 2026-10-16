@@ -76,7 +76,7 @@ import "@luz-ds/core";
 
 ### Level 3: tokens, core and site
 
-Five components that need data of the site: search, cookie consent, language switch, submenu and banner. Site needs core and tokens. The page structure, from the header to the footer, is in landing and cms, which work without site.
+Six components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner. Site needs core and tokens. The page structure, from the header to the footer, is in landing and cms, which work without site.
 
 `pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site`
 
@@ -166,7 +166,7 @@ curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css | opens
 
 Write the result as `integrity="sha384-…"` on the tag that loads that file, and repeat it for each file.
 
-A hash on a script covers that file only, not the files it loads later. `site.min.js` loads `search.min.js` on a page with a search and `consent.min.js` on a page with a cookie banner. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A `<link rel="modulepreload">` with a hash is not a guard in Safari or Firefox: use it as a performance hint only.
+A hash on a script covers that file only, not the files it loads later. `site.min.js` loads `search.min.js` on a page with a search and `consent.min.js` on a page with a cookie banner and `mode.min.js` on a page with an Auto color mode. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A `<link rel="modulepreload">` with a hash is not a guard in Safari or Firefox: use it as a performance hint only.
 
 Integrity for the site scripts
 ```html
@@ -174,7 +174,8 @@ Integrity for the site scripts
 {
   "integrity": {
     "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js": "sha384-…",
-    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js": "sha384-…"
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js": "sha384-…",
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/mode.min.js": "sha384-…"
   }
 }
 </script>
@@ -213,7 +214,7 @@ Package dependency chain
       ↓ required by
 @luz-ds/core     -> components, objects, bare-element styles, optional JS
       ↓ required by
-@luz-ds/site     -> search, consent, lang-switch, submenu and banner
+@luz-ds/site     -> search, consent, mode, lang-switch, submenu and banner
 
 Each of these needs tokens and core, and takes site as an optional peer:
 @luz-ds/landing  -> header, hero, sections and footer of a landing page (own version, 0.x)
@@ -245,6 +246,7 @@ Which package holds each part of a page
 - The links of a header, and its menu button: `.luz-navbar`, `.luz-nav-toggle`: core: A popover panel at 768 px and below, with no script
 - Submenu, banner: `<luz-submenu>`, `<luz-banner>`: site: Tags with no script and no class: the submenu is a native `<details>` in a header's links, the banner a `<section>`
 - Cookie consent: `<luz-consent>`, `.luz-consent`: site: `site.js` loads its script, `consent.js`, when the page has one; a band fixed at the bottom of the window; without the script it stays hidden
+- Auto color mode: `<luz-mode>`: site: `site.js` loads its script, `mode.js`, when the page has one; without it the radios of core's switcher still work and Auto is light
 - Language switch: `<luz-lang-switch>`: site: No script
 - Site search: `<luz-search>`, `.luz-search`: site: Needs the script (`site.js`, which loads `search.js` when the page has one) and an index file; without them it is a link
 - Print styles: Nothing to add: core: In `luz.css`; site adds its own print rules
@@ -384,7 +386,7 @@ These are examples, not the full list: each component's page names the attribute
 
 A tag that starts with `luz-` is a custom element. LUZ's are in the light DOM, so your CSS reaches inside them, and their parts are classes: `.luz-<tag>__<part>`.
 
-- **With a script:** `<luz-search>`, `<luz-consent>` and `<luz-timeline>` need their script to do their job.
+- **With a script:** `<luz-search>`, `<luz-consent>`, `<luz-mode>` and `<luz-timeline>` need their script to do their job.
 - **CSS only:** `<luz-lang-switch>`, `<luz-submenu>` and `<luz-banner>` have no script at all. They are a tag you can style before and without its script.
 
 Which package holds each one is in [How LUZ is organised](https://nandovejer.github.io/luz/docs/get-started/structure/).
@@ -758,10 +760,11 @@ The exports of each package
 - `@luz-ds/site`: `.`: `site.js`: loads the script of each site element the page has
 - `@luz-ds/site`: `./search`: The `<luz-search>` element
 - `@luz-ds/site`: `./consent`: The `<luz-consent>` element, and `getConsent`
+- `@luz-ds/site`: `./mode`: The `<luz-mode>` element
 - `@luz-ds/site`: `./css`: `site.css`: the styles of the site elements
 - `@luz-ds/site`: `./css/min`: `site.min.css`: the same, minified
 - `@luz-ds/site`: `./print.css`: The print rules of the site elements, alone
-- `@luz-ds/site`: `./components/*`: One stylesheet per site element: banner, consent, language switch, search and submenu
+- `@luz-ds/site`: `./components/*`: One stylesheet per site element: banner, consent, language switch, mode, search and submenu
 - `@luz-ds/site`: `./classes.json`: Every class and custom property the package defines, with its kind and layer, as JSON for tools and AI agents
 - `@luz-ds/site`: `./custom-elements.json`: Every custom element the package defines or styles, with its attributes and events, in the Custom Elements Manifest format, for editors and AI agents
 - `@luz-ds/landing`: `./css`: `landing.css`: the pieces of a landing page
@@ -938,7 +941,7 @@ initTabs();
 - `luz.js` starts every module when the page loads.
 - Importing a single module does nothing until you call its `init` function.
 - `midi.js`, `table-sort.js` and `timeline.js` are chunks of their own: `luz.js` loads each one on demand, and only on a page that needs it.
-- The site search is in `@luz-ds/site`: see [Search](https://nandovejer.github.io/luz/docs/site/search/). So is the cookie banner, a module of its own that `site.js` does not include: see [Cookie consent](https://nandovejer.github.io/luz/docs/site/consent/).
+- The site search is in `@luz-ds/site`: see [Search](https://nandovejer.github.io/luz/docs/site/search/). So is the cookie banner, a module of its own that `site.js` does not include: see [Cookie consent](https://nandovejer.github.io/luz/docs/site/consent/). The Auto color mode is a third module of the same kind, `mode.js`, loaded by `site.js` only on a page with a `<luz-mode>`: see [Auto color mode](https://nandovejer.github.io/luz/docs/site/mode/).
 
 ### The modules
 
@@ -960,6 +963,7 @@ What each behaviour falls back to when the script does not run:
 
 - [Tabs](https://nandovejer.github.io/luz/docs/components/tabs/): Links, and every panel stacked
 - [Color mode switcher](https://nandovejer.github.io/luz/docs/components/mode-switcher/): Three radios that still change the mode; not remembered
+- [Auto color mode](https://nandovejer.github.io/luz/docs/site/mode/): The four radios still change the mode; Auto is light, and neither the system nor the clock is followed
 - [Copy button](https://nandovejer.github.io/luz/docs/components/copy-button/): Hidden; the text stays selectable
 - [Player](https://nandovejer.github.io/luz/docs/components/player/): The browser's own media controls; MIDI shows its fallback text
 - [Modal](https://nandovejer.github.io/luz/docs/components/modal/): Opens where the browser supports `command`; elsewhere the open button does nothing
@@ -1423,7 +1427,7 @@ Mode examples
 
 Every mode is measured against the same minimums: 4.5:1 for text, 3:1 for disabled text, borders and focus rings. The same measure runs on a theme of your own with `npx @luz-ds/tokens check-contrast`, or in the browser with [the contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/).
 
-### Follow the system setting
+### Following the system or the clock
 
 A page is light until it says otherwise: LUZ reads nothing of the visitor's device by itself. To start in dark when the device is in dark, set the attribute from a script in the head.
 
@@ -1443,10 +1447,17 @@ Following the system color mode
 ```
 
 - Put it in `<head>`. It runs before the first paint, so the page does not flash light. Make it `<script type="module">` to keep it off the critical path: the page then paints light first, and switches.
+- Under a CSP without `'unsafe-inline'`, serve it as a classic file in `<head>` or allow it by its `'sha256-…'` hash.
 - A mode the reader chose wins. The color mode switcher stores it under `luz-theme`, and the script reads that first. The system setting is never stored, so the page keeps following it until the reader chooses.
 - Without JavaScript the page stays light, and the radios of the switcher still change the mode for the session.
 - It reads the setting once, when the page loads. To follow a change while the page is open, listen to the `change` event of `matchMedia()` and call `applyTheme(mode, { persist: false })` from `@luz-ds/core/theme`, only while `getStoredTheme()` is `null`.
 - It sets the three modes. A theme of your own is set with `data-theme` and `data-mode`, as [the themes page](https://nandovejer.github.io/luz/docs/tokens/themes/) says.
+
+The script sets the mode once. To keep following the system while the page is open, and to give the reader an Auto choice beside the three modes, wrap the switcher in [`<luz-mode>`](https://nandovejer.github.io/luz/docs/site/mode/), from `@luz-ds/site`.
+
+- Auto follows the system: `prefers-contrast: more` gives high contrast, then `prefers-color-scheme: dark` gives dark, otherwise light.
+- With `by="clock"` Auto follows the time of day instead, and writes the phase as `data-light`: see [how it works](https://nandovejer.github.io/luz/docs/site/mode/#how).
+- A mode the reader chooses wins over both. Without JavaScript Auto is light.
 
 The values are not repeated here: the primitives are in `tokens.json` of @luz-ds/tokens, and every custom property of a package, with the file that declares it, is in the `properties` of its `classes.json`.
 
@@ -2643,6 +2654,7 @@ A native radio group, styled by `components/mode-switcher.css`. The radios are t
 - `initThemeCycle()` turns each `--cycle` group into one button. Each press checks the next mode and fires its `change` event, so whatever listens to the radios applies it. It adds the button if the markup has none.
 - A look of your own ([make one](https://nandovejer.github.io/luz/docs/tokens/themes/)) joins the choice when its name is listed in `data-luz-themes` on `<html>`: a stored value is accepted only for the three modes and for those names.
 - `luz.js` runs both.
+- To add an Auto choice that follows the system setting or the time of day, wrap the radios, with a fourth one for it, in [`<luz-mode>`](https://nandovejer.github.io/luz/docs/site/mode/) from `@luz-ds/site`.
 
 ### Without JavaScript
 The three radios show, even in the cycle variant, and choosing one changes the mode of the page. The choice is not remembered on the next page.
@@ -4798,11 +4810,11 @@ Panel that slides in code
 ## Site
 URL: https://nandovejer.github.io/luz/docs/site/
 
-Five self-contained components that need data of the site: search, cookie consent, language switch, submenu and banner, and how to tell whether you need them.
+Six self-contained components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner, and how to tell whether you need them.
 
 Level 3 · @luz-ds/site
 
-Five self-contained components that need data of the site: search, cookie consent, language switch, submenu and banner, and how to tell whether you need them.
+Six self-contained components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner, and how to tell whether you need them.
 
 A piece is here when it needs data of the site: its search index, its cookie policy, its languages, its menu, an announcement. Each is a `<luz-*>` tag that works on its own, in any header or page. Everything else is a **component** of core, one reusable piece that fits inside anything; components are in [Components](https://nandovejer.github.io/luz/docs/components/).
 
@@ -5123,6 +5135,142 @@ Say in a sentence what the site needs and what it would like, and why, in plain 
 - Name each category after what it does for whom: “Measuring visits”, “Adverts on other sites”, not “Performance” or “Targeting”.
 - Link the cookie policy by its name, and say in the confirmation where the answer can be changed.
 
+## Auto color mode
+URL: https://nandovejer.github.io/luz/docs/site/mode/
+Example: https://nandovejer.github.io/luz/examples/site/mode.html
+Files: <luz-mode>, remember, by="clock" · Package: @luz-ds/site
+
+Adds an Auto choice to the color mode switcher, so the page follows the system setting or the time of day until the reader chooses a mode.
+
+### Known issues
+What to expect:
+
+- With `by="clock"`, Auto is dark from 20:30 to 07:30 even when the device is set to light. The system setting is not read.
+- With `prefers-contrast: more` and a dark setting together, Auto gives the high-contrast mode, which is light.
+- In the Auto state the cycle button says Auto, not the mode Auto applied.
+- Without [the script for the head](https://nandovejer.github.io/luz/docs/site/mode/#boot), a dark system can flash the wrong mode first.
+- Auto and the legend are yours to translate. A name in `data-luz-themes` is left to core.
+- It has not been tested with a screen reader.
+
+### Copy the markup
+Core's [color mode switcher](https://nandovejer.github.io/luz/docs/components/mode-switcher/) with a fourth radio, `auto`, checked, inside `<luz-mode>`. `site.min.js` loads the element's file, `mode.min.js`; a page without it loads that file on its own.
+
+Put the icons in the labels, not `data-mode-icon` on the cycle button: with `luz.js` the button copies the checked label's icon, and core has no Auto icon for `data-mode-icon`.
+
+Auto color mode markup
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js"></script>
+
+<luz-mode remember by="clock">
+  <fieldset class="luz-mode-switcher luz-mode-switcher--cycle">
+    <legend class="luz-mode-switcher__label">Color mode</legend>
+    <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m8 16 4-8 4 8m-6-3h4" fill="none" stroke="currentColor" stroke-width="2"/></svg>Auto</label>
+    <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="1.5 4.8"/></svg>Light</label>
+    <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+    <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
+  </fieldset>
+</luz-mode>
+```
+
+#### Script for the head
+
+This script, for `by="system"`, avoids the flash of the wrong mode: it sets `data-theme` before the first paint. It is recommended, not required. It takes the mode stored under `luz-theme`, then `prefers-contrast`, then `prefers-color-scheme`.
+
+Under a CSP without `'unsafe-inline'`, serve it as a classic file in the `<head>` or allow it by its `'sha256-…'` hash.
+
+Script for the head
+```html
+<script>
+  (function () {
+    var m;
+    try { m = localStorage.getItem("luz-theme"); } catch (e) {}
+    if (["light", "dark", "high-contrast"].indexOf(m) < 0)
+      m = matchMedia("(prefers-contrast: more)").matches ? "high-contrast"
+        : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    document.documentElement.dataset.theme = m;
+  })();
+</script>
+```
+
+### Variants and options
+There are no variants. The attributes of `<luz-mode>`:
+
+- `remember`: A boolean. Stores the choice under `luz-theme`, core's key. Auto removes it. Without it a reload starts in Auto
+- `by`: What Auto follows: `system` (the default) or `clock`
+- `for`: The `id` of the element that gets the attributes. `<html>` by default
+- `light-attr`: The attribute that holds the phase of the day, `data-light` by default. Never `data-theme` or a `data-luz-*` attribute: they are not checked, and are the mode's and core's
+
+### How it works
+CSS from `@luz-ds/site` for the element's box and `@luz-ds/site/mode`, which defines `<luz-mode>`. `site.min.js` loads it when idle, on a page with a `<luz-mode>`. The radios and labels are core's: the element writes no text.
+
+- **Auto by the system:** `prefers-contrast: more` gives `high-contrast`; otherwise `prefers-color-scheme: dark` gives `dark`; otherwise `light`. It follows a change while the page is open.
+- **Auto by the clock:** `prefers-contrast: more` still wins. Otherwise the phase of the day decides: `dark` in the dark phases, `light` in the others, and it is written as `data-light`. It checks every minute and when the tab shows again.
+- **A mode the reader chose:** It sets `data-theme` to it. With `by="clock"` the light is pinned: `afternoon` for Light, `night` for the others.
+- **Storage:** only with `remember`, under core's `luz-theme`; a value that is not a mode is ignored.
+- **With luz.js:** core's script ignores Auto, and its cycle button steps through all four.
+
+The phases of the day, by the visitor's clock. Night runs through midnight.
+
+- `night`: 22:30: 05:00: dark
+- `dawn`: 05:00: 07:30: dark
+- `morning`: 07:30: 12:00: light
+- `afternoon`: 12:00: 17:30: light
+- `sunset`: 17:30: 20:30: light
+- `dusk`: 20:30: 22:30: dark
+
+#### Properties, methods and event
+
+- `el.mode`: The choice: `auto`, `light`, `dark` or `high-contrast`. Setting it chooses the radio
+- `el.light`: The phase of the day now, or `null` unless `by="clock"`
+- `preview(x)`: Shows another time of day: `x` is a phase name or an hour from 0 to 24. With Auto, `data-theme` follows it; with a mode chosen, only the light does. `preview(null)` goes back. Unless `by="clock"` it returns `false`
+- `luz-mode:change`: Bubbles from the element at every change. Its `detail`: `mode` (the choice), `theme` (the `data-theme` applied), `light` (the phase, or `null`), `remembered` (`true` only with `remember` and a mode stored now) and `simulated` (`true` while a preview is active)
+
+#### Two lights in one mode
+
+With `by="clock"` the rest is your CSS: set only the semantic tokens that differ, as [a theme of your own](https://nandovejer.github.io/luz/docs/tokens/themes/) does. Measure each pair with the [contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/).
+
+A day look and a night look
+```css
+[data-theme="light"][data-light="morning"] {
+  --luz-surface-page: #fdf3dc;
+  --luz-surface-muted: #fdf3dc;
+  --luz-surface: #fffaf0;
+}
+
+[data-theme="dark"][data-light="night"] {
+  --luz-surface-page: #0f1520;
+  --luz-surface-muted: #0f1520;
+  --luz-surface: #172030;
+}
+```
+
+### Without JavaScript
+The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light. The system and the clock are not followed, and nothing is remembered.
+
+### Keyboard and ARIA
+- **Radios:** Tab reaches the group, the arrow keys choose Auto, Light, Dark or High contrast. With `luz.js`, the cycle button moves to the next of the four with Enter or Space.
+- The legend and the labels are yours. The element adds no button, role or ARIA: the group is the fieldset and its radios.
+
+### When to use
+Use it when readers should not have to choose: the page follows their device or the time of day until they do.
+
+- `by="system"` for a site that reads best in the light or the dark the reader's device is in.
+- `by="clock"` for a site with a look for each part of the day, such as a venue or a weather page.
+
+### When not to use
+Do not use it when the site has one look in one mode: a switcher with no Auto is core's.
+
+- Do not use `by="clock"` to promise the real sunrise: the hours are fixed.
+
+### Do and don't
+- **Do** Call the choice “Auto” and keep the other names as they are: the reader sees the four ways to choose at once.
+- **Don't** Name it “Smart” or “Magic”: it does not say what the page follows, and a reader cannot tell it from a mode.
+
+### Writing the content
+Call the group “Color mode” and the choices “Auto”, “Light”, “Dark” and “High contrast”.
+
+- Say near the switcher what Auto follows: “Auto follows your device” or “Auto follows the time of day”.
+
 ## Language switch
 URL: https://nandovejer.github.io/luz/docs/site/lang-switch/
 Example: https://nandovejer.github.io/luz/examples/site/lang-switch.html
@@ -5342,7 +5490,7 @@ Every text is in the markup, so it is yours to write, in the page's language.
 URL: https://nandovejer.github.io/luz/docs/site/classes/
 Files: components/search.css, components/consent.css, components/lang-switch.css, components/submenu.css, components/banner.css · Package: @luz-ds/site
 
-Every tag and class of the five site components, what element it goes on and what it does, in one place.
+Every tag and class of the site components, what element it goes on and what it does, in one place.
 
 Look up a tag or a class by name. Each component's own page has its markup and guidance. The page structure that site held before, from the shell to the footer, is in core ([layout](https://nandovejer.github.io/luz/docs/components/layout/), [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/), [image](https://nandovejer.github.io/luz/docs/components/image/), [band](https://nandovejer.github.io/luz/docs/components/band/)) and in the packages for one kind of site ([landing](https://nandovejer.github.io/luz/docs/landing/), [CMS](https://nandovejer.github.io/luz/docs/cms/)).
 
@@ -6405,7 +6553,7 @@ This page is a library of whole-page templates: open its URL for the markup of e
 ## Accessibility statement
 URL: https://nandovejer.github.io/luz/docs/accessibility/
 
-LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 15 October 2026.
+LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 16 October 2026.
 
 ### Target
 
@@ -6459,7 +6607,8 @@ Automated tools find only part of the problems. Treat this list as the gap, and 
 - **Navbar menu.** On narrow screens the menu of a navbar, in a landing, CMS or docs header, opens as a panel under the header. If you keep pressing Tab after its last link, focus moves into the page and the panel stays open over it. Press Escape to close it. (WCAG 2.2 success criterion 2.4.12, level AAA; level AA 2.4.11 is met.) Where CSS anchor positioning is supported (Chrome and Edge 125, Safari 26, Firefox 147) the panel opens under the header wherever it ends. In older browsers it opens at the height of a one-row bar at the default text size (`--luz-bar-h`), from the top of the window: with enlarged text and a header that wraps to a second row, or with a banner above the header before the page scrolls, it can cover part of the header.
 - **Submenu.** A submenu of a header’s links is a native disclosure: Escape and a click outside do not close it; its own button or opening another one does (several can stay open in Firefox before 130 and Safari before 17.2). From 769 pixels wide an open submenu stays over the top of the page, so if you keep pressing Tab after it, a link behind it can be hidden (WCAG 2.2 success criterion 2.4.11, Focus not obscured, minimum). Press its button to close it. In the narrow menu its links are in the flow and Escape closes the whole menu. It has not been tested with a screen reader.
 - **Banner.** It cannot be closed. It has no script.
-- **Cookie consent.** Without JavaScript the banner is not shown, because none of the site's own scripts run either; the cookie policy is a link on every page. With it, the banner shows as a band fixed at the bottom of the window, so nothing on the page moves; it comes first after the skip link in the reading and Tab order, takes no focus when the page loads, does not block the page, and Escape neither answers nor hides it. While it shows, the page keeps room for it at its end and scrolls what Tab reaches above it (WCAG 2.2 success criterion 2.4.11). In a window less than 480 pixels tall it is in the flow at the top of the page instead, so the page moves down when it appears. Its confirmation hides with its Close button, which returns focus to the button that opened the banner or to the main content, or when focus leaves it for the page; a click on an empty part of the page does not hide it. The answer is stored in the browser, not in a cookie. It has not been tested with a screen reader.
+- **Cookie consent.** Without JavaScript the banner is not shown, because none of the site's own scripts run either; the cookie policy is a link on every page. With it, the banner shows as a band fixed at the bottom of the window, so nothing on the page moves; it comes first after the skip link in the reading and Tab order, takes no focus when the page loads, does not block the page, and Escape neither answers nor hides it. While it shows, the page keeps room for it at its end and scrolls what Tab reaches above it (WCAG 2.2 success criterion 2.4.11); in Safari, which ignores that scroll padding for text fields, a script scrolls a field reached with Tab back above the band. In a window less than 30 rem tall it is in the flow at the top of the page instead, so the page moves down when it appears. Its confirmation hides with its Close button, which returns focus to the button that opened the banner or to the main content, or when focus leaves it for the page; a click on an empty part of the page does not hide it. The answer is stored in the browser, not in a cookie. It has not been tested with a screen reader.
+- **Auto color mode.** The `<luz-mode>` element adds an Auto radio to the color mode switcher. Without JavaScript the four radios still change the mode, but Auto is light: the system setting and the time of day are followed only by the script. Where the page does not have the small script for the head, a page that follows a dark system can paint light first. With `by="clock"` Auto is dark from 20:30 to 07:30 even when the device is set to light. With `prefers-contrast: more` and a dark setting, Auto gives the high-contrast mode. The cycle button says Auto, not the mode applied. It has not been tested with a screen reader.
 - **Sticky header, enlarged text.** A sticky header (`.o-sticky`) keeps a field reached with Tab clear of it by a minimum height. That works at 100 and 200 percent text. At 300 percent text, when the header wraps to several rows, Safari can still leave the field partly under it; Chrome, Edge and Firefox keep it clear. The Layout objects page and the landing and CMS Header pages say how to set the padding for your own header. In Firefox with forced colors the dim layer behind the open menu is not drawn; the panel keeps its border.
 - **Band.** A band (`.luz-band`) cuts off whatever sticks out of it above or below, so a tooltip on the first control of a band is clipped at 200 percent text and larger; start the band with its heading. The hover of an outline or ghost button on a band shows no change. In forced colors the band has no tint, only two thin rules above and below it.
 - **Prose.** A table that is wider than the text column and has no `.luz-table-wrap` around it makes the whole page scroll sideways on a narrow screen. A long preformatted block scrolls inside itself; give it `tabindex="0"` and a name, as the code block has, or Safari users cannot scroll it with the keyboard.
@@ -6472,7 +6621,8 @@ Automated tools find only part of the problems. Treat this list as the gap, and 
 - **Timeline.** Without JavaScript it is an ordered list with a line and a dot per item, and every item is visible. With it, only the current card is read and reached with Tab; the other cards are inert. The Previous and Next buttons are named only “Previous” and “Next”: the name does not say which date they lead to. Whether a screen reader announces the card that appears when you change the item has not been tested, and the timeline has not been tested with a screen reader at all. Autoplay is off unless the page asks for it. When it is on, it moves a card every few seconds, and a visible Pause / Play button stops and resumes it. It also holds while the pointer moves over the timeline, while the keyboard focus is inside it, while less than half of it is on screen and while the tab is hidden, and it never starts with reduced motion. While it runs, the card is not announced.
 - **Languages LUZ does not ship.** On a page in a language LUZ has no strings for, such as French or Arabic, the labels and messages its scripts write (player buttons, copy buttons, code block names, sort status) are in English inside a page marked with another language, so a screen reader reads them with that language's voice (WCAG 3.1.2, Language of parts). The scripts warn once in the console. Set all the `data-luz-label-*` attributes once on `<html>` or `<body>`, or call `registerLocale()` before the scripts start, and they are in your language. The home page does this for Arabic.
 - **Legacy theme buttons.** On a page in another language, the Apply theme / Applied buttons of the legacy custom-theme markup (`luz-theme-apply-btn`) are in English until the first theme change, unless the page sets `data-luz-label-apply-theme` and `data-luz-label-theme-applied`. Not tested with a screen reader.
-- **Strings in a language LUZ ships.** Spanish is a file fetched when a page declares it. If that language file cannot load, the labels LUZ's scripts add are in English inside a page marked with another language, and a screen reader reads them with that language's voice. The page itself, and its authored text, are not affected. The labels are written once the file arrives, or after two seconds without it. A click before the language arrives announces in English, and a late arrival mixes English labels written at start with Spanish labels written on a state change, such as play and pause. Not tested with NVDA, JAWS, VoiceOver, TalkBack or Orca.
+- **Strings in a language LUZ ships.** Spanish is a file fetched when a page declares it. If that language file cannot load, the labels LUZ's scripts add are in English inside a page marked with another language, and a screen reader reads them with that language's voice. The page itself, and its authored text, are not affected. The labels are written once the file arrives, or after two seconds without it. A click before the language arrives announces in English, and a late arrival mixes English labels written at start with Spanish labels written on a state change, such as play and pause. Not tested with NVDA, JAWS, VoiceOver, TalkBack or Orca. The standalone modules (`/highlight`, `/player`, `/theme`, `/clipboard`) carry English only: a Spanish page that imports them directly must call `loadLocales()` or `registerLocale()`.
+- **Button.** A `.luz-btn` does not wrap its label (`white-space: nowrap`), so a button with a long label can overflow its container at 320 pixels wide with text at 130 percent (WCAG 1.4.10, Reflow). Shorten the label, or set `white-space: normal` in your own layer.
 - **Copy button.** When the browser refuses to copy, the failure is announced to screen readers, but the button shows no message.
 
 ### Report a problem

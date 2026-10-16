@@ -12,10 +12,10 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-BLFqFzO1.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CntHoG1R.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D0TgfiGY.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-2VxXI5Sp.css">
+  <script type="module" crossorigin src="../../../assets/reference-B3A9Uvaq.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-hmJxk_Q7.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CYPPepRi.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-GOMTznhJ.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -168,7 +168,7 @@ initTabs();</code></pre>
             <li><code>luz.js</code> starts every module when the page loads.</li>
             <li>Importing a single module does nothing until you call its <code>init</code> function.</li>
             <li><code>midi.js</code>, <code>table-sort.js</code> and <code>timeline.js</code> are chunks of their own: <code>luz.js</code> loads each one on demand, and only on a page that needs it.</li>
-            <li>The site search is in <code>@luz-ds/site</code>: see <a href="../../../docs/site/search/">Search</a>. So is the cookie banner, a module of its own that <code>site.js</code> does not include: see <a href="../../../docs/site/consent/">Cookie consent</a>.</li>
+            <li>The site search is in <code>@luz-ds/site</code>: see <a href="../../../docs/site/search/">Search</a>. So is the cookie banner, a module of its own that <code>site.js</code> does not include: see <a href="../../../docs/site/consent/">Cookie consent</a>. The Auto color mode is a third module of the same kind, <code>mode.js</code>, loaded by <code>site.js</code> only on a page with a <code>&lt;luz-mode&gt;</code>: see <a href="../../../docs/site/mode/">Auto color mode</a>.</li>
           </ul>
           <h2 id="js-modules">The modules</h2>
           <details class="docs-fold" open data-fold-narrow>
@@ -213,6 +213,7 @@ initTabs();</code></pre>
               <tbody>
                 <tr><td data-label="Component"><div><a href="../../../docs/components/tabs/">Tabs</a></div></td><td data-label="Without JavaScript"><div>Links, and every panel stacked</div></td></tr>
                 <tr><td data-label="Component"><div><a href="../../../docs/components/mode-switcher/">Color mode switcher</a></div></td><td data-label="Without JavaScript"><div>Three radios that still change the mode; not remembered</div></td></tr>
+                <tr><td data-label="Component"><div><a href="../../../docs/site/mode/">Auto color mode</a></div></td><td data-label="Without JavaScript"><div>The four radios still change the mode; Auto is light, and neither the system nor the clock is followed</div></td></tr>
                 <tr><td data-label="Component"><div><a href="../../../docs/components/copy-button/">Copy button</a></div></td><td data-label="Without JavaScript"><div>Hidden; the text stays selectable</div></td></tr>
                 <tr><td data-label="Component"><div><a href="../../../docs/components/player/">Player</a></div></td><td data-label="Without JavaScript"><div>The browser's own media controls; MIDI shows its fallback text</div></td></tr>
                 <tr><td data-label="Component"><div><a href="../../../docs/components/modal/">Modal</a></div></td><td data-label="Without JavaScript"><div>Opens where the browser supports <code>command</code>; elsewhere the open button does nothing</div></td></tr>

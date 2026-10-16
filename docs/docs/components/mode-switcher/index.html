@@ -12,10 +12,10 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-BLFqFzO1.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CntHoG1R.js"></script>
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/site-header-D0TgfiGY.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-2VxXI5Sp.css">
+  <script type="module" crossorigin src="../../../assets/reference-B3A9Uvaq.js"></script>
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-hmJxk_Q7.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/site-header-CYPPepRi.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-GOMTznhJ.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -283,6 +283,7 @@ initThemeCycle();</code></pre>
               <li><code>initThemeCycle()</code> turns each <code>--cycle</code> group into one button. Each press checks the next mode and fires its <code>change</code> event, so whatever listens to the radios applies it. It adds the button if the markup has none.</li>
               <li>A look of your own (<a href="../../../docs/tokens/themes/">make one</a>) joins the choice when its name is listed in <code>data-luz-themes</code> on <code>&lt;html&gt;</code>: a stored value is accepted only for the three modes and for those names.</li>
               <li><code>luz.js</code> runs both.</li>
+              <li>To add an Auto choice that follows the system setting or the time of day, wrap the radios, with a fourth one for it, in <a href="../../../docs/site/mode/"><code>&lt;luz-mode&gt;</code></a> from <code>@luz-ds/site</code>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>The three radios show, even in the cycle variant, and choosing one changes the mode of the page. The choice is not remembered on the next page.</p>

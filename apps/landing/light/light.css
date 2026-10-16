@@ -1,8 +1,8 @@
 /* ==========================================================================
-   <luz-light> on the home page (apps/landing/light/light.css)
+   <home-light> on the home page (apps/landing/light/light.css)
 
-   The rules of the controller and of its three visuals, <luz-globe>,
-   <luz-city> and <luz-map>: every rule the mockup injected with <style>, as
+   The rules of the controller and of its three visuals, <home-globe>,
+   <home-city> and <home-map>: every rule the mockup injected with <style>, as
    one stylesheet that only apps/landing/index.html links. Unlayered, as the
    home's own CSS.
 
@@ -17,7 +17,7 @@
    visual and its line arrive in a box that is already there.
    ========================================================================== */
 
-luz-light {
+home-light {
   /* The drawing's inks */
   --light-sun: #ffd27a;
   --light-neon: #2ef2f5;
@@ -49,17 +49,17 @@ luz-light {
 /* The visual runs out to the edges of the page's frame, over the gutters of
    the home's main (.landing-wrap in apps/landing/landing.css: the same
    values, at the same width) */
-luz-light[bleed] {
+home-light[bleed] {
   margin-inline: calc(-1 * (var(--site-edge, 0px) + var(--luz-space-xl)));
 }
 
 @media (max-width: 640px) {
-  luz-light[bleed] {
+  home-light[bleed] {
     margin-inline: calc(-1 * var(--luz-space-md));
   }
 }
 
-:root[data-theme="high-contrast"] luz-light {
+:root[data-theme="high-contrast"] home-light {
   --light-sun: var(--luz-text-primary);
   --light-neon: var(--luz-text-primary);
   --light-neon-2: var(--luz-text-primary);
@@ -76,18 +76,18 @@ luz-light[bleed] {
    The stage: the visual fills the box, its foot over the faded bottom
    -------------------------------------------------------------------------- */
 
-luz-light .luz-light__stage {
+home-light .home-light__stage {
   position: absolute;
   inset: 0;
 }
 
-luz-light .luz-light__stage > [hidden] {
+home-light .home-light__stage > [hidden] {
   display: none;
 }
 
 /* The glow behind the globe follows the sun; two masks fade it downwards and
    at the sides, so the ellipse never meets the edge of the box */
-luz-light .luz-light__glow {
+home-light .home-light__glow {
   position: absolute;
   inset: -45% 0 -10%;
   pointer-events: none;
@@ -96,13 +96,13 @@ luz-light .luz-light__glow {
   mask-composite: intersect;
 }
 
-luz-light:not([look="globe"]) .luz-light__glow {
+home-light:not([look="globe"]) .home-light__glow {
   display: none;
 }
 
 /* The globe: as tall as the box, at most twice as wide as tall, so a wide
    screen shows its upper half and a narrow one more of it */
-luz-light .luz-light__stage > luz-globe {
+home-light .home-light__stage > home-globe {
   height: 100%;
   max-width: 100%;
   aspect-ratio: 2 / 1;
@@ -110,8 +110,8 @@ luz-light .luz-light__stage > luz-globe {
   mask-image: linear-gradient(to bottom, #000 28%, rgb(0 0 0 / 0.85) 45%, rgb(0 0 0 / 0.55) 64%, rgb(0 0 0 / 0.22) 84%, transparent 100%);
 }
 
-luz-light .luz-light__stage > luz-city,
-luz-light .luz-light__stage > luz-map {
+home-light .home-light__stage > home-city,
+home-light .home-light__stage > home-map {
   height: 100%;
   mask-image: linear-gradient(to bottom, #000 72%, transparent);
 }
@@ -120,7 +120,7 @@ luz-light .luz-light__stage > luz-map {
    The foot: the line that opens the bar, and the bar above it
    -------------------------------------------------------------------------- */
 
-luz-light .luz-light__foot {
+home-light .home-light__foot {
   position: absolute;
   inset-inline: 0;
   inset-block-end: 0;
@@ -130,7 +130,7 @@ luz-light .luz-light__foot {
   padding-inline: var(--luz-space-md);
 }
 
-luz-light .luz-light__line {
+home-light .home-light__line {
   position: relative;
   max-width: 64ch;
   padding: var(--luz-space-xs) var(--luz-space-md);
@@ -144,22 +144,22 @@ luz-light .luz-light__line {
   transition: color var(--luz-duration-slow) var(--_ease);
 }
 
-luz-light .luz-light__line:hover,
-luz-light .luz-light__line[aria-expanded="true"] {
+home-light .home-light__line:hover,
+home-light .home-light__line[aria-expanded="true"] {
   color: var(--_ink);
 }
 
 /* The phrase is the site's voice, between quotation marks */
-luz-light .luz-light__q::before {
+home-light .home-light__q::before {
   content: open-quote;
 }
 
-luz-light .luz-light__q::after {
+home-light .home-light__q::after {
   content: close-quote;
 }
 
 /* A hairline from the line up to the open bar */
-luz-light .luz-light__line::before {
+home-light .home-light__line::before {
   content: "";
   position: absolute;
   inset-inline-start: 50%;
@@ -170,11 +170,11 @@ luz-light .luz-light__line::before {
   transition: block-size var(--luz-duration-slow) var(--_ease);
 }
 
-luz-light .luz-light__line[aria-expanded="true"]::before {
+home-light .home-light__line[aria-expanded="true"]::before {
   block-size: var(--luz-space-sm);
 }
 
-luz-light .luz-light__bar {
+home-light .home-light__bar {
   position: absolute;
   inset-inline: var(--luz-space-md);
   inset-block-end: calc(100% + var(--luz-space-xs));
@@ -194,28 +194,28 @@ luz-light .luz-light__bar {
   font: 400 var(--luz-text-sm) / 1.4 var(--luz-font-sans);
 }
 
-luz-light .luz-light__bar[hidden] {
+home-light .home-light__bar[hidden] {
   display: none;
 }
 
-luz-light .luz-light__bar:not([hidden]) {
-  animation: luz-light-bar var(--luz-duration-slower) var(--_ease);
+home-light .home-light__bar:not([hidden]) {
+  animation: home-light-bar var(--luz-duration-slower) var(--_ease);
 }
 
-@keyframes luz-light-bar {
+@keyframes home-light-bar {
   from {
     opacity: 0;
     transform: translateY(8px);
   }
 }
 
-luz-light .luz-light__group {
+home-light .home-light__group {
   display: flex;
   align-items: center;
   gap: var(--luz-space-3xs);
 }
 
-luz-light .luz-light__group button {
+home-light .home-light__group button {
   display: grid;
   place-items: center;
   inline-size: 2.75rem;
@@ -229,16 +229,16 @@ luz-light .luz-light__group button {
   transition: color var(--luz-duration-slow), background-color var(--luz-duration-slow);
 }
 
-luz-light .luz-light__group button:hover,
-luz-light .luz-light__group button[aria-pressed="true"] {
+home-light .home-light__group button:hover,
+home-light .home-light__group button[aria-pressed="true"] {
   color: var(--_ink);
 }
 
-luz-light .luz-light__group button[aria-pressed="true"] {
+home-light .home-light__group button[aria-pressed="true"] {
   background: var(--luz-surface-pressed);
 }
 
-luz-light .luz-light__group svg {
+home-light .home-light__group svg {
   inline-size: 1.25rem;
   block-size: 1.25rem;
   fill: none;
@@ -248,12 +248,12 @@ luz-light .luz-light__group svg {
   stroke-linejoin: round;
 }
 
-luz-light :is(button, input):focus-visible {
+home-light :is(button, input):focus-visible {
   outline: 2px solid var(--luz-focus-ring);
   outline-offset: 2px;
 }
 
-luz-light .luz-light__day {
+home-light .home-light__day {
   display: flex;
   flex: 1 1 16rem;
   align-items: center;
@@ -261,7 +261,7 @@ luz-light .luz-light__day {
 }
 
 /* The slider: the day's sky on its track, the page's paper and accent on its thumb */
-luz-light .luz-light__day input {
+home-light .home-light__day input {
   flex: 1;
   min-inline-size: 0;
   block-size: 2.75rem;
@@ -273,23 +273,23 @@ luz-light .luz-light__day input {
 }
 
 /* Right to left, the day runs from the right */
-:root[dir="rtl"] luz-light {
+:root[dir="rtl"] home-light {
   --light-day: linear-gradient(270deg, #171b36, #6b3f5f 24%, #f7dfb0 36%, #cfe1f6 54%, #f2aa73 78%, #27254a 90%, #171b36);
 }
 
-luz-light .luz-light__day input::-webkit-slider-runnable-track {
+home-light .home-light__day input::-webkit-slider-runnable-track {
   block-size: 6px;
   border-radius: var(--luz-radius-full);
   background: var(--light-day);
 }
 
-luz-light .luz-light__day input::-moz-range-track {
+home-light .home-light__day input::-moz-range-track {
   block-size: 6px;
   border-radius: var(--luz-radius-full);
   background: var(--light-day);
 }
 
-luz-light .luz-light__day input::-webkit-slider-thumb {
+home-light .home-light__day input::-webkit-slider-thumb {
   inline-size: 18px;
   block-size: 18px;
   margin-block-start: -6px;
@@ -299,7 +299,7 @@ luz-light .luz-light__day input::-webkit-slider-thumb {
   appearance: none;
 }
 
-luz-light .luz-light__day input::-moz-range-thumb {
+home-light .home-light__day input::-moz-range-thumb {
   inline-size: 14px;
   block-size: 14px;
   border: 2px solid var(--luz-brand-primary);
@@ -308,7 +308,7 @@ luz-light .luz-light__day input::-moz-range-thumb {
 }
 
 /* The hour reads left to right in every language */
-luz-light .luz-light__day output {
+home-light .home-light__day output {
   min-inline-size: 5ch;
   font-family: var(--luz-font-mono);
   font-size: var(--luz-text-sm);
@@ -319,7 +319,7 @@ luz-light .luz-light__day output {
   unicode-bidi: isolate;
 }
 
-luz-light .luz-light__live {
+home-light .home-light__live {
   padding: var(--luz-space-2xs) var(--luz-space-sm);
   border: 0;
   border-radius: var(--luz-radius-full);
@@ -331,15 +331,15 @@ luz-light .luz-light__live {
   cursor: pointer;
 }
 
-luz-light .luz-light__live:lang(ar) {
+home-light .home-light__live:lang(ar) {
   letter-spacing: 0;
 }
 
-luz-light .luz-light__live[hidden] {
+home-light .home-light__live[hidden] {
   display: none;
 }
 
-luz-light .luz-light__sr {
+home-light .home-light__sr {
   position: absolute;
   inline-size: 1px;
   block-size: 1px;
@@ -350,7 +350,7 @@ luz-light .luz-light__sr {
 
 /* A narrow screen: the bar in two rows, the looks above the slider */
 @media (max-width: 640px) {
-  luz-light .luz-light__bar {
+  home-light .home-light__bar {
     flex-direction: column;
     align-items: stretch;
     gap: var(--luz-space-2xs);
@@ -358,16 +358,16 @@ luz-light .luz-light__sr {
     padding: var(--luz-space-xs) var(--luz-space-sm);
   }
 
-  luz-light .luz-light__day {
+  home-light .home-light__day {
     flex: 0 0 auto;
   }
 }
 
 /* ==========================================================================
-   <luz-globe>
+   <home-globe>
    ========================================================================== */
 
-luz-globe {
+home-globe {
   --_sun: var(--light-sun);
   --_shade: var(--light-shade);
   --_shade-opacity: var(--light-shade-opacity);
@@ -381,16 +381,16 @@ luz-globe {
   user-select: none;
 }
 
-luz-globe[dragging] {
+home-globe[dragging] {
   cursor: grabbing;
 }
 
-luz-globe:focus-visible {
+home-globe:focus-visible {
   outline: 2px solid var(--luz-focus-ring);
   outline-offset: -2px;
 }
 
-luz-globe > .luz-globe__halo {
+home-globe > .home-globe__halo {
   position: absolute;
   inset-block-start: 0;
   inline-size: 100%;
@@ -400,7 +400,7 @@ luz-globe > .luz-globe__halo {
   background: radial-gradient(circle closest-side at 50% 50%, color-mix(in oklab, var(--luz-surface-muted) 55%, var(--_paper)), transparent 100%);
 }
 
-luz-globe > svg {
+home-globe > svg {
   position: absolute;
   inset-block-start: 0;
   display: block;
@@ -410,63 +410,63 @@ luz-globe > svg {
   overflow: visible;
 }
 
-luz-globe .luz-globe__sea {
+home-globe .home-globe__sea {
   fill: color-mix(in oklab, var(--_ink) 4%, transparent);
 }
 
-luz-globe .luz-globe__dots path {
+home-globe .home-globe__dots path {
   fill: none;
   stroke: var(--_ink);
   stroke-linecap: round;
 }
 
-luz-globe .luz-globe__dots .luz-globe__twilight {
+home-globe .home-globe__dots .home-globe__twilight {
   stroke: color-mix(in oklab, var(--_sun) 75%, var(--_ink));
 }
 
-luz-globe .luz-globe__night {
+home-globe .home-globe__night {
   mix-blend-mode: multiply;
 }
 
-luz-globe .luz-globe__cities {
+home-globe .home-globe__cities {
   fill: none;
   stroke: var(--_sun);
   stroke-linecap: round;
 }
 
-luz-globe .luz-globe__rim {
+home-globe .home-globe__rim {
   fill: none;
   stroke: color-mix(in oklab, var(--_ink) 14%, transparent);
   stroke-width: 1;
 }
 
-luz-globe .luz-globe__rim-light {
+home-globe .home-globe__rim-light {
   fill: none;
   stroke-width: 3;
   pointer-events: none;
 }
 
-luz-globe .luz-globe__glint {
+home-globe .home-globe__glint {
   pointer-events: none;
 }
 
 /* ==========================================================================
-   <luz-city>: ink on paper by day, neon by night (--luz-city-glow, 0 to 1,
+   <home-city>: ink on paper by day, neon by night (--home-city-glow, 0 to 1,
    written by the script, cross-fades)
    ========================================================================== */
 
-@property --luz-city-glow {
+@property --home-city-glow {
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
 
-luz-city {
+home-city {
   --_neon: var(--light-neon);
   --_neon2: var(--light-neon-2);
   --_sun: var(--light-sun);
   --_moon: var(--light-moon);
-  --_g: var(--luz-city-glow, 0);
+  --_g: var(--home-city-glow, 0);
   --_line: color-mix(in oklab, var(--_neon) calc(var(--_g) * 100%), var(--_ink));
   --_mag: color-mix(in oklab, var(--_neon2) calc(var(--_g) * 100%), var(--luz-brand-primary));
   --_fill: color-mix(in oklab, var(--light-night-fill) calc(var(--_g) * 100%), var(--_paper));
@@ -477,40 +477,40 @@ luz-city {
   position: relative;
   overflow: hidden;
   user-select: none;
-  transition: --luz-city-glow var(--_fade) var(--_ease);
+  transition: --home-city-glow var(--_fade) var(--_ease);
 }
 
-luz-city > svg {
+home-city > svg {
   display: block;
   inline-size: 100%;
   block-size: 100%;
 }
 
 /* Three layers: the sky (moves with the sun and the moon), the city (still), the light (moves) */
-luz-city > .luz-city__skylayer {
+home-city > .home-city__skylayer {
   position: absolute;
   inset: 0;
 }
 
-luz-city > .luz-city__city {
+home-city > .home-city__city {
   position: relative;
 }
 
-luz-city > .luz-city__fx {
+home-city > .home-city__fx {
   position: absolute;
   inset: 0;
   mix-blend-mode: screen;
   pointer-events: none;
 }
 
-luz-city :is(path, ellipse, circle) {
+home-city :is(path, ellipse, circle) {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 /* Depth is colour, never opacity: a building stays opaque so it hides what is behind it */
-luz-city .luz-city__row {
+home-city .home-city__row {
   --_w: 0.9;
   --_dim: 100%;
   --_stroke: color-mix(in oklab, var(--_line) var(--_dim), var(--_fill));
@@ -518,59 +518,59 @@ luz-city .luz-city__row {
   --_sw: calc(var(--_w) * var(--_k, 1));
 }
 
-luz-city .luz-city__row--sil {
+home-city .home-city__row--sil {
   --_w: 0.5;
   --_dim: 38%;
 }
 
-luz-city .luz-city__row--far {
+home-city .home-city__row--far {
   --_w: 0.55;
   --_dim: 60%;
 }
 
-luz-city .luz-city__row--mid {
+home-city .home-city__row--mid {
   --_w: 0.7;
   --_dim: 82%;
 }
 
-luz-city .luz-city__body {
+home-city .home-city__body {
   stroke: var(--_stroke);
   stroke-width: var(--_sw);
   fill: var(--_fill);
 }
 
-luz-city .luz-city__lit-l {
+home-city .home-city__lit-l {
   fill: var(--_sun-l);
 }
 
-luz-city .luz-city__lit-r {
+home-city .home-city__lit-r {
   fill: var(--_sun-r);
 }
 
-luz-city .luz-city__lines {
+home-city .home-city__lines {
   stroke: var(--_stroke);
   stroke-width: calc(var(--_sw) * 0.8);
 }
 
-luz-city .luz-city__mag {
+home-city .home-city__mag {
   stroke: var(--_stroke2);
   stroke-width: calc(var(--_sw) * 1.1);
 }
 
-luz-city .luz-city__sign {
+home-city .home-city__sign {
   fill: color-mix(in oklab, var(--_stroke2) calc(18% + var(--_g) * 22%), transparent);
   stroke: var(--_stroke2);
   stroke-width: calc(var(--_sw) * 0.9);
 }
 
-luz-city .luz-city__dash {
+home-city .home-city__dash {
   stroke: var(--_stroke);
   stroke-width: calc(var(--_sw) * 0.8);
   stroke-dasharray: 8 7;
   opacity: 0.6;
 }
 
-luz-city .luz-city__halo {
+home-city .home-city__halo {
   --_k: 4;
   --_line: var(--_neon);
   --_mag: var(--_neon2);
@@ -578,38 +578,38 @@ luz-city .luz-city__halo {
   opacity: calc(var(--_g) * 0.2);
 }
 
-luz-city .luz-city__car {
+home-city .home-city__car {
   fill: var(--_mag);
   stroke: none;
 }
 
-luz-city .luz-city__car--cyan {
+home-city .home-city__car--cyan {
   fill: var(--_neon);
 }
 
-luz-city .luz-city__trail {
+home-city .home-city__trail {
   stroke: var(--_neon);
   stroke-width: 1;
   opacity: 0.6;
 }
 
-luz-city .luz-city__flyer {
+home-city .home-city__flyer {
   fill: var(--_fill);
   stroke: var(--_neon);
   stroke-width: 0.8;
 }
 
-luz-city .luz-city__beacon {
+home-city .home-city__beacon {
   fill: var(--_neon2);
   stroke: none;
-  animation: luz-city-blink calc(var(--luz-duration-lazy) * 2.25) ease-in-out infinite;
+  animation: home-city-blink calc(var(--luz-duration-lazy) * 2.25) ease-in-out infinite;
 }
 
-luz-city .luz-city__night {
+home-city .home-city__night {
   opacity: var(--_g);
 }
 
-@keyframes luz-city-blink {
+@keyframes home-city-blink {
   0%,
   100% {
     opacity: 0.15;
@@ -621,49 +621,49 @@ luz-city .luz-city__night {
 }
 
 /* The masks of the light: what is white shows it */
-luz-city .luz-city__mask,
-luz-map .luz-map__mask {
+home-city .home-city__mask,
+home-map .home-map__mask {
   fill: #fff;
   stroke: #fff;
   stroke-width: 1;
 }
 
-luz-city .luz-city__torch {
+home-city .home-city__torch {
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--luz-duration-slow);
 }
 
-luz-city .luz-city__sun {
+home-city .home-city__sun {
   fill: var(--_sun);
 }
 
-luz-city .luz-city__moon-dark {
+home-city .home-city__moon-dark {
   fill: var(--_fill);
   stroke: color-mix(in oklab, var(--_moon) 45%, transparent);
   stroke-width: 0.6;
 }
 
-luz-city .luz-city__moon-lit {
+home-city .home-city__moon-lit {
   fill: var(--_moon);
 }
 
-luz-city .luz-city__sky,
-luz-city .luz-city__stars {
+home-city .home-city__sky,
+home-city .home-city__stars {
   transition: opacity var(--_fade);
 }
 
-luz-city .luz-city__stars {
+home-city .home-city__stars {
   opacity: var(--_g);
 }
 
 /* Each star has its own duration and delay, written by the script */
-luz-city .luz-city__star {
+home-city .home-city__star {
   fill: var(--_moon);
-  animation: luz-city-twinkle calc(var(--luz-duration-lazy) * 17.5) ease-in-out infinite;
+  animation: home-city-twinkle calc(var(--luz-duration-lazy) * 17.5) ease-in-out infinite;
 }
 
-@keyframes luz-city-twinkle {
+@keyframes home-city-twinkle {
   0%,
   100% {
     opacity: 0.04;
@@ -675,20 +675,20 @@ luz-city .luz-city__star {
 }
 
 /* ==========================================================================
-   <luz-map>: ink on paper by day, neon by night (--luz-map-glow)
+   <home-map>: ink on paper by day, neon by night (--home-map-glow)
    ========================================================================== */
 
-@property --luz-map-glow {
+@property --home-map-glow {
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
 }
 
-luz-map {
+home-map {
   --_neon: var(--light-neon);
   --_neon2: var(--light-neon-2);
   --_sun: var(--light-sun);
-  --_g: var(--luz-map-glow, 0);
+  --_g: var(--home-map-glow, 0);
   --_street: color-mix(in oklab, var(--_neon) calc(var(--_g) * 100%), var(--_ink));
   --_highway: color-mix(in oklab, var(--_neon2) calc(var(--_g) * 100%), var(--luz-brand-primary));
 
@@ -696,112 +696,112 @@ luz-map {
   position: relative;
   overflow: hidden;
   user-select: none;
-  transition: --luz-map-glow var(--_fade) var(--_ease);
+  transition: --home-map-glow var(--_fade) var(--_ease);
 }
 
-luz-map > svg {
+home-map > svg {
   display: block;
   inline-size: 100%;
   block-size: 100%;
 }
 
 /* The moving light lives in its own layer: the city never repaints */
-luz-map > .luz-map__fx {
+home-map > .home-map__fx {
   position: absolute;
   inset: 0;
   mix-blend-mode: screen;
   pointer-events: none;
 }
 
-luz-map path {
+home-map path {
   fill: none;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 /* The sea is transparent: the page shows through */
-luz-map .luz-map__land {
+home-map .home-map__land {
   fill: color-mix(in oklab, var(--light-night-land) calc(var(--_g) * 100%), color-mix(in oklab, var(--_ink) 2%, var(--_paper)));
 }
 
-luz-map .luz-map__lake {
+home-map .home-map__lake {
   fill: color-mix(in oklab, var(--light-night-lake) calc(var(--_g) * 100%), color-mix(in oklab, var(--_ink) 9%, var(--_paper)));
 }
 
-luz-map .luz-map__lane {
+home-map .home-map__lane {
   stroke: var(--_street);
   stroke-width: 0.55;
   opacity: calc(0.22 + var(--_g) * 0.2);
 }
 
-luz-map .luz-map__street {
+home-map .home-map__street {
   stroke: var(--_street);
   stroke-width: 0.8;
   opacity: calc(0.4 + var(--_g) * 0.3);
 }
 
-luz-map .luz-map__coast {
+home-map .home-map__coast {
   stroke: var(--_street);
   stroke-width: 1.1;
   opacity: calc(0.55 + var(--_g) * 0.35);
 }
 
-luz-map .luz-map__main {
+home-map .home-map__main {
   stroke: var(--_street);
   stroke-width: 1.7;
   opacity: calc(0.7 + var(--_g) * 0.3);
 }
 
-luz-map .luz-map__main-glow {
+home-map .home-map__main-glow {
   stroke: var(--_neon);
   stroke-width: 5;
   opacity: calc(var(--_g) * 0.22);
 }
 
-luz-map .luz-map__highway {
+home-map .home-map__highway {
   stroke: var(--_highway);
   stroke-width: 3.4;
   opacity: calc(0.8 + var(--_g) * 0.2);
 }
 
-luz-map .luz-map__highway-core {
+home-map .home-map__highway-core {
   stroke: var(--light-neon-core);
   stroke-width: 1;
   opacity: calc(var(--_g) * 0.75);
 }
 
-luz-map .luz-map__highway-glow {
+home-map .home-map__highway-glow {
   stroke: var(--_neon2);
   stroke-width: 12;
   opacity: calc(var(--_g) * 0.3);
 }
 
-luz-map .luz-map__pulse {
+home-map .home-map__pulse {
   stroke: var(--light-glint);
   stroke-width: 2;
   stroke-dasharray: 6 140;
   opacity: calc(0.12 + var(--_g) * 0.8);
-  animation: luz-map-flow calc(var(--luz-duration-lazy) * 4.25) linear infinite;
+  animation: home-map-flow calc(var(--luz-duration-lazy) * 4.25) linear infinite;
 }
 
-luz-map .luz-map__pulse--main {
+home-map .home-map__pulse--main {
   stroke-width: 1.2;
   stroke-dasharray: 4 180;
   opacity: calc(var(--_g) * 0.6);
   animation-duration: calc(var(--luz-duration-lazy) * 6.875);
 }
 
-@keyframes luz-map-flow {
+@keyframes home-map-flow {
   to {
     stroke-dashoffset: -292;
   }
 }
 
-luz-map .luz-map__sunlight {
+home-map .home-map__sunlight {
   pointer-events: none;
 }
 
-luz-map .luz-map__torch {
+home-map .home-map__torch {
   pointer-events: none;
   opacity: 0;
   transition: opacity var(--luz-duration-slow);
@@ -814,17 +814,17 @@ luz-map .luz-map__torch {
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  luz-light .luz-light__bar:not([hidden]),
-  luz-city .luz-city__beacon {
+  home-light .home-light__bar:not([hidden]),
+  home-city .home-city__beacon {
     animation: none;
   }
 
-  luz-city .luz-city__star {
+  home-city .home-city__star {
     animation: none;
     opacity: 0.7;
   }
 
-  luz-map .luz-map__pulse {
+  home-map .home-map__pulse {
     animation: none;
     opacity: 0;
   }
@@ -832,7 +832,7 @@ luz-map .luz-map__torch {
 
 /* Forced colours: the drawing in the system's text colour */
 @media (forced-colors: active) {
-  luz-light {
+  home-light {
     --light-sun: CanvasText;
     --light-neon: CanvasText;
     --light-neon-2: CanvasText;

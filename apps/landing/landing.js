@@ -14,7 +14,7 @@ import { highlightBlock } from "/packages/core/dist/highlight.js";
 // search button wires itself when it connects
 import "/packages/site/dist/search.js";
 import { initSiteHeader } from "/apps/site/header.js";
-// <luz-light>, the visitor's sky under the hero: defines the element, which
+// <home-light>, the visitor's sky under the hero: defines the element, which
 // loads its one visual
 import "/apps/landing/light/light.js";
 

@@ -1,4 +1,4 @@
-# The light of the home page (`<luz-light>`)
+# The light of the home page (`<home-light>`)
 
 The section under the home page's hero: the visitor's sky, the sun and the moon where they are, drawn over a globe of dots, a skyline or a city map. A line under the visual opens a bar to scrub the day and change the look. It is part of the LUZ website, not of a package: nothing here is published, and only `apps/landing/index.html` links it.
 
@@ -8,20 +8,20 @@ It came from a mockup made outside the repository (`.claude/extra/landing/`, por
 
 | File | What it is |
 | --- | --- |
-| `light.js` | The controller: defines `<luz-light>`, builds the line and the bar, works out the sun and the moon from the clock, and loads the chosen visual. It imports nothing statically; each visual is a literal `import()` of its file. |
-| `globe.js` | `<luz-globe>`, the globe of dots, with the land data. |
-| `city.js` | `<luz-city>`, the skyline. |
-| `map.js` | `<luz-map>`, the city map. |
+| `light.js` | The controller: defines `<home-light>`, builds the line and the bar, works out the sun and the moon from the clock, and loads the chosen visual. It imports nothing statically; each visual is a literal `import()` of its file. |
+| `globe.js` | `<home-globe>`, the globe of dots, with the land data. |
+| `city.js` | `<home-city>`, the skyline. |
+| `map.js` | `<home-map>`, the city map. |
 | `light.css` | Every rule of the four elements. The interface reads LUZ's semantic tokens; the drawing has its own inks (`--light-*`), replaced by the page's text and surface in high contrast and forced colours. |
 
 Each module guards `customElements.get()`, writes no HTML from a string (nodes, `textContent`, SVG through `createElementNS`), injects no style and asks the network for nothing: the place is the time zone of `Intl`, never GPS or an address lookup.
 
 ## How it works with the rest of the page
 
-- `<luz-mode>` (the footer's) is the only writer of `data-theme` and `data-light` on `<html>`. `<luz-light>` reads them, follows `luz-mode:change`, and while the visitor scrubs the day it calls `preview(hour)` on `<luz-mode>`; Live calls `preview(null)`. Without a `<luz-mode>` only the visuals follow the slider.
+- `<luz-mode>` (the footer's) is the only writer of `data-theme` and `data-light` on `<html>`. `<home-light>` reads them, follows `luz-mode:change`, and while the visitor scrubs the day it calls `preview(hour)` on `<luz-mode>`; Live calls `preview(null)`. Without a `<luz-mode>` only the visuals follow the slider.
 - On `<html>` it writes four custom properties, no attribute: `--sun-alt`, `--sun-az`, `--sun-x` (where the sun stands, left to right, for the page's glow) and `--day-left`.
 - Its texts are the catalog's (`apps/landing/i18n/<lang>.json`, keys `light.*`), handed over as `data-luz-label-light-*` on `<body>`.
-- The look: `?look=globe|city|map` in the URL, else the look the visitor last clicked (`localStorage["luz-light"]`, only after a click), else one at random. Only that visual's file is loaded; another one loads the first time its button is pressed.
+- The look: `?look=globe|city|map` in the URL, else the look the visitor last clicked (`localStorage["home-light"]`, only after a click), else one at random. Only that visual's file is loaded; another one loads the first time its button is pressed.
 - Without JavaScript the element is empty and `light.css` gives it its height, so the page does not move when the script arrives.
 - Under `prefers-reduced-motion: reduce` nothing asks for an animation frame: the globe does not spin, the traffic stands still, and the stars, beacons and highway lights stop.
 

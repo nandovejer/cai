@@ -1,14 +1,14 @@
 /**
- * <luz-map>: a city map grown street by street: highways, bright arteries,
+ * <home-map>: a city map grown street by street: highways, bright arteries,
  * thousands of short streets that stop where they meet, a coast with piers,
  * a lake or two; periodic sideways, so it tiles for any width. One of the
- * three visuals of the home's <luz-light> (light.js loads this file when the
+ * three visuals of the home's <home-light> (light.js loads this file when the
  * map is the look); it imports nothing and writes no style (the rules are
  * light.css). Ink on paper by day; as the sun goes down it lights up into
  * neon, with light flowing along the highways (CSS, stopped under reduced
  * motion).
  *
- *   <luz-map seed="3" puzzle></luz-map>
+ *   <home-map seed="3" puzzle></home-map>
  *
  * Property `light` = { alt, az, night } in degrees, set by the controller.
  * Attribute `puzzle`: every street carries a jigsaw tab now and then, sized
@@ -195,12 +195,12 @@ class LuzMap extends HTMLElement {
 
   _build() {
     if (!this.hasAttribute("role")) this.setAttribute("role", "img");
-    this._uid = "luz-map-" + Math.random().toString(36).slice(2, 8);
+    this._uid = "home-map-" + Math.random().toString(36).slice(2, 8);
     this._vw = W;
     const layer = (cls) => el("svg", { class: cls, viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true" }, this);
-    this._svg = layer("luz-map__city");
+    this._svg = layer("home-map__city");
     // The moving light lives in its own layer: the city never repaints
-    this._fx = layer("luz-map__fx");
+    this._fx = layer("home-map__fx");
     this._bindPointer();
   }
 
@@ -278,12 +278,12 @@ class LuzMap extends HTMLElement {
     const outlineD = outline.map(([x, y], i) => (i ? "L" : "M") + q(x) + " " + q(y)).join("");
     const landD = outlineD + `L${W + 60} ${H + 40}L-60 ${H + 40}Z`;
     // the sea is transparent: the page shows through
-    el("path", { class: "luz-map__land", d: landD }, tile);
-    el("path", { class: "luz-map__coast", d: outlineD }, tile);
+    el("path", { class: "home-map__land", d: landD }, tile);
+    el("path", { class: "home-map__coast", d: outlineD }, tile);
     for (const l of lakes) {
       let d = "";
       for (let i = 0; i < 24; i++) { const a = i / 24 * TAU, r = 1 + 0.18 * Math.sin(a * 3 + l.ph) + 0.1 * Math.sin(a * 5 + 1); d += (i ? "L" : "M") + q(l.x + Math.cos(a) * l.rx * r) + " " + q(l.y + Math.sin(a) * l.ry * r); }
-      [0, -W, W].forEach((o) => el("path", { class: "luz-map__lake", d: d + "Z", transform: `translate(${o} 0)` }, tile));
+      [0, -W, W].forEach((o) => el("path", { class: "home-map__lake", d: d + "Z", transform: `translate(${o} 0)` }, tile));
     }
     // one path per class; the highways one per road, so the light can run along each. A segment over the seam is drawn on both sides
     const d = ["", "", "", ""], hwD = {};
@@ -301,20 +301,20 @@ class LuzMap extends HTMLElement {
       const side = tab && prnd() < 0.5 ? 1 : -1;
       for (const o of offs) { const seg = tab ? tabbed(s, o, tab, side) : line(s, o); if (s.k === 0) hwD[s.id] = (hwD[s.id] || "") + seg; else d[s.k] += seg; }
     }
-    el("path", { class: "luz-map__lane", d: d[3] }, tile);
-    el("path", { class: "luz-map__street", d: d[2] }, tile);
-    el("path", { class: "luz-map__main-glow", d: d[1] }, tile);
-    el("path", { class: "luz-map__main", d: d[1] }, tile);
+    el("path", { class: "home-map__lane", d: d[3] }, tile);
+    el("path", { class: "home-map__street", d: d[2] }, tile);
+    el("path", { class: "home-map__main-glow", d: d[1] }, tile);
+    el("path", { class: "home-map__main", d: d[1] }, tile);
     const hws = Object.values(hwD);
-    hws.forEach((hd) => el("path", { class: "luz-map__highway-glow", d: hd }, tile));
-    hws.forEach((hd) => el("path", { class: "luz-map__highway", d: hd }, tile));
-    hws.forEach((hd) => el("path", { class: "luz-map__highway-core", d: hd }, tile));
+    hws.forEach((hd) => el("path", { class: "home-map__highway-glow", d: hd }, tile));
+    hws.forEach((hd) => el("path", { class: "home-map__highway", d: hd }, tile));
+    hws.forEach((hd) => el("path", { class: "home-map__highway-core", d: hd }, tile));
     this._fill = el("rect", { x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-tile)` }, svg);
     // the light: pulses along the highways and the big arteries, the sun's warmth by day, your torch by night
     const fdefs = el("defs", {}, fx);
     const ftile = el("pattern", { id: uid + "-fx", width: W, height: H, patternUnits: "userSpaceOnUse" }, fdefs);
-    hws.forEach((hd, i) => el("path", { class: "luz-map__pulse", d: hd, style: `animation-delay:${-i * 1.1}s` }, ftile));
-    el("path", { class: "luz-map__pulse luz-map__pulse--main", d: d[1] }, ftile);
+    hws.forEach((hd, i) => el("path", { class: "home-map__pulse", d: hd, style: `animation-delay:${-i * 1.1}s` }, ftile));
+    el("path", { class: "home-map__pulse home-map__pulse--main", d: d[1] }, ftile);
     const sun = el("radialGradient", { id: uid + "-sun", gradientUnits: "userSpaceOnUse", cx: W / 2, cy: 0, r: 700 }, fdefs);
     stops(sun, [[0, "var(--_sun)", 0.3], [1, "var(--_sun)", 0]]);
     const torch = el("radialGradient", { id: uid + "-torch" }, fdefs);
@@ -322,13 +322,13 @@ class LuzMap extends HTMLElement {
     this._fxFill = el("rect", { x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-fx)` }, fx);
     // the sun and the torch light the land only: the sea is transparent, so no light may tint it (it would show the element's edge)
     const lpat = el("pattern", { id: uid + "-landpat", width: W, height: H, patternUnits: "userSpaceOnUse" }, fdefs);
-    el("path", { class: "luz-map__mask", d: landD }, lpat);
+    el("path", { class: "home-map__mask", d: landD }, lpat);
     const mask = el("mask", { id: uid + "-landmask", maskUnits: "userSpaceOnUse", x: 0, y: 0, width: 100000, height: H }, fdefs);
     this._maskFill = el("rect", { x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-landpat)` }, mask);
     const lit = el("g", { mask: `url(#${uid}-landmask)` }, fx);
-    this._sunlight = el("rect", { class: "luz-map__sunlight", x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-sun)`, opacity: 0 }, lit);
+    this._sunlight = el("rect", { class: "home-map__sunlight", x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-sun)`, opacity: 0 }, lit);
     this._sunG = sun;
-    this._torch = el("circle", { class: "luz-map__torch", r: 150, fill: `url(#${uid}-torch)` }, lit);
+    this._torch = el("circle", { class: "home-map__torch", r: 150, fill: `url(#${uid}-torch)` }, lit);
 
   }
 
@@ -337,7 +337,7 @@ class LuzMap extends HTMLElement {
     const { alt, az } = this._light;
     // How much neon: none while the sun is up, all of it below -8°, and none while the page is light
     const g = Math.min(this._light.night, alt >= 6 ? 0 : alt <= -8 ? 1 : (6 - alt) / 14);
-    this.style.setProperty("--luz-map-glow", (Math.round(g * 50) / 50).toFixed(2));
+    this.style.setProperty("--home-map-glow", (Math.round(g * 50) / 50).toFixed(2));
     this._sunG.setAttribute("cx", q(this._vw / 2 + this._vw * 0.35 * Math.sin(az * DEG)));
     this._sunlight.setAttribute("opacity", (alt > 0 ? Math.min(1, alt / 30) * (1 - g) : 0).toFixed(2));
     this._g = g;
@@ -357,4 +357,4 @@ class LuzMap extends HTMLElement {
   }
 }
 
-if (!customElements.get("luz-map")) customElements.define("luz-map", LuzMap);
+if (!customElements.get("home-map")) customElements.define("home-map", LuzMap);

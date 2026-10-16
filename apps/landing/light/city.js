@@ -1,12 +1,12 @@
 /**
- * <luz-city>: a skyline of line-drawn towers, isometric and periodic
+ * <home-city>: a skyline of line-drawn towers, isometric and periodic
  * sideways, so it tiles for any width. One of the three visuals of the home's
- * <luz-light> (light.js loads this file when the city is the look); it
+ * <home-light> (light.js loads this file when the city is the look); it
  * imports nothing and writes no style (the rules are light.css). Ink on paper
  * by day; as the sun goes down it lights up into neon, with beacons, traffic
  * and flying things.
  *
- *   <luz-city seed="7"></luz-city>
+ *   <home-city seed="7"></home-city>
  *
  * Property `light` = { alt, az, night, moon?: { alt, az, age, lit } }, in
  * degrees, set by the controller (night 0 keeps it ink on paper). The city
@@ -131,7 +131,7 @@ function bridge(a, b, z, ri) {
 
 // ---- drawing ----
 function drawBuilding(b, g, tile, offs) {
-  const grp = el("g", { class: "luz-city__bld" }, g);
+  const grp = el("g", { class: "home-city__bld" }, g);
   let sign = ""; const hullPts = [];
   const parts = []; // per tier: its body, then its lines, so a tier never shows through the one above
   const tiers = b.tiers;
@@ -178,16 +178,16 @@ function drawBuilding(b, g, tile, offs) {
   for (const o of offs) {
     const gg = o ? el("g", grpAttrs(o), grp) : grp;
     parts.forEach((pr) => {
-      el("path", { class: "luz-city__body", d: pr.body }, gg);
-      el("path", { class: "luz-city__lit-l", d: pr.litL }, gg); el("path", { class: "luz-city__lit-r", d: pr.litR }, gg);
-      if (pr.lines) el("path", { class: "luz-city__lines", d: pr.lines }, gg);
-      if (pr.mag) el("path", { class: "luz-city__mag", d: pr.mag }, gg);
+      el("path", { class: "home-city__body", d: pr.body }, gg);
+      el("path", { class: "home-city__lit-l", d: pr.litL }, gg); el("path", { class: "home-city__lit-r", d: pr.litR }, gg);
+      if (pr.lines) el("path", { class: "home-city__lines", d: pr.lines }, gg);
+      if (pr.mag) el("path", { class: "home-city__mag", d: pr.mag }, gg);
     });
-    if (body) el("path", { class: "luz-city__body", d: body }, gg);
-    if (b.roof === "dome") el("path", { class: "luz-city__body", d: `M${q(tcx - r * 1.2)} ${q(tcy)}A${q(r * 1.2)} ${q(r * 0.95)} 0 0 1 ${q(tcx + r * 1.2)} ${q(tcy)}A${q(r * 1.2)} ${q(r * 0.7)} 0 0 1 ${q(tcx - r * 1.2)} ${q(tcy)}Z` }, gg);
-    if (b.roof === "helipad") { el("ellipse", { class: "luz-city__lines", cx: q(tcx), cy: q(tcy), rx: q(r * 1.22), ry: q(r * 0.71) }, gg); el("ellipse", { class: "luz-city__lines", cx: q(tcx), cy: q(tcy), rx: q(r * 0.7), ry: q(r * 0.41) }, gg); }
-    if (lines) el("path", { class: "luz-city__lines", d: lines }, gg);
-    if (sign) el("path", { class: "luz-city__sign", d: sign }, gg);
+    if (body) el("path", { class: "home-city__body", d: body }, gg);
+    if (b.roof === "dome") el("path", { class: "home-city__body", d: `M${q(tcx - r * 1.2)} ${q(tcy)}A${q(r * 1.2)} ${q(r * 0.95)} 0 0 1 ${q(tcx + r * 1.2)} ${q(tcy)}A${q(r * 1.2)} ${q(r * 0.7)} 0 0 1 ${q(tcx - r * 1.2)} ${q(tcy)}Z` }, gg);
+    if (b.roof === "helipad") { el("ellipse", { class: "home-city__lines", cx: q(tcx), cy: q(tcy), rx: q(r * 1.22), ry: q(r * 0.71) }, gg); el("ellipse", { class: "home-city__lines", cx: q(tcx), cy: q(tcy), rx: q(r * 0.7), ry: q(r * 0.41) }, gg); }
+    if (lines) el("path", { class: "home-city__lines", d: lines }, gg);
+    if (sign) el("path", { class: "home-city__sign", d: sign }, gg);
   }
   return poly(hull(hullPts));
 }
@@ -199,15 +199,15 @@ function drawBridge(br, g, offs) {
   const n = Math.max(2, Math.round((x1 - x0) / 9));
   for (let i = 0; i < n; i++) { const t0 = i / n, t1 = (i + 0.5) / n, t2 = (i + 1) / n; truss += line([x0 + (x1 - x0) * t0, y0 + (y1 - y0) * t0 + d], [x0 + (x1 - x0) * t1, y0 + (y1 - y0) * t1]) + line([x0 + (x1 - x0) * t1, y0 + (y1 - y0) * t1], [x0 + (x1 - x0) * t2, y0 + (y1 - y0) * t2 + d]); }
   for (let i = 1; i < 4; i++) { const t = i / 4; rail += line([x0 + (x1 - x0) * t, y0 + (y1 - y0) * t - 5], [x0 + (x1 - x0) * t, y0 + (y1 - y0) * t]); }
-  for (const o of offs) { const gg = o ? el("g", { transform: `translate(${o} 0)` }, g) : g; el("path", { class: "luz-city__body", d: deck }, gg); el("path", { class: "luz-city__lines", d: truss + rail }, gg); }
+  for (const o of offs) { const gg = o ? el("g", { transform: `translate(${o} 0)` }, g) : g; el("path", { class: "home-city__body", d: deck }, gg); el("path", { class: "home-city__lines", d: truss + rail }, gg); }
 }
 
 function drawHighway(hw, g) {
   const y = hw.y - hw.z, d = 9;
-  el("path", { class: "luz-city__lines", d: (() => { let s = ""; for (let x = 30; x < W; x += 74) { s += line([x, y + d], [x - 3, hw.y]) + line([x + 8, y + d], [x + 11, hw.y]) + line([x - 1, y + d + 14], [x + 9, hw.y - 8]) + line([x + 9, y + d + 14], [x - 1, hw.y - 8]); } return s; })() }, g);
-  el("path", { class: "luz-city__body", d: poly([[-10, y], [W + 10, y], [W + 10, y + d], [-10, y + d]]) }, g);
-  el("path", { class: "luz-city__lines", d: line([-10, y - 4], [W + 10, y - 4]) + line([-10, y + d + 2], [W + 10, y + d + 2]) }, g);
-  el("path", { class: "luz-city__dash", d: line([-10, y + d / 2], [W + 10, y + d / 2]) }, g);
+  el("path", { class: "home-city__lines", d: (() => { let s = ""; for (let x = 30; x < W; x += 74) { s += line([x, y + d], [x - 3, hw.y]) + line([x + 8, y + d], [x + 11, hw.y]) + line([x - 1, y + d + 14], [x + 9, hw.y - 8]) + line([x + 9, y + d + 14], [x - 1, hw.y - 8]); } return s; })() }, g);
+  el("path", { class: "home-city__body", d: poly([[-10, y], [W + 10, y], [W + 10, y + d], [-10, y + d]]) }, g);
+  el("path", { class: "home-city__lines", d: line([-10, y - 4], [W + 10, y - 4]) + line([-10, y + d + 2], [W + 10, y + d + 2]) }, g);
+  el("path", { class: "home-city__dash", d: line([-10, y + d / 2], [W + 10, y + d / 2]) }, g);
 }
 
 
@@ -254,12 +254,12 @@ class LuzCity extends HTMLElement {
     if (!this.hasAttribute("role")) this.setAttribute("role", "img");
     this._reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     this._onMotion = () => this._go();
-    this._uid = "luz-city-" + Math.random().toString(36).slice(2, 8);
+    this._uid = "home-city-" + Math.random().toString(36).slice(2, 8);
     this._vw = W;
     const layer = (cls) => el("svg", { class: cls, viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: "xMidYMid slice", "aria-hidden": "true" }, this);
-    this._skySvg = layer("luz-city__skylayer");
-    this._svg = layer("luz-city__city");
-    this._fx = layer("luz-city__fx");
+    this._skySvg = layer("home-city__skylayer");
+    this._svg = layer("home-city__city");
+    this._fx = layer("home-city__fx");
     this._bindPointer();
   }
 
@@ -297,11 +297,11 @@ class LuzCity extends HTMLElement {
     items.sort((a, b) => a.depth - b.depth);
     const defs = el("defs", {}, svg);
     const tile = el("pattern", { id: uid + "-tile", width: W, height: H, patternUnits: "userSpaceOnUse" }, defs);
-    const wrap = el("g", { class: "luz-city__row" }, tile);
-    el("use", { class: "luz-city__halo", href: "#" + uid + "-city" }, wrap);
+    const wrap = el("g", { class: "home-city__row" }, tile);
+    el("use", { class: "home-city__halo", href: "#" + uid + "-city" }, wrap);
     const city = el("g", { id: uid + "-city" }, wrap);
     let silhouette = "";
-    const groupFor = (ri) => el("g", { class: `luz-city__row luz-city__row--${ri === 0 ? "sil" : ri === 1 ? "far" : ri <= 3 ? "mid" : "near"}` }, city);
+    const groupFor = (ri) => el("g", { class: `home-city__row home-city__row--${ri === 0 ? "sil" : ri === 1 ? "far" : ri <= 3 ? "mid" : "near"}` }, city);
     for (const it of items) {
       if (it.kind === "bld") {
         const xs = it.tiers.flatMap((t) => [pt(t.x0, t.y1, 0)[0], pt(t.x1, t.y0, 0)[0]]);
@@ -317,7 +317,7 @@ class LuzCity extends HTMLElement {
         if (Math.max(it.x0, it.x1) > W) offs.push(-W);
         drawBridge(it, groupFor(it.ri), offs);
       } else if (it.kind === "street") {
-        el("path", { class: "luz-city__dash", d: line([-10, it.y], [W + 10, it.y]) }, groupFor(it.ri));
+        el("path", { class: "home-city__dash", d: line([-10, it.y], [W + 10, it.y]) }, groupFor(it.ri));
       } else if (it.kind === "highway") drawHighway(it, groupFor(5));
     }
     // The sky: the sun or the moon and its glow, behind the towers (the pattern's fills hide them)
@@ -325,26 +325,26 @@ class LuzCity extends HTMLElement {
     const glow = el("radialGradient", { id: uid + "-glow" }, sdefs);
     stops(glow, [[0, "var(--_sky-glow)", 0.5], [0.4, "var(--_sky-glow)", 0.14], [1, "var(--_sky-glow)", 0]]);
     // A few stars, each one slowly coming and going on its own clock (light.css stops them under reduced motion)
-    const srnd = mulberry(seed + 7), stars = el("g", { class: "luz-city__stars" }, sky);
+    const srnd = mulberry(seed + 7), stars = el("g", { class: "home-city__stars" }, sky);
     for (let k = 0; k < 3; k++) {
       for (let i = 0; i < 11; i++) {
         const x = k * W + srnd() * W, y = 14 + srnd() * 190, r = 0.8 + srnd() * 0.8, dur = 10 + srnd() * 10;
-        el("circle", { class: "luz-city__star", cx: q(x), cy: q(y), r: q(r), style: `animation-duration:${dur.toFixed(1)}s;animation-delay:${(-srnd() * dur).toFixed(1)}s` }, stars);
+        el("circle", { class: "home-city__star", cx: q(x), cy: q(y), r: q(r), style: `animation-duration:${dur.toFixed(1)}s;animation-delay:${(-srnd() * dur).toFixed(1)}s` }, stars);
       }
     }
-    this._sky = el("g", { class: "luz-city__sky", opacity: 0 }, sky);
+    this._sky = el("g", { class: "home-city__sky", opacity: 0 }, sky);
     this._skyGlow = el("circle", { r: 150, style: `fill:url(#${uid}-glow)` }, this._sky); // inline: the generic circle rule says fill none
-    this._sunDisc = el("circle", { class: "luz-city__sun", r: 20 }, this._sky);
+    this._sunDisc = el("circle", { class: "home-city__sun", r: 20 }, this._sky);
     this._moonG = el("g", {}, this._sky);
-    el("circle", { class: "luz-city__moon-dark", r: 15 }, this._moonG);
-    this._moonLit = el("path", { class: "luz-city__moon-lit", d: "" }, this._moonG);
+    el("circle", { class: "home-city__moon-dark", r: 15 }, this._moonG);
+    this._moonLit = el("path", { class: "home-city__moon-lit", d: "" }, this._moonG);
     this._fill = el("rect", { x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-tile)` }, svg);
 
     // The light: beacons, traffic, the sun on the faces by day, the torch by night
     const fdefs = el("defs", {}, fx);
     const ftile = el("pattern", { id: uid + "-fx", width: W, height: H, patternUnits: "userSpaceOnUse" }, fdefs);
-    const night = el("g", { class: "luz-city__night" }, ftile);
-    beacons.forEach(([x, y], i) => el("circle", { class: "luz-city__beacon", cx: q(x), cy: q(y), r: 1.8, style: `animation-delay:${-(i * 0.7) % 1.8}s` }, night));
+    const night = el("g", { class: "home-city__night" }, ftile);
+    beacons.forEach(([x, y], i) => el("circle", { class: "home-city__beacon", cx: q(x), cy: q(y), r: 1.8, style: `animation-delay:${-(i * 0.7) % 1.8}s` }, night));
     const rnd = mulberry(seed + 99);
     // Each mover crosses the tile in its own time, one way or the other: { node, x, speed in px/ms, phase }
     this._movers = [];
@@ -353,15 +353,15 @@ class LuzCity extends HTMLElement {
     for (const ln of lanes) {
       for (let i = 0; i < 3 + Math.floor(rnd() * 3); i++) {
         const back = rnd() < 0.45, dur = (ln.z ? 14 : 22) + rnd() * 16, x = rnd() * W;
-        mover(el("rect", { class: "luz-city__car" + (rnd() < 0.5 ? " luz-city__car--cyan" : ""), x: q(x), y: q(ln.y - 2), width: 7, height: 2.6, rx: 0.8 }, night), x, dur, back);
+        mover(el("rect", { class: "home-city__car" + (rnd() < 0.5 ? " home-city__car--cyan" : ""), x: q(x), y: q(ln.y - 2), width: 7, height: 2.6, rx: 0.8 }, night), x, dur, back);
       }
     }
     for (let i = 0; i < 4; i++) {
       // Flying things, drifting over the skyline
       const y = 120 + rnd() * 160, x = rnd() * W, back = rnd() < 0.5, dur = 36 + rnd() * 30;
       const g = el("g", {}, night);
-      el("path", { class: "luz-city__flyer", d: `M${q(x)} ${q(y)}h13l3 2-3 2h-13z`, transform: back ? `scale(-1 1) translate(${-2 * x - 16} 0)` : "" }, g);
-      el("path", { class: "luz-city__trail", d: back ? line([x + 16, y + 2], [x + 34, y + 2]) : line([x - 18, y + 2], [x, y + 2]) }, g);
+      el("path", { class: "home-city__flyer", d: `M${q(x)} ${q(y)}h13l3 2-3 2h-13z`, transform: back ? `scale(-1 1) translate(${-2 * x - 16} 0)` : "" }, g);
+      el("path", { class: "home-city__trail", d: back ? line([x + 16, y + 2], [x + 34, y + 2]) : line([x - 18, y + 2], [x, y + 2]) }, g);
       mover(g, x, dur, back);
     }
     this._move(0);
@@ -370,7 +370,7 @@ class LuzCity extends HTMLElement {
     const torch = el("radialGradient", { id: uid + "-torch" }, fdefs);
     stops(torch, [[0, "var(--_neon)", 0.45], [1, "var(--_neon)", 0]]);
     const spat = el("pattern", { id: uid + "-silpat", width: W, height: H, patternUnits: "userSpaceOnUse" }, fdefs);
-    el("path", { class: "luz-city__mask", d: silhouette }, spat);
+    el("path", { class: "home-city__mask", d: silhouette }, spat);
     const mask = el("mask", { id: uid + "-silmask", maskUnits: "userSpaceOnUse", x: 0, y: 0, width: 100000, height: H }, fdefs);
     this._maskFill = el("rect", { x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-silpat)` }, mask);
     this._fxFill = el("rect", { x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-fx)` }, fx);
@@ -380,7 +380,7 @@ class LuzCity extends HTMLElement {
     stops(this._moonGrad, [[0, "var(--_moon)", 0.26], [1, "var(--_moon)", 0]]);
     this._moonlight = el("rect", { x: 0, y: 0, width: this._vw, height: H, fill: `url(#${uid}-moonlight)`, opacity: 0 }, lit);
     this._sunG = sun;
-    this._torch = el("circle", { class: "luz-city__torch", r: 150, style: `fill:url(#${uid}-torch)` }, lit);
+    this._torch = el("circle", { class: "home-city__torch", r: 150, style: `fill:url(#${uid}-torch)` }, lit);
     this._shade();
   }
 
@@ -389,7 +389,7 @@ class LuzCity extends HTMLElement {
     const { alt, az } = this._light;
     // How much neon: none while the sun is up, all of it below -8°, and none while the page is light
     const g = Math.min(this._light.night, alt >= 6 ? 0 : alt <= -8 ? 1 : (6 - alt) / 14);
-    this.style.setProperty("--luz-city-glow", (Math.round(g * 50) / 50).toFixed(2));
+    this.style.setProperty("--home-city-glow", (Math.round(g * 50) / 50).toFixed(2));
     const day = alt > 0 ? Math.min(1, alt / 25) * (1 - g) : 0;
     const vw = this._vw, skyX = (a) => vw / 2 + vw * 0.42 * Math.sin(a * DEG), skyY = (h) => 232 - h * 3.2; // the horizon sits behind the far silhouettes
     // The moon is up whenever the sun is down: at its own place when it is high enough, otherwise across the sky from the
@@ -467,4 +467,4 @@ class LuzCity extends HTMLElement {
   }
 }
 
-if (!customElements.get("luz-city")) customElements.define("luz-city", LuzCity);
+if (!customElements.get("home-city")) customElements.define("home-city", LuzCity);

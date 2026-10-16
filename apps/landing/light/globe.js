@@ -1,10 +1,10 @@
 /**
- * <luz-globe>: a globe of dots lit by the sun. One of the three visuals of
- * the home's <luz-light> (apps/landing/light/light.js loads this file when
+ * <home-globe>: a globe of dots lit by the sun. One of the three visuals of
+ * the home's <home-light> (apps/landing/light/light.js loads this file when
  * the globe is the look); it imports nothing and writes no style (the rules
  * are light.css). Light DOM, SVG built with createElementNS.
  *
- *   <luz-globe lat="40.42" lon="-3.7" spin cities twilight glint rim torch></luz-globe>
+ *   <home-globe lat="40.42" lon="-3.7" spin cities twilight glint rim torch></home-globe>
  *
  * lat, lon   the reader's place: where the globe faces at first
  * spin       slow rotation, only while the globe is on screen and the reader
@@ -13,7 +13,7 @@
  *            the sun's colour; glint: the sun on the sea; rim: a lit edge;
  *            torch: the dots near the pointer wake up
  * Property `sun`: the sun's unit vector in the Earth's frame, set by the
- * controller. Event luz-globe:sun ({ x }: -1 the sun on the left, 1 on the
+ * controller. Event home-globe:sun ({ x }: -1 the sun on the left, 1 on the
  * right), so the page's glow can follow it.
  *
  * Land: Natural Earth 1:50m land polygons (public domain,
@@ -134,9 +134,9 @@ class LuzGlobe extends HTMLElement {
     // An image the arrows turn: its name is the aria-label the page gives it
     if (!this.hasAttribute("role")) this.setAttribute("role", "img");
     if (!this.hasAttribute("tabindex")) this.tabIndex = 0;
-    const id = "luz-globe-" + ++count;
+    const id = "home-globe-" + ++count;
     const halo = document.createElement("div");
-    halo.className = "luz-globe__halo";
+    halo.className = "home-globe__halo";
     this.append(halo);
     const svg = (this._svg = el("svg", { viewBox: `0 0 ${VB} ${VB}`, "aria-hidden": "true" }, this));
     const defs = el("defs", {}, svg);
@@ -154,23 +154,23 @@ class LuzGlobe extends HTMLElement {
     const disc = () => el("g", { "clip-path": `url(#${id}-disc)` }, svg);
     const whole = { cx: CX, cy: CY, r: R };
 
-    el("circle", { class: "luz-globe__sea", ...whole }, svg);
+    el("circle", { class: "home-globe__sea", ...whole }, svg);
     this._sunlight = el("circle", { ...whole, fill: `url(#${id}-sun)` }, disc());
-    const dots = el("g", { class: "luz-globe__dots" }, svg);
+    const dots = el("g", { class: "home-globe__dots" }, svg);
     // Fourteen widths and opacities: six of sunlight on land, the same six near the edge, two of sea, two of twilight
     this._buckets = [];
     for (let b = 0; b < 6; b++) this._buckets.push({ w: 1.25 + 0.4 * b, o: 0.5 + 0.1 * b });
     for (let b = 0; b < 6; b++) this._buckets.push({ w: (1.25 + 0.4 * b) * 0.7, o: 0.5 + 0.1 * b });
-    this._buckets.push({ w: 1.1, o: 0.34, cls: "luz-globe__ocean" }, { w: 0.85, o: 0.22, cls: "luz-globe__ocean" });
-    this._buckets.push({ w: 2.45, o: 0.95, cls: "luz-globe__twilight" }, { w: 1.1, o: 0.6, cls: "luz-globe__twilight" });
+    this._buckets.push({ w: 1.1, o: 0.34, cls: "home-globe__ocean" }, { w: 0.85, o: 0.22, cls: "home-globe__ocean" });
+    this._buckets.push({ w: 2.45, o: 0.95, cls: "home-globe__twilight" }, { w: 1.1, o: 0.6, cls: "home-globe__twilight" });
     this._paths = this._buckets.map(({ o, cls }) => el("path", cls ? { "stroke-opacity": o, class: cls } : { "stroke-opacity": o }, dots));
-    this._glint = el("circle", { class: "luz-globe__glint", r: 24, fill: `url(#${id}-glint)`, opacity: 0 }, disc());
-    this._nightshade = el("circle", { class: "luz-globe__night", ...whole, fill: `url(#${id}-shade)` }, disc());
+    this._glint = el("circle", { class: "home-globe__glint", r: 24, fill: `url(#${id}-glint)`, opacity: 0 }, disc());
+    this._nightshade = el("circle", { class: "home-globe__night", ...whole, fill: `url(#${id}-shade)` }, disc());
     this._cityG = el("g", {}, svg);
-    this._cityGlow = el("path", { class: "luz-globe__cities", "stroke-opacity": 0.28 }, this._cityG);
-    this._cityCore = el("path", { class: "luz-globe__cities", "stroke-opacity": 0.95 }, this._cityG);
-    el("circle", { class: "luz-globe__rim", ...whole }, svg);
-    this._rimLight = el("circle", { class: "luz-globe__rim-light", ...whole, stroke: `url(#${id}-rim)` }, svg);
+    this._cityGlow = el("path", { class: "home-globe__cities", "stroke-opacity": 0.28 }, this._cityG);
+    this._cityCore = el("path", { class: "home-globe__cities", "stroke-opacity": 0.95 }, this._cityG);
+    el("circle", { class: "home-globe__rim", ...whole }, svg);
+    this._rimLight = el("circle", { class: "home-globe__rim-light", ...whole, stroke: `url(#${id}-rim)` }, svg);
     this._bindPointer();
     this._bindKeyboard();
   }
@@ -255,7 +255,7 @@ class LuzGlobe extends HTMLElement {
     this._nightshade.setAttribute("opacity", clamp01((-sz2 + 0.35) / 0.7).toFixed(2));
     if (Number.isNaN(this._sunX) || Math.abs(sx1 - this._sunX) > 0.015) {
       this._sunX = sx1;
-      this.dispatchEvent(new CustomEvent("luz-globe:sun", { bubbles: true, detail: { x: sx1 } }));
+      this.dispatchEvent(new CustomEvent("home-globe:sun", { bubbles: true, detail: { x: sx1 } }));
     }
     if (opts.glint) {
       this._glint.setAttribute("transform", `translate(${q(CX + R * sx1)} ${q(CY - R * sy2)})`);
@@ -390,4 +390,4 @@ class LuzGlobe extends HTMLElement {
   }
 }
 
-if (!customElements.get("luz-globe")) customElements.define("luz-globe", LuzGlobe);
+if (!customElements.get("home-globe")) customElements.define("home-globe", LuzGlobe);

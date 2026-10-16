@@ -1,16 +1,16 @@
 /**
- * <luz-light>: the light of the visitor's sky on the home page. It draws the
+ * <home-light>: the light of the visitor's sky on the home page. It draws the
  * sun and the moon where the visitor is, from the time zone of the browser's
  * clock (Intl, never the network or GPS), over one of three visuals: a globe
  * of dots, a skyline or a city map. A line under the visual opens a bar to
  * scrub the day and change the look.
  *
- *   <luz-light looks="globe city map" look="random" remember bleed favicon></luz-light>
+ *   <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
  *
  * looks     the visuals offered, any of globe, city, map ("none": no visual)
  * look      the first look, or random; ?look= in the URL wins, then the
  *           visitor's last click (with remember), then this
- * remember  keep the look the visitor clicks in localStorage["luz-light"]
+ * remember  keep the look the visitor clicks in localStorage["luz-home-light"]
  * bleed     the visual runs to the edges of the page's frame (light.css)
  * favicon   the tab's icon follows the sky (a data: URL of an SVG)
  *
@@ -28,7 +28,7 @@
  * wanted. The rules are apps/landing/light/light.css.
  */
 
-const KEY = "luz-light";
+const KEY = "luz-home-light";
 const LOOKS = ["globe", "city", "map"];
 const DEG = Math.PI / 180;
 // The three visuals: each one a file, loaded the first time it is wanted
@@ -240,13 +240,13 @@ class LuzLight extends HTMLElement {
     this._remember = this.hasAttribute("remember");
     this._looks = (this.getAttribute("looks") ?? LOOKS.join(" ")).split(/\s+/).filter((k) => LOOKS.includes(k));
 
-    const id = `luz-light-${++uid}`;
-    this._stage = h("div", { class: "luz-light__stage" });
-    this._stage.append(h("div", { class: "luz-light__glow", "aria-hidden": "true" }));
-    const foot = h("div", { class: "luz-light__foot" });
-    const bar = (this._bar = h("div", { class: "luz-light__bar", id: `${id}-bar`, hidden: "" }));
+    const id = `home-light-${++uid}`;
+    this._stage = h("div", { class: "home-light__stage" });
+    this._stage.append(h("div", { class: "home-light__glow", "aria-hidden": "true" }));
+    const foot = h("div", { class: "home-light__foot" });
+    const bar = (this._bar = h("div", { class: "home-light__bar", id: `${id}-bar`, hidden: "" }));
     if (this._looks.length) {
-      const group = h("div", { class: "luz-light__group", role: "group", "aria-label": this._text("looks") });
+      const group = h("div", { class: "home-light__group", role: "group", "aria-label": this._text("looks") });
       for (const k of this._looks) {
         const name = this._text(k);
         const b = h("button", { type: "button", "data-look": k, "aria-pressed": "false", "aria-label": name, title: name });
@@ -256,11 +256,11 @@ class LuzLight extends HTMLElement {
       }
       bar.append(group);
     }
-    const day = h("div", { class: "luz-light__day" });
-    day.append(h("label", { class: "luz-light__sr", for: `${id}-scrub` }, this._text("scrub")));
+    const day = h("div", { class: "home-light__day" });
+    day.append(h("label", { class: "home-light__sr", for: `${id}-scrub` }, this._text("scrub")));
     this._scrub = h("input", { type: "range", id: `${id}-scrub`, min: 0, max: 1439, step: 1, value: 720, "aria-describedby": `${id}-out` });
     this._scrub.addEventListener("input", () => this._preview(this._scrub.value / 60));
-    this._live = h("button", { type: "button", class: "luz-light__live", hidden: "" }, this._text("live"));
+    this._live = h("button", { type: "button", class: "home-light__live", hidden: "" }, this._text("live"));
     this._live.addEventListener("click", () => {
       this._preview(null);
       this._scrub.focus();
@@ -268,9 +268,9 @@ class LuzLight extends HTMLElement {
     this._out = h("output", { id: `${id}-out`, for: `${id}-scrub` });
     day.append(this._scrub, this._live, this._out);
     bar.append(day);
-    this._line = h("button", { type: "button", class: "luz-light__line", "aria-expanded": "false", "aria-controls": bar.id });
-    this._q = h("span", { class: "luz-light__q" });
-    this._when = h("span", { class: "luz-light__sr" });
+    this._line = h("button", { type: "button", class: "home-light__line", "aria-expanded": "false", "aria-controls": bar.id });
+    this._q = h("span", { class: "home-light__q" });
+    this._when = h("span", { class: "home-light__sr" });
     this._line.append(this._q, this._when);
     this._line.addEventListener("click", () => (this._bar.hidden ? this.open() : this.close()));
     foot.append(bar, this._line);
@@ -313,8 +313,8 @@ class LuzLight extends HTMLElement {
     if (k && !this._views[k]) {
       LOAD[k]().then(() => {
         if (this._views[k]) return;
-        const view = h(`luz-${k}`, { ...MAKE[k](this._place), "aria-label": this._text(`${k}-alt`), hidden: "" });
-        if (k === "globe") view.addEventListener("luz-globe:sun", (e) => this._setSunX(50 + 32 * e.detail.x));
+        const view = h(`home-${k}`, { ...MAKE[k](this._place), "aria-label": this._text(`${k}-alt`), hidden: "" });
+        if (k === "globe") view.addEventListener("home-globe:sun", (e) => this._setSunX(50 + 32 * e.detail.x));
         this._views[k] = view;
         this._stage.append(view);
         view.hidden = this._look !== k;
@@ -397,4 +397,4 @@ class LuzLight extends HTMLElement {
   }
 }
 
-if (!customElements.get("luz-light")) customElements.define("luz-light", LuzLight);
+if (!customElements.get("home-light")) customElements.define("home-light", LuzLight);

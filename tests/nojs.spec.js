@@ -220,17 +220,17 @@ for (const app of APPS) {
   });
 }
 
-// <luz-light> on the home (F3 of .claude/plans/luz-home-docs-identity.md): the hero is complete text, the
+// <home-light> on the home (F3 of .claude/plans/luz-home-docs-identity.md): the hero is complete text, the
 // light section is an empty element under a heading, and light.css keeps its room so nothing jumps in
 // (the same boxes with JavaScript on are compared in tests/home-light.spec.js)
 for (const home of ['/', '/es/', '/ar/']) {
-  test(`${home}: the light section is an empty <luz-light> under a heading and keeps its height`, async ({ page }) => {
+  test(`${home}: the light section is an empty <home-light> under a heading and keeps its height`, async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto(home);
     await expect(page.locator('.luz-landing-hero h1')).toBeVisible();
     await expect(page.locator('section#light h2')).toHaveText(/\S/);
-    await expect(page.locator('section#light luz-light')).toHaveCount(1);
-    expect(await page.locator('luz-light').evaluate((el) => ({ children: el.childElementCount, text: (el.textContent ?? '').trim() }))).toEqual({ children: 0, text: '' });
-    expect((await page.locator('luz-light').boundingBox())?.height ?? 0).toBeGreaterThan(200);
+    await expect(page.locator('section#light home-light')).toHaveCount(1);
+    expect(await page.locator('home-light').evaluate((el) => ({ children: el.childElementCount, text: (el.textContent ?? '').trim() }))).toEqual({ children: 0, text: '' });
+    expect((await page.locator('home-light').boundingBox())?.height ?? 0).toBeGreaterThan(200);
   });
 }

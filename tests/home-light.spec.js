@@ -1,25 +1,25 @@
 // @ts-check
 /**
- * <luz-light> on the home page (F3 of .claude/plans/luz-home-docs-identity.md,
+ * <home-light> on the home page (F3 of .claude/plans/luz-home-docs-identity.md,
  * section 3.7; D8, D11). The element sits in section#light after the hero:
  *
- *   <luz-light looks="globe city map" look="random" remember bleed favicon>
+ *   <home-light looks="globe city map" look="random" remember bleed favicon>
  *
  * It draws the sun and the moon where the visitor is (the zone of Intl, no
  * network), over a globe, a city or a map. It does not own the colour mode:
  * <luz-mode> (the footer's) is the only writer of data-theme and data-light,
- * and <luz-light> asks it to preview an hour (the slider) or to return to now
+ * and <home-light> asks it to preview an hour (the slider) or to return to now
  * (Live). What it writes on <html> are custom properties: --sun-alt, --sun-az,
  * --sun-x and --day-left. Its texts are data-luz-label-* of <body>, from the
  * catalog (apps/landing/i18n). The files and their budgets are in
  * tests/home-light.test.js.
  *
  * What the controller renders, as this file reads it (the class names of the
- * mockup, kept by light.css): `.luz-light__line` the button under the visual
- * (the phrase of the look, it opens the bar), `.luz-light__bar` the bar,
+ * mockup, kept by light.css): `.home-light__line` the button under the visual
+ * (the phrase of the look, it opens the bar), `.home-light__bar` the bar,
  * `[data-look]` the buttons of the looks, the slider (a range input named
- * "Scrub the day"), `.luz-light__live` the Live button, `.luz-light__q` the
- * phrase, and one of <luz-globe>, <luz-city>, <luz-map> for the look.
+ * "Scrub the day"), `.home-light__live` the Live button, `.home-light__q` the
+ * phrase, and one of <home-globe>, <home-city>, <home-map> for the look.
  *
  * Without JavaScript the element is empty and light.css reserves its height.
  * That block turns JavaScript off for itself, so it runs in the chromium
@@ -65,8 +65,8 @@ test.use({ timezoneId: TIMEZONE, storageState: NO_CHOICE });
 async function open(page, path = '/', { look, time } = {}) {
   if (time) await atTime(page, time);
   await page.goto(look ? `${path}?look=${look}` : path);
-  await expect(page.locator('luz-light .luz-light__line')).toBeVisible();
-  await expect(page.locator('luz-light').locator('luz-globe, luz-city, luz-map').filter({ visible: true })).toHaveCount(1);
+  await expect(page.locator('home-light .home-light__line')).toBeVisible();
+  await expect(page.locator('home-light').locator('home-globe, home-city, home-map').filter({ visible: true })).toHaveCount(1);
 }
 
 /** The state of the page the light reads and writes. */
@@ -78,11 +78,11 @@ const html = (page) =>
     sunAlt: document.documentElement.style.getPropertyValue('--sun-alt').trim(),
   }));
 const openBar = async (page) => {
-  const bar = page.locator('luz-light .luz-light__bar');
-  if (!(await bar.isVisible())) await page.locator('luz-light .luz-light__line').click();
+  const bar = page.locator('home-light .home-light__bar');
+  if (!(await bar.isVisible())) await page.locator('home-light .home-light__line').click();
   await expect(bar).toBeVisible();
 };
-const slider = (page) => page.locator('luz-light input[type="range"]');
+const slider = (page) => page.locator('home-light input[type="range"]');
 /** Scrub the day to `hh:mm`. */
 const scrub = async (page, hhmm) => {
   const [h, m] = hhmm.split(':').map(Number);
@@ -129,18 +129,18 @@ test.describe('without JavaScript', () => {
       const light = page.locator('section#light');
       await expect(light).toHaveCount(1);
       await expect(light.locator('h2')).toHaveText(/\S/);
-      await expect(light.locator('luz-light')).toHaveCount(1);
-      expect(await light.locator('luz-light').evaluate((el) => ({ children: el.childElementCount, text: (el.textContent ?? '').trim() }))).toEqual({ children: 0, text: '' });
+      await expect(light.locator('home-light')).toHaveCount(1);
+      expect(await light.locator('home-light').evaluate((el) => ({ children: el.childElementCount, text: (el.textContent ?? '').trim() }))).toEqual({ children: 0, text: '' });
     });
 
     test(`${route}: light.css reserves the height of the visual, so it does not jump in`, async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
       await page.goto(route);
-      await expect(page.locator('luz-light')).toHaveCount(1);
-      const box = await page.locator('luz-light').boundingBox();
+      await expect(page.locator('home-light')).toHaveCount(1);
+      const box = await page.locator('home-light').boundingBox();
       expect(box?.height ?? 0).toBeGreaterThan(200);
       await page.setViewportSize({ width: 320, height: 800 });
-      expect((await page.locator('luz-light').boundingBox())?.height ?? 0).toBeGreaterThan(150);
+      expect((await page.locator('home-light').boundingBox())?.height ?? 0).toBeGreaterThan(150);
     });
   }
 
@@ -231,7 +231,7 @@ test.describe('with JavaScript', () => {
     expect(hours.every((h) => typeof h === 'number' && h >= 0 && h <= 24)).toBe(true);
     expect(Math.abs(hours.at(-1) - 9.5)).toBeLessThan(0.02);
 
-    const live = page.locator('luz-light .luz-light__live');
+    const live = page.locator('home-light .home-light__live');
     await expect(live).toBeVisible();
     await expect(live).toHaveText(text('en', 'Live'));
     await live.click();
@@ -254,7 +254,7 @@ test.describe('with JavaScript', () => {
     await expect.poll(async () => (await html(page)).light).toBe('sunset');
     expect((await html(page)).theme).toBe('dark');
 
-    await page.locator('luz-light .luz-light__live').click();
+    await page.locator('home-light .home-light__live').click();
     await expect.poll(async () => (await html(page)).light).toBe('night');
     expect((await html(page)).theme).toBe('dark');
   });
@@ -267,21 +267,21 @@ test.describe('with JavaScript', () => {
     await range.focus();
     await page.keyboard.press('End');
     await expect.poll(async () => (await html(page)).light).toBe('night');
-    await expect(page.locator('luz-light output')).toHaveText(/23:59/);
+    await expect(page.locator('home-light output')).toHaveText(/23:59/);
     await page.keyboard.press('Home');
-    await expect(page.locator('luz-light output')).toHaveText(/00:00/);
+    await expect(page.locator('home-light output')).toHaveText(/00:00/);
     await page.keyboard.press('Escape');
-    await expect(page.locator('luz-light .luz-light__bar')).toBeHidden();
+    await expect(page.locator('home-light .home-light__bar')).toBeHidden();
   });
 
   test('the button under the visual opens and closes the bar, and says so by aria-expanded', async ({ page }) => {
     await open(page, '/', { look: 'city' });
-    const line = page.locator('luz-light .luz-light__line');
+    const line = page.locator('home-light .home-light__line');
     await expect(line).toHaveAttribute('aria-expanded', 'false');
     await expect(line).toHaveAccessibleName(new RegExp(text('en', 'Show the light bar').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     await line.click();
     await expect(line).toHaveAttribute('aria-expanded', 'true');
-    await expect(page.locator('luz-light .luz-light__bar')).toBeVisible();
+    await expect(page.locator('home-light .home-light__bar')).toBeVisible();
     await line.click();
     await expect(line).toHaveAttribute('aria-expanded', 'false');
   });
@@ -309,9 +309,9 @@ test.describe('with JavaScript', () => {
     const night = await html(page);
     await scrub(page, '13:00');
     await expect.poll(async () => (await html(page)).sunAlt).not.toBe(night.sunAlt);
-    await page.locator('luz-light .luz-light__live').click();
-    await page.locator('luz-light [data-look="map"]').click();
-    await expect(page.locator('luz-map')).toBeVisible();
+    await page.locator('home-light .home-light__live').click();
+    await page.locator('home-light [data-look="map"]').click();
+    await expect(page.locator('home-map')).toBeVisible();
     await page.waitForTimeout(2500); // two ticks of the controller
     expect(await page.evaluate(() => /** @type {any} */ (window).__writes)).toEqual([]);
     expect(await html(page)).toMatchObject({ theme: before.theme, light: before.light });
@@ -323,7 +323,7 @@ test.describe('with JavaScript', () => {
     test(`?look=${look} wins over the random pick and loads only that visual's chunk`, async ({ page }) => {
       const chunks = trackChunks(page);
       await open(page, '/', { look });
-      await expect(page.locator('luz-light')).toHaveAttribute('look', look);
+      await expect(page.locator('home-light')).toHaveAttribute('look', look);
       await expect(page.locator(`luz-${look}`)).toBeVisible();
       for (const other of LOOKS.filter((l) => l !== look)) await expect(page.locator(`luz-${other}`).filter({ visible: true })).toHaveCount(0);
       expect(chunks.filter((c) => c !== 'light' && !LOOKS.includes(c))).toEqual([]);
@@ -333,12 +333,12 @@ test.describe('with JavaScript', () => {
   }
 
   test('?look= wins over a remembered look, and an unknown value is ignored', async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem('luz-light', 'city'));
+    await page.addInitScript(() => localStorage.setItem('luz-home-light', 'city'));
     await open(page, '/', { look: 'map' });
-    await expect(page.locator('luz-light')).toHaveAttribute('look', 'map');
+    await expect(page.locator('home-light')).toHaveAttribute('look', 'map');
     await page.goto('/?look=%3Cscript%3E');
-    await expect(page.locator('luz-light .luz-light__line')).toBeVisible();
-    expect(LOOKS).toContain(await page.locator('luz-light').getAttribute('look'));
+    await expect(page.locator('home-light .home-light__line')).toBeVisible();
+    expect(LOOKS).toContain(await page.locator('home-light').getAttribute('look'));
   });
 
   test('a look is picked at random from the three on a load without ?look=: all three appear', async ({ page }) => {
@@ -350,7 +350,7 @@ test.describe('with JavaScript', () => {
         Math.random = () => value;
       }, r);
       await open(fresh, '/');
-      seen.add(await fresh.locator('luz-light').getAttribute('look'));
+      seen.add(await fresh.locator('home-light').getAttribute('look'));
       await fresh.close();
     }
     expect([...seen].sort()).toEqual(['city', 'globe', 'map']);
@@ -360,14 +360,14 @@ test.describe('with JavaScript', () => {
     const chunks = trackChunks(page);
     await open(page, '/', { look: 'globe' });
     await openBar(page);
-    await expect(page.locator('luz-light [data-look]')).toHaveCount(3);
-    await expect(page.locator('luz-light [data-look="globe"]')).toHaveAttribute('aria-pressed', 'true');
-    await page.locator('luz-light [data-look="city"]').click();
-    await expect(page.locator('luz-city')).toBeVisible();
-    await expect(page.locator('luz-globe').filter({ visible: true })).toHaveCount(0);
-    await expect(page.locator('luz-light [data-look="city"]')).toHaveAttribute('aria-pressed', 'true');
-    await page.locator('luz-light [data-look="globe"]').click();
-    await expect(page.locator('luz-globe')).toBeVisible();
+    await expect(page.locator('home-light [data-look]')).toHaveCount(3);
+    await expect(page.locator('home-light [data-look="globe"]')).toHaveAttribute('aria-pressed', 'true');
+    await page.locator('home-light [data-look="city"]').click();
+    await expect(page.locator('home-city')).toBeVisible();
+    await expect(page.locator('home-globe').filter({ visible: true })).toHaveCount(0);
+    await expect(page.locator('home-light [data-look="city"]')).toHaveAttribute('aria-pressed', 'true');
+    await page.locator('home-light [data-look="globe"]').click();
+    await expect(page.locator('home-globe')).toBeVisible();
     expect(chunks.filter((c) => c === 'globe')).toHaveLength(1);
     expect(chunks.filter((c) => c === 'city')).toHaveLength(1);
     expect(chunks).not.toContain('map');
@@ -380,12 +380,12 @@ test.describe('with JavaScript', () => {
     await page.route(/\/$/, async (route) => {
       if (route.request().resourceType() !== 'document') return route.continue();
       const response = await route.fetch();
-      const body = (await response.text()).replace(/(<luz-light\b[^>]*?)\blooks="[^"]*"/, '$1looks="none"');
+      const body = (await response.text()).replace(/(<home-light\b[^>]*?)\blooks="[^"]*"/, '$1looks="none"');
       await route.fulfill({ response, body });
     });
     await page.goto('/');
-    await expect(page.locator('luz-light[looks="none"]')).toHaveCount(1);
-    await expect(page.locator('luz-light .luz-light__line')).toBeVisible();
+    await expect(page.locator('home-light[looks="none"]')).toHaveCount(1);
+    await expect(page.locator('home-light .home-light__line')).toBeVisible();
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
     expect(chunks.filter((c) => LOOKS.includes(c))).toEqual([]);
@@ -395,15 +395,15 @@ test.describe('with JavaScript', () => {
 
   /* -- remember ----------------------------------------------------------- */
 
-  test('remember stores luz-light only after a click on a look, and the stored value is the look', async ({ page }) => {
+  test('remember stores luz-home-light only after a click on a look, and the stored value is the look', async ({ page }) => {
     await open(page, '/', { look: 'globe' });
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(1200);
-    expect(await page.evaluate(() => localStorage.getItem('luz-light')), 'nothing is stored by a load').toBeNull();
+    expect(await page.evaluate(() => localStorage.getItem('luz-home-light')), 'nothing is stored by a load').toBeNull();
     await scrub(page, '10:00');
-    await page.locator('luz-light [data-look="map"]').click();
-    await expect(page.locator('luz-map')).toBeVisible();
-    expect(await page.evaluate(() => localStorage.getItem('luz-light'))).toBe('map');
+    await page.locator('home-light [data-look="map"]').click();
+    await expect(page.locator('home-map')).toBeVisible();
+    expect(await page.evaluate(() => localStorage.getItem('luz-home-light'))).toBe('map');
     // core's key is not the light's
     expect(await page.evaluate(() => localStorage.getItem('luz-theme'))).toBeNull();
   });
@@ -411,20 +411,20 @@ test.describe('with JavaScript', () => {
   test('a remembered look is used on the next visit, and a value that is not an offered look is ignored', async ({ page }) => {
     await page.addInitScript(() => {
       if (!sessionStorage.getItem('seeded')) {
-        localStorage.setItem('luz-light', 'city');
+        localStorage.setItem('luz-home-light', 'city');
         sessionStorage.setItem('seeded', '1');
       }
     });
     await open(page, '/');
-    await expect(page.locator('luz-light')).toHaveAttribute('look', 'city');
+    await expect(page.locator('home-light')).toHaveAttribute('look', 'city');
 
     for (const bad of ['bogus', 'none', '{"look":"map"}', '<img src=x>', '']) {
       const fresh = await page.context().newPage();
       const errors = [];
       fresh.on('pageerror', (e) => errors.push(e.message));
-      await fresh.addInitScript((value) => localStorage.setItem('luz-light', value), bad);
+      await fresh.addInitScript((value) => localStorage.setItem('luz-home-light', value), bad);
       await open(fresh, '/');
-      expect(LOOKS, `a stored "${bad}" falls back to an offered look`).toContain(await fresh.locator('luz-light').getAttribute('look'));
+      expect(LOOKS, `a stored "${bad}" falls back to an offered look`).toContain(await fresh.locator('home-light').getAttribute('look'));
       expect(errors).toEqual([]);
       await fresh.close();
     }
@@ -443,8 +443,8 @@ test.describe('with JavaScript', () => {
     });
     await open(page, '/', { look: 'city' });
     await openBar(page);
-    await page.locator('luz-light [data-look="map"]').click();
-    await expect(page.locator('luz-map')).toBeVisible();
+    await page.locator('home-light [data-look="map"]').click();
+    await expect(page.locator('home-map')).toBeVisible();
     expect(errors).toEqual([]);
   });
 
@@ -495,16 +495,16 @@ test.describe('with JavaScript', () => {
     test(`${route}: the phrase under the visual and the names in the bar are the catalog's (${lang})`, async ({ page }) => {
       for (const look of LOOKS) {
         await open(page, route, { look });
-        await expect(page.locator('luz-light .luz-light__q')).toHaveText(text(lang, PHRASE[look]));
+        await expect(page.locator('home-light .home-light__q')).toHaveText(text(lang, PHRASE[look]));
       }
       await openBar(page);
       await scrub(page, '10:00');
-      await expect(page.locator('luz-light .luz-light__live')).toHaveText(text(lang, 'Live'));
+      await expect(page.locator('home-light .home-light__live')).toHaveText(text(lang, 'Live'));
       await expect(page.getByRole('slider', { name: text(lang, 'Scrub the day') })).toHaveCount(1);
       for (const [look, english] of [['globe', 'Globe'], ['city', 'City'], ['map', 'Map']]) {
-        await expect(page.locator(`luz-light [data-look="${look}"]`)).toHaveAccessibleName(text(lang, english));
+        await expect(page.locator(`home-light [data-look="${look}"]`)).toHaveAccessibleName(text(lang, english));
       }
-      await expect(page.locator('luz-light .luz-light__line')).toHaveAccessibleName(new RegExp(text(lang, 'Show the light bar').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+      await expect(page.locator('home-light .home-light__line')).toHaveAccessibleName(new RegExp(text(lang, 'Show the light bar').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     });
   }
 
@@ -536,7 +536,7 @@ test.describe('with JavaScript', () => {
         expect(await overflow()).toBeLessThanOrEqual(1);
         await openBar(page);
         expect(await overflow()).toBeLessThanOrEqual(1);
-        const bar = await page.locator('luz-light .luz-light__bar').boundingBox();
+        const bar = await page.locator('home-light .home-light__bar').boundingBox();
         expect((bar?.x ?? 0) + (bar?.width ?? 0)).toBeLessThanOrEqual(321);
         expect(bar?.x ?? 0).toBeGreaterThanOrEqual(-1);
       });
@@ -555,7 +555,7 @@ test.describe('with JavaScript', () => {
             const r = document.querySelector(selector)?.getBoundingClientRect();
             return r ? { top: Math.round(r.top + window.scrollY), height: Math.round(r.height), width: Math.round(r.width) } : null;
           };
-          return { hero: box('.luz-landing-hero'), light: box('section#light'), element: box('luz-light') };
+          return { hero: box('.luz-landing-hero'), light: box('section#light'), element: box('home-light') };
         });
       const withScript = await boxes(page);
 

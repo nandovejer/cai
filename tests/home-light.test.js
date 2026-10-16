@@ -1,11 +1,11 @@
 /**
- * <luz-light> on the home page (F3 of .claude/plans/luz-home-docs-identity.md,
+ * <home-light> on the home page (F3 of .claude/plans/luz-home-docs-identity.md,
  * section 3.7; D8, D9, D10, D11). The element lives in apps/landing/light/,
  * not in a package: four files of vanilla JS, one stylesheet and a README.
  *
- *   light.js   the controller: defines <luz-light>, imports nothing statically,
+ *   light.js   the controller: defines <home-light>, imports nothing statically,
  *              loads the chosen visual with a literal import()
- *   globe.js   <luz-globe>   city.js   <luz-city>   map.js   <luz-map>
+ *   globe.js   <home-globe>   city.js   <home-city>   map.js   <home-map>
  *              each imports nothing at all
  *   light.css  every rule the mockup injected with <style>, linked by the home only
  *
@@ -28,7 +28,7 @@ const read = (path) => {
 };
 const DIR = "apps/landing/light";
 const FILES = ["light", "globe", "city", "map"].map((name) => `${DIR}/${name}.js`);
-const VISUALS = { globe: "luz-globe", city: "luz-city", map: "luz-map" };
+const VISUALS = { globe: "home-globe", city: "home-city", map: "home-map" };
 
 /** The code without its comments: a rule may be explained in a comment that names what it forbids. */
 const code = (path) =>
@@ -70,7 +70,7 @@ describe("apps/landing/light: the files", () => {
   });
 
   it.each(FILES)("%s is an ES module that defines its element once, behind customElements.get()", (path) => {
-    const name = path.endsWith("light.js") ? "luz-light" : VISUALS[path.match(/(\w+)\.js$/)[1]];
+    const name = path.endsWith("light.js") ? "home-light" : VISUALS[path.match(/(\w+)\.js$/)[1]];
     const source = code(path);
     expect(source).toMatch(new RegExp(`customElements\\.get\\(\\s*["']${name}["']\\s*\\)`));
     expect(source).toMatch(new RegExp(`customElements\\.define\\(\\s*["']${name}["']`));
@@ -160,9 +160,9 @@ describe("light.js: <luz-mode> is the only writer of data-theme and data-light",
     for (const property of ["--sun-alt", "--sun-az", "--sun-x", "--day-left"]) expect(s).toContain(property);
   });
 
-  it("stores the look under luz-light, in a try/catch, and never touches core's luz-theme key", () => {
+  it("stores the look under luz-home-light, in a try/catch, and never touches core's luz-theme key", () => {
     const s = source();
-    expect(s).toContain('"luz-light"');
+    expect(s).toContain('"luz-home-light"');
     expect(s).not.toContain("luz-theme");
     expect(s).toMatch(/try\s*\{[^}]*localStorage/);
   });
@@ -215,13 +215,13 @@ describe("light.css", () => {
 
   it("styles the element and its three visuals, and stops its motion under prefers-reduced-motion", () => {
     const css = read(`${DIR}/light.css`);
-    for (const tag of ["luz-light", "luz-globe", "luz-city", "luz-map"]) expect(css).toContain(tag);
+    for (const tag of ["home-light", "home-globe", "home-city", "home-map"]) expect(css).toContain(tag);
     expect(css).toMatch(/prefers-reduced-motion:\s*reduce/);
   });
 
   it("reserves the room of the element before the script runs, so nothing jumps", () => {
     const css = read(`${DIR}/light.css`);
-    expect(css).toMatch(/luz-light(?::not\(:defined\))?\s*\{[^}]*(?:min-height|aspect-ratio|height)\s*:/);
+    expect(css).toMatch(/home-light(?::not\(:defined\))?\s*\{[^}]*(?:min-height|aspect-ratio|height)\s*:/);
   });
 
   it("reads the page's colours from its custom properties", () => {
@@ -240,13 +240,13 @@ describe("apps/landing/index.html: the light section", () => {
     expect(section, "a <section id=\"light\">").not.toBeNull();
     expect(html.indexOf('id="light"')).toBeGreaterThan(html.indexOf("luz-landing-hero"));
     expect(section[1]).toMatch(/<h2[^>]*class="[^"]*u-sr-only[^"]*"[^>]*>\s*\{\{t:[\w.-]+\}\}\s*<\/h2>/);
-    expect(section[1]).toMatch(/<luz-light\b[^>]*>\s*<\/luz-light>/);
+    expect(section[1]).toMatch(/<home-light\b[^>]*>\s*<\/home-light>/);
   });
 
   it('offers the three looks, picks one at random, remembers the visitor\'s click, bleeds and writes the favicon', () => {
     expect(section, "a <section id=\"light\">").not.toBeNull();
-    const tag = section[1].match(/<luz-light\b[^>]*>/)?.[0] ?? "";
-    expect(tag, "a <luz-light> in it").not.toBe("");
+    const tag = section[1].match(/<home-light\b[^>]*>/)?.[0] ?? "";
+    expect(tag, "a <home-light> in it").not.toBe("");
     expect(tag).toMatch(/\blooks="globe city map"/);
     expect(tag).toMatch(/\blook="random"/);
     for (const flag of ["remember", "bleed", "favicon"]) expect(tag).toMatch(new RegExp(`\\s${flag}(?=[\\s>=])`));
@@ -362,7 +362,7 @@ describe("the licence of the land data", () => {
 
 /* ---- The texts: the catalogs of the home (D11) -------------------------- */
 
-describe("the strings of <luz-light> in the catalogs of the home", () => {
+describe("the strings of <home-light> in the catalogs of the home", () => {
   const catalog = (code) => JSON.parse(read(`apps/landing/i18n/${code}.json`));
   const en = catalog("en");
   const es = catalog("es");
@@ -444,5 +444,48 @@ describe("the repository stays small", () => {
     const size = (name) => Buffer.byteLength(read(`${DIR}/${name}`));
     const total = ["light.js", "globe.js", "city.js", "map.js"].reduce((sum, name) => sum + size(name), 0);
     expect(total).toBeLessThan(141 * 1024);
+  });
+});
+
+/* ---- The home's elements are not LUZ elements, so they do not take the prefix */
+
+describe("custom element names under apps/", () => {
+  const walk = (dir) =>
+    readdirSync(join(repo, dir), { withFileTypes: true }).flatMap((entry) => {
+      if (entry.name === "node_modules" || entry.name === "dist") return [];
+      const path = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) return walk(path);
+      return /\.(html|css|js)$/.test(entry.name) ? [path] : [];
+    });
+
+  it("no file of apps/ defines or uses a custom element named luz-* unless a package defines it in packages/*/src", () => {
+    const sources = readdirSync(join(repo, "packages"), { withFileTypes: true })
+      .filter((entry) => entry.isDirectory() && existsSync(join(repo, "packages", entry.name, "src")))
+      .flatMap((entry) => walk(`packages/${entry.name}/src`))
+      .map(read)
+      .join("\n");
+    const known = new Set([...sources.matchAll(/\b(luz-[a-z][a-z0-9-]*)\b/g)].map((m) => m[1]));
+    const offenders = [];
+    for (const path of walk("apps")) {
+      const text = read(path);
+      const names = [
+        ...[...text.matchAll(/<\/?(luz-[a-z][a-z0-9-]*)/g)].map((m) => m[1]),
+        ...[...text.matchAll(/customElements\.(?:define|get|whenDefined)\(\s*["'](luz-[a-z][a-z0-9-]*)["']/g)].map((m) => m[1]),
+      ];
+      for (const name of new Set(names)) if (!known.has(name)) offenders.push(`${path}: <${name}>`);
+    }
+    expect(offenders, "elements of apps/ that are not LUZ's").toEqual([]);
+  });
+
+  it("the light's files name no luz-light, luz-globe, luz-city or luz-map: class, event, property or tag", () => {
+    for (const path of [...FILES, `${DIR}/light.css`, "apps/landing/index.html", "apps/landing/landing.js"]) {
+      expect(read(path), path).not.toMatch(/luz-(?:light|globe|city|map)\b/);
+    }
+  });
+
+  it("the light's custom properties and events use the home- prefix", () => {
+    for (const path of [...FILES, `${DIR}/light.css`]) {
+      expect(read(path), path).not.toMatch(/--luz-(?:light|globe|city|map)/);
+    }
   });
 });

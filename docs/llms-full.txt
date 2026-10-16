@@ -1992,15 +1992,6 @@ Do not hide what every reader needs, and do not use it to move around the site.
 - Do not put an error, a warning or a required step inside a closed panel.
 - With only one or two short answers, show them as plain text.
 
-### Do and don't
-- **Do** Give each summary a short title that says what the panel answers.
-- **Don't** Use a whole sentence of context as the title: it hides the point and wraps.
-
-### Writing the content
-- Write the summary as the question or the topic, in sentence case, in a few words.
-- Put the answer first in the panel. Keep it short; link to a page for more.
-- Order the panels as readers ask: most common first.
-
 ## Alert
 URL: https://nandovejer.github.io/luz/docs/components/alert/
 Example: https://nandovejer.github.io/luz/examples/components/alert.html
@@ -2059,17 +2050,6 @@ Do not use an alert for a message that must stop the reader, or one they can saf
 - A short confirmation that needs no action: use a [toast](https://nandovejer.github.io/luz/docs/components/toast/).
 - An error on one field: put it next to the field ([form fields](https://nandovejer.github.io/luz/docs/components/form/)).
 - More than two alerts at once: merge them, or the reader stops reading them.
-
-### Do and don't
-- **Do** Say what happened and what to do next: “Storage is almost full. Delete old builds or change your plan.”
-- **Don't** “Something went wrong.” names neither what failed nor what the reader can do about it.
-
-### Writing the content
-Say what happened, then what to do next.
-
-- The title is the status in one or two words: "Warning", "Build failed".
-- The body is one or two short sentences: "The build failed. Check the log and run it again."
-- Never rely on the colour or the icon alone.
 
 ## Avatar
 URL: https://nandovejer.github.io/luz/docs/components/avatar/
@@ -2139,18 +2119,6 @@ Do not use an avatar as the only way to tell people apart.
 - For a status or a category, use a [tag](https://nandovejer.github.io/luz/docs/components/tag/).
 - For the portrait of a speaker or a product, a size of its own, use a card with the image frame: see [Speakers](https://nandovejer.github.io/luz/docs/landing/templates/#speakers) in the landing page templates. An avatar is 24 to 48 px.
 
-### Do and don't
-- **Do** Show the name next to the avatar: two people can share initials.
-- **Don't** Avatars alone, as the only way to tell people apart: “AB” and “AB” are two different people.
-- **Do** Give every photo in a list the same framing: head and shoulders, the face away from the edges, because the box crops it to a square.
-- **Don't** Mix photos with initials in a list that could be all one or the other: the people without a photo look like a different kind of member.
-
-### Writing the content
-Two initials, from the name the person uses.
-
-- The accessible name is the full name, never the initials. For a photo, that is its `alt`.
-- Use the same size for every avatar in one list.
-
 ## Band
 URL: https://nandovejer.github.io/luz/docs/components/band/
 Example: https://nandovejer.github.io/luz/examples/components/band.html
@@ -2213,15 +2181,6 @@ Do not band every section: when everything stands out, nothing does.
 - Do not put a band inside a card or on a `--luz-surface` area, or around the whole page. In dark mode the primary button falls to 2.7:1 against a tint laid over `--luz-surface`, under the 3:1 a control's edge needs.
 - Do not put a `.luz-btn--secondary` on the band: its fill is the tint's own colour, and it reads as plain text.
 
-### Do and don't
-- **Do** One band, with a heading that says why now and one primary button.
-- **Don't** Two bands in a row: the second reads as a new background, and neither stands out as the call to act.
-
-### Writing the content
-On a band, the heading says why now, not the action: "Registration closes on 30 April", not "Register".
-
-- Add one sentence of support, one primary button and, if you need a second way, one outline button.
-
 ## Breadcrumb
 URL: https://nandovejer.github.io/luz/docs/components/breadcrumb/
 Example: https://nandovejer.github.io/luz/examples/components/breadcrumb.html
@@ -2275,16 +2234,6 @@ Do not use a breadcrumb on a flat site, or as the only navigation.
 
 - For the main sections of a site, use a [sidebar](https://nandovejer.github.io/luz/docs/components/sidebar/) or a header navigation.
 - For steps in a process, show the step number in the page heading instead.
-
-### Do and don't
-- **Do** Use the titles of the pages, and end with the current page as text.
-- **Don't** Internal names (“UI kit”, “luz-btn”) instead of the titles the reader saw on the way.
-
-### Writing the content
-Use the title of each page, shortened if it is long.
-
-- Start at the home or the top of the section.
-- End with the current page, as text, not as a link.
 
 ## Button
 URL: https://nandovejer.github.io/luz/docs/components/button/
@@ -2363,18 +2312,6 @@ Do not use a button to go to another page: use a link, styled as a button only w
 - For several related actions in a row, use an [action group](https://nandovejer.github.io/luz/docs/components/layout/#objects-actions).
 - Do not disable a button to hide an action the reader cannot take yet: say why instead.
 - Do not stretch a button across a wide column: a bar 1,000 px wide is not a button. Two actions side by side are two buttons of their own width.
-
-### Do and don't
-- **Do** One primary button, for the action most people take; the others are quieter.
-- **Don't** Two primary buttons: neither one reads as the next step, so the reader has to stop and compare.
-
-### Writing the content
-Start with a verb and say the result: "Save changes", "Delete draft".
-
-- Never "OK", "Submit" or "Click here".
-- Sentence case, two or three words, no full stop.
-- Use the same words for the same action everywhere.
-- A full-width bar invites a long label: keep it under about 24 characters, or let it wrap.
 
 ## Card
 URL: https://nandovejer.github.io/luz/docs/components/card/
@@ -2504,21 +2441,6 @@ Do not use a card to box content that is not a separate thing.
 - Do not put a card inside a card.
 - Do not feature several cards in a group, or use the border as the only cue: say why in words too.
 
-### Do and don't
-- **Do** Put the link on the title: the whole card takes the click and the link is named by the title. An action goes after it as a button, with a name of its own.
-- **Don't** A link round the whole card, or a second link such as “Read more” in it: the first takes every word of the card as its name, the second sits under the title link and says nothing out of context.
-- **Do** Feature one card, and say why in words: the border draws the eye, the tag tells everybody.
-- **Don't** A featured card with no words: a reader who does not see the border, or the colour, gets no hint that it is the one to choose.
-
-### Writing the content
-A short noun as the title, then one or two lines.
-
-- No full stop on the title.
-- Keep cards in one group parallel: the same kind of title, the same length of body.
-- In a linked card, the title is the link text: it says where the link goes, so the card needs no “Read more”.
-- On a featured card, a tag of one to three words says why: “Most chosen”, “Best value”. A button names the plan: “Choose Two days”.
-- A price with its currency, in the format of the page's language. A button says what it does and for what: “Add to cart”, then the product's name for assistive technology.
-
 ## Code
 URL: https://nandovejer.github.io/luz/docs/components/code/
 Example: https://nandovejer.github.io/luz/examples/components/code.html
@@ -2579,17 +2501,6 @@ Do not use a code block for a long file or for text that is not code.
 
 - For a whole file, link to the source.
 - For a key the reader presses, use `<kbd>`.
-
-### Do and don't
-- **Do** Code that works when it is pasted: the command alone.
-- **Don't** A prompt sign and the output in the same block: pasted, the “$” and the output lines fail.
-
-### Writing the content
-Show code that works when it is pasted.
-
-- Name each block in its `aria-label`: what the code is, not "Code".
-- Set `data-lang`; use `text` for output that is not code.
-- Keep lines short: a long line makes the reader scroll sideways.
 
 ## Color mode switcher
 URL: https://nandovejer.github.io/luz/docs/components/mode-switcher/
@@ -2677,15 +2588,6 @@ Do not use the cycle variant where readers compare the modes: the radio group sh
 
 - Do not hide it on a settings page only: a reader who cannot read the page cannot find the setting.
 
-### Do and don't
-- **Do** Name the modes for what they are: “Light”, “Dark”, “High contrast”.
-- **Don't** “Accessible” for the high-contrast mode: it says the other modes are not, and does not say what changes.
-
-### Writing the content
-Call the group "Color mode" and the modes "Light", "Dark" and "High contrast".
-
-- Each mode keeps its visible name next to its icon, so the radios read without the icons.
-
 ## Copy button
 URL: https://nandovejer.github.io/luz/docs/components/copy-button/
 Example: https://nandovejer.github.io/luz/examples/components/copy-button.html
@@ -2740,16 +2642,6 @@ Use a copy button for a short string the reader will paste somewhere else: a com
 Do not use a copy button where selecting the text is just as easy, or as the only way to get the content.
 
 - For long text, show it in a [code block](https://nandovejer.github.io/luz/docs/components/code/) the reader can select.
-
-### Do and don't
-- **Do** Next to the text it copies, which the reader can also select by hand.
-- **Don't** A copy button on text the reader must change first: they paste “<your-token>” and the command fails.
-
-### Writing the content
-Keep the visible label "Copy", and name what it copies in the accessible name.
-
-- Start the accessible name with the visible word: "Copy the install command".
-- Copy exactly what is shown, without a prompt sign or extra spaces.
 
 ## Dropdown
 URL: https://nandovejer.github.io/luz/docs/components/dropdown/
@@ -2816,17 +2708,6 @@ Do not use a dropdown to pick a value, or to hide the main action.
 - For the sections of a site, use a [sidebar](https://nandovejer.github.io/luz/docs/components/sidebar/) or a navigation list.
 - LUZ has no context menu on right click. The browser's own menu is the reader's, and replacing it breaks copy, paste and spelling help; give the same actions in a dropdown.
 
-### Do and don't
-- **Do** Name the actions with verbs and put the destructive one last, apart.
-- **Don't** Nouns that do not say what happens, and a dangerous action in the middle.
-
-### Writing the content
-Start each action with a verb, in the order a reader would look for it.
-
-- Two or three words: “Duplicate”, “Move to archive”.
-- Say what the destructive action destroys: “Delete project”, not “Delete”.
-- Group with a separator, not with headings.
-
 ## Figure
 URL: https://nandovejer.github.io/luz/docs/components/figure/
 Example: https://nandovejer.github.io/luz/examples/components/figure.html
@@ -2878,16 +2759,6 @@ Do not use a figure for decoration.
 
 - A decorative image gets `alt=""` and no figure.
 - For a picture in a box of fixed shape, use the [image](https://nandovejer.github.io/luz/docs/components/image/) frame.
-
-### Do and don't
-- **Do** A caption that says what the figure shows, and for what period.
-- **Don't** “Figure 1” as the caption: the reader learns the number, not what the chart says.
-
-### Writing the content
-The caption says what the figure shows, and for what period or scope.
-
-- The alt text says what the reader would see: the trend, not "chart".
-- Do not repeat the caption in the alt text.
 
 ## Form fields
 URL: https://nandovejer.github.io/luz/docs/components/form/
@@ -2988,18 +2859,6 @@ Do not rebuild a native control from `<div>` elements.
 - Do not use a placeholder as the label: it disappears when the reader types.
 - Do not use a switch inside a form that is sent with a button: use a checkbox.
 - To show how far a task has got, use [progress](https://nandovejer.github.io/luz/docs/components/progress/), not a [meter](https://nandovejer.github.io/luz/docs/components/meter/).
-
-### Do and don't
-- **Do** A checkbox in a form that is sent with a button: nothing changes until “Save preferences”.
-- **Don't** A switch in the same form: a switch promises an instant change, so the reader does not know the button is still needed.
-
-### Writing the content
-Every control has a visible label that names what to enter.
-
-- Labels are short nouns, in sentence case: "Project name".
-- A hint, under the control, says the format or why you ask.
-- An error says what is wrong and how to fix it: "Use letters, numbers and dashes only."
-- If you mark required fields with "*", say once, above the form, what it means.
 
 ## Icon grid
 URL: https://nandovejer.github.io/luz/docs/components/icon-grid/
@@ -3118,17 +2977,6 @@ Do not use it to lay out icons that do something: it is a catalogue, not a toolb
 - For a logo or an illustration, use an `<img>` or an SVG at its own size.
 - For hundreds of icons, bring your own set: LUZ's has 22.
 
-### Do and don't
-- **Do** Name each icon by what it shows, in one word.
-- **Don't** File names as labels: “ic_add_24” and “ic_ok_24” make the reader decode them, and “ok” is a use, not what the icon shows.
-
-### Writing the content
-Name each icon by what it shows, in one word if you can: "Plus", "Check", "Arrow".
-
-- Keep names unique in one grid.
-- Draw every icon on the same grid and stroke, with `currentColor`, so it follows the text colour in every mode.
-- Pair **Info** and **Warning** with words, in the same place. They are shapes, not status colours: an alert keeps its own.
-
 ## Image
 URL: https://nandovejer.github.io/luz/docs/components/image/
 Example: https://nandovejer.github.io/luz/examples/components/image.html
@@ -3192,19 +3040,6 @@ Do not use it for an image that must keep its own shape, such as a chart or a sc
 - For icons and logos, use an `<img>` or an SVG at its own size.
 - Never let an empty frame stand in for an image that carries information: if it is missing, say so in text.
 
-### Do and don't
-- **Do** A real image, with an alt text that says what it shows.
-- **Don't** An empty frame where the content is the image: a floor plan nobody can see, with nothing in words.
-
-### Writing the content
-Give every real image an alt text that says what it shows, in one plain sentence.
-
-- Use `alt=""` when the image is decorative, or the text next to it already says the same.
-- The frame crops: keep text and essential detail away from the edges, and describe what stays visible.
-- Set `width` and `height` to the image's own size, so the page does not jump while it loads.
-- Add `loading="lazy"` only below the fold; an image visible when the page opens should load at once.
-- Do not put text in images.
-
 ## Meta line
 URL: https://nandovejer.github.io/luz/docs/components/meta/
 Example: https://nandovejer.github.io/luz/examples/components/meta.html
@@ -3256,16 +3091,6 @@ Do not use it for a sentence, or for facts the reader needs to compare across it
 
 - Facts with labels, such as a price and a size, are a description list (`<dl>`) or a [table](https://nandovejer.github.io/luz/docs/components/table/).
 - A path of pages is a [breadcrumb](https://nandovejer.github.io/luz/docs/components/breadcrumb/); a set of labels is a row of [tags](https://nandovejer.github.io/luz/docs/components/tag/).
-
-### Do and don't
-- **Do** Each fact in its own element, and the dots left to CSS.
-- **Don't** Dots typed into the text: a screen reader reads each one, and a wrapped line can start with one.
-
-### Writing the content
-Short facts, the most useful first: usually the author, then the date.
-
-- Write the date in words, with the month spelled out, in the reader's language.
-- Two to four facts. More than that is a list, not a line.
 
 ## Meter
 URL: https://nandovejer.github.io/luz/docs/components/meter/
@@ -3329,17 +3154,6 @@ Do not use a meter for a task that is running: use [progress](https://nandovejer
 - For a trend over time, use a chart library; keep the [table](https://nandovejer.github.io/luz/docs/components/table/) as its text alternative. LUZ draws no line, area or pie chart.
 - When exact values matter more than the shape, leave the bar out: the figure is already there.
 - Do not use the bar's colour to say good or bad: it is always the brand colour.
-
-### Do and don't
-- **Do** One scale for every row, and the figure beside each bar: the length compares, the number says how much.
-- **Don't** A scale of its own in each row: 312 of 400 looks longer than 1,204 of 1,500, and the figure is nowhere to check it.
-
-### Writing the content
-The figure is the content; the bar only shows how it compares.
-
-- Put the figure in text in the same cell or line, with its unit in the column heading: “Parcels”.
-- Say the scale in the caption or the heading when it is not obvious: “Parcels per route, this week”.
-- Inside the element, write the figure and its range as a fallback: “1,204 of 1,500”.
 
 ## Modal
 URL: https://nandovejer.github.io/luz/docs/components/modal/
@@ -3424,17 +3238,6 @@ Do not use a modal for something the reader can ignore or come back to.
 - For a long form, use its own page.
 - Never open a modal when the page loads.
 
-### Do and don't
-- **Do** The title asks the question and the main button repeats the action.
-- **Don't** “Are you sure?” with “Cancel” and “Continue”: the reader has to read the body to know what “Continue” does.
-
-### Writing the content
-The title asks the question or names the task: "Delete this draft?"
-
-- The body says what happens, in one or two sentences.
-- The main button repeats the action: "Delete draft". The other one is "Cancel".
-- Never "OK", "Yes" or "Confirm".
-
 ## Navbar
 URL: https://nandovejer.github.io/luz/docs/components/navbar/
 Example: https://nandovejer.github.io/luz/examples/components/navbar.html
@@ -3507,16 +3310,6 @@ Do not use it for an app with many sections, or for links in the page.
 - For the place of a page in a hierarchy, use a [breadcrumb](https://nandovejer.github.io/luz/docs/components/breadcrumb/).
 - For the sections of one page, use [tabs](https://nandovejer.github.io/luz/docs/components/tabs/) or a list of in-page links.
 
-### Do and don't
-- **Do** A few links with short names, the current one underlined: the row reads in one glance.
-- **Don't** Every page of the site in the bar: the row wraps, and nothing stands out as the way in.
-
-### Writing the content
-Name each link after the page it opens, in one or two words.
-
-- Five links or fewer; put the rest in the footer, or a [submenu](https://nandovejer.github.io/luz/docs/site/submenu/).
-- Name the menu button after what it opens: "Menu".
-
 ## Pagination
 URL: https://nandovejer.github.io/luz/docs/components/pagination/
 Example: https://nandovejer.github.io/luz/examples/components/pagination.html
@@ -3578,17 +3371,6 @@ Do not use pagination for a short list, or for the steps of a task.
 - For the parents of the page you are on, use a [breadcrumb](https://nandovejer.github.io/luz/docs/components/breadcrumb/).
 - For the sections of one page, use [tabs](https://nandovejer.github.io/luz/docs/components/tabs/).
 - For a feed that keeps loading on scroll, give a link to the next page as well: it is the only version a keyboard and a screen reader reach.
-
-### Do and don't
-- **Do** Show the first and last page, the current one and its neighbours, and a gap between.
-- **Don't** Print every page of a long list: it grows past the width and the reader has to count.
-
-### Writing the content
-Use the word the reader would say.
-
-- “Previous” and “Next”, not arrows alone and not “Back”.
-- Page numbers as plain digits; name them “Page 3” for assistive technology.
-- Say how many pages there are near the list (“Page 8 of 40”) when the total matters.
 
 ## Player
 URL: https://nandovejer.github.io/luz/docs/components/player/
@@ -3692,18 +3474,6 @@ Do not use a player for media that starts on its own or plays in the background.
 - Never autoplay.
 - For a short animated illustration with no sound, use an image or a [figure](https://nandovejer.github.io/luz/docs/components/figure/).
 
-### Do and don't
-- **Do** Controls the reader starts, and a name that says what plays. Shortened: the full markup is under Copy the markup.
-- **Don't** Media that starts on its own. Sound that plays for more than 3 seconds must have a way to stop it (WCAG 1.4.2), so it is shown as code only.
-
-### Writing the content
-Name each player by what it plays: "Episode 12 player", not "Audio player".
-
-- Give video captions (`<track kind="captions">`) and a transcript when it has speech. Captions include the sounds as well as the words; subtitles (`kind="subtitles"`) translate the words.
-- Label each track in its own language: "English", "Español".
-- Describe a silent video in its `aria-label` or next to it.
-- Say the length and the format next to the player when it is large.
-
 ## Progress
 URL: https://nandovejer.github.io/luz/docs/components/progress/
 Example: https://nandovejer.github.io/luz/examples/components/progress.html
@@ -3751,16 +3521,6 @@ Do not use a progress bar for a value that is not a task.
 
 - For a measure in a known range, such as storage used, use a [meter](https://nandovejer.github.io/luz/docs/components/meter/).
 - Do not use it as decoration.
-
-### Do and don't
-- **Do** A task with an end, named with the figure: “Uploading report.pdf, 25%”.
-- **Don't** Storage used is a measure, not a task: a progress bar suggests it will finish. Use a meter.
-
-### Writing the content
-Say what is happening, not just the number: "Uploading report.pdf".
-
-- Put the figure in the name or next to the bar: "Upload, 25%".
-- When it ends, say so: "Upload complete".
 
 ## Prose
 URL: https://nandovejer.github.io/luz/docs/components/prose/
@@ -3823,18 +3583,6 @@ Do not put prose around a whole page or an interface: the header, the navigation
 
 - For a column of blocks you build yourself, use [`.o-stack`](https://nandovejer.github.io/luz/docs/components/layout/).
 - For one or two lines inside a component, such as a card's text, use the component's own classes.
-
-### Do and don't
-- **Do** Short paragraphs under headings that say what follows, so a reader can scan and find their place.
-- **Don't** One long paragraph with no heading: the reader cannot tell what it covers without reading all of it.
-
-### Writing the content
-Write for someone who reads the first words of each line and skips the rest.
-
-- One idea a paragraph. Put the point first.
-- Headings in order, in sentence case, that say what the section is about.
-- A list for three or more things of the same kind; a sentence for two.
-- Links that say where they go, and figures with a caption that says what they show.
 
 ## Select
 URL: https://nandovejer.github.io/luz/docs/components/select/
@@ -3904,16 +3652,6 @@ A select hides the options until the reader opens it, and some people find that 
 - To choose several, use [checkboxes](https://nandovejer.github.io/luz/docs/components/form/).
 - Before you use a long list, ask a question that cuts it down.
 - Never build your own listbox from `<div>` elements, or hide the select behind a copy of it.
-
-### Do and don't
-- **Do** Use a select for a long list, with a visible label that says what to choose.
-- **Don't** Hide three options in a select. Radio buttons show them all at once.
-
-### Writing the content
-- The label says what to choose, as a noun: "Country", not "Please select".
-- The first option is a prompt such as "Select a country", with an empty value, so a required field is not answered by default.
-- Write each option in sentence case and put them in an order the reader can predict, such as alphabetical.
-- Give every option text. An icon or a color swatch can go with it, never instead of it.
 
 ## Sidebar
 URL: https://nandovejer.github.io/luz/docs/components/sidebar/
@@ -3989,16 +3727,6 @@ Do not use a sidebar for a site with a few pages: a header navigation is simpler
 - For the trail to the current page, use a [breadcrumb](https://nandovejer.github.io/luz/docs/components/breadcrumb/).
 - For panels of one page, use [tabs](https://nandovejer.github.io/luz/docs/components/tabs/).
 
-### Do and don't
-- **Do** Short nouns, grouped under a label, in the order people need them.
-- **Don't** Sentences and catch-alls as links: “Manage your billing details” is slow to scan and “Other stuff” says nothing.
-
-### Writing the content
-Name each link after the page it opens, in a word or two.
-
-- Section labels are nouns: "Account", "Billing".
-- Order the links by how often people need them.
-
 ## Skip link
 URL: https://nandovejer.github.io/luz/docs/components/skip-link/
 Example: https://nandovejer.github.io/luz/examples/components/skip-link.html
@@ -4047,15 +3775,6 @@ Put a skip link on every page that has a header, a banner or navigation before t
 Do not rely on it alone: the page still needs landmarks and a logical heading order.
 
 - Do not add a list of skip links to every section: one to the main content is enough.
-
-### Do and don't
-- **Do** One link, that says where it goes: “Skip to main content”.
-- **Don't** A row of skip links: the reader has to read them all before the page starts, which is what the link was meant to avoid.
-
-### Writing the content
-Say where it goes: "Skip to main content".
-
-- Use the same text on every page.
 
 ## Table
 URL: https://nandovejer.github.io/luz/docs/components/table/
@@ -4178,18 +3897,6 @@ Do not use a table for layout.
 - For a data grid (filters, selecting rows, editing cells or thousands of rows), use a library built for it. LUZ's table shows rows and sorts them; it does not manage them. For paginated results, sort on the server.
 - For a trend over time, use a chart library and keep the table as its text alternative. A bar for each row is a [meter](https://nandovejer.github.io/luz/docs/components/meter/) in the cell of its figure.
 
-### Do and don't
-- **Do** The unit in the heading, the same decimals, and the column aligned to the end, heading included.
-- **Don't** A vague heading, the unit in every cell, mixed decimals and no alignment: the column is hard to compare.
-
-### Writing the content
-The caption names the table; column headings are short nouns.
-
-- Put units in the heading, not in every cell: "Amount (€)".
-- Put the column that identifies the row first.
-- Align numbers to the end with `.luz-table__numeric`, on the heading and on every cell of the column, with the same number of decimals. Text stays at the start.
-- In a table that sorts in the browser, the heading is the column name and its unit, “Weight (kg)”: no arrow and no direction, in the heading or in the caption.
-
 ## Tabs
 URL: https://nandovejer.github.io/luz/docs/components/tabs/
 Example: https://nandovejer.github.io/luz/examples/components/tabs.html
@@ -4253,16 +3960,6 @@ Do not use tabs to move between pages, or to hide content readers need all at on
 - For steps in order, use separate pages.
 - More than five or six tabs do not fit a phone: use sections with headings.
 
-### Do and don't
-- **Do** Tabs named after their panels, in a word or two.
-- **Don't** Numbered steps as tabs: a process in order belongs on separate pages, and nothing stops the reader from skipping a step.
-
-### Writing the content
-Name each tab after its panel, in one or two words.
-
-- Sentence case, no verbs: "Summary", "Settings".
-- Use the same name for the panel's heading.
-
 ## Tag and badge
 URL: https://nandovejer.github.io/luz/docs/components/tag/
 Example: https://nandovejer.github.io/luz/examples/components/tag.html
@@ -4322,16 +4019,6 @@ Do not use a tag for an action: it is not clickable.
 - For an action, use a [button](https://nandovejer.github.io/luz/docs/components/button/).
 - For a sentence, use an [alert](https://nandovejer.github.io/luz/docs/components/alert/).
 - Do not give teal or purple a status meaning: they are for categories.
-
-### Do and don't
-- **Do** Status colours for status: green running, yellow degraded, red stopped, each with its word.
-- **Don't** Teal and purple as statuses: they are for categories, so the reader cannot guess that teal means running.
-
-### Writing the content
-One or two words, in sentence case: "Running", "Degraded".
-
-- Never only a colour name: the reader may not see the colour.
-- Badges hold numbers; cap them ("99+") so they keep their size.
 
 ## Timeline
 URL: https://nandovejer.github.io/luz/docs/components/timeline/
@@ -4479,20 +4166,6 @@ Do not use a timeline for steps the reader has to follow in order, or for events
 - When the reader needs to see every item at once, use the vertical layout: the horizontal one shows a single card.
 - Do not turn on autoplay for content the reader must not miss. Nobody has to wait for the next card.
 
-### Do and don't
-- **Do** A title that says what happened, with the date in one format.
-- **Don't** A vague title and dates in different formats: the reader has to open the card to learn what happened, and cannot compare the dates.
-- **Do** A `<time>` with a different text in each item: it is the name of the button on the rail.
-- **Don't** Leave out the date: the rail then has buttons named "1" and "2", and the reader cannot tell them apart.
-
-### Writing the content
-Put the date first, then what happened, in few words.
-
-- The date: the same format in every item, and a different text in each. It is the name of a button.
-- The title: two to five words, sentence case, no full stop. Say the event: "Public launch", not "News".
-- The text: one sentence, a few lines at most. In the horizontal layout the band is as tall as the longest card, so keep the cards about the same length.
-- Use the `datetime` attribute so the date can be read by machines, such as `2025-06`.
-
 ## Toast
 URL: https://nandovejer.github.io/luz/docs/components/toast/
 Example: https://nandovejer.github.io/luz/examples/components/toast.html
@@ -4553,16 +4226,6 @@ Do not use a toast for anything the reader must act on or must not miss: it goes
 - For a decision, use a [modal](https://nandovejer.github.io/luz/docs/components/modal/).
 - Do not put links or buttons in it, other than the close button.
 
-### Do and don't
-- **Do** A short confirmation the reader can miss without harm: “File exported.”
-- **Don't** A failed payment in a toast: it goes away before the reader acts. Use an alert next to what failed.
-
-### Writing the content
-One short line, in the past tense: "File exported."
-
-- The kind label is one word: "Saved", "Success".
-- Do not repeat what the page already shows.
-
 ## Tooltip
 URL: https://nandovejer.github.io/luz/docs/components/tooltip/
 Example: https://nandovejer.github.io/luz/examples/components/tooltip.html
@@ -4615,16 +4278,6 @@ Do not put anything essential, long or interactive in a tooltip.
 - Touch screens have no hover: put information people need on the page, as a hint ([form fields](https://nandovejer.github.io/luz/docs/components/form/)).
 - Never use a tooltip as the only name of an icon button.
 - No links or buttons inside it.
-
-### Do and don't
-- **Do** A short phrase that adds something to the label: what “Archive” does.
-- **Don't** A tooltip that repeats the label: “Save” then “Saves the project” makes the reader wait for nothing.
-
-### Writing the content
-One short phrase that says what the control does or why: "Hides the project from the list".
-
-- Do not repeat the control's label.
-- No full stop on a fragment.
 
 ## Layout objects
 URL: https://nandovejer.github.io/luz/docs/components/layout/
@@ -4928,17 +4581,6 @@ Do not use it for a single link, or to hide pages most visitors need: put those 
 
 It replaces a dropdown navigation built with a script, and the hover menu. Nothing in LUZ is removed.
 
-### Do and don't
-- **Do** Name the group with a word that tells the visitor what is in it, and keep it to a handful of links.
-- **Don't** Use a vague group name such as “Resources” or “More”: the visitor has to open it to know whether what they want is there.
-
-### Writing the content
-Name the group with one or two words in sentence case that say what it holds: “Wines”, “About us”.
-
-- Name each link after the page it opens, so it makes sense outside the group: “Red wines”, not “Red”.
-- Do not make the group’s name a page of its own as well: the button opens the group, it does not go anywhere. If the group has an overview page, make it the first link: “All wines”.
-- Keep the same groups, in the same order, on every page.
-
 ## Banner
 URL: https://nandovejer.github.io/luz/docs/site/banner/
 Example: https://nandovejer.github.io/luz/examples/site/banner.html
@@ -4995,17 +4637,6 @@ Do not use it for something that belongs to one page or to one visitor: put that
 - Do not put a form or more than one link in it.
 
 It replaces the announcement bars a site builds with its own CSS. Nothing in LUZ is removed.
-
-### Do and don't
-- **Do** Start with what it is about, in bold, say when, and end with one link that says where it goes.
-- **Don't** Rely on the yellow to say it is a warning, shout in capitals, or leave out the date: the words alone must carry the message, and “soon” is wrong a day later.
-
-### Writing the content
-One sentence, two at most. Start with what it is about, in bold, ending with a full stop: “Open day.”, “Planned maintenance.”.
-
-- Give the date and the time, with the day of the week, so it is still true when read late.
-- End with one link that says where it goes: “Book a visit”, not “More information”.
-- Write in sentence case, with no exclamation marks.
 
 ## Cookie consent
 URL: https://nandovejer.github.io/luz/docs/site/consent/
@@ -5123,17 +4754,6 @@ Do not use it when the site sets only the cookies it needs to work (a session, a
 - Do not use it for news or a sale: that is a [banner](https://nandovejer.github.io/luz/docs/site/banner/).
 
 It replaces a third-party consent script. Nothing in LUZ is removed.
-
-### Do and don't
-- **Do** Give Accept and Reject the same style, side by side, with words that say what each one does.
-- **Don't** Make Accept a big button and hide Reject in a small link or behind settings: an answer pushed one way is not free consent.
-
-### Writing the content
-Say in a sentence what the site needs and what it would like, and why, in plain words. Name the heading after the site: “Cookies on Bodega Albar”.
-
-- Write the buttons as the action and the thing: “Accept optional cookies”, “Reject optional cookies”; never “OK”, “Got it” or “Agree”.
-- Name each category after what it does for whom: “Measuring visits”, “Adverts on other sites”, not “Performance” or “Targeting”.
-- Link the cookie policy by its name, and say in the confirmation where the answer can be changed.
 
 ## Auto color mode
 URL: https://nandovejer.github.io/luz/docs/site/mode/
@@ -5262,15 +4882,6 @@ Do not use it when the site has one look in one mode: a switcher with no Auto is
 
 - Do not use `by="clock"` to promise the real sunrise: the hours are fixed.
 
-### Do and don't
-- **Do** Call the choice “Auto” and keep the other names as they are: the reader sees the four ways to choose at once.
-- **Don't** Name it “Smart” or “Magic”: it does not say what the page follows, and a reader cannot tell it from a mode.
-
-### Writing the content
-Call the group “Color mode” and the choices “Auto”, “Light”, “Dark” and “High contrast”.
-
-- Say near the switcher what Auto follows: “Auto follows your device” or “Auto follows the time of day”.
-
 ## Language switch
 URL: https://nandovejer.github.io/luz/docs/site/lang-switch/
 Example: https://nandovejer.github.io/luz/examples/site/lang-switch.html
@@ -5342,17 +4953,6 @@ Do not add it to pages that exist in one language only, even if the rest of the 
 - Do not use it to translate the page in place with a script: each language is a page of its own, with its own address.
 
 It replaces nothing in LUZ. It makes a `<select>` with a script that changes the address unnecessary.
-
-### Do and don't
-- **Do** Name each language in that language, so a reader who does not understand the page still finds theirs.
-- **Don't** Use flags, or name the languages in the page’s language: a flag is a country, not a language, and “Árabe” means nothing to a reader of Arabic.
-
-### Writing the content
-Write each language’s name as its speakers write it: “English”, “Español”, “العربية”, never “EN” or a flag.
-
-- Write the label in the page’s language: “Language”, “Idioma”, “اللغة”.
-- List the languages in the same order on every page.
-- If some pages are not translated, link to the closest page that is, and say in its language that the rest is in another one.
 
 ## Search
 URL: https://nandovejer.github.io/luz/docs/site/search/
@@ -5473,18 +5073,6 @@ Do not use search instead of navigation: keep the menu and an index page.
 
 - Search needs typing, and a name the reader may not know.
 - It matches titles and headings only: it cannot search inside long texts or across many sites.
-
-### Do and don't
-- **Do** Say what is searched, in a short label that fits every language.
-- **Don't** The magnifier alone on a wide screen: the reader has to guess what it searches, and the shortcut hint is gone. Keep the icon-only trigger for narrow screens.
-
-### Writing the content
-Every text is in the markup, so it is yours to write, in the page's language.
-
-- The trigger says what is searched: “Search docs…”. Keep it short in every language (“Buscar…”) rather than cutting it off.
-- Give section results their page in the meta: “When to use” with “Button › Design”, so a result makes sense on its own and is found by the page’s name.
-- Say what to try next in the `none` label, which the status line announces: “Check the spelling or try a shorter word.” after the query.
-- Point the fallback link and the line under the results at the same index page.
 
 ## Class reference
 URL: https://nandovejer.github.io/luz/docs/site/classes/
@@ -5635,17 +5223,6 @@ Do not use it on a blog or a newspaper, or in an app: their packages have header
 - One header per page, never inside a component: it is the page's banner.
 - A single page that fits one screen needs a heading and a skip link, not a header.
 
-### Do and don't
-- **Do** Three to six links, each a noun that names its part of the site, with the current one marked.
-- **Don't** A dozen links, some of them vague: the row wraps into a wall and the visitor reads every word to choose.
-
-### Writing the content
-The brand is the site's name; the links are the names of its main parts.
-
-- Brand: the name as people say it, one to three words. A logo is decorative: the name stays as text in the link.
-- Links: three to six, one or two words each, the same words as the titles of the pages they go to. No "Home" beside a brand that already goes home.
-- Actions: a verb that says what happens, such as "Log in". Menu button: "Menu", translated like the rest of the page.
-
 ## Hero
 URL: https://nandovejer.github.io/luz/docs/landing/hero/
 Example: https://nandovejer.github.io/luz/examples/landing/hero.html
@@ -5713,20 +5290,6 @@ Do not use it on a page whose reader came to read or to do a task: use a plain `
 - One hero per page, and only at the top.
 - Not for a message in the middle of a page: use a [section](https://nandovejer.github.io/luz/docs/landing/section/), with core's [band](https://nandovejer.github.io/luz/docs/components/band/) if it must stand out.
 
-### Do and don't
-- **Do** One primary action, and a second one as an outline button.
-- **Don't** Three primary buttons: the reader cannot tell which one comes first.
-- **Do** A title that names the thing, and a lead that says what it gives the reader.
-- **Don't** A slogan for a title, and a lead that repeats it without saying what it is.
-
-### Writing the content
-The title says what the site or the event is, in sentence case and in fewer than ten words.
-
-- The eyebrow is a fact the reader needs at once (a date and a place, a product name), not a slogan. Leave it out if there is none.
-- The lead is one or two short sentences: what the reader gets.
-- Buttons start with a verb and say where they go: "Register", "See the programme".
-- The picture's `alt` says what it shows, or is empty if it only decorates. It is the first thing on the page: no `loading="lazy"`.
-
 ## Main and sections
 URL: https://nandovejer.github.io/luz/docs/landing/section/
 Example: https://nandovejer.github.io/luz/examples/landing/section.html
@@ -5793,16 +5356,6 @@ Do not use a section to space the paragraphs of running text: the text styles al
 - For blocks side by side, use core's [grid objects](https://nandovejer.github.io/luz/docs/components/layout/), such as `ul.o-grid.o-grid--split` for a few features of equal weight.
 - Do not use the glow on a long page or behind a band: the tint competes with the band's.
 
-### Do and don't
-- **Do** Blocks of different kinds, spaced as one group: a heading, a lead, the content.
-- **Don't** Running text in a section: every paragraph gets the section's gap, and the text reads as separate blocks.
-
-### Writing the content
-Start each section with a heading that says what the section is for.
-
-- Use the next heading level after the page title: `<h2>` under the hero's `<h1>`.
-- Keep one idea per section; a second idea is a second section.
-
 ## Footer
 URL: https://nandovejer.github.io/luz/docs/landing/footer/
 Example: https://nandovejer.github.io/luz/examples/landing/footer.html
@@ -5857,15 +5410,6 @@ Use the footer at the end of every page of a landing site, for who made it, its 
 Do not put the main navigation, or anything needed to finish a task, in the footer.
 
 - Main navigation goes in the [header](https://nandovejer.github.io/luz/docs/landing/header/).
-
-### Do and don't
-- **Do** Two to four links that say where they go.
-- **Don't** The main navigation in the footer: the reader has to reach the end of the page to move around.
-
-### Writing the content
-Keep it short: who made it, the licence, and two to four links.
-
-- Each link says where it goes: "Accessibility statement", not "Legal".
 
 ## Landing page templates
 URL: https://nandovejer.github.io/luz/docs/landing/templates/
@@ -6009,18 +5553,6 @@ Do not use it on a landing page or in an app: their packages have headers of the
 - One header per page, never inside a component or an article: it is the page's banner.
 - Do not make the masthead sticky, and do not put the date in the bar: in one row it competes with the name.
 
-### Do and don't
-- **Do** The publication's name as text, and a few sections named as the reader knows them.
-- **Don't** The name cut short with an ellipsis, or every tag of the site as a section: the reader cannot tell where they are.
-
-### Writing the content
-The brand is the publication's name; the sections are the names readers use for its parts.
-
-- Brand: the name in full, as it appears on the publication. It wraps at a narrow width; never shorten it with an ellipsis.
-- Sections: four to seven, one or two words each, the same words as the titles of their index pages.
-- Date (masthead): written out in the language of the page, "Wednesday, 14 October 2026", with the same day in `datetime`.
-- Menu button: "Sections", translated like the rest of the page.
-
 ## Page header
 URL: https://nandovejer.github.io/luz/docs/cms/page-header/
 Example: https://nandovejer.github.io/luz/examples/cms/page-header.html
@@ -6071,16 +5603,6 @@ Do not use it for a section inside the page: use a plain heading of the right le
 
 - One page header per page.
 - A story takes the [article header](https://nandovejer.github.io/luz/docs/cms/article-header/), which has its author and date.
-
-### Do and don't
-- **Do** A title of a few words and a lead that says what the reader can do here.
-- **Don't** A title padded with words the reader skips, and a lead that says nothing new.
-
-### Writing the content
-The title names the page in a few words, in sentence case.
-
-- The lead is one sentence, under 25 words, that says what the reader can do here.
-- Match the title to the link that led here and to the start of `<title>`.
 
 ## Article header
 URL: https://nandovejer.github.io/luz/docs/cms/article-header/
@@ -6151,20 +5673,6 @@ Do not use it for a page with no author or date, such as a contact or a section 
 
 - For the first block of a home or a landing page, use the [hero](https://nandovejer.github.io/luz/docs/landing/hero/).
 - For a story in a list, use a [post card](https://nandovejer.github.io/luz/docs/cms/templates/#post-card): the header is for the story's own page.
-
-### Do and don't
-- **Do** A title that says what happened, and a standfirst that adds what the title could not.
-- **Don't** A title that hides the news, and a standfirst that repeats the title.
-- **Do** A byline with the author's name as text and the date in words.
-- **Don't** A photo with no name beside it, and a date only in numbers, which readers in other countries read in another order.
-
-### Writing the content
-The title says what happened or what the reader will learn, in sentence case, with no full stop. Keep it under 90 characters: lists and search results cut longer ones.
-
-- The kicker is one or two words: the section, or the kind of piece ("Analysis", "Interview").
-- The standfirst is one or two sentences, under 40 words, that add to the title. It is often the description the CMS shows in lists and in search engines.
-- Write the date in words, with the month spelled out, in the reader's language. "6 min read" counts about 200 words a minute; leave it out on short posts.
-- The caption says what the picture shows and who took it. The `alt` describes what someone who cannot see it needs; it never repeats the caption.
 
 ## Table of contents
 URL: https://nandovejer.github.io/luz/docs/cms/toc/
@@ -6241,16 +5749,6 @@ Do not use it in a short post: three paragraphs need no map.
 - Not for links to other pages: that is navigation, in the [header](https://nandovejer.github.io/luz/docs/cms/header/) or a [sidebar](https://nandovejer.github.io/luz/docs/components/sidebar/).
 - Not for the steps of a task done in order: number the steps in the text.
 
-### Do and don't
-- **Do** Section headings that say what each part is about, so the list reads as a summary.
-- **Don't** Headings that could be in any article: the list tells the reader nothing.
-
-### Writing the content
-Each link is the text of its section's heading, word for word, so the reader recognises where it leads.
-
-- List the `<h2>` of the article only. A list of more than about eight is a sign the article could be two.
-- Call it "Contents", in the reader's language ("Contenido" in Spanish).
-
 ## Footer
 URL: https://nandovejer.github.io/luz/docs/cms/footer/
 Example: https://nandovejer.github.io/luz/examples/cms/footer.html
@@ -6306,15 +5804,6 @@ Do not put the main navigation, or anything needed to finish a task, in the foot
 
 - The sections go in the [header](https://nandovejer.github.io/luz/docs/cms/header/).
 - A landing page has a [footer](https://nandovejer.github.io/luz/docs/landing/footer/) of its own.
-
-### Do and don't
-- **Do** Two to four links that say where they go.
-- **Don't** The main navigation in the footer: the reader has to reach the end of the page to move around.
-
-### Writing the content
-Keep it short: who publishes it, and two to four links.
-
-- Each link says where it goes: "Accessibility statement", not "Legal".
 
 ## CMS templates
 URL: https://nandovejer.github.io/luz/docs/cms/templates/
@@ -6440,18 +5929,6 @@ Do not use it for the title of the view or for its actions: they go in the first
 - Do not put a primary button in the bar: the view's main action would be lost among the chrome.
 - For a bar with the site's own sections, use the [navbar](https://nandovejer.github.io/luz/docs/components/navbar/) in the header of [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/).
 
-### Do and don't
-- **Do** Keep the bar to the tools that are the same in every view: the menu, the search and the account.
-- **Don't** Put the view's main action next to the account: two things to press that are not alike, and the main one is lost among the chrome.
-
-### Writing the content
-The product is a name; the account is a person; the list holds what they can do about themselves.
-
-- Product: the name as it appears in the sidebar's brand. Never shorten it: it wraps.
-- Account: the person's name in full, and the initials of that name in the avatar. A photo has an empty `alt`, so the name is the button's name.
-- List: two to four links, each a verb or a noun the person knows: "Account settings", "Sign out". Put "Sign out" last.
-- Menu button: "Menu", translated like the rest of the page.
-
 ## Dashboard
 URL: https://nandovejer.github.io/luz/docs/app/dashboard/
 Example: https://nandovejer.github.io/luz/examples/app/dashboard.html
@@ -6531,18 +6008,6 @@ Do not use it for a view that is one long thing: a table, a form or a document a
 - Do not make a panel taller than its neighbours with row spans or dense packing: it moves a panel before the ones that come first in the markup.
 - For a plain grid of cards in a page of content, use core's [grid](https://nandovejer.github.io/luz/docs/components/layout/#objects-grid) and [card](https://nandovejer.github.io/luz/docs/components/card/).
 
-### Do and don't
-- **Do** Put the title and the one main action in the first row, and one short thing in each panel, under its own heading.
-- **Don't** Give every panel a primary button: the person cannot tell which thing to do first.
-
-### Writing the content
-The title names the view; each panel names one subject and says its state in a sentence.
-
-- Title: a noun the person knows from the sidebar, "Overview", "Reports". The same words as the sidebar's link.
-- Main action: a verb and what it makes, "New report". One per view.
-- Panel title: the subject, "Stock alerts". Under it, one sentence with the number: "Three products are below their minimum."
-- Link: where it goes, "Review stock", not "More" or "Click here".
-
 ## App templates
 URL: https://nandovejer.github.io/luz/docs/app/templates/
 
@@ -6555,76 +6020,10 @@ URL: https://nandovejer.github.io/luz/docs/accessibility/
 
 LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 16 October 2026.
 
-### Target
+- Target
+- What is checked on every change
+- What has not been tested
+- Known issues
+- Report a problem
 
-LUZ aims to meet [WCAG 2.2](https://www.w3.org/TR/WCAG22/) level AA, the level that EN 301 549 and the European Accessibility Act refer to.
-
-A design system cannot make a service accessible by itself: how you use the components decides the result. Each component page says what is yours to do, under *Keyboard and ARIA* and *Writing the content*.
-
-### What is checked on every change
-
-- An automated scan with axe-core of the home page, in English, Spanish and Arabic, and of every page of the documentation, in the light, dark and high-contrast modes. On component and pattern pages the scan runs once with each tab open, and on a sample of pages once with the search dialog open, with results and with none. A serious or critical finding fails the build.
-- Keyboard use of the sidebar drawer, the modal dialog, the tabs, the Code and Design tabs of the component pages, the "On this page" index, whose links open the tab of the section they point at, and the search: Ctrl+K, the arrow keys through the results, Enter and Escape.
-- The pages with JavaScript turned off: content is readable at 320 pixels wide, the Code and Design sections of a component page show one after the other, the search button is a link to the A–Z index, and no control that needs JavaScript is left on screen doing nothing. The color mode switcher in the page footer shows as an Auto radio button and three radio buttons for the modes, which still set the mode. The language switch of the home page opens its list of languages, which are links, with the popover API and no script.
-- Reduced motion: no transition or animation runs when the visitor asks for less motion.
-- The timeline: its keys (arrows, Home and End on the dates, mirrored right to left), the Previous and Next buttons, the names of the buttons, that autoplay is opt-in with a visible Pause / Play button, and that with reduced motion autoplay never starts and the button is not shown.
-- Forced colors: a focused button and a focused search result keep a visible outline, the selected tab keeps its underline, and the search dialog keeps its border.
-- The home page in Arabic, right to left: it must not overflow at 320 pixels wide, with JavaScript or without it.
-- Right-to-left text: the demo of every component, except the player, is laid out with `dir="rtl"` next to its left-to-right layout. Each element with text, and each control, must sit where the mirror image puts it, and nothing may overflow. The check runs with and without JavaScript.
-- Contrast of the text written for the home and documentation pages, in all three modes.
-- Before this release, the same automated suites ran once in Firefox 155 and in WebKit 26.6 and 27.2 (the engine of Safari), on Linux, and their findings were fixed. They do not run on every change, and neither is a test on macOS or iOS.
-- `llms.txt` and `classes.json` are regenerated on every change; a stale one fails.
-- Contrast of every token pair a component draws, by a script, in the three base modes. A theme of your own is measured by the same script, as [the themes page](https://nandovejer.github.io/luz/docs/tokens/themes/) shows.
-
-### What has not been tested
-
-- Screen readers. No assistive technology has been used to test this release: NVDA, JAWS, VoiceOver, TalkBack and Orca have not been tried. Nothing here says a component works with them.
-- Speech recognition and screen magnifier software.
-- Right-to-left text by a person who reads it, or with a screen reader. Only the layout is measured by a script, and the player's controls are not part of that measurement.
-- Zoom to 400 percent by hand. Only the 320 pixel width is measured.
-- Research with disabled people.
-- The accessibility reviewer that `@luz-ds/check` prints, and `luz-check` itself. They read source files and give advice; they do not open a page, measure on screen or use assistive technology. A run with no findings does not mean a page is accessible.
-
-Automated tools find only part of the problems. Treat this list as the gap, and test your own pages.
-
-### Known issues
-
-- **Tooltip.** Escape does not close it. This partly fails WCAG 1.4.13 (Content on hover or focus). Keep tooltips non-essential.
-- **Modal.** Its buttons use the `command` and `commandfor` attributes. In a browser without them, and without JavaScript, the open button does nothing.
-- **Player.** MIDI needs JavaScript and Web Audio. Without them the player shows a message. On this documentation site, the example video's caption files load only with JavaScript; without it the browser lists the tracks but shows no text.
-- **Select.** The open list is the browser’s or the system’s, so it looks and sounds different in each. Where the browser supports `appearance: base-select` (Chrome and Edge 135, Safari 27), LUZ styles the list too, and that list has not been tested with a screen reader yet. It works without JavaScript.
-- **Linked card.** The link in the title covers the whole card, so the body text cannot be selected with a mouse. Keyboard selection, find in page and screen readers reach it as usual.
-- **Table sorted in the browser.** The sorted column is exposed with `aria-sort` on its column header, and each sort is announced in a status message. Tabbing through the headings announces the column name; the sort state is read on the header cell and in the status message. Checked in the Chromium accessibility tree only; not yet tested with NVDA, JAWS, VoiceOver, TalkBack or Orca.
-- **Avatar with a photo.** If the photo does not load, the browser draws its text alternative inside the box, in capitals, and a long name can spill past it.
-- **Code and Design tabs.** The tab you chose last opens after the page has loaded, so the content below the tabs can move once.
-- **Find in page.** In browsers that do not support `hidden="until-found"` (Safari before 26.2, Firefox before 139), find in page (Ctrl+F) does not find text in the tab that is not open. In Safari 26.2 and later it opens the tab but does not scroll to the match. Open the other tab, or turn JavaScript off to see both.
-- **Choose your snippet.** Without JavaScript the picker is not in the page, every snippet is shown one after the other, and the index table, whose cells are links to the snippets, is the navigation. With JavaScript the picker replaces the table and shows one snippet, and it announces the snippet shown through its `<output>`, a status message. The focus stays on the choice you made. That announcement has not been tested with a screen reader.
-- **Make it yours, sizes demo.** The sizes demo is optional: the table of presets on the page lists the sizes without it. Without JavaScript the demo is not shown, so no control is left on screen doing nothing. With it, the sliders resize the page itself, not a sample, and the Reset sizes button puts the page back; nothing is stored, so a reload does the same. The size knobs change the text and the space of the page; a reader’s own text size is respected, because the scale is in rem and follows the browser’s text size.
-- **Search shortcut.** Ctrl+K (⌘K on a Mac) opens the documentation search instead of the browser’s own web search box. Use the browser’s address bar to search the web. The shortcut is shown on the search button, does nothing while you type in a text area or editable content, and there is no single-key shortcut. In a one-line text field it still opens the search, so on a Mac it replaces Ctrl+K, “delete to the end of the line”, there. On a site that loads the search with `site.js`, the search’s own script loads when the page is idle, or when you point at or move to the search: a Ctrl+K pressed before that loads it and then opens the search, after a short wait on a slow connection. On a page without a search, Ctrl+K stays the browser’s.
-- **Search.** It has not been tested with a screen reader. The number of results is announced once you stop typing. Until its script has loaded, the search is a link to the A–Z index, in the same place; if you are on that link when the script arrives, it stays until you leave it, and the focus is never moved. If the script cannot load, the link stays. Closing the search returns the focus to where it was; if nothing had the focus, as after Ctrl+K on a page just loaded, it goes to the search button, and the next Tab continues from there.
-- **Search at 400 percent zoom.** The whole search dialog scrolls, so the search field can move out of view while you read the results. Shift+Tab or the Up arrow from the first result brings you back to it.
-- **Language switcher.** The list of languages opens at a fixed place under the header, not next to its button. Below 360 pixels wide its button shows a globe only; the language’s name is still the button’s accessible name. It has not been tested with a screen reader.
-- **Navbar menu.** On narrow screens the menu of a navbar, in a landing, CMS or docs header, opens as a panel under the header. If you keep pressing Tab after its last link, focus moves into the page and the panel stays open over it. Press Escape to close it. (WCAG 2.2 success criterion 2.4.12, level AAA; level AA 2.4.11 is met.) Where CSS anchor positioning is supported (Chrome and Edge 125, Safari 26, Firefox 147) the panel opens under the header wherever it ends. In older browsers it opens at the height of a one-row bar at the default text size (`--luz-bar-h`), from the top of the window: with enlarged text and a header that wraps to a second row, or with a banner above the header before the page scrolls, it can cover part of the header.
-- **Submenu.** A submenu of a header’s links is a native disclosure: Escape and a click outside do not close it; its own button or opening another one does (several can stay open in Firefox before 130 and Safari before 17.2). From 769 pixels wide an open submenu stays over the top of the page, so if you keep pressing Tab after it, a link behind it can be hidden (WCAG 2.2 success criterion 2.4.11, Focus not obscured, minimum). Press its button to close it. In the narrow menu its links are in the flow and Escape closes the whole menu. It has not been tested with a screen reader.
-- **Banner.** It cannot be closed. It has no script.
-- **Cookie consent.** Without JavaScript the banner is not shown, because none of the site's own scripts run either; the cookie policy is a link on every page. With it, the banner shows as a band fixed at the bottom of the window, so nothing on the page moves; it comes first after the skip link in the reading and Tab order, takes no focus when the page loads, does not block the page, and Escape neither answers nor hides it. While it shows, the page keeps room for it at its end and scrolls what Tab reaches above it (WCAG 2.2 success criterion 2.4.11); in Safari, which ignores that scroll padding for text fields, a script scrolls a field reached with Tab back above the band. In a window less than 30 rem tall it is in the flow at the top of the page instead, so the page moves down when it appears. Its confirmation hides with its Close button, which returns focus to the button that opened the banner or to the main content, or when focus leaves it for the page; a click on an empty part of the page does not hide it. The answer is stored in the browser, not in a cookie. It has not been tested with a screen reader.
-- **Auto color mode.** `<luz-mode>` adds an Auto radio to the color mode switcher. Without JavaScript the radios still change the mode, but Auto is light. Without the small script for the head, a page that follows a dark system can paint light first. With `by="clock"`, as on this site, Auto is dark from 20:30 to 07:30 whatever the device says, and the site's four lights meet the same contrast as its modes. With `prefers-contrast: more`, Auto gives high contrast. The cycle button says Auto, not the mode applied. It has not been tested with a screen reader.
-- **Sticky header, enlarged text.** A sticky header (`.o-sticky`) keeps a field reached with Tab clear of it by a minimum height. That works at 100 and 200 percent text. At 300 percent text, when the header wraps to several rows, Safari can still leave the field partly under it; Chrome, Edge and Firefox keep it clear. The Layout objects page and the landing and CMS Header pages say how to set the padding for your own header. In Firefox with forced colors the dim layer behind the open menu is not drawn; the panel keeps its border.
-- **Band.** A band (`.luz-band`) cuts off whatever sticks out of it above or below, so a tooltip on the first control of a band is clipped at 200 percent text and larger; start the band with its heading. The hover of an outline or ghost button on a band shows no change. In forced colors the band has no tint, only two thin rules above and below it.
-- **Prose.** A table that is wider than the text column and has no `.luz-table-wrap` around it makes the whole page scroll sideways on a narrow screen. A long preformatted block scrolls inside itself; give it `tabindex="0"` and a name, as the code block has, or Safari users cannot scroll it with the keyboard.
-- **Meta line.** The dots between the facts are hidden from screen readers with alternative text for generated content. In a browser without it (Firefox before 128, Safari before 17.4) a screen reader reads each dot.
-- **Lists laid out as a grid, stack or row.** Safari does not announce a list whose markers are removed, outside a navigation landmark, as a list. Its items are still read in order, and the headings in them still lead through it.
-- **Masthead header (cms).** In browsers without CSS anchor positioning, the sections menu of the masthead header opens near the top of the window and covers the publication name and the menu button while it is open. Escape, or a click outside the menu, closes it and returns to the page.
-- **Table of contents (cms).** The mark on the section in view comes from core's script (`data-luz-spy`); without it, no link is marked, and the links still work. Next to the text, the contents list the sections at the inline end but come first in the source, so Tab reaches them before the text. It has not been tested with a screen reader.
-- **Account list (app).** The list of an application's account button is a list of links in a popover, not an ARIA menu: it has no arrow keys, and Tab moves through its links. In browsers without CSS anchor positioning it opens as a sheet at the bottom of the window instead of under the button; Escape, or a click outside it, closes it. The button's name is the initials, then the name, so it reads “AM Ana Martín” at every width. It has not been tested with a screen reader.
-- **Dashboard (app).** The panels keep the order of the markup, so a wide panel that does not fit in what is left of a row starts the next one and leaves a gap; the reading order and the drawn order are always the same. It has not been tested with a screen reader.
-- **Timeline.** Without JavaScript it is an ordered list with a line and a dot per item, and every item is visible. With it, only the current card is read and reached with Tab; the other cards are inert. The Previous and Next buttons are named only “Previous” and “Next”: the name does not say which date they lead to. Whether a screen reader announces the card that appears when you change the item has not been tested, and the timeline has not been tested with a screen reader at all. Autoplay is off unless the page asks for it. When it is on, it moves a card every few seconds, and a visible Pause / Play button stops and resumes it. It also holds while the pointer moves over the timeline, while the keyboard focus is inside it, while less than half of it is on screen and while the tab is hidden, and it never starts with reduced motion. While it runs, the card is not announced.
-- **Languages LUZ does not ship.** On a page in a language LUZ has no strings for, such as French or Arabic, the labels and messages its scripts write (player buttons, copy buttons, code block names, sort status) are in English inside a page marked with another language, so a screen reader reads them with that language's voice (WCAG 3.1.2, Language of parts). The scripts warn once in the console. Set all the `data-luz-label-*` attributes once on `<html>` or `<body>`, or call `registerLocale()` before the scripts start, and they are in your language. The home page does this for Arabic.
-- **Legacy theme buttons.** On a page in another language, the Apply theme / Applied buttons of the legacy custom-theme markup (`luz-theme-apply-btn`) are in English until the first theme change, unless the page sets `data-luz-label-apply-theme` and `data-luz-label-theme-applied`. Not tested with a screen reader.
-- **Strings in a language LUZ ships.** Spanish is a file fetched when a page declares it. If that language file cannot load, the labels LUZ's scripts add are in English inside a page marked with another language, and a screen reader reads them with that language's voice. The page itself, and its authored text, are not affected. The labels are written once the file arrives, or after two seconds without it. A click before the language arrives announces in English, and a late arrival mixes English labels written at start with Spanish labels written on a state change, such as play and pause. Not tested with NVDA, JAWS, VoiceOver, TalkBack or Orca. The standalone modules (`/highlight`, `/player`, `/theme`, `/clipboard`) carry English only: a Spanish page that imports them directly must call `loadLocales()` or `registerLocale()`.
-- **Button.** A `.luz-btn` does not wrap its label (`white-space: nowrap`), so a button with a long label can overflow its container at 320 pixels wide with text at 130 percent (WCAG 1.4.10, Reflow). Shorten the label, or set `white-space: normal` in your own layer.
-- **Copy button.** When the browser refuses to copy, the failure is announced to screen readers, but the button shows no message.
-
-### Report a problem
-
-If something does not work for you, [open an issue on GitHub](https://github.com/nandovejer/luz/issues) and say what you were trying to do, the browser and the assistive technology you use.
+This is the accessibility statement of LUZ: open its URL for what is checked, what has not been tested and the known issues. The known issues of each component are in its entry.

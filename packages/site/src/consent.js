@@ -160,6 +160,12 @@ const wire = (host) => {
     else unpublish();
   }).observe(box);
 
+  // WebKit ignores scroll-padding when it reveals a text control: bring one the band covers back above it (WCAG 2.4.11)
+  document.addEventListener("focusin", (e) => {
+    if (box.hidden || !box.isConnected || box.contains(e.target) || !e.target.getBoundingClientRect) return;
+    if (e.target.getBoundingClientRect().bottom > box.getBoundingClientRect().top) e.target.scrollIntoView({ block: "nearest" });
+  });
+
   for (const button of document.querySelectorAll("[data-luz-consent-open]")) {
     button.hidden = false;
     button.addEventListener("click", () => {

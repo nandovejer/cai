@@ -223,14 +223,20 @@ import &quot;@luz-ds/site&quot;;</code></pre>
           <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="Computing the integrity hash"><code id="code-integrity">curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css | openssl dgst -sha384 -binary | openssl base64 -A</code></pre>
         </div>
         <p>Write the result as <code class="luz-code-inline">integrity="sha384-…"</code> on the tag that loads that file, and repeat it for each file.</p>
-        <p>A hash on a script covers that file only, not the files it loads later. <code class="luz-code-inline">site.min.js</code> loads <code class="luz-code-inline">search.min.js</code> on a page with a search and <code class="luz-code-inline">consent.min.js</code> on a page with a cookie banner. Give each one its own hash in a <code class="luz-code-inline">&lt;link rel="modulepreload"&gt;</code> before the script: the browser checks it there, and a file with a wrong hash never runs.</p>
+        <p>A hash on a script covers that file only, not the files it loads later. <code class="luz-code-inline">site.min.js</code> loads <code class="luz-code-inline">search.min.js</code> on a page with a search and <code class="luz-code-inline">consent.min.js</code> on a page with a cookie banner. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A <code class="luz-code-inline">&lt;link rel="modulepreload"&gt;</code> with a hash is not a guard in Safari or Firefox: use it as a performance hint only.</p>
         <div class="docs-snippet">
           <div class="docs-snippet__bar">
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-integrity-chunks" aria-label="Copy the tags that check the site scripts">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Integrity for the site scripts"><code id="code-integrity-chunks">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Integrity for the site scripts"><code id="code-integrity-chunks">&lt;script type=&quot;importmap&quot;&gt;
+{
+  &quot;integrity&quot;: {
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js&quot;: &quot;sha384-…&quot;,
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js&quot;: &quot;sha384-…&quot;
+  }
+}
+&lt;/script&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-…&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
       </div>

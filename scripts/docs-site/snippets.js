@@ -204,26 +204,33 @@ ${rows.join("\n")}
 }
 
 function renderChunks(data) {
-  const rows = Object.entries(CHUNK_WHEN).map(([file, [pkg, when]]) => {
-    const e = data.entries[`${pkg}/${file}`];
+  const copyBlock = (id, aria, code) => `<div class="docs-snippet">
+                <div class="docs-snippet__bar">
+                  <span class="docs-snippet__lang">HTML</span>
+                  <button class="luz-copy-btn" type="button" data-copy-from="code-${id}" aria-label="Copy ${esc(aria)}">Copy</button>
+                </div>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="${esc(aria[0].toUpperCase() + aria.slice(1))}"><code id="code-${id}">${code}</code></pre>
+              </div>`;
+  const search = data.entries["site/search.min.js"];
+  const member = (e) => `${JSON.stringify(e.url)}: ${JSON.stringify(e.integrity)}`;
+  const chunks = Object.entries(CHUNK_WHEN).map(([file, [pkg, when]]) => ({ file, pkg, when, e: data.entries[`${pkg}/${file}`] }));
+  const rows = chunks.map(({ file, pkg, when, e }) => {
     const id = `chunk-${pkg}-${file.replace(/\.min\.js$/, "")}`;
-    const line = `<link rel="modulepreload" href="${e.url}" integrity="${e.integrity}" crossorigin="anonymous">`;
     return `            <tr>
               <th scope="row"><code>${esc(file)}</code></th>
               <td data-label="Add the line only if the page has"><div>${when}</div></td>
-              <td data-label="Line to add"><div class="docs-snippet">
-                <div class="docs-snippet__bar">
-                  <span class="docs-snippet__lang">HTML</span>
-                  <button class="luz-copy-btn" type="button" data-copy-from="code-${id}" aria-label="Copy the line for ${esc(file)}">Copy</button>
-                </div>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Line for ${esc(file)}"><code id="code-${id}">${esc(line)}</code></pre>
-              </div></td>
+              <td data-label="Line to add">${copyBlock(id, `the line for ${file}`, esc(member(e)))}</td>
             </tr>`;
   });
+  const map = `<script type="importmap">\n${JSON.stringify({ integrity: Object.fromEntries(chunks.map(({ e }) => [e.url, e.integrity])) }, null, 2)}\n</script>`;
   return `    <section class="docs-block" aria-labelledby="chunks">
       <h2 class="docs-chapter__title" id="chunks">Lazy chunks</h2>
-      <p>Core and site load some files only when the page needs them: a sortable table, a timeline, a MIDI player, a page in Spanish, the search, the cookie banner. A hash on a script covers that file only, so give each chunk its own hash in a <code>modulepreload</code> link before the script that loads it. The browser checks the file there, and a file with a wrong hash never runs.</p>
-      <p>These lines are not in the snippets above on purpose: a <code>modulepreload</code> fetches at once, so one in every snippet would download a MIDI parser for a page with no player. Add a line only if the page has what its row names.</p>
+      <p>Core and site load some files only when the page needs them: a sortable table, a timeline, a MIDI player, a page in Spanish, the search, the cookie banner. A hash on a script covers that file only, so a chunk needs its own hash. The way to give it one in every browser is an import map with an <code>integrity</code> section, placed before the first module script: the browser then checks each chunk when the script imports it, and a file with a wrong hash does not run.</p>
+      <p>Safari and Firefox do not use the <code>integrity</code> of a <code>&lt;link rel="modulepreload"&gt;</code> to block a file, so it is a performance hint only: use it, if you like, to fetch a chunk earlier, but do not rely on it as the check. The import map below lists every chunk. Keep only the lines for what the page has, as the rows say, because a hash for a file the page never loads does nothing.</p>
+${copyBlock("chunks-importmap", "the import map with every chunk", esc(map)).replace(/^/, "      ")}
+      <p>A hint to fetch a chunk earlier looks like this. It speeds the page up and checks nothing in Safari and Firefox, so it never replaces the import map:</p>
+${copyBlock("chunks-hint", "the performance hint for the search chunk", esc(`<link rel="modulepreload" href="${search.url}" integrity="${search.integrity}" crossorigin="anonymous">`)).replace(/^/, "      ")}
+      <p>To add one chunk to a map you already have, put its line, from the table, inside <code>integrity</code>, with a comma after every line but the last.</p>
       <div class="luz-table-wrap" role="region" aria-label="Lazy chunks" tabindex="0">
         <table class="luz-table">
           <caption>Lazy chunks</caption>

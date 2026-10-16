@@ -96,6 +96,21 @@ initThemeCycle();
 
 `loadLocales()` returns nothing to wait for on a page in English, and a promise that always resolves otherwise: a file that cannot load is one console warning and the English strings. Strings written on a click (copied, sorted, play or pause) read the dictionary when they are written, so they need no wait. `@luz-ds/core/i18n/es` is the Spanish dictionary alone, as a default export.
 
+To check the language file, put an import map with an `integrity` section before the first module script (Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores the key and loads the file unchecked), on the pages in that language only:
+
+```html
+<script type="importmap">
+{
+  "integrity": {
+    "https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/i18n-es.min.js": "sha384-…"
+  }
+}
+</script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js" integrity="sha384-…" crossorigin></script>
+```
+
+A `<link rel="modulepreload" integrity>` is not a guard outside Chromium: Safari and Firefox do not block a file with a wrong hash. Use it as a performance hint only.
+
 Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captions`, `captionsOff`, `loading`, `midiError`, `timeOf` (`{current}`, `{total}`), `copy`, `copied`, `copiedStatus`, `copyFailed`, `codeExample` (`{lang}`), `copyCode` (`{n}`), `applyTheme`, `themeApplied`, `changeMode` and `modeChanged` (`{mode}`), `sortedAsc` and `sortedDesc` (`{column}`), `previous` and `next`. A key in camelCase becomes kebab-case in the attribute: `data-luz-label-exit-fullscreen`. Missing keys fall back to English.
 
 `registerLocale()` must reach the same module instance the components use: with the auto-initializing entry import it from `@luz-ds/core`, with the individual modules from `@luz-ds/core/i18n`. Strings written later (play/pause, copied, status messages) use it right away; the ones written when a component initializes (code block names) need it registered before the `init*()` call.

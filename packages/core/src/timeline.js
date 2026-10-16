@@ -148,7 +148,9 @@ function horizontal(host, list, items) {
     if (on) clock = setTimeout(() => select(current + 1, false, true), interval);
     if (toggle) {
       toggle.hidden = reduce.matches;
-      toggle.textContent = t(paused ? "play" : "pause", host);
+      // Only when it changed: WebKit drops a click if the node under the pointer is replaced between mousedown and mouseup
+      const text = t(paused ? "play" : "pause", host);
+      if (toggle.textContent !== text) toggle.textContent = text;
     }
   }
 

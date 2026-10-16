@@ -41,13 +41,21 @@ import '@luz-ds/site'    // the loader: the search and the cookie banner, when t
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js"></script>
 ```
 
-With Subresource Integrity, an `integrity` on the `<script>` covers `site.min.js` only. List each chunk the page may load in a `<link rel="modulepreload">` with its own hash, before the script: the browser checks it, and the loader's import uses that verdict.
+With Subresource Integrity, an `integrity` on the `<script>` covers `site.min.js` only. To check each chunk the page may load, put an import map with an `integrity` section before the first module script. It works in Chrome 127 and later, Safari 18 and later and Firefox 138 and later; an older browser ignores the key and loads the chunks unchecked.
 
 ```html
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/search.min.js" integrity="sha384-…" crossorigin>
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js" integrity="sha384-…" crossorigin>
+<script type="importmap">
+{
+  "integrity": {
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/search.min.js": "sha384-…",
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js": "sha384-…"
+  }
+}
+</script>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js" integrity="sha384-…" crossorigin></script>
 ```
+
+A `<link rel="modulepreload" integrity>` is not a guard outside Chromium: Safari and Firefox do not block a chunk with a wrong hash. Add `modulepreload` only as a performance hint.
 
 ## Package exports
 

@@ -9,6 +9,10 @@
  *                  and after the search chunk, if there is one, has loaded
  *                  or failed
  *
+ * "Idle" starts at the `load` event (at once when the page has loaded): in
+ * Firefox a pending dynamic import delays `load`, so a chunk requested sooner
+ * would hold the page's load back.
+ *
  * A page with neither requests neither. Each chunk defines its element,
  * and the browser upgrades every instance on the page. There is no
  * MutationObserver: an element added after the scan stays undefined until
@@ -29,8 +33,9 @@
  * Security (.claude/plans/docs-redesign/security.md, SEC-CHUNK-1 to 4): the
  * chunks are a constant map of string literals next to this file, never a
  * URL built from the page; this file writes nothing to the DOM; a full-SRI
- * page lists each chunk in a <link rel="modulepreload" integrity crossorigin>
- * before this script (SECURITY.md).
+ * page lists each chunk in an import map's `integrity` section before this
+ * script (SECURITY.md); a modulepreload's integrity is only a performance
+ * hint in Safari and Firefox.
  */
 
 // SEC-CHUNK-1: the only two files this one loads, each by a literal
@@ -55,8 +60,13 @@ if (typeof document !== "undefined") {
       () => {},
     ));
 
-  // Read at call time: Safari has no requestIdleCallback
-  const idle = (callback) => (window.requestIdleCallback ? window.requestIdleCallback(callback, { timeout: 1000 }) : setTimeout(callback));
+  // After `load`: in Firefox a pending dynamic import holds the load event back, so an idle chunk started earlier would delay it.
+  // requestIdleCallback is read at call time: Safari has none
+  const idle = (callback) => {
+    const run = () => (window.requestIdleCallback ? window.requestIdleCallback(callback, { timeout: 1000 }) : setTimeout(callback));
+    if (document.readyState === "complete") run();
+    else window.addEventListener("load", run, { once: true });
+  };
 
   // Ctrl+K or ⌘K before the chunk, with the guards of search.js's isShortcut
   const early = (e) => {

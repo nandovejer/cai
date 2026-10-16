@@ -710,9 +710,9 @@ describe("the LUZ docs site", () => {
       expect(order.indexOf(route), route).toBeGreaterThanOrEqual(order.indexOf(`/docs/${area.slug}/`));
     }
     // F4 (D7) and F5 (f5-ai-ready.md 6): Install, Choose your snippet, organised, how to read,
-    // Make it yours, bundler, JavaScript, layers, print, Working with AI, Classless last (so
-    // `/docs/tokens/` keeps its Previous link)
-    expect(order.slice(0, 12)).toEqual([
+    // Make it yours, bundler, JavaScript, layers, print, Working with AI, Classless, then (F7 step 7,
+    // f7-open-source.md) How LUZ is built last (so `/docs/tokens/` keeps its Previous link)
+    expect(order.slice(0, 13)).toEqual([
       "/docs/get-started/",
       "/docs/get-started/snippet/",
       "/docs/get-started/structure/",
@@ -724,12 +724,13 @@ describe("the LUZ docs site", () => {
       "/docs/get-started/print/",
       "/docs/get-started/ai/",
       "/docs/get-started/classless/",
+      "/docs/get-started/how-luz-is-built/",
       "/docs/tokens/",
     ]);
     expect(order.at(-1)).toBe("/docs/accessibility/");
   });
 
-  it("numbers the Get started pages 1 to 11 in the reading order, with these titles", () => {
+  it("numbers the Get started pages 1 to 12 in the reading order, with these titles", () => {
     const pages = readingOrder(site).filter((p) => p.meta.area === "get-started" && p.route !== "/docs/get-started/");
     const all = [site.byRoute.get("/docs/get-started/"), ...pages];
     expect(all.map((p) => [p.meta.order, p.meta.title])).toEqual([
@@ -744,6 +745,7 @@ describe("the LUZ docs site", () => {
       ["9", "Print styles"],
       ["10", "Working with AI"],
       ["11", "Classless styles"],
+      ["12", "How LUZ is built"],
     ]);
   });
 
@@ -789,9 +791,10 @@ describe("the LUZ docs site", () => {
       }
     }
     // Get started → Tokens → HTML elements → Components → Site → Accessibility
-    expect(endOf(rendered.get("/docs/tokens/")).prev?.[0]).toBe("/docs/get-started/classless/");
+    expect(endOf(rendered.get("/docs/tokens/")).prev?.[0]).toBe("/docs/get-started/how-luz-is-built/");
     expect(endOf(rendered.get("/docs/tokens/")).next?.[0]).toBe("/docs/tokens/color/");
-    expect(endOf(rendered.get("/docs/get-started/classless/")).next?.[0]).toBe("/docs/tokens/");
+    expect(endOf(rendered.get("/docs/get-started/classless/")).next?.[0]).toBe("/docs/get-started/how-luz-is-built/");
+    expect(endOf(rendered.get("/docs/get-started/how-luz-is-built/")).next?.[0]).toBe("/docs/tokens/");
     expect(endOf(rendered.get("/docs/html/")).prev?.[0]).toMatch(/^\/docs\/tokens\//);
     expect(endOf(rendered.get("/docs/components/")).prev?.[0]).toMatch(/^\/docs\/html\//);
     expect(endOf(rendered.get("/docs/site/")).prev?.[0]).toMatch(/^\/docs\/components\//);

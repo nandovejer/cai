@@ -4,7 +4,7 @@
  * 9 step 7; security requirements R1 and R2, rows SEC-CHUNK-1 and SEC-CHUNK-2):
  *   - every chunk of every package imports nothing, static or dynamic;
  *   - site.min.js has no static import, and its dynamic imports are exactly
- *     "./search.min.js" and "./consent.min.js", each a string literal;
+ *     "./search.min.js", "./consent.min.js" and "./mode.min.js", each a string literal;
  *   - any import() whose argument is not a literal fails;
  *   - a bare specifier still fails (red line 1).
  * The guard runs on a copy of the repository in a temporary folder (it reads
@@ -33,14 +33,14 @@ const dynamicTargets = (code) => [...code.matchAll(LITERAL_IMPORT)].map((m) => m
 const sizeOf = (path) => gzipSync(readFileSync(join(repo, path)), { level: 9 }).length;
 
 describe("the built site files", () => {
-  it("site.min.js has no static import and loads exactly the two chunks, each by a literal specifier", () => {
+  it("site.min.js has no static import and loads exactly the three chunks, each by a literal specifier", () => {
     const code = read("packages/site/dist/site.min.js");
     expect(STATIC.test(code), "a static import or export-from").toBe(false);
-    expect(dynamicTargets(code)).toEqual(["./consent.min.js", "./search.min.js"]);
-    expect(code.match(IMPORT_CALL)).toHaveLength(2);
+    expect(dynamicTargets(code)).toEqual(["./consent.min.js", "./mode.min.js", "./search.min.js"]);
+    expect(code.match(IMPORT_CALL)).toHaveLength(3);
   });
 
-  it.each(["search", "consent"])("%s.min.js imports nothing, static or dynamic", (name) => {
+  it.each(["search", "consent", "mode"])("%s.min.js imports nothing, static or dynamic", (name) => {
     const code = read(`packages/site/dist/${name}.min.js`);
     expect(STATIC.test(code), "a static import or export-from").toBe(false);
     expect(code.match(IMPORT_CALL)).toBeNull();
@@ -48,10 +48,10 @@ describe("the built site files", () => {
 
   it("the sources follow: site.js names the chunks as literals, and the chunks import nothing (SEC-CHUNK-1)", () => {
     const loader = read("packages/site/src/site.js");
-    expect(dynamicTargets(loader)).toEqual(["./consent.js", "./search.js"]);
-    expect(loader.match(IMPORT_CALL)).toHaveLength(2);
+    expect(dynamicTargets(loader)).toEqual(["./consent.js", "./mode.js", "./search.js"]);
+    expect(loader.match(IMPORT_CALL)).toHaveLength(3);
     expect(loader).not.toMatch(/import\.meta/);
-    for (const name of ["search", "consent"]) {
+    for (const name of ["search", "consent", "mode"]) {
       const source = read(`packages/site/src/${name}.js`);
       expect(STATIC.test(source), `${name}.js static import`).toBe(false);
       expect(source.match(IMPORT_CALL), `${name}.js dynamic import`).toBeNull();
@@ -78,6 +78,11 @@ describe("budgets.json and PRINCIPLES.md section 8", () => {
   it("calls the consent file a lazy chunk, with the same file and ceiling", () => {
     expect(budgets.find((b) => b.name.startsWith("site JS lazy chunk: consent"))).toMatchObject({ file: "packages/site/dist/consent.min.js", ideal: 1024, max: 1536 });
     expect(principles).toMatch(/^\| `site` JS lazy chunk: `consent`[^\n]*\| 1\.5 kB \|$/m);
+  });
+
+  it("has a row for the mode chunk, the size of the consent one, appended as the last row (a new row, no other ceiling raised)", () => {
+    expect(budgets.at(-1)).toEqual({ name: "site JS lazy chunk: mode", file: "packages/site/dist/mode.min.js", ideal: 1024, max: 1536 });
+    expect(principles).toMatch(/^\| `site` JS lazy chunk: `mode`[^\n]*\| 1\.5 kB \|$/m);
   });
 
   it("keeps the site entry row, with its ceiling of 2 kB unchanged", () => {
@@ -126,8 +131,8 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     expect(budgets.slice(0, BEFORE.length).map((b) => [b.name, b.max])).toEqual(BEFORE);
   });
 
-  it("appends the three AI-ready rows after the docs page row, then the language chunk row (F6) and nothing else", () => {
-    expect(budgets).toHaveLength(BEFORE.length + 4);
+  it("appends the three AI-ready rows after the docs page row, then the language chunk row (F6), then the mode chunk row (F1) and nothing else", () => {
+    expect(budgets).toHaveLength(BEFORE.length + 5);
     expect(budgets.at(BEFORE.length - 1).name).toBe(last);
   });
 
@@ -164,7 +169,7 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
   });
 
   it("repeats the rows in the PRINCIPLES.md table, in the same order, after \"Each docs page\"", () => {
-    expect(table).toHaveLength(BEFORE.length + 4);
+    expect(table).toHaveLength(BEFORE.length + 5);
     expect(table[BEFORE.length - 1][0]).toMatch(/^Each docs page/);
     const [cli, text, manifests] = table.slice(BEFORE.length);
     expect(cli[0]).toMatch(/check/);
@@ -200,9 +205,9 @@ describe("the language chunks of core", () => {
     return read(path);
   };
 
-  it("budgets i18n-es as the row after the last one: ideal 0.75 kB, ceiling 1 kB, fixed once and never raised (RL-17)", () => {
+  it("budgets i18n-es as the row after the AI-ready ones, the one before the mode chunk: ideal 0.75 kB, ceiling 1 kB, fixed once and never raised (RL-17)", () => {
     // The spec's estimate was 510 B gzip for the 25 keys; x1.5 the ideal, x2 the ceiling, the proportion of table-sort
-    expect(budgets.at(-1)).toEqual({
+    expect(budgets.at(-2)).toEqual({
       name: "core JS lazy chunk: i18n-es",
       file: "packages/core/dist/i18n-es.min.js",
       ideal: 768,
@@ -210,9 +215,10 @@ describe("the language chunks of core", () => {
     });
   });
 
-  it("repeats it as the last row of the PRINCIPLES.md table: warns above 0.75 kB, ceiling 1 kB", () => {
-    const last = table.at(-1);
-    expect(last[0]).toMatch(/^`core` JS lazy chunk: `i18n-es`/);
+  it("repeats it in the PRINCIPLES.md table, before the mode chunk row: warns above 0.75 kB, ceiling 1 kB", () => {
+    const last = table.at(-2);
+    expect(last[0], "the row before the last one").toMatch(/^`core` JS lazy chunk: `i18n-es`/);
+    expect(table.at(-1)[0], "the last row").toMatch(/^`site` JS lazy chunk: `mode`/);
     expect(last[1]).toBe("\u2014");
     expect(kib(last[2])).toBe(768);
     expect(kib(last[3])).toBe(768);
@@ -264,15 +270,15 @@ describe("the language chunks of core", () => {
 
 /* ---- The guard on a temporary copy ------------------------------------- */
 
-const LOADER = 'document.querySelector("luz-search")&&import("./search.min.js");document.querySelector("luz-consent")&&import("./consent.min.js");';
+const LOADER = 'document.querySelector("luz-search")&&import("./search.min.js");document.querySelector("luz-consent")&&import("./consent.min.js");document.querySelector("luz-mode")&&import("./mode.min.js");';
 const CHUNK = (tag) => `customElements.get("${tag}")||customElements.define("${tag}",class extends HTMLElement{});`;
 
 describe("scripts/check-size.js on a copy of the repository", () => {
   let dir;
 
-  /** A repository with the three site files; `files` overrides the content of any of them. */
+  /** A repository with the four site files; `files` overrides the content of any of them. */
   function build(files = {}) {
-    const content = { "site.min.js": LOADER, "search.min.js": CHUNK("luz-search"), "consent.min.js": CHUNK("luz-consent"), ...files };
+    const content = { "site.min.js": LOADER, "search.min.js": CHUNK("luz-search"), "consent.min.js": CHUNK("luz-consent"), "mode.min.js": CHUNK("luz-mode"), ...files };
     mkdirSync(join(dir, "scripts"), { recursive: true });
     mkdirSync(join(dir, "packages/site/dist"), { recursive: true });
     cpSync(join(repo, "scripts/check-size.js"), join(dir, "scripts/check-size.js"));
@@ -294,7 +300,7 @@ describe("scripts/check-size.js on a copy of the repository", () => {
     rmSync(dir, { recursive: true, force: true });
   });
 
-  it("passes a loader that imports only its two chunks by literal specifiers, and chunks that import nothing", () => {
+  it("passes a loader that imports only its three chunks by literal specifiers, and chunks that import nothing", () => {
     const { status, output } = build();
     expect(output).not.toMatch(/✗/);
     expect(status).toBe(0);
@@ -306,16 +312,18 @@ describe("scripts/check-size.js on a copy of the repository", () => {
     expect(output).toMatch(/site\.min\.js/);
   });
 
-  it("fails a loader that imports a file other than the two chunks", () => {
+  it("fails a loader that imports a file other than the three chunks", () => {
     const { status, output } = build({ "site.min.js": `${LOADER}import("./other.min.js");` });
     expect(status).toBe(1);
     expect(output).toMatch(/other\.min\.js/);
   });
 
-  it("fails a loader that is missing one of the two chunks", () => {
-    const { status, output } = build({ "site.min.js": 'document.querySelector("luz-search")&&import("./search.min.js");' });
+  it.each(["search", "consent", "mode"])("fails a loader that is missing the %s chunk", (missing) => {
+    const loader = LOADER.split(";").filter((part) => part && !part.includes(`./${missing}.min.js`)).join(";") + ";";
+    expect(loader).not.toContain(`./${missing}.min.js`);
+    const { status, output } = build({ "site.min.js": loader });
     expect(status).toBe(1);
-    expect(output).toMatch(/consent\.min\.js/);
+    expect(output).toContain(`${missing}.min.js`);
   });
 
   it.each([
@@ -336,6 +344,12 @@ describe("scripts/check-size.js on a copy of the repository", () => {
     const { status, output } = build({ "search.min.js": `${CHUNK("luz-search")}${code}` });
     expect(status).toBe(1);
     expect(output).toMatch(/search\.min\.js/);
+  });
+
+  it("fails the mode chunk with an import, as any other chunk", () => {
+    const { status, output } = build({ "mode.min.js": `${CHUNK("luz-mode")}import("./x.min.js");` });
+    expect(status).toBe(1);
+    expect(output).toMatch(/mode\.min\.js/);
   });
 
   it("still fails a bare specifier in a chunk (red line 1)", () => {

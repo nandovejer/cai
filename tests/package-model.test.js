@@ -5,7 +5,7 @@
  *   (a) layering: a lower package never names a higher one
  *   (b) names: no block is shipped by two packages
  *   (c) peers: a kind of site takes site as an optional peer
- *   (d) site after F3: five components, the exports of spec §1.3, no placeholders
+ *   (d) site after F3 and F1: six components, the exports of spec §1.3, no placeholders
  */
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -18,6 +18,9 @@ import { blocksOfCss } from "./helpers/css-blocks.js";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const SITE_TAGS = ["search", "consent", "lang-switch", "submenu", "banner"];
+// F1 of the identity plan adds <luz-mode> to site. It is not in SITE_TAGS: core's theme.js has a
+// storage key spelled "luz-mode" (the mode of a custom theme), which the layering check would take for the tag
+const SITE_COMPONENTS = [...SITE_TAGS, "mode"];
 
 /** Source files (.css and .js) of packages/<name>/src, with their text. */
 function sources(name, extensions = [".css", ".js"]) {
@@ -132,17 +135,17 @@ describe("peers: a kind of site works without site", () => {
   }
 });
 
-/* ---- (d) site after F3: five components and nothing else (step 12) -------- */
+/* ---- (d) site after F3 and F1: six components and nothing else (step 12) -------- */
 
-describe("site after F3: five `<luz-*>` components", () => {
+describe("site after F1: six `<luz-*>` components", () => {
   const read = (path) => readFileSync(`${root}${path}`, "utf-8");
   const manifest = JSON.parse(read("packages/site/package.json"));
-  const components = SITE_TAGS.map((name) => `${name}.css`).sort();
+  const components = SITE_COMPONENTS.map((name) => `${name}.css`).sort();
   const minified = components.map((f) => f.replace(/\.css$/, ".min.css"));
   const list = (dir, keep) => (existsSync(`${root}${dir}`) ? readdirSync(`${root}${dir}`).filter(keep).sort() : []);
   const isCss = (f) => f.endsWith(".css") && !f.endsWith(".min.css");
 
-  it("src/components holds the five components and `_print.css`, nothing else", () => {
+  it("src/components holds the six components and `_print.css`, nothing else", () => {
     expect(list("packages/site/src/components", (f) => f.endsWith(".css"))).toEqual([...components, "_print.css"].sort());
   });
 
@@ -153,7 +156,7 @@ describe("site after F3: five `<luz-*>` components", () => {
 
   const built = existsSync(`${root}packages/site/dist/site.css`);
 
-  it.skipIf(!built)("dist/components is exactly {search, consent, lang-switch, submenu, banner}.css, plain and minified", () => {
+  it.skipIf(!built)("dist/components is exactly {search, consent, mode, lang-switch, submenu, banner}.css, plain and minified", () => {
     expect(list("packages/site/dist/components", isCss)).toEqual(components);
     expect(list("packages/site/dist/components", (f) => f.endsWith(".min.css"))).toEqual(minified);
   });
@@ -171,6 +174,7 @@ describe("site after F3: five `<luz-*>` components", () => {
       ".": "./dist/site.js",
       "./search": "./dist/search.js",
       "./consent": "./dist/consent.js",
+      "./mode": "./dist/mode.js",
       "./css": "./dist/site.css",
       "./css/min": "./dist/site.min.css",
       "./print.css": "./dist/print.css",
@@ -181,19 +185,19 @@ describe("site after F3: five `<luz-*>` components", () => {
     });
   });
 
-  it("`sideEffects` is the stylesheets and the three files that define or load an element", () => {
+  it("`sideEffects` is the stylesheets and the files that define or load an element", () => {
     expect([...manifest.sideEffects].sort()).toEqual(
-      ["*.css", "./dist/site.js", "./dist/site.min.js", "./dist/search.js", "./dist/search.min.js", "./dist/consent.js", "./dist/consent.min.js"].sort(),
+      ["*.css", "./dist/site.js", "./dist/site.min.js", "./dist/search.js", "./dist/search.min.js", "./dist/consent.js", "./dist/consent.min.js", "./dist/mode.js", "./dist/mode.min.js"].sort(),
     );
   });
 
-  it("ships `dist` and the licence only, and describes the five components", () => {
+  it("ships `dist` and the licence only, and describes its components", () => {
     expect(manifest.files).toEqual(["dist", "LICENSE"]);
     for (const word of ["search", "consent", "language", "submenu", "banner"]) expect(manifest.description.toLowerCase(), word).toContain(word);
     for (const word of ["shell", "header", "footer", "hero", "placeholder"]) expect(manifest.description.toLowerCase(), word).not.toContain(word);
   });
 
-  it("pack-files.txt lists the five components, plain and minified, and no placeholder", () => {
+  it("pack-files.txt lists the six components, plain and minified, and no placeholder", () => {
     const packed = read("packages/site/pack-files.txt").split("\n").filter(Boolean);
     expect(packed.filter((f) => f.startsWith("dist/components/")).sort()).toEqual([...components, ...minified].sort().map((f) => `dist/components/${f}`));
     expect(packed.filter((f) => /placeholder/.test(f))).toEqual([]);

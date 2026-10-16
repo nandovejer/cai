@@ -120,6 +120,10 @@ const TAGS = [
   { tag: "luz-timeline", pkg: "core", file: "timeline.js", script: true },
   { tag: "luz-search", pkg: "site", file: "search.js", script: true },
   { tag: "luz-consent", pkg: "site", file: "consent.js", script: true },
+  // F1 of the identity plan. The generator's grammar applies: attributes are the literal names of
+  // getAttribute("…") / hasAttribute("…") (remember, by, for, light-attr), a boolean one is only ever
+  // read with hasAttribute, and a declared default exists only for a number
+  { tag: "luz-mode", pkg: "site", file: "mode.js", script: true },
   { tag: "luz-lang-switch", pkg: "site", file: "components/lang-switch.css", script: false },
   { tag: "luz-submenu", pkg: "site", file: "components/submenu.css", script: false },
   { tag: "luz-banner", pkg: "site", file: "components/banner.css", script: false },
@@ -286,7 +290,7 @@ function firstColumnCodes(html) {
 /* ---- tests ------------------------------------------------------------------ */
 
 describe("which tags exist (the scan of the sources agrees with the spec)", () => {
-  it("the tags a script defines are timeline in core, and search and consent in site", () => {
+  it("the tags a script defines are timeline in core, and search, consent and mode in site", () => {
     const defined = definedTags();
     expect([...defined].sort()).toEqual(TAGS.filter((t) => t.script).map((t) => [t.tag, t.pkg]).sort());
   });
@@ -346,6 +350,7 @@ describe("the source tags in the header comment (D5-A), cross-checked with the c
     expect(names("luz-consent")).toEqual(
       ["data-luz-consent", "data-luz-consent-ask", "data-luz-consent-close", "data-luz-consent-days", "data-luz-consent-done", "data-luz-consent-key", "data-luz-consent-open"].sort(),
     );
+    expect(names("luz-mode")).toEqual(["by", "for", "light-attr", "remember"]);
     expect(names("luz-banner")).toEqual(["tone"]);
     expect(names("luz-lang-switch")).toEqual([]);
     expect(names("luz-submenu")).toEqual([]);

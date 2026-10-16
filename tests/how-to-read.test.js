@@ -25,7 +25,7 @@ import { codesOf, columnOf, declaredTokens, escapeRe, h2Ids, linksOf, packFiles,
 const IDS = ["classes", "tokens", "attributes", "elements", "layers", "public", "files"];
 const PREFIXES = [".luz-", ".o-", ".u-", ".luz-landing-", ".luz-cms-", ".luz-app-", ".is-"];
 const ATTRIBUTES = ["data-theme", "data-mode", "data-luz-*", "data-luz-label-*"];
-const ELEMENTS = ["luz-search", "luz-consent", "luz-timeline", "luz-lang-switch", "luz-submenu", "luz-banner"];
+const ELEMENTS = ["luz-search", "luz-consent", "luz-mode", "luz-timeline", "luz-lang-switch", "luz-submenu", "luz-banner"];
 const FILES = ["luz-tokens.css", "tokens.css", "components/<name>.css", "base.css", "classless.css", "themes/_template.css"];
 
 const page = readPage("get-started/how-to-read.html");
@@ -175,7 +175,7 @@ describe("attributes", () => {
 describe("elements", () => {
   const tags = () => codesOf(section("elements")).map((c) => /^<(luz-[a-z-]+)>$/.exec(c)?.[1]).filter(Boolean);
 
-  it("names the three that need a script and the three CSS-only tags", () => {
+  it("names the four that need a script and the three CSS-only tags", () => {
     for (const tag of ELEMENTS) expect(tags(), `<${tag}>`).toContain(tag);
   });
 

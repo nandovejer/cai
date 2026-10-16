@@ -560,7 +560,7 @@ describe("the LUZ docs site", () => {
     const viewPages = site.pages.filter(
       (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", ...SITE_KINDS].includes(p.meta.area) && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(48);
+    expect(viewPages).toHaveLength(49);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {
@@ -827,23 +827,23 @@ describe("the LUZ docs site", () => {
   // section) or to cms (header, footer, page header); the old URLs fall to the 404 page
   const LEFT_SITE = ["actions", "footer", "hero", "image", "lang-switcher", "notice", "page-header", "section", "shell", "site-header", "skip-link", "templates"];
 
-  it("the Site area holds its five components and its class reference, and nothing of the page structure that moved out", () => {
+  it("the Site area holds its six components and its class reference, and nothing of the page structure that moved out", () => {
     const routes = site.pages.filter((p) => p.meta.area === "site").map((p) => p.route).sort();
-    expect(routes).toEqual(["/docs/site/", ...["banner", "classes", "consent", "lang-switch", "search", "submenu"].map((slug) => `/docs/site/${slug}/`)]);
+    expect(routes).toEqual(["/docs/site/", ...["banner", "classes", "consent", "lang-switch", "mode", "search", "submenu"].map((slug) => `/docs/site/${slug}/`)]);
     const patterns = site.pages.filter((p) => p.meta.area === "site" && p.meta.group === "patterns").map((p) => p.route);
-    expect(patterns.sort()).toEqual(["banner", "consent", "lang-switch", "search", "submenu"].map((slug) => `/docs/site/${slug}/`));
+    expect(patterns.sort()).toEqual(["banner", "consent", "lang-switch", "mode", "search", "submenu"].map((slug) => `/docs/site/${slug}/`));
   });
 
   // F3 step 15 (.claude/plans/specs/f3-package-model.md, §7 and §9): the structure page says what site
   // is now, in its chain of packages, not only in the table of parts below it
-  it("the structure page's package chain lists site's five components and the three kinds, with site optional for them", () => {
+  it("the structure page's package chain lists site's six components and the three kinds, with site optional for them", () => {
     const body = site.byRoute.get("/docs/get-started/structure/").body;
     const chain = body
       .match(/<pre[^>]*aria-label="Package dependency chain"[^>]*><code>([\s\S]*?)<\/code><\/pre>/)[1]
       .replace(/&gt;/g, ">")
       .replace(/&lt;/g, "<")
       .replace(/&amp;/g, "&");
-    for (const tag of ["search", "consent", "lang-switch", "submenu", "banner"]) expect(chain, `site's ${tag}`).toContain(tag);
+    for (const tag of ["search", "consent", "mode", "lang-switch", "submenu", "banner"]) expect(chain, `site's ${tag}`).toContain(tag);
     for (const kind of ["landing", "cms", "app"]) expect(chain, `the ${kind} kind`).toContain(`@luz-ds/${kind}`);
     // Site no longer holds page structure ("page patterns"), and the kinds take it as an optional peer
     expect(chain).not.toMatch(/page patterns/i);

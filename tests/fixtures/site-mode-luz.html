@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUZ site mode fixture: a luz-mode with the four radios, and luz.js</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <!-- Core first, as a real page has it: luz.js applies the stored or served theme, wires the radios and the cycle button, then the lazy chunk upgrades the element -->
+  <script type="module" src="/packages/core/dist/luz.min.js"></script>
+  <script type="module" src="/packages/site/dist/mode.min.js"></script>
+</head>
+<body>
+  <main id="main">
+    <h1>Color mode</h1>
+    <p>Text of the page.</p>
+    <div id="target"><p>An element that <code>for="target"</code> points at.</p></div>
+  </main>
+  <footer>
+    <luz-mode id="mode">
+      <fieldset class="luz-mode-switcher luz-mode-switcher--cycle">
+        <legend class="luz-mode-switcher__label">Color mode</legend>
+        <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked>Auto</label>
+        <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light">Light</label>
+        <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark">Dark</label>
+        <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast">High contrast</label>
+      </fieldset>
+    </luz-mode>
+  </footer>
+  <!-- The query string is the test's way to author the page: ?by=clock&remember&for=target&light-attr=data-sky&boot=dark&themes=brand&mode=dark.
+       It runs before the module scripts, which wait for the parser. -->
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var html = document.documentElement;
+      if (q.has('boot')) html.setAttribute('data-theme', q.get('boot'));
+      if (q.has('mode')) html.setAttribute('data-mode', q.get('mode'));
+      if (q.has('themes')) html.setAttribute('data-luz-themes', q.get('themes'));
+      var el = document.getElementById('mode');
+      ['by', 'for', 'light-attr'].forEach(function (name) { if (q.has(name)) el.setAttribute(name, q.get(name)); });
+      if (q.has('remember')) el.setAttribute('remember', '');
+    })();
+  </script>
+</body>
+</html>

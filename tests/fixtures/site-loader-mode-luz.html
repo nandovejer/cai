@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUZ site loader fixture: a luz-mode loaded by site.min.js, with luz.js and the boot snippet</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <!-- The boot snippet, as a page has it in <head>: the served theme, before first paint.
+       The query string authors it: ?boot=dark -->
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      if (q.has('boot')) document.documentElement.setAttribute('data-theme', q.get('boot'));
+    })();
+  </script>
+  <!-- The real loading path: core, then the site loader, which loads mode.min.js on idle -->
+  <script type="module" src="/packages/core/dist/luz.min.js"></script>
+  <script type="module" src="/packages/site/dist/site.min.js"></script>
+</head>
+<body>
+  <main id="main">
+    <h1>Color mode</h1>
+    <p>Text of the page.</p>
+    <div id="target"><p>An element that <code>for="target"</code> points at.</p></div>
+  </main>
+  <footer>
+    <luz-mode id="mode">
+      <fieldset class="luz-mode-switcher luz-mode-switcher--cycle">
+        <legend class="luz-mode-switcher__label">Color mode</legend>
+        <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked>Auto</label>
+        <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light">Light</label>
+        <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark">Dark</label>
+        <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast">High contrast</label>
+      </fieldset>
+    </luz-mode>
+  </footer>
+  <!-- ?by=clock&remember: attributes of the element, set before the module scripts run -->
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var el = document.getElementById('mode');
+      ['by', 'for', 'light-attr'].forEach(function (name) { if (q.has(name)) el.setAttribute(name, q.get(name)); });
+      if (q.has('remember')) el.setAttribute('remember', '');
+    })();
+  </script>
+</body>
+</html>

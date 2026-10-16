@@ -35,10 +35,10 @@ const fenced = (text) => [...text.matchAll(/```[\w-]*\n([\s\S]*?)```/g)].map((m)
 const preBlocks = (html) => [...html.matchAll(/<pre\b[^>]*>\s*<code\b[^>]*>([\s\S]*?)<\/code>\s*<\/pre>/g)].map((m) => unescape(m[1].replace(/<[^>]+>/g, "")));
 
 const DOCS = [
-  { name: "SECURITY.md", text: () => read("SECURITY.md"), blocks: (t) => fenced(t), chunks: ["midi.min.js", "table-sort.min.js", "timeline.min.js", "i18n-es.min.js", "search.min.js", "consent.min.js"] },
-  { name: "packages/site/README.md", text: () => read("packages/site/README.md"), blocks: (t) => fenced(t), chunks: ["search.min.js", "consent.min.js"] },
+  { name: "SECURITY.md", text: () => read("SECURITY.md"), blocks: (t) => fenced(t), chunks: ["midi.min.js", "table-sort.min.js", "timeline.min.js", "i18n-es.min.js", "search.min.js", "consent.min.js", "mode.min.js"] },
+  { name: "packages/site/README.md", text: () => read("packages/site/README.md"), blocks: (t) => fenced(t), chunks: ["search.min.js", "consent.min.js", "mode.min.js"] },
   { name: "packages/core/README.md", text: () => read("packages/core/README.md"), blocks: (t) => fenced(t), chunks: ["i18n-es.min.js"] },
-  { name: "apps/docs/pages/get-started/index.html", text: () => read("apps/docs/pages/get-started/index.html"), blocks: (t) => preBlocks(t), chunks: ["search.min.js", "consent.min.js"] },
+  { name: "apps/docs/pages/get-started/index.html", text: () => read("apps/docs/pages/get-started/index.html"), blocks: (t) => preBlocks(t), chunks: ["search.min.js", "consent.min.js", "mode.min.js"] },
 ];
 
 /** The block that holds the import map: its text and the parsed map. */

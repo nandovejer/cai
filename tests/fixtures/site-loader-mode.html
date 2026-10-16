@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUZ site loader fixture: a color mode switcher only</title>
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/site/dist/site.css">
+  <script type="module" src="/packages/site/dist/site.min.js"></script>
+</head>
+<body>
+  <main id="main">
+    <h1>Color mode</h1>
+    <p>Text of the page.</p>
+  </main>
+  <footer>
+    <luz-mode id="mode">
+      <fieldset class="luz-mode-switcher">
+        <legend class="luz-mode-switcher__label">Color mode</legend>
+        <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked>Auto</label>
+        <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light">Light</label>
+        <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark">Dark</label>
+        <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast">High contrast</label>
+      </fieldset>
+    </luz-mode>
+  </footer>
+</body>
+</html>

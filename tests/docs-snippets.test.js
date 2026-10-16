@@ -28,7 +28,7 @@ const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const FILES = {
   tokens: ["luz-tokens.min.css"],
   core: ["luz.min.css", "luz.min.js", "midi.min.js", "table-sort.min.js", "timeline.min.js", "i18n-es.min.js"],
-  site: ["site.min.css", "site.min.js", "search.min.js", "consent.min.js"],
+  site: ["site.min.css", "site.min.js", "search.min.js", "consent.min.js", "mode.min.js"],
   landing: ["landing.min.css"],
   cms: ["cms.min.css"],
   app: ["app.min.css"],
@@ -220,7 +220,7 @@ describe("the snippet generator", () => {
 
       it("gives, in the chunks section, one import map whose integrity lists exactly the lazy chunks that budgets.json budgets, each with its version and sha384", () => {
         const budgeted = budgetedChunks();
-        expect(budgeted.length).toBe(6); // midi, table-sort, timeline, i18n-es, search, consent
+        expect(budgeted.length).toBe(7); // midi, table-sort, timeline, i18n-es, search, consent, mode
         const block = codeOf(html, "chunks-importmap");
         expect(block, "a code block #code-chunks-importmap in the chunks section").not.toBeNull();
         expect(chunkSection()).toContain('id="code-chunks-importmap"');
@@ -255,7 +255,7 @@ describe("the snippet generator", () => {
           expect(hash, rel).toBe(sri(root, pkg, file));
         }
         // each row says when to add the line
-        for (const element of ["luz-timeline", "luz-search", "luz-consent"]) expect(section, element).toContain(element);
+        for (const element of ["luz-timeline", "luz-search", "luz-consent", "luz-mode"]) expect(section, element).toContain(element);
       });
 
       it("calls the import map the way to check a chunk, and modulepreload only a performance hint (it does not block a bad file in Safari and Firefox)", () => {

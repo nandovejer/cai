@@ -4,7 +4,7 @@
  * section 2.3 and 9 step 7): site.min.js scans the page once and loads
  * search.min.js only when there is a <luz-search> (on its first pointerdown or
  * focusin, or on idle) and consent.min.js only when there is a <luz-consent>
- * (on idle). Content added later is not upgraded until the page imports the
+ * (on idle) and mode.min.js only when there is a <luz-mode> (on idle). Content added later is not upgraded until the page imports the
  * chunk by hand. Security: SEC-CHUNK-4 (R5), the full-SRI path is an import map
  * with an `integrity` section: a chunk with a wrong hash is never defined, in
  * every engine. A modulepreload with `integrity` is only a hint: Chromium
@@ -14,7 +14,7 @@
  */
 import { test, expect } from '@playwright/test';
 import { createHash } from 'node:crypto';
-import { EMPTY, PAGE, SEARCH_CHUNK, chunkRequests, holdIdle, isDefined, layoutShift, releaseIdle, watchLayoutShift } from './helpers/site-loader.js';
+import { EMPTY, MODE_PAGE, PAGE, SEARCH_CHUNK, chunkRequests, holdIdle, isDefined, layoutShift, releaseIdle, watchLayoutShift } from './helpers/site-loader.js';
 
 const SETTLE = 400;
 
@@ -91,6 +91,52 @@ test.describe('the loader: which chunk, and when', () => {
     await page.goto(PAGE);
     await expect.poll(() => seen.slice().sort()).toEqual(['consent', 'search']);
   });
+});
+
+test.describe('the loader: the mode chunk', () => {
+  test('(e) with a <luz-mode>, the mode chunk waits for idle: not requested while idle is held', async ({ page }) => {
+    await holdIdle(page);
+    const seen = chunkRequests(page);
+    await page.goto(MODE_PAGE);
+    await page.waitForTimeout(SETTLE);
+    expect(seen).toEqual([]);
+    expect(await isDefined(page, 'luz-mode')).toBe(false);
+  });
+
+  test('(e) idle requests the mode chunk, once, and defines <luz-mode>; the search and consent chunks are not requested', async ({ page }) => {
+    await holdIdle(page);
+    const seen = chunkRequests(page);
+    await page.goto(MODE_PAGE);
+    await releaseIdle(page);
+    await expect.poll(() => seen).toContain('mode');
+    await expect.poll(() => isDefined(page, 'luz-mode')).toBe(true);
+    await page.waitForTimeout(SETTLE);
+    expect(seen).toEqual(['mode']);
+  });
+
+  test('(e) with no stub the mode chunk arrives by itself', async ({ page }) => {
+    const seen = chunkRequests(page);
+    await page.goto(MODE_PAGE);
+    await expect.poll(() => seen).toEqual(['mode']);
+    await expect.poll(() => isDefined(page, 'luz-mode')).toBe(true);
+  });
+
+  for (const url of [EMPTY, PAGE]) {
+    test(`(e) a page without a <luz-mode> never requests the mode chunk, idle or not (${url})`, async ({ browser }) => {
+      // A page of its own per URL: the idle stub and the request listener are installed once
+      const page = await browser.newPage();
+      await holdIdle(page);
+      const seen = chunkRequests(page);
+      await page.goto(url);
+      await releaseIdle(page);
+      await page.waitForTimeout(SETTLE);
+      await page.keyboard.press('Control+k');
+      await page.waitForTimeout(SETTLE);
+      expect(seen).not.toContain('mode');
+      expect(await isDefined(page, 'luz-mode')).toBe(false);
+      await page.close();
+    });
+  }
 });
 
 test.describe('the loader: content added after the scan', () => {

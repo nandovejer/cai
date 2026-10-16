@@ -22,13 +22,14 @@ const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url))
 // classes start with .luz-<name>-, and each block maps to the id of its
 // pattern page (p-<pattern>)
 const PACKAGES = {
-  // F3 step 12: site is five self-contained components, each a `<luz-*>` tag that is the
+  // F3 step 12 and F1 of the identity plan: site is six self-contained components, each a `<luz-*>` tag that is the
   // block (`.luz-<tag>__<part>`, D5). The page structure moved to the kinds and to core
   site: {
     label: 'Site',
     patternOf: {
       search: 'search',
       consent: 'consent',
+      mode: 'mode',
       'lang-switch': 'lang-switch',
       submenu: 'submenu',
       banner: 'banner',
@@ -99,15 +100,15 @@ for (const [name, { label, patternOf }] of Object.entries(PACKAGES)) {
     });
 
     if (name === 'site') {
-      test('site ships exactly its five components: search, consent, lang-switch, submenu and banner', () => {
-        expect(blocksOf('site').sort()).toEqual(['banner', 'consent', 'lang-switch', 'search', 'submenu']);
+      test('site ships exactly its six components: search, consent, mode, lang-switch, submenu and banner', () => {
+        expect(blocksOf('site').sort()).toEqual(['banner', 'consent', 'lang-switch', 'mode', 'search', 'submenu']);
       });
 
-      test('the Site gallery lists the five components and the class reference, and nothing of the page structure that moved out', async ({ page }) => {
+      test('the Site gallery lists the six components and the class reference, and nothing of the page structure that moved out', async ({ page }) => {
         await page.goto('/docs/site/');
         const cards = await page.locator('.docs-gallery a').evaluateAll((links) => links.map((link) => new URL(link.href).pathname));
         expect(cards.filter((href) => href.startsWith('/docs/site/')).sort()).toEqual(
-          ['banner', 'classes', 'consent', 'lang-switch', 'search', 'submenu'].map((slug) => `/docs/site/${slug}/`),
+          ['banner', 'classes', 'consent', 'lang-switch', 'mode', 'search', 'submenu'].map((slug) => `/docs/site/${slug}/`),
         );
       });
     }

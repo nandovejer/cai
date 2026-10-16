@@ -283,7 +283,7 @@ test.describe('Documentation site', () => {
     test('an area index leads on to its first page, and the last page of an area to the next area', async ({ page }) => {
       await page.goto('/docs/tokens/');
       const end = page.getByRole('navigation', { name: 'Keep going' });
-      await expect(end.getByRole('link', { name: 'Previous: Classless styles', exact: true })).toHaveAttribute('href', /\/docs\/get-started\/classless\/$/);
+      await expect(end.getByRole('link', { name: 'Previous: How LUZ is built', exact: true })).toHaveAttribute('href', /\/docs\/get-started\/how-luz-is-built\/$/);
       await expect(end.getByRole('link', { name: 'Next: Color', exact: true })).toHaveAttribute('href', /\/docs\/tokens\/color\/$/);
       await expect(end.locator('.docs-end__links a')).toHaveText(['Color modes and themes', 'Components', 'Tokens in Figma']);
     });

@@ -153,6 +153,7 @@
 .docs-snippet,
 .elements-snippet {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--luz-space-2xs);
 }
 
@@ -161,6 +162,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: var(--luz-space-sm);
 }
 
@@ -174,7 +176,7 @@
 /* No width jump when the label becomes "✓ Copied" */
 .docs-snippet .luz-copy-btn,
 .elements-snippet .luz-copy-btn {
-  min-width: calc(var(--luz-space-3xl) + var(--luz-space-md) + var(--luz-space-xs));
+  min-width: min(calc(var(--luz-space-3xl) + var(--luz-space-md) + var(--luz-space-xs)), 100%);
   justify-content: center;
 }
 

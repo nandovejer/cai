@@ -59,10 +59,16 @@
 }
 
 /* The footer stays in main's column: the sticky sidebar, as tall as the
-   viewport, reaches into the last row at the end of the page */
+   viewport, reaches into the last row at the end of the page. Below 769px
+   the grid has one column and the footer stays in it. */
 .docs-page > footer {
-  grid-column: 2;
   grid-row: 3;
+}
+
+@media (min-width: 769px) {
+  .docs-page > footer {
+    grid-column: 2;
+  }
 }
 
 /* Grid and flex items default to min-width: auto, which lets a long <pre> or
@@ -109,6 +115,9 @@
   gap: var(--luz-space-xl);
   align-content: start;
   padding-block: var(--luz-space-lg) var(--luz-space-3xl);
+  /* A word longer than the line (400 % text on a phone) breaks instead of
+     widening the page */
+  overflow-wrap: break-word;
 }
 
 /* Every anchor target clears the top edge when it is jumped to */
@@ -125,6 +134,7 @@
 
 .docs-body {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--luz-space-2xl);
   align-content: start;
 }
@@ -137,6 +147,7 @@
 
 .docs-page-head {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--luz-space-sm);
 }
 
@@ -179,6 +190,7 @@
 .docs-block,
 .docs-component {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--luz-space-md);
   align-content: start;
 }
@@ -573,6 +585,7 @@
 
 .docs-pager__link {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--luz-space-3xs);
   block-size: 100%;
   padding: var(--luz-space-sm) var(--luz-space-md);
@@ -607,6 +620,13 @@
   display: inline-flex;
   align-items: center;
   min-block-size: var(--luz-control-sm);
+  /* A flex item: only `anywhere` lowers its minimum width */
+  overflow-wrap: anywhere;
+}
+
+/* Same for the breadcrumb, whose items are flex items */
+.docs-breadcrumb {
+  overflow-wrap: anywhere;
 }
 
 .docs-gallery {
@@ -1716,6 +1736,11 @@ h2.docs-demo__title {
 @media (max-width: 640px) {
   .docs-main > * {
     padding-inline: var(--luz-space-md);
+  }
+
+  /* The footer keeps the margin of main's content */
+  .docs-footer {
+    margin-inline: var(--luz-space-md);
   }
 
   /* Two columns of a 320px page are 106px: a datetime-local does not fit */

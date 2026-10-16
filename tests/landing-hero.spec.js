@@ -249,3 +249,94 @@ test.describe('home page hero', () => {
     expect(await sideways(p)).toBeLessThanOrEqual(0);
   });
 });
+
+// F4 of the identity plan (@luz-ds/landing 0.2): the centred hero and the picture that bleeds.
+// The page is tests/fixtures/landing-f4.html: tokens, core and landing only.
+const F4 = '/tests/fixtures/landing-f4.html';
+
+/** Open the F4 fixture at `width`, in `dir` (`rtl` also sets lang="ar"). */
+async function openF4(p, width, dir = 'ltr') {
+  await p.setViewportSize({ width, height: 900 });
+  await p.goto(F4);
+  await p.waitForLoadState('load');
+  if (dir === 'rtl') await p.evaluate(() => { document.documentElement.dir = 'rtl'; document.documentElement.lang = 'ar'; });
+}
+
+const centre = (box) => (box.left + box.right) / 2;
+const boxOf = (p, selector) => p.locator(selector).evaluate((el) => {
+  const r = el.getBoundingClientRect();
+  return { left: r.left, right: r.right, top: r.top, bottom: r.bottom, width: r.width };
+});
+
+test.describe('landing hero --centered', () => {
+  for (const dir of ['ltr', 'rtl']) {
+    test(`${dir}: it is one column even at 1280 px, the copy above the picture`, async ({ page: p }) => {
+      await openF4(p, 1280, dir);
+      const copy = await boxOf(p, '#copy-c');
+      const media = await boxOf(p, '#media-c');
+      expect(copy.bottom).toBeLessThanOrEqual(media.top);
+    });
+
+    test(`${dir}: the eyebrow, the title and the lead are centred text, and the lead block is centred in the copy`, async ({ page: p }) => {
+      await openF4(p, 1280, dir);
+      for (const id of ['hero-c-eyebrow', 'hero-c-title', 'hero-c-lead']) {
+        expect(await p.locator(`#${id}`).evaluate((el) => getComputedStyle(el).textAlign), id).toBe('center');
+      }
+      const copy = await boxOf(p, '#copy-c');
+      const lead = await boxOf(p, '#hero-c-lead');
+      expect(Math.abs(centre(lead) - centre(copy)), 'the lead is centred in the copy').toBeLessThanOrEqual(1);
+    });
+
+    test(`${dir}: the copy has a measure of its own, centred in the hero, and its actions are centred`, async ({ page: p }) => {
+      await openF4(p, 1280, dir);
+      expect(await p.locator('#copy-c').evaluate((el) => getComputedStyle(el).maxInlineSize), 'max-inline-size').not.toBe('none');
+      const hero = await p.locator('#hero-c').evaluate((el) => {
+        const r = el.getBoundingClientRect();
+        const cs = getComputedStyle(el);
+        return { left: r.left + parseFloat(cs.paddingLeft), right: r.right - parseFloat(cs.paddingRight) };
+      });
+      const copy = await boxOf(p, '#copy-c');
+      expect(copy.width, 'narrower than the hero').toBeLessThan(hero.right - hero.left);
+      expect(Math.abs(centre(copy) - centre(hero))).toBeLessThanOrEqual(1);
+      const buttons = await p.locator('#actions-c .luz-btn').evaluateAll((els) => els.map((el) => el.getBoundingClientRect()).map((r) => ({ left: r.left, right: r.right })));
+      const span = { left: Math.min(...buttons.map((b) => b.left)), right: Math.max(...buttons.map((b) => b.right)) };
+      expect(Math.abs(centre(span) - centre(copy)), 'the buttons are centred under the lead').toBeLessThanOrEqual(2);
+    });
+  }
+
+  test('at 320 px it does not scroll sideways', async ({ page: p }) => {
+    await openF4(p, 320);
+    expect(await sideways(p)).toBeLessThanOrEqual(0);
+  });
+
+  test('the plain hero is not centred: --centered is a modifier, not the default', async ({ page: p }) => {
+    await p.route('**/__hero__', (route) => route.fulfill({ contentType: 'text/html', body: page('ltr') }));
+    await p.setViewportSize({ width: 1280, height: 900 });
+    await p.goto('/__hero__');
+    expect(await p.locator('.luz-landing-hero__title').evaluate((el) => getComputedStyle(el).textAlign)).toMatch(/^(start|left)$/);
+  });
+});
+
+test.describe('landing hero __media--bleed', () => {
+  for (const dir of ['ltr', 'rtl']) {
+    for (const width of [320, 768, 1280, 1920]) {
+      test(`${dir}, ${width} px: the picture runs from edge to edge of the window, with no sideways scroll`, async ({ page: p }) => {
+        await openF4(p, width, dir);
+        const { left, right, edge } = await p.evaluate(() => {
+          const r = document.getElementById('media-b').getBoundingClientRect();
+          return { left: r.left, right: r.right, edge: document.documentElement.clientWidth };
+        });
+        expect(Math.abs(left), 'starts at the left edge').toBeLessThanOrEqual(1);
+        expect(Math.abs(right - edge), 'ends at the right edge').toBeLessThanOrEqual(1);
+        expect(await sideways(p), 'no horizontal scroll').toBeLessThanOrEqual(0);
+      });
+    }
+  }
+
+  test('the picture inside it still fills the bleeding box', async ({ page: p }) => {
+    await openF4(p, 1280);
+    const media = await boxOf(p, '#media-b');
+    const image = await boxOf(p, '#media-b .luz-image');
+    expect(Math.abs(image.width - media.width)).toBeLessThanOrEqual(1);
+  });
+});

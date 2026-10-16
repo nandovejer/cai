@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Landing 0.2</title>
+  <!-- tests/landing-hero.spec.js, landing-footer.spec.js and landing-section.spec.js (F4 of
+       .claude/plans/luz-home-docs-identity.md, @luz-ds/landing 0.2): tokens + core + landing ONLY.
+       Every piece the 0.2 adds, in the markup the spec of F4 names:
+         - hero--centered on the same `section.o-grid.o-grid--split` as the hero (the modifier makes it one column)
+         - hero__media--bleed as the picture of a second hero
+         - section__eyebrow, __title (with an `em`) and __lead
+         - stat, alone and inside a luz-card
+         - footer__brand and __col on `div.o-container.o-container--inline.o-grid` (the old `> .o-row` footer is
+           tests/fixtures/landing-page.html and stays as it is) -->
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/landing/dist/landing.css">
+</head>
+<body class="o-page">
+  <main id="main-content" class="o-container o-stack luz-landing-main" tabindex="-1">
+    <section class="luz-landing-hero luz-landing-hero--centered o-grid o-grid--split" id="hero-c" aria-labelledby="hero-c-title">
+      <div class="luz-landing-hero__copy" id="copy-c">
+        <p class="luz-landing-hero__eyebrow" id="hero-c-eyebrow">12 and 13 May 2027 · Seville</p>
+        <h1 class="luz-landing-hero__title" id="hero-c-title">Retail, <em id="hero-c-em">reimagined</em></h1>
+        <p class="luz-landing-hero__lead" id="hero-c-lead">Two days of talks and workshops for retail teams.</p>
+        <div class="o-actions" id="actions-c">
+          <a class="luz-btn luz-btn--primary" href="#sec">Register</a>
+          <a class="luz-btn luz-btn--outline" href="#sec">Programme</a>
+        </div>
+      </div>
+      <div class="luz-landing-hero__media" id="media-c">
+        <div class="luz-image luz-image--16x9" role="img" aria-label="The main hall"></div>
+      </div>
+    </section>
+    <section class="luz-landing-hero luz-landing-hero--centered o-grid o-grid--split" id="hero-b" aria-labelledby="hero-b-title">
+      <div class="luz-landing-hero__copy" id="copy-b">
+        <h2 class="luz-landing-hero__title" id="hero-b-title">The venue</h2>
+        <p class="luz-landing-hero__lead">A converted shipyard on the river.</p>
+      </div>
+      <div class="luz-landing-hero__media luz-landing-hero__media--bleed" id="media-b">
+        <div class="luz-image luz-image--16x9" role="img" aria-label="The shipyard at dusk"></div>
+      </div>
+    </section>
+    <section class="o-stack luz-landing-section" id="sec" aria-labelledby="sec-title">
+      <p class="luz-landing-section__eyebrow" id="sec-eyebrow">Why come</p>
+      <h2 class="luz-landing-section__title" id="sec-title">Numbers that <em id="sec-em">matter</em></h2>
+      <p class="luz-landing-section__lead" id="sec-lead">Last year in figures.</p>
+      <ul class="o-grid o-grid--split" id="stats">
+        <li class="luz-card" id="card-stat">
+          <div class="luz-landing-stat" id="stat-in-card">
+            <p class="luz-landing-stat__value" id="stat-in-card-value">3,200</p>
+            <p class="luz-landing-stat__label" id="stat-in-card-label">attendees</p>
+          </div>
+        </li>
+        <li>
+          <div class="luz-landing-stat" id="stat">
+            <p class="luz-landing-stat__value" id="stat-value">48</p>
+            <p class="luz-landing-stat__label" id="stat-label">speakers</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="luz-landing-footer" id="ftr">
+    <div class="o-container o-container--inline o-grid" id="ftr-grid">
+      <div class="luz-landing-footer__brand" id="brand">
+        <p><strong>Acme Summit</strong> <span>v2.0</span></p>
+        <p>A retail event, every May.</p>
+      </div>
+      <nav class="luz-landing-footer__col" id="col-1" aria-labelledby="col-1-title">
+        <h2 class="luz-landing-footer__col-title" id="col-1-title">Event</h2>
+        <ul>
+          <li><a href="#sec">Programme</a></li>
+          <li><a href="#sec">Speakers</a></li>
+          <li><a href="#sec">Tickets</a></li>
+        </ul>
+      </nav>
+      <nav class="luz-landing-footer__col" id="col-2" aria-labelledby="col-2-title">
+        <h2 class="luz-landing-footer__col-title" id="col-2-title">Legal</h2>
+        <ul>
+          <li><a href="#sec">Privacy</a></li>
+          <li><a href="#sec">Accessibility</a></li>
+        </ul>
+      </nav>
+      <nav class="luz-landing-footer__col" id="col-3" aria-labelledby="col-3-title">
+        <h2 class="luz-landing-footer__col-title" id="col-3-title">Contact</h2>
+        <ul>
+          <li><a href="#sec">Press</a></li>
+          <li><a href="#sec">Sponsors</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

@@ -4,7 +4,7 @@
  * no build. The browser half is tests/landing-header.spec.js,
  * landing-hero.spec.js, landing-footer.spec.js and landing-optional-site.spec.js.
  *
- *   - landing ships six components: header, hero, footer, main, section, glow
+ *   - landing ships seven components: header, hero, footer, main, section, glow, stat (stat: F4, landing 0.2)
  *   - the feature grid is gone (D10): no class, no file, no page, no link; its
  *     template is a `ul.o-grid.o-grid--split`
  *   - the pieces core owns stay in core: stickiness (`.o-sticky`), the split
@@ -20,7 +20,7 @@ const root = fileURLToPath(new URL("../", import.meta.url));
 const read = (path) => readFileSync(`${root}${path}`, "utf-8");
 /** Like `read`, but "" for a file that is not there yet, so the assertion says what is missing. */
 const readOr = (path) => (existsSync(`${root}${path}`) ? read(path) : "");
-const COMPONENTS = ["footer", "glow", "header", "hero", "main", "section"];
+const COMPONENTS = ["footer", "glow", "header", "hero", "main", "section", "stat"];
 
 /** Every file under `dir` (relative to the repo), skipping what is generated or installed. */
 function walk(dir, out = []) {
@@ -39,7 +39,7 @@ const stripComments = (css) => css.replace(/\/\*[\s\S]*?\*\//g, "");
 describe("landing ships the page structure of a landing page", () => {
   const sources = readdirSync(`${root}packages/landing/src/components`).filter((f) => f.endsWith(".css"));
 
-  it("has exactly header, hero, footer, main, section and glow", () => {
+  it("has exactly header, hero, footer, main, section, glow and stat", () => {
     expect(sources.map((f) => f.replace(/\.css$/, "")).sort()).toEqual(COMPONENTS);
   });
 
@@ -64,6 +64,7 @@ describe("landing ships the page structure of a landing page", () => {
       ".luz-landing-main",
       ".luz-landing-section",
       ".luz-landing-glow",
+      ".luz-landing-stat",
     ]) {
       expect(css, name).toMatch(new RegExp(`${name.replace(/[.]/g, "\\.")}(?![\\w-])`));
     }
@@ -124,7 +125,7 @@ describe("D10: the feature grid is a template, not a pattern", () => {
 });
 
 describe("the landing docs area documents the structure that moved here", () => {
-  for (const page of ["header", "hero", "footer", "section"]) {
+  for (const page of ["header", "hero", "footer", "section", "stat"]) {
     it(`has landing/${page}.html`, () => {
       expect(existsSync(`${root}apps/docs/pages/landing/${page}.html`), `apps/docs/pages/landing/${page}.html`).toBe(true);
     });

@@ -137,3 +137,85 @@ test.describe('the pages that use the landing footer', () => {
     await expect(page.locator('.luz-site-footer')).toHaveCount(0);
   });
 });
+
+// F4 of the identity plan (@luz-ds/landing 0.2): a brand block and columns of links.
+// The page is tests/fixtures/landing-f4.html (`div.o-container.o-container--inline.o-grid` inside the footer);
+// the old `> .o-row` footer is tests/fixtures/landing-page.html, tested above and unchanged.
+const F4 = '/tests/fixtures/landing-f4.html';
+const PARTS = ['brand', 'col-1', 'col-2', 'col-3'];
+
+const rects = (page) =>
+  page.evaluate((ids) => Object.fromEntries(ids.map((id) => {
+    const r = document.getElementById(id).getBoundingClientRect();
+    return [id, { left: r.left, right: r.right, top: r.top, bottom: r.bottom }];
+  })), PARTS);
+
+test.describe('landing footer: brand and columns', () => {
+  for (const dir of ['ltr', 'rtl']) {
+    for (const width of [1280, 768]) {
+      test(`${dir}, ${width} px: the brand and the columns sit side by side, the brand at the inline start`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(F4);
+        if (dir === 'rtl') await page.evaluate(() => { document.documentElement.dir = 'rtl'; document.documentElement.lang = 'ar'; });
+        const r = await rects(page);
+        // One row: every part shares the top of the brand's box
+        for (const id of PARTS.slice(1)) {
+          expect(r[id].top, id).toBeLessThan(r.brand.bottom);
+          expect(r.brand.top, id).toBeLessThan(r[id].bottom);
+        }
+        // In reading order along the row: brand, then the columns
+        const order = PARTS.map((id) => ({ id, edge: dir === 'ltr' ? r[id].left : -r[id].right })).sort((a, b) => a.edge - b.edge).map((x) => x.id);
+        expect(order).toEqual(PARTS);
+        expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+      });
+    }
+
+    for (const width of [767, 320]) {
+      test(`${dir}, ${width} px: they are one under the other, all at the inline start, with no sideways scroll`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 900 });
+        await page.goto(F4);
+        if (dir === 'rtl') await page.evaluate(() => { document.documentElement.dir = 'rtl'; document.documentElement.lang = 'ar'; });
+        const r = await rects(page);
+        for (let i = 1; i < PARTS.length; i += 1) {
+          expect(r[PARTS[i - 1]].bottom, PARTS[i]).toBeLessThanOrEqual(r[PARTS[i]].top + 1);
+          const edge = dir === 'ltr' ? 'left' : 'right';
+          expect(Math.abs(r[PARTS[i]][edge] - r.brand[edge]), PARTS[i]).toBeLessThanOrEqual(1);
+        }
+        expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+      });
+    }
+  }
+
+  test('a column is a small heading over a plain list of links with a gap between them', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(F4);
+    const col = await page.evaluate(() => {
+      const base = parseFloat(getComputedStyle(document.body).fontSize);
+      const title = document.getElementById('col-1-title');
+      const list = document.querySelector('#col-1 ul');
+      const [a, b] = [...list.querySelectorAll('li')].map((li) => li.getBoundingClientRect());
+      const cs = getComputedStyle(list);
+      return {
+        titleSize: parseFloat(getComputedStyle(title).fontSize),
+        base,
+        titleBottom: title.getBoundingClientRect().bottom,
+        listTop: list.getBoundingClientRect().top,
+        marker: cs.listStyleType,
+        indent: cs.paddingInlineStart,
+        gap: b.top - a.bottom,
+      };
+    });
+    expect(col.titleSize, 'the heading is no larger than the text').toBeLessThanOrEqual(col.base);
+    expect(col.titleBottom).toBeLessThanOrEqual(col.listTop + 1);
+    expect(col.marker).toBe('none');
+    expect(col.indent).toBe('0px');
+    expect(col.gap, 'the links have room between them').toBeGreaterThanOrEqual(4);
+  });
+
+  test('the old footer, a core row, is unchanged: its items at the two ends, with no landing grid', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(FIXTURE);
+    expect(await style(page, '#ftr-row', 'justifyContent')).toBe('space-between');
+    expect(await style(page, '#ftr-row', 'display')).toBe('flex');
+  });
+});

@@ -46,6 +46,7 @@ const PACKAGES = {
       main: 'landing-section',
       section: 'landing-section',
       glow: 'landing-section',
+      stat: 'landing-stat',
     },
   },
   cms: {

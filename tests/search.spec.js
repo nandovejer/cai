@@ -11,6 +11,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { routeOf, site } from './helpers/docs-site.js';
+import { faded } from './helpers/settle.js';
 import { SITE_KINDS } from '../scripts/luz-packages.js';
 
 const BUTTON = routeOf('c-button');
@@ -438,6 +439,8 @@ test.describe('search: rendering', () => {
     test(`axe with the dialog open, with results and with none, in ${theme}`, async ({ page }) => {
       await open(page);
       await page.evaluate((t) => (document.documentElement.dataset.theme = t), theme);
+      // The page fades between modes for 1.4 s: measure the settled colours
+      await faded(page);
       for (const query of ['tab', 'zzqx']) {
         await searchFor(page, query);
         await page.waitForTimeout(400);

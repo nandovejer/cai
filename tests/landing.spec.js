@@ -568,7 +568,7 @@ test.describe('Landing page', () => {
       });
     }
 
-    test('the color mode switcher is three radios: targets of 24px or more at 360px', async ({ page }) => {
+    test('the color mode switcher is four radios (Auto, Light, Dark, High contrast): targets of 24px or more at 360px', async ({ page }) => {
       await page.setViewportSize({ width: 360, height: 800 });
       await page.goto('/');
 
@@ -576,7 +576,7 @@ test.describe('Landing page', () => {
       const boxes = await page
         .locator('footer .luz-mode-btn')
         .evaluateAll((labels) => labels.map((el) => el.getBoundingClientRect()));
-      expect(boxes).toHaveLength(3);
+      expect(boxes).toHaveLength(4);
       for (const box of boxes) {
         expect(box.width).toBeGreaterThanOrEqual(24);
         expect(box.height).toBeGreaterThanOrEqual(24);

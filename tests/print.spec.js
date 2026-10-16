@@ -7,6 +7,7 @@
  * header repeated, and every tab panel shown.
  */
 import { test, expect } from '@playwright/test';
+import { faded } from './helpers/settle.js';
 
 const ROUTE = '/docs/components/select/';
 
@@ -21,6 +22,8 @@ test.describe('print', () => {
     await page.evaluate(() => {
       document.documentElement.dataset.theme = 'dark';
     });
+    // The page fades between modes for 1.4 s: the tests below measure the settled colours
+    await faded(page);
   });
 
   test('on a screen nothing changes: the dark page stays dark and no address is added', async ({ page }) => {
@@ -33,6 +36,7 @@ test.describe('print', () => {
 
   test('paper is white and ink is black, in the dark mode too', async ({ page }) => {
     await page.emulateMedia({ media: 'print' });
+    await faded(page);
     // The theme change that preceded may still be easing, on a screen
     await expect.poll(() => style(page, 'body', '', 'color')).toBe('rgb(0, 0, 0)');
     expect(await style(page, 'body', '', 'background-color')).toBe('rgb(255, 255, 255)');

@@ -96,6 +96,13 @@ const template = (() => {
   const light = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].find(([, selector]) => squash(selector).startsWith('[data-theme="my-brand"],'));
   return colours(Object.keys(declarations(light[2])));
 })();
+/**
+ * The status colours (--luz-color-*: success, danger, warning, info, teal, purple, code) keep
+ * Vejer's values in every light: RL-15 (tests/red-lines.test.js, "no app redefines a status
+ * colour") forbids an app to declare one. A block is complete over every other colour token.
+ */
+const STATUS = /^--luz-color-/;
+const own = template.filter((name) => !STATUS.test(name));
 
 const primitives = {};
 for (const [family, steps] of Object.entries(JSON.parse(read("packages/tokens/tokens.json")).color)) {
@@ -122,12 +129,18 @@ describe("theme-light.css has the four lights and nothing else", () => {
     expect(css).not.toMatch(/data-light="(?:afternoon|night)"/);
   });
 
-  it.each(LIGHTS)("%s declares the colour tokens the theme template declares, and color-scheme: %s", (light, mode, selector) => {
+  it.each(LIGHTS)("%s declares the colour tokens the theme template declares, except the status colours, and color-scheme: %s", (light, mode, selector) => {
     const found = block(selector);
     expect(found, `a block for ${selector}`).toBeTruthy();
     const { "color-scheme": scheme, ...tokens } = found.props;
-    expect(colours(Object.keys(tokens))).toEqual(template);
+    expect(colours(Object.keys(tokens))).toEqual(own);
     expect(scheme).toBe(mode);
+  });
+
+  it.each(LIGHTS)("%s declares no --luz-color-* token: the status colours keep Vejer's values (RL-15)", (light, mode, selector) => {
+    const found = block(selector);
+    expect(found, `a block for ${selector}`).toBeTruthy();
+    expect(Object.keys(found.props).filter((name) => STATUS.test(name))).toEqual([]);
   });
 
   it.each(LIGHTS)("%s is written in literal colours, as a theme is", (light, mode, selector) => {

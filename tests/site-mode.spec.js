@@ -299,6 +299,24 @@ test.describe('<luz-mode>', () => {
       await expect.poll(() => state(page)).toMatchObject({ theme: 'light', light: 'morning' });
     });
 
+    test('a minute that does not change the phase leaves a data-theme set by hand alone', async ({ page }) => {
+      await open(page, 'by=clock', { time: at('14:00') });
+      expect(await state(page)).toMatchObject({ theme: 'light', light: 'afternoon', mode: 'auto' });
+      // Something else (a picker, a tool, a test) sets the theme on <html> by hand
+      await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
+      await page.clock.runFor(61_000); // 14:01:01, still afternoon: the tick ran and had nothing to write
+      await page.waitForTimeout(100);
+      expect(await state(page)).toMatchObject({ theme: 'dark', light: 'afternoon' });
+    });
+
+    test('a minute that changes the phase writes the new phase: its light and its theme, over a data-theme set by hand', async ({ page }) => {
+      await open(page, 'by=clock', { time: at('17:29') });
+      expect(await state(page)).toMatchObject({ theme: 'light', light: 'afternoon' });
+      await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'dark'));
+      await page.clock.runFor(61_000); // 17:30:01, sunset
+      await expect.poll(() => state(page)).toMatchObject({ theme: 'light', light: 'sunset', mode: 'auto' });
+    });
+
     test('waits for the next minute with one timeout, not a busy interval, and a minute that changes nothing fires nothing', async ({ page }) => {
       await open(page, 'by=clock', { time: at('09:30:20') });
       const timers = () => page.evaluate(() => ({ intervals: /** @type {any} */ (window).__intervals, timeouts: /** @type {number[]} */ ([.../** @type {any} */ (window).__timeouts]) }));

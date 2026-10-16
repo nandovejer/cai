@@ -17,6 +17,7 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { faded } from './helpers/settle.js';
 
 const ROUTE = '/docs/get-started/snippet/';
 const KINDS = ['atoms', 'landing', 'blog', 'app'];
@@ -198,6 +199,8 @@ test.describe('snippet picker', () => {
       await page.evaluate((t) => {
         document.documentElement.dataset.theme = t;
       }, theme);
+      // The page fades between modes for 1.4 s: measure the settled colours
+      await faded(page);
       await page.waitForTimeout(400);
       const { violations } = await new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])

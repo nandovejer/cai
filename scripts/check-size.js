@@ -25,7 +25,9 @@
  *     one imports lazily, in any package, and site's search, consent and
  *     mode) imports nothing, static or dynamic; site.min.js, the presence
  *     loader, has no static import, and its dynamic imports are exactly its
- *     three chunks.
+ *     three chunks. The same holds for the home's light, which no build
+ *     touches: apps/landing/light/light.js loads exactly globe.js, city.js
+ *     and map.js, and each of them imports nothing.
  *
  * Usage: node scripts/check-size.js
  */
@@ -100,7 +102,12 @@ const SPECIFIERS = [
 const IMPORT_CALL = /\bimport\s*\(/g;
 const LITERAL_IMPORT = /\bimport\s*\(\s*(["'])([^"'`]+)\1\s*\)/g;
 const STATIC_IMPORT = /(?:^|[;}\s])(?:import\b(?!\s*[(.])|export\b[^"'();]*?\bfrom\b)/;
-const LOADERS = { "packages/site/dist/site.min.js": ["./consent.min.js", "./mode.min.js", "./search.min.js"] };
+const LOADERS = {
+  "packages/site/dist/site.min.js": ["./consent.min.js", "./mode.min.js", "./search.min.js"],
+  // The home's light (apps/landing/light/): served as written, no build, so the same rules hold for its sources
+  "apps/landing/light/light.js": ["./globe.js", "./city.js", "./map.js"],
+};
+const LIGHT = ["light.js", "globe.js", "city.js", "map.js"].map((name) => `apps/landing/light/${name}`);
 const chunks = new Set(Object.entries(LOADERS).flatMap(([loader, targets]) => targets.map((t) => relative(root, resolve(root, dirname(loader), t)))));
 const published = [];
 for (const pkg of readdirSync(resolve(root, "packages"))) {
@@ -113,6 +120,13 @@ for (const pkg of readdirSync(resolve(root, "packages"))) {
     for (const [, , target] of code.matchAll(LITERAL_IMPORT)) {
       if (/^\.{1,2}\//.test(target)) chunks.add(relative(root, resolve(root, dirname(file), target)));
     }
+  }
+}
+for (const file of LIGHT.filter((f) => existsSync(resolve(root, f)))) {
+  const code = readFileSync(resolve(root, file), "utf-8");
+  published.push([file, code]);
+  for (const [, , target] of code.matchAll(LITERAL_IMPORT)) {
+    if (/^\.{1,2}\//.test(target)) chunks.add(relative(root, resolve(root, dirname(file), target)));
   }
 }
 for (const [file, code] of published) {

@@ -59,6 +59,14 @@ home-light[bleed] {
   }
 }
 
+/* At sunset the sun is lower and redder: the city's sun and lit faces and the
+   map's sunlight warm with it (high contrast and forced colours keep theirs) */
+@media (forced-colors: none) {
+  :root[data-light="sunset"] home-light {
+    --light-sun: #ff9b5e;
+  }
+}
+
 :root[data-theme="high-contrast"] home-light {
   --light-sun: var(--luz-text-primary);
   --light-neon: var(--luz-text-primary);
@@ -116,6 +124,11 @@ home-light .home-light__stage > home-map {
   mask-image: linear-gradient(to bottom, #000 72%, transparent);
 }
 
+/* A plan has no sky: the map fades in at the top as well, so it has no hard edge */
+home-light .home-light__stage > home-map {
+  mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 72%, transparent);
+}
+
 /* --------------------------------------------------------------------------
    The foot: the line that opens the bar, and the bar above it
    -------------------------------------------------------------------------- */
@@ -130,13 +143,16 @@ home-light .home-light__foot {
   padding-inline: var(--luz-space-md);
 }
 
+/* The line sits on a pill of the page's paper, so its text keeps its contrast
+   over whatever the visual draws behind it */
 home-light .home-light__line {
   position: relative;
   max-width: 64ch;
   padding: var(--luz-space-xs) var(--luz-space-md);
   border: 0;
-  border-radius: var(--luz-radius-sm);
-  background: none;
+  border-radius: var(--luz-radius-md);
+  background: color-mix(in oklab, var(--_paper) 88%, transparent);
+  backdrop-filter: blur(12px);
   color: var(--_muted);
   font: italic 400 var(--luz-text-sm) / 1.45 var(--luz-font-serif);
   text-wrap: balance;
@@ -156,6 +172,50 @@ home-light .home-light__q::before {
 
 home-light .home-light__q::after {
   content: close-quote;
+}
+
+/* The light and the hour, under the phrase, with the mark that opens and closes the bar */
+home-light .home-light__when {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--luz-space-2xs);
+  font: 400 var(--luz-text-xs) / 1.4 var(--luz-font-sans);
+}
+
+home-light .home-light__q:not([hidden]) + .home-light__when {
+  margin-block-start: var(--luz-space-3xs);
+}
+
+home-light .home-light__q[hidden] {
+  display: none;
+}
+
+/* The hour reads left to right in every language */
+home-light .home-light__time {
+  font-variant-numeric: tabular-nums;
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+
+/* Closed it points up, to where the bar opens; open it points down */
+home-light .home-light__mark {
+  display: inline-flex;
+  transition: rotate var(--luz-duration-slow) var(--_ease);
+}
+
+home-light .home-light__line[aria-expanded="true"] .home-light__mark {
+  rotate: 180deg;
+}
+
+home-light .home-light__mark svg {
+  inline-size: 1em;
+  block-size: 1em;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* A hairline from the line up to the open bar */
@@ -383,11 +443,6 @@ home-globe {
 
 home-globe[dragging] {
   cursor: grabbing;
-}
-
-home-globe:focus-visible {
-  outline: 2px solid var(--luz-focus-ring);
-  outline-offset: -2px;
 }
 
 home-globe > .home-globe__halo {
@@ -845,5 +900,25 @@ home-map .home-map__torch {
     --light-night-lake: Canvas;
     --_ink: CanvasText;
     --_paper: Canvas;
+  }
+
+  /* The track is a gradient, which forced colours drop: a system colour draws
+     it, on the track and on the input's own content box (as tall as the track) */
+  home-light .home-light__day input {
+    padding-block: calc((2.75rem - 6px) / 2);
+    background: CanvasText content-box;
+  }
+
+  home-light .home-light__day input::-webkit-slider-runnable-track {
+    background: CanvasText;
+  }
+
+  home-light .home-light__day input::-moz-range-track {
+    background: CanvasText;
+  }
+
+  /* The pressed fill is forced away: a border in Highlight marks the chosen look */
+  home-light .home-light__group button[aria-pressed="true"] {
+    border: 2px solid Highlight;
   }
 }

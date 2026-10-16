@@ -131,9 +131,8 @@ class LuzGlobe extends HTMLElement {
   _build() {
     this._reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
     this._reduced.addEventListener("change", () => this._request());
-    // An image the arrows turn: its name is the aria-label the page gives it
+    // An image, not a control: its name is the aria-label the page gives it; a pointer may drag it
     if (!this.hasAttribute("role")) this.setAttribute("role", "img");
-    if (!this.hasAttribute("tabindex")) this.tabIndex = 0;
     const id = "home-globe-" + ++count;
     const halo = document.createElement("div");
     halo.className = "home-globe__halo";
@@ -172,7 +171,6 @@ class LuzGlobe extends HTMLElement {
     el("circle", { class: "home-globe__rim", ...whole }, svg);
     this._rimLight = el("circle", { class: "home-globe__rim-light", ...whole, stroke: `url(#${id}-rim)` }, svg);
     this._bindPointer();
-    this._bindKeyboard();
   }
 
   /** On the first size: the lattice; on every size: the level of detail. */
@@ -327,7 +325,7 @@ class LuzGlobe extends HTMLElement {
     this._request();
   }
 
-  /* ---- pointer and keyboard ---- */
+  /* ---- pointer ---- */
   _bindPointer() {
     let px = 0, py = 0, pt = 0;
     const perPx = () => VB / (this.clientWidth || VB) / R;
@@ -373,20 +371,6 @@ class LuzGlobe extends HTMLElement {
       this._changed();
     };
     for (const type of ["pointerup", "pointercancel", "lostpointercapture"]) this.addEventListener(type, release);
-  }
-
-  _bindKeyboard() {
-    this.addEventListener("keydown", (e) => {
-      const step = 8 * DEG;
-      const turn = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] }[e.key];
-      if (!turn) return;
-      this._yaw += turn[0];
-      this._pitch += turn[1];
-      this._vyaw = this._vpitch = 0;
-      this._changed();
-      // eslint-disable-next-line no-restricted-syntax -- RL-3: the arrows turn the focused globe; without this the page would scroll as well
-      e.preventDefault();
-    });
   }
 }
 

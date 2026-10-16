@@ -129,6 +129,12 @@ const AXE_PATTERNS = [{ group: ["axe-core", "axe-core/*", "@axe-core/*"], messag
 export default [
   js.configs.recommended,
   {
+    // Browser code a test runs in a page (page.evaluate) to decode a screenshot;
+    // not a global of the code that ships, where an Image is a request
+    files: ["tests/**/*.js"],
+    languageOptions: { globals: { Image: "readonly" } },
+  },
+  {
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",

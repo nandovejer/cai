@@ -243,8 +243,24 @@ export const DATA = [
     name: "Natural Earth 1:50m land polygons",
     licence: "public domain, naturalearthdata.com terms of use",
     where: "the land of the home page's globe, rasterised into `apps/landing/light/globe.js`",
+    file: "apps/landing/light/globe.js",
+    origin: "Natural Earth",
   },
 ];
+
+/** Each DATA entry's file, when it is there, carries its origin note: the origin and "public domain". */
+export function checkData(root) {
+  const problems = [];
+  for (const d of DATA) {
+    const path = join(root, d.file);
+    if (!existsSync(path)) continue;
+    const text = readFileSync(path, "utf-8");
+    if (!text.includes(d.origin) || !/public domain/i.test(text)) {
+      problems.push(`${d.file}: the data of ${d.name} needs its origin note next to it, "${d.origin}" and "public domain" (red line 13, DATA in scripts/check-license.js).`);
+    }
+  }
+  return problems;
+}
 
 const cell = (text) => String(text).replace(/\|/g, "\\|");
 
@@ -285,7 +301,7 @@ function main(argv) {
   const at = argv.indexOf("--root");
   const root = at >= 0 && argv[at + 1] ? resolve(argv[at + 1]) : resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-  const problems = [...checkPackages(root), ...checkPagesSite(root)];
+  const problems = [...checkPackages(root), ...checkPagesSite(root), ...checkData(root)];
   const entries = collectDependencies(root);
   for (const e of entries) {
     if (!acceptedDependency(e)) problems.push(`${e.name}@${e.version} (${e.usedBy.join(", ")}): licence ${e.licence} is not on the allowlist (${ALLOWED.join(", ")}).`);

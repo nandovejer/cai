@@ -14,13 +14,12 @@
  * bleed     the visual runs to the edges of the page's frame (light.css)
  * favicon   the tab's icon follows the sky (a data: URL of an SVG)
  *
- * It does not own the colour mode: <luz-mode> is the only writer of
- * data-theme and data-light. This element reads them, follows luz-mode:change
- * and, while the visitor scrubs the day, asks <luz-mode> to preview that
- * hour (Live gives it back); without a <luz-mode> only the visuals follow
- * the slider. On <html> it writes custom properties only: --sun-alt and
- * --sun-az (degrees), --sun-x (where the sun stands, left to right) and
- * --day-left (the share of today's daylight still to come).
+ * <luz-mode> is the only writer of data-theme and data-light: this element
+ * reads them, follows luz-mode:change and, while the visitor scrubs the day,
+ * asks <luz-mode> to preview that hour ("Back to now" ends it); without one
+ * only the visuals follow. On <html> it writes custom properties only:
+ * --sun-alt, --sun-az (degrees), --sun-x (the sun, left to right) and
+ * --day-left (the share of today's daylight to come).
  *
  * Its texts are the page's: data-luz-label-light-* on the element or an
  * ancestor (the home's <body>, from apps/landing/i18n). It imports nothing
@@ -258,22 +257,31 @@ class LuzLight extends HTMLElement {
     }
     const day = h("div", { class: "home-light__day" });
     day.append(h("label", { class: "home-light__sr", for: `${id}-scrub` }, this._text("scrub")));
-    this._scrub = h("input", { type: "range", id: `${id}-scrub`, min: 0, max: 1439, step: 1, value: 720, "aria-describedby": `${id}-out` });
+    // aria-valuetext carries the light and the hour; the output is not announced
+    this._scrub = h("input", { type: "range", id: `${id}-scrub`, min: 0, max: 1439, step: 1, value: 720 });
     this._scrub.addEventListener("input", () => this._preview(this._scrub.value / 60));
     this._live = h("button", { type: "button", class: "home-light__live", hidden: "" }, this._text("live"));
     this._live.addEventListener("click", () => {
       this._preview(null);
       this._scrub.focus();
     });
-    this._out = h("output", { id: `${id}-out`, for: `${id}-scrub` });
+    this._out = h("output", { for: `${id}-scrub`, "aria-live": "off" });
     day.append(this._scrub, this._live, this._out);
     bar.append(day);
     this._line = h("button", { type: "button", class: "home-light__line", "aria-expanded": "false", "aria-controls": bar.id });
+    // The phrase, then the light and the hour with a mark that turns with aria-expanded (not read)
     this._q = h("span", { class: "home-light__q" });
-    this._when = h("span", { class: "home-light__sr" });
-    this._line.append(this._q, this._when);
+    this._when = h("span", { class: "home-light__when" });
+    this._phase = h("span");
+    this._time = h("span", { class: "home-light__time" });
+    const mark = h("span", { class: "home-light__mark", "aria-hidden": "true" });
+    mark.append(icon("M9 20l7-7 7 7"));
+    this._when.append(this._phase, this._time, mark);
+    this._say = h("span", { class: "home-light__sr" });
+    this._line.append(this._q, this._when, this._say);
     this._line.addEventListener("click", () => (this._bar.hidden ? this.open() : this.close()));
-    foot.append(bar, this._line);
+    // The bar after the line, so Tab from the line lands in it; light.css draws it above
+    foot.append(this._line, bar);
     this.append(this._stage, foot);
 
     if (this.hasAttribute("favicon")) {
@@ -363,8 +371,13 @@ class LuzLight extends HTMLElement {
     this._out.textContent = time;
     const say = this._look ? this._text(`say-${this._look}`) : "";
     const phase = light ? this._text(light) : "";
-    this._q.textContent = say || [phase, time].filter(Boolean).join(" · ");
-    this._when.textContent = ` ${[phase, time].filter(Boolean).join(", ")}. ${this._text("open")}`;
+    const sep = this._text("sep") || ", ";
+    this._q.textContent = say;
+    this._q.hidden = !say;
+    this._phase.textContent = phase && phase + sep;
+    this._time.textContent = time;
+    this._say.textContent = `. ${this._text("open")}`;
+    this._scrub.setAttribute("aria-valuetext", this._phase.textContent + time);
 
     const { alt, az, vec } = this._sun(t);
     rs.setProperty("--sun-alt", alt.toFixed(2));

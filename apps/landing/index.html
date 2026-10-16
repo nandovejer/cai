@@ -18,16 +18,37 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="/apps/site/boot.js"></script>
   <link rel="stylesheet" href="/apps/landing/landing.css">
+  <link rel="stylesheet" href="/apps/landing/light/light.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
-     dictionary, which has no Arabic -->
+     dictionary, which has no Arabic. The light-* ones are the texts of
+     <luz-light> (apps/landing/light/light.js) -->
 <body class="o-page"
       data-luz-label-change-mode="{{t:js.change-mode}}"
       data-luz-label-mode-changed="{{t:js.mode-changed}}"
       data-luz-label-copied="{{t:js.copied}}"
       data-luz-label-copied-status="{{t:js.copied-status}}"
-      data-luz-label-copy-failed="{{t:js.copy-failed}}">
+      data-luz-label-copy-failed="{{t:js.copy-failed}}"
+      data-luz-label-light-open="{{t:light.open}}"
+      data-luz-label-light-looks="{{t:light.looks}}"
+      data-luz-label-light-globe="{{t:light.globe}}"
+      data-luz-label-light-city="{{t:light.city}}"
+      data-luz-label-light-map="{{t:light.map}}"
+      data-luz-label-light-say-globe="{{t:light.say.globe}}"
+      data-luz-label-light-say-city="{{t:light.say.city}}"
+      data-luz-label-light-say-map="{{t:light.say.map}}"
+      data-luz-label-light-globe-alt="{{t:light.alt.globe}}"
+      data-luz-label-light-city-alt="{{t:light.alt.city}}"
+      data-luz-label-light-map-alt="{{t:light.alt.map}}"
+      data-luz-label-light-scrub="{{t:light.scrub}}"
+      data-luz-label-light-live="{{t:light.live}}"
+      data-luz-label-light-dawn="{{t:light.dawn}}"
+      data-luz-label-light-morning="{{t:light.morning}}"
+      data-luz-label-light-afternoon="{{t:light.afternoon}}"
+      data-luz-label-light-sunset="{{t:light.sunset}}"
+      data-luz-label-light-dusk="{{t:light.dusk}}"
+      data-luz-label-light-night="{{t:light.night}}">
   <a class="luz-skip-link" href="#main-content">{{t:skip}}</a>
 
   <!-- luz:include header -->
@@ -68,6 +89,14 @@
           <a class="luz-btn luz-btn--outline luz-btn--lg" href="/docs/components/">{{t:hero.browse}}</a>
         </div>
       </div>
+    </section>
+
+    <!-- ====================== THE LIGHT ======================
+         The visitor's sky over a globe, a city or a map (apps/landing/light/).
+         Without JavaScript the element stays empty and light.css keeps its room -->
+    <section id="light" aria-labelledby="light-title">
+      <h2 class="u-sr-only" id="light-title">{{t:light.title}}</h2>
+      <luz-light looks="globe city map" look="random" remember bleed favicon></luz-light>
     </section>
 
     <!-- ====================== WHY ====================== -->

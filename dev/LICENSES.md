@@ -24,3 +24,7 @@ Every package here is a development-only tool (build, lint, test) of the reposit
 Not on the allowlist, accepted by name (`ACCEPTED_DEV` in `scripts/check-license.js`):
 
 - `@axe-core/playwright` (MPL-2.0): the accessibility checks of tests/ (axe-core, Deque). MPL-2.0 is a file-level licence: it asks that changes to the tool's own files stay open, not anything that runs it. LUZ does not modify it, bundle it or ship it.
+
+Data, not a dependency: the Pages site serves it, it is in the public domain and its origin is noted next to it (`DATA` in `scripts/check-license.js`):
+
+- Natural Earth 1:50m land polygons (public domain, naturalearthdata.com terms of use): the land of the home page's globe, rasterised into `apps/landing/light/globe.js`.

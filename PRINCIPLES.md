@@ -138,10 +138,14 @@ Words are a component. A button with the wrong label is a broken button. These r
 | Each manifest on Pages (`docs/manifests/**/*.json`), uncompressed | — | ≤ 48 kB | 48 kB | 64 kB |
 | `core` JS lazy chunk: `i18n-es` (loaded by `luz.js` when the page's `lang` is `es`; one row per language) | — | ≤ 0.75 kB | 0.75 kB | 1 kB |
 | `site` JS lazy chunk: `mode` (loaded by `site.js` when the page has a `<luz-mode>`) | — | ≤ 1 kB | 1 kB | 1.5 kB |
+| The home light controller JS, `apps/landing/light/light.js` (gzip of the source; the LUZ website only, not a package) | — | ≤ 7.25 kB | 7.25 kB | 7.5 kB |
+| The home light visual: `globe`, `apps/landing/light/globe.js` (loaded by `light.js` when the globe is the look) | — | ≤ 9.25 kB | 9.25 kB | 9.5 kB |
+| The home light visual: `city`, `apps/landing/light/city.js` (loaded when the city is the look) | — | ≤ 9.75 kB | 9.75 kB | 10 kB |
+| The home light visual: `map`, `apps/landing/light/map.js` (loaded when the map is the look) | — | ≤ 8 kB | 8 kB | 8.25 kB |
 
 Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).
 
-The three rows after the docs pages are the AI-ready artifacts. The CLI bundle is measured gzipped but not minified, because a tool that reads your files should be readable; it is a command you run, no page downloads it. Its row was fixed once, on 2026-10-15, from the measured 33.9 kB of the first complete version (it had been an estimate before anything shipped) and is never raised afterwards. `llms-full.txt` and each manifest are measured as the raw bytes of the built `docs/**/*.txt` and `docs/manifests/**/*.json`. The row before the last is a language file of core: one row per language, 0.75 kB ideal and 1 kB ceiling, fixed once from the first one (`es`) and never raised; a language that does not fit shortens its strings. The last row is site's color mode chunk, the size of the consent one.
+The three rows after the docs pages are the AI-ready artifacts. The CLI bundle is measured gzipped but not minified, because a tool that reads your files should be readable; it is a command you run, no page downloads it. Its row was fixed once, on 2026-10-15, from the measured 33.9 kB of the first complete version (it had been an estimate before anything shipped) and is never raised afterwards. `llms-full.txt` and each manifest are measured as the raw bytes of the built `docs/**/*.txt` and `docs/manifests/**/*.json`. The row before the last is a language file of core: one row per language, 0.75 kB ideal and 1 kB ceiling, fixed once from the first one (`es`) and never raised; a language that does not fit shortens its strings. The row after it is site's color mode chunk, the size of the consent one. The last four are the home page's `<luz-light>` (`apps/landing/light/`, the website, not a package), measured as the gzip of each source file because it is served as written: each ceiling was fixed once, on 2026-10-16, as the first measured size rounded up to the next 256 bytes, the ideal 256 bytes below it, and is never raised. A visitor downloads the controller and one visual.
 
 ## 9. Evidence, transparency and stability
 
@@ -170,7 +174,7 @@ Absolute. A PR that crosses one is closed, not reviewed.
 10. **No primitive token or literal colour/space value in a component.** Semantic tokens only.
 11. **No bare-element rule outside `:where()`** in `packages/`.
 12. **No third-party network request** (fonts, scripts, images, analytics) from a package or an app.
-13. **Nothing published or served under a licence other than the repository's (MIT), and MIT only.** It covers every file a package ships and every file the Pages site serves: code, fonts, icons, images, audio, examples. Dual-licensed work is not accepted, even when MIT is one of the options, and neither is OFL or Creative Commons. Third-party MIT work keeps its notice next to it (a font as `LICENSE-<Font>.txt`).
+13. **Nothing published or served under a licence other than the repository's (MIT), and MIT only.** It covers every file a package ships and every file the Pages site serves: code, fonts, icons, images, audio, examples. Dual-licensed work is not accepted, even when MIT is one of the options, and neither is OFL or Creative Commons. Third-party MIT work keeps its notice next to it (a font as `LICENSE-<Font>.txt`). Data in the public domain is accepted when its origin is noted next to it and in `dev/LICENSES.md` (the land of the home page's globe, Natural Earth; owner decision D9, 2026-10-16).
 14. **No hand edits to `dist/` or `docs/`.**
 15. **No new status colour, no new meaning for an existing one.**
 16. **No browser sniffing.** Feature detection only.

@@ -233,6 +233,19 @@ export function checkPagesSite(root) {
 
 /* ---- dev/LICENSES.md --------------------------------------------------------------- */
 
+/**
+ * Data the Pages site serves that is neither code nor a dependency: public
+ * domain, with its origin noted next to it (PRINCIPLES.md red line 13, owner
+ * decision D9, 2026-10-16). Listed in dev/LICENSES.md after the dependencies.
+ */
+export const DATA = [
+  {
+    name: "Natural Earth 1:50m land polygons",
+    licence: "public domain, naturalearthdata.com terms of use",
+    where: "the land of the home page's globe, rasterised into `apps/landing/light/globe.js`",
+  },
+];
+
 const cell = (text) => String(text).replace(/\|/g, "\\|");
 
 export function renderReport(entries) {
@@ -252,6 +265,10 @@ export function renderReport(entries) {
     ...rows,
     "",
     ...(accepted.length ? ["Not on the allowlist, accepted by name (`ACCEPTED_DEV` in `scripts/check-license.js`):", "", ...accepted.map((e) => `- \`${e.name}\` (${e.licence}): ${ACCEPTED_DEV[e.name].why}`), ""] : []),
+    "Data, not a dependency: the Pages site serves it, it is in the public domain and its origin is noted next to it (`DATA` in `scripts/check-license.js`):",
+    "",
+    ...DATA.map((d) => `- ${d.name} (${d.licence}): ${d.where}.`),
+    "",
   ].join("\n");
 }
 

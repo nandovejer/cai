@@ -384,6 +384,85 @@ describe("checkPackages", () => {
  */
 const POLYFILL = 'const e=document.createElement("link").relList;for(const o of document.querySelectorAll(\'link[rel="modulepreload"]\'))r(o);new MutationObserver(o=>{for(const s of o)s.type})';
 
+/**
+ * Also: a built .js file that holds Vite's `__vitePreload` helper (MIT code that stays in the
+ * bundle even without the polyfill) needs the same notice. A file is reported once, whatever
+ * markers it holds. The notice must be real: its text contains "MIT License" and "Vite" (or is
+ * Vite's own LICENSE.md); an empty or unrelated docs/LICENSE-vite.txt is a problem that names it.
+ */
+const HELPER = 'const _="modulepreload",d=function(e,t,n){return Promise.all(e.map(r=>import(r)))},__vitePreload=d;export{__vitePreload as _};';
+const NOTICE = "MIT License\n\nCopyright (c) 2019-present, VoidZero Inc. and Vite contributors\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\n";
+
+describe("checkPagesSite: the __vitePreload helper and the notice", () => {
+  it("fails a built file with the helper when docs/LICENSE-vite.txt is missing, naming the file and the notice", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/index-AbC.js", HELPER);
+    const problems = checkPagesSite(root);
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain("docs/assets/index-AbC.js");
+    expect(problems[0]).toContain("docs/LICENSE-vite.txt");
+  });
+
+  it("is quiet when the helper has its notice beside it", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/index-AbC.js", HELPER);
+    put(root, "docs/LICENSE-vite.txt", NOTICE);
+    expect(checkPagesSite(root)).toEqual([]);
+  });
+
+  it("accepts Vite's own LICENSE.md as the notice", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/index-AbC.js", HELPER);
+    put(root, "docs/LICENSE-vite.txt", readFileSync(join(repo, "node_modules/vite/LICENSE.md"), "utf-8"));
+    expect(checkPagesSite(root)).toEqual([]);
+  });
+
+  it.each([["empty", ""], ["only white space", "  \n\n"], ["unrelated text", "Do what you like.\n"], ["MIT without Vite", "MIT License\n\nCopyright (c) someone else\n"], ["Vite without MIT", "Vite contributors\n"]])("rejects a notice that is %s, naming it", async (_label, text) => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/index-AbC.js", HELPER);
+    put(root, "docs/LICENSE-vite.txt", text);
+    const problems = checkPagesSite(root);
+    expect(problems.length).toBeGreaterThan(0);
+    expect(problems.join("\n")).toContain("docs/LICENSE-vite.txt");
+  });
+
+  it("rejects an empty notice even when the file holds only the polyfill markers", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/site-header-AbC.js", POLYFILL);
+    put(root, "docs/LICENSE-vite.txt", "");
+    expect(checkPagesSite(root).join("\n")).toContain("docs/LICENSE-vite.txt");
+  });
+
+  it("reports a file that holds both the helper and the polyfill once", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/both.js", `${HELPER}${POLYFILL}`);
+    expect(checkPagesSite(root)).toHaveLength(1);
+  });
+
+  it("ignores a docs/assets file that only mentions the word, in a non-.js file or without the helper name", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/notes.txt", HELPER);
+    put(root, "docs/assets/own.js", "export const preload = () => {};");
+    expect(checkPagesSite(root)).toEqual([]);
+  });
+
+  it("the command fails on a helper with no notice and passes once the notice is there", () => {
+    const root = fixture();
+    put(root, "docs/assets/index-AbC.js", HELPER);
+    expect(cli(root, "--update").code).toBe(1);
+    put(root, "docs/LICENSE-vite.txt", NOTICE);
+    const ok = cli(root, "--update");
+    expect(ok.code, ok.out).toBe(0);
+  });
+});
+
 describe("checkPagesSite", () => {
   it("is quiet when there is no docs/assets, or nothing third-party in it", async () => {
     const { checkPagesSite } = await load();
@@ -418,7 +497,7 @@ describe("checkPagesSite", () => {
     const failing = cli(root, "--update");
     expect(failing.code).toBe(1);
     expect(failing.out).toContain("docs/LICENSE-vite.txt");
-    put(root, "docs/LICENSE-vite.txt", "MIT License\n");
+    put(root, "docs/LICENSE-vite.txt", NOTICE);
     const ok = cli(root, "--update");
     expect(ok.code, ok.out).toBe(0);
   });

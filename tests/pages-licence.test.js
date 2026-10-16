@@ -11,6 +11,15 @@
  *                  .js file holds the polyfill: the two markers `link[rel="modulepreload"]`
  *                  and `MutationObserver` in one file
  *
+ * The helper `__vitePreload` (MIT code, Vite) stays in a built file even with the polyfill
+ * off, so the pages build emits Vite's notice beside the site:
+ *
+ *   vite.config.js, mode "pages": a plugin whose name contains "licence" or "license"; its
+ *                  `generateBundle` calls `this.emitFile({ type: "asset", fileName:
+ *                  "LICENSE-vite.txt", source })` with the text of node_modules/vite/LICENSE.md
+ *                  (so docs/LICENSE-vite.txt). Outside mode pages the plugin is absent, or
+ *                  emits nothing.
+ *
  * scripts/check-license.js also fails on a leftover polyfill without a
  * docs/LICENSE-vite.txt (tests/check-license.test.js, "checkPagesSite").
  */
@@ -30,6 +39,40 @@ function* walk(dir) {
     else yield file;
   }
 }
+
+const plugins = (mode) => config({ mode, command: "build" }).plugins.flat(Infinity).filter(Boolean);
+const licencePlugin = (mode) => plugins(mode).find((p) => /licen[cs]e/i.test(p.name ?? ""));
+/** Run the plugin's generateBundle with a stub context: what it emitted. */
+function emitted(plugin) {
+  const files = [];
+  const hook = plugin?.generateBundle;
+  const fn = typeof hook === "function" ? hook : hook?.handler;
+  fn?.call({ emitFile: (f) => files.push(f) }, {}, {}, true);
+  return files;
+}
+
+describe("the Pages build emits Vite's notice next to the helper it keeps", () => {
+  it("has a plugin with licence or license in its name in mode pages, with a generateBundle hook", () => {
+    const plugin = licencePlugin("pages");
+    expect(plugin, "a plugin named *licence* or *license*").toBeTruthy();
+    expect(typeof plugin.generateBundle === "function" || typeof plugin.generateBundle?.handler === "function").toBe(true);
+  });
+
+  it("emits LICENSE-vite.txt, an asset whose source is node_modules/vite/LICENSE.md", () => {
+    const file = join(repo, "node_modules/vite/LICENSE.md");
+    expect(existsSync(file)).toBe(true);
+    const files = emitted(licencePlugin("pages"));
+    expect(files).toHaveLength(1);
+    expect(files[0].type).toBe("asset");
+    expect(files[0].fileName).toBe("LICENSE-vite.txt");
+    expect(String(files[0].source)).toBe(readFileSync(file, "utf-8"));
+    expect(String(files[0].source)).toContain("MIT License");
+  });
+
+  it("emits nothing when the mode is not pages (the dev build and dist/ do not serve the site)", () => {
+    expect(emitted(licencePlugin("production"))).toEqual([]);
+  });
+});
 
 describe("the Pages build does not emit Vite's module-preload polyfill", () => {
   it("sets build.modulePreload to false, or { polyfill: false }, in mode pages", () => {

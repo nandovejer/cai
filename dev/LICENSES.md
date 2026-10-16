@@ -4,7 +4,7 @@
 
 This list is generated: run `node scripts/check-license.js --update` after a change to `pnpm-lock.yaml`, and `pnpm check:license` fails when it is out of date.
 
-Every package here is a development-only tool (build, lint, test). Nothing in this list ships: the published packages have no `dependencies` and are MIT (`pnpm check:license` checks both). Only the direct dependencies of each workspace are listed, with the licence their installed `package.json` declares; "Used by" is the workspace (`.` is the root).
+Every package here is a development-only tool (build, lint, test) of the repository's workspaces, and none of them is shipped in a published package: those have no `dependencies` and are MIT (`pnpm check:license` checks both). Code a tool puts into the Pages site is not covered by this list: `pnpm check:license` looks for it in `docs/assets` and asks for its notice (`checkPagesSite` in `scripts/check-license.js`). Only the direct dependencies of each workspace are listed, with the licence their installed `package.json` declares; "Used by" is the workspace (`.` is the root).
 
 | Name | Version | Licence | Used by |
 | --- | --- | --- | --- |

@@ -117,6 +117,10 @@ export default defineConfig(({ mode }) => {
       // Pages: every asset is a file, never a data: URI, so the CSP can keep
       // media-src and connect-src at 'self' (the MIDI demo fetches its file)
       ...(pages ? { assetsInlineLimit: 0 } : {}),
+      // Pages: no module-preload polyfill. It is Vite's code (MIT, VoidZero Inc. and
+      // Vite contributors) and would be served in docs/assets with no notice (RL-13);
+      // the browsers LUZ supports have <link rel="modulepreload">
+      ...(pages ? { modulePreload: false } : {}),
       // rollupOptions.input: one entry per route, from the docs-site plugin
     },
   };

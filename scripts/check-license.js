@@ -3,11 +3,14 @@
  *
  * 1. Every published package (not `private`) says "license": "MIT", carries a
  *    LICENSE file with exactly the text of the repository's, and has no
- *    `dependencies` (nothing third-party ships).
+ *    `dependencies`, `optionalDependencies` or bundled dependencies (nothing
+ *    third-party ships).
  * 2. Every direct dependency of every importer of pnpm-lock.yaml has a licence
  *    on the allowlist. These are development tools: nothing in the list ships,
  *    and the check says so in the report.
- * 3. dev/LICENSES.md is the generated list of those dependencies and is up to
+ * 3. The Pages site (docs/assets) holds no third-party code without its notice
+ *    (`checkPagesSite`): the Vite module-preload polyfill needs docs/LICENSE-vite.txt.
+ * 4. dev/LICENSES.md is the generated list of those dependencies and is up to
  *    date. `--update` rewrites it; it never legitimises a problem of 1 or 2.
  *
  * Usage: node scripts/check-license.js [--update] [--root <dir>]
@@ -17,7 +20,7 @@
  * Importing this module has no side effect.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, realpathSync, statSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 
 /** SPDX ids whose terms a dependency of the tooling may have. */
@@ -171,7 +174,45 @@ export function checkPackages(root) {
     if (pkg.license !== "MIT") problems.push(`${name}: "license" is ${JSON.stringify(pkg.license ?? null)}, a published package is MIT and only MIT (red line 13).`);
     if (!existsSync(join(base, "LICENSE"))) problems.push(`${name}: no LICENSE file; copy the one at the root of the repository.`);
     else if (repoLicence === null || readFileSync(join(base, "LICENSE"), "utf-8") !== repoLicence) problems.push(`${name}: its LICENSE is not exactly the text of the repository's LICENSE.`);
-    if (Object.keys(pkg.dependencies ?? {}).length) problems.push(`${name}: it has dependencies (${Object.keys(pkg.dependencies).join(", ")}); a published package ships no third-party code (red line 1).`);
+    for (const field of ["dependencies", "optionalDependencies"]) {
+      const names = Object.keys(pkg[field] ?? {});
+      if (names.length) problems.push(`${name}: it has ${field} (${names.join(", ")}); a published package ships no third-party code (red line 1).`);
+    }
+    for (const field of ["bundleDependencies", "bundledDependencies"]) {
+      const value = pkg[field];
+      const names = Array.isArray(value) ? value : value && typeof value === "object" ? Object.keys(value) : [];
+      if (names.length || value === true) problems.push(`${name}: it has ${field} (${value === true ? "all" : names.join(", ")}); a published package ships no third-party code (red line 1).`);
+    }
+  }
+  return problems;
+}
+
+/* ---- The Pages site ------------------------------------------------------------------ */
+
+function* jsFiles(dir) {
+  for (const name of readdirSync(dir).sort()) {
+    const file = join(dir, name);
+    if (statSync(file).isDirectory()) yield* jsFiles(file);
+    else if (name.endsWith(".js")) yield file;
+  }
+}
+
+/**
+ * Third-party code the Pages build emits into docs/assets: Vite's module-preload
+ * polyfill (MIT, VoidZero Inc. and Vite contributors), recognised by two markers
+ * in one file, needs docs/LICENSE-vite.txt beside the site (red line 13). The
+ * pages build turns the polyfill off, so this normally finds nothing.
+ */
+export function checkPagesSite(root) {
+  const problems = [];
+  const assets = join(root, "docs", "assets");
+  if (!existsSync(assets)) return problems;
+  const notice = existsSync(join(root, "docs", "LICENSE-vite.txt"));
+  for (const file of jsFiles(assets)) {
+    const text = readFileSync(file, "utf-8");
+    if (!notice && text.includes('link[rel="modulepreload"]') && text.includes("MutationObserver")) {
+      problems.push(`${relative(root, file).split(sep).join("/")}: it holds Vite's module-preload polyfill (MIT) and docs/LICENSE-vite.txt is missing; turn the polyfill off (build.modulePreload) or ship the notice (red line 13).`);
+    }
   }
   return problems;
 }
@@ -190,7 +231,7 @@ export function renderReport(entries) {
     "",
     "This list is generated: run `node scripts/check-license.js --update` after a change to `pnpm-lock.yaml`, and `pnpm check:license` fails when it is out of date.",
     "",
-    "Every package here is a development-only tool (build, lint, test). Nothing in this list ships: the published packages have no `dependencies` and are MIT (`pnpm check:license` checks both). Only the direct dependencies of each workspace are listed, with the licence their installed `package.json` declares; \"Used by\" is the workspace (`.` is the root).",
+    "Every package here is a development-only tool (build, lint, test) of the repository's workspaces, and none of them is shipped in a published package: those have no `dependencies` and are MIT (`pnpm check:license` checks both). Code a tool puts into the Pages site is not covered by this list: `pnpm check:license` looks for it in `docs/assets` and asks for its notice (`checkPagesSite` in `scripts/check-license.js`). Only the direct dependencies of each workspace are listed, with the licence their installed `package.json` declares; \"Used by\" is the workspace (`.` is the root).",
     "",
     "| Name | Version | Licence | Used by |",
     "| --- | --- | --- | --- |",
@@ -213,7 +254,7 @@ function main(argv) {
   const at = argv.indexOf("--root");
   const root = at >= 0 && argv[at + 1] ? resolve(argv[at + 1]) : resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-  const problems = checkPackages(root);
+  const problems = [...checkPackages(root), ...checkPagesSite(root)];
   const entries = collectDependencies(root);
   for (const e of entries) {
     if (!acceptedDependency(e)) problems.push(`${e.name}@${e.version} (${e.usedBy.join(", ")}): licence ${e.licence} is not on the allowlist (${ALLOWED.join(", ")}).`);

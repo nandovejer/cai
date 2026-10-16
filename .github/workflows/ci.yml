@@ -161,6 +161,7 @@ jobs:
   red-commit:
     name: Red commit (test first)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -185,10 +186,12 @@ jobs:
 
   # Reference screenshots for the visual specs, made on the runner's own image
   # (Chromium on Linux), so they are never compared with a developer's machine.
-  # They are an artifact to look at, never committed.
+  # The CI copies are artifacts only, not committed by CI: the job has no write
+  # token, and the tree tracks the references of other machines.
   visual-references:
     name: Visual references (Chromium, Linux)
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     if: github.event_name == 'pull_request'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -222,6 +225,6 @@ jobs:
         with:
           name: visual-references
           path: |
-            tests/**/*-snapshots
+            tests/visual.spec.js-snapshots/*.png
           if-no-files-found: error
           retention-days: 14

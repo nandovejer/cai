@@ -120,6 +120,12 @@ const NODE_SYNTAX = [
   { selector: "VariableDeclarator[init.name='process'] > ObjectPattern > Property[key.name=/^(env|binding|dlopen)$/]", message: NODE_CAPABILITY },
 ];
 
+// axe-core and @axe-core/* (MPL-2.0) are dev tools of tests/: code that ships or
+// is served never imports them. Named apart from the generic RL-1 pattern so the
+// report says why and survives a change to that pattern.
+const AXE_MESSAGE = "axe-core and @axe-core/* are MPL-2.0 dev tools of tests/: never import them from packages/ or apps/ (code that ships or is served).";
+const AXE_PATTERNS = [{ group: ["axe-core", "axe-core/*", "@axe-core/*"], message: AXE_MESSAGE }];
+
 export default [
   js.configs.recommended,
   {
@@ -196,8 +202,10 @@ export default [
         "error",
         {
           patterns: [
+            ...AXE_PATTERNS,
             {
-              regex: "^(?![./])",
+              // axe is reported by its own entry above, once
+              regex: "^(?![./])(?!axe-core(?:/|$)|@axe-core/)",
               message: "No runtime dependency: import our own files only (red line 1).",
             },
           ],

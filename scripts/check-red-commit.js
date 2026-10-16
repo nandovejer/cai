@@ -53,6 +53,11 @@ export function decide({ commits, files }) {
     return { error: "A pull request that changes packages/, apps/ or scripts/ needs a commit `test:` that changes a file in tests/ and fails without the change. Add it as the first commit (see CONTRIBUTING.md)." };
   }
 
+  const outside = red.files.filter((f) => !inTests(f));
+  if (outside.length) {
+    return { error: `The \`test:\` commit ${red.sha.slice(0, 7)} must contain only tests, and it also changes ${outside.join(", ")}. Move those files to the commit that makes the test pass.` };
+  }
+
   const vitest = red.files.filter((f) => inTests(f) && f.endsWith(".test.js"));
   const playwright = red.files.filter((f) => inTests(f) && f.endsWith(".spec.js"));
   if (!vitest.length && !playwright.length) {
@@ -77,12 +82,15 @@ function git(cwd, ...argv) {
   return r.stdout;
 }
 
+/** A NUL-separated list (`-z`): a name with a newline or a quote stays one name. */
+const nulList = (text) => text.split("\0").filter(Boolean);
+
 function commitsOf(cwd, base, head) {
   const shas = git(cwd, "rev-list", "--reverse", "--no-merges", `${base}..${head}`).split("\n").filter(Boolean);
   return shas.map((sha) => ({
     sha,
     subject: git(cwd, "show", "-s", "--format=%s", sha).trim(),
-    files: git(cwd, "diff-tree", "-r", "--no-commit-id", "--name-only", "--no-renames", sha).split("\n").filter(Boolean),
+    files: nulList(git(cwd, "diff-tree", "-r", "-z", "--no-commit-id", "--name-only", "--no-renames", sha)),
   }));
 }
 
@@ -107,7 +115,7 @@ function main(argv) {
   const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
   const commits = commitsOf(repo, base, head);
-  const files = git(repo, "diff", "--name-only", "--no-renames", `${base}...${head}`).split("\n").filter(Boolean);
+  const files = nulList(git(repo, "diff", "--name-only", "-z", "--no-renames", `${base}...${head}`));
   const decision = decide({ commits, files });
 
   if (decision.skip) {

@@ -26,11 +26,16 @@
  * pages build) or "" (root-absolute links, as in dev): the URL of a page is
  * siteUrl + route.slice(1), or the route itself without it.
  *
- * What goes into llms-full.txt, by the kind of page (f5-ai-ready.md 1.3):
+ * What goes into llms-full.txt, by the kind of page (f5-ai-ready.md 1.3): what
+ * an agent needs to write LUZ markup.
  *   - a component or pattern page (it has `#markup`): its summary, files and
- *     package, "Known issues", then by id the sections a person reads; never
- *     the demo, the computed tables (`#contrast`, `#tokens`) or the stages of
- *     "Do and don't" (only their captions).
+ *     package, "Known issues", then by id the sections that shape the markup
+ *     (`#markup`, `#variants`, `#how`, `#no-js`, `#keyboard`, `#when`,
+ *     `#when-not`); never the demo, the computed tables (`#contrast`,
+ *     `#tokens`), "Do and don't" (`#do-dont`) or "Writing the content"
+ *     (`#content`): those are for the person who writes the words, on the page.
+ *   - the accessibility statement: its summary, the outline of its headings
+ *     and a pointer to it (llms.txt lists it too).
  *   - a page of templates (`/templates/`): its summary and a pointer to it.
  *   - a tokens page: its prose; the tables of values are `tokens.json`'s
  *     (the Figma import page, a workflow outside markup: summary and pointer).
@@ -451,8 +456,10 @@ function convert(fragment, { file, line = 1, ...options }) {
 
 /* ---- llms-full.txt ---------------------------------------------------------- */
 
-// The sections of a component or pattern page a person reads, by id, in page order
-const GUIDED = new Set(["known-issues", "markup", "variants", "how", "no-js", "keyboard", "when", "when-not", "do-dont", "content"]);
+// The sections of a component or pattern page an agent needs to write its markup, by id, in page order.
+// "Do and don't" (#do-dont) and "Writing the content" (#content) are guidance for the words: they stay on the
+// page, and out of the file, so it keeps room under its ideal.
+const GUIDED = new Set(["known-issues", "markup", "variants", "how", "no-js", "keyboard", "when", "when-not"]);
 
 /**
  * The headings of a page body outside the demos, with where their text ends:
@@ -487,23 +494,6 @@ function outline(body, bodyLine, file) {
   return found;
 }
 
-/** The captions of "Do and don't": the verdict and the reason, one list item each. */
-function captions(fragment, ctx, file, line) {
-  const { tree } = convert(fragment, { file, line, siteUrl: ctx.siteUrl, base: ctx.base });
-  const items = [];
-  const walk = (nodes) => {
-    for (const n of nodes) {
-      if (n.type !== "el" || isLeftOut(n, ctx)) continue;
-      if (n.name === "figcaption") {
-        const text = collapse(inline(n.children, ctx));
-        if (text) items.push(`- ${text}`);
-      } else walk(n.children);
-    }
-  };
-  walk(tree.children);
-  return items.join("\n");
-}
-
 const filesOf = (page, packageName) => {
   const files = page.meta.files
     .split(";")
@@ -523,6 +513,13 @@ const TEMPLATES_POINTER = "This page is a library of whole-page templates: open 
 // an agent that writes HTML does not need: its summary, its files and a pointer, so the file keeps its ideal.
 const SUMMARY_POINTERS = new Map([
   ["/docs/tokens/figma/", "This page explains how to import the tokens file into Figma and other design tools, step by step: open its URL for the steps."],
+]);
+
+// The accessibility statement is about LUZ, not about the markup an agent writes (what is checked, what has
+// not been tested, the known issues, how to report a problem): its summary, its headings and a pointer.
+// The known issues of each component are in its own entry.
+const OUTLINE_POINTERS = new Map([
+  ["/docs/accessibility/", "This is the accessibility statement of LUZ: open its URL for what is checked, what has not been tested and the known issues. The known issues of each component are in its entry."],
 ]);
 
 // The page "Working with AI" (generate: ai): most of it is data. The files are in llms.txt and its
@@ -589,9 +586,9 @@ function bodyOf(page, options) {
     return text.startsWith(page.meta.description) ? text.slice(page.meta.description.length).replace(/^\s+/, "") : text;
   }
 
-  if (area === "html") {
+  if (area === "html" || OUTLINE_POINTERS.has(page.route)) {
     const items = headings.filter((h) => h.level === 2 && h.text).map((h) => `- ${/[<>]/.test(h.text) ? codeSpan(h.text) : h.text}`);
-    return items.join("\n");
+    return [items.join("\n"), OUTLINE_POINTERS.get(page.route)].filter(Boolean).join("\n\n");
   }
 
   if (headings.some((h) => h.id === "markup")) {
@@ -602,13 +599,7 @@ function bodyOf(page, options) {
       const to = boundaries[i + 1]?.start ?? page.body.length;
       const fragment = page.body.slice(h.end, to);
       const line = h.endLine;
-      let text;
-      if (h.id === "do-dont") {
-        const ctx = new Context({ file, siteUrl, base });
-        text = captions(fragment, ctx, file, line);
-      } else {
-        text = convert(fragment, { file, line, siteUrl, base }).text;
-      }
+      const text = convert(fragment, { file, line, siteUrl, base }).text;
       if (text) sections.push(`### ${h.text}\n${text}`);
     }
     return sections.join("\n\n");

@@ -1,6 +1,6 @@
 # @luz-ds/landing
 
-The page structure of one kind of site, a landing page: the page of a product, a service or an event that asks the visitor to act. Its header, hero, main, sections, footer and glow are classes on native elements, laid out in the markup by core's objects (`.o-page`, `.o-sticky`, `.o-container`, `.o-row`, `.o-stack`, `.o-grid--split`) and core's navbar; this package adds only their skin and rhythm. `@luz-ds/site` is optional: load it for the search, the language switch or the cookie banner.
+The page structure of one kind of site, a landing page: the page of a product, a service or an event that asks the visitor to act. Its header, hero, main, sections, stats, footer and glow are classes on native elements, laid out in the markup by core's objects (`.o-page`, `.o-sticky`, `.o-container`, `.o-row`, `.o-stack`, `.o-grid--split`) and core's navbar; this package adds only their skin and rhythm. `@luz-ds/site` is optional: load it for the search, the language switch or the cookie banner.
 
 > **Beta, version 0.x.** Landing has a version of its own, apart from tokens, core and site, and grows in minor versions while it is 0.x: any of them may change a class. Pin an exact version and read the changelog before you upgrade.
 
@@ -51,9 +51,10 @@ There is no script. Add core's and site's if you use their behaviours.
 ## Classes included
 
 - `.luz-landing-header`, `__brand`, `__actions` — The header: on `header.o-sticky > .o-container.o-container--inline.o-row`, with core's `.luz-nav-toggle` and `.luz-navbar`. The page surface, a rule underneath, the brand and the row's gaps; its panels open under it. [Docs](https://nandovejer.github.io/luz/docs/landing/header/)
-- `.luz-landing-hero`, `__copy`, `__eyebrow`, `__title`, `__lead`, `__media` — The first block: on `section.o-grid.o-grid--split`, two equal columns when each gets 24rem, one below. [Docs](https://nandovejer.github.io/luz/docs/landing/hero/)
-- `.luz-landing-main`, `.luz-landing-section`, `.luz-landing-glow` — The rhythm of the page, on `main.o-container.o-stack` and `section.o-stack`, and a tint behind the `.o-page`. [Docs](https://nandovejer.github.io/luz/docs/landing/section/)
-- `.luz-landing-footer` — The footer: on `footer > .o-container.o-container--inline.o-row`, a rule on top and its items at the two ends of the row. [Docs](https://nandovejer.github.io/luz/docs/landing/footer/)
+- `.luz-landing-hero`, `__copy`, `__eyebrow`, `__title`, `__lead`, `__media` — The first block: on `section.o-grid.o-grid--split`, two equal columns when each gets 24rem, one below. `--centered`: one column, the copy centred above the media. `__media--bleed`, in a centred hero: the media runs from edge to edge of the window, with no sideways scroll. [Docs](https://nandovejer.github.io/luz/docs/landing/hero/)
+- `.luz-landing-main`, `.luz-landing-section`, `__eyebrow`, `__title`, `__lead`, `.luz-landing-glow` — The rhythm of the page, on `main.o-container.o-stack` and `section.o-stack`; the head of a section, which shares the hero's rules (load `hero.css` with `section.css`) one step smaller; and a tint behind the `.o-page`. Two knobs: `--luz-landing-title-accent`, the colour of the `em` in a hero or section title (unset, the title's), and `--luz-landing-glow-x`, where along the top edge the tint sits (unset, the edge where reading starts). [Docs](https://nandovejer.github.io/luz/docs/landing/section/)
+- `.luz-landing-stat`, `__value`, `__label` — A figure and what it counts, alone or in core's `.luz-card`: a big number in the heading face with tabular figures, the label under it. [Docs](https://nandovejer.github.io/luz/docs/landing/stat/)
+- `.luz-landing-footer`, `__brand`, `__col`, `__col-title` — The footer: on `footer > .o-container.o-container--inline.o-row`, a rule on top and its items at the two ends of the row; or on `footer > .o-container.o-container--inline.o-grid`, a brand block and columns of links, side by side from 768px, one under the other below. [Docs](https://nandovejer.github.io/luz/docs/landing/footer/)
 
 <!-- luz:ai-agents:start -->
 ## For AI agents

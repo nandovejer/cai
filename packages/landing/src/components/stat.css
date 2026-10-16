@@ -1,0 +1,31 @@
+/* ==========================================================================
+	 LUZ Landing: stat.
+	 A figure and what it counts: div.luz-landing-stat > p.__value + p.__label,
+	 alone or inside core's .luz-card. Tabular figures, so a row of stats
+	 lines up digit under digit.
+	 ========================================================================== */
+
+.luz-landing-stat {
+	display: grid;
+	gap: var(--luz-space-2xs);
+	min-inline-size: 0;
+}
+
+.luz-landing-stat > * {
+	margin: 0;
+}
+
+.luz-landing-stat__value {
+	font-family: var(--luz-font-heading);
+	font-size: var(--luz-text-3xl);
+	font-weight: 300;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.1;
+	overflow-wrap: anywhere;
+	color: var(--luz-text-primary);
+}
+
+.luz-landing-stat__label {
+	font-size: var(--luz-text-base);
+	color: var(--luz-text-secondary);
+}

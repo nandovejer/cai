@@ -1,6 +1,6 @@
 <!-- luz:page
 title: Landing page templates
-description: The blocks of an event landing page to paste in and adapt, in the order a visitor reads them: hero, programme, speakers, tickets, call to action, registration and features.
+description: The blocks of an event landing page to paste in and adapt, in the order a visitor reads them: hero, programme, speakers, tickets, call to action, registration and features, and a product page that puts a centred hero, a section head, stats and a footer with columns together.
 area: landing
 order: 10
 group: reference
@@ -299,6 +299,88 @@ group: reference
     &lt;/li&gt;
   &lt;/ul&gt;
 &lt;/section&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="product-page" class="docs-prose__title">Product page with a centred hero</h2>
+            <p>The page of a product rather than an event: a centred <a href="/docs/landing/hero/">hero</a> with a picture to the edges of the window, a section with a head and three <a href="/docs/landing/stat/">stats</a>, and a <a href="/docs/landing/footer/">footer</a> with a brand and columns. It goes inside the <a href="#landing-page-shell">shell</a>, in place of its <code>&lt;main&gt;</code> and footer.</p>
+            <ul>
+              <li>The hero is one column at every width. Its picture has the class <code>__media--bleed</code>, so it runs past the gutters of the page; keep <code>.o-container</code> on the <code>&lt;main&gt;</code>, as the bleed needs a column centred in the window.</li>
+              <li>The head is an eyebrow, a title and a lead, and the stats are a list on core's grid. Set <code>--luz-landing-title-accent</code> on the <code>&lt;main&gt;</code> to colour the <code>&lt;em&gt;</code> of both titles.</li>
+              <li>The footer's columns are navigation: each is a <code>&lt;nav&gt;</code> named by its title.</li>
+            </ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-product" aria-label="Copy the product page markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Product page markup"><code id="code-tpl-product">&lt;main id=&quot;main-content&quot; class=&quot;o-container o-stack luz-landing-main&quot; tabindex=&quot;-1&quot;&gt;
+  &lt;section class=&quot;luz-landing-hero luz-landing-hero--centered o-grid o-grid--split&quot; aria-labelledby=&quot;product-title&quot;&gt;
+    &lt;div class=&quot;luz-landing-hero__copy&quot;&gt;
+      &lt;p class=&quot;luz-landing-hero__eyebrow&quot;&gt;New in version 2&lt;/p&gt;
+      &lt;h1 class=&quot;luz-landing-hero__title&quot; id=&quot;product-title&quot;&gt;Stock counts that &lt;em&gt;keep up&lt;/em&gt; with the shop&lt;/h1&gt;
+      &lt;p class=&quot;luz-landing-hero__lead&quot;&gt;Acme Stock updates every shelf as it sells, so you reorder before it runs out.&lt;/p&gt;
+      &lt;div class=&quot;o-actions&quot;&gt;
+        &lt;a class=&quot;luz-btn luz-btn--primary&quot; href=&quot;/trial/&quot;&gt;Start free trial&lt;/a&gt;
+        &lt;a class=&quot;luz-btn luz-btn--outline&quot; href=&quot;/demo/&quot;&gt;Book a demo&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;luz-landing-hero__media luz-landing-hero__media--bleed&quot;&gt;
+      &lt;div class=&quot;luz-image&quot;&gt;
+        &lt;img src=&quot;/img/dashboard-1600.jpg&quot; width=&quot;1600&quot; height=&quot;900&quot; alt=&quot;The stock dashboard, with low items marked&quot; fetchpriority=&quot;high&quot; decoding=&quot;async&quot;&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/section&gt;
+
+  &lt;section class=&quot;o-stack luz-landing-section&quot; aria-labelledby=&quot;numbers-title&quot;&gt;
+    &lt;p class=&quot;luz-landing-section__eyebrow&quot;&gt;Why teams switch&lt;/p&gt;
+    &lt;h2 class=&quot;luz-landing-section__title&quot; id=&quot;numbers-title&quot;&gt;One count for &lt;em&gt;every&lt;/em&gt; shelf&lt;/h2&gt;
+    &lt;p class=&quot;luz-landing-section__lead&quot;&gt;What teams see in their first year.&lt;/p&gt;
+    &lt;ul class=&quot;o-grid o-grid--3&quot;&gt;
+      &lt;li&gt;
+        &lt;div class=&quot;luz-landing-stat&quot;&gt;
+          &lt;p class=&quot;luz-landing-stat__value&quot;&gt;4,000+&lt;/p&gt;
+          &lt;p class=&quot;luz-landing-stat__label&quot;&gt;teams on the platform&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;div class=&quot;luz-landing-stat&quot;&gt;
+          &lt;p class=&quot;luz-landing-stat__value&quot;&gt;99.95%&lt;/p&gt;
+          &lt;p class=&quot;luz-landing-stat__label&quot;&gt;uptime in the last year&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;div class=&quot;luz-landing-stat&quot;&gt;
+          &lt;p class=&quot;luz-landing-stat__value&quot;&gt;12 min&lt;/p&gt;
+          &lt;p class=&quot;luz-landing-stat__label&quot;&gt;to set up, on average&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/section&gt;
+&lt;/main&gt;
+
+&lt;footer class=&quot;luz-landing-footer&quot;&gt;
+  &lt;div class=&quot;o-container o-container--inline o-grid&quot;&gt;
+    &lt;div class=&quot;luz-landing-footer__brand&quot;&gt;
+      &lt;p&gt;&lt;strong&gt;Acme Stock&lt;/strong&gt; &lt;span&gt;v2.0&lt;/span&gt;&lt;/p&gt;
+      &lt;p&gt;Stock counts that keep up with the shop.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;nav class=&quot;luz-landing-footer__col&quot; aria-labelledby=&quot;footer-product&quot;&gt;
+      &lt;h2 class=&quot;luz-landing-footer__col-title&quot; id=&quot;footer-product&quot;&gt;Product&lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;/pricing/&quot;&gt;Pricing&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;/trial/&quot;&gt;Start free trial&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+    &lt;nav class=&quot;luz-landing-footer__col&quot; aria-labelledby=&quot;footer-company&quot;&gt;
+      &lt;h2 class=&quot;luz-landing-footer__col-title&quot; id=&quot;footer-company&quot;&gt;Company&lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href=&quot;/about/&quot;&gt;About&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&quot;/contact/&quot;&gt;Contact sales&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
             </div>
           </div>
           <div class="docs-prose">

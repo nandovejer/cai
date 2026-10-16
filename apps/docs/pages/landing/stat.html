@@ -1,0 +1,160 @@
+<!-- luz:page
+title: Stat
+description: Shows one figure big, with a short label under it.
+area: landing
+order: 5
+group: patterns
+files: .luz-landing-stat, __value, __label
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-landing-stat">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+          <div class="docs-demo__stage" id="demo-stat">
+            <ul class="o-grid o-grid--3">
+              <li>
+                <div class="luz-landing-stat">
+                  <p class="luz-landing-stat__value">4,000+</p>
+                  <p class="luz-landing-stat__label">teams on the platform</p>
+                </div>
+              </li>
+              <li>
+                <div class="luz-landing-stat">
+                  <p class="luz-landing-stat__value">99.95%</p>
+                  <p class="luz-landing-stat__label">uptime in the last year</p>
+                </div>
+              </li>
+              <li class="luz-card">
+                <div class="luz-landing-stat">
+                  <p class="luz-landing-stat__value">12 min</p>
+                  <p class="luz-landing-stat__label">to set up, on average</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <p class="docs-demo__note">The first two stand on the page; the third sits in a <code class="luz-code-inline">luz-card</code>. In a column narrower than 768 px the three stack.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Stat documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-landing-stat" aria-label="Copy the stat markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Stat markup"><code id="code-landing-stat">&lt;ul class=&quot;o-grid o-grid--3&quot;&gt;
+  &lt;li&gt;
+    &lt;div class=&quot;luz-landing-stat&quot;&gt;
+      &lt;p class=&quot;luz-landing-stat__value&quot;&gt;4,000+&lt;/p&gt;
+      &lt;p class=&quot;luz-landing-stat__label&quot;&gt;teams on the platform&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;!-- one li for each stat; a card is a li.luz-card --&gt;
+&lt;/ul&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>No modifiers: two parts, alone or inside a card.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Stat parts" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">What it does</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Class"><div><code>.luz-landing-stat</code></div></td><td data-label="What it does"><div>The block: the value over the label, a small gap (<code>--luz-space-2xs</code>) apart, and no padding or surface</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-stat__value</code></div></td><td data-label="What it does"><div>The figure: heading font, 3xl, light, with figures of equal width; it wraps anywhere in a narrow column</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-stat__label</code></div></td><td data-label="What it does"><div>What the figure counts: sm size, in the secondary text colour</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/landing</code>. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
+            <ul>
+              <li>The stat lays out nothing: put several in a core grid list, <code>ul.o-grid.o-grid--3</code>. In a <a href="/docs/components/card/">card</a> it uses the card's padding and surface.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the stat is HTML and CSS, and does not count up.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <p>The stat has no interaction or role of its own.</p>
+            <ul>
+              <li>The value comes before the label in the source, so it is read in that order. Put stats in a <code>&lt;ul&gt;</code>, under the section's heading.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use a stat for a figure that backs up a claim: how many use the product, how fast it is. Two to four together read at a glance.</p>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use a stat for a figure that needs a sentence to be understood.</p>
+            <ul>
+              <li>For rows and columns to compare, use a <a href="/docs/components/table/">table</a>.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="docs-dodont">
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> A short value and a label that says what is counted.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-stat"><p class="luz-landing-stat__value">4,000+</p><p class="luz-landing-stat__label">teams on the platform</p></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A word for a value and a vague label: nobody can check what "great" means.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-stat"><p class="luz-landing-stat__value">Great</p><p class="luz-landing-stat__label">results</p></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> The unit in the value, so the figure stands on its own.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-stat"><p class="luz-landing-stat__value">12 min</p><p class="luz-landing-stat__label">to set up, on average</p></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A sentence in the value: it is set big, so it wraps over many lines.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-stat"><p class="luz-landing-stat__value">More than four thousand teams</p><p class="luz-landing-stat__label">use it</p></div>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The value is a number with its unit, in five characters or fewer if you can. The label says what the number counts.</p>
+            <ul>
+              <li>Write the figure the way you would say it: "4,000+", "99.95%", "12 min".</li>
+              <li>The label is lower case, without a full stop, and says over what period or for whom: "uptime in the last year".</li>
+              <li>Say where a figure comes from, in a note under the section, if a reader could ask.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The value is primary text and the label secondary text, on the page or on a card.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Stat contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Value</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Label</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Value in a card</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Label in a card</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>6.4:1</div></td><td data-label="Dark"><div>6.9:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text.</p>
+            <ul>
+              <li><strong>Focus:</strong> the stat takes none; it is not interactive.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 6 tokens that the <code>.luz-landing-stat</code> rules of landing's <code>components/stat.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-2xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-heading</code>, <code>--luz-text-3xl</code>, <code>--luz-text-base</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

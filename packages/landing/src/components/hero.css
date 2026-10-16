@@ -5,6 +5,10 @@
 	 split grid gives two equal columns when each gets 24rem and one below:
 	 intrinsic, so it stacks in a narrow column and with larger text. Copy
 	 first in the source, so first in reading order in both directions.
+	 --centered: one column, the copy centred above the media. __media--bleed,
+	 in a centred hero: the media runs from edge to edge of the window.
+	 The eyebrow, the title and the lead share their rules with the head of a
+	 section (section.css).
 	 ========================================================================== */
 
 .luz-landing-hero {
@@ -21,7 +25,8 @@
 	min-inline-size: 0;
 }
 
-.luz-landing-hero__eyebrow {
+.luz-landing-hero__eyebrow,
+.luz-landing-section__eyebrow {
 	margin-block-end: var(--luz-space-sm);
 	font-family: var(--luz-font-mono);
 	font-size: var(--luz-text-xs);
@@ -32,7 +37,8 @@
 	color: var(--luz-text-secondary);
 }
 
-.luz-landing-hero__title {
+.luz-landing-hero__title,
+.luz-landing-section__title {
 	font-family: var(--luz-font-heading);
 	font-size: var(--luz-text-4xl);
 	font-weight: 300;
@@ -43,22 +49,60 @@
 }
 
 /* The mono has no Arabic letters; spacing between letters breaks the joins */
-.luz-landing-hero__eyebrow:lang(ar) {
+.luz-landing-hero__eyebrow:lang(ar),
+.luz-landing-section__eyebrow:lang(ar) {
 	font-family: var(--luz-font-sans);
 }
 
 .luz-landing-hero__eyebrow:lang(ar),
-.luz-landing-hero__title:lang(ar) {
+.luz-landing-section__eyebrow:lang(ar),
+.luz-landing-hero__title:lang(ar),
+.luz-landing-section__title:lang(ar) {
 	letter-spacing: 0;
 }
 
-.luz-landing-hero__lead {
-	margin-block: var(--luz-space-md) var(--luz-space-lg);
+.luz-landing-hero__lead,
+.luz-landing-section__lead {
 	max-inline-size: 70ch;
 	font-size: var(--luz-text-xl);
 	line-height: 1.4;
 	text-wrap: pretty;
 	color: var(--luz-text-secondary);
+}
+
+.luz-landing-hero__lead {
+	margin-block: var(--luz-space-md) var(--luz-space-lg);
+}
+
+/* One column: core's split grid with a column as wide as the row */
+.luz-landing-hero--centered {
+	--luz-grid-min: 100%;
+
+	text-align: center;
+}
+
+.luz-landing-hero--centered > .luz-landing-hero__copy {
+	justify-self: center;
+	max-inline-size: 48rem;
+}
+
+.luz-landing-hero--centered .luz-landing-hero__lead {
+	margin-inline: auto;
+}
+
+.luz-landing-hero--centered .o-actions {
+	justify-content: center;
+}
+
+/* The window's width without a viewport unit, which counts a visible
+   scrollbar and scrolls sideways: the root is the query container, and
+   the media's margins go out from the centre of the column to its edges */
+:root:has(.luz-landing-hero__media--bleed) {
+	container-type: inline-size;
+}
+
+.luz-landing-hero__media--bleed {
+	margin-inline: calc(50% - 50cqi);
 }
 
 @media (max-width: 1023px) {

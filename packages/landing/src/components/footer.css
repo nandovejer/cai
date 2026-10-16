@@ -3,6 +3,10 @@
 	 footer.luz-landing-footer > div.o-container.o-container--inline.o-row: a
 	 divider above, its items at the two ends of the row; at 768px and below
 	 a column aligned to the start.
+	 Or > div.o-container.o-container--inline.o-grid holding a __brand (the
+	 name, a version, one line) and __col columns (nav > h2.__col-title + ul
+	 of links): one under the other, side by side from 768px, the brand
+	 twice as wide as a column.
 	 ========================================================================== */
 
 .luz-landing-footer {
@@ -22,4 +26,43 @@
 		flex-flow: column nowrap;
 		align-items: flex-start;
 	}
+}
+
+.luz-landing-footer > .o-grid {
+	gap: var(--luz-space-lg);
+}
+
+@media (min-width: 768px) {
+	.luz-landing-footer > .o-grid {
+		grid-template-columns: minmax(0, 2fr);
+		grid-auto-columns: minmax(0, 1fr);
+		grid-auto-flow: column;
+	}
+}
+
+.luz-landing-footer__brand,
+.luz-landing-footer__col,
+.luz-landing-footer__col :where(ul) {
+	display: grid;
+	align-content: start;
+	gap: var(--luz-space-xs);
+	margin: 0;
+}
+
+.luz-landing-footer__brand > *,
+.luz-landing-footer__col-title {
+	margin: 0;
+}
+
+.luz-landing-footer__col-title {
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-sm);
+	font-weight: 600;
+	letter-spacing: 0;
+	color: var(--luz-text-primary);
+}
+
+.luz-landing-footer__col :where(ul) {
+	padding: 0;
+	list-style: none;
 }

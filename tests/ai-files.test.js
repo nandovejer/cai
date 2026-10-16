@@ -42,9 +42,11 @@
  *   (each `pre[data-lang=html]` as a fenced block, its `aria-label` as the
  *   caption line before the fence), `#variants` (a table row is
  *   `- \`first\`: other cells`), `#how`, `#no-js`, `#keyboard`, `#when`,
- *   `#when-not`, `#content`, and the Do and Don't captions of `#do-dont`.
- *   Never `#example`, `#contrast`, `#tokens`, a specimen, an `[inert]` or
+ *   `#when-not`. Never `#content` (Writing the content), the Do and Don't
+ *   captions of `#do-dont`, `#example`, `#contrast`, `#tokens`, a specimen, an `[inert]` or
  *   `[aria-hidden="true"]` subtree, a `<dialog>`, a `<script>` or a `<style>`.
+ *   The accessibility statement is only its summary, its h2 outline and a
+ *   pointer to its URL (under 2,000 B), not its full text.
  *   An internal link (`href="/docs/..."`) is absolute under siteUrl.
  */
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -602,11 +604,11 @@ describe("llms-full.txt: the curated text of the pages, from the real site", () 
     const page = site.byRoute.get("/docs/components/button/");
     const headings = readHtml("\n".repeat(page.bodyLine - 1) + page.body, page.file).headings;
     const titleOf = (id) => headings.find((h) => h.id === id)?.text;
-    for (const id of ["how", "no-js", "keyboard", "when", "when-not", "content"]) {
+    for (const id of ["how", "no-js", "keyboard", "when", "when-not"]) {
       expect(titleOf(id), `the page has #${id}`).toBeTruthy();
       expect(button.text, `#${id}`).toContain(`### ${titleOf(id)}`);
     }
-    for (const id of ["example", "contrast", "tokens"]) {
+    for (const id of ["example", "content", "contrast", "tokens"]) {
       expect(titleOf(id), `the page has #${id}`).toBeTruthy();
       expect(button.text, `#${id}`).not.toContain(`### ${titleOf(id)}`);
     }
@@ -647,6 +649,18 @@ describe("llms-full.txt: the curated text of the pages, from the real site", () 
       expect(h2.length, route).toBeGreaterThan(0);
       for (const h of h2) expect(e.text, `${route}: ${h.text}`).toContain(h.text);
     }
+  });
+
+  it("keeps the accessibility statement to its summary, its h2 outline and its URL", () => {
+    const route = "/docs/accessibility/";
+    const page = site.byRoute.get(route);
+    const e = entry(route);
+    expect(e, route).toBeTruthy();
+    expect(Buffer.byteLength(e.text, "utf8"), "size of the entry").toBeLessThan(2000);
+    expect(e.text).toContain(`URL: ${SITE_URL}docs/accessibility/`);
+    const h2 = readHtml("\n".repeat(page.bodyLine - 1) + page.body, page.file).headings.filter((h) => h.level === 2 && !h.specimen);
+    expect(h2.length).toBeGreaterThan(0);
+    for (const h of h2) expect(e.text, h.text).toContain(h.text);
   });
 
   it("points a tokens page at the manifests instead of copying its tables of values", () => {
@@ -694,10 +708,10 @@ describe("llms-full.txt: what a page contributes, on a fixture", () => {
   it("keeps the sections of the spec and leaves out the demo, the do/don't stages, the computed tables and the style", () => {
     const { scan } = fixtureSite(fixtureFiles());
     const out = renderLlmsFull(scan(), options);
-    for (const kept of ["None known.", "HOW-TEXT", "NOJS-TEXT", "KEY-ONE", "KEY-TWO", "WHEN-TEXT", "WHEN-NOT-TEXT", "DO-REASON", "DONT-REASON", "CONTENT-TEXT"]) {
+    for (const kept of ["None known.", "HOW-TEXT", "NOJS-TEXT", "KEY-ONE", "KEY-TWO", "WHEN-TEXT", "WHEN-NOT-TEXT"]) {
       expect(out, kept).toContain(kept);
     }
-    for (const left of ["DEMO-TEXT", "demo-style-leak", "DO-STAGE", "DONT-STAGE", "CONTRAST-TEXT", "--luz-token-only-here", "Contrast and focus", "Tokens it uses", "### Example", "HUB-ONLY-TEXT", "#code-panel", "#design-panel"]) {
+    for (const left of ["DO-REASON", "DONT-REASON", "CONTENT-TEXT", "DEMO-TEXT", "demo-style-leak", "DO-STAGE", "DONT-STAGE", "CONTRAST-TEXT", "--luz-token-only-here", "Contrast and focus", "Tokens it uses", "### Example", "HUB-ONLY-TEXT", "#code-panel", "#design-panel"]) {
       expect(out, left).not.toContain(left);
     }
   });

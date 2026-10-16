@@ -261,7 +261,11 @@ describe("the light cross-fades", () => {
     expect(groups.length, "a :root rule in the motion media query").toBeGreaterThan(0);
     const text = groups.map((g) => [g.props.transition, g.props["transition-property"], g.props["transition-duration"]].join(" ")).join(" ");
     for (const name of registered) expect(text, name).toContain(name);
-    expect(text).toMatch(/\b1\.4s\b|\b1400ms\b/);
+    // RL-8: a duration is a --luz-duration-* token (stylelint); 1.4s is the lazy step (0.8s) × 1.75
+    const lazy = readFileSync(resolve(repo, "packages/core/src/settings/_settings.css"), "utf-8").match(/--luz-duration-lazy:\s*([\d.]+)s/)[1];
+    const factor = text.match(/calc\(\s*var\(--luz-duration-lazy\)\s*\*\s*([\d.]+)\s*\)/)?.[1];
+    expect(factor, "the duration is calc(var(--luz-duration-lazy) * n)").toBeTruthy();
+    expect(Number(lazy) * Number(factor)).toBeCloseTo(1.4, 5);
   });
 
   it("transitions only when motion is welcome: nowhere outside prefers-reduced-motion: no-preference", () => {

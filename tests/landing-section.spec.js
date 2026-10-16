@@ -119,6 +119,20 @@ test.describe('landing stat', () => {
     }
   });
 
+  test('the value has the size of the section title at 1280, 768 and 375 px, and is never bigger than the hero title', async ({ page }) => {
+    await open(page);
+    for (const [width, token] of [[1280, '--luz-text-3xl'], [768, '--luz-text-2xl'], [375, '--luz-text-xl']]) {
+      await page.setViewportSize({ width, height: 900 });
+      const title = await css(page, '#sec-title', 'fontSize');
+      for (const value of ['#stat-value', '#stat-in-card-value']) {
+        expect(await css(page, value, 'fontSize'), `${value} at ${width} px`).toBe(title);
+      }
+      expect(title, `the title at ${width} px is ${token}`).toBe(`${await px(page, `var(${token})`)}px`);
+      const hero = parseFloat(await css(page, '#hero-c-title', 'fontSize'));
+      expect(parseFloat(await css(page, '#stat-value', 'fontSize')), `${width} px: not bigger than the hero title`).toBeLessThanOrEqual(hero);
+    }
+  });
+
   test('inside a card it stays inside the card, at 320 px too', async ({ page }) => {
     await open(page, 320);
     const inside = await page.evaluate(() => {

@@ -75,6 +75,18 @@ describe("the sources of landing 0.2", () => {
     expect(index).toMatch(/@import url\("\.\/components\/stat\.css"\)/);
   });
 
+  it("the stat value shares the section title's size rules (selector lists in section.css), it does not copy them", () => {
+    const section = src("section");
+    const rules = [...section.matchAll(/([^{}]+)\{([^{}]*)\}/g)]
+      .map(([, selector, body]) => ({ selectors: selector.split(",").map((s) => s.trim()), body }))
+      .filter((r) => r.selectors.includes(".luz-landing-section__title") && /font-size\s*:\s*var\(--luz-text-(3xl|2xl|xl)\)/.test(r.body));
+    const steps = rules.map((r) => r.body.match(/--luz-text-(3xl|2xl|xl)/)[1]).sort();
+    expect(steps, "one size rule per step of the title: 3xl, 2xl, xl").toEqual(["2xl", "3xl", "xl"]);
+    for (const r of rules) expect(r.selectors, r.body.trim()).toContain(".luz-landing-stat__value");
+    const own = src("stat").match(/\.luz-landing-stat__value\s*\{[^}]*\}/)?.[0] ?? "";
+    expect(own, "stat.css keeps no font-size of its own on the value").not.toMatch(/font-size/);
+  });
+
   it("glow.css reads --luz-landing-glow-x and no longer repeats its gradient for right-to-left", () => {
     const glow = src("glow");
     expect(glow).toMatch(/--luz-landing-glow-x/);

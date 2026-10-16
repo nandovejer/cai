@@ -58,7 +58,7 @@ function fixture({ registry = REGISTRY, catalogs = CATALOGS, landing = LANDING, 
   const files = {
     "apps/docs/site.json": JSON.stringify({ areas: [{ id: "components", label: "Components", slug: "components" }] }),
     "apps/docs/_layouts/page.html": '<!DOCTYPE html>\n<html lang="{{lang}}">\n<head><title>{{title}}</title></head>\n<body>\n<!-- luz:include header -->\n<main id="main-content">\n{{content}}\n</main>\n</body>\n</html>\n',
-    "apps/docs/_partials/header.html":
+    "apps/site/_partials/header.html":
       header ?? '<header>\n  <nav aria-label="Site">\n    <a href="{{home}}">{{t:site.home}}</a>\n    <a href="/docs/">Docs</a>\n  </nav>\n  {{langswitch}}\n</header>\n',
     "apps/docs/pages/index.html": "<!-- luz:page\ntitle: Docs\ndescription: The docs.\narea: hub\n-->\n<p>Hello.</p>\n",
     "apps/landing/index.html": landing,
@@ -133,7 +133,7 @@ describe("languages of the home page: registry and catalogs", () => {
     const landing = LANDING.replace("<h1>{{t:hero.title}}</h1>", "<h1>{{t:hero.titel}}</h1>");
     expect(() => build(fixture({ landing }))).toThrow('apps/landing/index.html:10: "hero.titel" is not in apps/landing/i18n/en.json');
     const header = '<header>\n  <a href="/">{{t:site.homme}}</a>\n</header>\n';
-    expect(() => build(fixture({ header }))).toThrow('apps/docs/_partials/header.html:2: "site.homme" is not in apps/landing/i18n/en.json');
+    expect(() => build(fixture({ header }))).toThrow('apps/site/_partials/header.html:2: "site.homme" is not in apps/landing/i18n/en.json');
   });
 
   it("reports a key no template uses, at its line in the default catalog", () => {

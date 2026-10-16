@@ -909,3 +909,91 @@ describe("the LUZ docs site", () => {
     expect(html).toContain("<h1 class=\"docs-title\">Page not found</h1>");
   });
 });
+
+/* ---- The shared partials: apps/site/_partials (F2) ------------------------ */
+
+describe("partials shared with the home page: apps/site/_partials", () => {
+  /** A repository whose docs have no header of their own: it is in apps/site. */
+  function shared(extra = {}) {
+    const one = fixture({ "_partials/header.html": null, ...extra });
+    mkdirSync(join(one.repoRoot, "apps/site/_partials"), { recursive: true });
+    writeFileSync(join(one.repoRoot, "apps/site/_partials/header.html"), HEADER.replace("LUZ", "Shared header"));
+    return one;
+  }
+
+  it("a layout includes a partial that lives in apps/site/_partials", () => {
+    const { repoRoot, docsDir } = shared();
+    const site = scanSite(docsDir, repoRoot);
+    const html = renderPage(site.byRoute.get("/docs/"), site);
+    expect(html).toContain("Shared header");
+  });
+
+  it("a partial of apps/docs/_partials is still found", () => {
+    const { repoRoot, docsDir } = shared({ "_partials/note.html": "<p>Docs only.</p>", "pages/index.html": PAGE("Home", "<!-- luz:include note -->") });
+    const site = scanSite(docsDir, repoRoot);
+    expect(renderPage(site.byRoute.get("/docs/"), site)).toContain("Docs only.");
+  });
+
+  it("the file named in an error is the one that is wrong, with its folder", () => {
+    const { repoRoot, docsDir } = shared({ "_partials/note.html": "<p>Docs only.</p><script>x</script>", "pages/index.html": PAGE("Home", "<!-- luz:include note -->") });
+    const site = scanSite(docsDir, repoRoot);
+    expect(() => renderPage(site.byRoute.get("/docs/"), site)).toThrow(/apps\/docs\/_partials\/note\.html/);
+  });
+
+  /** What the build says about the site, whether it throws or reports: the message, or "" when it is clean. */
+  const outcome = (repoRoot, docsDir) => {
+    try {
+      const site = scanSite(docsDir, repoRoot);
+      const { problems } = buildSite(site, { unchecked: ["/"] });
+      for (const page of site.pages) renderPage(page, site);
+      return problems.join("\n");
+    } catch (error) {
+      return String(error.message);
+    }
+  };
+
+  it("a name that is in both folders is a build error, found at scan or at render", () => {
+    const { repoRoot, docsDir } = shared({ "_partials/header.html": HEADER });
+    expect(outcome(repoRoot, docsDir)).toMatch(/header[\s\S]*(both|twice)|(both|twice)[\s\S]*header/i);
+  });
+
+  it("a name that is in both folders is an error even when no page includes it", () => {
+    const { repoRoot, docsDir } = shared({ "_partials/note.html": "<p>Docs.</p>" });
+    writeFileSync(join(repoRoot, "apps/site/_partials/note.html"), "<p>Site.</p>");
+    expect(outcome(repoRoot, docsDir)).toMatch(/note[\s\S]*(both|twice)|(both|twice)[\s\S]*note/i);
+  });
+
+  it("a partial of apps/site that is a symlink out of the repository is refused", () => {
+    const secret = join(tmpdir(), "luz-docs-site-shared-secret.html");
+    writeFileSync(secret, "<p>secret</p>");
+    try {
+      const { repoRoot, docsDir } = shared();
+      symlinkSync(secret, join(repoRoot, "apps/site/_partials/leak.html"));
+      writeFileSync(join(docsDir, "pages/index.html"), PAGE("Home", "<!-- luz:include leak -->"));
+      const message = outcome(repoRoot, docsDir);
+      expect(message).toMatch(/symlinks are not allowed|outside/);
+      expect(message).not.toContain("secret</p>");
+    } finally {
+      rmSync(secret, { force: true });
+    }
+  });
+
+  it("apps/site/_partials itself being a symlink out of the repository is refused, and nothing in it is read", () => {
+    const outside = mkdtempSync(join(tmpdir(), "luz-docs-site-outside-"));
+    temps.push(outside);
+    writeFileSync(join(outside, "header.html"), "<header>secret header</header>\n");
+    const { repoRoot, docsDir } = fixture({ "_partials/header.html": null });
+    mkdirSync(join(repoRoot, "apps/site"), { recursive: true });
+    symlinkSync(outside, join(repoRoot, "apps/site/_partials"));
+    const message = outcome(repoRoot, docsDir);
+    expect(message).toMatch(/symlinks are not allowed|outside/);
+    expect(message).not.toContain("secret header");
+  });
+
+  it("the links of a shared partial are checked, with its file and line", () => {
+    const { repoRoot, docsDir } = shared();
+    writeFileSync(join(repoRoot, "apps/site/_partials/header.html"), `${HEADER}<a href="/docs/nowhere/">x</a>\n`);
+    const problems = buildSite(scanSite(docsDir, repoRoot), { unchecked: ["/"] }).problems;
+    expect(problems.some((p) => p.startsWith("apps/site/_partials/header.html:") && p.includes("/docs/nowhere/"))).toBe(true);
+  });
+});

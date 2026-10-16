@@ -10,6 +10,7 @@
 import { test, expect } from '@playwright/test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { KEY as MODE_KEY, seedMode } from './helpers/site-lights.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -76,14 +77,15 @@ test.describe('Landing page', () => {
       expect(requests.filter((url) => /\/luz(\.min)?\.js/.test(url))).toEqual([]);
     });
 
-    test('the header switcher is a radio group that becomes one cycle button', async ({ page }) => {
+    test('the footer switcher is a radio group that becomes one cycle button, with Auto', async ({ page }) => {
+      await seedMode(page, 'light');
       await open(page);
 
       // The native radio group stays in the page, under the button
       const switcher = page.locator('footer fieldset.luz-mode-switcher--cycle');
       await expect(switcher).toHaveCount(1);
       await expect(switcher.locator('legend')).toHaveText('Color mode');
-      await expect(switcher.locator('input[type="radio"][name="luz-theme"]')).toHaveCount(3);
+      await expect(switcher.locator('input[type="radio"][name="luz-theme"]')).toHaveCount(4);
       expect(await theme(page)).toBe('light');
 
       const button = switcher.locator('button.luz-mode-cycle');
@@ -91,9 +93,10 @@ test.describe('Landing page', () => {
       await expect(button).toHaveAccessibleName('Change color mode. Current: Light');
       await expect(switcher.locator('.luz-mode-btn').first()).toBeHidden();
 
-      for (const [mode, label] of [['dark', 'Dark'], ['high-contrast', 'High contrast'], ['light', 'Light']]) {
+      // Light, then Dark, High contrast, Auto (the clock decides) and Light again
+      for (const [mode, label] of [['dark', 'Dark'], ['high-contrast', 'High contrast'], ['auto', 'Auto'], ['light', 'Light']]) {
         await button.click();
-        expect(await theme(page)).toBe(mode);
+        if (mode !== 'auto') expect(await theme(page)).toBe(mode);
         expect(await page.evaluate(() => document.documentElement.dataset.mode)).toBeUndefined();
         await expect(page.locator('input[name="luz-theme"]:checked')).toHaveValue(mode);
         await expect(button).toHaveAccessibleName(`Change color mode. Current: ${label}`);
@@ -102,6 +105,7 @@ test.describe('Landing page', () => {
     });
 
     test('the cycle button works from the keyboard', async ({ page }) => {
+      await seedMode(page, 'light');
       await open(page);
 
       await page.locator('footer .luz-mode-cycle').focus();
@@ -111,15 +115,16 @@ test.describe('Landing page', () => {
       expect(await theme(page)).toBe('high-contrast');
     });
 
-    test('the chosen mode survives a reload, under the site key', async ({ page }) => {
+    test('the chosen mode survives a reload, under core\'s key', async ({ page }) => {
+      await seedMode(page, 'light');
       await open(page);
       // light → dark → high contrast
       await page.click('footer .luz-mode-cycle');
       await page.click('footer .luz-mode-cycle');
 
-      expect(await page.evaluate(() => localStorage.getItem('luz-site-mode'))).toBe('high-contrast');
-      // luz.js (core's theme module) reads luz-theme: the site must not touch it
-      expect(await page.evaluate(() => localStorage.getItem('luz-theme'))).toBeNull();
+      expect(await page.evaluate((key) => localStorage.getItem(key), MODE_KEY)).toBe('high-contrast');
+      // The site has no key of its own
+      expect(await page.evaluate(() => localStorage.getItem('luz-site-mode'))).toBeNull();
 
       await page.reload();
       expect(await theme(page)).toBe('high-contrast');
@@ -128,32 +133,13 @@ test.describe('Landing page', () => {
       expect(await theme(page)).toBe('high-contrast');
     });
 
-    test.describe('with a dark OS preference', () => {
-      test.use({ colorScheme: 'dark' });
-
-      test('follows the OS until the visitor chooses', async ({ page }) => {
-        await open(page);
-        expect(await theme(page)).toBe('dark');
-
-        await page.emulateMedia({ colorScheme: 'light' });
-        await expect.poll(() => theme(page)).toBe('light');
-      });
-
-      // EX-009: theme-boot.js sets the mode before the first paint. The
-      // pages' modules are blocked, so only the boot script can have set it.
-      for (const path of ['/', '/docs/']) {
-        test(`${path} is dark before any module runs`, async ({ page }) => {
-          await page.route(/\/apps\/(landing\/landing|docs\/reference)\.js/, (route) => route.abort());
-          await page.goto(path);
-          expect(await theme(page)).toBe('dark');
-        });
-      }
-    });
-
+    // EX-009: apps/site/boot.js sets the mode before the first paint (the
+    // clock, the light and the dark OS preference are in tests/site-boot.spec.js).
+    // The pages' modules are blocked, so only the boot script can have set it.
     for (const path of ['/', '/docs/']) {
       test(`${path} applies the stored mode before any module runs`, async ({ page }) => {
-        await page.addInitScript(() => localStorage.setItem('luz-site-mode', 'high-contrast'));
-        await page.route(/\/apps\/(landing\/landing|docs\/reference)\.js/, (route) => route.abort());
+        await page.addInitScript(() => localStorage.setItem('luz-theme', 'high-contrast'));
+        await page.route(/\/apps\/(landing\/landing|docs\/reference|site\/header)\.js/, (route) => route.abort());
         await page.goto(path);
         expect(await theme(page)).toBe('high-contrast');
       });
@@ -191,13 +177,20 @@ test.describe('Landing page', () => {
       }
     });
 
-    test('footer: the cycle button ships in the markup and shows only the icon of the checked mode', async ({ page }) => {
+    test('footer: the cycle button ships with no icons of its own and shows a copy of the icon of the checked label', async ({ page }) => {
+      await seedMode(page, 'light');
       await open(page);
       const button = page.locator('footer .luz-mode-cycle');
-      for (const mode of ['light', 'dark', 'high-contrast']) {
+      await expect(button.locator('[data-mode-icon]')).toHaveCount(0);
+      for (const mode of ['light', 'dark', 'high-contrast', 'auto']) {
         await expect(page.locator(`footer input[value="${mode}"]`)).toBeChecked();
-        await expect(button.locator(`[data-mode-icon="${mode}"]`)).toBeVisible();
-        await expect(button.locator('[data-mode-icon]:visible')).toHaveCount(1);
+        await expect(button.locator('.luz-mode-btn__icon')).toHaveCount(1);
+        await expect(button.locator('.luz-mode-btn__icon')).toBeVisible();
+        const copy = await page.evaluate(() => {
+          const icon = document.querySelector('footer input:checked').closest('label').querySelector('.luz-mode-btn__icon');
+          return icon.outerHTML === document.querySelector('footer .luz-mode-cycle .luz-mode-btn__icon').outerHTML;
+        });
+        expect(copy, mode).toBe(true);
         await button.click();
       }
     });
@@ -663,7 +656,7 @@ test.describe('Landing page', () => {
     for (const mode of MODES) {
       test(`landing-local text has a contrast of 4.5:1 or more in ${mode}`, async ({ page }) => {
         await page.addInitScript((value) => {
-          localStorage.setItem('luz-site-mode', value);
+          localStorage.setItem('luz-theme', value);
         }, mode);
         await open(page);
         expect(await theme(page)).toBe(mode);

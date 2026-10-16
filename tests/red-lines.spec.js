@@ -9,6 +9,7 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { faded } from './helpers/settle.js';
 import { readFileSync } from 'node:fs';
 import { notFoundRoute, routeOf, routes } from './helpers/docs-site.js';
 
@@ -31,6 +32,8 @@ async function open(page, url, theme) {
     await page.evaluate((t) => {
       document.documentElement.dataset.theme = t;
     }, theme);
+    // The page fades between modes for 1.4 s: the checks that follow measure the settled colours
+    await faded(page);
   }
 }
 

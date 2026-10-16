@@ -17,3 +17,21 @@ export async function settled(page) {
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
 }
+
+/**
+ * Wait until the colour fade of the page has ended: the CSS transitions on
+ * <html> (apps/site/theme-light.css fades the colour tokens for 1.4 s when
+ * motion is welcome). Unlike `settled`, it does not wait for an infinite
+ * animation elsewhere on the page (a spinner), so it is safe on any page.
+ * @param {import('@playwright/test').Page} page
+ */
+export async function faded(page) {
+  await page.evaluate(async () => {
+    for (let round = 0; round < 10; round++) {
+      const running = document.documentElement.getAnimations().filter((a) => a.playState === 'running' || a.playState === 'pending');
+      if (!running.length) break;
+      await Promise.allSettled(running.map((a) => a.finished));
+    }
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+}

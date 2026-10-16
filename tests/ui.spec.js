@@ -23,20 +23,26 @@ test.describe('LUZ Design System UI Smoke Tests', () => {
 
   test.describe('Theme System', () => {
     test('should switch to dark theme and persist', async ({ page }) => {
+      // Light is chosen, so the cycle button's next step is Dark whatever the hour
+      await page.evaluate(() => localStorage.setItem('luz-theme', 'light'));
+      await page.reload();
+      await page.waitForLoadState('networkidle');
       // Get initial theme
       const initialTheme = await page.evaluate(() => document.documentElement.dataset.theme);
 
-      // The header's cycle button steps to the next mode
+      expect(initialTheme).toBe('light');
+
+      // The footer's cycle button steps to the next mode
       await page.click('footer .luz-mode-cycle');
 
       // Verify theme changed
       const newTheme = await page.evaluate(() => document.documentElement.dataset.theme);
-      expect(newTheme).not.toBe(initialTheme);
+      expect(newTheme).toBe('dark');
     });
 
     test('should persist theme after page reload', async ({ page }) => {
-      // The documentation page keeps the color mode under the site's key
-      await page.evaluate(() => localStorage.setItem('luz-site-mode', 'dark'));
+      // The documentation page keeps the color mode under core's key
+      await page.evaluate(() => localStorage.setItem('luz-theme', 'dark'));
       await page.reload();
       
       // Verify it persists

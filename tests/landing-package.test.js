@@ -144,13 +144,13 @@ describe("the home page and the docs footer are built on landing and core classe
   });
 
   it("no file of the home page or of the docs footer names a class of site's old blocks", () => {
-    // `luz-site-mode` is the key of the stored colour mode, not a class
+    // `luz-site-` names the old blocks of site (`luz-site-mode` was the key of the stored colour mode, gone in F2)
     const old = /luz-site-(?!mode)/;
     const files = [
       "apps/landing/index.html",
       "apps/landing/landing.css",
-      "apps/docs/site-header.css",
-      "apps/docs/_partials/footer.html",
+      "apps/site/header.css",
+      "apps/site/_partials/footer.html",
       "apps/docs/_partials/footer-links.html",
       "apps/docs/_layouts/not-found.html",
     ];
@@ -159,7 +159,7 @@ describe("the home page and the docs footer are built on landing and core classe
   });
 
   it("the docs footer partial is the landing footer", () => {
-    const partial = read("apps/docs/_partials/footer.html");
+    const partial = read("apps/site/_partials/footer.html");
     expect(partial).toMatch(/\bluz-landing-footer\b/);
     expect(partial).toMatch(/\bo-container--inline\b/);
   });

@@ -9,6 +9,7 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { faded } from './helpers/settle.js';
 import { routesWith } from './helpers/docs-site.js';
 
 const DESIGN = routesWith('docs-dodont__stage');
@@ -92,6 +93,8 @@ for (const route of DESIGN) {
           s.removeAttribute('inert');
         }
       }, theme);
+      // The page fades between modes for 1.4 s: measure the settled colours
+      await faded(page);
       await page.waitForTimeout(400);
       const { violations } = await new AxeBuilder({ page })
         .include('.docs-dodont')

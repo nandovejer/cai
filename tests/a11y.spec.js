@@ -5,6 +5,7 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { faded } from './helpers/settle.js';
 import { notFoundRoute, routeOf, routes, routesWith } from './helpers/docs-site.js';
 
 // Every page in Chromium; a sample of layouts in Firefox and WebKit (a11y.md TEST-1)
@@ -27,7 +28,8 @@ for (const app of [...APPS, ...DESIGN]) {
       await page.evaluate((t) => {
         document.documentElement.dataset.theme = t;
       }, theme);
-      // Let the theme transition (and any lazy content) settle before measuring
+      // Let the theme transition (the page fades between modes for 1.4 s) and any lazy content settle before measuring
+      await faded(page);
       await page.waitForTimeout(400);
 
       const { violations } = await new AxeBuilder({ page })

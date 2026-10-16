@@ -6,6 +6,7 @@
 import { test, expect } from '@playwright/test';
 import { notFoundRoute, routes, routesWith } from './helpers/docs-site.js';
 import { px } from './helpers/site-loader.js';
+import { channels, colorOf, vejer } from './helpers/site-lights.js';
 
 // The home page in each of its languages (apps/landing/i18n)
 const APPS = ['/', '/es/', '/ar/', ...routes(), notFoundRoute];
@@ -143,16 +144,50 @@ test('docs: the home shows the A–Z link in place of the big search button', as
   await expect(page.getByRole('main').getByRole('button', { name: /^Search docs/ })).toBeHidden();
 });
 
-test('docs: the color mode switcher is three radios that set the mode', async ({ page }) => {
+test('docs: the color mode switcher is four radios, Auto first and checked, that set the mode', async ({ page }) => {
   await page.goto('/docs/');
-  const switcher = page.locator('footer .luz-mode-switcher--cycle');
-  await expect(switcher.locator('.luz-mode-btn')).toHaveCount(3);
+  const switcher = page.locator('footer luz-mode .luz-mode-switcher--cycle');
+  await expect(switcher.locator('.luz-mode-btn')).toHaveCount(4);
+  await expect(switcher.locator('input[name="luz-theme"]')).toHaveCount(4);
+  expect(await switcher.locator('input[name="luz-theme"]').evaluateAll((all) => all.map((r) => r.value))).toEqual(['auto', 'light', 'dark', 'high-contrast']);
+  await expect(switcher.locator('input[value="auto"]')).toBeChecked();
   for (const label of await switcher.locator('.luz-mode-btn').all()) await expect(label).toBeVisible();
   await expect(page.locator('.luz-mode-cycle')).toBeHidden();
   const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  // Auto is Vejer light without JavaScript: the clock and the system are followed only by the script
   const light = await background();
   await switcher.locator('.luz-mode-btn:has(input[value="dark"])').click();
   await expect.poll(background).not.toBe(light);
+  await switcher.locator('.luz-mode-btn:has(input[value="auto"])').click();
+  await expect.poll(background).toBe(light);
+});
+
+for (const app of ['/', '/docs/', '/docs/components/button/']) {
+  test(`${app}: nothing is served about the light, and the page is Vejer light`, async ({ page }) => {
+    await page.goto(app);
+    expect(await page.evaluate(() => document.documentElement.hasAttribute('data-light'))).toBe(false);
+    expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe('light');
+  });
+}
+
+test('docs: the specimens carry no data-theme without JavaScript, and the radios still re-scope them', async ({ page }) => {
+  await page.goto('/docs/components/button/');
+  const specimens = page.locator('[data-docs-specimen], .docs-dodont__stage');
+  expect(await specimens.count()).toBeGreaterThan(1);
+  expect(await specimens.evaluateAll((all) => all.filter((el) => el.hasAttribute('data-theme')).length)).toBe(0);
+  const specimen = page.locator('[data-docs-specimen]').first();
+  const background = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  // Light first: Vejer's, whatever the hour (nothing is served about the light)
+  expect(channels(await colorOf(specimen, '--luz-surface-page'))).toEqual(vejer('light', '--luz-surface-page'));
+  const before = await background();
+  await page.locator('footer .luz-mode-btn:has(input[value="dark"])').click();
+  await expect.poll(background).not.toBe(before);
+  // The specimen follows: its tokens are Vejer's dark, not the light it was served in
+  // (polled: the page fades between modes when motion is welcome, and the specimen inherits the fade)
+  await expect.poll(async () => channels(await colorOf(specimen, '--luz-surface-page'))).toEqual(vejer('dark', '--luz-surface-page'));
+  await expect.poll(async () => channels(await colorOf(specimen, '--luz-text-primary'))).toEqual(vejer('dark', '--luz-text-primary'));
+  await page.locator('footer .luz-mode-btn:has(input[value="high-contrast"])').click();
+  await expect.poll(async () => channels(await colorOf(specimen, '--luz-surface-page'))).toEqual(vejer('high-contrast', '--luz-surface-page'));
 });
 
 // The drawer's names on the home page in another language (apps/landing/i18n)

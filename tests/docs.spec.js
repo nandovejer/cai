@@ -17,6 +17,8 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
 import { SITE_KINDS } from '../scripts/luz-packages.js';
+import { KEY as MODE_KEY, seedMode } from './helpers/site-lights.js';
+import { faded } from './helpers/settle.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -164,7 +166,7 @@ test.describe('Documentation site', () => {
       await expect(page.locator('.site-header__nav a[aria-current="page"]')).toHaveText('Docs');
       // Exactly one radio group drives the tokens on this page
       await expect(page.locator('fieldset:has(input[name="luz-theme"])')).toHaveCount(1);
-      await expect(page.locator('input[name="luz-theme"]')).toHaveCount(3);
+      await expect(page.locator('input[name="luz-theme"]')).toHaveCount(4);
       await expect(page.locator('#page-nav fieldset')).toHaveCount(0);
     });
 
@@ -174,19 +176,28 @@ test.describe('Documentation site', () => {
       await expect(page.locator('.site-header__nav a[aria-current="page"]')).toHaveCount(0);
     });
 
-    test('the cycle button in the footer sets the mode, under the site key', async ({ page }) => {
+    test('the cycle button in the footer steps through the modes and Auto, under core\'s key', async ({ page }) => {
+      await seedMode(page, 'light');
       await open(page);
       expect(await theme(page)).toBe('light');
 
       const button = page.locator('footer .luz-mode-cycle');
       await expect(button).toHaveAccessibleName('Change color mode. Current: Light');
-      for (const mode of ['dark', 'high-contrast', 'light']) {
+      for (const mode of ['dark', 'high-contrast']) {
         await button.click();
         expect(await theme(page)).toBe(mode);
         await expect(page.locator('input[name="luz-theme"]:checked')).toHaveValue(mode);
       }
+      // Auto is the absence of the choice: the key is removed and the clock decides
       await button.click();
-      expect(await page.evaluate(() => localStorage.getItem('luz-site-mode'))).toBe('dark');
+      await expect(page.locator('input[name="luz-theme"]:checked')).toHaveValue('auto');
+      await expect(button).toHaveAccessibleName('Change color mode. Current: Auto');
+      expect(await page.evaluate((key) => localStorage.getItem(key), MODE_KEY)).toBeNull();
+      await button.click();
+      await button.click();
+      expect(await page.evaluate((key) => localStorage.getItem(key), MODE_KEY)).toBe('dark');
+      // The site has no key of its own
+      expect(await page.evaluate(() => localStorage.getItem('luz-site-mode'))).toBeNull();
       // The choice follows the visitor to another page
       await page.goto(routeOf('c-button'));
       expect(await theme(page)).toBe('dark');
@@ -323,6 +334,7 @@ test.describe('Documentation site', () => {
           await page.evaluate((m) => {
             document.documentElement.dataset.theme = m;
           }, mode);
+          await faded(page);
           await page.waitForTimeout(400);
           const { violations } = await new AxeBuilder({ page })
             .include('.docs-end')
@@ -771,7 +783,7 @@ test.describe('Documentation site', () => {
       test(`docs-local text has a contrast of 4.5:1 or more in ${mode}`, async ({ page }) => {
         test.slow();
         await page.addInitScript((value) => {
-          localStorage.setItem('luz-site-mode', value);
+          localStorage.setItem('luz-theme', value);
         }, mode);
         let total = 0;
         for (const route of ALL) {
@@ -906,8 +918,6 @@ test.describe('Site header and navigation toggle', () => {
   // (scripts/docs-site). The landing and the docs layouts include it. The
   // generator marks the current link.
   const read = (file) => readFileSync(fromRepo(file), 'utf-8');
-  const HEADER = read('apps/docs/_partials/header.html');
-  const SITE_LINKS = read('apps/docs/_partials/site-links.html');
   const INCLUDERS = {
     'apps/landing/index.html': ['header', 'site-links'],
     'apps/docs/_layouts/page.html': ['header', 'site-links'],
@@ -915,6 +925,9 @@ test.describe('Site header and navigation toggle', () => {
   };
 
   test('every page has the same header markup: Home, Docs, GitHub and the search', () => {
+    // The shared partials are apps/site's (read here, so a missing file fails this test and no other)
+    const HEADER = read('apps/site/_partials/header.html');
+    const SITE_LINKS = read('apps/site/_partials/site-links.html');
     expect(HEADER).toContain('popovertarget="page-nav"');
     expect(HEADER).not.toContain('aria-current');
     const row = HEADER.match(/<nav class="site-header__nav"[\s\S]*?<\/nav>/)[0];
@@ -931,18 +944,24 @@ test.describe('Site header and navigation toggle', () => {
       // tabindex="-1": a scrollable nav is a Tab stop of its own in Firefox
       expect(read(file), file).toMatch(/<nav class="luz-sidebar page-nav[^"]*" id="page-nav" popover aria-label="[^"]+" tabindex="-1">/);
     }
-    // F3 step 13 (D9 a): the header's stylesheet and script are the docs app's, shared with the home page
+    // F2: the header's stylesheet and script are apps/site's, shared by the home page and the docs
     for (const file of ['apps/landing/index.html', 'apps/docs/_layouts/page.html', 'apps/docs/_layouts/not-found.html']) {
-      expect(read(file).includes('href="/apps/docs/site-header.css"'), `${file} links /apps/docs/site-header.css`).toBe(true);
-      expect(read(file).includes('/apps/landing/site-header.css'), `${file} no longer links the old path`).toBe(false);
+      expect(read(file).includes('href="/apps/site/header.css"'), `${file} links /apps/site/header.css`).toBe(true);
+      expect(read(file).includes('/apps/docs/site-header.css'), `${file} no longer links the old path`).toBe(false);
     }
   });
 
-  test('the header\'s stylesheet and script live in apps/docs, and the home page and the docs import them from there', () => {
-    for (const file of ['apps/docs/site-header.css', 'apps/docs/site-header.js']) expect(existsSync(fromRepo(file)), file).toBe(true);
-    for (const file of ['apps/landing/site-header.css', 'apps/landing/site-header.js']) expect(existsSync(fromRepo(file)), `${file} moved`).toBe(false);
-    expect(/from\s+["']\.\/site-header\.js["']/.test(read('apps/docs/reference.js')), 'reference.js imports ./site-header.js').toBe(true);
-    expect(/from\s+["']\.\.\/docs\/site-header\.js["']/.test(read('apps/landing/landing.js')), 'landing.js imports ../docs/site-header.js').toBe(true);
+  test('the header\'s stylesheet and script live in apps/site, and the home page and the docs import them from there', () => {
+    for (const file of ['apps/site/header.css', 'apps/site/header.js']) expect(existsSync(fromRepo(file)), file).toBe(true);
+    for (const file of ['apps/docs/site-header.css', 'apps/docs/site-header.js', 'apps/landing/site-header.css', 'apps/landing/site-header.js']) expect(existsSync(fromRepo(file)), `${file} moved`).toBe(false);
+    expect(/from\s+["']\/apps\/site\/header\.js["']/.test(read('apps/docs/reference.js')), 'reference.js imports /apps/site/header.js').toBe(true);
+    expect(/from\s+["']\/apps\/site\/header\.js["']/.test(read('apps/landing/landing.js')), 'landing.js imports /apps/site/header.js').toBe(true);
+    // The header no longer keeps a mode of its own: <luz-mode> does, and the page learns of it from its event
+    const header = read('apps/site/header.js');
+    expect(header).not.toContain('luz-site-mode');
+    expect(header).not.toMatch(/onModeChange/);
+    expect(header).toMatch(/\/packages\/site\/dist\/mode\.js/);
+    expect(read('apps/docs/reference.js')).toMatch(/luz-mode:change/);
   });
 
   const PAGES = [

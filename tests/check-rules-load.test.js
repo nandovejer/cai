@@ -185,7 +185,7 @@ describe("load/tokens-missing", () => {
     for (const head of [
       "",
       links(TOKENS),
-      links('  <link rel="stylesheet" href="css/site.css">', '  <link rel="stylesheet" href="css/app.css">', '  <link rel="stylesheet" href="/apps/docs/site-header.css">'),
+      links('  <link rel="stylesheet" href="css/site.css">', '  <link rel="stylesheet" href="css/app.css">', '  <link rel="stylesheet" href="/apps/site/header.css">'),
     ]) {
       const result = check({ "index.html": page('  <p class="o-stack">x</p>', head) });
       expect(rulesOf(result, "load/tokens-missing"), head).toEqual([]);

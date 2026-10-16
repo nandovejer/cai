@@ -12,6 +12,8 @@ import { test, expect } from '@playwright/test';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf, routesOf } from './helpers/docs-site.js';
+import { seedMode } from './helpers/site-lights.js';
+import { faded } from './helpers/settle.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -227,13 +229,16 @@ test.describe('HTML elements reference, in the documentation', () => {
     await page.goto('/');
     await expect(page.locator('.site-header__nav a[href="/docs/"]')).toHaveCount(1);
 
+    await seedMode(page, 'light');
     await open(page, CATEGORY_PAGES[0]);
     await expect(page.locator(`.docs-nav a[href="${OVERVIEW}"]`)).toHaveCount(1);
-    // The footer's cycle button: light, then dark, high contrast and light again
-    for (const mode of ['dark', 'high-contrast', 'light']) {
+    // The footer's cycle button: light, then dark and high contrast; the next step is Auto
+    for (const mode of ['dark', 'high-contrast']) {
       await page.click('footer .luz-mode-cycle');
       expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(mode);
     }
+    await page.click('footer .luz-mode-cycle');
+    await expect(page.locator('footer input[name="luz-theme"]:checked')).toHaveValue('auto');
   });
 
   test('the demos that need a script are wired', async ({ page }) => {
@@ -244,12 +249,15 @@ test.describe('HTML elements reference, in the documentation', () => {
     await gotoId(page, 'el-track');
     await expect(page.locator('#el-track track')).toHaveAttribute('src', /captions.*\.vtt|^data:/);
     // The canvas is painted, and repainted with the new tokens in another mode
+    await seedMode(page, 'light');
     await gotoId(page, 'd-canvas');
     const pixel = () =>
       page.evaluate(() => [...document.getElementById('d-canvas').getContext('2d').getImageData(60, 60, 1, 1).data].join());
     const light = await pixel();
     expect(light).not.toBe('0,0,0,0');
     await page.click('footer .luz-mode-cycle');
+    // The page fades between modes for 1.4 s: the canvas is repainted for the mode it ends in
+    await faded(page);
     await expect.poll(pixel).not.toBe(light);
   });
 

@@ -1,7 +1,7 @@
 {
   "name": "@luz-ds/site",
   "version": "0.0.0",
-  "description": "LUZ Design System — self-contained site components (search, cookie consent, language switch, submenu, banner) as light-DOM `<luz-*>` elements, built on @luz-ds/core",
+  "description": "LUZ Design System — self-contained site components (search, cookie consent, color mode, language switch, submenu, banner) as light-DOM `<luz-*>` elements, built on @luz-ds/core",
   "license": "MIT",
   "type": "module",
   "main": "dist/site.js",
@@ -10,6 +10,7 @@
     ".": "./dist/site.js",
     "./search": "./dist/search.js",
     "./consent": "./dist/consent.js",
+    "./mode": "./dist/mode.js",
     "./css": "./dist/site.css",
     "./css/min": "./dist/site.min.css",
     "./print.css": "./dist/print.css",
@@ -47,7 +48,9 @@
     "./dist/search.js",
     "./dist/search.min.js",
     "./dist/consent.js",
-    "./dist/consent.min.js"
+    "./dist/consent.min.js",
+    "./dist/mode.js",
+    "./dist/mode.min.js"
   ],
   "publishConfig": {
     "access": "public"

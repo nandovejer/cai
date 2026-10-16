@@ -1,6 +1,6 @@
 # @luz-ds/site
 
-Five self-contained site components, each a light-DOM `<luz-*>` tag: search, cookie consent, language switch, submenu and banner. A piece is here when it can go in any section of a page of any kind of site and acts for the site as a whole; everything else is in `@luz-ds/core`. The page structure (header, hero, page header, footer) is never here: it is in the packages for one kind of site, which work without this one. [`@luz-ds/landing`](../landing) is for a landing page, [`@luz-ds/cms`](../cms) for a blog, a newspaper or any CMS, and [`@luz-ds/app`](../app) for a web application.
+Six self-contained site components, each a light-DOM `<luz-*>` tag: search, cookie consent, color mode, language switch, submenu and banner. A piece is here when it can go in any section of a page of any kind of site and acts for the site as a whole; everything else is in `@luz-ds/core`. The page structure (header, hero, page header, footer) is never here: it is in the packages for one kind of site, which work without this one. [`@luz-ds/landing`](../landing) is for a landing page, [`@luz-ds/cms`](../cms) for a blog, a newspaper or any CMS, and [`@luz-ds/app`](../app) for a web application.
 
 > **Beta.** The tokens, components and patterns work and are tested, but names, classes and behavior can still change before the stable release. Pin an exact version and read the changelog before you upgrade.
 
@@ -24,7 +24,7 @@ import '@luz-ds/core/css'
 import '@luz-ds/site/css'
 
 import '@luz-ds/core'        // optional: the core behaviors
-import '@luz-ds/site'    // the loader: the search and the cookie banner, when the page has them
+import '@luz-ds/site'    // the loader: the search, the cookie banner and the color mode, when the page has them
 ```
 
 `@luz-ds/core` and `@luz-ds/site` without `/css` are the scripts.
@@ -36,8 +36,9 @@ import '@luz-ds/site'    // the loader: the search and the cookie banner, when t
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.js"></script>
-<!-- The loader: it loads search.min.js on a page with a <luz-search>
-     and consent.min.js on a page with a <luz-consent>, and nothing else -->
+<!-- The loader: it loads search.min.js on a page with a <luz-search>,
+     consent.min.js on a page with a <luz-consent> and mode.min.js on a
+     page with a <luz-mode>, and nothing else -->
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/site.min.js"></script>
 ```
 
@@ -48,7 +49,8 @@ With Subresource Integrity, an `integrity` on the `<script>` covers `site.min.js
 {
   "integrity": {
     "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/search.min.js": "sha384-…",
-    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js": "sha384-…"
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js": "sha384-…",
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/mode.min.js": "sha384-…"
   }
 }
 </script>
@@ -59,10 +61,11 @@ A `<link rel="modulepreload" integrity>` is not a guard outside Chromium: Safari
 
 ## Package exports
 
-- **`.`** → `site.js` — The presence loader. Warns when core is not loaded, scans the page once and loads `search.js` when it has a `<luz-search>` (on the first pointerdown or focus in it, Ctrl+K, or idle) and `consent.js` when it has a `<luz-consent>` (on idle). `site.min.js` imports `./search.min.js` and `./consent.min.js` and nothing else
+- **`.`** → `site.js` — The presence loader. Warns when core is not loaded, scans the page once and loads `search.js` when it has a `<luz-search>` (on the first pointerdown or focus in it, Ctrl+K, or idle) `consent.js` when it has a `<luz-consent>` (on idle) and `mode.js` when it has a `<luz-mode>` (on idle). `site.min.js` imports `./search.min.js`, `./consent.min.js` and `./mode.min.js` and nothing else
 - **`./search`** → `search.js` — defines `<luz-search>`, a custom element (light DOM) that holds the fallback link, the trigger and the search `<dialog>`, and wires them when it connects; importing it in a page defines the element (once, however many copies), importing it in Node does nothing. Import it by hand for a `<luz-search>` added after the page has loaded
 - **`./consent`** → `consent.js` — defines `<luz-consent>`, the cookie banner (light DOM), and exports `getConsent(key?)`. Importing it in Node does nothing but give `getConsent`
-- **`./css`** → `site.css` — The five components' styles (`./css/min` for the minified twin)
+- **`./mode`** → `mode.js` — defines `<luz-mode>`, the color mode switcher with an Auto state (light DOM), and exports `phaseOf(hour)`, the phase of the day at a local hour. Importing it in Node does nothing but give `phaseOf`
+- **`./css`** → `site.css` — The six components' styles (`./css/min` for the minified twin)
 - **`./components/*`** → `dist/components/` — one stylesheet per component, `<name>.css` and `<name>.min.css`, each in `luz.site`, for a page that loads only what it uses
 - **`./print.css`** → `print.css` — what site's pieces do on paper, in `luz.site`, for a page that loads components one by one (`site.css` already has it)
 
@@ -73,6 +76,7 @@ Each tag is the block; its parts are `.luz-<tag>__<part>`.
 - `<luz-submenu>` — An item of the header's links that holds more links: a tag (no class, no script, `display: contents`) around a native `<details name>`, in the flow in the menu panel and a box under its button from 769 px
 - `<luz-banner>` (`tone="warning"`) — A tag (no class, no script) around one `<section aria-labelledby>`: a band above the header with one short announcement and one link; no close button
 - `<luz-consent>` and `.luz-consent` (`__title`, `__choices`) — The cookie banner, first after the skip link in the markup and shown as a band fixed at the bottom of the window (in the flow under 30rem tall), hidden until `consent.js` shows it; its confirmation has a `[data-luz-consent-close]` button, and while it shows `consent.js` sets `--luz-consent-h` on `:root` so the page keeps room for it
+- `<luz-mode>` — Color mode: a tag around core's `.luz-mode-switcher` radios (and its `--cycle` variant) with a fourth, "Auto", radio first; `mode.js` makes Auto follow the system or the clock
 - `<luz-lang-switch>` with `.luz-lang-switch__button`, `__menu`, `__list`, `__link`, `__name`, `__title`, `__icon` — Language switch: a tag (no script) around a button that opens a native popover list of links; `--luz-lang-switch-top` (default `--luz-bar-h`) places the list
 - `<luz-search>` with `.luz-search__fallback` (`__fallback-label`), `.luz-search__trigger` (`--compact`, `__trigger-icon`, `__trigger-label`, `__trigger-key`) and `.luz-search` (`__body`, `__head`, `__title`, `__field`, `__status`, `__close`, `__results`, `__foot`) — Site search: a link to your index that a button replaces, in the same space, and a native `<dialog>` of grouped links
 
@@ -103,6 +107,24 @@ const granted = (answer) => answer?.granted.includes("analytics");
 if (granted(getConsent())) startMeasuring();
 document.addEventListener("luz:consent", (e) => (granted(e.detail) ? startMeasuring() : location.reload()));
 ```
+
+## Color mode
+
+`<luz-mode>` wraps core's color mode radios and adds an "Auto" radio, first. Without JavaScript the radios change the mode through the tokens, and Auto leaves the page light. With it, Auto follows the system (`prefers-contrast: more`, then `prefers-color-scheme: dark`) or, with `by="clock"`, the phase of the day from the local hour, written as `data-light` (`dawn`, `morning`, `afternoon`, `sunset`, `dusk`, `night`; dawn, dusk and night are dark), checked again each minute. A chosen mode is applied as `data-theme`, and with the clock its light is pinned (light: `afternoon`, dark and high contrast: `night`). With `remember` the choice is stored under core's `luz-theme` key, and Auto removes it; without it nothing is stored. `for` names the element that gets the attributes (default `<html>`), `light-attr` the attribute of the light (a `data-*` name, default `data-light`). The script writes no text: its labels are the radios'. With `luz.js` on the page, core's cycle button steps through the four states.
+
+```html
+<luz-mode remember by="clock">
+  <fieldset class="luz-mode-switcher luz-mode-switcher--cycle">
+    <legend class="luz-mode-switcher__label">Color mode</legend>
+    <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked>Auto</label>
+    <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light">Light</label>
+    <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark">Dark</label>
+    <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast">High contrast</label>
+  </fieldset>
+</luz-mode>
+```
+
+The element has `mode` (`"auto"`, `"light"`, `"dark"` or `"high-contrast"`), `light` (the phase, or `null` without the clock) and `preview(phase | hour | null)`, which shows another hour of the day with the clock (and returns `false` without it). It dispatches `luz-mode:change`, bubbling, after it starts and on every change, with `{ mode, theme, light, remembered, simulated }`. Full markup, the boot snippet for `<head>` and a theme with a day and a night light on the [Color mode page of the docs](https://nandovejer.github.io/luz/docs/site/mode/).
 
 ## What moved out
 

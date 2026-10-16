@@ -98,7 +98,7 @@ import &quot;@luz-ds/core&quot;;</code></pre>
 
       <div class="docs-prose">
         <h2 id="level-3-tokens-core-and-site" class="docs-prose__title">Level 3: tokens, core and site</h2>
-        <p>Five components that need data of the site: search, cookie consent, language switch, submenu and banner. Site needs core and tokens. The page structure, from the header to the footer, is in landing and cms, which work without site.</p>
+        <p>Six components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner. Site needs core and tokens. The page structure, from the header to the footer, is in landing and cms, which work without site.</p>
         <div class="docs-command-block">
           <code class="docs-command-block__cmd">
             <span class="docs-command-block__prefix" aria-hidden="true">$</span>
@@ -223,7 +223,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
           <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="Computing the integrity hash"><code id="code-integrity">curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css | openssl dgst -sha384 -binary | openssl base64 -A</code></pre>
         </div>
         <p>Write the result as <code class="luz-code-inline">integrity="sha384-…"</code> on the tag that loads that file, and repeat it for each file.</p>
-        <p>A hash on a script covers that file only, not the files it loads later. <code class="luz-code-inline">site.min.js</code> loads <code class="luz-code-inline">search.min.js</code> on a page with a search and <code class="luz-code-inline">consent.min.js</code> on a page with a cookie banner. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A <code class="luz-code-inline">&lt;link rel="modulepreload"&gt;</code> with a hash is not a guard in Safari or Firefox: use it as a performance hint only.</p>
+        <p>A hash on a script covers that file only, not the files it loads later. <code class="luz-code-inline">site.min.js</code> loads <code class="luz-code-inline">search.min.js</code> on a page with a search and <code class="luz-code-inline">consent.min.js</code> on a page with a cookie banner and <code class="luz-code-inline">mode.min.js</code> on a page with an Auto color mode. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A <code class="luz-code-inline">&lt;link rel="modulepreload"&gt;</code> with a hash is not a guard in Safari or Firefox: use it as a performance hint only.</p>
         <div class="docs-snippet">
           <div class="docs-snippet__bar">
             <span class="docs-snippet__lang">HTML</span>
@@ -233,7 +233,8 @@ import &quot;@luz-ds/site&quot;;</code></pre>
 {
   &quot;integrity&quot;: {
     &quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js&quot;: &quot;sha384-…&quot;,
-    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js&quot;: &quot;sha384-…&quot;
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js&quot;: &quot;sha384-…&quot;,
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/mode.min.js&quot;: &quot;sha384-…&quot;
   }
 }
 &lt;/script&gt;

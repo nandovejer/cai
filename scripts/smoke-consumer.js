@@ -189,6 +189,7 @@ const PAGE = (base, label) => `<!doctype html>
       [core + "/dist/clipboard.js"]: ["initCopyButtons"],
       [site + "/dist/search.js"]: ["search"],
       [site + "/dist/consent.js"]: ["getConsent"],
+      [site + "/dist/mode.js"]: ["phaseOf"],
       [site + "/dist/site.js"]: [],
     };
     const missing = [];

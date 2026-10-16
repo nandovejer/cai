@@ -69,7 +69,8 @@ Thank you for helping keep LUZ secure!
     "https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/timeline.min.js": "sha384-<hash>",
     "https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/i18n-es.min.js": "sha384-<hash>",
     "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/search.min.js": "sha384-<hash>",
-    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js": "sha384-<hash>"
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/consent.min.js": "sha384-<hash>",
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.1.0/dist/mode.min.js": "sha384-<hash>"
   }
 }
 </script>
@@ -102,7 +103,7 @@ Compute each hash from the file you are pinning:
 curl -s <url> | openssl dgst -sha384 -binary | openssl base64 -A
 ```
 
-`luz.js` and `site.js` are ES modules and must be loaded with `type="module"`. SRI on an entry file does not cover the lazy chunks it imports on demand: core's `midi.js`, `table-sort.js`, `timeline.js` and one language file per language a page declares (`i18n-es.min.js`), and site's `search.js` (on a page with a `<luz-search>`) and `consent.js` (on a page with a `<luz-consent>`). Each chunk imports nothing, and each entry imports its chunks by fixed names next to it, never a URL built from the page.
+`luz.js` and `site.js` are ES modules and must be loaded with `type="module"`. SRI on an entry file does not cover the lazy chunks it imports on demand: core's `midi.js`, `table-sort.js`, `timeline.js` and one language file per language a page declares (`i18n-es.min.js`), and site's `search.js` (on a page with a `<luz-search>`), `consent.js` (on a page with a `<luz-consent>`) and `mode.js` (on a page with a `<luz-mode>`). Each chunk imports nothing, and each entry imports its chunks by fixed names next to it, never a URL built from the page.
 
 To check the chunks, use an import map with an `integrity` section, placed before the first module script, as above: the browser checks each file at the URL listed, whenever the entry imports it. It works in Chrome 127 and later, Safari 18 and later and Firefox 138 and later. An older browser ignores the `integrity` key and loads the chunks unchecked, so there is no protection there. A `<link rel="modulepreload" integrity>` is not a guard outside Chromium: Safari (WebKit) runs the file it preloaded without checking the hash, and Firefox fetches the file again without it, so a wrong hash does not block the file in either. Use `modulepreload` as a performance hint only. For browsers without import map integrity, self-hosting the files or installing from npm are the safe options.
 

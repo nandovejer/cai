@@ -1,0 +1,13 @@
+/* ==========================================================================
+	 LUZ Site: color mode, <luz-mode>.
+	 A wrapper around core's color mode radios (.luz-mode-switcher, with or
+	 without its --cycle variant) that adds an "Auto" radio: mode.js follows
+	 the system or the clock while it is checked. The look is core's: this
+	 file only makes the tag a block, so the fieldset inside it lays out as
+	 it does anywhere else. Without JavaScript the radios work through the
+	 tokens' :root:has(), and "Auto" leaves the page light.
+	 ========================================================================== */
+
+:where(luz-mode) {
+	display: block;
+}

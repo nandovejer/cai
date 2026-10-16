@@ -8,12 +8,17 @@
  *   <luz-consent>  consent.js, when the browser is idle (at most 1 s later),
  *                  and after the search chunk, if there is one, has loaded
  *                  or failed
+ *   <luz-mode>     mode.js, when the browser is idle (at most 1 s later),
+ *                  whether or not the search chunk has loaded: until then
+ *                  the radios, and core's cycle button, work as they do
+ *                  without it, and the boot snippet in <head> has already
+ *                  set the first mode
  *
  * "Idle" starts at the `load` event (at once when the page has loaded): in
  * Firefox a pending dynamic import delays `load`, so a chunk requested sooner
  * would hold the page's load back.
  *
- * A page with neither requests neither. Each chunk defines its element,
+ * A page with none of them requests none. Each chunk defines its element,
  * and the browser upgrades every instance on the page. There is no
  * MutationObserver: an element added after the scan stays undefined until
  * the page loads its chunk by hand ("@luz-ds/site/search", or
@@ -38,10 +43,11 @@
  * hint in Safari and Firefox.
  */
 
-// SEC-CHUNK-1: the only two files this one loads, each by a literal
+// SEC-CHUNK-1: the only three files this one loads, each by a literal
 const CHUNKS = {
   "luz-search": () => import("./search.js"),
   "luz-consent": () => import("./consent.js"),
+  "luz-mode": () => import("./mode.js"),
 };
 
 if (typeof document !== "undefined") {
@@ -53,8 +59,8 @@ if (typeof document !== "undefined") {
   const load = (tag) =>
     (loading[tag] ??= CHUNKS[tag]().then(
       () => {
-        // The chunk's own shortcut takes over
-        document.removeEventListener("keydown", early);
+        // The search chunk's own shortcut takes over
+        if (tag === "luz-search") document.removeEventListener("keydown", early);
         return true;
       },
       () => {},
@@ -90,6 +96,8 @@ if (typeof document !== "undefined") {
     // its buttons elsewhere on the page, which would move a banner already
     // shown below them
     if (document.querySelector("luz-consent")) idle(() => Promise.resolve(loading["luz-search"]).then(() => load("luz-consent")));
+    // The mode on its own: it moves nothing on the page
+    if (document.querySelector("luz-mode")) idle(() => load("luz-mode"));
   };
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", scan);

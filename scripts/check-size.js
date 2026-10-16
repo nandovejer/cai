@@ -22,10 +22,10 @@
  *     inlined or missing dependency would escape its budget);
  *   - the lazy chunks (SEC-CHUNK-1, SEC-CHUNK-2): every import() of a
  *     published .min.js names a string literal; every chunk (a file another
- *     one imports lazily, in any package, and site's search and consent)
- *     imports nothing, static or dynamic; site.min.js, the presence loader,
- *     has no static import, and its dynamic imports are exactly its two
- *     chunks.
+ *     one imports lazily, in any package, and site's search, consent and
+ *     mode) imports nothing, static or dynamic; site.min.js, the presence
+ *     loader, has no static import, and its dynamic imports are exactly its
+ *     three chunks.
  *
  * Usage: node scripts/check-size.js
  */
@@ -100,7 +100,7 @@ const SPECIFIERS = [
 const IMPORT_CALL = /\bimport\s*\(/g;
 const LITERAL_IMPORT = /\bimport\s*\(\s*(["'])([^"'`]+)\1\s*\)/g;
 const STATIC_IMPORT = /(?:^|[;}\s])(?:import\b(?!\s*[(.])|export\b[^"'();]*?\bfrom\b)/;
-const LOADERS = { "packages/site/dist/site.min.js": ["./consent.min.js", "./search.min.js"] };
+const LOADERS = { "packages/site/dist/site.min.js": ["./consent.min.js", "./mode.min.js", "./search.min.js"] };
 const chunks = new Set(Object.entries(LOADERS).flatMap(([loader, targets]) => targets.map((t) => relative(root, resolve(root, dirname(loader), t)))));
 const published = [];
 for (const pkg of readdirSync(resolve(root, "packages"))) {

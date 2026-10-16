@@ -12,7 +12,7 @@ order: 3
       ↓ required by
 @luz-ds/core     -> components, objects, bare-element styles, optional JS
       ↓ required by
-@luz-ds/site     -> search, consent, lang-switch, submenu and banner
+@luz-ds/site     -> search, consent, mode, lang-switch, submenu and banner
 
 Each of these needs tokens and core, and takes site as an optional peer:
 @luz-ds/landing  -> header, hero, sections and footer of a landing page (own version, 0.x)
@@ -49,6 +49,7 @@ Each of these needs tokens and core, and takes site as an optional peer:
           <tr><td data-label="Piece"><div>The links of a header, and its menu button</div></td><td data-label="Classes or attributes"><div><code>.luz-navbar</code>, <code>.luz-nav-toggle</code></div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>A popover panel at 768 px and below, with no script</div></td></tr>
           <tr><td data-label="Piece"><div>Submenu, banner</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-submenu&gt;</code>, <code>&lt;luz-banner&gt;</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Tags with no script and no class: the submenu is a native <code>&lt;details&gt;</code> in a header's links, the banner a <code>&lt;section&gt;</code></div></td></tr>
           <tr><td data-label="Piece"><div>Cookie consent</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-consent&gt;</code>, <code>.luz-consent</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div><code>site.js</code> loads its script, <code>consent.js</code>, when the page has one; a band fixed at the bottom of the window; without the script it stays hidden</div></td></tr>
+          <tr><td data-label="Piece"><div>Auto color mode</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-mode&gt;</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div><code>site.js</code> loads its script, <code>mode.js</code>, when the page has one; without it the radios of core's switcher still work and Auto is light</div></td></tr>
           <tr><td data-label="Piece"><div>Language switch</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-lang-switch&gt;</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>No script</div></td></tr>
           <tr><td data-label="Piece"><div>Site search</div></td><td data-label="Classes or attributes"><div><code>&lt;luz-search&gt;</code>, <code>.luz-search</code></div></td><td data-label="Package"><div>site</div></td><td data-label="Notes"><div>Needs the script (<code>site.js</code>, which loads <code>search.js</code> when the page has one) and an index file; without them it is a link</div></td></tr>
           <tr><td data-label="Piece"><div>Print styles</div></td><td data-label="Classes or attributes"><div>Nothing to add</div></td><td data-label="Package"><div>core</div></td><td data-label="Notes"><div>In <code>luz.css</code>; site adds its own print rules</div></td></tr>

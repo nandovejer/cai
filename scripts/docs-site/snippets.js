@@ -23,7 +23,7 @@ import { join } from "node:path";
 export const FILES = {
   tokens: { css: "luz-tokens.min.css", js: null, chunks: [] },
   core: { css: "luz.min.css", js: "luz.min.js", chunks: ["midi.min.js", "table-sort.min.js", "timeline.min.js", "i18n-es.min.js"] },
-  site: { css: "site.min.css", js: "site.min.js", chunks: ["search.min.js", "consent.min.js"] },
+  site: { css: "site.min.css", js: "site.min.js", chunks: ["search.min.js", "consent.min.js", "mode.min.js"] },
   landing: { css: "landing.min.css", js: null, chunks: [] },
   cms: { css: "cms.min.css", js: null, chunks: [] },
   app: { css: "app.min.css", js: null, chunks: [] },
@@ -51,6 +51,7 @@ const CHUNK_WHEN = {
   "i18n-es.min.js": ["core", "an element with <code>lang=\"es\"</code>, on <code>&lt;html&gt;</code> or in the page, outside a link or an option"],
   "search.min.js": ["site", "a <code>&lt;luz-search&gt;</code>"],
   "consent.min.js": ["site", "a <code>&lt;luz-consent&gt;</code>"],
+  "mode.min.js": ["site", "a <code>&lt;luz-mode&gt;</code>"],
 };
 
 const CDN = "https://cdn.jsdelivr.net/npm";

@@ -259,3 +259,103 @@ describe("the pages that point at <luz-mode>", () => {
     expect(hasLink(html, ROUTE)).toBe(true);
   });
 });
+
+/* ---- Review fixes: icons in the labels, the three surprises of Auto, the CSP ----- */
+
+/** The text of a section: from its heading id to the next heading of the same or a higher level. */
+const section = (html, id) => {
+  const m = new RegExp(`<h([1-6])\\b[^>]*\\bid="${id}"[^>]*>`).exec(html);
+  expect(m, `a heading with id="${id}"`).not.toBeNull();
+  const rest = html.slice(m.index + m[0].length);
+  const end = new RegExp(`<h[1-${m[1]}]\\b`).exec(rest);
+  return end ? rest.slice(0, end.index) : rest;
+};
+const labelsOf = (markup) => [...markup.matchAll(/<label\b[^>]*\bluz-mode-btn\b[^>]*>[\s\S]*?<\/label>/g)].map((m) => m[0]);
+const ICON = /<svg\b(?=[^>]*\bclass="[^"]*\bluz-mode-btn__icon\b)(?=[^>]*\baria-hidden="true")[^>]*>/;
+
+describe("site/mode.html: the icons are in the labels (the cycle button shows the checked label's icon)", () => {
+  it("every label of the markup snippet has a .luz-mode-btn__icon svg with aria-hidden=\"true\", Auto included", () => {
+    const snippet = codeBlocks(page(MODE_PAGE)).find((c) => c.includes("<luz-mode"));
+    expect(snippet, "the code block with <luz-mode>").toBeTruthy();
+    const labels = labelsOf(snippet);
+    expect(labels, "four labels").toHaveLength(4);
+    for (const l of labels) expect(l, `an icon in ${text(l)}`).toMatch(ICON);
+  });
+
+  it("every label of the live demo has a .luz-mode-btn__icon svg with aria-hidden=\"true\", Auto included", () => {
+    const demo = section(page(MODE_PAGE), "example");
+    const labels = labelsOf(demo);
+    expect(labels, "four labels").toHaveLength(4);
+    for (const l of labels) expect(l, `an icon in ${text(l)}`).toMatch(ICON);
+  });
+
+  it("the page says the icons go in the labels, not data-mode-icon on the button, because core has no Auto icon", () => {
+    const body = text(page(MODE_PAGE));
+    expect(body).toMatch(/data-mode-icon/);
+    expect(body).toMatch(/icons?\b[^.]{0,80}\blabels?\b|\blabels?\b[^.]{0,80}\bicons?\b/i);
+    expect(body).toMatch(/\bno Auto icon\b|\bAuto\b[^.]{0,40}\bno icon\b|\bno icon\b[^.]{0,40}\bAuto\b/i);
+  });
+
+  it("the header comment of mode.js has the icons in its example too", () => {
+    const src = readFileSync(join(repo, "packages/site/src/mode.js"), "utf-8");
+    // reads packages/ only; the implementer edits it, this test does not
+    expect(src).toMatch(/luz-mode-btn__icon/);
+  });
+});
+
+describe("what Auto does that a reader would not expect: on the page and in the accessibility statement", () => {
+  const where = {
+    "site/mode.html (When not to use or Known issues)": () => text(section(page(MODE_PAGE), "when-not")) + " " + text(section(page(MODE_PAGE), "known-issues")),
+    "accessibility.html": () => text(page(`${PAGES}/accessibility.html`).split(/Auto color mode/)[1] ?? ""),
+  };
+  for (const [name, get] of Object.entries(where)) {
+    it(`${name}: by="clock" is dark from 20:30 to 07:30 even when the device is set to light`, () => {
+      const t = get();
+      expect(t).toMatch(/20:30/);
+      expect(t).toMatch(/07:30/);
+      expect(t).toMatch(/clock/);
+      expect(t).toMatch(/\b(device|system)\b[^.]{0,60}\blight\b|\blight\b[^.]{0,60}\b(device|system)\b/i);
+    });
+
+    it(`${name}: prefers-contrast: more together with a dark setting gives the high-contrast mode in Auto`, () => {
+      const t = get();
+      expect(t).toMatch(/prefers-contrast/);
+      expect(t).toMatch(/high[- ]contrast/i);
+      expect(t).toMatch(/\bdark\b/i);
+    });
+
+    it(`${name}: in the Auto state the cycle button says Auto, not the mode it applied`, () => {
+      const t = get();
+      expect(t).toMatch(/cycle button/i);
+      expect(t).toMatch(/\bsays Auto\b|\bAuto\b[^.]{0,60}\bnot the mode\b|\bnot the mode\b[^.]{0,80}\bAuto\b|\bshows? Auto\b/i);
+    });
+  }
+});
+
+describe("the CSP sentence for the script for the head", () => {
+  const CSP = /\bCSP\b|Content[- ]Security[- ]Policy/;
+  it("site/mode.html #boot says: under a CSP without 'unsafe-inline', serve it as a classic file in <head> or allow it by its sha256 hash", () => {
+    const t = text(section(page(MODE_PAGE), "boot"));
+    expect(t).toMatch(CSP);
+    expect(t).toMatch(/unsafe-inline/);
+    expect(t).toMatch(/sha256/);
+    expect(t).toMatch(/\b(classic|external)\b[^.]{0,60}\b(file|script)\b|\bfile\b[^.]{0,60}\bhead\b/i);
+  });
+
+  it("tokens/modes.html #system says the same in one sentence", () => {
+    const t = text(section(page(`${PAGES}/tokens/modes.html`), "system"));
+    expect(t).toMatch(CSP);
+    expect(t).toMatch(/unsafe-inline/);
+    expect(t).toMatch(/sha256/);
+  });
+});
+
+describe("the attributes table: light-attr", () => {
+  it("says light-attr must not be data-theme or a data-luz-* attribute", () => {
+    const row = rows(page(MODE_PAGE)).find((r) => r[0] === "light-attr");
+    expect(row, "a row for light-attr").toBeTruthy();
+    expect(row[1]).toMatch(/\bnot\b|\bnever\b|\bmust not\b/i);
+    expect(row[1]).toContain("data-theme");
+    expect(row[1]).toMatch(/data-luz-/);
+  });
+});

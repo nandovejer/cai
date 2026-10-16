@@ -93,6 +93,25 @@ function coreLanguages() {
   };
 }
 
+/**
+ * The pages build keeps Vite's `__vitePreload` helper (MIT, VoidZero Inc. and Vite
+ * contributors) in docs/assets, so it serves Vite's notice at docs/LICENSE-vite.txt
+ * (RL-13). `pnpm check:license` fails on the helper without it.
+ */
+function viteLicence() {
+  return {
+    name: "pages-vite-licence",
+    apply: "build",
+    generateBundle() {
+      this.emitFile({
+        type: "asset",
+        fileName: "LICENSE-vite.txt",
+        source: readFileSync(resolve(__dirname, "node_modules/vite/LICENSE.md"), "utf-8"),
+      });
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const pages = mode === "pages";
   const outRoot = pages ? pagesRoot : distRoot;
@@ -104,7 +123,7 @@ export default defineConfig(({ mode }) => {
     publicDir: false,
     // The site's routes, dev server, layouts and partials, link check and the
     // move of each HTML file to its route: scripts/docs-site/plugin.js
-    plugins: [coreLanguages(), docsSite({ repoRoot: __dirname, relative: pages, outRoot, pagesBase: PAGES_BASE, siteUrl: SITE_URL, csp: PAGES_CSP }), ...(pages ? [pagesCsp()] : [])],
+    plugins: [coreLanguages(), docsSite({ repoRoot: __dirname, relative: pages, outRoot, pagesBase: PAGES_BASE, siteUrl: SITE_URL, csp: PAGES_CSP }), ...(pages ? [pagesCsp(), viteLicence()] : [])],
     server: {
       open: "/",
       fs: {

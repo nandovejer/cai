@@ -9,7 +9,8 @@
  *    on the allowlist. These are development tools: nothing in the list ships,
  *    and the check says so in the report.
  * 3. The Pages site (docs/assets) holds no third-party code without its notice
- *    (`checkPagesSite`): the Vite module-preload polyfill needs docs/LICENSE-vite.txt.
+ *    (`checkPagesSite`): Vite's `__vitePreload` helper and module-preload polyfill
+ *    need docs/LICENSE-vite.txt.
  * 4. dev/LICENSES.md is the generated list of those dependencies and is up to
  *    date. `--update` rewrites it; it never legitimises a problem of 1 or 2.
  *
@@ -198,21 +199,34 @@ function* jsFiles(dir) {
 }
 
 /**
- * Third-party code the Pages build emits into docs/assets: Vite's module-preload
- * polyfill (MIT, VoidZero Inc. and Vite contributors), recognised by two markers
- * in one file, needs docs/LICENSE-vite.txt beside the site (red line 13). The
- * pages build turns the polyfill off, so this normally finds nothing.
+ * Third-party code the Pages build emits into docs/assets: Vite's `__vitePreload`
+ * helper and its module-preload polyfill (MIT, VoidZero Inc. and Vite
+ * contributors; the polyfill is recognised by two markers in one file). A built
+ * file that holds either needs docs/LICENSE-vite.txt beside the site, with the
+ * real notice: its text names "MIT License" and "Vite" (red line 13). The pages
+ * build turns the polyfill off and emits the notice; each file is reported once.
  */
 export function checkPagesSite(root) {
   const problems = [];
   const assets = join(root, "docs", "assets");
   if (!existsSync(assets)) return problems;
-  const notice = existsSync(join(root, "docs", "LICENSE-vite.txt"));
+  const noticeFile = join(root, "docs", "LICENSE-vite.txt");
+  let state = null;
+  const noticeState = () => {
+    if (state) return state;
+    if (!existsSync(noticeFile)) return (state = "is missing");
+    const text = readFileSync(noticeFile, "utf-8");
+    return (state = text.includes("MIT License") && text.includes("Vite") ? "ok" : "is not Vite's licence notice (it needs the text of Vite's LICENSE.md)");
+  };
   for (const file of jsFiles(assets)) {
     const text = readFileSync(file, "utf-8");
-    if (!notice && text.includes('link[rel="modulepreload"]') && text.includes("MutationObserver")) {
-      problems.push(`${relative(root, file).split(sep).join("/")}: it holds Vite's module-preload polyfill (MIT) and docs/LICENSE-vite.txt is missing; turn the polyfill off (build.modulePreload) or ship the notice (red line 13).`);
-    }
+    const helper = text.includes("__vitePreload");
+    const polyfill = text.includes('link[rel="modulepreload"]') && text.includes("MutationObserver");
+    if (!helper && !polyfill) continue;
+    const status = noticeState();
+    if (status === "ok") continue;
+    const what = helper ? "Vite's __vitePreload helper" : "Vite's module-preload polyfill";
+    problems.push(`${relative(root, file).split(sep).join("/")}: it holds ${what} (MIT) and docs/LICENSE-vite.txt ${status}; the pages build emits it (red line 13).`);
   }
   return problems;
 }

@@ -80,8 +80,8 @@ describe("budgets.json and PRINCIPLES.md section 8", () => {
     expect(principles).toMatch(/^\| `site` JS lazy chunk: `consent`[^\n]*\| 1\.5 kB \|$/m);
   });
 
-  it("has a row for the mode chunk, the size of the consent one, appended as the last row (a new row, no other ceiling raised)", () => {
-    expect(budgets.at(-1)).toEqual({ name: "site JS lazy chunk: mode", file: "packages/site/dist/mode.min.js", ideal: 1024, max: 1536 });
+  it("has a row for the mode chunk, the size of the consent one (a new row, no other ceiling raised)", () => {
+    expect(budgets.find((b) => b.name === "site JS lazy chunk: mode")).toEqual({ name: "site JS lazy chunk: mode", file: "packages/site/dist/mode.min.js", ideal: 1024, max: 1536 });
     expect(principles).toMatch(/^\| `site` JS lazy chunk: `mode`[^\n]*\| 1\.5 kB \|$/m);
   });
 
@@ -131,8 +131,8 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     expect(budgets.slice(0, BEFORE.length).map((b) => [b.name, b.max])).toEqual(BEFORE);
   });
 
-  it("appends the three AI-ready rows after the docs page row, then the language chunk row (F6), then the mode chunk row (F1) and nothing else", () => {
-    expect(budgets).toHaveLength(BEFORE.length + 5);
+  it("appends the three AI-ready rows after the docs page row, then the language chunk row (F6), then the mode chunk row (F1), then the four rows of the home's light (F3) and nothing else", () => {
+    expect(budgets).toHaveLength(BEFORE.length + 9);
     expect(budgets.at(BEFORE.length - 1).name).toBe(last);
   });
 
@@ -169,7 +169,7 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
   });
 
   it("repeats the rows in the PRINCIPLES.md table, in the same order, after \"Each docs page\"", () => {
-    expect(table).toHaveLength(BEFORE.length + 5);
+    expect(table).toHaveLength(BEFORE.length + 9);
     expect(table[BEFORE.length - 1][0]).toMatch(/^Each docs page/);
     const [cli, text, manifests] = table.slice(BEFORE.length);
     expect(cli[0]).toMatch(/check/);
@@ -207,7 +207,7 @@ describe("the language chunks of core", () => {
 
   it("budgets i18n-es as the row after the AI-ready ones, the one before the mode chunk: ideal 0.75 kB, ceiling 1 kB, fixed once and never raised (RL-17)", () => {
     // The spec's estimate was 510 B gzip for the 25 keys; x1.5 the ideal, x2 the ceiling, the proportion of table-sort
-    expect(budgets.at(-2)).toEqual({
+    expect(budgets.find((b) => b.name === "core JS lazy chunk: i18n-es")).toEqual({
       name: "core JS lazy chunk: i18n-es",
       file: "packages/core/dist/i18n-es.min.js",
       ideal: 768,
@@ -216,9 +216,10 @@ describe("the language chunks of core", () => {
   });
 
   it("repeats it in the PRINCIPLES.md table, before the mode chunk row: warns above 0.75 kB, ceiling 1 kB", () => {
-    const last = table.at(-2);
-    expect(last[0], "the row before the last one").toMatch(/^`core` JS lazy chunk: `i18n-es`/);
-    expect(table.at(-1)[0], "the last row").toMatch(/^`site` JS lazy chunk: `mode`/);
+    const at = table.findIndex((cells) => /^`core` JS lazy chunk: `i18n-es`/.test(cells[0]));
+    const last = table[at];
+    expect(at, "the i18n-es row is in the table").toBeGreaterThan(-1);
+    expect(table[at + 1][0], "the row after it").toMatch(/^`site` JS lazy chunk: `mode`/);
     expect(last[1]).toBe("\u2014");
     expect(kib(last[2])).toBe(768);
     expect(kib(last[3])).toBe(768);

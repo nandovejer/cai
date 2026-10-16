@@ -1,0 +1,448 @@
+/**
+ * <luz-light> on the home page (F3 of .claude/plans/luz-home-docs-identity.md,
+ * section 3.7; D8, D9, D10, D11). The element lives in apps/landing/light/,
+ * not in a package: four files of vanilla JS, one stylesheet and a README.
+ *
+ *   light.js   the controller: defines <luz-light>, imports nothing statically,
+ *              loads the chosen visual with a literal import()
+ *   globe.js   <luz-globe>   city.js   <luz-city>   map.js   <luz-map>
+ *              each imports nothing at all
+ *   light.css  every rule the mockup injected with <style>, linked by the home only
+ *
+ * What the browser does with them is in tests/home-light.spec.js. This file
+ * holds what a file can say about itself: no HTML sink, no injected style, no
+ * write of the attributes <luz-mode> owns, one row of budgets.json per file,
+ * the licence of the land data and the phrases of the bar in three languages.
+ */
+import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { gzipSync } from "node:zlib";
+import { describe, expect, it } from "vitest";
+
+const repo = fileURLToPath(new URL("../", import.meta.url));
+/** A missing file is a failed assertion that names it, not an ENOENT. */
+const read = (path) => {
+  expect(existsSync(join(repo, path)), `${path} does not exist`).toBe(true);
+  return readFileSync(join(repo, path), "utf-8");
+};
+const DIR = "apps/landing/light";
+const FILES = ["light", "globe", "city", "map"].map((name) => `${DIR}/${name}.js`);
+const VISUALS = { globe: "luz-globe", city: "luz-city", map: "luz-map" };
+
+/** The code without its comments: a rule may be explained in a comment that names what it forbids. */
+const code = (path) =>
+  read(path)
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/^\s*\/\/.*$/gm, "")
+    .replace(/([^:"'`\\])\/\/[^\n"'`]*$/gm, "$1");
+
+const IMPORT_CALL = /\bimport\s*\(/g;
+const LITERAL_IMPORT = /\bimport\s*\(\s*(["'])(\.\/[\w.-]+\.js)\1\s*\)/g;
+/** Static imports and re-exports, `import "x"`, `import x from "x"`, `export … from "x"`. */
+const STATIC = /(?:^|[;}\s])(?:import\b(?!\s*[(.])|export\b[^"'();]*?\bfrom\b)/;
+const dynamicTargets = (source) => [...source.matchAll(LITERAL_IMPORT)].map((m) => m[2]).sort();
+
+/* ---- The files --------------------------------------------------------- */
+
+describe("apps/landing/light: the files", () => {
+  it.each([...FILES, `${DIR}/light.css`, `${DIR}/README.md`])("%s exists", (path) => {
+    expect(existsSync(join(repo, path)), `${path} does not exist`).toBe(true);
+  });
+
+  it("light.js imports nothing statically", () => {
+    expect(STATIC.test(code(`${DIR}/light.js`)), "a static import or export-from").toBe(false);
+    expect(code(`${DIR}/light.js`)).not.toMatch(/import\.meta/);
+  });
+
+  it("light.js loads the three visuals with import() of a literal, and nothing else", () => {
+    const source = code(`${DIR}/light.js`);
+    expect(dynamicTargets(source)).toEqual(["./city.js", "./globe.js", "./map.js"]);
+    // every import( is one of the three literal ones: none is built from a variable or the URL
+    expect(source.match(IMPORT_CALL)).toHaveLength(3);
+  });
+
+  it.each(["globe", "city", "map"])("%s.js has no import at all, static or dynamic", (name) => {
+    const source = code(`${DIR}/${name}.js`);
+    expect(STATIC.test(source), "a static import or export-from").toBe(false);
+    expect(source.match(IMPORT_CALL)).toBeNull();
+    expect(source).not.toMatch(/import\.meta/);
+  });
+
+  it.each(FILES)("%s is an ES module that defines its element once, behind customElements.get()", (path) => {
+    const name = path.endsWith("light.js") ? "luz-light" : VISUALS[path.match(/(\w+)\.js$/)[1]];
+    const source = code(path);
+    expect(source).toMatch(new RegExp(`customElements\\.get\\(\\s*["']${name}["']\\s*\\)`));
+    expect(source).toMatch(new RegExp(`customElements\\.define\\(\\s*["']${name}["']`));
+    // no window.LuzX = … global, as the mockup had
+    expect(source).not.toMatch(/\bwindow\.Luz\w*\s*=/);
+    expect(source).not.toMatch(/\bglobalThis\.Luz\w*\s*=/);
+  });
+
+  it("globe.js says where the land data comes from (Natural Earth, public domain)", () => {
+    expect(read(`${DIR}/globe.js`)).toMatch(/Natural Earth/);
+    expect(read(`${DIR}/globe.js`)).toMatch(/public domain/i);
+  });
+});
+
+describe("apps/landing/light: no HTML sink, no injected style (SEC-IDX-2, plan section 3.7)", () => {
+  const SINKS = [
+    [/\binnerHTML\b/, "innerHTML"],
+    [/\bouterHTML\b/, "outerHTML"],
+    [/\binsertAdjacentHTML\b/, "insertAdjacentHTML"],
+    [/\bdocument\.write(ln)?\s*\(/, "document.write"],
+    [/\beval\s*\(/, "eval"],
+    [/\bnew\s+Function\b/, "new Function"],
+    [/\bsetHTMLUnsafe\b/, "setHTMLUnsafe"],
+    [/\bcreateContextualFragment\b/, "createContextualFragment"],
+  ];
+  const INJECTED = [
+    [/createElement\(\s*["']style["']\s*\)/, 'createElement("style")'],
+    [/\bnew\s+CSSStyleSheet\b/, "new CSSStyleSheet"],
+    [/\badoptedStyleSheets\b/, "adoptedStyleSheets"],
+    [/\binsertRule\b/, "insertRule"],
+  ];
+
+  for (const path of FILES) {
+    it(`${path} writes no HTML from a string`, () => {
+      const source = code(path);
+      for (const [pattern, label] of SINKS) expect(pattern.test(source), `${path} uses ${label}`).toBe(false);
+    });
+    it(`${path} injects no <style>: the rules are light.css`, () => {
+      const source = code(path);
+      for (const [pattern, label] of INJECTED) expect(pattern.test(source), `${path} uses ${label}`).toBe(false);
+    });
+    it(`${path} loads nothing from the network`, () => {
+      const source = code(path);
+      expect(source).not.toMatch(/\bfetch\s*\(/);
+      expect(source).not.toMatch(/\bXMLHttpRequest\b/);
+      expect(source).not.toMatch(/\bWebSocket\b/);
+      expect(source).not.toMatch(/\bnavigator\.geolocation\b/);
+      // the SVG namespace is a name, not an address
+      expect(source.replace(/https?:\/\/www\.w3\.org\/\d+\/\w+/g, "")).not.toMatch(/https?:\/\//);
+    });
+  }
+});
+
+/* ---- The controller leaves the mode to <luz-mode> ----------------------- */
+
+describe("light.js: <luz-mode> is the only writer of data-theme and data-light", () => {
+  const source = () => code(`${DIR}/light.js`);
+
+  it("does not write data-theme or data-light, by setAttribute, removeAttribute, toggleAttribute or dataset", () => {
+    const s = source();
+    expect(s).not.toMatch(/(?:set|remove|toggle)Attribute\(\s*["']data-(?:theme|light)["']/);
+    expect(s).not.toMatch(/\.dataset\.(?:theme|light)\s*=/);
+    expect(s).not.toMatch(/\.dataset\[\s*["'](?:theme|light)["']\s*\]\s*=/);
+  });
+
+  it("has no mode buttons and no mode, for, light-attr or mode-attr attribute", () => {
+    const s = source();
+    for (const gone of ["light-attr", "mode-attr", "data-mode", "MODE_LABEL", "high-contrast"]) expect(s, `"${gone}" is gone`).not.toContain(gone);
+    expect(s).not.toMatch(/observedAttributes[^;]*["']mode["']/);
+  });
+
+  it("does not repeat the phase table of <luz-mode> (the phase is <luz-mode>'s)", () => {
+    const s = source();
+    expect(s).not.toMatch(/\bphaseOf\b/);
+    for (const edge of ["7.5", "17.5", "20.5", "22.5", "6.25", "21.25", "23.75"]) expect(s, `the hour ${edge}`).not.toMatch(new RegExp(`(?<![\\d.])${edge.replace(".", "\\.")}(?![\\d])`));
+  });
+
+  it("asks <luz-mode> to preview the hour, and listens to luz-mode:change", () => {
+    const s = source();
+    expect(s).toMatch(/["']luz-mode["']/);
+    expect(s).toMatch(/\.preview\(/);
+    expect(s).toContain("luz-mode:change");
+  });
+
+  it("writes only custom properties on the page: --sun-alt, --sun-az, --sun-x and --day-left", () => {
+    const s = source();
+    for (const property of ["--sun-alt", "--sun-az", "--sun-x", "--day-left"]) expect(s).toContain(property);
+  });
+
+  it("stores the look under luz-light, in a try/catch, and never touches core's luz-theme key", () => {
+    const s = source();
+    expect(s).toContain('"luz-light"');
+    expect(s).not.toContain("luz-theme");
+    expect(s).toMatch(/try\s*\{[^}]*localStorage/);
+  });
+
+  it("reads the optional ?look= of the URL, and nothing else of it", () => {
+    const s = source();
+    expect(s).toMatch(/URLSearchParams|location\.search/);
+    expect(s).not.toMatch(/location\.(hash|href|pathname)/);
+  });
+
+  it("writes the favicon as a data: URL of an SVG, not as markup", () => {
+    expect(source()).toContain("data:image/svg+xml");
+  });
+
+  it("builds SVG with createElementNS", () => {
+    const all = FILES.map(code).join("\n");
+    expect(all).toMatch(/createElementNS\(/);
+  });
+
+  it("reads the strings it writes from data-luz-label-*", () => {
+    expect(source()).toMatch(/luzLabel|data-luz-label-|luz-label/);
+  });
+});
+
+/* ---- The stylesheet ----------------------------------------------------- */
+
+describe("light.css", () => {
+  const WHERE = ["apps/landing/index.html"];
+  /** Every file of a folder that can link a stylesheet. */
+  const filesOf = (dir) =>
+    readdirSync(join(repo, dir), { withFileTypes: true }).flatMap((entry) => {
+      if (entry.name === "node_modules" || entry.name === "dist") return [];
+      const path = `${dir}/${entry.name}`;
+      if (entry.isDirectory()) return filesOf(path);
+      return /\.(html|css|js|json)$/.test(entry.name) ? [path] : [];
+    });
+
+  it("is linked by the home, and by nothing under apps/docs or apps/site", () => {
+    for (const page of WHERE) expect(read(page)).toMatch(/<link[^>]+rel="stylesheet"[^>]+href="\/apps\/landing\/light\/light\.css"/);
+    const others = [...filesOf("apps/docs"), ...filesOf("apps/site")].filter((path) => /light\/light\.css|landing\/light/.test(read(path)));
+    expect(others, "files that name the home's light").toEqual([]);
+  });
+
+  it("is not imported by another stylesheet", () => {
+    const importers = filesOf("apps")
+      .filter((path) => path.endsWith(".css"))
+      .filter((path) => /@import[^;]*light\.css/.test(read(path)));
+    expect(importers).toEqual([]);
+  });
+
+  it("styles the element and its three visuals, and stops its motion under prefers-reduced-motion", () => {
+    const css = read(`${DIR}/light.css`);
+    for (const tag of ["luz-light", "luz-globe", "luz-city", "luz-map"]) expect(css).toContain(tag);
+    expect(css).toMatch(/prefers-reduced-motion:\s*reduce/);
+  });
+
+  it("reserves the room of the element before the script runs, so nothing jumps", () => {
+    const css = read(`${DIR}/light.css`);
+    expect(css).toMatch(/luz-light(?::not\(:defined\))?\s*\{[^}]*(?:min-height|aspect-ratio|height)\s*:/);
+  });
+
+  it("reads the page's colours from its custom properties", () => {
+    const css = read(`${DIR}/light.css`);
+    expect(css).toMatch(/var\(--/);
+  });
+});
+
+/* ---- The home page ------------------------------------------------------ */
+
+describe("apps/landing/index.html: the light section", () => {
+  const html = read("apps/landing/index.html");
+  const section = html.match(/<section[^>]*\bid="light"[^>]*>([\s\S]*?)<\/section>/);
+
+  it("has a section#light after the hero, with a screen-reader heading and the element, empty", () => {
+    expect(section, "a <section id=\"light\">").not.toBeNull();
+    expect(html.indexOf('id="light"')).toBeGreaterThan(html.indexOf("luz-landing-hero"));
+    expect(section[1]).toMatch(/<h2[^>]*class="[^"]*u-sr-only[^"]*"[^>]*>\s*\{\{t:[\w.-]+\}\}\s*<\/h2>/);
+    expect(section[1]).toMatch(/<luz-light\b[^>]*>\s*<\/luz-light>/);
+  });
+
+  it('offers the three looks, picks one at random, remembers the visitor\'s click, bleeds and writes the favicon', () => {
+    expect(section, "a <section id=\"light\">").not.toBeNull();
+    const tag = section[1].match(/<luz-light\b[^>]*>/)?.[0] ?? "";
+    expect(tag, "a <luz-light> in it").not.toBe("");
+    expect(tag).toMatch(/\blooks="globe city map"/);
+    expect(tag).toMatch(/\blook="random"/);
+    for (const flag of ["remember", "bleed", "favicon"]) expect(tag).toMatch(new RegExp(`\\s${flag}(?=[\\s>=])`));
+    // the modes, the target and the attribute names are gone: <luz-mode> owns them
+    for (const gone of ["modes=", "mode=", "for=", "light-attr", "mode-attr"]) expect(tag).not.toContain(gone);
+  });
+
+  it("loads light.js as a module, from the template or from landing.js", () => {
+    const named = /\/apps\/landing\/light\/light\.js/;
+    expect(named.test(html) || named.test(read("apps/landing/landing.js"))).toBe(true);
+  });
+});
+
+/* ---- The README --------------------------------------------------------- */
+
+describe("apps/landing/light/README.md", () => {
+  const readme = () => read(`${DIR}/README.md`);
+
+  it("names the land data's origin and licence: Natural Earth, public domain", () => {
+    expect(readme()).toMatch(/Natural Earth/);
+    expect(readme()).toMatch(/public domain/i);
+  });
+
+  it("gives the reason for its weight (PRINCIPLES section 3) and where it comes from", () => {
+    expect(readme()).toMatch(/gzip|kB|KB|bytes/);
+    expect(readme()).toMatch(/mockup/i);
+    expect(readme()).toMatch(/2026-10-16/);
+  });
+});
+
+/* ---- Budgets ------------------------------------------------------------ */
+
+describe("budgets.json and PRINCIPLES.md section 8: the four rows of the home's light", () => {
+  const budgets = JSON.parse(read("budgets.json")).budgets;
+  const ROWS = [
+    ["home light controller JS", "light"],
+    ["home light visual: globe", "globe"],
+    ["home light visual: city", "city"],
+    ["home light visual: map", "map"],
+  ];
+
+  it.each(ROWS)("has the row %s for %s.js, with ideal = max - 256 and a max that is a multiple of 256", (name, file) => {
+    const row = budgets.find((b) => b.name === name);
+    expect(row, `a row named "${name}"`).toBeDefined();
+    expect(row.file).toBe(`${DIR}/${file}.js`);
+    expect(row.max % 256, "max is a multiple of 256").toBe(0);
+    expect(row.ideal).toBe(row.max - 256);
+    expect(row.ideal).toBeGreaterThan(0);
+  });
+
+  it.each(ROWS)("%s: the source, gzipped at level 9 as check-size does, fits the ceiling", (name, file) => {
+    const row = budgets.find((b) => b.name === name);
+    expect(row, `a row named "${name}"`).toBeDefined();
+    const size = gzipSync(Buffer.from(read(`${DIR}/${file}.js`)), { level: 9 }).length;
+    expect(size).toBeLessThanOrEqual(row.max);
+  });
+
+  it("puts them after the mode chunk row, the last row that existed (no other row moved or raised)", () => {
+    const names = budgets.map((b) => b.name);
+    const mode = names.indexOf("site JS lazy chunk: mode");
+    expect(names.slice(mode + 1)).toEqual(ROWS.map(([name]) => name));
+  });
+
+  it("repeats them in the PRINCIPLES.md table, with the same ceilings, in the same order", () => {
+    const lines = read("PRINCIPLES.md").split("\n");
+    const header = lines.findIndex((line) => /^\|\s*Artifact\s*\|.*\|\s*Ceiling\s*\|$/.test(line));
+    const table = lines
+      .slice(header + 2)
+      .filter((line, i, all) => all.slice(0, i + 1).every((l) => l.startsWith("|")))
+      .map((line) => line.split("|").slice(1, -1).map((cell) => cell.trim()));
+    const at = table.findIndex((cells) => /^`site` JS lazy chunk: `mode`/.test(cells[0]));
+    const rows = table.slice(at + 1);
+    expect(rows).toHaveLength(4);
+    rows.forEach((cells, i) => {
+      expect(cells[0].replace(/`/g, ""), `row ${i + 1}`).toMatch(new RegExp(ROWS[i][0].replace(/`/g, "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+      const row = budgets.find((b) => b.name === ROWS[i][0]);
+      expect(Math.round(parseFloat(cells.at(-1)) * 1024), `${ROWS[i][0]} ceiling`).toBe(row.max);
+      expect(Math.round(parseFloat(cells[2].replace(/^≤\s*/, "")) * 1024), `${ROWS[i][0]} ideal`).toBe(row.ideal);
+    });
+  });
+
+  it("is measured by scripts/check-size.js: a line for each row, and no error about them", async () => {
+    const { spawnSync } = await import("node:child_process");
+    const run = spawnSync(process.execPath, [join(repo, "scripts/check-size.js")], { encoding: "utf-8" });
+    const output = `${run.stdout}\n${run.stderr}`;
+    for (const [name] of ROWS) expect(output, `check-size reports "${name}"`).toContain(name);
+    expect(output).not.toMatch(/✗[^\n]*(?:home light|apps\/landing\/light)/);
+    expect(output).not.toMatch(/PRINCIPLES\.md budget table/);
+  });
+});
+
+/* ---- Licence of the land data (D9) -------------------------------------- */
+
+describe("the licence of the land data", () => {
+  it("RL-13 accepts public-domain data with its origin noted next to it (owner decision D9, 2026-10-16)", () => {
+    const rl13 = read("PRINCIPLES.md")
+      .split("\n")
+      .find((line) => /^13\.\s+\*\*/.test(line));
+    expect(rl13, "the red line 13 paragraph").toBeDefined();
+    expect(rl13).toMatch(/public[- ]domain/i);
+    expect(rl13).toMatch(/origin/i);
+    // it is still MIT and only MIT for code
+    expect(rl13).toMatch(/MIT/);
+  });
+
+  it("dev/LICENSES.md lists Natural Earth as public domain, with its terms", () => {
+    const licences = read("dev/LICENSES.md");
+    expect(licences).toMatch(/Natural Earth/);
+    expect(licences).toMatch(/public domain/i);
+    expect(licences).toMatch(/naturalearthdata\.com/);
+  });
+});
+
+/* ---- The texts: the catalogs of the home (D11) -------------------------- */
+
+describe("the strings of <luz-light> in the catalogs of the home", () => {
+  const catalog = (code) => JSON.parse(read(`apps/landing/i18n/${code}.json`));
+  const en = catalog("en");
+  const es = catalog("es");
+  const ar = catalog("ar");
+  const html = read("apps/landing/index.html");
+  /** The key whose English value is `text`. */
+  const keyOf = (text) => Object.keys(en).find((key) => en[key] === text);
+
+  const PHRASES = {
+    globe: ["A design system is a world with its own laws of light.", "Un sistema de diseño es un mundo con sus propias leyes de la luz."],
+    city: ["A city is built piece by piece. So is a design system.", "Una ciudad se construye pieza a pieza. Un sistema de diseño también."],
+    map: ["The map is not the territory, but it looks like it.", "El mapa no es el territorio, pero lo parece."],
+  };
+
+  it.each(Object.entries(PHRASES))("the %s phrase of the bar is in en.json (translated from the mockup, D11) and es.json keeps the mockup's Spanish", (look, [english, spanish]) => {
+    const key = keyOf(english);
+    expect(key, `a key of en.json whose value is "${english}"`).toBeDefined();
+    expect(es[key]).toBe(spanish);
+  });
+
+  it.each(Object.entries(PHRASES))("the %s phrase has an Arabic translation, under the same key (the reader of F5 reviews it, Q21)", (look, [english]) => {
+    const key = keyOf(english);
+    expect(key, `a key of en.json whose value is "${english}"`).toBeDefined();
+    expect(typeof ar[key]).toBe("string");
+    expect(ar[key]).toMatch(/[؀-ۿ]/);
+    expect(ar[key]).not.toBe(english);
+  });
+
+  it.each(Object.entries(PHRASES))("the page hands the %s phrase to the script as a data-luz-label-* of <body>", (look, [english]) => {
+    const key = keyOf(english);
+    expect(key).toBeDefined();
+    const body = html.match(/<body[^>]*>/)[0];
+    expect(body).toMatch(new RegExp(`data-luz-label-[\\w-]+="\\{\\{t:${key.replace(/\./g, "\\.")}\\}\\}"`));
+  });
+
+  const WORDS = ["Live", "Globe", "City", "Map", "Scrub the day", "Show the light bar"];
+  it.each(WORDS)('"%s" is a key of every catalog and a data-luz-label-* of <body>', (text) => {
+    const key = keyOf(text);
+    expect(key, `a key of en.json whose value is "${text}"`).toBeDefined();
+    expect(typeof es[key], `es.json has ${key}`).toBe("string");
+    expect(es[key].length).toBeGreaterThan(0);
+    expect(typeof ar[key], `ar.json has ${key}`).toBe("string");
+    expect(ar[key]).toMatch(/[؀-ۿ]/);
+    const body = html.match(/<body[^>]*>/)[0];
+    expect(body).toMatch(new RegExp(`data-luz-label-[\\w-]+="\\{\\{t:${key.replace(/\./g, "\\.")}\\}\\}"`));
+  });
+
+  it("names the six lights for the line under the visual, in every language, from the catalog", () => {
+    const body = html.match(/<body[^>]*>/)[0];
+    const labels = [...body.matchAll(/data-luz-label-([\w-]+)="\{\{t:([\w.-]+)\}\}"/g)].map((m) => ({ attr: m[1], key: m[2] }));
+    // the six phase names: one label each, whatever it is called, with a different text in each
+    const phases = ["dawn", "morning", "afternoon", "sunset", "dusk", "night"].map((phase) => labels.filter((l) => l.attr.includes(phase)));
+    for (const [i, found] of phases.entries()) expect(found.length, `a data-luz-label-*${["dawn", "morning", "afternoon", "sunset", "dusk", "night"][i]}* on <body>`).toBeGreaterThan(0);
+    for (const [i, [{ key }]] of phases.entries()) {
+      expect(typeof en[key], `en.json ${key}`).toBe("string");
+      expect(typeof es[key], `es.json ${key}`).toBe("string");
+      expect(typeof ar[key], `ar.json ${key}`).toBe("string");
+      expect(i).toBeGreaterThanOrEqual(0);
+    }
+  });
+
+  it("names the section for screen readers in every language", () => {
+    const heading = html.match(/<section[^>]*\bid="light"[^>]*>\s*<h2[^>]*>\s*\{\{t:([\w.-]+)\}\}/);
+    expect(heading, "the h2 of section#light with a {{t:key}}").not.toBeNull();
+    for (const catalogOf of [en, es, ar]) expect(String(catalogOf[heading[1]] ?? "").length).toBeGreaterThan(0);
+  });
+});
+
+/* ---- D10: the mockup's leftovers are gone with this phase ---------------- */
+
+describe("the repository stays small", () => {
+  it("apps/landing/light holds the four modules, the stylesheet and the README, and no data file or font", () => {
+    expect(existsSync(join(repo, DIR)), `${DIR} does not exist`).toBe(true);
+    const names = readdirSync(join(repo, DIR)).sort();
+    expect(names).toEqual(["README.md", "city.js", "globe.js", "light.css", "light.js", "map.js"]);
+  });
+
+  it("splitting the mockup (141 KB in one file) did not grow it: the four modules together are no larger", () => {
+    const size = (name) => Buffer.byteLength(read(`${DIR}/${name}`));
+    const total = ["light.js", "globe.js", "city.js", "map.js"].reduce((sum, name) => sum + size(name), 0);
+    expect(total).toBeLessThan(141 * 1024);
+  });
+});

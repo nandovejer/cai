@@ -205,6 +205,18 @@
   }
 }
 
+/* In an .o-shell on a phone, a sidebar that is not a popover (or a browser
+   without the popover API) is the first block of the page, not a full-height
+   column. It lives here because this layer sets position, size and width. */
+@media (max-width: 768px) {
+  .o-shell > .luz-sidebar:not([popover]) {
+    position: static;
+    height: auto;
+    width: 100%;
+    min-width: 0;
+  }
+}
+
 @supports selector(:popover-open) {
   @media (max-width: 768px) {
     .luz-nav-toggle {

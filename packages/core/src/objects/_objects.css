@@ -41,14 +41,11 @@
   }
 
   /* A sidebar that is not a popover (or a browser without the popover API)
-     is just the first block of the page, not a full-height column */
+     is just the first block of the page, not a full-height column: its size
+     and position are in components/sidebar.css, the layer that sets them */
   .o-shell > .luz-sidebar:not([popover]) {
     grid-column: 1;
     grid-row: 1;
-    position: static;
-    height: auto;
-    width: 100%;
-    min-width: 0;
   }
 
   .o-main {

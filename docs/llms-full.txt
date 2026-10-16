@@ -166,12 +166,18 @@ curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css | opens
 
 Write the result as `integrity="sha384-…"` on the tag that loads that file, and repeat it for each file.
 
-A hash on a script covers that file only, not the files it loads later. `site.min.js` loads `search.min.js` on a page with a search and `consent.min.js` on a page with a cookie banner. Give each one its own hash in a `<link rel="modulepreload">` before the script: the browser checks it there, and a file with a wrong hash never runs.
+A hash on a script covers that file only, not the files it loads later. `site.min.js` loads `search.min.js` on a page with a search and `consent.min.js` on a page with a cookie banner. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A `<link rel="modulepreload">` with a hash is not a guard in Safari or Firefox: use it as a performance hint only.
 
 Integrity for the site scripts
 ```html
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js" integrity="sha384-…" crossorigin="anonymous">
-<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js" integrity="sha384-…" crossorigin="anonymous">
+<script type="importmap">
+{
+  "integrity": {
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js": "sha384-…",
+    "https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js": "sha384-…"
+  }
+}
+</script>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js" integrity="sha384-…" crossorigin="anonymous"></script>
 ```
 
@@ -944,7 +950,7 @@ English is in the entry. Every other language LUZ ships is a small file, fetched
 
 For a language LUZ does not ship, set `data-luz-label-*` once on `<html>` or `<body>`, or call `registerLocale()` before the scripts start.
 
-To preload the file, add a `modulepreload` link with `integrity` for it, on the pages in that language only.
+To check the file, put an import map with an `integrity` section for it before the first module script, on the pages in that language only. A `modulepreload` link with `integrity` is not a guard in Safari or Firefox: use it as a performance hint.
 
 A language for LUZ is a pull request: the JSON file `packages/core/src/i18n/<code>.json`, one line in the `files` map of `i18n.js` and a budget row. The steps are in AGENTS.md.
 

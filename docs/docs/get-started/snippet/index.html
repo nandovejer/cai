@@ -12,7 +12,7 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-BLFqFzO1.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DhJFXo-C.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CntHoG1R.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-D0TgfiGY.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-2VxXI5Sp.css">
@@ -270,7 +270,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot; integrity=&quot;sha384-kB7ZLDU3F6C/Zz059fyVvf+Nb0BsKxTC8AXnVIgUVgLs5LzntcaQ63xnGPdtGBNm&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
 &lt;!-- Optional, with the site stylesheet: the search and the cookie banner --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-KXyWTL+I0zuf9KyS+RbPWPaOFfxTqBPPSpX1G4evWBLpHmX+faJ9Vwx06/WkfBYe&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-Zqwd9QWhpMYyXpZLqUqfBww1ZYcHXM5faDTrT36qzSJe0RM00vgT+uKYy3lUA7hR&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
       </div>
     </section>
@@ -319,7 +319,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot; integrity=&quot;sha384-kB7ZLDU3F6C/Zz059fyVvf+Nb0BsKxTC8AXnVIgUVgLs5LzntcaQ63xnGPdtGBNm&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
 &lt;!-- Optional, with the site stylesheet: the search and the cookie banner --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-KXyWTL+I0zuf9KyS+RbPWPaOFfxTqBPPSpX1G4evWBLpHmX+faJ9Vwx06/WkfBYe&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-Zqwd9QWhpMYyXpZLqUqfBww1ZYcHXM5faDTrT36qzSJe0RM00vgT+uKYy3lUA7hR&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
       </div>
     </section>
@@ -368,14 +368,41 @@ import &quot;@luz-ds/site&quot;;</code></pre>
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot; integrity=&quot;sha384-kB7ZLDU3F6C/Zz059fyVvf+Nb0BsKxTC8AXnVIgUVgLs5LzntcaQ63xnGPdtGBNm&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
 &lt;!-- Optional, with the site stylesheet: the search and the cookie banner --&gt;
-&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-KXyWTL+I0zuf9KyS+RbPWPaOFfxTqBPPSpX1G4evWBLpHmX+faJ9Vwx06/WkfBYe&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-Zqwd9QWhpMYyXpZLqUqfBww1ZYcHXM5faDTrT36qzSJe0RM00vgT+uKYy3lUA7hR&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
         </div>
       </div>
     </section>
     <section class="docs-block" aria-labelledby="chunks">
       <h2 class="docs-chapter__title" id="chunks">Lazy chunks</h2>
-      <p>Core and site load some files only when the page needs them: a sortable table, a timeline, a MIDI player, a page in Spanish, the search, the cookie banner. A hash on a script covers that file only, so give each chunk its own hash in a <code>modulepreload</code> link before the script that loads it. The browser checks the file there, and a file with a wrong hash never runs.</p>
-      <p>These lines are not in the snippets above on purpose: a <code>modulepreload</code> fetches at once, so one in every snippet would download a MIDI parser for a page with no player. Add a line only if the page has what its row names.</p>
+      <p>Core and site load some files only when the page needs them: a sortable table, a timeline, a MIDI player, a page in Spanish, the search, the cookie banner. A hash on a script covers that file only, so a chunk needs its own hash. The way to give it one in every browser is an import map with an <code>integrity</code> section, placed before the first module script: the browser then checks each chunk when the script imports it, and a file with a wrong hash does not run.</p>
+      <p>Safari and Firefox do not use the <code>integrity</code> of a <code>&lt;link rel="modulepreload"&gt;</code> to block a file, so it is a performance hint only: use it, if you like, to fetch a chunk earlier, but do not rely on it as the check. The import map below lists every chunk. Keep only the lines for what the page has, as the rows say, because a hash for a file the page never loads does nothing.</p>
+      <div class="docs-snippet">
+                <div class="docs-snippet__bar">
+                  <span class="docs-snippet__lang">HTML</span>
+                  <button class="luz-copy-btn" type="button" data-copy-from="code-chunks-importmap" aria-label="Copy the import map with every chunk">Copy</button>
+                </div>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The import map with every chunk"><code id="code-chunks-importmap">&lt;script type=&quot;importmap&quot;&gt;
+{
+  &quot;integrity&quot;: {
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/midi.min.js&quot;: &quot;sha384-1/jMwUxslzdTelDpKZnWaNfcn11b+/hcvpxbX+SLH35MVtexPnyFKINInbVxwzV8&quot;,
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/table-sort.min.js&quot;: &quot;sha384-R+imdkLSyzPq7oSWCtDRr7lxmMxpy4ukmtJG2wc+DtF7AfPuRnKbaMxnSEPQrMFi&quot;,
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/timeline.min.js&quot;: &quot;sha384-rdSAZnrRmxzTwdgicXrH3AJuwhb8FGnBbIwYahJAnt/hX9z2q8WY69hhfA4Dtq+d&quot;,
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/i18n-es.min.js&quot;: &quot;sha384-WTwhB4JiLC3pI34wrjtORywtuYNTpKexHegaj7p+M120f0lVaNFjuZkgrDU8o+xU&quot;,
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js&quot;: &quot;sha384-hxqJRDacF2+DuZRdRU9HDWFsihewTmN9OKry3yybWXoiLENDS6MV/eGeg65biuVC&quot;,
+    &quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js&quot;: &quot;sha384-4AD7Vj38jnaQJcboRkMLqopiK2sUgJpuJSakDNHNIG/cZ9c5MSFP3oVBVZHBW9+R&quot;
+  }
+}
+&lt;/script&gt;</code></pre>
+              </div>
+      <p>A hint to fetch a chunk earlier looks like this. It speeds the page up and checks nothing in Safari and Firefox, so it never replaces the import map:</p>
+      <div class="docs-snippet">
+                <div class="docs-snippet__bar">
+                  <span class="docs-snippet__lang">HTML</span>
+                  <button class="luz-copy-btn" type="button" data-copy-from="code-chunks-hint" aria-label="Copy the performance hint for the search chunk">Copy</button>
+                </div>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The performance hint for the search chunk"><code id="code-chunks-hint">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js&quot; integrity=&quot;sha384-hxqJRDacF2+DuZRdRU9HDWFsihewTmN9OKry3yybWXoiLENDS6MV/eGeg65biuVC&quot; crossorigin=&quot;anonymous&quot;&gt;</code></pre>
+              </div>
+      <p>To add one chunk to a map you already have, put its line, from the table, inside <code>integrity</code>, with a comma after every line but the last.</p>
       <div class="luz-table-wrap" role="region" aria-label="Lazy chunks" tabindex="0">
         <table class="luz-table">
           <caption>Lazy chunks</caption>
@@ -391,7 +418,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
                   <span class="docs-snippet__lang">HTML</span>
                   <button class="luz-copy-btn" type="button" data-copy-from="code-chunk-core-midi" aria-label="Copy the line for midi.min.js">Copy</button>
                 </div>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Line for midi.min.js"><code id="code-chunk-core-midi">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/midi.min.js&quot; integrity=&quot;sha384-1/jMwUxslzdTelDpKZnWaNfcn11b+/hcvpxbX+SLH35MVtexPnyFKINInbVxwzV8&quot; crossorigin=&quot;anonymous&quot;&gt;</code></pre>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The line for midi.min.js"><code id="code-chunk-core-midi">&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/midi.min.js&quot;: &quot;sha384-1/jMwUxslzdTelDpKZnWaNfcn11b+/hcvpxbX+SLH35MVtexPnyFKINInbVxwzV8&quot;</code></pre>
               </div></td>
             </tr>
             <tr>
@@ -402,7 +429,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
                   <span class="docs-snippet__lang">HTML</span>
                   <button class="luz-copy-btn" type="button" data-copy-from="code-chunk-core-table-sort" aria-label="Copy the line for table-sort.min.js">Copy</button>
                 </div>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Line for table-sort.min.js"><code id="code-chunk-core-table-sort">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/table-sort.min.js&quot; integrity=&quot;sha384-R+imdkLSyzPq7oSWCtDRr7lxmMxpy4ukmtJG2wc+DtF7AfPuRnKbaMxnSEPQrMFi&quot; crossorigin=&quot;anonymous&quot;&gt;</code></pre>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The line for table-sort.min.js"><code id="code-chunk-core-table-sort">&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/table-sort.min.js&quot;: &quot;sha384-R+imdkLSyzPq7oSWCtDRr7lxmMxpy4ukmtJG2wc+DtF7AfPuRnKbaMxnSEPQrMFi&quot;</code></pre>
               </div></td>
             </tr>
             <tr>
@@ -413,7 +440,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
                   <span class="docs-snippet__lang">HTML</span>
                   <button class="luz-copy-btn" type="button" data-copy-from="code-chunk-core-timeline" aria-label="Copy the line for timeline.min.js">Copy</button>
                 </div>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Line for timeline.min.js"><code id="code-chunk-core-timeline">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/timeline.min.js&quot; integrity=&quot;sha384-ymvPhrTohbOmLCnbpvawIT9ve8bk/1cEr81yr/Vc8ZZaLw9KURTHxQz1umGz5aYG&quot; crossorigin=&quot;anonymous&quot;&gt;</code></pre>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The line for timeline.min.js"><code id="code-chunk-core-timeline">&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/timeline.min.js&quot;: &quot;sha384-rdSAZnrRmxzTwdgicXrH3AJuwhb8FGnBbIwYahJAnt/hX9z2q8WY69hhfA4Dtq+d&quot;</code></pre>
               </div></td>
             </tr>
             <tr>
@@ -424,7 +451,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
                   <span class="docs-snippet__lang">HTML</span>
                   <button class="luz-copy-btn" type="button" data-copy-from="code-chunk-core-i18n-es" aria-label="Copy the line for i18n-es.min.js">Copy</button>
                 </div>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Line for i18n-es.min.js"><code id="code-chunk-core-i18n-es">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/i18n-es.min.js&quot; integrity=&quot;sha384-WTwhB4JiLC3pI34wrjtORywtuYNTpKexHegaj7p+M120f0lVaNFjuZkgrDU8o+xU&quot; crossorigin=&quot;anonymous&quot;&gt;</code></pre>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The line for i18n-es.min.js"><code id="code-chunk-core-i18n-es">&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/i18n-es.min.js&quot;: &quot;sha384-WTwhB4JiLC3pI34wrjtORywtuYNTpKexHegaj7p+M120f0lVaNFjuZkgrDU8o+xU&quot;</code></pre>
               </div></td>
             </tr>
             <tr>
@@ -435,7 +462,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
                   <span class="docs-snippet__lang">HTML</span>
                   <button class="luz-copy-btn" type="button" data-copy-from="code-chunk-site-search" aria-label="Copy the line for search.min.js">Copy</button>
                 </div>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Line for search.min.js"><code id="code-chunk-site-search">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js&quot; integrity=&quot;sha384-hxqJRDacF2+DuZRdRU9HDWFsihewTmN9OKry3yybWXoiLENDS6MV/eGeg65biuVC&quot; crossorigin=&quot;anonymous&quot;&gt;</code></pre>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The line for search.min.js"><code id="code-chunk-site-search">&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/search.min.js&quot;: &quot;sha384-hxqJRDacF2+DuZRdRU9HDWFsihewTmN9OKry3yybWXoiLENDS6MV/eGeg65biuVC&quot;</code></pre>
               </div></td>
             </tr>
             <tr>
@@ -446,7 +473,7 @@ import &quot;@luz-ds/site&quot;;</code></pre>
                   <span class="docs-snippet__lang">HTML</span>
                   <button class="luz-copy-btn" type="button" data-copy-from="code-chunk-site-consent" aria-label="Copy the line for consent.min.js">Copy</button>
                 </div>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Line for consent.min.js"><code id="code-chunk-site-consent">&lt;link rel=&quot;modulepreload&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js&quot; integrity=&quot;sha384-XU3nNz8yHX+jPTdam9Q5KTiXjhV1nIQoKFA56qxVsYVQjyGrLd98NEultjOTvDeW&quot; crossorigin=&quot;anonymous&quot;&gt;</code></pre>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The line for consent.min.js"><code id="code-chunk-site-consent">&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/consent.min.js&quot;: &quot;sha384-4AD7Vj38jnaQJcboRkMLqopiK2sUgJpuJSakDNHNIG/cZ9c5MSFP3oVBVZHBW9+R&quot;</code></pre>
               </div></td>
             </tr>
           </tbody>

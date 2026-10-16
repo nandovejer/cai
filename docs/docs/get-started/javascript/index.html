@@ -12,7 +12,7 @@
   <!-- Before the first paint: the visitor's color mode (EX-009) -->
   <script src="../../../theme-boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/site-header-BLFqFzO1.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-DhJFXo-C.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-CntHoG1R.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/reference-DrBMOZvQ.css">
   <link rel="stylesheet" crossorigin href="../../../assets/site-header-D0TgfiGY.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-2VxXI5Sp.css">
@@ -201,7 +201,7 @@ initTabs();</code></pre>
           <h3 id="js-languages">Languages and the strings scripts write</h3>
           <p>English is in the entry. Every other language LUZ ships is a small file, fetched at start for a page whose <code>&lt;html lang&gt;</code>, or any <code>lang</code> outside a link or an option, names it; a page in English makes no request. With the individual modules, call <code>loadLocales()</code> yourself, and <code>await loadLocales()</code> before <code>initHighlight()</code>, <code>initPlayers()</code> and <code>initThemeCycle()</code>. A file that cannot load is one console warning, and English.</p>
           <p>For a language LUZ does not ship, set <code>data-luz-label-*</code> once on <code>&lt;html&gt;</code> or <code>&lt;body&gt;</code>, or call <code>registerLocale()</code> before the scripts start.</p>
-          <p>To preload the file, add a <code>modulepreload</code> link with <code>integrity</code> for it, on the pages in that language only.</p>
+          <p>To check the file, put an import map with an <code>integrity</code> section for it before the first module script, on the pages in that language only. A <code>modulepreload</code> link with <code>integrity</code> is not a guard in Safari or Firefox: use it as a performance hint.</p>
           <p>A language for LUZ is a pull request: the JSON file <code>packages/core/src/i18n/&lt;code&gt;.json</code>, one line in the <code>files</code> map of <code>i18n.js</code> and a budget row. The steps are in AGENTS.md.</p>
           <h2 id="js-without">Without JavaScript</h2>
           <p>What each behaviour falls back to when the script does not run:</p>

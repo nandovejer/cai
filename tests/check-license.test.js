@@ -93,8 +93,8 @@ function fixture({ packages = { a: {} }, deps = [{ name: "vite", version: "6.4.3
   temps.push(root);
   put(root, "LICENSE", MIT);
   for (const [dir, extra] of Object.entries(packages)) {
-    const { license = "MIT", licenseText = MIT, private: priv, dependencies } = extra;
-    put(root, `packages/${dir}/package.json`, JSON.stringify({ name: `@x/${dir}`, version: "0.0.0", license, ...(priv ? { private: true } : {}), ...(dependencies ? { dependencies } : {}) }, null, 2));
+    const { license = "MIT", licenseText = MIT, private: priv, ...fields } = extra;
+    put(root, `packages/${dir}/package.json`, JSON.stringify({ name: `@x/${dir}`, version: "0.0.0", license, ...(priv ? { private: true } : {}), ...fields }, null, 2));
     if (licenseText !== null) put(root, `packages/${dir}/LICENSE`, licenseText);
   }
   const byImporter = new Map();
@@ -335,6 +335,33 @@ describe("checkPackages", () => {
     expect(problems[0]).toMatch(/LICENSE/);
   });
 
+  it.each([
+    ["optionalDependencies", { left: "^1.0.0" }],
+    ["bundleDependencies", ["left"]],
+    ["bundledDependencies", ["left"]],
+  ])("fails a package with a non-empty %s (red line 1), naming the package and the field", async (field, value) => {
+    const { checkPackages } = await load();
+    const problems = checkPackages(fixture({ packages: { a: {}, b: { [field]: value } } }));
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain("@x/b");
+    expect(problems[0]).toContain(field);
+  });
+
+  it.each([
+    ["optionalDependencies", {}],
+    ["bundleDependencies", []],
+    ["bundledDependencies", []],
+    ["dependencies", {}],
+  ])("accepts an empty %s", async (field, value) => {
+    const { checkPackages } = await load();
+    expect(checkPackages(fixture({ packages: { a: { [field]: value } } }))).toEqual([]);
+  });
+
+  it("accepts peerDependencies and devDependencies (they ship nothing)", async () => {
+    const { checkPackages } = await load();
+    expect(checkPackages(fixture({ packages: { a: { peerDependencies: { "@luz-ds/core": "^0.1.0" }, devDependencies: { vite: "^6.0.0" } } } }))).toEqual([]);
+  });
+
   it("does not look at a private package", async () => {
     const { checkPackages } = await load();
     expect(checkPackages(fixture({ packages: { a: {}, internal: { license: "UNLICENSED", licenseText: null, private: true, dependencies: { x: "1" } } } }))).toEqual([]);
@@ -343,6 +370,57 @@ describe("checkPackages", () => {
   it("finds nothing to fix in the published packages of this repository", async () => {
     const { checkPackages } = await load();
     expect(checkPackages(repo)).toEqual([]);
+  });
+});
+
+/* ---- The Pages site: third-party code in docs/assets (RL-13) ------------------------- */
+
+/**
+ * Export: `checkPagesSite(root): string[]`, the problems of <root>/docs/assets: a .js file (any
+ * depth) that holds the Vite module-preload polyfill (the two markers `link[rel="modulepreload"]`
+ * and `MutationObserver` in one file) needs <root>/docs/LICENSE-vite.txt beside the site. Each
+ * problem names the file (relative to root) and `docs/LICENSE-vite.txt`. [] when there is no
+ * docs/assets, no such file, or the notice exists. The CLI prints these problems and exits 1.
+ */
+const POLYFILL = 'const e=document.createElement("link").relList;for(const o of document.querySelectorAll(\'link[rel="modulepreload"]\'))r(o);new MutationObserver(o=>{for(const s of o)s.type})';
+
+describe("checkPagesSite", () => {
+  it("is quiet when there is no docs/assets, or nothing third-party in it", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    expect(checkPagesSite(root)).toEqual([]);
+    put(root, "docs/assets/own-1.js", "export const a = new MutationObserver(() => {});");
+    put(root, "docs/assets/own-2.js", 'document.querySelector(\'link[rel="modulepreload"]\');');
+    expect(checkPagesSite(root)).toEqual([]);
+  });
+
+  it("fails a built file with the Vite polyfill when docs/LICENSE-vite.txt is missing, naming the file and the notice", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/deep/site-header-AbC.js", `import"./x.js";${POLYFILL}`);
+    const problems = checkPagesSite(root);
+    expect(problems).toHaveLength(1);
+    expect(problems[0]).toContain("docs/assets/deep/site-header-AbC.js");
+    expect(problems[0]).toContain("docs/LICENSE-vite.txt");
+  });
+
+  it("accepts the same file once docs/LICENSE-vite.txt is there", async () => {
+    const { checkPagesSite } = await load();
+    const root = fixture();
+    put(root, "docs/assets/site-header-AbC.js", POLYFILL);
+    put(root, "docs/LICENSE-vite.txt", "MIT License\n\nCopyright (c) 2019-present, VoidZero Inc. and Vite contributors\n");
+    expect(checkPagesSite(root)).toEqual([]);
+  });
+
+  it("the command fails on it and names the notice; with the notice it passes", () => {
+    const root = fixture();
+    put(root, "docs/assets/site-header-AbC.js", POLYFILL);
+    const failing = cli(root, "--update");
+    expect(failing.code).toBe(1);
+    expect(failing.out).toContain("docs/LICENSE-vite.txt");
+    put(root, "docs/LICENSE-vite.txt", "MIT License\n");
+    const ok = cli(root, "--update");
+    expect(ok.code, ok.out).toBe(0);
   });
 });
 

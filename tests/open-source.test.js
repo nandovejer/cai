@@ -91,6 +91,32 @@ function jobOf(workflow, job) {
   return lines.slice(start, end).join("\n");
 }
 
+/** The lines of the `path:` input of the upload-artifact step of a job (block or single value). */
+function uploadPath(job) {
+  const lines = job.split("\n");
+  const at = lines.findIndex((l) => /^\s+path:/.test(l));
+  if (at < 0) return [];
+  const inline = lines[at].replace(/^\s+path:\s*/, "").trim();
+  if (inline && inline !== "|" && inline !== ">") return [inline];
+  const indent = /^\s*/.exec(lines[at])[0].length;
+  const out = [];
+  for (const l of lines.slice(at + 1)) {
+    if (l.trim() === "") continue;
+    if (/^\s*/.exec(l)[0].length <= indent) break;
+    out.push(l.trim());
+  }
+  return out;
+}
+
+/** The comment lines (# ...) directly above `  <job>:` in a workflow. */
+function commentAbove(workflow, job) {
+  const lines = workflow.split("\n");
+  const at = lines.findIndex((l) => l === `  ${job}:`);
+  const out = [];
+  for (let i = at - 1; i >= 0 && /^\s*#/.test(lines[i]); i--) out.unshift(lines[i].replace(/^\s*#\s?/, ""));
+  return out.join(" ");
+}
+
 /* ---- CONTRIBUTING.md ------------------------------------------------------- */
 
 describe("CONTRIBUTING.md is short and says the five things a stranger needs", () => {
@@ -360,9 +386,34 @@ describe(".github/workflows/ci.yml", () => {
     expect(job).toContain("--project=chromium");
     expect(job).toMatch(/actions\/upload-artifact@[0-9a-f]{40}/);
     expect(job).toMatch(/retention-days:\s*14\b/);
-    expect(job).toMatch(/path:[\s\S]*tests\/\*\*\/\*-snapshots/);
+    expect(uploadPath(job)).toEqual(["tests/visual.spec.js-snapshots/*.png"]);
     expect(job).not.toMatch(/git (add|commit|push)/);
     expect(job).not.toContain("secrets.");
+  });
+
+  it("bounds both new jobs with `timeout-minutes` of 30 at most", () => {
+    for (const job of ["red-commit", "visual-references"]) {
+      const text = jobOf(ci(), job);
+      expect(text, `a \`${job}\` job`).not.toBe("");
+      const minutes = /^\s+timeout-minutes:\s*(\d+)\s*$/m.exec(text)?.[1];
+      expect(minutes, `${job} timeout-minutes`).toBeDefined();
+      expect(Number(minutes), job).toBeGreaterThan(0);
+      expect(Number(minutes), job).toBeLessThanOrEqual(30);
+    }
+  });
+
+  it("uploads only the PNG references of the visual spec, with no `**` glob", () => {
+    expect(existsSync(path("tests/visual.spec.js-snapshots")), "the references the artifact is made of").toBe(true);
+    expect(readdirSync(path("tests/visual.spec.js-snapshots")).some((f) => f.endsWith(".png"))).toBe(true);
+    expect(uploadPath(jobOf(ci(), "visual-references"))).toEqual(["tests/visual.spec.js-snapshots/*.png"]);
+  });
+
+  it("says what is true of the references: the CI copies are artifacts only, not committed by CI (the tree tracks others)", () => {
+    const comment = commentAbove(ci(), "visual-references");
+    expect(comment, "a comment above the job").not.toBe("");
+    expect(comment).not.toMatch(/never committed/i);
+    expect(comment).toMatch(/artifacts? only/i);
+    expect(comment).toMatch(/not committed by (the )?CI/i);
   });
 
   it("never runs the firefox or webkit projects", () => {

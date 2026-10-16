@@ -121,9 +121,9 @@ describe("decide: what must run", () => {
     });
   });
 
-  it("leaves out the helpers, fixtures and non-test files of the red commit", async () => {
+  it("leaves out the helpers, fixtures and non-test files under tests/ of the red commit", async () => {
     const { decide } = await load();
-    const red = commit("test: with fixtures", ["tests/fixtures/page.html", "tests/helpers/design-tokens.js", "tests/thing.test.js", "tests/notes.md", "README.md"]);
+    const red = commit("test: with fixtures", ["tests/fixtures/page.html", "tests/helpers/design-tokens.js", "tests/thing.test.js", "tests/notes.md"]);
     expect(decide(PR([red, GREEN]))).toEqual({ run: [{ runner: "vitest", files: ["tests/thing.test.js"] }] });
   });
 
@@ -174,6 +174,40 @@ describe("decide: a PR that changes source with no red commit", () => {
     expect(r.error).toContain("*.spec.js");
   });
 });
+
+describe("decide: the red commit contains only tests", () => {
+  const mixed = { sha: "abcdef1234567890", subject: "test: a failing test, and a fix", files: ["tests/thing.test.js", "packages/core/src/thing.js", "README.md"] };
+
+  it("is an error when the `test:` commit touches a file outside tests/, naming the short sha and those files", async () => {
+    const { decide } = await load();
+    const r = decide(PR([mixed, GREEN]));
+    expect(r.run).toBeUndefined();
+    expect(r.skip).toBeUndefined();
+    expect(r.error).toContain("abcdef1");
+    expect(r.error).not.toContain("abcdef12345");
+    expect(r.error).toContain("packages/core/src/thing.js");
+    expect(r.error).toContain("README.md");
+    expect(r.error).not.toContain("tests/thing.test.js");
+    expect(r.error).toMatch(/only tests/i);
+  });
+
+  it("is an error for a single stray file, even a docs one", async () => {
+    const { decide } = await load();
+    const r = decide(PR([{ sha: "1234567abcdef", subject: "test(core): with a doc", files: ["tests/a.test.js", "dev/TESTING.md"] }, GREEN]));
+    expect(r.error).toContain("1234567");
+    expect(r.error).toContain("dev/TESTING.md");
+    expect(r.error).toMatch(/only tests/i);
+  });
+
+  it("does not mind files outside tests/ in the other commits", async () => {
+    const { decide } = await load();
+    expect(decide(PR([{ sha: "aaaaaaa1", subject: "test: pure", files: ["tests/a.test.js", "tests/fixtures/x.json"] }, mixedGreen()])).run).toEqual([{ runner: "vitest", files: ["tests/a.test.js"] }]);
+  });
+});
+
+function mixedGreen() {
+  return { sha: "bbbbbbb2", subject: "feat: change", files: ["packages/core/src/a.js", "tests/b.test.js", "README.md"] };
+}
 
 describe("findTestCommit", () => {
   it("returns the first `test:` commit that touches tests/", async () => {

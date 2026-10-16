@@ -9,7 +9,7 @@
 
 **The search slot.** The fallback link and the button now sit inside `<luz-search>`, with the dialog, and share one place: the hidden one keeps its space, so nothing moves when the button takes over. If the reader is on the link at that moment (keyboard focus or a pressed pointer), the swap waits until they leave it. At 768 px and below, next to a `--compact` button, the link shows the magnifier only, 44 by 44 px, its words clipped but still its name. The button and the link use the sans. The `<kbd>` hint is `aria-hidden`.
 
-**Subresource Integrity.** An `integrity` on `site.min.js` does not cover the chunks it loads. For full coverage, add a `<link rel="modulepreload" integrity crossorigin>` for `search.min.js` and `consent.min.js` before the script (SECURITY.md).
+**Subresource Integrity.** An `integrity` on `site.min.js` does not cover the chunks it loads. To check the chunks too, add an import map with an `integrity` section that lists `search.min.js` and `consent.min.js`, before the first module script (SECURITY.md). A `modulepreload` link with `integrity` is not a guard outside Chromium.
 
 | Was | Now |
 | --- | --- |

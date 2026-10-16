@@ -21,5 +21,3 @@
 | `.luz-consent` in the flow, above the header | `.luz-consent` fixed at the bottom of the window (in the flow under 30 rem tall); keep it first after the skip link in the markup |
 | `<p data-luz-consent-done tabindex="-1" hidden>…</p>` | `<div data-luz-consent-done tabindex="-1" hidden><p>…</p><button type="button" data-luz-consent-close>Close</button></div>` |
 | Docs: `/docs/site/lang-switcher/`, `/docs/site/notice/` | `/docs/site/lang-switch/`, `/docs/site/banner/` |
-
-Also: `prefers-reduced-data` no longer removes the placeholder of `.luz-site-image` (no browser ships the media feature; the placeholders leave site in a later release), and the site header's own rule for the language list is gone: its `--luz-site-header-h` and the switch's default are both `--luz-bar-h`.

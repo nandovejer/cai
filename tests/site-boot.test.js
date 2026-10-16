@@ -9,7 +9,8 @@
  *   1. a stored choice under core's "luz-theme" key (light, dark or
  *      high-contrast) is that mode, with its light pinned: light is the
  *      afternoon, dark and high contrast are the night;
- *   2. else prefers-contrast: more is the high contrast mode, at night;
+ *   2. else prefers-contrast: more is the high contrast mode, with the light of
+ *      the local hour (what <luz-mode by="clock"> writes after it upgrades);
  *   3. else the phase of the local hour (the boundaries of phaseOf in
  *      packages/site/src/mode.js) is data-light, and dawn, dusk and night
  *      are dark, the others light. The system's colour scheme is not read.
@@ -149,7 +150,7 @@ describe("a stored value that is not a mode is not a choice", () => {
   });
 
   it("falls through to prefers-contrast: more as well", () => {
-    expect(run({ stored: "auto", hour: 9, contrastMore: true })).toMatchObject({ theme: "high-contrast", light: "night" });
+    expect(run({ stored: "auto", hour: 9, contrastMore: true })).toMatchObject({ theme: "high-contrast", light: "morning" });
   });
 
   it("the old key is not read: a value under luz-site-mode changes nothing", () => {
@@ -158,10 +159,18 @@ describe("a stored value that is not a mode is not a choice", () => {
 });
 
 describe("with no choice", () => {
-  it("prefers-contrast: more is the high contrast mode, at night, at any hour", () => {
-    for (const hour of [4, 6, 9, 14, 19, 21, 23]) {
-      expect(run({ hour, contrastMore: true }), `${hour}h`).toMatchObject({ theme: "high-contrast", light: "night" });
+  it("prefers-contrast: more is the high contrast mode, with the light of the local hour, at every minute of the day", () => {
+    const wrong = [];
+    for (let minute = 0; minute < 24 * 60; minute++) {
+      const got = run({ hour: Math.floor(minute / 60), minute: minute % 60, contrastMore: true });
+      const light = phaseOf(minute / 60);
+      if (got.theme !== "high-contrast" || got.light !== light) wrong.push(`${Math.floor(minute / 60)}:${minute % 60} ${got.theme}/${got.light}, wanted high-contrast/${light}`);
     }
+    expect(wrong.slice(0, 10)).toEqual([]);
+  });
+
+  it("a stored high-contrast still pins the night, whatever the hour", () => {
+    expect(run({ stored: "high-contrast", hour: 9, contrastMore: true })).toMatchObject({ theme: "high-contrast", light: "night" });
   });
 
   it("the light is the phase of the local hour at every minute of the day, and dawn, dusk and night are dark", () => {
@@ -195,7 +204,7 @@ describe("storage that throws (a sandboxed frame)", () => {
   it.each(["getItem throws", "localStorage throws"])("%s: the clock decides, and the script does not throw", (storage) => {
     expect(run({ storage, hour: 9 })).toMatchObject({ theme: "light", light: "morning" });
     expect(run({ storage, hour: 23 })).toMatchObject({ theme: "dark", light: "night" });
-    expect(run({ storage, hour: 9, contrastMore: true })).toMatchObject({ theme: "high-contrast", light: "night" });
+    expect(run({ storage, hour: 9, contrastMore: true })).toMatchObject({ theme: "high-contrast", light: "morning" });
   });
 });
 

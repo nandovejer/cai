@@ -158,9 +158,36 @@ test.describe('with no choice, the light follows the clock', () => {
     expect(await state(page)).toEqual({ theme: 'light', light: 'afternoon' });
   });
 
-  test('prefers-contrast: more is the high contrast mode, at night', async ({ page }) => {
+  test('prefers-contrast: more is the high contrast mode, with the light of the hour', async ({ page }) => {
     await page.emulateMedia({ contrast: 'more' });
-    await atTime(page, '14:00');
+    await atTime(page, '09:00');
+    await watch(page);
+    await page.route(MODULES, (route) => route.abort());
+    await page.goto('/');
+    expect(await page.evaluate(() => /** @type {any} */ (window).__dcl)).toEqual(['high-contrast', 'morning']);
+    expect(await state(page)).toEqual({ theme: 'high-contrast', light: 'morning' });
+  });
+
+  for (const path of PAGES) {
+    test(`${path}: prefers-contrast: more at 09:00 is morning at <body> insertion and after <luz-mode> upgraded, with no flip`, async ({ page }) => {
+      await page.emulateMedia({ contrast: 'more' });
+      await atTime(page, '09:00');
+      await watch(page);
+      await page.goto(path);
+      await modulesRan(page);
+      expect(await page.evaluate(() => /** @type {any} */ (window).__dcl)).toEqual(['high-contrast', 'morning']);
+      expect(await state(page)).toEqual({ theme: 'high-contrast', light: 'morning' });
+      // Every value the attributes took: boot's, then <luz-mode>'s, the same
+      expect(only(await took(page, 'data-theme'))).toEqual(['high-contrast']);
+      expect(only(await took(page, 'data-light'))).toEqual(['morning']);
+      await expect(page.locator('input[name="luz-theme"]:checked')).toHaveValue('auto');
+    });
+  }
+
+  test('a stored high-contrast still pins the night under prefers-contrast: more at 09:00', async ({ page }) => {
+    await page.emulateMedia({ contrast: 'more' });
+    await atTime(page, '09:00');
+    await seedMode(page, 'high-contrast');
     await page.route(MODULES, (route) => route.abort());
     await page.goto('/');
     expect(await state(page)).toEqual({ theme: 'high-contrast', light: 'night' });

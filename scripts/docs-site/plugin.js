@@ -31,9 +31,9 @@
  *   beside them, and the manifests of every package. Written by the build
  *   (`csp` is the policy of their <meta>; without it none is written) and
  *   served in dev from a route -> body table, never a path joined from the URL.
- * - The color-mode boot script (apps/landing/theme-boot.js, EX-009) is a
+ * - The color-mode boot script (apps/site/boot.js, EX-009) is a
  *   classic script, which Vite does not bundle: the build copies it to
- *   /theme-boot.js and points every page at it.
+ *   /boot.js and points every page at it.
  * - Every internal link is checked: an error in a build, a warning in dev.
  * - Editing a layout, a partial, a page or site.json reloads the browser.
  *
@@ -55,6 +55,7 @@ import {
   renderPage,
   rootOf,
   scanSite,
+  SHARED_PARTIALS_DIR,
 } from "./site.js";
 import { PACKAGES } from "../luz-packages.js";
 import { AI_ROUTES, exampleAssets, exampleDocuments, manifestAssets, renderLlmsFull, renderLlmsTxt } from "./ai.js";
@@ -71,7 +72,7 @@ const CONTENT_TYPES = {
 };
 
 /** The render-blocking color-mode script: its source and its file in the build. */
-const THEME_BOOT = { src: "/apps/landing/theme-boot.js", out: "theme-boot.js" };
+const THEME_BOOT = { src: "/apps/site/boot.js", out: "boot.js" };
 
 /** Output file of a route: "/" → "index.html", "/docs/a/" → "docs/a/index.html", "/404.html" → "404.html". */
 const outFileOf = (route) => (route.endsWith(".html") ? route.slice(1) : `${route.slice(1)}index.html`);
@@ -108,6 +109,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
   let warn = () => {};
 
   const i18nAbs = resolve(repoRoot, I18N_DIR);
+  const sharedAbs = resolve(repoRoot, SHARED_PARTIALS_DIR);
   const scan = () => (site ??= scanSite(docsDir, repoRoot));
 
   /**
@@ -340,6 +342,7 @@ export function docsSite({ repoRoot, relative: relativeUrls, outRoot, pagesBase 
       const rel = inDocs ? relative(docsDir, file).split(sep).join("/") : null;
       const generated =
         file === landingAbs ||
+        file.startsWith(sharedAbs + sep) ||
         file.startsWith(i18nAbs + sep) ||
         (rel !== null && (rel === "site.json" || /^(_layouts|_partials|pages)\//.test(rel)));
       if (!generated) return undefined;

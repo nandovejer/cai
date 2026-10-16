@@ -19,17 +19,21 @@ luz-design-system/
 │   │   │   └── html/                  ← overview with the A–Z table, one page per element category
 │   │   ├── 404.html                   ← /404.html (absolute <base>, no script)
 │   │   ├── _layouts/                  ← page.html and not-found.html: head, header, sidebar, <main>, footer
-│   │   ├── _partials/                 ← header (shared with the landing), site-links, footer
+│   │   ├── _partials/                 ← footer-links (the docs' own; header, site-links and footer are in apps/site/_partials)
 │   │   ├── reference.css              ← docs page–only styles
 │   │   ├── elements.css               ← HTML elements chapter styles
-│   │   ├── reference.js               ← docs glue on every page (mode, copy, demos, element cards, "On this page")
-│   │   ├── site-header.css, .js       ← the header of the docs and the home page (not published)
+│   │   ├── reference.js               ← docs glue on every page (copy, demos, element cards, "On this page")
 │   │   └── assets/                    ← demo media and images; placeholders/ (docs-only, MIT LICENSE next to them)
+│   ├── site/                          ← @luz-ds/website (private): what the home page and the docs share; depends on no other app
+│   │   ├── header.css, header.js      ← the header of the docs and the home page (not published)
+│   │   ├── boot.js                    ← colour mode and light before the first paint (EX-009)
+│   │   ├── theme-light.css            ← the four lights (morning, sunset, dawn, dusk)
+│   │   ├── _partials/                 ← header, site-links, footer (the generator reads this folder and apps/docs/_partials)
+│   │   └── assets/                    ← favicon set and LUZ mark
 │   ├── landing/                       ← home page
 │   │   ├── index.html                 ← template of the home page in every language; includes the header and site-links partials
 │   │   ├── i18n/                      ← locales.json (languages and routes) + one catalog per language (en, es, ar)
-│   │   ├── landing.css, landing.js    ← the home page's own; the header is ../docs/site-header.{css,js}
-│   │   └── assets/                    ← favicon set and LUZ mark
+│   │   ├── landing.css, landing.js    ← the home page's own; the header is ../site/header.{css,js}
 ├── packages/
 │   ├── tokens/                        ← @luz-ds/tokens (publishable)
 │   │   ├── tokens.json                ← source of truth for Layer 1 primitives
@@ -166,4 +170,4 @@ Tokens, core and site share one version; landing, cms and app have their own and
 - **Layer order lives in `src/index.css`** — build scripts inline its `@import` graph; there is no duplicated file list
 - **What gets published** — `packages/tokens/`, `packages/core/`, `packages/site/`, `packages/landing/`, `packages/cms/`, `packages/app/`, `packages/check/` (consumers download these)
 - **Where the guides live** — `dev/` holds the contributor guides. `.claude/` holds the Claude Code agents, hooks, `settings.json` and skills (all versioned) plus the maintainer's private notes (not in git)
-- **What does not** — `apps/docs/`, `apps/landing/` (internal apps only)
+- **What does not** — `apps/docs/`, `apps/landing/`, `apps/site/` (internal apps only)

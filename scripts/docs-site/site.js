@@ -16,7 +16,7 @@
  * the site's path, because GitHub Pages serves it at any URL.
  *
  * Template syntax, on purpose only these:
- *   <!-- luz:include name -->   a file of _partials/ (name: [a-z0-9-]+)
+ *   <!-- luz:include name -->   a file of _partials/ or of apps/site/_partials (name: [a-z0-9-]+)
  *   {{key}}                      a fixed set of values (the landing, layouts and partials)
  *   {{t:key}} / {{html:key}}     a string of the page's language catalog
  *                                (apps/landing/i18n/, see i18n.js)
@@ -32,7 +32,7 @@
  * single pass, so text a substitution produced is never expanded again.
  */
 import { lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
-import { join, relative, resolve, sep } from "node:path";
+import { dirname, join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
 import { SITE_KINDS } from "../luz-packages.js";
 import { fillAiMarkers } from "./ai.js";
@@ -323,6 +323,9 @@ export function scanSite(docsDir, repoRoot = resolve(docsDir, "../..")) {
   // The home page's languages (i18n.js), read only inside their folder
   const i18nDir = join(repoRoot, I18N_DIR);
   const i18n = loadLocales(i18nDir, repoRoot, (abs) => readInside(abs, [i18nDir]));
+
+  // The partials shared with the home page: a symlink or a name in both folders fails here
+  sharedPartials(docsDir, repoRoot);
 
   const all = notFound ? [...pages, notFound] : pages;
   return { docsDir, repoRoot, areas, pages, notFound, byRoute, byFile: new Map(all.map((p) => [p.abs, p])), i18n };
@@ -859,19 +862,64 @@ export function expand(template, ctx) {
   });
 }
 
+/** The partials the docs share with the home page (F2): the header, the site links, the footer. */
+export const SHARED_PARTIALS_DIR = "apps/site/_partials";
+
 /**
- * A reader of partials and layouts inside apps/docs (SEC-PLG-1/2/3). The root
- * is apps/docs itself, never _partials/ or _layouts/: if one of those folders
- * were a symlink, a root there would follow it out of the repository.
+ * The shared partials folder of a repository, checked: null when there is
+ * none; an error when it, or apps/site, is a symlink (SEC-PLG-1/2), or when a
+ * name is in it and in apps/docs/_partials as well (one partial, one file).
+ */
+export function sharedPartials(docsDir, repoRoot) {
+  const rel = (p) => relative(repoRoot, p).split(sep).join("/");
+  const dir = join(repoRoot, SHARED_PARTIALS_DIR);
+  for (const path of [dirname(dir), dir]) {
+    const stat = lstatSync(path, { throwIfNoEntry: false });
+    if (!stat) return null;
+    if (stat.isSymbolicLink()) throw new Error(`${rel(path)}: symlinks are not allowed in the docs sources`);
+    if (!stat.isDirectory()) throw new Error(`${rel(path)}: not a folder`);
+  }
+  const names = (folder) =>
+    lstatSync(folder, { throwIfNoEntry: false })?.isDirectory() ? readdirSync(folder).filter((n) => n.endsWith(".html")) : [];
+  const docsPartials = join(docsDir, "_partials");
+  const both = names(dir).filter((n) => names(docsPartials).includes(n));
+  if (both.length) {
+    throw new Error(both.map((n) => `${rel(join(dir, n))} and ${rel(join(docsPartials, n))}: the partial "${n.slice(0, -5)}" is in both folders; keep one`).join("\n"));
+  }
+  return dir;
+}
+
+/**
+ * A reader of partials and layouts (SEC-PLG-1/2/3). Layouts are read inside
+ * apps/docs; a partial from apps/docs/_partials, else from apps/site/_partials
+ * (the ones the home page shares), never from both. The roots are apps/docs
+ * and apps/site/_partials, each refused if it is a symlink, so a read never
+ * follows a link out of the repository.
  */
 export function sourceReader(site) {
   const rel = (p) => relative(site.repoRoot, p).split(sep).join("/");
-  const read = (folder, name) => {
+  const check = (folder, name) => {
     if (!NAME.test(name)) throw new Error(`"${name}" is not a valid ${folder.slice(1, -1)} name`);
-    const abs = join(site.docsDir, folder, `${name}.html`);
+  };
+  const layout = (name) => {
+    check("_layouts", name);
+    const abs = join(site.docsDir, "_layouts", `${name}.html`);
     return { text: readInside(abs, [site.docsDir]), file: rel(abs) };
   };
-  return { partial: (name) => read("_partials", name), layout: (name) => read("_layouts", name) };
+  // A partial never carries a script, a <base> or a CSP (SEC-PLG-12): refused as it is read, with its file
+  const safe = (found) => (assertFragmentSafe(found.text, found.file), found);
+  const partial = (name) => safe(find(name));
+  const find = (name) => {
+    check("_partials", name);
+    const own = join(site.docsDir, "_partials", `${name}.html`);
+    const shared = sharedPartials(site.docsDir, site.repoRoot);
+    if (shared) {
+      const abs = join(shared, `${name}.html`);
+      if (lstatSync(abs, { throwIfNoEntry: false })) return { text: readInside(abs, [shared]), file: rel(abs) };
+    }
+    return { text: readInside(own, [site.docsDir]), file: rel(own) };
+  };
+  return { partial, layout };
 }
 
 /**

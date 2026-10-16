@@ -84,6 +84,18 @@ importers:
         specifier: workspace:*
         version: link:../../packages/tokens
 
+  apps/site:
+    dependencies:
+      '@luz-ds/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@luz-ds/site':
+        specifier: workspace:*
+        version: link:../../packages/site
+      '@luz-ds/tokens':
+        specifier: workspace:*
+        version: link:../../packages/tokens
+
   packages/app:
     devDependencies:
       '@luz-ds/core':

@@ -13,7 +13,7 @@
  *   <luz-mode remember by="clock">
  *     <fieldset class="luz-mode-switcher luz-mode-switcher--cycle">
  *       <legend class="luz-mode-switcher__label">Color mode</legend>
- *       <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>Auto</label>
+ *       <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M11 7a5 5 0 0 0 0 10ZM23 14A5 5 0 0 1 17 8a5 5 0 1 0 6 6Z"/><path stroke="currentColor" stroke-width="3" stroke-linecap="round" d="M11 3h0M5 6h0M2 12h0M5 18h0M11 21h0"/></svg>Auto</label>
  *       <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>Light</label>
  *       <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>Dark</label>
  *       <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>High contrast</label>
@@ -53,6 +53,11 @@ const KEY = "luz-theme";
 const MODES = ["light", "dark", "high-contrast"];
 const CHOICES = ["auto", ...MODES];
 const DARK = ["dawn", "dusk", "night"];
+/** The phase of the wall clock now. */
+const now = () => {
+  const d = new Date();
+  return phaseOf(d.getHours() + d.getMinutes() / 60);
+};
 // The hour preview() takes for the name of a phase
 const HOURS = { dawn: 6.25, morning: 9.5, afternoon: 14, sunset: 19, dusk: 21.25, night: 23.75 };
 // Read through constants: the target's attributes and the page's list are not the tag's own
@@ -103,15 +108,15 @@ function choose(el, v, fromRadio) {
 function tick(el) {
   const d = new Date();
   el.i = setTimeout(() => {
-    render(el);
+    // Only Auto follows the clock, and only when the phase changes: a chosen mode's light is pinned, and a data-theme set by hand stays for the rest of its phase
+    if (el.c === "auto" && el.p === null && now() !== el.h) render(el);
     tick(el);
   }, 6e4 - d.getSeconds() * 1e3 - d.getMilliseconds());
 }
 
 function render(el) {
   const { t, c, k, p, m } = el;
-  const d = new Date();
-  const phase = phaseOf(p ?? d.getHours() + d.getMinutes() / 60);
+  const phase = p === null ? (el.h = now()) : phaseOf(p);
   const current = t.getAttribute(THEME);
   const auto = c === "auto";
   let theme = auto ? (m[0].matches ? "high-contrast" : (k ? DARK.includes(phase) : m[1].matches) ? "dark" : "light") : c;

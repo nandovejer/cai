@@ -80,6 +80,27 @@ for (const file of (existsSync(themesDir) ? readdirSync(themesDir) : []).filter(
     for (const mode of MODES) themes[`${name}/${mode}`] = { ...base.light, ...modes.default, ...modes[mode] };
   }
 }
+// The four lights of the site (apps/site/theme-light.css): each
+// :root[data-theme="<mode>"][data-light="<light>"] block layers over its base
+// mode, as in the browser. Afternoon and night are Vejer itself (no block).
+const LIGHTS_FILE = "apps/site/theme-light.css";
+if (existsSync(resolve(root, LIGHTS_FILE))) {
+  const css = read(LIGHTS_FILE).replace(/@property\s+[\w-]+\s*\{[^}]*\}/g, "").replace(/@media[^{]*\{(?:[^{}]*\{[^}]*\})*[^{}]*\}/g, "");
+  let found = 0;
+  for (const { selectors, props } of blocks(css)) {
+    for (const selector of selectors) {
+      const m = selector.match(/^:root\[data-theme="(light|dark)"\]\[data-light="([\w-]+)"\]$/);
+      if (!m) continue;
+      found += 1;
+      const key = `light ${m[2]} (${m[1]})`;
+      themes[key] = { ...themes[key], ...base.light, ...base[m[1]], ...props };
+    }
+  }
+  if (!found) {
+    console.error(`✗ ${LIGHTS_FILE}: no :root[data-theme][data-light] block`);
+    process.exit(1);
+  }
+}
 const THEMES = Object.keys(themes);
 
 /* ---- Run ------------------------------------------------------------------ */

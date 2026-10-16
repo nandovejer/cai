@@ -13,7 +13,7 @@ import { highlightBlock } from "/packages/core/dist/highlight.js";
 // Defines <luz-search> at once, not on idle as site.js would: the header's
 // search button wires itself when it connects
 import "/packages/site/dist/search.js";
-import { initSiteHeader } from "../docs/site-header.js";
+import { initSiteHeader } from "/apps/site/header.js";
 
 /* ---- Copy buttons ----------------------------------------------------- */
 

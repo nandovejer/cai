@@ -3,7 +3,7 @@
    Consumer-side styles for apps/docs (the pages of the documentation site),
    written the way any level-3 consumer would: on top of tokens + core +
    site. The page shell is core's .o-shell with a .luz-sidebar, under
-   the site header shared with the home page (apps/docs/site-header.css).
+   the site header shared with the home page (apps/site/header.css).
    The HTML elements reference has its own file, elements.css.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
@@ -32,7 +32,7 @@
   grid-row: 2;
 }
 
-/* The site frame (--site-max, --site-edge: apps/docs/site-header.css),
+/* The site frame (--site-max, --site-edge: apps/site/header.css),
    the same as the header's and the home page's. Wider than 768px the
    sidebar's dark column still reaches the window's edge, but grows by the
    free space and pads by it, so its links start where the header's brand

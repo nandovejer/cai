@@ -125,6 +125,7 @@ Requires the tokens layer, then `base.css` (core settings such as z-index and mo
 - **Package source:** `packages/{tokens,core,site,landing,cms,app}/src/` (CSS) and `packages/check/src/` (Node, no CSS)
 - **Package dist:** `packages/{tokens,core,site,landing,cms,app}/dist/` and `packages/check/dist/luz-check.js` (generated)
 - **Docs app:** pages in `apps/docs/pages/` (front matter + fragment), wrapped by `apps/docs/_layouts/` and `apps/docs/_partials/` through `scripts/docs-site/`; styles in `apps/docs/reference.css` and `elements.css`
+- **Shared site app:** `apps/site/` (`header.css`, `header.js`, `boot.js`, `theme-light.css`, `_partials/`, `assets/`): what the home page and the docs share; it depends on no other app
 - **Landing app:** `apps/landing/` (external consumer)
 
 **See [STRUCTURE.md](./STRUCTURE.md) for full directory layout.**

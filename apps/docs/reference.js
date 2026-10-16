@@ -24,7 +24,7 @@ import "/packages/site/dist/search.js";
 // Defines <luz-consent>, for the live example of the Cookie consent page
 // (its answer is stored under its own key, luz-consent-demo)
 import "/packages/site/dist/consent.js";
-import { initSiteHeader } from "./site-header.js";
+import { initSiteHeader } from "/apps/site/header.js";
 import { initDocsView } from "./view.js";
 
 /* ---- Small enhancements ----------------------------------------------- */
@@ -214,6 +214,43 @@ function drawCanvas() {
   ctx.fill();
 }
 
+/**
+ * Repaint the canvas demo when the mode or the light changes: at once, and
+ * again when the colour fade on <html> (apps/site/theme-light.css) has ended,
+ * so it ends in the colours of the mode and not in those of a frame of the fade.
+ */
+function initCanvas() {
+  if (!document.getElementById("d-canvas")) return;
+  drawCanvas();
+  document.addEventListener("luz-mode:change", () => {
+    drawCanvas();
+    const fading = document.documentElement.getAnimations?.() ?? [];
+    if (fading.length) Promise.allSettled(fading.map((a) => a.finished)).then(drawCanvas);
+  });
+}
+
+/**
+ * Re-anchor every specimen to the colour mode of <html> (plan §3.4): the
+ * site's light changes the page, never what is documented. A specimen gets
+ * <html>'s data-theme, so its tokens are Vejer's for that mode under any
+ * light. It follows luz-mode:change and any other write to <html>'s
+ * data-theme. Nothing is served with it: without JavaScript a specimen
+ * inherits the page, and the radios still re-scope it.
+ */
+function initSpecimenTheme() {
+  const root = document.documentElement;
+  const apply = () => {
+    const theme = root.getAttribute("data-theme");
+    for (const el of document.querySelectorAll("[data-docs-specimen], .docs-dodont__stage")) {
+      if (!theme) el.removeAttribute("data-theme");
+      else if (el.getAttribute("data-theme") !== theme) el.setAttribute("data-theme", theme);
+    }
+  };
+  apply();
+  document.addEventListener("luz-mode:change", apply);
+  new MutationObserver(apply).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+}
+
 function initTemplateDemo() {
   const template = document.getElementById("d-template");
   const list = document.getElementById("d-template-list");
@@ -242,9 +279,12 @@ function initSlotDemo() {
 
 /* ---- Boot -------------------------------------------------------------- */
 
-// Color mode, menu drawer and header height (shared with the home
-// page). The canvas demo paints with the token values: repaint it per mode.
-initSiteHeader({ onModeChange: drawCanvas });
+// Color mode, menu drawer and header height (shared with the home page)
+initSiteHeader();
+// The specimens stay in Vejer whatever the light; the canvas demo paints with
+// the token values, so it repaints per mode and light
+initSpecimenTheme();
+initCanvas();
 initFolds();
 initOnThisPage();
 initAssets();

@@ -6,15 +6,17 @@
  * also load it on its own ("@luz-ds/site/mode").
  *
  * Markup (every text is the radios' labels: the script writes none; the
- * docs page, /docs/site/mode/, has the full example):
+ * docs page, /docs/site/mode/, has the full example with the icons' paths).
+ * The icons go in the labels: core's cycle button copies the checked label's
+ * icon, and core has no Auto icon for data-mode-icon on the button.
  *
  *   <luz-mode remember by="clock">
  *     <fieldset class="luz-mode-switcher luz-mode-switcher--cycle">
  *       <legend class="luz-mode-switcher__label">Color mode</legend>
- *       <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked>Auto</label>
- *       <label class="luz-mode-btn" data-theme="light"><input … value="light">Light</label>
- *       <label class="luz-mode-btn" data-theme="dark"><input … value="dark">Dark</label>
- *       <label class="luz-mode-btn" data-theme="high-contrast"><input … value="high-contrast">High contrast</label>
+ *       <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="auto" checked><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>Auto</label>
+ *       <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="light"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>Light</label>
+ *       <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="dark"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>Dark</label>
+ *       <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">…</svg>High contrast</label>
  *     </fieldset>
  *   </luz-mode>
  *

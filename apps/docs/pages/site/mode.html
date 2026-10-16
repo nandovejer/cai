@@ -14,16 +14,24 @@ toc: h2,h3
           <div class="docs-demo__stage">
             <fieldset class="luz-mode-switcher" disabled>
                   <legend class="luz-mode-switcher__label">Color mode (specimen)</legend>
-                  <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="auto" checked>Auto</label>
-                  <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="light">Light</label>
-                  <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="dark">Dark</label>
-                  <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="high-contrast">High contrast</label>
+                  <label class="luz-mode-btn"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="auto" checked><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m8 16 4-8 4 8m-6-3h4" fill="none" stroke="currentColor" stroke-width="2"/></svg>Auto</label>
+                  <label class="luz-mode-btn" data-theme="light"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="light"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/><circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-dasharray="1.5 4.8"/></svg>Light</label>
+                  <label class="luz-mode-btn" data-theme="dark"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="dark"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z"/></svg>Dark</label>
+                  <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
                 </fieldset>
           </div>
           <p class="docs-demo__note">The radio group the element wraps, disabled here because a working one would change the color mode of this whole page. Auto is the fourth radio, checked until the reader chooses. The switcher in this page's footer is <a href="/docs/components/mode-switcher/">core's</a>, with three modes.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Without <a href="#boot">the script for the head</a>, a page that follows a dark system can flash the wrong mode before the element runs. The hours of <code>by="clock"</code> are fixed and read from the visitor's own clock: there is no sunrise or sunset for a place. The word Auto and the legend are yours to translate. A <a href="/docs/tokens/themes/">theme of your own</a> listed in <code>data-luz-themes</code> is left to core. It has not been tested with a screen reader.</p>
+          <p>What to expect:</p>
+          <ul>
+            <li>With <code>by="clock"</code>, Auto is dark from 20:30 to 07:30 even when the device is set to light. The system setting is not read.</li>
+            <li>With <code>prefers-contrast: more</code> and a dark setting together, Auto gives the high-contrast mode, which is light.</li>
+            <li>In the Auto state the cycle button says Auto, not the mode Auto applied.</li>
+            <li>Without <a href="#boot">the script for the head</a>, a dark system can flash the wrong mode first.</li>
+            <li>Auto and the legend are yours to translate. A name in <code>data-luz-themes</code> is left to core.</li>
+            <li>It has not been tested with a screen reader.</li>
+          </ul>
           <nav class="luz-tabs docs-view-tabs" aria-label="Auto color mode documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -31,7 +39,8 @@ toc: h2,h3
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>Core's <a href="/docs/components/mode-switcher/">color mode switcher</a> with a fourth radio, <code>auto</code>, checked, inside <code>&lt;luz-mode&gt;</code>. <code>site.min.js</code> loads the element's file, <code>mode.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
+            <p>Core's <a href="/docs/components/mode-switcher/">color mode switcher</a> with a fourth radio, <code>auto</code>, checked, inside <code>&lt;luz-mode&gt;</code>. <code>site.min.js</code> loads the element's file, <code>mode.min.js</code>; a page without it loads that file on its own.</p>
+            <p>Put the icons in the labels, not <code>data-mode-icon</code> on the cycle button: with <code>luz.js</code> the button copies the checked label's icon, and core has no Auto icon for <code>data-mode-icon</code>.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
@@ -42,15 +51,16 @@ toc: h2,h3
 &lt;luz-mode remember by=&quot;clock&quot;&gt;
   &lt;fieldset class=&quot;luz-mode-switcher luz-mode-switcher--cycle&quot;&gt;
     &lt;legend class=&quot;luz-mode-switcher__label&quot;&gt;Color mode&lt;/legend&gt;
-    &lt;label class=&quot;luz-mode-btn&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;auto&quot; checked&gt;Auto&lt;/label&gt;
-    &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;light&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;light&quot;&gt;Light&lt;/label&gt;
-    &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;dark&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;dark&quot;&gt;Dark&lt;/label&gt;
-    &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;high-contrast&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;high-contrast&quot;&gt;High contrast&lt;/label&gt;
+    &lt;label class=&quot;luz-mode-btn&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;auto&quot; checked&gt;&lt;svg class=&quot;luz-mode-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;/&gt;&lt;path d=&quot;m8 16 4-8 4 8m-6-3h4&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;/&gt;&lt;/svg&gt;Auto&lt;/label&gt;
+    &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;light&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;light&quot;&gt;&lt;svg class=&quot;luz-mode-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;5&quot; fill=&quot;currentColor&quot;/&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;8.6&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2.4&quot; stroke-dasharray=&quot;1.5 4.8&quot;/&gt;&lt;/svg&gt;Light&lt;/label&gt;
+    &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;dark&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;dark&quot;&gt;&lt;svg class=&quot;luz-mode-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z&quot;/&gt;&lt;/svg&gt;Dark&lt;/label&gt;
+    &lt;label class=&quot;luz-mode-btn&quot; data-theme=&quot;high-contrast&quot;&gt;&lt;input class=&quot;luz-mode-btn__input&quot; type=&quot;radio&quot; name=&quot;luz-theme&quot; value=&quot;high-contrast&quot;&gt;&lt;svg class=&quot;luz-mode-btn__icon&quot; viewBox=&quot;0 0 24 24&quot; aria-hidden=&quot;true&quot;&gt;&lt;circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;9&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;/&gt;&lt;path fill=&quot;currentColor&quot; d=&quot;M12 3a9 9 0 0 1 0 18Z&quot;/&gt;&lt;/svg&gt;High contrast&lt;/label&gt;
   &lt;/fieldset&gt;
 &lt;/luz-mode&gt;</code></pre>
             </div>
             <h4 id="boot">Script for the head</h4>
-            <p>This script avoids the flash of the wrong mode: it sets <code>data-theme</code> before the first paint, so a page that follows a dark system does not paint light first. It is recommended, not required, and is for <code>by="system"</code>. It takes the mode stored under <code>luz-theme</code>, otherwise <code>prefers-contrast</code>, then <code>prefers-color-scheme</code>.</p>
+            <p>This script, for <code>by="system"</code>, avoids the flash of the wrong mode: it sets <code>data-theme</code> before the first paint. It is recommended, not required. It takes the mode stored under <code>luz-theme</code>, then <code>prefers-contrast</code>, then <code>prefers-color-scheme</code>.</p>
+            <p>Under a CSP without <code>'unsafe-inline'</code>, serve it as a classic file in the <code>&lt;head&gt;</code> or allow it by its <code>'sha256-…'</code> hash.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
@@ -68,43 +78,42 @@ toc: h2,h3
 &lt;/script&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>There are no variants. The attributes of <code>&lt;luz-mode&gt;</code>, and the value <code>auto</code> of the first radio:</p>
+            <p>There are no variants. The attributes of <code>&lt;luz-mode&gt;</code>:</p>
             <div class="luz-table-wrap" role="region" aria-label="Auto color mode attributes" tabindex="0">
               <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class or attribute</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Class or attribute"><div><code>remember</code></div></td><td data-label="Effect"><div>A boolean. Stores the choice under <code>luz-theme</code>, core's own key, and reads it on load. Auto removes the key. Without it nothing is read, and the key core writes is removed, so a reload starts in Auto</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>remember</code></div></td><td data-label="Effect"><div>A boolean. Stores the choice under <code>luz-theme</code>, core's key. Auto removes it. Without it a reload starts in Auto</div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>by</code></div></td><td data-label="Effect"><div>What Auto follows: <code>system</code> (the default) or <code>clock</code></div></td></tr>
                   <tr><td data-label="Class or attribute"><div><code>for</code></div></td><td data-label="Effect"><div>The <code>id</code> of the element that gets the attributes. <code>&lt;html&gt;</code> by default</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>light-attr</code></div></td><td data-label="Effect"><div>The name of the attribute that holds the phase of the day. <code>data-light</code> by default</div></td></tr>
-                  <tr><td data-label="Class or attribute"><div><code>data-light</code></div></td><td data-label="Effect"><div>Written on the target by <code>by="clock"</code>: one of the six phases below</div></td></tr>
+                  <tr><td data-label="Class or attribute"><div><code>light-attr</code></div></td><td data-label="Effect"><div>The attribute that holds the phase of the day, <code>data-light</code> by default. Never <code>data-theme</code> or a <code>data-luz-*</code> attribute: they are not checked, and are the mode's and core's</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@luz-ds/site</code> for the element's box and a file of its own, <code>@luz-ds/site/mode</code> (<code>dist/mode.min.js</code>), which defines <code>&lt;luz-mode&gt;</code>. <code>site.min.js</code> loads it when the browser is idle, and only on a page with a <code>&lt;luz-mode&gt;</code>. The radios are core's, and so are their labels: the element writes no text.</p>
+            <p>CSS from <code>@luz-ds/site</code> for the element's box and <code>@luz-ds/site/mode</code>, which defines <code>&lt;luz-mode&gt;</code>. <code>site.min.js</code> loads it when idle, on a page with a <code>&lt;luz-mode&gt;</code>. The radios and labels are core's: the element writes no text.</p>
             <ul>
-              <li><strong>Auto by the system:</strong> <code>prefers-contrast: more</code> gives <code>high-contrast</code>; otherwise <code>prefers-color-scheme: dark</code> gives <code>dark</code>; otherwise <code>light</code>. It follows a change while the page is open, and writes no <code>data-light</code>.</li>
-              <li><strong>Auto by the clock:</strong> <code>prefers-contrast: more</code> still wins. Otherwise the phase of the day, from the visitor's own clock, decides: <code>dark</code> in the dark phases, <code>light</code> in the others, and the phase is written as <code>data-light</code>. It checks again every minute and when the tab shows again.</li>
-              <li><strong>A mode the reader chose:</strong> Light, Dark or High contrast sets <code>data-theme</code> to it. With <code>by="clock"</code> the light is pinned: Light is <code>afternoon</code>, Dark and High contrast are <code>night</code>.</li>
-              <li><strong>Storage:</strong> only with <code>remember</code>, under core's <code>luz-theme</code>; a value that is not a mode is ignored. A <a href="/docs/tokens/themes/">theme of your own</a> listed in <code>data-luz-themes</code> is left to core. Where storage is blocked, the choice holds for the page.</li>
-              <li><strong>With luz.js:</strong> core's script wires the same radios and ignores Auto, and its cycle button steps through all four.</li>
+              <li><strong>Auto by the system:</strong> <code>prefers-contrast: more</code> gives <code>high-contrast</code>; otherwise <code>prefers-color-scheme: dark</code> gives <code>dark</code>; otherwise <code>light</code>. It follows a change while the page is open.</li>
+              <li><strong>Auto by the clock:</strong> <code>prefers-contrast: more</code> still wins. Otherwise the phase of the day decides: <code>dark</code> in the dark phases, <code>light</code> in the others, and it is written as <code>data-light</code>. It checks every minute and when the tab shows again.</li>
+              <li><strong>A mode the reader chose:</strong> It sets <code>data-theme</code> to it. With <code>by="clock"</code> the light is pinned: <code>afternoon</code> for Light, <code>night</code> for the others.</li>
+              <li><strong>Storage:</strong> only with <code>remember</code>, under core's <code>luz-theme</code>; a value that is not a mode is ignored.</li>
+              <li><strong>With luz.js:</strong> core's script ignores Auto, and its cycle button steps through all four.</li>
             </ul>
-            <p id="phases">The phases of the day, by the visitor's local clock. Night runs through midnight.</p>
+            <p id="phases">The phases of the day, by the visitor's clock. Night runs through midnight.</p>
             <div class="luz-table-wrap" role="region" aria-label="Phases of the day" tabindex="0">
               <table class="luz-table">
                 <thead>
-                  <tr><th scope="col">Phase</th><th scope="col">From</th><th scope="col">To</th><th scope="col"><code>data-theme</code></th><th scope="col">preview(name) shows</th></tr>
+                  <tr><th scope="col">Phase</th><th scope="col">From</th><th scope="col">To</th><th scope="col"><code>data-theme</code></th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Phase"><div><code>night</code></div></td><td data-label="From"><div>22:30</div></td><td data-label="To"><div>05:00</div></td><td data-label="data-theme"><div>dark</div></td><td data-label="preview(name) shows"><div>23:45</div></td></tr>
-                  <tr><td data-label="Phase"><div><code>dawn</code></div></td><td data-label="From"><div>05:00</div></td><td data-label="To"><div>07:30</div></td><td data-label="data-theme"><div>dark</div></td><td data-label="preview(name) shows"><div>06:15</div></td></tr>
-                  <tr><td data-label="Phase"><div><code>morning</code></div></td><td data-label="From"><div>07:30</div></td><td data-label="To"><div>12:00</div></td><td data-label="data-theme"><div>light</div></td><td data-label="preview(name) shows"><div>09:30</div></td></tr>
-                  <tr><td data-label="Phase"><div><code>afternoon</code></div></td><td data-label="From"><div>12:00</div></td><td data-label="To"><div>17:30</div></td><td data-label="data-theme"><div>light</div></td><td data-label="preview(name) shows"><div>14:00</div></td></tr>
-                  <tr><td data-label="Phase"><div><code>sunset</code></div></td><td data-label="From"><div>17:30</div></td><td data-label="To"><div>20:30</div></td><td data-label="data-theme"><div>light</div></td><td data-label="preview(name) shows"><div>19:00</div></td></tr>
-                  <tr><td data-label="Phase"><div><code>dusk</code></div></td><td data-label="From"><div>20:30</div></td><td data-label="To"><div>22:30</div></td><td data-label="data-theme"><div>dark</div></td><td data-label="preview(name) shows"><div>21:15</div></td></tr>
+                  <tr><td data-label="Phase"><div><code>night</code></div></td><td data-label="From"><div>22:30</div></td><td data-label="To"><div>05:00</div></td><td data-label="data-theme"><div>dark</div></td></tr>
+                  <tr><td data-label="Phase"><div><code>dawn</code></div></td><td data-label="From"><div>05:00</div></td><td data-label="To"><div>07:30</div></td><td data-label="data-theme"><div>dark</div></td></tr>
+                  <tr><td data-label="Phase"><div><code>morning</code></div></td><td data-label="From"><div>07:30</div></td><td data-label="To"><div>12:00</div></td><td data-label="data-theme"><div>light</div></td></tr>
+                  <tr><td data-label="Phase"><div><code>afternoon</code></div></td><td data-label="From"><div>12:00</div></td><td data-label="To"><div>17:30</div></td><td data-label="data-theme"><div>light</div></td></tr>
+                  <tr><td data-label="Phase"><div><code>sunset</code></div></td><td data-label="From"><div>17:30</div></td><td data-label="To"><div>20:30</div></td><td data-label="data-theme"><div>light</div></td></tr>
+                  <tr><td data-label="Phase"><div><code>dusk</code></div></td><td data-label="From"><div>20:30</div></td><td data-label="To"><div>22:30</div></td><td data-label="data-theme"><div>dark</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -115,42 +124,26 @@ toc: h2,h3
                   <tr><th scope="col">Name</th><th scope="col">What it does</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Name"><div><code>el.mode</code></div></td><td data-label="What it does"><div>The choice: <code>auto</code>, <code>light</code>, <code>dark</code> or <code>high-contrast</code>. Setting it is choosing the radio; another value is ignored</div></td></tr>
+                  <tr><td data-label="Name"><div><code>el.mode</code></div></td><td data-label="What it does"><div>The choice: <code>auto</code>, <code>light</code>, <code>dark</code> or <code>high-contrast</code>. Setting it chooses the radio</div></td></tr>
                   <tr><td data-label="Name"><div><code>el.light</code></div></td><td data-label="What it does"><div>The phase of the day now, or <code>null</code> unless <code>by="clock"</code></div></td></tr>
-                  <tr><td data-label="Name"><div><code>preview(x)</code></div></td><td data-label="What it does"><div>Shows another time of day. <code>x</code> is a phase name or an hour from 0 to 24. With Auto, <code>data-theme</code> follows the phase; with a mode chosen, only the light does. <code>preview(null)</code> goes back. Unless <code>by="clock"</code> it does nothing and returns <code>false</code></div></td></tr>
-                  <tr><td data-label="Name"><div><code>luz-mode:change</code></div></td><td data-label="What it does"><div>Bubbles from the element once it is upgraded and at every change. Its <code>detail</code> is below</div></td></tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="luz-table-wrap" role="region" aria-label="Detail of luz-mode:change" tabindex="0">
-              <table class="luz-table">
-                <thead>
-                  <tr><th scope="col">Key</th><th scope="col">Value</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td data-label="Key"><div><code>detail.mode</code></div></td><td data-label="Value"><div>The choice</div></td></tr>
-                  <tr><td data-label="Key"><div><code>detail.theme</code></div></td><td data-label="Value"><div>The <code>data-theme</code> applied</div></td></tr>
-                  <tr><td data-label="Key"><div><code>detail.light</code></div></td><td data-label="Value"><div>The phase, or <code>null</code></div></td></tr>
-                  <tr><td data-label="Key"><div><code>detail.remembered</code></div></td><td data-label="Value"><div><code>true</code> only with <code>remember</code> and a mode stored now</div></td></tr>
-                  <tr><td data-label="Key"><div><code>detail.simulated</code></div></td><td data-label="Value"><div><code>true</code> while a preview is active</div></td></tr>
+                  <tr><td data-label="Name"><div><code>preview(x)</code></div></td><td data-label="What it does"><div>Shows another time of day: <code>x</code> is a phase name or an hour from 0 to 24. With Auto, <code>data-theme</code> follows it; with a mode chosen, only the light does. <code>preview(null)</code> goes back. Unless <code>by="clock"</code> it returns <code>false</code></div></td></tr>
+                  <tr><td data-label="Name"><div><code>luz-mode:change</code></div></td><td data-label="What it does"><div>Bubbles from the element at every change. Its <code>detail</code>: <code>mode</code> (the choice), <code>theme</code> (the <code>data-theme</code> applied), <code>light</code> (the phase, or <code>null</code>), <code>remembered</code> (<code>true</code> only with <code>remember</code> and a mode stored now) and <code>simulated</code> (<code>true</code> while a preview is active)</div></td></tr>
                 </tbody>
               </table>
             </div>
             <h4 id="two-lights">Two lights in one mode</h4>
-            <p>With <code>by="clock"</code> the phase is <code>data-light</code>, and the rest is your CSS: set only the semantic tokens that differ, as <a href="/docs/tokens/themes/">a theme of your own</a> does. Measure each pair with the <a href="/docs/tokens/contrast/">contrast check</a>, and use <code>preview()</code> to see each look.</p>
+            <p>With <code>by="clock"</code> the rest is your CSS: set only the semantic tokens that differ, as <a href="/docs/tokens/themes/">a theme of your own</a> does. Measure each pair with the <a href="/docs/tokens/contrast/">contrast check</a>.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">CSS</span>
                 <button class="luz-copy-btn" type="button" data-copy-from="code-mode-lights" aria-label="Copy the two looks">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="A day look and a night look"><code id="code-mode-lights">[data-theme=&quot;light&quot;][data-light=&quot;morning&quot;],
-[data-theme=&quot;light&quot;][data-light=&quot;afternoon&quot;] {
+              <pre class="luz-code-block" data-lang="css" tabindex="0" role="region" aria-label="A day look and a night look"><code id="code-mode-lights">[data-theme=&quot;light&quot;][data-light=&quot;morning&quot;] {
   --luz-surface-page: #fdf3dc;
   --luz-surface-muted: #fdf3dc;
   --luz-surface: #fffaf0;
 }
 
-[data-theme=&quot;dark&quot;][data-light=&quot;dusk&quot;],
 [data-theme=&quot;dark&quot;][data-light=&quot;night&quot;] {
   --luz-surface-page: #0f1520;
   --luz-surface-muted: #0f1520;
@@ -158,18 +151,18 @@ toc: h2,h3
 }</code></pre>
             </div>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light, because no rule matches it. The system and the clock are not followed, and nothing is remembered.</p>
+            <p>The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light. The system and the clock are not followed, and nothing is remembered.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
               <li><strong>Radios:</strong> Tab reaches the group, the arrow keys choose Auto, Light, Dark or High contrast. With <code>luz.js</code>, the cycle button moves to the next of the four with Enter or Space.</li>
-              <li>The legend and the labels are yours, in the page's language. The element adds no button, role or ARIA: the group is the fieldset and its radios.</li>
+              <li>The legend and the labels are yours. The element adds no button, role or ARIA: the group is the fieldset and its radios.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
           </div>
           <div class="luz-tabpanel docs-view" id="design-panel">
             <h2 class="docs-view__title" id="design">Design</h2>
             <h3 id="when">When to use</h3>
-            <p>Use it when readers should not have to choose: the page follows their device, or the time of day, until they do.</p>
+            <p>Use it when readers should not have to choose: the page follows their device or the time of day until they do.</p>
             <ul>
               <li><code>by="system"</code> for a site that reads best in the light or the dark the reader's device is in.</li>
               <li><code>by="clock"</code> for a site with a look for each part of the day, such as a venue or a weather page.</li>

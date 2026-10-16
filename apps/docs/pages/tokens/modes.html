@@ -78,8 +78,8 @@ keywords: dark mode, prefers-color-scheme
       <p>Every mode is measured against the same minimums: 4.5:1 for text, 3:1 for disabled text, borders and focus rings. The same measure runs on a theme of your own with <code class="luz-code-inline">npx @luz-ds/tokens check-contrast</code>, or in the browser with <a href="/docs/tokens/contrast/">the contrast check</a>.</p>
     </section>
 
-    <section class="docs-block docs-chapter" id="system" aria-labelledby="system-title">
-      <h2 class="docs-chapter__title" id="system-title">Following the system or the clock</h2>
+    <section class="docs-block docs-chapter" aria-labelledby="system">
+      <h2 class="docs-chapter__title" id="system">Following the system or the clock</h2>
       <p class="docs-lead">A page is light until it says otherwise: LUZ reads nothing of the visitor's device by itself. To start in dark when the device is in dark, set the attribute from a script in the head.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
@@ -100,6 +100,7 @@ keywords: dark mode, prefers-color-scheme
       </div>
       <ul>
         <li>Put it in <code class="luz-code-inline">&lt;head&gt;</code>. It runs before the first paint, so the page does not flash light. Make it <code class="luz-code-inline">&lt;script type=&quot;module&quot;&gt;</code> to keep it off the critical path: the page then paints light first, and switches.</li>
+        <li>Under a CSP without <code class="luz-code-inline">'unsafe-inline'</code>, serve it as a classic file in <code class="luz-code-inline">&lt;head&gt;</code> or allow it by its <code class="luz-code-inline">'sha256-…'</code> hash.</li>
         <li>A mode the reader chose wins. The color mode switcher stores it under <code class="luz-code-inline">luz-theme</code>, and the script reads that first. The system setting is never stored, so the page keeps following it until the reader chooses.</li>
         <li>Without JavaScript the page stays light, and the radios of the switcher still change the mode for the session.</li>
         <li>It reads the setting once, when the page loads. To follow a change while the page is open, listen to the <code class="luz-code-inline">change</code> event of <code class="luz-code-inline">matchMedia()</code> and call <code class="luz-code-inline">applyTheme(mode, { persist: false })</code> from <code class="luz-code-inline">@luz-ds/core/theme</code>, only while <code class="luz-code-inline">getStoredTheme()</code> is <code class="luz-code-inline">null</code>.</li>
@@ -107,9 +108,8 @@ keywords: dark mode, prefers-color-scheme
       </ul>
       <p>The script sets the mode once. To keep following the system while the page is open, and to give the reader an Auto choice beside the three modes, wrap the switcher in <a href="/docs/site/mode/"><code class="luz-code-inline">&lt;luz-mode&gt;</code></a>, from <code class="luz-code-inline">@luz-ds/site</code>.</p>
       <ul>
-        <li>Auto follows the system: <code class="luz-code-inline">prefers-contrast: more</code> gives high contrast, then <code class="luz-code-inline">prefers-color-scheme: dark</code> gives dark, otherwise light. It follows a change of either while the page is open.</li>
-        <li>With <code class="luz-code-inline">by="clock"</code> Auto follows the time of day instead: dark at dawn, dusk and night, light in the morning, afternoon and at sunset. It writes the phase as <code class="luz-code-inline">data-light</code>, so a theme can give each light its own look. The hours are in <a href="/docs/site/mode/#how">how it works</a>.</li>
-        <li>A mode the reader chooses wins over both. With <code class="luz-code-inline">remember</code> it is stored under <code class="luz-code-inline">luz-theme</code>, the key the switcher uses.</li>
-        <li>Without JavaScript Auto is light, as every page is.</li>
+        <li>Auto follows the system: <code class="luz-code-inline">prefers-contrast: more</code> gives high contrast, then <code class="luz-code-inline">prefers-color-scheme: dark</code> gives dark, otherwise light.</li>
+        <li>With <code class="luz-code-inline">by="clock"</code> Auto follows the time of day instead, and writes the phase as <code class="luz-code-inline">data-light</code>: see <a href="/docs/site/mode/#how">how it works</a>.</li>
+        <li>A mode the reader chooses wins over both. Without JavaScript Auto is light.</li>
       </ul>
     </section>

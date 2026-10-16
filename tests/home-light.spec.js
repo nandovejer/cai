@@ -324,8 +324,8 @@ test.describe('with JavaScript', () => {
       const chunks = trackChunks(page);
       await open(page, '/', { look });
       await expect(page.locator('home-light')).toHaveAttribute('look', look);
-      await expect(page.locator(`luz-${look}`)).toBeVisible();
-      for (const other of LOOKS.filter((l) => l !== look)) await expect(page.locator(`luz-${other}`).filter({ visible: true })).toHaveCount(0);
+      await expect(page.locator(`home-${look}`)).toBeVisible();
+      for (const other of LOOKS.filter((l) => l !== look)) await expect(page.locator(`home-${other}`).filter({ visible: true })).toHaveCount(0);
       expect(chunks.filter((c) => c !== 'light' && !LOOKS.includes(c))).toEqual([]);
       expect(chunks).toContain('light');
       expect(chunks.filter((c) => LOOKS.includes(c))).toEqual([look]);
@@ -389,7 +389,7 @@ test.describe('with JavaScript', () => {
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
     expect(chunks.filter((c) => LOOKS.includes(c))).toEqual([]);
-    for (const tag of LOOKS) expect(await page.locator(`luz-${tag}`).count()).toBe(0);
+    for (const tag of LOOKS) expect(await page.locator(`home-${tag}`).count()).toBe(0);
     expect(problems).toEqual([]);
   });
 

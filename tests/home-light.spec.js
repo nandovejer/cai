@@ -654,9 +654,9 @@ test.describe('review fixes', () => {
     await expect(page.locator('home-light .home-light__bar')).toBeVisible();
     await page.keyboard.press('Tab');
     expect(await page.evaluate(() => !!document.activeElement?.closest('home-light .home-light__bar')), 'focus is inside the bar').toBe(true);
-    const bar = await page.locator('home-light .home-light__bar').boundingBox();
-    const under = await line(page).boundingBox();
-    expect(bar?.y ?? Infinity, 'the bar is above the line').toBeLessThan(under?.y ?? 0);
+    // Both boxes in one frame: the page scrolls smoothly to the focused control, so two reads apart would race it
+    const [bar, under] = await page.evaluate(() => [document.querySelector('home-light .home-light__bar'), document.querySelector('home-light .home-light__line')].map((el) => el?.getBoundingClientRect().y ?? NaN));
+    expect(bar, 'the bar is above the line').toBeLessThan(under);
   });
 
   /* -- 2. aria-valuetext --------------------------------------------------- */

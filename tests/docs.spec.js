@@ -495,6 +495,7 @@ test.describe('Documentation site', () => {
     });
 
     test('every component has its page: example, known issues, then the Code and Design tabs (RL-18, SR-5)', async ({ page }) => {
+      test.slow(); // loops over every component page, so its time grows with the docs (about 27 s alone)
       // ia.md §6, a11y.md TAB-16/17; the source structure is checked in tests/docs-site.test.js
       expect(guideIds.length).toBeGreaterThanOrEqual(20);
       for (const id of guideIds) {
@@ -615,6 +616,7 @@ test.describe('Documentation site', () => {
     });
 
     test('the color mode switcher has its own page: the cycle variant, its markup, init, no-JS state and names', async ({ page }) => {
+      test.slow(); // many checks on one heavy page (about 27 s alone), over the 30 s default under load
       await gotoId(page, 'c-mode-switcher');
 
       const guide = page.locator('#c-mode-switcher');

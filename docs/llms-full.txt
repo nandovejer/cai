@@ -5226,7 +5226,7 @@ Do not use it on a blog or a newspaper, or in an app: their packages have header
 ## Hero
 URL: https://nandovejer.github.io/luz/docs/landing/hero/
 Example: https://nandovejer.github.io/luz/examples/landing/hero.html
-Files: .luz-landing-hero, __copy, __eyebrow, __title, __lead, __media · Package: @luz-ds/landing
+Files: .luz-landing-hero, --centered, __copy, __eyebrow, __title, __lead, __media, __media--bleed · Package: @luz-ds/landing
 
 Opens a home or landing page with its title, one sentence, the main actions and an optional picture.
 
@@ -5255,14 +5255,16 @@ Hero markup
 ```
 
 ### Variants and options
-There are no modifiers. The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width. The block is a class of the landing on core's split grid.
+Two modifiers, `--centered` and `__media--bleed`, as in the [product page template](https://nandovejer.github.io/luz/docs/landing/templates/#product-page). The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width. The block is a class of the landing on core's split grid.
 
 - `.luz-landing-hero`: On a `<section>` with core's `.o-grid.o-grid--split`: space above it, the gaps, and columns of at least 24rem (`--luz-grid-min`), so two equal columns when each gets 24rem, one below
+- `.luz-landing-hero--centered`: One column at every width: the copy at most 48rem wide, centred, with its text and actions centred, and the picture under it
 - `.luz-landing-hero__copy`: The text and the actions, first in the source
 - `.luz-landing-hero__eyebrow`: A short line above the title, in small capitals of the mono face; the sans in Arabic
 - `.luz-landing-hero__title`: The title: heading font, 4xl size, balanced lines; 3xl below 1024 px and 2xl at 640 px and below
 - `.luz-landing-hero__lead`: One or two sentences in the secondary text colour, 70 characters wide at most; xl, lg below 1024 px and base at 640 px and below
 - `.luz-landing-hero__media`: The second column, holding core's [image frame](https://nandovejer.github.io/luz/docs/components/image/)
+- `.luz-landing-hero__media--bleed`: On the picture of a centred hero: it runs from edge to edge of the window, past the page's gutters, with no sideways scroll. The frame is 16:9 unless you give it a ratio
 
 ### How it works
 A `<section>` named by its title, laid out by core's split grid and styled by `@luz-ds/landing`. No JavaScript, and `@luz-ds/site` is optional.
@@ -5270,6 +5272,8 @@ A `<section>` named by its title, laid out by core's split grid and styled by `@
 - The columns are core's [split grid](https://nandovejer.github.io/luz/docs/components/layout/#objects-actions), intrinsic: they follow the room the hero has, not the window. A hero as wide as the page splits from about 900 px of window; in a narrow column, or with larger text, it stays one column.
 - The order is the source order: the copy comes first, on the left in a left-to-right page and on the right in a right-to-left one.
 - The actions are core's [action group](https://nandovejer.github.io/luz/docs/components/layout/#objects-actions), `.o-actions`: at 640 px and below its buttons stack and take the whole width.
+- The bleed measures the window without a viewport unit, which counts a scrollbar and scrolls the page sideways: the page's root becomes a size container (`container-type: inline-size`). The column must be centred in the window, as core's `.o-container` is.
+- The `em` in a title takes the colour of `--luz-landing-title-accent`, the title's own when it is unset.
 - The classes change the look only. The title must be the page's `<h1>`.
 
 ### Without JavaScript
@@ -5293,9 +5297,9 @@ Do not use it on a page whose reader came to read or to do a task: use a plain `
 ## Main and sections
 URL: https://nandovejer.github.io/luz/docs/landing/section/
 Example: https://nandovejer.github.io/luz/examples/landing/section.html
-Files: .luz-landing-main, .luz-landing-section, .luz-landing-glow · Package: @luz-ds/landing
+Files: .luz-landing-main, .luz-landing-section, __eyebrow, __title, __lead, .luz-landing-glow · Package: @luz-ds/landing
 
-Gives a landing page its rhythm: wide room between the blocks of the main, a closer one inside each section, and an optional glow behind the page.
+Gives a landing page its rhythm: wide room between the blocks of the main, a closer one inside each section, with its head, and an optional glow behind the page.
 
 ### Known issues
 None known for the main and the sections. A section on core's [band](https://nandovejer.github.io/luz/docs/components/band/#known-issues) has the band's.
@@ -5323,18 +5327,34 @@ Main and sections markup
 </body>
 ```
 
+Section head markup
+```html
+<section class="o-stack luz-landing-section" aria-labelledby="why-title">
+  <p class="luz-landing-section__eyebrow">Why teams switch</p>
+  <h2 class="luz-landing-section__title" id="why-title">One count for <em>every</em> shelf</h2>
+  <p class="luz-landing-section__lead">Acme Stock reads each sale as it happens, in every shop.</p>
+  <!-- the content -->
+</section>
+```
+
 ### Variants and options
-Three classes of the landing, each on top of a core object. A section stands out on core's [band](https://nandovejer.github.io/luz/docs/components/band/).
+Classes of the landing on core's objects, the head of a section and two knobs. A section stands out on core's [band](https://nandovejer.github.io/luz/docs/components/band/).
 
 - `.luz-landing-main`: On `main.o-container.o-stack`: 64 px (`--luz-space-3xl`) between the blocks and under the last one; none above the first, as the hero brings its own
 - `.luz-landing-section`: On `section.o-stack`: 16 px (`--luz-space-md`) between its children
-- `.luz-landing-glow`: On the `.o-page` element: the brand's subtle tint in the corner where reading starts, over a fade from the page surface to the muted one; none in print
+- `.luz-landing-section__eyebrow`: Above the title: a short label, as the hero's eyebrow
+- `.luz-landing-section__title`: The title, as the hero's one step smaller: 3xl; 2xl below 1024 px and xl at 640 px and below
+- `.luz-landing-section__lead`: One or two sentences in the secondary text colour, 70 characters wide at most; lg, and base at 640 px and below
+- `--luz-landing-title-accent`: A knob: the colour of the `em` in a hero's or a section's title. Unset, the title's colour
+- `.luz-landing-glow`: On the `.o-page` element: the brand's subtle tint at the top, in the corner where reading starts, over a fade from the page surface to the muted one; none in print
+- `--luz-landing-glow-x`: A knob on the glow's element: where along the top edge the tint sits, `0%` the left to `100%` the right, in both directions. Unset, the start edge
 
 ### How it works
 CSS from `@luz-ds/landing` on core's objects. No JavaScript, and `@luz-ds/site` is optional.
 
 - Core's `.o-container` gives the main its width and gutters, and `.o-stack` the column; the landing's layer comes after core's objects, so its gaps win over the stack's.
-- The glow's tint sits top left in a left-to-right page and top right in a right-to-left one: a gradient's position is physical, so the class flips it with `:dir(rtl)`.
+- The glow's tint sits at the start edge: top left in a left-to-right page and top right in a right-to-left one. `--luz-landing-glow-x` moves it: `50%` centres it in both directions.
+- The head shares its rules, and the `em` knob, with the [hero](https://nandovejer.github.io/luz/docs/landing/hero/).
 - Use a section on a `<section>` when the group has its own heading, or on a `<div>` when it does not.
 
 ### Without JavaScript
@@ -5359,9 +5379,9 @@ Do not use a section to space the paragraphs of running text: the text styles al
 ## Footer
 URL: https://nandovejer.github.io/luz/docs/landing/footer/
 Example: https://nandovejer.github.io/luz/examples/landing/footer.html
-Files: .luz-landing-footer · Package: @luz-ds/landing
+Files: .luz-landing-footer, __brand, __col, __col-title · Package: @luz-ds/landing
 
-Ends every page of a landing site with who made it, its licence and a few secondary links, under a rule.
+Ends every page of a landing site with who made it, its licence and a few secondary links, under a rule, in a row or as columns.
 
 ### Known issues
 None known.
@@ -5380,11 +5400,39 @@ Footer markup
 </footer>
 ```
 
+Footer with columns markup
+```html
+<footer class="luz-landing-footer">
+  <div class="o-container o-container--inline o-grid">
+    <div class="luz-landing-footer__brand">
+      <p><strong>Acme Stock</strong> <span>v2.0</span></p>
+      <p>Stock counts that keep up with the shop.</p>
+    </div>
+    <nav class="luz-landing-footer__col" aria-labelledby="footer-product">
+      <h2 class="luz-landing-footer__col-title" id="footer-product">Product</h2>
+      <ul>
+        <li><a href="/pricing/">Pricing</a></li>
+        <li><a href="/trial/">Start free trial</a></li>
+      </ul>
+    </nav>
+    <nav class="luz-landing-footer__col" aria-labelledby="footer-company">
+      <h2 class="luz-landing-footer__col-title" id="footer-company">Company</h2>
+      <ul>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
+```
+
 ### Variants and options
-There are no modifiers. The footer is a class of the landing on a native `<footer>`, with a row of core's inside.
+No modifiers. The footer is a class of the landing on a native `<footer>`, with a row of core's or a grid of a brand and columns inside.
 
 - `.luz-landing-footer`: On `<footer>`: a rule on top, 24 px above its row and 32 px below; its row spreads its children to the two ends, and is a column aligned to the start at 768 px and below
 - `.o-container.o-container--inline.o-row` (core): The row: the width and gutters of the page, so its content starts where the main's does
+- `.luz-landing-footer__brand`: The first cell of the `.o-container.o-container--inline.o-grid` (core), 24 px (`--luz-space-lg`) apart: a name, a version, one line. From 768 px it is twice a column
+- `.luz-landing-footer__col`: A column, on a `<nav>`: a title over a list of links with no markers, 8 px (`--luz-space-xs`) apart
+- `.luz-landing-footer__col-title`: A column's title: sans, small, semibold, primary text
 - `.o-actions` (core): The links, as an [action group](https://nandovejer.github.io/luz/docs/components/layout/#objects-actions)
 
 ### How it works
@@ -5392,6 +5440,7 @@ CSS from `@luz-ds/landing` on core's objects. No JavaScript, and `@luz-ds/site` 
 
 - The landing adds the rule, the room around the row and how the row spreads its children; `.o-container--inline` lines the row up with the page's content.
 - On an `.o-page` the main grows, so the footer rests on the bottom of a page shorter than the window.
+- With a brand and columns the cells stack, and from 768 px they sit in a row: the brand takes two shares, each column one.
 - The column at 768 px and below does not wrap, so its children stay one under the other.
 
 ### Without JavaScript
@@ -5402,6 +5451,7 @@ The footer has no interaction of its own; its links keep theirs.
 
 - A `<footer>` that is a direct child of `<body>` is the contentinfo landmark.
 - Name a `<nav>` of links with `aria-label`, and keep the links in the same order on every page.
+- Name a column's `<nav>` by its title with `aria-labelledby`, and make the title a heading (`<h2>`).
 
 ### When to use
 Use the footer at the end of every page of a landing site, for who made it, its licence and a few secondary links.
@@ -5411,10 +5461,62 @@ Do not put the main navigation, or anything needed to finish a task, in the foot
 
 - Main navigation goes in the [header](https://nandovejer.github.io/luz/docs/landing/header/).
 
+## Stat
+URL: https://nandovejer.github.io/luz/docs/landing/stat/
+Example: https://nandovejer.github.io/luz/examples/landing/stat.html
+Files: .luz-landing-stat, __value, __label · Package: @luz-ds/landing
+
+Shows one figure big, with a short label under it.
+
+### Known issues
+None known.
+
+### Copy the markup
+Stat markup
+```html
+<ul class="o-grid o-grid--3">
+  <li>
+    <div class="luz-landing-stat">
+      <p class="luz-landing-stat__value">4,000+</p>
+      <p class="luz-landing-stat__label">teams on the platform</p>
+    </div>
+  </li>
+  <!-- one li for each stat; a card is a li.luz-card -->
+</ul>
+```
+
+### Variants and options
+No modifiers: two parts, alone or inside a card.
+
+- `.luz-landing-stat`: The block: the value over the label, a small gap (`--luz-space-2xs`) apart, and no padding or surface
+- `.luz-landing-stat__value`: The figure: heading font, 3xl, light, with figures of equal width; it wraps anywhere in a narrow column
+- `.luz-landing-stat__label`: What the figure counts: sm size, in the secondary text colour
+
+### How it works
+CSS from `@luz-ds/landing`. No JavaScript, and `@luz-ds/site` is optional.
+
+- The stat lays out nothing: put several in a core grid list, `ul.o-grid.o-grid--3`. In a [card](https://nandovejer.github.io/luz/docs/components/card/) it uses the card's padding and surface.
+
+### Without JavaScript
+Nothing changes: the stat is HTML and CSS, and does not count up.
+
+### Keyboard and ARIA
+The stat has no interaction or role of its own.
+
+- The value comes before the label in the source, so it is read in that order. Put stats in a `<ul>`, under the section's heading.
+
+### When to use
+Use a stat for a figure that backs up a claim: how many use the product, how fast it is. Two to four together read at a glance.
+
+### When not to use
+Do not use a stat for a figure that needs a sentence to be understood.
+
+- For rows and columns to compare, use a [table](https://nandovejer.github.io/luz/docs/components/table/).
+
 ## Landing page templates
 URL: https://nandovejer.github.io/luz/docs/landing/templates/
 
-The blocks of an event landing page to paste in and adapt, in the order a visitor reads them: hero, programme, speakers, tickets, call to action, registration and features.
+The blocks of an event landing page to paste in and adapt, in the order a visitor reads them: hero, programme, speakers, tickets, call to action, registration and features, and a product page that puts a centred hero, a section head, stats and a footer with columns together.
 
 This page is a library of whole-page templates: open its URL for the markup of each.
 

@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Main and sections – Landing – LUZ documentation</title>
-  <meta name="description" content="Gives a landing page its rhythm: wide room between the blocks of the main, a closer one inside each section, and an optional glow behind the page.">
+  <meta name="description" content="Gives a landing page its rhythm: wide room between the blocks of the main, a closer one inside each section, with its head, and an optional glow behind the page.">
   <link rel="icon" href="../../../assets/favicon-CLiQtzsm.ico" sizes="32x32">
   <link rel="icon" href="../../../assets/favicon-Cnbu5NPQ.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="../../../assets/apple-touch-icon-QPTLZskv.png">
@@ -15,7 +15,7 @@
   <script type="module" crossorigin src="../../../assets/reference-DvGfX6AQ.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-hmJxk_Q7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-CYPPepRi.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-NpwxmRRr.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-GOMTznhJ.css">
 </head>
 <body class="o-shell docs-page">
@@ -109,6 +109,7 @@
           <li><a class="luz-sidebar__link" href="../../../docs/landing/hero/">Hero</a></li>
           <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/landing/section/">Main and sections</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/landing/footer/">Footer</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/landing/stat/">Stat</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/landing/templates/">Landing page templates</a></li>
         </ul>
       </li>
@@ -131,9 +132,12 @@
       <h1 class="docs-title">Main and sections</h1>
       <code class="docs-demo__file">.luz-landing-main</code>
       <code class="docs-demo__file">.luz-landing-section</code>
+      <code class="docs-demo__file">__eyebrow</code>
+      <code class="docs-demo__file">__title</code>
+      <code class="docs-demo__file">__lead</code>
       <code class="docs-demo__file">.luz-landing-glow</code>
     </div>
-    <p class="docs-lead">Gives a landing page its rhythm: wide room between the blocks of the main, a closer one inside each section, and an optional glow behind the page.</p>
+    <p class="docs-lead">Gives a landing page its rhythm: wide room between the blocks of the main, a closer one inside each section, with its head, and an optional glow behind the page.</p>
   </div>
   <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
     <details class="docs-onpage__fold">
@@ -180,6 +184,13 @@
               </div>
             </div>
             <p class="docs-demo__note">Sections are 64 px (<code class="luz-code-inline">--luz-space-3xl</code>) apart in the main; their blocks, 16 px (<code class="luz-code-inline">--luz-space-md</code>).</p>
+            <div class="o-stack luz-landing-section" id="demo-section-head">
+              <p class="luz-landing-section__eyebrow">Why teams switch</p>
+              <p class="luz-landing-section__title">One count for <em>every</em> shelf</p>
+              <p class="luz-landing-section__lead">Acme Stock reads each sale as it happens, in every shop.</p>
+              <div class="docs-box">Content</div>
+            </div>
+            <p class="docs-demo__note">The head of a section: an eyebrow, a title and a lead. The title is a paragraph here, as this page already has its headings.</p>
             <div class="luz-landing-glow docs-gradient-sample">.luz-landing-glow</div>
           </div>
           </div>
@@ -216,8 +227,20 @@
   &lt;!-- the footer --&gt;
 &lt;/body&gt;</code></pre>
             </div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-landing-section-head" aria-label="Copy the section head markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Section head markup"><code id="code-landing-section-head">&lt;section class=&quot;o-stack luz-landing-section&quot; aria-labelledby=&quot;why-title&quot;&gt;
+  &lt;p class=&quot;luz-landing-section__eyebrow&quot;&gt;Why teams switch&lt;/p&gt;
+  &lt;h2 class=&quot;luz-landing-section__title&quot; id=&quot;why-title&quot;&gt;One count for &lt;em&gt;every&lt;/em&gt; shelf&lt;/h2&gt;
+  &lt;p class=&quot;luz-landing-section__lead&quot;&gt;Acme Stock reads each sale as it happens, in every shop.&lt;/p&gt;
+  &lt;!-- the content --&gt;
+&lt;/section&gt;</code></pre>
+            </div>
             <h3 id="variants">Variants and options</h3>
-            <p>Three classes of the landing, each on top of a core object. A section stands out on core's <a href="../../../docs/components/band/">band</a>.</p>
+            <p>Classes of the landing on core's objects, the head of a section and two knobs. A section stands out on core's <a href="../../../docs/components/band/">band</a>.</p>
             <div class="luz-table-wrap" role="region" aria-label="Main and sections classes" tabindex="0">
               <table class="luz-table">
                 <thead>
@@ -226,7 +249,12 @@
                 <tbody>
                   <tr><td data-label="Class"><div><code>.luz-landing-main</code></div></td><td data-label="Effect"><div>On <code>main.o-container.o-stack</code>: 64 px (<code>--luz-space-3xl</code>) between the blocks and under the last one; none above the first, as the hero brings its own</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-landing-section</code></div></td><td data-label="Effect"><div>On <code>section.o-stack</code>: 16 px (<code>--luz-space-md</code>) between its children</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.luz-landing-glow</code></div></td><td data-label="Effect"><div>On the <code>.o-page</code> element: the brand's subtle tint in the corner where reading starts, over a fade from the page surface to the muted one; none in print</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-section__eyebrow</code></div></td><td data-label="Effect"><div>Above the title: a short label, as the hero's eyebrow</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-section__title</code></div></td><td data-label="Effect"><div>The title, as the hero's one step smaller: 3xl; 2xl below 1024 px and xl at 640 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-section__lead</code></div></td><td data-label="Effect"><div>One or two sentences in the secondary text colour, 70 characters wide at most; lg, and base at 640 px and below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>--luz-landing-title-accent</code></div></td><td data-label="Effect"><div>A knob: the colour of the <code>em</code> in a hero's or a section's title. Unset, the title's colour</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-glow</code></div></td><td data-label="Effect"><div>On the <code>.o-page</code> element: the brand's subtle tint at the top, in the corner where reading starts, over a fade from the page surface to the muted one; none in print</div></td></tr>
+                  <tr><td data-label="Class"><div><code>--luz-landing-glow-x</code></div></td><td data-label="Effect"><div>A knob on the glow's element: where along the top edge the tint sits, <code>0%</code> the left to <code>100%</code> the right, in both directions. Unset, the start edge</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -234,7 +262,8 @@
             <p>CSS from <code>@luz-ds/landing</code> on core's objects. No JavaScript, and <code>@luz-ds/site</code> is optional.</p>
             <ul>
               <li>Core's <code>.o-container</code> gives the main its width and gutters, and <code>.o-stack</code> the column; the landing's layer comes after core's objects, so its gaps win over the stack's.</li>
-              <li>The glow's tint sits top left in a left-to-right page and top right in a right-to-left one: a gradient's position is physical, so the class flips it with <code>:dir(rtl)</code>.</li>
+              <li>The glow's tint sits at the start edge: top left in a left-to-right page and top right in a right-to-left one. <code>--luz-landing-glow-x</code> moves it: <code>50%</code> centres it in both directions.</li>
+              <li>The head shares its rules, and the <code>em</code> knob, with the <a href="../../../docs/landing/hero/">hero</a>.</li>
               <li>Use a section on a <code>&lt;section&gt;</code> when the group has its own heading, or on a <code>&lt;div&gt;</code> when it does not.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
@@ -272,21 +301,37 @@
                   <div class="o-stack luz-landing-section"><p class="u-mb-0">The plan renews on the first of the month.</p><p class="u-mb-0">You can cancel before then.</p><p class="u-mb-0">Unused days are not refunded.</p></div>
                 </div>
               </figure>
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> An eyebrow of a few words that names the topic, over a title that says the point.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-stack luz-landing-section"><p class="luz-landing-section__eyebrow">Pricing</p><p class="luz-landing-section__title">Pay for the shops you open</p></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A sentence as the eyebrow: it is set in small spaced capitals, which are slow to read at length.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="o-stack luz-landing-section"><p class="luz-landing-section__eyebrow">Plans for every size of shop, from one till to a chain</p><p class="luz-landing-section__title">Pay for the shops you open</p></div>
+                </div>
+              </figure>
             </div>
             <h3 id="content">Writing the content</h3>
             <p>Start each section with a heading that says what the section is for.</p>
             <ul>
               <li>Use the next heading level after the page title: <code>&lt;h2&gt;</code> under the hero's <code>&lt;h1&gt;</code>.</li>
               <li>Keep one idea per section; a second idea is a second section.</li>
+              <li>The eyebrow is one to three words, a label and not a sentence. The title is the point of the section, in sentence case. The lead is one or two sentences; leave out any of the three you do not need.</li>
+              <li>Put the <code>em</code> on one or two words of a title, to make them stand out. Use it for emphasis, not for colour alone.</li>
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
-            <p>The main and the sections are spacing only: they add no colour. The glow puts the page's text on the brand's subtle tint in one corner, and on the muted surface at the bottom.</p>
+            <p>The main and the sections are spacing only; the head adds primary and secondary text on the page. The glow puts the page's text on the brand's subtle tint in one corner, and on the muted surface at the bottom.</p>
             <div class="luz-table-wrap" role="region" aria-label="Glow contrast in each mode" tabindex="0">
               <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
                 </thead>
                 <tbody>
+<tr><td data-label="Part"><div>Section title</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Eyebrow and lead</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Text in the tinted corner</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>14.3:1</div></td><td data-label="Dark"><div>12.7:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Secondary text in the tinted corner</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-brand-subtle</code> over <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.3:1</div></td><td data-label="High contrast"><div>18.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
                   <tr><td data-label="Part"><div>Text at the bottom</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-muted</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>20.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
@@ -297,13 +342,15 @@
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text.</p>
             <ul>
               <li><strong>Focus:</strong> none of the three takes focus; what is inside keeps its own ring.</li>
+              <li><strong>Accent:</strong> <code>--luz-landing-title-accent</code> is yours. Check the colour you set against the page surface in every mode you ship, as text needs 4.5:1.</li>
               <li><strong>Forced colors:</strong> the glow is removed, and the page is the system's background.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 5 tokens that the <code>.luz-landing-main</code>, <code>.luz-landing-section</code> and <code>.luz-landing-glow</code> rules of landing's <code>components/main.css</code>, <code>section.css</code> and <code>glow.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 18 tokens that the <code>.luz-landing-main</code>, <code>.luz-landing-section</code> and <code>.luz-landing-glow</code> rules of landing's <code>components/main.css</code>, <code>section.css</code> and <code>glow.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="../../../docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
-              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#luz-brand-subtle"><code>--luz-brand-subtle</code></a>, <a href="../../../docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="../../../docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a></dd></div>
-              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-3xl</code>, <code>--luz-space-md</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/color/">Color</a></dt><dd><a href="../../../docs/tokens/color/#luz-brand-subtle"><code>--luz-brand-subtle</code></a>, <a href="../../../docs/tokens/color/#luz-surface-muted"><code>--luz-surface-muted</code></a>, <a href="../../../docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a>, <a href="../../../docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a>, <a href="../../../docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="../../../docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-3xl</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code></dd></div>
+              <div><dt><a href="../../../docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-heading</code>, <code>--luz-font-mono</code>, <code>--luz-font-sans</code>, <code>--luz-text-2xl</code>, <code>--luz-text-3xl</code>, <code>--luz-text-4xl</code>, <code>--luz-text-base</code>, <code>--luz-text-lg</code>, <code>--luz-text-xl</code>, <code>--luz-text-xs</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
           </div>

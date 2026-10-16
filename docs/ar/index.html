@@ -17,20 +17,41 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../boot.js" ></script>
   <script type="module" crossorigin src="../assets/header-BsUKXJYb.js"></script>
-  <script type="module" crossorigin src="../assets/landing-CSbE4t7h.js"></script>
+  <script type="module" crossorigin src="../assets/landing-JFSsVsAJ.js"></script>
   <link rel="stylesheet" crossorigin href="../assets/header-enjYdf1s.css">
-  <link rel="stylesheet" crossorigin href="../assets/landing-RgJmOG22.css">
-  <link rel="stylesheet" crossorigin href="../assets/header-CYPPepRi.css">
+  <link rel="stylesheet" crossorigin href="../assets/landing-DUe3Ym4C.css">
+  <link rel="stylesheet" crossorigin href="../assets/header-NpwxmRRr.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
-     dictionary, which has no Arabic -->
+     dictionary, which has no Arabic. The light-* ones are the texts of
+     <home-light> (apps/landing/light/light.js) -->
 <body class="o-page"
       data-luz-label-change-mode="تغيير وضع الألوان. الوضع الحالي: {mode}"
       data-luz-label-mode-changed="وضع الألوان: {mode}"
       data-luz-label-copied="تم النسخ"
       data-luz-label-copied-status="تم النسخ إلى الحافظة"
-      data-luz-label-copy-failed="تعذّر النسخ. حدّد النص وانسخه يدويًا.">
+      data-luz-label-copy-failed="تعذّر النسخ. حدّد النص وانسخه يدويًا."
+      data-luz-label-light-open="إظهار شريط الضوء"
+      data-luz-label-light-looks="ما يقع عليه الضوء"
+      data-luz-label-light-globe="الكرة الأرضية"
+      data-luz-label-light-city="المدينة"
+      data-luz-label-light-map="الخريطة"
+      data-luz-label-light-say-globe="نظام التصميم عالَمٌ له قوانينه الخاصة في الضوء."
+      data-luz-label-light-say-city="تُبنى المدينة قطعةً قطعة، وكذلك نظام التصميم."
+      data-luz-label-light-say-map="الخريطة ليست هي الأرض، لكنها تشبهها."
+      data-luz-label-light-globe-alt="كرة من النقاط تضيئها الشمس كما هي الآن: جانب النهار يواجه الضوء وجانب الليل يخبو."
+      data-luz-label-light-city-alt="أفق من أبراج مرسومة بالخطوط: حبر على ورق نهارًا، ونيون ليلًا."
+      data-luz-label-light-map-alt="خريطة مدينة: حبر على ورق نهارًا، ونيون ليلًا."
+      data-luz-label-light-scrub="تصفّح ساعات اليوم"
+      data-luz-label-light-live="العودة إلى الآن"
+      data-luz-label-light-sep="، "
+      data-luz-label-light-dawn="الفجر"
+      data-luz-label-light-morning="ضوء الصباح"
+      data-luz-label-light-afternoon="ضوء العصر"
+      data-luz-label-light-sunset="الغروب"
+      data-luz-label-light-dusk="الشفق"
+      data-luz-label-light-night="الليل">
   <a class="luz-skip-link" href="#main-content">انتقل إلى المحتوى الرئيسي</a>
 
   <header class="site-header" id="site-header">
@@ -153,6 +174,14 @@
           <a class="luz-btn luz-btn--outline luz-btn--lg" href="../docs/components/" hreflang="en">تصفّح المكونات</a>
         </div>
       </div>
+    </section>
+
+    <!-- ====================== THE LIGHT ======================
+         The visitor's sky over a globe, a city or a map (apps/landing/light/).
+         Without JavaScript the element stays empty and light.css keeps its room -->
+    <section id="light" aria-labelledby="light-title">
+      <h2 class="u-sr-only" id="light-title">الضوء حيث أنت</h2>
+      <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
     </section>
 
     <!-- ====================== WHY ====================== -->

@@ -17,20 +17,41 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../boot.js" ></script>
   <script type="module" crossorigin src="../assets/header-BsUKXJYb.js"></script>
-  <script type="module" crossorigin src="../assets/landing-CSbE4t7h.js"></script>
+  <script type="module" crossorigin src="../assets/landing-JFSsVsAJ.js"></script>
   <link rel="stylesheet" crossorigin href="../assets/header-enjYdf1s.css">
-  <link rel="stylesheet" crossorigin href="../assets/landing-RgJmOG22.css">
-  <link rel="stylesheet" crossorigin href="../assets/header-CYPPepRi.css">
+  <link rel="stylesheet" crossorigin href="../assets/landing-DUe3Ym4C.css">
+  <link rel="stylesheet" crossorigin href="../assets/header-NpwxmRRr.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
-     dictionary, which has no Arabic -->
+     dictionary, which has no Arabic. The light-* ones are the texts of
+     <home-light> (apps/landing/light/light.js) -->
 <body class="o-page"
       data-luz-label-change-mode="Cambiar el modo de color. Actual: {mode}"
       data-luz-label-mode-changed="Modo de color: {mode}"
       data-luz-label-copied="Copiado"
       data-luz-label-copied-status="Copiado al portapapeles"
-      data-luz-label-copy-failed="No se pudo copiar. Selecciona el texto y cópialo a mano.">
+      data-luz-label-copy-failed="No se pudo copiar. Selecciona el texto y cópialo a mano."
+      data-luz-label-light-open="Mostrar la barra de la luz"
+      data-luz-label-light-looks="Sobre qué cae la luz"
+      data-luz-label-light-globe="Globo"
+      data-luz-label-light-city="Ciudad"
+      data-luz-label-light-map="Mapa"
+      data-luz-label-light-say-globe="Un sistema de diseño es un mundo con sus propias leyes de la luz."
+      data-luz-label-light-say-city="Una ciudad se construye pieza a pieza. Un sistema de diseño también."
+      data-luz-label-light-say-map="El mapa no es el territorio, pero lo parece."
+      data-luz-label-light-globe-alt="Un globo de puntos iluminado por el sol tal como está ahora: el lado del día mira a la luz y el de la noche se apaga."
+      data-luz-label-light-city-alt="Un horizonte de torres dibujadas con líneas: tinta sobre papel de día, neón de noche."
+      data-luz-label-light-map-alt="Un mapa de ciudad: tinta sobre papel de día, neón de noche."
+      data-luz-label-light-scrub="Recorrer el día"
+      data-luz-label-light-live="Volver a ahora"
+      data-luz-label-light-sep=", "
+      data-luz-label-light-dawn="Amanecer"
+      data-luz-label-light-morning="Luz de mañana"
+      data-luz-label-light-afternoon="Luz de tarde"
+      data-luz-label-light-sunset="Atardecer"
+      data-luz-label-light-dusk="Anochecer"
+      data-luz-label-light-night="Noche">
   <a class="luz-skip-link" href="#main-content">Saltar al contenido principal</a>
 
   <header class="site-header" id="site-header">
@@ -153,6 +174,14 @@
           <a class="luz-btn luz-btn--outline luz-btn--lg" href="../docs/components/" hreflang="en">Ver los componentes</a>
         </div>
       </div>
+    </section>
+
+    <!-- ====================== THE LIGHT ======================
+         The visitor's sky over a globe, a city or a map (apps/landing/light/).
+         Without JavaScript the element stays empty and light.css keeps its room -->
+    <section id="light" aria-labelledby="light-title">
+      <h2 class="u-sr-only" id="light-title">La luz donde estás</h2>
+      <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
     </section>
 
     <!-- ====================== WHY ====================== -->

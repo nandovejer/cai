@@ -15,7 +15,7 @@
   <script type="module" crossorigin src="../../../assets/reference-DvGfX6AQ.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-hmJxk_Q7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-CYPPepRi.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-NpwxmRRr.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-GOMTznhJ.css">
 </head>
 <body class="o-shell docs-page">
@@ -109,6 +109,7 @@
           <li><a class="luz-sidebar__link" aria-current="page" href="../../../docs/landing/hero/">Hero</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/landing/section/">Main and sections</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/landing/footer/">Footer</a></li>
+          <li><a class="luz-sidebar__link" href="../../../docs/landing/stat/">Stat</a></li>
           <li><a class="luz-sidebar__link" href="../../../docs/landing/templates/">Landing page templates</a></li>
         </ul>
       </li>
@@ -130,11 +131,13 @@
     <div class="docs-page-head__title">
       <h1 class="docs-title">Hero</h1>
       <code class="docs-demo__file">.luz-landing-hero</code>
+      <code class="docs-demo__file">--centered</code>
       <code class="docs-demo__file">__copy</code>
       <code class="docs-demo__file">__eyebrow</code>
       <code class="docs-demo__file">__title</code>
       <code class="docs-demo__file">__lead</code>
       <code class="docs-demo__file">__media</code>
+      <code class="docs-demo__file">__media--bleed</code>
     </div>
     <p class="docs-lead">Opens a home or landing page with its title, one sentence, the main actions and an optional picture.</p>
   </div>
@@ -187,6 +190,20 @@
             </section>
           </div>
           <p class="docs-demo__note">This column is narrower than 51rem, so the picture goes under the text; on a page of full width it sits beside it. The frame is empty, so it shows its flat surface, and the title is a paragraph: this page already has its <code class="luz-code-inline">&lt;h1&gt;</code>.</p>
+          <div class="docs-demo__stage" id="demo-hero-centered">
+            <section class="luz-landing-hero luz-landing-hero--centered o-grid o-grid--split" aria-labelledby="demo-hero-centered-title">
+              <div class="luz-landing-hero__copy">
+                <p class="luz-landing-hero__eyebrow">New in version 2</p>
+                <p class="luz-landing-hero__title" id="demo-hero-centered-title">Stock counts that <em>keep up</em> with the shop</p>
+                <p class="luz-landing-hero__lead">Acme Stock updates every shelf as it sells, so you reorder before it runs out.</p>
+                <div class="o-actions">
+                  <a class="luz-btn luz-btn--primary" href="#markup">Start free trial</a>
+                  <a class="luz-btn luz-btn--outline" href="#variants">Book a demo</a>
+                </div>
+              </div>
+            </section>
+          </div>
+          <p class="docs-demo__note">The same hero with <code class="luz-code-inline">luz-landing-hero--centered</code>: one column at any width, the text centred. A picture that bleeds cannot be shown in this column, as it runs to the edges of the window: see <a href="#variants">Variants and options</a>.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
@@ -220,7 +237,7 @@
 &lt;/section&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>There are no modifiers. The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width. The block is a class of the landing on core's split grid.</p>
+            <p>Two modifiers, <code>--centered</code> and <code>__media--bleed</code>, as in the <a href="../../../docs/landing/templates/#product-page">product page template</a>. The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width. The block is a class of the landing on core's split grid.</p>
             <div class="luz-table-wrap" role="region" aria-label="Hero parts" tabindex="0">
               <table class="luz-table">
                 <thead>
@@ -228,11 +245,13 @@
                 </thead>
                 <tbody>
                   <tr><td data-label="Class"><div><code>.luz-landing-hero</code></div></td><td data-label="What it does"><div>On a <code>&lt;section&gt;</code> with core's <code>.o-grid.o-grid--split</code>: space above it, the gaps, and columns of at least 24rem (<code>--luz-grid-min</code>), so two equal columns when each gets 24rem, one below</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-hero--centered</code></div></td><td data-label="What it does"><div>One column at every width: the copy at most 48rem wide, centred, with its text and actions centred, and the picture under it</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-landing-hero__copy</code></div></td><td data-label="What it does"><div>The text and the actions, first in the source</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-landing-hero__eyebrow</code></div></td><td data-label="What it does"><div>A short line above the title, in small capitals of the mono face; the sans in Arabic</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-landing-hero__title</code></div></td><td data-label="What it does"><div>The title: heading font, 4xl size, balanced lines; 3xl below 1024 px and 2xl at 640 px and below</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-landing-hero__lead</code></div></td><td data-label="What it does"><div>One or two sentences in the secondary text colour, 70 characters wide at most; xl, lg below 1024 px and base at 640 px and below</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-landing-hero__media</code></div></td><td data-label="What it does"><div>The second column, holding core's <a href="../../../docs/components/image/">image frame</a></div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-hero__media--bleed</code></div></td><td data-label="What it does"><div>On the picture of a centred hero: it runs from edge to edge of the window, past the page's gutters, with no sideways scroll. The frame is 16:9 unless you give it a ratio</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -242,6 +261,8 @@
               <li>The columns are core's <a href="../../../docs/components/layout/#objects-actions">split grid</a>, intrinsic: they follow the room the hero has, not the window. A hero as wide as the page splits from about 900 px of window; in a narrow column, or with larger text, it stays one column.</li>
               <li>The order is the source order: the copy comes first, on the left in a left-to-right page and on the right in a right-to-left one.</li>
               <li>The actions are core's <a href="../../../docs/components/layout/#objects-actions">action group</a>, <code>.o-actions</code>: at 640 px and below its buttons stack and take the whole width.</li>
+              <li>The bleed measures the window without a viewport unit, which counts a scrollbar and scrolls the page sideways: the page's root becomes a size container (<code>container-type: inline-size</code>). The column must be centred in the window, as core's <code>.o-container</code> is.</li>
+              <li>The <code>em</code> in a title takes the colour of <code>--luz-landing-title-accent</code>, the title's own when it is unset.</li>
               <li>The classes change the look only. The title must be the page's <code>&lt;h1&gt;</code>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
@@ -290,6 +311,18 @@
                   <div class="luz-landing-hero o-grid o-grid--split"><div class="luz-landing-hero__copy"><p class="luz-landing-hero__title">The future starts here</p><p class="luz-landing-hero__lead">Be part of the future, starting today.</p></div></div>
                 </div>
               </figure>
+              <figure class="docs-dodont__item docs-dodont__item--do">
+                <figcaption><strong class="docs-dodont__verdict">Do</strong> Centre a short title and one sentence, with one or two actions.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-hero luz-landing-hero--centered o-grid o-grid--split"><div class="luz-landing-hero__copy"><p class="luz-landing-hero__title">Stock counts that keep up</p><p class="luz-landing-hero__lead">Reorder before a shelf runs out.</p><div class="o-actions"><span class="luz-btn luz-btn--primary">Start free trial</span></div></div></div>
+                </div>
+              </figure>
+              <figure class="docs-dodont__item docs-dodont__item--dont">
+                <figcaption><strong class="docs-dodont__verdict">Don't</strong> Centre a long paragraph: with no common start edge the eye has to find each line again.</figcaption>
+                <div class="docs-dodont__stage" inert aria-hidden="true">
+                  <div class="luz-landing-hero luz-landing-hero--centered o-grid o-grid--split"><div class="luz-landing-hero__copy"><p class="luz-landing-hero__title">Stock counts that keep up</p><p class="luz-landing-hero__lead">Acme Stock reads every sale as it happens, compares it with what is on the shelf and with what the supplier can deliver this week, and then suggests an order for each shop, which you can change before it is sent.</p></div></div>
+                </div>
+              </figure>
             </div>
             <h3 id="content">Writing the content</h3>
             <p>The title says what the site or the event is, in sentence case and in fewer than ten words.</p>
@@ -316,6 +349,7 @@
             <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
             <ul>
               <li><strong>Focus:</strong> the hero takes none; its buttons keep the focus ring of the <a href="../../../docs/components/button/">button</a>.</li>
+              <li><strong>Accent:</strong> the <code>em</code> of a title has the title's colour unless you set <code>--luz-landing-title-accent</code>. The colour is yours: check it against the page surface in every mode you ship, as text needs 4.5:1.</li>
               <li>Do not put the text over the picture: its contrast would depend on the picture, which no token controls.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>

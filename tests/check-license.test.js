@@ -608,3 +608,41 @@ describe("node scripts/check-license.js", () => {
     expect(r.status, `${r.stdout}${r.stderr}`).toBe(0);
   });
 });
+
+/* ---- The data a DATA entry names carries its origin note ------------------------------ */
+
+describe("the files of the DATA entries", () => {
+  const GLOBE = "apps/landing/light/globe.js";
+  const WITHOUT = "// the globe\nexport const LAND = [[0, 0, 1, 1]];\n";
+  const WITH = "// Land: Natural Earth 1:50m, public domain (naturalearthdata.com terms of use)\nexport const LAND = [[0, 0, 1, 1]];\n";
+
+  it("fails a file a DATA entry names when it lacks its origin note, and names the file", () => {
+    const root = fixture();
+    put(root, GLOBE, WITHOUT);
+    const failing = cli(root, "--update");
+    expect(failing.code, failing.out).toBe(1);
+    expect(failing.out).toContain(GLOBE);
+    expect(failing.out).toMatch(/Natural Earth/);
+  });
+
+  it("passes the same file once the note (the origin and the licence) is there", () => {
+    const root = fixture();
+    put(root, GLOBE, WITH);
+    const ok = cli(root, "--update");
+    expect(ok.code, ok.out).toBe(0);
+  });
+
+  it("is quiet when the file is not there at all (a repository without the home's light)", () => {
+    const root = fixture();
+    const ok = cli(root, "--update");
+    expect(ok.code, ok.out).toBe(0);
+  });
+
+  it("fails a note that names the origin but not the licence", () => {
+    const root = fixture();
+    put(root, GLOBE, "// Land: Natural Earth 1:50m\nexport const LAND = [];\n");
+    const failing = cli(root, "--update");
+    expect(failing.code, failing.out).toBe(1);
+    expect(failing.out).toContain(GLOBE);
+  });
+});

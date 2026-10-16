@@ -79,6 +79,13 @@ describe("apps/landing/light: the files", () => {
     expect(source).not.toMatch(/\bglobalThis\.Luz\w*\s*=/);
   });
 
+  it("globe.js does not make the globe a control: no tabindex, no arrow-key handler", () => {
+    const source = code(`${DIR}/globe.js`);
+    expect(source).not.toMatch(/tabindex|tabIndex/);
+    expect(source).not.toMatch(/Arrow(?:Left|Right|Up|Down)/);
+    expect(source).not.toMatch(/["']keydown["']/);
+  });
+
   it("globe.js says where the land data comes from (Natural Earth, public domain)", () => {
     expect(read(`${DIR}/globe.js`)).toMatch(/Natural Earth/);
     expect(read(`${DIR}/globe.js`)).toMatch(/public domain/i);
@@ -398,7 +405,7 @@ describe("the strings of <home-light> in the catalogs of the home", () => {
     expect(body).toMatch(new RegExp(`data-luz-label-[\\w-]+="\\{\\{t:${key.replace(/\./g, "\\.")}\\}\\}"`));
   });
 
-  const WORDS = ["Live", "Globe", "City", "Map", "Scrub the day", "Show the light bar"];
+  const WORDS = ["Back to now", "Globe", "City", "Map", "Scrub the day", "Show the light bar"];
   it.each(WORDS)('"%s" is a key of every catalog and a data-luz-label-* of <body>', (text) => {
     const key = keyOf(text);
     expect(key, `a key of en.json whose value is "${text}"`).toBeDefined();
@@ -408,6 +415,29 @@ describe("the strings of <home-light> in the catalogs of the home", () => {
     expect(ar[key]).toMatch(/[؀-ۿ]/);
     const body = html.match(/<body[^>]*>/)[0];
     expect(body).toMatch(new RegExp(`data-luz-label-[\\w-]+="\\{\\{t:${key.replace(/\./g, "\\.")}\\}\\}"`));
+  });
+
+  it("the Live button says what it does: \"Back to now\" in English, \"Volver a ahora\" in Spanish and \"العودة إلى الآن\" in Arabic, under the key light.live", () => {
+    expect(en["light.live"]).toBe("Back to now");
+    expect(es["light.live"]).toBe("Volver a ahora");
+    expect(ar["light.live"]).toBe("العودة إلى الآن");
+    expect(html.match(/<body[^>]*>/)[0]).toMatch(/data-luz-label-light-live="\{\{t:light\.live\}\}"/);
+    expect(Object.values(en), "no key is left with the value \"Live\"").not.toContain("Live");
+  });
+
+  it("the separator between the phase and the hour is a key of its own, light.sep: a comma, and the Arabic comma in Arabic, handed to the script by <body>", () => {
+    expect(en["light.sep"]).toMatch(/^,/);
+    expect(es["light.sep"]).toMatch(/^,/);
+    expect(ar["light.sep"]).toMatch(/^\u060C/);
+    expect(ar["light.sep"]).not.toContain(",");
+    expect(html.match(/<body[^>]*>/)[0]).toMatch(/data-luz-label-light-sep="\{\{t:light\.sep\}\}"/);
+  });
+
+  it("the name of the globe does not talk about arrow keys, in any language: the globe is not a control", () => {
+    expect(en["light.alt.globe"]).not.toMatch(/arrow|\bkeys?\b/i);
+    expect(es["light.alt.globe"]).not.toMatch(/flecha|teclas?\b/i);
+    expect(ar["light.alt.globe"]).not.toMatch(/الأسهم|مفاتيح|المفاتيح/);
+    for (const text of [en["light.alt.globe"], es["light.alt.globe"], ar["light.alt.globe"]]) expect(text.length).toBeGreaterThan(10);
   });
 
   it("names the six lights for the line under the visual, in every language, from the catalog", () => {

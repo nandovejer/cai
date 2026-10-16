@@ -233,7 +233,7 @@ test.describe('with JavaScript', () => {
 
     const live = page.locator('home-light .home-light__live');
     await expect(live).toBeVisible();
-    await expect(live).toHaveText(text('en', 'Live'));
+    await expect(live).toHaveText(catalog('en')['light.live']);
     await live.click();
     await expect.poll(async () => (await html(page)).light).toBe('afternoon');
     expect((await html(page)).theme).toBe('light');
@@ -499,7 +499,7 @@ test.describe('with JavaScript', () => {
       }
       await openBar(page);
       await scrub(page, '10:00');
-      await expect(page.locator('home-light .home-light__live')).toHaveText(text(lang, 'Live'));
+      await expect(page.locator('home-light .home-light__live')).toHaveText(catalog(lang)['light.live']);
       await expect(page.getByRole('slider', { name: text(lang, 'Scrub the day') })).toHaveCount(1);
       for (const [look, english] of [['globe', 'Globe'], ['city', 'City'], ['map', 'Map']]) {
         await expect(page.locator(`home-light [data-look="${look}"]`)).toHaveAccessibleName(text(lang, english));
@@ -614,6 +614,340 @@ test.describe('with JavaScript', () => {
       await openBar(page);
       await faded(page);
       expect(await violations(page), 'serious/critical axe violations').toEqual([]);
+    });
+  }
+});
+
+/* ---- Review fixes (F3, review of 2026-10-16) ------------------------------ */
+
+test.describe('review fixes', () => {
+  test.beforeEach(() => {
+    test.skip(jsOff(), 'needs JavaScript');
+  });
+
+  const line = (page) => page.locator('home-light .home-light__line');
+  const output = (page) => page.locator('home-light output');
+
+  /** The text of the line a reader sees: text nodes with a box, not the screen-reader-only ones (1 px, clipped). */
+  const visibleText = (locator) =>
+    locator.evaluate((el) => {
+      const out = [];
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        const parent = node.parentElement;
+        if (!parent) continue;
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        const box = range.getBoundingClientRect();
+        const style = getComputedStyle(parent);
+        if (box.width > 2 && box.height > 2 && style.visibility !== 'hidden' && style.clipPath === 'none') out.push(node.textContent);
+      }
+      return out.join('');
+    });
+
+  /* -- 1. Tab order -------------------------------------------------------- */
+
+  test('after opening the bar from the line, the next Tab lands inside the bar, and the bar is still drawn above the line', async ({ page }) => {
+    await open(page, '/', { look: 'city' });
+    await line(page).focus();
+    await page.keyboard.press('Enter');
+    await expect(page.locator('home-light .home-light__bar')).toBeVisible();
+    await page.keyboard.press('Tab');
+    expect(await page.evaluate(() => !!document.activeElement?.closest('home-light .home-light__bar')), 'focus is inside the bar').toBe(true);
+    const bar = await page.locator('home-light .home-light__bar').boundingBox();
+    const under = await line(page).boundingBox();
+    expect(bar?.y ?? Infinity, 'the bar is above the line').toBeLessThan(under?.y ?? 0);
+  });
+
+  /* -- 2. aria-valuetext --------------------------------------------------- */
+
+  for (const [route, lang] of ROUTES) {
+    test(`${route}: the slider's aria-valuetext is the phase name and the hour, joined by the catalog's separator (${lang})`, async ({ page }) => {
+      const cat = catalog(lang);
+      expect(typeof cat['light.sep'], 'light.sep is a key of the catalog').toBe('string');
+      await open(page, route, { look: 'map', time: '14:00' });
+      await scrub(page, '09:30');
+      await expect.poll(async () => (await html(page)).light).toBe('morning');
+      const hour = (await output(page).textContent())?.trim() ?? '';
+      expect(hour).toMatch(/\S/);
+      const expected = `${cat['light.morning']}${cat['light.sep']}${hour}`;
+      await expect(slider(page)).toHaveAttribute('aria-valuetext', expected);
+      if (lang === 'en') expect(expected).toBe('Morning light, 09:30');
+      if (lang === 'ar') {
+        const valuetext = (await slider(page).getAttribute('aria-valuetext')) ?? '';
+        expect(valuetext).toContain('\u060C');
+        expect(valuetext).not.toContain(', ');
+      }
+    });
+  }
+
+  /* -- 3. The output is not a live region ------------------------------------ */
+
+  test('the <output> is aria-live="off", and nothing in the light is a status or a polite live region', async ({ page }) => {
+    await open(page, '/', { look: 'city', time: '14:00' });
+    await openBar(page);
+    await expect(output(page)).toHaveAttribute('aria-live', 'off');
+    await slider(page).fill('600');
+    await expect(output(page)).toHaveAttribute('aria-live', 'off');
+    expect(await page.locator('home-light').evaluate((el) => el.querySelectorAll('[role="status"], [role="alert"], [role="log"], [aria-live]:not([aria-live="off"])').length)).toBe(0);
+  });
+
+  /* -- 4. Forced colours ------------------------------------------------------- */
+
+  test('forced colors: the slider track has a background colour of its own, and the pressed look button differs from the others', async ({ page }) => {
+    await page.emulateMedia({ forcedColors: 'active' });
+    await open(page, '/', { look: 'city', time: '14:00' });
+    await openBar(page);
+    await faded(page);
+    const clear = (colour) => /^(transparent|rgba\(.*,\s*0\))$/.test(colour);
+    const track = await slider(page).evaluate((input) => getComputedStyle(input, '::-webkit-slider-runnable-track').backgroundColor);
+    expect(clear(track), `the track is drawn in a colour of the system, not "${track}"`).toBe(false);
+
+    // What tells the pressed button from the others to a reader: a border, an outline, the text colour, or a fill that is not the bar's own
+    const barFill = await page.locator('home-light .home-light__bar').evaluate((bar) => getComputedStyle(bar).backgroundColor);
+    const looks = await page.locator('home-light [data-look]').evaluateAll((buttons, bar) =>
+      buttons.map((b) => {
+        const s = getComputedStyle(b);
+        const fill = s.backgroundColor;
+        const filled = !/^(transparent|rgba\(.*,\s*0\))$/.test(fill) && fill !== bar;
+        return {
+          pressed: b.getAttribute('aria-pressed') === 'true',
+          look: [
+            s.borderTopStyle === 'none' ? 'no border' : `${s.borderTopWidth} ${s.borderTopStyle} ${s.borderTopColor}`,
+            s.outlineStyle === 'none' ? 'no outline' : `${s.outlineWidth} ${s.outlineStyle} ${s.outlineColor}`,
+            s.color,
+            filled ? fill : 'no fill',
+          ].join(' | '),
+        };
+      }),
+    barFill);
+    const pressed = looks.filter((b) => b.pressed);
+    const others = looks.filter((b) => !b.pressed);
+    expect(pressed).toHaveLength(1);
+    expect(others.length).toBeGreaterThan(0);
+    for (const other of others) expect(pressed[0].look, 'the pressed button looks like an unpressed one').not.toBe(other.look);
+  });
+
+  /* -- 5. The globe is an image, not a control ---------------------------------- */
+
+  test('the globe is not focusable, and its name does not talk about arrow keys', async ({ page }) => {
+    await open(page, '/', { look: 'globe' });
+    const globe = page.locator('home-globe');
+    expect(await globe.evaluate((el) => ({ attribute: el.hasAttribute('tabindex'), index: /** @type {HTMLElement} */ (el).tabIndex }))).toEqual({ attribute: false, index: -1 });
+    await globe.evaluate((el) => /** @type {HTMLElement} */ (el).focus());
+    expect(await page.evaluate(() => document.activeElement?.tagName.toLowerCase())).not.toBe('home-globe');
+    const name = (await globe.getAttribute('aria-label')) ?? '';
+    expect(name.length).toBeGreaterThan(0);
+    expect(name).not.toMatch(/arrow/i);
+  });
+
+  test('dragging the globe with the pointer still turns it', async ({ page }) => {
+    await open(page, '/', { look: 'globe' });
+    const globe = page.locator('home-globe');
+    const dots = () => globe.evaluate((el) => [...el.querySelectorAll('.home-globe__dots path')].map((p) => p.getAttribute('d')).join('|'));
+    const before = await dots();
+    const box = await globe.boundingBox();
+    const x = (box?.x ?? 0) + (box?.width ?? 0) / 2;
+    const y = (box?.y ?? 0) + (box?.height ?? 0) / 3;
+    await page.mouse.move(x, y);
+    await page.mouse.down();
+    await page.mouse.move(x + 60, y, { steps: 6 });
+    await page.mouse.move(x + 120, y + 10, { steps: 6 });
+    await page.mouse.up();
+    await expect.poll(dots).not.toBe(before);
+  });
+
+  /* -- 6. The line shows the phase and the hour -------------------------------- */
+
+  for (const [route, lang] of ROUTES) {
+    test(`${route}: the line's visible text has the phase name and the hour (${lang})`, async ({ page }) => {
+      const cat = catalog(lang);
+      await open(page, route, { look: 'city', time: '14:00' });
+      const hour = (await output(page).textContent())?.trim() ?? '';
+      expect(hour).toMatch(/\S/);
+      const shown = await visibleText(line(page));
+      expect(shown).toContain(cat['light.afternoon']);
+      expect(shown).toContain(hour.slice(0, 2));
+      expect(shown).toMatch(/[0-9\u0660-\u0669]{2}\D[0-9\u0660-\u0669]{2}/);
+    });
+  }
+
+  test('the line has a visible open/close mark, hidden from assistive technology, that changes with aria-expanded', async ({ page }) => {
+    await open(page, '/', { look: 'city', time: '14:00' });
+    const mark = line(page).locator('[aria-hidden="true"]').first();
+    await expect(mark).toBeVisible();
+    expect((await mark.boundingBox())?.width ?? 0).toBeGreaterThan(4);
+    // Everything about the mark a reader could see change: its text, its markup, and the transforms and pseudo-element content of it and of what is in it
+    const look = () =>
+      mark.evaluate((el) => {
+        const state = (node) => {
+          const s = getComputedStyle(node);
+          return [s.transform, s.rotate, s.scale, s.opacity, getComputedStyle(node, '::before').content, getComputedStyle(node, '::after').content, node.getAttribute('d'), node.getAttribute('class')];
+        };
+        return JSON.stringify({ text: el.textContent, html: el.innerHTML, self: state(el), inner: [...el.querySelectorAll('*')].map(state) });
+      });
+    const closed = await look();
+    await expect(line(page)).toHaveAttribute('aria-expanded', 'false');
+    await line(page).click();
+    await expect(line(page)).toHaveAttribute('aria-expanded', 'true');
+    await expect.poll(look).not.toBe(closed);
+    await line(page).click();
+    await expect(line(page)).toHaveAttribute('aria-expanded', 'false');
+    await expect.poll(look).toBe(closed);
+    // The mark is not read: the name of the line is the same, whatever the mark says
+    await expect(line(page)).toHaveAccessibleName(new RegExp(catalog('en')['light.open'].replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+  });
+
+  /* -- 7. The Live button -------------------------------------------------------- */
+
+  for (const [lang, value] of [['en', 'Back to now'], ['es', 'Volver a ahora'], ['ar', 'العودة إلى الآن']]) {
+    test(`the Live button reads "${value}" in ${lang}, as its visible text and as its name`, async ({ page }) => {
+      expect(catalog(lang)['light.live']).toBe(value);
+      const route = ROUTES.find(([, code]) => code === lang)?.[0] ?? '/';
+      await open(page, route, { look: 'map', time: '14:00' });
+      await scrub(page, '09:30');
+      const live = page.locator('home-light .home-light__live');
+      await expect(live).toBeVisible();
+      await expect(live).toHaveText(value);
+      await expect(live).toHaveAccessibleName(value);
+    });
+  }
+
+  /* -- 8. The line is readable over what is behind it ------------------------------- */
+
+  /**
+   * The worst contrast of the line's text over the pixels actually drawn behind it:
+   * the text is made transparent, the area of the text is photographed, and every
+   * pixel is measured against the text colour, the worst one counts. Decoded in a
+   * second page, with a canvas.
+   */
+  async function behindTheLine(page) {
+    const target = line(page);
+    await target.scrollIntoViewIfNeeded();
+    const prepared = await target.evaluate(async (el) => {
+      const canvas = document.createElement('canvas');
+      canvas.width = canvas.height = 1;
+      const context = canvas.getContext('2d', { willReadFrequently: true });
+      context.fillStyle = getComputedStyle(el).color;
+      context.fillRect(0, 0, 1, 1);
+      const [r, g, b, a] = context.getImageData(0, 0, 1, 1).data;
+      const style = document.createElement('style');
+      style.id = 'probe-hide-text';
+      style.textContent = 'home-light .home-light__line, home-light .home-light__line * { color: transparent !important; text-shadow: none !important; transition: none !important; }';
+      document.head.append(style);
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity;
+      const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        const range = document.createRange();
+        range.selectNodeContents(node);
+        for (const box of range.getClientRects()) {
+          if (box.width < 2 || box.height < 2) continue;
+          left = Math.min(left, box.left);
+          top = Math.min(top, box.top);
+          right = Math.max(right, box.right);
+          bottom = Math.max(bottom, box.bottom);
+        }
+      }
+      return { text: [r, g, b, a / 255], clip: { x: Math.floor(left), y: Math.floor(top), width: Math.ceil(right - left) + 1, height: Math.ceil(bottom - top) + 1 } };
+    });
+    let png;
+    try {
+      png = await page.screenshot({ clip: prepared.clip, animations: 'disabled' });
+    } finally {
+      await page.evaluate(() => document.getElementById('probe-hide-text')?.remove());
+    }
+    const reader = await page.context().newPage();
+    try {
+      await reader.goto('about:blank');
+      return await reader.evaluate(
+        async ({ data, text }) => {
+          const image = new Image();
+          image.src = `data:image/png;base64,${data}`;
+          await image.decode();
+          const canvas = document.createElement('canvas');
+          canvas.width = image.width;
+          canvas.height = image.height;
+          const context = canvas.getContext('2d', { willReadFrequently: true });
+          context.drawImage(image, 0, 0);
+          const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+          const lum = (r, g, b) => {
+            const c = (v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
+            return 0.2126 * c(r) + 0.7152 * c(g) + 0.0722 * c(b);
+          };
+          const ratios = [];
+          for (let i = 0; i < pixels.length; i += 4) {
+            const [pr, pg, pb] = [pixels[i], pixels[i + 1], pixels[i + 2]];
+            const mix = (fg, bg) => fg * text[3] + bg * (1 - text[3]);
+            const a = lum(mix(text[0], pr), mix(text[1], pg), mix(text[2], pb)), b = lum(pr, pg, pb);
+            ratios.push((Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05));
+          }
+          ratios.sort((x, y) => x - y);
+          return { worst: ratios[0], pixels: ratios.length };
+        },
+        { data: png.toString('base64'), text: prepared.text },
+      );
+    } finally {
+      await reader.close();
+    }
+  }
+
+  for (const width of [375, 1280]) {
+    for (const [light, time, mode] of LIGHTS) for (const look of LOOKS) {
+      test(`${width} px, ${light} light, ${look} look: the line's text has 4.5:1 over what is behind it`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page, '/', { look, time });
+        await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe(light);
+        expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(mode);
+        await page.waitForLoadState('networkidle');
+        await faded(page);
+        await page.waitForTimeout(1500); // the colour of the line and the glow of the visual settle
+        const { worst, pixels } = await behindTheLine(page);
+        expect(pixels).toBeGreaterThan(50);
+        expect(worst, `the worst contrast of the line's text over its background: ${worst.toFixed(2)}:1`).toBeGreaterThanOrEqual(4.5);
+      });
+    }
+  }
+
+  /* -- 9. The map fades at the top as well as at the bottom -------------------------- */
+
+  test('the mask of <home-map> starts transparent at 0% and ends transparent', async ({ page }) => {
+    await open(page, '/', { look: 'map' });
+    const masks = await page.locator('home-map').evaluate((map) => {
+      const found = [];
+      for (let node = map; node && node.localName !== 'home-light'; node = node.parentElement) {
+        const s = getComputedStyle(node);
+        found.push(s.maskImage !== 'none' ? s.maskImage : s.webkitMaskImage);
+      }
+      return found.filter((value) => value && value !== 'none');
+    });
+    expect(masks.length, 'home-map or its wrapper has a mask-image').toBeGreaterThan(0);
+    const clear = '(?:rgba\\(0, 0, 0, 0\\)|transparent)';
+    const topFade = new RegExp(`linear-gradient\\((?:[^,()]+(?:\\([^)]*\\))?,\\s*)?${clear}(?:\\s*0%)?\\s*(?:,|\\))`);
+    const bottomFade = new RegExp(`${clear}(?:\\s*100%)?\\)$`);
+    expect(masks.some((value) => topFade.test(value)), `a gradient starting transparent in: ${masks.join(' ; ')}`).toBe(true);
+    expect(masks.some((value) => bottomFade.test(value)), `a gradient ending transparent in: ${masks.join(' ; ')}`).toBe(true);
+  });
+
+  /* -- 10. Sunset is not afternoon in the city and the map ---------------------------- */
+
+  // The drawing's inks, which the page's tokens do not decide (the tokens of the sunset differ from the afternoon's anyway)
+  const INKS = ['--light-sun', '--light-neon', '--light-neon-2', '--light-neon-core', '--light-glint', '--light-moon', '--light-shade', '--light-shade-opacity', '--light-night-fill', '--light-night-land', '--light-night-lake', '--_sun', '--_neon', '--_neon2', '--_moon', '--_glint', '--_shade', '--_shade-opacity', '--_g', '--_sky-glow', '--_sun-l', '--_sun-r'];
+  for (const look of ['city', 'map']) {
+    test(`the ${look} look draws the sunset with other inks than the afternoon`, async ({ page }) => {
+      await open(page, '/', { look, time: '14:00' });
+      await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe('afternoon');
+      await faded(page);
+      const ink = () => page.locator(`home-${look}`).evaluate((el, names) => Object.fromEntries(names.map((n) => [n, getComputedStyle(el).getPropertyValue(n).trim()])), INKS);
+      await page.waitForTimeout(2000);
+      const afternoon = await ink();
+      await scrub(page, '19:00');
+      await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe('sunset');
+      await faded(page);
+      await page.waitForTimeout(2500); // the glow of the visual is a registered property, it transitions
+      const sunset = await ink();
+      const changed = INKS.filter((name) => afternoon[name] !== sunset[name] && !(name === '--_sun-l' || name === '--_sun-r'));
+      expect(changed, `an ink of home-${look} that differs between the afternoon and the sunset`).not.toEqual([]);
     });
   }
 });

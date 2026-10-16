@@ -430,3 +430,89 @@ describe("scripts/check-size.js on a copy of the repository, with a language chu
   });
 });
 
+
+/* ---- The home's light: apps/landing/light/ (F3, SEC-CHUNK-1 and SEC-CHUNK-2) ---- */
+
+describe("scripts/check-size.js on a copy of the repository, with the home's light", () => {
+  let dir;
+  const LIGHT = 'const load={globe:()=>import("./globe.js"),city:()=>import("./city.js"),map:()=>import("./map.js")};customElements.get("home-light")||customElements.define("home-light",class extends HTMLElement{});';
+  const VISUAL = (tag) => `customElements.get("${tag}")||customElements.define("${tag}",class extends HTMLElement{});`;
+
+  /** A repository with the four files of the light; `files` overrides any of them. */
+  function build(files = {}) {
+    const content = { "light.js": LIGHT, "globe.js": VISUAL("home-globe"), "city.js": VISUAL("home-city"), "map.js": VISUAL("home-map"), ...files };
+    mkdirSync(join(dir, "scripts"), { recursive: true });
+    mkdirSync(join(dir, "apps/landing/light"), { recursive: true });
+    mkdirSync(join(dir, "packages"), { recursive: true }); // check-size reads the packages of the repository: none here
+    cpSync(join(repo, "scripts/check-size.js"), join(dir, "scripts/check-size.js"));
+    const rows = Object.keys(content).map((name, i) => ({ name: `home light row ${i}`, file: `apps/landing/light/${name}`, max: 2048 }));
+    writeFileSync(join(dir, "budgets.json"), JSON.stringify({ budgets: rows }));
+    writeFileSync(
+      join(dir, "PRINCIPLES.md"),
+      ["| Artifact | Warns below | Ideal | Warns above | Ceiling |", "| --- | --- | --- | --- | --- |", ...rows.map((r) => `| ${r.name} | - | - | - | 2 kB |`)].join("\n") + "\n",
+    );
+    for (const [name, code] of Object.entries(content)) writeFileSync(join(dir, "apps/landing/light", name), code);
+    const run = spawnSync(process.execPath, [join(dir, "scripts/check-size.js")], { encoding: "utf-8" });
+    return { status: run.status, output: run.stdout + run.stderr };
+  }
+
+  beforeEach(() => {
+    dir = mkdtempSync(join(tmpdir(), "luz-size-guard-light-"));
+  });
+  afterEach(() => {
+    rmSync(dir, { recursive: true, force: true });
+  });
+
+  it("passes a loader that imports only globe.js, city.js and map.js by literals, and visuals that import nothing", () => {
+    const { status, output } = build();
+    expect(output).not.toMatch(/✗/);
+    expect(status).toBe(0);
+  });
+
+  it("fails light.js with an import() of another file", () => {
+    const { status, output } = build({ "light.js": `${LIGHT}import("./other.js");`, "other.js": VISUAL("home-other") }); // budgeted, so only SEC-CHUNK-1 can object
+    expect(status).toBe(1);
+    expect(output).toContain("other.js");
+  });
+
+  it("fails light.js with a static import", () => {
+    const { status, output } = build({ "light.js": `import "./globe.js";${LIGHT}` }); // globe.js is budgeted, so only SEC-CHUNK-2 can object
+    expect(status).toBe(1);
+    expect(output).toMatch(/light\.js/);
+  });
+
+  it.each([
+    ["a variable", `${LIGHT}import(location.hash.slice(1));`],
+    ["a concatenation", `${LIGHT}import("./"+document.title+".js");`],
+    ["a template literal with a value", `${LIGHT}import(\`./\${document.title}.js\`);`],
+  ])("fails an import() in light.js whose argument is %s, and says it is not a literal", (_, code) => {
+    const { status, output } = build({ "light.js": code });
+    expect(status).toBe(1);
+    expect(output).toMatch(/literal/i);
+  });
+
+  it.each(["globe", "city", "map"])("fails a light.js that does not load %s.js", (missing) => {
+    const loader = LIGHT.replace(new RegExp(`,?${missing}:\\(\\)=>import\\("\\./${missing}\\.js"\\)`), "");
+    expect(loader).not.toContain(`./${missing}.js`);
+    const { status, output } = build({ "light.js": loader });
+    expect(status).toBe(1);
+    expect(output).toContain(`${missing}.js`);
+  });
+
+  it.each([
+    ["a static import", 'import "./x.js";'],
+    ["a dynamic import", 'import("./city.js");'],
+    ["a re-export", 'export * from "./x.js";'],
+  ])("fails a visual with %s", (_, code) => {
+    // x.js has a budget row, so only SEC-CHUNK-2 can object
+    const { status, output } = build({ "globe.js": `${VISUAL("home-globe")}${code}`, "x.js": VISUAL("home-x") });
+    expect(status).toBe(1);
+    expect(output).toMatch(/globe\.js/);
+  });
+
+  it("fails a visual that imports a bare specifier (red line 1)", () => {
+    const { status, output } = build({ "map.js": `import "lit";${VISUAL("home-map")}` });
+    expect(status).toBe(1);
+    expect(output).toMatch(/map\.js/);
+  });
+});

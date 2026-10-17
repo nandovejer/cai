@@ -228,7 +228,18 @@
    visible h2. With it, tabs.js shows one panel; the h2 stays for screen
    readers and "On this page" (a11y.md TAB-2), only not painted. */
 .docs-view-tabs {
+  /* The row stays under the site header while its panels scroll (native
+     sticky, to the end of .docs-component); opaque, so text passes under it */
+  position: sticky;
+  inset-block-start: var(--site-header-h, 0px);
+  z-index: calc(var(--luz-z-overlay) - 1);
   margin-block: var(--luz-space-lg) 0;
+  background: var(--luz-surface-page);
+}
+
+/* A heading jumped to lands below the header and the stuck tab row */
+.docs-component:has(> .docs-view-tabs) [id] {
+  scroll-margin-top: calc(var(--luz-space-lg) + 3rem);
 }
 
 .docs-view {

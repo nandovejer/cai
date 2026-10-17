@@ -532,6 +532,7 @@
    with its hint below */
 .docs-hub__find {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: start;
   gap: var(--luz-space-2xs);
 }
@@ -542,8 +543,34 @@
   font-size: var(--luz-text-md);
 }
 
+/* 400 % text at 320 px (WCAG 1.4.10): the big search button and the A–Z
+   link wrap inside the column instead of widening the page. The label
+   breaks, the key goes to a line of its own, and the inline padding (rem,
+   so four times larger) is capped by a share of the column. At any usual
+   text size the token is the smaller and the button keeps one row. */
+.docs-hub__search {
+  flex-wrap: wrap;
+  padding-inline: min(var(--luz-space-sm), 5%);
+  overflow-wrap: anywhere;
+}
+
+.docs-hub__search .luz-search__trigger-label {
+  min-inline-size: 0;
+}
+
+.docs-hub__search .luz-search__trigger-key {
+  white-space: normal;
+}
+
+.docs-hub__find > .luz-btn {
+  padding-inline: min(var(--luz-space-lg), 12%);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .docs-hub__find-hint {
   color: var(--luz-text-secondary);
+  overflow-wrap: anywhere;
 }
 
 /* A gallery or hub card is a linked core card: a link in .luz-card__title,
@@ -627,6 +654,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--luz-space-xs);
+  /* a flex item is as narrow as its longest word: let that word break */
+  overflow-wrap: anywhere;
 }
 
 .docs-hub__cards {
@@ -983,8 +1012,12 @@ h2.docs-demo__title {
   overflow-wrap: anywhere;
 }
 
+/* One column that never grows past the stage: a specimen's min-content
+   (the 260px minimum of the token grid, open without JavaScript) wraps
+   inside it at 320 px instead of widening the page (WCAG 1.4.10) */
 .docs-demo__stage {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--luz-space-sm);
   align-content: start;
 }
@@ -1113,6 +1146,7 @@ h2.docs-demo__title {
 
 .docs-token {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--luz-space-2xs);
   align-content: start;
   padding: var(--luz-space-sm);
@@ -1137,6 +1171,7 @@ h2.docs-demo__title {
 
 .docs-token__mode {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: var(--luz-space-xs);
   color: var(--luz-text-secondary);
@@ -1734,6 +1769,66 @@ h2.docs-demo__title {
    has wired it (data-ready), without JavaScript, nothing of it is shown */
 [data-contrast-tool]:not([data-ready]) {
   display: none;
+}
+
+/* --------------------------------------------------------------------------
+   Stars in the dark
+   The night of the home page's city, quiet: a band of small points across
+   the site header when the colour mode is dark (dawn and dusk too), never in
+   light or high contrast, and not under forced colours. Decorative and
+   still: no text, no pointer, nothing moves (the docs have no pause
+   control, WCAG 2.2.2).
+   The header is opaque and sticky, a stacking context of its own: the band
+   is its ::before at z-index -1, so it paints over the header's background
+   and under its links, and travels with it.
+   The text of the header keeps its contrast because no star sits under a
+   line of it: the row runs on a strip at the top (above the text, whose
+   lines start 15px down) that fades out downward, and a few fainter ones
+   sit in the empty middle of the row, between the brand and the links, at
+   every width. Each layer is one star, repeated across at its own odd
+   interval, so the pattern never lines up.
+   -------------------------------------------------------------------------- */
+
+:root[data-theme="dark"] .site-header::before {
+  /* the moon of the city (a pale, cold white) from two of the mode's tokens */
+  --docs-star: color-mix(in oklab, var(--luz-text-primary) 50%, var(--luz-brand-active));
+  --docs-star-dim: color-mix(in oklab, var(--docs-star) 55%, transparent);
+  --docs-star-faint: color-mix(in oklab, var(--docs-star) 28%, transparent);
+
+  content: "";
+  position: absolute;
+  inset: 0 0 -1px;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    /* the top strip, brightest at the top */
+    radial-gradient(circle at 77px 4px, var(--docs-star) 0 1.1px, transparent 1.9px),
+    radial-gradient(circle at 388px 3px, var(--docs-star) 0 0.8px, transparent 1.6px),
+    radial-gradient(circle at 97px 6px, var(--docs-star-dim) 0 0.7px, transparent 1.5px),
+    radial-gradient(circle at 41px 2px, var(--docs-star-dim) 0 0.55px, transparent 1.3px),
+    radial-gradient(circle at 260px 7px, var(--docs-star-dim) 0 0.6px, transparent 1.4px),
+    radial-gradient(circle at 530px 9px, var(--docs-star-faint) 0 0.8px, transparent 1.6px),
+    radial-gradient(circle at 150px 10px, var(--docs-star-faint) 0 0.5px, transparent 1.3px),
+    radial-gradient(circle at 12px 11px, var(--docs-star-faint) 0 0.5px, transparent 1.2px),
+    /* the middle of the row: a few, fainter as they go down */
+    radial-gradient(circle at 48% 17px, var(--docs-star-dim) 0 0.7px, transparent 1.5px),
+    radial-gradient(circle at 58% 13px, var(--docs-star-dim) 0 0.9px, transparent 1.7px),
+    radial-gradient(circle at 53% 29px, var(--docs-star-faint) 0 0.6px, transparent 1.4px),
+    radial-gradient(circle at 44% 24px, var(--docs-star-faint) 0 0.6px, transparent 1.4px),
+    radial-gradient(circle at 61% 39px, var(--docs-star-faint) 0 0.5px, transparent 1.2px),
+    radial-gradient(circle at 50% 45px, var(--docs-star-faint) 0 0.45px, transparent 1.2px);
+  background-size:
+    641px 100%, 523px 100%, 283px 100%, 173px 100%, 419px 100%, 797px 100%, 229px 100%, 337px 100%,
+    100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  background-repeat:
+    repeat-x, repeat-x, repeat-x, repeat-x, repeat-x, repeat-x, repeat-x, repeat-x,
+    no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+}
+
+@media (forced-colors: active) {
+  :root[data-theme="dark"] .site-header::before {
+    display: none;
+  }
 }
 
 /* --------------------------------------------------------------------------

@@ -25,6 +25,13 @@
 	min-inline-size: 0;
 }
 
+/* A word longer than the line (400 % text on a phone, WCAG 1.4.10) breaks
+   instead of widening the column: the centred copy is sized to its content,
+   so its narrowest width is its longest word */
+.luz-landing-hero__copy {
+	overflow-wrap: anywhere;
+}
+
 .luz-landing-hero__eyebrow,
 .luz-landing-section__eyebrow {
 	margin-block-end: var(--luz-space-sm);
@@ -83,7 +90,7 @@
 
 .luz-landing-hero--centered > .luz-landing-hero__copy {
 	justify-self: center;
-	max-inline-size: 48rem;
+	max-inline-size: min(100%, 48rem);
 }
 
 .luz-landing-hero--centered .luz-landing-hero__lead {

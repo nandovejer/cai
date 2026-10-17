@@ -320,7 +320,8 @@ home-light:defined ~ .landing-light__nojs {
 /* data-theme re-defines the semantic tokens inside: the scope paints the
    page of its own mode around the card */
 .landing-mode__scope {
-  padding: var(--luz-space-md);
+  /* capped at 400 % text on a phone, as the cards below */
+  padding: min(var(--luz-space-md), 7%);
   border: 1px solid var(--luz-divider);
   border-radius: var(--luz-radius-md);
   background: var(--luz-surface-page);
@@ -434,9 +435,10 @@ home-light:defined ~ .landing-light__nojs {
   outline-offset: 2px;
 }
 
-/* No width jump when the label becomes "✓ Copied" */
+/* No width jump when the label becomes "✓ Copied"; never wider than the
+   bar (400 % text at 320 px) */
 .landing-snippet .luz-copy-btn {
-  min-width: calc(var(--luz-space-3xl) + var(--luz-space-md) + var(--luz-space-xs));
+  min-inline-size: min(100%, calc(var(--luz-space-3xl) + var(--luz-space-md) + var(--luz-space-xs)));
   justify-content: center;
 }
 
@@ -488,8 +490,60 @@ home-light:defined ~ .landing-light__nojs {
 }
 
 /* --------------------------------------------------------------------------
+   400 % text at 320 px (WCAG 1.4.4, 1.4.10): a word, a name in code or a
+   label longer than the line breaks, and a row wraps, instead of widening
+   the page. At any other size nothing changes: each line still fits.
+   -------------------------------------------------------------------------- */
+
+/* `anywhere`, not `break-word`: it also lowers the narrowest width of a box
+   sized to its content (a grid column, a centred block, a link laid out as a
+   flex row), so that box narrows and its words break */
+.landing-wrap,
+.o-page > .luz-landing-footer {
+  overflow-wrap: anywhere;
+}
+
+.landing-brand,
+.landing-level__body a,
+.landing-level__actions a,
+.landing-kinds__list a,
+.landing-snippet__bar {
+  flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
    Local patches for gaps in core. Remove each one when core fixes it.
    -------------------------------------------------------------------------- */
+
+/* 400 % text at 320 px. Core's paddings are rem, so at 400 % a card in a
+   frame, or a button in a card, has no room left for a word: each padding
+   here is capped by a share of the width it sits in. At any usual text size
+   the token is the smaller, so nothing moves. Buttons and tags keep one
+   line while they fit and wrap when they do not. Zero specificity: a class
+   of this file (a swatch, a level's actions) still sets its own. */
+:where(.landing-wrap) :where(.luz-card) {
+  padding: min(var(--luz-space-md), 7%);
+}
+
+:where(.landing-wrap) :where(.luz-btn) {
+  padding-inline: min(var(--luz-space-lg), 12%);
+}
+
+:where(.landing-wrap) :where(.luz-btn--sm) {
+  padding-inline: min(var(--luz-space-sm), 12%);
+}
+
+:where(.landing-wrap) :where(.luz-btn--lg) {
+  padding-inline: min(var(--luz-space-xl), 12%);
+}
+
+:where(.landing-wrap) :where(.luz-tag) {
+  padding-inline: min(var(--luz-space-xs), 6%);
+}
+
+:where(.landing-wrap) :where(.luz-btn, .luz-tag) {
+  white-space: normal;
+}
 
 /* .o-actions (640px and below) becomes a column but keeps flex-wrap: wrap.
    A wrapping column nested in grids makes Chromium's layout take tens of

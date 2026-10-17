@@ -268,6 +268,22 @@
   border-radius: var(--luz-radius-md);
 }
 
+/* 400 % text at 320 px (WCAG 1.4.10): without JavaScript the radios and
+   the legend wrap inside the footer instead of widening the page. A
+   button may shrink below its one-line width and break "High contrast"
+   over two lines; the legend breaks the same way. */
+.site-modes,
+.site-modes .luz-mode-btn,
+.site-modes .luz-mode-switcher__label {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.site-modes .luz-mode-btn {
+  flex-shrink: 1;
+}
+
 /* The cycle button matches the other controls */
 .site-modes .luz-mode-cycle {
   inline-size: var(--luz-control-lg);

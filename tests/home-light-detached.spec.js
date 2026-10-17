@@ -6,17 +6,16 @@
  * every call, and `_tick()` also writes the sun's custom properties on <html>
  * and (with [favicon]) the tab's icon. disconnectedCallback() clears the two
  * timers once, but `_tick()` is still reachable from a detached element: the
- * `still` attribute (attributeChangedCallback) and the lazy globe that
- * resolves after the removal (`import("./globe.js").then`) both call it. Each call
- * arms a timer that keeps the element alive and goes on writing to the page
- * every minute, for good.
+ * lazy globe that resolves after the removal (`import("./globe.js").then`)
+ * calls it. The call arms a timer that keeps the element alive and goes on
+ * writing to the page every minute, for good. (The `still` attribute, the
+ * other way in, is gone with Pause motion, 2026-10-18.)
  *
  * What this file checks, on the home page at a fixed instant (the Playwright
  * clock):
- *   - after the element is removed and `still` is toggled, or the globe it
- *     was loading arrives, one more minute (and the favicon's
- *     delay) later, no --sun-* / --day-left custom property of <html> and no
- *     favicon href has changed;
+ *   - after the element is removed and the globe it was loading arrives,
+ *     one more minute (and the favicon's delay) later, no --sun-* /
+ *     --day-left custom property of <html> and no favicon href has changed;
  *   - no setTimeout or setInterval called from apps/landing/light/light.js is
  *     made after the removal (the page's timers are wrapped after the clock is
  *     installed, and a call is attributed by its stack).
@@ -119,14 +118,6 @@ test.describe('control: a <home-light> in the page', () => {
 });
 
 test.describe('a <home-light> removed from the page', () => {
-  test('toggling [still] on it does not arm a timer or write to <html>', async ({ page }) => {
-    await open(page);
-    await arm(page, true);
-    await page.evaluate(() => /** @type {any} */ (window).__held.toggleAttribute('still'));
-    await letTimePass(page);
-    expectUntouched(await written(page));
-  });
-
   test('the globe it was still loading arrives after the removal: no timer, no write to <html>', async ({ page }) => {
     let release = () => {};
     const gate = new Promise((resolve) => (release = () => resolve(undefined)));

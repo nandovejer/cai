@@ -191,16 +191,23 @@ describe("light.js: <luz-mode> is the only writer of data-theme and data-light",
     expect(s).not.toMatch(/\bURLSearchParams\b|location\.search/);
   });
 
-  it("with remember, stores only Pause motion: the word still under luz-home-light, in localStorage alone", () => {
+  it("stores nothing: no localStorage, sessionStorage or cookie, no luz-home-light key, no remember attribute", () => {
     const s = source();
-    expect(s).toContain("luz-home-light");
-    expect(s).not.toMatch(/sessionStorage/);
-    expect(s).toMatch(/localStorage\.setItem\(KEY, "still"\)/);
+    expect(/luz-home-light/.test(s), "the luz-home-light key is in light.js").toBe(false);
+    expect(/localStorage|sessionStorage|document\.cookie/.test(s), "light.js touches a storage").toBe(false);
+    expect(/["']remember["']|_remember/.test(s), "light.js reads a remember attribute").toBe(false);
   });
 
-  it("states its usage as <home-light remember bleed favicon></home-light>, in its header", () => {
+  it("has no Pause motion: no still attribute, no pause button, no home-light__still, no light-pause label", () => {
+    const s = source();
+    expect(/\bstill\b/.test(s), "light.js names the still attribute").toBe(false);
+    expect(/home-light__still|_pause\b|_text\(\s*["']pause["']\s*\)/.test(s), "light.js builds the pause button").toBe(false);
+  });
+
+  it("states its usage as <home-light bleed favicon></home-light>, in its header, with no remember and no still", () => {
     const header = read(`${DIR}/light.js`).match(/\/\*\*[\s\S]*?\*\//)?.[0] ?? "";
-    expect(header).toContain("<home-light remember bleed favicon></home-light>");
+    expect(header).toContain("<home-light bleed favicon></home-light>");
+    expect(header).not.toMatch(/\bremember\b|\bstill\b|Pause motion|localStorage/);
     expect(header).not.toMatch(/looks=|look=/);
   });
 
@@ -289,12 +296,12 @@ describe("apps/landing/index.html: the light section", () => {
     expect(section[1]).toMatch(/<home-light\b[^>]*>\s*<\/home-light>/);
   });
 
-  it("is <home-light remember bleed favicon>: no looks or look attribute, and remember (Pause motion), the favicon and the bleed stay", () => {
+  it("is <home-light bleed favicon>: no looks, look, remember or still attribute; the favicon and the bleed stay", () => {
     expect(section, "a <section id=\"light\">").not.toBeNull();
     const tag = section[1].match(/<home-light\b[^>]*>/)?.[0] ?? "";
     expect(tag, "a <home-light> in it").not.toBe("");
-    for (const flag of ["remember", "bleed", "favicon"]) expect(tag).toMatch(new RegExp(`\\s${flag}(?=[\\s>=])`));
-    for (const gone of ["looks", "look"]) expect(tag, `the ${gone} attribute is gone`).not.toMatch(new RegExp(`\\s${gone}(?=[\\s>=])`));
+    for (const flag of ["bleed", "favicon"]) expect(tag).toMatch(new RegExp(`\\s${flag}(?=[\\s>=])`));
+    for (const gone of ["looks", "look", "remember", "still"]) expect(tag, `the ${gone} attribute is gone`).not.toMatch(new RegExp(`\\s${gone}(?=[\\s>=])`));
     // the modes, the target and the attribute names are gone: <luz-mode> owns them
     for (const gone of ["modes=", "mode=", "for=", "light-attr", "mode-attr"]) expect(tag).not.toContain(gone);
   });
@@ -312,6 +319,31 @@ describe("apps/landing/index.html: the light section", () => {
   });
 });
 
+/* ---- Only prefers-reduced-motion stops the motion (2026-10-18) ---------- */
+
+describe("no Pause motion: no [still] in any file that read it", () => {
+  const css = (path) => read(path).replace(/\/\*[\s\S]*?\*\//g, "");
+
+  it("light.css has no rule for home-light[still] or for the Pause motion button (.home-light__still)", () => {
+    expect(/\[still\]|home-light__still/.test(css(`${DIR}/light.css`)), "light.css has a [still] or .home-light__still rule").toBe(false);
+  });
+
+  it("landing.css has no :has(home-light[still]) rule: the landing's stars stop under prefers-reduced-motion alone", () => {
+    expect(/\[still\]|home-light__still/.test(css("apps/landing/landing.css")), "landing.css has a [still] rule").toBe(false);
+    expect(/prefers-reduced-motion:\s*reduce/.test(css("apps/landing/landing.css")), "landing.css keeps its prefers-reduced-motion rules").toBe(true);
+  });
+
+  it("globe.js does not look for a [still] ancestor: reduced motion is its only reason to stop", () => {
+    const s = code(`${DIR}/globe.js`);
+    expect(/\[still\]|\bstill\b/.test(s), "globe.js names [still]").toBe(false);
+    expect(/prefers-reduced-motion/.test(s), "globe.js reads prefers-reduced-motion").toBe(true);
+  });
+
+  it("the home page's template names no still attribute and no pause label", () => {
+    expect(/\[still\]|light-pause|light\.pause/.test(read("apps/landing/index.html")), "index.html names [still] or light-pause").toBe(false);
+  });
+});
+
 /* ---- The README --------------------------------------------------------- */
 
 describe("apps/landing/light/README.md", () => {
@@ -320,6 +352,11 @@ describe("apps/landing/light/README.md", () => {
   it("names the land data's origin and licence: Natural Earth, public domain", () => {
     expect(readme()).toMatch(/Natural Earth/);
     expect(readme()).toMatch(/public domain/i);
+  });
+
+  it("has no row for still or remember, and says nothing of Pause motion: only prefers-reduced-motion stops the light", () => {
+    expect(/Pause motion|\[still\]|^\|\s*`(?:still|remember)`/im.test(readme()), "the README describes still, remember or Pause motion").toBe(false);
+    expect(/prefers-reduced-motion/.test(readme()), "the README names prefers-reduced-motion").toBe(true);
   });
 
   it("gives the reason for its weight (PRINCIPLES section 3) and where it comes from", () => {
@@ -457,6 +494,15 @@ describe("the strings of <home-light> in the catalogs of the home", () => {
   const GONE = ["light.looks", "light.globe", "light.city", "light.map", "light.say.city", "light.say.map", "light.alt.city", "light.alt.map"];
   it.each([["en", en], ["es", es], ["ar", ar]])("%s.json has no key for the looks, the city or the map", (code, catalogOf) => {
     for (const key of GONE) expect(Object.keys(catalogOf), `${code}.json has ${key}`).not.toContain(key);
+  });
+
+  it.each([["en", en], ["es", es], ["ar", ar]])("%s.json has no light.pause key: the bar has no Pause motion button", (code, catalogOf) => {
+    expect(Object.keys(catalogOf), `${code}.json has light.pause`).not.toContain("light.pause");
+  });
+
+  it("the page hands the script no light-pause label, and no template uses light.pause", () => {
+    expect(html.match(/<body[^>]*>/)[0]).not.toContain("data-luz-label-light-pause");
+    expect(html).not.toContain("light.pause");
   });
 
   it.each([["en", en], ["es", es], ["ar", ar]])("%s.json keeps light.say.globe and light.alt.globe", (code, catalogOf) => {

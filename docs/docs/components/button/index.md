@@ -52,6 +52,8 @@ A native `<button>` (or `<a>`) with classes from `components/button.css`. No Jav
 ### Without JavaScript
 A button works like any native button: it submits its form or runs nothing. What it does on click is up to your script.
 
+On this page, Try it and the Width choice under the example need JavaScript: without it they are not shown, and the examples and their markup are.
+
 ### Keyboard and ARIA
 Tab reaches the button; Enter or Space presses it. A link styled as a button answers to Enter only, as every link does.
 

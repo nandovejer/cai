@@ -67,8 +67,8 @@ describe("the core / site rule (spec §7)", () => {
       expect(bullet).not.toMatch(/needs data of the site/i);
     });
 
-    it("names the three kinds, as optional users of site, with no chain that puts a kind after site", () => {
-      for (const kind of ["landing", "cms", "app"]) expect(bullet, kind).toContain(`\`${kind}\``);
+    it("names the four kinds, as optional users of site, with no chain that puts a kind after site", () => {
+      for (const kind of ["landing", "cms", "app", "docs"]) expect(bullet, kind).toContain(`\`${kind}\``);
       expect(bullet).toMatch(/optional/i);
       expect(bullet).not.toMatch(/site\s*→\s*(cms|landing|app)/);
       expect(bullet).not.toMatch(/wordpress/i);

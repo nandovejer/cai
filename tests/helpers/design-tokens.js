@@ -14,6 +14,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { formatRatio as format, over, parseColor as parse, ratio } from "../../packages/tokens/lib/contrast.js";
 import { SITE_KINDS } from "../../scripts/luz-packages.js";
+import { KIND_AREAS, packageOfArea } from "./package-areas.js";
 
 const repo = fileURLToPath(new URL("../../", import.meta.url));
 const read = (path) => readFileSync(`${repo}${path}`, "utf-8");
@@ -90,8 +91,8 @@ function sourceOf(page) {
   // A CSS-only tag (<luz-banner>) is styled by :where(luz-banner …) selectors, not by a class
   const tags = entries.map((f) => f.match(/^<(luz-[\w-]+)>$/)?.[1]).filter(Boolean);
   // A package for one kind of site: every file of its components folder
-  if (SITE_KINDS.includes(page.meta.area)) {
-    const dir = `packages/${page.meta.area}/src/components`;
+  if (KIND_AREAS.includes(page.meta.area)) {
+    const dir = `packages/${packageOfArea(page.meta.area)}/src/components`;
     return { css: readdirSync(`${repo}${dir}`).filter((f) => f.endsWith(".css")).sort().map((f) => read(`${dir}/${f}`)).join("\n"), classes, tags };
   }
   // The shell patterns, and the patterns with a file of their own (the language switcher, the site header, the submenu, the notice and the cookie banner)

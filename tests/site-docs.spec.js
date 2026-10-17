@@ -1,9 +1,9 @@
 /**
  * LUZ Design System — Pattern docs guidance, per package
  * Every block class that a package of patterns ships (@luz-ds/site,
- * @luz-ds/landing, @luz-ds/cms, @luz-ds/app) belongs to a pattern, and every pattern has
+ * @luz-ds/landing, @luz-ds/cms, @luz-ds/app, @luz-ds/docs) belongs to a pattern, and every pattern has
  * its page in the documentation, in the area of its package (/docs/site/,
- * /docs/landing/, /docs/cms/, /docs/app/), with the same structure as a component page: example,
+ * /docs/landing/, /docs/cms/, /docs/app/, /docs/documentation/), with the same structure as a component page: example,
  * known issues, then the Code and Design tabs (PRINCIPLES.md red line 18 and
  * strong rule SR-5). The class list is read from each package's source, so
  * a new class without a pattern fails.
@@ -15,6 +15,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf } from './helpers/docs-site.js';
 import { blocksOfCss } from './helpers/css-blocks.js';
+import { areaOfPackage } from './helpers/package-areas.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
 
@@ -68,6 +69,23 @@ const PACKAGES = {
       dashboard: 'app-dashboard',
     },
   },
+  docs: {
+    label: 'Documentation',
+    // F6a: the pieces of a documentation page. Its docs area is `documentation` (areaOfPackage), its
+    // classes `.luz-docs-*`. The shell is also `.luz-docs-nav` and `.luz-docs-main`; the pattern pages
+    // are /docs/documentation/<name>/ with the ids p-docs-<name>
+    patternOf: {
+      shell: 'docs-shell',
+      nav: 'docs-shell',
+      main: 'docs-shell',
+      'page-head': 'docs-page-head',
+      rail: 'docs-rail',
+      example: 'docs-example',
+      dodont: 'docs-dodont',
+      pager: 'docs-pager',
+      'page-foot': 'docs-page-foot',
+    },
+  },
 };
 
 /**
@@ -90,6 +108,7 @@ const sections = ['known-issues', 'how', 'keyboard', 'when', 'when-not', 'conten
 
 for (const [name, { label, patternOf }] of Object.entries(PACKAGES)) {
   const patterns = new Set(Object.values(patternOf));
+  const area = areaOfPackage(name);
 
   test.describe(`${label} docs`, () => {
     test(`every ${name} class belongs to a pattern`, () => {
@@ -99,6 +118,18 @@ for (const [name, { label, patternOf }] of Object.entries(PACKAGES)) {
         expect(patternOf[block], `${name === 'site' ? `luz-${block}` : `.luz-${name}-${block}`} has no pattern in tests/site-docs.spec.js`).toBeTruthy();
       }
     });
+
+    if (name === 'docs') {
+      test('docs ships exactly seven patterns: shell, page-head, rail, example, dodont, pager and page-foot', () => {
+        expect([...patterns].sort()).toEqual(['docs-dodont', 'docs-example', 'docs-page-foot', 'docs-page-head', 'docs-pager', 'docs-rail', 'docs-shell']);
+      });
+
+      test('the Documentation gallery lists the seven patterns, in /docs/documentation/', async ({ page }) => {
+        await page.goto('/docs/documentation/');
+        const cards = await page.locator('.docs-gallery a').evaluateAll((links) => links.map((link) => new URL(link.href).pathname));
+        for (const slug of ['dodont', 'example', 'pager', 'page-foot', 'page-head', 'rail', 'shell']) expect(cards, slug).toContain(`/docs/documentation/${slug}/`);
+      });
+    }
 
     if (name === 'site') {
       test('site ships exactly its six components: search, consent, mode, lang-switch, submenu and banner', () => {
@@ -117,7 +148,7 @@ for (const [name, { label, patternOf }] of Object.entries(PACKAGES)) {
     test(`every ${name} pattern has its page: example, known issues, Code and Design`, async ({ page }) => {
       for (const pattern of patterns) {
         const route = await gotoId(page, `p-${pattern}`);
-        expect(route, pattern).toMatch(new RegExp(`^/docs/${name}/[a-z-]+/$`));
+        expect(route, pattern).toMatch(new RegExp(`^/docs/${area}/[a-z-]+/$`));
         // A pattern is a page: its name is the h1, like a core component
         await expect(page.locator('h1.docs-title'), pattern).toHaveCount(1);
         await expect(page.getByRole('tablist', { name: /documentation$/ }).getByRole('tab'), pattern).toHaveText(['Code', 'Design']);
@@ -133,7 +164,7 @@ for (const [name, { label, patternOf }] of Object.entries(PACKAGES)) {
     });
 
     test(`the ${label} area lists every pattern, in the sidebar and in its gallery`, async ({ page }) => {
-      await page.goto(`/docs/${name}/`);
+      await page.goto(`/docs/${area}/`);
       const nav = await page.locator('.docs-nav a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
       const cards = await page.locator('.docs-gallery a').evaluateAll((links) => links.map((link) => link.getAttribute('href')));
       for (const pattern of patterns) {

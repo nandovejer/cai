@@ -42,7 +42,7 @@ for (const page of site.pages) {
   for (const m of page.body.matchAll(/<meter\b[^>]*class="[^"]*\bluz-meter\b[^"]*"[^>]*>/g)) {
     const before = page.body.slice(0, m.index);
     const cell = before.lastIndexOf("<td");
-    const stage = before.lastIndexOf('class="docs-dodont__stage"');
+    const stage = before.lastIndexOf('class="luz-docs-dodont__stage"');
     // A Do and don't example is a picture: its stage is inert and hidden as a whole
     const inStage = stage > before.lastIndexOf("</figure>");
     meters.push({ page, tag: m[0], inStage, inCell: cell > stage && cell > before.lastIndexOf("</td>"), beforeInCell: before.slice(cell).replace(/<[^>]+>/g, "").trim() });

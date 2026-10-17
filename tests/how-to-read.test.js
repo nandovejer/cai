@@ -23,7 +23,7 @@ import { PACKAGES } from "../scripts/luz-packages.js";
 import { codesOf, columnOf, declaredTokens, escapeRe, h2Ids, linksOf, packFiles, packageSources, readPage, repo, sectionsOf, stripCssComments, tablesOf, textOf } from "./helpers/page-facts.js";
 
 const IDS = ["classes", "tokens", "attributes", "elements", "layers", "public", "files"];
-const PREFIXES = [".luz-", ".o-", ".u-", ".luz-landing-", ".luz-cms-", ".luz-app-", ".is-"];
+const PREFIXES = [".luz-", ".o-", ".u-", ".luz-landing-", ".luz-cms-", ".luz-app-", ".luz-docs-", ".is-"];
 const ATTRIBUTES = ["data-theme", "data-mode", "data-luz-*", "data-luz-label-*"];
 const ELEMENTS = ["luz-search", "luz-consent", "luz-mode", "luz-timeline", "luz-lang-switch", "luz-submenu", "luz-banner"];
 const FILES = ["luz-tokens.css", "tokens.css", "components/<name>.css", "base.css", "classless.css", "themes/_template.css"];

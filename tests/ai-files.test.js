@@ -293,14 +293,14 @@ function widgetPage({ how = "<p>HOW-TEXT, with <a href=\"/docs/tokens/color/#mod
     <h3 id="when-not">When not to use</h3>
     <p>WHEN-NOT-TEXT</p>
     <h3 id="do-dont">Do and don't</h3>
-    <div class="docs-dodont">
-      <figure class="docs-dodont__item docs-dodont__item--do">
-        <figcaption><strong class="docs-dodont__verdict">Do</strong> DO-REASON</figcaption>
-        <div class="docs-dodont__stage" inert aria-hidden="true"><button class="luz-btn" type="button">DO-STAGE</button></div>
+    <div class="luz-docs-dodont">
+      <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
+        <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> DO-REASON</figcaption>
+        <div class="luz-docs-dodont__stage" inert aria-hidden="true"><button class="luz-btn" type="button">DO-STAGE</button></div>
       </figure>
-      <figure class="docs-dodont__item docs-dodont__item--dont">
-        <figcaption><strong class="docs-dodont__verdict">Don't</strong> DONT-REASON</figcaption>
-        <div class="docs-dodont__stage" inert aria-hidden="true"><button class="luz-btn" type="button">DONT-STAGE</button></div>
+      <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+        <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> DONT-REASON</figcaption>
+        <div class="luz-docs-dodont__stage" inert aria-hidden="true"><button class="luz-btn" type="button">DONT-STAGE</button></div>
       </figure>
     </div>
     <h3 id="content">Writing the content</h3>
@@ -522,7 +522,7 @@ describe("llms.txt: the index of the site for an agent", () => {
 
 /* ---- llms-full.txt, the real pages ------------------------------------------ */
 
-const markupAreas = ["components", "site", "landing", "cms", "app"];
+const markupAreas = ["components", "site", "landing", "cms", "app", "documentation"];
 // Pages that print "&lt;tag" as plain text on purpose (counted in apps/docs/pages)
 const PLAIN_TAGS = new Set(["/docs/components/copy-button/", "/docs/components/icon-grid/", "/docs/site/classes/"]);
 
@@ -890,7 +890,9 @@ const SITE_ELEMENTS = readJson("packages/site/dist/custom-elements.json")
   .modules.flatMap((m) => m.declarations ?? [])
   .map((d) => d.tagName)
   .filter(Boolean);
-const KIND_AREAS = ["landing", "cms", "app"];
+const KIND_AREAS = ["landing", "cms", "app", "documentation"];
+/** The package an area documents (the documentation area documents @luz-ds/docs). */
+const PACKAGE_OF_AREA = { documentation: "docs" };
 const EXAMPLE_ENTRY = { tokens: "tokens.min.css" };
 /** The css file of each package an example links (the tokens one is the font-less file). */
 const cssOf = (pkg) => EXAMPLE_ENTRY[pkg] ?? FILES[pkg].css;
@@ -925,7 +927,7 @@ function packagesFor(page) {
   const area = areaOf(page.route);
   const { kept } = blocksOf(page);
   const useSite = area === "site" || kept.some((b) => SITE_ELEMENTS.some((tag) => new RegExp(`<${tag}[\\s>/]`).test(b.code)));
-  return ["tokens", "core", ...(useSite ? ["site"] : []), ...(KIND_AREAS.includes(area) ? [area] : [])];
+  return ["tokens", "core", ...(useSite ? ["site"] : []), ...(KIND_AREAS.includes(area) ? [PACKAGE_OF_AREA[area] ?? area] : [])];
 }
 
 /* ---- reading a generated document ------------------------------------------- */

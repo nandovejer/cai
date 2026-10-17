@@ -10,7 +10,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { readHtml } from "../scripts/docs-site/html.js";
-import { SITE_KINDS } from "../scripts/luz-packages.js";
+import { KIND_AREAS, PATTERN_AREAS } from "./helpers/package-areas.js";
 import { readIndex, search } from "../packages/site/src/search.js";
 import {
   SEARCH_INDEX_ROUTE,
@@ -241,7 +241,7 @@ describe("On this page", () => {
     const html = renderToc(page("h2,h3"), body);
     const items = readHtml(html, "toc").links.map((l) => l.href);
     expect(items).toEqual(["#a", "#b", "#b1", "#b2", "#c"]);
-    expect(html.replace(/\s+/g, " ")).toContain('href="#b">B</a> <ul class="docs-onpage__sub"> <li><a class="luz-sidebar__link docs-onpage__link" href="#b1">B one</a></li> <li><a class="luz-sidebar__link docs-onpage__link" href="#b2">B two</a></li> </ul> </li>');
+    expect(html.replace(/\s+/g, " ")).toContain('href="#b">B</a> <ul class="luz-docs-rail__sub"> <li><a class="luz-sidebar__link luz-docs-rail__link" href="#b1">B one</a></li> <li><a class="luz-sidebar__link luz-docs-rail__link" href="#b2">B two</a></li> </ul> </li>');
     expect(html).not.toContain("Demo");
   });
 
@@ -543,7 +543,7 @@ describe("the LUZ docs site", () => {
     const components = site.pages.filter((p) => p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers");
     expect(components).toHaveLength(32);
     const visible = (html) => {
-      const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<nav class="docs-onpage"[\s\S]*?<\/nav>/, "");
+      const main = html.match(/<main[\s\S]*?<\/main>/)[0].replace(/<nav class="luz-docs-rail__onpage"[\s\S]*?<\/nav>/, "");
       return new Set([...[...main.matchAll(/href="(\/docs\/[^"#]*)/g)].map((m) => m[1])]);
     };
     const links = new Map([...rendered].map(([route, html]) => [route, visible(html)]));
@@ -558,9 +558,9 @@ describe("the LUZ docs site", () => {
     // ia.md §6 and a11y.md TAB-1/3/16/17. Every section of both tabs is
     // required; tests/docs-design.test.js checks what the Design sections say.
     const viewPages = site.pages.filter(
-      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (["site", ...SITE_KINDS].includes(p.meta.area) && p.meta.group === "patterns"),
+      (p) => (p.meta.area === "components" && p.meta.group && p.meta.group !== "helpers") || (PATTERN_AREAS.includes(p.meta.area) && p.meta.group === "patterns"),
     );
-    expect(viewPages).toHaveLength(50);
+    expect(viewPages).toHaveLength(57);
     const CODE = ["markup", "variants", "how", "no-js", "keyboard"];
     const DESIGN = ["when", "when-not", "do-dont", "content", "contrast", "tokens"];
     for (const page of viewPages) {
@@ -844,7 +844,7 @@ describe("the LUZ docs site", () => {
       .replace(/&lt;/g, "<")
       .replace(/&amp;/g, "&");
     for (const tag of ["search", "consent", "mode", "lang-switch", "submenu", "banner"]) expect(chain, `site's ${tag}`).toContain(tag);
-    for (const kind of ["landing", "cms", "app"]) expect(chain, `the ${kind} kind`).toContain(`@luz-ds/${kind}`);
+    for (const kind of ["landing", "cms", "app", "docs"]) expect(chain, `the ${kind} kind`).toContain(`@luz-ds/${kind}`);
     // Site no longer holds page structure ("page patterns"), and the kinds take it as an optional peer
     expect(chain).not.toMatch(/page patterns/i);
     expect(chain).toMatch(/optional/i);
@@ -853,7 +853,7 @@ describe("the LUZ docs site", () => {
   it("every title of a page is its own: one page per name, except a header or footer of two different kinds of site", () => {
     const byTitle = new Map();
     for (const p of site.pages.filter((q) => q.meta.search !== "false")) byTitle.set(p.meta.title, [...(byTitle.get(p.meta.title) ?? []), p.meta.area]);
-    const shared = [...byTitle].filter(([, areas]) => areas.length > 1 && !areas.every((a) => SITE_KINDS.includes(a)));
+    const shared = [...byTitle].filter(([, areas]) => areas.length > 1 && !areas.every((a) => KIND_AREAS.includes(a)));
     expect(shared.map(([title, areas]) => `${title}: ${areas.join(" and ")}`)).toEqual([]);
   });
 

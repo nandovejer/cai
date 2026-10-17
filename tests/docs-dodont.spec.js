@@ -12,7 +12,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { faded } from './helpers/settle.js';
 import { routesWith } from './helpers/docs-site.js';
 
-const DESIGN = routesWith('docs-dodont__stage');
+const DESIGN = routesWith('luz-docs-dodont__stage');
 const THEMES = ['light', 'dark', 'high-contrast'];
 
 for (const route of DESIGN) {
@@ -20,14 +20,14 @@ for (const route of DESIGN) {
     await page.goto(`${route}#design`);
     await expect(page.locator('#design-panel')).toBeVisible();
     // One pair for each lesson of the page: a Do, then its Don't
-    const figures = page.locator('#do-dont ~ .docs-dodont > figure');
+    const figures = page.locator('#do-dont ~ .luz-docs-dodont > figure');
     const count = await figures.count();
     expect(count, route).toBeGreaterThanOrEqual(2);
     expect(count % 2, route).toBe(0);
 
     // Every stage is inert and hidden; an id in it (a label's for) is used
     // inside that stage only, so nothing outside points into a picture
-    const stages = page.locator('.docs-dodont__stage');
+    const stages = page.locator('.luz-docs-dodont__stage');
     for (const stage of await stages.all()) {
       await expect(stage).toHaveAttribute('inert', '');
       await expect(stage).toHaveAttribute('aria-hidden', 'true');
@@ -52,7 +52,7 @@ for (const route of DESIGN) {
 
     // Nothing in a stage takes focus, by script or by Tab
     const focusable = 'a[href], button, input, select, textarea, summary, [tabindex], [contenteditable], audio[controls], video[controls], iframe';
-    const reached = await page.locator('.docs-dodont__stage').evaluateAll((list, sel) => {
+    const reached = await page.locator('.luz-docs-dodont__stage').evaluateAll((list, sel) => {
       const hits = [];
       for (const stage of list) for (const el of stage.querySelectorAll(sel)) {
         el.focus();
@@ -71,7 +71,7 @@ for (const route of DESIGN) {
         const a = document.activeElement;
         const next = document.getElementById('content');
         return {
-          inStage: !!a?.closest('.docs-dodont__stage'),
+          inStage: !!a?.closest('.luz-docs-dodont__stage'),
           passed: !!(next.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING),
         };
       });
@@ -88,7 +88,7 @@ for (const route of DESIGN) {
       await page.evaluate((t) => {
         document.documentElement.dataset.theme = t;
         // axe skips hidden content: expose the stages to measure what is seen
-        for (const s of document.querySelectorAll('.docs-dodont__stage')) {
+        for (const s of document.querySelectorAll('.luz-docs-dodont__stage')) {
           s.removeAttribute('aria-hidden');
           s.removeAttribute('inert');
         }
@@ -97,7 +97,7 @@ for (const route of DESIGN) {
       await faded(page);
       await page.waitForTimeout(400);
       const { violations } = await new AxeBuilder({ page })
-        .include('.docs-dodont')
+        .include('.luz-docs-dodont')
         .withRules(['color-contrast', 'link-in-text-block'])
         .analyze();
       expect(violations.map((v) => `${v.id}: ${v.nodes.map((n) => `${n.target.join(' ')} ${n.any[0]?.message ?? ''}`).join('; ')}`)).toEqual([]);

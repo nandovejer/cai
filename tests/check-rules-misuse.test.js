@@ -191,7 +191,7 @@ describe("misuse/host-element", () => {
       body(
         '<div class="luz-btn" inert>self</div>',
         '<div inert><section><p><span class="luz-btn">deep</span></p></section></div>',
-        '<div class="docs-dodont__stage" inert aria-hidden="true"><div class="luz-btn luz-btn--primary">stage</div></div>',
+        '<div class="luz-docs-dodont__stage" inert aria-hidden="true"><div class="luz-btn luz-btn--primary">stage</div></div>',
         '<p class="luz-btn">after</p>',
       ),
     );

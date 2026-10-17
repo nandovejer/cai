@@ -3,7 +3,7 @@
  * Specimens under the light of the site (F2 of
  * .claude/plans/luz-home-docs-identity.md, section 3.4): the site's light
  * changes the page, never what is being documented. A specimen of the docs
- * (`[data-docs-specimen]`, `.docs-dodont__stage`) is re-anchored to the
+ * (`[data-docs-specimen]`, `.luz-docs-dodont__stage`) is re-anchored to the
  * colour mode of <html> with a data-theme of its own, so under any of the six
  * lights its tokens are Vejer's for that mode. apps/docs/reference.js does it
  * (initSpecimenTheme) and follows `luz-mode:change`. Nothing is served with
@@ -18,7 +18,7 @@ import { LIGHTS, NO_CHOICE, TIMEZONE, atTime, channels, colorOf, lightToken, see
 test.use({ timezoneId: TIMEZONE, storageState: NO_CHOICE });
 
 const PAGE = '/docs/components/button/';
-const SPECIMENS = '[data-docs-specimen], .docs-dodont__stage';
+const SPECIMENS = '[data-docs-specimen], .luz-docs-dodont__stage';
 const TOKENS = ['--luz-surface-page', '--luz-text-primary', '--luz-brand-fill'];
 
 const ready = async (page) => {
@@ -39,7 +39,7 @@ test.describe('a specimen keeps the colours of the mode, whatever the light', ()
       expect(themes.filter((t) => t !== mode), 'specimens that do not follow <html>').toEqual([]);
 
       // Not the first and the last only: a specimen of each kind
-      for (const selector of ['[data-docs-specimen]', '.docs-dodont__stage']) {
+      for (const selector of ['[data-docs-specimen]', '.luz-docs-dodont__stage']) {
         const one = page.locator(selector).first();
         await expect(one).toHaveCount(1);
         for (const token of TOKENS) {
@@ -91,7 +91,7 @@ test.describe('a specimen follows the mode when the visitor changes it', () => {
       document.documentElement.dataset.theme = 'light';
     });
     await expect(page.locator('[data-docs-specimen]').first()).toHaveAttribute('data-theme', 'light');
-    await expect(page.locator('.docs-dodont__stage').first()).toHaveAttribute('data-theme', 'light');
+    await expect(page.locator('.luz-docs-dodont__stage').first()).toHaveAttribute('data-theme', 'light');
     await page.evaluate(() => {
       document.documentElement.dataset.theme = 'high-contrast';
     });
@@ -105,7 +105,7 @@ test.describe('a specimen follows the mode when the visitor changes it', () => {
     const button = page.locator('footer .luz-mode-cycle');
     await button.click(); // Light
     await expect(page.locator('[data-docs-specimen]').first()).toHaveAttribute('data-theme', 'light');
-    await expect(page.locator('.docs-dodont__stage').first()).toHaveAttribute('data-theme', 'light');
+    await expect(page.locator('.luz-docs-dodont__stage').first()).toHaveAttribute('data-theme', 'light');
   });
 });
 

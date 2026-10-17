@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Docs patterns: shell, page head, rail, example, do and don't, pager, page foot</title>
+  <!-- tests/docs-patterns.spec.js: tokens + core + docs ONLY. No site stylesheet, no script at all: every
+       pattern of @luz-ds/docs is CSS (f6-docs-spec.md, F6a). The page is the shape of a docs page:
+       body.o-shell.luz-docs-shell > header, nav.luz-docs-nav, main.luz-docs-main, aside.luz-docs-rail -->
+  <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
+  <link rel="stylesheet" href="/packages/core/dist/luz.css">
+  <link rel="stylesheet" href="/packages/docs/dist/docs.css">
+</head>
+<body class="o-shell luz-docs-shell" id="shell">
+  <a class="luz-skip-link" href="#main-content">Skip to content</a>
+  <header id="top">
+    <p><a href="#main-content" id="brand">Docs patterns</a></p>
+  </header>
+  <nav class="luz-sidebar luz-docs-nav" id="nav" aria-label="Documentation">
+    <div class="luz-sidebar__section">
+      <a class="luz-sidebar__link" href="#main-content" aria-current="page" id="nav-current">Button</a>
+      <a class="luz-sidebar__link" href="#main-content">Card</a>
+      <a class="luz-sidebar__link" href="#main-content">Form</a>
+    </div>
+  </nav>
+  <main class="o-main luz-docs-main" id="main-content" tabindex="-1">
+    <header class="luz-docs-page-head" id="head">
+      <p class="luz-docs-page-head__eyebrow" id="eyebrow">Components · Actions and input</p>
+      <h1 id="title">Button</h1>
+      <p class="luz-docs-page-head__lead" id="lead">The control that does something when it is pressed, in four variants and three sizes.</p>
+      <ul class="luz-docs-page-head__meta" id="meta">
+        <li id="chip-1">components/button.css</li>
+        <li id="chip-2">No JavaScript</li>
+        <li id="chip-3">Light · Dark · High contrast</li>
+        <li id="chip-4">Tested</li>
+        <li id="chip-5"><a href="#known-issues">No known issues</a></li>
+      </ul>
+    </header>
+
+    <h2 id="example-title">Example</h2>
+    <figure class="luz-docs-example" id="example">
+      <div class="luz-docs-example__preview" id="preview">
+        <div class="luz-docs-example__frame" id="frame">
+          <button class="luz-btn luz-btn--primary" type="button">Save changes</button>
+        </div>
+      </div>
+      <div class="luz-docs-example__code" id="code">
+        <pre class="luz-code-block" tabindex="0" aria-label="Markup of the example" id="code-pre"><code>&lt;button class="luz-btn luz-btn--primary" type="button"&gt;<mark id="mark">Save changes</mark>&lt;/button&gt; &lt;!-- a long line so that the code scrolls in its own box and never widens the page: SKU-0001;SKU-0002;SKU-0003;SKU-0004;SKU-0005;SKU-0006;SKU-0007;SKU-0008 --&gt;</code></pre>
+      </div>
+    </figure>
+
+    <figure class="luz-docs-example" id="example-plain">
+      <div class="luz-docs-example__preview" id="preview-plain">
+        <div class="luz-docs-example__frame" id="frame-plain">
+          <button class="luz-btn luz-btn--secondary" type="button">Cancel</button>
+        </div>
+      </div>
+    </figure>
+
+    <figure class="luz-docs-example" id="example-narrow">
+      <div class="luz-docs-example__preview">
+        <div class="luz-docs-example__frame" id="frame-narrow" style="--luz-docs-example-w: 20rem">
+          <button class="luz-btn luz-btn--primary luz-btn--block" type="button">Pay now</button>
+        </div>
+      </div>
+    </figure>
+
+    <figure class="luz-docs-example" id="example-wide">
+      <div class="luz-docs-example__preview">
+        <div class="luz-docs-example__frame" id="frame-wide" style="--luz-docs-example-w: 64rem">
+          <button class="luz-btn luz-btn--primary luz-btn--block" type="button">Pay now</button>
+        </div>
+      </div>
+    </figure>
+
+    <h2 id="known-issues">Known issues</h2>
+    <p>None known.</p>
+
+    <h2 id="do-dont">Do and don't</h2>
+    <div class="luz-docs-dodont" id="dodont">
+      <figure class="luz-docs-dodont__item luz-docs-dodont__item--do" id="do">
+        <figcaption><strong class="luz-docs-dodont__verdict" id="do-verdict">Do</strong> Name the action: the label says what happens when the button is pressed.</figcaption>
+        <div class="luz-docs-dodont__stage" id="do-stage" inert aria-hidden="true"><button class="luz-btn luz-btn--primary" type="button">Save changes</button></div>
+      </figure>
+      <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont" id="dont">
+        <figcaption><strong class="luz-docs-dodont__verdict" id="dont-verdict">Don't</strong> Leave the label generic: "Click here" says nothing to someone who hears only the button.</figcaption>
+        <div class="luz-docs-dodont__stage" id="dont-stage" inert aria-hidden="true"><button class="luz-btn luz-btn--primary" type="button">Click here</button></div>
+      </figure>
+    </div>
+
+    <h2 id="prose-title">Reading</h2>
+      <p id="p1">Paragraph 1. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p2">Paragraph 2. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p3">Paragraph 3. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p4">Paragraph 4. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p5">Paragraph 5. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p6">Paragraph 6. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p7">Paragraph 7. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p8">Paragraph 8. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p9">Paragraph 9. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p10">Paragraph 10. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p11">Paragraph 11. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p12">Paragraph 12. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p13">Paragraph 13. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p14">Paragraph 14. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p15">Paragraph 15. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p16">Paragraph 16. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p17">Paragraph 17. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p18">Paragraph 18. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p19">Paragraph 19. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p20">Paragraph 20. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p21">Paragraph 21. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p22">Paragraph 22. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p23">Paragraph 23. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+      <p id="p24">Paragraph 24. A documentation page is read, not scanned: a measure of about forty-six rem keeps a line of running text short enough to follow from its end back to its start, and long enough that a sentence does not break every few words. This text repeats so that the page is tall enough to scroll.</p>
+
+    <nav aria-label="Previous and next page" id="pager-nav">
+      <ul class="luz-docs-pager" id="pager">
+        <li class="luz-docs-pager__prev"><a class="luz-docs-pager__link" id="pager-prev" rel="prev" href="#main-content" aria-label="Previous: Badge"><span class="luz-docs-pager__label">Previous</span> <span class="luz-docs-pager__title">Badge</span></a></li>
+        <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" id="pager-next" rel="next" href="#main-content" aria-label="Next: Card"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">Card</span></a></li>
+      </ul>
+    </nav>
+
+    <p class="luz-docs-page-foot" id="foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="#main-content" id="foot-edit">Edit this page</a> · <a href="#main-content" id="foot-report">Report a problem</a></p>
+  </main>
+  <aside class="luz-docs-rail" id="rail" aria-label="About this page">
+    <nav class="luz-docs-rail__onpage" id="onpage" aria-labelledby="onpage-label">
+      <details class="luz-docs-rail__fold" open>
+        <summary class="luz-docs-rail__title" id="onpage-label">On this page</summary>
+        <ul class="luz-docs-rail__list">
+          <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-example" href="#example-title">Example</a></li>
+          <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-issues" href="#known-issues">Known issues</a></li>
+          <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-dodont" href="#do-dont">Do and don't</a>
+            <ul class="luz-docs-rail__sub">
+              <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Names</a></li>
+            </ul>
+          </li>
+          <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-reading" href="#prose-title">Reading</a></li>
+        </ul>
+      </details>
+    </nav>
+    <div class="luz-docs-rail__actions" id="actions">
+      <a href="#main-content" id="act-copy">Copy page as Markdown</a>
+      <a href="#main-content" id="act-edit">Edit this page</a>
+      <a href="#main-content" id="act-report">Report a problem</a>
+    </div>
+  </aside>
+</body>
+</html>

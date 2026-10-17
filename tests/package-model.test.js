@@ -51,12 +51,12 @@ function offenders(names, pattern) {
 describe("layering: tokens < core < site < a kind of site", () => {
   it("tokens and core name no site block, no kind of site and none of site's five tags", () => {
     const tags = new RegExp(`luz-(?:${SITE_TAGS.join("|")})(?:__|--|(?![\\w-]))`);
-    expect(offenders(["tokens", "core"], /luz-(?:site|landing|cms|app)-/)).toEqual([]);
+    expect(offenders(["tokens", "core"], /luz-(?:site|landing|cms|app|docs)-/)).toEqual([]);
     expect(offenders(["tokens", "core"], tags)).toEqual([]);
   });
 
   it("site names no kind of site", () => {
-    expect(offenders(["site"], /luz-(?:landing|cms|app)-/)).toEqual([]);
+    expect(offenders(["site"], /luz-(?:landing|cms|app|docs)-/)).toEqual([]);
   });
 
   // A kind may refine site's tags (`.luz-landing-header luz-lang-switch`),

@@ -131,8 +131,8 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     expect(budgets.slice(0, BEFORE.length).map((b) => [b.name, b.max])).toEqual(BEFORE);
   });
 
-  it("appends the three AI-ready rows after the docs page row, then the language chunk row (F6), then the mode chunk row (F1), then the four rows of the home's light (F3) and nothing else", () => {
-    expect(budgets).toHaveLength(BEFORE.length + 9);
+  it("appends the three AI-ready rows after the docs page row, then the language chunk row (F6), then the mode chunk row (F1), then the four rows of the home's light (F3), then the docs package row (F6a) and nothing else", () => {
+    expect(budgets).toHaveLength(BEFORE.length + 10);
     expect(budgets.at(BEFORE.length - 1).name).toBe(last);
   });
 
@@ -168,8 +168,20 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     });
   });
 
+  it("budgets the docs package CSS as the last row: ideal 2 KiB, ceiling 4 KiB, a new row and no other ceiling raised (F6a)", () => {
+    expect(budgets.at(-1)).toEqual({ name: "docs CSS", file: "packages/docs/dist/docs.min.css", ideal: 2 * KiB, max: 4 * KiB });
+  });
+
+  it("has the docs row in the PRINCIPLES.md table, last, with the same ideal and ceiling", () => {
+    const [name, floor, ideal, , ceiling] = table.at(-1);
+    expect(name).toMatch(/^`docs` CSS/);
+    expect(floor).toBe("\u2014");
+    expect(ideal).toBe("\u2264 2 kB");
+    expect(ceiling).toBe("4 kB");
+  });
+
   it("repeats the rows in the PRINCIPLES.md table, in the same order, after \"Each docs page\"", () => {
-    expect(table).toHaveLength(BEFORE.length + 9);
+    expect(table).toHaveLength(BEFORE.length + 10);
     expect(table[BEFORE.length - 1][0]).toMatch(/^Each docs page/);
     const [cli, text, manifests] = table.slice(BEFORE.length);
     expect(cli[0]).toMatch(/check/);

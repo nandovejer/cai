@@ -107,9 +107,9 @@ describe("@luz-ds/app: the package", () => {
 /* ---- The lists the scripts read -------------------------------------------- */
 
 describe("@luz-ds/app: the build, the release scripts and the layer", () => {
-  it("is the third kind of site, after landing and cms, and the last package in dependency order", () => {
-    expect(SITE_KINDS).toEqual(["landing", "cms", "app"]);
-    expect(PACKAGES).toEqual([...BASE, "landing", "cms", "app"]);
+  it("is the third kind of site, after landing and cms (docs came after it, F6a)", () => {
+    expect(SITE_KINDS).toEqual(["landing", "cms", "app", "docs"]);
+    expect(PACKAGES).toEqual([...BASE, "landing", "cms", "app", "docs"]);
   });
 
   it("has scripts/build-app.js, three lines on the shared builder, and an app:build chained in build", () => {
@@ -118,12 +118,12 @@ describe("@luz-ds/app: the build, the release scripts and the layer", () => {
     expect(script).toMatch(/buildPackage\(\{ name: "app", label: "App" \}\)/);
     const pkg = json("package.json");
     expect(pkg.scripts?.["app:build"]).toBe("node scripts/build-app.js");
-    expect(pkg.scripts?.build).toMatch(/pnpm cms:build && pnpm app:build( && pnpm luzcheck:build)?$/);
+    expect(pkg.scripts?.build).toMatch(/pnpm cms:build && pnpm app:build && pnpm docs:build( && pnpm luzcheck:build)?$/);
   });
 
   it("is a sentinel of check-dist, a pattern of qa-release and a probe of smoke-consumer", () => {
     expect(readOr("scripts/check-dist.js")).toContain("../packages/app/dist/app.css");
-    expect(readOr("scripts/qa-release.js")).toMatch(/\(core\|site\|landing\|cms\|(?:app\|tokens|tokens\|app)(?:\|check)?\)/);
+    expect(readOr("scripts/qa-release.js").match(/\^packages\\\/\(([^)]*)\)\\\/src\\\//)?.[1].split("|")).toContain("app");
     const smoke = readOr("scripts/smoke-consumer.js");
     expect(smoke).toContain("/node_modules/@luz-ds/app");
     expect(smoke).toContain("/dist/app.css");
@@ -132,6 +132,7 @@ describe("@luz-ds/app: the build, the release scripts and the layer", () => {
 
   it("is a public layer that comes right after cms", () => {
     expect(LAYERS.indexOf("app")).toBe(LAYERS.indexOf("cms") + 1);
+    expect(LAYERS.indexOf("docs"), "docs (F6a) comes right after app").toBe(LAYERS.indexOf("app") + 1);
     expect(readOr("scripts/luz-layers.js")).toMatch(/luz\.app\s+\.luz-app-\*/);
   });
 
@@ -249,10 +250,10 @@ describe("@luz-ds/app: the docs area", () => {
   const siteJson = json("apps/docs/site.json");
   const areas = (siteJson.areas ?? []).map((a) => a.id);
 
-  it("has the area `app`, labelled App, right after cms and before accessibility", () => {
+  it("has the area `app`, labelled App, right after cms and before documentation (F6a)", () => {
     const area = siteJson.areas?.find((a) => a.id === "app");
     expect(area).toMatchObject({ id: "app", label: "App", slug: "app" });
-    expect(areas.slice(areas.indexOf("cms"))).toEqual(["cms", "app", "accessibility"]);
+    expect(areas.slice(areas.indexOf("cms"))).toEqual(["cms", "app", "documentation", "accessibility"]);
   });
 
   it("groups it as the other kinds are: patterns, then a reference list, with essentials", () => {

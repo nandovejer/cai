@@ -17,6 +17,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
 import { SITE_KINDS } from '../scripts/luz-packages.js';
+import { areaOfPackage } from './helpers/package-areas.js';
 import { KEY as MODE_KEY, seedMode } from './helpers/site-lights.js';
 import { faded } from './helpers/settle.js';
 
@@ -261,10 +262,10 @@ test.describe('Documentation site', () => {
   });
 
   test.describe('navigation', () => {
-    test('the sidebar shows the nine areas and expands only the current one', async ({ page }) => {
+    test('the sidebar shows the ten areas and expands only the current one', async ({ page }) => {
       await gotoId(page, 'c-button');
       const areas = page.locator('.docs-nav > li > a');
-      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Landing', 'CMS', 'App', 'Accessibility']);
+      await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Landing', 'CMS', 'App', 'Documentation', 'Accessibility']);
       await expect(page.locator('.docs-nav > li > ul')).toHaveCount(1);
       await expect(page.locator('.docs-nav a[aria-current="true"]')).toHaveText('Components');
       await expect(page.locator('.docs-nav a[aria-current="page"]')).toHaveText('Button');
@@ -309,12 +310,12 @@ test.describe('Documentation site', () => {
         // Tab from the last essential link reaches Previous, then Next
         await end.locator('.docs-end__links a').last().focus();
         await page.keyboard.press('Tab');
-        await expect(page.locator('.docs-pager__prev a')).toBeFocused();
+        await expect(page.locator('.luz-docs-pager__prev a')).toBeFocused();
         await page.keyboard.press('Tab');
-        await expect(page.locator('.docs-pager__next a')).toBeFocused();
-        const outline = await page.locator('.docs-pager__next a').evaluate((el) => getComputedStyle(el).outlineStyle);
+        await expect(page.locator('.luz-docs-pager__next a')).toBeFocused();
+        const outline = await page.locator('.luz-docs-pager__next a').evaluate((el) => getComputedStyle(el).outlineStyle);
         expect(outline).not.toBe('none');
-        const [prev, next] = await page.locator('.docs-pager a').evaluateAll((links) => links.map((a) => a.getBoundingClientRect().toJSON()));
+        const [prev, next] = await page.locator('.luz-docs-pager a').evaluateAll((links) => links.map((a) => a.getBoundingClientRect().toJSON()));
         for (const box of [prev, next]) expect(box.height).toBeGreaterThanOrEqual(24);
         // Side by side, or stacked full width at 640px and below
         if (width <= 640) {
@@ -399,7 +400,7 @@ test.describe('Documentation site', () => {
         await page.setViewportSize({ width, height: 800 });
         for (const route of [...ALL, '/'].filter((r) => r !== '/docs/components/')) {
           await page.goto(route);
-          const toGallery = page.locator('a[href="/docs/components/"]:visible').filter({ hasNot: page.locator('xpath=ancestor::*[@id="page-nav" or contains(@class,"docs-onpage")]') });
+          const toGallery = page.locator('a[href="/docs/components/"]:visible').filter({ hasNot: page.locator('xpath=ancestor::*[@id="page-nav" or contains(@class,"luz-docs-rail")]') });
           expect(await toGallery.count(), route).toBeGreaterThan(0);
         }
         await page.goto('/docs/components/');
@@ -554,7 +555,7 @@ test.describe('Documentation site', () => {
       test(`every ${name} class is used or named on the ${name} pages`, () => {
         const classes = classesOf(name);
         expect(classes.length, name).toBeGreaterThan(0);
-        const html = routesOf(name).map((route) => site.byRoute.get(route).body).join('\n');
+        const html = routesOf(areaOfPackage(name)).map((route) => site.byRoute.get(route).body).join('\n');
         for (const selector of classes) expect(html, selector).toContain(selector.slice(1));
       });
     }

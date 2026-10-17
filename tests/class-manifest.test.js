@@ -666,10 +666,10 @@ describe("the generator: classes the unminified scripts name (RL-19)", () => {
   });
 });
 
-describe("the six built packages", () => {
+describe("the seven built packages", () => {
   const manifests = Object.fromEntries(PACKAGES.map((name) => [name, buildClassManifest(name)]));
   const byName = (pkg) => new Map(manifests[pkg].classes.map((c) => [c.name, c]));
-  const SITE_KIND_PREFIX = { landing: "luz-landing-", cms: "luz-cms-", app: "luz-app-" };
+  const SITE_KIND_PREFIX = { landing: "luz-landing-", cms: "luz-cms-", app: "luz-app-", docs: "luz-docs-" };
   const OWN_LAYERS = {
     tokens: ["tokens"],
     core: ["themes", "settings", "generic", "elements", "objects", "components", "utilities", "print"],
@@ -677,10 +677,11 @@ describe("the six built packages", () => {
     landing: ["landing", "print"],
     cms: ["cms", "print"],
     app: ["app", "print"],
+    docs: ["docs", "print"],
   };
 
-  it("covers exactly tokens, core, site, landing, cms and app", () => {
-    expect(PACKAGES).toEqual(["tokens", "core", "site", "landing", "cms", "app"]);
+  it("covers exactly tokens, core, site, landing, cms, app and docs", () => {
+    expect(PACKAGES).toEqual(["tokens", "core", "site", "landing", "cms", "app", "docs"]);
   });
 
   it.each(PACKAGES)("%s: schema, package name and version come from its package.json", (name) => {

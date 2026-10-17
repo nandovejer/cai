@@ -174,7 +174,7 @@ for (const app of ['/', '/docs/', '/docs/components/button/']) {
 
 test('docs: the specimens carry no data-theme without JavaScript, and the radios still re-scope them', async ({ page }) => {
   await page.goto('/docs/components/button/');
-  const specimens = page.locator('[data-docs-specimen], .docs-dodont__stage');
+  const specimens = page.locator('[data-docs-specimen], .luz-docs-dodont__stage');
   expect(await specimens.count()).toBeGreaterThan(1);
   expect(await specimens.evaluateAll((all) => all.filter((el) => el.hasAttribute('data-theme')).length)).toBe(0);
   const specimen = page.locator('[data-docs-specimen]').first();

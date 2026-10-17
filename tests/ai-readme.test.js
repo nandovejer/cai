@@ -573,10 +573,10 @@ describe("the READMEs of the packages", () => {
   const packages = readdirSync(join(repo, "packages")).filter((p) => existsSync(join(repo, "packages", p, "package.json")) && existsSync(join(repo, "packages", p, "README.md")));
 
   it("there are packages with a README to check", () => {
-    expect(packages).toEqual(expect.arrayContaining(["tokens", "core", "site", "landing", "cms", "app"]));
+    expect(packages).toEqual(expect.arrayContaining(["tokens", "core", "site", "landing", "cms", "app", "docs"]));
   });
 
-  it.each(["tokens", "core", "site", "landing", "cms", "app"])("%s has one block, between the markers, right before '## License'", (name) => {
+  it.each(["tokens", "core", "site", "landing", "cms", "app", "docs"])("%s has one block, between the markers, right before '## License'", (name) => {
     const text = read(`packages/${name}/README.md`);
     expect(text.split(START), "start markers").toHaveLength(2);
     expect(text.split(END), "end markers").toHaveLength(2);

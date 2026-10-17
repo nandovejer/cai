@@ -12,7 +12,7 @@ import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { routeOf, site } from './helpers/docs-site.js';
 import { faded } from './helpers/settle.js';
-import { SITE_KINDS } from '../scripts/luz-packages.js';
+import { KIND_AREAS, PATTERN_AREAS } from './helpers/package-areas.js';
 
 const BUTTON = routeOf('c-button');
 const THEMES = ['light', 'dark', 'high-contrast'];
@@ -191,7 +191,7 @@ test.describe('search: results', () => {
 
   test('the first result is the page of that name', async ({ page }) => {
     await open(page);
-    const sample = site.pages.filter((p) => p.meta.search !== 'false' && ['components', 'tokens', 'site', ...SITE_KINDS, 'html'].includes(p.meta.area));
+    const sample = site.pages.filter((p) => p.meta.search !== 'false' && ['components', 'tokens', ...PATTERN_AREAS, 'html'].includes(p.meta.area));
     const titles = sample.filter((_, i) => i % 4 === 0);
     expect(titles.length).toBeGreaterThan(10);
     await page.keyboard.press('Control+k');
@@ -199,7 +199,7 @@ test.describe('search: results', () => {
       await field(page).fill(p.meta.title);
       // Every title is one page's own (tests/docs-site.test.js): the first result is that page. The one
       // name two pages share by design is a landing's and a cms' Header or Footer: either page will do
-      const routes = site.pages.filter((q) => q.meta.search !== 'false' && q.meta.title === p.meta.title && (q === p || (SITE_KINDS.includes(q.meta.area) && SITE_KINDS.includes(p.meta.area)))).map((q) => q.route);
+      const routes = site.pages.filter((q) => q.meta.search !== 'false' && q.meta.title === p.meta.title && (q === p || (KIND_AREAS.includes(q.meta.area) && KIND_AREAS.includes(p.meta.area)))).map((q) => q.route);
       await expect(results(page).first(), p.meta.title).toHaveAttribute('href', new RegExp(`(${routes.join('|')})$`));
     }
   });

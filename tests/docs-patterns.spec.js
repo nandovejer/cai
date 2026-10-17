@@ -19,6 +19,7 @@
  * Runs in `chromium` and, once playwright.config.js lists it in the `chromium-nojs` testMatch, in
  * `chromium-nojs`: nothing here needs a script.
  */
+/* global CSSLayerBlockRule */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
@@ -73,7 +74,8 @@ async function axeIn(page, mode) {
 
 test.describe('the package', () => {
   test('docs.css is served: the layer order statement first, its rules in luz.docs', async ({ request }) => {
-    const response = await request.get(STYLESHEET);
+    // `?direct`: Vite serves a bare .css request as a JS module, the way it does for an import
+    const response = await request.get(`${STYLESHEET}?direct`);
     expect(response.status(), `${STYLESHEET} (pnpm docs:build)`).toBe(200);
     const css = await response.text();
     expect(css.startsWith('@layer luz.tokens,')).toBe(true);
@@ -303,12 +305,6 @@ test.describe('example: the preview and its code in one frame, a frame as wide a
     expect(button.width).toBeLessThanOrEqual(20 * REM + 1);
   });
 
-  test('the mark inside the code has a fill of its own, apart from the code around it', async ({ page }) => {
-    const mark = await style(page, '#mark', 'backgroundColor');
-    expect(mark).not.toBe('rgba(0, 0, 0, 0)');
-    expect(mark).not.toBe(await style(page, '#code-pre', 'backgroundColor'));
-  });
-
   test('the code scrolls inside its own box at 320px, and the page does not scroll sideways', async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 800 });
     const code = await page.locator('#code-pre').evaluate((el) => ({ scrolls: el.scrollWidth > el.clientWidth, right: el.getBoundingClientRect().right }));
@@ -429,14 +425,16 @@ test.describe('the page', () => {
   });
 
   for (const mode of ['light', 'dark', 'high-contrast']) {
-    test(`has no serious or critical axe violation in ${mode}`, async ({ page }) => {
+    test(`has no serious or critical axe violation in ${mode}`, async ({ page }, testInfo) => {
+      test.skip(testInfo.project.name === 'chromium-nojs', 'axe needs JavaScript');
       await page.setViewportSize({ width: 1440, height: 900 });
       await page.goto(PAGE);
       expect(await axeIn(page, mode)).toEqual([]);
     });
   }
 
-  test('has no serious or critical axe violation at 320px', async ({ page }) => {
+  test('has no serious or critical axe violation at 320px', async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name === 'chromium-nojs', 'axe needs JavaScript');
     await page.setViewportSize({ width: 320, height: 800 });
     await page.goto(PAGE);
     expect(await axeIn(page, 'light')).toEqual([]);

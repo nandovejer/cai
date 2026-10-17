@@ -27,7 +27,7 @@
  *      dist/data/index.json
  *          { "schema": 1, "packages": [{ "package": "@luz-ds/tokens", "version": "0.0.0" }, ...] }
  *          the seven, in dependency order, the version of each package.json
- *      dist/data/<pkg>/classes.json          for each of tokens, core, site, landing, cms, app
+ *      dist/data/<pkg>/classes.json          for each of tokens, core, site, landing, cms, app, docs
  *          { schema, package, version, classes, properties, hooks? }
  *          the package's dist/classes.json with only what a rule reads:
  *          classes [{ name, kind, defined, block?, modifier?, part?, hosts? }],
@@ -190,6 +190,7 @@ describe("dist/data: the snapshot of this release, beside the bundle", () => {
       "cms/classes.json",
       "core/classes.json",
       "core/custom-elements.json",
+      "docs/classes.json",
       "index.json",
       "landing/classes.json",
       "site/classes.json",

@@ -194,10 +194,10 @@ function expectedSections() {
   const sections = [];
   for (const area of site.areas) {
     const pages = order.filter((p) => p.meta.area === area.id && inIndex.has(p.route));
-    if (pages.length) sections.push({ title: area.label, pages });
+    if (pages.length) sections.push({ title: area.label, hub: false, pages });
   }
   const hub = site.pages.filter((p) => !site.areas.some((a) => a.id === p.meta.area) && inIndex.has(p.route));
-  sections.push({ title: "Documentation", pages: hub });
+  sections.push({ title: "Documentation", hub: true, pages: hub });
   return sections;
 }
 
@@ -455,8 +455,9 @@ describe("llms.txt: the index of the site for an agent", () => {
   });
 
   it("writes each page as its title and description from the front matter, verbatim", () => {
-    for (const section of expectedSections()) {
-      const items = parsed.sections.find((s) => s.title === section.title).items;
+    // by position, not by title: an area may be labelled "Documentation" like the hub's section
+    for (const [at, section] of expectedSections().entries()) {
+      const items = parsed.sections[at].items;
       for (const [i, page] of section.pages.entries()) {
         expect(items[i].line).toBe(`- [${page.meta.title}](${urlOf(page.route)}): ${page.meta.description}`);
       }
@@ -534,7 +535,7 @@ describe("llms-full.txt: the curated text of the pages, from the real site", () 
   it("starts with the H1 and is one entry per page in the reading order of llms.txt, none for the hub", () => {
     expect(full().startsWith("# LUZ\n")).toBe(true);
     const entries = all();
-    const pages = expectedSections().filter((s) => s.title !== "Documentation").flatMap((s) => s.pages);
+    const pages = expectedSections().filter((s) => !s.hub).flatMap((s) => s.pages);
     const guided = entries.filter((e) => e.url);
     expect(guided.map((e) => e.url)).toEqual(pages.map((p) => urlOf(p.route)));
     for (const e of guided) expect(e.title, e.url).toBe(site.byRoute.get(`/${e.url.slice(SITE_URL.length)}`).meta.title);
@@ -1269,7 +1270,7 @@ describe("exampleAssets: the CSS and JS an example loads, copied beside the exam
   it("names each as { route, from }: a file of the package's dist at /examples/dist/<pkg>/<file>", () => {
     expect(assets().length).toBeGreaterThan(10);
     for (const asset of assets()) {
-      const m = /^\/examples\/dist\/(tokens|core|site|landing|cms|app)\/([A-Za-z0-9._-]+\.(?:css|js))$/.exec(asset.route);
+      const m = /^\/examples\/dist\/(tokens|core|site|landing|cms|app|docs)\/([A-Za-z0-9._-]+\.(?:css|js))$/.exec(asset.route);
       expect(m, asset.route).toBeTruthy();
       expect(asset.from, asset.route).toBe(`packages/${m[1]}/dist/${m[2]}`);
       expect(existsSync(join(root, asset.from)), `${asset.from} exists (run pnpm build)`).toBe(true);

@@ -94,10 +94,10 @@ describe("@luz-ds/docs: the package", () => {
 
   it("has exactly the seven patterns as components, all imported by index.css, and no JavaScript source", () => {
     const sources = exists("packages/docs/src/components") ? readdirSync(`${root}packages/docs/src/components`).filter((f) => f.endsWith(".css")) : [];
-    expect(sources.map((f) => f.replace(/\.css$/, "")).sort()).toEqual(COMPONENTS);
+    expect(sources.map((f) => f.replace(/\.css$/, "")).sort()).toEqual([...COMPONENTS].sort());
     const index = readOr("packages/docs/src/index.css");
     const imports = [...index.matchAll(/@import url\("\.\/components\/([\w-]+)\.css"\)/g)].map((m) => m[1]);
-    expect(imports.sort()).toEqual(COMPONENTS);
+    expect(imports.sort()).toEqual([...COMPONENTS].sort());
     expect(walk("packages/docs", [".js", ".mjs", ".cjs", ".ts"]), "a JavaScript file in the package").toEqual([]);
   });
 
@@ -184,7 +184,13 @@ describe("@luz-ds/docs: the budget, the lint rules and the owners", () => {
     const budgets = json("budgets.json").budgets ?? [];
     const row = budgets.find((b) => b.name === "docs CSS");
     expect(row).toEqual({ name: "docs CSS", file: "packages/docs/dist/docs.min.css", ideal: 2048, max: 4096 });
-    expect(budgets.at(-1)?.name).toBe("docs CSS");
+    // The home's light rows stay the last four (tests/home-light.test.js) and i18n-es stays right before the mode chunk
+    // (tests/size-guard.test.js), so the docs row is the first free place: after the manifests row, the last AI-ready one.
+    const names = budgets.map((b) => b.name);
+    expect(names.indexOf("docs CSS"), "docs CSS comes right after the manifests row").toBe(names.indexOf("manifests (each, uncompressed)") + 1);
+    expect(names.indexOf("docs CSS"), "docs CSS comes after app CSS").toBeGreaterThan(names.indexOf("app CSS"));
+    expect(names.indexOf("docs CSS"), "docs CSS comes before the light rows").toBeLessThan(names.indexOf("home light controller JS"));
+    expect(names.slice(-4), "the light rows stay last").toEqual(["home light controller JS", "home light visual: globe", "home light visual: city", "home light visual: map"]);
     const others = Object.fromEntries(budgets.filter((b) => b.name !== "docs CSS").map((b) => [b.name, b.max]));
     expect(others["app CSS"]).toBe(2048);
     expect(others["cms CSS"]).toBe(4096);
@@ -242,6 +248,22 @@ describe("@luz-ds/docs: the stylesheets", () => {
 
   it("has CSS to read", () => {
     expect(files.length, "packages/docs/src/**/*.css").toBeGreaterThan(0);
+  });
+
+  it("has no `mark` selector: the example's code is not highlighted with <mark> (core's highlight.js rewrites it from textContent)", () => {
+    expect(has(css, /(?<![\w-])mark(?![\w-])/), "a `mark` type selector or element name").toBe(false);
+  });
+
+  it("documentation/example.html has no <mark> element inside a pre.luz-code-block", () => {
+    const html = readOr("apps/docs/pages/documentation/example.html");
+    expect(html.length, "apps/docs/pages/documentation/example.html").toBeGreaterThan(0);
+    const blocks = [...html.matchAll(/<pre\b[^>]*\bluz-code-block\b[^>]*>[\s\S]*?<\/pre>/g)].map((m) => m[0]);
+    expect(blocks.length, "pre.luz-code-block blocks").toBeGreaterThan(0);
+    expect(blocks.filter((block) => /<mark\b/i.test(block))).toEqual([]);
+  });
+
+  it("the fixture page of the browser spec has no <mark> either", () => {
+    expect(has(read("tests/fixtures/docs-patterns.html"), /<mark\b/i)).toBe(false);
   });
 
   it("defines the seven patterns and their parts", () => {

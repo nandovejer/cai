@@ -6,7 +6,7 @@
  *   snippetData({ root, readFile })  reads each package's package.json and the
  *                                    dist files of the table of 3.4.1
  *   renderSnippets(data)             pure: the HTML of 3.4.2 (the index table,
- *                                    the eight snippets, the chunks table)
+ *                                    the ten snippets, the chunks table)
  *
  * The checks read the rendered HTML, not the shape of `data`: that is what a
  * reader copies. Two roots are used: the repository (the real dist/, the real
@@ -23,7 +23,7 @@ import { renderSnippets, snippetData } from "../scripts/docs-site/snippets.js";
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
-/* ---- What the spec fixes (3.4.1): files per package, the eight ids -------- */
+/* ---- What the spec fixes (3.4.1): files per package, the ten ids -------- */
 
 const FILES = {
   tokens: ["luz-tokens.min.css"],
@@ -32,8 +32,9 @@ const FILES = {
   landing: ["landing.min.css"],
   cms: ["cms.min.css"],
   app: ["app.min.css"],
+  docs: ["docs.min.css"],
 };
-const KIND_PACKAGE = { atoms: null, landing: "landing", blog: "cms", app: "app" };
+const KIND_PACKAGE = { atoms: null, landing: "landing", blog: "cms", app: "app", docs: "docs" };
 const KINDS = Object.keys(KIND_PACKAGE);
 const IDS = KINDS.flatMap((k) => [`${k}-npm`, `${k}-cdn`]);
 
@@ -137,7 +138,7 @@ describe("the snippet generator", () => {
     expect(renderSnippets(snippetData({ root: fixture, readFile: readerOf(fixture) }))).toBe(renderSnippets(data));
   });
 
-  it("has the eight snippets, each an element with its id, data-snippet, data-kind and data-via", () => {
+  it("has the ten snippets, each an element with its id, data-snippet, data-kind and data-via", () => {
     const html = build(fixture);
     for (const id of IDS) {
       expect(html.match(new RegExp(`\\bid="${id}"`, "g"))?.length, `#${id} once`).toBe(1);
@@ -150,7 +151,7 @@ describe("the snippet generator", () => {
     }
   });
 
-  it("has an index table that links to each of the eight snippets", () => {
+  it("has an index table that links to each of the ten snippets", () => {
     const html = build(fixture);
     const table = html.match(/<table\b[\s\S]*?<\/table>/)?.[0] ?? "";
     for (const id of IDS) {
@@ -205,7 +206,7 @@ describe("the snippet generator", () => {
         }
       });
 
-      it("keeps modulepreload out of the eight snippets: a chunk is fetched only by the page that needs it", () => {
+      it("keeps modulepreload out of the ten snippets: a chunk is fetched only by the page that needs it", () => {
         for (const id of IDS) expect(codeOf(html, id), id).not.toMatch(/modulepreload/);
       });
 
@@ -284,12 +285,16 @@ describe("the snippet generator", () => {
     });
   }
 
-  it("takes each version from its own package.json: the six fixture versions are all different", () => {
+  it("takes each version from its own package.json: the seven fixture versions are all different", () => {
     const html = build(fixture);
     const versions = new Set(tagsOf(codeOf(html, "app-cdn")).map((t) => parts(t.url).version));
     expect(versions.size).toBe(4); // tokens, core, site, app
     expect(versions.has(versionOf(fixture, "tokens"))).toBe(true);
     expect(versions.has(versionOf(fixture, "app"))).toBe(true);
+    const docs = new Set(tagsOf(codeOf(html, "docs-cdn")).map((t) => parts(t.url).version));
+    expect(docs.size).toBe(4); // tokens, core, site, docs
+    expect(docs.has(versionOf(fixture, "docs"))).toBe(true);
+    expect(docs.has(versionOf(fixture, "app"))).toBe(false);
   });
 
   it("lists only files that each package ships (pack-files.txt), so a renamed file fails here", () => {

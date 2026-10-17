@@ -657,6 +657,7 @@ describe("the manifests: node_modules first, then the snapshot", () => {
       ["@luz-ds/landing", "0.1.0", "bundled"],
       ["@luz-ds/cms", "0.1.0", "bundled"],
       ["@luz-ds/app", "0.1.0", "bundled"],
+      ["@luz-ds/docs", "0.1.0", "bundled"],
     ]);
     expect(run(["."], { version: VERSION, cwd: result.dir, data: miniSnapshot() }).stdout).toContain("@luz-ds/core 9.9.0 from node_modules");
   });

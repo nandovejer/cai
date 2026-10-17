@@ -311,13 +311,13 @@ describe("the release scripts read PUBLISHED, and the CSS probes keep PACKAGES",
   it("scripts/qa-release.js counts packages/check/src among the sources it reports", () => {
     const line = readOr("scripts/qa-release.js").split("\n").find((l) => l.startsWith("const uiFiles")) ?? "";
     const group = line.match(/\^packages\\\/\(([^)]*)\)\\\/src\\\//)?.[1] ?? "";
-    expect(group.split("|").sort()).toEqual(["app", "check", "cms", "core", "landing", "site", "tokens"]);
+    expect(group.split("|").sort()).toEqual(["app", "check", "cms", "core", "docs", "landing", "site", "tokens"]);
   });
 
-  it("the root build ends with the bundle of check, after app: root script luzcheck:build (spec 7.1)", () => {
+  it("the root build ends with the bundle of check, after docs: root script luzcheck:build (spec 7.1)", () => {
     const pkg = json("package.json");
     expect(pkg.scripts?.["luzcheck:build"]).toBe("node scripts/build-check.js");
-    expect(pkg.scripts?.build).toMatch(/pnpm app:build && pnpm luzcheck:build$/);
+    expect(pkg.scripts?.build).toMatch(/pnpm app:build && pnpm docs:build && pnpm luzcheck:build$/);
   });
 
   it("the root has no script that npm runs on its own for check (no pre or post hook of the release scripts)", () => {

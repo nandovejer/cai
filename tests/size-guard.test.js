@@ -131,9 +131,18 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     expect(budgets.slice(0, BEFORE.length).map((b) => [b.name, b.max])).toEqual(BEFORE);
   });
 
-  it("appends the three AI-ready rows after the docs page row, then the language chunk row (F6), then the mode chunk row (F1), then the four rows of the home's light (F3), then the docs package row (F6a) and nothing else", () => {
+  it("appends the three AI-ready rows after the docs page row, then the docs package row (F6a), the language chunk row (F6), the mode chunk row (F1), the four rows of the home's light (F3) and nothing else", () => {
     expect(budgets).toHaveLength(BEFORE.length + 10);
     expect(budgets.at(BEFORE.length - 1).name).toBe(last);
+    expect(budgets.slice(BEFORE.length + 3).map((b) => b.name)).toEqual([
+      "docs CSS",
+      "core JS lazy chunk: i18n-es",
+      "site JS lazy chunk: mode",
+      "home light controller JS",
+      "home light visual: globe",
+      "home light visual: city",
+      "home light visual: map",
+    ]);
   });
 
   it("budgets the check CLI bundle, gzipped: ideal 36 KiB, ceiling 40 KiB", () => {
@@ -168,12 +177,14 @@ describe("the AI-ready rows of budgets.json and PRINCIPLES.md section 8", () => 
     });
   });
 
-  it("budgets the docs package CSS as the last row: ideal 2 KiB, ceiling 4 KiB, a new row and no other ceiling raised (F6a)", () => {
-    expect(budgets.at(-1)).toEqual({ name: "docs CSS", file: "packages/docs/dist/docs.min.css", ideal: 2 * KiB, max: 4 * KiB });
+  it("budgets the docs package CSS after the manifests row and before the language and light rows: ideal 2 KiB, ceiling 4 KiB, a new row and no other ceiling raised (F6a)", () => {
+    // The light rows stay last (tests/home-light.test.js) and i18n-es stays right before the mode chunk, so this is the first free place.
+    expect(budgets[BEFORE.length + 3]).toEqual({ name: "docs CSS", file: "packages/docs/dist/docs.min.css", ideal: 2 * KiB, max: 4 * KiB });
   });
 
-  it("has the docs row in the PRINCIPLES.md table, last, with the same ideal and ceiling", () => {
-    const [name, floor, ideal, , ceiling] = table.at(-1);
+  it("has the docs row in the PRINCIPLES.md table right after the manifests row, with the same ideal and ceiling", () => {
+    expect(table[BEFORE.length + 2][0], "the row before it").toMatch(/manifests|Each manifest/i);
+    const [name, floor, ideal, , ceiling] = table[BEFORE.length + 3];
     expect(name).toMatch(/^`docs` CSS/);
     expect(floor).toBe("\u2014");
     expect(ideal).toBe("\u2264 2 kB");

@@ -725,7 +725,7 @@ describe("the seven built packages", () => {
 
   it.each(PACKAGES)("%s: kind follows the name; block, modifier and part are its BEM split", (name) => {
     for (const c of manifests[name].classes) {
-      const kind = /^luz-(?:site|landing|cms|app)-/.test(c.name) ? "pattern" : c.name.startsWith("o-") ? "object" : c.name.startsWith("u-") ? "utility" : c.name.startsWith("is-") ? "state" : "component";
+      const kind = /^luz-(?:site|landing|cms|app|docs)-/.test(c.name) ? "pattern" : c.name.startsWith("o-") ? "object" : c.name.startsWith("u-") ? "utility" : c.name.startsWith("is-") ? "state" : "component";
       expect(c.kind, c.name).toBe(kind);
       if (kind === "utility" || kind === "state") {
         expect(c, c.name).not.toHaveProperty("block");

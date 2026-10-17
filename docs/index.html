@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; media-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LUZ: UI built for accessibility on native HTML, no framework</title>
-  <meta name="description" content="LUZ (Light, Usable &amp; Zero-dependency) is a CSS-first, zero-build design system for the web: tokens, components and page layouts on native HTML, three color modes, one cascade layer you can always override, and JavaScript only as an enhancement.">
+  <title>LUZ: a light, usable and zero-dependency design system for the web</title>
+  <meta name="description" content="LUZ (Light, Usable &amp; Zero-dependency) is a design system of tokens, CSS and a little vanilla JavaScript that starts from what the browser already does: native HTML, three color modes, one cascade layer you can always override, and no build step.">
   <link rel="canonical"  href="https://nandovejer.github.io/luz/">
   <link rel="alternate"  hreflang="en" href="https://nandovejer.github.io/luz/">
   <link rel="alternate"  hreflang="es" href="https://nandovejer.github.io/luz/es/">
@@ -16,16 +16,17 @@
   <link rel="apple-touch-icon" href="./assets/apple-touch-icon-QPTLZskv.png">
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="./boot.js" ></script>
-  <script type="module" crossorigin src="./assets/header-BsUKXJYb.js"></script>
-  <script type="module" crossorigin src="./assets/landing-JFSsVsAJ.js"></script>
+  <script type="module" crossorigin src="./assets/header-CDFpI0K3.js"></script>
+  <script type="module" crossorigin src="./assets/landing-BagdSstR.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/header-enjYdf1s.css">
-  <link rel="stylesheet" crossorigin href="./assets/landing-DUe3Ym4C.css">
-  <link rel="stylesheet" crossorigin href="./assets/header-NpwxmRRr.css">
+  <link rel="stylesheet" crossorigin href="./assets/landing-DLJz4QDG.css">
+  <link rel="stylesheet" crossorigin href="./assets/header-Bie_b5hL.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
      buttons), in the page's language: authored labels win over core's
      dictionary, which has no Arabic. The light-* ones are the texts of
-     <home-light> (apps/landing/light/light.js) -->
+     <home-light> (apps/landing/light/light.js), which landing.js also
+     reads for the names of the lights -->
 <body class="o-page"
       data-luz-label-change-mode="Change color mode. Current: {mode}"
       data-luz-label-mode-changed="Color mode: {mode}"
@@ -143,11 +144,12 @@
 
     <div class="luz-sidebar__section">
       <div class="luz-sidebar__section-label">On this page</div>
-      <a class="luz-sidebar__link" href="#what">Why teams use LUZ</a>
-      <a class="luz-sidebar__link" href="#see">See it working</a>
-      <a class="luz-sidebar__link" href="#adopt">Adopt it one layer at a time</a>
-      <a class="luz-sidebar__link" href="#fit">When LUZ fits</a>
-      <a class="luz-sidebar__link" href="#start">Start with one link tag per layer</a>
+      <a class="luz-sidebar__link" href="#why">Why LUZ</a>
+      <a class="luz-sidebar__link" href="#inside">What’s inside</a>
+      <a class="luz-sidebar__link" href="#native">Works without JavaScript</a>
+      <a class="luz-sidebar__link" href="#modes">Three color modes</a>
+      <a class="luz-sidebar__link" href="#type">Typography</a>
+      <a class="luz-sidebar__link" href="#start">Get started</a>
     </div>
 
     <div class="luz-sidebar__section">
@@ -163,92 +165,87 @@
 
   <main id="main-content" class="o-container o-stack luz-landing-main landing-wrap" tabindex="-1">
 
-    <!-- ====================== HERO ====================== -->
-    <section class="luz-landing-hero o-grid o-grid--split" aria-labelledby="hero-title">
+    <!-- ====================== 1. HERO ====================== -->
+    <section class="luz-landing-hero luz-landing-hero--centered o-grid o-grid--split" id="hero" aria-labelledby="hero-title">
       <div class="luz-landing-hero__copy">
-        <p class="luz-landing-hero__eyebrow" lang="en">Light, Usable & Zero-dependency</p>
-        <h1 class="luz-landing-hero__title" id="hero-title">LUZ, a native, styled design system built for accessibility.</h1>
-        <p class="luz-landing-hero__lead">A CSS-first, zero-build design system for the web. Three color modes, your CSS always wins, JavaScript only as an enhancement.</p>
+        <p class="luz-landing-hero__eyebrow" lang="en">Light, usable &amp; zero-dependency</p>
+        <h1 class="luz-landing-hero__title" id="hero-title">LUZ, a design system for <em>humans</em>, ready for AI.</h1>
+        <p class="luz-landing-hero__lead">Tokens, CSS and a little vanilla JavaScript, built on what the browser already does. Every component works before JavaScript loads, in light, dark and high contrast.</p>
+        <p class="landing-built"><a href="./docs/get-started/how-luz-is-built/#tests-first">We love TDD</a>: every change starts with a failing test.</p>
         <div class="o-actions">
-          <a class="luz-btn luz-btn--primary luz-btn--lg" href="#adopt">Get started</a>
-          <a class="luz-btn luz-btn--outline luz-btn--lg" href="./docs/components/">Browse the components</a>
+          <a class="luz-btn luz-btn--primary luz-btn--lg" href="./docs/">Read the docs</a>
+          <a class="luz-btn luz-btn--outline luz-btn--lg" href="https://github.com/nandovejer/luz">View on GitHub</a>
         </div>
       </div>
     </section>
 
-    <!-- ====================== THE LIGHT ======================
-         The visitor's sky over a globe, a city or a map (apps/landing/light/).
-         Without JavaScript the element stays empty and light.css keeps its room -->
-    <section id="light" aria-labelledby="light-title">
+    <!-- ====================== 2. THE LIGHT ======================
+         The visitor's sky over a globe, a city or a map (apps/landing/light/),
+         from edge to edge of the window. Without JavaScript the element stays
+         empty, light.css keeps its room and the sentence after it says what
+         the room is for; once <home-light> is defined the sentence goes -->
+    <section class="luz-landing-hero__media luz-landing-hero__media--bleed landing-light" id="light" aria-labelledby="light-title">
       <h2 class="u-sr-only" id="light-title">The light where you are</h2>
       <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
+      <p class="landing-light__nojs">With JavaScript on, the light of your hour is drawn here.</p>
     </section>
 
-    <!-- ====================== WHY ====================== -->
-    <section class="o-stack luz-landing-section" id="what" aria-labelledby="what-title">
-      <h2 class="landing-h2" id="what-title">Why teams use LUZ</h2>
-      <p class="landing-lead">For sites and tools that should work for everyone, on any device, for years, without a framework to keep up with.</p>
+    <!-- ====================== 3. WHY ====================== -->
+    <section class="o-stack luz-landing-section" id="why" aria-labelledby="why-title">
+      <p class="luz-landing-section__eyebrow">Why LUZ</p>
+      <h2 class="luz-landing-section__title" id="why-title">Three words, <em>one</em> promise.</h2>
+      <p class="luz-landing-section__lead">A CSS-first, zero-build design system for the web. Your CSS always wins, JavaScript is only an enhancement, and every page works before it loads.</p>
 
-      <ul class="o-grid o-grid--split landing-points">
-        <li class="o-media">
-          <span class="luz-avatar luz-avatar--md" aria-hidden="true">01</span>
-          <div class="o-media__body">
-            <h3 class="landing-point__title">Works without JavaScript</h3>
-            <p class="u-text-muted">Components are native HTML elements: <code class="luz-code-inline">&lt;dialog&gt;</code>, <code class="luz-code-inline">&lt;details&gt;</code>, form controls, popovers. JavaScript only adds polish, so pages keep working when a script fails.</p>
+      <div class="o-grid landing-trio">
+        <article class="luz-card o-stack" aria-labelledby="why-light">
+          <h3 class="luz-card__title landing-word" id="why-light" lang="en">Light</h3>
+          <p class="luz-card__body">Plain CSS and small ES modules from a CDN or npm. No preprocessor, no compiler: what you read in the files is what the browser runs.</p>
+          <!-- Each swatch asks <luz-mode> to preview a light (landing.js); without a script they are not shown -->
+          <div class="o-stack landing-swatches" role="group" aria-label="Try this page in another light" hidden>
+            <div class="o-row landing-swatches__row">
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="dawn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6 17a6 6 0 0 1 12 0Z"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 18h18"/></svg><span class="u-sr-only">Dawn</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="morning" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="8" cy="11" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">Morning light</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="afternoon" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="12" cy="8" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">Afternoon light</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="sunset" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="16" cy="14" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">Sunset</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="dusk" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" d="M18 17a6 6 0 0 0-12 0"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 18h18"/></svg><span class="u-sr-only">Dusk</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="night" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17 14.5A6.5 6.5 0 0 1 9.5 7a6.5 6.5 0 1 0 7.5 7.5Z"/></svg><span class="u-sr-only">Night</span></button>
+            </div>
+            <!-- The light the page shows, by name: the pressed swatch's or the clock's (landing.js) -->
+            <div class="o-row landing-swatches__now">
+              <button class="luz-btn luz-btn--outline luz-btn--sm" type="button" data-phase-live hidden>Back to now</button>
+              <span class="landing-swatches__name" data-shown-light></span>
+            </div>
           </div>
-        </li>
-        <li class="o-media">
-          <span class="luz-avatar luz-avatar--md" aria-hidden="true">02</span>
-          <div class="o-media__body">
-            <h3 class="landing-point__title">Built for accessibility</h3>
-            <p class="u-text-muted">Keyboard support, visible focus, 4.5:1 text contrast and a high-contrast mode are part of every component, and automated checks run on every change. The <a href="./docs/accessibility/">accessibility statement</a> lists what has not been tested yet, screen readers included.</p>
-          </div>
-        </li>
-        <li class="o-media">
-          <span class="luz-avatar luz-avatar--md" aria-hidden="true">03</span>
-          <div class="o-media__body">
-            <h3 class="landing-point__title">Nothing to install to try it</h3>
-            <p class="u-text-muted">Plain CSS and small ES modules from a CDN or npm. No preprocessor, no compiler, zero dependencies: what you read in the files is what the browser runs.</p>
-          </div>
-        </li>
-      </ul>
+          <p class="u-text-muted">This page follows your clock. <span data-needs-js hidden>Tap a light to borrow another hour.</span></p>
+        </article>
 
-      <div class="o-stack">
-        <h3 class="landing-point__title"><a href="./docs/get-started/how-luz-is-built/">Human-first, AI-ready</a></h3>
-        <p class="u-text-muted">Every change starts with a failing test</p>
+        <article class="luz-card o-stack" aria-labelledby="why-usable">
+          <h3 class="luz-card__title landing-word" id="why-usable" lang="en">Usable</h3>
+          <p class="luz-card__body">Native first: dialog, popover, details, range, progress. Keyboard support, visible focus and 4.5:1 text contrast are part of every component, not an option.</p>
+          <div class="luz-dropdown">
+            <button class="luz-btn luz-btn--outline" type="button" popovertarget="why-keyboard">Press Tab, then Space</button>
+            <div class="luz-dropdown__menu" id="why-keyboard" popover>
+              <p class="landing-note">That was the keyboard alone. Press Escape to close this note.</p>
+            </div>
+          </div>
+          <p class="u-text-muted">The focus ring takes the color of the page’s actions, and it never hides.</p>
+        </article>
+
+        <article class="luz-card o-stack" aria-labelledby="why-zero">
+          <h3 class="luz-card__title landing-word" id="why-zero" lang="en">Zero-dependency</h3>
+          <div class="luz-landing-stat">
+            <p class="luz-landing-stat__value">0</p>
+            <p class="luz-landing-stat__label">runtime dependencies. Nothing to install to try it, and no framework to keep up with for years.</p>
+          </div>
+        </article>
       </div>
     </section>
 
-    <!-- ====================== SEE IT ====================== -->
-    <section class="o-stack luz-landing-section" id="see" aria-labelledby="see-title">
-      <h2 class="landing-h2" id="see-title">See it working</h2>
-      <p class="landing-lead">This is the whole setup. The result below is rendered by the same CSS.</p>
-
-      <div class="landing-snippet">
-        <div class="landing-snippet__bar">
-          <span class="landing-eyebrow">The whole setup</span>
-          <button class="luz-copy-btn" type="button" data-copy-from="snip-what" aria-label="Copy the whole setup snippet">Copy</button>
-        </div>
-        <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The whole setup snippet"><code id="snip-what">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.1.0/dist/luz-tokens.min.css&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.1.0/dist/luz.min.css&quot;&gt;
-
-&lt;button class=&quot;luz-btn luz-btn--primary&quot;&gt;Save changes&lt;/button&gt;
-&lt;span class=&quot;luz-tag luz-tag--green luz-tag--dot&quot;&gt;Published&lt;/span&gt;</code></pre>
-      </div>
-
-      <div class="landing-render">
-        <p class="landing-eyebrow">Renders as</p>
-        <div class="o-row">
-          <button class="luz-btn luz-btn--primary" type="button">Save changes</button>
-          <span class="luz-tag luz-tag--green luz-tag--dot">Published</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====================== ADOPT ====================== -->
-    <section class="o-stack luz-landing-section" id="adopt" aria-labelledby="adopt-title">
-      <h2 class="landing-h2" id="adopt-title">Adopt it one layer at a time</h2>
-      <p class="landing-lead">One direction: each package needs the ones below it and nothing above it, and installing it brings them in. Pick the level you need and stop there.</p>
+    <!-- ====================== 4. INSIDE ====================== -->
+    <section class="o-stack luz-landing-section" id="inside" aria-labelledby="inside-title">
+      <p class="luz-landing-section__eyebrow">What’s inside</p>
+      <h2 class="luz-landing-section__title" id="inside-title">Adopt it one <em>layer</em> at a time.</h2>
+      <p class="luz-landing-section__lead">One direction: each package needs the ones below it and nothing above it, and installing it brings them in. Pick the level you need and stop there.</p>
 
       <div class="landing-levels">
 
@@ -261,11 +258,8 @@
           <div class="landing-level__body">
             <h4 class="landing-eyebrow">You get</h4>
             <ul class="landing-level__get">
-              <li><span data-count="primitives">53</span> color primitives in <span data-count="families">7</span> families</li>
-              <li><span data-count="semantic">55</span> semantic tokens, each defined for light, dark and high contrast</li>
-              <li>Spacing (12), control heights (4), type sizes (9), radii (6) and shadows (3)</li>
-              <li>ET Book for running text and headings, self-hosted and MIT licensed; the system fonts for controls, labels and code</li>
-              <li>A <a href="./docs/tokens/contrast/">contrast check</a> for your own colors, as a command or in the browser</li>
+              <li>53 color primitives and 55 semantic tokens, the semantic ones defined for light, dark and high contrast</li>
+              <li>Scales for spacing, control heights, type sizes, radii and shadows</li>
             </ul>
           </div>
           <div class="landing-level__actions">
@@ -283,10 +277,7 @@
           <div class="landing-level__body">
             <h4 class="landing-eyebrow">Adds to level 1</h4>
             <ul class="landing-level__get">
-              <li><span data-count="components">32</span> components: buttons, forms, tables, tabs, modal, media player and more</li>
-              <li><span data-count="objects">10</span> layout objects, a small set of utilities and the styles of bare HTML elements</li>
-              <li>Optional JavaScript for tabs, modals, copy buttons and players; every page works without it</li>
-              <li>Print styles and right-to-left layouts, with no extra file</li>
+              <li>32 components, from buttons and forms to tabs and a media player, and 10 layout objects</li>
               <li>Everything in one <a href="./docs/get-started/layers/">cascade layer</a>, <code class="luz-code-inline">luz</code>: your own CSS wins without <code class="luz-code-inline">!important</code></li>
             </ul>
           </div>
@@ -300,15 +291,13 @@
           <div class="landing-level__intro">
             <h3 class="landing-level__title" id="level-3-title"><span class="landing-eyebrow">Level 3</span> Tokens + Core + Site</h3>
             <span class="luz-tag luz-tag--gray">Requires core + tokens</span>
-            <p>Choose this if your site needs a search, a cookie banner or more than one language. This landing is built at this level.</p>
+            <p>Choose this if your site needs a search, a cookie banner or more than one language. This home page is built on it.</p>
           </div>
           <div class="landing-level__body">
             <h4 class="landing-eyebrow">Adds to level 2</h4>
             <ul class="landing-level__get">
-              <li>Cookie consent: a band fixed at the bottom of the window, which covers nothing</li>
-              <li>Submenus for the links of a header, and a banner above it</li>
-              <li>Language switch</li>
-              <li>Site search, with optional JavaScript</li>
+              <li>Site search and a cookie consent band that covers nothing, with optional JavaScript</li>
+              <li>A language switch, submenus for the links of a header, and a banner above it</li>
             </ul>
           </div>
           <div class="landing-level__actions">
@@ -319,26 +308,202 @@
 
       </div>
 
-      <div class="landing-next">
-        <h3 class="landing-next__title" id="next-title">Next: a package for your kind of site</h3>
-        <p>Packages for one kind of site build on site. Install the one at the top: it brings everything below it.</p>
-        <ul class="landing-next__list" aria-labelledby="next-title">
-          <li><a href="./docs/cms/"><code class="luz-code-inline">cms</code></a>: a blog, a newspaper or any CMS, built with any stack. Article header, post lists, table of contents and author box.</li>
-          <li><a href="./docs/landing/"><code class="luz-code-inline">landing</code></a>: a landing page. The header, hero, sections and footer of a landing page, plus speakers and calls to action.</li>
-          <li><a href="./docs/app/"><code class="luz-code-inline">app</code></a>: a web application. The header with search and account, and a dashboard of panels, on core's sidebar.</li>
+      <div class="o-stack landing-kinds">
+        <h3 class="landing-kinds__title" id="kinds-title">Level 4 · one package for your kind of site</h3>
+        <p class="u-text-muted">Each is built on site. Install the one for your site: it brings everything below it.</p>
+        <ul class="o-row landing-kinds__list" aria-labelledby="kinds-title">
+          <li><a href="./docs/landing/"><code class="luz-code-inline">landing</code> for a landing page</a></li>
+          <li><a href="./docs/cms/"><code class="luz-code-inline">cms</code> for a blog or a newspaper</a></li>
+          <li><a href="./docs/app/"><code class="luz-code-inline">app</code> for a web application</a></li>
         </ul>
-        <pre class="luz-code-block landing-next__tree" dir="ltr" tabindex="0" role="region" aria-label="The package tree"><code>tokens → core → site ─┬─ cms
-                      ├─ landing
-                      └─ app</code></pre>
       </div>
     </section>
 
-    <!-- ====================== FIT ====================== -->
-    <section class="o-stack luz-landing-section" id="fit" aria-labelledby="fit-title">
-      <h2 class="landing-h2" id="fit-title">When LUZ fits</h2>
-      <div class="landing-fit">
+    <!-- ====================== 5. NATIVE ====================== -->
+    <section class="o-stack luz-landing-section" id="native" aria-labelledby="native-title">
+      <p class="luz-landing-section__eyebrow">Works without JavaScript</p>
+      <h2 class="luz-landing-section__title" id="native-title">Starts from what the browser <em>already</em> does.</h2>
+      <p class="luz-landing-section__lead">Every component is a native element with a stylesheet on top. Switch JavaScript off and they still open, close, slide and choose.</p>
+
+      <div class="o-grid landing-specimens">
+        <div class="luz-card o-stack">
+          <h3 class="luz-card__title"><code>&lt;details&gt;</code></h3>
+          <details>
+            <summary>What does “zero-build” mean?</summary>
+            <p>That there is no step between the files you read and the page the browser shows. Copy them, link them, done.</p>
+          </details>
+        </div>
+
+        <div class="luz-card o-stack">
+          <h3 class="luz-card__title"><code>&lt;dialog&gt;</code></h3>
+          <div>
+            <button class="luz-btn luz-btn--outline" type="button" commandfor="native-dialog" command="show-modal">Open a dialog</button>
+          </div>
+          <p class="u-text-muted">It opens with no script where the browser has <code class="luz-code-inline">command</code>; elsewhere a small script opens it.</p>
+          <dialog class="luz-modal" id="native-dialog" aria-labelledby="native-dialog-title">
+            <div class="luz-modal__header">
+              <p class="luz-modal__title" id="native-dialog-title">A native dialog</p>
+            </div>
+            <div class="luz-modal__body">
+              <p>Focus moves into it, Escape closes it, and the browser keeps the page behind it out of reach. No library wrote any of that.</p>
+            </div>
+            <div class="luz-modal__footer">
+              <button class="luz-btn luz-btn--primary" type="button" commandfor="native-dialog" command="close">Close the dialog</button>
+            </div>
+          </dialog>
+        </div>
+
+        <div class="luz-card o-stack">
+          <h3 class="luz-card__title"><code>popover</code></h3>
+          <div class="luz-dropdown">
+            <button class="luz-btn luz-btn--outline" type="button" popovertarget="native-popover">Open a popover</button>
+            <div class="luz-dropdown__menu" id="native-popover" popover>
+              <p class="landing-note">Light dismiss and the top layer, with no z-index to fight. The browser handles it.</p>
+              <ul class="luz-dropdown__list">
+                <li><a class="luz-dropdown__item" href="./docs/components/dropdown/">See the dropdown, built on a popover</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="luz-card o-stack">
+          <h3 class="luz-card__title"><code>&lt;input type="range"&gt;</code></h3>
+          <div class="luz-field">
+            <label class="luz-field__label" for="native-range">Brightness</label>
+            <input class="luz-input" id="native-range" type="range" min="0" max="100" value="64">
+          </div>
+        </div>
+
+        <div class="luz-card o-stack">
+          <h3 class="luz-card__title"><code>&lt;progress&gt;</code></h3>
+          <div class="luz-field">
+            <label class="luz-field__label" for="native-progress">Profile, 3 of 5 steps done</label>
+            <progress class="luz-progress" id="native-progress" max="5" value="3"></progress>
+          </div>
+        </div>
+
+        <div class="luz-card o-stack">
+          <h3 class="luz-card__title"><code>&lt;select&gt;</code></h3>
+          <div class="luz-field">
+            <label class="luz-field__label" for="native-select">Size</label>
+            <select class="luz-select" id="native-select">
+              <option value="small">Small</option>
+              <option value="medium" selected>Medium</option>
+              <option value="large">Large</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================== 6. MODES ====================== -->
+    <section class="o-stack luz-landing-section" id="modes" aria-labelledby="modes-title">
+      <p class="luz-landing-section__eyebrow">Three color modes</p>
+      <h2 class="luz-landing-section__title" id="modes-title">Light, dark, high contrast. <em>And the hour.</em></h2>
+      <p class="luz-landing-section__lead">Every semantic color is defined for the three modes, and the <code class="luz-code-inline">data-theme</code> attribute switches them, on the page or on one part of it. This page adds an axis of its own: the time where you are.</p>
+
+      <!-- The same invoice three times: each scope re-defines the semantic tokens -->
+      <div class="o-grid landing-modes">
+        <figure class="landing-mode">
+          <figcaption class="landing-eyebrow">Light</figcaption>
+          <div class="landing-mode__scope" data-theme="light">
+            <div class="luz-card">
+              <p class="luz-card__title">Invoice 1042</p>
+              <p class="luz-card__body">Paid on 3 October. Thank you.</p>
+              <span class="luz-tag luz-tag--green luz-tag--dot">Paid</span>
+            </div>
+          </div>
+        </figure>
+        <figure class="landing-mode">
+          <figcaption class="landing-eyebrow">Dark</figcaption>
+          <div class="landing-mode__scope" data-theme="dark">
+            <div class="luz-card">
+              <p class="luz-card__title">Invoice 1042</p>
+              <p class="luz-card__body">Paid on 3 October. Thank you.</p>
+              <span class="luz-tag luz-tag--green luz-tag--dot">Paid</span>
+            </div>
+          </div>
+        </figure>
+        <figure class="landing-mode">
+          <figcaption class="landing-eyebrow">High contrast</figcaption>
+          <div class="landing-mode__scope" data-theme="high-contrast">
+            <div class="luz-card">
+              <p class="luz-card__title">Invoice 1042</p>
+              <p class="luz-card__body">Paid on 3 October. Thank you.</p>
+              <span class="luz-tag luz-tag--green luz-tag--dot">Paid</span>
+            </div>
+          </div>
+        </figure>
+      </div>
+
+      <!-- The day strip: decoration; the line under it says the light in words (landing.js) -->
+      <div class="landing-day" aria-hidden="true">
+        <div class="landing-day__strip"><span class="landing-day__now" hidden></span></div>
+        <div class="landing-day__ticks">
+          <span>Dawn</span>
+          <span>Morning light</span>
+          <span>Afternoon light</span>
+          <span>Sunset</span>
+          <span>Dusk</span>
+          <span>Night</span>
+        </div>
+      </div>
+      <p class="u-text-muted" data-day-line hidden>The light of the hour: <strong data-day-phase></strong></p>
+    </section>
+
+    <!-- ====================== 7. TYPE ====================== -->
+    <section class="o-stack luz-landing-section" id="type" aria-labelledby="type-title">
+      <p class="luz-landing-section__eyebrow">Typography</p>
+      <h2 class="luz-landing-section__title" id="type-title">Made to be <em>read</em>.</h2>
+      <p class="luz-landing-section__lead">ET Book for running text and headings, self-hosted and MIT licensed. The system fonts for controls, labels and code.</p>
+
+      <blockquote class="landing-type__quote"><p>Light is the first material of a page. Everything else is placed in it.</p></blockquote>
+    </section>
+
+    <!-- ====================== 8. START ======================
+         The snippets, then who LUZ fits and who it does not, then the two actions -->
+    <section class="o-stack luz-landing-section" id="start" aria-labelledby="start-title">
+      <p class="luz-landing-section__eyebrow">Get started</p>
+      <h2 class="luz-landing-section__title" id="start-title">One link tag per <em>layer</em>.</h2>
+      <p class="luz-landing-section__lead">Pick a level, copy the snippet, ship. Pin an exact version while LUZ is in beta.</p>
+
+      <div class="landing-snippet">
+        <div class="landing-snippet__bar">
+          <span class="landing-eyebrow">From a CDN</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="snip-cdn" aria-label="Copy the CDN snippet" hidden>Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="html" dir="ltr" tabindex="0" role="region" aria-label="The CDN snippet"><code id="snip-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot;&gt;
+
+&lt;button class=&quot;luz-btn luz-btn--primary&quot;&gt;Save changes&lt;/button&gt;
+&lt;span class=&quot;luz-tag luz-tag--green luz-tag--dot&quot;&gt;Published&lt;/span&gt;</code></pre>
+      </div>
+
+      <div class="landing-render">
+        <p class="landing-eyebrow">This is what it renders</p>
+        <div class="o-row">
+          <button class="luz-btn luz-btn--primary" type="button">Save changes</button>
+          <span class="luz-tag luz-tag--green luz-tag--dot">Published</span>
+        </div>
+      </div>
+
+      <div class="landing-snippet">
+        <div class="landing-snippet__bar">
+          <span class="landing-eyebrow">From npm</span>
+          <button class="luz-copy-btn" type="button" data-copy-from="snip-npm" aria-label="Copy the npm snippet" hidden>Copy</button>
+        </div>
+        <pre class="luz-code-block" data-lang="js" dir="ltr" tabindex="0" role="region" aria-label="The npm snippet"><code id="snip-npm">npm install @luz-ds/tokens @luz-ds/core
+
+import &quot;@luz-ds/tokens/css&quot;;
+import &quot;@luz-ds/core/css&quot;;
+import &quot;@luz-ds/core&quot;;</code></pre>
+      </div>
+
+      <p>Then write HTML. <code class="luz-code-inline">&lt;button class="luz-btn"&gt;</code> is a button. <code class="luz-code-inline">&lt;dialog class="luz-modal"&gt;</code> is a modal. That is the whole idea.</p>
+
+      <div class="o-grid o-grid--split landing-fit">
         <div>
-          <h3 class="landing-subtitle">A good fit</h3>
+          <h3 class="landing-fit__title">A good fit</h3>
           <ul class="landing-fit__list">
             <li>Content sites, documentation and public services that must meet WCAG 2.2 AA.</li>
             <li>Server-rendered pages and static sites, in any back-end language.</li>
@@ -346,7 +511,7 @@
           </ul>
         </div>
         <div>
-          <h3 class="landing-subtitle">Not a good fit</h3>
+          <h3 class="landing-fit__title">Not a good fit</h3>
           <ul class="landing-fit__list">
             <li>You need ready-made React or Vue components.</li>
             <li>You need a data grid, charts or a date-range picker: LUZ has none.</li>
@@ -354,27 +519,51 @@
           </ul>
         </div>
       </div>
-    </section>
 
-    <!-- ====================== CLOSING CTA ====================== -->
-    <section class="o-stack luz-landing-section" id="start" aria-labelledby="cta-title">
-      <h2 class="landing-h2" id="cta-title">Start with one link tag per layer</h2>
-      <p class="landing-lead">Pick a level, copy the snippet, ship. Pin an exact version while LUZ is in beta.</p>
       <div class="o-actions">
-        <a class="luz-btn luz-btn--primary" href="#adopt">Get started</a>
-        <a class="luz-btn luz-btn--outline" href="./docs/">Read the documentation</a>
+        <a class="luz-btn luz-btn--primary" href="./docs/">Read the documentation</a>
+        <a class="luz-btn luz-btn--outline" href="./docs/components/">Browse the components</a>
       </div>
     </section>
   </main>
 
   <footer class="luz-landing-footer">
-    <div class="o-container o-container--inline o-row">
-      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
-      <nav class="o-actions" aria-label="Project links">
-        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>
-        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="./docs/">Docs</a>
-        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="./docs/site/">Site</a>
+    <div class="o-container o-container--inline o-grid">
+      <div class="luz-landing-footer__brand">
+        <p class="landing-brand"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg><strong>LUZ</strong> <span>v0.0.0</span></p>
+        <p class="u-text-muted">Beta · MIT License</p>
+        <p class="u-text-muted">Light, wherever you are.</p>
+      </div>
+      <nav class="luz-landing-footer__col" aria-labelledby="footer-docs">
+        <h2 class="luz-landing-footer__col-title" id="footer-docs">Docs</h2>
+        <ul>
+          <li><a href="./docs/get-started/">Get started</a></li>
+          <li><a href="./docs/tokens/">Tokens</a></li>
+          <li><a href="./docs/components/">Components</a></li>
+          <li><a href="./docs/site/">Patterns</a></li>
+          <li><a href="./docs/accessibility/">Accessibility statement</a></li>
+        </ul>
       </nav>
+      <nav class="luz-landing-footer__col" aria-labelledby="footer-project">
+        <h2 class="luz-landing-footer__col-title" id="footer-project">Project</h2>
+        <ul>
+          <li><a href="https://github.com/nandovejer/luz">GitHub</a></li>
+          <li><a href="https://github.com/nandovejer/luz/blob/main/CHANGELOG.md">Changelog</a></li>
+          <li><a href="https://github.com/nandovejer/luz/blob/main/CONTRIBUTING.md">Contributing</a></li>
+          <li><a href="https://github.com/nandovejer/luz/blob/main/dev/BROWSER-REVIEWS.md">Browser reviews</a></li>
+        </ul>
+      </nav>
+      <!-- Named apart from the header's language menu: two landmarks, two names -->
+      <nav class="luz-landing-footer__col" aria-label="Languages of this page">
+        <h2 class="luz-landing-footer__col-title">Language</h2>
+        <ul>
+  <li><a href="./" hreflang="en" lang="en" aria-current="page">English</a></li>
+  <li><a href="./es/" hreflang="es" lang="es">Español</a></li>
+  <li><a href="./ar/" hreflang="ar" lang="ar">العربية</a></li>
+</ul>
+      </nav>
+    </div>
+    <div class="o-stack landing-foot">
       <luz-mode class="site-modes" remember by="clock">
         <fieldset class="luz-mode-switcher luz-mode-switcher--cycle site-modes">
           <legend class="luz-mode-switcher__label">Color mode</legend>
@@ -386,6 +575,7 @@
           <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
         </fieldset>
       </luz-mode>
+      <p class="u-text-muted">The light is computed from your clock, never from your location. Your choice stays in this browser.</p>
     </div>
   </footer>
 

@@ -1276,9 +1276,29 @@ Plain HTML and CSS with a closed list of class names is also easy for an AI agen
 
 ### Tests first
 
-Every change starts with a failing test. The first commit is a `test:` commit that fails without the change, and the change that follows makes it pass. A bug fix starts with the test that reproduces it.
+Every change starts with a failing test. The test says what the change must do, and it exists before the change does.
 
-One command, `pnpm check:all`, runs every check. The rules those checks enforce are in [PRINCIPLES.md](https://github.com/nandovejer/luz/blob/main/PRINCIPLES.md), and [TESTING.md](https://github.com/nandovejer/luz/blob/main/dev/TESTING.md) says how to write the test.
+The loop has two steps:
+
+1. Commit a `test:` commit. The test must fail without the change, and it must fail for the right reason: the missing behaviour, not a typo in the test.
+2. Commit the change that makes it pass. Nobody weakens a test to get it green.
+
+A bug fix starts with the test that reproduces the bug. The test is read before the code.
+
+The tests are of several kinds:
+
+- **Unit tests**, with Vitest, for logic and values.
+- **Browser tests**, with Playwright in Chromium, once with JavaScript and once without. They cover behaviour, the keyboard and the state of a page when the script does not run.
+- **Accessibility tests.** axe scans every page in the light, dark and high contrast modes. A serious or critical problem fails the build.
+- **Docs tests.** The contrast ratios and token lists on the docs pages are computed from the CSS and recomputed by a test, so they cannot drift from the code.
+- **Size budgets.** A file that grows past its ceiling fails, and nobody raises a ceiling.
+- **Checks** on the shipped strings, the licences and the contents of each package.
+
+One command, `pnpm check:all`, runs all of them.
+
+Safari and Firefox are not in that command. People review them before a release, and the open reviews are public.
+
+The rules those checks enforce are in [PRINCIPLES.md](https://github.com/nandovejer/luz/blob/main/PRINCIPLES.md), and [TESTING.md](https://github.com/nandovejer/luz/blob/main/dev/TESTING.md) says how to write the test.
 
 ### Zero dependencies
 
@@ -5431,7 +5451,7 @@ No modifiers. The footer is a class of the landing on a native `<footer>`, with 
 - `.luz-landing-footer`: On `<footer>`: a rule on top, 24 px above its row and 32 px below; its row spreads its children to the two ends, and is a column aligned to the start at 768 px and below
 - `.o-container.o-container--inline.o-row` (core): The row: the width and gutters of the page, so its content starts where the main's does
 - `.luz-landing-footer__brand`: The first cell of the `.o-container.o-container--inline.o-grid` (core), 24 px (`--luz-space-lg`) apart: a name, a version, one line. From 768 px it is twice a column
-- `.luz-landing-footer__col`: A column, on a `<nav>`: a title over a list of links with no markers, 8 px (`--luz-space-xs`) apart
+- `.luz-landing-footer__col`: A column, on a `<nav>`: a title over a list of links with no markers, 8 px (`--luz-space-xs`) apart; each link is a box 28 px (`--luz-control-sm`) tall, a target of 24 px or more
 - `.luz-landing-footer__col-title`: A column's title: sans, small, semibold, primary text
 - `.o-actions` (core): The links, as an [action group](https://nandovejer.github.io/luz/docs/components/layout/#objects-actions)
 

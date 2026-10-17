@@ -12,11 +12,11 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../../../boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-or9Ve1Dh.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-Cw3lj9ZT.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-uPwpUGqG.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BSyRBnxb.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-oA0PmqRi.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BjX1gfAT.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -234,6 +234,43 @@
 <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
+  <aside class="luz-docs-rail" aria-label="About this page">
+  <div class="luz-docs-rail__inner">
+  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
+    <details class="luz-docs-rail__fold" open>
+      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
+      <ul class="luz-docs-rail__list">
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#example">Example</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#known-issues">Known issues</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#code">Code</a>
+          <ul class="luz-docs-rail__sub">
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#markup">Copy the markup</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#variants">Variants and options</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#how">How it works</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#no-js">Without JavaScript</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#design">Design</a>
+          <ul class="luz-docs-rail__sub">
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#when">When to use</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#when-not">When not to use</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Do and don&#39;t</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#content">Writing the content</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#tokens">Tokens it uses</a></li>
+          </ul>
+        </li>
+      </ul>
+    </details>
+  </nav>
+    <div class="luz-docs-rail__actions">
+      <a data-docs-copy-page href="../../../docs/documentation/rail/index.md">Copy page as Markdown</a>
+      <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/documentation/rail.html">Edit this page</a>
+      <a href="https://github.com/nandovejer/luz/issues/new?title=Rail">Report a problem</a>
+    </div>
+  </div>
+  </aside>
 
   <main class="o-main luz-docs-main" id="main-content" tabindex="-1">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
@@ -289,7 +326,7 @@
                   <p>Name it <code>acme.config.json</code>.</p>
                 </div>
               </div>
-              <p class="docs-demo__note">The rail beside the text it lists, shown at any width: in a page it is a third column from 80rem and sits under the content below it. With core's script, the section in view is marked as you scroll.</p>
+              <p class="docs-demo__note">The rail beside the text it lists, shown at any width: in a page it is a third column from 80rem and sits above the content below it. With core's script, the section in view is marked as you scroll.</p>
             </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
@@ -301,7 +338,7 @@
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>The rail, as a direct child of the shell, after the content:</p>
+            <p>The rail, as a direct child of the shell, between the sidebar and the content:</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
@@ -338,10 +375,10 @@
                   <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span></code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column of the <a href="../../../docs/documentation/shell/">shell</a> from 80rem, as tall as the content; below it, under the content</div></td></tr>
+                <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span></code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column of the <a href="../../../docs/documentation/shell/">shell</a> from 80rem, as tall as the content; below it, above the content</div></td></tr>
                 <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span><wbr><span>__inner</span></code></div></td><td data-label="Effect"><div>On a <code>&lt;div&gt;</code>, the one child of the rail, around the list and the actions: from 80rem it is the sticky box, inside the rail, so it never covers the footer, and it scrolls by itself, with room at its start for a focus ring</div></td></tr>
                 <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span><wbr><span>__onpage</span></code></div></td><td data-label="Effect"><div>On the <code>&lt;nav&gt;</code> of the list, a direct child of <code>__inner</code>: it scopes the reset of the fold and its title, and is the hook for a script</div></td></tr>
-                <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span><wbr><span>__fold</span></code></div></td><td data-label="Effect"><div>On a native <code>&lt;details&gt;</code>. Write <code>open</code>, so the list shows</div></td></tr>
+                <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span><wbr><span>__fold</span></code></div></td><td data-label="Effect"><div>On a native <code>&lt;details&gt;</code>. Write <code>open</code>, so the list shows without a script. Where the rail is above the content, a script may close it when the page loads</div></td></tr>
                 <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span><wbr><span>__title</span></code></div></td><td data-label="Effect"><div>On the <code>&lt;summary&gt;</code>: "On this page", semibold. It names the <code>&lt;nav&gt;</code></div></td></tr>
                 <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span><wbr><span>__list</span></code></div></td><td data-label="Effect"><div>On the <code>&lt;ul&gt;</code>: no bullets, a rule at its start</div></td></tr>
                 <tr><td data-label="Class"><div><code class="docs-name"><span>.luz-docs-rail</span><wbr><span>__link</span></code> with <code class="docs-name"><span>.luz-sidebar</span><wbr><span>__link</span></code></div></td><td data-label="Effect"><div>On each <code>&lt;a&gt;</code>: text on the page, 28px tall. The link marked <code>aria-current="true"</code> gets a start border in the brand colour</div></td></tr>
@@ -353,7 +390,7 @@
             <h3 id="how">How it works</h3>
             <p>CSS from <code>@luz-ds/docs</code>, on core's sidebar link and its scroll spy.</p>
             <ul>
-              <li>Below 80rem the rail is drawn under the content, before the footer. From 80rem it is a column as tall as the content, and its inner box is sticky, at <code>--luz-docs-rail-top</code> from the top of the window: it stops at the end of the rail, so it never covers the footer under it. The inner box is as tall as the window at most, and scrolls by itself when the list is longer.</li>
+              <li>Below 80rem the rail is drawn above the content, under the header. From 80rem it is a column as tall as the content, and its inner box is sticky, at <code>--luz-docs-rail-top</code> from the top of the window: it stops at the end of the rail, so it never covers the footer under it. The inner box is as tall as the window at most, and scrolls by itself when the list is longer.</li>
               <li>A link carries core's <code>.luz-sidebar__link</code>, so core's script marks the section in view with <code>aria-current="true"</code>. The rail redraws the link as text on the page: the mark is the weight and a start border, never the colour alone.</li>
               <li>The list names each <code>h2</code> of the page and, nested under it, each <code>h3</code>. Nothing is nested deeper.</li>
               <li>"Copy page as Markdown" is a link to the page's Markdown file; copying it with a script is yours. The rail is left out of print.</li>
@@ -362,7 +399,7 @@
             <p>The list and the actions are links and a native <code>&lt;details&gt;</code>, so they work. No link is marked as current: the mark comes from core's script.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
-              <li><strong>Order:</strong> the rail is after the content in the source, so Tab reaches it after the text: the list, then the actions.</li>
+              <li><strong>Order:</strong> the rail is between the sidebar and the content in the source, so Tab reaches it before the text: the list, then the actions. The skip link goes to the content, past the rail.</li>
               <li><strong>Keys:</strong> Enter or Space on "On this page" folds the list. Tab reaches each link; Enter goes to its section.</li>
               <li><strong>Names:</strong> the <code>&lt;aside&gt;</code> is a landmark named "About this page"; the <code>&lt;nav&gt;</code> is named by its summary, "On this page".</li>
             </ul>
@@ -461,43 +498,6 @@
   </nav>
   <p class="luz-docs-page-foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/documentation/rail.html">Edit this page</a> · <a href="https://github.com/nandovejer/luz/issues/new?title=Rail">Report a problem</a></p>
   </main>
-  <aside class="luz-docs-rail" aria-label="About this page">
-  <div class="luz-docs-rail__inner">
-  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
-    <details class="luz-docs-rail__fold" open>
-      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
-      <ul class="luz-docs-rail__list">
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#example">Example</a></li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#known-issues">Known issues</a></li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#code">Code</a>
-          <ul class="luz-docs-rail__sub">
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#markup">Copy the markup</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#variants">Variants and options</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#how">How it works</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#no-js">Without JavaScript</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#keyboard">Keyboard and ARIA</a></li>
-          </ul>
-        </li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#design">Design</a>
-          <ul class="luz-docs-rail__sub">
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#when">When to use</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#when-not">When not to use</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Do and don&#39;t</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#content">Writing the content</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#contrast">Contrast and focus</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#tokens">Tokens it uses</a></li>
-          </ul>
-        </li>
-      </ul>
-    </details>
-  </nav>
-    <div class="luz-docs-rail__actions">
-      <a data-docs-copy-page href="../../../docs/documentation/rail/index.md">Copy page as Markdown</a>
-      <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/documentation/rail.html">Edit this page</a>
-      <a href="https://github.com/nandovejer/luz/issues/new?title=Rail">Report a problem</a>
-    </div>
-  </div>
-  </aside>
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
     <div class="o-container o-container--inline o-row">

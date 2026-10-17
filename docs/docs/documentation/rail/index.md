@@ -6,7 +6,7 @@ The list of the sections of the page that stays in view beside the content, with
 Without core's script no link is marked as current, and the links still work. Not tested with a screen reader.
 
 ### Copy the markup
-The rail, as a direct child of the shell, after the content:
+The rail, as a direct child of the shell, between the sidebar and the content:
 
 Rail markup
 ```html
@@ -37,10 +37,10 @@ Rail markup
 ### Variants and options
 No modifier. The rail is an `<aside>` around one box that holds two blocks: the list and the actions.
 
-- `.luz-docs-rail`: On an `<aside>`: the third column of the [shell](https://nandovejer.github.io/luz/docs/documentation/shell/) from 80rem, as tall as the content; below it, under the content
+- `.luz-docs-rail`: On an `<aside>`: the third column of the [shell](https://nandovejer.github.io/luz/docs/documentation/shell/) from 80rem, as tall as the content; below it, above the content
 - `.luz-docs-rail__inner`: On a `<div>`, the one child of the rail, around the list and the actions: from 80rem it is the sticky box, inside the rail, so it never covers the footer, and it scrolls by itself, with room at its start for a focus ring
 - `.luz-docs-rail__onpage`: On the `<nav>` of the list, a direct child of `__inner`: it scopes the reset of the fold and its title, and is the hook for a script
-- `.luz-docs-rail__fold`: On a native `<details>`. Write `open`, so the list shows
+- `.luz-docs-rail__fold`: On a native `<details>`. Write `open`, so the list shows without a script. Where the rail is above the content, a script may close it when the page loads
 - `.luz-docs-rail__title`: On the `<summary>`: "On this page", semibold. It names the `<nav>`
 - `.luz-docs-rail__list`: On the `<ul>`: no bullets, a rule at its start
 - `.luz-docs-rail__link` with `.luz-sidebar__link`: On each `<a>`: text on the page, 28px tall. The link marked `aria-current="true"` gets a start border in the brand colour
@@ -50,7 +50,7 @@ No modifier. The rail is an `<aside>` around one box that holds two blocks: the 
 ### How it works
 CSS from `@luz-ds/docs`, on core's sidebar link and its scroll spy.
 
-- Below 80rem the rail is drawn under the content, before the footer. From 80rem it is a column as tall as the content, and its inner box is sticky, at `--luz-docs-rail-top` from the top of the window: it stops at the end of the rail, so it never covers the footer under it. The inner box is as tall as the window at most, and scrolls by itself when the list is longer.
+- Below 80rem the rail is drawn above the content, under the header. From 80rem it is a column as tall as the content, and its inner box is sticky, at `--luz-docs-rail-top` from the top of the window: it stops at the end of the rail, so it never covers the footer under it. The inner box is as tall as the window at most, and scrolls by itself when the list is longer.
 - A link carries core's `.luz-sidebar__link`, so core's script marks the section in view with `aria-current="true"`. The rail redraws the link as text on the page: the mark is the weight and a start border, never the colour alone.
 - The list names each `h2` of the page and, nested under it, each `h3`. Nothing is nested deeper.
 - "Copy page as Markdown" is a link to the page's Markdown file; copying it with a script is yours. The rail is left out of print.
@@ -59,7 +59,7 @@ CSS from `@luz-ds/docs`, on core's sidebar link and its scroll spy.
 The list and the actions are links and a native `<details>`, so they work. No link is marked as current: the mark comes from core's script.
 
 ### Keyboard and ARIA
-- **Order:** the rail is after the content in the source, so Tab reaches it after the text: the list, then the actions.
+- **Order:** the rail is between the sidebar and the content in the source, so Tab reaches it before the text: the list, then the actions. The skip link goes to the content, past the rail.
 - **Keys:** Enter or Space on "On this page" folds the list. Tab reaches each link; Enter goes to its section.
 - **Names:** the `<aside>` is a landmark named "About this page"; the `<nav>` is named by its summary, "On this page".
 

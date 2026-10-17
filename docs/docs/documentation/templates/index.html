@@ -12,11 +12,11 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../../../boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-or9Ve1Dh.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-Cw3lj9ZT.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-uPwpUGqG.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BSyRBnxb.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-oA0PmqRi.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BjX1gfAT.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -234,6 +234,25 @@
 <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
+  <aside class="luz-docs-rail" aria-label="About this page">
+  <div class="luz-docs-rail__inner">
+  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
+    <details class="luz-docs-rail__fold" open>
+      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
+      <ul class="luz-docs-rail__list">
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#docs-page">Documentation page</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#first-last">First and last page</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#not-here">What is not here</a></li>
+      </ul>
+    </details>
+  </nav>
+    <div class="luz-docs-rail__actions">
+      <a data-docs-copy-page href="../../../docs/documentation/templates/index.md">Copy page as Markdown</a>
+      <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/documentation/templates.html">Edit this page</a>
+      <a href="https://github.com/nandovejer/luz/issues/new?title=Documentation%20templates">Report a problem</a>
+    </div>
+  </div>
+  </aside>
 
   <main class="o-main luz-docs-main" id="main-content" tabindex="-1">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
@@ -254,12 +273,12 @@
           <p>The first is a whole page; the second is one piece that changes at the ends of a sequence. The last section says what is not in the package yet.</p>
           <div class="docs-prose">
             <h2 id="docs-page" class="docs-prose__title">Documentation page</h2>
-            <p>A whole page: the skip link, the header, the sidebar, the content with its <a href="../../../docs/documentation/page-head/">head</a>, an <a href="../../../docs/documentation/example/">example</a> and a <a href="../../../docs/documentation/dodont/">do and don't</a> pair, the <a href="../../../docs/documentation/pager/">pager</a> and the <a href="../../../docs/documentation/page-foot/">page foot</a>, then the <a href="../../../docs/documentation/rail/">rail</a> and the footer, on the <a href="../../../docs/documentation/shell/">shell</a>.</p>
+            <p>A whole page: the skip link, the header, the sidebar, the <a href="../../../docs/documentation/rail/">rail</a>, the content with its <a href="../../../docs/documentation/page-head/">head</a>, an <a href="../../../docs/documentation/example/">example</a> and a <a href="../../../docs/documentation/dodont/">do and don't</a> pair, the <a href="../../../docs/documentation/pager/">pager</a> and the <a href="../../../docs/documentation/page-foot/">page foot</a>, then the footer, on the <a href="../../../docs/documentation/shell/">shell</a>.</p>
             <ul>
   <li>Load the CSS of tokens, core and docs in that order: <a href="../../../docs/get-started/#site-kinds">Install LUZ</a> has the command. Core's script is optional: it marks the section in view in the rail and closes the drawer when a link is followed.</li>
-  <li>The columns are placed by the shell, so the source stays in reading order: sidebar, content, rail.</li>
+  <li>The columns are placed by the shell, so the source stays in reading order: sidebar, rail, content.</li>
   <li>The links of the sidebar and of the rail are examples. The rail lists the <code>h2</code> of the page, and its <code>h3</code> in a nested list.</li>
-  <li>From 80rem the shell always has three tracks. Without the <code>&lt;aside&gt;</code> the third stays empty, so keep the rail on every page of the site. Below 80rem the rail is drawn under the content, before the footer.</li>
+  <li>From 80rem the shell always has three tracks. Without the <code>&lt;aside&gt;</code> the third stays empty, so keep the rail on every page of the site. Below 80rem the rail is drawn above the content, under the header.</li>
 </ul>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
@@ -279,6 +298,25 @@
       &lt;a class=&quot;luz-sidebar__link&quot; href=&quot;/deploy/&quot;&gt;Deploy&lt;/a&gt;
     &lt;/div&gt;
   &lt;/nav&gt;
+  &lt;aside class=&quot;luz-docs-rail&quot; aria-label=&quot;About this page&quot;&gt;
+    &lt;div class=&quot;luz-docs-rail__inner&quot;&gt;
+      &lt;nav class=&quot;luz-docs-rail__onpage&quot; aria-labelledby=&quot;onpage-title&quot;&gt;
+        &lt;details class=&quot;luz-docs-rail__fold&quot; open&gt;
+          &lt;summary class=&quot;luz-docs-rail__title&quot; id=&quot;onpage-title&quot;&gt;On this page&lt;/summary&gt;
+          &lt;ul class=&quot;luz-docs-rail__list&quot;&gt;
+            &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#install&quot;&gt;Install&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#configure&quot;&gt;Configure&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#known-issues&quot;&gt;Known issues&lt;/a&gt;&lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/details&gt;
+      &lt;/nav&gt;
+      &lt;div class=&quot;luz-docs-rail__actions&quot;&gt;
+        &lt;a href=&quot;https://example.com/docs/install.md&quot;&gt;Copy page as Markdown&lt;/a&gt;
+        &lt;a href=&quot;https://example.com/edit/install.md&quot;&gt;Edit this page&lt;/a&gt;
+        &lt;a href=&quot;https://example.com/issues/new&quot;&gt;Report a problem&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/aside&gt;
   &lt;main class=&quot;o-main luz-docs-main&quot; id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;
     &lt;header class=&quot;luz-docs-page-head&quot;&gt;
       &lt;p class=&quot;luz-docs-page-head__eyebrow&quot;&gt;Guides · Setup&lt;/p&gt;
@@ -317,25 +355,6 @@
     &lt;/nav&gt;
     &lt;p class=&quot;luz-docs-page-foot&quot;&gt;Last updated &lt;time datetime=&quot;2026-10-17&quot;&gt;17 October 2026&lt;/time&gt; · &lt;a href=&quot;https://example.com/edit/install.md&quot;&gt;Edit this page&lt;/a&gt; · &lt;a href=&quot;https://example.com/issues/new&quot;&gt;Report a problem&lt;/a&gt;&lt;/p&gt;
   &lt;/main&gt;
-  &lt;aside class=&quot;luz-docs-rail&quot; aria-label=&quot;About this page&quot;&gt;
-    &lt;div class=&quot;luz-docs-rail__inner&quot;&gt;
-      &lt;nav class=&quot;luz-docs-rail__onpage&quot; aria-labelledby=&quot;onpage-title&quot;&gt;
-        &lt;details class=&quot;luz-docs-rail__fold&quot; open&gt;
-          &lt;summary class=&quot;luz-docs-rail__title&quot; id=&quot;onpage-title&quot;&gt;On this page&lt;/summary&gt;
-          &lt;ul class=&quot;luz-docs-rail__list&quot;&gt;
-            &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#install&quot;&gt;Install&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#configure&quot;&gt;Configure&lt;/a&gt;&lt;/li&gt;
-            &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#known-issues&quot;&gt;Known issues&lt;/a&gt;&lt;/li&gt;
-          &lt;/ul&gt;
-        &lt;/details&gt;
-      &lt;/nav&gt;
-      &lt;div class=&quot;luz-docs-rail__actions&quot;&gt;
-        &lt;a href=&quot;https://example.com/docs/install.md&quot;&gt;Copy page as Markdown&lt;/a&gt;
-        &lt;a href=&quot;https://example.com/edit/install.md&quot;&gt;Edit this page&lt;/a&gt;
-        &lt;a href=&quot;https://example.com/issues/new&quot;&gt;Report a problem&lt;/a&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/aside&gt;
   &lt;footer&gt;
     &lt;p&gt;© 2026 Acme&lt;/p&gt;
   &lt;/footer&gt;
@@ -396,25 +415,6 @@
   </nav>
   <p class="luz-docs-page-foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/documentation/templates.html">Edit this page</a> · <a href="https://github.com/nandovejer/luz/issues/new?title=Documentation%20templates">Report a problem</a></p>
   </main>
-  <aside class="luz-docs-rail" aria-label="About this page">
-  <div class="luz-docs-rail__inner">
-  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
-    <details class="luz-docs-rail__fold" open>
-      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
-      <ul class="luz-docs-rail__list">
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#docs-page">Documentation page</a></li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#first-last">First and last page</a></li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#not-here">What is not here</a></li>
-      </ul>
-    </details>
-  </nav>
-    <div class="luz-docs-rail__actions">
-      <a data-docs-copy-page href="../../../docs/documentation/templates/index.md">Copy page as Markdown</a>
-      <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/documentation/templates.html">Edit this page</a>
-      <a href="https://github.com/nandovejer/luz/issues/new?title=Documentation%20templates">Report a problem</a>
-    </div>
-  </div>
-  </aside>
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
     <div class="o-container o-container--inline o-row">

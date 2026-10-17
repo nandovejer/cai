@@ -19,14 +19,14 @@
  *    (that family is accepted by prefix), never from a .min file; sorted, once.
  *
  * 2. The snapshot: scripts/build-check.js writes, beside luz-check.js, the
- *    facts of the six packages of this release, for a project that has no
+ *    facts of the seven packages of this release, for a project that has no
  *    node_modules/@luz-ds (it uses a CDN). It is DATA, read at run time, never
  *    inlined in the bundle, so the bundle stays under the `check CLI` row of
  *    budgets.json (40,960 B gzip) however many classes LUZ has:
  *
  *      dist/data/index.json
  *          { "schema": 1, "packages": [{ "package": "@luz-ds/tokens", "version": "0.0.0" }, ...] }
- *          the six, in dependency order, the version of each package.json
+ *          the seven, in dependency order, the version of each package.json
  *      dist/data/<pkg>/classes.json          for each of tokens, core, site, landing, cms, app
  *          { schema, package, version, classes, properties, hooks? }
  *          the package's dist/classes.json with only what a rule reads:
@@ -60,7 +60,7 @@ import { buildCheckTo, builtOnce, removeBuilds, root } from "./helpers/check-bui
 
 afterAll(removeBuilds);
 
-const LIBRARIES = ["tokens", "core", "site", "landing", "cms", "app"];
+const LIBRARIES = ["tokens", "core", "site", "landing", "cms", "app", "docs"];
 const readJson = (path) => JSON.parse(readFileSync(path, "utf-8"));
 
 /* ---- hooks in classes.json ------------------------------------------------------------------- */
@@ -132,7 +132,7 @@ describe("classes.json: the hooks a package reads", () => {
     expect(Object.keys(manifest)).toEqual(["schema", "package", "version", "classes", "properties"]);
   });
 
-  it("is in the six real manifests: core reads classless, sort, spy and themes; tokens reads none", () => {
+  it("is in the seven real manifests: core reads classless, sort, spy and themes; tokens reads none", () => {
     const core = buildClassManifest("core");
     expect(core.hooks, "hooks in the manifest of core").toBeDefined();
     for (const name of ["data-luz-classless", "data-luz-sort", "data-luz-spy", "data-luz-themes"]) expect(core.hooks, name).toContain(name);
@@ -183,7 +183,7 @@ describe("dist/data: the snapshot of this release, beside the bundle", () => {
     expect(existsSync(join(dataDir(), "index.json")), "data/index.json").toBe(true);
   });
 
-  it("holds exactly index.json, the six classes.json, the custom-elements.json of core and site, and LUZ's tokens for the theme rules", () => {
+  it("holds exactly index.json, the seven classes.json, the custom-elements.json of core and site, and LUZ's tokens for the theme rules", () => {
     expect(built.error).toBeNull();
     expect(filesUnder(dataDir())).toEqual([
       "app/classes.json",
@@ -199,7 +199,7 @@ describe("dist/data: the snapshot of this release, beside the bundle", () => {
     ]);
   });
 
-  it("says which release it is: the six packages in dependency order, with their versions", () => {
+  it("says which release it is: the seven packages in dependency order, with their versions", () => {
     expect(built.error).toBeNull();
     const index = snapshot("index.json");
     expect(Object.keys(index)).toEqual(["schema", "packages"]);

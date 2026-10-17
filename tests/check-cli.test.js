@@ -1148,7 +1148,7 @@ describe("tests/fixtures/check: the folder", () => {
 
   it("uses a class of LUZ only where its manifest has it, so a pass file is a valid LUZ page", () => {
     const known = new Set();
-    for (const pkg of ["core", "site", "landing", "cms", "app"]) {
+    for (const pkg of ["core", "site", "landing", "cms", "app", "docs"]) {
       const file = join(root, "packages", pkg, "dist", "classes.json");
       if (existsSync(file)) for (const c of JSON.parse(readFileSync(file, "utf-8")).classes) known.add(c.name);
     }

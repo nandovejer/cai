@@ -25,7 +25,7 @@
  *                                 most max(2, ceil(len / 4)) and at most 40 %
  *                                 of the name, ties in code-unit order of the
  *                                 candidate, null for a name over 64 chars
- *   Facts (5.4): for each of the six packages, from the directory of each
+ *   Facts (5.4): for each of the seven packages, from the directory of each
  *       checked file walk up to node_modules/@luz-ds/<pkg>/ and read
  *       dist/classes.json and dist/custom-elements.json, as data, when its
  *       package.json names @luz-ds/<pkg> and the manifest is a manifest
@@ -640,7 +640,7 @@ describe("class/unknown-in-css and class/reserved-prefix", () => {
 describe("the manifests: node_modules first, then the snapshot", () => {
   const LUZ_PAGE = page('  <button class="luz-btn luz-newthing">x</button>');
 
-  it("lists the six packages in dependency order, from the snapshot when there is no node_modules", () => {
+  it("lists the seven packages in dependency order, from the snapshot when there is no node_modules", () => {
     const result = check({ "index.html": LUZ_PAGE }, { snapshot: { version: "0.1.0" } });
     expect(result.data.manifests).toEqual(LIBRARIES.map((name) => ({ package: `@luz-ds/${name}`, version: "0.1.0", source: "bundled" })));
     expect(run(["."], { version: VERSION, cwd: result.dir, data: miniSnapshot() }).stdout).toMatch(/\(manifests: @luz-ds\/tokens 0\.1\.0 from bundled, @luz-ds\/core 0\.1\.0 from bundled,/);

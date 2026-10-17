@@ -38,7 +38,7 @@ const json = (path) => JSON.parse(readOr(path) || "{}");
 /** The text without comments, so a word in one is not a use of it. */
 const code = (text) => text.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
 
-const LIBRARIES = ["tokens", "core", "site", "landing", "cms", "app"];
+const LIBRARIES = ["tokens", "core", "site", "landing", "cms", "app", "docs"];
 const distOfRepo = `${root}packages/check/dist/${BUNDLE}`;
 const distBefore = existsSync(distOfRepo) ? statSync(distOfRepo).mtimeMs : null;
 
@@ -92,7 +92,7 @@ describe("@luz-ds/check: package.json", () => {
     expect(Object.keys(manifest.scripts ?? {})).toEqual([]);
   });
 
-  it("names the six libraries as workspace dev dependencies, for the build that reads their dist", () => {
+  it("names the seven libraries as workspace dev dependencies, for the build that reads their dist", () => {
     expect(manifest.devDependencies).toEqual(Object.fromEntries(LIBRARIES.map((name) => [`@luz-ds/${name}`, "workspace:*"])));
   });
 
@@ -164,6 +164,10 @@ describe("scripts/build-check.js: the build", () => {
   it("exists and exports buildCheck({ outdir })", async () => {
     expect(exists("scripts/build-check.js"), "scripts/build-check.js").toBe(true);
     expect(source).toMatch(/export (?:async )?function buildCheck\b|export const buildCheck\b/);
+  });
+
+  it("snapshots the facts of the seven libraries, docs last, so luz-check knows every luz-docs-* class", () => {
+    expect(/const PACKAGES = \["tokens", "core", "site", "landing", "cms", "app", "docs"\];/.test(source), "PACKAGES in scripts/build-check.js").toBe(true);
   });
 
   it("bundles packages/check/src/main.js with esbuild, as build-package.js does: node, ESM, node20, builtins external", () => {

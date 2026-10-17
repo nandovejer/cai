@@ -33,8 +33,8 @@ import { builtOnce } from "./check-build.js";
 export const ROOT = fileURLToPath(new URL("../../", import.meta.url));
 export const FIXTURES = join(ROOT, "tests/fixtures/check");
 export const VERSION = "9.9.9";
-/** The six libraries, in dependency order: the order `manifests` is written in. */
-export const LIBRARIES = ["tokens", "core", "site", "landing", "cms", "app"];
+/** The seven libraries, in dependency order: the order `manifests` is written in. */
+export const LIBRARIES = ["tokens", "core", "site", "landing", "cms", "app", "docs"];
 
 /* ---- The `expect:` comments ----------------------------------------------------------------- */
 
@@ -147,7 +147,7 @@ export function removeWorkspaces() {
 /* ---- A small world of manifests, made by hand ------------------------------------------------- */
 
 const BEM = /^(.+?)(?:__(.+?))?(?:--(.+))?$/;
-const kindOf = (name) => (/^luz-(?:site|landing|cms|app)-/.test(name) ? "pattern" : name.startsWith("o-") ? "object" : name.startsWith("u-") ? "utility" : name.startsWith("is-") ? "state" : "component");
+const kindOf = (name) => (/^luz-(?:site|landing|cms|app|docs)-/.test(name) ? "pattern" : name.startsWith("o-") ? "object" : name.startsWith("u-") ? "utility" : name.startsWith("is-") ? "state" : "component");
 
 /** A class as a manifest lists it: name, kind, layer, files, defined, then block, modifier, part. */
 function fullClass(pkg, spec) {
@@ -212,6 +212,7 @@ export const MINI = {
   landing: { classes: ["luz-landing-hero", "luz-landing-hero__title", "luz-landing-main"], properties: [], elements: [], hooks: [] },
   cms: { classes: ["luz-cms-post", "luz-cms-post__title"], properties: [], elements: [], hooks: [] },
   app: { classes: ["luz-app-shell", "luz-app-shell__nav"], properties: [], elements: [], hooks: [] },
+  docs: { classes: ["luz-docs-pager", "luz-docs-pager__link", "luz-docs-shell"], properties: [], elements: [], hooks: [] },
 };
 
 /**

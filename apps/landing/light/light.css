@@ -142,19 +142,19 @@ home-light .home-light__foot {
   z-index: 1;
   display: flex;
   justify-content: center;
-  padding-inline: var(--luz-space-md);
 }
 
-/* The line sits on a pill of the page's paper, so its text keeps its contrast
+/* The line spans the light on the bar's frosted glass, so its text keeps its contrast
    over whatever the visual draws behind it */
 home-light .home-light__line {
   position: relative;
-  max-width: 64ch;
-  padding: var(--luz-space-xs) var(--luz-space-md);
+  inline-size: 100%;
+  padding: var(--luz-space-lg) var(--luz-space-md);
   border: 0;
-  border-radius: var(--luz-radius-md);
-  background: color-mix(in oklab, var(--_paper) 88%, transparent);
-  backdrop-filter: blur(12px);
+  background: color-mix(in oklab, var(--_paper) 82%, transparent);
+  backdrop-filter: blur(18px) saturate(1.2);
+  /* No hard edge: the glass fades out above and below the phrase */
+  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
   color: var(--_muted);
   font: italic 400 var(--luz-text-sm) / 1.45 var(--luz-font-serif);
   text-wrap: balance;
@@ -312,26 +312,6 @@ home-light[data-sky="night"] .home-light__day input::-webkit-slider-thumb {
 home-light[data-sky="night"] .home-light__day input::-moz-range-thumb {
   background: var(--light-moon);
   box-shadow: inset 4px -2px 0 0 var(--_paper);
-}
-
-home-light .home-light__live {
-  padding: var(--luz-space-2xs) var(--luz-space-sm);
-  border: 0;
-  border-radius: var(--luz-radius-full);
-  background: var(--luz-brand-fill);
-  color: var(--luz-text-on-fill);
-  font: 600 var(--luz-text-xs) / 1.2 var(--luz-font-sans);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-
-home-light .home-light__live:lang(ar) {
-  letter-spacing: 0;
-}
-
-home-light .home-light__live[hidden] {
-  display: none;
 }
 
 home-light .home-light__sr {

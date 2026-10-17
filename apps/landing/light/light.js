@@ -11,7 +11,7 @@
  *
  * <luz-mode> is the only writer of data-theme and data-light: this element
  * reads them, follows luz-mode:change and, while the visitor scrubs the day,
- * asks <luz-mode> to preview that hour ("Back to now" ends it); without one
+ * asks <luz-mode> to preview that hour (closing the bar ends it); without one
  * only the visuals follow. On <html> it writes custom properties only:
  * --sun-alt, --sun-az (degrees), --sun-x (the sun, left to right) and
  * --day-left (the share of today's daylight to come).
@@ -175,10 +175,12 @@ class LuzLight extends HTMLElement {
     this._line.setAttribute("aria-expanded", "true");
   }
 
+  /** Close the bar; a scrubbed hour goes with it: the light is the clock's again. */
   close() {
     if (this._bar.hidden) return;
     this._bar.hidden = true;
     this._line.setAttribute("aria-expanded", "false");
+    if (this._sim) this._preview(null);
   }
 
   _build() {
@@ -206,12 +208,7 @@ class LuzLight extends HTMLElement {
     // aria-valuetext carries the light and the hour, which the bar does not show
     this._scrub = h("input", { type: "range", id: `${id}-scrub`, min: 0, max: 1439, step: 1, value: 720 });
     this._scrub.addEventListener("input", () => this._preview(this._scrub.value / 60));
-    this._live = h("button", { type: "button", class: "home-light__live", hidden: "" }, this._text("live"));
-    this._live.addEventListener("click", () => {
-      this._preview(null);
-      this._scrub.focus();
-    });
-    day.append(this._scrub, this._live);
+    day.append(this._scrub);
     bar.append(day);
     this._line = h("button", { type: "button", class: "home-light__line", "aria-expanded": "false", "aria-controls": bar.id });
     // The phrase alone; the light and the hour are in the bar
@@ -246,7 +243,6 @@ class LuzLight extends HTMLElement {
       const p = partsIn(this._tz, Date.now());
       this._sim = (hour - (p.hour + p.minute / 60 + p.second / 3600)) * 36e5;
     }
-    this._live.hidden = hour === null;
     this._line.dataset.preview = String(hour !== null);
     mode()?.preview(hour);
     this._tick();

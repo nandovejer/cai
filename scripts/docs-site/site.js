@@ -31,13 +31,13 @@
  * path; no symlinks; route segments use a strict alphabet; expansion is a
  * single pass, so text a substitution produced is never expanded again.
  */
-import { lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
+import { existsSync, lstatSync, readFileSync, readdirSync, realpathSync } from "node:fs";
 import { dirname, join, relative, resolve, sep } from "node:path";
 import { HtmlError, readHtml, tags } from "./html.js";
 import { SITE_KINDS } from "../luz-packages.js";
 import { fillAiMarkers } from "./ai.js";
 import { renderSnippets, snippetData } from "./snippets.js";
-import { assertInlineHtml, loadLocales, lookup, markDocsLinks, renderAlternates, renderSwitcher, unusedKeys } from "./i18n.js";
+import { assertInlineHtml, loadLocales, lookup, markDocsLinks, renderAlternates, renderLangLinks, renderSwitcher, unusedKeys } from "./i18n.js";
 
 /** Where the docs pages are published. */
 export const DOCS_ROUTE = "/docs/";
@@ -84,10 +84,12 @@ const PLACEHOLDERS = new Set([
   "title", "doctitle", "description", "root", "content", "nav", "pagehead", "toc", "endnav", "generated",
   // The page's language (i18n.js): its code and direction, its home page, the
   // <link rel="alternate"> of every language, the language switcher
-  "lang", "dir", "home", "alternates", "langswitch",
+  "lang", "dir", "home", "alternates", "langswitch", "langlinks",
+  // The version the packages share (packages/core/package.json): the CDN snippets and the footer of the home
+  "version",
 ]);
 /** Values inserted as HTML, not escaped. Only the generator produces them. */
-const RAW_VALUES = new Set(["content", "nav", "pagehead", "toc", "endnav", "generated", "alternates", "langswitch"]);
+const RAW_VALUES = new Set(["content", "nav", "pagehead", "toc", "endnav", "generated", "alternates", "langswitch", "langlinks"]);
 
 /** Where the home page's languages live, from the repository root. */
 export const I18N_DIR = "apps/landing/i18n";
@@ -986,13 +988,27 @@ export function renderPage(page, site, options = {}) {
 function languageValues(site, locale, { home = false, siteUrl = "" } = {}) {
   const i18n = site.i18n;
   const translated = home && i18n && locale;
-  return {
+  const values = {
     lang: locale?.code ?? "en",
     dir: locale?.dir ?? "ltr",
     home: locale?.route ?? "/",
     alternates: translated ? renderAlternates(i18n, locale, siteUrl) : "",
     langswitch: translated ? renderSwitcher(i18n, locale, lookup(locale, "lang.label", `${I18N_DIR}/${locale.code}.json`, null)) : "",
+    langlinks: translated ? renderLangLinks(i18n, locale) : "",
   };
+  // A repository without the packages (a fixture) has no {{version}}: a template that uses it fails
+  const version = sharedVersion(site.repoRoot);
+  if (version) values.version = version;
+  return values;
+}
+
+/** The version of packages/core/package.json (tokens, core and site share it), or null. */
+function sharedVersion(repoRoot) {
+  const manifest = join(repoRoot ?? "", "packages/core/package.json");
+  if (!repoRoot || !existsSync(manifest)) return null;
+  const { version } = JSON.parse(readFileSync(manifest, "utf-8"));
+  if (typeof version !== "string" || !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.]+)?$/.test(version)) throw new Error(`packages/core/package.json: "version" is not a version`);
+  return version;
 }
 
 /**

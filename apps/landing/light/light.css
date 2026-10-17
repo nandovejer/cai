@@ -48,13 +48,15 @@ home-light {
 
 /* The visual runs out to the edges of the page's frame, over the gutters of
    the home's main (.landing-wrap in apps/landing/landing.css: the same
-   values, at the same width) */
-home-light[bleed] {
+   values, at the same width). Inside @luz-ds/landing's
+   .luz-landing-hero__media--bleed, which takes it to the edges of the
+   window, it has no margins of its own */
+home-light[bleed]:not(.luz-landing-hero__media--bleed > *) {
   margin-inline: calc(-1 * (var(--site-edge, 0px) + var(--luz-space-xl)));
 }
 
 @media (max-width: 640px) {
-  home-light[bleed] {
+  home-light[bleed]:not(.luz-landing-hero__media--bleed > *) {
     margin-inline: calc(-1 * var(--luz-space-md));
   }
 }

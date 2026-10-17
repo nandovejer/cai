@@ -370,7 +370,8 @@ class LuzLight extends HTMLElement {
     this._scrub.value = p.hour * 60 + p.minute;
     this._out.textContent = time;
     const say = this._look ? this._text(`say-${this._look}`) : "";
-    const phase = light ? this._text(light) : "";
+    // A chosen mode pins a light that is not the hour's: the hour alone
+    const phase = light && (mode()?.mode ?? "auto") === "auto" ? this._text(light) : "";
     const sep = this._text("sep") || ", ";
     this._q.textContent = say;
     this._q.hidden = !say;

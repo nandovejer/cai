@@ -1,13 +1,18 @@
 /* ==========================================================================
    LUZ — LANDING PAGE
    Consumer-side styles for apps/landing, written the way any level-3 consumer
-   would: on top of tokens + core + site + landing.
+   would: on top of tokens + core + site + landing. The hero, the head of each
+   section, the stat and the footer's columns are @luz-ds/landing's; what is
+   here is the home's own layout and the few pieces only it has.
    Rules:
      - semantic tokens only (no primitive color tokens, no literal colors);
      - media queries use the literal values of --luz-mq-* (640, 768, 1024),
        max-width like core and site, so both collapse at the same widths;
      - the token a specimen illustrates arrives as an inline custom property,
-       style="--v: var(--luz-…)", and is consumed here as var(--v).
+       style="--v: var(--luz-…)", and is consumed here as var(--v);
+     - this file is not in a layer, so it wins over the packages': it never
+       sets `display` on an element that carries `hidden` (core's utility
+       hides it from its own layer).
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -16,14 +21,17 @@
 
 /* The site frame (--site-max, --site-edge: apps/site/header.css),
    the same as the header's and the documentation's. On the main it
-   replaces the width and the gutters of core's .o-container */
+   replaces the width and the gutters of core's .o-container. The stressed
+   word of every title takes the colour of the page's actions */
 .landing-wrap {
+  --luz-landing-title-accent: var(--luz-brand-primary);
+
   max-inline-size: none;
   padding-inline: calc(var(--site-edge) + var(--luz-space-xl));
 }
 
 /* Landing's footer, inset by the same gutters so its divider spans the
-   frame, as in the documentation; its row has no gutters of its own */
+   frame, as in the documentation; its rows have no gutters of their own */
 .o-page > .luz-landing-footer {
   margin-inline: calc(var(--site-edge) + var(--luz-space-xl));
 }
@@ -40,17 +48,15 @@
   min-width: 0;
 }
 
-.landing-levels {
-  display: grid;
+/* Three columns from 1024px: the cards of "Why", the specimens, the modes */
+.landing-trio,
+.landing-specimens,
+.landing-modes {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--luz-space-lg);
 }
 
-.landing-h2 {
-  font-size: var(--luz-text-2xl);
-}
-
-.landing-eyebrow,
-.landing-subhead {
+.landing-eyebrow {
   font-family: var(--luz-font-mono);
   font-size: var(--luz-text-xs);
   font-weight: 500;
@@ -62,87 +68,74 @@
 
 /* Arabic: the mono has no Arabic letters, and spacing between letters
    breaks the joins of the script */
-.landing-eyebrow:lang(ar),
-.landing-subhead:lang(ar) {
+.landing-eyebrow:lang(ar) {
   font-family: var(--luz-font-sans);
   letter-spacing: 0;
 }
 
-.landing-lead {
-  font-size: var(--luz-text-lg);
+/* Links that stand alone (not inside a sentence) are targets of 24px or more */
+.landing-level__body a,
+.landing-level__actions a,
+.landing-kinds__list a,
+.luz-landing-footer__col a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--luz-space-xs);
+  min-block-size: var(--luz-control-sm);
+}
+
+/* --------------------------------------------------------------------------
+   1. Hero: the two statements under the lead
+   -------------------------------------------------------------------------- */
+
+.landing-built {
+  margin-block-end: var(--luz-space-lg);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
   color: var(--luz-text-secondary);
-  max-width: 65ch;
 }
 
 /* --------------------------------------------------------------------------
-   What LUZ is
+   3. Why: the three words, the swatches of the lights, the keyboard note
    -------------------------------------------------------------------------- */
 
-.landing-points {
-  list-style: none;
-  gap: var(--luz-space-lg);
+.landing-word {
+  font-family: var(--luz-font-heading);
+  font-size: var(--luz-text-xl);
+  font-weight: 400;
 }
 
-.landing-point__title {
-  font-family: var(--luz-font-sans);
-  font-size: var(--luz-text-base);
-  font-weight: 600;
-  line-height: 1.5;
-  letter-spacing: 0;
-}
-
-.landing-render {
-  display: grid;
-  gap: var(--luz-space-sm);
-  padding: var(--luz-space-md);
-  background: var(--luz-surface);
-  border: 1px dashed var(--luz-outline);
-  border-radius: var(--luz-radius-md);
-}
-
-/* --------------------------------------------------------------------------
-   Snippet (label bar + code block) and copy buttons
-   -------------------------------------------------------------------------- */
-
-.landing-snippet {
-  display: grid;
+.landing-swatches {
   gap: var(--luz-space-2xs);
 }
 
-.landing-snippet__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--luz-space-sm);
+.landing-swatch {
+  padding-inline: var(--luz-space-xs);
+  color: var(--luz-text-primary);
 }
 
-/* The bar carries the label; the absolute language badge would sit on top of
-   the first line of code. */
-.landing-snippet .luz-code-block::before {
-  content: none;
+.landing-swatch svg {
+  inline-size: var(--luz-space-lg);
+  block-size: var(--luz-space-lg);
 }
 
-.luz-code-block:focus-visible {
-  outline: 2px solid var(--luz-focus-ring);
-  outline-offset: 2px;
+/* The borrowed light: a border, so it is not told by colour alone */
+.landing-swatch[aria-pressed="true"] {
+  border-color: var(--luz-brand-primary);
+  background: var(--luz-brand-subtle);
 }
 
-/* No width jump when the label becomes "✓ Copied" */
-.landing-snippet .luz-copy-btn {
-  min-width: calc(var(--luz-space-3xl) + var(--luz-space-md) + var(--luz-space-xs));
-  justify-content: center;
-}
-
-/* .luz-copy-btn has a subtle border and no fill: on a snippet bar
-   (--luz-surface-strong) it reads as plain text. Give it a surface and a boundary;
-   hover and .is-copied keep the component's own colors. */
-.landing-snippet .luz-copy-btn:not(:hover, .is-copied) {
-  background: var(--luz-surface);
-  border-color: var(--luz-outline);
+/* A note in core's popover panel: the panel pads a list, a sentence needs more */
+.landing-note {
+  max-inline-size: 18rem;
+  margin: 0;
+  padding: var(--luz-space-xs) var(--luz-space-sm);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-md);
 }
 
 /* --------------------------------------------------------------------------
-   Adoption level cards
+   4. Inside: the level cards and the row of level 4
    -------------------------------------------------------------------------- */
 
 /* A pricing-style row: three columns from 1024px. Each card spans three rows
@@ -150,7 +143,9 @@
    the actions line up across the cards whatever the length of each. No
    highlighted card: no level is the recommended one. */
 .landing-levels {
+  display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--luz-space-lg);
 }
 
 .landing-level {
@@ -234,45 +229,150 @@
   justify-content: center;
 }
 
-/* Links that stand alone (not inside a sentence) are targets of 24px or more */
-.landing-level__body a,
-.landing-level__actions a {
-  display: inline-flex;
-  align-items: center;
-  min-height: var(--luz-control-sm);
+.landing-kinds {
+  margin-block-start: var(--luz-space-lg);
 }
 
-/* The packages for one kind of site, under the level cards: a short list
-   and the package tree. Not cards, since none of them is published yet. */
-.landing-next {
-  margin-top: var(--luz-space-2xl);
-  max-width: 48rem;
-}
-
-.landing-next__title {
+.landing-kinds__title {
   font-size: var(--luz-text-xl);
-  margin-bottom: var(--luz-space-sm);
 }
 
-.landing-next__list {
-  display: grid;
-  gap: var(--luz-space-sm);
-  margin-bottom: var(--luz-space-lg);
+/* The current language says so in weight, not only to assistive technology */
+.luz-landing-footer__col [aria-current="page"] {
+  font-weight: 600;
+  color: var(--luz-text-primary);
+}
+
+.landing-kinds__list {
+  gap: var(--luz-space-xs) var(--luz-space-xl);
 }
 
 /* --------------------------------------------------------------------------
-   Fit lists
+   6. Modes: the three scopes and the day strip
    -------------------------------------------------------------------------- */
 
-.landing-subtitle {
-  font-size: var(--luz-text-lg);
-  margin-block: var(--luz-space-xl) var(--luz-space-xs);
+/* A figure without core's frame: the scope is the frame */
+.landing-mode {
+  display: grid;
+  gap: var(--luz-space-xs);
+  margin: 0;
+  padding: 0;
+  background: none;
 }
 
-.landing-fit {
+/* data-theme re-defines the semantic tokens inside: the scope paints the
+   page of its own mode around the card */
+.landing-mode__scope {
+  padding: var(--luz-space-md);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  background: var(--luz-surface-page);
+  color: var(--luz-text-primary);
+}
+
+/* Six equal phases; --day-t (0 to 1, landing.js) places the marker */
+.landing-day {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--luz-space-xs);
+  margin-block-start: var(--luz-space-md);
+}
+
+.landing-day__strip {
+  position: relative;
+  block-size: var(--luz-space-xs);
+  border: 1px solid var(--luz-input-border);
+  border-radius: var(--luz-radius-full);
+  background: var(--luz-surface-strong);
+}
+
+.landing-day__now {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: calc(var(--day-t, 0) * 100%);
+  inline-size: var(--luz-space-md);
+  block-size: var(--luz-space-md);
+  margin-block-start: calc(var(--luz-space-md) / -2);
+  margin-inline-start: calc(var(--luz-space-md) / -2);
+  border: 2px solid var(--luz-surface-page);
+  border-radius: var(--luz-radius-full);
+  background: var(--luz-brand-primary);
+  transition: inset-inline-start var(--luz-duration-base) var(--luz-easing-enter);
+}
+
+.landing-day__ticks {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-day__now {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .landing-day__now {
+    background: CanvasText;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Type: the quote and the scale
+   -------------------------------------------------------------------------- */
+
+.landing-type {
+  margin: 0;
+  padding: 0;
+  background: none;
+}
+
+.landing-type__quote {
+  max-inline-size: 40ch;
+  font-size: var(--luz-text-2xl);
+  font-style: italic;
+  line-height: 1.3;
+  color: var(--luz-text-primary);
+}
+
+.landing-type__scale {
+  align-items: baseline;
+  gap: var(--luz-space-sm) var(--luz-space-lg);
+  margin: 0;
+}
+
+.landing-type__scale li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--luz-space-2xs);
+}
+
+.landing-type__aa {
+  font-family: var(--luz-font-heading);
+  font-size: var(--v);
+  line-height: 1;
+  color: var(--luz-text-primary);
+}
+
+.landing-type__scale code {
+  font-size: var(--luz-text-xs);
+  color: var(--luz-text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   8. Fit
+   -------------------------------------------------------------------------- */
+
+.landing-fit {
   gap: var(--luz-space-xl);
+}
+
+.landing-fit__title {
+  margin-block-end: var(--luz-space-xs);
+  font-size: var(--luz-text-lg);
 }
 
 .landing-fit__list {
@@ -283,13 +383,80 @@
 }
 
 /* --------------------------------------------------------------------------
+   9. Start: snippet (label bar + code block), what it renders
+   -------------------------------------------------------------------------- */
+
+.landing-snippet {
+  display: grid;
+  gap: var(--luz-space-2xs);
+}
+
+.landing-snippet__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--luz-space-sm);
+  min-block-size: var(--luz-control-md);
+}
+
+/* The bar carries the label; the absolute language badge would sit on top of
+   the first line of code. */
+.landing-snippet .luz-code-block::before {
+  content: none;
+}
+
+.luz-code-block:focus-visible {
+  outline: 2px solid var(--luz-focus-ring);
+  outline-offset: 2px;
+}
+
+/* No width jump when the label becomes "✓ Copied" */
+.landing-snippet .luz-copy-btn {
+  min-width: calc(var(--luz-space-3xl) + var(--luz-space-md) + var(--luz-space-xs));
+  justify-content: center;
+}
+
+/* .luz-copy-btn has a subtle border and no fill: on a snippet bar
+   (--luz-surface-strong) it reads as plain text. Give it a surface and a boundary;
+   hover and .is-copied keep the component's own colors. */
+.landing-snippet .luz-copy-btn:not(:hover, .is-copied) {
+  background: var(--luz-surface);
+  border-color: var(--luz-outline);
+}
+
+.landing-render {
+  display: grid;
+  gap: var(--luz-space-sm);
+  padding: var(--luz-space-md);
+  background: var(--luz-surface);
+  border: 1px dashed var(--luz-outline);
+  border-radius: var(--luz-radius-md);
+}
+
+/* --------------------------------------------------------------------------
+   Footer: the brand line and the row of the mode and the privacy line
+   -------------------------------------------------------------------------- */
+
+.landing-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--luz-space-xs);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-lg);
+}
+
+.landing-foot {
+  gap: var(--luz-space-md);
+  margin-block-start: var(--luz-space-xl);
+}
+
+/* --------------------------------------------------------------------------
    Local patches for gaps in core. Remove each one when core fixes it.
    -------------------------------------------------------------------------- */
 
 /* .o-actions (640px and below) becomes a column but keeps flex-wrap: wrap.
    A wrapping column nested in grids makes Chromium's layout take tens of
-   seconds: the page freezes while it loads. (The landing footer's column
-   does not wrap.) */
+   seconds: the page freezes while it loads. */
 @media (max-width: 640px) {
   .o-page .o-actions {
     flex-wrap: nowrap;
@@ -302,8 +469,14 @@
 
 @media (max-width: 1023px) {
   /* One card per row: stacked rows, and a button as wide as its label */
-  .landing-levels {
+  .landing-levels,
+  .landing-trio,
+  .landing-modes {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .landing-specimens {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .landing-level {
@@ -320,12 +493,6 @@
   }
 }
 
-@media (max-width: 768px) {
-  .landing-fit {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 @media (max-width: 640px) {
   .landing-wrap {
     padding-inline: var(--luz-space-md);
@@ -335,12 +502,17 @@
     margin-inline: var(--luz-space-md);
   }
 
-  .landing-h2 {
+  .landing-specimens {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .landing-type__quote {
     font-size: var(--luz-text-xl);
   }
 
-  .landing-lead {
-    font-size: var(--luz-text-base);
+  /* Six names do not fit under a narrow strip: the line under it says the light */
+  .landing-day__ticks {
+    display: none;
   }
 
   .landing-level__intro,
@@ -355,27 +527,5 @@
 
   .landing-level__actions .luz-btn {
     inline-size: 100%;
-  }
-
-  /* Page footer: three short links on one row; a row may wrap (a longer
-     name in another language, larger text), only a wrapping column freezes */
-  body > footer .o-actions {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .o-page > footer .o-actions {
-    flex-wrap: wrap;
-  }
-
-  body > footer .o-actions > * {
-    width: auto;
-  }
-}
-
-/* Stacked footer: line the ghost links' text up with the line above */
-@media (max-width: 768px) {
-  body > footer .o-actions {
-    margin-inline-start: calc(-1 * var(--luz-space-sm));
   }
 }

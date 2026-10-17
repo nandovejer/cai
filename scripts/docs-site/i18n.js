@@ -18,11 +18,16 @@
  *                 <a href>, <code>, <span>, <strong> and <em>, with the
  *                 attributes class, href, lang and data-count (INLINE_HTML)
  *
+ * In a catalog value, `{n:<name>}` is a count the build writes from the
+ * packages (siteNumbers, NUMBER_NAMES), so a number in the copy is never
+ * typed: "{n:components} components". Any other `{…}` is left as written
+ * (the scripts fill `{n}`, `{mode}`…). An unknown name fails with file:line.
+ *
  * Mistakes fail the build with file:line: a key used but missing (site.js,
  * expand), a key missing from a catalog or not in the default one, and a
  * key no template uses (unusedKeys).
  */
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { HtmlError, tags } from "./html.js";
 
@@ -36,6 +41,44 @@ export const INLINE_HTML = {
   tags: new Set(["a", "code", "span", "strong", "em"]),
   attrs: new Set(["class", "href", "lang", "data-count"]),
 };
+
+/** The counts a catalog value may say as `{n:<name>}`, in this order. */
+export const NUMBER_NAMES = ["components", "objects", "primitives", "semantic"];
+
+/**
+ * The counts of NUMBER_NAMES, read from the packages of `repoRoot`:
+ *   components  the stylesheets of packages/core/src/components (not index.css, not a `_` file)
+ *   objects     the distinct `.o-*` blocks of packages/core/src/objects/_objects.css
+ *   primitives  the colour steps of packages/tokens/tokens.json
+ *   semantic    the tokens of the light block of packages/tokens/src/semantic.css
+ */
+export function siteNumbers(repoRoot) {
+  const read = (path) => readFileSync(join(repoRoot, path), "utf-8");
+  const components = readdirSync(join(repoRoot, "packages/core/src/components")).filter(
+    (file) => file.endsWith(".css") && file !== "index.css" && !file.startsWith("_"),
+  ).length;
+  const objects = new Set([...read("packages/core/src/objects/_objects.css").matchAll(/^\s*\.(o-[a-z]+)\b/gm)].map((m) => m[1])).size;
+  const primitives = Object.values(JSON.parse(read("packages/tokens/tokens.json")).color).reduce((total, steps) => total + Object.keys(steps).length, 0);
+  const css = read("packages/tokens/src/semantic.css");
+  const light = css.slice(css.indexOf('[data-theme="light"] {'), css.indexOf('[data-theme="dark"],'));
+  const semantic = [...light.matchAll(/^\s*(--luz-[\w-]+):/gm)].length;
+  return { components, objects, primitives, semantic };
+}
+
+/**
+ * `text` with every `{n:<name>}` replaced by its count. `numbers` is the
+ * object of siteNumbers(), or a function that returns it (read only when the
+ * text has a count). An unknown or empty name throws, at `where` ("file:line").
+ */
+export function expandNumbers(text, numbers, where) {
+  const names = [...text.matchAll(/\{n:([^{}]*)\}/g)].map((m) => m[1]);
+  if (!names.length) return text;
+  for (const name of names) {
+    if (!NUMBER_NAMES.includes(name)) throw new Error(`${where}: "{n:${name}}" is not a count the build knows (${NUMBER_NAMES.join(", ")})`);
+  }
+  const values = typeof numbers === "function" ? numbers() : numbers;
+  return text.replace(/\{n:([^{}]*)\}/g, (_, name) => String(values[name]));
+}
 
 /** Line of `"key":` in a JSON source, for messages (1 when not found). */
 export function lineOfKey(source, key) {
@@ -64,6 +107,9 @@ export function loadLocales(i18nDir, repoRoot, read) {
 
   const locales = [];
   const byCode = new Map();
+  // The counts of {n:<name>}, read from the packages the first time a value has one
+  let counts = null;
+  const numbers = () => (counts ??= siteNumbers(repoRoot));
   list.forEach((entry, i) => {
     const where = `${registryFile}: language ${i + 1}`;
     const { code, name, dir, route } = entry ?? {};
@@ -91,7 +137,7 @@ export function loadLocales(i18nDir, repoRoot, read) {
       if (!KEY.test(key)) throw new Error(`${at}: "${key}" is not a valid key (lowercase words joined by "." or "-")`);
       if (typeof value !== "string" || !value.trim()) throw new Error(`${at}: "${key}" is not a non-empty string`);
     }
-    const locale = { code, name, dir, route, file, strings, source };
+    const locale = { code, name, dir, route, file, strings, source, numbers };
     locales.push(locale);
     byCode.set(code, locale);
   });
@@ -121,7 +167,7 @@ export function lookup(locale, key, where, used) {
   if (!KEY.test(key)) throw new Error(`${where}: "${key}" is not a valid catalog key`);
   if (!Object.hasOwn(locale.strings, key)) throw new Error(`${where}: "${key}" is not in ${locale.file}`);
   used?.add(key);
-  return locale.strings[key];
+  return expandNumbers(locale.strings[key], locale.numbers ?? {}, `${locale.file}:${lineOfKey(locale.source ?? "", key)}`);
 }
 
 /** Refuse anything in an {{html:key}} value but the inline elements of INLINE_HTML. */
@@ -202,6 +248,19 @@ export function renderSwitcher(i18n, current, label) {
     "  </nav>",
     "</luz-lang-switch>",
   ].join("\n");
+}
+
+/**
+ * The languages as a list of links, for the footer of the home page
+ * ({{langlinks}}): each name in its own language (lang, hreflang), the
+ * current one marked aria-current="page". The same links as the switcher.
+ */
+export function renderLangLinks(i18n, current) {
+  const items = i18n.locales.map((l) => {
+    const mark = l.code === current.code ? ' aria-current="page"' : "";
+    return `  <li><a href="${esc(l.route)}" hreflang="${esc(l.code)}" lang="${esc(l.code)}"${mark}>${esc(l.name)}</a></li>`;
+  });
+  return ["<ul>", ...items, "</ul>"].join("\n");
 }
 
 /**

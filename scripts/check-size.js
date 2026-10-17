@@ -26,8 +26,9 @@
  *     mode) imports nothing, static or dynamic; site.min.js, the presence
  *     loader, has no static import, and its dynamic imports are exactly its
  *     three chunks. The same holds for the home's light, which no build
- *     touches: apps/landing/light/light.js loads exactly globe.js, city.js
- *     and map.js, and each of them imports nothing.
+ *     touches: apps/landing/light/light.js loads exactly globe.js, globe.js
+ *     loads exactly globe-data.js, and globe-data.js imports nothing (a file
+ *     that is a loader may import its own chunks, lazily, and nothing else).
  *
  * Usage: node scripts/check-size.js
  */
@@ -105,9 +106,10 @@ const STATIC_IMPORT = /(?:^|[;}\s])(?:import\b(?!\s*[(.])|export\b[^"'();]*?\bfr
 const LOADERS = {
   "packages/site/dist/site.min.js": ["./consent.min.js", "./mode.min.js", "./search.min.js"],
   // The home's light (apps/landing/light/): served as written, no build, so the same rules hold for its sources
-  "apps/landing/light/light.js": ["./globe.js", "./city.js", "./map.js"],
+  "apps/landing/light/light.js": ["./globe.js"],
+  "apps/landing/light/globe.js": ["./globe-data.js"],
 };
-const LIGHT = ["light.js", "globe.js", "city.js", "map.js"].map((name) => `apps/landing/light/${name}`);
+const LIGHT = ["light.js", "globe.js", "globe-data.js"].map((name) => `apps/landing/light/${name}`);
 const chunks = new Set(Object.entries(LOADERS).flatMap(([loader, targets]) => targets.map((t) => relative(root, resolve(root, dirname(loader), t)))));
 const published = [];
 for (const pkg of readdirSync(resolve(root, "packages"))) {
@@ -142,7 +144,8 @@ for (const [file, code] of published) {
     console.error(`✗ ${file} has an import() whose argument is not a string literal: a lazy chunk is named, never built (SEC-CHUNK-1)`);
     failed = true;
   }
-  if (chunks.has(file) && (calls || STATIC_IMPORT.test(code))) {
+  // A chunk that is itself a loader (globe.js) answers to the loader's rules below
+  if (chunks.has(file) && !LOADERS[file] && (calls || STATIC_IMPORT.test(code))) {
     console.error(`✗ ${file} is a lazy chunk and imports a file: a chunk imports nothing, static or dynamic (SEC-CHUNK-2)`);
     failed = true;
   }

@@ -140,9 +140,8 @@ Words are a component. A button with the wrong label is a broken button. These r
 | `core` JS lazy chunk: `i18n-es` (loaded by `luz.js` when the page's `lang` is `es`; one row per language) | — | ≤ 0.75 kB | 0.75 kB | 1 kB |
 | `site` JS lazy chunk: `mode` (loaded by `site.js` when the page has a `<luz-mode>`) | — | ≤ 1 kB | 1 kB | 1.5 kB |
 | The home light controller JS, `apps/landing/light/light.js` (gzip of the source; the LUZ website only, not a package) | — | ≤ 7.25 kB | 7.25 kB | 7.5 kB |
-| The home light visual: `globe`, `apps/landing/light/globe.js` (loaded by `light.js` when the globe is the look) | — | ≤ 9.25 kB | 9.25 kB | 9.5 kB |
-| The home light visual: `city`, `apps/landing/light/city.js` (loaded when the city is the look) | — | ≤ 9.75 kB | 9.75 kB | 10 kB |
-| The home light visual: `map`, `apps/landing/light/map.js` (loaded when the map is the look) | — | ≤ 8 kB | 8 kB | 8.25 kB |
+| The home light visual: `globe`, `apps/landing/light/globe.js` (loaded by `light.js` once the element is built; the code only) | — | ≤ 9.25 kB | 9.25 kB | 9.5 kB |
+| The home light data: `globe`, `apps/landing/light/globe-data.js` (the land, Natural Earth 1:110m countries: loaded by `globe.js` once the globe is on screen and the browser is idle) | — | ≤ 9.5 kB | 9.5 kB | 9.75 kB |
 
 Docs pages are measured as the raw bytes of each built `docs/**/*.html`, without compression and without CSS or JS. A page that reaches the ceiling is split into two pages; the ceiling is never raised (red line 17).
 

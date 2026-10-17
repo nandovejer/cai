@@ -240,10 +240,10 @@ export function checkPagesSite(root) {
  */
 export const DATA = [
   {
-    name: "Natural Earth 1:50m land polygons",
+    name: "Natural Earth 1:110m admin-0 countries",
     licence: "public domain, naturalearthdata.com terms of use",
-    where: "the land of the home page's globe, rasterised into `apps/landing/light/globe.js`",
-    file: "apps/landing/light/globe.js",
+    where: "the coast, the borders and the countries of the home's globe, re-encoded by `scripts/globe-puzzle-data.js` into `apps/landing/light/globe-data.js`",
+    file: "apps/landing/light/globe-data.js",
     origin: "Natural Earth",
   },
 ];

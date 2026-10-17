@@ -1,15 +1,13 @@
 /* ==========================================================================
    <home-light> on the home page (apps/landing/light/light.css)
 
-   The rules of the controller and of its three visuals, <home-globe>,
-   <home-city> and <home-map>: every rule the mockup injected with <style>, as
-   one stylesheet that only apps/landing/index.html links. Unlayered, as the
+   The rules of the controller and of its globe, <home-globe>: one stylesheet that only apps/landing/index.html links. Unlayered, as the
    home's own CSS.
 
    Two kinds of colour. The interface (the line, the bar, its buttons, the
    slider's thumb, the focus ring) reads LUZ's semantic tokens, so it follows
    the mode and the light <luz-mode> writes on <html>. The drawing (the
-   sun, the neon, the night fill, the sky on the slider's track) has its own
+   sun, the shade, the glint, the sky on the slider's track) has its own
    inks, declared once below as --light-*; high contrast and forced colours
    replace them with the page's text and surface.
 
@@ -20,16 +18,9 @@
 home-light {
   /* The drawing's inks */
   --light-sun: #ffd27a;
-  --light-neon: #2ef2f5;
-  --light-neon-2: #ff2fd8;
-  --light-neon-core: #ffc4f3;
   --light-glint: #fff;
-  --light-moon: #d9e6ff;
   --light-shade: #0b0d12;
   --light-shade-opacity: 0.2;
-  --light-night-fill: #130a2b;
-  --light-night-land: #0a0c1a;
-  --light-night-lake: #02020a;
   --light-day: linear-gradient(
     90deg,
     #171b36,
@@ -70,8 +61,8 @@ home-light[bleed]:not(.luz-landing-hero__media--bleed > *) {
   }
 }
 
-/* At sunset the sun is lower and redder: the city's sun and lit faces and the
-   map's sunlight warm with it (high contrast and forced colours keep theirs) */
+/* At sunset the sun is lower and redder: the globe's sunlight warms with it
+   (high contrast and forced colours keep theirs) */
 @media (forced-colors: none) {
   :root[data-light="sunset"] home-light {
     --light-sun: #ff9b5e;
@@ -80,15 +71,8 @@ home-light[bleed]:not(.luz-landing-hero__media--bleed > *) {
 
 :root[data-theme="high-contrast"] home-light {
   --light-sun: var(--luz-text-primary);
-  --light-neon: var(--luz-text-primary);
-  --light-neon-2: var(--luz-text-primary);
-  --light-neon-core: var(--luz-text-primary);
   --light-glint: var(--luz-text-primary);
-  --light-moon: var(--luz-text-primary);
   --light-shade-opacity: 0;
-  --light-night-fill: var(--luz-surface-page);
-  --light-night-land: var(--luz-surface-page);
-  --light-night-lake: var(--luz-surface-page);
 }
 
 /* --------------------------------------------------------------------------
@@ -147,23 +131,6 @@ home-light .home-light__stage > home-globe {
     rgb(0 0 0 / 0.55) 64%,
     rgb(0 0 0 / 0.22) 84%,
     transparent 100%
-  );
-}
-
-home-light .home-light__stage > home-city,
-home-light .home-light__stage > home-map {
-  height: 100%;
-  mask-image: linear-gradient(to bottom, #000 72%, transparent);
-}
-
-/* A plan has no sky: the map fades in at the top as well, so it has no hard edge */
-home-light .home-light__stage > home-map {
-  mask-image: linear-gradient(
-    to bottom,
-    transparent,
-    #000 14%,
-    #000 72%,
-    transparent
   );
 }
 
@@ -305,46 +272,6 @@ home-light .home-light__bar:not([hidden]) {
     opacity: 0;
     transform: translateY(8px);
   }
-}
-
-home-light .home-light__group {
-  display: flex;
-  align-items: center;
-  gap: var(--luz-space-3xs);
-}
-
-home-light .home-light__group button {
-  display: grid;
-  place-items: center;
-  inline-size: 2.75rem;
-  block-size: 2.75rem;
-  padding: 0;
-  border: 0;
-  border-radius: var(--luz-radius-sm);
-  background: none;
-  color: var(--_muted);
-  cursor: pointer;
-  transition: color var(--luz-duration-slow),
-    background-color var(--luz-duration-slow);
-}
-
-home-light .home-light__group button:hover,
-home-light .home-light__group button[aria-pressed="true"] {
-  color: var(--_ink);
-}
-
-home-light .home-light__group button[aria-pressed="true"] {
-  background: var(--luz-surface-pressed);
-}
-
-home-light .home-light__group svg {
-  inline-size: 1.25rem;
-  block-size: 1.25rem;
-  fill: none;
-  stroke: currentcolor;
-  stroke-width: 2.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 home-light :is(button, input):focus-visible {
@@ -628,416 +555,13 @@ home-globe .home-globe__here {
 }
 
 /* ==========================================================================
-   <home-city>: ink on paper by day, neon by night (--home-city-glow, 0 to 1,
-   written by the script, cross-fades)
-   ========================================================================== */
-
-@property --home-city-glow {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
-home-city {
-  --_neon: var(--light-neon);
-  --_neon2: var(--light-neon-2);
-  --_sun: var(--light-sun);
-  --_moon: var(--light-moon);
-  --_g: var(--home-city-glow, 0);
-  --_line: color-mix(
-    in oklab,
-    var(--_neon) calc(var(--_g) * 100%),
-    var(--_ink)
-  );
-  --_mag: color-mix(
-    in oklab,
-    var(--_neon2) calc(var(--_g) * 100%),
-    var(--luz-brand-primary)
-  );
-  --_fill: color-mix(
-    in oklab,
-    var(--light-night-fill) calc(var(--_g) * 100%),
-    var(--_paper)
-  );
-  --_sun-l: transparent;
-  --_sun-r: transparent;
-
-  display: block;
-  position: relative;
-  overflow: hidden;
-  user-select: none;
-  transition: --home-city-glow var(--_fade) var(--_ease);
-}
-
-home-city > svg {
-  display: block;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-/* Three layers: the sky (moves with the sun and the moon), the city (still), the light (moves) */
-home-city > .home-city__skylayer {
-  position: absolute;
-  inset: 0;
-}
-
-home-city > .home-city__city {
-  position: relative;
-}
-
-home-city > .home-city__fx {
-  position: absolute;
-  inset: 0;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-home-city :is(path, ellipse, circle) {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* Depth is colour, never opacity: a building stays opaque so it hides what is behind it */
-home-city .home-city__row {
-  --_w: 0.9;
-  --_dim: 100%;
-  --_stroke: color-mix(in oklab, var(--_line) var(--_dim), var(--_fill));
-  --_stroke2: color-mix(in oklab, var(--_mag) var(--_dim), var(--_fill));
-  --_sw: calc(var(--_w) * var(--_k, 1));
-}
-
-home-city .home-city__row--sil {
-  --_w: 0.5;
-  --_dim: 38%;
-}
-
-home-city .home-city__row--far {
-  --_w: 0.55;
-  --_dim: 60%;
-}
-
-home-city .home-city__row--mid {
-  --_w: 0.7;
-  --_dim: 82%;
-}
-
-home-city .home-city__body {
-  stroke: var(--_stroke);
-  stroke-width: var(--_sw);
-  fill: var(--_fill);
-}
-
-home-city .home-city__lit-l {
-  fill: var(--_sun-l);
-}
-
-home-city .home-city__lit-r {
-  fill: var(--_sun-r);
-}
-
-home-city .home-city__lines {
-  stroke: var(--_stroke);
-  stroke-width: calc(var(--_sw) * 0.8);
-}
-
-home-city .home-city__mag {
-  stroke: var(--_stroke2);
-  stroke-width: calc(var(--_sw) * 1.1);
-}
-
-home-city .home-city__sign {
-  fill: color-mix(
-    in oklab,
-    var(--_stroke2) calc(18% + var(--_g) * 22%),
-    transparent
-  );
-  stroke: var(--_stroke2);
-  stroke-width: calc(var(--_sw) * 0.9);
-}
-
-home-city .home-city__dash {
-  stroke: var(--_stroke);
-  stroke-width: calc(var(--_sw) * 0.8);
-  stroke-dasharray: 8 7;
-  opacity: 0.6;
-}
-
-home-city .home-city__halo {
-  --_k: 4;
-  --_line: var(--_neon);
-  --_mag: var(--_neon2);
-
-  opacity: calc(var(--_g) * 0.2);
-}
-
-home-city .home-city__car {
-  fill: var(--_mag);
-  stroke: none;
-}
-
-home-city .home-city__car--cyan {
-  fill: var(--_neon);
-}
-
-home-city .home-city__trail {
-  stroke: var(--_neon);
-  stroke-width: 1;
-  opacity: 0.6;
-}
-
-home-city .home-city__flyer {
-  fill: var(--_fill);
-  stroke: var(--_neon);
-  stroke-width: 0.8;
-}
-
-home-city .home-city__beacon {
-  fill: var(--_neon2);
-  stroke: none;
-  animation: home-city-blink calc(var(--luz-duration-lazy) * 2.25) ease-in-out
-    infinite;
-}
-
-home-city .home-city__night {
-  opacity: var(--_g);
-}
-
-@keyframes home-city-blink {
-  0%,
-  100% {
-    opacity: 0.15;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-/* The masks of the light: what is white shows it */
-home-city .home-city__mask,
-home-map .home-map__mask {
-  fill: #fff;
-  stroke: #fff;
-  stroke-width: 1;
-}
-
-home-city .home-city__torch {
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--luz-duration-slow);
-}
-
-home-city .home-city__sun {
-  fill: var(--_sun);
-}
-
-home-city .home-city__moon-dark {
-  fill: var(--_fill);
-  stroke: color-mix(in oklab, var(--_moon) 45%, transparent);
-  stroke-width: 0.6;
-}
-
-home-city .home-city__moon-lit {
-  fill: var(--_moon);
-}
-
-home-city .home-city__sky,
-home-city .home-city__stars {
-  transition: opacity var(--_fade);
-}
-
-home-city .home-city__stars {
-  opacity: var(--_g);
-}
-
-/* Each star has its own duration and delay, written by the script */
-home-city .home-city__star {
-  fill: var(--_moon);
-  animation: home-city-twinkle calc(var(--luz-duration-lazy) * 17.5) ease-in-out
-    infinite;
-}
-
-@keyframes home-city-twinkle {
-  0%,
-  100% {
-    opacity: 0.04;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-/* ==========================================================================
-   <home-map>: ink on paper by day, neon by night (--home-map-glow)
-   ========================================================================== */
-
-@property --home-map-glow {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
-home-map {
-  --_neon: var(--light-neon);
-  --_neon2: var(--light-neon-2);
-  --_sun: var(--light-sun);
-  --_g: var(--home-map-glow, 0);
-  --_street: color-mix(
-    in oklab,
-    var(--_neon) calc(var(--_g) * 100%),
-    var(--_ink)
-  );
-  --_highway: color-mix(
-    in oklab,
-    var(--_neon2) calc(var(--_g) * 100%),
-    var(--luz-brand-primary)
-  );
-
-  display: block;
-  position: relative;
-  overflow: hidden;
-  user-select: none;
-  transition: --home-map-glow var(--_fade) var(--_ease);
-}
-
-home-map > svg {
-  display: block;
-  inline-size: 100%;
-  block-size: 100%;
-}
-
-/* The moving light lives in its own layer: the city never repaints */
-home-map > .home-map__fx {
-  position: absolute;
-  inset: 0;
-  mix-blend-mode: screen;
-  pointer-events: none;
-}
-
-home-map path {
-  fill: none;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* The sea is transparent: the page shows through */
-home-map .home-map__land {
-  fill: color-mix(
-    in oklab,
-    var(--light-night-land) calc(var(--_g) * 100%),
-    color-mix(in oklab, var(--_ink) 2%, var(--_paper))
-  );
-}
-
-home-map .home-map__lake {
-  fill: color-mix(
-    in oklab,
-    var(--light-night-lake) calc(var(--_g) * 100%),
-    color-mix(in oklab, var(--_ink) 9%, var(--_paper))
-  );
-}
-
-home-map .home-map__lane {
-  stroke: var(--_street);
-  stroke-width: 0.55;
-  opacity: calc(0.22 + var(--_g) * 0.2);
-}
-
-home-map .home-map__street {
-  stroke: var(--_street);
-  stroke-width: 0.8;
-  opacity: calc(0.4 + var(--_g) * 0.3);
-}
-
-home-map .home-map__coast {
-  stroke: var(--_street);
-  stroke-width: 1.1;
-  opacity: calc(0.55 + var(--_g) * 0.35);
-}
-
-home-map .home-map__main {
-  stroke: var(--_street);
-  stroke-width: 1.7;
-  opacity: calc(0.7 + var(--_g) * 0.3);
-}
-
-home-map .home-map__main-glow {
-  stroke: var(--_neon);
-  stroke-width: 5;
-  opacity: calc(var(--_g) * 0.22);
-}
-
-home-map .home-map__highway {
-  stroke: var(--_highway);
-  stroke-width: 3.4;
-  opacity: calc(0.8 + var(--_g) * 0.2);
-}
-
-home-map .home-map__highway-core {
-  stroke: var(--light-neon-core);
-  stroke-width: 1;
-  opacity: calc(var(--_g) * 0.75);
-}
-
-home-map .home-map__highway-glow {
-  stroke: var(--_neon2);
-  stroke-width: 12;
-  opacity: calc(var(--_g) * 0.3);
-}
-
-home-map .home-map__pulse {
-  stroke: var(--light-glint);
-  stroke-width: 2;
-  stroke-dasharray: 6 140;
-  opacity: calc(0.12 + var(--_g) * 0.8);
-  animation: home-map-flow calc(var(--luz-duration-lazy) * 4.25) linear infinite;
-}
-
-home-map .home-map__pulse--main {
-  stroke-width: 1.2;
-  stroke-dasharray: 4 180;
-  opacity: calc(var(--_g) * 0.6);
-  animation-duration: calc(var(--luz-duration-lazy) * 6.875);
-}
-
-@keyframes home-map-flow {
-  to {
-    stroke-dashoffset: -292;
-  }
-}
-
-home-map .home-map__sunlight {
-  pointer-events: none;
-}
-
-home-map .home-map__torch {
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--luz-duration-slow);
-}
-
-/* ==========================================================================
-   Reduced motion: a still frame. The scripts ask for no animation frame
-   (no spin, no traffic); here the bar, the beacons, the stars and the
-   light on the highways stop
+   Reduced motion: a still frame. The globe asks for no animation frame (no
+   spin); here the bar stops
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  home-light .home-light__bar:not([hidden]),
-  home-city .home-city__beacon {
+  home-light .home-light__bar:not([hidden]) {
     animation: none;
-  }
-
-  home-city .home-city__star {
-    animation: none;
-    opacity: 0.7;
-  }
-
-  home-map .home-map__pulse {
-    animation: none;
-    opacity: 0;
   }
 }
 
@@ -1045,15 +569,8 @@ home-map .home-map__torch {
 @media (forced-colors: active) {
   home-light {
     --light-sun: CanvasText;
-    --light-neon: CanvasText;
-    --light-neon-2: CanvasText;
-    --light-neon-core: CanvasText;
     --light-glint: CanvasText;
-    --light-moon: CanvasText;
     --light-shade-opacity: 0;
-    --light-night-fill: Canvas;
-    --light-night-land: Canvas;
-    --light-night-lake: Canvas;
     --_ink: CanvasText;
     --_paper: Canvas;
   }
@@ -1071,10 +588,5 @@ home-map .home-map__torch {
 
   home-light .home-light__day input::-moz-range-track {
     background: CanvasText;
-  }
-
-  /* The pressed fill is forced away: a border in Highlight marks the chosen look */
-  home-light .home-light__group button[aria-pressed="true"] {
-    border: 2px solid Highlight;
   }
 }

@@ -1,16 +1,11 @@
 /**
  * <home-light>: the light of the visitor's sky on the home page. It draws the
  * sun and the moon where the visitor is, from the time zone of the browser's
- * clock (Intl, never the network or GPS), over one of three visuals: a globe
- * of dots, a skyline or a city map. A line under the visual opens a bar to
- * scrub the day and change the look.
+ * clock (Intl, never the network or GPS), over a globe (<home-globe>,
+ * globe.js). A line under the globe opens a bar to scrub the day.
  *
- *   <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
+ *   <home-light bleed favicon></home-light>
  *
- * looks     the visuals offered, any of globe, city, map ("none": no visual)
- * look      the first look, or random; ?look= in the URL wins, then the
- *           visitor's last click (with remember), then this
- * remember  keep the look the visitor clicks in localStorage["luz-home-light"]
  * bleed     the visual runs to the edges of the page's frame (light.css)
  * favicon   the tab's icon follows the sky (a data: URL of an SVG)
  *
@@ -23,26 +18,11 @@
  *
  * Its texts are the page's: data-luz-label-light-* on the element or an
  * ancestor (the home's <body>, from apps/landing/i18n). It imports nothing
- * statically: each visual is its own file, loaded the first time it is
- * wanted. The rules are apps/landing/light/light.css.
+ * statically: the globe is its own file, loaded once the element is built.
+ * The rules are apps/landing/light/light.css.
  */
 
-const KEY = "luz-home-light";
-const LOOKS = ["globe", "city", "map"];
 const DEG = Math.PI / 180;
-// The three visuals: each one a file, loaded the first time it is wanted
-const LOAD = { globe: () => import("./puzzle.js"), city: () => import("./city.js"), map: () => import("./map.js") };
-// What each visual is made with
-const MAKE = {
-  globe: (place) => ({ spin: "", cities: "", twilight: "", glint: "", rim: "", torch: "", lat: place.lat, lon: place.lon }),
-  city: () => ({ seed: 7 }),
-  map: () => ({ seed: 3, puzzle: "" }),
-};
-const ICONS = {
-  globe: "M28.6 16A12.6 12.6 0 1 1 3.4 16a12.6 12.6 0 1 1 25.2 0M21.4 16A5.4 12.6 0 1 1 10.6 16a5.4 12.6 0 1 1 10.8 0M3.4 16h25.2M6 9.2h20M6 22.8h20",
-  city: "M3 29h26M5 29V15h6v14M13 29V7h6v22M21 29V18h6v11M8 19v.02M8 23v.02M16 11v.02M16 15v.02M16 19v.02M16 23v.02M24 22v.02",
-  map: "M3 8 11 5l10 4 8-3v18l-8 3-10-4-8 3zM11 5v18M21 9v18",
-};
 // eslint-disable-next-line no-restricted-syntax -- RL-12: the SVG namespace name, an identifier that is never fetched
 const SVG = "http://www.w3.org/2000/svg";
 // A place for each common time zone, latitude and longitude; another zone gets its offset's meridian at 30°
@@ -163,14 +143,9 @@ const mode = () => {
 let uid = 0;
 
 class LuzLight extends HTMLElement {
-  static get observedAttributes() {
-    return ["look"];
-  }
-
   constructor() {
     super();
     this._sim = 0; // the offset of the simulated instant, in ms; 0 is now
-    this._views = {};
   }
 
   connectedCallback() {
@@ -199,10 +174,6 @@ class LuzLight extends HTMLElement {
     this._abort.abort();
     clearTimeout(this._timer);
     clearTimeout(this._favTimer);
-  }
-
-  attributeChangedCallback(name, old, value) {
-    if (this._stage && !this._reflecting && old !== value) this._setLook(value, false);
   }
 
   /** A text of the page: data-luz-label-light-<key> here or on an ancestor. */
@@ -236,25 +207,12 @@ class LuzLight extends HTMLElement {
     } catch {
       this._clock = new Intl.DateTimeFormat("en", clock);
     }
-    this._remember = this.hasAttribute("remember");
-    this._looks = (this.getAttribute("looks") ?? LOOKS.join(" ")).split(/\s+/).filter((k) => LOOKS.includes(k));
 
     const id = `home-light-${++uid}`;
     this._stage = h("div", { class: "home-light__stage" });
     this._stage.append(h("div", { class: "home-light__glow", "aria-hidden": "true" }));
     const foot = h("div", { class: "home-light__foot" });
     const bar = (this._bar = h("div", { class: "home-light__bar", id: `${id}-bar`, hidden: "" }));
-    if (this._looks.length) {
-      const group = h("div", { class: "home-light__group", role: "group", "aria-label": this._text("looks") });
-      for (const k of this._looks) {
-        const name = this._text(k);
-        const b = h("button", { type: "button", "data-look": k, "aria-pressed": "false", "aria-label": name, title: name });
-        b.append(icon(ICONS[k]));
-        b.addEventListener("click", () => this._setLook(k, true));
-        group.append(b);
-      }
-      bar.append(group);
-    }
     const day = h("div", { class: "home-light__day" });
     day.append(h("label", { class: "home-light__sr", for: `${id}-scrub` }, this._text("scrub")));
     // aria-valuetext carries the light and the hour; the output is not announced
@@ -289,47 +247,15 @@ class LuzLight extends HTMLElement {
       if (!this._favicon) document.head.append((this._favicon = h("link", { rel: "icon", type: "image/svg+xml" })));
     }
 
-    // The first look: ?look= of the URL, then the visitor's last click, then the attribute, then one at random
-    let stored = null;
-    if (this._remember) {
-      try {
-        stored = localStorage.getItem(KEY);
-      } catch {
-        // Storage refused (a sandboxed frame): nothing remembered
-      }
-    }
-    const asked = [new window.URLSearchParams(location.search).get("look"), stored, this.getAttribute("look")].find((k) => this._looks.includes(k));
-    this._setLook(asked ?? this._looks[Math.floor(Math.random() * this._looks.length)], false);
-  }
-
-  /** Show a look, loading its visual the first time; a click is remembered. */
-  _setLook(k, byUser) {
-    if (!this._looks.includes(k)) k = this._looks.includes(this._look) ? this._look : this._looks[0];
-    this._look = k;
-    this._reflecting = true;
-    if (k) this.setAttribute("look", k);
-    this._reflecting = false;
-    for (const b of this.querySelectorAll("[data-look]")) b.setAttribute("aria-pressed", String(b.dataset.look === k));
-    if (byUser && this._remember) {
-      try {
-        localStorage.setItem(KEY, k);
-      } catch {
-        // Not remembered: the same page
-      }
-    }
-    for (const v in this._views) this._views[v].hidden = v !== k;
-    if (k && !this._views[k]) {
-      LOAD[k]().then(() => {
-        if (this._views[k]) return;
-        const view = h(`home-${k}`, { ...MAKE[k](this._place), "aria-label": this._text(`${k}-alt`), hidden: "" });
-        if (k === "globe") view.addEventListener("home-globe:sun", (e) => this._setSunX(50 + 32 * e.detail.x));
-        this._views[k] = view;
-        this._stage.append(view);
-        view.hidden = this._look !== k;
-        this._tick();
-      });
-    }
-    this._tick();
+    // The globe: its own file, loaded once
+    import("./globe.js").then(() => {
+      const { lat, lon } = this._place;
+      const globe = h("home-globe", { spin: "", here: "", glint: "", rim: "", lat, lon, "aria-label": this._text("globe-alt") });
+      globe.addEventListener("home-globe:sun", (e) => this._setSunX(50 + 32 * e.detail.x));
+      this._globe = globe;
+      this._stage.append(globe);
+      this._tick();
+    });
   }
 
   /** Scrub to an hour (0 to 24), or back to now (null), and ask <luz-mode> to follow. */
@@ -369,7 +295,7 @@ class LuzLight extends HTMLElement {
     const time = this._clock.format(new Date(t));
     this._scrub.value = p.hour * 60 + p.minute;
     this._out.textContent = time;
-    const say = this._look ? this._text(`say-${this._look}`) : "";
+    const say = this._text("say-globe");
     // A chosen mode pins a light that is not the hour's: the hour alone
     const phase = light && (mode()?.mode ?? "auto") === "auto" ? this._text(light) : "";
     const sep = this._text("sep") || ", ";
@@ -383,19 +309,13 @@ class LuzLight extends HTMLElement {
     const { alt, az, vec } = this._sun(t);
     rs.setProperty("--sun-alt", alt.toFixed(2));
     rs.setProperty("--sun-az", az.toFixed(2));
-    if (this._look !== "globe" || !this._views.globe) this._setSunX(50 + 32 * Math.sin(az * DEG));
+    if (!this._globe) this._setSunX(50 + 32 * Math.sin(az * DEG));
     const st = sunTimes(this._place.lat, this._place.lon, p);
     const left = st.hours > 0 && st.hours < 24 ? Math.min(1, Math.max(0, (st.set - t) / (st.set - st.rise))) : st.hours ? 1 : 0;
     rs.setProperty("--day-left", (left * 100).toFixed(1) + "%");
 
-    const { age, lit } = moonPhase(t);
-    // Neon only on a dark page: the visuals stay ink on paper while the page is light
-    const night = root.getAttribute("data-theme") === "light" ? 0 : 1;
-    const v = this._views;
-    if (v.globe) v.globe.sun = vec;
-    const moon = { ...this._sun(t - age * 864e5), age, lit };
-    if (v.city) v.city.light = { alt, az, moon, night };
-    if (v.map) v.map.light = { alt, az, night };
+    const { age } = moonPhase(t);
+    if (this._globe) this._globe.sun = vec;
     if (this._favicon) this._updateFavicon(-Math.max(-8, Math.min(15, alt)) * 0.6, alt < -6, age);
   }
 

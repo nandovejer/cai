@@ -1,35 +1,52 @@
 /**
- * <home-globe>: a globe of dots lit by the sun. One of the three visuals of
- * the home's <home-light> (apps/landing/light/light.js loads this file when
- * the globe is the look); it imports nothing and writes no style (the rules
- * are light.css). Light DOM, SVG built with createElementNS.
+ * <home-globe>: the globe of the home's <home-light>, lit by the sun, its land
+ * a puzzle with one piece per country. Each country is a faint grey (five
+ * tones, no two neighbours alike), the borders between them are fine lines
+ * with a knob, barely there, and the coast is a fine dotted line; the lines
+ * are drawn in relief, a line of light towards the sun and a line of shade
+ * away from it. Nothing on the sea, and one light at the reader's place. It
+ * writes no style (the rules are light.css). Light DOM, SVG built with
+ * createElementNS.
  *
- *   <home-globe lat="40.42" lon="-3.7" spin cities twilight glint rim torch></home-globe>
+ *   <home-globe lat="40.42" lon="-3.7" spin here glint rim></home-globe>
  *
- * lat, lon   the reader's place: where the globe faces at first
+ * lat, lon   the reader's place: where the globe faces at first and where its
+ *            one light is (`here`, or `cities`), by day and by night
  * spin       slow rotation, only while the globe is on screen and the reader
  *            has not asked for reduced motion
- * cities     city lights on the night side; twilight: the day/night line in
- *            the sun's colour; glint: the sun on the sea; rim: a lit edge;
- *            torch: the dots near the pointer wake up
+ * glint      the sun on the sea; rim: a lit edge. `twilight` and `torch` are
+ *            accepted and ignored
  * Property `sun`: the sun's unit vector in the Earth's frame, set by the
  * controller. Event home-globe:sun ({ x }: -1 the sun on the left, 1 on the
  * right), so the page's glow can follow it.
  *
- * Land: Natural Earth 1:50m land polygons (public domain,
- * naturalearthdata.com), rasterised once onto the dot lattice below, one bit
- * per dot, base64. See apps/landing/light/README.md.
+ * The land is globe-data.js (Natural Earth, see there), the one file it
+ * loads, lazily: the globe draws the sea, the sun, the night and the
+ * reader's light at once, and loads the land the first time it is on screen
+ * and the browser is idle (even when the browser asks to save data: a globe
+ * without land says nothing). Then it carries the attribute `land`.
  */
 
-// Natural Earth 1:50m land (public domain): one bit per dot of the lattice, row by row from the south pole
-const LAND = "/u//////+//////////1//////P//////+H//////x/8/+v/////gP//8P////8B/P8p/v////8A+P9Dw/////8/QP7/CeP//////wHg//+A/f//////H8D//x+A////////PwD4/38A8P///////w8A/P//A4D/////////AAD8b/8HAP7///////8HAAAC/P8AoP////////8PAAAQwLcPAPj/////////DwAAABAADADg////9/////8BAAAAIEAHAID////f/////x8AAAAAAPgAADD+///v/////w8AAAAAAIAGAAAADP7/8f////8BAAAAAACABgAAAAAg/x//////DwAAAAAAAAACAAAAAAD+P/z///8XAAAAAAAAACAAAAAAAAD+H/z///8BAAAAAAAAAIABAAAAAAAAFwD+//o/AAAAAAAAAAAAAwAAAAAAABwAADgDPAAAAAAAAAAAAMAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD8AQAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAD4AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAD8AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOABAAAAAAAAAAAAAACAfwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAQAAAAAAAAAAAAAAAH8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAADAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAMAAAAAAAAAAAAAAAAIA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAwAAAAAAAAAAAAAAAPAPAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgAADAAAAAAAAAAAAAAAAMD/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAADwfwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAAgP8DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAEAAAAAAAAAAAAAAADg/w8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaAAAADwAAAAAAAAAAAAAAAMD/fwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwPAAAgAAAAAAAAAAAAAAAAAOD/PwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPwPAAAAAAAAAAAAAAAAAAAAAMD/PwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOT/AAAAAAAAAAAAAAAAAAAAAADg/w8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD0/wAAgAAAAAAAAAAAAAAAAAAA4P/3AAAAAAAAAAAAOAAAAAAAAAAAAAAAgAcA6P8HAAAAAAAAAAAAAAAAAAAAAAD8/z8AAAAAAAAAAAD/AQAAAAAAAAAAAADgPwDs/wcAAAAAAAAAAAAAAAAAAAAAAPz/PwAAAAAAAAAAAP8HAAAAAAAAAAAAAMD/APz/HwAAAAAAAAAAAAAAAAAAAAAAwP//AwAAAAAAAAAA4P8AAAAAAAAAAAAAAPD/w///BwAAAAAAAAAAAAAAAAAAAAAA8P//AQAAAAAAAAAA8P8BAAAAAAAAAAAAAPD/////DwAAAAAAAAAAAAAAAAAAAAAAwP//DwAAAAAAAAAAwP8fAAAAAAAAAAAAAID//////wEAAAAAAAAAAAAAAAAAAAAAAPj//wMAAAAAAAAAAPj/AwAAAAAAAAAAAADg/////38AAAAAAAAAAAAAAAAAAAAAAAD4//8PAAAAAAAAAADw/x8AAAAAAAAAAAAAgP//////AwAAAAAAAAAAAAAAAAAAAAAAwP//fwAAAAAAAAAAwP//AAAAAAAAAAAAAAD8/////z8AAAAAAAAAAAAAAAAAAAAAAADg//8/AAAAAAAAAADw//8AAAAAAAAAAAAAAPz/////PwAAAAAAAAAAAAAAAAAAAAAAAOD//z8AAAAAAAAAAOD//wEAAAAAAAAAAAAA+P//////AAAAAAAAAAAAAAAAAAAAAAAAAPz//wcAAAAAAAAAAPz/fwAAAAAAAAAAAAAA/P////8/AAAAAAAAAAAAAAAAAAAAAAAAAP///wMAAAAAAAAAAP7/fwAcAAAAAAAAAAAA/v////8fAAAAAAAAAAAAAAAAAAAAAAAAAP7//x8AAAAAAAAAAPj//wfwAAAAAAAAAAAA8P////9/AAAAAAAAAAAAAAAAAAAAAAAAAOD///8HAAAAAAAAAID//38AHwAAAAAAAAAAAP7/////BwAAAAAAAAAAAAAAAAAAAAAAAADw////HwAAAAAAAADA//9/gB8AAAAAAAAAAAD8/////wsAAAAAAAAAAAAAAAAAAAAAAAAA4P///z8AAAAAAAAAwP//fwA/AAAAAAAAAAAA8P////8PAEAAAAAAAAAAAAAAAAAAAAAAAAD/////AwAAAAAAAAD8//8H4AcAAAAAAAAAAAD8/////wAABAAAAAAAAAAAAAAAAAAAAAAA4P////8AAAAAAAAAgP///wDwAQAAAAAAAAAAAPj///8/AAAAAAAAAAAAAAAAAAAAAAAAAADg/////wEAAAAAAACA////A/ADAAAAAAAAAAAAgP///x8AAAAAAAAAAAAAAAAAAAAAAAAAAMD/////AwAAAAAAAAD///8fwA8AAAAAAAAAAAAA/P//fwAAAAAAAAAAAAAAAAAAAAAAAAAAAP7///9/AAAAAAAAAPD///8H/AEAAAAAAAAAAAAA////DwAAQAAGAAAAAAAAAAAAAAAAAAAA4P////8fAAAAAAAAAPz///8DfgAAAAAAAAAAAABA///zAwAAAAACAAAAAAAAAAAAAAAAAAAA+P////8fAAAAAAAAAPz///8P+AAAAAAAAAAAAAAA/P/BBwAAAAAAAAAAAAAAAAAAAAAAAAAA/P////8/AAAAAAAAAPD///8/wAMAAAAAAAAAAAAAcP8BDwAAQAAAAAAAAAAAAAAAAAAAAAAA8P//////AQAAAAAAAID/////AxwAAAAAAAAAAAAAAOYf8AAAAAAAAAAAAAAAAAAAAAAAAAAAAP//////HwAAAAAAAADw////P4ABAAAAAAAAAAAAAAD8AwcAAAAAAAAAAAAAAAAAAAAAAAAAAMD//////w8AAAAAAAAA+P///w+AAAAAAAAAAAAAAAAA/AEDAAAAAAAAAAAAAAAAAAAAAAAAAADw//////8PAAAAAAAAAPj///8PAAAAAAAAAAAAAAAAADAAAQAAAAAAAAAAAAAAAAAAAAAAAAAA8P//////HwAAAAAAAADw////HwAAAAAAAAAAAAAAAAAABAIAAAAAAAAAAAAAAAAAAAAAAAAAAOD///////8AAAAAAAAA4P///z8AAAAAAAAAAAAAAAAAAAAAIAAIAAAAAAAAAAAAAAAAAAAAAAAA////////HwAAAAAAAAD+////AQAAAAAAAAAAAAAAGAYAAMAF4AAAAAAAAAAAAAAAAAAAAAAAAPj///////8BAAAAAAAA4P///x8AAAAAAAAAAAAAAHCGAQA8DAAAAAAAAAAAAAAAAAAAAAAAAAAA////////fwAAAAAAAAD4////BwAAAAAAAAAAAAD4AAAAoI8DgAAAAAAAAAAAAAAAAAAAAAAAAOD///////8fAAAAAAAAAP////8BAAAAAAAAAAAA8B8AAAjwPwAEAAAAAAAAAAAAAAAAAAAAAAAA+P///////w8AAAAAAADA////fwAAAAAAAAAAAAA8AAAAAPh/AAAAAAAAAAAAAAAAAAAAAAAAAAD+////////AwAAAAAAAOD///8/AAAAAAAAAAAAAAMAAAAg/I8HAAAAAAAAAAAAAAAAAAAAAAAAAP7///////8AAAAAAAAA4P///38AAAAAAAAAAACAAwCIAAD/DwgAAAAAAAAAAAAAAAAAAAAAAAAA/v//////fwAAAAAAAADw/////wAAAAAAAAAAAMAHIFAA0P8HAAAAAAAAAAAAAAAAAAAAAAAAAADw//////9/AAAAAAAAAOD/////AwAAAAAAAAAAgA/4sSHn/gMAAAAAAAAAAAAAAAAAAAAAAAAAAPD//////wEAAAAAAAAA4P////8PAAAAAAAAAACAP/jHQQD5AAAAAAAAAAAAAAAAAAAAAAAAAAAAwP//////BwAAAAAAAACA//////8AAAAAAAAAAIC+4B8uCIcAAAAAAAAAAAAAAAAAAAAAAAAAAAAA/////98GAAAAAAAAAAD//////wMAAAAAAAAAADzA/0QAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4/////wIAAAAAAAAAAPj/////HwAAAAAAAAAA8AH/IwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOD/////AwAAAAAAAAAA4P//////AAAAAAAAAADgA/6PHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP7///8fAAAAAAAAAAAA//////8HAAAAAAAAAIAn8H8ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+P///z8AAAAAAAAAAAD+/////z8AAAAAAAAAoHMA/wEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADA////fwAAAAAAAAAAAPj//////wEAAAAAAAAA5wjwAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAID/////AAAAAAAAAAAA8P//////BwAAAAAAAADjQOADIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAP////8AAAAAAADAAID///////8PAAAAAAAAgMMBgA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA////HwAAAAAAAPD/gP///////x8AAAAAAAAA4AAADwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///8BAAAAAAAA+P/v////////HwAAAAAYAABwAAACDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwP//PwAAAAAAAID///////////8HAAAAAAYAAAIAAAAHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAID5//8HAAAAAAAA4P///////////wMAAACAAQCAAQAg8AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfPv/PwAAAAAAAAD+////////////AAAAADMAABgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMABvv8HAAAAAAAAwP///////////x8AAADgAAAAAQEAAQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB+D9DAAAAAAAAAD/////////////AAAAgA8AAAgeABAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgA7gAAAAAAAAAA/v//////////gQcAAAA+AAAg/AEANAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AFAAAAAAAAAAAP///////////wEAAAAAPwAAIPwDABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgAAAAAAAAAAAAD///////////8HAAAAgD8AALD/AYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8A8AAAAAAAAAAADg///////////fBwAAAPAHAAD+PwCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgP8DAAAAAAAAAAAA/P//////////+QMAAAD+AADg/wcAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAP4fAAAAAAAAAAAQ4P//////////4X8AAAD8AwCA/w8ABAAAAAAAAAAAAAAAAAAAAAAAAAAA4PwAAAAAAAAAAACAgP//////////g/8DAAD4HwAg/x8AGAAAAAAAAAAAAAAAAAAAAAAAAAAA+P8BAAAAAAAAAAAAgP//////////wf8HAAD8HwCw/wcAGAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAAAAAAAAAAAAwP////////9/+P8HAAD/DwD8/wAABwAAAAAAAAAAAAAAAAAAAAAAAAD87w8A8WMAAAAAAAAA/v/////////D//8AAPj/APD/QwAwAAAAAAAAAAAAAACAAAAAAAAAAPg/8AAAHgAAAAAAAADw/////////4f//wcA4P8H4P+PAwAAAAAAAAAAAAAAAIAAAAAAAAAA+B/wAHgAAAAAAAAAAPj/////////w///AwDw/w/w/wcBAAAAAAAAAAAAAAAAYAAAAAAAAAD8B3gADAAAAAAAAAAA/v/////////4//8DAPz/B/7/IwAIAAAAAAAAAAAAAAABAAAAAAAAwH8AACAAAAAAAAAAAPD/////////5///HwDu/z/4/78DAAAAAAAAAAAAAAAAAAAAAAAAAID/AAA5AAAAAAAAAADA/////////4///38A/P//9///PwAAAAAAAAAAAAAAAAAAAAAAAADC/wAAAAAAAAAAAAAA4P/////////h//8PgP///////z8MAAAAAAAAAAAAAAAAAAAAAADA+B8AAAAAAAAAAAAAAPj///////8//v8+APz////////HAAAAAAAAAAAAAAAAAAAAAACA8X8AACAAAAAAAAAAAOD///////8///8wAPz///////+PAAAAAAAAAAAAAAAAAAAAAACA+P8AAAQAAAAAAAAAAOD///////+f/7+Q//////////8fAAAAAAAAAAAAAAAAAAAAAACY/w8AwAAAAAAAAAAAAPz////////8/wP+//////////8AAQAAAAAAAAAAAAAAAAAAAHD+fwAAAwAAAAAAAAAA4P////////n/w////////////wEAAAAAAAAAAAAAAAAAAAAAkP8/AMABAAAAAAAAAADx//////8//3/8//////////9/AAAAAAAAAAAAAAAAAAAAAAD//x8AGAAAAAAAAAAAAPz///////X/4////////////wcAAAAAAAAAAAAAAAAAAAAA+/8/DBgAAAAAAAAAAAD4//////////P///////////8DAAAAAAAAAAAAAAAAAAAAgPz//98PAAAAAAAAAAAA/v////7////+//////////8/AAAAAAAAAAAAAAAAAAAAAOb///9/AAAAAAAAAAAA+P////jn/P//////////////AAIAAAAAAAAAAAAAAAAAAPz/////AAAAAAAAAAAA8P//P3gA/P////////////9fAAEAAAAAAAAAAAAAAAAAwP////8fAAAAAAAAAAAA//9/gAHA//////////////8AHgAAAAAAAAAAAAAAAACA//////8AAAAAAAAAAAD8/x8AAID//////////////wC0AAAAAAAAAAAAAAAAAPj/////fwAAAAAAAAAAAP//AQAA+P////////////8DwQ4AAAAAAAAAAAAAAADg//////8DAAAAAAAAAAC8/w8ABuT/////////////Bxz/AAAAAAAAAAAAAAAA+P//////AgAAAAAAAAAAwP8BAAD8/////////////8ABDwAAAAAAAAAAAAAAgP//////HwAAAAAAAAAAPPCfgHjv/8f//////////4MDHgAAAAAAAAAAAAAA4P//////DwAAAAAAAADAPwA4sP//f/D/////////T3AAAwAAAAAAAAAAAAAA/v////+/AAAAAAAAAAD+AwAA+///g/////////8f8AAYAAAAAAAAAAAAAAD+/////z8AAAAAAAAAgP8AAHH8///g/////////08MAAMAAAAAAAAAAAAA4P//////HwAAAAAAAAD4DxCo5///h/////////9/fgAMAAAAAAAAAAAAAOD//////y8AAAAAAAAA/AcM58n//8H/////////3x+AAAAAAAAAAAAAAAD8//////8PAAAAAAAAwP9AHP/w4I/+/////////38AAAAAAAAAAAAAAAD+//////8HAAAAAAAA8H/Q4R8A/OD//////////x+AAAAAAAAAAAAAAOD//////z8AAAAAAADA/wHn/wD44////////////8EHAAAAAAAAAAAA8P//////PwMAAAAAAAD4Z/w/gH/8//////////8/eAAAAAAAAAAAAAD///////83AAAAAAAA4P/5/5D/+P//////////fwABAAAAAAAAAADA////////HwAAAAAAAPy//4/5D/7//////////wcAAAAAAAAAAAAA/v//////LwAAAAAAAPz//7/zP/7//////////wMAAAAAAAAAAACg////////AAIAAAAA4P//////////////////HwEAAAAAAAAAAID+///////gBwAAAAD4//////////////////8PAAAAAAAAAAAA/P//////Dg4AAAAAAP//////////////////TwAAAAAAAAAAAPL//////xEKAAAAAAD//////////////////wkAAAAAAAAAAOj///////8JAAAAADD8/////////////////wUAAAAAAAAAAP7///////8CAAAAAHz/////////////////LwABAAAAAAAA/P///z///wEAAABgPv////////////////8FIAAAAAAAAID/////9/8fAAAAAPf5////////////////C2AAAAAAAAD0//////z/BwAAAOAM/v//////////////WwAHAAAAAACA//////P/DwAAAIAZEPb/////////////AYADAAAAAAD4////H/4/AAAAAGAAAP////////////8BAA8AAIAAAPz///8D/A8AAAAAMGDD/////////////wDwAQAAAADg////B/A/AAAAADBAxv///////////38AeAAAACwA+v//PwD+AwAAAAAHcPH///////////8D4AEAABgA/f//H4DfAQAAAIDAHv3//////////z8ADAAA8AH4//9/AHwEAAAAAIB/+P//////////f0AMAEB/w////wfAAwAAAAAA/AP+//////////9/eAAA/Pf///8PwAcABgAAAP74////////////nz4A+P////8/AIcAHgAAAP74////////////px8A/P////8PGgTgAQAA4M//////////////fwD4/////0fEAnwAAAD4/f////////////8PgP////8/lQ/4ATgA8PP3////////////Gf//////mz/gB+ADgM+v//////////9/Pf//////Bi/4A3QA4Pv4////////////9P////8HN/wPAgDwv/3//v//////f4P////7f/DwPwAAwP/D//3//////3/w//+H6eYH/wMAAP5P/u///////z/g//9v1OQB/g8AAP8BvP3//////wH/h+RD3AH/HwCAPwBk/////38dgA8QeMQf+H8AAHAAwP7///8fIEAAwIf8Af8XAAAACO////sHAAAA+Gd+gP8HAAAAwfb/PywAAADg0TeA/wcAAIAg/v8HAAAAABy9BvxfAAAAAuhvAAEAAAABAMD/BwAAEMD/AAAAAAAke+D/AQAADPAPsAAAAHSL4P8BAAAM8AMGAAAAQ8//DwAAIIABAAAAgIDw/wAKAAACAAAAgN7/PwAAACAAAAAA8vk/IAAAAQAAAIDv/wBBgAEAAAD4/geAAgIAAAB4/wEAAAAAAPA8AAAAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-// Cities lit on the night side: latitude, longitude
-const CITIES = [40.42, -3.7, 28.1, -15.4, 38.72, -9.14, 51.5, -0.12, 53.35, -6.26, 48.86, 2.35, 50.85, 4.35, 52.37, 4.9, 52.52, 13.4, 47.38, 8.54, 48.21, 16.37, 41.9, 12.5, 50.08, 14.44, 52.23, 21.01, 55.68, 12.57, 59.91, 10.75, 59.33, 18.07, 60.17, 24.94, 37.98, 23.73, 41.01, 28.98, 50.45, 30.52, 55.76, 37.62, 33.57, -7.59, 36.75, 3.06, 30.04, 31.24, 6.52, 3.38, -1.29, 36.82, -26.2, 28.05, 40.71, -74.01, 43.65, -79.38, 41.88, -87.63, 39.74, -104.99, 33.45, -112.07, 34.05, -118.24, 49.28, -123.12, 19.43, -99.13, 4.71, -74.07, -12.05, -77.04, -33.45, -70.67, 10.48, -66.9, -34.6, -58.38, -23.55, -46.63, -34.9, -56.16, 23.11, -82.37, 31.77, 35.21, 24.71, 46.68, 25.2, 55.27, 35.69, 51.39, 24.86, 67.01, 19.08, 72.88, 23.81, 90.41, 13.76, 100.5, -6.21, 106.85, 1.35, 103.82, 14.6, 120.98, 22.32, 114.17, 31.23, 121.47, 25.03, 121.57, 37.57, 126.98, 35.68, 139.69, -31.95, 115.86, -37.81, 144.96, -33.87, 151.21, -27.47, 153.03, -36.85, 174.76, 21.31, -157.86, 41.39, 2.17, 39.47, -0.38, 37.39, -5.99, 43.26, -2.93, 41.15, -8.61, 43.3, 5.37, 45.76, 4.84, 45.46, 9.19, 40.85, 14.27, 48.14, 11.58, 53.55, 9.99, 50.11, 8.68, 55.95, -3.19, 53.48, -2.24, 64.15, -21.94, 59.93, 30.34, 56.84, 60.6, 43.12, 131.89, 31.63, -7.99, 36.8, 10.18, 32.9, 13.18, 5.6, -0.19, 14.69, -17.44, 9.03, 38.74, -4.32, 15.31, -8.84, 13.23, -33.93, 18.42, -6.79, 39.28, 15.5, 32.56, 32.08, 34.78, 33.31, 44.37, 28.61, 77.21, 12.97, 77.59, 22.57, 88.36, 31.55, 74.34, 34.53, 69.17, 41.3, 69.24, 43.24, 76.89, 55.03, 82.92, 39.9, 116.4, 30.57, 104.07, 30.59, 114.3, 23.13, 113.26, 34.69, 135.5, 43.06, 141.35, 10.82, 106.63, 21.03, 105.85, 3.14, 101.69, -7.26, 112.75, -34.93, 138.6, -12.46, 130.84, -22.91, -43.17, -15.79, -47.88, -12.97, -38.5, -8.05, -34.9, -0.18, -78.47, -16.5, -68.15, 20.66, -103.35, 25.69, -100.32, 25.76, -80.19, 33.75, -84.39, 29.76, -95.37, 32.78, -96.8, 47.61, -122.33, 37.77, -122.42, 42.36, -71.06, 38.9, -77.04, 42.33, -83.05, 44.98, -93.27, 45.5, -73.57, 51.05, -114.07, 61.22, -149.9];
+// The land, from globe-data.js: set once it has arrived
+let QX, QY, K, ARCS, BORDERS, COUNTRIES;
+let land = null;
+const loadLand = () =>
+  (land ??= import("./globe-data.js").then((m) => {
+    ({ QX, QY, K, ARCS, BORDERS, COUNTRIES } = m);
+  }));
 
-const D = 0.8, ROWS = Math.round(180 / D), DEG = Math.PI / 180;
-const VB = 600, CX = 300, CY = 300, R = 272;
+const DEG = Math.PI / 180,
+  TAU = 2 * Math.PI;
+const VB = 600,
+  CX = 300,
+  CY = 300,
+  R = 272;
 // eslint-disable-next-line no-restricted-syntax -- RL-12: the SVG namespace name, an identifier that is never fetched
 const SVG = "http://www.w3.org/2000/svg";
+const ALPHABET =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+const CODE = new Uint8Array(128);
+for (let i = 0; i < 64; i++) CODE[ALPHABET.charCodeAt(i)] = i;
 const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 const q = (v) => Math.round(v * 10) / 10;
 const el = (tag, attrs, parent) => {
@@ -38,36 +55,300 @@ const el = (tag, attrs, parent) => {
   if (parent) parent.append(n);
   return n;
 };
-const vec = (lat, lon) => [Math.cos(lat * DEG) * Math.sin(lon * DEG), Math.sin(lat * DEG), Math.cos(lat * DEG) * Math.cos(lon * DEG)];
+const vec = (lat, lon) => [
+  Math.cos(lat * DEG) * Math.sin(lon * DEG),
+  Math.sin(lat * DEG),
+  Math.cos(lat * DEG) * Math.cos(lon * DEG),
+];
 
-/* The lattice, built once, the first time a globe has a size */
-let lattice = null;
-function getLattice() {
-  if (lattice) return lattice;
-  const s = window.atob(LAND), bits = new Uint8Array(s.length);
-  for (let i = 0; i < s.length; i++) bits[i] = s.charCodeAt(i);
-  let N = 0;
-  const rowLen = new Uint16Array(ROWS), rowStart = new Uint32Array(ROWS);
-  for (let i = 0; i < ROWS; i++) {
-    rowLen[i] = Math.max(1, Math.round((Math.cos((-90 + D / 2 + i * D) * DEG) * 360) / D));
-    rowStart[i] = N;
-    N += rowLen[i];
-  }
-  const X = new Float32Array(N), Y = new Float32Array(N), Z = new Float32Array(N);
-  const kindFull = new Uint8Array(N), kindLite = new Uint8Array(N);
-  for (let i = 0, k = 0; i < ROWS; i++) {
-    const lat = -90 + D / 2 + i * D, m = rowLen[i], off = (i % 2) * 0.5;
-    for (let j = 0; j < m; j++, k++) {
-      [X[k], Y[k], Z[k]] = vec(lat, -180 + ((j + off) * 360) / m);
-      const land = (bits[k >> 3] >> (k & 7)) & 1;
-      const e2 = i % 2 === 0 && j % 2 === 0, e4 = i % 4 === 0 && j % 4 === 0;
-      kindFull[k] = land ? 2 : e2 ? 1 : 0;
-      kindLite[k] = land ? (e2 ? 2 : 0) : e4 ? 1 : 0;
+/* ---- the borders ---- */
+/** Every number of a string of the alphabet (5 bits a char, the sixth: more follows) */
+function ints(s) {
+  const out = [];
+  let n = 0,
+    shift = 0;
+  for (let i = 0; i < s.length; i++) {
+    const c = CODE[s.charCodeAt(i)];
+    n |= (c & 31) << shift;
+    if (c & 32) shift += 5;
+    else {
+      out.push(n);
+      n = shift = 0;
     }
   }
-  const n = CITIES.length / 2, city = { n, x: new Float32Array(n), y: new Float32Array(n), z: new Float32Array(n) };
-  for (let i = 0; i < n; i++) [city.x[i], city.y[i], city.z[i]] = vec(CITIES[2 * i], CITIES[2 * i + 1]);
-  return (lattice = { N, X, Y, Z, kindFull, kindLite, rowLen, rowStart, bits, city });
+  return out;
+}
+const zig = (n) => (n & 1 ? -(n + 1) / 2 : n / 2);
+
+/* The land, decoded once, the first time a globe has a size */
+let topo = null;
+function getTopo() {
+  if (topo) return topo;
+  // The coast arcs, then the borders with their knobs, in one set of points
+  const coast = decodeLines(ARCS),
+    { start, len, ...rest } = packLines([
+      ...coast,
+      ...decodeLines(BORDERS).map(knobbed),
+    ]);
+  // A ring: references to arcs (each from the one before), chained into one list of point indices
+  const ring = (refs) => {
+    const idx = [];
+    let a = 0;
+    for (const ref of ints(refs)) {
+      a += zig(ref >> 1);
+      const s = start[a],
+        n = len[a];
+      for (let k = 0; k < n; k++) idx.push(ref & 1 ? s + n - 1 - k : s + k);
+    }
+    return idx;
+  };
+  // The rings of each country, with its tone
+  const countries = COUNTRIES.split(";").map((c) => ({
+    tone: CODE[c.charCodeAt(0)],
+    loops: c.slice(1).split(",").map(ring),
+  }));
+  return (topo = {
+    ...rest,
+    start,
+    len,
+    coast: coast.length,
+    countries,
+  });
+}
+
+/* The pieces: one per country. Every border between two countries is a cut
+   of the puzzle, with a knob (one for every ~14 degrees of its length) out
+   on one side or the other, built once in a local flat frame (longitude
+   times the cosine of the latitude, latitude) around the knob */
+// The knob on a chord from 0 to 1: along, and across to one side (a narrow neck, a round head)
+const KNOB = [
+  [0, 0],
+  [0.18, 0.18],
+  [-0.08, 0.42],
+  [0.08, 0.68],
+  [0.5, 0.78],
+  [0.92, 0.68],
+  [1.08, 0.42],
+  [0.82, 0.18],
+  [1, 0],
+];
+// The flat length of a segment, in degrees
+const span = ([x0, y0], [x1, y1]) =>
+  Math.hypot((x1 - x0) * Math.cos(((y0 + y1) / 2) * DEG), y1 - y0);
+/** A line of [lon, lat, seam] points with its knobs (the a-th line: its seed);
+ *  a knob that would span a seam point is left out */
+function knobbed(line, a) {
+  const n = line.length,
+    d = [0];
+  for (let k = 1; k < n; k++) d.push(d[k - 1] + span(line[k - 1], line[k]));
+  const L = d[n - 1],
+    knobs = L < 1.6 ? 0 : Math.max(1, Math.round(L / 14));
+  if (!knobs) return line;
+  // The point at distance t along the line, and the index of the point after it
+  const at = (t) => {
+    let k = 1;
+    while (k < n - 1 && d[k] < t) k++;
+    const f = (t - d[k - 1]) / (d[k] - d[k - 1] || 1);
+    return [
+      [
+        line[k - 1][0] + (line[k][0] - line[k - 1][0]) * f,
+        line[k - 1][1] + (line[k][1] - line[k - 1][1]) * f,
+        0,
+      ],
+      k,
+    ];
+  };
+  const w = Math.min(2.4, Math.max(0.8, (L / knobs) * 0.3)),
+    out = [];
+  let from = 0;
+  for (let j = 0; j < knobs; j++) {
+    const t = (L * (j + 0.5)) / knobs,
+      side = (a * 7 + j * 3) % 2 ? 1 : -1;
+    const [A, ka] = at(t - w / 2),
+      [B, kb] = at(t + w / 2);
+    let seam = false;
+    for (let k = ka - 1; k <= kb; k++) if (line[k][2]) seam = true;
+    if (seam) continue;
+    for (let k = from; k < ka; k++) out.push(line[k]);
+    const c = Math.cos(((A[1] + B[1]) / 2) * DEG),
+      ux = (B[0] - A[0]) * c,
+      uy = B[1] - A[1];
+    for (const [s, h] of KNOB)
+      out.push([
+        A[0] + (s * ux - h * uy * side) / c,
+        A[1] + s * uy + h * ux * side,
+        0,
+      ]);
+    from = kb;
+  }
+  for (let k = from; k < n; k++) out.push(line[k]);
+  return out;
+}
+
+/** Lines of ARCS-encoded points (Exp-Golomb bits), as lists of [lon, lat, seam] */
+function decodeLines(s) {
+  // The stream of bits, 6 a char, and its Exp-Golomb numbers of order k
+  let at = 0;
+  const bit = () => (CODE[s.charCodeAt((at / 6) | 0)] >> (5 - (at++ % 6))) & 1;
+  const num = (k) => {
+    let z = k,
+      w = 1;
+    while (!bit()) z++;
+    while (z--) w = w * 2 + bit();
+    return w - (1 << k);
+  };
+  const lines = [];
+  for (let i = s ? num(K[0]) : 0, x = 0, y = 0; i--; ) {
+    const n = num(K[0]),
+      line = [];
+    for (let k = 0; k < n; k++) {
+      x += zig(num(K[1]));
+      y += zig(num(K[2]));
+      // A point on the antimeridian or at the pole: a segment between two of them is a seam of the data, not a line to draw
+      line.push([
+        (x / QX) * 360 - 180,
+        (y / QY) * 180 - 90,
+        x === 0 || x === QX || y === 0 ? 1 : 0,
+      ]);
+    }
+    lines.push(line);
+  }
+  return lines;
+}
+
+/** Lines as one set of points on the sphere, each line a run of it */
+function packLines(lines) {
+  const start = [],
+    len = [];
+  let N = 0;
+  for (const line of lines) {
+    start.push(N);
+    len.push(line.length);
+    N += line.length;
+  }
+  const X = new Float32Array(N),
+    Y = new Float32Array(N),
+    Z = new Float32Array(N),
+    seam = new Uint8Array(N);
+  let k = 0;
+  for (const line of lines)
+    for (const [lon, lat, s] of line) {
+      [X[k], Y[k], Z[k]] = vec(lat, lon);
+      seam[k++] = s;
+    }
+  return { N, X, Y, Z, seam, start, len };
+}
+
+/* ---- the horizon ---- */
+// P holds, per point, its screen x and y and its depth (positive: facing us)
+const cross = (P, a, b) => {
+  const za = P[3 * a + 2],
+    t = za / (za - P[3 * b + 2]);
+  const dx = P[3 * a] + (P[3 * b] - P[3 * a]) * t - CX,
+    dy = P[3 * a + 1] + (P[3 * b + 1] - P[3 * a + 1]) * t - CY;
+  const s = R / (Math.hypot(dx, dy) || 1);
+  return [CX + dx * s, CY + dy * s];
+};
+const pt = ([x, y]) => q(x) + " " + q(y);
+const angle = ([x, y]) => Math.atan2(CY - y, x - CX);
+
+/** The visible parts of a polyline of point indices, as path data (a segment between two seam points is left out) */
+function strokeOf(P, indices, seam) {
+  let d = "",
+    on = false,
+    prev = -1;
+  for (const i of indices) {
+    if (seam && prev >= 0 && seam[i] && seam[prev]) {
+      on = false;
+      prev = -1;
+    }
+    if (P[3 * i + 2] > 0) {
+      if (on) d += "L" + q(P[3 * i]) + " " + q(P[3 * i + 1]);
+      else {
+        on = true;
+        d +=
+          (prev >= 0 ? "M" + pt(cross(P, i, prev)) + "L" : "M") +
+          q(P[3 * i]) +
+          " " +
+          q(P[3 * i + 1]);
+      }
+    } else if (on) {
+      on = false;
+      d += "L" + pt(cross(P, prev, i));
+    }
+    prev = i;
+  }
+  return d;
+}
+
+/** The visible part of a ring (indices, closed), as filled shapes: its runs
+ *  stitched along the horizon, counter-clockwise as seen (every ring of the
+ *  data is counter-clockwise, so its inside stays on the left; a lake is a
+ *  ring inside another, left to the even-odd rule): from where a run leaves
+ *  the disc, the horizon is followed to the nearest point where a run comes
+ *  back in, which may belong to another run */
+function fillOf(P, indices) {
+  const runs = [];
+  let open = null,
+    crossed = false,
+    prev = -1;
+  const n = indices.length;
+  for (let k = 0; k <= n; k++) {
+    const i = indices[k % n];
+    if (P[3 * i + 2] > 0) {
+      if (!open) {
+        open = [];
+        if (prev >= 0 && P[3 * prev + 2] <= 0) {
+          open.push(cross(P, i, prev));
+          crossed = true;
+        }
+      }
+      open.push([P[3 * i], P[3 * i + 1]]);
+    } else if (open) {
+      open.push(cross(P, prev, i));
+      crossed = true;
+      runs.push(open);
+      open = null;
+    }
+    prev = i;
+  }
+  if (open) {
+    if (!crossed) return "M" + open.map(pt).join("L") + "Z";
+    // The run that closes the ring continues the one that opened it
+    runs[0] = open.concat(runs[0].slice(1));
+  }
+  if (!runs.length) return "";
+  const entry = runs.map((run) => angle(run[0])),
+    done = new Uint8Array(runs.length);
+  let d = "";
+  for (let first = 0; first < runs.length; first++) {
+    if (done[first]) continue;
+    let r = first;
+    d += "M" + runs[r].map(pt).join("L");
+    for (;;) {
+      done[r] = 1;
+      // From the end of this run, the first entry met going counter-clockwise
+      const exit = angle(runs[r][runs[r].length - 1]);
+      let next = -1,
+        best = Infinity;
+      for (let e = 0; e < runs.length; e++) {
+        let span = entry[e] - exit;
+        if (span <= 0) span += TAU;
+        if (span < best) {
+          best = span;
+          next = e;
+        }
+      }
+      const [nx, ny] = runs[next][0];
+      d += `A${R} ${R} 0 ${best > Math.PI ? 1 : 0} 0 ${q(nx)} ${q(ny)}`;
+      // A run already stitched (a knob that touches the horizon can lead back to one): the shape is closed
+      if (next === first || done[next]) break;
+      r = next;
+      d += "L" + runs[r].map(pt).join("L");
+    }
+    d += "Z";
+  }
+  return d;
 }
 
 let count = 0;
@@ -79,10 +360,10 @@ class LuzGlobe extends HTMLElement {
     this._last = 0;
     this._yaw = this._pitch = this._vyaw = this._vpitch = 0;
     this._dragging = false;
-    this._torch = { x: 0, y: 0, on: false };
     this._sun = [0, 0, 1];
     this._sunX = NaN;
     this._seen = false;
+    this._here = null;
   }
 
   get sun() {
@@ -90,7 +371,8 @@ class LuzGlobe extends HTMLElement {
   }
 
   set sun(v) {
-    if (!Array.isArray(v) || v.length !== 3 || !v.every(Number.isFinite)) return;
+    if (!Array.isArray(v) || v.length !== 3 || !v.every(Number.isFinite))
+      return;
     this._sun = v.slice();
     this._shadeAll();
   }
@@ -102,6 +384,7 @@ class LuzGlobe extends HTMLElement {
     this._ro.observe(this);
     this._io = new IntersectionObserver(([entry]) => {
       this._seen = entry.isIntersecting;
+      if (this._seen) this._wantLand();
       this._request();
     });
     this._io.observe(this);
@@ -116,13 +399,20 @@ class LuzGlobe extends HTMLElement {
 
   _read() {
     const has = (a) => this.hasAttribute(a);
-    this._opts = { cities: has("cities"), twilight: has("twilight"), glint: has("glint"), rim: has("rim"), torch: has("torch"), spin: has("spin") };
-    const lat = parseFloat(this.getAttribute("lat")), lon = parseFloat(this.getAttribute("lon"));
+    this._opts = {
+      here: has("here") || has("cities"),
+      glint: has("glint"),
+      rim: has("rim"),
+      spin: has("spin"),
+    };
+    const lat = parseFloat(this.getAttribute("lat")),
+      lon = parseFloat(this.getAttribute("lon"));
     if (Number.isFinite(lat) && Number.isFinite(lon)) {
       this._yaw = -lon * DEG;
       this._pitch = Math.max(-50, Math.min(50, lat * 0.35)) * DEG;
+      this._here = vec(lat, lon);
     }
-    this._cityG.style.display = this._opts.cities ? "" : "none";
+    this._hereG.style.display = this._opts.here && this._here ? "" : "none";
     this._glint.style.display = this._opts.glint ? "" : "none";
     this._rimLight.style.display = this._opts.rim ? "" : "none";
   }
@@ -137,75 +427,185 @@ class LuzGlobe extends HTMLElement {
     const halo = document.createElement("div");
     halo.className = "home-globe__halo";
     this.append(halo);
-    const svg = (this._svg = el("svg", { viewBox: `0 0 ${VB} ${VB}`, "aria-hidden": "true" }, this));
+    const svg = (this._svg = el(
+      "svg",
+      { viewBox: `0 0 ${VB} ${VB}`, "aria-hidden": "true" },
+      this
+    ));
     const defs = el("defs", {}, svg);
     // In style, not in attributes: a presentation attribute takes no var()
-    const stops = (grad, list) => list.forEach(([offset, color, opacity]) => el("stop", { offset, style: `stop-color:${color};stop-opacity:${opacity}` }, grad));
-    const userSpace = { gradientUnits: "userSpaceOnUse", cx: CX, cy: CY, r: 330 };
+    const stops = (grad, list) =>
+      list.forEach(([offset, color, opacity]) =>
+        el(
+          "stop",
+          { offset, style: `stop-color:${color};stop-opacity:${opacity}` },
+          grad
+        )
+      );
+    const userSpace = {
+      gradientUnits: "userSpaceOnUse",
+      cx: CX,
+      cy: CY,
+      r: 330,
+    };
     this._gSun = el("radialGradient", { id: id + "-sun", ...userSpace }, defs);
-    stops(this._gSun, [[0, "var(--_sun)", 0.7], [0.55, "var(--_sun)", 0.18], [1, "var(--_sun)", 0]]);
-    this._gShade = el("radialGradient", { id: id + "-shade", ...userSpace }, defs);
-    stops(this._gShade, [[0, "var(--_shade)", "var(--_shade-opacity)"], [1, "var(--_shade)", 0]]);
-    stops(el("radialGradient", { id: id + "-glint" }, defs), [[0, "var(--_glint)", 0.95], [0.35, "var(--_sun)", 0.6], [1, "var(--_sun)", 0]]);
-    this._gRim = el("linearGradient", { id: id + "-rim", gradientUnits: "userSpaceOnUse", x1: CX, y1: 28, x2: CX, y2: 572 }, defs);
-    stops(this._gRim, [[0, "var(--_sun)", 0.9], [0.45, "var(--_sun)", 0]]);
-    el("circle", { cx: CX, cy: CY, r: R }, el("clipPath", { id: id + "-disc" }, defs));
+    stops(this._gSun, [
+      [0, "var(--_sun)", 0.7],
+      [0.55, "var(--_sun)", 0.18],
+      [1, "var(--_sun)", 0],
+    ]);
+    this._gShade = el(
+      "radialGradient",
+      { id: id + "-shade", ...userSpace },
+      defs
+    );
+    stops(this._gShade, [
+      [0, "var(--_shade)", "var(--_shade-opacity)"],
+      [1, "var(--_shade)", 0],
+    ]);
+    stops(el("radialGradient", { id: id + "-glint" }, defs), [
+      [0, "var(--_glint)", 0.95],
+      [0.35, "var(--_sun)", 0.6],
+      [1, "var(--_sun)", 0],
+    ]);
+    stops(el("radialGradient", { id: id + "-here" }, defs), [
+      [0, "var(--_sun)", 0.85],
+      [0.3, "var(--_sun)", 0.35],
+      [1, "var(--_sun)", 0],
+    ]);
+    this._gRim = el(
+      "linearGradient",
+      {
+        id: id + "-rim",
+        gradientUnits: "userSpaceOnUse",
+        x1: CX,
+        y1: 28,
+        x2: CX,
+        y2: 572,
+      },
+      defs
+    );
+    stops(this._gRim, [
+      [0, "var(--_sun)", 0.9],
+      [0.45, "var(--_sun)", 0],
+    ]);
+    el(
+      "circle",
+      { cx: CX, cy: CY, r: R },
+      el("clipPath", { id: id + "-disc" }, defs)
+    );
+    // The land: the cuts between pieces are drawn inside it only. The cuts and the
+    // coast are drawn once each, in defs, and used three times: a line of
+    // light, a line of shade and the cut itself
+    this._clip = el(
+      "path",
+      { "clip-rule": "evenodd" },
+      el("clipPath", { id: id + "-land" }, defs)
+    );
+    this._jigSrc = el("path", { id: id + "-jig" }, defs);
+    this._coastSrc = el("path", { id: id + "-coast" }, defs);
     const disc = () => el("g", { "clip-path": `url(#${id}-disc)` }, svg);
     const whole = { cx: CX, cy: CY, r: R };
 
     el("circle", { class: "home-globe__sea", ...whole }, svg);
-    this._sunlight = el("circle", { ...whole, fill: `url(#${id}-sun)` }, disc());
-    const dots = el("g", { class: "home-globe__dots" }, svg);
-    // Fourteen widths and opacities: six of sunlight on land, the same six near the edge, two of sea, two of twilight
-    this._buckets = [];
-    for (let b = 0; b < 6; b++) this._buckets.push({ w: 1.25 + 0.4 * b, o: 0.5 + 0.1 * b });
-    for (let b = 0; b < 6; b++) this._buckets.push({ w: (1.25 + 0.4 * b) * 0.7, o: 0.5 + 0.1 * b });
-    this._buckets.push({ w: 1.1, o: 0.34, cls: "home-globe__ocean" }, { w: 0.85, o: 0.22, cls: "home-globe__ocean" });
-    this._buckets.push({ w: 2.45, o: 0.95, cls: "home-globe__twilight" }, { w: 1.1, o: 0.6, cls: "home-globe__twilight" });
-    this._paths = this._buckets.map(({ o, cls }) => el("path", cls ? { "stroke-opacity": o, class: cls } : { "stroke-opacity": o }, dots));
-    this._glint = el("circle", { class: "home-globe__glint", r: 24, fill: `url(#${id}-glint)`, opacity: 0 }, disc());
-    this._nightshade = el("circle", { class: "home-globe__night", ...whole, fill: `url(#${id}-shade)` }, disc());
-    this._cityG = el("g", {}, svg);
-    this._cityGlow = el("path", { class: "home-globe__cities", "stroke-opacity": 0.28 }, this._cityG);
-    this._cityCore = el("path", { class: "home-globe__cities", "stroke-opacity": 0.95 }, this._cityG);
+    // The pieces: a faint grey per country, five tones, no two neighbours alike
+    this._tones = [0, 1, 2, 3, 4].map((t) =>
+      el(
+        "path",
+        {
+          class: `home-globe__piece home-globe__piece--${t}`,
+          "fill-rule": "evenodd",
+        },
+        svg
+      )
+    );
+    this._sunlight = el(
+      "circle",
+      { ...whole, fill: `url(#${id}-sun)` },
+      disc()
+    );
+    const uses = (href, parent, cls) =>
+      ["light", "shade", "line"].map((part) =>
+        el("use", { href: "#" + href, class: `${cls} ${cls}--${part}` }, parent)
+      );
+    const inland = el("g", { "clip-path": `url(#${id}-land)` }, svg);
+    this._jig = uses(id + "-jig", inland, "home-globe__jigsaw");
+    this._coasts = uses(
+      id + "-coast",
+      el("g", { class: "home-globe__lines" }, svg),
+      "home-globe__coast"
+    );
+    this._glint = el(
+      "circle",
+      {
+        class: "home-globe__glint",
+        r: 24,
+        fill: `url(#${id}-glint)`,
+        opacity: 0,
+      },
+      disc()
+    );
+    this._nightshade = el(
+      "circle",
+      { class: "home-globe__night", ...whole, fill: `url(#${id}-shade)` },
+      disc()
+    );
+    // The reader's light: above the night, so it shines there too
+    this._hereG = el("g", { class: "home-globe__here" }, svg);
+    el("circle", { r: 14, fill: `url(#${id}-here)` }, this._hereG);
+    el("circle", { class: "home-globe__here-core", r: 2.4 }, this._hereG);
     el("circle", { class: "home-globe__rim", ...whole }, svg);
-    this._rimLight = el("circle", { class: "home-globe__rim-light", ...whole, stroke: `url(#${id}-rim)` }, svg);
+    this._rimLight = el(
+      "circle",
+      { class: "home-globe__rim-light", ...whole, stroke: `url(#${id}-rim)` },
+      svg
+    );
     this._bindPointer();
   }
 
-  /** On the first size: the lattice; on every size: the level of detail. */
+  /** The land, once: when the browser is idle after the globe is first on screen. */
+  _wantLand() {
+    if (this._asked) return;
+    this._asked = true;
+    const go = () =>
+      loadLand().then(
+        () => {
+          this._T = getTopo();
+          this._P = new Float32Array(this._T.N * 3);
+          this.setAttribute("land", "");
+          this._shadeAll();
+        },
+        // Not loaded (offline, blocked): the globe stays without land, and a later view tries again
+        () => {
+          land = null;
+          this._asked = false;
+        }
+      );
+    if (typeof window.requestIdleCallback === "function")
+      window.requestIdleCallback(go, { timeout: 1500 });
+    else setTimeout(go, 200);
+  }
+
+  /** On every size: the level of detail. */
   _setLod() {
     const w = this.clientWidth;
     if (!w) return;
-    if (!this._L) {
-      this._L = getLattice();
-      this._shade = new Uint8Array(this._L.N);
-      this._twilight = new Uint8Array(this._L.N);
+    const lod = w < 420 ? 1.9 : 1;
+    this._lod = lod;
+    // The cuts between pieces: a fine whole line, barely there; the coast
+    // dotted (round caps on zero-length dashes)
+    for (const u of this._jig)
+      u.setAttribute("stroke-width", (0.4 * lod).toFixed(2));
+    for (const u of this._coasts) {
+      u.setAttribute("stroke-width", (0.5 * lod).toFixed(2));
+      u.setAttribute("stroke-dasharray", `0 ${(1.3 * lod).toFixed(2)}`);
     }
-    const lite = w < 420, lod = lite ? 1.9 : 1;
-    this._kinds = lite ? this._L.kindLite : this._L.kindFull;
-    this._cut = ((this.clientHeight || w) / w) * VB + 12;
-    this._buckets.forEach(({ w: width }, i) => this._paths[i].setAttribute("stroke-width", (width * lod).toFixed(2)));
-    this._cityGlow.setAttribute("stroke-width", (6 * lod).toFixed(2));
-    this._cityCore.setAttribute("stroke-width", (2.2 * lod).toFixed(2));
     this._shadeAll();
   }
 
-  /* ---- light ---- */
+  /* ---- light: the sun's gradients do it; a new sun asks for a frame ---- */
   _shadeAll() {
-    const L = this._L;
-    if (!L) return;
-    const sun = this._sun, { X, Y, Z, N } = L, shade = this._shade, tw = this._twilight;
-    for (let k = 0; k < N; k++) {
-      const l = X[k] * sun[0] + Y[k] * sun[1] + Z[k] * sun[2];
-      shade[k] = Math.round(clamp01((l + 0.1) / 0.6) * 5);
-      tw[k] = l > -0.08 && l < 0.08 ? 1 : 0;
-    }
-    // Is the sun's reflection on land? Then it is dimmer
-    const slat = Math.asin(sun[1]) / DEG, slon = Math.atan2(sun[0], sun[2]) / DEG;
-    const i = Math.max(0, Math.min(ROWS - 1, Math.round((slat + 90 - D / 2) / D)));
-    const m = L.rowLen[i], j = ((Math.round(((slon + 180) / 360) * m - (i % 2) * 0.5) % m) + m) % m, kk = L.rowStart[i] + j;
-    this._glintOnLand = ((L.bits[kk >> 3] >> (kk & 7)) & 1) === 1;
+    if (!this._lod) return;
     this._dirty = true;
     // A still globe draws now, with no animation frame (reduced motion asks for none)
     if (this._raf) return;
@@ -214,82 +614,147 @@ class LuzGlobe extends HTMLElement {
 
   /* ---- draw ---- */
   _draw() {
-    if (!this._L || this.hidden) return;
-    const { X, Y, Z, N, city } = this._L, kinds = this._kinds, shade = this._shade, tw = this._twilight, sun = this._sun, opts = this._opts, cut = this._cut;
-    const cy = Math.cos(this._yaw), sy = Math.sin(this._yaw), cp = Math.cos(this._pitch), sp = Math.sin(this._pitch);
-    const buf = this._buckets.map(() => "");
-    const torchOn = opts.torch && this._torch.on, tx = this._torch.x, ty = this._torch.y;
-    for (let k = 0; k < N; k++) {
-      const kind = kinds[k];
-      if (!kind) continue;
-      const x = X[k], y = Y[k], z = Z[k];
-      const x1 = x * cy + z * sy, z1 = z * cy - x * sy, z2 = y * sp + z1 * cp;
-      if (z2 <= 0.015) continue;
-      const sy2 = CY - R * (y * cp - z1 * sp);
-      if (sy2 > cut) continue;
-      const sx2 = CX + R * x1;
-      let b;
-      if (opts.twilight && tw[k]) b = kind === 2 ? 14 : 15;
-      else {
-        let sh = shade[k];
-        if (torchOn) {
-          const dx = sx2 - tx, dy = sy2 - ty, d2 = dx * dx + dy * dy;
-          if (d2 < 4900) sh = Math.min(5, sh + (d2 < 1225 ? 3 : 2));
-        }
-        b = kind === 2 ? sh + (z2 < 0.32 ? 6 : 0) : sh > 2 ? 12 : 13;
+    const T = this._T;
+    if (this.hidden) return;
+    const P = this._P,
+      sun = this._sun,
+      opts = this._opts;
+    const cy = Math.cos(this._yaw),
+      sy = Math.sin(this._yaw),
+      cp = Math.cos(this._pitch),
+      sp = Math.sin(this._pitch);
+    const project = (X, Y, Z, out) => {
+      for (let k = 0; k < X.length; k++) {
+        const x = X[k],
+          y = Y[k],
+          z = Z[k];
+        const x1 = x * cy + z * sy,
+          z1 = z * cy - x * sy;
+        out[3 * k] = CX + R * x1;
+        out[3 * k + 1] = CY - R * (y * cp - z1 * sp);
+        out[3 * k + 2] = y * sp + z1 * cp;
       }
-      buf[b] += "M" + q(sx2) + " " + q(sy2) + "h.1";
+    };
+    // The land, once it has arrived
+    if (T) {
+      project(T.X, T.Y, T.Z, P);
+
+      // The coast, then the cuts between pieces (the borders): every arc, once
+      let coasts = "",
+        jig = "";
+      const idx = [];
+      for (let a = 0; a < T.start.length; a++) {
+        idx.length = 0;
+        for (let i = T.start[a]; i < T.start[a] + T.len[a]; i++) idx.push(i);
+        if (a < T.coast) coasts += strokeOf(P, idx, T.seam);
+        else jig += strokeOf(P, idx);
+      }
+      this._coastSrc.setAttribute("d", coasts);
+      this._jigSrc.setAttribute("d", jig);
+
+      // The pieces: each country filled with its tone, one path per tone; all
+      // of them, the land, are the clip of the cuts
+      const tones = this._tones.map(() => "");
+      for (const { tone, loops } of T.countries)
+        for (const loop of loops) tones[tone] += fillOf(P, loop);
+      this._tones.forEach((path, t) => path.setAttribute("d", tones[t]));
+      this._clip.setAttribute("d", tones.join(""));
     }
-    buf.forEach((d, b) => this._paths[b].setAttribute("d", d));
 
     // The sun in view space
-    const sx1 = sun[0] * cy + sun[2] * sy, sz1 = sun[2] * cy - sun[0] * sy;
-    const sz2 = sun[1] * sp + sz1 * cp, sy2 = sun[1] * cp - sz1 * sp;
+    const sx1 = sun[0] * cy + sun[2] * sy,
+      sz1 = sun[2] * cy - sun[0] * sy;
+    const sz2 = sun[1] * sp + sz1 * cp,
+      sy2 = sun[1] * cp - sz1 * sp;
     this._gSun.setAttribute("cx", q(CX + R * sx1 * 1.1));
     this._gSun.setAttribute("cy", q(CY - R * sy2 * 1.1));
-    this._sunlight.setAttribute("opacity", clamp01((sz2 + 0.35) / 0.7).toFixed(2));
+    this._sunlight.setAttribute(
+      "opacity",
+      clamp01((sz2 + 0.35) / 0.7).toFixed(2)
+    );
     this._gShade.setAttribute("cx", q(CX - R * sx1 * 1.1));
     this._gShade.setAttribute("cy", q(CY + R * sy2 * 1.1));
-    this._nightshade.setAttribute("opacity", clamp01((-sz2 + 0.35) / 0.7).toFixed(2));
+    this._nightshade.setAttribute(
+      "opacity",
+      clamp01((-sz2 + 0.35) / 0.7).toFixed(2)
+    );
+    // The relief of the cuts: the light towards the sun, the shade away from it (from the top left when the sun is behind)
+    const sl = Math.hypot(sx1, sy2),
+      lit = sl > 0.2 && sz2 > -0.3,
+      ux = lit ? sx1 / sl : -0.7,
+      uy = lit ? -sy2 / sl : -0.7,
+      off = 0.55 * this._lod;
+    for (const [light, shade] of [this._jig, this._coasts]) {
+      light.setAttribute(
+        "transform",
+        `translate(${q(ux * off)} ${q(uy * off)})`
+      );
+      shade.setAttribute(
+        "transform",
+        `translate(${q(-ux * off)} ${q(-uy * off)})`
+      );
+    }
     if (Number.isNaN(this._sunX) || Math.abs(sx1 - this._sunX) > 0.015) {
       this._sunX = sx1;
-      this.dispatchEvent(new CustomEvent("home-globe:sun", { bubbles: true, detail: { x: sx1 } }));
+      this.dispatchEvent(
+        new CustomEvent("home-globe:sun", { bubbles: true, detail: { x: sx1 } })
+      );
     }
     if (opts.glint) {
-      this._glint.setAttribute("transform", `translate(${q(CX + R * sx1)} ${q(CY - R * sy2)})`);
-      this._glint.setAttribute("opacity", (clamp01((sz2 - 0.2) / 0.6) * (this._glintOnLand ? 0.3 : 1)).toFixed(2));
+      this._glint.setAttribute(
+        "transform",
+        `translate(${q(CX + R * sx1)} ${q(CY - R * sy2)})`
+      );
+      this._glint.setAttribute(
+        "opacity",
+        (clamp01((sz2 - 0.2) / 0.6) * 0.6).toFixed(2)
+      );
     }
     if (opts.rim) {
-      const sl = Math.hypot(sx1, sy2) || 1, ux = sx1 / sl, uy = sy2 / sl;
+      const sl = Math.hypot(sx1, sy2) || 1,
+        ux = sx1 / sl,
+        uy = sy2 / sl;
       this._gRim.setAttribute("x1", q(CX + R * ux));
       this._gRim.setAttribute("y1", q(CY - R * uy));
       this._gRim.setAttribute("x2", q(CX - R * ux));
       this._gRim.setAttribute("y2", q(CY + R * uy));
-      this._rimLight.setAttribute("opacity", (0.35 + 0.65 * clamp01(-sz2)).toFixed(2));
+      this._rimLight.setAttribute(
+        "opacity",
+        (0.35 + 0.65 * clamp01(-sz2)).toFixed(2)
+      );
     }
-    if (opts.cities) {
-      let d = "";
-      for (let i = 0; i < city.n; i++) {
-        const x = city.x[i], y = city.y[i], z = city.z[i];
-        if (x * sun[0] + y * sun[1] + z * sun[2] > -0.08) continue;
-        const x1 = x * cy + z * sy, z1 = z * cy - x * sy;
-        if (y * sp + z1 * cp <= 0.05) continue;
-        const py = CY - R * (y * cp - z1 * sp);
-        if (py <= cut) d += "M" + q(CX + R * x1) + " " + q(py) + "h.1";
-      }
-      this._cityCore.setAttribute("d", d);
-      this._cityGlow.setAttribute("d", d);
+    if (opts.here && this._here) {
+      const [x, y, z] = this._here,
+        x1 = x * cy + z * sy,
+        z1 = z * cy - x * sy,
+        z2 = y * sp + z1 * cp;
+      this._hereG.setAttribute(
+        "transform",
+        `translate(${q(CX + R * x1)} ${q(CY - R * (y * cp - z1 * sp))})`
+      );
+      this._hereG.setAttribute("opacity", clamp01(z2 / 0.2).toFixed(2));
     }
     this._dirty = false;
   }
 
   /* ---- motion: a frame only while something moves ---- */
   _spinning() {
-    return this._opts.spin && this._seen && !this.hidden && !this._reduced.matches && !document.hidden;
+    return (
+      this._opts.spin &&
+      this._seen &&
+      !this.hidden &&
+      !this._reduced.matches &&
+      !document.hidden
+    );
   }
 
   _moving() {
-    return this._dragging || Math.abs(this._vyaw) > 2e-6 || Math.abs(this._vpitch) > 2e-6 || this._spinning();
+    return (
+      this._dragging ||
+      Math.abs(this._vyaw) > 2e-6 ||
+      Math.abs(this._vpitch) > 2e-6 ||
+      this._spinning()
+    );
   }
 
   _request() {
@@ -317,7 +782,8 @@ class LuzGlobe extends HTMLElement {
     }
     this._pitch = Math.max(-75 * DEG, Math.min(75 * DEG, this._pitch));
     if (this._dirty) this._draw();
-    if (this._moving()) this._raf = requestAnimationFrame((next) => this._frame(next));
+    if (this._moving())
+      this._raf = requestAnimationFrame((next) => this._frame(next));
   }
 
   _changed() {
@@ -327,7 +793,9 @@ class LuzGlobe extends HTMLElement {
 
   /* ---- pointer ---- */
   _bindPointer() {
-    let px = 0, py = 0, pt = 0;
+    let px = 0,
+      py = 0,
+      pt0 = 0;
     const perPx = () => VB / (this.clientWidth || VB) / R;
     this.addEventListener("pointerdown", (e) => {
       if (e.button !== 0 && e.pointerType === "mouse") return;
@@ -335,30 +803,24 @@ class LuzGlobe extends HTMLElement {
       this._vyaw = this._vpitch = 0;
       px = e.clientX;
       py = e.clientY;
-      pt = e.timeStamp;
+      pt0 = e.timeStamp;
       this.setPointerCapture(e.pointerId);
       this.setAttribute("dragging", "");
       this._request();
     });
     this.addEventListener("pointermove", (e) => {
-      if (this._opts.torch && (e.pointerType === "mouse" || this._dragging)) {
-        const r = this.getBoundingClientRect();
-        this._torch = { x: ((e.clientX - r.left) / r.width) * VB, y: ((e.clientY - r.top) / r.width) * VB, on: true };
-        this._changed();
-      }
       if (!this._dragging) return;
-      const k = perPx(), dx = e.clientX - px, dy = e.clientY - py, dt = Math.max(1, e.timeStamp - pt);
+      const k = perPx(),
+        dx = e.clientX - px,
+        dy = e.clientY - py,
+        dt = Math.max(1, e.timeStamp - pt0);
       this._yaw += dx * k;
       this._pitch += dy * k;
       this._vyaw = (dx * k) / dt;
       this._vpitch = (dy * k) / dt;
       px = e.clientX;
       py = e.clientY;
-      pt = e.timeStamp;
-      this._changed();
-    });
-    this.addEventListener("pointerleave", () => {
-      this._torch.on = false;
+      pt0 = e.timeStamp;
       this._changed();
     });
     const release = (e) => {
@@ -366,12 +828,14 @@ class LuzGlobe extends HTMLElement {
       this._dragging = false;
       this.removeAttribute("dragging");
       // Under reduced motion a throw does not keep turning
-      if (e.timeStamp - pt > 80 || this._reduced.matches) this._vyaw = this._vpitch = 0;
-      if (e.pointerType !== "mouse") this._torch.on = false;
+      if (e.timeStamp - pt0 > 80 || this._reduced.matches)
+        this._vyaw = this._vpitch = 0;
       this._changed();
     };
-    for (const type of ["pointerup", "pointercancel", "lostpointercapture"]) this.addEventListener(type, release);
+    for (const type of ["pointerup", "pointercancel", "lostpointercapture"])
+      this.addEventListener(type, release);
   }
 }
 
-if (!customElements.get("home-globe")) customElements.define("home-globe", LuzGlobe);
+if (!customElements.get("home-globe"))
+  customElements.define("home-globe", LuzGlobe);

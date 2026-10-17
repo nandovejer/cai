@@ -32,16 +32,8 @@
       data-luz-label-copied-status="{{t:js.copied-status}}"
       data-luz-label-copy-failed="{{t:js.copy-failed}}"
       data-luz-label-light-open="{{t:light.open}}"
-      data-luz-label-light-looks="{{t:light.looks}}"
-      data-luz-label-light-globe="{{t:light.globe}}"
-      data-luz-label-light-city="{{t:light.city}}"
-      data-luz-label-light-map="{{t:light.map}}"
       data-luz-label-light-say-globe="{{t:light.say.globe}}"
-      data-luz-label-light-say-city="{{t:light.say.city}}"
-      data-luz-label-light-say-map="{{t:light.say.map}}"
       data-luz-label-light-globe-alt="{{t:light.alt.globe}}"
-      data-luz-label-light-city-alt="{{t:light.alt.city}}"
-      data-luz-label-light-map-alt="{{t:light.alt.map}}"
       data-luz-label-light-scrub="{{t:light.scrub}}"
       data-luz-label-light-live="{{t:light.live}}"
       data-luz-label-light-sep="{{t:light.sep}}"
@@ -96,13 +88,13 @@
     </section>
 
     <!-- ====================== 2. THE LIGHT ======================
-         The visitor's sky over a globe, a city or a map (apps/landing/light/),
+         The visitor's sky over a globe (apps/landing/light/),
          from edge to edge of the window. Without JavaScript the element stays
          empty, light.css keeps its room and the sentence after it says what
          the room is for; once <home-light> is defined the sentence goes -->
     <section class="luz-landing-hero__media luz-landing-hero__media--bleed landing-light" id="light" aria-labelledby="light-title">
       <h2 class="u-sr-only" id="light-title">{{t:light.title}}</h2>
-      <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
+      <home-light bleed favicon></home-light>
       <p class="landing-light__nojs">{{t:light.nojs}}</p>
     </section>
 

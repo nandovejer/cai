@@ -27,4 +27,4 @@ Not on the allowlist, accepted by name (`ACCEPTED_DEV` in `scripts/check-license
 
 Data, not a dependency: the Pages site serves it, it is in the public domain and its origin is noted next to it (`DATA` in `scripts/check-license.js`):
 
-- Natural Earth 1:50m land polygons (public domain, naturalearthdata.com terms of use): the land of the home page's globe, rasterised into `apps/landing/light/globe.js`.
+- Natural Earth 1:110m admin-0 countries (public domain, naturalearthdata.com terms of use): the coast, the borders and the countries of the home's globe, re-encoded by `scripts/globe-puzzle-data.js` into `apps/landing/light/globe-data.js`.

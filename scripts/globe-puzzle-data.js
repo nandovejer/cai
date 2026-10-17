@@ -1,13 +1,13 @@
 /**
- * The data of the home's puzzle globe (apps/landing/light/puzzle.js): the
+ * The data of the home's globe (apps/landing/light/globe-data.js): the
  * land, from Natural Earth 1:110m admin-0 countries (public domain,
  * naturalearthdata.com) read as the TopoJSON of the world-atlas package
  * (countries-110m.json): the coast, the borders and the countries.
  *
  *   node scripts/globe-puzzle-data.js <countries-110m.json> [--area=<deg2>] [--write]
  *
- * Prints the sizes; with --write it replaces the data block of puzzle.js,
- * between its two marker lines. The encoding (decoded by puzzle.js):
+ * Prints the sizes; with --write it replaces the data block of globe-data.js,
+ * between its two marker lines. The encoding (decoded by globe.js):
  *
  * - A char is 6 bits of a 64-char alphabet. In COUNTRIES a number is 5 bits
  *   of payload a char, the sixth a "more follows" flag; ARCS and BORDERS are
@@ -272,14 +272,14 @@ console.log(
 );
 
 if (write) {
-  const file = new URL("../apps/landing/light/puzzle.js", import.meta.url);
+  const file = new URL("../apps/landing/light/globe-data.js", import.meta.url);
   const source = readFileSync(file, "utf8");
   const START = "// luz:puzzle-data:start",
     END = "// luz:puzzle-data:end";
   const a = source.indexOf(START),
     b = source.indexOf(END);
-  if (a < 0 || b < 0) throw new Error("puzzle.js has no data markers");
-  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst K = [${K}];\nconst ARCS = "${ARCS}";\nconst BORDERS = "${BORDERS}";\nconst COUNTRIES = "${COUNTRIES}";\n`;
+  if (a < 0 || b < 0) throw new Error("globe-data.js has no data markers");
+  const block = `${START}\nexport const QX = ${QX}, QY = ${QY};\nexport const K = [${K}];\nexport const ARCS = "${ARCS}";\nexport const BORDERS = "${BORDERS}";\nexport const COUNTRIES = "${COUNTRIES}";\n`;
   writeFileSync(file, source.slice(0, a) + block + source.slice(b));
-  console.log("written to apps/landing/light/puzzle.js");
+  console.log("written to apps/landing/light/globe-data.js");
 }

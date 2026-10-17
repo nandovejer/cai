@@ -111,15 +111,9 @@ home-light .home-light__glow {
   mask-composite: intersect;
 }
 
-home-light:not([look="globe"]) .home-light__glow {
-  display: none;
-}
-
 /* The globe: as tall as the box, at most twice as wide as tall, so a wide
-   screen shows its upper half and a narrow one more of it. A quarter
-   opaque: a backdrop, not a picture (the line and the bar keep theirs) */
+   screen shows its upper half and a narrow one more of it */
 home-light .home-light__stage > home-globe {
-  opacity: 0.25;
   height: 100%;
   max-width: 100%;
   aspect-ratio: 2 / 1;

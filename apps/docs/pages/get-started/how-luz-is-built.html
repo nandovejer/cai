@@ -13,8 +13,25 @@ toc: false
 
     <section class="docs-block" id="tests-first" aria-labelledby="tests-first-title">
       <h2 class="docs-chapter__title" id="tests-first-title">Tests first</h2>
-      <p>Every change starts with a failing test. The first commit is a <code>test:</code> commit that fails without the change, and the change that follows makes it pass. A bug fix starts with the test that reproduces it.</p>
-      <p>One command, <code>pnpm check:all</code>, runs every check. The rules those checks enforce are in <a href="https://github.com/nandovejer/luz/blob/main/PRINCIPLES.md">PRINCIPLES.md</a>, and <a href="https://github.com/nandovejer/luz/blob/main/dev/TESTING.md">TESTING.md</a> says how to write the test.</p>
+      <p>Every change starts with a failing test. The test says what the change must do, and it exists before the change does.</p>
+      <p>The loop has two steps:</p>
+      <ol>
+        <li>Commit a <code>test:</code> commit. The test must fail without the change, and it must fail for the right reason: the missing behaviour, not a typo in the test.</li>
+        <li>Commit the change that makes it pass. Nobody weakens a test to get it green.</li>
+      </ol>
+      <p>A bug fix starts with the test that reproduces the bug. The test is read before the code.</p>
+      <p>The tests are of several kinds:</p>
+      <ul>
+        <li><strong>Unit tests</strong>, with Vitest, for logic and values.</li>
+        <li><strong>Browser tests</strong>, with Playwright in Chromium, once with JavaScript and once without. They cover behaviour, the keyboard and the state of a page when the script does not run.</li>
+        <li><strong>Accessibility tests.</strong> axe scans every page in the light, dark and high contrast modes. A serious or critical problem fails the build.</li>
+        <li><strong>Docs tests.</strong> The contrast ratios and token lists on the docs pages are computed from the CSS and recomputed by a test, so they cannot drift from the code.</li>
+        <li><strong>Size budgets.</strong> A file that grows past its ceiling fails, and nobody raises a ceiling.</li>
+        <li><strong>Checks</strong> on the shipped strings, the licences and the contents of each package.</li>
+      </ul>
+      <p>One command, <code>pnpm check:all</code>, runs all of them.</p>
+      <p>Safari and Firefox are not in that command. People review them before a release, and the open reviews are public.</p>
+      <p>The rules those checks enforce are in <a href="https://github.com/nandovejer/luz/blob/main/PRINCIPLES.md">PRINCIPLES.md</a>, and <a href="https://github.com/nandovejer/luz/blob/main/dev/TESTING.md">TESTING.md</a> says how to write the test.</p>
     </section>
 
     <section class="docs-block" id="zero-dependencies" aria-labelledby="zero-dependencies-title">

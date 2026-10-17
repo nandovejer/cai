@@ -9,6 +9,7 @@ keywords: nav bar, navigation bar
 -->
     <div class="docs-component" id="c-navbar">
           <h2 id="example">Example</h2>
+          <p>A bar with the name Acme and three links: Products, Pricing and Support.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <div class="docs-bar">
@@ -30,7 +31,8 @@ keywords: nav bar, navigation bar
           <p class="docs-demo__note">At 768 px of window width and below the links collapse into a menu. Its panel opens under this example's bar where the browser supports CSS anchor positioning, and under the top of the window, where a header sits, elsewhere.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it. This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA).</p>
+          <p>If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it.</p>
+          <p>This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA).</p>
           <ul>
             <li><strong>Browsers without anchor positioning.</strong> Where CSS anchor positioning is supported (Chrome and Edge 125, Safari 26, Firefox 147) the panel opens under the bar wherever it ends, even with a notice or the cookie banner above it. Elsewhere it opens at <code>--luz-bar-h</code> from the top of the window: with enlarged text and a bar that wraps to a second row, or with a band above the bar before the page scrolls, it can cover part of the bar. Escape or a click outside closes it.</li>
             <li><strong>Forced colors in Firefox.</strong> The dim layer behind the open menu is not drawn, so the page is not dimmed. The panel keeps its border, so it is still set apart.</li>

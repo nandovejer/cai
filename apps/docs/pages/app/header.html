@@ -10,6 +10,7 @@ toc: h2,h3
 -->
     <div class="docs-component" id="p-app-header">
           <h2 id="example">Example</h2>
+          <p>The header of an application, with the menu button, the product name and the account list.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <header class="luz-app-header">
@@ -32,7 +33,8 @@ toc: h2,h3
               </div>
             </header>
           </div>
-          <p class="docs-demo__note">The bar at a window of full width: the sidebar is a column beside it, so the product name stays there. At 768 px and below the sidebar is a drawer, the menu button opens it and the product name shows beside it. The example is not sticky: in a page, <code class="luz-code-inline">.o-sticky</code> keeps the bar at the top. The account list opens under the button: press it.</p>
+          <p class="docs-demo__note">The bar at a window of full width: the sidebar is a column beside it, so the product name stays there. At 768 px and below the sidebar is a drawer, the menu button opens it and the product name shows beside it.</p>
+          <p class="docs-demo__note">The example is not sticky: in a page, <code class="luz-code-inline">.o-sticky</code> keeps the bar at the top. The account list opens under the button: press it.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>The header's own issues are those of the pieces of core it is made of.</p>
@@ -109,7 +111,8 @@ toc: h2,h3
               <li>The view's <code>h1</code> and its main action are not here: they are the first row of the <a href="/docs/app/dashboard/">dashboard</a>. The bar holds only what is the same in every view.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Nothing changes. The drawer and the account list are popovers opened by the button's <code>popovertarget</code>, with no script, and site's search shows its link to the A–Z index. In a browser without the popover API the sidebar stays in the page above the content, the menu button is not shown, and the account list stays under its button.</p>
+            <p>Nothing changes.</p>
+            <p>The drawer and the account list are popovers opened by the button's <code>popovertarget</code>, with no script, and site's search shows its link to the A–Z index. In a browser without the popover API the sidebar stays in the page above the content, the menu button is not shown, and the account list stays under its button.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
               <li><strong>Order:</strong> the order of the source and of the screen. Skip link, the sidebar (a column from 769 px), the search, the account, then the view. At 768 px and below the closed drawer is out of the order: skip link, menu button, search, account, then the view.</li>

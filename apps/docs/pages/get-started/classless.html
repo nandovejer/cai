@@ -75,7 +75,8 @@ import "@luz-ds/core/classless.css";</code></pre>
 
     <section class="docs-block" id="flow" aria-labelledby="flow-title">
       <h2 class="docs-chapter__title" id="flow-title">Space between blocks</h2>
-      <p>LUZ's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, <code>details</code>, <code>fieldset</code>, <code>form</code> or address starts one step (<code>--luz-space-md</code>) below the block before it. A heading starts further down (<code>--luz-space-xl</code>), and the block that follows it sits closer (<code>--luz-space-sm</code>), so each heading belongs to what it introduces.</p>
+      <p>LUZ's reset removes every margin, so a Markdown article would run together. Inside the zone, a paragraph, list, quotation, figure, preformatted block, table, rule, <code>details</code>, <code>fieldset</code>, <code>form</code> or address starts one step (<code>--luz-space-md</code>) below the block before it.</p>
+      <p>A heading starts further down (<code>--luz-space-xl</code>), and the block that follows it sits closer (<code>--luz-space-sm</code>), so each heading belongs to what it introduces.</p>
       <ul>
         <li>The first child of its parent has no margin above it, so the zone does not push itself away from its container.</li>
         <li><code>div</code>, <code>span</code> and inline elements are left alone: their layout is yours. For a column of blocks you build yourself, use <a href="/docs/components/layout/"><code>.o-stack</code></a>.</li>

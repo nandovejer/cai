@@ -11,6 +11,7 @@ toc: h2,h3
 -->
     <div class="docs-component" id="p-consent">
           <h2 id="example">Example</h2>
+          <p>The cookie banner of a winery, with its two answers and the choice of which cookies to allow.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <luz-consent>
@@ -45,11 +46,18 @@ toc: h2,h3
               </section>
             </luz-consent>
             <p class="o-actions"><button class="luz-btn luz-btn--outline" type="button" data-luz-consent-open hidden>Change cookie settings</button></p>
-            <p class="docs-demo__note">The example is live: until you answer it, it shows as a band at the bottom of this window, as it would on your site. Its answer is stored under its own key, <code>luz-consent-demo</code>, so it does not count as an answer for this site; the button above shows it again. Without JavaScript the banner and its button stay hidden.</p>
+            <p class="docs-demo__note">The example is live: until you answer it, it shows as a band at the bottom of this window, as it would on your site. Its answer is stored under its own key, <code>luz-consent-demo</code>, so it does not count as an answer for this site; the button above shows it again.</p>
+            <p class="docs-demo__note">Without JavaScript the banner and its button stay hidden.</p>
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way. The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again. In a window less than 30 rem (480 px) tall the banner is not fixed: it is in the flow at the top of the page, where its markup is, so the page moves down when it appears. The saved state hides when focus leaves it for the page, but not when you click an empty part of the page: use its Close button. It has not been tested with a screen reader.</p>
+          <p>Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way.</p>
+          <ul>
+            <li>The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again.</li>
+            <li>In a window less than 30 rem (480 px) tall the banner is not fixed: it is in the flow at the top of the page, where its markup is, so the page moves down when it appears.</li>
+            <li>The saved state hides when focus leaves it for the page, but not when you click an empty part of the page. Use its Close button.</li>
+            <li>It has not been tested with a screen reader.</li>
+          </ul>
           <nav class="luz-tabs docs-view-tabs" aria-label="Cookie consent documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -57,7 +65,8 @@ toc: h2,h3
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>Right after the <a href="/docs/components/skip-link/">skip link</a>, before a <a href="/docs/site/banner/">banner</a> and the header of the page (a <a href="/docs/landing/header/">landing</a> or <a href="/docs/cms/header/">CMS</a> header): it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its <code>value</code> the category’s name. <code>site.min.js</code> loads the banner’s own file, <code>consent.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
+            <p>Right after the <a href="/docs/components/skip-link/">skip link</a>, before a <a href="/docs/site/banner/">banner</a> and the header of the page (a <a href="/docs/landing/header/">landing</a> or <a href="/docs/cms/header/">CMS</a> header): it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its <code>value</code> the category’s name.</p>
+            <p><code>site.min.js</code> loads the banner’s own file, <code>consent.min.js</code>, when the browser is idle; a page without <code>site.min.js</code> loads that file on its own.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
@@ -143,7 +152,8 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@luz-ds/site</code>, two native forms and a file of its own, <code>@luz-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed), which defines <code>&lt;luz-consent&gt;</code>. <code>site.min.js</code> loads it when the browser is idle, and only on a page with a <code>&lt;luz-consent&gt;</code>, so no other page pays for it. A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.</p>
+            <p>CSS from <code>@luz-ds/site</code>, two native forms and a file of its own, <code>@luz-ds/site/consent</code> (<code>dist/consent.min.js</code>, under 1 kB compressed), which defines <code>&lt;luz-consent&gt;</code>. <code>site.min.js</code> loads it when the browser is idle, and only on a page with a <code>&lt;luz-consent&gt;</code>, so no other page pays for it.</p>
+            <p>A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.</p>
             <ul>
               <li><strong>When it asks:</strong> when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, as a band at the bottom of the window, so nothing on the page moves: it traps nothing and takes no focus, and the page keeps room for it at its end and scrolls what Tab reaches above it, so the page can be read and used before answering.</li>
               <li><strong>The answer:</strong> Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read. It goes away with its Close button, or when focus leaves the banner for the page; focus stays where it went.</li>
@@ -153,7 +163,8 @@ document.addEventListener(&quot;luz:consent&quot;, (event) =&gt; {
               <li>The script writes no text: every word is in your markup, in the page’s language.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>The banner and the button that shows it again stay hidden, by their <code>hidden</code> attribute. Without a script none of the site’s own scripts run, so there is nothing to ask about, and buttons that would do nothing are never shown. Link the cookie policy from the footer of every page, so it can always be read.</p>
+            <p>The banner and the button that shows it again stay hidden, by their <code>hidden</code> attribute. Without a script none of the site’s own scripts run, so there is nothing to ask about, and buttons that would do nothing are never shown.</p>
+            <p>Link the cookie policy from the footer of every page, so it can always be read.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
               <li><strong>Order:</strong> the skip link stays first, so a returning visitor can still jump to the content. The banner comes next, before the header, although it shows at the bottom: the policy link, Accept, Reject, then the button that opens the categories.</li>

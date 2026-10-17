@@ -10,6 +10,7 @@ toc: h2,h3
 -->
     <div class="docs-component" id="p-lang-switch">
           <h2 id="example">Example</h2>
+          <p>The language switch of a header, with English, Spanish and Arabic.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <luz-lang-switch>
@@ -27,7 +28,8 @@ toc: h2,h3
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe. It has not been tested with a screen reader yet.</p>
+          <p>The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe.</p>
+          <p>It has not been tested with a screen reader yet.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Language switch documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -76,7 +78,8 @@ toc: h2,h3
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>Changing language is going to another page, so the switch is a list of links. The button opens it with the native <code>popovertarget</code>, and <code>@luz-ds/site</code> only styles it: there is no script. <code>&lt;luz-lang-switch&gt;</code> is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the <code>nav</code> carry the meaning.</p>
+            <p>Changing language is going to another page, so the switch is a list of links. The button opens it with the native <code>popovertarget</code>, and <code>@luz-ds/site</code> only styles it: there is no script.</p>
+            <p><code>&lt;luz-lang-switch&gt;</code> is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the <code>nav</code> carry the meaning.</p>
             <ul>
               <li>Each language is named in that language, with <code>lang</code> so a screen reader pronounces it, and <code>hreflang</code> so the link says where it goes.</li>
               <li>The list is a popover in the top layer, fixed under the header at the inline end; it mirrors in right-to-left text.</li>

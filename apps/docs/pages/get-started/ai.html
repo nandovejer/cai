@@ -8,7 +8,8 @@ keywords: llms.txt, agent, claude, copilot, cursor, manifest, check
 -->
     <section class="docs-block" aria-labelledby="start">
       <h2 class="docs-chapter__title" id="start">Give your agent LUZ</h2>
-      <p class="docs-lead">LUZ is plain HTML and CSS, so an AI coding agent can write it when it knows which class names exist. Paste this prompt into your agent. It points the agent at the files below and asks it to run the checker on what it wrote. What the checker does not do is in <a href="#limits">What this does not do</a>.</p>
+      <p class="docs-lead">LUZ is plain HTML and CSS, so an AI coding agent can write it when it knows which class names exist. Paste this prompt into your agent.</p>
+      <p>It points the agent at the files below and asks it to run the checker on what it wrote. What the checker does not do is in <a href="#limits">What this does not do</a>.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">Prompt</span>
@@ -26,7 +27,8 @@ keywords: llms.txt, agent, claude, copilot, cursor, manifest, check
 
     <section class="docs-block" aria-labelledby="check">
       <h2 class="docs-chapter__title" id="check">Check what an agent wrote</h2>
-      <p class="docs-lead"><code>npx @luz-ds/check</code> reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and color tokens are wrong. It reads files and writes nothing. It needs Node 20 or later.</p>
+      <p class="docs-lead"><code>npx @luz-ds/check</code> reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and color tokens are wrong. It reads files and writes nothing.</p>
+      <p>It needs Node 20 or later.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">Shell</span>
@@ -36,7 +38,8 @@ keywords: llms.txt, agent, claude, copilot, cursor, manifest, check
 npx @luz-ds/check index.html css/site.css
 npx @luz-ds/check src --json</code></pre>
       </div>
-      <p>Say <code>npx @luz-ds/check</code>, with the scope. A path is a file, a folder (read recursively: <code>.html</code>, <code>.htm</code> and <code>.css</code>) or a quoted glob such as <code>"src/**/*.html"</code>. With no path it reads the current folder.</p>
+      <p>Say <code>npx @luz-ds/check</code>, with the scope. A path is a file, a folder (read recursively: <code>.html</code>, <code>.htm</code> and <code>.css</code>) or a quoted glob such as <code>"src/**/*.html"</code>.</p>
+      <p>With no path it reads the current folder.</p>
       <div class="luz-table-wrap" role="region" aria-label="The options of the command" tabindex="0">
         <table class="luz-table">
           <caption>The options of the command</caption>
@@ -70,7 +73,8 @@ npx @luz-ds/check src --json</code></pre>
         </table>
       </div>
       <h3 class="docs-subhead" id="check-output">What it prints</h3>
-      <p>One line for each finding, in the order of the files and lines: a mark (<code>✗</code> blocks, <code>!</code> warns), the place, the rule and one sentence that says what is wrong and what to do. A color token finding is followed by the lines where the colors were set. The last line counts what it found in the files it read.</p>
+      <p>One line for each finding, in the order of the files and lines: a mark (<code>✗</code> blocks, <code>!</code> warns), the place, the rule and one sentence that says what is wrong and what to do. A color token finding is followed by the lines where the colors were set.</p>
+      <p>The last line counts what it found in the files it read.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">Output</span>
@@ -133,7 +137,8 @@ npx @luz-ds/check src --json</code></pre>
 
     <section class="docs-block" aria-labelledby="rules">
       <h2 class="docs-chapter__title" id="rules">What check blocks and what it warns about</h2>
-      <p class="docs-lead">Each rule has an id such as <code>class/unknown</code>, shown in every finding. A rule that blocks makes the exit code 1. A rule that warns does not, unless you pass <code>--strict</code>. The two tables are written from the list of rules the command has.</p>
+      <p class="docs-lead">Each rule has an id such as <code>class/unknown</code>, shown in every finding. A rule that blocks makes the exit code 1.</p>
+      <p>A rule that warns does not, unless you pass <code>--strict</code>. The two tables are written from the list of rules the command has.</p>
       <!-- luz:ai rules -->
     </section>
 

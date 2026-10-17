@@ -9,6 +9,7 @@ toc: h2,h3
 -->
     <div class="docs-component" id="c-player">
           <h2 id="example">Example</h2>
+          <p>A video and an audio file with the same controls.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage o-grid docs-cols-2">
             <div class="docs-demo__stage">
@@ -47,7 +48,8 @@ toc: h2,h3
                 </div>
               </div>
             </div>
-            <p class="docs-demo__note">Video, MP4, 15 seconds, with English captions shown by default and Spanish subtitles. It has no sound: both tracks describe the picture. Video: <a href="https://images.nasa.gov/details/NHQ_2020_1221_Earth%20Views">NASA, Earth Views from the ISS</a>, in the public domain.</p>
+            <p class="docs-demo__note">Video, MP4, 15 seconds, with English captions shown by default and Spanish subtitles. It has no sound: both tracks describe the picture.</p>
+            <p class="docs-demo__note">Video: <a href="https://images.nasa.gov/details/NHQ_2020_1221_Earth%20Views">NASA, Earth Views from the ISS</a>, in the public domain.</p>
             </div>
 
             <div class="docs-demo__stage">
@@ -68,7 +70,8 @@ toc: h2,h3
                   </div>
                 </div>
               </div>
-              <p class="docs-demo__note">Audio, MP3, 25 seconds. Nothing is downloaded until you press play. Recording: <a href="https://www.nasa.gov/historical-sounds/">NASA, Apollo 11 launch countdown and lift-off</a>, in the public domain.</p>
+              <p class="docs-demo__note">Audio, MP3, 25 seconds.</p>
+              <p class="docs-demo__note">Nothing is downloaded until you press play. Recording: <a href="https://www.nasa.gov/historical-sounds/">NASA, Apollo 11 launch countdown and lift-off</a>, in the public domain.</p>
 
               <!-- data-src is set by reference.js (the build does not rewrite data-* URLs) -->
               <div class="luz-player" data-type="midi" role="group" aria-label="MIDI player">
@@ -91,7 +94,8 @@ toc: h2,h3
           </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example. A MIDI file has no player without JavaScript: offer a download link in the fallback text.</p>
+          <p>Captions, transcripts and audio description depend on the media you provide. The colours of the captions are a request: the reader's own caption settings win, and a browser may draw them its own way, in its own full-screen player for example.</p>
+          <p>A MIDI file has no player without JavaScript: offer a download link in the fallback text.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Player documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -182,7 +186,8 @@ initPlayers();</code></pre>
               <li>In right-to-left text the timeline follows the reading direction: the seek bar starts at the right and fills towards the left, the controls row mirrors, and the slider's keys are the browser's own. The play, pause and volume icons are not mirrored: they do not point anywhere.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with <code>default</code> shows from the start. A MIDI player shows its fallback text instead.</p>
+            <p>Audio and video show the browser's own controls, and the LUZ controls stay hidden. The browser's controls offer the captions and subtitles, and a track with <code>default</code> shows from the start.</p>
+            <p>A MIDI player shows its fallback text instead.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab moves through the controls; each one keeps its native keys.</p>
             <ul>

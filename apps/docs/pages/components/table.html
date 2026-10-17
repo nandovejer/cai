@@ -9,6 +9,7 @@ toc: h2,h3
 -->
     <div class="docs-component" id="c-table">
           <h2 id="example">Example</h2>
+          <p>A table of three services with their status, CPU and region.</p>
           <div class="docs-example" data-docs-specimen>
           <fieldset class="docs-width" hidden>
             <legend>Width</legend>
@@ -166,7 +167,8 @@ toc: h2,h3
               <li>Cards change the <code>display</code> of the table elements, which can hide the table from some screen readers. The stylesheet recommends <code>role="table"</code>, <code>"row"</code> and <code>"cell"</code> on a table that stacks.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>Nothing changes: scrolling, the sticky column and the cards are all CSS. A heading with a link sorts on the server; a plain heading is just a heading. Rows are never hidden, and if the script does not load the table stays whole.</p>
+            <p>Nothing changes: scrolling, the sticky column and the cards are all CSS. A heading with a link sorts on the server; a plain heading is just a heading.</p>
+            <p>Rows are never hidden, and if the script does not load the table stays whole.</p>
             <h4 id="sort-module">Loading the sort on its own</h4>
             <p>The module has no imports and no effect until you call it. Pass the <code>t</code> of core's strings so the status line is written in the table's language; without it the table still sorts and the status line stays empty.</p>
             <div class="docs-snippet">

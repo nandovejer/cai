@@ -194,30 +194,35 @@ import Base from "../layouts/Base.astro";
         <li>Astro bundled the <code>&lt;script&gt;</code> with <code>import "@luz-ds/core"</code> into one module file and split the lazy chunks off it.</li>
         <li>The fonts came out as hashed files, and the layers and your own rule came out in the order described above.</li>
       </ul>
-      <p>The build output was inspected, and the built page was not opened in a browser. Astro with a view transition router (<code>&lt;ClientRouter /&gt;</code>) was not tried, and neither was Windows. The <code>landing</code>, <code>cms</code> and <code>app</code> imports have the same shape as the ones above, and were not built.</p>
+      <p>The build output was inspected, and the built page was not opened in a browser. Astro with a view transition router (<code>&lt;ClientRouter /&gt;</code>) was not tried, and neither was Windows.</p>
+      <p>The <code>landing</code>, <code>cms</code> and <code>app</code> imports have the same shape as the ones above, and were not built.</p>
     </section>
 
     <section class="docs-block" aria-labelledby="others">
       <h2 class="docs-chapter__title" id="others">Vite, Next, Nuxt and SvelteKit</h2>
-      <p>Only Astro was built for this page; Vite on its own, Next, Nuxt and SvelteKit were not built or tested. The imports are the same ones, in the root layout or the entry file of the app. Each tool's own documentation says where CSS from a package goes:</p>
+      <p>Only Astro was built for this page; Vite on its own, Next, Nuxt and SvelteKit were not built or tested. The imports are the same ones, in the root layout or the entry file of the app.</p>
+      <p>Each tool's own documentation says where CSS from a package goes:</p>
       <ul>
         <li><a href="https://vite.dev/guide/">Vite documentation</a></li>
         <li><a href="https://nextjs.org/docs">Next.js documentation</a></li>
         <li><a href="https://nuxt.com/docs">Nuxt documentation</a></li>
         <li><a href="https://svelte.dev/docs/kit">SvelteKit documentation</a></li>
       </ul>
-      <p>One fact is the same for all of them. A LUZ module has no side effect when it is imported, until you call its <code>init</code> function, and <code>luz.js</code> and <code>site.js</code> check that <code>document</code> exists first. So a framework that renders on the server can import them. In plain Node, with no <code>document</code>, ten modules of core and site were imported with no error.</p>
+      <p>One fact is the same for all of them. A LUZ module has no side effect when it is imported, until you call its <code>init</code> function, and <code>luz.js</code> and <code>site.js</code> check that <code>document</code> exists first.</p>
+      <p>So a framework that renders on the server can import them. In plain Node, with no <code>document</code>, ten modules of core and site were imported with no error.</p>
     </section>
 
     <section class="docs-block" aria-labelledby="fonts">
       <h2 class="docs-chapter__title" id="fonts">Fonts and assets</h2>
       <p><code>@luz-ds/tokens/css</code> is <code>luz-tokens.css</code>, and its <code>@font-face</code> rules point at the ET Book files with <code>url()</code>. Your bundler resolves those paths: Astro emitted the files as hashed <code>woff2</code> assets.</p>
-      <p>To skip ET Book, import <code>@luz-ds/tokens/tokens.css</code> instead. It has the same tokens and no <code>@font-face</code>, so no font is downloaded. Then set <code>--luz-font-body</code> to the font you use: <a href="/docs/get-started/make-it-yours/">Make it yours</a> shows how.</p>
+      <p>To skip ET Book, import <code>@luz-ds/tokens/tokens.css</code> instead. It has the same tokens and no <code>@font-face</code>, so no font is downloaded.</p>
+      <p>Then set <code>--luz-font-body</code> to the font you use: <a href="/docs/get-started/make-it-yours/">Make it yours</a> shows how.</p>
     </section>
 
     <section class="docs-block" aria-labelledby="cdn">
       <h2 class="docs-chapter__title" id="cdn">A CDN in a framework</h2>
-      <p>You can load LUZ from a CDN in a framework layout instead of importing it. In an Astro layout, a <code>&lt;link rel="stylesheet"&gt;</code> in the <code>&lt;head&gt;</code> and a <code>&lt;script type="module" src="https://…"&gt;</code>, each with <code>integrity</code> and <code>crossorigin</code>, stay as written. So does a script with <code>is:inline</code>. Astro only processes a <code>&lt;script&gt;</code> that has no attribute other than <code>src</code>.</p>
+      <p>You can load LUZ from a CDN in a framework layout instead of importing it. In an Astro layout, a <code>&lt;link rel="stylesheet"&gt;</code> in the <code>&lt;head&gt;</code> and a <code>&lt;script type="module" src="https://…"&gt;</code>, each with <code>integrity</code> and <code>crossorigin</code>, stay as written.</p>
+      <p>So does a script with <code>is:inline</code>. Astro only processes a <code>&lt;script&gt;</code> that has no attribute other than <code>src</code>.</p>
       <p>Use the CDN or the imports, not both: LUZ would load twice. <a href="/docs/get-started/snippet/">Choose your snippet</a> gives the tags with their hashes.</p>
     </section>
 

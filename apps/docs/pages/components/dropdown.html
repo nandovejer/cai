@@ -9,6 +9,7 @@ keywords: menu
 -->
     <div class="docs-component" id="c-dropdown">
           <h2 id="example">Example</h2>
+          <p>A button called Actions that opens a short list: edit, duplicate, move and delete a project.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <div class="luz-dropdown">
@@ -81,7 +82,8 @@ keywords: menu
             <h3 id="no-js">Without JavaScript</h3>
             <p>Nothing changes: the popover is HTML. The actions that are buttons need your own script to do something, as any button does; the ones that are links work as they are.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
-            <p>Enter or Space on the button opens the panel; the focus stays on the button, and the panel follows it in the tab order. Tab moves to the first action, then through the others, and Shift+Tab goes back. Escape closes the panel and returns the focus to the button.</p>
+            <p>Enter or Space on the button opens the panel; the focus stays on the button, and the panel follows it in the tab order. Tab moves to the first action, then through the others, and Shift+Tab goes back.</p>
+            <p>Escape closes the panel and returns the focus to the button.</p>
             <ul>
               <li>Give the button a name that says what is inside: “Actions”, “More options for Ana”, not a bare “…”.</li>
               <li>An unavailable action uses <code>aria-disabled="true"</code> and no <code>disabled</code>, so it stays reachable and a screen reader says it exists. Do not run its action when it is activated.</li>

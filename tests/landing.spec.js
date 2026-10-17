@@ -433,10 +433,14 @@ test.describe('Landing page', () => {
       await expect(hero.locator('.luz-landing-hero__eyebrow')).toHaveText('Light, usable & zero-dependency');
       await expect(hero.locator('h1.luz-landing-hero__title')).toHaveText('LUZ, a design system for humans, ready for AI.');
       await expect(hero.locator('.luz-landing-hero__lead')).toBeVisible();
-      // One sentence, not a paragraph
-      await expect(hero.locator('.luz-landing-hero__lead')).toHaveText('Tokens, CSS and a little vanilla JavaScript, built on what the browser already does.');
+      // The owner kept the longer lead (2026-10-17)
+      await expect(hero.locator('.luz-landing-hero__lead')).toHaveText('LUZ is a design system of tokens, CSS and a little vanilla JavaScript that starts from what the browser already does. No framework and no build step: every component works before JavaScript loads, in light, dark and high-contrast modes.');
       await expect(hero).toContainText(EN['built.title']);
       await expect(hero).toContainText(EN['built.line']);
+      // "We love TDD" leads to the docs section that says how it is done
+      const tdd = hero.locator('a[href="/docs/get-started/how-luz-is-built/#tests-first"]');
+      await expect(tdd).toHaveCount(1);
+      await expect(tdd).toContainText(EN['built.title'].replace(/<[^>]*>/g, ''));
 
       await expect(hero.locator('a.luz-btn')).toHaveCount(2);
       await expect(hero.locator('.luz-btn--primary')).toHaveCount(1);
@@ -450,13 +454,11 @@ test.describe('Landing page', () => {
     });
 
     for (const [route, lang] of ROUTES) {
-      test(`${route}: the lead is one sentence, the catalog's (${lang})`, async ({ page }) => {
+      test(`${route}: the lead is the catalog's (${lang})`, async ({ page }) => {
         await open(page, route);
 
         const lead = ((await page.locator('section#hero .luz-landing-hero__lead').textContent()) ?? '').replace(/\s+/g, ' ').trim();
         expect(lead.length).toBeGreaterThan(20);
-        // A full stop (or its Arabic and question forms) only at the end
-        expect(lead, 'no sentence ends inside the lead').not.toMatch(/[.!?\u061F\u2026]\s+\S/);
         expect(lead).toMatch(/[.!?\u061F\u2026]$/);
         if (lang === 'en') expect(lead).toBe(catalog('en')['hero.lead']);
       });

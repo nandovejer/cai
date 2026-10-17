@@ -371,13 +371,9 @@ describe("the new home page: catalogs and rendered pages (F5)", () => {
     expect(rendered.get("/ar/")).not.toContain("Your choice stays in this browser.");
   });
 
-  it("the hero's lead is one sentence in every language, and in English it is the owner's", () => {
-    expect(catalogs.en["hero.lead"]).toBe("Tokens, CSS and a little vanilla JavaScript, built on what the browser already does.");
-    for (const code of ["en", "es", "ar"]) {
-      const lead = catalogs[code]["hero.lead"].replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
-      expect(lead, code).not.toMatch(/[.!?\u061F\u2026]\s+\S/);
-      expect(lead, code).toMatch(/[.!?\u061F\u2026]$/);
-    }
+  it("the hero's lead is the longer one the owner kept, in every language", () => {
+    expect(catalogs.en["hero.lead"]).toBe("LUZ is a design system of tokens, CSS and a little vanilla JavaScript that starts from what the browser already does. No framework and no build step: every component works before JavaScript loads, in light, dark and high-contrast modes.");
+    for (const code of ["en", "es", "ar"]) expect(catalogs[code]["hero.lead"].replace(/<[^>]*>/g, "").length, code).toBeGreaterThan(120);
   });
 
   describe("Spanish", () => {

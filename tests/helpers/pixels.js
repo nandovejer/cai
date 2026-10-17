@@ -27,13 +27,20 @@ export async function readPoints(page, png, points) {
   }, { b64: png.toString('base64'), pts: points });
 }
 
-/** The colour a CSS value paints, as [r, g, b], read from a probe element. */
-export async function paintOf(page, value) {
-  return page.evaluate((v) => {
+/**
+ * The colour a CSS value paints, as [r, g, b], read from a probe element.
+ * The probe goes inside `within` (a locator) when given, so a `var(--luz-...)`
+ * resolves in the same theme as the element under test: a specimen is Vejer
+ * whatever light the site is in (apps/docs/reference.js), but a probe in
+ * <body> is in the site's light, which depends on the time of day.
+ */
+export async function paintOf(page, value, within) {
+  const host = within ?? page.locator('body');
+  return host.evaluate((el, v) => {
     const probe = document.createElement('span');
     probe.style.color = v;
     probe.style.forcedColorAdjust = 'none'; // forced colors would otherwise paint it CanvasText
-    document.body.append(probe);
+    el.append(probe);
     const [r, g, b] = getComputedStyle(probe).color.match(/[\d.]+/g).map(Number);
     probe.remove();
     return [r, g, b];

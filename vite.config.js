@@ -128,6 +128,11 @@ export default defineConfig(({ mode }) => {
       open: "/",
       fs: {
         allow: [__dirname],
+        // root is the repository, so every file under it is a URL: keep the
+        // secrets, the git store and the private Claude files out of it (F8, L1).
+        // Vite's default is [".env", ".env.*", "*.{crt,pem}", "**/.git/**"];
+        // setting deny replaces it, so the list repeats it
+        deny: [".env", ".env.*", "*.{crt,pem}", "**/.git/**", "**/.claude/**"],
       },
     },
     build: {

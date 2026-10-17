@@ -152,6 +152,7 @@ home-light .home-light__line {
   padding: var(--luz-space-lg) var(--luz-space-md);
   border: 0;
   background: color-mix(in oklab, var(--_paper) 82%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
   backdrop-filter: blur(18px) saturate(1.2);
   /* No hard edge: the glass fades out above and below the phrase */
   mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
@@ -211,6 +212,7 @@ home-light .home-light__bar {
   border: 1px solid var(--luz-divider);
   border-radius: var(--luz-radius-md);
   background: color-mix(in oklab, var(--_paper) 82%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
   backdrop-filter: blur(18px) saturate(1.2);
   color: var(--_ink);
   font: 400 var(--luz-text-sm) / 1.4 var(--luz-font-sans);
@@ -312,6 +314,27 @@ home-light[data-sky="night"] .home-light__day input::-webkit-slider-thumb {
 home-light[data-sky="night"] .home-light__day input::-moz-range-thumb {
   background: var(--light-moon);
   box-shadow: inset 4px -2px 0 0 var(--_paper);
+}
+
+/* Pause motion: a quiet text button, filled while pressed, as the looks are */
+home-light .home-light__still {
+  min-block-size: 2.75rem;
+  padding-inline: var(--luz-space-sm);
+  border: 0;
+  border-radius: var(--luz-radius-sm);
+  background: none;
+  color: var(--_muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+home-light .home-light__still:hover,
+home-light .home-light__still[aria-pressed="true"] {
+  color: var(--_ink);
+}
+
+home-light .home-light__still[aria-pressed="true"] {
+  background: var(--luz-surface-pressed);
 }
 
 home-light .home-light__sr {
@@ -496,13 +519,18 @@ home-globe .home-globe__here {
 
 /* ==========================================================================
    Reduced motion: a still frame. The globe asks for no animation frame (no
-   spin); here the bar stops
+   spin); here the bar stops. Pause motion ([still], WCAG 2.2.2) asks for
+   the same frame: the same rules, under home-light[still]
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
   home-light .home-light__bar:not([hidden]) {
     animation: none;
   }
+}
+
+home-light[still] .home-light__bar:not([hidden]) {
+  animation: none;
 }
 
 /* Forced colours: the drawing in the system's text colour */
@@ -529,5 +557,10 @@ home-globe .home-globe__here {
 
   home-light .home-light__day input::-moz-range-track {
     background: CanvasText;
+  }
+
+  /* The pressed fill is forced away: a border in Highlight marks Pause motion */
+  home-light .home-light__still[aria-pressed="true"] {
+    border: 2px solid Highlight;
   }
 }

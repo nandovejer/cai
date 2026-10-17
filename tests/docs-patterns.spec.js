@@ -23,6 +23,7 @@
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import { focusAndHitTest, ringBeyondInlineStart } from './helpers/obscured.js';
+import { readingOrder } from './helpers/reading-order.js';
 
 const PAGE = '/tests/fixtures/docs-patterns.html';
 const STYLESHEET = '/packages/docs/dist/docs.css';
@@ -130,7 +131,9 @@ test.describe('shell: three columns from 80rem, two from 60rem, one below', () =
       expect(near(nav.width, 16.5 * REM), `sidebar ${nav.width}px`).toBe(true);
       expect(near(main.left, nav.right), 'content starts where the sidebar ends').toBe(true);
       expect(near(main.right, viewport), 'content takes the rest').toBe(true);
-      expect(!rail.visible || rail.left <= main.left + 1, 'the rail is hidden or below the content, never beside it').toBe(true);
+      expect(rail.visible, 'the rail is drawn').toBe(true);
+      expect(rail.left <= main.left + 1, 'the rail is above the content, never beside it').toBe(true);
+      expect(rail.bottom, 'the rail is above the content').toBeLessThanOrEqual(main.top + 1);
     });
   }
 
@@ -142,7 +145,10 @@ test.describe('shell: three columns from 80rem, two from 60rem, one below', () =
       expect(near(main.left, 0), 'content starts at the edge').toBe(true);
       expect(near(main.right, viewport), 'content takes the width').toBe(true);
       expect(!nav.visible || nav.bottom <= main.top + 1, 'the sidebar is hidden or above the content').toBe(true);
-      expect(!rail.visible || rail.left <= main.left + 1, 'the rail is hidden or below the content').toBe(true);
+      expect(rail.visible, 'the rail is drawn').toBe(true);
+      expect(rail.left <= main.left + 1, 'the rail is in the content\'s column').toBe(true);
+      expect(!nav.visible || nav.bottom <= rail.top + 1, 'the sidebar is hidden or above the rail').toBe(true);
+      expect(rail.bottom, 'the rail is above the content').toBeLessThanOrEqual(main.top + 1);
     });
   }
 
@@ -304,16 +310,16 @@ test.describe('rail: the focus ring of a control is whole at its start edge', ()
 
 /* ---- rail below 80rem (WCAG 1.4.10 Reflow: nothing is lost when the third column goes) --------- */
 
-test.describe('rail: below 80rem it is drawn in the grid area `rail`, under the content', () => {
+test.describe('rail: below 80rem it is drawn in the grid area `rail`, above the content', () => {
   // The two-column template (60rem to 80rem) and the one-column template (below 60rem)
   for (const width of [1279, 1024, 960, 959, 800, 375, 320]) {
-    test(`${width}px: the rail is drawn, under main, in the content's column, inside the viewport`, async ({ page }) => {
+    test(`${width}px: the rail is drawn, above main, in the content's column, inside the viewport`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(PAGE);
       const { viewport, main, rail } = await layout(page);
       expect(await style(page, '#rail', 'display'), 'the rail is not display:none').not.toBe('none');
       expect(rail.visible, 'the rail is rendered').toBe(true);
-      expect(rail.top, 'under the content').toBeGreaterThanOrEqual(main.bottom - 1);
+      expect(rail.bottom, 'above the content').toBeLessThanOrEqual(main.top + 1);
       expect(near(rail.left, main.left, 2), 'in the same column as the content').toBe(true);
       expect(rail.right, 'inside the viewport').toBeLessThanOrEqual(viewport + 1);
       expect(await sideways(page), 'no sideways scroll').toBe(0);
@@ -343,6 +349,50 @@ test.describe('rail: below 80rem it is drawn in the grid area `rail`, under the 
     expect(rail.visible).toBe(true);
     expect(rail.left, 'beside, not under').toBeGreaterThanOrEqual(main.right - 1);
     expect(rail.top, 'at the top of the page').toBeLessThan(main.top + 200);
+  });
+
+  // The page has no script, so "On this page" is a details that is open at every width: nothing is hidden behind a script.
+  // (On the docs site a script folds it below 80rem: tests/docs-shell.spec.js.)
+  for (const width of [1440, 1024, 375]) {
+    test(`${width}px, no script: "On this page" is open and its links are visible`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(PAGE);
+      expect(await page.locator('#onpage details').evaluate((d) => /** @type {HTMLDetailsElement} */ (d).open), 'the details is open').toBe(true);
+      await expect(page.locator('#on-example')).toBeVisible();
+      await expect(page.locator('#on-reading')).toBeVisible();
+    });
+  }
+});
+
+/* ---- the order of the markup is the order of the screen below 80rem (WCAG 1.3.2, 2.4.3) -------- */
+
+test.describe('order: the rail is before main in the markup, and the focus walks down the page', () => {
+  test('the markup is the header, the sidebar, the rail, then main, then the footer', async ({ page }) => {
+    await page.goto(PAGE);
+    const order = await page.evaluate(() => [...document.body.children].map((el) => el.id).filter(Boolean));
+    expect(order).toEqual(['top', 'nav', 'rail', 'main-content', 'site-footer']);
+  });
+
+  for (const width of [375, 1024]) {
+    test(`${width}px: every control the Tab key reaches is below the one before it, or in a column to its right`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(PAGE);
+      const walk = await readingOrder(page);
+      expect(walk.count, 'the page has controls').toBeGreaterThan(10);
+      expect(walk.problems, walk.steps.join('\n')).toEqual([]);
+    });
+  }
+
+  test('the skip link goes to main, and the next Tab is inside main, not in the rail', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 900 });
+    await page.goto(PAGE);
+    await page.keyboard.press('Tab');
+    await expect(page.locator('a.luz-skip-link')).toBeFocused();
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Tab');
+    const inside = await page.evaluate(() => ({ main: !!document.activeElement?.closest('main'), rail: !!document.activeElement?.closest('aside'), tag: document.activeElement?.outerHTML.slice(0, 80) }));
+    expect(inside.rail, `the focus is in the rail: ${inside.tag}`).toBe(false);
+    expect(inside.main, `the focus is inside main: ${inside.tag}`).toBe(true);
   });
 });
 

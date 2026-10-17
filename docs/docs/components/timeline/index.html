@@ -12,11 +12,11 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../../../boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-or9Ve1Dh.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-Cw3lj9ZT.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-BXzNEBss.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-BWHl3Jti.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-oA0PmqRi.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BjX1gfAT.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -30,7 +30,7 @@
           <rect class="site-header__menu-bar" x="3" y="17" width="18" height="2" rx="1"/>
         </svg>
       </button>
-      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.1.0 beta</span></a>
+      <a class="site-header__brand" href="../../../"><span class="site-header__mark"><svg viewBox="8 8 32 32" width="22" height="22" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 8h4v28h4v4H8Zm10 0h4v26.5a1.5 1.5 0 0 0 3 0V8h4v26.5a5.5 5.5 0 0 1-11 0Zm13 0h9v4l-5 24h5v4h-9v-4l5-24h-5Z"/></svg></span><span class="site-header__name">LUZ</span> <span class="luz-tag luz-tag--purple site-header__tag">v0.0.0 beta</span></a>
       <nav class="site-header__nav" aria-label="Site">
         <a href="../../../">Home</a>
         <a href="../../../docs/" aria-current="true">Docs</a>
@@ -234,6 +234,43 @@
 <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
+  <aside class="luz-docs-rail" aria-label="About this page">
+  <div class="luz-docs-rail__inner">
+  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
+    <details class="luz-docs-rail__fold" open>
+      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
+      <ul class="luz-docs-rail__list">
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#example">Example</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#known-issues">Known issues</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#code">Code</a>
+          <ul class="luz-docs-rail__sub">
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#markup">Copy the markup</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#variants">Variants and options</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#how">How it works</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#no-js">Without JavaScript</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#keyboard">Keyboard and ARIA</a></li>
+          </ul>
+        </li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#design">Design</a>
+          <ul class="luz-docs-rail__sub">
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#when">When to use</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#when-not">When not to use</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Do and don&#39;t</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#content">Writing the content</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#contrast">Contrast and focus</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#tokens">Tokens it uses</a></li>
+          </ul>
+        </li>
+      </ul>
+    </details>
+  </nav>
+    <div class="luz-docs-rail__actions">
+      <a data-docs-copy-page href="../../../docs/components/timeline/index.md">Copy page as Markdown</a>
+      <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/components/timeline.html">Edit this page</a>
+      <a href="https://github.com/nandovejer/luz/issues/new?title=Timeline">Report a problem</a>
+    </div>
+  </div>
+  </aside>
 
   <main class="o-main luz-docs-main" id="main-content" tabindex="-1">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
@@ -430,16 +467,16 @@
                   <tr><th scope="col">Attribute or class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td data-label="Attribute or class"><div><code>aria-label</code></div></td><td data-label="Effect"><div>The name of the timeline. Write it with <code>role="group"</code>: a name on an element without a role is not read. If you leave the role out, the script adds it</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>aria-label</span></code></div></td><td data-label="Effect"><div>The name of the timeline. Write it with <code>role="group"</code>: a name on an element without a role is not read. If you leave the role out, the script adds it</div></td></tr>
                   <tr><td data-label="Attribute or class"><div><code>layout="vertical"</code></div></td><td data-label="Effect"><div>Every item stays visible down a line. The item in the middle of the screen is active, the ones before it are past</div></td></tr>
                   <tr><td data-label="Attribute or class"><div><code>autoplay</code></div></td><td data-label="Effect"><div>Opts in to moving on by itself, with a visible Pause and Play button. Horizontal only; off unless you write it</div></td></tr>
                   <tr><td data-label="Attribute or class"><div><code>interval</code></div></td><td data-label="Effect"><div>Milliseconds between items with <code>autoplay</code>. The default is 5000; a value under 2000 is raised to 2000</div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>data-luz-label-previous</code>, <code>-next</code>, <code>-pause</code>, <code>-play</code></div></td><td data-label="Effect"><div>The names of the buttons, when LUZ does not ship the language of the page or you want other words</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>data-luz-label-previous</span></code>, <code>-next</code>, <code>-pause</code>, <code>-play</code></div></td><td data-label="Effect"><div>The names of the buttons, when LUZ does not ship the language of the page or you want other words</div></td></tr>
                   <tr><td data-label="Attribute or class"><div><code>--luz-timeline-paper</code></div></td><td data-label="Effect"><div>The colour behind the timeline, which the hump on the rail and the empty dots are painted with. The default is <code>--luz-surface-page</code>; on a card, set it on the element to the card's surface: <code>style="--luz-timeline-paper: var(--luz-surface)"</code></div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__date</code></div></td><td data-label="Effect"><div>A <code>&lt;time&gt;</code>. Its text is the label of the date button on the rail, so give each item a different one. Without it the button shows the item's number</div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__title</code></div></td><td data-label="Effect"><div>A <code>&lt;p&gt;</code>, or a heading of the level your page needs: the class stays the same</div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>.luz-timeline__text</code></div></td><td data-label="Effect"><div>One or two sentences; a link is allowed</div></td></tr>
-                  <tr><td data-label="Attribute or class"><div><code>data-luz-state</code></div></td><td data-label="Effect"><div>Written by the script on the items of a vertical timeline: <code>active</code> or <code>past</code>. Do not set it yourself</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>.luz-timeline</span><wbr><span>__date</span></code></div></td><td data-label="Effect"><div>A <code>&lt;time&gt;</code>. Its text is the label of the date button on the rail, so give each item a different one. Without it the button shows the item's number</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>.luz-timeline</span><wbr><span>__title</span></code></div></td><td data-label="Effect"><div>A <code>&lt;p&gt;</code>, or a heading of the level your page needs: the class stays the same</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>.luz-timeline</span><wbr><span>__text</span></code></div></td><td data-label="Effect"><div>One or two sentences; a link is allowed</div></td></tr>
+                  <tr><td data-label="Attribute or class"><div><code class="docs-name"><span>data-luz-state</span></code></div></td><td data-label="Effect"><div>Written by the script on the items of a vertical timeline: <code>active</code> or <code>past</code>. Do not set it yourself</div></td></tr>
                 </tbody>
               </table>
             </div>
@@ -589,47 +626,10 @@
   </nav>
   <p class="luz-docs-page-foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/components/timeline.html">Edit this page</a> · <a href="https://github.com/nandovejer/luz/issues/new?title=Timeline">Report a problem</a></p>
   </main>
-  <aside class="luz-docs-rail" aria-label="About this page">
-  <div class="luz-docs-rail__inner">
-  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
-    <details class="luz-docs-rail__fold" open>
-      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
-      <ul class="luz-docs-rail__list">
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#example">Example</a></li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#known-issues">Known issues</a></li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#code">Code</a>
-          <ul class="luz-docs-rail__sub">
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#markup">Copy the markup</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#variants">Variants and options</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#how">How it works</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#no-js">Without JavaScript</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#keyboard">Keyboard and ARIA</a></li>
-          </ul>
-        </li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#design">Design</a>
-          <ul class="luz-docs-rail__sub">
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#when">When to use</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#when-not">When not to use</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Do and don&#39;t</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#content">Writing the content</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#contrast">Contrast and focus</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#tokens">Tokens it uses</a></li>
-          </ul>
-        </li>
-      </ul>
-    </details>
-  </nav>
-    <div class="luz-docs-rail__actions">
-      <a data-docs-copy-page href="../../../docs/components/timeline/index.md">Copy page as Markdown</a>
-      <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/components/timeline.html">Edit this page</a>
-      <a href="https://github.com/nandovejer/luz/issues/new?title=Timeline">Report a problem</a>
-    </div>
-  </div>
-  </aside>
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
     <div class="o-container o-container--inline o-row">
-      <p class="u-text-muted">LUZ Design System · v0.1.0 · Beta · MIT License</p>
+      <p class="u-text-muted">LUZ Design System · v0.0.0 · Beta · MIT License</p>
       <nav class="o-actions" aria-label="Project links">
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../">Home</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>

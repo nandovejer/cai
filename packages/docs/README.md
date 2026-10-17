@@ -10,7 +10,7 @@ The pieces of a documentation page: the shell (the sidebar, the content and a ra
 - You show live examples with their markup, and say what to do and what not to do.
 - Not for a landing page (`@luz-ds/landing`), a blog (`@luz-ds/cms`) or a web application (`@luz-ds/app`).
 
-The shell has three columns from 80 rem (the sidebar 16.5 rem, the content, the rail 14 rem), two from 60 rem (the rail under the content, in its column) and one below, where core's sidebar is a drawer at 768 px and below when it is a popover. The content keeps to a measure of 46 rem (`--luz-docs-measure`).
+The shell has three columns from 80 rem (the sidebar 16.5 rem, the content, the rail 14 rem), two from 60 rem (the rail above the content, in its column) and one below, where core's sidebar is a drawer at 768 px and below when it is a popover. The content keeps to a measure of 46 rem (`--luz-docs-measure`).
 
 ## Prerequisites
 

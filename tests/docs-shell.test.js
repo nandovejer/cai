@@ -4,7 +4,9 @@
  * must do, from the markup of tests/fixtures/docs-patterns.html:
  *
  *   shell      body.o-shell.luz-docs-shell > nav.luz-sidebar.luz-docs-nav,
- *              main.luz-docs-main, then aside.luz-docs-rail "About this page"
+ *              then aside.luz-docs-rail "About this page", then main.luz-docs-main
+ *              (the rail is before main in the markup, and the grid places it: the
+ *              third column from 80rem, above the content below it)
  *   sidebar    flat: every area of site.json open, every page listed, no accordion
  *   page head  header.luz-docs-page-head: eyebrow "Area · Group", h1, lead and,
  *              on a component or pattern page, the chips
@@ -220,7 +222,7 @@ const renderedOf = (fixture, route, options) => {
  * 1. The shell
  * =================================================================================== */
 
-describe("the shell: body.o-shell.luz-docs-shell, the sidebar, main, then the rail", () => {
+describe("the shell: body.o-shell.luz-docs-shell, the sidebar, the rail, then main", () => {
   it("every docs page has the shell classes on body, on the sidebar nav and on main", () => {
     for (const p of site.pages) {
       const { body, main, nav } = partsOf(treeOf(p.route));
@@ -235,16 +237,51 @@ describe("the shell: body.o-shell.luz-docs-shell, the sidebar, main, then the ra
     }
   });
 
-  it("aside.luz-docs-rail, named \"About this page\", comes right after main, as its sibling", () => {
+  it("aside.luz-docs-rail, named \"About this page\", comes right before main, as its sibling (the grid places it)", () => {
     for (const p of site.pages) {
       const { main, aside } = partsOf(treeOf(p.route));
       expect(aside, `${p.route} aside.luz-docs-rail`).toBeTruthy();
       expect(aside.attrs.get("aria-label"), p.route).toBe("About this page");
       expect(aside.parent, p.route).toBe(main.parent);
       const siblings = main.parent.children;
-      expect(siblings[siblings.indexOf(main) + 1], `${p.route}: what follows main`).toBe(aside);
+      expect(siblings[siblings.indexOf(main) - 1], `${p.route}: what comes before main`).toBe(aside);
       expect(isInside(aside, main), `${p.route}: the rail is not inside main`).toBe(false);
     }
+  });
+
+  it("the rail comes after the sidebar and the skip link goes to main, so the skip link skips both", () => {
+    for (const p of site.pages) {
+      const { main, aside, nav } = partsOf(treeOf(p.route));
+      const siblings = main.parent.children;
+      expect(siblings.indexOf(nav), `${p.route}: the sidebar is before the rail`).toBeLessThan(siblings.indexOf(aside));
+      const skip = find(treeOf(p.route), (n) => n.name === "a" && hasClass(n, "luz-skip-link"));
+      expect(skip?.attrs.get("href"), `${p.route}: the skip link`).toBe("#main-content");
+      expect(main.attrs.get("id"), `${p.route}: main is its target`).toBe("main-content");
+    }
+  });
+
+  it("the page head, header.luz-docs-page-head, still opens main: only the breadcrumb may come before it, and the h1 is the first heading", () => {
+    for (const p of site.pages) {
+      const { main, head } = partsOf(treeOf(p.route));
+      expect(head, `${p.route} header.luz-docs-page-head`).toBeTruthy();
+      const before = main.children.slice(0, main.children.indexOf(head));
+      expect(before.map((n) => `${n.name}.${n.attrs.get("class")}`), `${p.route}: what comes before the page head in main`).toEqual(before.length ? ["nav.docs-breadcrumb"] : []);
+      expect(queryAll(head, "h1"), `${p.route}: the h1 is in the page head`).toHaveLength(1);
+      expect(findAll(main, (n) => /^h[1-6]$/.test(n.name))[0].name, `${p.route}: the first heading of main`).toBe("h1");
+    }
+  });
+
+  it("\"On this page\" is a details written open: without JavaScript nothing is folded away (a script folds it below 80rem)", () => {
+    let checked = 0;
+    for (const p of site.pages) {
+      const { aside } = partsOf(treeOf(p.route));
+      const onpage = queryAll(aside, "nav.luz-docs-rail__onpage");
+      if (!onpage.length) continue;
+      const fold = query(onpage[0], "details.luz-docs-rail__fold");
+      expect(fold.attrs.has("open"), `${p.route}: details.luz-docs-rail__fold carries \`open\` in the markup`).toBe(true);
+      checked += 1;
+    }
+    expect(checked).toBeGreaterThan(0);
   });
 
   it("the not-found page is unchanged: no script, no rail, its old head", () => {

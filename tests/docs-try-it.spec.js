@@ -23,8 +23,9 @@
  */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { copiedText, recordCopies } from './helpers/clipboard.js';
 import { routeOf } from './helpers/docs-site.js';
-import { faded } from './helpers/settle.js';
+import { faded, idle } from './helpers/settle.js';
 
 const BUTTON = routeOf('c-button');
 const THEMES = ['light', 'dark', 'high-contrast'];
@@ -69,15 +70,19 @@ const expectCodeIsPreview = async (page) => {
 };
 
 const gotoButton = async (page) => {
+  await recordCopies(page);
   await page.goto(BUTTON);
-  await page.waitForLoadState('networkidle');
+  await idle(page);
   // Everything below needs the form: fail on its absence in five seconds, with this message
   await expect(tryIt(page), 'form.docs-try is shown').toBeVisible();
 };
 
 test.describe('Try it, with JavaScript', () => {
   test.skip(({ javaScriptEnabled }) => javaScriptEnabled === false, 'needs JavaScript: the no-JS tests are below');
-  test.use({ permissions: ['clipboard-read', 'clipboard-write'] });
+  // Only Chromium knows these permission names (Firefox: unknown; WebKit: no clipboard-write); the copy runs inside a click everywhere
+  test.beforeEach(async ({ context, browserName }) => {
+    if (browserName === 'chromium') await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  });
 
   test('is shown in the Example section, after the live demo and before Known issues', async ({ page }) => {
     await gotoButton(page);
@@ -193,13 +198,13 @@ test.describe('Try it, with JavaScript', () => {
 
     const first = ((await codeOf(page).textContent()) ?? '').trim();
     await copy.click();
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(first);
+    await expect.poll(() => copiedText(page)).toBe(first);
 
     await apply(page, { variant: 'outline', size: 'sm', block: true });
     const now = ((await codeOf(page).textContent()) ?? '').trim();
     expect(now).toContain('luz-btn--outline');
     await copy.click();
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(now);
+    await expect.poll(() => copiedText(page)).toBe(now);
   });
 
   test('writes with textContent and classList only: nothing new in the form, no script, no on* attribute', async ({ page }) => {
@@ -232,7 +237,7 @@ test.describe('Try it, with JavaScript', () => {
     expect(errors).toEqual([]);
   });
 
-  test('arrow keys move inside a radio group and change the preview as they go', async ({ page }) => {
+  test('arrow keys move inside a radio group and change the preview as they go', async ({ page, browserName }) => {
     await gotoButton(page);
     await tryIt(page).getByRole('radio', { name: 'Primary', exact: true }).focus();
     await page.keyboard.press('ArrowRight');
@@ -243,10 +248,14 @@ test.describe('Try it, with JavaScript', () => {
     await expect(tryIt(page).getByRole('radio', { name: 'Outline', exact: true })).toBeChecked();
     await page.keyboard.press('ArrowLeft');
     await expect(tryIt(page).getByRole('radio', { name: 'Secondary', exact: true })).toBeChecked();
-    // The group wraps, as every native radio group does
-    await tryIt(page).getByRole('radio', { name: 'Danger', exact: true }).check();
-    await page.keyboard.press('ArrowRight');
-    await expect(tryIt(page).getByRole('radio', { name: 'Primary', exact: true })).toBeChecked();
+    // The group wraps, as every native radio group does. WebKit does not wrap
+    // ArrowRight on the last radio of a native group, so the wrap is asserted
+    // everywhere else.
+    if (browserName !== 'webkit') {
+      await tryIt(page).getByRole('radio', { name: 'Danger', exact: true }).check();
+      await page.keyboard.press('ArrowRight');
+      await expect(tryIt(page).getByRole('radio', { name: 'Primary', exact: true })).toBeChecked();
+    }
     await expectCodeIsPreview(page);
   });
 
@@ -367,7 +376,7 @@ test.describe('the width selector, with JavaScript', () => {
     test.describe(`on ${title}`, () => {
       test('is a group "Width" in the Example frame with Phone, Tablet and Full, Full chosen', async ({ page }) => {
         await page.goto(routeOf(id));
-        await page.waitForLoadState('networkidle');
+        await idle(page);
         await expect(widthGroup(page)).toBeVisible();
         for (const name of ['Phone', 'Tablet', 'Full']) {
           await expect(widthGroup(page).getByRole('radio', { name, exact: true })).toBeVisible();
@@ -381,7 +390,7 @@ test.describe('the width selector, with JavaScript', () => {
 
       test('Full fills the room it has; Phone is about 375px; Tablet is about 768px, never wider than the room', async ({ page }) => {
         await page.goto(routeOf(id));
-        await page.waitForLoadState('networkidle');
+        await idle(page);
         const full = await sizes(page);
         expect(near(full.frame, full.room), `Full: ${full.frame} of ${full.room}`).toBe(true);
 
@@ -406,7 +415,7 @@ test.describe('the width selector, with JavaScript', () => {
 
       test('the arrow keys move inside the group and the frame follows', async ({ page }) => {
         await page.goto(routeOf(id));
-        await page.waitForLoadState('networkidle');
+        await idle(page);
         await (await widthRadio(page, 'Full')).focus();
         await page.keyboard.press('ArrowLeft');
         await expect(widthGroup(page).getByRole('radio', { name: 'Tablet', exact: true })).toBeFocused();
@@ -419,7 +428,7 @@ test.describe('the width selector, with JavaScript', () => {
       test('keeps the page from scrolling sideways at 320px with any choice', async ({ page }) => {
         await page.setViewportSize({ width: 320, height: 700 });
         await page.goto(routeOf(id));
-        await page.waitForLoadState('networkidle');
+        await idle(page);
         for (const name of ['Phone', 'Tablet', 'Full']) {
           await (await widthRadio(page, name)).check();
           const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
@@ -433,7 +442,7 @@ test.describe('the width selector, with JavaScript', () => {
 
   test('the Button frame holds the --block demo, which follows the frame', async ({ page }) => {
     await page.goto(BUTTON);
-    await page.waitForLoadState('networkidle');
+    await idle(page);
     const block = frameOf(page).locator('.luz-btn--block').first();
     await (await widthRadio(page, 'Phone')).check();
     const phone = (await block.boundingBox())?.width ?? 0;

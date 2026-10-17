@@ -112,11 +112,52 @@ describe("the header moved to apps/site keeps what it did", () => {
       .replace(/\s+/g, " ")
       .replace(/\s*([{};:,>])\s*/g, "$1")
       .trim();
-  const OLD_RULES = "aab969bd46c2e344c793ab637298679d45d128bdfb690beb0b4c95eaaf1f8fc1";
 
-  it("header.css has the same rules as site-header.css had (only comments may name the new path)", () => {
+  /**
+   * The rules of a normalised stylesheet, one string per rule: `@media (...)|selector{body}` for a
+   * rule inside a conditional group, `selector{body}` otherwise. A group is not a rule of its own,
+   * so a condition can change only by changing the rules inside it.
+   */
+  function rulesOf(css, context = "") {
+    const out = [];
+    let i = 0;
+    while (i < css.length) {
+      const open = css.indexOf("{", i);
+      if (open === -1) break;
+      const prelude = css.slice(i, open).trim();
+      let depth = 1;
+      let close = open + 1;
+      while (depth > 0 && close < css.length) {
+        if (css[close] === "{") depth++;
+        else if (css[close] === "}") depth--;
+        close++;
+      }
+      const body = css.slice(open + 1, close - 1);
+      out.push(...(body.includes("{") ? rulesOf(body, `${context}${prelude}|`) : [`${context}${prelude}{${body}}`]));
+      i = close;
+    }
+    return out;
+  }
+
+  // The footer's colour mode switcher is the one part of header.css that was not in the old file as it is
+  // now and that may change (400 % text at 320 px, tests/site-reflow.spec.js). Every rule whose selector
+  // names `.site-modes` is left out of the comparison; every other rule, the header, the menu button, the
+  // drawer, the search slot and the media conditions around them, is compared as it was.
+  const ofSwitcher = (rule) => rule.slice(0, rule.indexOf("{")).includes(".site-modes");
+  const OLD_RULES = "631c208319b68aa47c50777dc5b51242bb4fe4c7eb0ddce117019c23fd79cc65";
+  const OLD_RULE_COUNT = 39;
+
+  it("header.css has the same rules as site-header.css had, except those of the footer's mode switcher (only comments may name the new path)", () => {
     expect(existsSync(join(repo, "apps/site/header.css")), "apps/site/header.css exists").toBe(true);
-    expect(createHash("sha256").update(normal(read("apps/site/header.css"))).digest("hex")).toBe(OLD_RULES);
+    const kept = rulesOf(normal(read("apps/site/header.css"))).filter((rule) => !ofSwitcher(rule));
+    expect(kept.length, "the rules compared").toBe(OLD_RULE_COUNT);
+    expect(createHash("sha256").update(kept.join("\n")).digest("hex")).toBe(OLD_RULES);
+  });
+
+  it("the rules left out of that comparison name `.site-modes` and no other app", () => {
+    const left = rulesOf(normal(read("apps/site/header.css"))).filter(ofSwitcher);
+    expect(left.length, "the footer's mode switcher has rules").toBeGreaterThan(0);
+    for (const rule of left) expect(rule, rule).not.toMatch(/apps\/(?:docs|landing)|\.\.\/(?:docs|landing)\//);
   });
 
   it("header.js exports initSiteHeader() with no option, still wires core's cycle button and the sidebar, and defines <luz-mode>", () => {

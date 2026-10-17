@@ -147,11 +147,14 @@ jobs:
       - name: Run build
         run: pnpm build
 
+      # Chromium, with and without JavaScript (AGENTS.md §6). The firefox and webkit
+      # projects are run by the maintainer before a release, and a CI run never
+      # stands for a Safari or Firefox review (dev/BROWSER-REVIEWS.md).
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps chromium firefox webkit
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Run UI tests
-        run: pnpm test:ui
+        run: pnpm exec playwright test --project=chromium --project=chromium-nojs
 
   # SR-9: a pull request that changes packages/, apps/ or scripts/ carries a
   # `test:` commit that fails on its own on top of the base. The script checks

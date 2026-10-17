@@ -10,8 +10,15 @@ toc: h2,h3
 -->
     <div class="docs-component" id="p-docs-shell">
           <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+            <div class="docs-shell-sketch" aria-hidden="true">
+              <div class="docs-shell-sketch__box">Sidebar</div>
+              <div class="docs-shell-sketch__box docs-shell-sketch__box--content">Content</div>
+              <div class="docs-shell-sketch__box">Rail</div>
+            </div>
+          </div>
           <p>The shell is the whole page, so it has no live example inside another page. The markup below is a complete page: copy it, add your own content and resize the window.</p>
-          <p>It is three columns from 80rem, two from 60rem and one below, with the rail under the content when there is no third column. <a href="/docs/documentation/templates/#docs-page">Documentation templates</a> has the same page filled in.</p>
+          <p>It is three columns from 80rem, two from 60rem and one below, with the rail above the content when there is no third column. <a href="/docs/documentation/templates/#docs-page">Documentation templates</a> has the same page filled in.</p>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Shell documentation">
@@ -21,7 +28,7 @@ toc: h2,h3
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>The shell on <code>&lt;body&gt;</code>, then the header, the sidebar, the content, the rail and the footer, in the order a keyboard reaches them:</p>
+            <p>The shell on <code>&lt;body&gt;</code>, then the header, the sidebar, the rail, the content and the footer, in the order a keyboard reaches them. The skip link goes to the content, past the sidebar and the rail:</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
@@ -34,11 +41,11 @@ toc: h2,h3
     &lt;p&gt;&lt;a href=&quot;/&quot;&gt;Acme docs&lt;/a&gt;&lt;/p&gt;
   &lt;/header&gt;
   &lt;nav class=&quot;luz-sidebar luz-docs-nav&quot; id=&quot;docs-nav&quot; aria-label=&quot;Acme docs&quot; popover&gt;…&lt;/nav&gt;
+  &lt;aside class=&quot;luz-docs-rail&quot; aria-label=&quot;About this page&quot;&gt;…&lt;/aside&gt;
   &lt;main class=&quot;o-main luz-docs-main&quot; id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;
     &lt;header class=&quot;luz-docs-page-head&quot;&gt;…&lt;/header&gt;
     …
   &lt;/main&gt;
-  &lt;aside class=&quot;luz-docs-rail&quot; aria-label=&quot;About this page&quot;&gt;…&lt;/aside&gt;
   &lt;footer&gt;…&lt;/footer&gt;
 &lt;/body&gt;</code></pre>
             </div>
@@ -53,7 +60,7 @@ toc: h2,h3
                 <tr><td data-label="Class or property"><div><code>.luz-docs-shell</code></div></td><td data-label="Effect"><div>On <code>&lt;body&gt;</code>, with core's <code>.o-shell</code>: the tracks and where each part goes</div></td></tr>
                 <tr><td data-label="Class or property"><div><code>.luz-docs-nav</code></div></td><td data-label="Effect"><div>With core's <code>.luz-sidebar</code>, on the <code>&lt;nav&gt;</code>: the sidebar's column</div></td></tr>
                 <tr><td data-label="Class or property"><div><code>.luz-docs-main</code></div></td><td data-label="Effect"><div>With <code>.o-main</code>, on the <code>&lt;main&gt;</code>: the content's column. Its children keep to the measure</div></td></tr>
-                <tr><td data-label="Class or property"><div><code>.luz-docs-rail</code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column from 80rem, under the content below it. See <a href="/docs/documentation/rail/">Rail</a></div></td></tr>
+                <tr><td data-label="Class or property"><div><code>.luz-docs-rail</code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column from 80rem, above the content below it. See <a href="/docs/documentation/rail/">Rail</a></div></td></tr>
                 <tr><td data-label="Class or property"><div><code>--luz-docs-measure</code></div></td><td data-label="Effect"><div>A line of text: <code>46rem</code>. Set it on the shell in your own CSS to change it</div></td></tr>
                 <tr><td data-label="Class or property"><div><code>--luz-docs-nav-w</code>, <code>--luz-docs-rail-w</code></div></td><td data-label="Effect"><div>The sidebar and the rail: <code>16.5rem</code> and <code>14rem</code></div></td></tr>
                 <tr><td data-label="Class or property"><div><code>--luz-docs-rail-top</code></div></td><td data-label="Effect"><div>How far from the top the rail sticks. Raise it under a sticky header</div></td></tr>
@@ -63,7 +70,7 @@ toc: h2,h3
             <h3 id="how">How it works</h3>
             <p>CSS from <code>@luz-ds/docs</code> on core's shell and sidebar. Docs gives the tracks and the measure; core gives the grid and the drawer.</p>
             <ul>
-              <li>From 80rem there are three tracks: sidebar, content, rail. From 60rem there are two, with the rail drawn under the content. Below, one, in the order of the markup: content, rail, footer.</li>
+              <li>From 80rem there are three tracks: sidebar, content, rail. From 60rem there are two, with the rail drawn above the content. Below, one, in the order of the markup: sidebar, rail, content, footer.</li>
               <li>A plain <code>&lt;header&gt;</code> goes across every track. The footer sits under the content, and the sidebar runs down beside it.</li>
               <li>Between 769px and 60rem the sidebar is the first block above the content. At 768px and below it is core's drawer, a popover the menu button opens.</li>
               <li>Every child of the content keeps to <code>--luz-docs-measure</code>, so an example is as wide as a line of text. In print the rail is left out.</li>
@@ -73,7 +80,7 @@ toc: h2,h3
             <p>In a browser without the popover API the sidebar stays in the page, above the content.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
-              <li><strong>Order:</strong> the order of the source; the grid does not change it. Skip link, header, sidebar, content, rail, footer.</li>
+              <li><strong>Order:</strong> the order of the source; the grid does not change it. Skip link, header, sidebar, rail, content, footer. The skip link goes to the content, past the sidebar and the rail.</li>
               <li><strong>Skip link:</strong> put the <a href="/docs/components/skip-link/">skip link</a> first, aimed at the <code>&lt;main&gt;</code>, so a keyboard user passes the sidebar.</li>
               <li><strong>Landmarks:</strong> a <code>&lt;header&gt;</code> child of <code>&lt;body&gt;</code> is the banner; name the <code>&lt;nav&gt;</code> after the site and the <code>&lt;aside&gt;</code> "About this page".</li>
               <li><strong>Keys:</strong> Enter or Space on the menu button opens the drawer; Escape closes it. The browser does it.</li>
@@ -97,16 +104,16 @@ toc: h2,h3
             <h3 id="do-dont">Do and don't</h3>
             <div class="luz-docs-dodont">
               <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
-                <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Keep the source in reading order: sidebar, content, rail. The grid draws the columns, so nothing has to move.</figcaption>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Sidebar, content, rail"><code>&lt;nav class=&quot;luz-sidebar luz-docs-nav&quot;&gt;…&lt;/nav&gt;
-&lt;main class=&quot;o-main luz-docs-main&quot;&gt;…&lt;/main&gt;
-&lt;aside class=&quot;luz-docs-rail&quot;&gt;…&lt;/aside&gt;</code></pre>
-              </figure>
-              <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
-                <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> Put the rail before the content to get it on the right: Tab and a screen reader then go through "On this page" before the text.</figcaption>
-                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Rail before content"><code>&lt;nav class=&quot;luz-sidebar luz-docs-nav&quot;&gt;…&lt;/nav&gt;
+                <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Put the rail between the sidebar and the content. "On this page" comes before the text, and the skip link goes past it.</figcaption>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Sidebar, rail, content"><code>&lt;nav class=&quot;luz-sidebar luz-docs-nav&quot;&gt;…&lt;/nav&gt;
 &lt;aside class=&quot;luz-docs-rail&quot;&gt;…&lt;/aside&gt;
 &lt;main class=&quot;o-main luz-docs-main&quot;&gt;…&lt;/main&gt;</code></pre>
+              </figure>
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+                <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> Put the rail after the content. On a phone, "On this page" is then at the end of the page, after everything it lists.</figcaption>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Rail after content"><code>&lt;nav class=&quot;luz-sidebar luz-docs-nav&quot;&gt;…&lt;/nav&gt;
+&lt;main class=&quot;o-main luz-docs-main&quot;&gt;…&lt;/main&gt;
+&lt;aside class=&quot;luz-docs-rail&quot;&gt;…&lt;/aside&gt;</code></pre>
               </figure>
             </div>
             <h3 id="content">Writing the content</h3>

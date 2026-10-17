@@ -47,12 +47,21 @@ function initFolds() {
 
 function initOnThisPage() {
   // "On this page" is an open <details> in the rail (aside.luz-docs-rail), so
-  // it reads without JS. From 80rem the rail is a column beside the content:
-  // mark the section in view there (aria-current="true", core's scroll spy).
-  // Only the page's own list, never the live demo of the rail pattern, which
-  // sits inside an example in main.
+  // it reads without JS. Below 80rem the rail is above the content: fold the
+  // list when the page loads, so the content starts one line lower, not a
+  // screen lower (the summary opens it). From 80rem the rail is a column
+  // beside the content: leave it open and mark the section in view there
+  // (aria-current="true", core's scroll spy). Only the page's own list,
+  // never the live demo of the rail pattern, which sits inside an example in
+  // main.
   const nav = document.querySelector("aside.luz-docs-rail > .luz-docs-rail__inner > .luz-docs-rail__onpage");
-  if (!nav || !window.matchMedia("(min-width: 80rem)").matches) return;
+  if (!nav) return;
+  if (!window.matchMedia("(min-width: 80rem)").matches) {
+    const fold = nav.querySelector(":scope > details.luz-docs-rail__fold");
+    // eslint-disable-next-line no-restricted-syntax -- RL-3: the initial state only, once on load; the summary opens and closes it natively from then on
+    if (fold) fold.open = false;
+    return;
+  }
   initSidebar(nav);
 }
 
@@ -72,6 +81,9 @@ function initCopyPage() {
   const link = document.querySelector("aside.luz-docs-rail a[data-docs-copy-page]");
   if (!link || !navigator.clipboard) return;
   const href = link.href;
+  // Only the site's own file: an href to another origin is never fetched, and
+  // a click says it could not copy (no request leaves, nothing is copied)
+  const own = new URL(href, location.href).origin === location.origin;
   const button = document.createElement("button");
   button.type = "button";
   if (link.className) button.className = link.className;
@@ -85,7 +97,7 @@ function initCopyPage() {
   let text = null;
   let loading = null;
   const load = () =>
-    (loading ??= fetch(href)
+    (loading ??= (own ? fetch(href) : Promise.reject(new Error("other origin")))
       .then((response) => (response.ok ? response.text() : Promise.reject(new Error(`${response.status}`))))
       .then(
         (body) => (text = body),

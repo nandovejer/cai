@@ -183,20 +183,25 @@ describe("light.js: <luz-mode> is the only writer of data-theme and data-light",
     for (const property of ["--sun-alt", "--sun-az", "--sun-x", "--day-left"]) expect(s).toContain(property);
   });
 
-  it("offers no look: no luz-home-light key, no localStorage, no looks or remember attribute, no look buttons, no city or map", () => {
+  it("offers no look: no looks attribute, no look buttons, no city or map, no ?look=", () => {
     const s = source();
-    expect(s).not.toContain("luz-home-light");
-    expect(s).not.toMatch(/localStorage|sessionStorage/);
-    expect(s).not.toMatch(/["']looks?["']|["']remember["']/);
-    expect(s).not.toMatch(/data-look|dataset\.look|\blooks\b|\bremember\b/i);
+    expect(s).not.toMatch(/["']looks?["']/);
+    expect(s).not.toMatch(/data-look|dataset\.look|\blooks\b/i);
     expect(s).not.toMatch(/home-city|home-map|city\.js|map\.js|puzzle\.js/);
     expect(s).not.toMatch(/\bURLSearchParams\b|location\.search/);
   });
 
-  it("states its usage as <home-light bleed favicon></home-light>, in its header", () => {
+  it("with remember, stores only Pause motion: the word still under luz-home-light, in localStorage alone", () => {
+    const s = source();
+    expect(s).toContain("luz-home-light");
+    expect(s).not.toMatch(/sessionStorage/);
+    expect(s).toMatch(/localStorage\.setItem\(KEY, "still"\)/);
+  });
+
+  it("states its usage as <home-light remember bleed favicon></home-light>, in its header", () => {
     const header = read(`${DIR}/light.js`).match(/\/\*\*[\s\S]*?\*\//)?.[0] ?? "";
-    expect(header).toContain("<home-light bleed favicon></home-light>");
-    expect(header).not.toMatch(/looks=|look=|remember/);
+    expect(header).toContain("<home-light remember bleed favicon></home-light>");
+    expect(header).not.toMatch(/looks=|look=/);
   });
 
   it("writes the favicon as a data: URL of an SVG, not as markup", () => {
@@ -284,12 +289,12 @@ describe("apps/landing/index.html: the light section", () => {
     expect(section[1]).toMatch(/<home-light\b[^>]*>\s*<\/home-light>/);
   });
 
-  it("is <home-light bleed favicon>: no looks, look or remember attribute, and the favicon and the bleed stay", () => {
+  it("is <home-light remember bleed favicon>: no looks or look attribute, and remember (Pause motion), the favicon and the bleed stay", () => {
     expect(section, "a <section id=\"light\">").not.toBeNull();
     const tag = section[1].match(/<home-light\b[^>]*>/)?.[0] ?? "";
     expect(tag, "a <home-light> in it").not.toBe("");
-    for (const flag of ["bleed", "favicon"]) expect(tag).toMatch(new RegExp(`\\s${flag}(?=[\\s>=])`));
-    for (const gone of ["looks", "look", "remember"]) expect(tag, `the ${gone} attribute is gone`).not.toMatch(new RegExp(`\\s${gone}(?=[\\s>=])`));
+    for (const flag of ["remember", "bleed", "favicon"]) expect(tag).toMatch(new RegExp(`\\s${flag}(?=[\\s>=])`));
+    for (const gone of ["looks", "look"]) expect(tag, `the ${gone} attribute is gone`).not.toMatch(new RegExp(`\\s${gone}(?=[\\s>=])`));
     // the modes, the target and the attribute names are gone: <luz-mode> owns them
     for (const gone of ["modes=", "mode=", "for=", "light-attr", "mode-attr"]) expect(tag).not.toContain(gone);
   });

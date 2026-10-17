@@ -12,8 +12,8 @@
  *
  * lat, lon   the reader's place: where the globe faces at first and where its
  *            one light is (`here`, or `cities`), by day and by night
- * spin       slow rotation, only while the globe is on screen and the reader
- *            has not asked for reduced motion
+ * spin       slow rotation, only while the globe is on screen, the reader
+ *            has not asked for reduced motion and no ancestor is [still]
  * glint      the sun on the sea; rim: a lit edge. `twilight` and `torch` are
  *            accepted and ignored
  * Property `sun`: the sun's unit vector in the Earth's frame, set by the
@@ -375,6 +375,8 @@ class LuzGlobe extends HTMLElement {
       return;
     this._sun = v.slice();
     this._shadeAll();
+    // The controller sets the sun again when its [still] changes: spin or stop
+    this._request();
   }
 
   connectedCallback() {
@@ -743,9 +745,14 @@ class LuzGlobe extends HTMLElement {
       this._opts.spin &&
       this._seen &&
       !this.hidden &&
-      !this._reduced.matches &&
+      !this._calm() &&
       !document.hidden
     );
+  }
+
+  /** Reduced motion, or the motion paused: a <home-light still> around the globe. */
+  _calm() {
+    return this._reduced.matches || !!this.closest("[still]");
   }
 
   _moving() {
@@ -827,8 +834,8 @@ class LuzGlobe extends HTMLElement {
       if (!this._dragging) return;
       this._dragging = false;
       this.removeAttribute("dragging");
-      // Under reduced motion a throw does not keep turning
-      if (e.timeStamp - pt0 > 80 || this._reduced.matches)
+      // Under reduced or paused motion a throw does not keep turning
+      if (e.timeStamp - pt0 > 80 || this._calm())
         this._vyaw = this._vpitch = 0;
       this._changed();
     };

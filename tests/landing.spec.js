@@ -431,7 +431,9 @@ test.describe('Landing page', () => {
 
       const hero = page.locator('section#hero');
       await expect(hero.locator('.luz-landing-hero__eyebrow')).toHaveText('Light, usable & zero-dependency');
-      await expect(hero.locator('h1.luz-landing-hero__title')).toHaveText('LUZ, a design system for humans, ready for AI.');
+      await expect(hero.locator('h1.luz-landing-hero__title')).toHaveText('LUZ, design system for humans, ready for AI.');
+      // The owner's title (2026-10-17): both ends are stressed, the human and the AI
+      await expect(hero.locator('h1.luz-landing-hero__title em')).toHaveText(['humans', 'AI']);
       await expect(hero.locator('.luz-landing-hero__lead')).toBeVisible();
       // The owner kept the longer lead (2026-10-17)
       await expect(hero.locator('.luz-landing-hero__lead')).toHaveText('Tokens, CSS and a little vanilla JavaScript, built on what the browser already does. Every component works before JavaScript loads, in light, dark and high contrast.');
@@ -470,8 +472,11 @@ test.describe('Landing page', () => {
         await expect(hero).toHaveCount(1);
         const title = (await hero.locator('h1').textContent())?.trim() ?? '';
         expect(title.length).toBeGreaterThan(5);
-        if (lang !== 'en') expect(title).not.toBe('LUZ, a design system for humans, ready for AI.');
+        if (lang !== 'en') expect(title).not.toBe('LUZ, design system for humans, ready for AI.');
         if (lang === 'es') expect(title).toBe('Luz, sistema de diseño para el humano, listo para la IA');
+        // Every language stresses the human and the AI
+        await expect(hero.locator('h1 em')).toHaveCount(2);
+        if (lang === 'es') await expect(hero.locator('h1 em')).toHaveText(['humano', 'IA']);
         const eyebrow = hero.locator('.luz-landing-hero__eyebrow');
         await expect(eyebrow).toHaveAttribute('lang', 'en');
         await expect(eyebrow).toHaveText('Light, usable & zero-dependency');
@@ -866,7 +871,8 @@ test.describe('Landing page', () => {
           expect(await select.inputValue()).not.toBe(before);
         });
 
-        test('progress: a named progress bar with a value', async ({ page }) => {
+        test('progress: a named progress bar with a value', async ({ page, browserName }) => {
+          test.skip(!js && browserName === 'firefox', 'Playwright Firefox cannot read element properties with JavaScript disabled');
           const bar = page.locator('#native progress.luz-progress');
           await expect(bar).toHaveCount(1);
           await expect(page.locator('#native').getByRole('progressbar')).toHaveAccessibleName(/\S/);
@@ -1478,7 +1484,7 @@ test.describe('Landing page', () => {
     test('the beta and version tags are text', async ({ page }) => {
       await open(page);
 
-      await expect(page.locator('.site-header__brand .site-header__tag')).toHaveText('v0.1.0 beta');
+      await expect(page.locator('.site-header__brand .site-header__tag')).toHaveText(`v${version('core')} beta`);
     });
 
     test('the page background is one flat color', async ({ page }) => {

@@ -35,6 +35,7 @@
       data-luz-label-light-say-globe="{{t:light.say.globe}}"
       data-luz-label-light-globe-alt="{{t:light.alt.globe}}"
       data-luz-label-light-scrub="{{t:light.scrub}}"
+      data-luz-label-light-pause="{{t:light.pause}}"
       data-luz-label-light-sep="{{t:light.sep}}"
       data-luz-label-light-dawn="{{t:light.dawn}}"
       data-luz-label-light-morning="{{t:light.morning}}"
@@ -93,7 +94,7 @@
          the room is for; once <home-light> is defined the sentence goes -->
     <section class="luz-landing-hero__media luz-landing-hero__media--bleed landing-light" id="light" aria-labelledby="light-title">
       <h2 class="u-sr-only" id="light-title">{{t:light.title}}</h2>
-      <home-light bleed favicon></home-light>
+      <home-light remember bleed favicon></home-light>
       <p class="landing-light__nojs">{{t:light.nojs}}</p>
     </section>
 
@@ -478,7 +479,7 @@ import &quot;@luz-ds/core&quot;;</code></pre>
           <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>{{t:footer.contrast}}</label>
         </fieldset>
       </luz-mode>
-      <p class="u-text-muted">{{t:footer.privacy}}</p>
+      <p class="u-text-muted" data-needs-js hidden>{{t:footer.privacy}}</p>
     </div>
   </footer>
 

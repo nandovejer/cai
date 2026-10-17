@@ -8,19 +8,21 @@
    page scrolls (native sticky) inside it, so it never covers the footer
    under it (WCAG 2.4.11); the inner box scrolls on its own when it is
    taller than the window, with room at its start for a focus ring. Below
-   80rem the rail is drawn under the content, in its column, and does not
-   stick. A link of the list also carries core's .luz-sidebar__link,
+   80rem the rail is drawn above the content (it comes before main in the
+   markup), in its column, and does not stick; a script may fold the list
+   there (its details is written open, so without one it reads in full). A link of the list also carries core's .luz-sidebar__link,
    so core's scroll spy marks the section in view (aria-current="true"):
    the mark is the weight and a start border, never the colour alone.
    ========================================================================== */
 
+/* Above the content (below 80rem): the content's own top padding is the gap */
 .luz-docs-rail {
-	padding: 0 var(--luz-space-md) var(--luz-space-xl);
+	padding: var(--luz-space-lg) var(--luz-space-md) 0;
 	font-family: var(--luz-font-sans);
 	font-size: var(--luz-text-sm);
 }
 
-/* Under the content (below 80rem) it keeps the content's gutters */
+/* Above the content (below 80rem) it keeps the content's gutters */
 @media (min-width: 60rem) {
 	.luz-docs-rail {
 		padding-inline: var(--luz-space-xl);
@@ -88,6 +90,9 @@
 	font-size: inherit;
 	font-weight: 400;
 	text-decoration: none;
+	/* A heading's long word ("accessibility" at 400 % text, 320 px) breaks
+	   inside the column instead of widening the page (WCAG 1.4.10) */
+	overflow-wrap: anywhere;
 }
 
 .luz-docs-rail__sub .luz-docs-rail__link {

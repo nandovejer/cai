@@ -379,7 +379,8 @@ test.describe('Documentation site', () => {
       const rail = page.getByRole('complementary', { name: 'About this page' });
       const toc = rail.getByRole('navigation', { name: 'On this page' });
       await expect(page.locator('main').getByRole('navigation', { name: 'On this page' })).toHaveCount(0);
-      // The rail is the column after main
+      expect(await toc.locator('details').evaluate((d) => d.open), 'open from 80rem').toBe(true);
+      // The rail is before main in the markup and the third column on the screen, open from 80rem
       const [main, aside] = await Promise.all(['main', 'aside.luz-docs-rail'].map((s) => page.locator(s).evaluate((el) => el.getBoundingClientRect().toJSON())));
       expect(aside.left).toBeGreaterThanOrEqual(main.right - 1);
       // Both tabs' sections, each h3 under its tab's h2 (NAV-13)
@@ -399,21 +400,21 @@ test.describe('Documentation site', () => {
       }
     });
 
-    test('below 80rem "On this page" is drawn under the content, in the rail: no drawer, and it opens natively', async ({ page }) => {
+    test('below 80rem "On this page" is drawn above the content, in the rail, folded: no drawer, and it opens natively', async ({ page }) => {
       await page.setViewportSize({ width: 1000, height: 800 });
       await gotoId(page, 'c-button');
       const main = await page.locator('main').evaluate((el) => el.getBoundingClientRect().toJSON());
       const aside = await page.locator('aside.luz-docs-rail').evaluate((el) => el.getBoundingClientRect().toJSON());
-      expect(aside.top, 'the rail is under the content').toBeGreaterThanOrEqual(main.bottom - 1);
+      expect(aside.bottom, 'the rail is above the content').toBeLessThanOrEqual(main.top + 1);
       const toc = page.getByRole('complementary', { name: 'About this page' }).getByRole('navigation', { name: 'On this page' });
       const summary = toc.locator('summary');
       await expect(summary).toBeVisible();
-      // A native <details>: whatever its state at first, one click on the summary toggles the list
+      // A native <details>, closed when the page loads below 80rem (a script folds it; without one it is open): one click opens the list
+      expect(await toc.locator('details').evaluate((d) => d.open), 'folded on load').toBe(false);
       const first = toc.getByRole('link').first();
-      const wasOpen = await toc.locator('details').evaluate((d) => d.open);
+      await expect(first).toBeHidden();
       await summary.click();
-      if (wasOpen) await expect(first).toBeHidden();
-      else await expect(first).toBeVisible();
+      await expect(first).toBeVisible();
     });
 
     for (const width of [360, 1280]) {
@@ -1130,7 +1131,10 @@ test.describe('Site header and navigation toggle', () => {
       await expect(page.locator('.site-header__nav a:visible')).toHaveCount(0);
       await expect(page.locator('.site-header__search')).toBeVisible();
 
-      await page.getByRole('button', { name: 'Menu', exact: true }).click();
+      // The keyboard opens the drawer: a mouse click does not focus a button in WebKit, so the next Tab would start elsewhere
+      const menu = page.getByRole('button', { name: 'Menu', exact: true });
+      await menu.focus();
+      await page.keyboard.press('Enter');
       const site = page.getByRole('list', { name: 'Site', exact: true });
       await expect(site.getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
       await expect(site.locator('[aria-current]')).toHaveText(current);

@@ -144,3 +144,24 @@ test.describe('shell: forced colours', () => {
     expect(current.all, 'border-color of the current link and of a link that is not current').not.toBe(other.all);
   });
 });
+
+test.describe('shell: forced colours, the open drawer', () => {
+  // F7 (review with forced colours): the drawer is drawn over the page; with backgrounds dropped, nothing but a border tells it from the page behind it
+  test.use({ viewport: { width: 375, height: 800 } });
+
+  test('the open drawer has a visible border on its inline-end edge, in a colour that is not its own background', async ({ page }) => {
+    await page.emulateMedia({ forcedColors: 'active' });
+    await page.goto(DRAWER);
+    expect(await page.evaluate(() => window.matchMedia('(forced-colors: active)').matches), 'forced colours are on').toBe(true);
+    await page.locator('#toggle').click();
+    await expect(page.locator('#sidebar')).toBeVisible();
+    expect(await page.locator('#sidebar').evaluate((el) => el.matches(':popover-open')), 'the drawer is open').toBe(true);
+    const edge = await page.locator('#sidebar').evaluate((el) => {
+      const cs = getComputedStyle(el);
+      return { width: parseFloat(cs.borderInlineEndWidth), style: cs.borderInlineEndStyle, color: cs.borderInlineEndColor, background: cs.backgroundColor };
+    });
+    expect(edge.style, 'border-inline-end-style').not.toBe('none');
+    expect(edge.width, 'border-inline-end-width').toBeGreaterThan(0);
+    expect(edge.color, 'the border is not drawn in the drawer\'s own background colour').not.toBe(edge.background);
+  });
+});

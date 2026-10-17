@@ -43,6 +43,15 @@ describe("select.css layering", () => {
     }
   });
 
+  it("lets the flex select shrink below its longest option", () => {
+    // WebKit (Safari 27+) gives a flex select min-width: auto, the width of its
+    // longest option, so a narrow page at 400 % text scrolls sideways.
+    const rules = [...layer2.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => ({ selector: selector.trim(), body }));
+    const flex = rules.filter((r) => /appearance:\s*base-select/.test(r.body) && /display:\s*flex/.test(r.body));
+    expect(flex.length).toBeGreaterThan(0);
+    for (const rule of flex) expect(rule.body, rule.selector).toMatch(/\bmin-(inline-size|width):\s*0\s*;/);
+  });
+
   it("uses no literal colour or physical side, and no primitive token", () => {
     expect(css).not.toMatch(/#[0-9a-f]{3,8}\b|rgba?\(|var\(--luz-(gray|blue|red|green|yellow|purple)-\d+/);
     expect(css).not.toMatch(/\b(margin|padding|border)-(left|right)\b|\b(left|right):/);

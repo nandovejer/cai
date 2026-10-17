@@ -49,7 +49,8 @@ const ROUTES = [
   ['/es/', 'es'],
   ['/ar/', 'ar'],
 ];
-const ORIGIN = 'http://localhost:5173';
+/** The origin of the server under test, whatever its port (the project's baseURL). */
+const origin = () => new URL(test.info().project.use.baseURL).origin;
 
 test.use({ timezoneId: TIMEZONE, storageState: NO_CHOICE });
 
@@ -169,8 +170,9 @@ test.describe('with JavaScript', () => {
         page.on('response', (r) => {
           if (r.status() >= 400) problems.push(`${r.status()} ${r.url()}`);
         });
+        const own = origin();
         page.on('request', (r) => {
-          if (!r.url().startsWith(ORIGIN) && !r.url().startsWith('data:') && !r.url().startsWith('blob:')) foreign.push(r.url());
+          if (new URL(r.url()).origin !== own && !r.url().startsWith('data:') && !r.url().startsWith('blob:')) foreign.push(r.url());
         });
         await open(page, route + query);
         await page.waitForLoadState('networkidle');
@@ -947,4 +949,225 @@ test.describe('review fixes', () => {
       });
     }
   }
+});
+
+/* ---- F7: Pause motion (WCAG 2.2.2 Pause, Stop, Hide) ----------------------- */
+
+/**
+ * The light moves for more than five seconds: the globe spins (the city and the
+ * map, with their endless CSS animations, are gone since the puzzle globe). Decision of the F7 accessibility review: a
+ * "Pause motion" toggle button in the bar. Pressed, it sets `still` on
+ * <home-light>; the scripts and light.css treat `still` as reduced motion; the
+ * choice is remembered in the existing `luz-home-light` storage (its shape is
+ * the implementer's: the tests only read what a reader sees after a reload).
+ * Its name comes from the catalogs, as the bar's other strings do: the tests
+ * find it as the button of the bar that has `aria-pressed` and is not one of
+ * the looks, so they do not name the catalog key.
+ */
+test.describe('Pause motion (WCAG 2.2.2)', () => {
+  const PAUSE = 'home-light .home-light__bar button[aria-pressed]:not([data-look])';
+  const pauseButton = (page) => page.locator(PAUSE);
+  /** [look, hh:mm, does it move with motion welcome?] */
+  const CASES = [
+    ['globe', '13:00', true],
+    ['globe', '23:00', true],
+  ];
+  const MOVING = CASES.filter(([, , moves]) => moves);
+  const shot = (page) => page.locator('home-light').screenshot({ animations: 'allow' });
+  const isStill = (page) => page.locator('home-light').evaluate((el) => el.hasAttribute('still'));
+  const countFrames = (page) =>
+    page.addInitScript(() => {
+      const ask = window.requestAnimationFrame.bind(window);
+      window.requestAnimationFrame = (callback) => {
+        if (/\/apps\/landing\/light\//.test(new Error().stack ?? '')) /** @type {any} */ (window).__frames = ((/** @type {any} */ (window).__frames) ?? 0) + 1;
+        return ask(callback);
+      };
+    });
+  const framesIn = async (page, ms) => {
+    await page.evaluate(() => {
+      /** @type {any} */ (window).__frames = 0;
+    });
+    await page.waitForTimeout(ms);
+    return page.evaluate(() => /** @type {any} */ (window).__frames ?? 0);
+  };
+  /** Open the home on a look at an hour, with the bar open, ready to press. */
+  async function ready(page, look, time, route = '/', { needsButton = true, frames = false } = {}) {
+    // The clock first: installing it replaces requestAnimationFrame, so the frame counter goes in after it
+    if (frames) {
+      await atTime(page, time);
+      await countFrames(page);
+    }
+    await open(page, route, { look, time: frames ? undefined : time });
+    await page.waitForLoadState('networkidle');
+    await openBar(page);
+    if (needsButton) await expect(pauseButton(page), 'the bar has a Pause motion button').toBeVisible();
+  }
+
+  test.describe('without JavaScript', () => {
+    test.use({ javaScriptEnabled: false });
+    for (const [route] of ROUTES) {
+      test(`${route}: there is no Pause motion button and nothing is still (the element is empty)`, async ({ page }) => {
+        await page.goto(route);
+        await expect(page.locator('home-light button')).toHaveCount(0);
+        await expect(page.locator('home-light[still]')).toHaveCount(0);
+      });
+    }
+  });
+
+  test.describe('with JavaScript', () => {
+    test.beforeEach(() => {
+      test.skip(jsOff(), 'needs JavaScript');
+    });
+
+    test('the bar has a Pause motion toggle: a button named for it, not pressed, and the light is not still', async ({ page }) => {
+      await ready(page, 'globe', '14:00');
+      const button = pauseButton(page);
+      await expect(button).toHaveCount(1);
+      await expect(button).toHaveAttribute('type', 'button');
+      await expect(button).toHaveAttribute('aria-pressed', 'false');
+      await expect(button).toHaveAccessibleName(/pause motion/i);
+      expect(await isStill(page)).toBe(false);
+    });
+
+    test('pressing it sets [still] on <home-light>, and pressing it again takes it off', async ({ page }) => {
+      await ready(page, 'globe', '14:00');
+      const button = pauseButton(page);
+      await button.click();
+      await expect(button).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.locator('home-light[still]')).toHaveCount(1);
+      await button.click();
+      await expect(button).toHaveAttribute('aria-pressed', 'false');
+      await expect(page.locator('home-light[still]')).toHaveCount(0);
+    });
+
+    for (const [look, time] of CASES) {
+      test(`pressed, ${look} at ${time}: two screenshots of <home-light> 3 s apart are identical`, async ({ page }) => {
+        await ready(page, look, time);
+        await pauseButton(page).click();
+        await expect(pauseButton(page)).toHaveAttribute('aria-pressed', 'true');
+        await page.waitForTimeout(1500); // a frame in flight, a transition, the bar's own animation
+        const first = await shot(page);
+        await page.waitForTimeout(3000);
+        const second = await shot(page);
+        expect(first.equals(second), 'the picture moved while the light was paused').toBe(true);
+      });
+    }
+
+    for (const [look, time] of MOVING) {
+      test(`control: not pressed, ${look} at ${time}: the two screenshots 3 s apart differ (the probe sees the motion)`, async ({ page }) => {
+        await ready(page, look, time, '/', { needsButton: false });
+        await page.waitForTimeout(1500);
+        const first = await shot(page);
+        await page.waitForTimeout(3000);
+        const second = await shot(page);
+        expect(first.equals(second), 'nothing moved: the comparison proves nothing').toBe(false);
+      });
+
+      test(`pressed again, ${look} at ${time}: the motion resumes`, async ({ page }) => {
+        await ready(page, look, time);
+        const button = pauseButton(page);
+        await button.click();
+        await expect(button).toHaveAttribute('aria-pressed', 'true');
+        await button.click();
+        await expect(button).toHaveAttribute('aria-pressed', 'false');
+        expect(await isStill(page)).toBe(false);
+        await page.waitForTimeout(1500);
+        const first = await shot(page);
+        await page.waitForTimeout(3000);
+        const second = await shot(page);
+        expect(first.equals(second), 'the picture is still after Pause motion was released').toBe(false);
+      });
+    }
+
+    for (const [look, time] of [['globe', '13:00'], ['globe', '23:00']]) {
+      test(`pressed, the ${look} look at ${time} asks for no animation frame (the scripts treat [still] as reduced motion)`, async ({ page }) => {
+        await ready(page, look, time, '/', { frames: true });
+        await page.waitForTimeout(500);
+        expect(await framesIn(page, 1500), 'control: before pressing, the visual asks for frames').toBeGreaterThan(10);
+        await pauseButton(page).click();
+        await expect(pauseButton(page)).toHaveAttribute('aria-pressed', 'true');
+        await page.waitForTimeout(600);
+        expect(await framesIn(page, 1500)).toBe(0);
+      });
+    }
+
+    test('the choice survives a reload: still, pressed, and no frame asked, under the same luz-home-light storage', async ({ page }) => {
+      await ready(page, 'globe', '13:00', '/', { frames: true });
+      await pauseButton(page).click();
+      await expect(page.locator('home-light[still]')).toHaveCount(1);
+      expect(await page.evaluate(() => localStorage.getItem('luz-home-light')), 'the choice is stored under the existing key').not.toBeNull();
+      expect(await page.evaluate(() => Object.keys(localStorage)), 'and under no other key').toEqual(['luz-home-light']);
+
+      await page.reload();
+      await expect(page.locator('home-light .home-light__line')).toBeVisible();
+      await expect(page.locator('home-globe').filter({ visible: true })).toHaveCount(1);
+      await expect(page.locator('home-light[still]')).toHaveCount(1);
+      await openBar(page);
+      await expect(pauseButton(page)).toHaveAttribute('aria-pressed', 'true');
+      await page.waitForTimeout(1000);
+      expect(await framesIn(page, 1500), 'a light that was paused starts paused').toBe(0);
+
+      // Released, it is remembered too
+      await pauseButton(page).click();
+      await expect(pauseButton(page)).toHaveAttribute('aria-pressed', 'false');
+      await page.reload();
+      await expect(page.locator('home-light .home-light__line')).toBeVisible();
+      await expect(page.locator('home-light[still]')).toHaveCount(0);
+      await openBar(page);
+      await expect(pauseButton(page)).toHaveAttribute('aria-pressed', 'false');
+    });
+
+    test('the keyboard reaches it with Tab from the line, and Enter and Space both toggle it, with the focus staying on it', async ({ page }) => {
+      await open(page, '/', { look: 'globe', time: '14:00' });
+      await page.locator('home-light .home-light__line').focus();
+      await page.keyboard.press('Enter');
+      await expect(page.locator('home-light .home-light__bar')).toBeVisible();
+      const button = pauseButton(page);
+      let reached = false;
+      for (let i = 0; i < 8 && !reached; i++) {
+        await page.keyboard.press('Tab');
+        reached = await page.evaluate((selector) => !!document.activeElement?.matches(selector), PAUSE);
+      }
+      expect(reached, 'Tab from the line reaches the Pause motion button within the bar').toBe(true);
+      await page.keyboard.press('Enter');
+      await expect(button).toHaveAttribute('aria-pressed', 'true');
+      await expect(page.locator('home-light[still]')).toHaveCount(1);
+      await expect(button).toBeFocused();
+      await page.keyboard.press('Space');
+      await expect(button).toHaveAttribute('aria-pressed', 'false');
+      await expect(page.locator('home-light[still]')).toHaveCount(0);
+      await page.keyboard.press('Space');
+      await expect(button).toHaveAttribute('aria-pressed', 'true');
+      await page.keyboard.press('Enter');
+      await expect(button).toHaveAttribute('aria-pressed', 'false');
+      await expect(button).toBeFocused();
+    });
+
+    for (const [route, lang] of ROUTES) {
+      test(`${route}: the button's name is a string of the catalog, in ${lang}`, async ({ page }) => {
+        await ready(page, 'globe', '14:00', route);
+        const name = await pauseButton(page).evaluate((el) => (el.getAttribute('aria-label') || el.textContent || '').trim());
+        expect(name).toMatch(/\S/);
+        const labels = await page.evaluate(() => [...document.body.attributes].filter((a) => a.name.startsWith('data-luz-label-light-')).map((a) => a.value));
+        expect(labels, 'the name is one of the <body> data-luz-label-light-* of the page').toContain(name);
+        expect(Object.values(catalog(lang)), `the name is a value of ${lang}.json`).toContain(name);
+        await expect(pauseButton(page)).toHaveAccessibleName(name);
+        if (lang === 'en') expect(name).toMatch(/pause motion/i);
+        else expect(name, `the ${lang} name is not the English one`).not.toMatch(/pause motion/i);
+      });
+    }
+
+    for (const time of ['13:00', '23:00']) {
+      test(`axe: / with the bar open and Pause motion pressed (${time})`, async ({ page, browserName }) => {
+        test.skip(browserName !== 'chromium', 'Chromium only');
+        await ready(page, 'globe', time);
+        await pauseButton(page).click();
+        await expect(pauseButton(page)).toHaveAttribute('aria-pressed', 'true');
+        await page.waitForTimeout(1500);
+        const { violations: found } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
+        const blocking = found.filter((v) => ['serious', 'critical'].includes(v.impact ?? '')).map((v) => `${v.impact} ${v.id}: ${v.nodes.length} node(s) - ${v.nodes[0]?.target?.join(' ')}`);
+        expect(blocking, 'serious/critical axe violations').toEqual([]);
+      });
+    }
+  });
 });

@@ -111,6 +111,9 @@
   .luz-select:not([multiple], [size]:not([size="1"])) {
     appearance: base-select;
     display: flex;
+    /* A flex select must be able to shrink to its field: its auto minimum is the
+       longest option, which at 400 % text is wider than a phone (WCAG 1.4.10) */
+    min-inline-size: 0;
     align-items: center;
     justify-content: space-between;
     background-image: none;

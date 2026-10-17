@@ -769,23 +769,51 @@ export function buildSearchIndex(site) {
   return index;
 }
 
-/** The A–Z index: a row of letters, then one h2 and one list per letter. */
-export function renderAZ(site) {
+/**
+ * The A–Z index is two pages, so neither passes the ceiling of a docs page
+ * (RL-17): the first holds the letters A–L, the second M–Z and then "Other"
+ * (a name that starts with neither). Each lists its own half of the same
+ * indexEntries(), so the two never disagree and every entry is on one page.
+ */
+export const AZ_PAGES = [
+  { route: `${DOCS_ROUTE}a-z/`, label: "A–L", letters: [..."ABCDEFGHIJKL"] },
+  { route: `${DOCS_ROUTE}a-z/m-z/`, label: "M–Z", letters: [..."MNOPQRSTUVWXYZ", "#"] },
+];
+
+/** The letter an entry is filed under: its first letter or digit, A–Z, else "#" (Other). */
+const azLetterOf = (name) => {
+  const first = name.replace(/^[^\p{L}\p{N}]+/u, "")[0]?.toUpperCase() ?? "#";
+  return /[A-Z]/.test(first) ? first : "#";
+};
+const azIdOf = (letter) => (letter === "#" ? "az-other" : `az-${letter.toLowerCase()}`);
+
+/**
+ * One page of the A–Z index (`page` is the one being rendered; the first half
+ * when it is not one of AZ_PAGES): a nav to the two halves, the row of letters
+ * (a letter of the other half links to its section there), then one h2 and one
+ * list per letter of this half that has entries.
+ */
+export function renderAZ(site, page) {
   const groups = new Map();
   for (const entry of indexEntries(site)) {
-    const first = entry.name.replace(/^[^\p{L}\p{N}]+/u, "")[0]?.toUpperCase() ?? "#";
-    const letter = /[A-Z]/.test(first) ? first : "#";
+    const letter = azLetterOf(entry.name);
     if (!groups.has(letter)) groups.set(letter, []);
     groups.get(letter).push(entry);
   }
+  const half = AZ_PAGES.find((p) => p.route === page?.route) ?? AZ_PAGES[0];
+  const halves = AZ_PAGES.map((p) => `<li>${link(p.route, p.label, p === half ? ' aria-current="page"' : "")}</li>`).join("");
   const letters = [..."ABCDEFGHIJKLMNOPQRSTUVWXYZ"];
   const jump = letters
-    .map((l) => (groups.has(l) ? `<li>${link(`#az-${l.toLowerCase()}`, l)}</li>` : `<li><span>${l}</span></li>`))
+    .map((l) => {
+      if (!groups.has(l)) return `<li><span>${l}</span></li>`;
+      const there = AZ_PAGES.find((p) => p.letters.includes(l));
+      return `<li>${link(there === half ? `#${azIdOf(l)}` : `${there.route}#${azIdOf(l)}`, l)}</li>`;
+    })
     .join("");
-  const sections = [...letters, "#"]
+  const sections = half.letters
     .filter((l) => groups.has(l))
     .map((l) => {
-      const id = l === "#" ? "az-other" : `az-${l.toLowerCase()}`;
+      const id = azIdOf(l);
       const heading = l === "#" ? "Other" : l;
       const items = groups
         .get(l)
@@ -793,7 +821,7 @@ export function renderAZ(site) {
         .join("\n");
       return `  <section class="docs-az__letter" aria-labelledby="${id}">\n    <h2 id="${id}">${heading}</h2>\n    <ul class="docs-az__list">\n${items}\n    </ul>\n  </section>`;
     });
-  return `  <nav class="docs-az__letters" aria-label="Letters">\n    <ul>${jump}</ul>\n  </nav>\n${sections.join("\n")}`;
+  return `  <nav class="docs-az__halves" aria-label="Parts of the index">\n    <ul>${halves}</ul>\n  </nav>\n  <nav class="docs-az__letters" aria-label="Letters">\n    <ul>${jump}</ul>\n  </nav>\n${sections.join("\n")}`;
 }
 
 /* ---- Rendering --------------------------------------------------------- */
@@ -940,7 +968,7 @@ function renderGenerated(page, site, options) {
     case "gallery":
       return renderGallery(site, page);
     case "a-z":
-      return renderAZ(site);
+      return renderAZ(site, page);
     case "snippets":
       return renderSnippets(snippetData({ root: site.repoRoot, readFile: readFileSync, dev: options.dev === true }));
     default:

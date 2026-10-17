@@ -494,6 +494,7 @@
 .docs-hub__more,
 .docs-az__list,
 .docs-az__letters ul,
+.docs-az__halves ul,
 .docs-not-found__links {
   list-style: none;
   margin: 0;
@@ -558,6 +559,25 @@
 
 .docs-az__letters span {
   color: var(--luz-text-secondary);
+}
+
+/* The two pages of the index: the current one is bold, not only coloured */
+.docs-az__halves ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--luz-space-md);
+}
+
+.docs-az__halves a {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--luz-control-sm);
+}
+
+.docs-az__halves a[aria-current="page"] {
+  color: var(--luz-text-primary);
+  font-weight: 600;
+  text-decoration: none;
 }
 
 .docs-az__letter {

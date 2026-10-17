@@ -203,6 +203,17 @@
   .luz-nav-toggle__bar {
     background: ButtonText;
   }
+
+  /* The current page keeps a mark when backgrounds are dropped: a start
+     border in Highlight; every other link has the same border in Canvas,
+     so nothing moves */
+  .luz-sidebar__link {
+    border-inline-start: 3px solid Canvas;
+  }
+
+  .luz-sidebar__link[aria-current="page"] {
+    border-inline-start-color: Highlight;
+  }
 }
 
 /* In an .o-shell on a phone, a sidebar that is not a popover (or a browser

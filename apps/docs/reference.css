@@ -210,6 +210,24 @@
   background: var(--luz-surface-page);
 }
 
+/* A control the focus reaches lands below the header and the stuck tab row,
+   not under it (WCAG 2.4.11): the row is a 44px tab and its rule */
+:root:has(.docs-view-tabs) {
+  scroll-padding-block-start: calc(var(--site-header-h) + var(--luz-control-lg) + var(--luz-space-md));
+}
+
+/* In a window shorter than 30rem (a phone on its side, 400 % zoom) the row
+   would cover most of it: it scrolls with the page */
+@media (max-height: 30rem) {
+  .docs-view-tabs {
+    position: static;
+  }
+
+  :root:has(.docs-view-tabs) {
+    scroll-padding-block-start: calc(var(--site-header-h) + var(--luz-space-sm));
+  }
+}
+
 /* A heading jumped to lands below the header and the stuck tab row */
 .docs-component:has(> .docs-view-tabs) [id] {
   scroll-margin-top: calc(var(--luz-space-lg) + 3rem);
@@ -669,6 +687,18 @@
   background: var(--luz-sidebar-hover);
   color: var(--luz-sidebar-text-hover);
   font-weight: 600;
+}
+
+/* Forced colours drop the transparent start border to the text colour:
+   Canvas for every link, Highlight for the current page (as core does) */
+@media (forced-colors: active) {
+  .docs-nav .luz-sidebar__link {
+    border-inline-start-color: Canvas;
+  }
+
+  .docs-nav .luz-sidebar__link[aria-current="page"] {
+    border-inline-start-color: Highlight;
+  }
 }
 
 /* Rows of 44px on touch screens (2.5.5) */

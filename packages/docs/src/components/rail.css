@@ -1,12 +1,15 @@
 /* ==========================================================================
    LUZ DOCS: rail.
-   aside.luz-docs-rail > nav.luz-docs-rail__onpage ("On this page": a
-   details.__fold, its summary.__title, ul.__list of a.__link, an h3 in a
-   nested ul.__sub) + .luz-docs-rail__actions (Copy page, Edit, Report).
-   In the shell's third column from 80rem it stays in view while the page
-   scrolls (native sticky), and scrolls on its own when it is taller than
-   the window; below 80rem it is drawn under the content, in its column,
-   and does not stick. A link of the list also carries core's .luz-sidebar__link,
+   aside.luz-docs-rail > div.luz-docs-rail__inner > nav.luz-docs-rail__onpage
+   ("On this page": a details.__fold, its summary.__title, ul.__list of
+   a.__link, an h3 in a nested ul.__sub) + .luz-docs-rail__actions (Copy
+   page, Edit, Report). In the shell's third column from 80rem the aside
+   stretches over its grid area and its inner box stays in view while the
+   page scrolls (native sticky) inside it, so it never covers the footer
+   under it (WCAG 2.4.11); the inner box scrolls on its own when it is
+   taller than the window, with room at its start for a focus ring. Below
+   80rem the rail is drawn under the content, in its column, and does not
+   stick. A link of the list also carries core's .luz-sidebar__link,
    so core's scroll spy marks the section in view (aria-current="true"):
    the mark is the weight and a start border, never the colour alone.
    ========================================================================== */
@@ -28,11 +31,15 @@
 	.luz-docs-rail {
 		padding-block: var(--luz-space-lg);
 		padding-inline: 0 var(--luz-space-md);
+	}
+
+	.luz-docs-rail__inner {
 		position: sticky;
 		inset-block-start: var(--luz-docs-rail-top, 0);
-		align-self: start;
 		max-block-size: calc(100dvh - var(--luz-docs-rail-top, 0rem));
 		overflow-y: auto;
+		/* The box clips: a focus ring (2px, 2px away) keeps its start edge */
+		padding-inline-start: var(--luz-space-xs);
 	}
 }
 
@@ -43,7 +50,7 @@
 }
 
 /* In the rail, "On this page" is a list under its title, not core's box */
-.luz-docs-rail > .luz-docs-rail__onpage .luz-docs-rail__fold {
+.luz-docs-rail .luz-docs-rail__onpage .luz-docs-rail__fold {
 	margin: 0;
 	padding: 0;
 	border: 0;
@@ -51,7 +58,7 @@
 	background: none;
 }
 
-.luz-docs-rail > .luz-docs-rail__onpage .luz-docs-rail__title {
+.luz-docs-rail .luz-docs-rail__onpage .luz-docs-rail__title {
 	margin: 0 0 var(--luz-space-xs);
 	padding-inline: 0;
 }
@@ -116,6 +123,20 @@
 	align-items: center;
 	min-block-size: var(--luz-control-sm);
 	overflow-wrap: anywhere;
+}
+
+/* An action a script turns into a button (copy, not go) reads as one of
+   the list: the same text, colour and underline as its links */
+.luz-docs-rail__actions > :where(button) {
+	padding: 0;
+	border: 0;
+	background: none;
+	color: var(--luz-brand-primary);
+	font: inherit;
+	text-align: start;
+	text-decoration: underline;
+	text-underline-offset: 0.18em;
+	cursor: pointer;
 }
 
 /* Forced colours drop the transparent start border to the text colour: the

@@ -51,7 +51,7 @@ function initOnThisPage() {
   // mark the section in view there (aria-current="true", core's scroll spy).
   // Only the page's own list, never the live demo of the rail pattern, which
   // sits inside an example in main.
-  const nav = document.querySelector("aside.luz-docs-rail > .luz-docs-rail__onpage");
+  const nav = document.querySelector("aside.luz-docs-rail > .luz-docs-rail__inner > .luz-docs-rail__onpage");
   if (!nav || !window.matchMedia("(min-width: 80rem)").matches) return;
   initSidebar(nav);
 }
@@ -59,46 +59,82 @@ function initOnThisPage() {
 /* ---- Copy page as Markdown --------------------------------------------- */
 
 const COPIED = "Copied the page as Markdown.";
+const NOT_COPIED = "Could not copy the page.";
 
 function initCopyPage() {
   // A plain link to the page's index.md: without a script it opens the file.
-  // With one, a click copies the file's text and says so in the rail. The
-  // text is fetched when the pointer or the focus reaches the link, so the
-  // copy happens inside the click (Safari asks for that); if the copy fails,
-  // the link does what it does without a script.
+  // With the clipboard API it becomes a button with the same text, which
+  // copies the file's text and says so in the rail (WCAG 4.1.2: it no
+  // longer navigates). The text is fetched when the pointer or the focus
+  // reaches it, so the copy happens inside the click (Safari asks for that).
+  // If the file cannot be read, the rail says so and the focus stays; if the
+  // clipboard refuses the text, the browser opens the file instead.
   const link = document.querySelector("aside.luz-docs-rail a[data-docs-copy-page]");
   if (!link || !navigator.clipboard) return;
+  const href = link.href;
+  const button = document.createElement("button");
+  button.type = "button";
+  if (link.className) button.className = link.className;
+  button.textContent = link.textContent;
+  link.replaceWith(button);
   // The status exists, empty, before anything is said in it
   const status = document.createElement("p");
   status.className = "docs-rail-status";
   status.setAttribute("role", "status");
-  link.closest(".luz-docs-rail__actions").append(status);
+  button.closest(".luz-docs-rail__actions").append(status);
   let text = null;
   let loading = null;
   const load = () =>
-    (loading ??= fetch(link.href)
+    (loading ??= fetch(href)
       .then((response) => (response.ok ? response.text() : Promise.reject(new Error(`${response.status}`))))
-      .then((body) => (text = body)));
-  link.addEventListener("pointerenter", () => load().catch(() => {}));
-  link.addEventListener("focus", () => load().catch(() => {}));
+      .then(
+        (body) => (text = body),
+        (error) => {
+          // A later click tries again
+          loading = null;
+          throw error;
+        },
+      ));
+  button.addEventListener("pointerenter", () => load().catch(() => {}));
+  button.addEventListener("focus", () => load().catch(() => {}));
   let clear;
-  link.addEventListener("click", (event) => {
-    // A new tab, a new window or a download: the link's own
-    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    // eslint-disable-next-line no-restricted-syntax -- RL-3: the link still works without a script; with one it copies instead of opening the file
-    event.preventDefault();
-    const copied = text !== null ? navigator.clipboard.writeText(text) : load().then((body) => navigator.clipboard.writeText(body));
-    copied.then(
-      () => {
-        status.textContent = COPIED;
-        clearTimeout(clear);
-        clear = setTimeout(() => {
-          status.textContent = "";
-        }, 5000);
-      },
-      () => window.location.assign(link.href),
+  const say = (message) => {
+    status.textContent = message;
+    clearTimeout(clear);
+    clear = setTimeout(() => {
+      status.textContent = "";
+    }, 5000);
+  };
+  button.addEventListener("click", () => {
+    const read = text !== null ? Promise.resolve(text) : load();
+    read.then(
+      (body) =>
+        navigator.clipboard.writeText(body).then(
+          () => say(COPIED),
+          () => window.location.assign(href),
+        ),
+      () => say(NOT_COPIED),
     );
   });
+}
+
+/* ---- The current page in the sidebar ------------------------------------ */
+
+/**
+ * Every page is in the sidebar, so the current one can be far down its
+ * list: on load, scroll the sidebar (its own scroller, never the page) so
+ * that the link marked aria-current="page" is in view. The focus stays where
+ * it is. The same in-list scroll as core's sidebar.js uses for the scroll spy.
+ */
+function revealCurrentPage() {
+  const nav = document.getElementById("page-nav");
+  const current = nav?.querySelector('a[aria-current="page"]');
+  if (!current || nav.scrollHeight <= nav.clientHeight || !/auto|scroll/.test(getComputedStyle(nav).overflowY)) return;
+  const l = current.getBoundingClientRect();
+  const b = nav.getBoundingClientRect();
+  if (l.top >= b.top && l.bottom <= b.bottom) return;
+  // Into the middle of the box, so the pages around it show too
+  nav.scrollTop += l.top - b.top - (b.height - l.height) / 2;
 }
 
 function initRangeOutputs() {
@@ -333,6 +369,7 @@ initCanvas();
 initFolds();
 initOnThisPage();
 initCopyPage();
+revealCurrentPage();
 initAssets();
 initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each

@@ -638,8 +638,9 @@ const actionsOf = (page) => ({
 });
 
 /**
- * The rail, the aside after main: "On this page" (`toc`, from renderToc;
- * none on a short page) and the page's actions: Copy page as Markdown (a
+ * The rail, the aside after main, around one inner box (the sticky one,
+ * so the aside can stretch and never cover the footer): "On this page"
+ * (`toc`, from renderToc; none on a short page) and the page's actions: Copy page as Markdown (a
  * link to the page's index.md, which the docs script copies to the
  * clipboard), Edit this page and Report a problem.
  */
@@ -647,12 +648,14 @@ export function renderRail(page, toc) {
   const { edit, report } = actionsOf(page);
   return [
     '  <aside class="luz-docs-rail" aria-label="About this page">',
+    '  <div class="luz-docs-rail__inner">',
     ...(toc ? [toc] : []),
     '    <div class="luz-docs-rail__actions">',
     `      ${link(`${page.route}index.md`, "Copy page as Markdown", " data-docs-copy-page")}`,
     `      ${link(edit, "Edit this page")}`,
     `      ${link(report, "Report a problem")}`,
     "    </div>",
+    "  </div>",
     "  </aside>",
   ].join("\n");
 }

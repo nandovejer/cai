@@ -22,6 +22,7 @@
 /* global CSSLayerBlockRule */
 import { test, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { focusAndHitTest, ringBeyondInlineStart } from './helpers/obscured.js';
 
 const PAGE = '/tests/fixtures/docs-patterns.html';
 const STYLESHEET = '/packages/docs/dist/docs.css';
@@ -240,6 +241,65 @@ test.describe('rail: "On this page" that stays in view, and the page actions', (
       if (i > 0) expect(action.top, `action ${i}`).toBeGreaterThanOrEqual(actions[i - 1].bottom - 1);
     });
   });
+});
+
+/* ---- rail and the site footer (WCAG 2.4.11): the rail's content is a sticky box inside a rail that stretches ---- */
+
+test.describe('rail: from 80rem the aside stretches over its grid area and its inner box sticks, so the footer is never covered', () => {
+  for (const width of [1440, 1280]) {
+    test(`${width}px: aside > div.luz-docs-rail__inner (the list and the actions); the aside is not sticky and is as tall as main`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(PAGE);
+      await expect(page.locator('#rail > .luz-docs-rail__inner')).toHaveCount(1);
+      await expect(page.locator('#rail > *')).toHaveCount(1);
+      await expect(page.locator('#rail-inner > #onpage')).toHaveCount(1);
+      await expect(page.locator('#rail-inner > #actions')).toHaveCount(1);
+      expect(await style(page, '#rail', 'position'), 'the aside does not stick').not.toBe('sticky');
+      expect(await style(page, '#rail-inner', 'position'), 'the inner box sticks').toBe('sticky');
+      const { main, rail } = await layout(page);
+      expect(near(rail.height, main.height), `aside ${rail.height}px, main ${main.height}px`).toBe(true);
+    });
+  }
+
+  // The fixture's rail is short, so the window is short too: the sticky box (100dvh less its top offset)
+  // then reaches past the top of the footer, as the rail of a long page does in a 800px window.
+  for (const [width, height] of [[1440, 400], [1280, 400]]) {
+    test(`${width}x${height}: at the bottom of the page every focused footer link is on top, and the rail ends above the footer`, async ({ page }) => {
+      await page.setViewportSize({ width, height });
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.goto(PAGE);
+      await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+      const links = page.locator('#site-footer a');
+      const count = await links.count();
+      expect(count, 'the footer has links').toBeGreaterThan(0);
+      const problems = [];
+      for (let i = 0; i < count; i++) {
+        const result = await focusAndHitTest(links.nth(i));
+        if (!result.inViewport) problems.push(`"${result.label}" is not inside the window`);
+        for (const hit of result.covered) problems.push(`"${result.label}" is covered at ${hit}`);
+      }
+      expect(problems, 'footer links covered by something else').toEqual([]);
+      const footerTop = (await box(page, '#site-footer')).top;
+      expect((await box(page, '#rail')).bottom, 'the rail ends at or above the footer').toBeLessThanOrEqual(footerTop + 0.5);
+      expect((await box(page, '#rail-inner')).bottom, 'what the rail holds ends at or above the footer').toBeLessThanOrEqual(footerTop + 0.5);
+    });
+  }
+});
+
+test.describe('rail: the focus ring of a control is whole at its start edge', () => {
+  for (const selector of ['#onpage summary', '#on-example', '#act-copy', '#act-edit', '#act-report']) {
+    test(`1440px: ${selector}: the outline starts inside the padding box of the element that scrolls`, async ({ page }) => {
+      await page.setViewportSize({ width: 1440, height: 800 });
+      await page.goto(PAGE);
+      await page.locator(selector).focus();
+      await page.keyboard.press('Shift+Tab');
+      await page.keyboard.press('Tab');
+      const ring = await ringBeyondInlineStart(page);
+      expect(ring.focusVisible, `"${ring.label}" shows a focus ring`).toBe(true);
+      expect(ring.outlineStyle, 'it is an outline').not.toBe('none');
+      expect(ring.hidden, `the ring starts ${ring.ringStart}px, the padding box of ${ring.clipper} starts ${ring.paddingBoxStart}px`).toBeLessThanOrEqual(0.01);
+    });
+  }
 });
 
 /* ---- rail below 80rem (WCAG 1.4.10 Reflow: nothing is lost when the third column goes) --------- */

@@ -124,26 +124,36 @@
     <p class="luz-docs-page-foot" id="foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="#main-content" id="foot-edit">Edit this page</a> · <a href="#main-content" id="foot-report">Report a problem</a></p>
   </main>
   <aside class="luz-docs-rail" id="rail" aria-label="About this page">
-    <nav class="luz-docs-rail__onpage" id="onpage" aria-labelledby="onpage-label">
-      <details class="luz-docs-rail__fold" open>
-        <summary class="luz-docs-rail__title" id="onpage-label">On this page</summary>
-        <ul class="luz-docs-rail__list">
-          <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-example" href="#example-title">Example</a></li>
-          <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-issues" href="#known-issues">Known issues</a></li>
-          <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-dodont" href="#do-dont">Do and don't</a>
-            <ul class="luz-docs-rail__sub">
-              <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Names</a></li>
-            </ul>
-          </li>
-          <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-reading" href="#prose-title">Reading</a></li>
-        </ul>
-      </details>
-    </nav>
-    <div class="luz-docs-rail__actions" id="actions">
-      <a href="#main-content" id="act-copy">Copy page as Markdown</a>
-      <a href="#main-content" id="act-edit">Edit this page</a>
-      <a href="#main-content" id="act-report">Report a problem</a>
+    <div class="luz-docs-rail__inner" id="rail-inner">
+      <nav class="luz-docs-rail__onpage" id="onpage" aria-labelledby="onpage-label">
+        <details class="luz-docs-rail__fold" open>
+          <summary class="luz-docs-rail__title" id="onpage-label">On this page</summary>
+          <ul class="luz-docs-rail__list">
+            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-example" href="#example-title">Example</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-issues" href="#known-issues">Known issues</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-dodont" href="#do-dont">Do and don't</a>
+              <ul class="luz-docs-rail__sub">
+                <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Names</a></li>
+              </ul>
+            </li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-reading" href="#prose-title">Reading</a></li>
+          </ul>
+        </details>
+      </nav>
+      <div class="luz-docs-rail__actions" id="actions">
+        <a href="#main-content" id="act-copy">Copy page as Markdown</a>
+        <a href="#main-content" id="act-edit">Edit this page</a>
+        <a href="#main-content" id="act-report">Report a problem</a>
+      </div>
     </div>
   </aside>
+  <footer id="site-footer">
+    <!-- The site footer spans the shell (grid area foot), under main and the rail: its links sit under the rail's column -->
+    <nav aria-label="Project links" style="text-align: end; padding: 1rem">
+      <a href="#main-content" id="foot-home">Home</a>
+      <a href="#main-content" id="foot-github">GitHub</a>
+      <a href="#main-content" id="foot-issues">Issues on GitHub</a>
+    </nav>
+  </footer>
 </body>
 </html>

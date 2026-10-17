@@ -671,6 +671,20 @@ describe("the rail: \"On this page\" outside main, then Copy, Edit and Report", 
     }
   });
 
+  it("holds the rail's content in one div.luz-docs-rail__inner (the sticky box, WCAG 2.4.11): aside > div.__inner > the list nav and the actions", () => {
+    for (const p of site.pages) {
+      const { aside } = partsOf(treeOf(p.route));
+      expect(aside.children.map((c) => c.name), `${p.route}: the aside has one child`).toEqual(["div"]);
+      const [inner] = aside.children;
+      expect(hasClass(inner, "luz-docs-rail__inner"), `${p.route}: div.luz-docs-rail__inner`).toBe(true);
+      const onpage = queryAll(aside, "nav.luz-docs-rail__onpage");
+      for (const nav of onpage) expect(nav.parent, `${p.route}: "On this page" is a child of the inner box`).toBe(inner);
+      const actions = queryAll(aside, ".luz-docs-rail__actions");
+      expect(actions, `${p.route}: one actions box`).toHaveLength(1);
+      expect(actions[0].parent, `${p.route}: the actions are a child of the inner box`).toBe(inner);
+    }
+  });
+
   it("puts \"On this page\" in the rail, never in main: nav.luz-docs-rail__onpage > details > summary.luz-docs-rail__title", () => {
     let withList = 0;
     let expected = 0;

@@ -122,3 +122,25 @@ test.describe('shell: a sidebar with popover keeps the drawer', () => {
     expect(sidebar.height).toBe(DESKTOP.height);
   });
 });
+
+test.describe('shell: forced colours', () => {
+  test.use({ viewport: DESKTOP });
+
+  test('the current link has a border colour that a link that is not current does not have', async ({ page }) => {
+    await page.emulateMedia({ forcedColors: 'active' });
+    await page.goto(PLAIN);
+    expect(await page.evaluate(() => window.matchMedia('(forced-colors: active)').matches), 'forced colours are on').toBe(true);
+    await page.evaluate(() => document.querySelector('#sidebar .luz-sidebar__link').setAttribute('aria-current', 'page'));
+    const border = (selector) =>
+      page.locator(selector).first().evaluate((el) => {
+        const cs = getComputedStyle(el);
+        return { color: cs.borderInlineStartColor, width: cs.borderInlineStartWidth, style: cs.borderInlineStartStyle, all: cs.borderColor };
+      });
+    const current = await border('#sidebar .luz-sidebar__link[aria-current="page"]');
+    const other = await border('#sidebar .luz-sidebar__link:not([aria-current])');
+    expect(current.style, 'the current link has a border').not.toBe('none');
+    expect(current.width, 'the current link has a border with a width').not.toBe('0px');
+    expect(current.color, 'border-inline-start-color of the current link and of a link that is not current').not.toBe(other.color);
+    expect(current.all, 'border-color of the current link and of a link that is not current').not.toBe(other.all);
+  });
+});

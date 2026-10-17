@@ -20,6 +20,8 @@
  * - LAND: the rings of the land, ";"-separated, each a list of arc references
  *   (index * 2 + reversed) chained end to end, every one counter-clockwise
  *   seen from outside (a lake is a ring inside another: the even-odd rule).
+ * - BORDERS: the borders between countries (an arc used by two), encoded as
+ *   ARCS; each is a cut of the puzzle, so every country is one piece.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { gzipSync } from "node:zlib";
@@ -184,17 +186,24 @@ const varint = (n) => {
   return s;
 };
 const zig = (n) => varint(n < 0 ? -2 * n - 1 : 2 * n);
-let ARCS = "",
-  px = 0,
-  py = 0;
-for (const i of coast) {
-  ARCS += varint(arcs[i].length);
-  for (const [x, y] of arcs[i]) {
-    ARCS += zig(x - px) + zig(y - py);
-    px = x;
-    py = y;
+const encodeArcs = (list) => {
+  let out = "",
+    px = 0,
+    py = 0;
+  for (const i of list) {
+    out += varint(arcs[i].length);
+    for (const [x, y] of arcs[i]) {
+      out += zig(x - px) + zig(y - py);
+      px = x;
+      py = y;
+    }
   }
-}
+  return out;
+};
+const ARCS = encodeArcs(coast);
+const borders = [];
+uses.forEach((n, i) => n === 2 && arcs[i].length > 1 && borders.push(i));
+const BORDERS = encodeArcs(borders);
 const LAND = land
   .map((ring) =>
     ring
@@ -211,7 +220,7 @@ console.log(
   `${coast.length} coast arcs of ${arcs.length}, ${npts} points, ${land.length} rings, grid ${QX}x${QY}, area ${AREA}`
 );
 console.log(
-  `ARCS ${gz(ARCS)} gzip, LAND ${gz(LAND)} gzip, all ${gz(ARCS + LAND)} gzip`
+  `${borders.length} border arcs; ARCS ${gz(ARCS)} gzip, LAND ${gz(LAND)} gzip, BORDERS ${gz(BORDERS)} gzip, all ${gz(ARCS + LAND + BORDERS)} gzip`
 );
 
 if (write) {
@@ -222,7 +231,7 @@ if (write) {
   const a = source.indexOf(START),
     b = source.indexOf(END);
   if (a < 0 || b < 0) throw new Error("puzzle.js has no data markers");
-  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst ARCS = "${ARCS}";\nconst LAND = "${LAND}";\n`;
+  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst ARCS = "${ARCS}";\nconst LAND = "${LAND}";\nconst BORDERS = "${BORDERS}";\n`;
   writeFileSync(file, source.slice(0, a) + block + source.slice(b));
   console.log("written to apps/landing/light/puzzle.js");
 }

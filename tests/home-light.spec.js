@@ -677,83 +677,39 @@ test.describe('review fixes', () => {
     await expect.poll(dots).not.toBe(before);
   });
 
-  /* -- 6. The line shows the phase and the hour -------------------------------- */
+  /* -- 6. The line shows the phrase only: no light's name, no hour (the owner's cut, 2026-10-17) -- */
 
   for (const [route, lang] of ROUTES) {
-    test(`${route}: the line's visible text has the phase name and the hour (${lang})`, async ({ page }) => {
-      const cat = catalog(lang);
-      await open(page, route, { time: '14:00' });
-      const hour = (await output(page).textContent())?.trim() ?? '';
-      expect(hour).toMatch(/\S/);
-      const shown = await visibleText(line(page));
-      expect(shown).toContain(cat['light.afternoon']);
-      expect(shown).toContain(hour.slice(0, 2));
-      expect(shown).toMatch(/[0-9\u0660-\u0669]{2}\D[0-9\u0660-\u0669]{2}/);
-    });
-  }
-
-  // F5 follow-up: a chosen mode pins a light (high contrast and dark: night), which is not the hour it is: the line shows the hour alone
-  for (const [route, lang] of ROUTES) {
-    test(`${route}: with a fixed mode the line shows the hour and no light's name (${lang})`, async ({ page }) => {
+    test(`${route}: the line's visible text is the phrase, with no light's name and no hour (${lang})`, async ({ page }) => {
       const cat = catalog(lang);
       const phases = ['dawn', 'morning', 'afternoon', 'sunset', 'dusk', 'night'].map((phase) => cat[`light.${phase}`]);
       await open(page, route, { time: '14:00' });
-      await chooseMode(page, 'high-contrast');
-      await expect.poll(async () => (await html(page)).theme).toBe('high-contrast');
-      await expect.poll(async () => (await html(page)).light, 'the mode pins its own light').toBe('night');
-      const hour = (await output(page).textContent())?.trim() ?? '';
-      expect(hour).toMatch(/\S/);
-      await expect
-        .poll(async () => {
-          const shown = await visibleText(line(page));
-          return { hour: shown.includes(hour.slice(0, 2)), names: phases.filter((name) => shown.includes(name)) };
-        }, { message: 'the line has the hour and none of the six names' })
-        .toEqual({ hour: true, names: [] });
-      expect(await visibleText(line(page))).toMatch(/[0-9٠-٩]{2}\D[0-9٠-٩]{2}/);
-
-      // Scrubbing an hour in a fixed mode does not bring a name back either
-      await scrub(page, '09:30');
-      await expect.poll(async () => (await html(page)).light).toBe('morning');
       const shown = await visibleText(line(page));
-      expect(phases.filter((name) => shown.includes(name))).toEqual([]);
-      expect(shown).toMatch(/[0-9\u0660-\u0669]{2}\D[0-9\u0660-\u0669]{2}/);
+      expect(shown).toContain(cat['light.say.globe']);
+      expect(phases.filter((name) => shown.includes(name)), 'no light name on the line').toEqual([]);
+      expect(shown, 'no hour on the line').not.toMatch(/[0-9\u0660-\u0669]{1,2}\D[0-9\u0660-\u0669]{2}/);
+      // The hour stays in the bar, beside the slider
+      expect((await output(page).textContent())?.trim() ?? '').toMatch(/\S/);
     });
   }
 
-  test('back in Auto the line names the light again', async ({ page }) => {
-    await open(page, '/', { time: '14:00' });
-    await chooseMode(page, 'dark');
-    await expect.poll(async () => (await html(page)).theme).toBe('dark');
-    await chooseMode(page, 'auto');
-    await expect.poll(async () => (await html(page)).light).toBe('afternoon');
-    await expect.poll(() => visibleText(line(page))).toContain(catalog('en')['light.afternoon']);
-  });
+  /* -- 6b. The light sits close under the hero's buttons ------------------------ */
 
-  test('the line has a visible open/close mark, hidden from assistive technology, that changes with aria-expanded', async ({ page }) => {
-    await open(page, '/', { time: '14:00' });
-    const mark = line(page).locator('[aria-hidden="true"]').first();
-    await expect(mark).toBeVisible();
-    expect((await mark.boundingBox())?.width ?? 0).toBeGreaterThan(4);
-    // Everything about the mark a reader could see change: its text, its markup, and the transforms and pseudo-element content of it and of what is in it
-    const look = () =>
-      mark.evaluate((el) => {
-        const state = (node) => {
-          const s = getComputedStyle(node);
-          return [s.transform, s.rotate, s.scale, s.opacity, getComputedStyle(node, '::before').content, getComputedStyle(node, '::after').content, node.getAttribute('d'), node.getAttribute('class')];
-        };
-        return JSON.stringify({ text: el.textContent, html: el.innerHTML, self: state(el), inner: [...el.querySelectorAll('*')].map(state) });
+  for (const width of [375, 1440]) {
+    test(`${width} px: the light starts at most --luz-space-md under the hero's buttons, never over them`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await open(page, '/');
+      const gap = await page.evaluate(() => {
+        const buttons = [...document.querySelectorAll('#hero .luz-btn')].map((b) => b.getBoundingClientRect().bottom);
+        const probe = document.body.appendChild(Object.assign(document.createElement('div'), { style: 'block-size: var(--luz-space-md); position: absolute' }));
+        const space = probe.getBoundingClientRect().height;
+        probe.remove();
+        return { gap: document.querySelector('home-light').getBoundingClientRect().top - Math.max(...buttons), space };
       });
-    const closed = await look();
-    await expect(line(page)).toHaveAttribute('aria-expanded', 'false');
-    await line(page).click();
-    await expect(line(page)).toHaveAttribute('aria-expanded', 'true');
-    await expect.poll(look).not.toBe(closed);
-    await line(page).click();
-    await expect(line(page)).toHaveAttribute('aria-expanded', 'false');
-    await expect.poll(look).toBe(closed);
-    // The mark is not read: the name of the line is the same, whatever the mark says
-    await expect(line(page)).toHaveAccessibleName(new RegExp(catalog('en')['light.open'].replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
-  });
+      expect(gap.gap).toBeGreaterThanOrEqual(0);
+      expect(gap.gap).toBeLessThanOrEqual(gap.space + 1);
+    });
+  }
 
   /* -- 7. The Live button -------------------------------------------------------- */
 

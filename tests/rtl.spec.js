@@ -78,6 +78,8 @@ for (const route of pages) {
     const specimens = page.locator('[data-docs-specimen]');
     const n = await specimens.count();
     for (let i = 0; i < n; i++) {
+      // A specimen that is not rendered has no boxes to compare: the Try it preview sits in form.docs-try[hidden], which only JavaScript shows
+      if (await specimens.nth(i).evaluate((el) => el.closest('[hidden]') !== null || el.getClientRects().length === 0)) continue;
       const result = await specimens.nth(i).evaluate(measure);
       expect(result.count, `${slug} has elements to compare`).toBeGreaterThan(0);
       expect(result.overflow, `${slug} overflows by ${result.overflow}px`).toBeLessThanOrEqual(1);

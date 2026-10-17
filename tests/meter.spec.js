@@ -13,7 +13,9 @@ const EXAMPLE = '#example ~ .docs-example';
 /** Fraction of the inside of a meter that is the fill colour, read from its screenshot. */
 async function filled(page, meter) {
   const png = await meter.screenshot();
-  const [fill, track] = await Promise.all([paintOf(page, 'var(--luz-brand-primary)'), paintOf(page, 'var(--luz-surface-muted)')]);
+  // The probes sit beside the meter, in its own theme: a specimen is Vejer, the page is in the light of the hour
+  const host = meter.locator('xpath=..');
+  const [fill, track] = await Promise.all([paintOf(page, 'var(--luz-brand-primary)', host), paintOf(page, 'var(--luz-surface-muted)', host)]);
   const row = await readRow(page, png, Math.floor((await meter.boundingBox()).height / 2));
   const inside = row.slice(1, -1);
   const count = inside.filter((p) => near(p, fill)).length;

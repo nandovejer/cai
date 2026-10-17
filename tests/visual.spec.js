@@ -41,7 +41,8 @@ test.describe('visual regression of the component demos', () => {
           document.documentElement.dataset.theme = t;
         }, theme);
         await page.evaluate(() => document.fonts.ready);
-        const specimens = page.locator('[data-docs-specimen]');
+        // Not the Try it preview: it is one button that a variant already covers, and it is hidden without JavaScript
+        const specimens = page.locator('[data-docs-specimen]:not(.docs-try__preview)');
         const count = await specimens.count();
         for (let i = 0; i < count; i++) {
           await expect(specimens.nth(i)).toHaveScreenshot(`${slug}-${theme}${count > 1 ? `-${i + 1}` : ''}.png`);

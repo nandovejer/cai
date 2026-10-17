@@ -372,7 +372,7 @@ describe("the new home page: catalogs and rendered pages (F5)", () => {
   });
 
   it("the hero's lead is the longer one the owner kept, in every language", () => {
-    expect(catalogs.en["hero.lead"]).toBe("LUZ is a design system of tokens, CSS and a little vanilla JavaScript that starts from what the browser already does. No framework and no build step: every component works before JavaScript loads, in light, dark and high-contrast modes.");
+    expect(catalogs.en["hero.lead"]).toBe("Tokens, CSS and a little vanilla JavaScript, built on what the browser already does. Every component works before JavaScript loads, in light, dark and high contrast.");
     for (const code of ["en", "es", "ar"]) expect(catalogs[code]["hero.lead"].replace(/<[^>]*>/g, "").length, code).toBeGreaterThan(120);
   });
 

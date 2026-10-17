@@ -434,7 +434,7 @@ test.describe('Landing page', () => {
       await expect(hero.locator('h1.luz-landing-hero__title')).toHaveText('LUZ, a design system for humans, ready for AI.');
       await expect(hero.locator('.luz-landing-hero__lead')).toBeVisible();
       // The owner kept the longer lead (2026-10-17)
-      await expect(hero.locator('.luz-landing-hero__lead')).toHaveText('LUZ is a design system of tokens, CSS and a little vanilla JavaScript that starts from what the browser already does. No framework and no build step: every component works before JavaScript loads, in light, dark and high-contrast modes.');
+      await expect(hero.locator('.luz-landing-hero__lead')).toHaveText('Tokens, CSS and a little vanilla JavaScript, built on what the browser already does. Every component works before JavaScript loads, in light, dark and high contrast.');
       await expect(hero).toContainText(EN['built.title']);
       await expect(hero).toContainText(EN['built.line']);
       // "We love TDD" leads to the docs section that says how it is done

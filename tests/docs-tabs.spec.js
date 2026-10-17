@@ -159,6 +159,9 @@ test.describe('Code and Design tabs on a component page', () => {
   });
 
   test('keyboard: arrows, Home, End and Space select a tab, and are stored (TAB-4, TAB-7)', async ({ page }) => {
+    // The tab row is below the fold at 1280x720: focusing a tab scrolls it into view, and smooth scrolling
+    // would still be moving when scrollY is read
+    await page.emulateMedia({ reducedMotion: 'reduce' });
     await page.goto(BUTTON);
     await tab(page, 'Code').focus();
     await page.keyboard.press('ArrowRight');

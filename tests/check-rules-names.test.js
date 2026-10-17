@@ -749,6 +749,17 @@ describe("a page that loads a LUZ release newer than the snapshot", () => {
     expect(JSON.stringify(result.findings[0].details)).toContain("0.1.0");
   });
 
+  it("counts @luz-ds/docs among the packages whose release it reads from a CDN URL", () => {
+    const head = CDN("0.1.0") + '  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/docs@0.2.0/dist/docs.min.css">\n';
+    const result = check({ "index.html": page('  <p class="luz-docs-shiny-new-thing">x</p>', head) }, { snapshot: { version: "0.1.0" } });
+    expect(result.code).toBe(0);
+    expect(result.findings.map((f) => [f.rule, f.severity])).toEqual([["class/unknown", "warn"]]);
+    expect(JSON.stringify(result.findings[0].details)).toContain("0.2.0");
+    // The same page with docs at the release the snapshot is: the class is unknown, and blocks
+    const same = check({ "index.html": page('  <p class="luz-docs-shiny-new-thing">x</p>', head.replace("docs@0.2.0", "docs@0.1.0")) }, { snapshot: { version: "0.1.0" } });
+    expect(same.findings.map((f) => [f.rule, f.severity])).toEqual([["class/unknown", "block"]]);
+  });
+
   it("blocks when the page loads the release the snapshot is, or an older one, or none", () => {
     for (const links of [CDN("0.1.0"), CDN("0.0.9"), LINKS]) {
       const result = check({ "index.html": page(body, links) }, { snapshot: { version: "0.1.0" } });

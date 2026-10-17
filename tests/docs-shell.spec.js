@@ -16,6 +16,7 @@ import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { readingOrder } from '../scripts/docs-site/site.js';
 import { site } from './helpers/docs-site.js';
+import { eyebrowPackageOf } from './helpers/package-areas.js';
 
 const BUTTON = '/docs/components/button/';
 const rail = (page) => page.getByRole('complementary', { name: 'About this page' });
@@ -114,13 +115,14 @@ test.describe('docs shell, with JavaScript', () => {
     await expect(head.locator('ul.luz-docs-page-head__meta > li')).toHaveText(chips);
   });
 
-  test('on an area index the eyebrow is above the h1, and says the area alone', async ({ page }) => {
+  test('on an area index the eyebrow is above the h1, and says the area and its package', async ({ page }) => {
     for (const area of ['components', 'documentation', 'landing']) {
       await page.goto(`/docs/${area}/`);
       const eyebrow = await box(page, 'header.luz-docs-page-head p.luz-docs-page-head__eyebrow');
       const h1 = await box(page, 'header.luz-docs-page-head h1');
       expect(eyebrow.bottom, area).toBeLessThanOrEqual(h1.y + 1);
-      await expect(page.locator('header.luz-docs-page-head p.luz-docs-page-head__eyebrow')).toHaveText(site.areas.find((a) => a.id === area)?.label ?? '');
+      const label = site.areas.find((a) => a.id === area)?.label ?? '';
+      await expect(page.locator('header.luz-docs-page-head p.luz-docs-page-head__eyebrow')).toHaveText(`${label} · ${eyebrowPackageOf(area)}`);
     }
   });
 
@@ -135,7 +137,8 @@ test.describe('docs shell, with JavaScript', () => {
     // Every page of the reading order is in it, once
     expect(await nav.locator('a[href^="/docs/"]').count()).toBeGreaterThanOrEqual(readingOrder(site).length);
     await expect(nav.locator('a[aria-current="page"]')).toHaveText('Button');
-    await expect(nav.locator('a[aria-current="true"]')).toHaveText('Components');
+    // The drawer's site links (Home, Docs) are in the nav too, and "Docs" is "true" on every docs page: they are not an area
+    await expect(nav.locator('a[aria-current="true"]:not(.page-nav__site a)')).toHaveText('Components');
   });
 
   test('the page ends with the pager, then the foot: Last updated, Edit and Report', async ({ page }) => {

@@ -21,7 +21,7 @@
  *     - else a file name of `luz.css` or `luz.min.css` (core) or
  *       `luz-tokens.css` or `luz-tokens.min.css` (tokens), the copies
  *       people make;
- *     - `site`, `landing`, `cms` and `app` with `.css` or `.min.css` as a
+ *     - `site`, `landing`, `cms`, `app` and `docs` with `.css` or `.min.css` as a
  *       file name, and nothing of the path, may be a copy of LUZ's or the
  *       project's own (app.css): it is not a LUZ link for the rules that
  *       block on what is linked, and it keeps load/package-missing silent
@@ -306,6 +306,68 @@ describe("load/package-missing", () => {
     const found = ofRule(check({ "index.html": html }), "load/");
     expect(found).toHaveLength(1);
     expect(found[0].message).toBe(messages.message("load/package-missing", { name: "luz-landing-hero", package: "landing" }));
+  });
+});
+
+/* ---- The docs stylesheet (@luz-ds/docs) ----------------------------------------------------------- */
+
+describe("the docs stylesheet is a LUZ stylesheet: @luz-ds/docs, /packages/docs/ or a bare docs.css", () => {
+  const DOCS = linkTo("docs", "docs.min.css");
+  const BODY = '  <nav class="luz-docs-pager"><a class="luz-docs-pager__link" href="/next/">Next</a></nav>';
+
+  it("is satisfied by the package's stylesheet by every way a page names it: node_modules, a CDN, the dev server's path, an @import", () => {
+    const ways = {
+      "node_modules": links(TOKENS, CORE, DOCS),
+      "a CDN": links(
+        TOKENS,
+        CORE,
+        '  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@luz-ds/docs@0.1.0/dist/docs.min.css">',
+      ),
+      "the dev server's path": links(TOKENS, CORE, '  <link rel="stylesheet" href="/packages/docs/dist/docs.css">'),
+      "one component file": links(TOKENS, CORE, linkTo("docs", "components/pager.css")),
+      "@import in a <style>": style('@import "@luz-ds/tokens/css";\n@import "@luz-ds/core/css";\n@import "@luz-ds/docs/css";'),
+    };
+    for (const [label, head] of Object.entries(ways)) {
+      expect(rulesOf(check({ "index.html": page(BODY, head) }), "load/"), label).toEqual([]);
+    }
+  });
+
+  it("blocks a class of the docs package when its stylesheet is not linked, and names the package", () => {
+    const html = page(BODY, links(TOKENS, CORE));
+    const result = check({ "index.html": html });
+    const at = where(html, 'class="luz-docs-pager"');
+    const found = ofRule(result, "load/");
+    expect(result.code).toBe(1);
+    expect(found).toHaveLength(1);
+    expect(found[0]).toMatchObject({ rule: "load/package-missing", severity: "block", line: at.line, column: at.column });
+    expect(found[0].message).toBe(messages.message("load/package-missing", { name: "luz-docs-pager", package: "docs" }));
+  });
+
+  it("needs tokens, like every package: docs linked alone is load/tokens-missing, naming docs", () => {
+    const result = check({ "index.html": page(BODY, links(DOCS)) });
+    expect(ofRule(result, "load/").map((f) => [f.rule, f.message])).toEqual([["load/tokens-missing", messages.message("load/tokens-missing", { package: "docs" })]]);
+  });
+
+  it("takes a bare docs.css or docs.min.css for a copy that may be the project's own: not a link to block on, and no package-missing", () => {
+    for (const href of ["docs.css", "docs.min.css", "vendor/docs.min.css", "css/docs.css"]) {
+      // Alone: it is not a LUZ link, so tokens are not asked for
+      const alone = check({ "index.html": page('  <p class="o-stack">x</p>', links(`  <link rel="stylesheet" href="${href}">`)) });
+      expect(rulesOf(alone, "load/tokens-missing"), `${href} alone`).toEqual([]);
+      // With tokens and core: it may be LUZ's docs, so its classes are not reported as unloaded
+      const withBase = check({ "index.html": page(BODY, links(TOKENS, CORE, `  <link rel="stylesheet" href="${href}">`)) });
+      expect(rulesOf(withBase, "load/"), href).toEqual([]);
+    }
+  });
+
+  it("does not take a file that only ends in docs.css for the docs package", () => {
+    const result = check({ "index.html": page(BODY, links(TOKENS, CORE, '  <link rel="stylesheet" href="css/my-docs.css">')) });
+    expect(rulesOf(result, "load/")).toEqual(["load/package-missing"]);
+  });
+
+  it("is a kind of site: it may come after core in any order among the kinds, and before core is load/order", () => {
+    expect(rulesOf(check({ "index.html": page(BODY, links(TOKENS, CORE, DOCS, LANDING)) }), "load/order")).toEqual([]);
+    const result = check({ "index.html": page(BODY, links(TOKENS, DOCS, CORE)) });
+    expect(ofRule(result, "load/order").map((f) => f.message)).toEqual([messages.message("load/order", { first: "docs", second: "core" })]);
   });
 });
 

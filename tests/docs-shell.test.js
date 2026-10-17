@@ -39,7 +39,7 @@ import {
   scanSite,
 } from "../scripts/docs-site/site.js";
 import { find, findAll, hasClass, isInside, matcher, parse, query, queryAll, queryAllLive, queryLive, textOf } from "./helpers/html-dom.js";
-import { PATTERN_AREAS } from "./helpers/package-areas.js";
+import { PATTERN_AREAS, eyebrowPackageOf } from "./helpers/package-areas.js";
 
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const EDIT = "https://github.com/nandovejer/luz/edit/main/";
@@ -161,7 +161,7 @@ const COMPONENT = (name, extra, issues) =>
  * A repository with a few pages: the real layouts and partials, the home page's catalogs
  * (the header's strings), and `tests/<name>.spec.js` for each name in `specs`.
  */
-function repository(pages, { specs = [] } = {}) {
+function repository(pages, { specs = [], siteJson = SITE_JSON } = {}) {
   const root = mkdtempSync(join(tmpdir(), "luz-docs-shell-"));
   temps.push(root);
   const docs = join(root, "apps/docs");
@@ -171,7 +171,7 @@ function repository(pages, { specs = [] } = {}) {
   }
   mkdirSync(join(root, "packages/core"), { recursive: true });
   cpSync(join(repo, "packages/core/package.json"), join(root, "packages/core/package.json"));
-  writeFileSync(join(docs, "site.json"), JSON.stringify(SITE_JSON));
+  writeFileSync(join(docs, "site.json"), JSON.stringify(siteJson));
   for (const [path, text] of Object.entries(pages)) {
     mkdirSync(dirname(join(docs, "pages", path)), { recursive: true });
     writeFileSync(join(docs, "pages", path), text);
@@ -370,12 +370,14 @@ describe("the page head: eyebrow, h1, lead, then the chips", () => {
     }
   });
 
-  it("an area index says its area alone, above its h1 (not below, as a paragraph of the content)", () => {
-    for (const area of site.areas) {
+  it("an area index says \"Area · package\" when the area documents a package, and the area alone when it does not, above its h1 (not below, as a paragraph of the content)", () => {
+    // HTML elements is not decided: it documents core's elements, but is not a package's area
+    for (const area of site.areas.filter((a) => a.id !== "html")) {
       const index = site.byRoute.get(`/docs/${area.slug}/`);
       if (!index) continue;
       const { head, main } = partsOf(treeOf(index.route));
-      expect(textOf(query(head, "p.luz-docs-page-head__eyebrow")), index.route).toBe(area.label);
+      const pkg = eyebrowPackageOf(area.id);
+      expect(textOf(query(head, "p.luz-docs-page-head__eyebrow")), index.route).toBe(pkg ? `${area.label} · ${pkg}` : area.label);
       // Nothing styled as an eyebrow sits in the content under the h1
       const below = findAll(main, (n) => n.name === "p" && /(^|\s)docs-eyebrow(\s|$)/.test(n.attrs.get("class") ?? ""));
       expect(below.map((n) => textOf(n)), index.route).toEqual([]);
@@ -424,6 +426,77 @@ describe("the page head: eyebrow, h1, lead, then the chips", () => {
       const { head } = partsOf(treeOf(p.route));
       expect(query(head, "ul.luz-docs-page-head__meta"), p.route).toBeNull();
     }
+  });
+
+  it("names the package of an area on its index: Components · @luz-ds/core, Tokens · @luz-ds/tokens, and each pattern area its own package", () => {
+    const expected = {
+      components: "@luz-ds/core",
+      tokens: "@luz-ds/tokens",
+      site: "@luz-ds/site",
+      landing: "@luz-ds/landing",
+      cms: "@luz-ds/cms",
+      app: "@luz-ds/app",
+      documentation: "@luz-ds/docs",
+    };
+    for (const [id, pkg] of Object.entries(expected)) {
+      const area = site.areas.find((a) => a.id === id);
+      expect(textOf(query(partsOf(treeOf(`/docs/${area.slug}/`)).head, "p.luz-docs-page-head__eyebrow")), id).toBe(`${area.label} · ${pkg}`);
+      expect(eyebrowPackageOf(id), `${id}: the helper reads the package.json name`).toBe(pkg);
+    }
+    for (const id of ["get-started", "accessibility"]) {
+      const area = site.areas.find((a) => a.id === id);
+      expect(textOf(query(partsOf(treeOf(`/docs/${area.slug}/`)).head, "p.luz-docs-page-head__eyebrow")), id).toBe(area.label);
+    }
+  });
+
+  it("the package is the area's, not the page's: a page of the area keeps \"Area · Group\" or the area alone", () => {
+    for (const route of ["/docs/components/button/", "/docs/components/keyframes/", "/docs/tokens/color/", "/docs/landing/hero/"]) {
+      const p = site.byRoute.get(route);
+      const eyebrow = textOf(query(partsOf(treeOf(route)).head, "p.luz-docs-page-head__eyebrow"));
+      expect(eyebrow, route).not.toContain("@luz-ds/");
+      expect(eyebrow, route).toBe(eyebrowOf(p));
+    }
+  });
+
+  it("a plain line, Files: <code>, <code>, in the head of every page that has `files` and no chips; the pages with chips and the pages without files get none", () => {
+    let plain = 0;
+    for (const p of site.pages.filter((q) => areaOf(site, q))) {
+      const { head } = partsOf(treeOf(p.route));
+      const line = queryAllLive(head, "p.luz-docs-page-head__files");
+      if (isView(p) || !p.meta.files) {
+        expect(line, `${p.route}: no Files line`).toEqual([]);
+        continue;
+      }
+      plain += 1;
+      expect(line, `${p.route}: one Files line`).toHaveLength(1);
+      const files = filesOf(p);
+      expect(textOf(line[0]), p.route).toBe(`Files: ${files.join(", ")}`);
+      expect(findAll(line[0], (n) => n.name === "code").map((c) => textOf(c)), `${p.route}: each file in a <code>`).toEqual(files);
+      expect(query(head, "ul.luz-docs-page-head__meta"), `${p.route}: a line, not chips`).toBeNull();
+      // Under the h1 and the lead, where the chips would stand
+      expect(line[0].open.index, p.route).toBeGreaterThan(query(head, "h1").open.index);
+      const lead = query(head, "p.luz-docs-page-head__lead");
+      if (lead) expect(line[0].open.index, p.route).toBeGreaterThan(lead.open.index);
+    }
+    expect(plain, "there are such pages").toBeGreaterThan(5);
+  });
+
+  it("shows it on a helper (/docs/components/keyframes/) and on a tokens page (/docs/tokens/color/)", () => {
+    for (const [route, files] of [
+      ["/docs/components/keyframes/", ["components/_animations.css"]],
+      ["/docs/tokens/color/", ["src/semantic.css"]],
+    ]) {
+      const { head } = partsOf(treeOf(route));
+      const line = queryLive(head, "p.luz-docs-page-head__files");
+      expect(line, route).toBeTruthy();
+      expect(textOf(line), route).toBe(`Files: ${files.join(", ")}`);
+    }
+  });
+
+  it("keeps the chips on a component page (/docs/components/button/) and gives it no Files line", () => {
+    const { head } = partsOf(treeOf("/docs/components/button/"));
+    expect(query(head, "ul.luz-docs-page-head__meta")).toBeTruthy();
+    expect(query(head, "p.luz-docs-page-head__files")).toBeNull();
   });
 
   describe("on a repository made for it", () => {
@@ -487,6 +560,79 @@ describe("the page head: eyebrow, h1, lead, then the chips", () => {
       expect(eyebrow("/docs/get-started/short/")).toBe("Get started");
     });
 
+    /** The fixture with a helper, a tokens page and the packages of two areas named in site.json (`package`). */
+    const packaged = () => {
+      const siteJson = {
+        areas: [
+          { id: "get-started", label: "Get started", slug: "get-started" },
+          { id: "tokens", label: "Tokens", slug: "tokens", package: "@luz-ds/tokens", groups: [{ id: "families", label: "Token families" }] },
+          {
+            id: "components",
+            label: "Components",
+            slug: "components",
+            package: "@luz-ds/core",
+            groups: [{ id: "actions", label: "Actions and input" }, { id: "helpers", label: "Helpers", sidebar: true, list: true }],
+          },
+        ],
+      };
+      const pages = {
+        ...PAGES,
+        "tokens/index.html": page({ title: "Tokens", description: "The tokens.", area: "tokens", generate: "gallery" }, "<p>Intro.</p>"),
+        "tokens/color.html": page({ title: "Color", description: "Colours.", area: "tokens", group: "families", files: "src/semantic.css; src/extra.css" }, "<p>Colour.</p>"),
+        "tokens/bare.html": page({ title: "Bare", description: "No files.", area: "tokens", group: "families" }, "<p>Bare.</p>"),
+        "components/keyframes.html": page({ title: "Keyframes", description: "Motion.", area: "components", group: "helpers", files: "components/_animations.css" }, "<p>Keyframes.</p>"),
+        "components/loose.html": page({ title: "Loose", description: "A helper with two files.", area: "components", group: "helpers", files: "components/_a.css; components/_b.css" }, "<p>Loose.</p>"),
+      };
+      const { root, docs } = repository(pages, { siteJson });
+      return { root, site: scanSite(docs, root) };
+    };
+    const headOf = (fixture, route) => partsOf(renderedOf(fixture, route)).head;
+
+    it("an area index says \"Area · package\" with the package of its entry in site.json; an area with none says the label alone", () => {
+      const fixture = packaged();
+      const eyebrow = (route) => textOf(query(headOf(fixture, route), "p.luz-docs-page-head__eyebrow"));
+      expect(eyebrow("/docs/components/")).toBe("Components · @luz-ds/core");
+      expect(eyebrow("/docs/tokens/")).toBe("Tokens · @luz-ds/tokens");
+      expect(eyebrow("/docs/get-started/")).toBe("Get started");
+    });
+
+    it("the package is for the index only: a page of the area says \"Area · Group\", and a page without a group the area alone", () => {
+      const fixture = packaged();
+      const eyebrow = (route) => textOf(query(headOf(fixture, route), "p.luz-docs-page-head__eyebrow"));
+      expect(eyebrow("/docs/components/widget/")).toBe("Components · Actions and input");
+      expect(eyebrow("/docs/tokens/color/")).toBe("Tokens · Token families");
+      expect(eyebrow("/docs/get-started/short/")).toBe("Get started");
+    });
+
+    it("a helper and a tokens page that have files get a Files line, and no chips", () => {
+      const fixture = packaged();
+      for (const [route, files] of [
+        ["/docs/components/keyframes/", ["components/_animations.css"]],
+        ["/docs/components/loose/", ["components/_a.css", "components/_b.css"]],
+        ["/docs/tokens/color/", ["src/semantic.css", "src/extra.css"]],
+      ]) {
+        const head = headOf(fixture, route);
+        const line = queryAll(head, "p.luz-docs-page-head__files");
+        expect(line, route).toHaveLength(1);
+        expect(textOf(line[0]), route).toBe(`Files: ${files.join(", ")}`);
+        expect(findAll(line[0], (n) => n.name === "code").map((c) => textOf(c)), route).toEqual(files);
+        expect(query(head, "ul.luz-docs-page-head__meta"), route).toBeNull();
+        expect(line[0].parent, `${route}: in the page head`).toBe(head);
+      }
+    });
+
+    it("a component page keeps its chips and has no Files line; a page without files has neither", () => {
+      const fixture = packaged();
+      const widget = headOf(fixture, "/docs/components/widget/");
+      expect(query(widget, "ul.luz-docs-page-head__meta")).toBeTruthy();
+      expect(query(widget, "p.luz-docs-page-head__files")).toBeNull();
+      for (const route of ["/docs/tokens/bare/", "/docs/get-started/short/"]) {
+        const head = headOf(fixture, route);
+        expect(query(head, "p.luz-docs-page-head__files"), route).toBeNull();
+        expect(query(head, "ul.luz-docs-page-head__meta"), route).toBeNull();
+      }
+    });
+
     it("gives a page that is not a component the eyebrow, the h1 and the lead, whatever its front matter says of files and module; lead: false leaves the lead to the content", () => {
       const fixture = fixtureSite();
       const { head } = partsOf(renderedOf(fixture, "/docs/get-started/plain/"));
@@ -524,10 +670,14 @@ describe("the rail: \"On this page\" outside main, then Copy, Edit and Report", 
 
   it("puts \"On this page\" in the rail, never in main: nav.luz-docs-rail__onpage > details > summary.luz-docs-rail__title", () => {
     let withList = 0;
+    let expected = 0;
     for (const p of site.pages) {
       const root = treeOf(p.route);
       const { main, aside } = partsOf(root);
-      expect(queryAll(main, "nav.luz-docs-rail__onpage"), `${p.route}: nothing of the list stays in main`).toEqual([]);
+      // A list is written when the page has three or more h2 with an id outside the demos
+      const h2s = readHtml(rendered.get(p.route).slice(main.open.index, main.close.end), p.route).headings.filter((h) => h.level === 2 && !h.specimen && h.id && h.id !== "docs-end-title");
+      if (p.meta.toc !== "false" && h2s.length >= 3) expected += 1;
+      expect(queryAllLive(main, "nav.luz-docs-rail__onpage"), `${p.route}: nothing of the list stays in main`).toEqual([]);
       const onpage = queryAll(aside, "nav.luz-docs-rail__onpage");
       if (!onpage.length) continue;
       withList += 1;
@@ -537,7 +687,8 @@ describe("the rail: \"On this page\" outside main, then Copy, Edit and Report", 
       expect(summary.parent.name, p.route).toBe("details");
       expect(isInside(summary.parent, onpage[0]), p.route).toBe(true);
     }
-    expect(withList).toBeGreaterThan(100);
+    expect(withList, "the pages with a list are those with three or more h2").toBe(expected);
+    expect(withList).toBeGreaterThan(0);
   });
 
   it("lists the h2 of the page that have an id (and the h3 of toc: h2,h3, nested under their h2), in the order of the page", () => {
@@ -571,9 +722,9 @@ describe("the rail: \"On this page\" outside main, then Copy, Edit and Report", 
       const fixture = fixtureSite();
       const root = renderedOf(fixture, "/docs/components/widget/");
       const { main, aside } = partsOf(root);
-      expect(queryAll(main, "nav.luz-docs-rail__onpage")).toEqual([]);
+      expect(queryAllLive(main, "nav.luz-docs-rail__onpage")).toEqual([]);
       const onpage = query(aside, "nav.luz-docs-rail__onpage");
-      expect(findAll(onpage, (n) => n.name === "a").map((a) => a.attrs.get("href"))).toEqual(["#example", "#known-issues", "#code", "#markup", "#design"]);
+      expect(findAll(onpage, (n) => n.name === "a").map((a) => a.attrs.get("href"))).toEqual(["#example", "#known-issues", "#code", "#markup", "#design", "#when"]);
       const markup = find(onpage, (n) => n.name === "a" && n.attrs.get("href") === "#markup");
       const sub = markup.parent.parent;
       expect(hasClass(sub, "luz-docs-rail__sub")).toBe(true);
@@ -666,7 +817,9 @@ describe("index.md: every page also published as Markdown, from the same text as
       compared += 1;
       expect(flat(String(files.get(mdFileOf(p.route)))), p.route).toContain(flat(body));
     }
-    expect(compared).toBeGreaterThan(150);
+    // Every listed page has an entry: the count is the site's, not a number typed here
+    expect(compared).toBe(site.pages.filter((p) => areaOf(site, p) && p.meta.search !== "false").length);
+    expect(compared).toBeGreaterThan(0);
   });
 
   it("does not make llms-full.txt grow: the files are separate, one entry per page, one # LUZ, under its ceiling", () => {
@@ -852,7 +1005,8 @@ describe("<!-- luz:generated --> puts the gallery of an area index where the mar
   it("the rail lists the headings in the order they are on the page, the gallery's among them", () => {
     const fixture = fixtureSite();
     const root = parse(renderPage(fixture.site.byRoute.get("/docs/components/"), fixture.site), "/docs/components/");
-    const onpage = query(root, "aside.luz-docs-rail nav.luz-docs-rail__onpage");
+    const onpage = query(query(root, "aside.luz-docs-rail"), "nav.luz-docs-rail__onpage");
+    expect(onpage, "the list is in the rail").toBeTruthy();
     expect(findAll(onpage, (n) => n.name === "a").map((a) => a.attrs.get("href"))).toEqual(["#before", "#group-actions", "#after"]);
   });
 

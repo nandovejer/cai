@@ -385,7 +385,11 @@ test.describe('Documentation site', () => {
       // Both tabs' sections, each h3 under its tab's h2 (NAV-13)
       await expect(toc.getByRole('link')).toHaveText(['Example', 'Known issues', 'Code', 'Copy the markup', 'Variants and options', 'How it works', 'Without JavaScript', 'Keyboard and ARIA', 'Design', 'When to use', 'When not to use', "Do and don't", 'Writing the content', 'Contrast and focus', 'Tokens it uses']);
       await expect(toc.locator('li:has(> a[href="#design"]) > ul a')).toHaveText(['When to use', 'When not to use', "Do and don't", 'Writing the content', 'Contrast and focus', 'Tokens it uses']);
-      await page.locator('#how').scrollIntoViewIfNeeded();
+      // Core's scroll spy marks the heading in the band 10-40 % down the window: put #how at the top of it
+      // (scrollIntoViewIfNeeded leaves it wherever it first fits)
+      await page.emulateMedia({ reducedMotion: 'reduce' });
+      await page.locator('#how').evaluate((el) => el.scrollIntoView({ block: 'start' }));
+      await expect(toc.locator('a[href="#how"]')).toHaveAttribute('aria-current', 'true');
       await expect(toc.locator('[aria-current="true"]')).toHaveCount(1);
       await expect(toc.locator('[aria-current="page"]')).toHaveCount(0);
       // the sidebar keeps its own mark

@@ -9,14 +9,19 @@
  * Prints the sizes; with --write it replaces the data block of puzzle.js,
  * between its two marker lines. The encoding (decoded by puzzle.js):
  *
- * - A char is 6 bits of a 64-char alphabet: 5 bits of payload, the sixth a
- *   "more follows" flag; a signed number is zigzag-encoded.
+ * - A char is 6 bits of a 64-char alphabet. In COUNTRIES a number is 5 bits
+ *   of payload a char, the sixth a "more follows" flag; ARCS and BORDERS are
+ *   one stream of bits, 6 a char, first bit first, of Exp-Golomb numbers (a
+ *   number v with order k: w = v + 2^k written in binary, after as many
+ *   zeros as it has bits beyond k + 1; the order of each kind is in K). A
+ *   signed number is zigzag-encoded.
  * - ARCS: the coast only (an arc used by one country), simplified
- *   (Visvalingam, --area square degrees) and on a grid of QX x QY steps: for
- *   each arc, the count of its points, then for each point the delta of its
- *   longitude and latitude from the point before (the first point: from the
- *   last point of the arc before). Antarctica's southern cut (-85.6°) is
- *   pushed to the pole.
+ *   (Visvalingam, --area square degrees) and on a grid of QX x QY steps: the
+ *   count of arcs (order K[0]), then for each arc the count of its points
+ *   (K[0]), then for each point the delta of its longitude (K[1]) and of its
+ *   latitude (K[2]) from the point before (the first point: from the last
+ *   point of the arc before). Antarctica's southern cut (-85.6°) is pushed
+ *   to the pole.
  * - BORDERS: the borders between countries (an arc used by two), encoded as
  *   ARCS; each is a cut of the puzzle, so every country is one piece.
  * - COUNTRIES: the pieces, ";"-separated: a char, the country's tone (0 to
@@ -147,25 +152,51 @@ const varint = (n) => {
   } while (n);
   return s;
 };
-const zig = (n) => varint(n < 0 ? -2 * n - 1 : 2 * n);
-const encodeArcs = (list) => {
-  let out = "",
-    px = 0,
+const signed = (n) => (n < 0 ? -2 * n - 1 : 2 * n);
+const expGolomb = (list, [kn, kx, ky]) => {
+  const bits = [];
+  const put = (v, k) => {
+    const w = v + 2 ** k,
+      top = Math.floor(Math.log2(w));
+    for (let i = k; i < top; i++) bits.push(0);
+    for (let i = top; i >= 0; i--) bits.push(Math.floor(w / 2 ** i) % 2);
+  };
+  let px = 0,
     py = 0;
+  put(list.length, kn);
   for (const i of list) {
-    out += varint(arcs[i].length);
+    put(arcs[i].length, kn);
     for (const [x, y] of arcs[i]) {
-      out += zig(x - px) + zig(y - py);
+      put(signed(x - px), kx);
+      put(signed(y - py), ky);
       px = x;
       py = y;
     }
   }
+  let out = "";
+  for (let i = 0; i < bits.length; i += 6) {
+    let c = 0;
+    for (let j = 0; j < 6; j++) c = c * 2 + (bits[i + j] ?? 0);
+    out += ALPHABET[c];
+  }
   return out;
 };
-const ARCS = encodeArcs(coast);
+// The orders: the ones that make the coast and the borders shortest together
+let K = null,
+  shortest = Infinity;
+const borderList = [];
+uses.forEach((n, i) => n === 2 && arcs[i].length > 1 && borderList.push(i));
+for (let kn = 0; kn < 6; kn++)
+  for (let kx = 0; kx < 6; kx++)
+    for (let ky = 0; ky < 6; ky++) {
+      const k = [kn, kx, ky],
+        n = expGolomb(coast, k).length + expGolomb(borderList, k).length;
+      if (n < shortest) [shortest, K] = [n, k];
+    }
+const ARCS = expGolomb(coast, K);
 const borders = [];
 uses.forEach((n, i) => n === 2 && arcs[i].length > 1 && borders.push(i));
-const BORDERS = encodeArcs(borders);
+const BORDERS = expGolomb(borders, K);
 
 /* ---- the countries: their rings over the coast and the border arcs, and a
    tone each, greedy, the most neighbours first, so no two neighbours share one ---- */
@@ -248,7 +279,7 @@ if (write) {
   const a = source.indexOf(START),
     b = source.indexOf(END);
   if (a < 0 || b < 0) throw new Error("puzzle.js has no data markers");
-  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst ARCS = "${ARCS}";\nconst BORDERS = "${BORDERS}";\nconst COUNTRIES = "${COUNTRIES}";\n`;
+  const block = `${START}\nconst QX = ${QX}, QY = ${QY};\nconst K = [${K}];\nconst ARCS = "${ARCS}";\nconst BORDERS = "${BORDERS}";\nconst COUNTRIES = "${COUNTRIES}";\n`;
   writeFileSync(file, source.slice(0, a) + block + source.slice(b));
   console.log("written to apps/landing/light/puzzle.js");
 }

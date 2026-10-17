@@ -50,6 +50,8 @@ beforeAll(() => {
 /** The page's rendered HTML, or "" when the route is not there yet (so the assertion says what is missing). */
 const htmlOf = (route) => rendered.get(route) ?? "";
 const idsIn = (html) => new Set([...html.matchAll(/\sid="([^"]*)"/g)].map((m) => decodeEntities(m[1])));
+/** The inner HTML of the nav of letters, or "" when there is none. */
+const rowOf = (html) => html.match(/<nav class="docs-az__letters" aria-label="Letters">([\s\S]*?)<\/nav>/)?.[1] ?? "";
 const attr = (tag, name) => {
   const m = new RegExp(`\\s${name}="([^"]*)"`).exec(tag);
   return m ? decodeEntities(m[1]) : null;
@@ -155,8 +157,20 @@ describe("the A–Z index is two pages", () => {
       expect(sectionOf(second(), "@layer")).toBeUndefined();
     });
 
-    it("does not put Other in the row of letters (it is not a letter), and leaves the real index alone", () => {
-      expect(second()).not.toMatch(/<nav class="docs-az__letters"[^>]*>[\s\S]*?href="[^"]*#az-other"[\s\S]*?<\/nav>/);
+    // The row is a way to every section of the page: a reader who jumps by letter must be able to reach Other too
+    it("ends the row of letters of M–Z with a link to Other (#az-other), labelled \"Other\", when the page has that section", () => {
+      const items = [...rowOf(second()).matchAll(/<li>([\s\S]*?)<\/li>/g)].map((m) => m[1]);
+      const last = items.at(-1) ?? "";
+      const a = /<a\b([^>]*)>([\s\S]*?)<\/a>/.exec(last);
+      expect(a, `the last item of the row is a link: ${last}`).toBeTruthy();
+      expect(decodeEntities(a[2]).trim(), "its label").toBe("Other");
+      expect(attr(`<a${a[1]}>`, "href"), "its target is the section on this page").toBe("#az-other");
+      expect(idsIn(second()).has("az-other"), "and the section is there").toBe(true);
+      // ... after the 26 letters, which are still there
+      expect(items.length, "26 letters, then Other").toBe(27);
+    });
+
+    it("leaves the real index alone", () => {
       expect(indexEntries(synthetic).length).toBeGreaterThan(entries.length);
       expect(entries.some((e) => e.name === "2D shapes")).toBe(false);
     });
@@ -193,8 +207,76 @@ describe("each page links to the other, near its top", () => {
   });
 });
 
+describe("the halves nav says what it is, in visible words", () => {
+  const TOP = (html) => {
+    const from = html.indexOf('<h1 class="docs-title">');
+    const to = html.indexOf('<section class="docs-az__letter"');
+    return from > -1 && to > from ? html.slice(from, to) : "";
+  };
+  const halves = (html) => [...TOP(html).matchAll(/<nav\b([^>]*)>([\s\S]*?)<\/nav>/g)].find(([, , body]) => /<a\b[^>]*>\s*A–L\s*<\/a>/.test(body));
+  const SENTENCE = "This index has two pages:";
+
+  it.each(ROUTES)("%s: the nav starts with the sentence \"This index has two pages:\", before its links", (route) => {
+    const nav = halves(htmlOf(route));
+    expect(nav, `the halves nav of ${route}`).toBeTruthy();
+    const body = nav[2];
+    const before = body.slice(0, body.search(/<a\b/));
+    expect(decodeEntities(before.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim(), "the words before the first link").toBe(SENTENCE);
+  });
+
+  it.each(ROUTES)("%s: the sentence is shown, not hidden or kept for a screen reader only", (route) => {
+    const nav = halves(htmlOf(route));
+    const body = nav?.[2] ?? "";
+    const prefix = `<nav${nav?.[1] ?? ""}>${body.slice(0, Math.max(0, body.search(/<a\b/)))}`;
+    expect(prefix, "the sentence is in the nav").toContain(SENTENCE);
+    expect(prefix, "no hidden, aria-hidden, display:none or visually-hidden class around it").not.toMatch(/\shidden\b|aria-hidden|display:\s*none|sr-only|visually-hidden|u-visually/i);
+  });
+
+  it.each(ROUTES)("%s: the sentence about the components gallery comes after the row of letters, not before the halves nav", (route) => {
+    // from the h1 on: the header and the sidebar link to the gallery too
+    const html = htmlOf(route).slice(htmlOf(route).indexOf('<h1 class="docs-title">'));
+    const gallery = html.indexOf('href="/docs/components/"');
+    const lettersEnd = html.indexOf("</nav>", html.indexOf('<nav class="docs-az__letters"'));
+    const halvesStart = html.indexOf('<nav class="docs-az__halves"');
+    expect(gallery, "the link to the components gallery").toBeGreaterThan(-1);
+    expect(halvesStart, "the halves nav").toBeGreaterThan(-1);
+    expect(lettersEnd, "the row of letters").toBeGreaterThan(-1);
+    expect(gallery, "after the row of letters").toBeGreaterThan(lettersEnd);
+    expect(gallery, "so not before the halves nav").toBeGreaterThan(halvesStart);
+  });
+});
+
+describe("the Other group is named only when it exists", () => {
+  const hasOther = () => entries.some((e) => letterOf(e.name) === "#");
+  const topOf = (html) => {
+    const from = html.indexOf('<h1 class="docs-title">');
+    const to = html.indexOf('<section class="docs-az__letter"');
+    return from > -1 && to > from ? html.slice(from, to) : "";
+  };
+  const words = (html) => decodeEntities(html.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ");
+  const MENTION = /symbol|digit|number/i;
+
+  it("without an entry that lacks a leading letter, the M–Z page has no Other link in its row", () => {
+    if (hasOther()) return;
+    expect(rowOf(htmlOf(SECOND)), "a link to #az-other").not.toContain("az-other");
+    expect(words(rowOf(htmlOf(SECOND)))).not.toMatch(/\bOther\b/);
+  });
+
+  it("without such an entry, the description of the M–Z page does not promise symbols or digits", () => {
+    if (hasOther()) return;
+    const description = site.byRoute.get(SECOND)?.meta.description ?? "";
+    expect(description, "description in the front matter").not.toMatch(MENTION);
+    expect(htmlOf(SECOND).match(/<meta name="description" content="([^"]*)"/)?.[1] ?? "", "<meta name=description>").not.toMatch(MENTION);
+  });
+
+  it("... nor does its lead, or anything between its h1 and its first letter", () => {
+    if (hasOther()) return;
+    expect(words(topOf(htmlOf(SECOND)))).not.toMatch(MENTION);
+  });
+});
+
 describe("the row of letters", () => {
-  const row = (html) => html.match(/<nav class="docs-az__letters" aria-label="Letters">([\s\S]*?)<\/nav>/)?.[1] ?? "";
+  const row = rowOf;
 
   it.each(ROUTES)("%s: every link of the row resolves to an id on its target page", (route) => {
     const links = [...row(htmlOf(route)).matchAll(/<a\b([^>]*)>([\s\S]*?)<\/a>/g)].map((m) => ({ href: attr(m[1], "href"), text: decodeEntities(m[2]).trim() }));

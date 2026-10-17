@@ -461,6 +461,40 @@ test.describe('Documentation site', () => {
     });
   });
 
+  test.describe('the A–Z pages: what a reader sees at the top', () => {
+    for (const route of ['/docs/a-z/', '/docs/a-z/m-z/']) {
+      test(`${route}: "This index has two pages:" is shown in the halves nav, before its two links`, async ({ page }) => {
+        await open(page, route);
+        const main = page.locator('main');
+        const halves = main.getByRole('navigation').filter({ has: page.getByRole('link', { name: 'A–L', exact: true }) });
+        await expect(halves).toHaveCount(1);
+        await expect(halves.getByText('This index has two pages:')).toBeVisible();
+        await expect(halves.getByRole('link')).toHaveText(['A–L', 'M–Z']);
+        const sentence = await halves.getByText('This index has two pages:').boundingBox();
+        const first = await halves.getByRole('link', { name: 'A–L', exact: true }).boundingBox();
+        expect(sentence.y, 'the sentence is above or level with the links').toBeLessThanOrEqual(first.y + 1);
+        if (Math.abs(sentence.y - first.y) < 4) expect(sentence.x, 'and ends before the first link').toBeLessThan(first.x);
+      });
+
+      test(`${route}: the sentence about the components gallery is under the row of letters`, async ({ page }) => {
+        await open(page, route);
+        const main = page.locator('main');
+        const letters = await main.getByRole('navigation', { name: 'Letters' }).boundingBox();
+        const gallery = await main.getByRole('link', { name: 'components gallery' }).boundingBox();
+        expect(gallery.y, 'under the row of letters').toBeGreaterThanOrEqual(letters.y + letters.height - 1);
+      });
+    }
+
+    test('when an entry has no letter A–Z the row of letters of M–Z ends with a link to Other', async ({ page }) => {
+      const hasOther = indexEntries(site).some((e) => !/^[A-Z]/i.test(e.name.replace(/^[^\p{L}\p{N}]+/u, '')));
+      test.skip(!hasOther, 'no entry lacks a leading letter A–Z today; tests/az-split.test.js covers it with synthetic entries');
+      await open(page, '/docs/a-z/m-z/');
+      const links = page.locator('main').getByRole('navigation', { name: 'Letters' }).getByRole('link');
+      await expect(links.last()).toHaveText('Other');
+      await expect(links.last()).toHaveAttribute('href', '#az-other');
+    });
+  });
+
   test.describe('inventory', () => {
     test('the counts in the copy match the packages', async ({ page }) => {
       const expected = {

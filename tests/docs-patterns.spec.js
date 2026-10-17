@@ -242,6 +242,68 @@ test.describe('rail: "On this page" that stays in view, and the page actions', (
   });
 });
 
+/* ---- rail below 80rem (WCAG 1.4.10 Reflow: nothing is lost when the third column goes) --------- */
+
+test.describe('rail: below 80rem it is drawn in the grid area `rail`, under the content', () => {
+  // The two-column template (60rem to 80rem) and the one-column template (below 60rem)
+  for (const width of [1279, 1024, 960, 959, 800, 375, 320]) {
+    test(`${width}px: the rail is drawn, under main, in the content's column, inside the viewport`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(PAGE);
+      const { viewport, main, rail } = await layout(page);
+      expect(await style(page, '#rail', 'display'), 'the rail is not display:none').not.toBe('none');
+      expect(rail.visible, 'the rail is rendered').toBe(true);
+      expect(rail.top, 'under the content').toBeGreaterThanOrEqual(main.bottom - 1);
+      expect(near(rail.left, main.left, 2), 'in the same column as the content').toBe(true);
+      expect(rail.right, 'inside the viewport').toBeLessThanOrEqual(viewport + 1);
+      expect(await sideways(page), 'no sideways scroll').toBe(0);
+    });
+  }
+
+  for (const width of [1279, 320]) {
+    test(`${width}px: "Copy page as Markdown" is visible and "On this page" is in the accessibility tree`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(PAGE);
+      await expect(page.getByRole('link', { name: 'Copy page as Markdown' })).toBeVisible();
+      await expect(page.getByRole('navigation', { name: 'On this page' })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Known issues', exact: true }).first()).toBeVisible();
+      for (const selector of ['#act-copy', '#act-edit', '#act-report']) {
+        const action = await box(page, selector);
+        expect(action.height, selector).toBeGreaterThanOrEqual(24);
+        expect(action.right, selector).toBeLessThanOrEqual(width + 1);
+      }
+      expect(await sideways(page)).toBe(0);
+    });
+  }
+
+  test('1280px: it stays in the third column, beside the content', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(PAGE);
+    const { main, rail } = await layout(page);
+    expect(rail.visible).toBe(true);
+    expect(rail.left, 'beside, not under').toBeGreaterThanOrEqual(main.right - 1);
+    expect(rail.top, 'at the top of the page').toBeLessThan(main.top + 200);
+  });
+});
+
+/* ---- rail in forced colours: the current link is told apart by its border, not by a colour ----- */
+
+test.describe('rail: forced colours', () => {
+  test('the current link (aria-current="true") has a start border colour that the others do not have', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.emulateMedia({ forcedColors: 'active' });
+    await page.goto(PAGE);
+    expect(await page.evaluate(() => matchMedia('(forced-colors: active)').matches), 'forced colours are on').toBe(true);
+    await page.evaluate(() => document.querySelector('#on-example').setAttribute('aria-current', 'true'));
+    const colour = (selector) => style(page, selector, 'borderInlineStartColor');
+    const current = await colour('#on-example');
+    const other = await colour('#on-issues');
+    expect(await style(page, '#on-example', 'borderInlineStartWidth'), 'the current link has a border').not.toBe('0px');
+    expect(current, 'the current link and a link that is not current, border-inline-start-color').not.toBe(other);
+    expect(await colour('#on-reading'), 'every link that is not current has the same colour').toBe(other);
+  });
+});
+
 /* ---- example ----------------------------------------------------------------------------------- */
 
 test.describe('example: the preview and its code in one frame, a frame as wide as the width selector says', () => {
@@ -378,6 +440,17 @@ test.describe('pager: Previous and Next as two link blocks', () => {
     expect(next.top).toBeGreaterThanOrEqual(prev.bottom - 1);
     expect(near(prev.width, next.width, 2)).toBe(true);
     expect(await sideways(page)).toBe(0);
+  });
+
+  test('each link is named by its visible text, not by an aria-label (WCAG 2.5.3 Label in Name)', async ({ page }) => {
+    await page.goto(PAGE);
+    for (const selector of ['#pager-prev', '#pager-next']) {
+      expect(await page.locator(selector).getAttribute('aria-label'), `${selector} has no aria-label`).toBeNull();
+      expect(await page.locator(selector).getAttribute('aria-labelledby'), `${selector} has no aria-labelledby`).toBeNull();
+    }
+    const nav = page.getByRole('navigation', { name: 'Previous and next page' });
+    await expect(nav.getByRole('link', { name: 'Previous Badge', exact: true })).toHaveCount(1);
+    await expect(nav.getByRole('link', { name: 'Next Card', exact: true })).toHaveCount(1);
   });
 
   test('Tab reaches Previous, then Next, and each shows a focus ring', async ({ page }) => {

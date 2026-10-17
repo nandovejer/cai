@@ -521,3 +521,44 @@ describe("@luz-ds/docs: the pages that count the kinds", () => {
     expect(has(readOr("apps/docs/pages/accessibility.html"), /luz-docs-|@luz-ds\/docs/), `"apps/docs/pages/accessibility.html" matches ${/luz-docs-|@luz-ds\/docs/}`).toBe(true);
   });
 });
+
+/* ---- From the F6a accessibility and UX review ------------------------------------------------ */
+
+describe("@luz-ds/docs: the pager pattern pages name each link by its visible text (WCAG 2.5.3)", () => {
+  /** The start tags of a.luz-docs-pager__link, live (`<a …>`) and written out in a code block (`&lt;a …&gt;`). */
+  const pagerLinks = (text) => [
+    ...[...text.matchAll(/<a\b[^>]*\bluz-docs-pager__link\b[^>]*>/g)].map((m) => m[0]),
+    ...[...text.matchAll(/&lt;a\b(?:(?!&gt;)[\s\S])*?\bluz-docs-pager__link\b(?:(?!&gt;)[\s\S])*?&gt;/g)].map((m) => m[0]),
+  ];
+
+  for (const file of ["apps/docs/pages/documentation/pager.html", "apps/docs/pages/documentation/templates.html"]) {
+    it(`${file}: no pager link has an aria-label, in the live markup or in the code it teaches`, () => {
+      const links = pagerLinks(readOr(file));
+      expect(links.length, `pager links in ${file}`).toBeGreaterThan(0);
+      expect(links.filter((tag) => /\baria-label(?:ledby)?\b/.test(tag)).map((tag) => tag.slice(0, 120))).toEqual([]);
+    });
+  }
+});
+
+describe("@luz-ds/docs: the Do and don't pattern page", () => {
+  const site = scanSite(join(root, "apps/docs"), root);
+  const ROUTE = "/docs/documentation/dodont/";
+  const { rendered } = buildSite(site, { unchecked: ["/"] });
+  const text = (html) => html.replace(/<[^>]*>/g, "").replace(/&#39;|&apos;|&#x27;/g, "'").replace(/\s+/g, " ").trim();
+
+  it(`is titled "Do and don't", the name the component pages use for the same block`, () => {
+    expect(site.byRoute.get(ROUTE)?.meta.title).toBe("Do and don't");
+  });
+
+  it(`its h1 reads "Do and don't"`, () => {
+    const h1 = /<h1 class="docs-title">([\s\S]*?)<\/h1>/.exec(rendered.get(ROUTE) ?? "")?.[1] ?? "";
+    expect(text(h1)).toBe("Do and don't");
+  });
+
+  it(`its sidebar label, on this page and on a sibling, reads "Do and don't"`, () => {
+    for (const route of [ROUTE, "/docs/documentation/pager/"]) {
+      const links = [...(rendered.get(route) ?? "").matchAll(/<a\b[^>]*\bhref="\/docs\/documentation\/dodont\/"[^>]*\bclass="luz-sidebar__link"[^>]*>([\s\S]*?)<\/a>|<a\b[^>]*\bclass="luz-sidebar__link"[^>]*\bhref="\/docs\/documentation\/dodont\/"[^>]*>([\s\S]*?)<\/a>/g)];
+      expect(links.map((m) => text(m[1] ?? m[2])), `sidebar links to ${ROUTE} on ${route}`).toEqual(["Do and don't"]);
+    }
+  });
+});

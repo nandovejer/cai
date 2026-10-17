@@ -270,7 +270,7 @@ for (const size of SIZES) {
       // Text scrolling under the row must be hidden: not transparent, alpha 1
       expect(style.background).not.toBe('rgba(0, 0, 0, 0)');
       expect(style.background).not.toBe('transparent');
-      const alpha = style.background.match(/rgba?\([^)]*?,\s*([\d.]+)\)$/);
+      const alpha = style.background.match(/^rgba\([^,]+,[^,]+,[^,]+,\s*([\d.]+)\)$/);
       expect(alpha ? Number(alpha[1]) : 1).toBe(1);
     });
 

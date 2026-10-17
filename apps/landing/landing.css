@@ -100,8 +100,9 @@
    twinkle by their opacity alone, at two paces, so the browser does not
    repaint them. They drift with the scroll, a little slower than the page,
    the far layer slower still: a scroll-driven translate, no script, where
-   the browser has scroll timelines. Still under reduced motion; never in
-   high contrast or forced colours
+   the browser has scroll timelines. Still under reduced motion and while
+   the light's Pause motion is pressed; never in high contrast or forced
+   colours
    -------------------------------------------------------------------------- */
 
 .luz-landing-main {
@@ -220,6 +221,12 @@
     animation-timeline: auto, scroll(root);
     animation-range: normal, 0 100vh;
   }
+}
+
+/* Pause motion of the home's light ([still], WCAG 2.2.2) stops them too */
+:root:is([data-light]):not([data-theme="high-contrast"]):has(home-light[still]) .luz-landing-main::before,
+:root:is([data-light]):not([data-theme="high-contrast"]):has(home-light[still]) .luz-landing-main::after {
+  animation: none;
 }
 
 @media (forced-colors: active) {

@@ -791,14 +791,42 @@ test.describe('review fixes', () => {
       await open(page, '/', { time });
       await expect.poll(async () => (await html(page)).light).toBe(light);
       expect(mode).toBe(dark ? 'dark' : 'light');
+      // Two layers of stars behind the page's content (main's ::before and ::after), twinkling at two paces
       await expect
         .poll(() => page.evaluate(() => {
-          const s = getComputedStyle(document.body, '::before');
-          return { stars: s.content !== 'none' && /radial-gradient/.test(s.backgroundImage) && parseFloat(s.opacity) > 0, events: s.pointerEvents };
+          const main = document.querySelector('main.luz-landing-main');
+          return ['::before', '::after'].map((pseudo) => {
+            const s = getComputedStyle(main, pseudo);
+            return { stars: s.content !== 'none' && /radial-gradient/.test(s.backgroundImage) && parseFloat(s.opacity) > 0, events: s.pointerEvents, twinkle: s.animationName !== 'none' };
+          });
         }))
-        .toEqual({ stars: dark, events: 'none' });
+        .toEqual([0, 1].map(() => ({ stars: dark, events: 'none', twinkle: dark })));
+      // The page's own background is untouched
+      expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).not.toBe('rgba(0, 0, 0, 0)');
     });
   }
+
+  test('under reduced motion the stars are still: no twinkle', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await open(page, '/', { time: '23:30' });
+    const names = await page.evaluate(() => ['::before', '::after'].map((p) => getComputedStyle(document.querySelector('main.luz-landing-main'), p).animationName));
+    expect(names).toEqual(['none', 'none']);
+  });
+
+  test('the line fades out at its top and bottom edges, and its text sits where it is opaque', async ({ page }) => {
+    await open(page, '/');
+    const m = await page.evaluate(() => {
+      const lineEl = document.querySelector('home-light .home-light__line');
+      const q = document.querySelector('home-light .home-light__q').getBoundingClientRect();
+      const r = lineEl.getBoundingClientRect();
+      const mask = getComputedStyle(lineEl).maskImage || getComputedStyle(lineEl).webkitMaskImage;
+      return { mask, top: (q.top - r.top) / r.height, bottom: (r.bottom - q.bottom) / r.height };
+    });
+    expect(m.mask).toMatch(/linear-gradient/);
+    // The fades take at most the outer quarter on each side; the text is inside the middle
+    expect(m.top).toBeGreaterThanOrEqual(0.2);
+    expect(m.bottom).toBeGreaterThanOrEqual(0.2);
+  });
 
   /* -- 8. The line is readable over what is behind it ------------------------------- */
 

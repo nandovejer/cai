@@ -117,10 +117,14 @@ describe("D10: the feature grid is a template, not a pattern", () => {
     expect(block).toMatch(/&lt;ul class=&quot;o-grid o-grid--split&quot;/);
   });
 
-  it("is a list on core's split grid on the home page", () => {
-    const home = read("apps/landing/index.html");
-    expect(home).toMatch(/<ul class="[^"]*\bo-grid--split\b[^"]*"/);
-    expect(home).not.toMatch(/luz-landing-feature-grid/);
+  // The home's fit lists moved into #start (two plain ul, pinned by landing.spec.js), so the
+  // real use of the pattern is the landing templates page, the markup a reader copies.
+  it("is a list on core's split grid in the landing templates, a real use, with no landing class", () => {
+    const templates = read("apps/docs/pages/landing/templates.html");
+    const block = templates.slice(templates.indexOf('id="code-tpl-features"'));
+    expect(templates).toContain('id="code-tpl-features"');
+    expect(block).toMatch(/&lt;ul class=&quot;[^&]*\bo-grid--split\b/);
+    expect(templates).not.toMatch(/luz-landing-feature-grid/);
   });
 });
 

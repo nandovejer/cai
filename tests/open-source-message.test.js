@@ -48,8 +48,11 @@ describe("the home page says it in three languages", () => {
   const catalog = (code) => JSON.parse(read(`apps/landing/i18n/${code}.json`));
 
   it("English has the two statements, word for word", () => {
-    expect(catalog("en")["built.title"]).toBe(STATEMENT);
-    expect(catalog("en")["built.line"]).toBe(LINE);
+    // The owner replaced the home's hero line by "We love TDD: every change starts with a failing test."
+    // (title, separator and line are three keys); README.md and PRINCIPLES.md keep STATEMENT and LINE.
+    expect(catalog("en")["built.title"]).toBe("We love TDD");
+    expect(catalog("en")["built.sep"]).toBe(": ");
+    expect(catalog("en")["built.line"]).toBe("every change starts with a failing test.");
   });
 
   it.each(["es", "ar"])("%s has the same keys, translated", (code) => {
@@ -144,8 +147,9 @@ describe("get-started/how-luz-is-built", () => {
     }
   });
 
-  it("is short, 400 words at most (the A–Z index and llms-full.txt are close to their ceilings)", () => {
-    expect(textOf(body()).split(/\s+/).length).toBeLessThanOrEqual(400);
+  it("is short, 450 words at most (the A–Z index and llms-full.txt are close to their ceilings)", () => {
+    // 400 until "Tests first" had to explain how TDD is done (commit 2d9278c3): 419 words now, 450 with a margin.
+    expect(textOf(body()).split(/\s+/).length).toBeLessThanOrEqual(450);
   });
 });
 

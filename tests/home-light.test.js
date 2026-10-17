@@ -1,13 +1,15 @@
 /**
  * <home-light> on the home page (F3 of .claude/plans/luz-home-docs-identity.md,
  * section 3.7; D8, D9, D10, D11). The element lives in apps/landing/light/,
- * not in a package: four files of vanilla JS, one stylesheet and a README.
+ * not in a package: three files of vanilla JS, one stylesheet and a README.
  *
- *   light.js   the controller: defines <home-light>, imports nothing statically,
- *              loads the chosen visual with a literal import()
- *   globe.js   <home-globe>   city.js   <home-city>   map.js   <home-map>
- *              each imports nothing at all
- *   light.css  every rule the mockup injected with <style>, linked by the home only
+ *   light.js       the controller: defines <home-light>, imports nothing
+ *                  statically, loads the globe with a literal import()
+ *   globe.js       <home-globe>, the puzzle globe: code only, no static import;
+ *                  loads its land with one literal import() once it is on screen
+ *                  and the browser is idle
+ *   globe-data.js  the Natural Earth data, a chunk that imports nothing at all
+ *   light.css      every rule the mockup injected with <style>, linked by the home only
  *
  * What the browser does with them is in tests/home-light.spec.js. This file
  * holds what a file can say about itself: no HTML sink, no injected style, no
@@ -27,8 +29,9 @@ const read = (path) => {
   return readFileSync(join(repo, path), "utf-8");
 };
 const DIR = "apps/landing/light";
-const FILES = ["light", "globe", "city", "map"].map((name) => `${DIR}/${name}.js`);
-const VISUALS = { globe: "home-globe", city: "home-city", map: "home-map" };
+const FILES = ["light", "globe", "globe-data"].map((name) => `${DIR}/${name}.js`);
+/** The files that define an element (globe-data.js is data). */
+const ELEMENTS = { light: "home-light", globe: "home-globe" };
 
 /** The code without its comments: a rule may be explained in a comment that names what it forbids. */
 const code = (path) =>
@@ -55,28 +58,41 @@ describe("apps/landing/light: the files", () => {
     expect(code(`${DIR}/light.js`)).not.toMatch(/import\.meta/);
   });
 
-  it("light.js loads the three visuals with import() of a literal, and nothing else", () => {
+  it("light.js loads the globe with import() of a literal, and nothing else", () => {
     const source = code(`${DIR}/light.js`);
-    expect(dynamicTargets(source)).toEqual(["./city.js", "./globe.js", "./map.js"]);
-    // every import( is one of the three literal ones: none is built from a variable or the URL
-    expect(source.match(IMPORT_CALL)).toHaveLength(3);
+    expect(dynamicTargets(source)).toEqual(["./globe.js"]);
+    // every import( is the one literal: none is built from a variable or the URL
+    expect(source.match(IMPORT_CALL)).toHaveLength(1);
   });
 
-  it.each(["globe", "city", "map"])("%s.js has no import at all, static or dynamic", (name) => {
-    const source = code(`${DIR}/${name}.js`);
+  it("globe.js imports nothing statically, and loads its land with one import() of a literal", () => {
+    const source = code(`${DIR}/globe.js`);
+    expect(STATIC.test(source), "a static import or export-from").toBe(false);
+    expect(source).not.toMatch(/import\.meta/);
+    expect(dynamicTargets(source)).toEqual(["./globe-data.js"]);
+    expect(source.match(IMPORT_CALL)).toHaveLength(1);
+  });
+
+  it("globe-data.js has no import of any kind: static, dynamic or re-export", () => {
+    const source = code(`${DIR}/globe-data.js`);
     expect(STATIC.test(source), "a static import or export-from").toBe(false);
     expect(source.match(IMPORT_CALL)).toBeNull();
     expect(source).not.toMatch(/import\.meta/);
+    expect(source).not.toMatch(/\bexport\b[^;]*\bfrom\b/);
   });
 
-  it.each(FILES)("%s is an ES module that defines its element once, behind customElements.get()", (path) => {
-    const name = path.endsWith("light.js") ? "home-light" : VISUALS[path.match(/(\w+)\.js$/)[1]];
-    const source = code(path);
+  it.each(["light", "globe"])("%s.js is an ES module that defines its element once, behind customElements.get()", (file) => {
+    const name = ELEMENTS[file];
+    const source = code(`${DIR}/${file}.js`);
     expect(source).toMatch(new RegExp(`customElements\\.get\\(\\s*["']${name}["']\\s*\\)`));
     expect(source).toMatch(new RegExp(`customElements\\.define\\(\\s*["']${name}["']`));
-    // no window.LuzX = … global, as the mockup had
+    // no window.LuzX = ... global, as the mockup had
     expect(source).not.toMatch(/\bwindow\.Luz\w*\s*=/);
     expect(source).not.toMatch(/\bglobalThis\.Luz\w*\s*=/);
+  });
+
+  it("globe-data.js defines no element: it is data", () => {
+    expect(code(`${DIR}/globe-data.js`)).not.toMatch(/customElements/);
   });
 
   it("globe.js does not make the globe a control: no tabindex, no arrow-key handler", () => {
@@ -86,9 +102,9 @@ describe("apps/landing/light: the files", () => {
     expect(source).not.toMatch(/["']keydown["']/);
   });
 
-  it("globe.js says where the land data comes from (Natural Earth, public domain)", () => {
-    expect(read(`${DIR}/globe.js`)).toMatch(/Natural Earth/);
-    expect(read(`${DIR}/globe.js`)).toMatch(/public domain/i);
+  it("globe-data.js says where the land data comes from (Natural Earth, public domain)", () => {
+    expect(read(`${DIR}/globe-data.js`)).toMatch(/Natural Earth/);
+    expect(read(`${DIR}/globe-data.js`)).toMatch(/public domain/i);
   });
 });
 
@@ -167,17 +183,20 @@ describe("light.js: <luz-mode> is the only writer of data-theme and data-light",
     for (const property of ["--sun-alt", "--sun-az", "--sun-x", "--day-left"]) expect(s).toContain(property);
   });
 
-  it("stores the look under luz-home-light, in a try/catch, and never touches core's luz-theme key", () => {
+  it("offers no look: no luz-home-light key, no localStorage, no looks or remember attribute, no look buttons, no city or map", () => {
     const s = source();
-    expect(s).toContain('"luz-home-light"');
-    expect(s).not.toContain("luz-theme");
-    expect(s).toMatch(/try\s*\{[^}]*localStorage/);
+    expect(s).not.toContain("luz-home-light");
+    expect(s).not.toMatch(/localStorage|sessionStorage/);
+    expect(s).not.toMatch(/["']looks?["']|["']remember["']/);
+    expect(s).not.toMatch(/data-look|dataset\.look|\blooks\b|\bremember\b/i);
+    expect(s).not.toMatch(/home-city|home-map|city\.js|map\.js|puzzle\.js/);
+    expect(s).not.toMatch(/\bURLSearchParams\b|location\.search/);
   });
 
-  it("reads the optional ?look= of the URL, and nothing else of it", () => {
-    const s = source();
-    expect(s).toMatch(/URLSearchParams|location\.search/);
-    expect(s).not.toMatch(/location\.(hash|href|pathname)/);
+  it("states its usage as <home-light bleed favicon></home-light>, in its header", () => {
+    const header = read(`${DIR}/light.js`).match(/\/\*\*[\s\S]*?\*\//)?.[0] ?? "";
+    expect(header).toContain("<home-light bleed favicon></home-light>");
+    expect(header).not.toMatch(/looks=|look=|remember/);
   });
 
   it("writes the favicon as a data: URL of an SVG, not as markup", () => {
@@ -185,7 +204,7 @@ describe("light.js: <luz-mode> is the only writer of data-theme and data-light",
   });
 
   it("builds SVG with createElementNS", () => {
-    const all = FILES.map(code).join("\n");
+    const all = ["light", "globe"].map((name) => code(`${DIR}/${name}.js`)).join("\n");
     expect(all).toMatch(/createElementNS\(/);
   });
 
@@ -220,10 +239,15 @@ describe("light.css", () => {
     expect(importers).toEqual([]);
   });
 
-  it("styles the element and its three visuals, and stops its motion under prefers-reduced-motion", () => {
+  it("styles the element and the globe, and stops its motion under prefers-reduced-motion", () => {
     const css = read(`${DIR}/light.css`);
-    for (const tag of ["home-light", "home-globe", "home-city", "home-map"]) expect(css).toContain(tag);
+    for (const tag of ["home-light", "home-globe"]) expect(css).toContain(tag);
     expect(css).toMatch(/prefers-reduced-motion:\s*reduce/);
+  });
+
+  it("has no rule for the city or the map: they are gone", () => {
+    const css = read(`${DIR}/light.css`);
+    expect(css).not.toMatch(/home-city|home-map|data-look|home-light__group/);
   });
 
   it("reserves the room of the element before the script runs, so nothing jumps", () => {
@@ -250,15 +274,21 @@ describe("apps/landing/index.html: the light section", () => {
     expect(section[1]).toMatch(/<home-light\b[^>]*>\s*<\/home-light>/);
   });
 
-  it('offers the three looks, picks one at random, remembers the visitor\'s click, bleeds and writes the favicon', () => {
+  it("is <home-light bleed favicon>: no looks, look or remember attribute, and the favicon and the bleed stay", () => {
     expect(section, "a <section id=\"light\">").not.toBeNull();
     const tag = section[1].match(/<home-light\b[^>]*>/)?.[0] ?? "";
     expect(tag, "a <home-light> in it").not.toBe("");
-    expect(tag).toMatch(/\blooks="globe city map"/);
-    expect(tag).toMatch(/\blook="random"/);
-    for (const flag of ["remember", "bleed", "favicon"]) expect(tag).toMatch(new RegExp(`\\s${flag}(?=[\\s>=])`));
+    for (const flag of ["bleed", "favicon"]) expect(tag).toMatch(new RegExp(`\\s${flag}(?=[\\s>=])`));
+    for (const gone of ["looks", "look", "remember"]) expect(tag, `the ${gone} attribute is gone`).not.toMatch(new RegExp(`\\s${gone}(?=[\\s>=])`));
     // the modes, the target and the attribute names are gone: <luz-mode> owns them
     for (const gone of ["modes=", "mode=", "for=", "light-attr", "mode-attr"]) expect(tag).not.toContain(gone);
+  });
+
+  it("hands the script no label for the looks, the city or the map", () => {
+    const body = html.match(/<body[^>]*>/)[0];
+    for (const gone of ["light-looks", "light-globe", "light-city", "light-map", "light-say-city", "light-say-map", "light-city-alt", "light-map-alt"]) {
+      expect(body, `data-luz-label-${gone}`).not.toContain(`data-luz-label-${gone}=`);
+    }
   });
 
   it("loads light.js as a module, from the template or from landing.js", () => {
@@ -286,13 +316,12 @@ describe("apps/landing/light/README.md", () => {
 
 /* ---- Budgets ------------------------------------------------------------ */
 
-describe("budgets.json and PRINCIPLES.md section 8: the four rows of the home's light", () => {
+describe("budgets.json and PRINCIPLES.md section 8: the three rows of the home's light", () => {
   const budgets = JSON.parse(read("budgets.json")).budgets;
   const ROWS = [
     ["home light controller JS", "light"],
     ["home light visual: globe", "globe"],
-    ["home light visual: city", "city"],
-    ["home light visual: map", "map"],
+    ["home light data: globe", "globe-data"],
   ];
 
   it.each(ROWS)("has the row %s for %s.js, with ideal = max - 256 and a max that is a multiple of 256", (name, file) => {
@@ -311,6 +340,13 @@ describe("budgets.json and PRINCIPLES.md section 8: the four rows of the home's 
     expect(size).toBeLessThanOrEqual(row.max);
   });
 
+  it("keeps the globe's row where it was, at 9.5 kB, and gives the city and the map no row (their files are gone)", () => {
+    const globe = budgets.find((b) => b.name === "home light visual: globe");
+    expect(globe).toEqual({ name: "home light visual: globe", file: `${DIR}/globe.js`, ideal: 9472, max: 9728 });
+    for (const gone of ["home light visual: city", "home light visual: map"]) expect(budgets.map((b) => b.name), `"${gone}" is gone`).not.toContain(gone);
+    expect(budgets.some((b) => /light\/(?:city|map|puzzle)\.js$/.test(b.file ?? ""))).toBe(false);
+  });
+
   it("puts them after the mode chunk row, the last row that existed (no other row moved or raised)", () => {
     const names = budgets.map((b) => b.name);
     const mode = names.indexOf("site JS lazy chunk: mode");
@@ -326,7 +362,7 @@ describe("budgets.json and PRINCIPLES.md section 8: the four rows of the home's 
       .map((line) => line.split("|").slice(1, -1).map((cell) => cell.trim()));
     const at = table.findIndex((cells) => /^`site` JS lazy chunk: `mode`/.test(cells[0]));
     const rows = table.slice(at + 1);
-    expect(rows).toHaveLength(4);
+    expect(rows).toHaveLength(ROWS.length);
     rows.forEach((cells, i) => {
       expect(cells[0].replace(/`/g, ""), `row ${i + 1}`).toMatch(new RegExp(ROWS[i][0].replace(/`/g, "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
       const row = budgets.find((b) => b.name === ROWS[i][0]);
@@ -380,11 +416,9 @@ describe("the strings of <home-light> in the catalogs of the home", () => {
 
   const PHRASES = {
     globe: ["A design system is a world with its own laws of light.", "Un sistema de diseño es un mundo con sus propias leyes de la luz."],
-    city: ["A city is built piece by piece. So is a design system.", "Una ciudad se construye pieza a pieza. Un sistema de diseño también."],
-    map: ["The map is not the territory, but it looks like it.", "El mapa no es el territorio, pero lo parece."],
   };
 
-  it.each(Object.entries(PHRASES))("the %s phrase of the bar is in en.json (translated from the mockup, D11) and es.json keeps the mockup's Spanish", (look, [english, spanish]) => {
+  it.each(Object.entries(PHRASES))("the %s phrase of the bar is in en.json and es.json keeps the mockup's Spanish", (look, [english, spanish]) => {
     const key = keyOf(english);
     expect(key, `a key of en.json whose value is "${english}"`).toBeDefined();
     expect(es[key]).toBe(spanish);
@@ -405,7 +439,21 @@ describe("the strings of <home-light> in the catalogs of the home", () => {
     expect(body).toMatch(new RegExp(`data-luz-label-[\\w-]+="\\{\\{t:${key.replace(/\./g, "\\.")}\\}\\}"`));
   });
 
-  const WORDS = ["Back to now", "Globe", "City", "Map", "Scrub the day", "Show the light bar"];
+  const GONE = ["light.looks", "light.globe", "light.city", "light.map", "light.say.city", "light.say.map", "light.alt.city", "light.alt.map"];
+  it.each([["en", en], ["es", es], ["ar", ar]])("%s.json has no key for the looks, the city or the map", (code, catalogOf) => {
+    for (const key of GONE) expect(Object.keys(catalogOf), `${code}.json has ${key}`).not.toContain(key);
+  });
+
+  it.each([["en", en], ["es", es], ["ar", ar]])("%s.json keeps light.say.globe and light.alt.globe", (code, catalogOf) => {
+    expect(typeof catalogOf["light.say.globe"], `${code}.json light.say.globe`).toBe("string");
+    expect(typeof catalogOf["light.alt.globe"], `${code}.json light.alt.globe`).toBe("string");
+  });
+
+  it("the English name of the globe no longer says dots: the globe is a puzzle of countries", () => {
+    expect(en["light.alt.globe"]).not.toMatch(/\bdots?\b/i);
+  });
+
+  const WORDS = ["Back to now", "Scrub the day", "Show the light bar"];
   it.each(WORDS)('"%s" is a key of every catalog and a data-luz-label-* of <body>', (text) => {
     const key = keyOf(text);
     expect(key, `a key of en.json whose value is "${text}"`).toBeDefined();
@@ -464,15 +512,15 @@ describe("the strings of <home-light> in the catalogs of the home", () => {
 /* ---- D10: the mockup's leftovers are gone with this phase ---------------- */
 
 describe("the repository stays small", () => {
-  it("apps/landing/light holds the four modules, the stylesheet and the README, and no data file or font", () => {
+  it("apps/landing/light holds the controller, the globe and its data, the stylesheet and the README, and no city, map or puzzle", () => {
     expect(existsSync(join(repo, DIR)), `${DIR} does not exist`).toBe(true);
     const names = readdirSync(join(repo, DIR)).sort();
-    expect(names).toEqual(["README.md", "city.js", "globe.js", "light.css", "light.js", "map.js"]);
+    expect(names).toEqual(["README.md", "globe-data.js", "globe.js", "light.css", "light.js"]);
   });
 
-  it("splitting the mockup (141 KB in one file) did not grow it: the four modules together are no larger", () => {
+  it("splitting the mockup (141 KB in one file) did not grow it: the three modules together are no larger", () => {
     const size = (name) => Buffer.byteLength(read(`${DIR}/${name}`));
-    const total = ["light.js", "globe.js", "city.js", "map.js"].reduce((sum, name) => sum + size(name), 0);
+    const total = ["light.js", "globe.js", "globe-data.js"].reduce((sum, name) => sum + size(name), 0);
     expect(total).toBeLessThan(141 * 1024);
   });
 });

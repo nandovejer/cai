@@ -184,13 +184,13 @@ describe("@luz-ds/docs: the budget, the lint rules and the owners", () => {
     const budgets = json("budgets.json").budgets ?? [];
     const row = budgets.find((b) => b.name === "docs CSS");
     expect(row).toEqual({ name: "docs CSS", file: "packages/docs/dist/docs.min.css", ideal: 2048, max: 4096 });
-    // The home's light rows stay the last four (tests/home-light.test.js) and i18n-es stays right before the mode chunk
+    // The home's light rows stay the last three (tests/home-light.test.js) and i18n-es stays right before the mode chunk
     // (tests/size-guard.test.js), so the docs row is the first free place: after the manifests row, the last AI-ready one.
     const names = budgets.map((b) => b.name);
     expect(names.indexOf("docs CSS"), "docs CSS comes right after the manifests row").toBe(names.indexOf("manifests (each, uncompressed)") + 1);
     expect(names.indexOf("docs CSS"), "docs CSS comes after app CSS").toBeGreaterThan(names.indexOf("app CSS"));
     expect(names.indexOf("docs CSS"), "docs CSS comes before the light rows").toBeLessThan(names.indexOf("home light controller JS"));
-    expect(names.slice(-4), "the light rows stay last").toEqual(["home light controller JS", "home light visual: globe", "home light visual: city", "home light visual: map"]);
+    expect(names.slice(-3), "the light rows stay last").toEqual(["home light controller JS", "home light visual: globe", "home light data: globe"]);
     const others = Object.fromEntries(budgets.filter((b) => b.name !== "docs CSS").map((b) => [b.name, b.max]));
     expect(others["app CSS"]).toBe(2048);
     expect(others["cms CSS"]).toBe(4096);

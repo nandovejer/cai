@@ -3,10 +3,13 @@
  * <home-light> on the home page (F3 of .claude/plans/luz-home-docs-identity.md,
  * section 3.7; D8, D11). The element sits in section#light after the hero:
  *
- *   <home-light looks="globe city map" look="random" remember bleed favicon>
+ *   <home-light bleed favicon>
  *
  * It draws the sun and the moon where the visitor is (the zone of Intl, no
- * network), over a globe, a city or a map. It does not own the colour mode:
+ * network), over the puzzle globe: one piece per country, the land loaded
+ * from globe-data.js once the globe is on screen and the browser is idle
+ * (<home-globe land> says it is drawn). There is one look and no way to
+ * choose another: no look buttons, no ?look=, nothing remembered. It does not own the colour mode:
  * <luz-mode> (the footer's) is the only writer of data-theme and data-light,
  * and <home-light> asks it to preview an hour (the slider) or to return to now
  * (Live). What it writes on <html> are custom properties: --sun-alt, --sun-az,
@@ -17,9 +20,8 @@
  * What the controller renders, as this file reads it (the class names of the
  * mockup, kept by light.css): `.home-light__line` the button under the visual
  * (the phrase of the look, it opens the bar), `.home-light__bar` the bar,
- * `[data-look]` the buttons of the looks, the slider (a range input named
- * "Scrub the day"), `.home-light__live` the Live button, `.home-light__q` the
- * phrase, and one of <home-globe>, <home-city>, <home-map> for the look.
+ * the slider (a range input named "Scrub the day"), `.home-light__live` the
+ * Live button, `.home-light__q` the phrase, and <home-globe> for the drawing.
  *
  * Without JavaScript the element is empty and light.css reserves its height.
  * That block turns JavaScript off for itself, so it runs in the chromium
@@ -41,12 +43,7 @@ const text = (lang, english) => {
   if (!key) throw new Error(`no key of en.json has the value "${english}"`);
   return catalog(lang)[key];
 };
-const PHRASE = {
-  globe: 'A design system is a world with its own laws of light.',
-  city: 'A city is built piece by piece. So is a design system.',
-  map: 'The map is not the territory, but it looks like it.',
-};
-const LOOKS = ['globe', 'city', 'map'];
+const PHRASE = 'A design system is a world with its own laws of light.';
 const ROUTES = [
   ['/', 'en'],
   ['/es/', 'es'],
@@ -60,13 +57,13 @@ test.use({ timezoneId: TIMEZONE, storageState: NO_CHOICE });
  * Open the home and wait until the visual is there.
  * @param {import('@playwright/test').Page} page
  * @param {string} [path]
- * @param {{ look?: string, time?: string }} [options] look: the ?look= of the URL, time: the clock (hh:mm, Madrid)
+ * @param {{ time?: string }} [options] time: the clock (hh:mm, Madrid)
  */
-async function open(page, path = '/', { look, time } = {}) {
+async function open(page, path = '/', { time } = {}) {
   if (time) await atTime(page, time);
-  await page.goto(look ? `${path}?look=${look}` : path);
+  await page.goto(path);
   await expect(page.locator('home-light .home-light__line')).toBeVisible();
-  await expect(page.locator('home-light').locator('home-globe, home-city, home-map').filter({ visible: true })).toHaveCount(1);
+  await expect(page.locator('home-light').locator('home-globe').filter({ visible: true })).toHaveCount(1);
 }
 
 /** The state of the page the light reads and writes. */
@@ -105,11 +102,11 @@ const spyPreview = (page) =>
   });
 const previews = (page) => page.evaluate(() => /** @type {any} */ (window).__previews);
 
-/** The files the page asks for under apps/landing/light/. */
+/** The files the page asks for under apps/landing/light/ (their names without .js). */
 function trackChunks(page) {
   const seen = [];
   page.on('request', (request) => {
-    const match = new URL(request.url()).pathname.match(/^\/apps\/landing\/light\/(\w+)\.js$/);
+    const match = new URL(request.url()).pathname.match(/^\/apps\/landing\/light\/([\w-]+)\.js$/);
     if (match) seen.push(match[1]);
   });
   return seen;
@@ -164,8 +161,8 @@ test.describe('with JavaScript', () => {
   /* -- No errors, no third party ----------------------------------------- */
 
   for (const [route] of ROUTES) {
-    for (const look of [undefined, ...LOOKS]) {
-      test(`${route}${look ? `?look=${look}` : ''}: no page error, no failed request, nothing from another origin`, async ({ page }) => {
+    for (const query of ['', '?look=city']) {
+      test(`${route}${query}: no page error, no failed request, nothing from another origin`, async ({ page }) => {
         const problems = [];
         const foreign = [];
         page.on('pageerror', (e) => problems.push(e.message));
@@ -175,7 +172,7 @@ test.describe('with JavaScript', () => {
         page.on('request', (r) => {
           if (!r.url().startsWith(ORIGIN) && !r.url().startsWith('data:') && !r.url().startsWith('blob:')) foreign.push(r.url());
         });
-        await open(page, route, { look });
+        await open(page, route + query);
         await page.waitForLoadState('networkidle');
         await openBar(page);
         await scrub(page, '03:00');
@@ -189,7 +186,7 @@ test.describe('with JavaScript', () => {
   /* -- The page reads the light ------------------------------------------ */
 
   test('writes --sun-x, --sun-alt on <html>; the sun moves from the east side to the west side over the day', async ({ page }) => {
-    await open(page, '/', { look: 'city', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     await scrub(page, '07:30');
     await expect.poll(async () => (await html(page)).sunX).toMatch(/^\d+(\.\d+)?%$/);
     const morning = await html(page);
@@ -202,15 +199,15 @@ test.describe('with JavaScript', () => {
     expect(await page.evaluate(() => document.documentElement.style.getPropertyValue('--day-left'))).toMatch(/%$/);
   });
 
-  test('--sun-x also follows the globe\'s own sun when the look is the globe', async ({ page }) => {
-    await open(page, '/', { look: 'globe', time: '14:00' });
+  test('--sun-x follows the globe\'s own sun', async ({ page }) => {
+    await open(page, '/', { time: '14:00' });
     await expect.poll(async () => (await html(page)).sunX).toMatch(/^\d+(\.\d+)?%$/);
   });
 
   /* -- The slider and Live call <luz-mode>.preview() --------------------- */
 
   test('in Auto the slider scrubs the page: data-light and data-theme follow the hour, and Live returns', async ({ page }) => {
-    await open(page, '/', { look: 'city', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     await expect.poll(async () => (await html(page)).light).toBe('afternoon');
     expect((await html(page)).theme).toBe('light');
     await spyPreview(page);
@@ -242,7 +239,7 @@ test.describe('with JavaScript', () => {
   });
 
   test('with a fixed mode the theme stays and data-light follows the hour; Live gives the mode\'s own light back', async ({ page }) => {
-    await open(page, '/', { look: 'city', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     await chooseMode(page, 'dark');
     await expect.poll(async () => (await html(page)).theme).toBe('dark');
     await expect.poll(async () => (await html(page)).light).toBe('night');
@@ -260,7 +257,7 @@ test.describe('with JavaScript', () => {
   });
 
   test('the slider is a keyboard control named from the catalog, and its output shows the hour', async ({ page }) => {
-    await open(page, '/', { look: 'map', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     await openBar(page);
     const range = page.getByRole('slider', { name: text('en', 'Scrub the day') });
     await expect(range).toHaveCount(1);
@@ -275,7 +272,7 @@ test.describe('with JavaScript', () => {
   });
 
   test('the button under the visual opens and closes the bar, and says so by aria-expanded', async ({ page }) => {
-    await open(page, '/', { look: 'city' });
+    await open(page);
     const line = page.locator('home-light .home-light__line');
     await expect(line).toHaveAttribute('aria-expanded', 'false');
     await expect(line).toHaveAccessibleName(new RegExp(text('en', 'Show the light bar').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
@@ -293,7 +290,7 @@ test.describe('with JavaScript', () => {
     for (const file of ['mode.js', 'mode.min.js']) {
       await page.route(`**/packages/site/dist/${file}`, (route) => route.fulfill({ contentType: 'text/javascript', body: 'export {};' }));
     }
-    await open(page, '/', { look: 'city', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     expect(await page.evaluate(() => !!customElements.get('luz-mode'))).toBe(false);
     const before = await html(page);
     // From here on every write of the two attributes is recorded; the boot script ran before
@@ -310,142 +307,95 @@ test.describe('with JavaScript', () => {
     await scrub(page, '13:00');
     await expect.poll(async () => (await html(page)).sunAlt).not.toBe(night.sunAlt);
     await page.locator('home-light .home-light__live').click();
-    await page.locator('home-light [data-look="map"]').click();
-    await expect(page.locator('home-map')).toBeVisible();
     await page.waitForTimeout(2500); // two ticks of the controller
     expect(await page.evaluate(() => /** @type {any} */ (window).__writes)).toEqual([]);
     expect(await html(page)).toMatchObject({ theme: before.theme, light: before.light });
   });
 
-  /* -- The looks ---------------------------------------------------------- */
+  /* -- One look: the puzzle globe ------------------------------------------ */
 
-  for (const look of LOOKS) {
-    test(`?look=${look} wins over the random pick and loads only that visual's chunk`, async ({ page }) => {
-      const chunks = trackChunks(page);
-      await open(page, '/', { look });
-      await expect(page.locator('home-light')).toHaveAttribute('look', look);
-      await expect(page.locator(`home-${look}`)).toBeVisible();
-      for (const other of LOOKS.filter((l) => l !== look)) await expect(page.locator(`home-${other}`).filter({ visible: true })).toHaveCount(0);
-      expect(chunks.filter((c) => c !== 'light' && !LOOKS.includes(c))).toEqual([]);
-      expect(chunks).toContain('light');
-      expect(chunks.filter((c) => LOOKS.includes(c))).toEqual([look]);
-    });
-  }
-
-  test('?look= wins over a remembered look, and an unknown value is ignored', async ({ page }) => {
-    await page.addInitScript(() => localStorage.setItem('luz-home-light', 'city'));
-    await open(page, '/', { look: 'map' });
-    await expect(page.locator('home-light')).toHaveAttribute('look', 'map');
-    await page.goto('/?look=%3Cscript%3E');
-    await expect(page.locator('home-light .home-light__line')).toBeVisible();
-    expect(LOOKS).toContain(await page.locator('home-light').getAttribute('look'));
-  });
-
-  test('a look is picked at random from the three on a load without ?look=: all three appear', async ({ page }) => {
-    // Math.random is seeded, so the test does not depend on luck (nine real loads miss one look 8 % of the time)
-    const seen = new Set();
-    for (const r of [0.05, 0.5, 0.95]) {
-      const fresh = await page.context().newPage();
-      await fresh.addInitScript((value) => {
-        Math.random = () => value;
-      }, r);
-      await open(fresh, '/');
-      seen.add(await fresh.locator('home-light').getAttribute('look'));
-      await fresh.close();
-    }
-    expect([...seen].sort()).toEqual(['city', 'globe', 'map']);
-  });
-
-  test('the buttons of the looks switch the visual; each look loads its chunk once, when it is first wanted', async ({ page }) => {
-    const chunks = trackChunks(page);
-    await open(page, '/', { look: 'globe' });
+  test('the bar has no look buttons: there is one look and nothing to choose', async ({ page }) => {
+    await open(page);
     await openBar(page);
-    await expect(page.locator('home-light [data-look]')).toHaveCount(3);
-    await expect(page.locator('home-light [data-look="globe"]')).toHaveAttribute('aria-pressed', 'true');
-    await page.locator('home-light [data-look="city"]').click();
-    await expect(page.locator('home-city')).toBeVisible();
-    await expect(page.locator('home-globe').filter({ visible: true })).toHaveCount(0);
-    await expect(page.locator('home-light [data-look="city"]')).toHaveAttribute('aria-pressed', 'true');
-    await page.locator('home-light [data-look="globe"]').click();
-    await expect(page.locator('home-globe')).toBeVisible();
-    expect(chunks.filter((c) => c === 'globe')).toHaveLength(1);
-    expect(chunks.filter((c) => c === 'city')).toHaveLength(1);
-    expect(chunks).not.toContain('map');
+    await expect(page.locator('[data-look]')).toHaveCount(0);
+    await expect(page.locator('home-light .home-light__group')).toHaveCount(0);
+    await expect(page.locator('home-city, home-map')).toHaveCount(0);
   });
 
-  test('looks="none" requests no visual chunk', async ({ page }) => {
+  test('the city and the map are gone: only light.js, globe.js and globe-data.js are ever requested from apps/landing/light/', async ({ page }) => {
     const chunks = trackChunks(page);
-    const problems = [];
-    page.on('pageerror', (e) => problems.push(e.message));
-    await page.route(/\/$/, async (route) => {
-      if (route.request().resourceType() !== 'document') return route.continue();
-      const response = await route.fetch();
-      const body = (await response.text()).replace(/(<home-light\b[^>]*?)\blooks="[^"]*"/, '$1looks="none"');
-      await route.fulfill({ response, body });
-    });
-    await page.goto('/');
-    await expect(page.locator('home-light[looks="none"]')).toHaveCount(1);
-    await expect(page.locator('home-light .home-light__line')).toBeVisible();
+    await open(page);
+    await expect(page.locator('home-globe[land]')).toHaveCount(1, { timeout: 15000 });
+    await page.waitForLoadState('networkidle');
+    expect(chunks).not.toContain('city');
+    expect(chunks).not.toContain('map');
+    expect(chunks).not.toContain('puzzle');
+    expect([...new Set(chunks)].sort()).toEqual(['globe', 'globe-data', 'light']);
+  });
+
+  test('globe-data.js is requested once, and after it the globe carries the attribute land and its pieces have a shape', async ({ page }) => {
+    const chunks = trackChunks(page);
+    await open(page);
+    await expect(page.locator('home-globe[land]')).toHaveCount(1, { timeout: 15000 });
+    const pieces = page.locator('home-globe path.home-globe__piece');
+    expect(await pieces.count(), 'a path.home-globe__piece for the countries').toBeGreaterThan(0);
+    const shapes = await pieces.evaluateAll((paths) => paths.map((path) => path.getAttribute('d') ?? ''));
+    expect(shapes.some((d) => d.trim().length > 0), 'at least one piece has a non-empty d').toBe(true);
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(500);
-    expect(chunks.filter((c) => LOOKS.includes(c))).toEqual([]);
-    for (const tag of LOOKS) expect(await page.locator(`home-${tag}`).count()).toBe(0);
-    expect(problems).toEqual([]);
+    expect(chunks.filter((c) => c === 'globe-data'), 'globe-data.js requested once').toHaveLength(1);
+    expect(chunks.filter((c) => c === 'globe')).toHaveLength(1);
   });
 
-  /* -- remember ----------------------------------------------------------- */
+  test('until the data has arrived the globe is drawn without land, and has no land attribute; when it comes the land appears', async ({ page }) => {
+    let release = () => {};
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    await page.route('**/apps/landing/light/globe-data.js', async (route) => {
+      await gate;
+      await route.continue();
+    });
+    const asked = page.waitForRequest('**/apps/landing/light/globe-data.js', { timeout: 15000 });
+    await open(page);
+    await asked; // the data is asked for once the globe is on screen and the browser is idle
+    const globe = page.locator('home-globe');
+    await expect(globe).toBeVisible();
+    await expect(globe).not.toHaveAttribute('land', /.*/);
+    await expect(globe.locator('.home-globe__sea')).toHaveCount(1);
+    const drawn = () => globe.locator('path.home-globe__piece').evaluateAll((paths) => paths.map((path) => path.getAttribute('d') ?? '').filter((d) => d.trim()));
+    expect(await drawn(), 'no piece of land yet').toEqual([]);
+    release();
+    await expect(globe).toHaveAttribute('land', /.*/, { timeout: 15000 });
+    expect((await drawn()).length, 'land is drawn').toBeGreaterThan(0);
+  });
 
-  test('remember stores luz-home-light only after a click on a look, and the stored value is the look', async ({ page }) => {
-    await open(page, '/', { look: 'globe' });
+  test('the land is loaded even when the browser asks to save data (Save-Data, by the owner\'s decision)', async ({ page }) => {
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'connection', { configurable: true, value: { saveData: true, effectiveType: '2g', addEventListener() {}, removeEventListener() {} } });
+    });
+    await page.route('**/*', (route) => route.continue({ headers: { ...route.request().headers(), 'save-data': 'on' } }));
+    const chunks = trackChunks(page);
+    await open(page);
+    await expect(page.locator('home-globe[land]')).toHaveCount(1, { timeout: 15000 });
+    expect(chunks).toContain('globe-data');
+  });
+
+  test('?look=city is ignored: the globe is shown, whatever the parameter says', async ({ page }) => {
+    const chunks = trackChunks(page);
+    await open(page, '/?look=city');
+    await expect(page.locator('home-globe')).toBeVisible();
+    await expect(page.locator('home-city, home-map')).toHaveCount(0);
+    await expect(page.locator('home-light')).not.toHaveAttribute('look', /.*/);
+    expect(chunks).not.toContain('city');
+  });
+
+  test('nothing is remembered: a load and a scrub write no luz-home-light key', async ({ page }) => {
+    await open(page);
     await page.waitForLoadState('networkidle');
-    await page.waitForTimeout(1200);
-    expect(await page.evaluate(() => localStorage.getItem('luz-home-light')), 'nothing is stored by a load').toBeNull();
     await scrub(page, '10:00');
-    await page.locator('home-light [data-look="map"]').click();
-    await expect(page.locator('home-map')).toBeVisible();
-    expect(await page.evaluate(() => localStorage.getItem('luz-home-light'))).toBe('map');
-    // core's key is not the light's
+    expect(await page.evaluate(() => localStorage.getItem('luz-home-light'))).toBeNull();
     expect(await page.evaluate(() => localStorage.getItem('luz-theme'))).toBeNull();
-  });
-
-  test('a remembered look is used on the next visit, and a value that is not an offered look is ignored', async ({ page }) => {
-    await page.addInitScript(() => {
-      if (!sessionStorage.getItem('seeded')) {
-        localStorage.setItem('luz-home-light', 'city');
-        sessionStorage.setItem('seeded', '1');
-      }
-    });
-    await open(page, '/');
-    await expect(page.locator('home-light')).toHaveAttribute('look', 'city');
-
-    for (const bad of ['bogus', 'none', '{"look":"map"}', '<img src=x>', '']) {
-      const fresh = await page.context().newPage();
-      const errors = [];
-      fresh.on('pageerror', (e) => errors.push(e.message));
-      await fresh.addInitScript((value) => localStorage.setItem('luz-home-light', value), bad);
-      await open(fresh, '/');
-      expect(LOOKS, `a stored "${bad}" falls back to an offered look`).toContain(await fresh.locator('home-light').getAttribute('look'));
-      expect(errors).toEqual([]);
-      await fresh.close();
-    }
-  });
-
-  test('storage that throws (a sandboxed frame) is not an error: the look is not remembered', async ({ page }) => {
-    const errors = [];
-    page.on('pageerror', (e) => errors.push(e.message));
-    await page.addInitScript(() => {
-      Object.defineProperty(window, 'localStorage', {
-        configurable: true,
-        get() {
-          throw new DOMException('denied', 'SecurityError');
-        },
-      });
-    });
-    await open(page, '/', { look: 'city' });
-    await openBar(page);
-    await page.locator('home-light [data-look="map"]').click();
-    await expect(page.locator('home-map')).toBeVisible();
-    expect(errors).toEqual([]);
   });
 
   /* -- Reduced motion ------------------------------------------------------ */
@@ -467,59 +417,54 @@ test.describe('with JavaScript', () => {
       };
     });
 
-  for (const look of LOOKS) {
-    test(`reduced motion: the ${look} look asks for no continuous animation frame`, async ({ page }) => {
-      await page.emulateMedia({ reducedMotion: 'reduce' });
-      await countFrames(page);
-      await open(page, '/', { look });
-      await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(1500);
-      expect(await framesAsked(page, 1500)).toBe(0);
-    });
-  }
+  test('reduced motion: the globe asks for no continuous animation frame', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await countFrames(page);
+    await open(page);
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1500);
+    expect(await framesAsked(page, 1500)).toBe(0);
+  });
 
-  for (const look of ['globe', 'city']) {
-    test(`control: with motion welcome the ${look} look does ask for frames (the probe sees them)`, async ({ page }) => {
-      await page.emulateMedia({ reducedMotion: 'no-preference' });
-      await countFrames(page);
-      await open(page, '/', { look });
-      await page.waitForLoadState('networkidle');
-      await page.waitForTimeout(1500);
-      expect(await framesAsked(page, 1500)).toBeGreaterThan(10);
-    });
-  }
+  test('control: with motion welcome the globe does ask for frames (the probe sees them)', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await countFrames(page);
+    await open(page);
+    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(1500);
+    expect(await framesAsked(page, 1500)).toBeGreaterThan(10);
+  });
+
+  test('reduced motion: the land still comes', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await open(page);
+    await expect(page.locator('home-globe[land]')).toHaveCount(1, { timeout: 15000 });
+  });
 
   /* -- Texts from the catalog ----------------------------------------------- */
 
   for (const [route, lang] of ROUTES) {
     test(`${route}: the phrase under the visual and the names in the bar are the catalog's (${lang})`, async ({ page }) => {
-      for (const look of LOOKS) {
-        await open(page, route, { look });
-        await expect(page.locator('home-light .home-light__q')).toHaveText(text(lang, PHRASE[look]));
-      }
+      await open(page, route);
+      await expect(page.locator('home-light .home-light__q')).toHaveText(text(lang, PHRASE));
       await openBar(page);
       await scrub(page, '10:00');
       await expect(page.locator('home-light .home-light__live')).toHaveText(catalog(lang)['light.live']);
       await expect(page.getByRole('slider', { name: text(lang, 'Scrub the day') })).toHaveCount(1);
-      for (const [look, english] of [['globe', 'Globe'], ['city', 'City'], ['map', 'Map']]) {
-        await expect(page.locator(`home-light [data-look="${look}"]`)).toHaveAccessibleName(text(lang, english));
-      }
       await expect(page.locator('home-light .home-light__line')).toHaveAccessibleName(new RegExp(text(lang, 'Show the light bar').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     });
   }
 
-  test('the three English phrases are what the catalog says (D11), and the other languages differ', async () => {
-    for (const look of LOOKS) {
-      expect(text('en', PHRASE[look])).toBe(PHRASE[look]);
-      expect(text('es', PHRASE[look])).not.toBe(PHRASE[look]);
-      expect(text('ar', PHRASE[look])).not.toBe(PHRASE[look]);
-    }
+  test('the English phrase is what the catalog says (D11), and the other languages differ', async () => {
+    expect(text('en', PHRASE)).toBe(PHRASE);
+    expect(text('es', PHRASE)).not.toBe(PHRASE);
+    expect(text('ar', PHRASE)).not.toBe(PHRASE);
   });
 
   /* -- The favicon ------------------------------------------------------------ */
 
   test('favicon: the page\'s icon becomes a data: SVG of the sun and the moon', async ({ page }) => {
-    await open(page, '/', { look: 'city' });
+    await open(page);
     await expect
       .poll(() => page.evaluate(() => [...document.querySelectorAll('link[rel~="icon"]')].some((link) => /** @type {HTMLLinkElement} */ (link).href.startsWith('data:image/svg+xml'))), { timeout: 8000 })
       .toBe(true);
@@ -527,26 +472,24 @@ test.describe('with JavaScript', () => {
 
   /* -- Layout ----------------------------------------------------------------- */
 
-  for (const look of LOOKS) {
-    for (const [route, lang] of [['/', 'en'], ['/ar/', 'ar']]) {
-      test(`320 px: no horizontal scroll with the ${look} look (${lang}), the bar closed and open`, async ({ page }) => {
-        await page.setViewportSize({ width: 320, height: 800 });
-        await open(page, route, { look });
-        const overflow = () => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
-        expect(await overflow()).toBeLessThanOrEqual(1);
-        await openBar(page);
-        expect(await overflow()).toBeLessThanOrEqual(1);
-        const bar = await page.locator('home-light .home-light__bar').boundingBox();
-        expect((bar?.x ?? 0) + (bar?.width ?? 0)).toBeLessThanOrEqual(321);
-        expect(bar?.x ?? 0).toBeGreaterThanOrEqual(-1);
-      });
-    }
+  for (const [route, lang] of [['/', 'en'], ['/ar/', 'ar']]) {
+    test(`320 px: no horizontal scroll (${lang}), the bar closed and open`, async ({ page }) => {
+      await page.setViewportSize({ width: 320, height: 800 });
+      await open(page, route);
+      const overflow = () => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+      expect(await overflow()).toBeLessThanOrEqual(1);
+      await openBar(page);
+      expect(await overflow()).toBeLessThanOrEqual(1);
+      const bar = await page.locator('home-light .home-light__bar').boundingBox();
+      expect((bar?.x ?? 0) + (bar?.width ?? 0)).toBeLessThanOrEqual(321);
+      expect(bar?.x ?? 0).toBeGreaterThanOrEqual(-1);
+    });
   }
 
   for (const [width, height] of [[1280, 800], [375, 800]]) {
     test(`no layout shift at ${width} px: the hero and the light section are where JavaScript off puts them`, async ({ page, browser }) => {
       await page.setViewportSize({ width, height });
-      await open(page, '/', { look: 'city', time: '14:00' });
+      await open(page, '/', { time: '14:00' });
       await page.waitForLoadState('networkidle');
       await page.waitForTimeout(800);
       const boxes = (/** @type {import('@playwright/test').Page} */ p) =>
@@ -584,21 +527,20 @@ test.describe('with JavaScript', () => {
   };
 
   for (const [light, time, mode] of LIGHTS) {
-    for (const look of LOOKS) {
-      test(`axe: / with the ${look} look in the ${light} light (${time}, ${mode})`, async ({ page, browserName }) => {
-        test.skip(browserName !== 'chromium', 'Chromium only');
-        await open(page, '/', { look, time });
-        await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe(light);
-        expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(mode);
-        await page.waitForLoadState('networkidle');
-        await faded(page);
-        expect(await violations(page), 'serious/critical axe violations').toEqual([]);
-      });
-    }
+    test(`axe: / in the ${light} light (${time}, ${mode}), the land drawn`, async ({ page, browserName }) => {
+      test.skip(browserName !== 'chromium', 'Chromium only');
+      await open(page, '/', { time });
+      await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe(light);
+      expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(mode);
+      await expect(page.locator('home-globe[land]')).toHaveCount(1, { timeout: 15000 });
+      await page.waitForLoadState('networkidle');
+      await faded(page);
+      expect(await violations(page), 'serious/critical axe violations').toEqual([]);
+    });
 
     test(`axe: / with the bar open in the ${light} light (${time})`, async ({ page, browserName }) => {
       test.skip(browserName !== 'chromium', 'Chromium only');
-      await open(page, '/', { look: 'map', time });
+      await open(page, '/', { time });
       await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe(light);
       await page.waitForLoadState('networkidle');
       await openBar(page);
@@ -610,7 +552,7 @@ test.describe('with JavaScript', () => {
   for (const [route] of ROUTES.slice(1)) {
     test(`axe: ${route} with the bar open`, async ({ page, browserName }) => {
       test.skip(browserName !== 'chromium', 'Chromium only');
-      await open(page, route, { look: 'city', time: '14:00' });
+      await open(page, route, { time: '14:00' });
       await openBar(page);
       await faded(page);
       expect(await violations(page), 'serious/critical axe violations').toEqual([]);
@@ -648,7 +590,7 @@ test.describe('review fixes', () => {
   /* -- 1. Tab order -------------------------------------------------------- */
 
   test('after opening the bar from the line, the next Tab lands inside the bar, and the bar is still drawn above the line', async ({ page }) => {
-    await open(page, '/', { look: 'city' });
+    await open(page);
     await line(page).focus();
     await page.keyboard.press('Enter');
     await expect(page.locator('home-light .home-light__bar')).toBeVisible();
@@ -665,7 +607,7 @@ test.describe('review fixes', () => {
     test(`${route}: the slider's aria-valuetext is the phase name and the hour, joined by the catalog's separator (${lang})`, async ({ page }) => {
       const cat = catalog(lang);
       expect(typeof cat['light.sep'], 'light.sep is a key of the catalog').toBe('string');
-      await open(page, route, { look: 'map', time: '14:00' });
+      await open(page, route, { time: '14:00' });
       await scrub(page, '09:30');
       await expect.poll(async () => (await html(page)).light).toBe('morning');
       const hour = (await output(page).textContent())?.trim() ?? '';
@@ -684,7 +626,7 @@ test.describe('review fixes', () => {
   /* -- 3. The output is not a live region ------------------------------------ */
 
   test('the <output> is aria-live="off", and nothing in the light is a status or a polite live region', async ({ page }) => {
-    await open(page, '/', { look: 'city', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     await openBar(page);
     await expect(output(page)).toHaveAttribute('aria-live', 'off');
     await slider(page).fill('600');
@@ -694,44 +636,20 @@ test.describe('review fixes', () => {
 
   /* -- 4. Forced colours ------------------------------------------------------- */
 
-  test('forced colors: the slider track has a background colour of its own, and the pressed look button differs from the others', async ({ page }) => {
+  test('forced colors: the slider track has a background colour of its own', async ({ page }) => {
     await page.emulateMedia({ forcedColors: 'active' });
-    await open(page, '/', { look: 'city', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     await openBar(page);
     await faded(page);
     const clear = (colour) => /^(transparent|rgba\(.*,\s*0\))$/.test(colour);
     const track = await slider(page).evaluate((input) => getComputedStyle(input, '::-webkit-slider-runnable-track').backgroundColor);
     expect(clear(track), `the track is drawn in a colour of the system, not "${track}"`).toBe(false);
-
-    // What tells the pressed button from the others to a reader: a border, an outline, the text colour, or a fill that is not the bar's own
-    const barFill = await page.locator('home-light .home-light__bar').evaluate((bar) => getComputedStyle(bar).backgroundColor);
-    const looks = await page.locator('home-light [data-look]').evaluateAll((buttons, bar) =>
-      buttons.map((b) => {
-        const s = getComputedStyle(b);
-        const fill = s.backgroundColor;
-        const filled = !/^(transparent|rgba\(.*,\s*0\))$/.test(fill) && fill !== bar;
-        return {
-          pressed: b.getAttribute('aria-pressed') === 'true',
-          look: [
-            s.borderTopStyle === 'none' ? 'no border' : `${s.borderTopWidth} ${s.borderTopStyle} ${s.borderTopColor}`,
-            s.outlineStyle === 'none' ? 'no outline' : `${s.outlineWidth} ${s.outlineStyle} ${s.outlineColor}`,
-            s.color,
-            filled ? fill : 'no fill',
-          ].join(' | '),
-        };
-      }),
-    barFill);
-    const pressed = looks.filter((b) => b.pressed);
-    const others = looks.filter((b) => !b.pressed);
-    expect(pressed).toHaveLength(1);
-    expect(others.length).toBeGreaterThan(0);
-    for (const other of others) expect(pressed[0].look, 'the pressed button looks like an unpressed one').not.toBe(other.look);
   });
 
   /* -- 5. The globe is an image, not a control ---------------------------------- */
 
   test('the globe is not focusable, and its name does not talk about arrow keys', async ({ page }) => {
-    await open(page, '/', { look: 'globe' });
+    await open(page);
     const globe = page.locator('home-globe');
     expect(await globe.evaluate((el) => ({ attribute: el.hasAttribute('tabindex'), index: /** @type {HTMLElement} */ (el).tabIndex }))).toEqual({ attribute: false, index: -1 });
     await globe.evaluate((el) => /** @type {HTMLElement} */ (el).focus());
@@ -742,10 +660,12 @@ test.describe('review fixes', () => {
   });
 
   test('dragging the globe with the pointer still turns it', async ({ page }) => {
-    await open(page, '/', { look: 'globe' });
+    await open(page);
     const globe = page.locator('home-globe');
-    const dots = () => globe.evaluate((el) => [...el.querySelectorAll('.home-globe__dots path')].map((p) => p.getAttribute('d')).join('|'));
+    await expect(globe).toHaveAttribute('land', /.*/, { timeout: 15000 });
+    const dots = () => globe.evaluate((el) => [...el.querySelectorAll('path.home-globe__piece')].map((p) => p.getAttribute('d')).join('|'));
     const before = await dots();
+    expect(before.replace(/\|/g, ''), 'the pieces are drawn before the drag').not.toBe('');
     const box = await globe.boundingBox();
     const x = (box?.x ?? 0) + (box?.width ?? 0) / 2;
     const y = (box?.y ?? 0) + (box?.height ?? 0) / 3;
@@ -762,7 +682,7 @@ test.describe('review fixes', () => {
   for (const [route, lang] of ROUTES) {
     test(`${route}: the line's visible text has the phase name and the hour (${lang})`, async ({ page }) => {
       const cat = catalog(lang);
-      await open(page, route, { look: 'city', time: '14:00' });
+      await open(page, route, { time: '14:00' });
       const hour = (await output(page).textContent())?.trim() ?? '';
       expect(hour).toMatch(/\S/);
       const shown = await visibleText(line(page));
@@ -777,7 +697,7 @@ test.describe('review fixes', () => {
     test(`${route}: with a fixed mode the line shows the hour and no light's name (${lang})`, async ({ page }) => {
       const cat = catalog(lang);
       const phases = ['dawn', 'morning', 'afternoon', 'sunset', 'dusk', 'night'].map((phase) => cat[`light.${phase}`]);
-      await open(page, route, { look: 'city', time: '14:00' });
+      await open(page, route, { time: '14:00' });
       await chooseMode(page, 'high-contrast');
       await expect.poll(async () => (await html(page)).theme).toBe('high-contrast');
       await expect.poll(async () => (await html(page)).light, 'the mode pins its own light').toBe('night');
@@ -801,7 +721,7 @@ test.describe('review fixes', () => {
   }
 
   test('back in Auto the line names the light again', async ({ page }) => {
-    await open(page, '/', { look: 'city', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     await chooseMode(page, 'dark');
     await expect.poll(async () => (await html(page)).theme).toBe('dark');
     await chooseMode(page, 'auto');
@@ -810,7 +730,7 @@ test.describe('review fixes', () => {
   });
 
   test('the line has a visible open/close mark, hidden from assistive technology, that changes with aria-expanded', async ({ page }) => {
-    await open(page, '/', { look: 'city', time: '14:00' });
+    await open(page, '/', { time: '14:00' });
     const mark = line(page).locator('[aria-hidden="true"]').first();
     await expect(mark).toBeVisible();
     expect((await mark.boundingBox())?.width ?? 0).toBeGreaterThan(4);
@@ -841,7 +761,7 @@ test.describe('review fixes', () => {
     test(`the Live button reads "${value}" in ${lang}, as its visible text and as its name`, async ({ page }) => {
       expect(catalog(lang)['light.live']).toBe(value);
       const route = ROUTES.find(([, code]) => code === lang)?.[0] ?? '/';
-      await open(page, route, { look: 'map', time: '14:00' });
+      await open(page, route, { time: '14:00' });
       await scrub(page, '09:30');
       const live = page.locator('home-light .home-light__live');
       await expect(live).toBeVisible();
@@ -930,10 +850,11 @@ test.describe('review fixes', () => {
   }
 
   for (const width of [375, 1280]) {
-    for (const [light, time, mode] of LIGHTS) for (const look of LOOKS) {
-      test(`${width} px, ${light} light, ${look} look: the line's text has 4.5:1 over what is behind it`, async ({ page }) => {
+    for (const [light, time, mode] of LIGHTS) {
+      test(`${width} px, ${light} light: the line's text has 4.5:1 over what is behind it, the land drawn`, async ({ page }) => {
         await page.setViewportSize({ width, height: 800 });
-        await open(page, '/', { look, time });
+        await open(page, '/', { time });
+        await expect(page.locator('home-globe[land]')).toHaveCount(1, { timeout: 15000 });
         await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe(light);
         expect(await page.evaluate(() => document.documentElement.dataset.theme)).toBe(mode);
         await page.waitForLoadState('networkidle');
@@ -944,47 +865,5 @@ test.describe('review fixes', () => {
         expect(worst, `the worst contrast of the line's text over its background: ${worst.toFixed(2)}:1`).toBeGreaterThanOrEqual(4.5);
       });
     }
-  }
-
-  /* -- 9. The map fades at the top as well as at the bottom -------------------------- */
-
-  test('the mask of <home-map> starts transparent at 0% and ends transparent', async ({ page }) => {
-    await open(page, '/', { look: 'map' });
-    const masks = await page.locator('home-map').evaluate((map) => {
-      const found = [];
-      for (let node = map; node && node.localName !== 'home-light'; node = node.parentElement) {
-        const s = getComputedStyle(node);
-        found.push(s.maskImage !== 'none' ? s.maskImage : s.webkitMaskImage);
-      }
-      return found.filter((value) => value && value !== 'none');
-    });
-    expect(masks.length, 'home-map or its wrapper has a mask-image').toBeGreaterThan(0);
-    const clear = '(?:rgba\\(0, 0, 0, 0\\)|transparent)';
-    const topFade = new RegExp(`linear-gradient\\((?:[^,()]+(?:\\([^)]*\\))?,\\s*)?${clear}(?:\\s*0%)?\\s*(?:,|\\))`);
-    const bottomFade = new RegExp(`${clear}(?:\\s*100%)?\\)$`);
-    expect(masks.some((value) => topFade.test(value)), `a gradient starting transparent in: ${masks.join(' ; ')}`).toBe(true);
-    expect(masks.some((value) => bottomFade.test(value)), `a gradient ending transparent in: ${masks.join(' ; ')}`).toBe(true);
-  });
-
-  /* -- 10. Sunset is not afternoon in the city and the map ---------------------------- */
-
-  // The drawing's inks, which the page's tokens do not decide (the tokens of the sunset differ from the afternoon's anyway)
-  const INKS = ['--light-sun', '--light-neon', '--light-neon-2', '--light-neon-core', '--light-glint', '--light-moon', '--light-shade', '--light-shade-opacity', '--light-night-fill', '--light-night-land', '--light-night-lake', '--_sun', '--_neon', '--_neon2', '--_moon', '--_glint', '--_shade', '--_shade-opacity', '--_g', '--_sky-glow', '--_sun-l', '--_sun-r'];
-  for (const look of ['city', 'map']) {
-    test(`the ${look} look draws the sunset with other inks than the afternoon`, async ({ page }) => {
-      await open(page, '/', { look, time: '14:00' });
-      await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe('afternoon');
-      await faded(page);
-      const ink = () => page.locator(`home-${look}`).evaluate((el, names) => Object.fromEntries(names.map((n) => [n, getComputedStyle(el).getPropertyValue(n).trim()])), INKS);
-      await page.waitForTimeout(2000);
-      const afternoon = await ink();
-      await scrub(page, '19:00');
-      await expect.poll(() => page.evaluate(() => document.documentElement.dataset.light)).toBe('sunset');
-      await faded(page);
-      await page.waitForTimeout(2500); // the glow of the visual is a registered property, it transitions
-      const sunset = await ink();
-      const changed = INKS.filter((name) => afternoon[name] !== sunset[name] && !(name === '--_sun-l' || name === '--_sun-r'));
-      expect(changed, `an ink of home-${look} that differs between the afternoon and the sunset`).not.toEqual([]);
-    });
   }
 });

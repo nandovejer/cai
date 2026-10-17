@@ -772,6 +772,43 @@ test.describe('review fixes', () => {
     });
   }
 
+  // F5 follow-up: a chosen mode pins a light (high contrast and dark: night), which is not the hour it is: the line shows the hour alone
+  for (const [route, lang] of ROUTES) {
+    test(`${route}: with a fixed mode the line shows the hour and no light's name (${lang})`, async ({ page }) => {
+      const cat = catalog(lang);
+      const phases = ['dawn', 'morning', 'afternoon', 'sunset', 'dusk', 'night'].map((phase) => cat[`light.${phase}`]);
+      await open(page, route, { look: 'city', time: '14:00' });
+      await chooseMode(page, 'high-contrast');
+      await expect.poll(async () => (await html(page)).theme).toBe('high-contrast');
+      await expect.poll(async () => (await html(page)).light, 'the mode pins its own light').toBe('night');
+      const hour = (await output(page).textContent())?.trim() ?? '';
+      expect(hour).toMatch(/\S/);
+      await expect
+        .poll(async () => {
+          const shown = await visibleText(line(page));
+          return { hour: shown.includes(hour.slice(0, 2)), names: phases.filter((name) => shown.includes(name)) };
+        }, { message: 'the line has the hour and none of the six names' })
+        .toEqual({ hour: true, names: [] });
+      expect(await visibleText(line(page))).toMatch(/[0-9٠-٩]{2}\D[0-9٠-٩]{2}/);
+
+      // Scrubbing an hour in a fixed mode does not bring a name back either
+      await scrub(page, '09:30');
+      await expect.poll(async () => (await html(page)).light).toBe('morning');
+      const shown = await visibleText(line(page));
+      expect(phases.filter((name) => shown.includes(name))).toEqual([]);
+      expect(shown).toMatch(/[0-9\u0660-\u0669]{2}\D[0-9\u0660-\u0669]{2}/);
+    });
+  }
+
+  test('back in Auto the line names the light again', async ({ page }) => {
+    await open(page, '/', { look: 'city', time: '14:00' });
+    await chooseMode(page, 'dark');
+    await expect.poll(async () => (await html(page)).theme).toBe('dark');
+    await chooseMode(page, 'auto');
+    await expect.poll(async () => (await html(page)).light).toBe('afternoon');
+    await expect.poll(() => visibleText(line(page))).toContain(catalog('en')['light.afternoon']);
+  });
+
   test('the line has a visible open/close mark, hidden from assistive technology, that changes with aria-expanded', async ({ page }) => {
     await open(page, '/', { look: 'city', time: '14:00' });
     const mark = line(page).locator('[aria-hidden="true"]').first();

@@ -95,7 +95,7 @@ for (const { route, lang, dir, name, label } of LANGUAGES) {
       await expect(button).toBeVisible();
       await expect(button).toHaveAccessibleName(`${label}: ${name}`);
       await button.click();
-      const list = page.getByRole('navigation', { name: label });
+      const list = page.getByRole('banner').getByRole('navigation', { name: label });
       await expect(list).toBeVisible();
       const links = list.getByRole('link');
       await expect(links).toHaveText(['English', 'Español', 'العربية']);
@@ -159,7 +159,7 @@ test.describe('the language switch', () => {
   test('goes to another language by following a link, with or without JavaScript', async ({ page }) => {
     await open(page, '/es/');
     await switcher(page).getByRole('button').click();
-    await page.getByRole('navigation', { name: 'Idioma' }).getByRole('link', { name: 'العربية' }).click();
+    await page.getByRole('banner').getByRole('navigation', { name: 'Idioma' }).getByRole('link', { name: 'العربية' }).click();
     await expect(page).toHaveURL(/\/ar\/$/);
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
     await expect(switcher(page).getByRole('button')).toHaveAccessibleName('اللغة: العربية');
@@ -170,7 +170,7 @@ test.describe('the language switch', () => {
     const button = switcher(page).getByRole('button');
     await button.focus();
     await page.keyboard.press('Enter');
-    const list = page.getByRole('navigation', { name: 'Language' });
+    const list = page.getByRole('banner').getByRole('navigation', { name: 'Language' });
     await expect(list).toBeVisible();
     await page.keyboard.press('Tab');
     await expect(list.getByRole('link', { name: 'English' })).toBeFocused();
@@ -255,7 +255,8 @@ test.describe('Arabic typography', () => {
     const style = (selector) =>
       page.locator(selector).first().evaluate((el) => ({ font: getComputedStyle(el).fontFamily, spacing: getComputedStyle(el).letterSpacing }));
     const sans = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--luz-font-sans').trim());
-    for (const selector of ['h1', 'h2', '.landing-lead', '.landing-level__title .landing-eyebrow']) {
+    for (const selector of ['h1', '.luz-landing-section__title', '.luz-landing-section__eyebrow', '.luz-landing-section__lead', '.landing-level__title .landing-eyebrow']) {
+      await expect(page.locator(selector).first(), selector).toBeAttached();
       const { font, spacing } = await style(selector);
       expect(font, selector).not.toMatch(/ET Book/i);
       expect(font.replace(/\s/g, ''), selector).toBe(sans.replace(/\s/g, ''));

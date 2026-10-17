@@ -287,3 +287,91 @@ describe("the LUZ home page in every language", () => {
     }
   });
 });
+
+/* ---- The new home (F5): every string in three languages ------------------------ */
+
+describe("the new home page: catalogs and rendered pages (F5)", () => {
+  const catalog = (code) => JSON.parse(readFileSync(join(repo, `apps/landing/i18n/${code}.json`), "utf-8"));
+  const catalogs = { en: catalog("en"), es: catalog("es"), ar: catalog("ar") };
+  const site = scanSite(join(repo, "apps/docs"), repo);
+  const template = readFileSync(join(repo, "apps/landing/index.html"), "utf-8");
+  const docs = landingDocuments(site, "apps/landing/index.html", template);
+  const { rendered, problems } = buildSite(site, { extra: docs });
+  const SECTIONS = ["hero", "light", "why", "inside", "native", "modes", "type", "fit", "start"];
+  const placeholders = (value) => [...value.matchAll(/\{[a-z]+(?::[a-z]+)?\}/g)].map((m) => m[0]).sort();
+  /** Values that are the same word in the three languages: a brand, a command, a symbol. */
+  const SAME = /^(?:[^\p{L}]*|GitHub|LUZ|ET Book|Core|Site|Tokens|Auto|Tokens \+ Core(?: \+ Site)?)$/u;
+
+  it("the three catalogs have the same keys, and every key is used by a template: no orphan, no missing key", () => {
+    expect(Object.keys(catalogs.es).sort()).toEqual(Object.keys(catalogs.en).sort());
+    expect(Object.keys(catalogs.ar).sort()).toEqual(Object.keys(catalogs.en).sort());
+    expect(problems).toEqual([]);
+  });
+
+  it("each key keeps its placeholders in every language", () => {
+    for (const [key, value] of Object.entries(catalogs.en)) {
+      expect(placeholders(catalogs.es[key]), `es ${key}`).toEqual(placeholders(value));
+      expect(placeholders(catalogs.ar[key]), `ar ${key}`).toEqual(placeholders(value));
+    }
+  });
+
+  it("es and ar are translated: no value is the English one but a brand, a command or a symbol", () => {
+    for (const code of ["es", "ar"]) {
+      const same = Object.keys(catalogs.en).filter((key) => catalogs[code][key] === catalogs.en[key] && !SAME.test(catalogs.en[key].replace(/<[^>]*>/g, "")));
+      expect(same, `${code} values identical to English`).toEqual([]);
+    }
+  });
+
+  it("ar is written in Arabic: every value that is not a brand or a symbol has an Arabic letter", () => {
+    const bare = Object.keys(catalogs.en).filter((key) => !SAME.test(catalogs.en[key].replace(/<[^>]*>/g, "")) && !/[؀-ۿ]/.test(catalogs.ar[key]));
+    expect(bare).toEqual([]);
+  });
+
+  it("the hero's brand line is English in every language: the eyebrow carries lang=\"en\"", () => {
+    for (const doc of docs) {
+      const html = rendered.get(doc.route);
+      const tag = html.match(/<p\b[^>]*luz-landing-hero__eyebrow[^>]*>/);
+      expect(tag, `${doc.route} has the hero's eyebrow`).not.toBeNull();
+      expect(tag[0], doc.route).toMatch(/\slang="en"/);
+      const text = html.slice(html.indexOf(tag[0]) + tag[0].length).match(/^\s*([^<]*)</)[1].replace(/&amp;/g, "&").trim();
+      expect(text, doc.route).toBe("Light, usable & zero-dependency");
+    }
+  });
+
+  it("each language renders the nine sections in order, one h1 and no template syntax left", () => {
+    for (const doc of docs) {
+      const html = rendered.get(doc.route);
+      const at = SECTIONS.map((id) => html.search(new RegExp(`<section\\b[^>]*\\sid="${id}"`)));
+      expect(at.every((place) => place > -1), `${doc.route} has ${SECTIONS.join(", ")}: ${at.join()}`).toBe(true);
+      expect([...at].sort((a, b) => a - b), `${doc.route} in order`).toEqual(at);
+      expect(html.match(/<h1\b/g), doc.route).toHaveLength(1);
+      expect(html, doc.route).not.toMatch(/\{\{|\}\}|\{n:/);
+    }
+  });
+
+  it("the old sections are gone from every language", () => {
+    for (const doc of docs) {
+      const html = rendered.get(doc.route);
+      for (const id of ["what", "see", "adopt"]) expect(html, `${doc.route} #${id}`).not.toMatch(new RegExp(`\\sid="${id}"`));
+      expect(html, doc.route).not.toMatch(/landing-h2|landing-points|landing-point__title|landing-lead/);
+    }
+  });
+
+  it("the footer is the brand and three columns, with the languages and the privacy line, in every language", () => {
+    for (const doc of docs) {
+      const html = rendered.get(doc.route);
+      const footer = html.slice(html.indexOf("<footer"), html.indexOf("</footer>"));
+      expect(footer, doc.route).toContain("luz-landing-footer__brand");
+      expect(footer.match(/luz-landing-footer__col-title/g), doc.route).toHaveLength(3);
+      expect(footer, doc.route).toMatch(/<luz-mode\b[^>]*\sremember\b[^>]*\sby="clock"/);
+      for (const lang of ["en", "es", "ar"]) expect(footer, `${doc.route} → ${lang}`).toMatch(new RegExp(`hreflang="${lang}"`));
+    }
+    expect(rendered.get("/")).toContain("The light is computed from your clock, never from your location. Your choice stays in this browser.");
+    expect(rendered.get("/es/")).not.toContain("Your choice stays in this browser.");
+    expect(rendered.get("/ar/")).not.toContain("Your choice stays in this browser.");
+  });
+
+  it("each rendered page stays under the 80 KiB the page ceiling allows", () => {
+    for (const doc of docs) expect(Buffer.byteLength(rendered.get(doc.route)), doc.route).toBeLessThanOrEqual(80 * 1024);
+  });
+});

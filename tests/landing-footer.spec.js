@@ -118,9 +118,10 @@ test.describe('landing footer', () => {
 
 test.describe('the pages that use the landing footer', () => {
   for (const route of ['/', '/es/', '/ar/']) {
-    test(`${route}: the footer is \`footer.luz-landing-footer\` around a core row, not \`.luz-site-footer\``, async ({ page }) => {
+    test(`${route}: the footer is \`footer.luz-landing-footer\` around a core grid (brand and columns, F5), not \`.luz-site-footer\``, async ({ page }) => {
       await page.goto(route);
-      await expect(page.locator('footer.luz-landing-footer > .o-container.o-container--inline.o-row')).toHaveCount(1);
+      await expect(page.locator('footer.luz-landing-footer > .o-container.o-container--inline.o-grid')).toHaveCount(1);
+      await expect(page.locator('footer.luz-landing-footer > .o-row')).toHaveCount(0);
       await expect(page.locator('.luz-site-footer')).toHaveCount(0);
       expect(await page.locator('footer.luz-landing-footer').evaluate((el) => getComputedStyle(el).borderBlockStartStyle)).toBe('solid');
     });

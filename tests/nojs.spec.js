@@ -234,3 +234,94 @@ for (const home of ['/', '/es/', '/ar/']) {
     expect((await page.locator('home-light').boundingBox())?.height ?? 0).toBeGreaterThan(200);
   });
 }
+
+// The new home (F5 of .claude/plans/luz-home-docs-identity.md, section 3.6): nine sections in a fixed order, all of them
+// words and native elements; what needs a script (the swatches of the lights, Back to now, the copy buttons) is not shown dead
+const SECTIONS = ['hero', 'light', 'why', 'inside', 'native', 'modes', 'type', 'fit', 'start'];
+
+for (const home of ['/', '/es/', '/ar/']) {
+  test(`${home}: the nine sections are in the page, in order, and every one but the light has words`, async ({ page }) => {
+    await page.goto(home);
+    expect(await page.locator('main > section').evaluateAll((all) => all.map((el) => el.id))).toEqual(SECTIONS);
+    await expect(page.locator('h1')).toHaveCount(1);
+    for (const id of SECTIONS.filter((section) => section !== 'light')) {
+      const section = page.locator(`main > section#${id}`);
+      await expect(section.locator('h1, h2').first(), id).toBeVisible();
+      expect((await section.innerText()).trim().length, id).toBeGreaterThan(30);
+    }
+  });
+
+  test(`${home}: the swatches of the lights are not shown without a script`, async ({ page }) => {
+    await page.goto(home);
+    const shown = await page.locator('#why button').evaluateAll((all) =>
+      all.filter((el) => el.checkVisibility({ visibilityProperty: true }) && el.hasAttribute('aria-pressed')).map((el) => el.textContent.trim()),
+    );
+    expect(shown).toEqual([]);
+    // A control that is in the page and visible must be able to do something: the light card keeps its words
+    await expect(page.locator('#why .luz-card').first()).toBeVisible();
+  });
+
+  test(`${home}: the six native specimens work: details, popover, range, select, progress and the dialog`, async ({ page }) => {
+    await page.goto(home);
+    const native = page.locator('#native');
+    await expect(native.locator('.luz-card')).toHaveCount(6);
+
+    const details = native.locator('details');
+    await details.locator('summary').click();
+    expect(await details.evaluate((el) => el.open)).toBe(true);
+
+    const trigger = native.locator('button[popovertarget]');
+    const popover = page.locator(`#${await trigger.getAttribute('popovertarget')}`);
+    await trigger.click();
+    expect(await popover.evaluate((el) => el.matches(':popover-open'))).toBe(true);
+    await page.keyboard.press('Escape');
+    expect(await popover.evaluate((el) => el.matches(':popover-open'))).toBe(false);
+
+    const range = native.locator('input[type="range"]');
+    const before = await range.inputValue();
+    await range.focus();
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
+    expect(await range.inputValue()).not.toBe(before);
+
+    const select = native.locator('select');
+    const options = await select.locator('option').evaluateAll((all) => all.map((o) => o.value));
+    const chosen = await select.inputValue();
+    await select.selectOption(options.find((value) => value !== chosen));
+    expect(await select.inputValue()).not.toBe(chosen);
+
+    await expect(native.locator('progress.luz-progress')).toHaveCount(1);
+
+    // The dialog opens by command / commandfor where the browser does it
+    if (await page.evaluate(() => 'commandForElement' in HTMLButtonElement.prototype)) {
+      const opener = native.locator('button[command="show-modal"][commandfor]');
+      const dialog = page.locator(`#${await opener.getAttribute('commandfor')}`);
+      await opener.click();
+      expect(await dialog.evaluate((el) => el.open)).toBe(true);
+      await page.keyboard.press('Escape');
+      expect(await dialog.evaluate((el) => el.open)).toBe(false);
+    }
+  });
+
+  test(`${home}: the three mode cards are re-scoped by their own data-theme, with no script`, async ({ page }) => {
+    await page.goto(home);
+    const surfaces = [];
+    for (const mode of ['light', 'dark', 'high-contrast']) {
+      const card = page.locator(`#modes [data-theme="${mode}"]`);
+      await expect(card, mode).toHaveCount(1);
+      const surface = channels(await colorOf(card, '--luz-surface-page'));
+      expect(surface, mode).toEqual(vejer(mode, '--luz-surface-page'));
+      surfaces.push(surface.join());
+    }
+    expect(new Set(surfaces).size).toBe(3);
+  });
+
+  test(`${home}: the footer lists the columns and the three languages, and the privacy line is words`, async ({ page }) => {
+    await page.goto(home);
+    const footer = page.locator('footer.luz-landing-footer');
+    await expect(footer.locator('.luz-landing-footer__col')).toHaveCount(3);
+    await expect(footer.locator('.luz-landing-footer__col').nth(2).locator('a')).toHaveCount(3);
+    await expect(footer.locator('luz-mode input[name="luz-theme"]')).toHaveCount(4);
+    expect((await footer.locator('p').allInnerTexts()).join(' ').length).toBeGreaterThan(40);
+  });
+}

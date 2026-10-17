@@ -225,21 +225,28 @@ test.describe('landing hero', () => {
 });
 
 test.describe('home page hero', () => {
-  test('in Arabic the copy starts at the right edge of the hero, in the sans with no letter-spacing', async ({ page: p }) => {
+  test('in Arabic the centred copy is centred about the hero, in the sans with no letter-spacing', async ({ page: p }) => {
     await p.setViewportSize({ width: 1280, height: 900 });
     await p.goto('/ar/');
     await expect(p.locator('.luz-landing-hero')).toHaveCount(1);
+    await expect(p.locator('.luz-landing-hero')).toHaveClass(/\bluz-landing-hero--centered\b/);
     const geometry = await p.evaluate(() => {
       const hero = document.querySelector('.luz-landing-hero');
-      const cs = getComputedStyle(hero);
-      const inner = hero.getBoundingClientRect().right - parseFloat(cs.paddingRight);
+      const box = hero.getBoundingClientRect();
       const title = document.querySelector('.luz-landing-hero__title');
-      // The text, not the block: in RTL its lines start at the right
+      // The text, not the block: the lines are centred about the middle of the hero
       const range = document.createRange();
       range.selectNodeContents(title);
-      return { inner, right: Math.max(...[...range.getClientRects()].map((r) => r.right)), spacing: getComputedStyle(title).letterSpacing };
+      const rects = [...range.getClientRects()];
+      return {
+        middle: (box.left + box.right) / 2,
+        text: (Math.min(...rects.map((r) => r.left)) + Math.max(...rects.map((r) => r.right))) / 2,
+        align: getComputedStyle(title).textAlign,
+        spacing: getComputedStyle(title).letterSpacing,
+      };
     });
-    expect(Math.abs(geometry.inner - geometry.right)).toBeLessThanOrEqual(1);
+    expect(geometry.align).toBe('center');
+    expect(Math.abs(geometry.middle - geometry.text)).toBeLessThanOrEqual(2);
     expect(['normal', '0px']).toContain(geometry.spacing);
   });
 

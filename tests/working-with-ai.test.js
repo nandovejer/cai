@@ -75,7 +75,7 @@
  * rule (D14-A: declared at root scope); README.md lists @luz-ds/check and has
  * "For AI agents"; AGENTS.md names @luz-ds/check, TOOLS and the AI files;
  * packages/check/README.md says the rules exist; accessibility.html has the
- * bullet of accessibility-engineer Q3 and "Last reviewed on 16 October 2026"
+ * bullet of accessibility-engineer Q3 and "Last reviewed on 17 October 2026"
  * (this file is the pin of that date); Node 20 (D14-A) replaces Node 18 in the
  * luz-tokens text.
  */
@@ -114,7 +114,7 @@ const NOT_TESTED = "/docs/accessibility/#h-a11y-not-tested";
 const STATEMENT_BULLET =
   "The accessibility reviewer that @luz-ds/check prints, and luz-check itself. They read source files and give advice; " +
   "they do not open a page, measure on screen or use assistive technology. A run with no findings does not mean a page is accessible.";
-const LAST_REVIEWED = "Last reviewed on 16 October 2026.";
+const LAST_REVIEWED = "Last reviewed on 17 October 2026.";
 
 const squash = (s) => s.replace(/\s+/g, " ").trim();
 const read = (path) => readFileSync(join(repo, path), "utf-8");
@@ -862,7 +862,7 @@ describe("accessibility.html: the statement covers the tool and the agent", () =
     expect(textOf(known.html)).not.toContain("@luz-ds/check");
   });
 
-  it("is last reviewed on 16 October 2026, in the lead and in the description of the front matter", () => {
+  it("is last reviewed on 17 October 2026, in the lead and in the description of the front matter", () => {
     const { source, body } = page();
     expect(source).toContain(`description: LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. ${LAST_REVIEWED}`);
     expect(textOf(body)).toContain(`and the known issues. ${LAST_REVIEWED}`);

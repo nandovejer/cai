@@ -5,8 +5,8 @@
 	 a column aligned to the start.
 	 Or > div.o-container.o-container--inline.o-grid holding a __brand (the
 	 name, a version, one line) and __col columns (nav > h2.__col-title + ul
-	 of links): one under the other, side by side from 768px, the brand
-	 twice as wide as a column.
+	 of links, each a target of 24px or more): one under the other, side
+	 by side from 768px, the brand twice as wide as a column.
 	 ========================================================================== */
 
 .luz-landing-footer {
@@ -65,4 +65,12 @@
 .luz-landing-footer__col :where(ul) {
 	padding: 0;
 	list-style: none;
+}
+
+/* Each link is a target of 24px or more (WCAG 2.5.8): a box of its own,
+   as tall as a small control, the text centred in it */
+.luz-landing-footer__col :where(a) {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: var(--luz-control-sm);
 }

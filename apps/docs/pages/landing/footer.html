@@ -111,7 +111,7 @@ toc: h2,h3
                   <tr><td data-label="Class"><div><code>.luz-landing-footer</code></div></td><td data-label="Effect"><div>On <code>&lt;footer&gt;</code>: a rule on top, 24 px above its row and 32 px below; its row spreads its children to the two ends, and is a column aligned to the start at 768 px and below</div></td></tr>
                   <tr><td data-label="Class"><div><code>.o-container.o-container--inline.o-row</code> (core)</div></td><td data-label="Effect"><div>The row: the width and gutters of the page, so its content starts where the main's does</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-landing-footer__brand</code></div></td><td data-label="Effect"><div>The first cell of the <code>.o-container.o-container--inline.o-grid</code> (core), 24 px (<code>--luz-space-lg</code>) apart: a name, a version, one line. From 768 px it is twice a column</div></td></tr>
-                  <tr><td data-label="Class"><div><code>.luz-landing-footer__col</code></div></td><td data-label="Effect"><div>A column, on a <code>&lt;nav&gt;</code>: a title over a list of links with no markers, 8 px (<code>--luz-space-xs</code>) apart</div></td></tr>
+                  <tr><td data-label="Class"><div><code>.luz-landing-footer__col</code></div></td><td data-label="Effect"><div>A column, on a <code>&lt;nav&gt;</code>: a title over a list of links with no markers, 8 px (<code>--luz-space-xs</code>) apart; each link is a box 28 px (<code>--luz-control-sm</code>) tall, a target of 24 px or more</div></td></tr>
                   <tr><td data-label="Class"><div><code>.luz-landing-footer__col-title</code></div></td><td data-label="Effect"><div>A column's title: sans, small, semibold, primary text</div></td></tr>
                   <tr><td data-label="Class"><div><code>.o-actions</code> (core)</div></td><td data-label="Effect"><div>The links, as an <a href="/docs/components/layout/#objects-actions">action group</a></div></td></tr>
                 </tbody>
@@ -197,10 +197,10 @@ toc: h2,h3
               <li><strong>Forced colors:</strong> the rule is a border, so it stays.</li>
             </ul>
             <h3 id="tokens">Tokens it uses</h3>
-            <p>The 8 tokens that the <code>.luz-landing-footer</code> rules of landing's <code>components/footer.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <p>The 9 tokens that the <code>.luz-landing-footer</code> rules of landing's <code>components/footer.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
             <dl class="docs-uses">
               <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
-              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-sm</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code>, <code>--luz-space-xs</code></dd></div>
               <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-sm</code></dd></div>
             </dl>
             <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>

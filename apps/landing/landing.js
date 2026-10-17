@@ -76,13 +76,22 @@ function initDay() {
   const { at, phases: PHASES, place } = day;
   const swatches = [...document.querySelectorAll("[data-phase]")];
   const back = document.querySelector("[data-phase-live]");
+  const current = document.querySelector("[data-shown-light]");
   const strip = document.querySelector(".landing-day");
   const marker = strip?.querySelector(".landing-day__now");
   const line = document.querySelector("[data-day-line]");
   const name = line?.querySelector("[data-day-phase]");
 
   for (const swatch of swatches) swatch.addEventListener("click", () => mode()?.preview(swatch.dataset.phase));
-  back?.addEventListener("click", () => mode()?.preview(null));
+  back?.addEventListener("click", () => {
+    // The button hides itself once the clock's light is back: the focus goes
+    // first to the swatch of that light, not with the button to <body>
+    if (document.activeElement === back) {
+      const now = new Date();
+      swatches.find((swatch) => swatch.dataset.phase === at(now.getHours() * 60 + now.getMinutes()))?.focus();
+    }
+    mode()?.preview(null);
+  });
 
   let timer = 0;
   // A borrowed light is shown at the middle of its phase; else the clock's minute
@@ -97,6 +106,7 @@ function initDay() {
     if (strip) strip.style.setProperty("--day-t", (borrowed ? (PHASES.indexOf(borrowed) + 0.5) / PHASES.length : place(minute)).toFixed(4));
     if (marker) marker.hidden = false;
     if (name) name.textContent = nameOf(phase);
+    if (current) current.textContent = nameOf(phase);
     if (line) line.hidden = false;
     if (!borrowed) timer = setTimeout(() => show(), 6e4 - (now.getSeconds() * 1e3 + now.getMilliseconds()));
   };

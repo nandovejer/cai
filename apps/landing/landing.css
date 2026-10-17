@@ -8,8 +8,6 @@
      - semantic tokens only (no primitive color tokens, no literal colors);
      - media queries use the literal values of --luz-mq-* (640, 768, 1024),
        max-width like core and site, so both collapse at the same widths;
-     - the token a specimen illustrates arrives as an inline custom property,
-       style="--v: var(--luz-…)", and is consumed here as var(--v);
      - this file is not in a layer, so it wins over the packages': it never
        sets `display` on an element that carries `hidden` (core's utility
        hides it from its own layer).
@@ -73,11 +71,11 @@
   letter-spacing: 0;
 }
 
-/* Links that stand alone (not inside a sentence) are targets of 24px or more */
+/* Links that stand alone (not inside a sentence) are targets of 24px or
+   more; the footer's columns get theirs from @luz-ds/landing */
 .landing-level__body a,
 .landing-level__actions a,
-.landing-kinds__list a,
-.luz-landing-footer__col a {
+.landing-kinds__list a {
   display: inline-flex;
   align-items: center;
   gap: var(--luz-space-xs);
@@ -85,7 +83,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   1. Hero: the two statements under the lead
+   1. Hero: the line under the lead
    -------------------------------------------------------------------------- */
 
 .landing-built {
@@ -93,6 +91,37 @@
   font-family: var(--luz-font-sans);
   font-size: var(--luz-text-sm);
   color: var(--luz-text-secondary);
+}
+
+/* --------------------------------------------------------------------------
+   2. The light: without JavaScript, a sentence in the room light.css keeps
+   -------------------------------------------------------------------------- */
+
+/* The sentence and the element share one cell: the sentence sits in the
+   middle of the empty box, and goes once <home-light> is defined */
+.landing-light {
+  display: grid;
+}
+
+.landing-light > home-light,
+.landing-light__nojs {
+  grid-area: 1 / 1;
+}
+
+.landing-light__nojs {
+  align-self: center;
+  justify-self: center;
+  max-inline-size: 40ch;
+  margin: 0;
+  padding-inline: var(--luz-space-md);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-md);
+  color: var(--luz-text-secondary);
+  text-align: center;
+}
+
+home-light:defined ~ .landing-light__nojs {
+  display: none;
 }
 
 /* --------------------------------------------------------------------------
@@ -106,7 +135,24 @@
 }
 
 .landing-swatches {
+  gap: var(--luz-space-xs);
+}
+
+.landing-swatches__row {
   gap: var(--luz-space-2xs);
+}
+
+/* Back to now and the name of the light the page shows, on one row */
+.landing-swatches__now {
+  align-items: center;
+  gap: var(--luz-space-xs);
+  min-block-size: var(--luz-control-sm);
+}
+
+.landing-swatches__name {
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
 }
 
 .landing-swatch {
@@ -123,6 +169,17 @@
 .landing-swatch[aria-pressed="true"] {
   border-color: var(--luz-brand-primary);
   background: var(--luz-brand-subtle);
+}
+
+/* Forced colours drop the tint and repaint every border alike: the pressed
+   swatch takes the system's selection colours instead */
+@media (forced-colors: active) {
+  .landing-swatch[aria-pressed="true"] {
+    forced-color-adjust: none;
+    border-color: Highlight;
+    background: Highlight;
+    color: HighlightText;
+  }
 }
 
 /* A note in core's popover panel: the panel pads a list, a sentence needs more */
@@ -321,14 +378,8 @@
 }
 
 /* --------------------------------------------------------------------------
-   7. Type: the quote and the scale
+   7. Type: the quote
    -------------------------------------------------------------------------- */
-
-.landing-type {
-  margin: 0;
-  padding: 0;
-  background: none;
-}
 
 .landing-type__quote {
   max-inline-size: 40ch;
@@ -338,34 +389,11 @@
   color: var(--luz-text-primary);
 }
 
-.landing-type__scale {
-  align-items: baseline;
-  gap: var(--luz-space-sm) var(--luz-space-lg);
-  margin: 0;
-}
-
-.landing-type__scale li {
-  display: inline-flex;
-  align-items: baseline;
-  gap: var(--luz-space-2xs);
-}
-
-.landing-type__aa {
-  font-family: var(--luz-font-heading);
-  font-size: var(--v);
-  line-height: 1;
-  color: var(--luz-text-primary);
-}
-
-.landing-type__scale code {
-  font-size: var(--luz-text-xs);
-  color: var(--luz-text-secondary);
-}
-
 /* --------------------------------------------------------------------------
-   8. Fit
+   8. Start: who it fits, snippet (label bar + code block), what it renders
    -------------------------------------------------------------------------- */
 
+/* Two short lists, side by side on core's split grid */
 .landing-fit {
   gap: var(--luz-space-xl);
 }
@@ -381,10 +409,6 @@
   padding-inline-start: var(--luz-space-lg);
   color: var(--luz-text-secondary);
 }
-
-/* --------------------------------------------------------------------------
-   9. Start: snippet (label bar + code block), what it renders
-   -------------------------------------------------------------------------- */
 
 .landing-snippet {
   display: grid;
@@ -448,6 +472,19 @@
 .landing-foot {
   gap: var(--luz-space-md);
   margin-block-start: var(--luz-space-xl);
+}
+
+/* The switcher's legend stays text beside the cycle button: on the home the
+   button alone would not say what it changes. Core hides it for screen
+   readers only once the button is there */
+.landing-foot .luz-mode-switcher__label {
+  position: static;
+  inline-size: auto;
+  block-size: auto;
+  margin: 0;
+  overflow: visible;
+  clip-path: none;
+  white-space: normal;
 }
 
 /* --------------------------------------------------------------------------

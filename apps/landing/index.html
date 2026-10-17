@@ -65,7 +65,6 @@
       <a class="luz-sidebar__link" href="#native">{{t:native.eyebrow}}</a>
       <a class="luz-sidebar__link" href="#modes">{{t:modes.eyebrow}}</a>
       <a class="luz-sidebar__link" href="#type">{{t:type.eyebrow}}</a>
-      <a class="luz-sidebar__link" href="#fit">{{t:fit.eyebrow}}</a>
       <a class="luz-sidebar__link" href="#start">{{t:start.eyebrow}}</a>
     </div>
 
@@ -88,7 +87,7 @@
         <p class="luz-landing-hero__eyebrow" lang="en">Light, usable &amp; zero-dependency</p>
         <h1 class="luz-landing-hero__title" id="hero-title">{{html:hero.title}}</h1>
         <p class="luz-landing-hero__lead">{{t:hero.lead}}</p>
-        <p class="landing-built"><a href="/docs/get-started/how-luz-is-built/">{{t:built.title}}</a> <span aria-hidden="true">·</span> {{t:built.line}}</p>
+        <p class="landing-built"><a href="/docs/get-started/how-luz-is-built/#tests-first">{{t:built.title}}</a>{{t:built.sep}}{{t:built.line}}</p>
         <div class="o-actions">
           <a class="luz-btn luz-btn--primary luz-btn--lg" href="/docs/">{{t:hero.docs}}</a>
           <a class="luz-btn luz-btn--outline luz-btn--lg" href="https://github.com/nandovejer/luz">{{t:hero.github}}</a>
@@ -99,10 +98,12 @@
     <!-- ====================== 2. THE LIGHT ======================
          The visitor's sky over a globe, a city or a map (apps/landing/light/),
          from edge to edge of the window. Without JavaScript the element stays
-         empty and light.css keeps its room -->
-    <section class="luz-landing-hero__media luz-landing-hero__media--bleed" id="light" aria-labelledby="light-title">
+         empty, light.css keeps its room and the sentence after it says what
+         the room is for; once <home-light> is defined the sentence goes -->
+    <section class="luz-landing-hero__media luz-landing-hero__media--bleed landing-light" id="light" aria-labelledby="light-title">
       <h2 class="u-sr-only" id="light-title">{{t:light.title}}</h2>
       <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
+      <p class="landing-light__nojs">{{t:light.nojs}}</p>
     </section>
 
     <!-- ====================== 3. WHY ====================== -->
@@ -116,14 +117,20 @@
           <h3 class="luz-card__title landing-word" id="why-light" lang="en">Light</h3>
           <p class="luz-card__body">{{t:why.light.text}}</p>
           <!-- Each swatch asks <luz-mode> to preview a light (landing.js); without a script they are not shown -->
-          <div class="o-row landing-swatches" role="group" aria-label="{{t:why.light.swatches}}" hidden>
-            <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="dawn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6 17a6 6 0 0 1 12 0Z"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 18h18"/></svg><span class="u-sr-only">{{t:light.dawn}}</span></button>
-            <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="morning" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="8" cy="11" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">{{t:light.morning}}</span></button>
-            <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="afternoon" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="12" cy="8" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">{{t:light.afternoon}}</span></button>
-            <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="sunset" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="16" cy="14" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">{{t:light.sunset}}</span></button>
-            <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="dusk" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" d="M18 17a6 6 0 0 0-12 0"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 18h18"/></svg><span class="u-sr-only">{{t:light.dusk}}</span></button>
-            <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="night" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17 14.5A6.5 6.5 0 0 1 9.5 7a6.5 6.5 0 1 0 7.5 7.5Z"/></svg><span class="u-sr-only">{{t:light.night}}</span></button>
-            <button class="luz-btn luz-btn--outline luz-btn--sm" type="button" data-phase-live hidden>{{t:light.live}}</button>
+          <div class="o-stack landing-swatches" role="group" aria-label="{{t:why.light.swatches}}" hidden>
+            <div class="o-row landing-swatches__row">
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="dawn" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6 17a6 6 0 0 1 12 0Z"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 18h18"/></svg><span class="u-sr-only">{{t:light.dawn}}</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="morning" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="8" cy="11" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">{{t:light.morning}}</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="afternoon" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="12" cy="8" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">{{t:light.afternoon}}</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="sunset" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="16" cy="14" r="4.5"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 20h18"/></svg><span class="u-sr-only">{{t:light.sunset}}</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="dusk" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" d="M18 17a6 6 0 0 0-12 0"/><path stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M3 18h18"/></svg><span class="u-sr-only">{{t:light.dusk}}</span></button>
+              <button class="luz-btn luz-btn--ghost luz-btn--sm landing-swatch" type="button" data-phase="night" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M17 14.5A6.5 6.5 0 0 1 9.5 7a6.5 6.5 0 1 0 7.5 7.5Z"/></svg><span class="u-sr-only">{{t:light.night}}</span></button>
+            </div>
+            <!-- The light the page shows, by name: the pressed swatch's or the clock's (landing.js) -->
+            <div class="o-row landing-swatches__now">
+              <button class="luz-btn luz-btn--outline luz-btn--sm" type="button" data-phase-live hidden>{{t:light.live}}</button>
+              <span class="landing-swatches__name" data-shown-light></span>
+            </div>
           </div>
           <p class="u-text-muted">{{t:why.light.clock}} <span data-needs-js hidden>{{t:why.light.tap}}</span></p>
         </article>
@@ -132,7 +139,7 @@
           <h3 class="luz-card__title landing-word" id="why-usable" lang="en">Usable</h3>
           <p class="luz-card__body">{{t:why.usable.text}}</p>
           <div class="luz-dropdown">
-            <button class="luz-btn luz-btn--ghost" type="button" popovertarget="why-keyboard">{{t:why.usable.try}}</button>
+            <button class="luz-btn luz-btn--outline" type="button" popovertarget="why-keyboard">{{t:why.usable.try}}</button>
             <div class="luz-dropdown__menu" id="why-keyboard" popover>
               <p class="landing-note">{{t:why.usable.done}}</p>
             </div>
@@ -167,10 +174,8 @@
           <div class="landing-level__body">
             <h4 class="landing-eyebrow">{{t:adopt.level1.get}}</h4>
             <ul class="landing-level__get">
-              <li>{{t:adopt.level1.colors}}</li>
               <li>{{t:adopt.level1.semantic}}</li>
               <li>{{t:adopt.level1.scales}}</li>
-              <li>{{t:adopt.level1.fonts}}</li>
             </ul>
           </div>
           <div class="landing-level__actions">
@@ -189,8 +194,6 @@
             <h4 class="landing-eyebrow">{{t:adopt.level2.get}}</h4>
             <ul class="landing-level__get">
               <li>{{t:adopt.level2.components}}</li>
-              <li>{{t:adopt.level2.objects}}</li>
-              <li>{{t:adopt.level2.js}}</li>
               <li>{{html:adopt.level2.layer}}</li>
             </ul>
           </div>
@@ -210,7 +213,6 @@
             <h4 class="landing-eyebrow">{{t:adopt.level3.get}}</h4>
             <ul class="landing-level__get">
               <li>{{t:adopt.level3.search}}</li>
-              <li>{{t:adopt.level3.shell}}</li>
               <li>{{t:adopt.level3.parts}}</li>
             </ul>
           </div>
@@ -371,49 +373,11 @@
       <h2 class="luz-landing-section__title" id="type-title">{{html:type.title}}</h2>
       <p class="luz-landing-section__lead">{{t:type.lead}}</p>
 
-      <figure class="o-stack landing-type">
-        <blockquote class="landing-type__quote"><p>{{t:type.quote}}</p></blockquote>
-        <!-- One sample per step of the scale, drawn by its token: no size is typed -->
-        <ul class="o-row landing-type__scale" dir="ltr">
-          <li style="--v: var(--luz-text-xs)"><span class="landing-type__aa">Aa</span> <code>xs</code></li>
-          <li style="--v: var(--luz-text-sm)"><span class="landing-type__aa">Aa</span> <code>sm</code></li>
-          <li style="--v: var(--luz-text-md)"><span class="landing-type__aa">Aa</span> <code>md</code></li>
-          <li style="--v: var(--luz-text-base)"><span class="landing-type__aa">Aa</span> <code>base</code></li>
-          <li style="--v: var(--luz-text-lg)"><span class="landing-type__aa">Aa</span> <code>lg</code></li>
-          <li style="--v: var(--luz-text-xl)"><span class="landing-type__aa">Aa</span> <code>xl</code></li>
-          <li style="--v: var(--luz-text-2xl)"><span class="landing-type__aa">Aa</span> <code>2xl</code></li>
-          <li style="--v: var(--luz-text-3xl)"><span class="landing-type__aa">Aa</span> <code>3xl</code></li>
-          <li style="--v: var(--luz-text-4xl)"><span class="landing-type__aa">Aa</span> <code>4xl</code></li>
-        </ul>
-        <figcaption class="u-text-muted">{{t:type.scale}}</figcaption>
-      </figure>
+      <blockquote class="landing-type__quote"><p>{{t:type.quote}}</p></blockquote>
     </section>
 
-    <!-- ====================== 8. FIT ====================== -->
-    <section class="o-stack luz-landing-section" id="fit" aria-labelledby="fit-title">
-      <p class="luz-landing-section__eyebrow">{{t:fit.eyebrow}}</p>
-      <h2 class="luz-landing-section__title" id="fit-title">{{t:fit.title}}</h2>
-      <ul class="o-grid o-grid--split landing-fit">
-        <li>
-          <h3 class="landing-fit__title">{{t:fit.good}}</h3>
-          <ul class="landing-fit__list">
-            <li>{{t:fit.good.public}}</li>
-            <li>{{t:fit.good.server}}</li>
-            <li>{{t:fit.good.own}}</li>
-          </ul>
-        </li>
-        <li>
-          <h3 class="landing-fit__title">{{t:fit.bad}}</h3>
-          <ul class="landing-fit__list">
-            <li>{{t:fit.bad.react}}</li>
-            <li>{{t:fit.bad.grid}}</li>
-            <li>{{t:fit.bad.beta}}</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-
-    <!-- ====================== 9. START ====================== -->
+    <!-- ====================== 8. START ======================
+         The snippets, then who LUZ fits and who it does not, then the two actions -->
     <section class="o-stack luz-landing-section" id="start" aria-labelledby="start-title">
       <p class="luz-landing-section__eyebrow">{{t:start.eyebrow}}</p>
       <h2 class="luz-landing-section__title" id="start-title">{{html:start.title}}</h2>
@@ -452,6 +416,26 @@ import &quot;@luz-ds/core&quot;;</code></pre>
       </div>
 
       <p>{{html:start.then}}</p>
+
+      <div class="o-grid o-grid--split landing-fit">
+        <div>
+          <h3 class="landing-fit__title">{{t:fit.good}}</h3>
+          <ul class="landing-fit__list">
+            <li>{{t:fit.good.public}}</li>
+            <li>{{t:fit.good.server}}</li>
+            <li>{{t:fit.good.own}}</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="landing-fit__title">{{t:fit.bad}}</h3>
+          <ul class="landing-fit__list">
+            <li>{{t:fit.bad.react}}</li>
+            <li>{{t:fit.bad.grid}}</li>
+            <li>{{t:fit.bad.beta}}</li>
+          </ul>
+        </div>
+      </div>
+
       <div class="o-actions">
         <a class="luz-btn luz-btn--primary" href="/docs/">{{t:start.docs}}</a>
         <a class="luz-btn luz-btn--outline" href="/docs/components/">{{t:start.components}}</a>
@@ -485,8 +469,9 @@ import &quot;@luz-ds/core&quot;;</code></pre>
           <li><a href="https://github.com/nandovejer/luz/blob/main/dev/BROWSER-REVIEWS.md">{{t:footer.reviews}}</a></li>
         </ul>
       </nav>
-      <nav class="luz-landing-footer__col" aria-labelledby="footer-lang">
-        <h2 class="luz-landing-footer__col-title" id="footer-lang">{{t:lang.label}}</h2>
+      <!-- Named apart from the header's language menu: two landmarks, two names -->
+      <nav class="luz-landing-footer__col" aria-label="{{t:footer.languages}}">
+        <h2 class="luz-landing-footer__col-title">{{t:lang.label}}</h2>
         {{langlinks}}
       </nav>
     </div>

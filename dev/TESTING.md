@@ -80,6 +80,26 @@ The helpers you will meet:
 
 Read the head of a helper before you write another one.
 
+## Minimum Automated Baseline
+
+The least a release stands on, so it stays stable without heavy upkeep:
+
+- Unit tests for the behaviour of each module in `packages/core/src/`.
+- Specs for the critical flows of the documentation (`/docs/`, source in `apps/docs/pages/`).
+- An axe scan of key pages and components (see [Accessibility](#accessibility)).
+
+Suggested scope for the specs:
+
+- Theme switch and persistence
+- Sidebar open/close on mobile
+- Modal open/close, Escape, focus restore
+- Keyboard navigation in tabs and player controls
+- Core responsive checks at 480px, 768px, 1024px
+
+If you touch `packages/site/src/`, run `pnpm build` and check that the apps that use it still render.
+
+Keep specs small and high-value. These tools are development-only dependencies, never runtime ones.
+
 ## Run the tests
 
 Run one file, then one test, then both projects:
@@ -144,6 +164,40 @@ const { violations } = await new AxeBuilder({ page })
 ```
 
 Axe finds about a third of the problems. Test the rest yourself in the spec: the keyboard (Tab order, Escape, Enter, Space, arrow keys), the focus ring, a viewport of 320 px with no sideways scroll, forced colours (`page.emulateMedia({ forcedColors: 'active' })`) and reduced motion.
+
+### Keyboard Testing
+
+- Tab through all interactive elements
+- Escape closes modals/details
+- Enter/Space activate buttons
+- Arrow keys work in tabs/similar components
+- Focus always visible
+
+### Focus Testing
+
+- All focusable elements have `:focus-visible` styles
+- Focus order matches visual/logical order
+- No focus traps (unless intended)
+
+### Visual Testing
+
+- Dark mode looks correct
+- High contrast mode readable
+- Responsive at 480px, 768px, 1024px
+
+### A11y Checklist
+
+Before you submit a component:
+
+- [ ] Semantic HTML (no div abuse)
+- [ ] Keyboard accessible
+- [ ] Focus indicators visible (2px outline minimum)
+- [ ] Color contrast ≥4.5:1
+- [ ] ARIA labels/roles where needed
+- [ ] Animations respect `prefers-reduced-motion`
+- [ ] No flashing >3/second
+
+The full list is in [DEFINITION-OF-DONE.md](./DEFINITION-OF-DONE.md).
 
 ### Hit test and obscured focus
 
@@ -259,7 +313,7 @@ After a deliberate change to what a package ships, run `node scripts/check-pack.
 - **The Safari and Firefox reviews.** What has not been reviewed yet is in the "Open" section of [BROWSER-REVIEWS.md](./BROWSER-REVIEWS.md), one row for each `needs-browser-review` issue. When you change CSS, HTML or JS that those browsers have not seen, add a row. To help, pick an issue with that label, test the files it names and write what you see. A row is closed only when both browsers have reviewed it.
 - **Assistive technology.** NVDA, VoiceOver, TalkBack and Orca are tested by hand before a release (SR-6). Use `tests/manual/SR-6-evidence-template.md`, and state only the combinations you tested.
 
-## A native dialog
+## Modals and dialogs
 
 Use a native `<dialog>` opened with `showModal()`. The browser traps focus, closes on Escape, makes the page behind inert and returns focus to the opener. Do not write a focus trap, and do not test the browser: test that your markup opens and closes it.
 

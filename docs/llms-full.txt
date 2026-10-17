@@ -1322,10 +1322,6 @@ URL: https://nandovejer.github.io/luz/docs/tokens/
 
 CSS custom properties for every colour, space, size and type value. Use the semantic ones: they change with the color mode.
 
-Level 1 · @luz-ds/tokens
-
-CSS custom properties for every colour, space, size and type value. Use the semantic ones: they change with the color mode.
-
 ### Two layers
 
 - **Primitives** hold raw values: `--luz-blue-60`, `--luz-space-md`. They are the same in every mode.
@@ -1950,10 +1946,6 @@ Build custom elements: a template that is parsed but not shown, and a slot that 
 
 ## Components
 URL: https://nandovejer.github.io/luz/docs/components/
-
-Every core component, grouped by task, with a live example, the markup to copy and when to use it.
-
-Level 2 · @luz-ds/core
 
 Every core component, grouped by task, with a live example, the markup to copy and when to use it.
 
@@ -4496,10 +4488,6 @@ URL: https://nandovejer.github.io/luz/docs/site/
 
 Six self-contained components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner, and how to tell whether you need them.
 
-Level 3 · @luz-ds/site
-
-Six self-contained components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner, and how to tell whether you need them.
-
 A piece is here when it needs data of the site: its search index, its cookie policy, its languages, its menu, an announcement. Each is a `<luz-*>` tag that works on its own, in any header or page. Everything else is a **component** of core, one reusable piece that fits inside anything; components are in [Components](https://nandovejer.github.io/luz/docs/components/).
 
 The page structure (the header, the hero, the footer, the page header) is in the packages for one kind of site: [landing](https://nandovejer.github.io/luz/docs/landing/) for a landing page and [CMS](https://nandovejer.github.io/luz/docs/cms/) for a blog, a newspaper or any CMS. They work without this package, and take its components where a search or a language switch goes.
@@ -5161,10 +5149,6 @@ URL: https://nandovejer.github.io/luz/docs/landing/
 
 What a landing page needs on top of core, from its header and hero to the blocks of an event page, and how to tell whether you need it.
 
-For one kind of site · @luz-ds/landing
-
-What a landing page needs on top of core, from its header and hero to the blocks of an event page, and how to tell whether you need it.
-
 A landing page is one page that presents a product or an event and asks the visitor to act. This package holds the patterns only that kind of page uses. The page column, the sticky bar, the skip link and the header’s links are core’s; the search, the cookie banner and the language switch are [Site](https://nandovejer.github.io/luz/docs/site/)’s, and optional.
 
 - Every class starts with `.luz-landing-`, uses semantic tokens only and sits in the cascade layer `luz.landing`, after site's.
@@ -5553,10 +5537,6 @@ This page is a library of whole-page templates: open its URL for the markup of e
 
 ## CMS
 URL: https://nandovejer.github.io/luz/docs/cms/
-
-The page structure of a blog, a newspaper or any site of articles, from the header to the post listing, and how to tell whether you need it.
-
-For one kind of site · @luz-ds/cms
 
 The page structure of a blog, a newspaper or any site of articles, from the header to the post listing, and how to tell whether you need it.
 
@@ -5950,10 +5930,6 @@ URL: https://nandovejer.github.io/luz/docs/app/
 
 The header and the dashboard of a web application, on core's shell and sidebar, and how to tell whether you need them.
 
-For one kind of site · @luz-ds/app
-
-The header and the dashboard of a web application, on core's shell and sidebar, and how to tell whether you need them.
-
 An application is used every day by the same people to check a state and act on one thing. The layout it needs is already core's: the shell with its sidebar, the drawer on a phone, the sticky bar, the grid and the card. This package holds the two pieces that only an application has: the bar at the top of the main area, with the search and the account, and the dashboard, a grid of panels under the view's title.
 
 - Every class starts with `.luz-app-`, uses semantic tokens only and sits in the cascade layer `luz.app`, after site's, landing's and cms's. Each pattern is a class on a native element, laid out in the markup by core's objects.
@@ -6153,10 +6129,6 @@ URL: https://nandovejer.github.io/luz/docs/documentation/
 
 The shell, page head, rail, example, do and don't, pager and page foot of a documentation site, and how to tell whether you need them.
 
-For one kind of site · @luz-ds/docs
-
-The shell, page head, rail, example, do and don't, pager and page foot of a documentation site, and how to tell whether you need them.
-
 ### Use this package when
 
 - You write a documentation site: guides, a reference, a manual, with a sidebar of pages.
@@ -6250,7 +6222,7 @@ Do not use the shell for a page that is not documentation: it assumes a sidebar 
 ## Page head
 URL: https://nandovejer.github.io/luz/docs/documentation/page-head/
 Example: https://nandovejer.github.io/luz/examples/documentation/page-head.html
-Files: .luz-docs-page-head, __eyebrow, __lead, __meta · Package: @luz-ds/docs
+Files: .luz-docs-page-head, __eyebrow, __lead, __meta, __files · Package: @luz-ds/docs
 
 The top of a documentation page: the eyebrow, the title, one sentence and the chips that say what the page covers.
 
@@ -6278,9 +6250,10 @@ Page head markup
 No modifier. The head is a class on a native `<header>` with four parts.
 
 - `.luz-docs-page-head`: On a `<header>` in the content: one column, with a gap between its parts and room under it. Its `h1` is `--luz-text-4xl`, and `--luz-text-2xl` at 640px and below
-- `.luz-docs-page-head__eyebrow`: On a `<p>`: the area and the group, in small spaced capitals and the secondary colour. In Arabic the spacing between letters is left out
+- `.luz-docs-page-head__eyebrow`: On a `<p>`: the area and the group, in small spaced capitals and the secondary colour. A `<code>` in it, a package name, keeps its own case. In Arabic the spacing between letters is left out
 - `.luz-docs-page-head__lead`: On a `<p>`: one sentence, larger than the text, in the secondary colour
 - `.luz-docs-page-head__meta`: On a `<ul>`: the chips. Each `<li>` is a word or two in a rounded outline, at least `--luz-control-sm` (28px) tall. A link in one is the same height
+- `.luz-docs-page-head__files`: On a `<p>`, instead of the chips, on a page that is not a component: "Files:" and each file in a `<code>`, one small line in the secondary colour
 
 ### How it works
 CSS from `@luz-ds/docs`. It sets the rhythm and the sizes; the words are yours.

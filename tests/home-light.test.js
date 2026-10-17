@@ -217,6 +217,16 @@ describe("light.js: <luz-mode> is the only writer of data-theme and data-light",
 
 describe("light.css", () => {
   const WHERE = ["apps/landing/index.html"];
+
+  it("draws the globe fully opaque, not as a faint backdrop (the owner's decision, 2026-10-17)", () => {
+    const rule = /home-light \.home-light__stage > home-globe \{([^}]*)\}/.exec(read(`${DIR}/light.css`))?.[1] ?? "";
+    expect(rule, "the globe's rule on the stage").not.toBe("");
+    expect(rule).not.toMatch(/(^|[\s;])opacity\s*:/);
+  });
+
+  it("never hides the sun's glow behind a look the controller no longer writes", () => {
+    expect(read(`${DIR}/light.css`)).not.toMatch(/\[look[=\]]/);
+  });
   /** Every file of a folder that can link a stylesheet. */
   const filesOf = (dir) =>
     readdirSync(join(repo, dir), { withFileTypes: true }).flatMap((entry) => {

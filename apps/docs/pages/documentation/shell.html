@@ -10,7 +10,7 @@ toc: h2,h3
 -->
     <div class="docs-component" id="p-docs-shell">
           <h2 id="example">Example</h2>
-          <p>The shell is the whole page, so it has no live example inside another page. The markup below is a complete page: copy it, add your own content and resize the window. It is three columns from 80rem, two from 60rem and one below. <a href="/docs/documentation/templates/#docs-page">Documentation templates</a> has the same page filled in.</p>
+          <p>The shell is the whole page, so it has no live example inside another page. The markup below is a complete page: copy it, add your own content and resize the window. It is three columns from 80rem, two from 60rem and one below, with the rail under the content when there is no third column. <a href="/docs/documentation/templates/#docs-page">Documentation templates</a> has the same page filled in.</p>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Shell documentation">
@@ -52,7 +52,7 @@ toc: h2,h3
                 <tr><td data-label="Class or property"><div><code>.luz-docs-shell</code></div></td><td data-label="Effect"><div>On <code>&lt;body&gt;</code>, with core's <code>.o-shell</code>: the tracks and where each part goes</div></td></tr>
                 <tr><td data-label="Class or property"><div><code>.luz-docs-nav</code></div></td><td data-label="Effect"><div>With core's <code>.luz-sidebar</code>, on the <code>&lt;nav&gt;</code>: the sidebar's column</div></td></tr>
                 <tr><td data-label="Class or property"><div><code>.luz-docs-main</code></div></td><td data-label="Effect"><div>With <code>.o-main</code>, on the <code>&lt;main&gt;</code>: the content's column. Its children keep to the measure</div></td></tr>
-                <tr><td data-label="Class or property"><div><code>.luz-docs-rail</code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column from 80rem. See <a href="/docs/documentation/rail/">Rail</a></div></td></tr>
+                <tr><td data-label="Class or property"><div><code>.luz-docs-rail</code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column from 80rem, under the content below it. See <a href="/docs/documentation/rail/">Rail</a></div></td></tr>
                 <tr><td data-label="Class or property"><div><code>--luz-docs-measure</code></div></td><td data-label="Effect"><div>A line of text: <code>46rem</code>. Set it on the shell in your own CSS to change it</div></td></tr>
                 <tr><td data-label="Class or property"><div><code>--luz-docs-nav-w</code>, <code>--luz-docs-rail-w</code></div></td><td data-label="Effect"><div>The sidebar and the rail: <code>16.5rem</code> and <code>14rem</code></div></td></tr>
                 <tr><td data-label="Class or property"><div><code>--luz-docs-rail-top</code></div></td><td data-label="Effect"><div>How far from the top the rail sticks. Raise it under a sticky header</div></td></tr>
@@ -62,7 +62,7 @@ toc: h2,h3
             <h3 id="how">How it works</h3>
             <p>CSS from <code>@luz-ds/docs</code> on core's shell and sidebar. Docs gives the tracks and the measure; core gives the grid and the drawer.</p>
             <ul>
-              <li>From 80rem there are three tracks: sidebar, content, rail. From 60rem there are two, and the rail is not drawn. Below, one, in the order of the markup.</li>
+              <li>From 80rem there are three tracks: sidebar, content, rail. From 60rem there are two, with the rail drawn under the content. Below, one, in the order of the markup: content, rail, footer.</li>
               <li>A plain <code>&lt;header&gt;</code> goes across every track. The footer sits under the content, and the sidebar runs down beside it.</li>
               <li>Between 769px and 60rem the sidebar is the first block above the content. At 768px and below it is core's drawer, a popover the menu button opens.</li>
               <li>Every child of the content keeps to <code>--luz-docs-measure</code>, so an example is as wide as a line of text. In print the rail is left out.</li>
@@ -83,8 +83,8 @@ toc: h2,h3
             <h3 id="when">When to use</h3>
             <p>Use the shell for the pages of a documentation site: read one after another, with a sidebar of all of them and a list of the sections of the page.</p>
             <ul>
-              <li>A sidebar that stays in view while a long page scrolls.</li>
-              <li>Running text kept to a readable line, and two columns on a tablet, one on a phone.</li>
+              <li>Your site has more pages than fit in a header.</li>
+              <li>Readers move through pages in order.</li>
             </ul>
             <h3 id="when-not">When not to use</h3>
             <p>Do not use the shell for a page that is not documentation: it assumes a sidebar and a content column.</p>

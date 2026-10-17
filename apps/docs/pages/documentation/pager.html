@@ -14,8 +14,8 @@ toc: h2,h3
             <div class="docs-demo__stage">
               <nav aria-label="Previous and next page, example">
                 <ul class="luz-docs-pager">
-                  <li class="luz-docs-pager__prev"><a class="luz-docs-pager__link" rel="prev" href="#example" aria-label="Previous: Install the tool"><span class="luz-docs-pager__label">Previous</span> <span class="luz-docs-pager__title">Install the tool</span></a></li>
-                  <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="#example" aria-label="Next: Deploy to production"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">Deploy to production</span></a></li>
+                  <li class="luz-docs-pager__prev"><a class="luz-docs-pager__link" rel="prev" href="#example"><span class="luz-docs-pager__label">Previous</span> <span class="luz-docs-pager__title">Install the tool</span></a></li>
+                  <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="#example"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">Deploy to production</span></a></li>
                 </ul>
               </nav>
               <p class="docs-demo__note">Two blocks side by side, Next at the end; stacked at 640px and below. The whole block is the link.</p>
@@ -38,8 +38,8 @@ toc: h2,h3
               </div>
               <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Pager markup"><code id="code-docs-pager">&lt;nav aria-label=&quot;Previous and next page&quot;&gt;
   &lt;ul class=&quot;luz-docs-pager&quot;&gt;
-    &lt;li class=&quot;luz-docs-pager__prev&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;prev&quot; href=&quot;/install/&quot; aria-label=&quot;Previous: Install the tool&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Previous&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Install the tool&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
-    &lt;li class=&quot;luz-docs-pager__next&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;next&quot; href=&quot;/deploy/&quot; aria-label=&quot;Next: Deploy to production&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Next&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Deploy to production&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;luz-docs-pager__prev&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;prev&quot; href=&quot;/install/&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Previous&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Install the tool&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;luz-docs-pager__next&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;next&quot; href=&quot;/deploy/&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Next&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Deploy to production&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/nav&gt;</code></pre>
             </div>
@@ -73,7 +73,7 @@ toc: h2,h3
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
               <li><strong>Order:</strong> Previous, then Next, as in the source. Tab reaches each link, and Enter follows it.</li>
-              <li><strong>Names:</strong> the <code>&lt;nav&gt;</code> is named "Previous and next page". Each link's name starts with its visible words ("Previous: Install the tool"), so a person who says "click Previous" finds it (WCAG 2.5.3).</li>
+              <li><strong>Names:</strong> the <code>&lt;nav&gt;</code> is named "Previous and next page". Each link is named by its visible text ("Previous Install the tool"), so a person who says "click Previous" finds it (WCAG 2.5.3). Do not add an <code>aria-label</code> that replaces it.</li>
               <li><strong>Landmark:</strong> one pager for each page. A second <code>&lt;nav&gt;</code> on the page needs a different name.</li>
             </ul>
             <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>

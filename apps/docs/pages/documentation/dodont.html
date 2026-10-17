@@ -1,11 +1,11 @@
 <!-- luz:page
-title: Good and bad
+title: Do and don't
 description: A Do and a Don't, one example to follow and one to avoid, each with its reason, side by side when there is room.
 area: documentation
 order: 5
 group: patterns
 files: .luz-docs-dodont, __item, __verdict, __stage
-keywords: do and don't, dos and donts, guidance, guideline, comparison
+keywords: dos and donts, good and bad, guidance, guideline, comparison
 toc: h2,h3
 -->
     <div class="docs-component" id="p-docs-dodont">
@@ -30,8 +30,8 @@ toc: h2,h3
             </div>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>None known.</p>
-          <nav class="luz-tabs docs-view-tabs" aria-label="Good and bad documentation">
+          <p>In browsers without alternative text for generated content (Safari before 17.4, Firefox before 128), a screen reader may read the tick or the cross before "Do" or "Don't". The word that follows is always read. Not tested with a screen reader.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Do and don't documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
           </nav>
@@ -42,9 +42,9 @@ toc: h2,h3
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>
-                <button class="luz-copy-btn" type="button" data-copy-from="code-docs-dodont" aria-label="Copy the good and bad markup">Copy</button>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-docs-dodont" aria-label="Copy the do and don't markup">Copy</button>
               </div>
-              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Good and bad markup"><code id="code-docs-dodont">&lt;div class=&quot;luz-docs-dodont&quot;&gt;
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Do and don't markup"><code id="code-docs-dodont">&lt;div class=&quot;luz-docs-dodont&quot;&gt;
   &lt;figure class=&quot;luz-docs-dodont__item luz-docs-dodont__item--do&quot;&gt;
     &lt;figcaption&gt;&lt;strong class=&quot;luz-docs-dodont__verdict&quot;&gt;Do&lt;/strong&gt; Title a page for what it lets the reader do.&lt;/figcaption&gt;
     &lt;div class=&quot;luz-docs-dodont__stage&quot; inert aria-hidden=&quot;true&quot;&gt;
@@ -60,7 +60,7 @@ toc: h2,h3
 &lt;/div&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>Two modifiers, for the two verdicts.</p>
+            <p>One block, its parts, and two modifiers for the two verdicts.</p>
             <div class="luz-table-wrap" role="region" aria-label="Do and don't classes" tabindex="0">
               <table class="luz-table">
                 <thead>
@@ -139,7 +139,7 @@ toc: h2,h3
             </ul>
             <h3 id="contrast">Contrast and focus</h3>
             <p>The caption sits on the surface of the frame and the stage on the page surface. The verdict and the frame carry the same colour.</p>
-            <div class="luz-table-wrap" role="region" aria-label="Good and bad contrast in each mode" tabindex="0">
+            <div class="luz-table-wrap" role="region" aria-label="Do and don't contrast in each mode" tabindex="0">
               <table class="luz-table docs-contrast">
                 <thead>
                   <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>

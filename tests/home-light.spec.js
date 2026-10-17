@@ -693,23 +693,34 @@ test.describe('review fixes', () => {
     });
   }
 
-  /* -- 6b. The light sits close under the hero's buttons ------------------------ */
+  /* -- 6b. The globe rises behind the hero's buttons (the owner's sketch, 2026-10-17) -- */
 
-  for (const width of [375, 1440]) {
-    test(`${width} px: the light starts at most --luz-space-md under the hero's buttons, never over them`, async ({ page }) => {
+  for (const width of [375, 1024, 1440]) {
+    test(`${width} px: the globe's top edge is behind the hero's buttons, which stay on top and can be clicked`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await open(page, '/');
-      const gap = await page.evaluate(() => {
-        const buttons = [...document.querySelectorAll('#hero .luz-btn')].map((b) => b.getBoundingClientRect().bottom);
-        const probe = document.body.appendChild(Object.assign(document.createElement('div'), { style: 'block-size: var(--luz-space-md); position: absolute' }));
-        const space = probe.getBoundingClientRect().height;
-        probe.remove();
-        return { gap: document.querySelector('home-light').getBoundingClientRect().top - Math.max(...buttons), space };
+      await expect(page.locator('home-globe[land]')).toHaveCount(1);
+      const m = await page.evaluate(() => {
+        const buttons = [...document.querySelectorAll('#hero .luz-btn')];
+        const low = buttons.map((b) => b.getBoundingClientRect()).reduce((a, r) => (r.bottom > a.bottom ? r : a));
+        const rim = document.querySelector('home-globe .home-globe__rim').getBoundingClientRect();
+        const onTop = buttons.every((b) => {
+          const r = b.getBoundingClientRect();
+          return b.contains(document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2));
+        });
+        return { rimTop: rim.top, top: low.top, bottom: low.bottom, onTop };
       });
-      expect(gap.gap).toBeGreaterThanOrEqual(0);
-      expect(gap.gap).toBeLessThanOrEqual(gap.space + 1);
+      expect(m.rimTop, "the globe's top edge is not above the lowest button").toBeGreaterThanOrEqual(m.top);
+      expect(m.rimTop, "the globe's top edge is not below the lowest button").toBeLessThanOrEqual(m.bottom);
+      expect(m.onTop, 'each button is the element at its centre').toBe(true);
     });
   }
+
+  test('the line has no mark under the phrase: the phrase alone opens the bar', async ({ page }) => {
+    await open(page, '/');
+    await expect(line(page).locator('svg, .home-light__mark')).toHaveCount(0);
+    await expect(line(page)).toHaveAttribute('aria-expanded', 'false');
+  });
 
   /* -- 7. The Live button -------------------------------------------------------- */
 

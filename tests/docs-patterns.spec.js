@@ -293,7 +293,7 @@ test.describe('rail: forced colours', () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.emulateMedia({ forcedColors: 'active' });
     await page.goto(PAGE);
-    expect(await page.evaluate(() => matchMedia('(forced-colors: active)').matches), 'forced colours are on').toBe(true);
+    expect(await page.evaluate(() => window.matchMedia('(forced-colors: active)').matches), 'forced colours are on').toBe(true);
     await page.evaluate(() => document.querySelector('#on-example').setAttribute('aria-current', 'true'));
     const colour = (selector) => style(page, selector, 'borderInlineStartColor');
     const current = await colour('#on-example');

@@ -103,10 +103,20 @@
   display: grid;
 }
 
-/* Close under the hero's buttons: the page's gap less --luz-space-md, so
-   the globe's sky meets them without touching them, at every width */
+/* The globe rises behind the hero's buttons: the light moves up by the
+   page's gap and a little more, plus the room above the globe's edge in its
+   box (about 4% of the width, up to 3.75rem), so the edge crosses the
+   buttons at every width. The hero is drawn above it, so the buttons stay
+   on top and take the clicks */
 .luz-landing-main > .landing-light {
-  margin-block-start: calc(var(--luz-space-md) - var(--luz-space-3xl));
+  margin-block-start: calc(
+    -1 * (var(--luz-space-3xl) + var(--luz-space-lg) + var(--luz-space-xs) + min(4cqi, 3.75rem))
+  );
+}
+
+.luz-landing-main > .luz-landing-hero {
+  position: relative;
+  z-index: 1;
 }
 
 .landing-light > home-light,

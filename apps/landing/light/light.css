@@ -173,41 +173,8 @@ home-light .home-light__q::after {
   content: close-quote;
 }
 
-/* The mark that opens and closes the bar, under the phrase */
-home-light .home-light__when {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--luz-space-2xs);
-  font: 400 var(--luz-text-xs) / 1.4 var(--luz-font-sans);
-}
-
-home-light .home-light__q:not([hidden]) + .home-light__when {
-  margin-block-start: var(--luz-space-3xs);
-}
-
 home-light .home-light__q[hidden] {
   display: none;
-}
-
-/* Closed it points up, to where the bar opens; open it points down */
-home-light .home-light__mark {
-  display: inline-flex;
-  transition: rotate var(--luz-duration-slow) var(--_ease);
-}
-
-home-light .home-light__line[aria-expanded="true"] .home-light__mark {
-  rotate: 180deg;
-}
-
-home-light .home-light__mark svg {
-  inline-size: 1em;
-  block-size: 1em;
-  fill: none;
-  stroke: currentcolor;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 /* A hairline from the line up to the open bar */

@@ -11,32 +11,35 @@ The rail, as a direct child of the shell, after the content:
 Rail markup
 ```html
 <aside class="luz-docs-rail" aria-label="About this page">
-  <nav class="luz-docs-rail__onpage" aria-labelledby="onpage-title">
-    <details class="luz-docs-rail__fold" open>
-      <summary class="luz-docs-rail__title" id="onpage-title">On this page</summary>
-      <ul class="luz-docs-rail__list">
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#install">Install</a></li>
-        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#configure">Configure</a>
-          <ul class="luz-docs-rail__sub">
-            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#config-file">The config file</a></li>
-          </ul>
-        </li>
-      </ul>
-    </details>
-  </nav>
-  <div class="luz-docs-rail__actions">
-    <a href="https://example.com/docs/install.md">Copy page as Markdown</a>
-    <a href="https://example.com/edit/install.md">Edit this page</a>
-    <a href="https://example.com/issues/new">Report a problem</a>
+  <div class="luz-docs-rail__inner">
+    <nav class="luz-docs-rail__onpage" aria-labelledby="onpage-title">
+      <details class="luz-docs-rail__fold" open>
+        <summary class="luz-docs-rail__title" id="onpage-title">On this page</summary>
+        <ul class="luz-docs-rail__list">
+          <li><a class="luz-sidebar__link luz-docs-rail__link" href="#install">Install</a></li>
+          <li><a class="luz-sidebar__link luz-docs-rail__link" href="#configure">Configure</a>
+            <ul class="luz-docs-rail__sub">
+              <li><a class="luz-sidebar__link luz-docs-rail__link" href="#config-file">The config file</a></li>
+            </ul>
+          </li>
+        </ul>
+      </details>
+    </nav>
+    <div class="luz-docs-rail__actions">
+      <a href="https://example.com/docs/install.md">Copy page as Markdown</a>
+      <a href="https://example.com/edit/install.md">Edit this page</a>
+      <a href="https://example.com/issues/new">Report a problem</a>
+    </div>
   </div>
 </aside>
 ```
 
 ### Variants and options
-No modifier. The rail is an `<aside>` with two blocks: the list and the actions.
+No modifier. The rail is an `<aside>` around one box that holds two blocks: the list and the actions.
 
-- `.luz-docs-rail`: On an `<aside>`: the third column of the [shell](https://nandovejer.github.io/luz/docs/documentation/shell/) from 80rem, sticky; below it, under the content
-- `.luz-docs-rail__onpage`: On the `<nav>` of the list, a direct child of the rail: it scopes the reset of the fold and its title, and is the hook for a script
+- `.luz-docs-rail`: On an `<aside>`: the third column of the [shell](https://nandovejer.github.io/luz/docs/documentation/shell/) from 80rem, as tall as the content; below it, under the content
+- `.luz-docs-rail__inner`: On a `<div>`, the one child of the rail, around the list and the actions: from 80rem it is the sticky box, inside the rail, so it never covers the footer, and it scrolls by itself, with room at its start for a focus ring
+- `.luz-docs-rail__onpage`: On the `<nav>` of the list, a direct child of `__inner`: it scopes the reset of the fold and its title, and is the hook for a script
 - `.luz-docs-rail__fold`: On a native `<details>`. Write `open`, so the list shows
 - `.luz-docs-rail__title`: On the `<summary>`: "On this page", semibold. It names the `<nav>`
 - `.luz-docs-rail__list`: On the `<ul>`: no bullets, a rule at its start
@@ -47,7 +50,7 @@ No modifier. The rail is an `<aside>` with two blocks: the list and the actions.
 ### How it works
 CSS from `@luz-ds/docs`, on core's sidebar link and its scroll spy.
 
-- Below 80rem the rail is drawn under the content, before the footer. From 80rem it is a column and sticky, at `--luz-docs-rail-top` from the top of the window. It is as tall as the window at most, and scrolls by itself when the list is longer.
+- Below 80rem the rail is drawn under the content, before the footer. From 80rem it is a column as tall as the content, and its inner box is sticky, at `--luz-docs-rail-top` from the top of the window: it stops at the end of the rail, so it never covers the footer under it. The inner box is as tall as the window at most, and scrolls by itself when the list is longer.
 - A link carries core's `.luz-sidebar__link`, so core's script marks the section in view with `aria-current="true"`. The rail redraws the link as text on the page: the mark is the weight and a start border, never the colour alone.
 - The list names each `h2` of the page and, nested under it, each `h3`. Nothing is nested deeper.
 - "Copy page as Markdown" is a link to the page's Markdown file; copying it with a script is yours. The rail is left out of print.

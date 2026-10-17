@@ -12,11 +12,11 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../../../boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-CIriMMU2.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-B4r09wPr.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
   <link rel="stylesheet" crossorigin href="../../../assets/reference-CFwLTcYL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-CLv74IIZ.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-Clvlnotq.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-BXzNEBss.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-BjaYmOk8.css">
 </head>
 <body class="o-shell luz-docs-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -247,7 +247,7 @@
     <p class="luz-docs-page-head__eyebrow">Documentation · Patterns</p>
     <h1 class="docs-title">Rail</h1>
     <p class="luz-docs-page-head__lead">The list of the sections of the page that stays in view beside the content, with the actions of the page under it.</p>
-    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">.luz-docs-rail, __onpage, __fold, __title, __list, __sub, __link, __actions</code></li><li>No JavaScript</li><li>Light · Dark · High contrast</li><li><a href="#known-issues">1 known issue</a></li></ul>
+    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">.luz-docs-rail, __inner, __onpage, __fold, __title, __list, __sub, __link, __actions</code></li><li>No JavaScript</li><li>Light · Dark · High contrast</li><li><a href="#known-issues">1 known issue</a></li></ul>
   </header>
   <div class="docs-body">
     <div class="docs-component" id="p-docs-rail">
@@ -257,23 +257,25 @@
               <div class="o-grid o-grid--2">
                 <div>
                   <div class="luz-docs-rail" style="display: block">
-                    <nav class="luz-docs-rail__onpage" aria-label="On this page, example">
-                      <details class="luz-docs-rail__fold" open>
-                        <summary class="luz-docs-rail__title">On this page</summary>
-                        <ul class="luz-docs-rail__list">
-                          <li><a class="luz-sidebar__link luz-docs-rail__link" href="#rail-demo-install">Install</a></li>
-                          <li><a class="luz-sidebar__link luz-docs-rail__link" href="#rail-demo-configure">Configure</a>
-                            <ul class="luz-docs-rail__sub">
-                              <li><a class="luz-sidebar__link luz-docs-rail__link" href="#rail-demo-file">The config file</a></li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </details>
-                    </nav>
-                    <div class="luz-docs-rail__actions">
-                      <a href="#example">Copy page as Markdown</a>
-                      <a href="#example">Edit this page</a>
-                      <a href="#example">Report a problem</a>
+                    <div class="luz-docs-rail__inner">
+                      <nav class="luz-docs-rail__onpage" aria-label="On this page, example">
+                        <details class="luz-docs-rail__fold" open>
+                          <summary class="luz-docs-rail__title">On this page</summary>
+                          <ul class="luz-docs-rail__list">
+                            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#rail-demo-install">Install</a></li>
+                            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#rail-demo-configure">Configure</a>
+                              <ul class="luz-docs-rail__sub">
+                                <li><a class="luz-sidebar__link luz-docs-rail__link" href="#rail-demo-file">The config file</a></li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </details>
+                      </nav>
+                      <div class="luz-docs-rail__actions">
+                        <a href="#example">Copy page as Markdown</a>
+                        <a href="#example">Edit this page</a>
+                        <a href="#example">Report a problem</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -305,36 +307,39 @@
                 <button class="luz-copy-btn" type="button" data-copy-from="code-docs-rail" aria-label="Copy the rail markup">Copy</button>
               </div>
               <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Rail markup"><code id="code-docs-rail">&lt;aside class=&quot;luz-docs-rail&quot; aria-label=&quot;About this page&quot;&gt;
-  &lt;nav class=&quot;luz-docs-rail__onpage&quot; aria-labelledby=&quot;onpage-title&quot;&gt;
-    &lt;details class=&quot;luz-docs-rail__fold&quot; open&gt;
-      &lt;summary class=&quot;luz-docs-rail__title&quot; id=&quot;onpage-title&quot;&gt;On this page&lt;/summary&gt;
-      &lt;ul class=&quot;luz-docs-rail__list&quot;&gt;
-        &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#install&quot;&gt;Install&lt;/a&gt;&lt;/li&gt;
-        &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#configure&quot;&gt;Configure&lt;/a&gt;
-          &lt;ul class=&quot;luz-docs-rail__sub&quot;&gt;
-            &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#config-file&quot;&gt;The config file&lt;/a&gt;&lt;/li&gt;
-          &lt;/ul&gt;
-        &lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/details&gt;
-  &lt;/nav&gt;
-  &lt;div class=&quot;luz-docs-rail__actions&quot;&gt;
-    &lt;a href=&quot;https://example.com/docs/install.md&quot;&gt;Copy page as Markdown&lt;/a&gt;
-    &lt;a href=&quot;https://example.com/edit/install.md&quot;&gt;Edit this page&lt;/a&gt;
-    &lt;a href=&quot;https://example.com/issues/new&quot;&gt;Report a problem&lt;/a&gt;
+  &lt;div class=&quot;luz-docs-rail__inner&quot;&gt;
+    &lt;nav class=&quot;luz-docs-rail__onpage&quot; aria-labelledby=&quot;onpage-title&quot;&gt;
+      &lt;details class=&quot;luz-docs-rail__fold&quot; open&gt;
+        &lt;summary class=&quot;luz-docs-rail__title&quot; id=&quot;onpage-title&quot;&gt;On this page&lt;/summary&gt;
+        &lt;ul class=&quot;luz-docs-rail__list&quot;&gt;
+          &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#install&quot;&gt;Install&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#configure&quot;&gt;Configure&lt;/a&gt;
+            &lt;ul class=&quot;luz-docs-rail__sub&quot;&gt;
+              &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#config-file&quot;&gt;The config file&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/details&gt;
+    &lt;/nav&gt;
+    &lt;div class=&quot;luz-docs-rail__actions&quot;&gt;
+      &lt;a href=&quot;https://example.com/docs/install.md&quot;&gt;Copy page as Markdown&lt;/a&gt;
+      &lt;a href=&quot;https://example.com/edit/install.md&quot;&gt;Edit this page&lt;/a&gt;
+      &lt;a href=&quot;https://example.com/issues/new&quot;&gt;Report a problem&lt;/a&gt;
+    &lt;/div&gt;
   &lt;/div&gt;
 &lt;/aside&gt;</code></pre>
             </div>
             <h3 id="variants">Variants and options</h3>
-            <p>No modifier. The rail is an <code>&lt;aside&gt;</code> with two blocks: the list and the actions.</p>
+            <p>No modifier. The rail is an <code>&lt;aside&gt;</code> around one box that holds two blocks: the list and the actions.</p>
             <div class="luz-table-wrap" role="region" aria-label="Rail classes" tabindex="0">
               <table class="luz-table">
                 <thead>
                   <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
                 </thead>
                 <tbody>
-                <tr><td data-label="Class"><div><code>.luz-docs-rail</code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column of the <a href="../../../docs/documentation/shell/">shell</a> from 80rem, sticky; below it, under the content</div></td></tr>
-                <tr><td data-label="Class"><div><code>.luz-docs-rail__onpage</code></div></td><td data-label="Effect"><div>On the <code>&lt;nav&gt;</code> of the list, a direct child of the rail: it scopes the reset of the fold and its title, and is the hook for a script</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-rail</code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column of the <a href="../../../docs/documentation/shell/">shell</a> from 80rem, as tall as the content; below it, under the content</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-rail__inner</code></div></td><td data-label="Effect"><div>On a <code>&lt;div&gt;</code>, the one child of the rail, around the list and the actions: from 80rem it is the sticky box, inside the rail, so it never covers the footer, and it scrolls by itself, with room at its start for a focus ring</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-rail__onpage</code></div></td><td data-label="Effect"><div>On the <code>&lt;nav&gt;</code> of the list, a direct child of <code>__inner</code>: it scopes the reset of the fold and its title, and is the hook for a script</div></td></tr>
                 <tr><td data-label="Class"><div><code>.luz-docs-rail__fold</code></div></td><td data-label="Effect"><div>On a native <code>&lt;details&gt;</code>. Write <code>open</code>, so the list shows</div></td></tr>
                 <tr><td data-label="Class"><div><code>.luz-docs-rail__title</code></div></td><td data-label="Effect"><div>On the <code>&lt;summary&gt;</code>: "On this page", semibold. It names the <code>&lt;nav&gt;</code></div></td></tr>
                 <tr><td data-label="Class"><div><code>.luz-docs-rail__list</code></div></td><td data-label="Effect"><div>On the <code>&lt;ul&gt;</code>: no bullets, a rule at its start</div></td></tr>
@@ -347,7 +352,7 @@
             <h3 id="how">How it works</h3>
             <p>CSS from <code>@luz-ds/docs</code>, on core's sidebar link and its scroll spy.</p>
             <ul>
-              <li>Below 80rem the rail is drawn under the content, before the footer. From 80rem it is a column and sticky, at <code>--luz-docs-rail-top</code> from the top of the window. It is as tall as the window at most, and scrolls by itself when the list is longer.</li>
+              <li>Below 80rem the rail is drawn under the content, before the footer. From 80rem it is a column as tall as the content, and its inner box is sticky, at <code>--luz-docs-rail-top</code> from the top of the window: it stops at the end of the rail, so it never covers the footer under it. The inner box is as tall as the window at most, and scrolls by itself when the list is longer.</li>
               <li>A link carries core's <code>.luz-sidebar__link</code>, so core's script marks the section in view with <code>aria-current="true"</code>. The rail redraws the link as text on the page: the mark is the weight and a start border, never the colour alone.</li>
               <li>The list names each <code>h2</code> of the page and, nested under it, each <code>h3</code>. Nothing is nested deeper.</li>
               <li>"Copy page as Markdown" is a link to the page's Markdown file; copying it with a script is yours. The rail is left out of print.</li>
@@ -456,6 +461,7 @@
   <p class="luz-docs-page-foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/documentation/rail.html">Edit this page</a> · <a href="https://github.com/nandovejer/luz/issues/new?title=Rail">Report a problem</a></p>
   </main>
   <aside class="luz-docs-rail" aria-label="About this page">
+  <div class="luz-docs-rail__inner">
   <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
     <details class="luz-docs-rail__fold" open>
       <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
@@ -489,6 +495,7 @@
       <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/documentation/rail.html">Edit this page</a>
       <a href="https://github.com/nandovejer/luz/issues/new?title=Rail">Report a problem</a>
     </div>
+  </div>
   </aside>
 
   <footer class="docs-footer luz-landing-footer" id="site-footer">
@@ -499,7 +506,7 @@
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz">GitHub</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../docs/a-z/">A–Z index</a>
         <a class="luz-btn luz-btn--ghost luz-btn--sm" href="../../../docs/accessibility/">Accessibility statement</a>
-        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz/issues">Report a problem</a>
+        <a class="luz-btn luz-btn--ghost luz-btn--sm" href="https://github.com/nandovejer/luz/issues">Issues on GitHub</a>
       </nav>
       <luz-mode class="site-modes" remember by="clock">
         <fieldset class="luz-mode-switcher luz-mode-switcher--cycle site-modes">

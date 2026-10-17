@@ -227,14 +227,12 @@ class LuzLight extends HTMLElement {
     day.append(this._scrub, this._live, this._out);
     bar.append(day);
     this._line = h("button", { type: "button", class: "home-light__line", "aria-expanded": "false", "aria-controls": bar.id });
-    // The phrase, then the light and the hour with a mark that turns with aria-expanded (not read)
+    // The phrase, then a mark that turns with aria-expanded (not read); the light and the hour are in the bar
     this._q = h("span", { class: "home-light__q" });
     this._when = h("span", { class: "home-light__when" });
-    this._phase = h("span");
-    this._time = h("span", { class: "home-light__time" });
     const mark = h("span", { class: "home-light__mark", "aria-hidden": "true" });
     mark.append(icon("M9 20l7-7 7 7"));
-    this._when.append(this._phase, this._time, mark);
+    this._when.append(mark);
     this._say = h("span", { class: "home-light__sr" });
     this._line.append(this._q, this._when, this._say);
     this._line.addEventListener("click", () => (this._bar.hidden ? this.open() : this.close()));
@@ -301,10 +299,9 @@ class LuzLight extends HTMLElement {
     const sep = this._text("sep") || ", ";
     this._q.textContent = say;
     this._q.hidden = !say;
-    this._phase.textContent = phase && phase + sep;
-    this._time.textContent = time;
+
     this._say.textContent = `. ${this._text("open")}`;
-    this._scrub.setAttribute("aria-valuetext", this._phase.textContent + time);
+    this._scrub.setAttribute("aria-valuetext", (phase && phase + sep) + time);
 
     const { alt, az, vec } = this._sun(t);
     rs.setProperty("--sun-alt", alt.toFixed(2));

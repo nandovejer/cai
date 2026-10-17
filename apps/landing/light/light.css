@@ -173,7 +173,7 @@ home-light .home-light__q::after {
   content: close-quote;
 }
 
-/* The light and the hour, under the phrase, with the mark that opens and closes the bar */
+/* The mark that opens and closes the bar, under the phrase */
 home-light .home-light__when {
   display: flex;
   justify-content: center;
@@ -188,13 +188,6 @@ home-light .home-light__q:not([hidden]) + .home-light__when {
 
 home-light .home-light__q[hidden] {
   display: none;
-}
-
-/* The hour reads left to right in every language */
-home-light .home-light__time {
-  font-variant-numeric: tabular-nums;
-  direction: ltr;
-  unicode-bidi: isolate;
 }
 
 /* Closed it points up, to where the bar opens; open it points down */

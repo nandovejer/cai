@@ -103,6 +103,12 @@
   display: grid;
 }
 
+/* Close under the hero's buttons: the page's gap less --luz-space-md, so
+   the globe's sky meets them without touching them, at every width */
+.luz-landing-main > .landing-light {
+  margin-block-start: calc(var(--luz-space-md) - var(--luz-space-3xl));
+}
+
 .landing-light > home-light,
 .landing-light__nojs {
   grid-area: 1 / 1;

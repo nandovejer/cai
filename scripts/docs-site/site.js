@@ -789,9 +789,10 @@ const azIdOf = (letter) => (letter === "#" ? "az-other" : `az-${letter.toLowerCa
 
 /**
  * One page of the A–Z index (`page` is the one being rendered; the first half
- * when it is not one of AZ_PAGES): a nav to the two halves, the row of letters
- * (a letter of the other half links to its section there), then one h2 and one
- * list per letter of this half that has entries.
+ * when it is not one of AZ_PAGES): a nav to the two halves that says so in
+ * words, the row of letters (a letter of the other half links to its section
+ * there; Other last, on the half that has it), a pointer to the components
+ * gallery, then one h2 and one list per letter of this half that has entries.
  */
 export function renderAZ(site, page) {
   const groups = new Map();
@@ -810,6 +811,8 @@ export function renderAZ(site, page) {
       return `<li>${link(there === half ? `#${azIdOf(l)}` : `${there.route}#${azIdOf(l)}`, l)}</li>`;
     })
     .join("");
+  // The row reaches every section of the page: Other too, when this half has it
+  const other = half.letters.includes("#") && groups.has("#") ? `<li>${link("#az-other", "Other")}</li>` : "";
   const sections = half.letters
     .filter((l) => groups.has(l))
     .map((l) => {
@@ -821,7 +824,8 @@ export function renderAZ(site, page) {
         .join("\n");
       return `  <section class="docs-az__letter" aria-labelledby="${id}">\n    <h2 id="${id}">${heading}</h2>\n    <ul class="docs-az__list">\n${items}\n    </ul>\n  </section>`;
     });
-  return `  <nav class="docs-az__halves" aria-label="Parts of the index">\n    <ul>${halves}</ul>\n  </nav>\n  <nav class="docs-az__letters" aria-label="Letters">\n    <ul>${jump}</ul>\n  </nav>\n${sections.join("\n")}`;
+  const gallery = `  <p>The components are also grouped by what they do in the ${link(`${DOCS_ROUTE}components/`, "components gallery")}.</p>`;
+  return `  <nav class="docs-az__halves" aria-label="Parts of the index">\n    <p>This index has two pages:</p>\n    <ul>${halves}</ul>\n  </nav>\n  <nav class="docs-az__letters" aria-label="Letters">\n    <ul>${jump}${other}</ul>\n  </nav>\n${gallery}\n${sections.join("\n")}`;
 }
 
 /* ---- Rendering --------------------------------------------------------- */

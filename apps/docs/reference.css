@@ -561,7 +561,23 @@
   color: var(--luz-text-secondary);
 }
 
-/* The two pages of the index: the current one is bold, not only coloured */
+/* The two pages of the index, said in words, then the links: the current
+   one is bold, not only coloured */
+.docs-az__halves {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: var(--luz-space-2xs) var(--luz-space-md);
+}
+
+/* As tall as the links, so the words and the links share a line */
+.docs-az__halves p {
+  display: flex;
+  align-items: center;
+  min-block-size: var(--luz-control-sm);
+  margin: 0;
+}
+
 .docs-az__halves ul {
   display: flex;
   flex-wrap: wrap;

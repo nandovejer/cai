@@ -3,8 +3,8 @@
    body.o-shell.luz-docs-shell > header, nav.luz-sidebar.luz-docs-nav,
    main.o-main.luz-docs-main, aside.luz-docs-rail, footer. Three columns
    from 80rem (the sidebar, the content, the rail), two from 60rem (the
-   rail is not drawn; the page foot carries Edit and Report), one below, in the
-   order of the markup. The header and the footer span the shell. The
+   rail under the content, in its column), one below, in the order of the
+   markup: nothing is lost when the third column goes (WCAG 1.4.10). The header and the footer span the shell. The
    content's children keep to the measure, --luz-docs-measure.
    Core gives the grid, the sidebar and its drawer (a popover nav at 768px
    and below); docs gives the tracks and the measure.
@@ -34,12 +34,13 @@
 	align-content: start;
 	gap: var(--luz-space-md);
 	min-inline-size: 0;
-	padding: var(--luz-space-lg) var(--luz-space-md) var(--luz-space-3xl);
+	/* The rail follows under the content below 80rem: room for one break, not two */
+	padding: var(--luz-space-lg) var(--luz-space-md) var(--luz-space-xl);
 }
 
 .luz-docs-rail {
 	grid-area: rail;
-	display: none;
+	min-inline-size: 0;
 }
 
 .luz-docs-shell > :where(footer) {
@@ -73,6 +74,7 @@
 		grid-template:
 			"head head" auto
 			"nav main" 1fr
+			"nav rail" auto
 			"nav foot" auto / var(--luz-docs-nav-w) minmax(0, 1fr);
 	}
 
@@ -94,8 +96,8 @@
 			"nav foot foot" auto / var(--luz-docs-nav-w) minmax(0, 1fr) var(--luz-docs-rail-w);
 	}
 
-	.luz-docs-rail {
-		display: block;
+	.luz-docs-main {
+		padding-block-end: var(--luz-space-3xl);
 	}
 }
 

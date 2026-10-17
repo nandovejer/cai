@@ -610,10 +610,11 @@ test.describe('review fixes', () => {
       await open(page, route, { time: '14:00' });
       await scrub(page, '09:30');
       await expect.poll(async () => (await html(page)).light).toBe('morning');
-      const hour = (await output(page).textContent())?.trim() ?? '';
-      expect(hour).toMatch(/\S/);
-      const expected = `${cat['light.morning']}${cat['light.sep']}${hour}`;
-      await expect(slider(page)).toHaveAttribute('aria-valuetext', expected);
+      // The hour is not shown in the bar any more (the owner's cut, 2026-10-17): the slider still says it
+      const prefix = `${cat['light.morning']}${cat['light.sep']}`;
+      await expect.poll(async () => (await slider(page).getAttribute('aria-valuetext')) ?? '').toMatch(/[0-9\u0660-\u0669]{2}\D[0-9\u0660-\u0669]{2}$/);
+      const expected = (await slider(page).getAttribute('aria-valuetext')) ?? '';
+      expect(expected.startsWith(prefix), `"${expected}" starts with "${prefix}"`).toBe(true);
       if (lang === 'en') expect(expected).toBe('Morning light, 09:30');
       if (lang === 'ar') {
         const valuetext = (await slider(page).getAttribute('aria-valuetext')) ?? '';
@@ -623,14 +624,14 @@ test.describe('review fixes', () => {
     });
   }
 
-  /* -- 3. The output is not a live region ------------------------------------ */
+  /* -- 3. The bar shows no hour, and nothing is a live region ------------------- */
 
-  test('the <output> is aria-live="off", and nothing in the light is a status or a polite live region', async ({ page }) => {
+  test('the bar shows no hour (no <output>), and nothing in the light is a status or a polite live region', async ({ page }) => {
     await open(page, '/', { time: '14:00' });
     await openBar(page);
-    await expect(output(page)).toHaveAttribute('aria-live', 'off');
+    await expect(output(page)).toHaveCount(0);
     await slider(page).fill('600');
-    await expect(output(page)).toHaveAttribute('aria-live', 'off');
+    expect(await visibleText(page.locator('home-light .home-light__bar')), 'no hour in the bar').not.toMatch(/[0-9\u0660-\u0669]{1,2}\D[0-9\u0660-\u0669]{2}/);
     expect(await page.locator('home-light').evaluate((el) => el.querySelectorAll('[role="status"], [role="alert"], [role="log"], [aria-live]:not([aria-live="off"])').length)).toBe(0);
   });
 
@@ -688,8 +689,6 @@ test.describe('review fixes', () => {
       expect(shown).toContain(cat['light.say.globe']);
       expect(phases.filter((name) => shown.includes(name)), 'no light name on the line').toEqual([]);
       expect(shown, 'no hour on the line').not.toMatch(/[0-9\u0660-\u0669]{1,2}\D[0-9\u0660-\u0669]{2}/);
-      // The hour stays in the bar, beside the slider
-      expect((await output(page).textContent())?.trim() ?? '').toMatch(/\S/);
     });
   }
 
@@ -720,6 +719,31 @@ test.describe('review fixes', () => {
     await open(page, '/');
     await expect(line(page).locator('svg, .home-light__mark')).toHaveCount(0);
     await expect(line(page)).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  /* -- 6c. The slider's thumb is a sun by day and a moon by night -------------- */
+
+  test("the slider's thumb is a sun while the scrubbed hour is day, a moon while it is night", async ({ page }) => {
+    await open(page, '/', { time: '14:00' });
+    await openBar(page);
+    const thumb = () => slider(page).evaluate((input) => {
+      const t = getComputedStyle(input, '::-webkit-slider-thumb');
+      return `${t.backgroundColor} ${t.backgroundImage} ${t.boxShadow}`;
+    });
+    await scrub(page, '12:00');
+    await expect(page.locator('home-light')).toHaveAttribute('data-sky', 'day');
+    const sun = await thumb();
+    await scrub(page, '23:30');
+    await expect(page.locator('home-light')).toHaveAttribute('data-sky', 'night');
+    expect(await thumb(), 'the thumb is drawn differently at night').not.toBe(sun);
+  });
+
+  /* -- 6d. The phrase sits 10 px lower than the light's box ---------------------- */
+
+  test('the line sits 10 px below the bottom of the light', async ({ page }) => {
+    await open(page, '/');
+    const d = await page.evaluate(() => document.querySelector('home-light .home-light__line').getBoundingClientRect().bottom - document.querySelector('home-light').getBoundingClientRect().bottom);
+    expect(Math.abs(d - 10), `the line's bottom is ${d}px below the light's`).toBeLessThanOrEqual(1);
   });
 
   /* -- 7. The Live button -------------------------------------------------------- */

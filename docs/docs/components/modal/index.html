@@ -247,11 +247,12 @@
     <p class="luz-docs-page-head__eyebrow">Components · Feedback and status</p>
     <h1 class="docs-title">Modal</h1>
     <p class="luz-docs-page-head__lead">Asks for a decision that must be made before the reader goes on, in a native dialog.</p>
-    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">components/modal.css</code></li><li>JS: modal.js</li><li>Light · Dark · High contrast</li><li><a href="#known-issues">1 known issue</a></li></ul>
+    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">components/modal.css</code></li><li>JS: modal.js</li><li>Light · Dark · High contrast</li><li><a href="#known-issues">2 known issues</a></li></ul>
   </header>
   <div class="docs-body">
     <div class="docs-component" id="c-modal">
           <h2 id="example">Example</h2>
+          <p>A button that opens a dialog asking whether to delete a draft.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <div class="o-row">
@@ -272,10 +273,12 @@
             </dialog>
           </div>
 
-          <p class="docs-demo__note">A native <code class="luz-code-inline">&lt;dialog&gt;</code>. Escape closes it and focus goes back to the button that opened it. Nothing is deleted here.</p>
+          <p class="docs-demo__note">A native <code class="luz-code-inline">&lt;dialog&gt;</code>.</p>
+          <p class="docs-demo__note">Escape closes it and focus goes back to the button that opened it. Nothing is deleted here.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>Some supported browsers do not have the <code>command</code> and <code>commandfor</code> attributes yet. In those browsers, with JavaScript off, the open button does nothing. Give the reader another way to the same action.</p>
+          <p>Some supported browsers do not have the <code>command</code> and <code>commandfor</code> attributes yet. In those browsers, with JavaScript off, the open button does nothing.</p>
+          <p>Give the reader another way to the same action.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Modal documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>

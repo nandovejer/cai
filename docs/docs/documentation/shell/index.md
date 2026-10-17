@@ -46,7 +46,9 @@ CSS from `@luz-ds/docs` on core's shell and sidebar. Docs gives the tracks and t
 - Every child of the content keeps to `--luz-docs-measure`, so an example is as wide as a line of text. In print the rail is left out.
 
 ### Without JavaScript
-Nothing changes: the layout is CSS. The drawer is a popover opened by the menu button's `popovertarget`, with no script. In a browser without the popover API the sidebar stays in the page, above the content.
+Nothing changes: the layout is CSS. The drawer is a popover opened by the menu button's `popovertarget`, with no script.
+
+In a browser without the popover API the sidebar stays in the page, above the content.
 
 ### Keyboard and ARIA
 - **Order:** the order of the source; the grid does not change it. Skip link, header, sidebar, content, rail, footer.

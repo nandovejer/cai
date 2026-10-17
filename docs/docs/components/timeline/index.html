@@ -252,6 +252,7 @@
   <div class="docs-body">
     <div class="docs-component" id="c-timeline">
           <h2 id="example">Example</h2>
+          <p>The releases of an app as a timeline, in its horizontal and its vertical layouts.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <p class="docs-demo__note">Horizontal, the default. Pick a date, or use Previous and Next, the arrow keys on the dates, or swipe.</p>
@@ -443,7 +444,8 @@
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>A custom element around a native ordered list, with styles from <code>components/timeline.css</code> and a script, <code>timeline.js</code>. <code>luz.js</code> loads the script only on a page that has a <code>&lt;luz-timeline&gt;</code>. The element looks for the first <code>.luz-timeline</code> inside it; with none, it does nothing.</p>
+            <p>A custom element around a native ordered list, with styles from <code>components/timeline.css</code> and a script, <code>timeline.js</code>. <code>luz.js</code> loads the script only on a page that has a <code>&lt;luz-timeline&gt;</code>.</p>
+            <p>The element looks for the first <code>.luz-timeline</code> inside it; with none, it does nothing.</p>
             <ul>
               <li><strong>Horizontal.</strong> The script builds, with DOM methods only, Previous and Next at the sides of the card and a rail of dates under it: one button per item, with the text of its date. The cards share one grid cell, so the band is as tall as the longest card and nothing jumps when you change the item. The cards that are not current are <code>inert</code> and hidden. In the current card the date is hidden from sight, because the rail shows it.</li>
               <li><strong>Changing the item.</strong> Click a date, use Previous and Next, the arrow keys, Home and End on the rail, or swipe more than 40 px sideways with a finger or the mouse. Toward the start of the line is the next item. Past either end it wraps round. A swipe that ends on a link is not a click on it.</li>
@@ -453,7 +455,8 @@
               <li><strong>Text.</strong> "Previous", "Next", "Pause" and "Play" are in the language of the page when LUZ ships it (English, Spanish), chosen by the nearest <code>lang</code>, or yours through <code>registerLocale()</code> and <code>data-luz-label-*</code>. They travel with the script, so <code>@luz-ds/core/timeline</code> works on its own. With <code>luz.js</code> on the page, a language you add with <code>registerLocale()</code> reaches them too. See <a href="../../../docs/get-started/javascript/">the JavaScript modules</a>.</li>
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does. Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.</p>
+            <p>An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does.</p>
+            <p>Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab reaches, in this order: Previous, the links in the current card, Next, the current date on the rail and the Pause or Play button. The other dates are not in the Tab order: the arrow keys move between them.</p>
             <ul>

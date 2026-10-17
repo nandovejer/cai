@@ -3,7 +3,9 @@
 Shows a few facts about something on one line, such as its date, its reading time and its author, with a dot between them.
 
 ### Known issues
-The dots are hidden from screen readers with alternative text for generated content, which Firefox has since version 128 and Safari since 17.4. An older browser lets a screen reader read each dot. Not yet tested with a screen reader.
+The dots are hidden from screen readers with alternative text for generated content, which Firefox has since version 128 and Safari since 17.4. An older browser lets a screen reader read each dot.
+
+Not yet tested with a screen reader.
 
 ### Copy the markup
 Meta line markup

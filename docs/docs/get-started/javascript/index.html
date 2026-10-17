@@ -302,7 +302,8 @@ initTabs();</code></pre>
           </div>
           </details>
           <h3 id="js-languages">Languages and the strings scripts write</h3>
-          <p>English is in the entry. Every other language LUZ ships is a small file, fetched at start for a page whose <code>&lt;html lang&gt;</code>, or any <code>lang</code> outside a link or an option, names it; a page in English makes no request. With the individual modules, call <code>loadLocales()</code> yourself, and <code>await loadLocales()</code> before <code>initHighlight()</code>, <code>initPlayers()</code> and <code>initThemeCycle()</code>. A file that cannot load is one console warning, and English.</p>
+          <p>English is in the entry. Every other language LUZ ships is a small file, fetched at start for a page whose <code>&lt;html lang&gt;</code>, or any <code>lang</code> outside a link or an option, names it; a page in English makes no request.</p>
+          <p>With the individual modules, call <code>loadLocales()</code> yourself, and <code>await loadLocales()</code> before <code>initHighlight()</code>, <code>initPlayers()</code> and <code>initThemeCycle()</code>. A file that cannot load is one console warning, and English.</p>
           <p>For a language LUZ does not ship, set <code>data-luz-label-*</code> once on <code>&lt;html&gt;</code> or <code>&lt;body&gt;</code>, or call <code>registerLocale()</code> before the scripts start.</p>
           <p>To check the file, put an import map with an <code>integrity</code> section for it before the first module script, on the pages in that language only. A <code>modulepreload</code> link with <code>integrity</code> is not a guard in Safari or Firefox: use it as a performance hint.</p>
           <p>A language for LUZ is a pull request: the JSON file <code>packages/core/src/i18n/&lt;code&gt;.json</code>, one line in the <code>files</code> map of <code>i18n.js</code> and a budget row. The steps are in AGENTS.md.</p>
@@ -344,7 +345,7 @@ initTabs();</code></pre>
       <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="../../../docs/get-started/layers/"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">Cascade layers</span></a></li>
     </ul>
   </nav>
-  <p class="luz-docs-page-foot">Last updated <time datetime="2026-10-16">16 October 2026</time> · <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/get-started/javascript.html">Edit this page</a> · <a href="https://github.com/nandovejer/luz/issues/new?title=JavaScript%20modules">Report a problem</a></p>
+  <p class="luz-docs-page-foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/get-started/javascript.html">Edit this page</a> · <a href="https://github.com/nandovejer/luz/issues/new?title=JavaScript%20modules">Report a problem</a></p>
   </main>
   <aside class="luz-docs-rail" aria-label="About this page">
   <div class="luz-docs-rail__inner">

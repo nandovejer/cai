@@ -3,7 +3,9 @@
 Adds a short hint to a control on hover or focus; never essential content.
 
 ### Known issues
-Partly fails WCAG 1.4.13 (content on hover or focus): Escape does not close the tooltip, so the reader has to move the pointer or the focus away. Keep tooltips short and non-essential. Listed in the [accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/).
+Partly fails WCAG 1.4.13 (content on hover or focus): Escape does not close the tooltip, so the reader has to move the pointer or the focus away. Keep tooltips short and non-essential.
+
+Listed in the [accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/).
 
 ### Copy the markup
 Tooltip markup
@@ -15,7 +17,9 @@ Tooltip markup
 ```
 
 ### Variants and options
-One position: above the control, centred. Where the browser has CSS anchor positioning, the tip moves below the control when there is no room above. There are no modifiers.
+One position: above the control, centred. Where the browser has CSS anchor positioning, the tip moves below the control when there is no room above.
+
+There are no modifiers.
 
 - `.luz-tooltip`: Wraps the control and the tip, and opens the tip on hover and on focus inside
 - `.luz-tooltip__text`: The tip: one line, on the strong surface, with a shadow

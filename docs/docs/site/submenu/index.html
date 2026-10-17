@@ -247,11 +247,12 @@
     <p class="luz-docs-page-head__eyebrow">Site · Patterns</p>
     <h1 class="docs-title">Submenu</h1>
     <p class="luz-docs-page-head__lead">Groups a few links of a header under one button, so the header keeps a short row of links.</p>
-    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">&lt;luz-submenu&gt;</code></li><li>No JavaScript</li><li>Light · Dark · High contrast</li><li>Tested</li><li><a href="#known-issues">1 known issue</a></li></ul>
+    <ul class="luz-docs-page-head__meta"><li><code class="docs-demo__file">&lt;luz-submenu&gt;</code></li><li>No JavaScript</li><li>Light · Dark · High contrast</li><li>Tested</li><li><a href="#known-issues">2 known issues</a></li></ul>
   </header>
   <div class="docs-body">
     <div class="docs-component" id="p-submenu">
           <h2 id="example">Example</h2>
+          <p>A winery’s header with two submenus: Wines and About us.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <header class="luz-landing-header">
@@ -295,7 +296,8 @@
           <p class="docs-demo__note">Press Wines or About us. From 769 px of window width each opens a box under its button; at 768 px and below the links are in the menu, and each group opens in place, under its button.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
-          <p>A submenu is a native <code>&lt;details&gt;</code>, which has no Escape key and does not close when you click elsewhere: it closes when you press its button again or open another one (in browsers that support <code>name</code> on <code>&lt;details&gt;</code>: Chrome and Edge 120, Safari 17.2, Firefox 130; in older ones several can be open at once). From 769 px an open box stays over the top of the page until then, and if you keep pressing Tab after it, a link of the page behind it can be hidden (WCAG 2.2 success criterion 2.4.11, Focus not obscured). In the menu at 768 px and below this does not happen: the links are in the flow and Escape closes the whole menu. It has not been tested with a screen reader.</p>
+          <p>A submenu is a native <code>&lt;details&gt;</code>, which has no Escape key and does not close when you click elsewhere: it closes when you press its button again or open another one (in browsers that support <code>name</code> on <code>&lt;details&gt;</code>: Chrome and Edge 120, Safari 17.2, Firefox 130; in older ones several can be open at once). From 769 px an open box stays over the top of the page until then, and if you keep pressing Tab after it, a link of the page behind it can be hidden (WCAG 2.2 success criterion 2.4.11, Focus not obscured).</p>
+          <p>In the menu at 768 px and below this does not happen: the links are in the flow and Escape closes the whole menu. It has not been tested with a screen reader.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Submenu documentation">
             <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
             <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
@@ -303,7 +305,8 @@
           <div class="luz-tabpanel docs-view" id="code-panel">
             <h2 class="docs-view__title" id="code">Code</h2>
             <h3 id="markup">Copy the markup</h3>
-            <p>An item of the list of core’s <a href="../../../docs/components/navbar/">navbar</a>, in a <a href="../../../docs/landing/header/">landing</a> or <a href="../../../docs/cms/header/">CMS</a> header, whose content is a <code>&lt;luz-submenu&gt;</code> around a <code>&lt;details&gt;</code>: its <code>&lt;summary&gt;</code> is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place. Give every submenu of the header the same <code>name</code>, so opening one closes the others.</p>
+            <p>An item of the list of core’s <a href="../../../docs/components/navbar/">navbar</a>, in a <a href="../../../docs/landing/header/">landing</a> or <a href="../../../docs/cms/header/">CMS</a> header, whose content is a <code>&lt;luz-submenu&gt;</code> around a <code>&lt;details&gt;</code>: its <code>&lt;summary&gt;</code> is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place.</p>
+            <p>Give every submenu of the header the same <code>name</code>, so opening one closes the others.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
                 <span class="docs-snippet__lang">HTML</span>

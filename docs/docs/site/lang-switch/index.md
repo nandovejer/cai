@@ -3,7 +3,9 @@
 Lets readers go to the same page in another language, from a button in the header.
 
 ### Known issues
-The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe. It has not been tested with a screen reader yet.
+The list opens at a fixed place under the header, not under its button: placing it next to the button needs CSS anchor positioning, which is not yet available in every browser. Below 360 px wide the button shows the globe only, to keep the header on one row; the language’s name is still its accessible name, so a sighted reader has to recognise the globe.
+
+It has not been tested with a screen reader yet.
 
 ### Copy the markup
 One link per language, to the same page in that language, in the header of every translated page. On each page mark its own language with `aria-current="page"` and write the label in the page’s language.
@@ -39,7 +41,9 @@ There are no variants. One custom property places the list.
 - `--luz-lang-switch-top`: How far from the top of the screen the list opens. Defaults to `--luz-bar-h`, the height of a one-row bar of 44 px controls; set it on the tag if your header is taller.
 
 ### How it works
-Changing language is going to another page, so the switch is a list of links. The button opens it with the native `popovertarget`, and `@luz-ds/site` only styles it: there is no script. `<luz-lang-switch>` is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the `nav` carry the meaning.
+Changing language is going to another page, so the switch is a list of links. The button opens it with the native `popovertarget`, and `@luz-ds/site` only styles it: there is no script.
+
+`<luz-lang-switch>` is a tag that no script ever defines; it only gives the block a name in the markup and in CSS, and adds no role: the button and the `nav` carry the meaning.
 
 - Each language is named in that language, with `lang` so a screen reader pronounces it, and `hreflang` so the link says where it goes.
 - The list is a popover in the top layer, fixed under the header at the inline end; it mirrors in right-to-left text.

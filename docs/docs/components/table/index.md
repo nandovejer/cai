@@ -82,7 +82,9 @@ A native `<table>` with `<caption>`, `<thead>` and `<th scope>`, styled by `comp
 - Cards change the `display` of the table elements, which can hide the table from some screen readers. The stylesheet recommends `role="table"`, `"row"` and `"cell"` on a table that stacks.
 
 ### Without JavaScript
-Nothing changes: scrolling, the sticky column and the cards are all CSS. A heading with a link sorts on the server; a plain heading is just a heading. Rows are never hidden, and if the script does not load the table stays whole.
+Nothing changes: scrolling, the sticky column and the cards are all CSS. A heading with a link sorts on the server; a plain heading is just a heading.
+
+Rows are never hidden, and if the script does not load the table stays whole.
 
 #### Loading the sort on its own
 

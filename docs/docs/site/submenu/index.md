@@ -3,10 +3,14 @@
 Groups a few links of a header under one button, so the header keeps a short row of links.
 
 ### Known issues
-A submenu is a native `<details>`, which has no Escape key and does not close when you click elsewhere: it closes when you press its button again or open another one (in browsers that support `name` on `<details>`: Chrome and Edge 120, Safari 17.2, Firefox 130; in older ones several can be open at once). From 769 px an open box stays over the top of the page until then, and if you keep pressing Tab after it, a link of the page behind it can be hidden (WCAG 2.2 success criterion 2.4.11, Focus not obscured). In the menu at 768 px and below this does not happen: the links are in the flow and Escape closes the whole menu. It has not been tested with a screen reader.
+A submenu is a native `<details>`, which has no Escape key and does not close when you click elsewhere: it closes when you press its button again or open another one (in browsers that support `name` on `<details>`: Chrome and Edge 120, Safari 17.2, Firefox 130; in older ones several can be open at once). From 769 px an open box stays over the top of the page until then, and if you keep pressing Tab after it, a link of the page behind it can be hidden (WCAG 2.2 success criterion 2.4.11, Focus not obscured).
+
+In the menu at 768 px and below this does not happen: the links are in the flow and Escape closes the whole menu. It has not been tested with a screen reader.
 
 ### Copy the markup
-An item of the list of core’s [navbar](https://nandovejer.github.io/luz/docs/components/navbar/), in a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header, whose content is a `<luz-submenu>` around a `<details>`: its `<summary>` is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place. Give every submenu of the header the same `name`, so opening one closes the others.
+An item of the list of core’s [navbar](https://nandovejer.github.io/luz/docs/components/navbar/), in a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header, whose content is a `<luz-submenu>` around a `<details>`: its `<summary>` is the button, and a list of links follows it. No class: the tag is the block, and its parts are found by their place.
+
+Give every submenu of the header the same `name`, so opening one closes the others.
 
 Submenu markup
 ```html

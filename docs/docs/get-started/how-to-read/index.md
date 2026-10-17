@@ -17,7 +17,9 @@ What each class prefix means
 - `.luz-docs-`: A piece of a documentation page: docs: `.luz-docs-pager`
 - `.is-`: A state a script mirrors onto an element. Read it, but do not style from outside: it is not part of what you can rely on: core: `.is-active`
 
-Inside a component, two separators say how the pieces fit. A double underscore names a part of the component: `.luz-card__title` is the title of a card. A double hyphen names a variant of it: `.luz-btn--primary` is the primary button.
+Inside a component, two separators say how the pieces fit. A double underscore names a part of the component: `.luz-card__title` is the title of a card.
+
+A double hyphen names a variant of it: `.luz-btn--primary` is the primary button.
 
 Read this markup from left to right, one class at a time.
 

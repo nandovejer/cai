@@ -102,7 +102,9 @@ The options are attributes of `<luz-timeline>`. Each item has a date, a title an
 - `data-luz-state`: Written by the script on the items of a vertical timeline: `active` or `past`. Do not set it yourself
 
 ### How it works
-A custom element around a native ordered list, with styles from `components/timeline.css` and a script, `timeline.js`. `luz.js` loads the script only on a page that has a `<luz-timeline>`. The element looks for the first `.luz-timeline` inside it; with none, it does nothing.
+A custom element around a native ordered list, with styles from `components/timeline.css` and a script, `timeline.js`. `luz.js` loads the script only on a page that has a `<luz-timeline>`.
+
+The element looks for the first `.luz-timeline` inside it; with none, it does nothing.
 
 - **Horizontal.** The script builds, with DOM methods only, Previous and Next at the sides of the card and a rail of dates under it: one button per item, with the text of its date. The cards share one grid cell, so the band is as tall as the longest card and nothing jumps when you change the item. The cards that are not current are `inert` and hidden. In the current card the date is hidden from sight, because the rail shows it.
 - **Changing the item.** Click a date, use Previous and Next, the arrow keys, Home and End on the rail, or swipe more than 40 px sideways with a finger or the mouse. Toward the start of the line is the next item. Past either end it wraps round. A swipe that ends on a link is not a click on it.
@@ -112,7 +114,9 @@ A custom element around a native ordered list, with styles from `components/time
 - **Text.** "Previous", "Next", "Pause" and "Play" are in the language of the page when LUZ ships it (English, Spanish), chosen by the nearest `lang`, or yours through `registerLocale()` and `data-luz-label-*`. They travel with the script, so `@luz-ds/core/timeline` works on its own. With `luz.js` on the page, a language you add with `registerLocale()` reaches them too. See [the JavaScript modules](https://nandovejer.github.io/luz/docs/get-started/javascript/).
 
 ### Without JavaScript
-An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does. Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.
+An ordered list, with every item visible: a line down the inline-start side with a dot at each item, then the date, the title and the text. The list looks the same before the script has defined the element, so nothing jumps when it does.
+
+Autoplay, the rail, Previous and Next, the swipe and the active mark of the vertical layout need JavaScript.
 
 ### Keyboard and ARIA
 Tab reaches, in this order: Previous, the links in the current card, Next, the current date on the rail and the Pause or Play button. The other dates are not in the Tab order: the arrow keys move between them.

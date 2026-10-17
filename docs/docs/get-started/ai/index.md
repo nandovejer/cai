@@ -4,13 +4,13 @@ What an AI coding agent can read, how to check what it wrote, and the accessibil
 
 ### Check what an agent wrote
 
-`npx @luz-ds/check` reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and color tokens are wrong. It reads files and writes nothing. It needs Node 20 or later.
+`npx @luz-ds/check` reads the HTML and CSS of a project, offline, and says which LUZ classes, elements, load order and color tokens are wrong. It reads files and writes nothing.
 
 The files an agent can read are linked from `llms.txt`. The commands with paths, the options and exit codes (`npx @luz-ds/check --help`), a sample of the output, the fields of `--json` and the tables of the files and of the rules are on the page at the URL above.
 
 ### What check blocks and what it warns about
 
-Each rule has an id such as `class/unknown`, shown in every finding. A rule that blocks makes the exit code 1. A rule that warns does not, unless you pass `--strict`. The two tables are written from the list of rules the command has.
+Each rule has an id such as `class/unknown`, shown in every finding. A rule that blocks makes the exit code 1.
 
 ### The accessibility reviewer
 

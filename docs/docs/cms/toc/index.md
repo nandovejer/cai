@@ -3,7 +3,9 @@
 Lists the sections of a long article, beside the text when there is room and above it when there is not.
 
 ### Known issues
-The mark on the section in view needs core's script; without it, no link is marked. Beside the text, the contents sit at the inline end but come first in the source, so Tab reaches them before the text. Not yet tested with a screen reader.
+The mark on the section in view needs core's script; without it, no link is marked. Beside the text, the contents sit at the inline end but come first in the source, so Tab reaches them before the text.
+
+Not yet tested with a screen reader.
 
 ### Copy the markup
 Table of contents markup

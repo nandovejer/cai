@@ -67,7 +67,9 @@ import "@luz-ds/core";
 
 ### Level 3: tokens, core and site
 
-Six components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner. Site needs core and tokens. The page structure, from the header to the footer, is in landing and cms, which work without site.
+Six components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner. Site needs core and tokens.
+
+The page structure, from the header to the footer, is in landing and cms, which work without site.
 
 `pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site`
 
@@ -95,7 +97,16 @@ import "@luz-ds/site";
 
 ### Packages for one kind of site
 
-On top of level 3, a package can add what one kind of site needs: [Landing](https://nandovejer.github.io/luz/docs/landing/), the header, hero, sections and footer of a landing page and blocks to copy for it, [CMS](https://nandovejer.github.io/luz/docs/cms/), the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS, [App](https://nandovejer.github.io/luz/docs/app/), the header and the dashboard of a web application, and [Documentation](https://nandovejer.github.io/luz/docs/documentation/), the shell, page head, rail, example, do and don't, pager and page foot of a documentation site. Each needs the packages of level 2, loaded first; site is optional for them, and the commands below add it for its search and its language switch. Install the one you need.
+On top of level 3, a package can add what one kind of site needs:
+
+- [Landing](https://nandovejer.github.io/luz/docs/landing/): the header, hero, sections and footer of a landing page, and blocks to copy for it.
+- [CMS](https://nandovejer.github.io/luz/docs/cms/): the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS.
+- [App](https://nandovejer.github.io/luz/docs/app/): the header and the dashboard of a web application.
+- [Documentation](https://nandovejer.github.io/luz/docs/documentation/): the shell, page head, rail, example, do and don't, pager and page foot of a documentation site.
+
+Each needs the packages of level 2, loaded first. Site is optional for them, and the commands below add it for its search and its language switch.
+
+Install the one you need.
 
 `pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/landing`
 
@@ -159,7 +170,11 @@ curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css | opens
 
 Write the result as `integrity="sha384-…"` on the tag that loads that file, and repeat it for each file.
 
-A hash on a script covers that file only, not the files it loads later. `site.min.js` loads `search.min.js` on a page with a search and `consent.min.js` on a page with a cookie banner and `mode.min.js` on a page with an Auto color mode. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A `<link rel="modulepreload">` with a hash is not a guard in Safari or Firefox: use it as a performance hint only.
+A hash on a script covers that file only, not the files it loads later. `site.min.js` loads `search.min.js` on a page with a search and `consent.min.js` on a page with a cookie banner and `mode.min.js` on a page with an Auto color mode.
+
+Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked.
+
+A `<link rel="modulepreload">` with a hash is not a guard in Safari or Firefox: use it as a performance hint only.
 
 Integrity for the site scripts
 ```html

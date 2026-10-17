@@ -17,9 +17,9 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../boot.js" ></script>
   <script type="module" crossorigin src="../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../assets/landing-BagdSstR.js"></script>
+  <script type="module" crossorigin src="../assets/landing-BUwKwoMU.js"></script>
   <link rel="stylesheet" crossorigin href="../assets/header-enjYdf1s.css">
-  <link rel="stylesheet" crossorigin href="../assets/landing-DLJz4QDG.css">
+  <link rel="stylesheet" crossorigin href="../assets/landing-CkiJMQ4u.css">
   <link rel="stylesheet" crossorigin href="../assets/header-BXzNEBss.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
@@ -34,16 +34,8 @@
       data-luz-label-copied-status="تم النسخ إلى الحافظة"
       data-luz-label-copy-failed="تعذّر النسخ. حدّد النص وانسخه يدويًا."
       data-luz-label-light-open="إظهار شريط الضوء"
-      data-luz-label-light-looks="ما يقع عليه الضوء"
-      data-luz-label-light-globe="الكرة الأرضية"
-      data-luz-label-light-city="المدينة"
-      data-luz-label-light-map="الخريطة"
       data-luz-label-light-say-globe="نظام التصميم عالَمٌ له قوانينه الخاصة في الضوء."
-      data-luz-label-light-say-city="تُبنى المدينة قطعةً قطعة، وكذلك نظام التصميم."
-      data-luz-label-light-say-map="الخريطة ليست هي الأرض، لكنها تشبهها."
-      data-luz-label-light-globe-alt="كرة من النقاط تضيئها الشمس كما هي الآن: جانب النهار يواجه الضوء وجانب الليل يخبو."
-      data-luz-label-light-city-alt="أفق من أبراج مرسومة بالخطوط: حبر على ورق نهارًا، ونيون ليلًا."
-      data-luz-label-light-map-alt="خريطة مدينة: حبر على ورق نهارًا، ونيون ليلًا."
+      data-luz-label-light-globe-alt="كرة أرضية تضيئها الشمس كما هي الآن، يابستها أحجية من قطعة رمادية باهتة لكل بلد: جانب النهار يواجه الضوء وجانب الليل يخبو."
       data-luz-label-light-scrub="تصفّح ساعات اليوم"
       data-luz-label-light-live="العودة إلى الآن"
       data-luz-label-light-sep="، "
@@ -180,13 +172,13 @@
     </section>
 
     <!-- ====================== 2. THE LIGHT ======================
-         The visitor's sky over a globe, a city or a map (apps/landing/light/),
+         The visitor's sky over a globe (apps/landing/light/),
          from edge to edge of the window. Without JavaScript the element stays
          empty, light.css keeps its room and the sentence after it says what
          the room is for; once <home-light> is defined the sentence goes -->
     <section class="luz-landing-hero__media luz-landing-hero__media--bleed landing-light" id="light" aria-labelledby="light-title">
       <h2 class="u-sr-only" id="light-title">الضوء حيث أنت</h2>
-      <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
+      <home-light bleed favicon></home-light>
       <p class="landing-light__nojs">عند تفعيل JavaScript، يُرسم هنا ضوء ساعتك.</p>
     </section>
 

@@ -132,4 +132,6 @@ App shell markup
 </body>
 ```
 
-The footer is a plain `<footer>`, which core places across the bottom: nothing here needs site. For whole pages without a sidebar, use [`.o-page`](https://nandovejer.github.io/luz/docs/components/layout/#objects-page). [What each package needs](https://nandovejer.github.io/luz/docs/get-started/structure/#needs) lists every piece.
+The footer is a plain `<footer>`, which core places across the bottom: nothing here needs site. For whole pages without a sidebar, use [`.o-page`](https://nandovejer.github.io/luz/docs/components/layout/#objects-page).
+
+[What each package needs](https://nandovejer.github.io/luz/docs/get-started/structure/#needs) lists every piece.

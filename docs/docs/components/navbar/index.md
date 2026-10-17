@@ -3,7 +3,9 @@
 Puts the main links of a site in a header's row, and in a panel under it on a narrow screen.
 
 ### Known issues
-If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it. This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA).
+If you keep pressing Tab after the last link of the open menu, focus moves on into the page and the menu stays open over it, hiding what is behind. Escape closes it.
+
+This meets WCAG 2.4.11 (AA) and does not meet 2.4.12 (AAA).
 
 - **Browsers without anchor positioning.** Where CSS anchor positioning is supported (Chrome and Edge 125, Safari 26, Firefox 147) the panel opens under the bar wherever it ends, even with a notice or the cookie banner above it. Elsewhere it opens at `--luz-bar-h` from the top of the window: with enlarged text and a bar that wraps to a second row, or with a band above the bar before the page scrolls, it can cover part of the bar. Escape or a click outside closes it.
 - **Forced colors in Firefox.** The dim layer behind the open menu is not drawn, so the page is not dimmed. The panel keeps its border, so it is still set apart.

@@ -63,7 +63,9 @@ CSS from `@luz-ds/app` on core's shell, sticky bar, drawer and dropdown. No Java
 - The view's `h1` and its main action are not here: they are the first row of the [dashboard](https://nandovejer.github.io/luz/docs/app/dashboard/). The bar holds only what is the same in every view.
 
 ### Without JavaScript
-Nothing changes. The drawer and the account list are popovers opened by the button's `popovertarget`, with no script, and site's search shows its link to the A–Z index. In a browser without the popover API the sidebar stays in the page above the content, the menu button is not shown, and the account list stays under its button.
+Nothing changes.
+
+The drawer and the account list are popovers opened by the button's `popovertarget`, with no script, and site's search shows its link to the A–Z index. In a browser without the popover API the sidebar stays in the page above the content, the menu button is not shown, and the account list stays under its button.
 
 ### Keyboard and ARIA
 - **Order:** the order of the source and of the screen. Skip link, the sidebar (a column from 769 px), the search, the account, then the view. At 768 px and below the closed drawer is out of the order: skip link, menu button, search, account, then the view.

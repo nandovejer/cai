@@ -252,6 +252,7 @@
   <div class="docs-body">
     <div class="docs-component" id="p-mode">
           <h2 id="example">Example</h2>
+          <p>The color mode switcher with its Auto choice, disabled so that it does not change this page.</p>
           <div class="docs-example" data-docs-specimen>
           <div class="docs-demo__stage">
             <fieldset class="luz-mode-switcher" disabled>
@@ -262,7 +263,8 @@
                   <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="mode-specimen" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>High contrast</label>
                 </fieldset>
           </div>
-          <p class="docs-demo__note">The radio group the element wraps, disabled here because a working one would change the color mode of this whole page. Auto is the fourth radio, checked until the reader chooses. The switcher in this page's footer is <a href="../../../docs/components/mode-switcher/">core's</a>, with three modes.</p>
+          <p class="docs-demo__note">The radio group the element wraps, disabled here because a working one would change the color mode of this whole page. Auto is the fourth radio, checked until the reader chooses.</p>
+          <p class="docs-demo__note">The switcher in this page's footer is this element around <a href="../../../docs/components/mode-switcher/">core's</a> radios, with Auto first. On this site Auto follows the clock.</p>
           </div>
           <h2 id="known-issues">Known issues</h2>
           <p>What to expect:</p>
@@ -301,7 +303,8 @@
 &lt;/luz-mode&gt;</code></pre>
             </div>
             <h4 id="boot">Script for the head</h4>
-            <p>This script, for <code>by="system"</code>, avoids the flash of the wrong mode: it sets <code>data-theme</code> before the first paint. It is recommended, not required. It takes the mode stored under <code>luz-theme</code>, then <code>prefers-contrast</code>, then <code>prefers-color-scheme</code>.</p>
+            <p>This script, for <code>by="system"</code>, avoids the flash of the wrong mode: it sets <code>data-theme</code> before the first paint. It is recommended, not required.</p>
+            <p>It takes the mode stored under <code>luz-theme</code>, then <code>prefers-contrast</code>, then <code>prefers-color-scheme</code>.</p>
             <p>Under a CSP without <code>'unsafe-inline'</code>, serve it as a classic file in the <code>&lt;head&gt;</code> or allow it by its <code>'sha256-…'</code> hash.</p>
             <div class="docs-snippet">
               <div class="docs-snippet__bar">
@@ -335,7 +338,8 @@
               </table>
             </div>
             <h3 id="how">How it works</h3>
-            <p>CSS from <code>@luz-ds/site</code> for the element's box and <code>@luz-ds/site/mode</code>, which defines <code>&lt;luz-mode&gt;</code>. <code>site.min.js</code> loads it when idle, on a page with a <code>&lt;luz-mode&gt;</code>. The radios and labels are core's: the element writes no text.</p>
+            <p>CSS from <code>@luz-ds/site</code> for the element's box and <code>@luz-ds/site/mode</code>, which defines <code>&lt;luz-mode&gt;</code>. <code>site.min.js</code> loads it when idle, on a page with a <code>&lt;luz-mode&gt;</code>.</p>
+            <p>The radios and labels are core's: the element writes no text.</p>
             <ul>
               <li><strong>Auto by the system:</strong> <code>prefers-contrast: more</code> gives <code>high-contrast</code>; otherwise <code>prefers-color-scheme: dark</code> gives <code>dark</code>; otherwise <code>light</code>. It follows a change while the page is open.</li>
               <li><strong>Auto by the clock:</strong> <code>prefers-contrast: more</code> still wins. Otherwise the phase of the day decides: <code>dark</code> in the dark phases, <code>light</code> in the others, and it is written as <code>data-light</code>. It checks every minute and when the tab shows again.</li>
@@ -393,7 +397,8 @@
 }</code></pre>
             </div>
             <h3 id="no-js">Without JavaScript</h3>
-            <p>The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light. The system and the clock are not followed, and nothing is remembered.</p>
+            <p>The four radios show, even in the cycle variant, and core's tokens change the mode from the checked one. Auto is light.</p>
+            <p>The system and the clock are not followed, and nothing is remembered.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <ul>
               <li><strong>Radios:</strong> Tab reaches the group, the arrow keys choose Auto, Light, Dark or High contrast. With <code>luz.js</code>, the cycle button moves to the next of the four with Enter or Space.</li>

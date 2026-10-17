@@ -17,9 +17,9 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../boot.js" ></script>
   <script type="module" crossorigin src="../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../assets/landing-BagdSstR.js"></script>
+  <script type="module" crossorigin src="../assets/landing-BUwKwoMU.js"></script>
   <link rel="stylesheet" crossorigin href="../assets/header-enjYdf1s.css">
-  <link rel="stylesheet" crossorigin href="../assets/landing-DLJz4QDG.css">
+  <link rel="stylesheet" crossorigin href="../assets/landing-CkiJMQ4u.css">
   <link rel="stylesheet" crossorigin href="../assets/header-BXzNEBss.css">
 </head>
 <!-- The strings core's scripts write (the color mode button, the copy
@@ -34,16 +34,8 @@
       data-luz-label-copied-status="Copiado al portapapeles"
       data-luz-label-copy-failed="No se pudo copiar. Selecciona el texto y cópialo a mano."
       data-luz-label-light-open="Mostrar la barra de la luz"
-      data-luz-label-light-looks="Sobre qué cae la luz"
-      data-luz-label-light-globe="Globo"
-      data-luz-label-light-city="Ciudad"
-      data-luz-label-light-map="Mapa"
       data-luz-label-light-say-globe="Un sistema de diseño es un mundo con sus propias leyes de la luz."
-      data-luz-label-light-say-city="Una ciudad se construye pieza a pieza. Un sistema de diseño también."
-      data-luz-label-light-say-map="El mapa no es el territorio, pero lo parece."
-      data-luz-label-light-globe-alt="Un globo de puntos iluminado por el sol tal como está ahora: el lado del día mira a la luz y el de la noche se apaga."
-      data-luz-label-light-city-alt="Un horizonte de torres dibujadas con líneas: tinta sobre papel de día, neón de noche."
-      data-luz-label-light-map-alt="Un mapa de ciudad: tinta sobre papel de día, neón de noche."
+      data-luz-label-light-globe-alt="Un globo iluminado por el sol tal como está ahora, con la tierra hecha un puzle de una pieza gris tenue por país: el lado de día mira a la luz y el de noche se apaga."
       data-luz-label-light-scrub="Recorrer el día"
       data-luz-label-light-live="Volver a ahora"
       data-luz-label-light-sep=", "
@@ -180,13 +172,13 @@
     </section>
 
     <!-- ====================== 2. THE LIGHT ======================
-         The visitor's sky over a globe, a city or a map (apps/landing/light/),
+         The visitor's sky over a globe (apps/landing/light/),
          from edge to edge of the window. Without JavaScript the element stays
          empty, light.css keeps its room and the sentence after it says what
          the room is for; once <home-light> is defined the sentence goes -->
     <section class="luz-landing-hero__media luz-landing-hero__media--bleed landing-light" id="light" aria-labelledby="light-title">
       <h2 class="u-sr-only" id="light-title">La luz donde estás</h2>
-      <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
+      <home-light bleed favicon></home-light>
       <p class="landing-light__nojs">Con JavaScript activado, aquí se dibuja la luz de tu hora.</p>
     </section>
 

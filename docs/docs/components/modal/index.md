@@ -3,7 +3,9 @@
 Asks for a decision that must be made before the reader goes on, in a native dialog.
 
 ### Known issues
-Some supported browsers do not have the `command` and `commandfor` attributes yet. In those browsers, with JavaScript off, the open button does nothing. Give the reader another way to the same action.
+Some supported browsers do not have the `command` and `commandfor` attributes yet. In those browsers, with JavaScript off, the open button does nothing.
+
+Give the reader another way to the same action.
 
 ### Copy the markup
 Modal markup

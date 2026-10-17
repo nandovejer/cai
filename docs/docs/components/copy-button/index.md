@@ -3,7 +3,9 @@
 Copies a command or a value to the clipboard, and says it did.
 
 ### Known issues
-The Clipboard API needs a secure context (https, or localhost while you develop). Elsewhere the copy fails. The failure is announced to screen readers only: the button shows no message, so a sighted reader sees nothing happen. The text can still be selected and copied by hand.
+The Clipboard API needs a secure context (https, or localhost while you develop). Elsewhere the copy fails.
+
+The failure is announced to screen readers only: the button shows no message, so a sighted reader sees nothing happen. The text can still be selected and copied by hand.
 
 ### Copy the markup
 Copy button markup

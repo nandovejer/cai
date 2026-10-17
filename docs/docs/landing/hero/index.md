@@ -27,7 +27,9 @@ Hero markup
 ```
 
 ### Variants and options
-Two modifiers, `--centered` and `__media--bleed`, as in the [product page template](https://nandovejer.github.io/luz/docs/landing/templates/#product-page). The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width. The block is a class of the landing on core's split grid.
+Two modifiers, `--centered` and `__media--bleed`, as in the [product page template](https://nandovejer.github.io/luz/docs/landing/templates/#product-page). The eyebrow, the lead and the picture are optional; with no picture the copy takes the whole width.
+
+The block is a class of the landing on core's split grid.
 
 - `.luz-landing-hero`: On a `<section>` with core's `.o-grid.o-grid--split`: space above it, the gaps, and columns of at least 24rem (`--luz-grid-min`), so two equal columns when each gets 24rem, one below
 - `.luz-landing-hero--centered`: One column at every width: the copy at most 48rem wide, centred, with its text and actions centred, and the picture under it

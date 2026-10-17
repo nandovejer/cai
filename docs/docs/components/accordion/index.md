@@ -32,7 +32,9 @@ A single `<details>` needs no class: the elements layer styles it. The class onl
 - `open`: Starts a panel open. In a named group, only the first `open` one in the source stays open
 
 ### How it works
-Native `<details>` and `<summary>`, styled by `elements/interactive.css` with no class. `components/accordion.css` adds only the joined block. No JavaScript.
+Native `<details>` and `<summary>`, styled by `elements/interactive.css` with no class. `components/accordion.css` adds only the joined block.
+
+No JavaScript.
 
 - The summary is the label of the panel; the rest of the details is its content.
 - Closed content is not shown and is out of the reading order until the panel opens.
@@ -41,7 +43,9 @@ Native `<details>` and `<summary>`, styled by `elements/interactive.css` with no
 Nothing changes: opening, closing and grouping are the browser's. The accordion is complete without a script.
 
 ### Keyboard and ARIA
-Tab reaches each summary in order. Enter or Space opens or closes it. There are no arrow-key shortcuts between panels.
+Tab reaches each summary in order. Enter or Space opens or closes it.
+
+There are no arrow-key shortcuts between panels.
 
 - Add no role: a `<details>` already has its semantics, and no ARIA role is allowed on it.
 - Keep links and buttons out of the summary: it is itself the control.

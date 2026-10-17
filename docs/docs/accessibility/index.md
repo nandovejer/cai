@@ -1,6 +1,6 @@
 # Accessibility statement
 
-LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 16 October 2026.
+LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 17 October 2026.
 
 - Target
 - What is checked on every change

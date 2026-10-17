@@ -339,7 +339,8 @@ import &quot;@luz-ds/core&quot;;</code></pre>
 
       <div class="docs-prose">
         <h2 id="level-3-tokens-core-and-site" class="docs-prose__title">Level 3: tokens, core and site</h2>
-        <p>Six components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner. Site needs core and tokens. The page structure, from the header to the footer, is in landing and cms, which work without site.</p>
+        <p>Six components that need data of the site: search, cookie consent, color mode, language switch, submenu and banner. Site needs core and tokens.</p>
+        <p>The page structure, from the header to the footer, is in landing and cms, which work without site.</p>
         <div class="docs-command-block">
           <code class="docs-command-block__cmd">
             <span class="docs-command-block__prefix" aria-hidden="true">$</span>
@@ -377,7 +378,15 @@ import &quot;@luz-ds/site&quot;;</code></pre>
 
       <div class="docs-prose">
         <h2 id="site-kinds" class="docs-prose__title">Packages for one kind of site</h2>
-        <p>On top of level 3, a package can add what one kind of site needs: <a href="../../docs/landing/">Landing</a>, the header, hero, sections and footer of a landing page and blocks to copy for it, <a href="../../docs/cms/">CMS</a>, the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS, <a href="../../docs/app/">App</a>, the header and the dashboard of a web application, and <a href="../../docs/documentation/">Documentation</a>, the shell, page head, rail, example, do and don't, pager and page foot of a documentation site. Each needs the packages of level 2, loaded first; site is optional for them, and the commands below add it for its search and its language switch. Install the one you need.</p>
+        <p>On top of level 3, a package can add what one kind of site needs:</p>
+        <ul>
+          <li><a href="../../docs/landing/">Landing</a>: the header, hero, sections and footer of a landing page, and blocks to copy for it.</li>
+          <li><a href="../../docs/cms/">CMS</a>: the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS.</li>
+          <li><a href="../../docs/app/">App</a>: the header and the dashboard of a web application.</li>
+          <li><a href="../../docs/documentation/">Documentation</a>: the shell, page head, rail, example, do and don't, pager and page foot of a documentation site.</li>
+        </ul>
+        <p>Each needs the packages of level 2, loaded first. Site is optional for them, and the commands below add it for its search and its language switch.</p>
+        <p>Install the one you need.</p>
         <div class="docs-command-block">
           <code class="docs-command-block__cmd">
             <span class="docs-command-block__prefix" aria-hidden="true">$</span>
@@ -471,7 +480,9 @@ import &quot;@luz-ds/site&quot;;</code></pre>
           <pre class="luz-code-block" data-lang="text" tabindex="0" role="region" aria-label="Computing the integrity hash"><code id="code-integrity">curl -s https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css | openssl dgst -sha384 -binary | openssl base64 -A</code></pre>
         </div>
         <p>Write the result as <code class="luz-code-inline">integrity="sha384-…"</code> on the tag that loads that file, and repeat it for each file.</p>
-        <p>A hash on a script covers that file only, not the files it loads later. <code class="luz-code-inline">site.min.js</code> loads <code class="luz-code-inline">search.min.js</code> on a page with a search and <code class="luz-code-inline">consent.min.js</code> on a page with a cookie banner and <code class="luz-code-inline">mode.min.js</code> on a page with an Auto color mode. Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked. A <code class="luz-code-inline">&lt;link rel="modulepreload"&gt;</code> with a hash is not a guard in Safari or Firefox: use it as a performance hint only.</p>
+        <p>A hash on a script covers that file only, not the files it loads later. <code class="luz-code-inline">site.min.js</code> loads <code class="luz-code-inline">search.min.js</code> on a page with a search and <code class="luz-code-inline">consent.min.js</code> on a page with a cookie banner and <code class="luz-code-inline">mode.min.js</code> on a page with an Auto color mode.</p>
+        <p>Give each one its own hash in an import map, before the first module script. It works in Chrome 127, Safari 18 and Firefox 138 and later; an older browser ignores it and loads the files unchecked.</p>
+        <p>A <code class="luz-code-inline">&lt;link rel="modulepreload"&gt;</code> with a hash is not a guard in Safari or Firefox: use it as a performance hint only.</p>
         <div class="docs-snippet">
           <div class="docs-snippet__bar">
             <span class="docs-snippet__lang">HTML</span>

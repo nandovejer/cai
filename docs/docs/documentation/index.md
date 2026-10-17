@@ -12,7 +12,9 @@ The shell, page head, rail, example, do and don't, pager and page foot of a docu
 - Your site is a landing page, a blog or an application: [Landing](https://nandovejer.github.io/luz/docs/landing/), [CMS](https://nandovejer.github.io/luz/docs/cms/) and [App](https://nandovejer.github.io/luz/docs/app/) have their own pieces.
 - You only need a sidebar and a content area: core's [layout](https://nandovejer.github.io/luz/docs/components/layout/) and [sidebar](https://nandovejer.github.io/luz/docs/components/sidebar/) are enough.
 
-A documentation site is read in long sittings, one page after the next. The layout it needs is already core's: the shell, the sidebar and its drawer, the code block, the table. This package holds the seven pieces only a documentation page has: the three columns, the head, the list of sections, the framed example, the do and don't pair, the links to the next page and the small print.
+A documentation site is read in long sittings, one page after the next. The layout it needs is already core's: the shell, the sidebar and its drawer, the code block, the table.
+
+This package holds the seven pieces only a documentation page has: the three columns, the head, the list of sections, the framed example, the do and don't pair, the links to the next page and the small print.
 
 ### Install and load
 

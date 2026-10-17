@@ -3,7 +3,9 @@
 Sets long text in lines of about 70 characters, with space between its blocks, whatever markup an editor writes inside.
 
 ### Known issues
-A table without a wrapper that is wider than the column pushes the page sideways on a narrow screen. Put a wide table in core's [table](https://nandovejer.github.io/luz/docs/components/table/) wrapper, `.luz-table-wrap`, which scrolls inside itself. Not yet tested with a screen reader.
+A table without a wrapper that is wider than the column pushes the page sideways on a narrow screen. Put a wide table in core's [table](https://nandovejer.github.io/luz/docs/components/table/) wrapper, `.luz-table-wrap`, which scrolls inside itself.
+
+Not yet tested with a screen reader.
 
 ### Copy the markup
 Prose markup

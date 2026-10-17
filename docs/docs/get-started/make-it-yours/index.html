@@ -253,7 +253,8 @@
       <p>LUZ is made to be changed from the outside. You do not edit its files: you write CSS of your own that loads after it, and the rule that matters is that your CSS wins.</p>
 
       <h2 id="how">Change a token, not a component</h2>
-      <p>LUZ's components read tokens: custom properties that start with <code class="luz-code-inline">--luz-</code>. To change how LUZ looks, write the token again in your own CSS. Every component that reads it follows.</p>
+      <p>LUZ's components read tokens: custom properties that start with <code class="luz-code-inline">--luz-</code>. To change how LUZ looks, write the token again in your own CSS.</p>
+      <p>Every component that reads it follows.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">CSS</span>
@@ -271,7 +272,8 @@
       </ul>
 
       <h2 id="colour">Colours and modes</h2>
-      <p>LUZ ships one look in three modes: light, dark and high contrast. Colours are semantic tokens, such as <code class="luz-code-inline">--luz-brand-fill</code> and <code class="luz-code-inline">--luz-surface-page</code>, and each one has a value for each mode. To change them, <a href="../../../docs/tokens/themes/">make your own theme</a>: it gives you a template, the steps and where to load it. Then run <a href="../../../docs/tokens/contrast/">the contrast check</a> on your colours, which measures the pairs LUZ promises to keep readable.</p>
+      <p>LUZ ships one look in three modes: light, dark and high contrast. Colours are semantic tokens, such as <code class="luz-code-inline">--luz-brand-fill</code> and <code class="luz-code-inline">--luz-surface-page</code>, and each one has a value for each mode.</p>
+      <p>To change them, <a href="../../../docs/tokens/themes/">make your own theme</a>: it gives you a template, the steps and where to load it. Then run <a href="../../../docs/tokens/contrast/">the contrast check</a> on your colours, which measures the pairs LUZ promises to keep readable.</p>
 
       <h2 id="fonts">Fonts</h2>
       <p>Two tokens say which font is used for what. Three more hold the font stacks.</p>
@@ -380,7 +382,8 @@ body {
       <h3 id="sizes-try">Try them</h3>
       <template id="sizes-demo">
         <form class="docs-example" data-docs-specimen>
-          <p>Move the sliders: this whole page re-scales, because the knobs are written on its <code class="luz-code-inline">:root</code>. Nothing is stored. Reload, or reset, to go back.</p>
+          <p>Move the sliders: this whole page re-scales, because the knobs are written on its <code class="luz-code-inline">:root</code>. Nothing is stored.</p>
+          <p>Reload, or reset, to go back.</p>
           <div class="luz-field">
             <label class="luz-field__label" for="sizes-base">Base size, <output class="luz-output" id="sizes-base-out" for="sizes-base">1</output> rem</label>
             <input class="luz-input" id="sizes-base" type="range" min="0.875" max="1.25" step="0.0625" value="1" data-output="sizes-base-out">
@@ -416,7 +419,8 @@ body {
       <p><a href="../../../docs/tokens/typography/">Typography</a> and <a href="../../../docs/tokens/spacing/">Spacing and sizing</a> list each step with its formula.</p>
 
       <h2 id="corners">Corners</h2>
-      <p><code class="luz-code-inline">--luz-radius-md</code> is the ceiling: no rectangle is rounder. It is the corner of buttons, cards, alerts, menus and dialogs. Three more steps cover the other cases.</p>
+      <p><code class="luz-code-inline">--luz-radius-md</code> is the ceiling: no rectangle is rounder. It is the corner of buttons, cards, alerts, menus and dialogs.</p>
+      <p>Three more steps cover the other cases.</p>
       <ul>
         <li><code class="luz-code-inline">--luz-radius-none</code> (0px): a square corner, for a box that joins a neighbour.</li>
         <li><code class="luz-code-inline">--luz-radius-sm</code> (2px): small marks, such as inline code and a checkbox.</li>
@@ -436,7 +440,8 @@ body {
 
       <h2 id="shadows">Shadows</h2>
       <p>Three tokens set how far a surface seems to float: <code class="luz-code-inline">--luz-shadow-sm</code> for a card, <code class="luz-code-inline">--luz-shadow-md</code> for tooltips and toasts, and <code class="luz-code-inline">--luz-shadow-lg</code> for dialogs and the drawer.</p>
-      <p>LUZ redraws them in dark mode, and in high contrast it draws outlines instead. A rule on <code class="luz-code-inline">:root</code> outside any layer wins in every mode, so one value serves them all. If you want the dark ones heavier, set them for that mode as well.</p>
+      <p>LUZ redraws them in dark mode, and in high contrast it draws outlines instead. A rule on <code class="luz-code-inline">:root</code> outside any layer wins in every mode, so one value serves them all.</p>
+      <p>If you want the dark ones heavier, set them for that mode as well.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">CSS</span>
@@ -453,7 +458,8 @@ body {
       <p>Never let a shadow be the only edge of a surface: it disappears in forced colors. <a href="../../../docs/tokens/shadows/">Shadows</a> has the values, and <a href="../../../docs/tokens/modes/">Color modes</a> how the three modes are chosen.</p>
 
       <h2 id="component">Adjust one component</h2>
-      <p>Change a token first: every component that reads it follows, in every mode. When one component needs a rule of its own, write it in CSS outside any layer. It wins over every LUZ layer, so the selector can stay short.</p>
+      <p>Change a token first: every component that reads it follows, in every mode. When one component needs a rule of its own, write it in CSS outside any layer.</p>
+      <p>It wins over every LUZ layer, so the selector can stay short.</p>
       <div class="docs-snippet">
         <div class="docs-snippet__bar">
           <span class="docs-snippet__lang">CSS</span>
@@ -486,7 +492,8 @@ body {
       <p><a href="../../../docs/get-started/layers/">Cascade layers</a> has the full order of LUZ's layers.</p>
 
       <h2 id="icons">Icons</h2>
-      <p>LUZ draws 22 icons of its own, on <a href="../../../docs/components/icon-grid/">the Icon grid page</a>, which also has the markup. For hundreds, bring a set. Whatever set you use, the pattern is the same:</p>
+      <p>LUZ draws 22 icons of its own, on <a href="../../../docs/components/icon-grid/">the Icon grid page</a>, which also has the markup. For hundreds, bring a set.</p>
+      <p>Whatever set you use, the pattern is the same:</p>
       <ol>
         <li>Use an inline <code class="luz-code-inline">&lt;svg&gt;</code> that takes <code class="luz-code-inline">currentColor</code>. It follows the text colour and the mode, and it works in forced colors.</li>
         <li>Mark it decorative with <code class="luz-code-inline">aria-hidden="true"</code> and <code class="luz-code-inline">focusable="false"</code>. Its name comes from the visible text beside it, or from a <code class="luz-code-inline">.u-sr-only</code> span in the button.</li>
@@ -569,7 +576,7 @@ body {
       <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="../../../docs/get-started/bundler/"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">With a bundler or framework</span></a></li>
     </ul>
   </nav>
-  <p class="luz-docs-page-foot">Last updated <time datetime="2026-10-15">15 October 2026</time> · <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/get-started/make-it-yours.html">Edit this page</a> · <a href="https://github.com/nandovejer/luz/issues/new?title=Make%20it%20yours">Report a problem</a></p>
+  <p class="luz-docs-page-foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="https://github.com/nandovejer/luz/edit/main/apps/docs/pages/get-started/make-it-yours.html">Edit this page</a> · <a href="https://github.com/nandovejer/luz/issues/new?title=Make%20it%20yours">Report a problem</a></p>
   </main>
   <aside class="luz-docs-rail" aria-label="About this page">
   <div class="luz-docs-rail__inner">

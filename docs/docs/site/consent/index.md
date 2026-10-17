@@ -3,10 +3,17 @@
 Asks a visitor once whether the site may use optional cookies, with Accept and Reject side by side, and remembers the answer.
 
 ### Known issues
-Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way. The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again. In a window less than 30 rem (480 px) tall the banner is not fixed: it is in the flow at the top of the page, where its markup is, so the page moves down when it appears. The saved state hides when focus leaves it for the page, but not when you click an empty part of the page: use its Close button. It has not been tested with a screen reader.
+Without JavaScript the banner is not shown at all: there is nothing to answer, because none of the site’s own scripts run either. A server that sets optional cookies itself, without a script, must ask some other way.
+
+- The answer is kept in the browser’s local storage, so a server cannot read it, and clearing site data asks again.
+- In a window less than 30 rem (480 px) tall the banner is not fixed: it is in the flow at the top of the page, where its markup is, so the page moves down when it appears.
+- The saved state hides when focus leaves it for the page, but not when you click an empty part of the page. Use its Close button.
+- It has not been tested with a screen reader.
 
 ### Copy the markup
-Right after the [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/), before a [banner](https://nandovejer.github.io/luz/docs/site/banner/) and the header of the page (a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header): it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its `value` the category’s name. `site.min.js` loads the banner’s own file, `consent.min.js`, when the browser is idle; a page without `site.min.js` loads that file on its own.
+Right after the [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/), before a [banner](https://nandovejer.github.io/luz/docs/site/banner/) and the header of the page (a [landing](https://nandovejer.github.io/luz/docs/landing/header/) or [CMS](https://nandovejer.github.io/luz/docs/cms/header/) header): it shows at the bottom of the window, but it comes first in the reading and Tab order. One checkbox per category of optional cookies, its `value` the category’s name.
+
+`site.min.js` loads the banner’s own file, `consent.min.js`, when the browser is idle; a page without `site.min.js` loads that file on its own.
 
 Cookie consent markup
 ```html
@@ -83,7 +90,9 @@ There are no variants. The hooks are `data-luz-consent-*` attributes.
 - `--luz-consent-h`: Set on `:root` by the script while the banner shows: its height. The page, `.o-main` and `.luz-sidebar` keep that much room at their end, and scroll what Tab reaches above the banner
 
 ### How it works
-CSS from `@luz-ds/site`, two native forms and a file of its own, `@luz-ds/site/consent` (`dist/consent.min.js`, under 1 kB compressed), which defines `<luz-consent>`. `site.min.js` loads it when the browser is idle, and only on a page with a `<luz-consent>`, so no other page pays for it. A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.
+CSS from `@luz-ds/site`, two native forms and a file of its own, `@luz-ds/site/consent` (`dist/consent.min.js`, under 1 kB compressed), which defines `<luz-consent>`. `site.min.js` loads it when the browser is idle, and only on a page with a `<luz-consent>`, so no other page pays for it.
+
+A banner added after the page has loaded needs the file imported by hand; two copies of it on one page define the element once.
 
 - **When it asks:** when no answer is stored, when the stored one has expired, or when the banner offers a category the stored answer was not asked about. Then it shows, as a band at the bottom of the window, so nothing on the page moves: it traps nothing and takes no focus, and the page keeps room for it at its end and scrolls what Tab reaches above it, so the page can be read and used before answering.
 - **The answer:** Accept grants every category, Reject none, Save my choices the ones ticked. Enter in a checkbox saves the ticked ones, never all. Escape is not an answer: nothing happens. The confirmation then takes the place of the question and takes focus, and is read. It goes away with its Close button, or when focus leaves the banner for the page; focus stays where it went.
@@ -93,7 +102,9 @@ CSS from `@luz-ds/site`, two native forms and a file of its own, `@luz-ds/site/c
 - The script writes no text: every word is in your markup, in the page’s language.
 
 ### Without JavaScript
-The banner and the button that shows it again stay hidden, by their `hidden` attribute. Without a script none of the site’s own scripts run, so there is nothing to ask about, and buttons that would do nothing are never shown. Link the cookie policy from the footer of every page, so it can always be read.
+The banner and the button that shows it again stay hidden, by their `hidden` attribute. Without a script none of the site’s own scripts run, so there is nothing to ask about, and buttons that would do nothing are never shown.
+
+Link the cookie policy from the footer of every page, so it can always be read.
 
 ### Keyboard and ARIA
 - **Order:** the skip link stays first, so a returning visitor can still jump to the content. The banner comes next, before the header, although it shows at the bottom: the policy link, Accept, Reject, then the button that opens the categories.

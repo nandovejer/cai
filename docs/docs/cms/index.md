@@ -2,7 +2,9 @@
 
 The page structure of a blog, a newspaper or any site of articles, from the header to the post listing, and how to tell whether you need it.
 
-A site of articles publishes many pages of the same shape: a story with its header, its text and its author, and lists that lead to them. This package holds the page structure of that kind of site: its header (a bar or a masthead), the page header, the article header with its table of contents, and the footer. The layout every page needs (the page, the sticky bar, the navbar) is core's, and the pieces that act for the whole site (search, language, cookie consent) are in [Site](https://nandovejer.github.io/luz/docs/site/).
+A site of articles publishes many pages of the same shape: a story with its header, its text and its author, and lists that lead to them. This package holds the page structure of that kind of site: its header (a bar or a masthead), the page header, the article header with its table of contents, and the footer.
+
+The layout every page needs (the page, the sticky bar, the navbar) is core's, and the pieces that act for the whole site (search, language, cookie consent) are in [Site](https://nandovejer.github.io/luz/docs/site/).
 
 - It works with any CMS and any stack. The classes go on any element, so a template of WordPress, Drupal, Ghost, Hugo or your own code can write them.
 - Every class starts with `.luz-cms-`, uses semantic tokens only and sits in the cascade layer `luz.cms`, after site's. Each pattern is a class on a native element, laid out in the markup by core's objects.

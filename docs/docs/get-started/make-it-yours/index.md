@@ -6,7 +6,9 @@ LUZ is made to be changed from the outside. You do not edit its files: you write
 
 ### Change a token, not a component
 
-LUZ's components read tokens: custom properties that start with `--luz-`. To change how LUZ looks, write the token again in your own CSS. Every component that reads it follows.
+LUZ's components read tokens: custom properties that start with `--luz-`. To change how LUZ looks, write the token again in your own CSS.
+
+Every component that reads it follows.
 
 The token override
 ```css
@@ -22,7 +24,9 @@ The token override
 
 ### Colours and modes
 
-LUZ ships one look in three modes: light, dark and high contrast. Colours are semantic tokens, such as `--luz-brand-fill` and `--luz-surface-page`, and each one has a value for each mode. To change them, [make your own theme](https://nandovejer.github.io/luz/docs/tokens/themes/): it gives you a template, the steps and where to load it. Then run [the contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/) on your colours, which measures the pairs LUZ promises to keep readable.
+LUZ ships one look in three modes: light, dark and high contrast. Colours are semantic tokens, such as `--luz-brand-fill` and `--luz-surface-page`, and each one has a value for each mode.
+
+To change them, [make your own theme](https://nandovejer.github.io/luz/docs/tokens/themes/): it gives you a template, the steps and where to load it. Then run [the contrast check](https://nandovejer.github.io/luz/docs/tokens/contrast/) on your colours, which measures the pairs LUZ promises to keep readable.
 
 ### Fonts
 
@@ -138,7 +142,9 @@ Type sizes at 16px root
 
 ### Corners
 
-`--luz-radius-md` is the ceiling: no rectangle is rounder. It is the corner of buttons, cards, alerts, menus and dialogs. Three more steps cover the other cases.
+`--luz-radius-md` is the ceiling: no rectangle is rounder. It is the corner of buttons, cards, alerts, menus and dialogs.
+
+Three more steps cover the other cases.
 
 - `--luz-radius-none` (0px): a square corner, for a box that joins a neighbour.
 - `--luz-radius-sm` (2px): small marks, such as inline code and a checkbox.
@@ -158,7 +164,9 @@ Square corners
 
 Three tokens set how far a surface seems to float: `--luz-shadow-sm` for a card, `--luz-shadow-md` for tooltips and toasts, and `--luz-shadow-lg` for dialogs and the drawer.
 
-LUZ redraws them in dark mode, and in high contrast it draws outlines instead. A rule on `:root` outside any layer wins in every mode, so one value serves them all. If you want the dark ones heavier, set them for that mode as well.
+LUZ redraws them in dark mode, and in high contrast it draws outlines instead. A rule on `:root` outside any layer wins in every mode, so one value serves them all.
+
+If you want the dark ones heavier, set them for that mode as well.
 
 Shadows for light and dark
 ```css
@@ -175,7 +183,9 @@ Never let a shadow be the only edge of a surface: it disappears in forced colors
 
 ### Adjust one component
 
-Change a token first: every component that reads it follows, in every mode. When one component needs a rule of its own, write it in CSS outside any layer. It wins over every LUZ layer, so the selector can stay short.
+Change a token first: every component that reads it follows, in every mode. When one component needs a rule of its own, write it in CSS outside any layer.
+
+It wins over every LUZ layer, so the selector can stay short.
 
 A rule for one component
 ```css
@@ -207,7 +217,9 @@ Three things to avoid.
 
 ### Icons
 
-LUZ draws 22 icons of its own, on [the Icon grid page](https://nandovejer.github.io/luz/docs/components/icon-grid/), which also has the markup. For hundreds, bring a set. Whatever set you use, the pattern is the same:
+LUZ draws 22 icons of its own, on [the Icon grid page](https://nandovejer.github.io/luz/docs/components/icon-grid/), which also has the markup. For hundreds, bring a set.
+
+Whatever set you use, the pattern is the same:
 
 1. Use an inline `<svg>` that takes `currentColor`. It follows the text colour and the mode, and it works in forced colors.
 2. Mark it decorative with `aria-hidden="true"` and `focusable="false"`. Its name comes from the visible text beside it, or from a `.u-sr-only` span in the button.

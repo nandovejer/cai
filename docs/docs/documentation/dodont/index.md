@@ -3,7 +3,9 @@
 A Do and a Don't, one example to follow and one to avoid, each with its reason, side by side when there is room.
 
 ### Known issues
-In browsers without alternative text for generated content (Safari before 17.4, Firefox before 128), a screen reader may read the tick or the cross before "Do" or "Don't". The word that follows is always read. Not tested with a screen reader.
+In browsers without alternative text for generated content (Safari before 17.4, Firefox before 128), a screen reader may read the tick or the cross before "Do" or "Don't". The word that follows is always read.
+
+Not tested with a screen reader.
 
 ### Copy the markup
 A pair: the Do first, then the Don't. Each is a figure whose caption says why:

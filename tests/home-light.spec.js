@@ -806,25 +806,27 @@ test.describe('review fixes', () => {
     });
   }
 
-  test('the stars drift very slightly with the globe: the same way, the far layer less', async ({ page }) => {
+  test('the stars drift with the scroll: slower than the page, the far layer slower still', async ({ page }) => {
     await open(page, '/', { time: '23:30' });
-    const globe = page.locator('home-globe');
-    await expect(globe).toHaveAttribute('land', /.*/, { timeout: 15000 });
-    await page.emulateMedia({ reducedMotion: 'reduce' }); // the spin stops: only the drag moves it
-    const xs = () => page.evaluate(() => ['::before', '::after'].map((p) => parseFloat(getComputedStyle(document.querySelector('main.luz-landing-main'), p).backgroundPositionX)));
-    const before = await xs();
-    const box = await globe.boundingBox();
-    const x = (box?.x ?? 0) + (box?.width ?? 0) / 2;
-    const y = (box?.y ?? 0) + (box?.height ?? 0) / 3;
-    await page.mouse.move(x, y);
-    await page.mouse.down();
-    await page.mouse.move(x + 120, y, { steps: 12 });
-    await page.mouse.up();
-    await expect.poll(async () => (await xs())[0] - before[0]).toBeGreaterThan(4);
-    const [near, far] = (await xs()).map((v, i) => v - before[i]);
-    expect(near, 'the near layer moves less than the drag').toBeLessThan(60);
-    expect(far, 'the far layer moves the same way, less').toBeGreaterThan(0);
-    expect(far).toBeLessThan(near);
+    // The block offset of each layer's translate (none is 0)
+    const ys = () => page.evaluate(() => ['::before', '::after'].map((p) => parseFloat(getComputedStyle(document.querySelector('main.luz-landing-main'), p).translate.split(' ')[1]) || 0));
+    expect(await ys(), 'still at the top of the page').toEqual([0, 0]);
+    await page.evaluate(() => window.scrollTo(0, 300));
+    // They stay a little behind: moved down by a part of the scroll, the far layer by more
+    await expect.poll(async () => (await ys())[0]).toBeGreaterThan(5);
+    const [near, far] = await ys();
+    expect(near, 'the near layer lags a little').toBeLessThan(120);
+    expect(far, 'the far layer lags more').toBeGreaterThan(near);
+    expect(far).toBeLessThan(150);
+  });
+
+  test('under reduced motion the stars do not drift with the scroll', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await open(page, '/', { time: '23:30' });
+    await page.evaluate(() => window.scrollTo(0, 300));
+    await page.waitForTimeout(300);
+    const t = await page.evaluate(() => ['::before', '::after'].map((p) => getComputedStyle(document.querySelector('main.luz-landing-main'), p).translate));
+    expect(t).toEqual(['none', 'none']);
   });
 
   test('under reduced motion the stars are still: no twinkle', async ({ page }) => {

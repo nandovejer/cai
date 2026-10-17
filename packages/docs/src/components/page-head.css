@@ -3,7 +3,9 @@
    header.luz-docs-page-head > p.__eyebrow (the area · the group), h1,
    p.__lead (one sentence), ul.__meta (chips: the files, the script or "No
    JavaScript", the modes, whether it is tested, its known issues). A chip
-   is a word in a rounded outline; a link in one is a 28px target.
+   is a word in a rounded outline; a link in one is a 28px target. A page
+   that is not a component says its files in p.__files instead, one quiet
+   line ("Files: <code>…</code>"), without the chips.
    ========================================================================== */
 
 .luz-docs-page-head {
@@ -27,6 +29,12 @@
 	letter-spacing: 0.1em;
 	text-transform: uppercase;
 	color: var(--luz-text-secondary);
+}
+
+/* A package name in it keeps its own case: @luz-ds/core */
+.luz-docs-page-head__eyebrow :where(code) {
+	letter-spacing: 0;
+	text-transform: none;
 }
 
 /* Spacing between letters breaks the joins of Arabic script */
@@ -66,6 +74,14 @@
 	display: inline-flex;
 	align-items: center;
 	min-block-size: var(--luz-control-sm);
+}
+
+.luz-docs-page-head__files {
+	margin: 0;
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-xs);
+	color: var(--luz-text-secondary);
+	overflow-wrap: anywhere;
 }
 
 @media (max-width: 640px) {

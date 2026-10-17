@@ -275,8 +275,8 @@ export function scanSite(docsDir, repoRoot = resolve(docsDir, "../..")) {
   const { areas } = JSON.parse(readInside(join(docsDir, "site.json"), roots));
   const validGroups = (groups) =>
     groups === undefined || (Array.isArray(groups) && groups.every((g) => NAME.test(g?.id ?? "") && typeof g.label === "string"));
-  if (!Array.isArray(areas) || areas.some((a) => !NAME.test(a?.id ?? "") || typeof a.label !== "string" || !NAME.test(a.slug ?? "") || !validGroups(a.groups))) {
-    throw new Error(`${rel(join(docsDir, "site.json"))}: "areas" is a list of { id, label, slug, groups?, essentials? }`);
+  if (!Array.isArray(areas) || areas.some((a) => !NAME.test(a?.id ?? "") || typeof a.label !== "string" || !NAME.test(a.slug ?? "") || !validGroups(a.groups) || !(a.package === undefined || /^@luz-ds\/[a-z0-9-]+$/.test(a.package)))) {
+    throw new Error(`${rel(join(docsDir, "site.json"))}: "areas" is a list of { id, label, slug, package?, groups?, essentials? }`);
   }
 
   const pagesDir = join(docsDir, "pages");
@@ -538,8 +538,10 @@ function chipsOf(site, page) {
 
 /**
  * The breadcrumb, then the page head: the eyebrow ("Area · Group", or the
- * area alone; none on the hub), the h1, the lead (unless the content brings
- * its own) and, on a component or pattern page, the chips. The not-found
+ * area alone; "Area · package" on an area index whose site.json entry has a
+ * `package`; none on the hub), the h1, the lead (unless the content brings
+ * its own) and, on a component or pattern page, the chips; on any other
+ * page with `files`, a line "Files: a, b". The not-found
  * page keeps its plain head: the h1 and the lead.
  */
 export function renderPageHead(site, page) {
@@ -550,8 +552,18 @@ export function renderPageHead(site, page) {
   }
   const area = areaOf(site, page);
   const group = area?.groups?.find((g) => g.id === page.meta.group);
-  const eyebrow = area ? [`    <p class="luz-docs-page-head__eyebrow">${escapeHtml(group ? `${area.label} · ${group.label}` : area.label)}</p>`] : [];
-  const chips = isViewPage(page) ? [`    <ul class="luz-docs-page-head__meta">${chipsOf(site, page).map((c) => `<li>${c}</li>`).join("")}</ul>`] : [];
+  // An area index names the package the area documents (site.json `package`); its pages name their group
+  // (a package name is code, in its own case)
+  const pkg = area && page.route === areaRoute(area) && area.package ? `<code>${escapeHtml(area.package)}</code>` : null;
+  const second = pkg ?? (group ? escapeHtml(group.label) : null);
+  const eyebrow = area ? [`    <p class="luz-docs-page-head__eyebrow">${escapeHtml(area.label)}${second ? ` · ${second}` : ""}</p>`] : [];
+  const files = page.meta.files.split(";").map((f) => f.trim()).filter(Boolean);
+  // A component or pattern page ends with the chips; any other page with files says them in a line
+  const chips = isViewPage(page)
+    ? [`    <ul class="luz-docs-page-head__meta">${chipsOf(site, page).map((c) => `<li>${c}</li>`).join("")}</ul>`]
+    : files.length
+      ? [`    <p class="luz-docs-page-head__files">Files: ${files.map((f) => `<code class="docs-demo__file">${escapeHtml(f)}</code>`).join(", ")}</p>`]
+      : [];
   const crumb = renderBreadcrumb(site, page);
   return [...(crumb ? [crumb] : []), '  <header class="luz-docs-page-head">', ...eyebrow, h1, ...lead, ...chips, "  </header>"].join("\n");
 }

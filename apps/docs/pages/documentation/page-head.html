@@ -4,7 +4,7 @@ description: The top of a documentation page: the eyebrow, the title, one senten
 area: documentation
 order: 2
 group: patterns
-files: .luz-docs-page-head, __eyebrow, __lead, __meta
+files: .luz-docs-page-head, __eyebrow, __lead, __meta, __files
 keywords: title, lead, eyebrow, chips, page top
 toc: h2,h3
 -->
@@ -60,9 +60,10 @@ toc: h2,h3
                 </thead>
                 <tbody>
                 <tr><td data-label="Class"><div><code>.luz-docs-page-head</code></div></td><td data-label="Effect"><div>On a <code>&lt;header&gt;</code> in the content: one column, with a gap between its parts and room under it. Its <code>h1</code> is <code>--luz-text-4xl</code>, and <code>--luz-text-2xl</code> at 640px and below</div></td></tr>
-                <tr><td data-label="Class"><div><code>.luz-docs-page-head__eyebrow</code></div></td><td data-label="Effect"><div>On a <code>&lt;p&gt;</code>: the area and the group, in small spaced capitals and the secondary colour. In Arabic the spacing between letters is left out</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-page-head__eyebrow</code></div></td><td data-label="Effect"><div>On a <code>&lt;p&gt;</code>: the area and the group, in small spaced capitals and the secondary colour. A <code>&lt;code&gt;</code> in it, a package name, keeps its own case. In Arabic the spacing between letters is left out</div></td></tr>
                 <tr><td data-label="Class"><div><code>.luz-docs-page-head__lead</code></div></td><td data-label="Effect"><div>On a <code>&lt;p&gt;</code>: one sentence, larger than the text, in the secondary colour</div></td></tr>
                 <tr><td data-label="Class"><div><code>.luz-docs-page-head__meta</code></div></td><td data-label="Effect"><div>On a <code>&lt;ul&gt;</code>: the chips. Each <code>&lt;li&gt;</code> is a word or two in a rounded outline, at least <code>--luz-control-sm</code> (28px) tall. A link in one is the same height</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-page-head__files</code></div></td><td data-label="Effect"><div>On a <code>&lt;p&gt;</code>, instead of the chips, on a page that is not a component: "Files:" and each file in a <code>&lt;code&gt;</code>, one small line in the secondary colour</div></td></tr>
                 </tbody>
               </table>
             </div>

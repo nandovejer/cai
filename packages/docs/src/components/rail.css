@@ -102,6 +102,10 @@
 .luz-docs-rail__actions {
 	display: grid;
 	justify-items: start;
+}
+
+/* A rule between the list and the actions; without a list, none */
+.luz-docs-rail__onpage + .luz-docs-rail__actions {
 	margin-block-start: var(--luz-space-lg);
 	padding-block-start: var(--luz-space-md);
 	border-block-start: 1px solid var(--luz-divider);

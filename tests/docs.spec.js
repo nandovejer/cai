@@ -16,7 +16,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { gotoId, routeOf, routes, routesOf, routesWith, site } from './helpers/docs-site.js';
-import { indexEntries } from '../scripts/docs-site/site.js';
+import { indexEntries, readingOrder } from '../scripts/docs-site/site.js';
 import { SITE_KINDS } from '../scripts/luz-packages.js';
 import { areaOfPackage } from './helpers/package-areas.js';
 import { KEY as MODE_KEY, seedMode } from './helpers/site-lights.js';
@@ -263,15 +263,18 @@ test.describe('Documentation site', () => {
   });
 
   test.describe('navigation', () => {
-    test('the sidebar shows the ten areas and expands only the current one', async ({ page }) => {
+    test('the sidebar shows the ten areas, all open, with every page listed', async ({ page }) => {
+      await page.setViewportSize({ width: 1440, height: 900 });
       await gotoId(page, 'c-button');
-      const areas = page.locator('.docs-nav > li > a');
+      const areas = page.locator('.docs-nav a.docs-nav__area');
       await expect(areas).toHaveText(['Get started', 'Tokens', 'HTML elements', 'Components', 'Site', 'Landing', 'CMS', 'App', 'Documentation', 'Accessibility']);
-      await expect(page.locator('.docs-nav > li > ul')).toHaveCount(1);
+      // Flat: no accordion, and every page of every area is a link
+      await expect(page.locator('nav.luz-docs-nav details')).toHaveCount(0);
       await expect(page.locator('.docs-nav a[aria-current="true"]')).toHaveText('Components');
       await expect(page.locator('.docs-nav a[aria-current="page"]')).toHaveText('Button');
-      // Every component is listed, and the helpers are a named group
       const hrefs = await page.locator('.docs-nav a').evaluateAll((links) => links.map((a) => a.getAttribute('href')));
+      for (const { route } of readingOrder(site)) expect(hrefs, route).toContain(route);
+      // Every component is listed, and the helpers are a named group
       for (const id of guideIds) expect(hrefs, id).toContain(routeOf(id));
       await expect(page.getByRole('list', { name: 'Helpers' }).getByRole('link')).toHaveText(['Layout objects', 'Utility classes', 'Keyframes']);
     });
@@ -288,16 +291,19 @@ test.describe('Documentation site', () => {
     test('breadcrumb and Previous / Next follow the sidebar order', async ({ page }) => {
       await gotoId(page, 'c-button');
       await expect(page.getByRole('navigation', { name: 'Breadcrumb' }).locator('a, [aria-current]')).toHaveText(['Docs', 'Components', 'Button']);
-      const end = page.getByRole('navigation', { name: 'Keep going' });
-      await expect(end.getByRole('link', { name: 'Previous: Breadcrumb', exact: true })).toHaveAttribute('rel', 'prev');
-      await expect(end.getByRole('link', { name: 'Next: Card', exact: true })).toHaveAttribute('rel', 'next');
+      // Each link is named by its visible text, not by an aria-label (WCAG 2.5.3)
+      const pager = page.locator('.luz-docs-pager');
+      await expect(pager.getByRole('link', { name: 'Previous Breadcrumb', exact: true })).toHaveAttribute('rel', 'prev');
+      await expect(pager.getByRole('link', { name: 'Next Card', exact: true })).toHaveAttribute('rel', 'next');
+      await expect(pager.locator('a[aria-label]')).toHaveCount(0);
     });
 
     test('an area index leads on to its first page, and the last page of an area to the next area', async ({ page }) => {
       await page.goto('/docs/tokens/');
       const end = page.getByRole('navigation', { name: 'Keep going' });
-      await expect(end.getByRole('link', { name: 'Previous: How LUZ is built', exact: true })).toHaveAttribute('href', /\/docs\/get-started\/how-luz-is-built\/$/);
-      await expect(end.getByRole('link', { name: 'Next: Color', exact: true })).toHaveAttribute('href', /\/docs\/tokens\/color\/$/);
+      const pager = page.locator('.luz-docs-pager');
+      await expect(pager.getByRole('link', { name: 'Previous How LUZ is built', exact: true })).toHaveAttribute('href', /\/docs\/get-started\/how-luz-is-built\/$/);
+      await expect(pager.getByRole('link', { name: 'Next Color', exact: true })).toHaveAttribute('href', /\/docs\/tokens\/color\/$/);
       await expect(end.locator('.docs-end__links a')).toHaveText(['Color modes and themes', 'Components', 'Tokens in Figma']);
     });
 
@@ -366,11 +372,16 @@ test.describe('Documentation site', () => {
       });
     }
 
-    test('"On this page" is a rail with scroll spy at 1280px: aria-current="true", never "page"', async ({ page }) => {
+    test('"On this page" is in the aside rail, the third column from 80rem, with scroll spy: aria-current="true", never "page"', async ({ page }) => {
       await page.setViewportSize({ width: 1280, height: 800 });
       await gotoId(page, 'c-button');
 
-      const toc = page.getByRole('navigation', { name: 'On this page' });
+      const rail = page.getByRole('complementary', { name: 'About this page' });
+      const toc = rail.getByRole('navigation', { name: 'On this page' });
+      await expect(page.locator('main').getByRole('navigation', { name: 'On this page' })).toHaveCount(0);
+      // The rail is the column after main
+      const [main, aside] = await Promise.all(['main', 'aside.luz-docs-rail'].map((s) => page.locator(s).evaluate((el) => el.getBoundingClientRect().toJSON())));
+      expect(aside.left).toBeGreaterThanOrEqual(main.right - 1);
       // Both tabs' sections, each h3 under its tab's h2 (NAV-13)
       await expect(toc.getByRole('link')).toHaveText(['Example', 'Known issues', 'Code', 'Copy the markup', 'Variants and options', 'How it works', 'Without JavaScript', 'Keyboard and ARIA', 'Design', 'When to use', 'When not to use', "Do and don't", 'Writing the content', 'Contrast and focus', 'Tokens it uses']);
       await expect(toc.locator('li:has(> a[href="#design"]) > ul a')).toHaveText(['When to use', 'When not to use', "Do and don't", 'Writing the content', 'Contrast and focus', 'Tokens it uses']);
@@ -384,13 +395,21 @@ test.describe('Documentation site', () => {
       }
     });
 
-    test('"On this page" is closed below 1280px and opens natively', async ({ page }) => {
-      await page.setViewportSize({ width: 360, height: 800 });
+    test('below 80rem "On this page" is drawn under the content, in the rail: no drawer, and it opens natively', async ({ page }) => {
+      await page.setViewportSize({ width: 1000, height: 800 });
       await gotoId(page, 'c-button');
-      const toc = page.getByRole('navigation', { name: 'On this page' });
-      await expect(toc.getByRole('link').first()).toBeHidden();
-      await toc.locator('summary').click();
-      await expect(toc.getByRole('link').first()).toBeVisible();
+      const main = await page.locator('main').evaluate((el) => el.getBoundingClientRect().toJSON());
+      const aside = await page.locator('aside.luz-docs-rail').evaluate((el) => el.getBoundingClientRect().toJSON());
+      expect(aside.top, 'the rail is under the content').toBeGreaterThanOrEqual(main.bottom - 1);
+      const toc = page.getByRole('complementary', { name: 'About this page' }).getByRole('navigation', { name: 'On this page' });
+      const summary = toc.locator('summary');
+      await expect(summary).toBeVisible();
+      // A native <details>: whatever its state at first, one click on the summary toggles the list
+      const first = toc.getByRole('link').first();
+      const wasOpen = await toc.locator('details').evaluate((d) => d.open);
+      await summary.click();
+      if (wasOpen) await expect(first).toBeHidden();
+      else await expect(first).toBeVisible();
     });
 
     for (const width of [360, 1280]) {

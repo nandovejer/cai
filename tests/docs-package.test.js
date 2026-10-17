@@ -422,7 +422,7 @@ describe("the patterns moved out of the docs app", () => {
     const { rendered } = buildSite(site, { unchecked: ["/"] });
     const page = rendered.get("/docs/components/button/");
     expect(page, "the button page is rendered").toBeTruthy();
-    expect(has(page, '<div class="luz-docs-page-head">'), "page head").toBe(true);
+    expect(has(page, '<header class="luz-docs-page-head">'), "page head").toBe(true);
     expect(has(page, /<ul class="luz-docs-pager">/), "pager").toBe(true);
     expect(has(page, '<nav class="luz-docs-rail__onpage"'), "on this page").toBe(true);
     expect(has(page, 'class="luz-docs-pager__prev"'), "pager prev").toBe(true);

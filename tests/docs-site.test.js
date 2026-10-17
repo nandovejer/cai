@@ -10,6 +10,7 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import { readHtml } from "../scripts/docs-site/html.js";
+import { findAll, parse, query, queryAllLive, textOf } from "./helpers/html-dom.js";
 import { KIND_AREAS, PATTERN_AREAS } from "./helpers/package-areas.js";
 import { readIndex, search } from "../packages/site/src/search.js";
 import {
@@ -515,18 +516,21 @@ describe("the LUZ docs site", () => {
     }
   });
 
-  it("marks the current page in the sidebar, its area with \"true\", and expands only that area (NAV-9, NAV-10)", () => {
+  it("marks the current page in the sidebar and its area with \"true\", in a flat list where every area is open (NAV-9, NAV-10)", () => {
+    const everyPage = readingOrder(site).map((p) => p.route);
     for (const [route, html] of pages) {
-      const nav = html.match(/<ul class="docs-nav">[\s\S]*?\n {4}<\/ul>/)[0];
-      const current = [...nav.matchAll(/aria-current="page" href="([^"]*)"/g)].map((m) => m[1]);
+      const list = query(parse(html, route), "ul.docs-nav");
+      const links = findAll(list, (n) => n.name === "a");
+      const current = links.filter((a) => a.attrs.get("aria-current") === "page").map((a) => a.attrs.get("href"));
       const page = site.byRoute.get(route);
       const area = site.areas.find((a) => a.id === page?.meta.area);
       expect(current, route).toEqual(area ? [route] : []);
-      const parents = [...nav.matchAll(/aria-current="true" href="([^"]*)"/g)].map((m) => m[1]);
+      const parents = links.filter((a) => a.attrs.get("aria-current") === "true").map((a) => a.attrs.get("href"));
       expect(parents, route).toEqual(area && route !== `/docs/${area.slug}/` ? [`/docs/${area.slug}/`] : []);
-      expect(nav, route).not.toContain("is-active");
-      // One nested list at most: the current area
-      expect((nav.match(/<li><a class="luz-sidebar__link docs-nav__area"[^>]*>[^<]*<\/a>\n/g) ?? []).length, route).toBeLessThanOrEqual(1);
+      expect(links.filter((a) => (a.attrs.get("class") ?? "").includes("is-active")), route).toEqual([]);
+      // Flat: not only the current area's pages, every page of every area
+      const hrefs = links.map((a) => a.attrs.get("href"));
+      for (const target of everyPage) expect(hrefs, `${route} lists ${target}`).toContain(target);
     }
   });
 
@@ -690,14 +694,17 @@ describe("the LUZ docs site", () => {
     expect(first("keyboard tooltip")).toEqual(["Keyboard and ARIA"]);
   });
 
-  /** An attribute value as the browser reads it: the generator escapes & < > " and ' (as &#39;). */
-  const decodeAttr = (value) =>
-    value.replace(/&(#39|quot|lt|gt|amp);/g, (_, e) => ({ "#39": "'", quot: '"', lt: "<", gt: ">", amp: "&" })[e]);
-
-  /** The Previous / Next targets, accessible names and "Keep going" links of a rendered page. */
+  /**
+   * The Previous / Next targets of a rendered page, with the name of each link and whether it carries an
+   * aria-label (it must not: the name is the visible text, WCAG 2.5.3), and its "Keep going" links.
+   */
   const endOf = (html) => {
     const nav = html.match(/<nav class="docs-end" aria-labelledby="docs-end-title">[\s\S]*?<\/nav>/)?.[0] ?? null;
-    const rel = (kind) => nav?.match(new RegExp(`rel="${kind}" href="([^"]*)" aria-label="([^"]*)"`))?.slice(1) ?? null;
+    const tree = parse(html, "page");
+    const rel = (kind) => {
+      const link = queryAllLive(tree, "a.luz-docs-pager__link").find((a) => a.attrs.get("rel") === kind);
+      return link ? [link.attrs.get("href"), textOf(link), link.attrs.has("aria-label")] : null;
+    };
     const links = nav?.match(/<ul class="docs-end__links">([\s\S]*?)<\/ul>/)?.[1].match(/href="[^"]*"/g)?.map((h) => h.slice(6, -1)) ?? [];
     return { nav, prev: rel("prev"), next: rel("next"), links };
   };
@@ -769,9 +776,9 @@ describe("the LUZ docs site", () => {
     const page = site.byRoute.get("/docs/get-started/snippet/");
     expect(page?.meta.generate).toBe("snippets");
     expect(page?.meta.area).toBe("get-started");
-    // the generator wrote the eight snippets under the hand-written intro
+    // the generator wrote the ten snippets (five kinds, two ways) under the hand-written intro
     const html = rendered.get("/docs/get-started/snippet/") ?? "";
-    for (const id of ["atoms-npm", "atoms-cdn", "landing-npm", "landing-cdn", "blog-npm", "blog-cdn", "app-npm", "app-cdn"]) {
+    for (const id of ["atoms-npm", "atoms-cdn", "landing-npm", "landing-cdn", "blog-npm", "blog-cdn", "app-npm", "app-cdn", "docs-npm", "docs-cdn"]) {
       expect(html, id).toContain(`id="${id}"`);
     }
   });
@@ -790,9 +797,11 @@ describe("the LUZ docs site", () => {
       expect(next?.[0] ?? null, route).toBe(order[i + 1] ?? null);
       if (next) expect(endOf(rendered.get(next[0])).prev?.[0], `${route} → ${next[0]}`).toBe(route);
       if (prev) expect(endOf(rendered.get(prev[0])).next?.[0], `${prev[0]} → ${route}`).toBe(route);
-      // The name says which way and where: "Previous: Breadcrumb"
+      // The name is the visible text, which way and where: "Previous Breadcrumb", with no aria-label (WCAG 2.5.3)
       for (const [kind, link] of [["Previous", prev], ["Next", next]]) {
-        if (link) expect(decodeAttr(link[1]), route).toBe(`${kind}: ${site.byRoute.get(link[0]).meta.title}`);
+        if (!link) continue;
+        expect(link[1], route).toBe(`${kind} ${site.byRoute.get(link[0]).meta.title}`);
+        expect(link[2], `${route}: ${kind} has an aria-label`).toBe(false);
       }
     }
     // Get started → Tokens → HTML elements → Components → Site → Accessibility

@@ -159,7 +159,8 @@ test.describe('a <home-light> removed from the page', () => {
         };
       }
     });
-    await page.goto('/?look=city');
+    // 'commit', not 'load': WebKit and Firefox hold `load` while a dynamic import is pending, and city.js is held by the gate
+    await page.goto('/?look=city', { waitUntil: 'commit' });
     await expect(page.locator('home-light .home-light__line')).toBeVisible();
     await arm(page, true);
     const loaded = page.waitForResponse((response) => /\/apps\/landing\/light\/city\.js/.test(response.url()));

@@ -54,6 +54,11 @@ async function open(page, route, mode, hhmm = NIGHT) {
   await page.evaluate(() => window.scrollTo(0, 0));
 }
 
+/** Two frames, so a style toggled a moment ago is the one painted (WebKit applies a media toggle late). */
+async function nextFrames(page) {
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+}
+
 /**
  * The star band of the page, or null. Marks its host with `data-test-band`
  * (value "self" or the pseudo-element). The band is an out-of-flow box with a
@@ -252,10 +257,17 @@ for (const route of ROUTES) {
     test('the text of the header and the page head keeps its contrast over the stars (measured on the pixels: axe cannot see a pseudo-element)', async ({ page }) => {
       await open(page, route, 'dark');
       await expectBand(page, route);
-      // Paint the page with its text transparent: what is left behind each line of text is the background it is read on.
-      await page.addStyleTag({ content: '#site-header *, .luz-docs-page-head * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; }' });
       const runs = await page.evaluate(() => {
+        // Text clipped to a 1px box (the sr-only recipe, e.g. "Search docs…") is not read by eye: it is not a run
+        const visuallyHidden = (el, root) => {
+          for (let e = el; e && e !== root.parentElement; e = e.parentElement) {
+            const r = e.getBoundingClientRect();
+            if (r.width <= 1 || r.height <= 1 || getComputedStyle(e).clip !== 'auto') return true;
+          }
+          return false;
+        };
         const out = [];
+        window.__runParents = [];
         const roots = [document.querySelector('#site-header'), document.querySelector('.luz-docs-page-head')];
         for (const root of roots) {
           if (!root) continue;
@@ -264,6 +276,7 @@ for (const route of ROUTES) {
             const parent = n.parentElement;
             if (!parent || !n.textContent?.trim() || !parent.checkVisibility()) continue;
             if (parent.closest('[hidden], dialog:not([open]), script, style')) continue;
+            if (visuallyHidden(parent, root)) continue;
             const range = document.createRange();
             range.selectNodeContents(n);
             const rects = [...range.getClientRects()].filter((r) => r.width > 0 && r.height > 0 && r.top >= 0 && r.bottom <= innerHeight);
@@ -271,30 +284,18 @@ for (const route of ROUTES) {
             const size = parseFloat(s.fontSize);
             const large = size >= 24 || (size >= 18.66 && Number(s.fontWeight) >= 700);
             // the colour it had before the style above made it transparent is read from the token chain: ask a probe
+            window.__runParents.push(parent);
             out.push({ text: n.textContent.trim().slice(0, 30), large, parent: parent.className || parent.tagName, rects: rects.map((r) => [r.left, r.top, r.width, r.height]) });
           }
         }
         return out;
       });
       expect(runs.length, 'the header and the page head have text').toBeGreaterThan(3);
-      // read each run's real text colour with the transparent style off
-      await page.evaluate(() => document.querySelectorAll('style').forEach((st) => st.textContent?.includes('-webkit-text-fill-color: transparent') && st.setAttribute('media', 'not all')));
-      const colours = await page.evaluate((count) => {
-        const out = [];
-        const roots = [document.querySelector('#site-header'), document.querySelector('.luz-docs-page-head')];
-        for (const root of roots) {
-          if (!root) continue;
-          const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-          for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-            const parent = n.parentElement;
-            if (!parent || !n.textContent?.trim() || !parent.checkVisibility()) continue;
-            if (parent.closest('[hidden], dialog:not([open]), script, style')) continue;
-            out.push(getComputedStyle(parent).color);
-          }
-        }
-        return out.slice(0, count);
-      }, runs.length);
-      await page.evaluate(() => document.querySelectorAll('style[media="not all"]').forEach((st) => st.removeAttribute('media')));
+      // read each run's real text colour before the text is made transparent (no style is toggled back: WebKit applies that late)
+      const colours = await page.evaluate(() => window.__runParents.map((parent) => getComputedStyle(parent).color));
+      // Paint the page with its text transparent: what is left behind each line of text is the background it is read on.
+      await page.addStyleTag({ content: '#site-header *, .luz-docs-page-head * { color: transparent !important; -webkit-text-fill-color: transparent !important; text-shadow: none !important; }' });
+      await nextFrames(page);
       const png = await page.screenshot({ animations: 'disabled' });
       const worst = await page.evaluate(
         async ({ b64, list }) => {
@@ -302,15 +303,31 @@ for (const route of ROUTES) {
           const bitmap = await createImageBitmap(new Blob([bytes], { type: 'image/png' }));
           const ctx = new OffscreenCanvas(bitmap.width, bitmap.height).getContext('2d');
           ctx.drawImage(bitmap, 0, 0);
+          const scale = bitmap.width / window.innerWidth;
+          // Chromium answers rgb()/rgba(); WebKit answers color(srgb 0.5 0.5 0.5 / 1), whose channels are 0 to 1: let a canvas resolve anything else
+          const probe = new OffscreenCanvas(1, 1).getContext('2d', { willReadFrequently: true });
+          const toRgba = (css) => {
+            if (/^rgba?\(/.test(css)) {
+              const [r, g, b, a = 1] = css.match(/[\d.]+/g).map(Number);
+              return [r, g, b, a];
+            }
+            probe.clearRect(0, 0, 1, 1);
+            probe.fillStyle = css;
+            probe.fillRect(0, 0, 1, 1);
+            const d = probe.getImageData(0, 0, 1, 1).data;
+            return [d[0], d[1], d[2], d[3] / 255];
+          };
           const lum = ([r, g, b]) => {
             const c = (v) => ((v /= 255) <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4);
             return 0.2126 * c(r) + 0.7152 * c(g) + 0.0722 * c(b);
           };
           const result = [];
           for (const { text, large, colour, rects } of list) {
-            const [fr, fg, fb, fa = 1] = colour.match(/[\d.]+/g).map(Number);
+            const [fr, fg, fb, fa] = toRgba(colour);
             let min = Infinity;
-            for (const [x, y, w, h] of rects) {
+            for (const [cssX, cssY, cssW, cssH] of rects) {
+              // the screenshot is in device pixels (WebKit's project runs at a device pixel ratio of 2), the rects in CSS pixels
+              const [x, y, w, h] = [cssX * scale, cssY * scale, cssW * scale, cssH * scale];
               const { data } = ctx.getImageData(Math.floor(x), Math.floor(y), Math.max(1, Math.ceil(w)), Math.max(1, Math.ceil(h)));
               for (let i = 0; i < data.length; i += 4) {
                 const bg = [data[i], data[i + 1], data[i + 2]];

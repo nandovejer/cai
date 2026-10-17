@@ -871,7 +871,8 @@ test.describe('Landing page', () => {
           expect(await select.inputValue()).not.toBe(before);
         });
 
-        test('progress: a named progress bar with a value', async ({ page }) => {
+        test('progress: a named progress bar with a value', async ({ page, browserName }) => {
+          test.skip(!js && browserName === 'firefox', 'Playwright Firefox cannot read element properties with JavaScript disabled');
           const bar = page.locator('#native progress.luz-progress');
           await expect(bar).toHaveCount(1);
           await expect(page.locator('#native').getByRole('progressbar')).toHaveAccessibleName(/\S/);

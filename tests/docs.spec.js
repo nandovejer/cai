@@ -1131,7 +1131,10 @@ test.describe('Site header and navigation toggle', () => {
       await expect(page.locator('.site-header__nav a:visible')).toHaveCount(0);
       await expect(page.locator('.site-header__search')).toBeVisible();
 
-      await page.getByRole('button', { name: 'Menu', exact: true }).click();
+      // The keyboard opens the drawer: a mouse click does not focus a button in WebKit, so the next Tab would start elsewhere
+      const menu = page.getByRole('button', { name: 'Menu', exact: true });
+      await menu.focus();
+      await page.keyboard.press('Enter');
       const site = page.getByRole('list', { name: 'Site', exact: true });
       await expect(site.getByRole('link')).toHaveText(['Home', 'Docs', 'GitHub']);
       await expect(site.locator('[aria-current]')).toHaveText(current);

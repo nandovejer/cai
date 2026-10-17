@@ -16,7 +16,9 @@ import AxeBuilder from '@axe-core/playwright';
 import { existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { readingOrder } from '../scripts/docs-site/site.js';
+import { copiedText, recordCopies } from './helpers/clipboard.js';
 import { site } from './helpers/docs-site.js';
+import { idle } from './helpers/settle.js';
 import { eyebrowPackageOf } from './helpers/package-areas.js';
 import { focusAndHitTest, ringBeyondInlineStart } from './helpers/obscured.js';
 import { readingOrder as walkTheTabOrder } from './helpers/reading-order.js';
@@ -34,7 +36,10 @@ const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url))
 
 test.describe('docs shell, with JavaScript', () => {
   test.skip(({ javaScriptEnabled }) => javaScriptEnabled === false, 'needs JavaScript: the no-JS tests are below');
-  test.use({ permissions: ['clipboard-read', 'clipboard-write'] });
+  // Only Chromium knows these permission names (Firefox: unknown; WebKit: no clipboard-write); the copy runs inside a click everywhere
+  test.beforeEach(async ({ context, browserName }) => {
+    if (browserName === 'chromium') await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  });
 
   test('at 1440px the sidebar, main and the rail stand side by side, in this order', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
@@ -68,14 +73,15 @@ test.describe('docs shell, with JavaScript', () => {
 
   test('Copy page as Markdown writes the page as Markdown to the clipboard, says so, and stays on the page', async ({ page }) => {
     await page.setViewportSize({ width: 1440, height: 900 });
+    await recordCopies(page);
     await page.goto(BUTTON);
-    await page.waitForLoadState('networkidle');
+    await idle(page);
     const markdown = await (await page.request.get(`${BUTTON}index.md`)).text();
     expect(markdown.startsWith('# Button\n')).toBe(true);
     const status = rail(page).locator('[role="status"], [aria-live], output').filter({ hasText: /\S/ });
     await expect(status, 'nothing is announced before the click').toHaveCount(0);
     await rail(page).getByText('Copy page as Markdown', { exact: true }).click();
-    await expect.poll(() => page.evaluate(() => navigator.clipboard.readText())).toBe(markdown);
+    await expect.poll(() => copiedText(page)).toBe(markdown);
     await expect(status, 'a status says it was copied').not.toHaveCount(0);
     await expect(page).toHaveURL(new RegExp(`${BUTTON}$`));
   });
@@ -172,7 +178,7 @@ test.describe('docs shell, with JavaScript', () => {
     await page.setViewportSize({ width: 1440, height: 900 });
     for (const route of [BUTTON, '/docs/components/']) {
       await page.goto(route);
-      await page.waitForLoadState('networkidle');
+      await idle(page);
       const { violations } = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa']).analyze();
       const blocking = violations.filter((v) => ['serious', 'critical'].includes(v.impact ?? ''));
       expect(blocking.map((v) => `${v.id}: ${v.nodes[0]?.target?.join(' ')}`), route).toEqual([]);
@@ -183,7 +189,7 @@ test.describe('docs shell, with JavaScript', () => {
     test(`${width}px: the skip link goes to main, and the next Tab lands inside main, not in the rail`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(BUTTON);
-      await page.waitForLoadState('networkidle');
+      await idle(page);
       await page.keyboard.press('Tab');
       const skip = page.locator('a.luz-skip-link');
       await expect(skip).toBeFocused();
@@ -204,7 +210,7 @@ test.describe('docs shell, with JavaScript', () => {
     test(`${width}px: "On this page" is ${open ? 'open' : 'closed'} when the page loads`, async ({ page }) => {
       await page.setViewportSize({ width, height: 800 });
       await page.goto(BUTTON);
-      await page.waitForLoadState('networkidle');
+      await idle(page);
       const fold = rail(page).locator('nav.luz-docs-rail__onpage details');
       await expect(fold.locator('> summary'), 'the title is always visible').toBeVisible();
       expect(await fold.evaluate((d) => /** @type {HTMLDetailsElement} */ (d).open), `open: ${open}`).toBe(open);
@@ -217,7 +223,7 @@ test.describe('docs shell, with JavaScript', () => {
   test('below 80rem one click on "On this page" opens the list, and the reader can close it again', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 800 });
     await page.goto(BUTTON);
-    await page.waitForLoadState('networkidle');
+    await idle(page);
     const fold = rail(page).locator('nav.luz-docs-rail__onpage details');
     const first = fold.getByRole('link').first();
     await expect(first).toBeHidden();
@@ -324,7 +330,7 @@ test.describe('docs shell, without JavaScript', () => {
     test(`${width}px: the order of the markup is the order of the screen: every control Tab reaches is below the one before it, or in a column to its right`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.goto(BUTTON);
-      await page.waitForLoadState('networkidle');
+      await idle(page);
       const walk = await walkTheTabOrder(page);
       expect(walk.count, 'the page has controls').toBeGreaterThan(20);
       expect(walk.problems, walk.steps.join('\n')).toEqual([]);
@@ -416,7 +422,7 @@ test.describe('S2 the sticky tab row and the Copy buttons', () => {
     test(`${width}x${height}: going backwards with Shift+Tab through "Copy the markup", no focused Copy button is under the tab row`, async ({ page }) => {
       await page.setViewportSize({ width, height });
       await page.goto(BUTTON);
-      await page.waitForLoadState('networkidle');
+      await idle(page);
       await page.locator('[aria-label="Button variants and sizes"]').focus();
       const seen = [];
       const covered = [];
@@ -445,7 +451,11 @@ test.describe('S2 the sticky tab row and the Copy buttons', () => {
 
 test.describe('M1 Copy page as Markdown fails', () => {
   test.skip(({ javaScriptEnabled }) => javaScriptEnabled === false, 'needs JavaScript');
-  test.use({ permissions: ['clipboard-read', 'clipboard-write'], viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  test.use({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  // Only Chromium knows these permission names (Firefox: unknown; WebKit: no clipboard-write)
+  test.beforeEach(async ({ context, browserName }) => {
+    if (browserName === 'chromium') await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  });
 
   const failures = [
     ['index.md answers 404', (route) => route.fulfill({ status: 404, contentType: 'text/plain', body: 'not found' })],
@@ -455,7 +465,7 @@ test.describe('M1 Copy page as Markdown fails', () => {
     test(`when ${when}: the URL stays, the rail says "${COULD_NOT_COPY}", and the focus stays on the control`, async ({ page }) => {
       await page.route('**/index.md', fail);
       await page.goto(BUTTON);
-      await page.waitForLoadState('networkidle');
+      await idle(page);
       const navigations = [];
       page.on('framenavigated', (frame) => { if (frame === page.mainFrame()) navigations.push(frame.url()); });
       await copyControl(page).click();
@@ -474,7 +484,7 @@ test.describe('M1 Copy page as Markdown fails', () => {
       });
     });
     await page.goto(BUTTON);
-    await page.waitForLoadState('networkidle');
+    await idle(page);
     await copyControl(page).click();
     await expect(page).toHaveURL(new RegExp(`${BUTTON}index\\.md$`));
   });
@@ -506,7 +516,7 @@ test.describe('M3 the current page in the sidebar is in view', () => {
     test(`${width}px: /docs/accessibility/ shows its own link inside the sidebar's box, without moving the page or the focus`, async ({ page }) => {
       await page.setViewportSize({ width, height: 800 });
       await page.goto('/docs/accessibility/');
-      await page.waitForLoadState('networkidle');
+      await idle(page);
       const scroller = await page.locator('#page-nav').evaluate((nav) => {
         const cs = getComputedStyle(nav);
         return { overflowY: cs.overflowY, overflows: nav.scrollHeight > nav.clientHeight };
@@ -546,7 +556,7 @@ test.describe('m1 the focus ring of a rail control is whole at the start edge', 
   for (const [name, find] of Object.entries(controls)) {
     test(`${name}: the outline starts inside the padding box of the element that scrolls`, async ({ page }) => {
       await page.goto(BUTTON);
-      await page.waitForLoadState('networkidle');
+      await idle(page);
       await find(page).focus();
       await page.keyboard.press('Shift+Tab');
       await page.keyboard.press('Tab');

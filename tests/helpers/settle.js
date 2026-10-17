@@ -35,3 +35,17 @@ export async function faded(page) {
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
 }
+
+/**
+ * Wait for the network to go quiet. WebKit's driver sometimes never reports it
+ * on the Button page of the docs although no request is pending (Safari review
+ * 2026-10-17, probed with Playwright's WebKit: the page loads, no request is
+ * left, `networkidle` still times out in about one load in two), so there the
+ * wait is bounded and the expectations that follow do the waiting. Everywhere
+ * else it is exactly `waitForLoadState('networkidle')`.
+ * @param {import('@playwright/test').Page} page
+ */
+export async function idle(page) {
+  if (page.context().browser()?.browserType().name() === 'webkit') await page.waitForLoadState('networkidle', { timeout: 3000 }).catch(() => {});
+  else await page.waitForLoadState('networkidle');
+}

@@ -1,0 +1,165 @@
+<!-- luz:page
+title: Page head
+description: The top of a documentation page: the eyebrow, the title, one sentence and the chips that say what the page covers.
+area: documentation
+order: 2
+group: patterns
+files: .luz-docs-page-head, __eyebrow, __lead, __meta
+keywords: title, lead, eyebrow, chips, page top
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-docs-page-head">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+            <div class="docs-demo__stage" inert aria-hidden="true">
+              <header class="luz-docs-page-head">
+                <p class="luz-docs-page-head__eyebrow">Guides · Setup</p>
+                <h1>Install the command line tool</h1>
+                <p class="luz-docs-page-head__lead">Add the tool to a project and check that it runs, in about two minutes.</p>
+                <ul class="luz-docs-page-head__meta">
+                  <li>Version 2</li>
+                  <li>macOS, Linux and Windows</li>
+                  <li><a href="#known-issues">No known issues</a></li>
+                </ul>
+              </header>
+            </div>
+            <p class="docs-demo__note">A picture of the head: it holds a title of its own, so it is hidden from assistive technology on this page. Its text is in the markup below. The chips wrap on a narrow screen.</p>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Page head documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>The head, as the first child of the content:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-docs-page-head" aria-label="Copy the page head markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Page head markup"><code id="code-docs-page-head">&lt;header class=&quot;luz-docs-page-head&quot;&gt;
+  &lt;p class=&quot;luz-docs-page-head__eyebrow&quot;&gt;Guides · Setup&lt;/p&gt;
+  &lt;h1&gt;Install the command line tool&lt;/h1&gt;
+  &lt;p class=&quot;luz-docs-page-head__lead&quot;&gt;Add the tool to a project and check that it runs, in about two minutes.&lt;/p&gt;
+  &lt;ul class=&quot;luz-docs-page-head__meta&quot;&gt;
+    &lt;li&gt;Version 2&lt;/li&gt;
+    &lt;li&gt;macOS, Linux and Windows&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;#known-issues&quot;&gt;No known issues&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/header&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>No modifier. The head is a class on a native <code>&lt;header&gt;</code> with four parts.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Page head classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                <tr><td data-label="Class"><div><code>.luz-docs-page-head</code></div></td><td data-label="Effect"><div>On a <code>&lt;header&gt;</code> in the content: one column, with a gap between its parts and room under it. Its <code>h1</code> is <code>--luz-text-4xl</code>, and <code>--luz-text-2xl</code> at 640px and below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-page-head__eyebrow</code></div></td><td data-label="Effect"><div>On a <code>&lt;p&gt;</code>: the area and the group, in small spaced capitals and the secondary colour. In Arabic the spacing between letters is left out</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-page-head__lead</code></div></td><td data-label="Effect"><div>On a <code>&lt;p&gt;</code>: one sentence, larger than the text, in the secondary colour</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-page-head__meta</code></div></td><td data-label="Effect"><div>On a <code>&lt;ul&gt;</code>: the chips. Each <code>&lt;li&gt;</code> is a word or two in a rounded outline, at least <code>--luz-control-sm</code> (28px) tall. A link in one is the same height</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/docs</code>. It sets the rhythm and the sizes; the words are yours.</p>
+            <ul>
+              <li>The head is a grid of one column. The gap between the parts is <code>--luz-space-sm</code> and the space under the head is <code>--luz-space-xl</code>.</li>
+              <li>The <code>h1</code> is a plain element inside the head, with no class: the head styles it by position.</li>
+              <li>The chips are a list of facts a reader asks before reading: which files, which script, which modes, whether it is tested, whether it has known issues. A chip that leads somewhere is a link.</li>
+              <li>A long word in a chip breaks instead of widening the page, so the chips wrap at 320px.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes. The head is text and links, and the package has no script.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the order of the source: eyebrow, title, lead, then the chips. Tab reaches only the links in the chips.</li>
+              <li><strong>Headings:</strong> the <code>h1</code> is the one <code>h1</code> of the page. A <code>&lt;header&gt;</code> inside <code>&lt;main&gt;</code> is not a banner landmark.</li>
+              <li><strong>Chips:</strong> a list of plain items, announced as a list. A chip with no link is text and takes no focus.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the head at the top of every page of a documentation site, so a reader finds the title and what the page covers in the same place.</p>
+            <ul>
+              <li>One sentence that says what the page lets a reader do.</li>
+              <li>A few chips for the facts that decide whether to read on.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use the head for the banner of the site: it holds the page's <code>h1</code>.</p>
+            <ul>
+              <li>One head per page. A section of a long page has an <code>h2</code>, not another head.</li>
+              <li>For the header of an article in a blog, use <a href="/docs/cms/article-header/">the CMS article header</a>.</li>
+              <li>A landing page opens with <a href="/docs/landing/hero/">the hero</a>.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="luz-docs-dodont">
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
+                <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Keep the lead to one sentence that says what the page lets the reader do.</figcaption>
+                <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+                  <header class="luz-docs-page-head">
+                    <p class="luz-docs-page-head__eyebrow">Guides · Setup</p>
+                    <h1>Configure the cache</h1>
+                    <p class="luz-docs-page-head__lead">Choose where the tool keeps its files and when it clears them.</p>
+                  </header>
+                </div>
+              </figure>
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+                <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> Repeat the title in the lead, or write a paragraph there: the reader skims the head and gets nothing new.</figcaption>
+                <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+                  <header class="luz-docs-page-head">
+                    <p class="luz-docs-page-head__eyebrow">Guides · Setup</p>
+                    <h1>Configure the cache</h1>
+                    <p class="luz-docs-page-head__lead">This page is about how to configure the cache. The cache is a place where the tool keeps files, and you can configure it in several ways, described below.</p>
+                  </header>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <ul>
+              <li>Eyebrow: the area, then the group, with a space, a middle dot and a space: "Guides · Setup". Sentence case; the style makes the capitals.</li>
+              <li>Title: what the page is about, or a task that starts with a verb: "Install the command line tool". No full stop.</li>
+              <li>Lead: one sentence that ends with a full stop, in about twenty words or fewer.</li>
+              <li>Chips: two to five, a word or a few. State a fact ("Version 2"), never a slogan. "No known issues" links to the list.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>All the text sits on the page surface. The outline of a chip is decoration: the word inside carries the meaning.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Page head contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Title</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Eyebrow</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Lead</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Chip</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Link in a chip</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> a link in a chip keeps core's ring, 2 px of <code>--luz-focus-ring</code>.</li>
+              <li><strong>Target:</strong> a chip and a link in it are at least 28 by 28 px, above the 24 px minimum of WCAG 2.2 (2.5.8).</li>
+              <li><strong>Edges:</strong> the outline of a chip (<code>--luz-divider</code>) is decorative and has no minimum.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 12 tokens that the <code>.luz-docs-page-head</code> rules of docs' <code>components/page-head.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-control-sm</code>, <code>--luz-space-sm</code>, <code>--luz-space-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code>, <code>--luz-text-2xl</code>, <code>--luz-text-4xl</code>, <code>--luz-text-base</code>, <code>--luz-text-lg</code>, <code>--luz-text-xs</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-full</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

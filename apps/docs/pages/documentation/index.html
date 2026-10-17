@@ -1,0 +1,35 @@
+<!-- luz:page
+title: Documentation
+description: The shell, page head, rail, example, do and don't, pager and page foot of a documentation site, and how to tell whether you need them.
+area: documentation
+order: 0
+lead: false
+generate: gallery
+-->
+    <p class="docs-eyebrow">For one kind of site · @luz-ds/docs</p>
+
+    <p class="docs-lead">The shell, page head, rail, example, do and don't, pager and page foot of a documentation site, and how to tell whether you need them.</p>
+    <p>A documentation site is read in long sittings, one page after the next. The layout it needs is already core's: the shell, the sidebar and its drawer, the code block, the table. This package holds the seven pieces only a documentation page has: the three columns, the head, the list of sections, the framed example, the good and bad pair, the links to the next page and the small print.</p>
+    <ul>
+      <li>Every class starts with <code class="luz-code-inline">.luz-docs-</code>, uses semantic tokens only and sits in the cascade layer <code class="luz-code-inline">luz.docs</code>, after app's.</li>
+      <li>It has no script. Load <code class="luz-code-inline">docs.css</code> after the CSS of tokens and core: <a href="/docs/get-started/#site-kinds">Install LUZ</a> has the command. Core's script is optional: it marks the section in view in the rail.</li>
+      <li>It has a version of its own, 0.x while it grows, and needs <code>^0.1.0</code> of tokens and core. Site is an optional peer, for the search.</li>
+      <li>A whole page to copy, and what is not in 0.1, are on <a href="/docs/documentation/templates/">Documentation templates</a>.</li>
+    </ul>
+
+    <div class="docs-decision-grid">
+        <div class="docs-decision-card">
+          <h2 id="use-docs-when" class="docs-decision-card__title">Use docs when</h2>
+          <ul>
+            <li>You write a documentation site: guides, a reference, a manual, with a sidebar of pages.</li>
+            <li>You want a long page to have a head, a list of its sections and a way to the next page.</li>
+          </ul>
+        </div>
+        <div class="docs-decision-card">
+          <h2 id="use-another-kind-when" class="docs-decision-card__title">Use another package when</h2>
+          <ul>
+            <li>Your site is a landing page, a blog or an application: <a href="/docs/landing/">Landing</a>, <a href="/docs/cms/">CMS</a> and <a href="/docs/app/">App</a> have their own pieces.</li>
+            <li>You only need a sidebar and a content area: core's <a href="/docs/components/layout/">layout</a> and <a href="/docs/components/sidebar/">sidebar</a> are enough.</li>
+          </ul>
+        </div>
+      </div>

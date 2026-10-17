@@ -1,0 +1,153 @@
+<!-- luz:page
+title: Pager
+description: Two link blocks at the end of a page, to the previous page and to the next, each with the title it leads to.
+area: documentation
+order: 6
+group: patterns
+files: .luz-docs-pager, __prev, __next, __link, __label, __title
+keywords: previous, next, page links, sequence
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-docs-pager">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+            <div class="docs-demo__stage">
+              <nav aria-label="Previous and next page, example">
+                <ul class="luz-docs-pager">
+                  <li class="luz-docs-pager__prev"><a class="luz-docs-pager__link" rel="prev" href="#example" aria-label="Previous: Install the tool"><span class="luz-docs-pager__label">Previous</span> <span class="luz-docs-pager__title">Install the tool</span></a></li>
+                  <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="#example" aria-label="Next: Deploy to production"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">Deploy to production</span></a></li>
+                </ul>
+              </nav>
+              <p class="docs-demo__note">Two blocks side by side, Next at the end; stacked at 640px and below. The whole block is the link.</p>
+            </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Pager documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>A list of one or two blocks, in a navigation landmark:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-docs-pager" aria-label="Copy the pager markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Pager markup"><code id="code-docs-pager">&lt;nav aria-label=&quot;Previous and next page&quot;&gt;
+  &lt;ul class=&quot;luz-docs-pager&quot;&gt;
+    &lt;li class=&quot;luz-docs-pager__prev&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;prev&quot; href=&quot;/install/&quot; aria-label=&quot;Previous: Install the tool&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Previous&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Install the tool&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+    &lt;li class=&quot;luz-docs-pager__next&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;next&quot; href=&quot;/deploy/&quot; aria-label=&quot;Next: Deploy to production&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Next&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Deploy to production&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>No modifier. The two items say which side they are on.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Pager classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                <tr><td data-label="Class"><div><code>.luz-docs-pager</code></div></td><td data-label="Effect"><div>On a <code>&lt;ul&gt;</code>: two equal columns with a gap, no bullets. One column at 640px and below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-pager__prev</code></div></td><td data-label="Effect"><div>On the first <code>&lt;li&gt;</code>: the first column</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-pager__next</code></div></td><td data-label="Effect"><div>On the second <code>&lt;li&gt;</code>: the second column, with its text at the end. It stays there when there is no previous page</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-pager__link</code></div></td><td data-label="Effect"><div>On the <code>&lt;a&gt;</code>: the whole block is the link, with a border and padding. On hover, the border and the surface change and the title is underlined</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-pager__label</code></div></td><td data-label="Effect"><div>"Previous" or "Next", small, in the secondary colour</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-pager__title</code></div></td><td data-label="Effect"><div>The title of the page it leads to, larger and semibold, in the colour of a link</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/docs</code>. It sets the blocks; the order of the pages is yours.</p>
+            <ul>
+              <li>The two blocks are equal and the whole block is the target, so the click or tap area is large.</li>
+              <li>The first page has only a Next and the last only a Previous: leave the other <code>&lt;li&gt;</code> out. A lone Next stays in the second column, at the end.</li>
+              <li>Each link has <code>rel="prev"</code> or <code>rel="next"</code>, and a name that starts with its visible words: "Previous: Install the tool".</li>
+              <li>The title is never shortened: a long one wraps inside the block.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes. It is two links, and the package has no script.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> Previous, then Next, as in the source. Tab reaches each link, and Enter follows it.</li>
+              <li><strong>Names:</strong> the <code>&lt;nav&gt;</code> is named "Previous and next page". Each link's name starts with its visible words ("Previous: Install the tool"), so a person who says "click Previous" finds it (WCAG 2.5.3).</li>
+              <li><strong>Landmark:</strong> one pager for each page. A second <code>&lt;nav&gt;</code> on the page needs a different name.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the pager at the end of the content, so a reader who finishes a page goes to the next one in the order you intend.</p>
+            <ul>
+              <li>Pages that are read in a sequence: a guide, a tutorial, the chapters of a manual.</li>
+              <li>After the content and before the page foot.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use the pager for pages that have no order, or for the pages of a list of results.</p>
+            <ul>
+              <li>The sidebar already lists every page. The pager gives the next step, not the whole map.</li>
+              <li>For the pages of a list or a table, use <a href="/docs/components/pagination/">pagination</a>, which has page numbers.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="luz-docs-dodont">
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
+                <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Give each block the title of the page it leads to, so the reader knows where the link goes.</figcaption>
+                <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+                  <ul class="luz-docs-pager">
+                    <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="#"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">Deploy to production</span></a></li>
+                  </ul>
+                </div>
+              </figure>
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+                <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> Leave the title out and keep only "Next": the reader cannot tell where it leads until they follow it.</figcaption>
+                <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+                  <ul class="luz-docs-pager">
+                    <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="#"><span class="luz-docs-pager__title">Next</span></a></li>
+                  </ul>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <ul>
+              <li>Label: "Previous" and "Next". Translate them with the rest of the page.</li>
+              <li>Title: the title of the page it leads to, word for word, as in the sidebar.</li>
+              <li>Name: "Previous: " or "Next: " and the title. Do not add arrows or "page" to it.</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The blocks sit on the page surface; under the pointer they sit on the hover surface.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Pager contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Label</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>6.2:1</div></td><td data-label="Dark"><div>7.5:1</div></td><td data-label="High contrast"><div>19.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Label under the pointer</div></td><td data-label="Colour on background"><div><code>--luz-text-secondary</code> on <code>--luz-surface-hover</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>6.2:1</div></td><td data-label="High contrast"><div>18.4:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Title under the pointer</div></td><td data-label="Colour on background"><div><code>--luz-brand-primary</code> on <code>--luz-surface-hover</code></div></td><td data-label="Light"><div>5.1:1</div></td><td data-label="Dark"><div>6.4:1</div></td><td data-label="High contrast"><div>13.5:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Border under the pointer</div></td><td data-label="Colour on background"><div><code>--luz-outline</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>4.3:1</div></td><td data-label="Dark"><div>3.6:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> each block keeps core's ring, 2 px of <code>--luz-focus-ring</code>, drawn around the whole block.</li>
+              <li><strong>Target:</strong> each block is the link: at least 24px tall, and as wide as its half of the row.</li>
+              <li><strong>Edges:</strong> the border at rest (<code>--luz-divider</code>) is decorative and has no minimum.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 10 tokens that the <code>.luz-docs-pager</code> rules of docs' <code>components/pager.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-outline"><code>--luz-outline</code></a>, <a href="/docs/tokens/color/#luz-surface-hover"><code>--luz-surface-hover</code></a>, <a href="/docs/tokens/color/#luz-text-secondary"><code>--luz-text-secondary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-3xs</code>, <code>--luz-space-md</code>, <code>--luz-space-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-text-lg</code>, <code>--luz-text-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

@@ -19,8 +19,8 @@
  * node_modules/@luz-ds (it uses a CDN), as DATA the tool reads at run time and
  * never inlined in the bundle (f5-ai-ready.md 5.4, 5.1):
  *
- *   packages/check/dist/data/index.json                    the six packages and their versions
- *   packages/check/dist/data/<pkg>/classes.json            tokens, core, site, landing, cms, app
+ *   packages/check/dist/data/index.json                    the seven packages and their versions
+ *   packages/check/dist/data/<pkg>/classes.json            tokens, core, site, landing, cms, app, docs
  *   packages/check/dist/data/<core|site>/custom-elements.json
  *   packages/check/dist/data/tokens/tokens.css             LUZ's colour tokens, for the theme rules
  *
@@ -65,7 +65,7 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const entry = resolve(repoRoot, "packages", "check", "src", "main.js");
 const defaultOutdir = resolve(repoRoot, "packages", "check", "dist");
 // In dependency order: the order the facts are listed in
-const PACKAGES = ["tokens", "core", "site", "landing", "cms", "app"];
+const PACKAGES = ["tokens", "core", "site", "landing", "cms", "app", "docs"];
 
 const readJson = (path) => {
   if (!existsSync(path)) throw new Error(`${path} does not exist; build the packages first (pnpm build)`);
@@ -103,15 +103,27 @@ function reduceElements(manifest) {
   };
 }
 
-/** One class or element per line, so a change to the data is a readable diff. */
+/**
+ * One class or element per line, so a change to the data is a readable diff,
+ * and no indentation: the folder stays under its 56 KiB with seven packages.
+ */
 function format(manifest) {
   const lines = [];
   for (const [key, value] of Object.entries(manifest)) {
     if (Array.isArray(value)) {
-      lines.push(value.length === 0 ? `  ${JSON.stringify(key)}: []` : `  ${JSON.stringify(key)}: [\n${value.map((item) => `    ${JSON.stringify(item)}`).join(",\n")}\n  ]`);
-    } else lines.push(`  ${JSON.stringify(key)}: ${JSON.stringify(value)}`);
+      lines.push(value.length === 0 ? `${JSON.stringify(key)}:[]` : `${JSON.stringify(key)}:[\n${value.map((item) => JSON.stringify(item)).join(",\n")}\n]`);
+    } else lines.push(`${JSON.stringify(key)}:${JSON.stringify(value)}`);
   }
   return `{\n${lines.join(",\n")}\n}\n`;
+}
+
+/** custom-elements.json with one declaration per line, unindented. */
+function formatElements(manifest) {
+  const modules = manifest.modules.map(({ declarations, ...module }) => {
+    const head = JSON.stringify(module).slice(0, -1);
+    return `${head},"declarations":[\n${declarations.map((d) => JSON.stringify(d)).join(",\n")}\n]}`;
+  });
+  return `{"schemaVersion":${JSON.stringify(manifest.schemaVersion)},"modules":[\n${modules.join(",\n")}\n]}\n`;
 }
 
 /**
@@ -148,7 +160,7 @@ function writeData(folder) {
     mkdirSync(resolve(data, name), { recursive: true });
     writeFileSync(resolve(data, name, "classes.json"), format(classes), "utf-8");
     const elements = resolve(dist, "custom-elements.json");
-    if (existsSync(elements)) writeFileSync(resolve(data, name, "custom-elements.json"), `${JSON.stringify(reduceElements(readJson(elements)), null, 2)}\n`, "utf-8");
+    if (existsSync(elements)) writeFileSync(resolve(data, name, "custom-elements.json"), formatElements(reduceElements(readJson(elements))), "utf-8");
   }
   writeFileSync(resolve(data, "tokens", "tokens.css"), reduceTokens(readFileSync(resolve(repoRoot, "packages", "tokens", "dist", "tokens.css"), "utf-8")), "utf-8");
   writeFileSync(resolve(data, "index.json"), `${JSON.stringify({ schema: 1, packages }, null, 2)}\n`, "utf-8");

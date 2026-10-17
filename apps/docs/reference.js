@@ -49,7 +49,9 @@ function initOnThisPage() {
   // screen; from 1280px it is a rail beside the content: open it, and mark
   // the section in view (aria-current="true", core's scroll spy). Below
   // 1280px nothing is marked: the list is closed.
-  const nav = document.querySelector(".docs-onpage");
+  // Only the page's own list (in main, or in a rail aside), never the live
+  // demo of the rail pattern, which sits inside an example.
+  const nav = document.querySelector(":is(.docs-main, aside.luz-docs-rail) > .luz-docs-rail__onpage");
   if (!nav || !window.matchMedia("(min-width: 1280px)").matches) return;
   // eslint-disable-next-line no-restricted-syntax -- RL-3: sets the initial state only; opening and closing stay native
   nav.querySelector("details").open = true;
@@ -241,7 +243,7 @@ function initSpecimenTheme() {
   const root = document.documentElement;
   const apply = () => {
     const theme = root.getAttribute("data-theme");
-    for (const el of document.querySelectorAll("[data-docs-specimen], .docs-dodont__stage")) {
+    for (const el of document.querySelectorAll("[data-docs-specimen], .luz-docs-dodont__stage")) {
       if (!theme) el.removeAttribute("data-theme");
       else if (el.getAttribute("data-theme") !== theme) el.setAttribute("data-theme", theme);
     }

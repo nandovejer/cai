@@ -41,7 +41,7 @@
 import { join, dirname } from "node:path";
 import { readLimited } from "./walk.js";
 
-export const PACKAGES = ["tokens", "core", "site", "landing", "cms", "app"];
+export const PACKAGES = ["tokens", "core", "site", "landing", "cms", "app", "docs"];
 export const MAX_MANIFEST_BYTES = 8 * 1024 * 1024;
 const MAX_PACKAGE_JSON_BYTES = 256 * 1024;
 const MAX_CLASSES = 50000;

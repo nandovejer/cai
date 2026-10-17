@@ -1,0 +1,105 @@
+/* ==========================================================================
+   LUZ DOCS: rail.
+   aside.luz-docs-rail > nav.luz-docs-rail__onpage ("On this page": a
+   details.__fold, its summary.__title, ul.__list of a.__link, an h3 in a
+   nested ul.__sub) + .luz-docs-rail__actions (Copy page, Edit, Report).
+   In the shell's third column from 80rem it stays in view while the page
+   scrolls (native sticky), and scrolls on its own when it is taller than
+   the window. A link of the list also carries core's .luz-sidebar__link,
+   so core's scroll spy marks the section in view (aria-current="true"):
+   the mark is the weight and a start border, never the colour alone.
+   ========================================================================== */
+
+.luz-docs-rail {
+	padding-block: var(--luz-space-lg);
+	padding-inline-end: var(--luz-space-md);
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-sm);
+}
+
+@media (min-width: 80rem) {
+	.luz-docs-rail {
+		position: sticky;
+		inset-block-start: var(--luz-docs-rail-top, 0);
+		align-self: start;
+		max-block-size: calc(100dvh - var(--luz-docs-rail-top, 0rem));
+		overflow-y: auto;
+	}
+}
+
+.luz-docs-rail__title {
+	min-block-size: var(--luz-control-sm);
+	font-weight: 600;
+	color: var(--luz-text-primary);
+}
+
+/* In the rail, "On this page" is a list under its title, not core's box */
+.luz-docs-rail > .luz-docs-rail__onpage .luz-docs-rail__fold {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: none;
+}
+
+.luz-docs-rail > .luz-docs-rail__onpage .luz-docs-rail__title {
+	margin: 0 0 var(--luz-space-xs);
+	padding-inline: 0;
+}
+
+.luz-docs-rail__list,
+.luz-docs-rail__sub {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.luz-docs-rail__list {
+	border-inline-start: 1px solid var(--luz-divider);
+}
+
+/* Core's sidebar link is drawn for the sidebar's own surface: here it is
+   text on the page */
+.luz-docs-rail__link {
+	display: flex;
+	align-items: center;
+	min-block-size: var(--luz-control-sm);
+	margin-inline-start: -1px;
+	padding: var(--luz-space-2xs) var(--luz-space-sm);
+	border-inline-start: 2px solid transparent;
+	background: none;
+	color: var(--luz-text-secondary);
+	font-size: inherit;
+	font-weight: 400;
+	text-decoration: none;
+}
+
+.luz-docs-rail__sub .luz-docs-rail__link {
+	padding-inline-start: var(--luz-space-lg);
+}
+
+.luz-docs-rail__link:hover {
+	background: var(--luz-surface-muted);
+	color: var(--luz-text-primary);
+}
+
+.luz-docs-rail__link[aria-current="true"] {
+	border-inline-start-color: var(--luz-brand-primary);
+	background: none;
+	color: var(--luz-text-primary);
+	font-weight: 600;
+}
+
+.luz-docs-rail__actions {
+	display: grid;
+	justify-items: start;
+	margin-block-start: var(--luz-space-lg);
+	padding-block-start: var(--luz-space-md);
+	border-block-start: 1px solid var(--luz-divider);
+}
+
+.luz-docs-rail__actions > :where(a, button) {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: var(--luz-control-sm);
+}

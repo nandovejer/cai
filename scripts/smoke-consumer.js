@@ -10,7 +10,7 @@
  *      (patterns such as ./components/* are expanded);
  *   2. a minimal page that links the installed files loads in Chromium with
  *      no failed request, no console error or warning, the tokens defined,
- *      core, site, landing, cms and app CSS applied, and the JS exports importable;
+ *      core, site, landing, cms, app and docs CSS applied, and the JS exports importable;
  *   3. the same page with jsDelivr-style URLs (/npm/@luz-ds/<pkg>@<version>/…),
  *      served from the same tarballs by a local server: no network is used;
  *   4. the `luz-tokens` command runs from the installed package;
@@ -168,6 +168,7 @@ const PAGE = (base, label) => `<!doctype html>
   <link rel="stylesheet" href="${base.landing}/dist/landing.css">
   <link rel="stylesheet" href="${base.cms}/dist/cms.css">
   <link rel="stylesheet" href="${base.app}/dist/app.css">
+  <link rel="stylesheet" href="${base.docs}/dist/docs.css">
 </head>
 <body>
   <h1>Smoke test</h1>
@@ -177,6 +178,7 @@ const PAGE = (base, label) => `<!doctype html>
   <footer class="luz-landing-footer" id="probe-landing"></footer>
   <div class="luz-cms-article-header" id="probe-article"></div>
   <main class="luz-app-dashboard" id="probe-dashboard"></main>
+  <figure class="luz-docs-example" id="probe-docs"></figure>
   <script type="module">
     const core = ${JSON.stringify(base.core)};
     const site = ${JSON.stringify(base.site)};
@@ -260,6 +262,7 @@ const local = {
   landing: "/node_modules/@luz-ds/landing",
   cms: "/node_modules/@luz-ds/cms",
   app: "/node_modules/@luz-ds/app",
+  docs: "/node_modules/@luz-ds/docs",
 };
 const cdn = Object.fromEntries(PACKAGES.map((n) => [n, `/npm/@luz-ds/${n}@${versions[n]}`]));
 
@@ -334,6 +337,7 @@ if (browser) {
         landingBorder: landing.borderTopStyle,
         articleDisplay: article.display,
         dashboardType: getComputedStyle(document.getElementById("probe-dashboard")).containerType,
+        docsBorder: getComputedStyle(document.getElementById("probe-docs")).borderTopStyle,
         sheets,
         missing: window.__smoke?.missing ?? ["no result"],
       };
@@ -346,6 +350,7 @@ if (browser) {
     check(`${label2} landing CSS applied (.luz-landing-footer has its rule)`, state.landingBorder === "solid", state.landingBorder);
     check(`${label2} cms CSS applied (.luz-cms-article-header is a grid)`, state.articleDisplay === "grid", state.articleDisplay);
     check(`${label2} app CSS applied (.luz-app-dashboard is a size container)`, state.dashboardType === "inline-size", state.dashboardType);
+    check(`${label2} docs CSS applied (.luz-docs-example has its frame)`, state.docsBorder === "solid", state.docsBorder);
     check(`${label2} ${PACKAGES.length} stylesheets with rules`, state.sheets.length === PACKAGES.length && state.sheets.every((n) => n > 0), JSON.stringify(state.sheets));
     check(`${label2} JS entries import and export what the docs name`, state.missing.length === 0, state.missing.join("\n"));
     await page.close();

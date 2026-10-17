@@ -1,0 +1,136 @@
+<!-- luz:page
+title: Documentation templates
+description: A whole documentation page to paste in and adapt, the pager of the first and the last page, and what the package does not have yet.
+area: documentation
+order: 10
+group: reference
+-->
+    <div class="docs-block" id="p-docs-templates">
+          <p>Each template is markup to copy into your site, with your own text in place of the example. They use the classes of core and docs only. The first is a whole page; the second is one piece that changes at the ends of a sequence. The last section says what is not in the package yet.</p>
+          <div class="docs-prose">
+            <h2 id="docs-page" class="docs-prose__title">Documentation page</h2>
+            <p>A whole page: the skip link, the header, the sidebar, the content with its <a href="/docs/documentation/page-head/">head</a>, an <a href="/docs/documentation/example/">example</a> and a <a href="/docs/documentation/dodont/">good and bad</a> pair, the <a href="/docs/documentation/pager/">pager</a> and the <a href="/docs/documentation/page-foot/">page foot</a>, then the <a href="/docs/documentation/rail/">rail</a> and the footer, on the <a href="/docs/documentation/shell/">shell</a>.</p>
+            <ul>
+  <li>Load the CSS of tokens, core and docs in that order: <a href="/docs/get-started/#site-kinds">Install LUZ</a> has the command. Core's script is optional: it marks the section in view in the rail and closes the drawer when a link is followed.</li>
+  <li>The columns are placed by the shell, so the source stays in reading order: sidebar, content, rail.</li>
+  <li>The links of the sidebar and of the rail are examples. The rail lists the <code>h2</code> of the page, and its <code>h3</code> in a nested list.</li>
+  <li>From 80rem the shell always has three tracks. Without the <code>&lt;aside&gt;</code> the third stays empty, so keep the rail on every page of the site.</li>
+</ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-docs-page" aria-label="Copy the documentation page markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Documentation page markup"><code id="code-tpl-docs-page">&lt;body class=&quot;o-shell luz-docs-shell&quot;&gt;
+              &lt;a class=&quot;luz-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to content&lt;/a&gt;
+              &lt;header&gt;
+                &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;docs-nav&quot; aria-label=&quot;Menu&quot;&gt;…&lt;/button&gt;
+                &lt;p&gt;&lt;a href=&quot;/&quot;&gt;Acme docs&lt;/a&gt;&lt;/p&gt;
+              &lt;/header&gt;
+              &lt;nav class=&quot;luz-sidebar luz-docs-nav&quot; id=&quot;docs-nav&quot; aria-label=&quot;Acme docs&quot; popover&gt;
+                &lt;div class=&quot;luz-sidebar__section&quot;&gt;
+                  &lt;a class=&quot;luz-sidebar__link&quot; href=&quot;/install/&quot; aria-current=&quot;page&quot;&gt;Install&lt;/a&gt;
+                  &lt;a class=&quot;luz-sidebar__link&quot; href=&quot;/configure/&quot;&gt;Configure&lt;/a&gt;
+                  &lt;a class=&quot;luz-sidebar__link&quot; href=&quot;/deploy/&quot;&gt;Deploy&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/nav&gt;
+              &lt;main class=&quot;o-main luz-docs-main&quot; id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;
+                &lt;header class=&quot;luz-docs-page-head&quot;&gt;
+                  &lt;p class=&quot;luz-docs-page-head__eyebrow&quot;&gt;Guides · Setup&lt;/p&gt;
+                  &lt;h1&gt;Install the command line tool&lt;/h1&gt;
+                  &lt;p class=&quot;luz-docs-page-head__lead&quot;&gt;Add the tool to a project and check that it runs, in about two minutes.&lt;/p&gt;
+                  &lt;ul class=&quot;luz-docs-page-head__meta&quot;&gt;
+                    &lt;li&gt;Version 2&lt;/li&gt;
+                    &lt;li&gt;&lt;a href=&quot;#known-issues&quot;&gt;No known issues&lt;/a&gt;&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/header&gt;
+            
+                &lt;h2 id=&quot;install&quot;&gt;Install&lt;/h2&gt;
+                &lt;p&gt;Add the tool to your project with your package manager.&lt;/p&gt;
+                &lt;figure class=&quot;luz-docs-example&quot;&gt;
+                  &lt;div class=&quot;luz-docs-example__preview&quot;&gt;
+                    &lt;div class=&quot;luz-docs-example__frame&quot;&gt;
+                      &lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;button&quot;&gt;Run the tool&lt;/button&gt;
+                    &lt;/div&gt;
+                  &lt;/div&gt;
+                  &lt;div class=&quot;luz-docs-example__code&quot;&gt;
+                    &lt;pre class=&quot;luz-code-block&quot; data-lang=&quot;html&quot; tabindex=&quot;0&quot; aria-label=&quot;Markup of the button&quot;&gt;&lt;code&gt;&amp;lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;button&quot;&amp;gt;Run the tool&amp;lt;/button&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+                  &lt;/div&gt;
+                &lt;/figure&gt;
+            
+                &lt;h2 id=&quot;configure&quot;&gt;Configure&lt;/h2&gt;
+                &lt;p&gt;The tool reads one file from the root of the project.&lt;/p&gt;
+                &lt;div class=&quot;luz-docs-dodont&quot;&gt;…&lt;/div&gt;
+            
+                &lt;h2 id=&quot;known-issues&quot;&gt;Known issues&lt;/h2&gt;
+                &lt;p&gt;None known.&lt;/p&gt;
+            
+                &lt;nav aria-label=&quot;Previous and next page&quot;&gt;
+                  &lt;ul class=&quot;luz-docs-pager&quot;&gt;
+                    &lt;li class=&quot;luz-docs-pager__next&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;next&quot; href=&quot;/configure/&quot; aria-label=&quot;Next: Configure&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Next&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Configure&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+                  &lt;/ul&gt;
+                &lt;/nav&gt;
+                &lt;p class=&quot;luz-docs-page-foot&quot;&gt;Last updated &lt;time datetime=&quot;2026-10-17&quot;&gt;17 October 2026&lt;/time&gt; · &lt;a href=&quot;https://example.com/edit/install.md&quot;&gt;Edit this page&lt;/a&gt; · &lt;a href=&quot;https://example.com/issues/new&quot;&gt;Report a problem&lt;/a&gt;&lt;/p&gt;
+              &lt;/main&gt;
+              &lt;aside class=&quot;luz-docs-rail&quot; aria-label=&quot;About this page&quot;&gt;
+                &lt;nav class=&quot;luz-docs-rail__onpage&quot; aria-labelledby=&quot;onpage-title&quot;&gt;
+                  &lt;details class=&quot;luz-docs-rail__fold&quot; open&gt;
+                    &lt;summary class=&quot;luz-docs-rail__title&quot; id=&quot;onpage-title&quot;&gt;On this page&lt;/summary&gt;
+                    &lt;ul class=&quot;luz-docs-rail__list&quot;&gt;
+                      &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#install&quot;&gt;Install&lt;/a&gt;&lt;/li&gt;
+                      &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#configure&quot;&gt;Configure&lt;/a&gt;&lt;/li&gt;
+                      &lt;li&gt;&lt;a class=&quot;luz-sidebar__link luz-docs-rail__link&quot; href=&quot;#known-issues&quot;&gt;Known issues&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/details&gt;
+                &lt;/nav&gt;
+                &lt;div class=&quot;luz-docs-rail__actions&quot;&gt;
+                  &lt;a href=&quot;https://example.com/docs/install.md&quot;&gt;Copy page as Markdown&lt;/a&gt;
+                  &lt;a href=&quot;https://example.com/edit/install.md&quot;&gt;Edit this page&lt;/a&gt;
+                  &lt;a href=&quot;https://example.com/issues/new&quot;&gt;Report a problem&lt;/a&gt;
+                &lt;/div&gt;
+              &lt;/aside&gt;
+              &lt;footer&gt;
+                &lt;p&gt;© 2026 Acme&lt;/p&gt;
+              &lt;/footer&gt;
+            &lt;/body&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="first-last" class="docs-prose__title">First and last page</h2>
+            <p>The first page of a sequence has no previous page and the last has no next one. Leave the other item out: a lone Next stays at the end of the row, and a lone Previous at the start.</p>
+            <ul>
+  <li>Do not add a link that leads nowhere to keep two blocks: an empty block is a link that does nothing.</li>
+  <li>If a page is part of two sequences, use one pager and decide which sequence it follows.</li>
+</ul>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-tpl-first-last" aria-label="Copy the pager of the first and last page">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="First and last page pager markup"><code id="code-tpl-first-last">&lt;!-- First page: there is no Previous --&gt;
+            &lt;nav aria-label=&quot;Previous and next page&quot;&gt;
+              &lt;ul class=&quot;luz-docs-pager&quot;&gt;
+                &lt;li class=&quot;luz-docs-pager__next&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;next&quot; href=&quot;/configure/&quot; aria-label=&quot;Next: Configure&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Next&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Configure&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/nav&gt;
+            
+            &lt;!-- Last page: there is no Next --&gt;
+            &lt;nav aria-label=&quot;Previous and next page&quot;&gt;
+              &lt;ul class=&quot;luz-docs-pager&quot;&gt;
+                &lt;li class=&quot;luz-docs-pager__prev&quot;&gt;&lt;a class=&quot;luz-docs-pager__link&quot; rel=&quot;prev&quot; href=&quot;/configure/&quot; aria-label=&quot;Previous: Configure&quot;&gt;&lt;span class=&quot;luz-docs-pager__label&quot;&gt;Previous&lt;/span&gt; &lt;span class=&quot;luz-docs-pager__title&quot;&gt;Configure&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/nav&gt;</code></pre>
+            </div>
+          </div>
+          <div class="docs-prose">
+            <h2 id="not-here" class="docs-prose__title">What is not here</h2>
+            <p>A documentation site often asks for things the package does not have. They are not faked in the templates above.</p>
+            <ul>
+  <li><strong>Search.</strong> Use <a href="/docs/site/search/">site's search</a>, an optional peer of this package.</li>
+  <li><strong>Syntax highlighting and a copy button on the code.</strong> They are core's <a href="/docs/components/code/">code block</a>, with its script.</li>
+  <li><strong>A width selector for the example, and live controls that rewrite it.</strong> The frame reads <code>--luz-docs-example-w</code>; the control that sets it is yours.</li>
+  <li><strong>A script for "Copy page as Markdown".</strong> The rail has the link; copying its target is yours.</li>
+  <li><strong>Versions, translations and a changelog.</strong> They are the content of your site.</li>
+</ul>
+          </div>
+    </div>

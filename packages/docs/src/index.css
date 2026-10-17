@@ -1,0 +1,19 @@
+/* ==========================================================================
+   LUZ DOCS
+   The pieces of a documentation page: the shell (sidebar, content, rail),
+   the page head, the rail ("On this page" and the page's actions), the
+   example frame, do and don't, Previous / Next and the page foot. Each is a
+   class on a native element, on core's objects and components (.o-shell,
+   .o-main, .luz-sidebar, .luz-code-block). Docs adds only its layout, its
+   skin and its rhythm. No JavaScript.
+   Requires: @luz-ds/tokens and @luz-ds/core loaded first; @luz-ds/site
+   optional, loaded before this file.
+   ========================================================================== */
+
+@import url("./components/shell.css");
+@import url("./components/page-head.css");
+@import url("./components/rail.css");
+@import url("./components/example.css");
+@import url("./components/dodont.css");
+@import url("./components/pager.css");
+@import url("./components/page-foot.css");

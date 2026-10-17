@@ -117,7 +117,7 @@ Keys: `play`, `pause`, `mute`, `unmute`, `fullscreen`, `exitFullscreen`, `captio
 
 ## Cascade layers
 
-Every stylesheet puts its rules in a layer of one container layer, `luz`: `luz.tokens`, `luz.themes`, `luz.settings`, `luz.generic`, `luz.elements`, `luz.objects`, `luz.components`, `luz.utilities`, `luz.site`, `luz.landing`, `luz.cms`, `luz.app`, `luz.print`. Your unlayered CSS wins over all of them; to order LUZ as one unit, declare `@layer reset, luz, app;` first. The names are public API.
+Every stylesheet puts its rules in a layer of one container layer, `luz`: `luz.tokens`, `luz.themes`, `luz.settings`, `luz.generic`, `luz.elements`, `luz.objects`, `luz.components`, `luz.utilities`, `luz.site`, `luz.landing`, `luz.cms`, `luz.app`, `luz.docs`, `luz.print`. Your unlayered CSS wins over all of them; to order LUZ as one unit, declare `@layer reset, luz, app;` first. The names are public API.
 
 ## Package exports
 

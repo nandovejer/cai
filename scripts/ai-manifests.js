@@ -69,7 +69,7 @@ const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 const CLASS_NAMESPACE = /^(?:luz|o|u|is)-/;
 const PROPERTY_NAMESPACE = /^--luz-/;
-const PATTERN = /^luz-(?:site|landing|cms|app)-/;
+const PATTERN = /^luz-(?:site|landing|cms|app|docs)-/;
 const BEM = /^(.+?)(?:__(.+?))?(?:--(.+))?$/;
 
 /** The kind of a class, from its name. */

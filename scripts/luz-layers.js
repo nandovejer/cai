@@ -27,13 +27,18 @@
  *                   dashboard of a web application). It shares no class
  *                   with landing or cms either; it comes after cms so
  *                   adding it moved no existing layer
+ *   luz.docs        .luz-docs-* patterns of @luz-ds/docs (the shell, the page
+ *                   head, the rail, the example, the do and don't, the pager
+ *                   and the page foot of a documentation site). It
+ *                   shares no class with any other package, so its place
+ *                   moves no other layer: after app, before luz.print
  *   luz.print       what changes on paper (@media print): last, so it wins over
  *                   the screen styles of every package by order
  *
  * Every file repeats the statement first, so the order is the same whichever
  * file a page loads first.
  */
-export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "landing", "cms", "app", "print"];
+export const LAYERS = ["tokens", "themes", "settings", "generic", "elements", "objects", "components", "utilities", "site", "landing", "cms", "app", "docs", "print"];
 
 export const LAYER_ORDER = `@layer ${LAYERS.map((l) => `luz.${l}`).join(", ")};\n`;
 

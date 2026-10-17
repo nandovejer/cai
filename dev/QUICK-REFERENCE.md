@@ -4,13 +4,14 @@
 
 ```bash
 pnpm dev            # Vite → localhost:5173 (apps/docs/)
-pnpm build          # Full build (tokens + core + site + landing + cms + app + check)
+pnpm build          # Full build (tokens + core + site + landing + cms + app + docs + check)
 pnpm tokens:build   # Regenerate primitives from tokens.json
 pnpm core:build     # Sync @luz-ds/core dist/
 pnpm site:build     # Sync @luz-ds/site dist/
 pnpm landing:build  # Sync @luz-ds/landing dist/
 pnpm cms:build      # Sync @luz-ds/cms dist/
 pnpm app:build      # Sync @luz-ds/app dist/
+pnpm docs:build     # Sync @luz-ds/docs dist/
 pnpm luzcheck:build # Bundle @luz-ds/check into dist/luz-check.js
 pnpm lint:css       # Stylelint
 pnpm lint:js        # ESLint
@@ -87,7 +88,7 @@ pnpm lint:js        # ESLint
 
 ✓ **Token decimal rule:** Components always use semantic tokens (`--luz-text-primary`), never primitives (`--luz-gray-100`)
 
-✓ **Package boundary:** `core` must never import from `site`, nor `site` from `landing`, `cms` or `app`, and `landing`, `cms` and `app` never from each other
+✓ **Package boundary:** `core` must never import from `site`, nor `site` from `landing`, `cms`, `app` or `docs`, and `landing`, `cms`, `app` and `docs` never from each other
 
 ✓ **No runtime dependencies** — See [VANILLA-FIRST.md](./VANILLA-FIRST.md)
 
@@ -122,9 +123,9 @@ Requires the tokens layer, then `base.css` (core settings such as z-index and mo
 
 ## File Organization
 
-- **Package source:** `packages/{tokens,core,site,landing,cms,app}/src/` (CSS) and `packages/check/src/` (Node, no CSS)
-- **Package dist:** `packages/{tokens,core,site,landing,cms,app}/dist/` and `packages/check/dist/luz-check.js` (generated)
-- **Docs app:** pages in `apps/docs/pages/` (front matter + fragment), wrapped by `apps/docs/_layouts/` and `apps/docs/_partials/` through `scripts/docs-site/`; styles in `apps/docs/reference.css` and `elements.css`
+- **Package source:** `packages/{tokens,core,site,landing,cms,app,docs}/src/` (CSS) and `packages/check/src/` (Node, no CSS)
+- **Package dist:** `packages/{tokens,core,site,landing,cms,app,docs}/dist/` and `packages/check/dist/luz-check.js` (generated)
+- **Docs app:** pages in `apps/docs/pages/` (front matter + fragment), wrapped by `apps/docs/_layouts/` and `apps/docs/_partials/` through `scripts/docs-site/`; styles in `apps/docs/reference.css` and `elements.css`, on top of `@luz-ds/docs` (`.luz-docs-*`: page head, "On this page", Previous / Next, Do and don't)
 - **Shared site app:** `apps/site/` (`header.css`, `header.js`, `boot.js`, `theme-light.css`, `_partials/`, `assets/`): what the home page and the docs share; it depends on no other app
 - **Landing app:** `apps/landing/` (external consumer)
 

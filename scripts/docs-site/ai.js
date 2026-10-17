@@ -73,7 +73,7 @@ const DETAILS =
   "After you write HTML or CSS, run `npx @luz-ds/check` on the files and fix what it reports; it reads source, so it does not replace testing in a browser.";
 
 /** The package a page of these areas documents; the other areas name none. */
-const PACKAGE_OF_AREA = { components: "core", site: "site", landing: "landing", cms: "cms", app: "app" };
+const PACKAGE_OF_AREA = { components: "core", site: "site", landing: "landing", cms: "cms", app: "app", documentation: "docs" };
 
 /** The pages the A-Z index lists (indexData() keeps exactly these). */
 const listed = (page) => page.meta.search !== "false";
@@ -719,7 +719,8 @@ function markupBlocks(page) {
   return { kept, skipped };
 }
 
-const KIND_AREAS = new Set(SITE_KINDS);
+/** The areas of the packages for one kind of site: the package's name, but `documentation` for docs (/docs/docs/ would read as a typo). */
+const KIND_AREAS = new Set(Object.keys(PACKAGE_OF_AREA).filter((area) => SITE_KINDS.includes(PACKAGE_OF_AREA[area])));
 
 /** The tags of the elements `@luz-ds/site` declares, from the manifest it ships. */
 function siteElements(root) {
@@ -804,7 +805,7 @@ export function exampleDocuments(site, { csp, versions, root = REPO_ROOT }) {
     const area = page.route.split("/")[2];
     const { kept } = markupBlocks(page);
     const withSite = area === "site" || kept.some((b) => tags.some((tag) => tag.test(b.code)));
-    const packages = ["tokens", "core", ...(withSite ? ["site"] : []), ...(KIND_AREAS.has(area) ? [area] : [])];
+    const packages = ["tokens", "core", ...(withSite ? ["site"] : []), ...(KIND_AREAS.has(area) ? [PACKAGE_OF_AREA[area]] : [])];
     documents.push(exampleDocument(page, { csp, versions, packages }));
   }
   return documents;

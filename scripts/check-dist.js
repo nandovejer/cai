@@ -13,6 +13,7 @@ const sentinels = [
   "../packages/landing/dist/landing.css",
   "../packages/cms/dist/cms.css",
   "../packages/app/dist/app.css",
+  "../packages/docs/dist/docs.css",
   "../packages/check/dist/luz-check.js",
 ].map((p) => resolve(__dirname, p));
 

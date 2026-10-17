@@ -1,0 +1,81 @@
+/* ==========================================================================
+   LUZ DOCS: do and don't.
+   div.luz-docs-dodont > figure.__item.__item--do, then --dont, each a
+   figcaption > strong.__verdict ("Do", "Don't") and its reason, then a
+   div.__stage (the example, inert and aria-hidden: the caption says what it
+   shows) or a code block. Side by side when there is room, stacked below.
+   The verdict is a word; the mark before it (a tick, a cross) and the
+   frame (solid, dashed) are extra cues, never the only one, and so is the
+   colour (green, red).
+   ========================================================================== */
+
+.luz-docs-dodont {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 17.5rem), 1fr));
+	gap: var(--luz-space-md);
+}
+
+.luz-docs-dodont__item {
+	display: grid;
+	grid-template-rows: auto 1fr;
+	gap: var(--luz-space-sm);
+	min-inline-size: 0;
+	margin: 0;
+	padding: var(--luz-space-sm);
+	border: 2px solid var(--luz-divider);
+	border-radius: var(--luz-radius-md);
+	background: var(--luz-surface);
+	color: var(--luz-text-primary);
+}
+
+.luz-docs-dodont__item--do {
+	border-color: var(--luz-color-success);
+}
+
+.luz-docs-dodont__item--dont {
+	border-style: dashed;
+	border-color: var(--luz-color-danger);
+}
+
+.luz-docs-dodont__item > :where(figcaption) {
+	font-style: normal;
+}
+
+.luz-docs-dodont__verdict {
+	display: block;
+	color: var(--luz-color-success);
+	font-family: var(--luz-font-sans);
+}
+
+.luz-docs-dodont__item--dont .luz-docs-dodont__verdict {
+	color: var(--luz-color-danger);
+}
+
+/* The mark is decoration: the word says it. A browser without alternative
+   text for content reads the first value */
+.luz-docs-dodont__verdict::before {
+	content: "\2713  ";
+	content: "\2713  " / "";
+}
+
+.luz-docs-dodont__item--dont .luz-docs-dodont__verdict::before {
+	content: "\2715  ";
+	content: "\2715  " / "";
+}
+
+.luz-docs-dodont__stage {
+	display: grid;
+	gap: var(--luz-space-sm);
+	align-content: center;
+	min-inline-size: 0;
+	padding: var(--luz-space-md);
+	border: 1px solid var(--luz-divider);
+	border-radius: var(--luz-radius-sm);
+	background: var(--luz-surface-page);
+	color: var(--luz-text-primary);
+	overflow-wrap: anywhere;
+}
+
+.luz-docs-dodont__stage > :where(*) {
+	margin-block: 0;
+}

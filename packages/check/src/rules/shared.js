@@ -29,6 +29,7 @@ const PACKAGE_PREFIXES = [
   ["luz-landing-", "landing"],
   ["luz-cms-", "cms"],
   ["luz-app-", "app"],
+  ["luz-docs-", "docs"],
   ["luz-site-", "site"],
 ];
 

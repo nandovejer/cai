@@ -1,0 +1,110 @@
+/* ==========================================================================
+   LUZ DOCS: shell.
+   body.o-shell.luz-docs-shell > header, nav.luz-sidebar.luz-docs-nav,
+   main.o-main.luz-docs-main, aside.luz-docs-rail, footer. Three columns
+   from 80rem (the sidebar, the content, the rail), two from 60rem (the
+   rail is not drawn; the page foot carries Edit and Report), one below, in the
+   order of the markup. The header and the footer span the shell. The
+   content's children keep to the measure, --luz-docs-measure.
+   Core gives the grid, the sidebar and its drawer (a popover nav at 768px
+   and below); docs gives the tracks and the measure.
+   ========================================================================== */
+
+.luz-docs-shell {
+	--luz-docs-measure: 46rem;
+	--luz-docs-nav-w: 16.5rem;
+	--luz-docs-rail-w: 14rem;
+	--luz-docs-rail-top: var(--luz-space-lg);
+
+	grid-template: "head" "nav" "main" "rail" "foot" / minmax(0, 1fr);
+}
+
+.luz-docs-shell > :where(header) {
+	grid-area: head;
+}
+
+.luz-docs-nav {
+	grid-area: nav;
+}
+
+.luz-docs-main {
+	grid-area: main;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	align-content: start;
+	gap: var(--luz-space-md);
+	min-inline-size: 0;
+	padding: var(--luz-space-lg) var(--luz-space-md) var(--luz-space-3xl);
+}
+
+.luz-docs-rail {
+	grid-area: rail;
+	display: none;
+}
+
+.luz-docs-shell > :where(footer) {
+	grid-area: foot;
+}
+
+/* Every child of the content keeps to the measure: a line of running text,
+   an example and its code alike. A section starts with more room above its
+   heading than between its blocks. */
+.luz-docs-main > * {
+	max-inline-size: var(--luz-docs-measure);
+}
+
+.luz-docs-main > :where(h2) {
+	margin-block-start: var(--luz-space-xl);
+}
+
+/* Between core's drawer (768px and below) and two columns, the sidebar is
+   the first block above the content, popover or not */
+@media (769px <= width < 60rem) {
+	.luz-docs-nav {
+		position: static;
+		block-size: auto;
+		inline-size: auto;
+		min-inline-size: 0;
+	}
+}
+
+@media (min-width: 60rem) {
+	.luz-docs-shell {
+		grid-template:
+			"head head" auto
+			"nav main" 1fr
+			"nav foot" auto / var(--luz-docs-nav-w) minmax(0, 1fr);
+	}
+
+	.luz-docs-nav {
+		inline-size: auto;
+		min-inline-size: 0;
+	}
+
+	.luz-docs-main {
+		padding-inline: var(--luz-space-xl);
+	}
+}
+
+@media (min-width: 80rem) {
+	.luz-docs-shell {
+		grid-template:
+			"head head head" auto
+			"nav main rail" 1fr
+			"nav foot foot" auto / var(--luz-docs-nav-w) minmax(0, 1fr) var(--luz-docs-rail-w);
+	}
+
+	.luz-docs-rail {
+		display: block;
+	}
+}
+
+@media print {
+	.luz-docs-shell {
+		display: block;
+	}
+
+	.luz-docs-rail {
+		display: none;
+	}
+}

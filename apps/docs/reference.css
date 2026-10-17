@@ -145,13 +145,7 @@
   border-block-start: 0;
 }
 
-.docs-page-head {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--luz-space-sm);
-}
-
-.docs-page-head__title {
+.docs-title-row {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -163,7 +157,7 @@
   line-height: 1.1;
 }
 
-.docs-page-head__title .docs-title {
+.docs-title-row .docs-title {
   margin-inline-end: var(--luz-space-xs);
 }
 
@@ -219,7 +213,7 @@
 
 /* A band bleeds to the edge of the frame it is shown in, not of the page */
 .docs-example:has(.luz-band),
-.docs-dodont__stage:has(.luz-band) {
+.luz-docs-dodont__stage:has(.luz-band) {
   overflow: clip;
 }
 
@@ -299,94 +293,28 @@
   color: var(--luz-text-secondary);
 }
 
-/* Do and don't (Design tab): two figures side by side when there is room.
-   The verdict is a word at the start of the caption; the mark before it and
-   the solid or dashed frame are extra cues, never the only one (a11y.md
-   TAB-20). The examples are real LUZ markup, inert and hidden from assistive
-   technology: the caption says what each one shows. */
-.docs-dodont {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-  gap: var(--luz-space-md);
-}
-
-.docs-dodont__item {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: var(--luz-space-sm);
-  min-width: 0;
-  margin: 0;
-  padding: var(--luz-space-sm);
-  border: 2px solid var(--luz-color-success);
-  border-radius: var(--luz-radius-md);
-  background: var(--luz-surface);
-  color: var(--luz-text-primary);
-}
-
-.docs-dodont__item--dont {
-  border-style: dashed;
-  border-color: var(--luz-color-danger);
-}
-
-.docs-dodont__item > figcaption {
-  font-style: normal;
-}
-
-.docs-dodont__verdict {
-  display: block;
-  color: var(--luz-color-success);
-  font-family: var(--luz-font-sans);
-}
-
-.docs-dodont__item--dont .docs-dodont__verdict {
-  color: var(--luz-color-danger);
-}
-
-.docs-dodont__verdict::before {
-  content: "✓ " / "";
-}
-
-.docs-dodont__item--dont .docs-dodont__verdict::before {
-  content: "✕ " / "";
-}
-
-.docs-dodont__stage {
-  display: grid;
-  gap: var(--luz-space-sm);
-  align-content: center;
-  min-width: 0;
-  padding: var(--luz-space-md);
-  border: 1px solid var(--luz-divider);
-  border-radius: var(--luz-radius-sm);
-  background: var(--luz-surface-page);
-  color: var(--luz-text-primary);
-  overflow-wrap: anywhere;
-}
-
-.docs-dodont__stage > :where(*) {
-  margin-block: 0;
-}
-
-/* Stand-ins: the component's own classes, held still for a picture */
-.docs-dodont__stage > .luz-search__trigger {
+/* Do and don't (Design tab): the pattern is @luz-ds/docs' .luz-docs-dodont.
+   What follows holds a component still for a picture in its stage: the
+   component's own classes, drawn in place (what the docs teach, not the
+   pattern). */
+.luz-docs-dodont__stage > .luz-search__trigger {
   justify-self: start;
 }
 
-
-.docs-dodont__stage .docs-dodont__modal {
+.luz-docs-dodont__stage .docs-stage__modal {
   max-inline-size: none;
   padding: var(--luz-space-md);
   box-shadow: none;
 }
 
-.docs-dodont__tabs {
+.docs-stage__tabs {
   display: flex;
   flex-wrap: wrap;
   border-block-end: 2px solid var(--luz-divider);
   font-family: var(--luz-font-sans);
 }
 
-.docs-dodont__sidebar {
+.docs-stage__sidebar {
   display: grid;
   gap: var(--luz-space-3xs);
   padding: var(--luz-space-sm);
@@ -395,13 +323,13 @@
   font-family: var(--luz-font-sans);
 }
 
-.docs-dodont__tip {
+.docs-stage__tip {
   display: grid;
   justify-items: start;
   gap: var(--luz-space-xs);
 }
 
-.docs-dodont__tip .luz-tooltip__text {
+.docs-stage__tip .luz-tooltip__text {
   position: static;
   transform: none;
   visibility: visible;
@@ -409,22 +337,14 @@
   white-space: normal;
 }
 
-.docs-dodont__stage .docs-dodont__skip {
+.luz-docs-dodont__stage .docs-stage__skip {
   position: static;
   display: inline-block;
   justify-self: start;
   transform: none;
 }
 
-.docs-dodont__shell {
-  display: grid;
-  gap: var(--luz-space-xs);
-  padding: var(--luz-space-md);
-  border: 1px solid var(--luz-divider);
-  border-radius: var(--luz-radius-sm);
-}
-
-.docs-dodont__label {
+.docs-stage__label {
   font-family: var(--luz-font-sans);
   font-size: var(--luz-text-sm);
   color: var(--luz-text-secondary);
@@ -466,66 +386,33 @@
    in view marked by weight and a start border (core's initSidebar).
    -------------------------------------------------------------------------- */
 
-.docs-onpage__fold {
-  margin: 0;
-}
-
-.docs-onpage__title {
+/* The pattern is @luz-ds/docs' rail (.luz-docs-rail__*); here it sits in
+   main, under the page head, in the size of running text */
+.luz-docs-rail__onpage {
   font-size: var(--luz-text-md);
 }
 
-.docs-onpage__list {
-  list-style: none;
+.luz-docs-rail__fold {
   margin: 0;
-  padding: 0;
-  border-inline-start: 1px solid var(--luz-divider);
 }
 
-.docs-onpage .luz-sidebar__link {
-  margin-inline-start: -1px;
-  padding: var(--luz-space-2xs) var(--luz-space-sm);
-  border-inline-start: 2px solid transparent;
+.luz-docs-rail__title {
   font-size: var(--luz-text-md);
-  color: var(--luz-text-secondary);
-}
-
-.docs-onpage .luz-sidebar__link:hover {
-  background: var(--luz-surface-muted);
-  color: var(--luz-text-primary);
-}
-
-/* The h3 of a section (on a component page, of a tab), under its h2 */
-.docs-onpage__sub {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.docs-onpage .docs-onpage__sub .luz-sidebar__link {
-  padding-inline-start: var(--luz-space-lg);
-}
-
-.docs-onpage .luz-sidebar__link.is-active,
-.docs-onpage .luz-sidebar__link[aria-current="true"] {
-  border-inline-start-color: var(--luz-brand-primary);
-  background: none;
-  color: var(--luz-text-primary);
-  font-weight: 600;
 }
 
 @media (min-width: 1280px) {
-  .docs-main:has(> .docs-onpage) {
+  .docs-main:has(> .luz-docs-rail__onpage) {
     /* The rail keeps 13rem for its links plus the page gutter at its end,
        so it ends where the header's search does (the site frame) */
     grid-template-columns: minmax(0, 1fr) calc(13rem + var(--luz-space-xl));
     column-gap: 0;
   }
 
-  .docs-main:has(> .docs-onpage) > * {
+  .docs-main:has(> .luz-docs-rail__onpage) > * {
     grid-column: 1;
   }
 
-  .docs-main > .docs-onpage {
+  .docs-main > .luz-docs-rail__onpage {
     grid-column: 2;
     grid-row: 1 / span 3;
     align-self: start;
@@ -537,15 +424,15 @@
   }
 
   /* A rail, not a box */
-  .docs-onpage__fold,
-  .docs-onpage__fold[open] {
+  .luz-docs-rail__fold,
+  .luz-docs-rail__fold[open] {
     padding: 0;
     border: 0;
     border-radius: 0;
     background: none;
   }
 
-  .docs-onpage__title {
+  .luz-docs-rail__title {
     margin: 0 0 var(--luz-space-xs);
   }
 }
@@ -570,58 +457,13 @@
   font-size: var(--luz-text-md);
 }
 
-.docs-end__links,
-.docs-pager {
+.docs-end__links {
   list-style: none;
   margin: 0;
   padding: 0;
-}
-
-.docs-end__links {
   display: flex;
   flex-wrap: wrap;
   gap: var(--luz-space-2xs) var(--luz-space-lg);
-}
-
-.docs-pager {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--luz-space-md);
-}
-
-.docs-pager__next {
-  grid-column: 2;
-  text-align: end;
-}
-
-.docs-pager__link {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--luz-space-3xs);
-  block-size: 100%;
-  padding: var(--luz-space-sm) var(--luz-space-md);
-  border: 1px solid var(--luz-divider);
-  border-radius: var(--luz-radius-md);
-}
-
-.docs-pager__link:hover {
-  border-color: var(--luz-outline);
-  background: var(--luz-surface-hover);
-  text-decoration: none;
-}
-
-.docs-pager__link:hover .docs-pager__title {
-  text-decoration: underline;
-}
-
-.docs-pager__label {
-  font-size: var(--luz-text-sm);
-  color: var(--luz-text-secondary);
-}
-
-.docs-pager__title {
-  font-size: var(--luz-text-lg);
-  font-weight: 600;
 }
 
 .docs-end__links a,
@@ -1759,14 +1601,6 @@ h2.docs-demo__title {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .docs-pager {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .docs-pager__next {
-    grid-column: 1;
-  }
-
   .docs-title {
     font-size: var(--luz-text-2xl);
   }
@@ -1841,7 +1675,7 @@ h2.docs-demo__title {
 @media print {
   .site-header,
   .docs-footer,
-  .docs-onpage,
+  .luz-docs-rail__onpage,
   .docs-end,
   .docs-view-tabs,
   .docs-breadcrumb,
@@ -1864,6 +1698,6 @@ h2.docs-demo__title {
 }
 
 /* Do and don't of the submenu: the open box is drawn in place, in its frame */
-.docs-dodont__stage luz-submenu > details > ul {
+.luz-docs-dodont__stage luz-submenu > details > ul {
   position: static;
 }

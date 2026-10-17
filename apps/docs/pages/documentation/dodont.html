@@ -1,0 +1,173 @@
+<!-- luz:page
+title: Good and bad
+description: A Do and a Don't, one example to follow and one to avoid, each with its reason, side by side when there is room.
+area: documentation
+order: 5
+group: patterns
+files: .luz-docs-dodont, __item, __verdict, __stage
+keywords: do and don't, dos and donts, guidance, guideline, comparison
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-docs-dodont">
+          <h2 id="example">Example</h2>
+          <div class="docs-example" data-docs-specimen>
+            <div class="docs-demo__stage">
+              <div class="luz-docs-dodont">
+                <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
+                  <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Title a page for what it lets the reader do.</figcaption>
+                  <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+                    <h3>Install the command line tool</h3>
+                  </div>
+                </figure>
+                <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+                  <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> Use a title that fits any page: "Introduction" tells the reader nothing.</figcaption>
+                  <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+                    <h3>Introduction</h3>
+                  </div>
+                </figure>
+              </div>
+              <p class="docs-demo__note">A Do and a Don't. The word, the mark before it and the frame (solid or dashed) say which is which, so the colour is never the only cue. The two stack on a narrow screen.</p>
+            </div>
+          </div>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Good and bad documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>A pair: the Do first, then the Don't. Each is a figure whose caption says why:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-docs-dodont" aria-label="Copy the good and bad markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Good and bad markup"><code id="code-docs-dodont">&lt;div class=&quot;luz-docs-dodont&quot;&gt;
+  &lt;figure class=&quot;luz-docs-dodont__item luz-docs-dodont__item--do&quot;&gt;
+    &lt;figcaption&gt;&lt;strong class=&quot;luz-docs-dodont__verdict&quot;&gt;Do&lt;/strong&gt; Title a page for what it lets the reader do.&lt;/figcaption&gt;
+    &lt;div class=&quot;luz-docs-dodont__stage&quot; inert aria-hidden=&quot;true&quot;&gt;
+      &lt;h3&gt;Install the command line tool&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/figure&gt;
+  &lt;figure class=&quot;luz-docs-dodont__item luz-docs-dodont__item--dont&quot;&gt;
+    &lt;figcaption&gt;&lt;strong class=&quot;luz-docs-dodont__verdict&quot;&gt;Don't&lt;/strong&gt; Use a title that fits any page: &quot;Introduction&quot; tells the reader nothing.&lt;/figcaption&gt;
+    &lt;div class=&quot;luz-docs-dodont__stage&quot; inert aria-hidden=&quot;true&quot;&gt;
+      &lt;h3&gt;Introduction&lt;/h3&gt;
+    &lt;/div&gt;
+  &lt;/figure&gt;
+&lt;/div&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>Two modifiers, for the two verdicts.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Do and don't classes" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                <tr><td data-label="Class"><div><code>.luz-docs-dodont</code></div></td><td data-label="Effect"><div>On a <code>&lt;div&gt;</code>: the pair, in columns of at least 17.5rem. Side by side when there is room, stacked below</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-dodont__item</code></div></td><td data-label="Effect"><div>On each <code>&lt;figure&gt;</code>: a framed box with the caption and the stage</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-dodont__item--do</code></div></td><td data-label="Effect"><div>A solid frame in the success colour</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-dodont__item--dont</code></div></td><td data-label="Effect"><div>A dashed frame in the danger colour</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-dodont__verdict</code></div></td><td data-label="Effect"><div>On a <code>&lt;strong&gt;</code> that starts the caption: "Do" or "Don't", in the colour of its frame, with a tick or a cross before it</div></td></tr>
+                <tr><td data-label="Class"><div><code>.luz-docs-dodont__stage</code></div></td><td data-label="Effect"><div>The picture: a bordered box on the page surface. Make it <code>inert</code> and <code>aria-hidden="true"</code>. For a mistake that would itself be a barrier, use a <code>pre.luz-code-block</code> in its place</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/docs</code>. It draws the verdict three ways; the words are yours.</p>
+            <ul>
+              <li>The verdict is a word first. The tick or the cross before it, the solid or dashed frame and the colour are extra cues, and none is the only one.</li>
+              <li>The tick and the cross are generated content with an empty alternative, so a screen reader does not read them.</li>
+              <li>The stage is inert and hidden from assistive technology: it is a picture, and the caption says what it shows. Nothing in it takes focus or is announced.</li>
+              <li>A mistake that would be a barrier when live, such as low contrast or wrong semantics, is shown as code in a <code>pre.luz-code-block</code>, never as a live stage.</li>
+              <li>Write the Do first, then its Don't. A page can have several pairs, one after another.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes. The stage is inert by its attribute, and the pair is CSS.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the Do, then the Don't. Each is a <code>&lt;figure&gt;</code> with a <code>&lt;figcaption&gt;</code>, read as the caption of its picture.</li>
+              <li><strong>Stage:</strong> <code>inert</code> keeps focus and clicks out of it, and <code>aria-hidden="true"</code> keeps it out of the accessibility tree. Do not put a link or a field in it that the reader should use.</li>
+              <li><strong>Code stage:</strong> a <code>pre.luz-code-block</code> keeps <code>tabindex="0"</code> and an <code>aria-label</code>, as it scrolls.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use Do and don't to teach a rule by contrast: the reader sees the right way next to the wrong one.</p>
+            <ul>
+              <li>A lesson that is easier to see than to say, such as a title, a label or a spacing.</li>
+              <li>One pair for each lesson, and the Don't is a mistake people make.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use it for a rule with nothing to compare, or to show a piece that works.</p>
+            <ul>
+              <li>To show how a piece looks and is built, use <a href="/docs/documentation/example/">the example</a>.</li>
+              <li>Do not invent a mistake nobody makes to fill the Don't.</li>
+              <li>Do not show a live failure. A contrast or semantics failure goes in code.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="luz-docs-dodont">
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
+                <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Show one thing in the stage, the one the caption is about.</figcaption>
+                <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+                  <h3>Install the command line tool</h3>
+                </div>
+              </figure>
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+                <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> Put several things in the stage: the reader cannot tell which one the caption is about.</figcaption>
+                <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+                  <h3>Introduction</h3>
+                  <p>Welcome to the documentation.</p>
+                  <ul>
+                    <li>Install the tool</li>
+                    <li>Configure the cache</li>
+                  </ul>
+                </div>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <ul>
+              <li>The verdict is "Do" or "Don't", with the apostrophe, followed by a space.</li>
+              <li>The reason is one sentence, two at most. A Do starts with a verb; a Don't says what goes wrong for the reader.</li>
+              <li>The two stages show the same thing, changed in one way. If they differ in three ways, the reader cannot tell which one matters.</li>
+              <li>The example is made of real words: the name of a task, not "Lorem ipsum".</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The caption sits on the surface of the frame and the stage on the page surface. The verdict and the frame carry the same colour.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Good and bad contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Do</div></td><td data-label="Colour on background"><div><code>--luz-color-success</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>11.6:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Don't</div></td><td data-label="Colour on background"><div><code>--luz-color-danger</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>10.8:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Caption</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>16.5:1</div></td><td data-label="Dark"><div>14.0:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Stage text</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Frame of the Do</div></td><td data-label="Colour on background"><div><code>--luz-color-success</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>11.6:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Frame of the Don't</div></td><td data-label="Colour on background"><div><code>--luz-color-danger</code> on <code>--luz-surface</code></div></td><td data-label="Light"><div>5.5:1</div></td><td data-label="Dark"><div>10.8:1</div></td><td data-label="High contrast"><div>9.3:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> nothing in a live stage takes focus. A code stage keeps core's ring, 2 px of <code>--luz-focus-ring</code>.</li>
+              <li><strong>Not by colour alone:</strong> the word, the mark before it and the solid or dashed frame say which is which (WCAG 1.4.1).</li>
+              <li><strong>Edges:</strong> the border of the stage (<code>--luz-divider</code>) is decorative and has no minimum.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 11 tokens that the <code>.luz-docs-dodont</code> rules of docs' <code>components/dodont.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/color/">Color</a></dt><dd><a href="/docs/tokens/color/#luz-color-danger"><code>--luz-color-danger</code></a>, <a href="/docs/tokens/color/#luz-color-success"><code>--luz-color-success</code></a>, <a href="/docs/tokens/color/#luz-divider"><code>--luz-divider</code></a>, <a href="/docs/tokens/color/#luz-surface"><code>--luz-surface</code></a>, <a href="/docs/tokens/color/#luz-surface-page"><code>--luz-surface-page</code></a>, <a href="/docs/tokens/color/#luz-text-primary"><code>--luz-text-primary</code></a></dd></div>
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-md</code>, <code>--luz-space-sm</code></dd></div>
+              <div><dt><a href="/docs/tokens/typography/">Typography</a></dt><dd><code>--luz-font-sans</code></dd></div>
+              <div><dt><a href="/docs/tokens/radius/">Radius</a></dt><dd><code>--luz-radius-md</code>, <code>--luz-radius-sm</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

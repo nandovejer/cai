@@ -1,0 +1,146 @@
+<!-- luz:page
+title: Shell
+description: The page of a documentation site in three columns: the sidebar, the content and a rail, down to one column on a phone.
+area: documentation
+order: 1
+group: patterns
+files: .luz-docs-shell, .luz-docs-nav, .luz-docs-main
+keywords: three columns, documentation page, page grid, measure, line length
+toc: h2,h3
+-->
+    <div class="docs-component" id="p-docs-shell">
+          <h2 id="example">Example</h2>
+          <p>The shell is the whole page, so it has no live example inside another page. The markup below is a complete page: copy it, add your own content and resize the window. It is three columns from 80rem, two from 60rem and one below. <a href="/docs/documentation/templates/#docs-page">Documentation templates</a> has the same page filled in.</p>
+          <h2 id="known-issues">Known issues</h2>
+          <p>None known.</p>
+          <nav class="luz-tabs docs-view-tabs" aria-label="Shell documentation">
+            <a class="luz-tab" href="#code-panel" data-docs-view="code">Code</a>
+            <a class="luz-tab" href="#design-panel" data-docs-view="design">Design</a>
+          </nav>
+          <div class="luz-tabpanel docs-view" id="code-panel">
+            <h2 class="docs-view__title" id="code">Code</h2>
+            <h3 id="markup">Copy the markup</h3>
+            <p>The shell on <code>&lt;body&gt;</code>, then the header, the sidebar, the content, the rail and the footer, in the order a keyboard reaches them:</p>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-docs-shell" aria-label="Copy the shell markup">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Shell markup"><code id="code-docs-shell">&lt;body class=&quot;o-shell luz-docs-shell&quot;&gt;
+  &lt;a class=&quot;luz-skip-link&quot; href=&quot;#main-content&quot;&gt;Skip to content&lt;/a&gt;
+  &lt;header&gt;
+    &lt;button class=&quot;luz-nav-toggle&quot; type=&quot;button&quot; popovertarget=&quot;docs-nav&quot; aria-label=&quot;Menu&quot;&gt;…&lt;/button&gt;
+    &lt;p&gt;&lt;a href=&quot;/&quot;&gt;Acme docs&lt;/a&gt;&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;nav class=&quot;luz-sidebar luz-docs-nav&quot; id=&quot;docs-nav&quot; aria-label=&quot;Acme docs&quot; popover&gt;…&lt;/nav&gt;
+  &lt;main class=&quot;o-main luz-docs-main&quot; id=&quot;main-content&quot; tabindex=&quot;-1&quot;&gt;
+    &lt;header class=&quot;luz-docs-page-head&quot;&gt;…&lt;/header&gt;
+    …
+  &lt;/main&gt;
+  &lt;aside class=&quot;luz-docs-rail&quot; aria-label=&quot;About this page&quot;&gt;…&lt;/aside&gt;
+  &lt;footer&gt;…&lt;/footer&gt;
+&lt;/body&gt;</code></pre>
+            </div>
+            <h3 id="variants">Variants and options</h3>
+            <p>No modifier. Three classes on native elements, and three custom properties.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Shell classes and properties" tabindex="0">
+              <table class="luz-table">
+                <thead>
+                  <tr><th scope="col">Class or property</th><th scope="col">Effect</th></tr>
+                </thead>
+                <tbody>
+                <tr><td data-label="Class or property"><div><code>.luz-docs-shell</code></div></td><td data-label="Effect"><div>On <code>&lt;body&gt;</code>, with core's <code>.o-shell</code>: the tracks and where each part goes</div></td></tr>
+                <tr><td data-label="Class or property"><div><code>.luz-docs-nav</code></div></td><td data-label="Effect"><div>With core's <code>.luz-sidebar</code>, on the <code>&lt;nav&gt;</code>: the sidebar's column</div></td></tr>
+                <tr><td data-label="Class or property"><div><code>.luz-docs-main</code></div></td><td data-label="Effect"><div>With <code>.o-main</code>, on the <code>&lt;main&gt;</code>: the content's column. Its children keep to the measure</div></td></tr>
+                <tr><td data-label="Class or property"><div><code>.luz-docs-rail</code></div></td><td data-label="Effect"><div>On an <code>&lt;aside&gt;</code>: the third column from 80rem. See <a href="/docs/documentation/rail/">Rail</a></div></td></tr>
+                <tr><td data-label="Class or property"><div><code>--luz-docs-measure</code></div></td><td data-label="Effect"><div>A line of text: <code>46rem</code>. Set it on the shell in your own CSS to change it</div></td></tr>
+                <tr><td data-label="Class or property"><div><code>--luz-docs-nav-w</code>, <code>--luz-docs-rail-w</code></div></td><td data-label="Effect"><div>The sidebar and the rail: <code>16.5rem</code> and <code>14rem</code></div></td></tr>
+                <tr><td data-label="Class or property"><div><code>--luz-docs-rail-top</code></div></td><td data-label="Effect"><div>How far from the top the rail sticks. Raise it under a sticky header</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <h3 id="how">How it works</h3>
+            <p>CSS from <code>@luz-ds/docs</code> on core's shell and sidebar. Docs gives the tracks and the measure; core gives the grid and the drawer.</p>
+            <ul>
+              <li>From 80rem there are three tracks: sidebar, content, rail. From 60rem there are two, and the rail is not drawn. Below, one, in the order of the markup.</li>
+              <li>A plain <code>&lt;header&gt;</code> goes across every track. The footer sits under the content, and the sidebar runs down beside it.</li>
+              <li>Between 769px and 60rem the sidebar is the first block above the content. At 768px and below it is core's drawer, a popover the menu button opens.</li>
+              <li>Every child of the content keeps to <code>--luz-docs-measure</code>, so an example is as wide as a line of text. In print the rail is left out.</li>
+            </ul>
+            <h3 id="no-js">Without JavaScript</h3>
+            <p>Nothing changes: the layout is CSS. The drawer is a popover opened by the menu button's <code>popovertarget</code>, with no script. In a browser without the popover API the sidebar stays in the page, above the content.</p>
+            <h3 id="keyboard">Keyboard and ARIA</h3>
+            <ul>
+              <li><strong>Order:</strong> the order of the source; the grid does not change it. Skip link, header, sidebar, content, rail, footer.</li>
+              <li><strong>Skip link:</strong> put the <a href="/docs/components/skip-link/">skip link</a> first, aimed at the <code>&lt;main&gt;</code>, so a keyboard user passes the sidebar.</li>
+              <li><strong>Landmarks:</strong> a <code>&lt;header&gt;</code> child of <code>&lt;body&gt;</code> is the banner; name the <code>&lt;nav&gt;</code> after the site and the <code>&lt;aside&gt;</code> "About this page".</li>
+              <li><strong>Keys:</strong> Enter or Space on the menu button opens the drawer; Escape closes it. The browser does it.</li>
+            </ul>
+            <p class="docs-view__xref"><a href="#contrast">Contrast and focus</a> are in the Design tab.</p>
+          </div>
+          <div class="luz-tabpanel docs-view" id="design-panel">
+            <h2 class="docs-view__title" id="design">Design</h2>
+            <h3 id="when">When to use</h3>
+            <p>Use the shell for the pages of a documentation site: read one after another, with a sidebar of all of them and a list of the sections of the page.</p>
+            <ul>
+              <li>A sidebar that stays in view while a long page scrolls.</li>
+              <li>Running text kept to a readable line, and two columns on a tablet, one on a phone.</li>
+            </ul>
+            <h3 id="when-not">When not to use</h3>
+            <p>Do not use the shell for a page that is not documentation: it assumes a sidebar and a content column.</p>
+            <ul>
+              <li>A page with no sidebar uses core's <code>.o-page</code>: see <a href="/docs/components/layout/#objects-page">the page and its bars</a>.</li>
+              <li>A web application has <a href="/docs/app/">App</a>; a blog has <a href="/docs/cms/">CMS</a>.</li>
+            </ul>
+            <h3 id="do-dont">Do and don't</h3>
+            <div class="luz-docs-dodont">
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
+                <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Keep the source in reading order: sidebar, content, rail. The grid draws the columns, so nothing has to move.</figcaption>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Sidebar, content, rail"><code>&lt;nav class=&quot;luz-sidebar luz-docs-nav&quot;&gt;…&lt;/nav&gt;
+&lt;main class=&quot;o-main luz-docs-main&quot;&gt;…&lt;/main&gt;
+&lt;aside class=&quot;luz-docs-rail&quot;&gt;…&lt;/aside&gt;</code></pre>
+              </figure>
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+                <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> Put the rail before the content to get it on the right: Tab and a screen reader then go through "On this page" before the text.</figcaption>
+                <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Rail before content"><code>&lt;nav class=&quot;luz-sidebar luz-docs-nav&quot;&gt;…&lt;/nav&gt;
+&lt;aside class=&quot;luz-docs-rail&quot;&gt;…&lt;/aside&gt;
+&lt;main class=&quot;o-main luz-docs-main&quot;&gt;…&lt;/main&gt;</code></pre>
+              </figure>
+            </div>
+            <h3 id="content">Writing the content</h3>
+            <p>The shell has few words of its own, and each is a name.</p>
+            <ul>
+              <li>Skip link: "Skip to content".</li>
+              <li>Sidebar: <code>aria-label</code> the name of the documentation, such as "Acme docs". Not "Navigation": the role already says it.</li>
+              <li>Rail: "About this page". Its list is named "On this page".</li>
+              <li>Sidebar links: the titles of the pages, in the order a reader goes through them.</li>
+              <li>Menu button: "Menu".</li>
+            </ul>
+            <h3 id="contrast">Contrast and focus</h3>
+            <p>The shell sets no colour of its own. The text sits on the page surface, and the sidebar keeps core's colours.</p>
+            <div class="luz-table-wrap" role="region" aria-label="Shell contrast in each mode" tabindex="0">
+              <table class="luz-table docs-contrast">
+                <thead>
+                  <tr><th scope="col">Part</th><th scope="col">Colour on background</th><th scope="col">Light</th><th scope="col">Dark</th><th scope="col">High contrast</th><th scope="col">Needs</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td data-label="Part"><div>Content text</div></td><td data-label="Colour on background"><div><code>--luz-text-primary</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>15.8:1</div></td><td data-label="Dark"><div>15.1:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Sidebar link</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-text</code> on <code>--luz-sidebar-bg</code></div></td><td data-label="Light"><div>10.9:1</div></td><td data-label="Dark"><div>10.0:1</div></td><td data-label="High contrast"><div>14.1:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Current sidebar link</div></td><td data-label="Colour on background"><div><code>--luz-sidebar-active-text</code> on <code>--luz-sidebar-active-bg</code></div></td><td data-label="Light"><div>10.3:1</div></td><td data-label="Dark"><div>10.2:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>4.5:1</div></td></tr>
+                  <tr><td data-label="Part"><div>Focus ring</div></td><td data-label="Colour on background"><div><code>--luz-focus-ring</code> on <code>--luz-surface-page</code></div></td><td data-label="Light"><div>5.6:1</div></td><td data-label="Dark"><div>7.7:1</div></td><td data-label="High contrast"><div>21.0:1</div></td><td data-label="Needs"><div>3:1</div></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="docs-demo__note">Measured from the token values of each mode, rounded down. Needs is the WCAG 2.2 AA minimum: 4.5:1 for text, 3:1 for focus rings, borders and icons.</p>
+            <ul>
+              <li><strong>Focus:</strong> every link and button keeps core's ring, 2 px of <code>--luz-focus-ring</code>.</li>
+              <li><strong>Reflow:</strong> at 320px the page is one column and does not scroll sideways. It is checked in the tests.</li>
+            </ul>
+            <h3 id="tokens">Tokens it uses</h3>
+            <p>The 4 tokens that the <code>.luz-docs-shell</code> rules of docs' <code>components/shell.css</code> read, by family. Each family links to its page, with the values in every mode. In Figma they are variables with the same names: see <a href="/docs/tokens/figma/">Tokens in Figma</a>.</p>
+            <dl class="docs-uses">
+              <div><dt><a href="/docs/tokens/spacing/">Spacing and sizing</a></dt><dd><code>--luz-space-3xl</code>, <code>--luz-space-lg</code>, <code>--luz-space-md</code>, <code>--luz-space-xl</code></dd></div>
+            </dl>
+            <p class="docs-view__xref"><a href="#keyboard">Keyboard and ARIA</a> are in the Code tab.</p>
+          </div>
+    </div>

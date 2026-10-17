@@ -1,0 +1,42 @@
+/* ==========================================================================
+   LUZ DOCS: example.
+   figure.luz-docs-example > div.__preview (the live markup, in a
+   div.__frame) + an optional div.__code (core's pre.luz-code-block). One
+   frame for both: the code sits under the preview, across its width, and a
+   long line scrolls inside its own box. The frame is as wide as the
+   preview, or as --luz-docs-example-w says (a width selector sets it:
+   20rem is a phone), never wider; it is a size container, so what is in it
+   answers to the frame.
+   ========================================================================== */
+
+.luz-docs-example {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	margin: 0;
+	padding: 0;
+	border: 1px solid var(--luz-divider);
+	border-radius: var(--luz-radius-md);
+	background: var(--luz-surface);
+}
+
+.luz-docs-example__preview {
+	padding: var(--luz-space-md);
+}
+
+.luz-docs-example__frame {
+	inline-size: min(100%, var(--luz-docs-example-w, 100%));
+	margin-inline: auto;
+	container-type: inline-size;
+}
+
+.luz-docs-example__code {
+	min-inline-size: 0;
+	border-block-start: 1px solid var(--luz-divider);
+}
+
+/* The frame draws the edge: the code block keeps only its inner corners */
+.luz-docs-example__code > :where(pre) {
+	margin: 0;
+	border: 0;
+	border-radius: 0 0 calc(var(--luz-radius-md) - 1px) calc(var(--luz-radius-md) - 1px);
+}

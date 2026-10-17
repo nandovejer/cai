@@ -86,16 +86,16 @@ initCopyButtons();</code></pre>
               <li>For long text, show it in a <a href="/docs/components/code/">code block</a> the reader can select.</li>
             </ul>
             <h3 id="do-dont">Do and don't</h3>
-            <div class="docs-dodont">
-              <figure class="docs-dodont__item docs-dodont__item--do">
-                <figcaption><strong class="docs-dodont__verdict">Do</strong> Next to the text it copies, which the reader can also select by hand.</figcaption>
-                <div class="docs-dodont__stage" inert aria-hidden="true">
+            <div class="luz-docs-dodont">
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
+                <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Next to the text it copies, which the reader can also select by hand.</figcaption>
+                <div class="luz-docs-dodont__stage" inert aria-hidden="true">
                   <div class="o-row"><code class="luz-code-inline">var(--luz-brand-primary)</code><button class="luz-copy-btn" type="button">Copy</button></div>
                 </div>
               </figure>
-              <figure class="docs-dodont__item docs-dodont__item--dont">
-                <figcaption><strong class="docs-dodont__verdict">Don't</strong> A copy button on text the reader must change first: they paste “&lt;your-token&gt;” and the command fails.</figcaption>
-                <div class="docs-dodont__stage" inert aria-hidden="true">
+              <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+                <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> A copy button on text the reader must change first: they paste “&lt;your-token&gt;” and the command fails.</figcaption>
+                <div class="luz-docs-dodont__stage" inert aria-hidden="true">
                   <div class="o-row"><code class="luz-code-inline">npm config set _authToken &lt;your-token&gt;</code><button class="luz-copy-btn" type="button">Copy</button></div>
                 </div>
               </figure>

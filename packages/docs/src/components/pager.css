@@ -1,0 +1,66 @@
+/* ==========================================================================
+   LUZ DOCS: pager.
+   nav[aria-label] > ul.luz-docs-pager > li.__prev / li.__next >
+   a.__link[rel] > span.__label ("Previous", "Next") + span.__title (the
+   page). Two link blocks side by side, Next at the end, the whole block the
+   link; stacked at 640px and below. Name each link from its visible text
+   first ("Previous: Badge").
+   ========================================================================== */
+
+.luz-docs-pager {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: var(--luz-space-md);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.luz-docs-pager__prev {
+	grid-column: 1;
+}
+
+.luz-docs-pager__next {
+	grid-column: 2;
+	text-align: end;
+}
+
+.luz-docs-pager__link {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--luz-space-3xs);
+	block-size: 100%;
+	padding: var(--luz-space-sm) var(--luz-space-md);
+	border: 1px solid var(--luz-divider);
+	border-radius: var(--luz-radius-md);
+	text-decoration: none;
+}
+
+.luz-docs-pager__link:hover {
+	border-color: var(--luz-outline);
+	background: var(--luz-surface-hover);
+}
+
+.luz-docs-pager__link:hover .luz-docs-pager__title {
+	text-decoration: underline;
+}
+
+.luz-docs-pager__label {
+	font-size: var(--luz-text-sm);
+	color: var(--luz-text-secondary);
+}
+
+.luz-docs-pager__title {
+	font-size: var(--luz-text-lg);
+	font-weight: 600;
+}
+
+@media (max-width: 640px) {
+	.luz-docs-pager {
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	.luz-docs-pager__next {
+		grid-column: 1;
+	}
+}

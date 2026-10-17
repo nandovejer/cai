@@ -110,8 +110,13 @@ const TEMPLATE_HEADINGS = new Set([
   "Writing the content", "Contrast and focus", "Tokens it uses",
 ]);
 
-/** The areas that document a package of patterns built on core: one per package. */
-const PACKAGE_AREAS = new Set(["site", ...SITE_KINDS]);
+/**
+ * The areas that document a package of patterns built on core: one per
+ * package, named as the package, except docs, whose area is `documentation`
+ * (/docs/docs/ would read as a typo).
+ */
+const AREA_OF_PACKAGE = { docs: "documentation" };
+const PACKAGE_AREAS = new Set(["site", ...SITE_KINDS.map((name) => AREA_OF_PACKAGE[name] ?? name)]);
 
 /** What an A–Z entry is, by the area of its page. */
 const AREA_KIND = {
@@ -122,6 +127,7 @@ const AREA_KIND = {
   landing: "Landing pattern",
   cms: "CMS pattern",
   app: "App pattern",
+  documentation: "Documentation pattern",
   html: "HTML elements",
   accessibility: "Accessibility",
   hub: "Documentation",
@@ -483,11 +489,11 @@ export function renderPageHead(site, page) {
     ...(page.meta.module ? [`<span class="luz-tag luz-tag--purple">JS: ${escapeHtml(page.meta.module)}</span>`] : []),
   ];
   const title = meta.length
-    ? `    <div class="docs-page-head__title">\n      <h1 class="docs-title">${escapeHtml(page.meta.title)}</h1>\n      ${meta.join("\n      ")}\n    </div>`
+    ? `    <div class="docs-title-row">\n      <h1 class="docs-title">${escapeHtml(page.meta.title)}</h1>\n      ${meta.join("\n      ")}\n    </div>`
     : `    <h1 class="docs-title">${escapeHtml(page.meta.title)}</h1>`;
   const lead = page.meta.lead === "true" ? `\n    <p class="docs-lead">${escapeHtml(page.meta.description)}</p>` : "";
   const crumb = renderBreadcrumb(site, page);
-  return `  <div class="docs-page-head">\n${crumb ? `${crumb}\n` : ""}${title}${lead}\n  </div>`;
+  return `  <div class="luz-docs-page-head">\n${crumb ? `${crumb}\n` : ""}${title}${lead}\n  </div>`;
 }
 
 /**
@@ -507,18 +513,18 @@ export function renderToc(page, html) {
   const missing = headings.find((h) => !h.id);
   if (missing) throw new Error(`${page.file}: the heading "${missing.text}" belongs in "On this page" and needs an id`);
   if (headings[0].level !== 2) throw new Error(`${page.file}: the h3 "${headings[0].text}" comes before any h2`);
-  const item = (h) => link(`#${h.id}`, h.text, ' class="luz-sidebar__link docs-onpage__link"');
+  const item = (h) => link(`#${h.id}`, h.text, ' class="luz-sidebar__link luz-docs-rail__link"');
   const lines = [];
   headings.forEach((h, i) => {
     const next = headings[i + 1];
     if (h.level === 2) {
-      lines.push(next?.level === 3 ? `        <li>${item(h)}\n          <ul class="docs-onpage__sub">` : `        <li>${item(h)}</li>`);
+      lines.push(next?.level === 3 ? `        <li>${item(h)}\n          <ul class="luz-docs-rail__sub">` : `        <li>${item(h)}</li>`);
       return;
     }
     lines.push(`            <li>${item(h)}</li>`);
     if (next?.level !== 3) lines.push("          </ul>\n        </li>");
   });
-  return `  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">\n    <details class="docs-onpage__fold">\n      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>\n      <ul class="docs-onpage__list">\n${lines.join("\n")}\n      </ul>\n    </details>\n  </nav>`;
+  return `  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">\n    <details class="luz-docs-rail__fold">\n      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>\n      <ul class="luz-docs-rail__list">\n${lines.join("\n")}\n      </ul>\n    </details>\n  </nav>`;
 }
 
 /**
@@ -543,12 +549,12 @@ export function renderEndNav(site, page) {
     const target = around?.[key];
     if (!target) continue;
     pager.push(
-      `      <li class="docs-pager__${key}"><a class="docs-pager__link" rel="${rel}" href="${escapeHtml(target.route)}" aria-label="${label}: ${escapeHtml(target.meta.title)}">` +
-        `<span class="docs-pager__label">${label}</span> ` +
-        `<span class="docs-pager__title">${escapeHtml(target.meta.title)}</span></a></li>`,
+      `      <li class="luz-docs-pager__${key}"><a class="luz-docs-pager__link" rel="${rel}" href="${escapeHtml(target.route)}" aria-label="${label}: ${escapeHtml(target.meta.title)}">` +
+        `<span class="luz-docs-pager__label">${label}</span> ` +
+        `<span class="luz-docs-pager__title">${escapeHtml(target.meta.title)}</span></a></li>`,
     );
   }
-  if (pager.length) lines.push('    <ul class="docs-pager">', ...pager, "    </ul>");
+  if (pager.length) lines.push('    <ul class="luz-docs-pager">', ...pager, "    </ul>");
   lines.push("  </nav>");
   return lines.join("\n");
 }

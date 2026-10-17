@@ -1,0 +1,79 @@
+/* ==========================================================================
+   LUZ DOCS: page head.
+   header.luz-docs-page-head > p.__eyebrow (the area · the group), h1,
+   p.__lead (one sentence), ul.__meta (chips: the files, the script or "No
+   JavaScript", the modes, whether it is tested, its known issues). A chip
+   is a word in a rounded outline; a link in one is a 28px target.
+   ========================================================================== */
+
+.luz-docs-page-head {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	gap: var(--luz-space-sm);
+}
+
+.luz-docs-page-head > :where(h1) {
+	margin: 0;
+	font-size: var(--luz-text-4xl);
+	line-height: 1.1;
+	text-wrap: balance;
+}
+
+.luz-docs-page-head__eyebrow {
+	margin: 0;
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-xs);
+	font-weight: 500;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--luz-text-secondary);
+}
+
+/* Spacing between letters breaks the joins of Arabic script */
+.luz-docs-page-head__eyebrow:lang(ar) {
+	letter-spacing: 0;
+}
+
+.luz-docs-page-head__lead {
+	margin: 0;
+	font-size: var(--luz-text-lg);
+	color: var(--luz-text-secondary);
+}
+
+.luz-docs-page-head__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--luz-space-xs);
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	font-family: var(--luz-font-sans);
+	font-size: var(--luz-text-xs);
+	color: var(--luz-text-secondary);
+}
+
+.luz-docs-page-head__meta > :where(li) {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: var(--luz-control-sm);
+	padding-inline: var(--luz-space-sm);
+	border: 1px solid var(--luz-divider);
+	border-radius: var(--luz-radius-full);
+	overflow-wrap: anywhere;
+}
+
+.luz-docs-page-head__meta :where(a) {
+	display: inline-flex;
+	align-items: center;
+	min-block-size: var(--luz-control-sm);
+}
+
+@media (max-width: 640px) {
+	.luz-docs-page-head > :where(h1) {
+		font-size: var(--luz-text-2xl);
+	}
+
+	.luz-docs-page-head__lead {
+		font-size: var(--luz-text-base);
+	}
+}

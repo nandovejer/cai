@@ -27,6 +27,7 @@ export const FILES = {
   landing: { css: "landing.min.css", js: null, chunks: [] },
   cms: { css: "cms.min.css", js: null, chunks: [] },
   app: { css: "app.min.css", js: null, chunks: [] },
+  docs: { css: "docs.min.css", js: null, chunks: [] },
 };
 
 /** What the reader is building: its id, its words, and the package that is its kind (null: none). */
@@ -35,6 +36,7 @@ export const KINDS = [
   { id: "landing", label: "Landing page", pkg: "landing" },
   { id: "blog", label: "Blog or newspaper", pkg: "cms" },
   { id: "app", label: "Web application", pkg: "app" },
+  { id: "docs", label: "Documentation site", pkg: "docs" },
 ];
 
 /** How it is loaded. */

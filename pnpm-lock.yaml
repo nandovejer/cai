@@ -59,6 +59,9 @@ importers:
       '@luz-ds/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@luz-ds/docs':
+        specifier: workspace:*
+        version: link:../../packages/docs
       '@luz-ds/landing':
         specifier: workspace:*
         version: link:../../packages/landing
@@ -119,6 +122,9 @@ importers:
       '@luz-ds/core':
         specifier: workspace:*
         version: link:../core
+      '@luz-ds/docs':
+        specifier: workspace:*
+        version: link:../docs
       '@luz-ds/landing':
         specifier: workspace:*
         version: link:../landing
@@ -143,6 +149,18 @@ importers:
 
   packages/core:
     devDependencies:
+      '@luz-ds/tokens':
+        specifier: workspace:*
+        version: link:../tokens
+
+  packages/docs:
+    devDependencies:
+      '@luz-ds/core':
+        specifier: workspace:*
+        version: link:../core
+      '@luz-ds/site':
+        specifier: workspace:*
+        version: link:../site
       '@luz-ds/tokens':
         specifier: workspace:*
         version: link:../tokens

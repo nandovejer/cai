@@ -1,0 +1,56 @@
+{
+  "name": "@luz-ds/docs",
+  "version": "0.0.0",
+  "description": "LUZ Design System — the pieces of a documentation page (the shell, the page head, the rail, the example frame, do and don't, the pager and the page foot), built on @luz-ds/core",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./css": "./dist/docs.css",
+    "./css/min": "./dist/docs.min.css",
+    "./components/*": "./dist/components/*",
+    "./classes.json": "./dist/classes.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nandovejer/luz.git",
+    "directory": "packages/docs"
+  },
+  "homepage": "https://github.com/nandovejer/luz#readme",
+  "bugs": {
+    "url": "https://github.com/nandovejer/luz/issues"
+  },
+  "keywords": [
+    "design-system",
+    "css",
+    "documentation",
+    "docs",
+    "patterns",
+    "vanilla"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "@luz-ds/core": "^0.1.0",
+    "@luz-ds/site": "^0.1.0",
+    "@luz-ds/tokens": "^0.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@luz-ds/site": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@luz-ds/core": "workspace:*",
+    "@luz-ds/site": "workspace:*",
+    "@luz-ds/tokens": "workspace:*"
+  }
+}

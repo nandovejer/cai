@@ -12,11 +12,11 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../../../boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-Dxm0Fxmo.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-q0f-YNtX.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-hmJxk_Q7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-Bie_b5hL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-a791DtZT.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DdYxBin7.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-CLv74IIZ.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-C_8M7sZG.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -120,12 +120,13 @@
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/landing/">Landing</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/cms/">CMS</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/app/">App</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/documentation/">Documentation</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
 
   <main class="o-main docs-main" id="main-content" tabindex="-1">
-  <div class="docs-page-head">
+  <div class="luz-docs-page-head">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
       <ol class="luz-breadcrumb">
         <li><a class="luz-breadcrumb__item" href="../../../docs/">Docs</a></li>
@@ -136,17 +137,18 @@
     <h1 class="docs-title">Choose your snippet</h1>
     <p class="docs-lead">Pick what you are building and how you load it, then copy the lines. The CDN lines carry integrity hashes computed from the published files.</p>
   </div>
-  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
-    <details class="docs-onpage__fold">
-      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
-      <ul class="docs-onpage__list">
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#choose">Choose</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#atoms">Components only</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#landing">Landing page</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#blog">Blog or newspaper</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#app">Web application</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#chunks">Lazy chunks</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#verify">Verify a hash yourself</a></li>
+  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
+    <details class="luz-docs-rail__fold">
+      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
+      <ul class="luz-docs-rail__list">
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#choose">Choose</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#atoms">Components only</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#landing">Landing page</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#blog">Blog or newspaper</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#app">Web application</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#docs">Documentation site</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#chunks">Lazy chunks</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#verify">Verify a hash yourself</a></li>
       </ul>
     </details>
   </nav>
@@ -164,6 +166,7 @@
           <label><input type="radio" name="kind" value="landing"> Landing page</label>
           <label><input type="radio" name="kind" value="blog"> Blog or newspaper</label>
           <label><input type="radio" name="kind" value="app"> Web application</label>
+          <label><input type="radio" name="kind" value="docs"> Documentation site</label>
         </fieldset>
         <fieldset>
           <legend>How do you load it?</legend>
@@ -184,6 +187,7 @@
             <tr><th scope="row">Landing page</th><td data-label="npm and a bundler"><div><a href="#landing-npm">Landing page, with npm</a></div></td><td data-label="CDN with integrity hashes"><div><a href="#landing-cdn">Landing page, from a CDN</a></div></td></tr>
             <tr><th scope="row">Blog or newspaper</th><td data-label="npm and a bundler"><div><a href="#blog-npm">Blog or newspaper, with npm</a></div></td><td data-label="CDN with integrity hashes"><div><a href="#blog-cdn">Blog or newspaper, from a CDN</a></div></td></tr>
             <tr><th scope="row">Web application</th><td data-label="npm and a bundler"><div><a href="#app-npm">Web application, with npm</a></div></td><td data-label="CDN with integrity hashes"><div><a href="#app-cdn">Web application, from a CDN</a></div></td></tr>
+            <tr><th scope="row">Documentation site</th><td data-label="npm and a bundler"><div><a href="#docs-npm">Documentation site, with npm</a></div></td><td data-label="CDN with integrity hashes"><div><a href="#docs-cdn">Documentation site, from a CDN</a></div></td></tr>
           </tbody>
         </table>
       </div>
@@ -218,8 +222,8 @@ import &quot;@luz-ds/core&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-atoms-cdn" aria-label="Copy the CDN tags, components only">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, components only"><code id="code-atoms-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-4KkP0yHCFPlLo3fkJqgJM2rsHqEeAb831V5qeK9aYfYW2LyOxiFsZvqFLAg3r3Kt&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-KskFQEh4FuC6b2gtOaQ8M8HWLcRNDpCEUulsb8Rt/k0XdY+QY8zWEdgpzkFnl/ot&quot; crossorigin=&quot;anonymous&quot;&gt;
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, components only"><code id="code-atoms-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-JCZ5BlwLtsW0WSUO1x4mkb9rFqUylvfjIKCDK325w0yGMWYGfmfdbcJu++5KUjmy&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-4lnKG02/alNP7t6YEgLLeN8uAai7f5YZlaBs7k1XW6SDKUM+0/OO0FQAC4CibS5S&quot; crossorigin=&quot;anonymous&quot;&gt;
 
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot; integrity=&quot;sha384-kB7ZLDU3F6C/Zz059fyVvf+Nb0BsKxTC8AXnVIgUVgLs5LzntcaQ63xnGPdtGBNm&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
@@ -262,11 +266,11 @@ import &quot;@luz-ds/site&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-landing-cdn" aria-label="Copy the CDN tags, landing page">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, landing page"><code id="code-landing-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-4KkP0yHCFPlLo3fkJqgJM2rsHqEeAb831V5qeK9aYfYW2LyOxiFsZvqFLAg3r3Kt&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-KskFQEh4FuC6b2gtOaQ8M8HWLcRNDpCEUulsb8Rt/k0XdY+QY8zWEdgpzkFnl/ot&quot; crossorigin=&quot;anonymous&quot;&gt;
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, landing page"><code id="code-landing-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-JCZ5BlwLtsW0WSUO1x4mkb9rFqUylvfjIKCDK325w0yGMWYGfmfdbcJu++5KUjmy&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-4lnKG02/alNP7t6YEgLLeN8uAai7f5YZlaBs7k1XW6SDKUM+0/OO0FQAC4CibS5S&quot; crossorigin=&quot;anonymous&quot;&gt;
 &lt;!-- Optional: site adds the search, the cookie banner and the language switch. Delete the site lines if the page has none of them. --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot; integrity=&quot;sha384-KtXjkPV0/zHuxhF+nROIzjAG9F9VTL0O0gfJQwUg9yfd1uqUvAXnACl2+kiaSJYU&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/landing@0.0.0/dist/landing.min.css&quot; integrity=&quot;sha384-ZKSVTqdTPcgbjaq0+7qxX+yf9k2tPz1H/eU2HBo6j+jPYamCje9gq4/w7NzNg5bs&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot; integrity=&quot;sha384-+q1flL+IF3jXy69S3gZdxlpUsdS8rL1e2zATwLarfzQQO3aRwr98659OyKgtaPDQ&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/landing@0.0.0/dist/landing.min.css&quot; integrity=&quot;sha384-cFgw3gBNpKUEFdmgmiRF0XvKX1Ci0AdvAjQKACKqwAMfuFGTNefqvOLNHHA/GdW5&quot; crossorigin=&quot;anonymous&quot;&gt;
 
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot; integrity=&quot;sha384-kB7ZLDU3F6C/Zz059fyVvf+Nb0BsKxTC8AXnVIgUVgLs5LzntcaQ63xnGPdtGBNm&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
@@ -311,11 +315,11 @@ import &quot;@luz-ds/site&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-blog-cdn" aria-label="Copy the CDN tags, blog or newspaper">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, blog or newspaper"><code id="code-blog-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-4KkP0yHCFPlLo3fkJqgJM2rsHqEeAb831V5qeK9aYfYW2LyOxiFsZvqFLAg3r3Kt&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-KskFQEh4FuC6b2gtOaQ8M8HWLcRNDpCEUulsb8Rt/k0XdY+QY8zWEdgpzkFnl/ot&quot; crossorigin=&quot;anonymous&quot;&gt;
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, blog or newspaper"><code id="code-blog-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-JCZ5BlwLtsW0WSUO1x4mkb9rFqUylvfjIKCDK325w0yGMWYGfmfdbcJu++5KUjmy&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-4lnKG02/alNP7t6YEgLLeN8uAai7f5YZlaBs7k1XW6SDKUM+0/OO0FQAC4CibS5S&quot; crossorigin=&quot;anonymous&quot;&gt;
 &lt;!-- Optional: site adds the search, the cookie banner and the language switch. Delete the site lines if the page has none of them. --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot; integrity=&quot;sha384-KtXjkPV0/zHuxhF+nROIzjAG9F9VTL0O0gfJQwUg9yfd1uqUvAXnACl2+kiaSJYU&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/cms@0.0.0/dist/cms.min.css&quot; integrity=&quot;sha384-Amm9V0cl4srKeKzxVbQUfWKR0bqjyEQdEcWQEndj2RUudBmYsPaFYcJq+KxD0a8g&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot; integrity=&quot;sha384-+q1flL+IF3jXy69S3gZdxlpUsdS8rL1e2zATwLarfzQQO3aRwr98659OyKgtaPDQ&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/cms@0.0.0/dist/cms.min.css&quot; integrity=&quot;sha384-GtTB3UzvdqhYlxLFT3swuCOkG18E//wbeXsErtToMaWJlZfa1vN8u2EGWLzf0Vkv&quot; crossorigin=&quot;anonymous&quot;&gt;
 
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot; integrity=&quot;sha384-kB7ZLDU3F6C/Zz059fyVvf+Nb0BsKxTC8AXnVIgUVgLs5LzntcaQ63xnGPdtGBNm&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
@@ -360,11 +364,60 @@ import &quot;@luz-ds/site&quot;;</code></pre>
             <span class="docs-snippet__lang">HTML</span>
             <button class="luz-copy-btn" type="button" data-copy-from="code-app-cdn" aria-label="Copy the CDN tags, web application">Copy</button>
           </div>
-          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, web application"><code id="code-app-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-4KkP0yHCFPlLo3fkJqgJM2rsHqEeAb831V5qeK9aYfYW2LyOxiFsZvqFLAg3r3Kt&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-KskFQEh4FuC6b2gtOaQ8M8HWLcRNDpCEUulsb8Rt/k0XdY+QY8zWEdgpzkFnl/ot&quot; crossorigin=&quot;anonymous&quot;&gt;
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, web application"><code id="code-app-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-JCZ5BlwLtsW0WSUO1x4mkb9rFqUylvfjIKCDK325w0yGMWYGfmfdbcJu++5KUjmy&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-4lnKG02/alNP7t6YEgLLeN8uAai7f5YZlaBs7k1XW6SDKUM+0/OO0FQAC4CibS5S&quot; crossorigin=&quot;anonymous&quot;&gt;
 &lt;!-- Optional: site adds the search, the cookie banner and the language switch. Delete the site lines if the page has none of them. --&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot; integrity=&quot;sha384-KtXjkPV0/zHuxhF+nROIzjAG9F9VTL0O0gfJQwUg9yfd1uqUvAXnACl2+kiaSJYU&quot; crossorigin=&quot;anonymous&quot;&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/app@0.0.0/dist/app.min.css&quot; integrity=&quot;sha384-4rwq1N61j8MXAdA0mBEFzGyO1EbVHyFEzE4hc4uCWqbfFgvMY+FFF0HRyqoGcV+A&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot; integrity=&quot;sha384-+q1flL+IF3jXy69S3gZdxlpUsdS8rL1e2zATwLarfzQQO3aRwr98659OyKgtaPDQ&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/app@0.0.0/dist/app.min.css&quot; integrity=&quot;sha384-NEhIOQhBNxy3F8Q5apzF2zo/6ZLpHuT+Eyi8kOQ/D0WTsYDUXJkio2KRlwwk7TSp&quot; crossorigin=&quot;anonymous&quot;&gt;
+
+&lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot; integrity=&quot;sha384-kB7ZLDU3F6C/Zz059fyVvf+Nb0BsKxTC8AXnVIgUVgLs5LzntcaQ63xnGPdtGBNm&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+&lt;!-- Optional, with the site stylesheet: the search and the cookie banner --&gt;
+&lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js&quot; integrity=&quot;sha384-Kl5mPaCoWXAjnJ+1IcqRBjePjqkSA4/GIE7XZ5/eGkZQgF1cO4R6CWjMJS7icL/Q&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+    </section>
+    <section data-snippet-kind="docs" aria-labelledby="docs">
+      <h2 class="docs-chapter__title" id="docs">Documentation site</h2>
+      <div data-snippet data-kind="docs" data-via="npm" id="docs-npm">
+        <h3>Documentation site: with npm and a bundler</h3>
+        <div class="docs-command-block">
+          <code class="docs-command-block__cmd">
+            <span class="docs-command-block__prefix" aria-hidden="true">$</span>
+            pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/docs
+          </code>
+          <button class="luz-copy-btn" type="button" data-copy="pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/docs" aria-label="Copy the install command, documentation site">Copy</button>
+        </div>
+        <p>Site is optional: leave <code>@luz-ds/site</code> out of the command and out of the imports if the page has no search, cookie banner or language switch.</p>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">Bundler</span>
+            <button class="luz-copy-btn" type="button" data-copy-from="code-docs-npm" aria-label="Copy the bundler imports, documentation site">Copy</button>
+          </div>
+          <pre class="luz-code-block" data-lang="js" tabindex="0" role="region" aria-label="The bundler imports, documentation site"><code id="code-docs-npm">import &quot;@luz-ds/tokens/css&quot;;
+import &quot;@luz-ds/core/css&quot;;
+// Optional: site adds the search, the cookie banner and the language switch. Delete the site lines if the page has none of them.
+import &quot;@luz-ds/site/css&quot;;
+import &quot;@luz-ds/docs/css&quot;;
+
+// Optional: copy buttons, tabs, players, the color mode
+import &quot;@luz-ds/core&quot;;
+// Optional, with the site stylesheet: the search and the cookie banner
+import &quot;@luz-ds/site&quot;;</code></pre>
+        </div>
+      </div>
+      <div data-snippet data-kind="docs" data-via="cdn" id="docs-cdn">
+        <h3>Documentation site: from a CDN, with integrity hashes</h3>
+        <div class="docs-snippet">
+          <div class="docs-snippet__bar">
+            <span class="docs-snippet__lang">HTML</span>
+            <button class="luz-copy-btn" type="button" data-copy-from="code-docs-cdn" aria-label="Copy the CDN tags, documentation site">Copy</button>
+          </div>
+          <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="The CDN tags, documentation site"><code id="code-docs-cdn">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/tokens@0.0.0/dist/luz-tokens.min.css&quot; integrity=&quot;sha384-JCZ5BlwLtsW0WSUO1x4mkb9rFqUylvfjIKCDK325w0yGMWYGfmfdbcJu++5KUjmy&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.css&quot; integrity=&quot;sha384-4lnKG02/alNP7t6YEgLLeN8uAai7f5YZlaBs7k1XW6SDKUM+0/OO0FQAC4CibS5S&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;!-- Optional: site adds the search, the cookie banner and the language switch. Delete the site lines if the page has none of them. --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.css&quot; integrity=&quot;sha384-+q1flL+IF3jXy69S3gZdxlpUsdS8rL1e2zATwLarfzQQO3aRwr98659OyKgtaPDQ&quot; crossorigin=&quot;anonymous&quot;&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/docs@0.0.0/dist/docs.min.css&quot; integrity=&quot;sha384-QwmCOaaLrxzEzsQPLgHD1P5XRSRp197EBw9jtF6BsD/zrZp0CJgLYiH4qwVpLnav&quot; crossorigin=&quot;anonymous&quot;&gt;
 
 &lt;!-- Optional: copy buttons, tabs, players, the color mode --&gt;
 &lt;script type=&quot;module&quot; src=&quot;https://cdn.jsdelivr.net/npm/@luz-ds/core@0.0.0/dist/luz.min.js&quot; integrity=&quot;sha384-kB7ZLDU3F6C/Zz059fyVvf+Nb0BsKxTC8AXnVIgUVgLs5LzntcaQ63xnGPdtGBNm&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
@@ -513,9 +566,9 @@ import &quot;@luz-ds/site&quot;;</code></pre>
       <li><a href="../../../docs/tokens/modes/">Color modes and themes</a></li>
       <li><a href="../../../docs/tokens/color/">Color tokens</a></li>
     </ul>
-    <ul class="docs-pager">
-      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/get-started/" aria-label="Previous: Install LUZ"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Install LUZ</span></a></li>
-      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/get-started/structure/" aria-label="Next: How LUZ is organised"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">How LUZ is organised</span></a></li>
+    <ul class="luz-docs-pager">
+      <li class="luz-docs-pager__prev"><a class="luz-docs-pager__link" rel="prev" href="../../../docs/get-started/" aria-label="Previous: Install LUZ"><span class="luz-docs-pager__label">Previous</span> <span class="luz-docs-pager__title">Install LUZ</span></a></li>
+      <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="../../../docs/get-started/structure/" aria-label="Next: How LUZ is organised"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">How LUZ is organised</span></a></li>
     </ul>
   </nav>
   </main>

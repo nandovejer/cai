@@ -2,7 +2,7 @@
 
 > Install LUZ, find a component and copy its markup, or look up a token, a page pattern or an HTML element. MIT licence. In beta: any release may break anything, and the changelog says how to migrate.
 
-Packages, in load order: @luz-ds/tokens, @luz-ds/core, @luz-ds/site, then one for your kind of site (@luz-ds/landing, @luz-ds/cms or @luz-ds/app). Use only the classes listed in each package's classes.json. After you write HTML or CSS, run `npx @luz-ds/check` on the files and fix what it reports; it reads source, so it does not replace testing in a browser.
+Packages, in load order: @luz-ds/tokens, @luz-ds/core, @luz-ds/site, then one for your kind of site (@luz-ds/landing, @luz-ds/cms, @luz-ds/app or @luz-ds/docs). Use only the classes listed in each package's classes.json. After you write HTML or CSS, run `npx @luz-ds/check` on the files and fix what it reports; it reads source, so it does not replace testing in a browser.
 
 ## Get started
 - [Install LUZ](https://nandovejer.github.io/luz/docs/get-started/): Pick a level, then copy one install command or the CDN tags. Each level needs the ones below it and nothing above.
@@ -122,6 +122,17 @@ Packages, in load order: @luz-ds/tokens, @luz-ds/core, @luz-ds/site, then one fo
 - [Header](https://nandovejer.github.io/luz/docs/app/header/): The quiet bar at the top of an application's main area: the menu button, the product name on a phone, the search and the account.
 - [Dashboard](https://nandovejer.github.io/luz/docs/app/dashboard/): The view of an application at a glance: its title and main action, then a grid of panels that fills the room the view has.
 - [App templates](https://nandovejer.github.io/luz/docs/app/templates/): The pieces of an application that need no CSS of their own, to paste in and adapt: the app page with its sidebar, an app with no sidebar and an empty dashboard.
+
+## Documentation
+- [Documentation](https://nandovejer.github.io/luz/docs/documentation/): The shell, page head, rail, example, do and don't, pager and page foot of a documentation site, and how to tell whether you need them.
+- [Shell](https://nandovejer.github.io/luz/docs/documentation/shell/): The page of a documentation site in three columns: the sidebar, the content and a rail, down to one column on a phone.
+- [Page head](https://nandovejer.github.io/luz/docs/documentation/page-head/): The top of a documentation page: the eyebrow, the title, one sentence and the chips that say what the page covers.
+- [Rail](https://nandovejer.github.io/luz/docs/documentation/rail/): The list of the sections of the page that stays in view beside the content, with the actions of the page under it.
+- [Example](https://nandovejer.github.io/luz/docs/documentation/example/): A live preview with its code under it, in one frame, as wide as the width you give it.
+- [Do and don't](https://nandovejer.github.io/luz/docs/documentation/dodont/): A Do and a Don't, one example to follow and one to avoid, each with its reason, side by side when there is room.
+- [Pager](https://nandovejer.github.io/luz/docs/documentation/pager/): Two link blocks at the end of a page, to the previous page and to the next, each with the title it leads to.
+- [Page foot](https://nandovejer.github.io/luz/docs/documentation/page-foot/): The small print under a page: when it was last updated, and links to edit it or report a problem.
+- [Documentation templates](https://nandovejer.github.io/luz/docs/documentation/templates/): A whole documentation page to paste in and adapt, the pager of the first and the last page, and what the package does not have yet.
 
 ## Accessibility
 - [Accessibility statement](https://nandovejer.github.io/luz/docs/accessibility/): LUZ aims for WCAG 2.2 level AA. What is checked on every change, what has not been tested, and the known issues. Last reviewed on 16 October 2026.

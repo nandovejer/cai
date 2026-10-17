@@ -2,7 +2,7 @@
 
 > Install LUZ, find a component and copy its markup, or look up a token, a page pattern or an HTML element. MIT licence. In beta: any release may break anything, and the changelog says how to migrate.
 
-Packages, in load order: @luz-ds/tokens, @luz-ds/core, @luz-ds/site, then one for your kind of site (@luz-ds/landing, @luz-ds/cms or @luz-ds/app). Use only the classes listed in each package's classes.json. After you write HTML or CSS, run `npx @luz-ds/check` on the files and fix what it reports; it reads source, so it does not replace testing in a browser.
+Packages, in load order: @luz-ds/tokens, @luz-ds/core, @luz-ds/site, then one for your kind of site (@luz-ds/landing, @luz-ds/cms, @luz-ds/app or @luz-ds/docs). Use only the classes listed in each package's classes.json. After you write HTML or CSS, run `npx @luz-ds/check` on the files and fix what it reports; it reads source, so it does not replace testing in a browser.
 
 One entry per page of the documentation, in reading order. The markup of an entry shows its classes and elements; the `classes.json` of each package lists them all.
 
@@ -104,7 +104,7 @@ import "@luz-ds/site";
 
 ### Packages for one kind of site
 
-On top of level 3, a package can add what one kind of site needs: [Landing](https://nandovejer.github.io/luz/docs/landing/), the header, hero, sections and footer of a landing page and blocks to copy for it, [CMS](https://nandovejer.github.io/luz/docs/cms/), the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS, and [App](https://nandovejer.github.io/luz/docs/app/), the header and the dashboard of a web application. Each needs the packages of level 2, loaded first; site is optional for them, and the commands below add it for its search and its language switch. Install the one you need.
+On top of level 3, a package can add what one kind of site needs: [Landing](https://nandovejer.github.io/luz/docs/landing/), the header, hero, sections and footer of a landing page and blocks to copy for it, [CMS](https://nandovejer.github.io/luz/docs/cms/), the header, page header, article header, table of contents and footer of a blog or a newspaper, with any CMS, [App](https://nandovejer.github.io/luz/docs/app/), the header and the dashboard of a web application, and [Documentation](https://nandovejer.github.io/luz/docs/documentation/), the shell, page head, rail, example, do and don't, pager and page foot of a documentation site. Each needs the packages of level 2, loaded first; site is optional for them, and the commands below add it for its search and its language switch. Install the one you need.
 
 `pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/landing`
 
@@ -148,8 +148,10 @@ CDN tags, app
 <script type="module" src="https://cdn.jsdelivr.net/npm/@luz-ds/site@0.0.0/dist/site.min.js"></script>
 ```
 
-- Landing, cms and app each have their own version and need `^0.1.0` of the base. Pin both numbers.
-- With a bundler, add `import "@luz-ds/landing/css";`, `import "@luz-ds/cms/css";` or `import "@luz-ds/app/css";` after the imports of level 3.
+`pnpm add @luz-ds/tokens @luz-ds/core @luz-ds/site @luz-ds/docs`
+
+- Landing, cms, app and docs each have their own version and need `^0.1.0` of the base. Pin both numbers.
+- With a bundler, add `import "@luz-ds/landing/css";`, `import "@luz-ds/cms/css";`, `import "@luz-ds/app/css";` or `import "@luz-ds/docs/css";` after the imports of level 3.
 - None has a script. Core's script is optional: with cms, it marks the section in view in the table of contents; with app, it marks the current link of the sidebar and closes the drawer when a link is followed.
 
 ### Before you ship
@@ -220,11 +222,12 @@ Each of these needs tokens and core, and takes site as an optional peer:
 @luz-ds/landing  -> header, hero, sections and footer of a landing page (own version, 0.x)
 @luz-ds/cms      -> page structure of a blog, a newspaper or any CMS (own version, 0.x)
 @luz-ds/app      -> header and dashboard of a web application (own version, 0.x)
+@luz-ds/docs     -> shell, page head, rail, example, do and don't, pager and page foot of a documentation site (own version, 0.x)
 ```
 
-- Landing, cms and app need tokens and core, and can use site when you load it, never each other; site needs core and tokens; core needs tokens; tokens needs nothing.
-- Tokens, core and site share one version. A package for one kind of site, such as landing, cms or app, has its own, and names the major of the others it needs.
-- The packages say so as peer dependencies: required for tokens and core, optional for site in landing, cms and app. The core and site scripts warn in the console when a level is missing.
+- Landing, cms, app and docs need tokens and core, and can use site when you load it, never each other; site needs core and tokens; core needs tokens; tokens needs nothing.
+- Tokens, core and site share one version. A package for one kind of site, such as landing, cms, app or docs, has its own, and names the major of the others it needs.
+- The packages say so as peer dependencies: required for tokens and core, optional for site in landing, cms, app and docs. The core and site scripts warn in the console when a level is missing.
 
 ### What each package needs
 
@@ -243,6 +246,7 @@ Which package holds each part of a page
 - The header, hero, sections and footer of a landing page: `.luz-landing-header`, `-hero`, `-main`, `-section`, `-footer`, `-glow`: landing: On core's objects (`.o-page`, `.o-sticky`, `.o-container`, `.o-grid--split`) and core's navbar; site is optional. A feature grid is `ul.o-grid.o-grid--split`, core's
 - The header, page header, article header, table of contents and footer of a blog or a newspaper: `.luz-cms-header` (`--masthead`), `-page-header`, `-article-header`, `-article`, `-toc`, `-footer`: cms: On core's objects and navbar; site is optional. Post cards, listings and the author box are core's card: [CMS templates](https://nandovejer.github.io/luz/docs/cms/templates/)
 - The header and the dashboard of a web application: `.luz-app-header` (`__product`, `__actions`, `__account`), `.luz-app-dashboard` (`__head`, `__title`, `__panel`): app: On core's shell, sidebar, sticky bar, grid and card; site is optional, for the search. No script. See [App](https://nandovejer.github.io/luz/docs/app/)
+- The shell, page head, rail, example, do and don't, pager and page foot of a documentation site: `.luz-docs-shell`, `.luz-docs-page-head`, `.luz-docs-rail`, `.luz-docs-example`, `.luz-docs-dodont`, `.luz-docs-pager`, `.luz-docs-page-foot`: docs: On core's shell, sidebar, code block and tables; site is optional, for the search. No script. See [Documentation](https://nandovejer.github.io/luz/docs/documentation/)
 - The links of a header, and its menu button: `.luz-navbar`, `.luz-nav-toggle`: core: A popover panel at 768 px and below, with no script
 - Submenu, banner: `<luz-submenu>`, `<luz-banner>`: site: Tags with no script and no class: the submenu is a native `<details>` in a header's links, the banner a `<section>`
 - Cookie consent: `<luz-consent>`, `.luz-consent`: site: `site.js` loads its script, `consent.js`, when the page has one; a band fixed at the bottom of the window; without the script it stays hidden
@@ -254,7 +258,7 @@ Which package holds each part of a page
 - Checking what you or an AI agent wrote: `npx @luz-ds/check`, the `luz-check` command: check: A tool with no CSS and no layer, and no other package needed: it reads your HTML and CSS offline. See [Working with AI](https://nandovejer.github.io/luz/docs/get-started/ai/)
 
 - **Two ways to lay out a page, both core's.** `.o-shell` with `.o-main`: a sidebar column beside the main area. `.o-page`: a header, the content and a footer in one column. Pick one for the grid of the page: the first when it has a sidebar, the second when it has none. A landing or CMS header and footer work with both; these docs use `.o-shell`.
-- Site needs core, and core needs tokens, so a row at a level also needs every package under it. Landing, CMS and app need core and tokens; site is optional for them.
+- Site needs core, and core needs tokens, so a row at a level also needs every package under it. Landing, CMS, app and docs need core and tokens; site is optional for them.
 
 ### CSS layers
 
@@ -272,7 +276,7 @@ packages/core/src/
 ```
 
 - The components layer holds 32 components.
-- `dist/luz.css` holds these six layers and `luz.print`. Tokens are in `luz.tokens`, site in `luz.site`, landing in `luz.landing`, cms in `luz.cms` and app in `luz.app`; `luz.themes` is empty, kept for a look of your own. For a page that needs a few components only, load `dist/base.css` (settings, reset and elements), then `dist/components/<name>.css` for each one.
+- `dist/luz.css` holds these six layers and `luz.print`. Tokens are in `luz.tokens`, site in `luz.site`, landing in `luz.landing`, cms in `luz.cms`, app in `luz.app` and docs in `luz.docs`; `luz.themes` is empty, kept for a look of your own. For a page that needs a few components only, load `dist/base.css` (settings, reset and elements), then `dist/components/<name>.css` for each one.
 - Rules for bare elements are wrapped in `:where()`, so any class wins over them.
 
 ### The script
@@ -331,6 +335,7 @@ What each class prefix means
 - `.luz-landing-`: A piece of a landing page: landing: `.luz-landing-hero`
 - `.luz-cms-`: A piece of a blog, a newspaper or any CMS: cms: `.luz-cms-header`
 - `.luz-app-`: A piece of a web application: app: `.luz-app-header`
+- `.luz-docs-`: A piece of a documentation page: docs: `.luz-docs-pager`
 - `.is-`: A state a script mirrors onto an element. Read it, but do not style from outside: it is not part of what you can rely on: core: `.is-active`
 
 Inside a component, two separators say how the pieces fit. A double underscore names a part of the component: `.luz-card__title` is the title of a card. A double hyphen names a variant of it: `.luz-btn--primary` is the primary button.
@@ -779,6 +784,10 @@ The exports of each package
 - `@luz-ds/app`: `./css/min`: `app.min.css`: the same, minified
 - `@luz-ds/app`: `./components/*`: One stylesheet per piece
 - `@luz-ds/app`: `./classes.json`: Every class and custom property the package defines, with its kind and layer, as JSON for tools and AI agents
+- `@luz-ds/docs`: `./css`: `docs.css`: the pieces of a documentation page
+- `@luz-ds/docs`: `./css/min`: `docs.min.css`: the same, minified
+- `@luz-ds/docs`: `./components/*`: One stylesheet per piece
+- `@luz-ds/docs`: `./classes.json`: Every class and custom property the package defines, with its kind and layer, as JSON for tools and AI agents
 
 ### The layer order survives bundling
 
@@ -1010,6 +1019,7 @@ Core and the other packages put their rules in their own layers inside `luz`. Th
 - `luz.landing`: landing: The patterns of a landing page: `.luz-landing-*`. After site, so they can build on it
 - `luz.cms`: cms: The patterns of a blog, a newspaper or any CMS: `.luz-cms-*`. After site; landing and cms share no class, so their order decides nothing
 - `luz.app`: app: The header and the dashboard of a web application: `.luz-app-*`. After cms; landing, cms and app share no class, so their order decides nothing
+- `luz.docs`: docs: The pieces of a documentation page: `.luz-docs-*`. After app; it shares no class with any other package, so its place moves no other layer
 - `luz.print`: core: What changes on paper, inside `@media print`: [Print styles](https://nandovejer.github.io/luz/docs/get-started/print/). Last, so it wins over the screen styles of every package
 
 Every file LUZ publishes repeats the order of this list first, so it is the same whichever file a page loads first. These names are public: renaming one is a breaking change.
@@ -1076,6 +1086,7 @@ Importing LUZ
 @import url("@luz-ds/landing/css"); /* only for a landing page */
 @import url("@luz-ds/cms/css");     /* only for a blog or a newspaper */
 @import url("@luz-ds/app/css");     /* only for a web application */
+@import url("@luz-ds/docs/css");    /* only for a documentation site */
 ```
 
 Your own stylesheet imports a file after the statement, so the order is set before LUZ loads.
@@ -6134,6 +6145,500 @@ Do not use it for a view that is one long thing: a table, a form or a document a
 URL: https://nandovejer.github.io/luz/docs/app/templates/
 
 The pieces of an application that need no CSS of their own, to paste in and adapt: the app page with its sidebar, an app with no sidebar and an empty dashboard.
+
+This page is a library of whole-page templates: open its URL for the markup of each.
+
+## Documentation
+URL: https://nandovejer.github.io/luz/docs/documentation/
+
+The shell, page head, rail, example, do and don't, pager and page foot of a documentation site, and how to tell whether you need them.
+
+For one kind of site · @luz-ds/docs
+
+The shell, page head, rail, example, do and don't, pager and page foot of a documentation site, and how to tell whether you need them.
+
+### Use this package when
+
+- You write a documentation site: guides, a reference, a manual, with a sidebar of pages.
+- You want a long page to have a head, a list of its sections and a way to the next page.
+
+### Use another package when
+
+- Your site is a landing page, a blog or an application: [Landing](https://nandovejer.github.io/luz/docs/landing/), [CMS](https://nandovejer.github.io/luz/docs/cms/) and [App](https://nandovejer.github.io/luz/docs/app/) have their own pieces.
+- You only need a sidebar and a content area: core's [layout](https://nandovejer.github.io/luz/docs/components/layout/) and [sidebar](https://nandovejer.github.io/luz/docs/components/sidebar/) are enough.
+
+A documentation site is read in long sittings, one page after the next. The layout it needs is already core's: the shell, the sidebar and its drawer, the code block, the table. This package holds the seven pieces only a documentation page has: the three columns, the head, the list of sections, the framed example, the do and don't pair, the links to the next page and the small print.
+
+### Install and load
+
+- Every class starts with `.luz-docs-`, uses semantic tokens only and sits in the cascade layer `luz.docs`, after app's.
+- It has no script. Load `docs.css` after the CSS of tokens and core: [Install LUZ](https://nandovejer.github.io/luz/docs/get-started/#site-kinds) has the command. Core's script is optional: it marks the section in view in the rail.
+- It has a version of its own, 0.x while it grows, and needs `^0.1.0` of tokens and core. Site is an optional peer, for the search.
+- A whole page to copy, and what is not in 0.1, are on [Documentation templates](https://nandovejer.github.io/luz/docs/documentation/templates/).
+
+## Shell
+URL: https://nandovejer.github.io/luz/docs/documentation/shell/
+Example: https://nandovejer.github.io/luz/examples/documentation/shell.html
+Files: .luz-docs-shell, .luz-docs-nav, .luz-docs-main · Package: @luz-ds/docs
+
+The page of a documentation site in three columns: the sidebar, the content and a rail, down to one column on a phone.
+
+### Known issues
+None known.
+
+### Copy the markup
+The shell on `<body>`, then the header, the sidebar, the content, the rail and the footer, in the order a keyboard reaches them:
+
+Shell markup
+```html
+<body class="o-shell luz-docs-shell">
+  <a class="luz-skip-link" href="#main-content">Skip to content</a>
+  <header>
+    <button class="luz-nav-toggle" type="button" popovertarget="docs-nav" aria-label="Menu">…</button>
+    <p><a href="/">Acme docs</a></p>
+  </header>
+  <nav class="luz-sidebar luz-docs-nav" id="docs-nav" aria-label="Acme docs" popover>…</nav>
+  <main class="o-main luz-docs-main" id="main-content" tabindex="-1">
+    <header class="luz-docs-page-head">…</header>
+    …
+  </main>
+  <aside class="luz-docs-rail" aria-label="About this page">…</aside>
+  <footer>…</footer>
+</body>
+```
+
+### Variants and options
+No modifier. Three classes on native elements, and three custom properties.
+
+- `.luz-docs-shell`: On `<body>`, with core's `.o-shell`: the tracks and where each part goes
+- `.luz-docs-nav`: With core's `.luz-sidebar`, on the `<nav>`: the sidebar's column
+- `.luz-docs-main`: With `.o-main`, on the `<main>`: the content's column. Its children keep to the measure
+- `.luz-docs-rail`: On an `<aside>`: the third column from 80rem, under the content below it. See [Rail](https://nandovejer.github.io/luz/docs/documentation/rail/)
+- `--luz-docs-measure`: A line of text: `46rem`. Set it on the shell in your own CSS to change it
+- `--luz-docs-nav-w`, `--luz-docs-rail-w`: The sidebar and the rail: `16.5rem` and `14rem`
+- `--luz-docs-rail-top`: How far from the top the rail sticks. Raise it under a sticky header
+
+### How it works
+CSS from `@luz-ds/docs` on core's shell and sidebar. Docs gives the tracks and the measure; core gives the grid and the drawer.
+
+- From 80rem there are three tracks: sidebar, content, rail. From 60rem there are two, with the rail drawn under the content. Below, one, in the order of the markup: content, rail, footer.
+- A plain `<header>` goes across every track. The footer sits under the content, and the sidebar runs down beside it.
+- Between 769px and 60rem the sidebar is the first block above the content. At 768px and below it is core's drawer, a popover the menu button opens.
+- Every child of the content keeps to `--luz-docs-measure`, so an example is as wide as a line of text. In print the rail is left out.
+
+### Without JavaScript
+Nothing changes: the layout is CSS. The drawer is a popover opened by the menu button's `popovertarget`, with no script. In a browser without the popover API the sidebar stays in the page, above the content.
+
+### Keyboard and ARIA
+- **Order:** the order of the source; the grid does not change it. Skip link, header, sidebar, content, rail, footer.
+- **Skip link:** put the [skip link](https://nandovejer.github.io/luz/docs/components/skip-link/) first, aimed at the `<main>`, so a keyboard user passes the sidebar.
+- **Landmarks:** a `<header>` child of `<body>` is the banner; name the `<nav>` after the site and the `<aside>` "About this page".
+- **Keys:** Enter or Space on the menu button opens the drawer; Escape closes it. The browser does it.
+
+### When to use
+Use the shell for the pages of a documentation site: read one after another, with a sidebar of all of them and a list of the sections of the page.
+
+- Your site has more pages than fit in a header.
+- Readers move through pages in order.
+
+### When not to use
+Do not use the shell for a page that is not documentation: it assumes a sidebar and a content column.
+
+- A page with no sidebar uses core's `.o-page`: see [the page and its bars](https://nandovejer.github.io/luz/docs/components/layout/#objects-page).
+- A web application has [App](https://nandovejer.github.io/luz/docs/app/); a blog has [CMS](https://nandovejer.github.io/luz/docs/cms/).
+
+## Page head
+URL: https://nandovejer.github.io/luz/docs/documentation/page-head/
+Example: https://nandovejer.github.io/luz/examples/documentation/page-head.html
+Files: .luz-docs-page-head, __eyebrow, __lead, __meta · Package: @luz-ds/docs
+
+The top of a documentation page: the eyebrow, the title, one sentence and the chips that say what the page covers.
+
+### Known issues
+None known.
+
+### Copy the markup
+The head, as the first child of the content:
+
+Page head markup
+```html
+<header class="luz-docs-page-head">
+  <p class="luz-docs-page-head__eyebrow">Guides · Setup</p>
+  <h1>Install the command line tool</h1>
+  <p class="luz-docs-page-head__lead">Add the tool to a project and check that it runs, in about two minutes.</p>
+  <ul class="luz-docs-page-head__meta">
+    <li>Version 2</li>
+    <li>macOS, Linux and Windows</li>
+    <li><a href="#known-issues">No known issues</a></li>
+  </ul>
+</header>
+```
+
+### Variants and options
+No modifier. The head is a class on a native `<header>` with four parts.
+
+- `.luz-docs-page-head`: On a `<header>` in the content: one column, with a gap between its parts and room under it. Its `h1` is `--luz-text-4xl`, and `--luz-text-2xl` at 640px and below
+- `.luz-docs-page-head__eyebrow`: On a `<p>`: the area and the group, in small spaced capitals and the secondary colour. In Arabic the spacing between letters is left out
+- `.luz-docs-page-head__lead`: On a `<p>`: one sentence, larger than the text, in the secondary colour
+- `.luz-docs-page-head__meta`: On a `<ul>`: the chips. Each `<li>` is a word or two in a rounded outline, at least `--luz-control-sm` (28px) tall. A link in one is the same height
+
+### How it works
+CSS from `@luz-ds/docs`. It sets the rhythm and the sizes; the words are yours.
+
+- The head is a grid of one column. The gap between the parts is `--luz-space-sm` and the space under the head is `--luz-space-xl`.
+- The `h1` is a plain element inside the head, with no class: the head styles it by position.
+- The chips are a list of facts a reader asks before reading: which files, which script, which modes, whether it is tested, whether it has known issues. A chip that leads somewhere is a link.
+- A long word in a chip breaks instead of widening the page, so the chips wrap at 320px.
+
+### Without JavaScript
+Nothing changes. The head is text and links, and the package has no script.
+
+### Keyboard and ARIA
+- **Order:** the order of the source: eyebrow, title, lead, then the chips. Tab reaches only the links in the chips.
+- **Headings:** the `h1` is the one `h1` of the page. A `<header>` inside `<main>` is not a banner landmark.
+- **Chips:** a list of plain items, announced as a list. A chip with no link is text and takes no focus.
+
+### When to use
+Use the head at the top of every page of a documentation site, so a reader finds the title and what the page covers in the same place.
+
+- One sentence that says what the page lets a reader do.
+- A few chips for the facts that decide whether to read on.
+
+### When not to use
+Do not use the head for the banner of the site: it holds the page's `h1`.
+
+- One head per page. A section of a long page has an `h2`, not another head.
+- For the header of an article in a blog, use [the CMS article header](https://nandovejer.github.io/luz/docs/cms/article-header/).
+- A landing page opens with [the hero](https://nandovejer.github.io/luz/docs/landing/hero/).
+
+## Rail
+URL: https://nandovejer.github.io/luz/docs/documentation/rail/
+Example: https://nandovejer.github.io/luz/examples/documentation/rail.html
+Files: .luz-docs-rail, __onpage, __fold, __title, __list, __sub, __link, __actions · Package: @luz-ds/docs
+
+The list of the sections of the page that stays in view beside the content, with the actions of the page under it.
+
+### Known issues
+Without core's script no link is marked as current, and the links still work. Not tested with a screen reader.
+
+### Copy the markup
+The rail, as a direct child of the shell, after the content:
+
+Rail markup
+```html
+<aside class="luz-docs-rail" aria-label="About this page">
+  <nav class="luz-docs-rail__onpage" aria-labelledby="onpage-title">
+    <details class="luz-docs-rail__fold" open>
+      <summary class="luz-docs-rail__title" id="onpage-title">On this page</summary>
+      <ul class="luz-docs-rail__list">
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#install">Install</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#configure">Configure</a>
+          <ul class="luz-docs-rail__sub">
+            <li><a class="luz-sidebar__link luz-docs-rail__link" href="#config-file">The config file</a></li>
+          </ul>
+        </li>
+      </ul>
+    </details>
+  </nav>
+  <div class="luz-docs-rail__actions">
+    <a href="https://example.com/docs/install.md">Copy page as Markdown</a>
+    <a href="https://example.com/edit/install.md">Edit this page</a>
+    <a href="https://example.com/issues/new">Report a problem</a>
+  </div>
+</aside>
+```
+
+### Variants and options
+No modifier. The rail is an `<aside>` with two blocks: the list and the actions.
+
+- `.luz-docs-rail`: On an `<aside>`: the third column of the [shell](https://nandovejer.github.io/luz/docs/documentation/shell/) from 80rem, sticky; below it, under the content
+- `.luz-docs-rail__onpage`: On the `<nav>` of the list, a direct child of the rail: it scopes the reset of the fold and its title, and is the hook for a script
+- `.luz-docs-rail__fold`: On a native `<details>`. Write `open`, so the list shows
+- `.luz-docs-rail__title`: On the `<summary>`: "On this page", semibold. It names the `<nav>`
+- `.luz-docs-rail__list`: On the `<ul>`: no bullets, a rule at its start
+- `.luz-docs-rail__link` with `.luz-sidebar__link`: On each `<a>`: text on the page, 28px tall. The link marked `aria-current="true"` gets a start border in the brand colour
+- `.luz-docs-rail__sub`: On a nested `<ul>`: the `h3` of an `h2`, indented
+- `.luz-docs-rail__actions`: A column of links under a rule: copy, edit, report
+
+### How it works
+CSS from `@luz-ds/docs`, on core's sidebar link and its scroll spy.
+
+- Below 80rem the rail is drawn under the content, before the footer. From 80rem it is a column and sticky, at `--luz-docs-rail-top` from the top of the window. It is as tall as the window at most, and scrolls by itself when the list is longer.
+- A link carries core's `.luz-sidebar__link`, so core's script marks the section in view with `aria-current="true"`. The rail redraws the link as text on the page: the mark is the weight and a start border, never the colour alone.
+- The list names each `h2` of the page and, nested under it, each `h3`. Nothing is nested deeper.
+- "Copy page as Markdown" is a link to the page's Markdown file; copying it with a script is yours. The rail is left out of print.
+
+### Without JavaScript
+The list and the actions are links and a native `<details>`, so they work. No link is marked as current: the mark comes from core's script.
+
+### Keyboard and ARIA
+- **Order:** the rail is after the content in the source, so Tab reaches it after the text: the list, then the actions.
+- **Keys:** Enter or Space on "On this page" folds the list. Tab reaches each link; Enter goes to its section.
+- **Names:** the `<aside>` is a landmark named "About this page"; the `<nav>` is named by its summary, "On this page".
+
+### When to use
+Use the rail on pages with several sections, so a reader sees the shape of the page and jumps to a part of it.
+
+- A page with three or more sections, long enough to scroll.
+- Actions that belong to the page and not to the site: edit, report, copy.
+
+### When not to use
+Do not use the rail on a short page: a list of two links is more to read than the page.
+
+- It lists the sections of one page. The pages of the site go in the sidebar.
+- Nest no deeper than an `h3`. For the contents beside an article, use [the CMS table of contents](https://nandovejer.github.io/luz/docs/cms/toc/).
+
+## Example
+URL: https://nandovejer.github.io/luz/docs/documentation/example/
+Example: https://nandovejer.github.io/luz/examples/documentation/example.html
+Files: .luz-docs-example, __preview, __frame, __code · Package: @luz-ds/docs
+
+A live preview with its code under it, in one frame, as wide as the width you give it.
+
+### Known issues
+None known.
+
+### Copy the markup
+A figure with the preview and, under it, the code. The code is optional:
+
+Example markup
+```html
+<figure class="luz-docs-example">
+  <div class="luz-docs-example__preview">
+    <div class="luz-docs-example__frame">
+      <button class="luz-btn luz-btn--primary" type="button">Save changes</button>
+    </div>
+  </div>
+  <div class="luz-docs-example__code">
+    <pre class="luz-code-block" data-lang="html" tabindex="0" aria-label="Markup of the example"><code>&lt;button class="luz-btn luz-btn--primary" type="button"&gt;Save changes&lt;/button&gt;</code></pre>
+  </div>
+</figure>
+```
+
+### Variants and options
+No modifier. The width is a custom property.
+
+- `.luz-docs-example`: On a `<figure>`: one framed box with a rounded border on the surface. The preview and the code share it
+- `.luz-docs-example__preview`: The live markup, with padding around the frame
+- `.luz-docs-example__frame`: Inside the preview: as wide as the preview, or as `--luz-docs-example-w` says (never wider), and centred. It is a size container
+- `.luz-docs-example__code`: Optional, under the preview, across its width, with a rule above. A `pre.luz-code-block` in it loses its own border
+- `--luz-docs-example-w`: The width of the frame. Set it on the frame: `style="--luz-docs-example-w: 20rem"` is a phone. It defaults to the whole preview
+
+### How it works
+CSS from `@luz-ds/docs` on core's code block and highlight.
+
+- The preview and the code are one frame, so they read as one example. A long line scrolls inside the code block and never widens the figure.
+- The frame's width is `min(100%, var(--luz-docs-example-w, 100%))`: a width larger than the room does not widen the figure.
+- The frame is a size container (`container-type: inline-size`). A block button fills the frame, not the window, and a rule of your own can answer to the frame with `@container`.
+- Write the markup once and show it twice, as a preview and as escaped code: the reader sees what they copy.
+
+### Without JavaScript
+Nothing changes in the frame. The code block is plain text in a region that scrolls and takes the focus, without the highlight and the copy button of core's script.
+
+### Keyboard and ARIA
+- **Order:** the controls of the preview, then the code block.
+- **Code block:** keep `tabindex="0"` and an `aria-label` on the `<pre>`: it scrolls, and without them a keyboard user cannot reach it or tell what it is.
+- **Preview:** it is live, so what is in it works as it does anywhere. A picture that must not be used goes in [Do and don't](https://nandovejer.github.io/luz/docs/documentation/dodont/), whose stage is inert.
+
+### When to use
+Use the example to show a piece and the markup that makes it, in one frame, the code under the preview.
+
+- A component, a pattern or a snippet that a reader will copy.
+- A piece whose look depends on its width: set the frame's width.
+
+### When not to use
+Do not use the example to show a mistake or code with nothing to preview.
+
+- A picture of a mistake goes in [Do and don't](https://nandovejer.github.io/luz/docs/documentation/dodont/), which is inert.
+- Code with nothing to show, such as a command, is a plain [code block](https://nandovejer.github.io/luz/docs/components/code/).
+
+## Do and don't
+URL: https://nandovejer.github.io/luz/docs/documentation/dodont/
+Example: https://nandovejer.github.io/luz/examples/documentation/dodont.html
+Files: .luz-docs-dodont, __item, __verdict, __stage · Package: @luz-ds/docs
+
+A Do and a Don't, one example to follow and one to avoid, each with its reason, side by side when there is room.
+
+### Known issues
+In browsers without alternative text for generated content (Safari before 17.4, Firefox before 128), a screen reader may read the tick or the cross before "Do" or "Don't". The word that follows is always read. Not tested with a screen reader.
+
+### Copy the markup
+A pair: the Do first, then the Don't. Each is a figure whose caption says why:
+
+Do and don't markup
+```html
+<div class="luz-docs-dodont">
+  <figure class="luz-docs-dodont__item luz-docs-dodont__item--do">
+    <figcaption><strong class="luz-docs-dodont__verdict">Do</strong> Title a page for what it lets the reader do.</figcaption>
+    <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+      <h3>Install the command line tool</h3>
+    </div>
+  </figure>
+  <figure class="luz-docs-dodont__item luz-docs-dodont__item--dont">
+    <figcaption><strong class="luz-docs-dodont__verdict">Don't</strong> Use a title that fits any page: "Introduction" tells the reader nothing.</figcaption>
+    <div class="luz-docs-dodont__stage" inert aria-hidden="true">
+      <h3>Introduction</h3>
+    </div>
+  </figure>
+</div>
+```
+
+### Variants and options
+One block, its parts, and two modifiers for the two verdicts.
+
+- `.luz-docs-dodont`: On a `<div>`: the pair, in columns of at least 17.5rem. Side by side when there is room, stacked below
+- `.luz-docs-dodont__item`: On each `<figure>`: a framed box with the caption and the stage
+- `.luz-docs-dodont__item--do`: A solid frame in the success colour
+- `.luz-docs-dodont__item--dont`: A dashed frame in the danger colour
+- `.luz-docs-dodont__verdict`: On a `<strong>` that starts the caption: "Do" or "Don't", in the colour of its frame, with a tick or a cross before it
+- `.luz-docs-dodont__stage`: The picture: a bordered box on the page surface. Make it `inert` and `aria-hidden="true"`. For a mistake that would itself be a barrier, use a `pre.luz-code-block` in its place
+
+### How it works
+CSS from `@luz-ds/docs`. It draws the verdict three ways; the words are yours.
+
+- The verdict is a word first. The tick or the cross before it, the solid or dashed frame and the colour are extra cues, and none is the only one.
+- The tick and the cross are generated content with an empty alternative, so a screen reader does not read them.
+- The stage is inert and hidden from assistive technology: it is a picture, and the caption says what it shows. Nothing in it takes focus or is announced.
+- A mistake that would be a barrier when live, such as low contrast or wrong semantics, is shown as code in a `pre.luz-code-block`, never as a live stage.
+- Write the Do first, then its Don't. A page can have several pairs, one after another.
+
+### Without JavaScript
+Nothing changes. The stage is inert by its attribute, and the pair is CSS.
+
+### Keyboard and ARIA
+- **Order:** the Do, then the Don't. Each is a `<figure>` with a `<figcaption>`, read as the caption of its picture.
+- **Stage:** `inert` keeps focus and clicks out of it, and `aria-hidden="true"` keeps it out of the accessibility tree. Do not put a link or a field in it that the reader should use.
+- **Code stage:** a `pre.luz-code-block` keeps `tabindex="0"` and an `aria-label`, as it scrolls.
+
+### When to use
+Use Do and don't to teach a rule by contrast: the reader sees the right way next to the wrong one.
+
+- A lesson that is easier to see than to say, such as a title, a label or a spacing.
+- One pair for each lesson, and the Don't is a mistake people make.
+
+### When not to use
+Do not use it for a rule with nothing to compare, or to show a piece that works.
+
+- To show how a piece looks and is built, use [the example](https://nandovejer.github.io/luz/docs/documentation/example/).
+- Do not invent a mistake nobody makes to fill the Don't.
+- Do not show a live failure. A contrast or semantics failure goes in code.
+
+## Pager
+URL: https://nandovejer.github.io/luz/docs/documentation/pager/
+Example: https://nandovejer.github.io/luz/examples/documentation/pager.html
+Files: .luz-docs-pager, __prev, __next, __link, __label, __title · Package: @luz-ds/docs
+
+Two link blocks at the end of a page, to the previous page and to the next, each with the title it leads to.
+
+### Known issues
+None known.
+
+### Copy the markup
+A list of one or two blocks, in a navigation landmark:
+
+Pager markup
+```html
+<nav aria-label="Previous and next page">
+  <ul class="luz-docs-pager">
+    <li class="luz-docs-pager__prev"><a class="luz-docs-pager__link" rel="prev" href="/install/"><span class="luz-docs-pager__label">Previous</span> <span class="luz-docs-pager__title">Install the tool</span></a></li>
+    <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="/deploy/"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">Deploy to production</span></a></li>
+  </ul>
+</nav>
+```
+
+### Variants and options
+No modifier. The two items say which side they are on.
+
+- `.luz-docs-pager`: On a `<ul>`: two equal columns with a gap, no bullets. One column at 640px and below
+- `.luz-docs-pager__prev`: On the first `<li>`: the first column
+- `.luz-docs-pager__next`: On the second `<li>`: the second column, with its text at the end. It stays there when there is no previous page
+- `.luz-docs-pager__link`: On the `<a>`: the whole block is the link, with a border and padding. On hover, the border and the surface change and the title is underlined
+- `.luz-docs-pager__label`: "Previous" or "Next", small, in the secondary colour
+- `.luz-docs-pager__title`: The title of the page it leads to, larger and semibold, in the colour of a link
+
+### How it works
+CSS from `@luz-ds/docs`. It sets the blocks; the order of the pages is yours.
+
+- The two blocks are equal and the whole block is the target, so the click or tap area is large.
+- The first page has only a Next and the last only a Previous: leave the other `<li>` out. A lone Next stays in the second column, at the end.
+- Each link has `rel="prev"` or `rel="next"`, and a name that starts with its visible words: "Previous: Install the tool".
+- The title is never shortened: a long one wraps inside the block.
+
+### Without JavaScript
+Nothing changes. It is two links, and the package has no script.
+
+### Keyboard and ARIA
+- **Order:** Previous, then Next, as in the source. Tab reaches each link, and Enter follows it.
+- **Names:** the `<nav>` is named "Previous and next page". Each link is named by its visible text ("Previous Install the tool"), so a person who says "click Previous" finds it (WCAG 2.5.3). Do not add an `aria-label` that replaces it.
+- **Landmark:** one pager for each page. A second `<nav>` on the page needs a different name.
+
+### When to use
+Use the pager at the end of the content, so a reader who finishes a page goes to the next one in the order you intend.
+
+- Pages that are read in a sequence: a guide, a tutorial, the chapters of a manual.
+- After the content and before the page foot.
+
+### When not to use
+Do not use the pager for pages that have no order, or for the pages of a list of results.
+
+- The sidebar already lists every page. The pager gives the next step, not the whole map.
+- For the pages of a list or a table, use [pagination](https://nandovejer.github.io/luz/docs/components/pagination/), which has page numbers.
+
+## Page foot
+URL: https://nandovejer.github.io/luz/docs/documentation/page-foot/
+Example: https://nandovejer.github.io/luz/examples/documentation/page-foot.html
+Files: .luz-docs-page-foot · Package: @luz-ds/docs
+
+The small print under a page: when it was last updated, and links to edit it or report a problem.
+
+### Known issues
+None known.
+
+### Copy the markup
+One paragraph, after the pager:
+
+Page foot markup
+```html
+<p class="luz-docs-page-foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="https://example.com/edit/install.md">Edit this page</a> · <a href="https://example.com/issues/new">Report a problem</a></p>
+```
+
+### Variants and options
+No modifier. The foot is one class on a native `<p>`.
+
+- `.luz-docs-page-foot`: On a `<p>` under the content: a rule above, room above the rule, small print in the UI font and the secondary colour. Its links are at least `--luz-control-sm` (28px) tall
+
+### How it works
+CSS from `@luz-ds/docs`. It sets the rule, the size and the colour; the facts are yours.
+
+- The foot is one paragraph. It wraps with its text, so on a narrow screen the links go to the next line.
+- The middle dots are text in the markup, between the date and the links.
+- The date is a `<time>` with a `datetime` a machine can read, and the same date written in words.
+- The links go to your own edit page and your own list of issues. LUZ gives neither.
+
+### Without JavaScript
+Nothing changes. It is text and two links, and the package has no script.
+
+### Keyboard and ARIA
+- **Order:** the date is text; Tab reaches "Edit this page", then "Report a problem".
+- **Names:** the links are named by their text, so they make sense out of context. Do not shorten them to "Edit" and "Report".
+- **Date:** `<time datetime="2026-10-17">` gives the date in a form software can read, next to the words a person reads.
+
+### When to use
+Use the page foot under the content of every page that people maintain, so a reader can tell how old it is and fix it.
+
+- A page that changes over time, such as a guide or a reference.
+- A site whose pages live in a repository, where "Edit this page" can open the file.
+
+### When not to use
+Do not use the page foot for the footer of the site: it belongs to one page.
+
+- The footer of the site is a `<footer>`, a child of the [shell](https://nandovejer.github.io/luz/docs/documentation/shell/).
+- Do not show a date that is not kept up to date: a wrong date is worse than none.
+
+## Documentation templates
+URL: https://nandovejer.github.io/luz/docs/documentation/templates/
+
+A whole documentation page to paste in and adapt, the pager of the first and the last page, and what the package does not have yet.
 
 This page is a library of whole-page templates: open its URL for the markup of each.
 

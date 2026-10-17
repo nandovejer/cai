@@ -12,11 +12,11 @@
   <!-- Before the first paint: the visitor's color mode and the light of the hour (EX-009) -->
   <script src="../../../boot.js" ></script>
   <script type="module" crossorigin src="../../../assets/header-CDFpI0K3.js"></script>
-  <script type="module" crossorigin src="../../../assets/reference-Dxm0Fxmo.js"></script>
+  <script type="module" crossorigin src="../../../assets/reference-q0f-YNtX.js"></script>
   <link rel="stylesheet" crossorigin href="../../../assets/header-enjYdf1s.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-hmJxk_Q7.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/header-Bie_b5hL.css">
-  <link rel="stylesheet" crossorigin href="../../../assets/reference-a791DtZT.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-DdYxBin7.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/header-CLv74IIZ.css">
+  <link rel="stylesheet" crossorigin href="../../../assets/reference-C_8M7sZG.css">
 </head>
 <body class="o-shell docs-page">
   <a class="luz-skip-link" href="#main-content">Skip to main content</a>
@@ -120,12 +120,13 @@
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/landing/">Landing</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/cms/">CMS</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/app/">App</a></li>
+      <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/documentation/">Documentation</a></li>
       <li><a class="luz-sidebar__link docs-nav__area" href="../../../docs/accessibility/">Accessibility</a></li>
     </ul>
   </nav>
 
   <main class="o-main docs-main" id="main-content" tabindex="-1">
-  <div class="docs-page-head">
+  <div class="luz-docs-page-head">
     <nav class="docs-breadcrumb" aria-label="Breadcrumb">
       <ol class="luz-breadcrumb">
         <li><a class="luz-breadcrumb__item" href="../../../docs/">Docs</a></li>
@@ -136,16 +137,16 @@
     <h1 class="docs-title">Working with AI</h1>
     <p class="docs-lead">What an AI coding agent can read, how to check what it wrote, and the accessibility reviewer you can give it.</p>
   </div>
-  <nav class="docs-onpage" aria-labelledby="docs-onpage-title">
-    <details class="docs-onpage__fold">
-      <summary class="docs-onpage__title" id="docs-onpage-title">On this page</summary>
-      <ul class="docs-onpage__list">
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#start">Give your agent LUZ</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#files">What an agent can read</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#check">Check what an agent wrote</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#rules">What check blocks and what it warns about</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#agent">The accessibility reviewer</a></li>
-        <li><a class="luz-sidebar__link docs-onpage__link" href="#limits">What this does not do</a></li>
+  <nav class="luz-docs-rail__onpage" aria-labelledby="docs-rail-title">
+    <details class="luz-docs-rail__fold">
+      <summary class="luz-docs-rail__title" id="docs-rail-title">On this page</summary>
+      <ul class="luz-docs-rail__list">
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#start">Give your agent LUZ</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#files">What an agent can read</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#check">Check what an agent wrote</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#rules">What check blocks and what it warns about</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#agent">The accessibility reviewer</a></li>
+        <li><a class="luz-sidebar__link luz-docs-rail__link" href="#limits">What this does not do</a></li>
       </ul>
     </details>
   </nav>
@@ -181,6 +182,7 @@
             <tr><td data-label="File"><div><code>manifests/landing/classes.json</code></div></td><td data-label="URL"><div><code>https://nandovejer.github.io/luz/manifests/landing/classes.json</code></div></td><td data-label="What it is"><div>Every class, custom property and attribute hook of the package: the names an agent may use. Package: @luz-ds/landing.</div></td><td data-label="Made by"><div>scripts/ai-manifests.js, in the build of each package</div></td></tr>
             <tr><td data-label="File"><div><code>manifests/cms/classes.json</code></div></td><td data-label="URL"><div><code>https://nandovejer.github.io/luz/manifests/cms/classes.json</code></div></td><td data-label="What it is"><div>Every class, custom property and attribute hook of the package: the names an agent may use. Package: @luz-ds/cms.</div></td><td data-label="Made by"><div>scripts/ai-manifests.js, in the build of each package</div></td></tr>
             <tr><td data-label="File"><div><code>manifests/app/classes.json</code></div></td><td data-label="URL"><div><code>https://nandovejer.github.io/luz/manifests/app/classes.json</code></div></td><td data-label="What it is"><div>Every class, custom property and attribute hook of the package: the names an agent may use. Package: @luz-ds/app.</div></td><td data-label="Made by"><div>scripts/ai-manifests.js, in the build of each package</div></td></tr>
+            <tr><td data-label="File"><div><code>manifests/docs/classes.json</code></div></td><td data-label="URL"><div><code>https://nandovejer.github.io/luz/manifests/docs/classes.json</code></div></td><td data-label="What it is"><div>Every class, custom property and attribute hook of the package: the names an agent may use. Package: @luz-ds/docs.</div></td><td data-label="Made by"><div>scripts/ai-manifests.js, in the build of each package</div></td></tr>
           </tbody>
         </table>
       </div>
@@ -385,9 +387,9 @@ npx @luz-ds/check src --json</code></pre>
       <li><a href="../../../docs/tokens/modes/">Color modes and themes</a></li>
       <li><a href="../../../docs/tokens/color/">Color tokens</a></li>
     </ul>
-    <ul class="docs-pager">
-      <li class="docs-pager__prev"><a class="docs-pager__link" rel="prev" href="../../../docs/get-started/print/" aria-label="Previous: Print styles"><span class="docs-pager__label">Previous</span> <span class="docs-pager__title">Print styles</span></a></li>
-      <li class="docs-pager__next"><a class="docs-pager__link" rel="next" href="../../../docs/get-started/classless/" aria-label="Next: Classless styles"><span class="docs-pager__label">Next</span> <span class="docs-pager__title">Classless styles</span></a></li>
+    <ul class="luz-docs-pager">
+      <li class="luz-docs-pager__prev"><a class="luz-docs-pager__link" rel="prev" href="../../../docs/get-started/print/" aria-label="Previous: Print styles"><span class="luz-docs-pager__label">Previous</span> <span class="luz-docs-pager__title">Print styles</span></a></li>
+      <li class="luz-docs-pager__next"><a class="luz-docs-pager__link" rel="next" href="../../../docs/get-started/classless/" aria-label="Next: Classless styles"><span class="luz-docs-pager__label">Next</span> <span class="luz-docs-pager__title">Classless styles</span></a></li>
     </ul>
   </nav>
   </main>

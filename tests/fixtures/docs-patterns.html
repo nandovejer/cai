@@ -6,7 +6,10 @@
   <title>Docs patterns: shell, page head, rail, example, do and don't, pager, page foot</title>
   <!-- tests/docs-patterns.spec.js: tokens + core + docs ONLY. No site stylesheet, no script at all: every
        pattern of @luz-ds/docs is CSS (f6-docs-spec.md, F6a). The page is the shape of a docs page:
-       body.o-shell.luz-docs-shell > header, nav.luz-docs-nav, main.luz-docs-main, aside.luz-docs-rail -->
+       body.o-shell.luz-docs-shell > header, nav.luz-docs-nav, aside.luz-docs-rail, main.luz-docs-main.
+       The rail is before main in the markup and the grid places it: the third column from 80rem, above the
+       content below it (the order of the markup is the order of the screen). The page has no script, so
+       "On this page" is a details that is open at every width; on the docs site a script folds it below 80rem. -->
   <link rel="stylesheet" href="/packages/tokens/dist/luz-tokens.css">
   <link rel="stylesheet" href="/packages/core/dist/luz.css">
   <link rel="stylesheet" href="/packages/docs/dist/docs.css">
@@ -23,6 +26,30 @@
       <a class="luz-sidebar__link" href="#main-content">Form</a>
     </div>
   </nav>
+  <aside class="luz-docs-rail" id="rail" aria-label="About this page">
+    <div class="luz-docs-rail__inner" id="rail-inner">
+      <nav class="luz-docs-rail__onpage" id="onpage" aria-labelledby="onpage-label">
+        <details class="luz-docs-rail__fold" open>
+          <summary class="luz-docs-rail__title" id="onpage-label">On this page</summary>
+          <ul class="luz-docs-rail__list">
+            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-example" href="#example-title">Example</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-issues" href="#known-issues">Known issues</a></li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-dodont" href="#do-dont">Do and don't</a>
+              <ul class="luz-docs-rail__sub">
+                <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Names</a></li>
+              </ul>
+            </li>
+            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-reading" href="#prose-title">Reading</a></li>
+          </ul>
+        </details>
+      </nav>
+      <div class="luz-docs-rail__actions" id="actions">
+        <a href="#main-content" id="act-copy">Copy page as Markdown</a>
+        <a href="#main-content" id="act-edit">Edit this page</a>
+        <a href="#main-content" id="act-report">Report a problem</a>
+      </div>
+    </div>
+  </aside>
   <main class="o-main luz-docs-main" id="main-content" tabindex="-1">
     <header class="luz-docs-page-head" id="head">
       <p class="luz-docs-page-head__eyebrow" id="eyebrow">Components · Actions and input</p>
@@ -123,30 +150,6 @@
 
     <p class="luz-docs-page-foot" id="foot">Last updated <time datetime="2026-10-17">17 October 2026</time> · <a href="#main-content" id="foot-edit">Edit this page</a> · <a href="#main-content" id="foot-report">Report a problem</a></p>
   </main>
-  <aside class="luz-docs-rail" id="rail" aria-label="About this page">
-    <div class="luz-docs-rail__inner" id="rail-inner">
-      <nav class="luz-docs-rail__onpage" id="onpage" aria-labelledby="onpage-label">
-        <details class="luz-docs-rail__fold" open>
-          <summary class="luz-docs-rail__title" id="onpage-label">On this page</summary>
-          <ul class="luz-docs-rail__list">
-            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-example" href="#example-title">Example</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-issues" href="#known-issues">Known issues</a></li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-dodont" href="#do-dont">Do and don't</a>
-              <ul class="luz-docs-rail__sub">
-                <li><a class="luz-sidebar__link luz-docs-rail__link" href="#do-dont">Names</a></li>
-              </ul>
-            </li>
-            <li><a class="luz-sidebar__link luz-docs-rail__link" id="on-reading" href="#prose-title">Reading</a></li>
-          </ul>
-        </details>
-      </nav>
-      <div class="luz-docs-rail__actions" id="actions">
-        <a href="#main-content" id="act-copy">Copy page as Markdown</a>
-        <a href="#main-content" id="act-edit">Edit this page</a>
-        <a href="#main-content" id="act-report">Report a problem</a>
-      </div>
-    </div>
-  </aside>
   <footer id="site-footer">
     <!-- The site footer spans the shell (grid area foot), under main and the rail: its links sit under the rail's column -->
     <nav aria-label="Project links" style="text-align: end; padding: 1rem">

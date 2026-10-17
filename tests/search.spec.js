@@ -390,7 +390,9 @@ test.describe('search: the index (SRCH-17, SEC-IDX, SEC-NET)', () => {
     // Another origin on this machine (127.0.0.1 is not localhost), so the
     // control below makes no request to the internet. Playwright does not
     // route the request a redirect makes, so requests are recorded as sent.
-    const OTHER = 'http://127.0.0.1:5173/x.json';
+    // The same port as the server under test, on the other host name.
+    const base = new URL(test.info().project.use.baseURL);
+    const OTHER = `http://127.0.0.1:${base.port}/x.json`;
     const sent = [];
     page.on('request', (request) => sent.push(request.url()));
     await page.route('**/search-index.json', (route) => route.fulfill({ status: 302, headers: { Location: OTHER } }));

@@ -52,7 +52,8 @@ const ROUTES = [
   ['/es/', 'es'],
   ['/ar/', 'ar'],
 ];
-const ORIGIN = 'http://localhost:5173';
+/** The origin of the server under test, whatever its port (the project's baseURL). */
+const origin = () => new URL(test.info().project.use.baseURL).origin;
 
 test.use({ timezoneId: TIMEZONE, storageState: NO_CHOICE });
 
@@ -172,8 +173,9 @@ test.describe('with JavaScript', () => {
         page.on('response', (r) => {
           if (r.status() >= 400) problems.push(`${r.status()} ${r.url()}`);
         });
+        const own = origin();
         page.on('request', (r) => {
-          if (!r.url().startsWith(ORIGIN) && !r.url().startsWith('data:') && !r.url().startsWith('blob:')) foreign.push(r.url());
+          if (new URL(r.url()).origin !== own && !r.url().startsWith('data:') && !r.url().startsWith('blob:')) foreign.push(r.url());
         });
         await open(page, route, { look });
         await page.waitForLoadState('networkidle');

@@ -3,7 +3,8 @@
  * LUZ docs site — the docs app adopts @luz-ds/docs (F6b): what the browser shows.
  * The markup the generator writes is checked, page by page, in tests/docs-shell.test.js;
  * this file holds what needs a layout, a keyboard or a clipboard: the three columns, the
- * order of the page head on screen, the rail outside main, "Copy page as Markdown" (a
+ * order of the page head on screen, the rail outside main (before it in the markup, and above the content below
+ * 80rem, with "On this page" folded by a script and open without one), "Copy page as Markdown" (a
  * plain link without JavaScript, the clipboard and a status with it), index.md served by
  * the dev server, and where the area index's gallery stands.
  *
@@ -18,6 +19,7 @@ import { readingOrder } from '../scripts/docs-site/site.js';
 import { site } from './helpers/docs-site.js';
 import { eyebrowPackageOf } from './helpers/package-areas.js';
 import { focusAndHitTest, ringBeyondInlineStart } from './helpers/obscured.js';
+import { readingOrder as walkTheTabOrder } from './helpers/reading-order.js';
 
 const BUTTON = '/docs/components/button/';
 const rail = (page) => page.getByRole('complementary', { name: 'About this page' });
@@ -176,10 +178,86 @@ test.describe('docs shell, with JavaScript', () => {
       expect(blocking.map((v) => `${v.id}: ${v.nodes[0]?.target?.join(' ')}`), route).toEqual([]);
     }
   });
+
+  for (const width of [375, 1024, 1440]) {
+    test(`${width}px: the skip link goes to main, and the next Tab lands inside main, not in the rail`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(BUTTON);
+      await page.waitForLoadState('networkidle');
+      await page.keyboard.press('Tab');
+      const skip = page.locator('a.luz-skip-link');
+      await expect(skip).toBeFocused();
+      await expect(skip).toHaveAttribute('href', '#main-content');
+      await page.keyboard.press('Enter');
+      await expect(page.locator('main#main-content')).toBeFocused();
+      await page.keyboard.press('Tab');
+      const where = await page.evaluate(() => ({ main: !!document.activeElement?.closest('main'), rail: !!document.activeElement?.closest('aside'), nav: !!document.activeElement?.closest('nav.luz-docs-nav'), what: document.activeElement?.outerHTML.slice(0, 90) }));
+      expect(where.rail, `the focus is in the rail: ${where.what}`).toBe(false);
+      expect(where.nav, `the focus is in the sidebar: ${where.what}`).toBe(false);
+      expect(where.main, `the focus is inside main: ${where.what}`).toBe(true);
+    });
+  }
+
+  // "On this page" is folded by the page's script below 80rem (it is closed when the page loads) and open from 80rem.
+  // Without the script it is open at every width: nothing is hidden behind a script (the no-JS describe below).
+  for (const [width, open] of [[390, false], [1000, false], [1279, false], [1280, true], [1440, true]]) {
+    test(`${width}px: "On this page" is ${open ? 'open' : 'closed'} when the page loads`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(BUTTON);
+      await page.waitForLoadState('networkidle');
+      const fold = rail(page).locator('nav.luz-docs-rail__onpage details');
+      await expect(fold.locator('> summary'), 'the title is always visible').toBeVisible();
+      expect(await fold.evaluate((d) => /** @type {HTMLDetailsElement} */ (d).open), `open: ${open}`).toBe(open);
+      const first = fold.getByRole('link').first();
+      if (open) await expect(first).toBeVisible();
+      else await expect(first).toBeHidden();
+    });
+  }
+
+  test('below 80rem one click on "On this page" opens the list, and the reader can close it again', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 800 });
+    await page.goto(BUTTON);
+    await page.waitForLoadState('networkidle');
+    const fold = rail(page).locator('nav.luz-docs-rail__onpage details');
+    const first = fold.getByRole('link').first();
+    await expect(first).toBeHidden();
+    await fold.locator('> summary').click();
+    await expect(first).toBeVisible();
+    await fold.locator('> summary').click();
+    await expect(first).toBeHidden();
+  });
 });
 
 test.describe('docs shell, without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
+
+  // Decided: the fold is the script's. Without it the details is open at every width, so nothing is hidden behind a script.
+  for (const width of [390, 1000, 1440]) {
+    test(`${width}px: "On this page" is open and its links are visible, and the rail is still above main below 80rem`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(BUTTON);
+      const fold = rail(page).locator('nav.luz-docs-rail__onpage details');
+      expect(await fold.evaluate((d) => /** @type {HTMLDetailsElement} */ (d).open), 'the details is open').toBe(true);
+      await expect(fold.getByRole('link', { name: 'Example', exact: true })).toBeVisible();
+      if (width < 1280) {
+        const main = await box(page, 'main.luz-docs-main');
+        const aside = await box(page, 'aside.luz-docs-rail');
+        expect(aside.bottom, 'the rail is above main').toBeLessThanOrEqual(main.y + 1);
+      }
+    });
+  }
+
+  test('375px: the skip link goes to main, and the next Tab lands inside main, not in the rail', async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 900 });
+    await page.goto(BUTTON);
+    await page.keyboard.press('Tab');
+    await expect(page.locator('a.luz-skip-link')).toBeFocused();
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Tab');
+    const where = await page.evaluate(() => ({ main: !!document.activeElement?.closest('main'), rail: !!document.activeElement?.closest('aside'), what: document.activeElement?.outerHTML.slice(0, 90) }));
+    expect(where.rail, `the focus is in the rail: ${where.what}`).toBe(false);
+    expect(where.main, `the focus is inside main: ${where.what}`).toBe(true);
+  });
 
   test('Copy page as Markdown is a plain link to the .md file, and the file is text', async ({ page }) => {
     await page.goto(BUTTON);
@@ -203,14 +281,55 @@ test.describe('docs shell, without JavaScript', () => {
     await expect(summary).toBeVisible();
   });
 
-  test('below 80rem the rail is drawn under the content, and nothing scrolls sideways', async ({ page }) => {
-    await page.setViewportSize({ width: 390, height: 800 });
+  test('below 80rem the rail is drawn above the content, under the site header, and nothing scrolls sideways', async ({ page }) => {
+    for (const width of [390, 1000]) {
+      await page.setViewportSize({ width, height: 800 });
+      await page.goto(BUTTON);
+      const header = await box(page, 'body > header');
+      const main = await box(page, 'main.luz-docs-main');
+      const aside = await box(page, 'aside.luz-docs-rail');
+      expect(aside.bottom, `${width}px: the rail is above main`).toBeLessThanOrEqual(main.y + 1);
+      expect(aside.y, `${width}px: the rail is under the site header`).toBeGreaterThanOrEqual(header.bottom - 1);
+      expect(main.right, `${width}px: main is not beside the rail`).toBeGreaterThan(aside.x);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${width}px: nothing scrolls sideways`).toBe(true);
+    }
+  });
+
+  test('from 80rem the rail is still the third column, on the right, and sticks inside its column while the page scrolls', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 800 });
     await page.goto(BUTTON);
     const main = await box(page, 'main.luz-docs-main');
     const aside = await box(page, 'aside.luz-docs-rail');
-    expect(aside.y, 'the rail is under main').toBeGreaterThanOrEqual(main.bottom - 1);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    expect(aside.x, 'beside main, on the right').toBeGreaterThanOrEqual(main.right - 1);
+    expect(aside.y, 'at the top of the content, not above it').toBeLessThan(main.y + 200);
+    await page.evaluate(() => window.scrollTo({ top: 1500, behavior: 'instant' }));
+    expect(await page.evaluate(() => window.scrollY), 'the page scrolled').toBeGreaterThan(1000);
+    const inner = await box(page, 'aside.luz-docs-rail .luz-docs-rail__inner');
+    expect(inner.y, 'the sticky box is in the window').toBeGreaterThanOrEqual(0);
+    expect(inner.y, 'near the top edge').toBeLessThanOrEqual(200);
+    expect(inner.x, 'in the same column').toBeGreaterThanOrEqual(main.right - 1);
   });
+
+  test('the rail is before main in the markup: the sidebar, the rail, then main, and the page head opens main', async ({ page }) => {
+    await page.goto(BUTTON);
+    const order = await page.evaluate(() => [...document.body.children].map((el) => el.matches('nav.luz-docs-nav') ? 'sidebar' : el.matches('aside.luz-docs-rail') ? 'rail' : el.matches('main.luz-docs-main') ? 'main' : null).filter(Boolean));
+    expect(order).toEqual(['sidebar', 'rail', 'main']);
+    // Only the breadcrumb may come before the page head, and the h1 is the first heading of main
+    const before = await page.evaluate(() => [...document.querySelector('main.luz-docs-main').children].slice(0, [...document.querySelector('main.luz-docs-main').children].indexOf(document.querySelector('header.luz-docs-page-head'))).map((el) => el.className));
+    expect(before).toEqual(['docs-breadcrumb']);
+    expect(await page.evaluate(() => document.querySelector('main.luz-docs-main').querySelector('h1, h2, h3, h4, h5, h6').tagName)).toBe('H1');
+  });
+
+  for (const width of [375, 1024]) {
+    test(`${width}px: the order of the markup is the order of the screen: every control Tab reaches is below the one before it, or in a column to its right`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(BUTTON);
+      await page.waitForLoadState('networkidle');
+      const walk = await walkTheTabOrder(page);
+      expect(walk.count, 'the page has controls').toBeGreaterThan(20);
+      expect(walk.problems, walk.steps.join('\n')).toEqual([]);
+    });
+  }
 
   test('the not-found page keeps no rail (its markup has no script: tests/docs-shell.test.js; the dev server adds its own client)', async ({ page }) => {
     await page.goto('/404.html');

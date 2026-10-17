@@ -156,6 +156,7 @@ home-light .home-light__line {
   border: 0;
   border-radius: var(--luz-radius-md);
   background: color-mix(in oklab, var(--_paper) 88%, transparent);
+  -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   color: var(--_muted);
   font: italic 400 var(--luz-text-sm) / 1.45 var(--luz-font-serif);
@@ -253,6 +254,7 @@ home-light .home-light__bar {
   border: 1px solid var(--luz-divider);
   border-radius: var(--luz-radius-md);
   background: color-mix(in oklab, var(--_paper) 82%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.2);
   backdrop-filter: blur(18px) saturate(1.2);
   color: var(--_ink);
   font: 400 var(--luz-text-sm) / 1.4 var(--luz-font-sans);

@@ -297,7 +297,7 @@ describe("the new home page: catalogs and rendered pages (F5)", () => {
   const template = readFileSync(join(repo, "apps/landing/index.html"), "utf-8");
   const docs = landingDocuments(site, "apps/landing/index.html", template);
   const { rendered, problems } = buildSite(site, { extra: docs });
-  const SECTIONS = ["hero", "light", "why", "inside", "native", "modes", "type", "fit", "start"];
+  const SECTIONS = ["hero", "light", "why", "inside", "native", "modes", "type", "start"];
   const placeholders = (value) => [...value.matchAll(/\{[a-z]+(?::[a-z]+)?\}/g)].map((m) => m[0]).sort();
   /** Values that are the same word in the three languages: a brand, a command, a symbol. */
   const SAME = /^(?:[^\p{L}]*|GitHub|LUZ|ET Book|Core|Site|Tokens|Auto|Tokens \+ Core(?: \+ Site)?)$/u;
@@ -338,7 +338,7 @@ describe("the new home page: catalogs and rendered pages (F5)", () => {
     }
   });
 
-  it("each language renders the nine sections in order, one h1 and no template syntax left", () => {
+  it("each language renders the eight sections in order (fit is inside start), one h1 and no template syntax left", () => {
     for (const doc of docs) {
       const html = rendered.get(doc.route);
       const at = SECTIONS.map((id) => html.search(new RegExp(`<section\\b[^>]*\\sid="${id}"`)));
@@ -352,7 +352,7 @@ describe("the new home page: catalogs and rendered pages (F5)", () => {
   it("the old sections are gone from every language", () => {
     for (const doc of docs) {
       const html = rendered.get(doc.route);
-      for (const id of ["what", "see", "adopt"]) expect(html, `${doc.route} #${id}`).not.toMatch(new RegExp(`\\sid="${id}"`));
+      for (const id of ["what", "see", "adopt", "fit"]) expect(html, `${doc.route} #${id}`).not.toMatch(new RegExp(`\\sid="${id}"`));
       expect(html, doc.route).not.toMatch(/landing-h2|landing-points|landing-point__title|landing-lead/);
     }
   });
@@ -369,6 +369,40 @@ describe("the new home page: catalogs and rendered pages (F5)", () => {
     expect(rendered.get("/")).toContain("The light is computed from your clock, never from your location. Your choice stays in this browser.");
     expect(rendered.get("/es/")).not.toContain("Your choice stays in this browser.");
     expect(rendered.get("/ar/")).not.toContain("Your choice stays in this browser.");
+  });
+
+  it("the hero's lead is one sentence in every language, and in English it is the owner's", () => {
+    expect(catalogs.en["hero.lead"]).toBe("Tokens, CSS and a little vanilla JavaScript, built on what the browser already does.");
+    for (const code of ["en", "es", "ar"]) {
+      const lead = catalogs[code]["hero.lead"].replace(/<[^>]*>/g, "").replace(/\s+/g, " ").trim();
+      expect(lead, code).not.toMatch(/[.!?\u061F\u2026]\s+\S/);
+      expect(lead, code).toMatch(/[.!?\u061F\u2026]$/);
+    }
+  });
+
+  describe("Spanish", () => {
+    /** A value as a reader meets it: tags gone, and what is marked as English (lang="en") left out. */
+    const spanish = (value) => value.replace(/<span\b[^>]*\blang="en"[^>]*>[\s\S]*?<\/span>/g, "").replace(/<[^>]*>/g, "");
+
+    it("the hero's lead says framework once at most", () => {
+      const mentions = catalogs.es["hero.lead"].replace(/<[^>]*>/g, "").match(/framework/gi) ?? [];
+      expect(mentions.length).toBeLessThanOrEqual(1);
+    });
+
+    it("a design system is \"sistema de diseño\" everywhere: no \"design system\" outside a lang=\"en\" span", () => {
+      const offenders = Object.entries(catalogs.es).filter(([, value]) => /design system/i.test(spanish(value))).map(([key]) => key);
+      expect(offenders).toEqual([]);
+    });
+
+    it("the progress bar counts steps \"completados\", not \"hechos\"", () => {
+      expect(catalogs.es["native.progress.label"]).toContain("completados");
+      expect(catalogs.es["native.progress.label"]).not.toContain("hechos");
+    });
+
+    it("the title of \"Get started\" writes the tag: <link>", () => {
+      const title = catalogs.es["start.title"];
+      expect(title.includes("<link>") || title.includes("&lt;link&gt;"), title).toBe(true);
+    });
   });
 
   it("each rendered page stays under the 80 KiB the page ceiling allows", () => {

@@ -69,6 +69,16 @@ describe("apps/landing/landing.css: the home's own, on tokens", () => {
     }
   });
 
+  it("does not size the links of the footer's columns: the package gives them their block size (24 px)", () => {
+    // Every rule whose selector names a footer column, and what it declares
+    const rules = [...css.matchAll(/([^{}]+)\{([^{}]*)\}/g)].map(([, selector, body]) => ({ selector: selector.trim(), body }));
+    const ofColumn = rules.filter((rule) => rule.selector.includes(".luz-landing-footer__col"));
+    expect(ofColumn.length, "the file still styles the current language in the column").toBeGreaterThan(0);
+    for (const rule of ofColumn) {
+      expect(rule.body, rule.selector).not.toMatch(/(?<![\w-])(?:min-|max-)?(?:block-size|height)\s*:/);
+    }
+  });
+
   it("uses the semantic type steps, not a typed size, for the type scale samples", () => {
     expect(css).not.toMatch(/font-size:\s*\d/);
   });
@@ -84,11 +94,29 @@ describe("apps/landing/index.html: the template of the home", () => {
     expect(at("/apps/landing/light/light.css")).toBeGreaterThan(-1);
   });
 
-  it("writes the nine sections as direct children of main, in the order of the map (Q27)", () => {
+  it("writes the eight sections as direct children of main, in the order of the map (Q27): fit is not one of them", () => {
     const main = html.slice(html.indexOf("<main"), html.indexOf("</main>"));
     const ids = [...main.matchAll(/<section\b[^>]*\sid="([^"]+)"/g)].map((m) => m[1]);
-    expect(ids).toEqual(["hero", "light", "why", "inside", "native", "modes", "type", "fit", "start"]);
+    expect(ids).toEqual(["hero", "light", "why", "inside", "native", "modes", "type", "start"]);
     expect(main.match(/<h1\b/g)).toHaveLength(1);
+    expect(html, "no link to the section that went").not.toContain('href="#fit"');
+  });
+
+  it("writes the two fit lists inside #start, after the snippets and before the two actions", () => {
+    const start = html.slice(html.search(/<section\b[^>]*\sid="start"/), html.indexOf("</main>"));
+    const at = (needle) => start.indexOf(needle);
+    expect(at("{{t:fit.good}}"), "A good fit").toBeGreaterThan(at('id="snip-npm"'));
+    expect(at("{{t:fit.bad}}"), "Not a good fit").toBeGreaterThan(at("{{t:fit.good}}"));
+    expect(at("{{t:fit.bad}}")).toBeLessThan(at('<div class="o-actions">'));
+    expect(start.match(/<h3\b/g) ?? []).toHaveLength(2);
+  });
+
+  it("the type section is the quote alone: no sample of the scale", () => {
+    const type = html.slice(html.search(/<section\b[^>]*\sid="type"/), html.search(/<section\b[^>]*\sid="start"/));
+    expect(type).toContain("<blockquote");
+    expect(type).not.toMatch(/>\s*Aa\s*</);
+    expect(type).not.toContain("type.scale");
+    expect(type).not.toMatch(/landing-type__(scale|aa)/);
   });
 
   it("types no number, no version and no colour in the copy: the counts are {n:…} in the catalogs, the version is the build's", () => {

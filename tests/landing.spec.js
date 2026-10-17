@@ -1,8 +1,9 @@
 /**
  * LUZ Design System — Landing page checks
  * The home (apps/landing, served at /, /es/ and /ar/) in the order of the
- * F5 spec of .claude/plans/luz-home-docs-identity.md (section 3.6, Q22-Q27):
- * hero, light, why, inside, native, modes, type, fit, start, and the footer.
+ * F5 spec of .claude/plans/luz-home-docs-identity.md (section 3.6, Q22-Q27),
+ * after the owner's cuts: hero, light, why, inside, native, modes, type, start
+ * (the fit lists close "start"), and the footer.
  * It is a level-3 consumer on top of @luz-ds/landing 0.2, with the base color
  * modes and the six lights of the hour. The documentation, with every
  * component and its guidance, lives on its own pages (tests/docs.spec.js);
@@ -16,8 +17,6 @@ import AxeBuilder from '@axe-core/playwright';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { faded } from './helpers/settle.js';
-import { px } from './helpers/site-loader.js';
-import { STEPS } from './helpers/scale-golden.js';
 import { KEY as MODE_KEY, LIGHTS, NO_CHOICE, TIMEZONE, atTime, channels, colorOf, seedMode, vejer } from './helpers/site-lights.js';
 
 const fromRepo = (path) => fileURLToPath(new URL(`../${path}`, import.meta.url));
@@ -26,7 +25,7 @@ test.use({ timezoneId: TIMEZONE, storageState: NO_CHOICE });
 
 const MODES = ['light', 'dark', 'high-contrast'];
 /** The ids of the sections of the home, in the order of the page (Q27). */
-const SECTIONS = ['hero', 'light', 'why', 'inside', 'native', 'modes', 'type', 'fit', 'start'];
+const SECTIONS = ['hero', 'light', 'why', 'inside', 'native', 'modes', 'type', 'start'];
 const ROUTES = [
   ['/', 'en'],
   ['/es/', 'es'],
@@ -190,14 +189,14 @@ test.describe('Landing page', () => {
 
   test.describe('the map of the page', () => {
     for (const [route, lang] of ROUTES) {
-      test(`${route}: nine sections, in order, one h1, each named by its heading (${lang})`, async ({ page }) => {
+      test(`${route}: eight sections, in order, one h1, each named by its heading (${lang})`, async ({ page }) => {
         await open(page, route);
 
         expect(await page.locator('main > section').evaluateAll((all) => all.map((el) => el.id))).toEqual(SECTIONS);
         await expect(page.locator('h1')).toHaveCount(1);
         await expect(page.locator('#hero h1')).toHaveCount(1);
         // The old ids are gone with their sections
-        for (const gone of ['what', 'see', 'adopt']) await expect(page.locator(`#${gone}`), `#${gone}`).toHaveCount(0);
+        for (const gone of ['what', 'see', 'adopt', 'fit']) await expect(page.locator(`#${gone}`), `#${gone}`).toHaveCount(0);
         // Every section is named by a heading of its own: h1 for the hero, h2 for the others
         const named = await page.locator('main > section').evaluateAll((all) =>
           all.map((el) => {
@@ -371,6 +370,8 @@ test.describe('Landing page', () => {
       await expect(drawer).toBeVisible();
       const local = await drawer.locator('a[href^="#"]').evaluateAll((links) => links.map((a) => a.getAttribute('href')));
       expect(local.length).toBeGreaterThan(4);
+      // The fit lists are in "Get started" now: no link to a section that is gone
+      expect(local).not.toContain('#fit');
       // Each names a section of the new map, and none the sections that went
       for (const href of local) {
         expect(SECTIONS, href).toContain(href.slice(1));
@@ -430,8 +431,10 @@ test.describe('Landing page', () => {
 
       const hero = page.locator('section#hero');
       await expect(hero.locator('.luz-landing-hero__eyebrow')).toHaveText('Light, usable & zero-dependency');
-      await expect(hero.locator('h1.luz-landing-hero__title')).toHaveText('Light, wherever you are.');
+      await expect(hero.locator('h1.luz-landing-hero__title')).toHaveText('LUZ, a design system for humans, ready for AI.');
       await expect(hero.locator('.luz-landing-hero__lead')).toBeVisible();
+      // One sentence, not a paragraph
+      await expect(hero.locator('.luz-landing-hero__lead')).toHaveText('Tokens, CSS and a little vanilla JavaScript, built on what the browser already does.');
       await expect(hero).toContainText(EN['built.title']);
       await expect(hero).toContainText(EN['built.line']);
 
@@ -447,6 +450,17 @@ test.describe('Landing page', () => {
     });
 
     for (const [route, lang] of ROUTES) {
+      test(`${route}: the lead is one sentence, the catalog's (${lang})`, async ({ page }) => {
+        await open(page, route);
+
+        const lead = ((await page.locator('section#hero .luz-landing-hero__lead').textContent()) ?? '').replace(/\s+/g, ' ').trim();
+        expect(lead.length).toBeGreaterThan(20);
+        // A full stop (or its Arabic and question forms) only at the end
+        expect(lead, 'no sentence ends inside the lead').not.toMatch(/[.!?\u061F\u2026]\s+\S/);
+        expect(lead).toMatch(/[.!?\u061F\u2026]$/);
+        if (lang === 'en') expect(lead).toBe(catalog('en')['hero.lead']);
+      });
+
       test(`${route}: the title is the catalog's, and the brand line stays English (${lang})`, async ({ page }) => {
         await open(page, route);
 
@@ -454,7 +468,8 @@ test.describe('Landing page', () => {
         await expect(hero).toHaveCount(1);
         const title = (await hero.locator('h1').textContent())?.trim() ?? '';
         expect(title.length).toBeGreaterThan(5);
-        if (lang !== 'en') expect(title).not.toBe('Light, wherever you are.');
+        if (lang !== 'en') expect(title).not.toBe('LUZ, a design system for humans, ready for AI.');
+        if (lang === 'es') expect(title).toBe('Luz, sistema de diseño para el humano, listo para la IA');
         const eyebrow = hero.locator('.luz-landing-hero__eyebrow');
         await expect(eyebrow).toHaveAttribute('lang', 'en');
         await expect(eyebrow).toHaveText('Light, usable & zero-dependency');
@@ -544,6 +559,89 @@ test.describe('Landing page', () => {
       expect(await swatches(page).nth(PHASES.indexOf('night')).getAttribute('aria-pressed')).toBe('false');
     });
 
+    test('Light: "Back to now" from the keyboard leaves the focus on the swatch of the current light, not on the page', async ({ page }) => {
+      await openLive(page, '/?look=city', '14:00');
+      await expect(swatches(page)).toHaveCount(6);
+      await swatches(page).nth(PHASES.indexOf('night')).click();
+      await expect.poll(() => light(page)).toBe('night');
+
+      const back = page.locator('#why').getByRole('button', { name: EN['light.live'] });
+      await back.focus();
+      await page.keyboard.press('Enter');
+      await expect.poll(() => light(page)).toBe('afternoon');
+      // The button hides itself: the focus must not fall to <body> with it
+      await expect(back).toBeHidden();
+      const active = await page.evaluate(() => ({ tag: document.activeElement?.tagName, phase: document.activeElement?.getAttribute('data-phase') }));
+      expect(active, 'document.activeElement').toEqual({ tag: 'BUTTON', phase: 'afternoon' });
+      await expect(swatches(page).nth(PHASES.indexOf('afternoon'))).toBeFocused();
+    });
+
+    test('Light, forced colors: the pressed swatch is drawn differently from the others, by a solid fill, a border or an outline', async ({ page }) => {
+      await page.emulateMedia({ forcedColors: 'active' });
+      await openLive(page, '/?look=city', '14:00');
+      await expect(swatches(page)).toHaveCount(6);
+      await swatches(page).nth(PHASES.indexOf('night')).click();
+      await expect.poll(() => light(page)).toBe('night');
+      // Neither the pointer nor the focus ring may be what tells them apart
+      await page.evaluate(() => /** @type {HTMLElement} */ (document.activeElement)?.blur());
+      await page.mouse.move(0, 0);
+
+      const looks = await swatches(page).evaluateAll((all) =>
+        all.map((el) => {
+          const cs = getComputedStyle(el);
+          // A fill under half opaque (the page's translucent tint) does not tell one swatch from another
+          const alpha = cs.backgroundColor.match(/rgba?\(([^)]+)\)/)?.[1].split(/[,\s/]+/).filter(Boolean)[3];
+          const fill = alpha !== undefined && Number(alpha) < 0.5 ? 'transparent' : cs.backgroundColor;
+          return {
+            pressed: el.getAttribute('aria-pressed'),
+            look: JSON.stringify([fill, cs.outlineStyle, cs.outlineWidth, cs.outlineColor, cs.borderTopStyle, cs.borderTopWidth, cs.borderTopColor, cs.borderBottomStyle, cs.borderBottomWidth, cs.borderBottomColor]),
+          };
+        }),
+      );
+      const pressed = looks.filter((l) => l.pressed === 'true');
+      expect(pressed).toHaveLength(1);
+      for (const other of looks.filter((l) => l.pressed !== 'true')) expect(other.look, 'an unpressed swatch looks like the pressed one').not.toBe(pressed[0].look);
+    });
+
+    test('Light: the name of the selected light is written next to "Back to now", and follows the swatch', async ({ page }) => {
+      await page.setViewportSize({ width: 1280, height: 900 });
+      await openLive(page, '/?look=city', '14:00');
+      await expect(swatches(page)).toHaveCount(6);
+
+      const card = page.locator('#why .luz-card').first();
+      /** The visible name in the card: text outside any button, equal to the catalog's name of the light. */
+      const named = (name) =>
+        card.evaluate((root, wanted) => {
+          return [...root.querySelectorAll('*')]
+            .filter((el) => !el.closest('button, .u-sr-only') && el.children.length === 0 && (el.textContent ?? '').trim() === wanted)
+            .filter((el) => el.checkVisibility({ visibilityProperty: true }))
+            .map((el) => {
+              const r = el.getBoundingClientRect();
+              return { width: r.width, height: r.height, top: r.top, bottom: r.bottom };
+            })
+            .filter((box) => box.width > 8 && box.height > 8);
+        }, name);
+
+      // None pressed: the current phase
+      expect(await named(EN['light.afternoon']), 'the clock\'s light, with no swatch pressed').toHaveLength(1);
+
+      for (const phase of ['night', 'dawn', 'sunset']) {
+        await swatches(page).nth(PHASES.indexOf(phase)).click();
+        await expect.poll(() => light(page)).toBe(phase);
+        const boxes = await named(EN[`light.${phase}`]);
+        expect(boxes, `"${EN[`light.${phase}`]}" is visible in the card`).toHaveLength(1);
+        // Beside the button, on its row
+        const back = await card.getByRole('button', { name: EN['light.live'] }).boundingBox();
+        expect(back).not.toBeNull();
+        expect(Math.abs((boxes[0].top + boxes[0].bottom) / 2 - ((back?.y ?? 0) + (back?.height ?? 0) / 2)), `${phase}: on the row of Back to now`).toBeLessThanOrEqual(24);
+      }
+
+      await card.getByRole('button', { name: EN['light.live'] }).click();
+      await expect.poll(() => light(page)).toBe('afternoon');
+      expect(await named(EN['light.afternoon']), 'back to the clock\'s light').toHaveLength(1);
+      expect(await named(EN['light.sunset']), 'the borrowed name is gone').toHaveLength(0);
+    });
+
     test('Light: the swatches are keyboard controls', async ({ page }) => {
       await openLive(page, '/?look=city', '14:00');
       await expect(swatches(page)).toHaveCount(6);
@@ -557,11 +655,12 @@ test.describe('Landing page', () => {
       await expect.poll(() => light(page)).toBe('dusk');
     });
 
-    test('Usable: a ghost button to press with Tab then Space, with a visible focus ring, and its line', async ({ page }) => {
+    test('Usable: an outline button to press with Tab then Space, with a visible focus ring, and its line', async ({ page }) => {
       await open(page);
 
       const card = page.locator('#why .o-grid > .luz-card').nth(1);
-      const ghost = card.locator('button.luz-btn--ghost');
+      await expect(card.locator('button.luz-btn--ghost'), 'not a ghost button').toHaveCount(0);
+      const ghost = card.locator('button.luz-btn--outline');
       await expect(ghost).toHaveCount(1);
       await expect(card.locator('p').last()).toHaveText(/\S/);
       // Reached by Tab, as its words say
@@ -610,6 +709,14 @@ test.describe('Landing page', () => {
         const install = card.getByRole('link', { name: `Install level ${index + 1}` });
         await expect(install).toHaveAttribute('href', new RegExp(`${anchor}$`));
       }
+    });
+
+    test('each level card keeps its list short: two bullets at most', async ({ page }) => {
+      await open(page);
+
+      const counts = await page.locator('#inside .landing-level').evaluateAll((cards) => cards.map((card) => card.querySelectorAll('li').length));
+      expect(counts).toHaveLength(3);
+      for (const [index, count] of counts.entries()) expect(count, `Level ${index + 1}`).toBeLessThanOrEqual(2);
     });
 
     test('the three levels are layered: standalone, then each requires the ones below', async ({ page }) => {
@@ -906,36 +1013,74 @@ test.describe('Landing page', () => {
       expect(family.replace(/\s/g, '')).toBe(serif.replace(/\s/g, ''));
     });
 
-    test('the scale: one "Aa" per step, drawn at the size of its token, smallest to largest', async ({ page }) => {
+    test('only the quote: no scale samples ("Aa"), no table of steps, no caption about the scale', async ({ page }) => {
       await open(page);
 
-      const samples = page.locator('#type').getByText('Aa', { exact: true });
-      await expect(samples).toHaveCount(STEPS.length);
-      const drawn = await samples.evaluateAll((all) => all.map((el) => parseFloat(getComputedStyle(el).fontSize)));
-      const tokens = [];
-      for (const step of STEPS) tokens.push(await px(page, `var(--luz-text-${step})`));
-      expect(drawn).toEqual(tokens);
-      for (let i = 1; i < drawn.length; i += 1) expect(drawn[i]).toBeGreaterThan(drawn[i - 1] - 1);
-      // Each sample says which step it is
-      const section = await page.locator('#type').innerText();
-      for (const step of STEPS) expect(section, step).toContain(step);
+      await expect(page.locator('#type blockquote')).toHaveCount(1);
+      // No element whose text is "Aa" (the samples drawn at each step of the scale)
+      const samples = await page.locator('#type *').evaluateAll((all) => all.filter((el) => (el.textContent ?? '').trim() === 'Aa').length);
+      expect(samples, 'elements with the text "Aa"').toBe(0);
+      await expect(page.locator('#type figcaption'), 'the caption of the scale').toHaveCount(0);
+      await expect(page.locator('#type ul, #type ol, #type li'), 'the list of steps').toHaveCount(0);
+      expect(await page.locator('#type').innerText()).not.toMatch(/\b(?:xs|2xl|3xl|4xl)\b/);
     });
   });
 
-  /* ---- 8. fit ----------------------------------------------------------- */
+  /* ---- fit: two short lists inside "start" -------------------------------- */
 
   test.describe('fit', () => {
-    test('a good fit and not a good fit, side by side on core\'s split grid', async ({ page }) => {
-      await page.setViewportSize({ width: 1280, height: 800 });
+    test('is not a section of its own, and nothing links to it', async ({ page }) => {
       await open(page);
 
-      const grid = page.locator('#fit .o-grid--split');
-      await expect(grid).toHaveCount(1);
-      await expect(grid.locator('h3')).toHaveText([EN['fit.good'], EN['fit.bad']]);
-      await expect(grid.locator('ul')).toHaveCount(2);
-      for (const list of await grid.locator('ul').all()) await expect(list.locator('li')).toHaveCount(3);
-      const tops = await grid.locator('h3').evaluateAll((all) => all.map((el) => Math.round(el.getBoundingClientRect().top)));
-      expect(new Set(tops).size, 'on one row').toBe(1);
+      await expect(page.locator('#fit')).toHaveCount(0);
+      await expect(page.locator('a[href="#fit"]')).toHaveCount(0);
+      await expect(page.locator('main > section')).toHaveCount(SECTIONS.length);
+    });
+
+    for (const [route, lang] of ROUTES) {
+      test(`${route}: "A good fit" and "Not a good fit", two lists in #start between the snippets and the actions (${lang})`, async ({ page }) => {
+        await page.setViewportSize({ width: 1280, height: 900 });
+        await open(page, route);
+        const words = catalog(lang);
+        const items = (prefix) => Object.keys(words).filter((key) => key.startsWith(prefix)).map((key) => words[key]);
+        const good = items('fit.good.');
+        const bad = items('fit.bad.');
+        expect(good.length, 'good items in the catalog').toBeGreaterThan(0);
+        expect(bad.length, 'bad items in the catalog').toBeGreaterThan(0);
+
+        const lists = await page.locator('#start').evaluate((root) => {
+          const text = (el) => (el.textContent ?? '').replace(/\s+/g, ' ').trim();
+          const all = [...root.querySelectorAll('*')];
+          const at = (el) => all.indexOf(el);
+          const npm = [...root.querySelectorAll('pre.luz-code-block')].find((el) => !el.textContent.includes('cdn.jsdelivr.net'));
+          const firstAction = root.querySelector('a.luz-btn');
+          return [...root.querySelectorAll('h3')].map((h3) => {
+            const list = h3.nextElementSibling?.matches('ul') ? h3.nextElementSibling : h3.parentElement?.querySelector('ul');
+            return {
+              heading: text(h3),
+              items: list ? [...list.querySelectorAll(':scope > li')].map(text) : null,
+              top: h3.getBoundingClientRect().top,
+              afterSnippets: at(h3) > at(npm),
+              beforeActions: at(h3) < at(firstAction),
+            };
+          });
+        });
+        expect(lists.map((l) => l.heading)).toEqual([words['fit.good'], words['fit.bad']]);
+        expect(lists[0].items).toEqual(good);
+        expect(lists[1].items).toEqual(bad);
+        for (const l of lists) {
+          expect(l.afterSnippets, `${l.heading} comes after the last snippet`).toBe(true);
+          expect(l.beforeActions, `${l.heading} comes before the two actions`).toBe(true);
+        }
+        // Two short lists, not the old three-column section
+        await expect(page.locator('#start ul')).toHaveCount(2);
+      });
+    }
+
+    test('the headings are h3, under the h2 of "Get started"', async ({ page }) => {
+      await open(page);
+
+      await expect(page.locator('#start h3')).toHaveText([EN['fit.good'], EN['fit.bad']]);
     });
   });
 
@@ -1094,6 +1239,30 @@ test.describe('Landing page', () => {
       expect(await mode.locator('input[name="luz-theme"]').evaluateAll((all) => all.map((r) => r.value))).toEqual(['auto', 'light', 'dark', 'high-contrast']);
     });
 
+    for (const width of [320, 1280]) {
+      test(`the switcher's legend, "Color mode", is shown as text at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await open(page);
+
+        const legend = footer(page).locator('fieldset.luz-mode-switcher legend');
+        await expect(legend).toHaveText('Color mode');
+        const seen = await legend.evaluate((el) => {
+          const cs = getComputedStyle(el);
+          const box = el.getBoundingClientRect();
+          return { shown: el.checkVisibility({ visibilityProperty: true }), width: box.width, height: box.height, left: box.left, right: box.right, clip: cs.clip, clipPath: cs.clipPath, fontSize: parseFloat(cs.fontSize), edge: document.documentElement.clientWidth };
+        });
+        expect(seen.shown).toBe(true);
+        // Not the one-pixel, clipped box of a screen-reader-only label
+        expect(seen.width, 'width of the legend').toBeGreaterThanOrEqual(40);
+        expect(seen.height, 'height of the legend').toBeGreaterThanOrEqual(12);
+        expect(seen.clip).toBe('auto');
+        expect(seen.clipPath).toBe('none');
+        expect(seen.fontSize).toBeGreaterThanOrEqual(12);
+        expect(seen.left).toBeGreaterThanOrEqual(-1);
+        expect(seen.right).toBeLessThanOrEqual(seen.edge + 1);
+      });
+    }
+
     test('the privacy line: the light comes from the clock, never from the location', async ({ page }) => {
       await open(page);
 
@@ -1147,7 +1316,7 @@ test.describe('Landing page', () => {
           if (id !== 'light') expect((await section.innerText()).trim().length, id).toBeGreaterThan(20);
         }
         await expect(page.locator('h1')).toBeVisible();
-        for (const id of ['why', 'inside', 'native', 'modes', 'type', 'fit', 'start']) {
+        for (const id of ['why', 'inside', 'native', 'modes', 'type', 'start']) {
           for (const element of await page.locator(`#${id} h2, #${id} h3`).all()) await expect(element).toBeVisible();
         }
         // The adoption message does not depend on a script
@@ -1187,6 +1356,23 @@ test.describe('Landing page', () => {
         await expect(block).toHaveAttribute('aria-label', /\S/);
       }
     });
+
+    for (const width of [320, 1280]) {
+      test(`the legend of the switcher is shown as text at ${width}px`, async ({ page }) => {
+        await page.setViewportSize({ width, height: 800 });
+        await page.goto('/');
+
+        const legend = page.locator('footer fieldset.luz-mode-switcher legend');
+        await expect(legend).toHaveText('Color mode');
+        const box = await legend.evaluate((el) => {
+          const r = el.getBoundingClientRect();
+          return { width: r.width, height: r.height, clip: getComputedStyle(el).clip };
+        });
+        expect(box.width).toBeGreaterThanOrEqual(40);
+        expect(box.height).toBeGreaterThanOrEqual(12);
+        expect(box.clip).toBe('auto');
+      });
+    }
 
     test('the color mode switcher is four radios (Auto, Light, Dark, High contrast): targets of 24px or more at 360px', async ({ page }) => {
       await page.setViewportSize({ width: 360, height: 800 });
@@ -1243,6 +1429,24 @@ test.describe('Landing page', () => {
       expect(names.every(Boolean)).toBe(true);
       expect(new Set(names).size).toBe(names.length);
     });
+
+    for (const [route, lang] of ROUTES) {
+      test(`${route}: no two navigation landmarks share a name, the header's language menu and the footer's Language column included (${lang})`, async ({ page }) => {
+        await open(page, route);
+
+        // Every nav of the page, shown or not: a menu that is closed now is a landmark once it opens
+        const names = await page.locator('nav').evaluateAll((navs) =>
+          navs.map((el) => ({
+            where: el.className.split(' ')[0],
+            name: (el.getAttribute('aria-label') ?? document.getElementById(el.getAttribute('aria-labelledby') ?? '')?.textContent ?? '').trim(),
+          })),
+        );
+        expect(names.every((n) => n.name), JSON.stringify(names)).toBe(true);
+        const byName = Object.groupBy(names, (n) => n.name);
+        const shared = Object.entries(byName).filter(([, group]) => (group ?? []).length > 1).map(([name, group]) => `${name}: ${(group ?? []).map((g) => g.where).join(' + ')}`);
+        expect(shared, 'names used by more than one nav').toEqual([]);
+      });
+    }
 
     test('labels say "color mode", never "theme"', async ({ page }) => {
       await open(page);

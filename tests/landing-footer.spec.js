@@ -213,6 +213,14 @@ test.describe('landing footer: brand and columns', () => {
     expect(col.gap, 'the links have room between them').toBeGreaterThanOrEqual(4);
   });
 
+  test('the links of a column are targets of 24 px or more, from the package alone', async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.goto(F4);
+    const heights = await page.locator('.luz-landing-footer__col a').evaluateAll((links) => links.map((a) => a.getBoundingClientRect().height));
+    expect(heights.length).toBeGreaterThan(0);
+    for (const height of heights) expect(height).toBeGreaterThanOrEqual(24);
+  });
+
   test('the old footer, a core row, is unchanged: its items at the two ends, with no landing grid', async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.goto(FIXTURE);

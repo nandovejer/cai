@@ -4,6 +4,8 @@
  * Each test says what the page must still do without scripts.
  */
 import { test, expect } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { notFoundRoute, routes, routesWith } from './helpers/docs-site.js';
 import { px } from './helpers/site-loader.js';
 import { channels, colorOf, vejer } from './helpers/site-lights.js';
@@ -235,12 +237,14 @@ for (const home of ['/', '/es/', '/ar/']) {
   });
 }
 
-// The new home (F5 of .claude/plans/luz-home-docs-identity.md, section 3.6): nine sections in a fixed order, all of them
-// words and native elements; what needs a script (the swatches of the lights, Back to now, the copy buttons) is not shown dead
-const SECTIONS = ['hero', 'light', 'why', 'inside', 'native', 'modes', 'type', 'fit', 'start'];
+// The new home (F5 of .claude/plans/luz-home-docs-identity.md, section 3.6): eight sections in a fixed order (the fit lists
+// are in "start"), all of them words and native elements; what needs a script (the swatches of the lights, Back to now, the copy buttons) is not shown dead
+const SECTIONS = ['hero', 'light', 'why', 'inside', 'native', 'modes', 'type', 'start'];
+const HOME_CATALOG = { '/': 'en', '/es/': 'es', '/ar/': 'ar' };
+const homeCatalog = (home) => JSON.parse(readFileSync(fileURLToPath(new URL(`../apps/landing/i18n/${HOME_CATALOG[home]}.json`, import.meta.url)), 'utf-8'));
 
 for (const home of ['/', '/es/', '/ar/']) {
-  test(`${home}: the nine sections are in the page, in order, and every one but the light has words`, async ({ page }) => {
+  test(`${home}: the eight sections are in the page, in order, and every one but the light has words`, async ({ page }) => {
     await page.goto(home);
     expect(await page.locator('main > section').evaluateAll((all) => all.map((el) => el.id))).toEqual(SECTIONS);
     await expect(page.locator('h1')).toHaveCount(1);
@@ -249,6 +253,25 @@ for (const home of ['/', '/es/', '/ar/']) {
       await expect(section.locator('h1, h2').first(), id).toBeVisible();
       expect((await section.innerText()).trim().length, id).toBeGreaterThan(30);
     }
+  });
+
+  test(`${home}: the light section is not an empty region: a sentence of the catalog is shown in it`, async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto(home);
+    const words = Object.values(homeCatalog(home)).map((value) => value.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim());
+    const shown = await page.locator('section#light').evaluate((section) => {
+      const clean = (el) => (el.textContent ?? '').replace(/\s+/g, ' ').trim();
+      const box = section.getBoundingClientRect();
+      return [...section.querySelectorAll('*')]
+        // Not the heading for screen readers: a sentence a sighted reader can see
+        .filter((el) => !el.closest('.u-sr-only, h1, h2, h3, h4, h5, h6, script, style'))
+        .filter((el) => el.checkVisibility({ visibilityProperty: true }) && clean(el).length > 0)
+        .map((el) => ({ text: clean(el), rect: el.getBoundingClientRect() }))
+        .filter(({ rect }) => rect.width > 8 && rect.height > 8 && rect.bottom > box.top && rect.top < box.bottom)
+        .map(({ text }) => text);
+    });
+    const sentences = shown.filter((text) => words.includes(text) && /\s/.test(text) && /[.!?\u061F]$/.test(text));
+    expect(sentences, `visible text in #light: ${JSON.stringify(shown)}`).not.toEqual([]);
   });
 
   test(`${home}: the swatches of the lights are not shown without a script`, async ({ page }) => {

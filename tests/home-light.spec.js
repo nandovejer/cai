@@ -20,8 +20,8 @@
  * What the controller renders, as this file reads it (the class names of the
  * mockup, kept by light.css): `.home-light__line` the button under the visual
  * (the phrase of the look, it opens the bar), `.home-light__bar` the bar,
- * the slider (a range input named "Scrub the day"), `.home-light__live` the
- * Live button, `.home-light__q` the phrase, and <home-globe> for the drawing.
+ * the slider (a range input named "Scrub the day"), `.home-light__q` the
+ * phrase (closing the bar brings the light back to now), and <home-globe> for the drawing.
  *
  * Without JavaScript the element is empty and light.css reserves its height.
  * That block turns JavaScript off for itself, so it runs in the chromium
@@ -228,14 +228,12 @@ test.describe('with JavaScript', () => {
     expect(hours.every((h) => typeof h === 'number' && h >= 0 && h <= 24)).toBe(true);
     expect(Math.abs(hours.at(-1) - 9.5)).toBeLessThan(0.02);
 
-    const live = page.locator('home-light .home-light__live');
-    await expect(live).toBeVisible();
-    await expect(live).toHaveText(catalog('en')['light.live']);
-    await live.click();
+    // No Back to now button any more: closing the bar brings the light back to now
+    await expect(page.locator('home-light .home-light__live')).toHaveCount(0);
+    await page.keyboard.press('Escape');
     await expect.poll(async () => (await html(page)).light).toBe('afternoon');
     expect((await html(page)).theme).toBe('light');
     expect((await previews(page)).at(-1)).toBeNull();
-    await expect(live).toBeHidden();
   });
 
   test('with a fixed mode the theme stays and data-light follows the hour; Live gives the mode\'s own light back', async ({ page }) => {
@@ -251,12 +249,12 @@ test.describe('with JavaScript', () => {
     await expect.poll(async () => (await html(page)).light).toBe('sunset');
     expect((await html(page)).theme).toBe('dark');
 
-    await page.locator('home-light .home-light__live').click();
+    await page.keyboard.press('Escape');
     await expect.poll(async () => (await html(page)).light).toBe('night');
     expect((await html(page)).theme).toBe('dark');
   });
 
-  test('the slider is a keyboard control named from the catalog, and its output shows the hour', async ({ page }) => {
+  test('the slider is a keyboard control named from the catalog, and its value text says the hour', async ({ page }) => {
     await open(page, '/', { time: '14:00' });
     await openBar(page);
     const range = page.getByRole('slider', { name: text('en', 'Scrub the day') });
@@ -264,9 +262,9 @@ test.describe('with JavaScript', () => {
     await range.focus();
     await page.keyboard.press('End');
     await expect.poll(async () => (await html(page)).light).toBe('night');
-    await expect(page.locator('home-light output')).toHaveText(/23:59/);
+    await expect(range).toHaveAttribute('aria-valuetext', /23:59$/);
     await page.keyboard.press('Home');
-    await expect(page.locator('home-light output')).toHaveText(/00:00/);
+    await expect(range).toHaveAttribute('aria-valuetext', /00:00$/);
     await page.keyboard.press('Escape');
     await expect(page.locator('home-light .home-light__bar')).toBeHidden();
   });
@@ -306,7 +304,7 @@ test.describe('with JavaScript', () => {
     const night = await html(page);
     await scrub(page, '13:00');
     await expect.poll(async () => (await html(page)).sunAlt).not.toBe(night.sunAlt);
-    await page.locator('home-light .home-light__live').click();
+    await page.keyboard.press('Escape');
     await page.waitForTimeout(2500); // two ticks of the controller
     expect(await page.evaluate(() => /** @type {any} */ (window).__writes)).toEqual([]);
     expect(await html(page)).toMatchObject({ theme: before.theme, light: before.light });
@@ -449,7 +447,6 @@ test.describe('with JavaScript', () => {
       await expect(page.locator('home-light .home-light__q')).toHaveText(text(lang, PHRASE));
       await openBar(page);
       await scrub(page, '10:00');
-      await expect(page.locator('home-light .home-light__live')).toHaveText(catalog(lang)['light.live']);
       await expect(page.getByRole('slider', { name: text(lang, 'Scrub the day') })).toHaveCount(1);
       await expect(page.locator('home-light .home-light__line')).toHaveAccessibleName(new RegExp(text(lang, 'Show the light bar').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
     });
@@ -756,18 +753,50 @@ test.describe('review fixes', () => {
     expect(Math.abs(d - 10), `the line's bottom is ${d}px below the light's`).toBeLessThanOrEqual(1);
   });
 
-  /* -- 7. The Live button -------------------------------------------------------- */
+  /* -- 7. No Back to now: closing the bar brings the light back to now ------------ */
 
-  for (const [lang, value] of [['en', 'Back to now'], ['es', 'Volver a ahora'], ['ar', 'العودة إلى الآن']]) {
-    test(`the Live button reads "${value}" in ${lang}, as its visible text and as its name`, async ({ page }) => {
-      expect(catalog(lang)['light.live']).toBe(value);
-      const route = ROUTES.find(([, code]) => code === lang)?.[0] ?? '/';
-      await open(page, route, { time: '14:00' });
-      await scrub(page, '09:30');
-      const live = page.locator('home-light .home-light__live');
-      await expect(live).toBeVisible();
-      await expect(live).toHaveText(value);
-      await expect(live).toHaveAccessibleName(value);
+  test('the bar has no Back to now button, and clicking the line to close it brings the light back to now', async ({ page }) => {
+    await open(page, '/', { time: '14:00' });
+    await openBar(page);
+    await expect(page.locator('home-light .home-light__live')).toHaveCount(0);
+    await scrub(page, '23:30');
+    await expect.poll(async () => (await html(page)).light).toBe('night');
+    await line(page).click();
+    await expect(line(page)).toHaveAttribute('aria-expanded', 'false');
+    await expect.poll(async () => (await html(page)).light).toBe('afternoon');
+  });
+
+  /* -- 7b. The line spans the whole width, on the bar's frosted glass ------------- */
+
+  test('the line spans the width of the light, on the same frosted background as the bar', async ({ page }) => {
+    await open(page, '/');
+    await openBar(page);
+    const m = await page.evaluate(() => {
+      const light = document.querySelector('home-light').getBoundingClientRect();
+      const lineEl = document.querySelector('home-light .home-light__line');
+      const bar = getComputedStyle(document.querySelector('home-light .home-light__bar'));
+      const ls = getComputedStyle(lineEl);
+      return { light: light.width, line: lineEl.getBoundingClientRect().width, lineBlur: ls.backdropFilter, barBlur: bar.backdropFilter, lineBg: ls.backgroundColor, barBg: bar.backgroundColor };
+    });
+    expect(m.line, 'the line is as wide as the light').toBeGreaterThanOrEqual(m.light - 1);
+    expect(m.lineBlur).toBe(m.barBlur);
+    expect(m.lineBg).toBe(m.barBg);
+  });
+
+  /* -- 7c. Stars at the top of the page, in the dark lights only -------------------- */
+
+  for (const [light, time, mode] of LIGHTS) {
+    const dark = ['dawn', 'dusk', 'night'].includes(light);
+    test(`${light} (${time}): ${dark ? 'faint stars at the top of the page' : 'no stars'}`, async ({ page }) => {
+      await open(page, '/', { time });
+      await expect.poll(async () => (await html(page)).light).toBe(light);
+      expect(mode).toBe(dark ? 'dark' : 'light');
+      await expect
+        .poll(() => page.evaluate(() => {
+          const s = getComputedStyle(document.body, '::before');
+          return { stars: s.content !== 'none' && /radial-gradient/.test(s.backgroundImage) && parseFloat(s.opacity) > 0, events: s.pointerEvents };
+        }))
+        .toEqual({ stars: dark, events: 'none' });
     });
   }
 

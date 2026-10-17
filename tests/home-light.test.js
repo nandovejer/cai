@@ -463,7 +463,7 @@ describe("the strings of <home-light> in the catalogs of the home", () => {
     expect(en["light.alt.globe"]).not.toMatch(/\bdots?\b/i);
   });
 
-  const WORDS = ["Back to now", "Scrub the day", "Show the light bar"];
+  const WORDS = ["Scrub the day", "Show the light bar"];
   it.each(WORDS)('"%s" is a key of every catalog and a data-luz-label-* of <body>', (text) => {
     const key = keyOf(text);
     expect(key, `a key of en.json whose value is "${text}"`).toBeDefined();
@@ -475,11 +475,11 @@ describe("the strings of <home-light> in the catalogs of the home", () => {
     expect(body).toMatch(new RegExp(`data-luz-label-[\\w-]+="\\{\\{t:${key.replace(/\./g, "\\.")}\\}\\}"`));
   });
 
-  it("the Live button says what it does: \"Back to now\" in English, \"Volver a ahora\" in Spanish and \"العودة إلى الآن\" in Arabic, under the key light.live", () => {
+  it("light.live is still \"Back to now\" (the Why section's button), but the light's bar has none: <body> hands it no light-live label", () => {
     expect(en["light.live"]).toBe("Back to now");
     expect(es["light.live"]).toBe("Volver a ahora");
     expect(ar["light.live"]).toBe("العودة إلى الآن");
-    expect(html.match(/<body[^>]*>/)[0]).toMatch(/data-luz-label-light-live="\{\{t:light\.live\}\}"/);
+    expect(html.match(/<body[^>]*>/)[0]).not.toMatch(/data-luz-label-light-live=/);
     expect(Object.values(en), "no key is left with the value \"Live\"").not.toContain("Live");
   });
 

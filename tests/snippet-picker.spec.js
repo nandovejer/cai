@@ -4,7 +4,7 @@
  * f4-customisation.md 3.4.2, 3.4.3 and 3.4.5).
  *
  * The page is generated (scripts/docs-site/snippets.js): an index table, and
- * eight snippets stacked in four sections. The picker is not in the page:
+ * ten snippets stacked in five sections. The picker is not in the page:
  * it is a <template data-docs-picker>, so without JavaScript there is no
  * `form.docs-picker` in the DOM at all (docs.spec.js allows no `hidden`
  * element in main) and the table is the index. With JavaScript
@@ -20,13 +20,13 @@ import AxeBuilder from '@axe-core/playwright';
 import { faded } from './helpers/settle.js';
 
 const ROUTE = '/docs/get-started/snippet/';
-const KINDS = ['atoms', 'landing', 'blog', 'app'];
+const KINDS = ['atoms', 'landing', 'blog', 'app', 'docs'];
 const VIAS = ['npm', 'cdn'];
 const IDS = KINDS.flatMap((k) => VIAS.map((v) => `${k}-${v}`));
 const THEMES = ['light', 'dark', 'high-contrast'];
 
 // The labels the generator writes (scripts/docs-site/snippets.js)
-const KIND_LABEL = { atoms: 'Components only', landing: 'Landing page', blog: 'Blog or newspaper', app: 'Web application' };
+const KIND_LABEL = { atoms: 'Components only', landing: 'Landing page', blog: 'Blog or newspaper', app: 'Web application', docs: 'Documentation site' };
 const VIA_LABEL = { npm: 'npm and a bundler', cdn: 'CDN with integrity hashes' };
 
 const picker = (page) => page.locator('form.docs-picker');
@@ -226,7 +226,7 @@ test.describe('snippet picker without JavaScript', () => {
     await expect(page.locator('main [hidden]')).toHaveCount(0);
   });
 
-  test('the index table and the eight snippets are all visible', async ({ page }) => {
+  test('the index table and the ten snippets are all visible', async ({ page }) => {
     await page.goto(ROUTE);
     const table = page.locator('[role="region"][aria-label="Every snippet"] table.luz-table');
     await expect(table).toBeVisible();

@@ -185,6 +185,68 @@
   background: var(--luz-surface);
 }
 
+/* The width selector of an example (Phone, Tablet, Full) and the groups of
+   Try it: a legend over one row of native radios that wraps. Only when
+   shown: this file is unlayered, a display here would beat [hidden] */
+.docs-width:not([hidden]),
+.docs-try__group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--luz-space-2xs) var(--luz-space-md);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-inline-size: 0;
+}
+
+.docs-width > legend,
+.docs-try__group > legend {
+  padding: 0;
+  margin-block-end: var(--luz-space-2xs);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+  font-weight: 500;
+  color: var(--luz-text-secondary);
+}
+
+.docs-width > .luz-check-item,
+.docs-try__group > .luz-check-item {
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+  min-block-size: var(--luz-control-sm);
+}
+
+/* Try it (the Button page): the controls, the button they make, its code */
+.docs-try:not([hidden]) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--luz-space-md);
+  margin-block-start: var(--luz-space-md);
+  padding: var(--luz-space-md);
+  border: 1px solid var(--luz-divider);
+  border-radius: var(--luz-radius-md);
+  background: var(--luz-surface);
+}
+
+.docs-try__lead {
+  margin: 0;
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+  color: var(--luz-text-secondary);
+}
+
+.docs-try__controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--luz-space-md) var(--luz-space-xl);
+}
+
+.docs-try__preview {
+  padding-block: var(--luz-space-md);
+  border-block: 1px solid var(--luz-divider);
+  background: var(--luz-surface); /* a specimen: its own Vejer ground */
+}
+
 /* The timeline paints its hump and dots with the ground behind it: here the frame's */
 .docs-example luz-timeline {
   --luz-timeline-paper: var(--luz-surface);

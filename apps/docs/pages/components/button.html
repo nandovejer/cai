@@ -9,6 +9,13 @@ toc: h2,h3
     <div class="docs-component" id="c-button">
           <h2 id="example">Example</h2>
           <div class="docs-example" data-docs-specimen>
+          <fieldset class="docs-width" hidden>
+            <legend>Width</legend>
+            <label class="luz-check-item"><input type="radio" name="docs-width" value="phone"> Phone</label>
+            <label class="luz-check-item"><input type="radio" name="docs-width" value="tablet"> Tablet</label>
+            <label class="luz-check-item"><input type="radio" name="docs-width" value="full" checked> Full</label>
+          </fieldset>
+          <div class="luz-docs-example__frame">
           <div class="docs-demo__stage">
             <div class="o-row">
               <button class="luz-btn luz-btn--primary" type="button">Primary</button>
@@ -31,6 +38,38 @@ toc: h2,h3
             </div>
           </div>
           </div>
+          </div>
+          <form class="docs-try" hidden>
+            <p class="docs-try__lead">Try it: choose a variant, a size and the width, then copy the markup.</p>
+            <div class="docs-try__controls">
+              <fieldset class="docs-try__group">
+                <legend>Variant</legend>
+                <label class="luz-check-item"><input type="radio" name="variant" value="primary" checked> Primary</label>
+                <label class="luz-check-item"><input type="radio" name="variant" value="secondary"> Secondary</label>
+                <label class="luz-check-item"><input type="radio" name="variant" value="outline"> Outline</label>
+                <label class="luz-check-item"><input type="radio" name="variant" value="ghost"> Ghost</label>
+                <label class="luz-check-item"><input type="radio" name="variant" value="danger"> Danger</label>
+              </fieldset>
+              <fieldset class="docs-try__group">
+                <legend>Size</legend>
+                <label class="luz-check-item"><input type="radio" name="size" value="sm"> Small</label>
+                <label class="luz-check-item"><input type="radio" name="size" value="default" checked> Default</label>
+                <label class="luz-check-item"><input type="radio" name="size" value="lg"> Large</label>
+              </fieldset>
+              <fieldset class="docs-try__group">
+                <legend>Full width</legend>
+                <label class="luz-check-item"><input type="checkbox" name="block" value="block"> Fill the width of its container</label>
+              </fieldset>
+            </div>
+            <div class="docs-try__preview" data-docs-specimen><button class="luz-btn luz-btn--primary" type="button">Save changes</button></div>
+            <div class="docs-snippet">
+              <div class="docs-snippet__bar">
+                <span class="docs-snippet__lang">HTML</span>
+                <button class="luz-copy-btn" type="button" data-copy-from="code-button-try" aria-label="Copy the markup of the button you made">Copy</button>
+              </div>
+              <pre class="luz-code-block" data-lang="html" tabindex="0" role="region" aria-label="Markup of the button you made"><code id="code-button-try">&lt;button class=&quot;luz-btn luz-btn--primary&quot; type=&quot;button&quot;&gt;Save changes&lt;/button&gt;</code></pre>
+            </div>
+          </form>
           <h2 id="known-issues">Known issues</h2>
           <p>None known.</p>
           <nav class="luz-tabs docs-view-tabs" aria-label="Button documentation">
@@ -95,6 +134,7 @@ toc: h2,h3
             </ul>
             <h3 id="no-js">Without JavaScript</h3>
             <p>A button works like any native button: it submits its form or runs nothing. What it does on click is up to your script.</p>
+            <p>On this page, Try it and the Width choice under the example need JavaScript: without it they are not shown, and the examples and their markup are.</p>
             <h3 id="keyboard">Keyboard and ARIA</h3>
             <p>Tab reaches the button; Enter or Space presses it. A link styled as a button answers to Enter only, as every link does.</p>
             <ul>

@@ -263,6 +263,66 @@ function initCopy() {
   initCopyButtons();
 }
 
+/* ---- Try it and the width of the example -------------------------------- */
+
+const VARIANTS = new Set(["primary", "secondary", "outline", "ghost", "danger"]);
+const SIZES = new Set(["sm", "lg"]);
+
+/**
+ * Try it (the Button page): the form is hidden in the markup, so without a
+ * script no control that does nothing is shown. Its native radios and
+ * checkbox write the class list of one live button; the code under it is
+ * that button's outerHTML, written as text, and the copy button copies it.
+ */
+function initTryIt() {
+  const form = document.querySelector("form.docs-try");
+  const button = form?.querySelector(".docs-try__preview > button");
+  const code = form?.querySelector("pre.luz-code-block code");
+  if (!form || !button || !code) return;
+  const copy = form.querySelector(".luz-copy-btn[data-copy-from]");
+  const render = () => {
+    const value = (name) => form.querySelector(`input[name="${name}"]:checked`)?.value;
+    const variant = value("variant");
+    const size = value("size");
+    const classes = ["luz-btn", `luz-btn--${VARIANTS.has(variant) ? variant : "primary"}`];
+    if (SIZES.has(size)) classes.push(`luz-btn--${size}`);
+    if (value("block")) classes.push("luz-btn--block");
+    button.className = classes.join(" ");
+    code.textContent = button.outerHTML;
+    highlightBlock(code.closest("pre"));
+    // initCopy() took the text once, at load: give the button the new one
+    if (copy) copy.dataset.copy = code.textContent.trim();
+  };
+  form.addEventListener("change", render);
+  // eslint-disable-next-line no-restricted-syntax -- RL-3: the form has no endpoint; Enter in a control must not reload the page
+  form.addEventListener("submit", (e) => e.preventDefault());
+  // A restored form (back and forward) keeps its choice: show it
+  render();
+  form.hidden = false;
+}
+
+const WIDTHS = { phone: "375px", tablet: "768px" };
+
+/**
+ * The width selector of an example: Phone and Tablet set the frame's
+ * --luz-docs-example-w (@luz-ds/docs caps it at the room it has), Full
+ * removes it. Hidden in the markup, shown here.
+ */
+function initExampleWidth() {
+  document.querySelectorAll("fieldset.docs-width").forEach((set) => {
+    const frame = set.parentElement.querySelector(":scope > .luz-docs-example__frame");
+    if (!frame) return;
+    const apply = () => {
+      const width = WIDTHS[set.querySelector('input[name="docs-width"]:checked')?.value];
+      if (width) frame.style.setProperty("--luz-docs-example-w", width);
+      else frame.style.removeProperty("--luz-docs-example-w");
+    };
+    set.addEventListener("change", apply);
+    apply();
+    set.hidden = false;
+  });
+}
+
 /* ---- HTML element demos ------------------------------------------------ */
 
 function initDemoGuards() {
@@ -375,6 +435,8 @@ initCopy();
 // highlightBlock() only: initHighlight() also injects a copy button into each
 // block, and core ships no position for it.
 document.querySelectorAll("pre.luz-code-block").forEach(highlightBlock);
+initTryIt();
+initExampleWidth();
 // The remembered Code / Design tab first: initTabs() opens the tab it marks,
 // unless the URL fragment points into the other one
 initDocsView();

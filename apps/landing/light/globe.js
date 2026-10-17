@@ -7,8 +7,8 @@
  *   <home-globe lat="40.42" lon="-3.7" spin cities twilight glint rim torch></home-globe>
  *
  * lat, lon   the reader's place: where the globe faces at first
- * spin       slow rotation, only while the globe is on screen and the reader
- *            has not asked for reduced motion
+ * spin       slow rotation, only while the globe is on screen, the reader
+ *            has not asked for reduced motion and no ancestor is [still]
  * cities     city lights on the night side; twilight: the day/night line in
  *            the sun's colour; glint: the sun on the sea; rim: a lit edge;
  *            torch: the dots near the pointer wake up
@@ -93,6 +93,8 @@ class LuzGlobe extends HTMLElement {
     if (!Array.isArray(v) || v.length !== 3 || !v.every(Number.isFinite)) return;
     this._sun = v.slice();
     this._shadeAll();
+    // The controller sets the sun again when its [still] changes: spin or stop
+    this._request();
   }
 
   connectedCallback() {
@@ -285,7 +287,12 @@ class LuzGlobe extends HTMLElement {
 
   /* ---- motion: a frame only while something moves ---- */
   _spinning() {
-    return this._opts.spin && this._seen && !this.hidden && !this._reduced.matches && !document.hidden;
+    return this._opts.spin && this._seen && !this.hidden && !this._calm() && !document.hidden;
+  }
+
+  /** Reduced motion, or the motion paused: a <home-light still> around the globe. */
+  _calm() {
+    return this._reduced.matches || !!this.closest("[still]");
   }
 
   _moving() {
@@ -365,8 +372,8 @@ class LuzGlobe extends HTMLElement {
       if (!this._dragging) return;
       this._dragging = false;
       this.removeAttribute("dragging");
-      // Under reduced motion a throw does not keep turning
-      if (e.timeStamp - pt > 80 || this._reduced.matches) this._vyaw = this._vpitch = 0;
+      // Under reduced or paused motion a throw does not keep turning
+      if (e.timeStamp - pt > 80 || this._calm()) this._vyaw = this._vpitch = 0;
       if (e.pointerType !== "mouse") this._torch.on = false;
       this._changed();
     };

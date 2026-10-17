@@ -44,6 +44,7 @@
       data-luz-label-light-map-alt="{{t:light.alt.map}}"
       data-luz-label-light-scrub="{{t:light.scrub}}"
       data-luz-label-light-live="{{t:light.live}}"
+      data-luz-label-light-pause="{{t:light.pause}}"
       data-luz-label-light-sep="{{t:light.sep}}"
       data-luz-label-light-dawn="{{t:light.dawn}}"
       data-luz-label-light-morning="{{t:light.morning}}"
@@ -487,7 +488,7 @@ import &quot;@luz-ds/core&quot;;</code></pre>
           <label class="luz-mode-btn" data-theme="high-contrast"><input class="luz-mode-btn__input" type="radio" name="luz-theme" value="high-contrast"><svg class="luz-mode-btn__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path fill="currentColor" d="M12 3a9 9 0 0 1 0 18Z"/></svg>{{t:footer.contrast}}</label>
         </fieldset>
       </luz-mode>
-      <p class="u-text-muted">{{t:footer.privacy}}</p>
+      <p class="u-text-muted" data-needs-js hidden>{{t:footer.privacy}}</p>
     </div>
   </footer>
 

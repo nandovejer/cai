@@ -16,15 +16,32 @@ It came from a mockup made outside the repository (`.claude/extra/landing/`, por
 
 Each module guards `customElements.get()`, writes no HTML from a string (nodes, `textContent`, SVG through `createElementNS`), injects no style and asks the network for nothing: the place is the time zone of `Intl`, never GPS or an address lookup.
 
+## The element
+
+```html
+<home-light looks="globe city map" look="random" remember bleed favicon></home-light>
+```
+
+| Attribute | What it does |
+| --- | --- |
+| `looks` | The visuals offered, any of `globe`, `city`, `map` (`none`: no visual). |
+| `look` | The first look, or `random`. `?look=` in the URL wins, then the visitor's last click (with `remember`), then this. |
+| `remember` | Keep the look the visitor clicks, and Pause motion, in `localStorage["luz-home-light"]`. |
+| `still` | The motion is paused: the visuals ask for no animation frame and `light.css` stops its animations, as under `prefers-reduced-motion: reduce`. The bar's Pause motion button (`aria-pressed`) toggles it. |
+| `bleed` | The visual runs to the edges of the page's frame (`light.css`). |
+| `favicon` | The tab's icon follows the sky (a `data:` URL of an SVG). |
+
+On `<html>` it writes custom properties only: `--sun-alt`, `--sun-az` (degrees), `--sun-x` (the sun, left to right) and `--day-left` (the share of today's daylight to come).
+
 ## How it works with the rest of the page
 
 - `<luz-mode>` (the footer's) is the only writer of `data-theme` and `data-light` on `<html>`. `<home-light>` reads them, follows `luz-mode:change`, and while the visitor scrubs the day it calls `preview(hour)` on `<luz-mode>`; "Back to now" calls `preview(null)`. Without a `<luz-mode>` only the visuals follow the slider.
 - On `<html>` it writes four custom properties, no attribute: `--sun-alt`, `--sun-az`, `--sun-x` (where the sun stands, left to right, for the page's glow) and `--day-left`.
 - Its texts are the catalog's (`apps/landing/i18n/<lang>.json`, keys `light.*`), handed over as `data-luz-label-light-*` on `<body>`.
-- The look: `?look=globe|city|map` in the URL, else the look the visitor last clicked (`localStorage["luz-home-light"]`, only after a click), else one at random. Only that visual's file is loaded; another one loads the first time its button is pressed.
+- The look: `?look=globe|city|map` in the URL, else the look the visitor last clicked, else one at random. `localStorage["luz-home-light"]` is written only after a click: the look, then `still` when Pause motion is pressed, separated by a space (`city still`, or `still` alone); only those words are read back, and `still` is set before any visual loads. Only that visual's file is loaded; another one loads the first time its button is pressed.
 - The line under the visual is a button that opens the bar: it shows the phrase of the look, the light and the hour (on a pill of the page's paper, so it keeps its contrast over the drawing) and a mark that turns with `aria-expanded`. The bar follows it in the DOM, so Tab goes from the line into the bar; the CSS draws it above. The slider's `aria-valuetext` is the light and the hour, joined by `light.sep`; its `<output>` is `aria-live="off"`. The globe is an image (`role="img"`), not a control: a pointer may drag it, and it is not in the tab order.
 - Without JavaScript the element is empty and `light.css` gives it its height, so the page does not move when the script arrives.
-- Under `prefers-reduced-motion: reduce` nothing asks for an animation frame: the globe does not spin, the traffic stands still, and the stars, beacons and highway lights stop.
+- Under `prefers-reduced-motion: reduce`, and while Pause motion is pressed (`[still]`, WCAG 2.2.2), nothing asks for an animation frame: the globe does not spin, the traffic stands still, and the stars, beacons and highway lights stop. Pressing it again starts them.
 
 ## Why it weighs what it weighs
 

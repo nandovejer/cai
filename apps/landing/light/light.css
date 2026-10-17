@@ -403,6 +403,27 @@ home-light .home-light__live[hidden] {
   display: none;
 }
 
+/* Pause motion: a quiet text button, filled while pressed, as the looks are */
+home-light .home-light__still {
+  min-block-size: 2.75rem;
+  padding-inline: var(--luz-space-sm);
+  border: 0;
+  border-radius: var(--luz-radius-sm);
+  background: none;
+  color: var(--_muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+home-light .home-light__still:hover,
+home-light .home-light__still[aria-pressed="true"] {
+  color: var(--_ink);
+}
+
+home-light .home-light__still[aria-pressed="true"] {
+  background: var(--luz-surface-pressed);
+}
+
 home-light .home-light__sr {
   position: absolute;
   inline-size: 1px;
@@ -869,7 +890,8 @@ home-map .home-map__torch {
 /* ==========================================================================
    Reduced motion: a still frame. The scripts ask for no animation frame
    (no spin, no traffic); here the bar, the beacons, the stars and the
-   light on the highways stop
+   light on the highways stop. Pause motion ([still], WCAG 2.2.2) asks for
+   the same frame: the same rules, under home-light[still]
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
@@ -887,6 +909,21 @@ home-map .home-map__torch {
     animation: none;
     opacity: 0;
   }
+}
+
+home-light[still] .home-light__bar:not([hidden]),
+home-light[still] home-city .home-city__beacon {
+  animation: none;
+}
+
+home-light[still] home-city .home-city__star {
+  animation: none;
+  opacity: 0.7;
+}
+
+home-light[still] home-map .home-map__pulse {
+  animation: none;
+  opacity: 0;
 }
 
 /* Forced colours: the drawing in the system's text colour */
@@ -921,8 +958,9 @@ home-map .home-map__torch {
     background: CanvasText;
   }
 
-  /* The pressed fill is forced away: a border in Highlight marks the chosen look */
-  home-light .home-light__group button[aria-pressed="true"] {
+  /* The pressed fill is forced away: a border in Highlight marks the chosen look and Pause motion */
+  home-light .home-light__group button[aria-pressed="true"],
+  home-light .home-light__still[aria-pressed="true"] {
     border: 2px solid Highlight;
   }
 }

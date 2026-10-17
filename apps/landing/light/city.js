@@ -431,7 +431,8 @@ class LuzCity extends HTMLElement {
 
   /* ---- the traffic: an animation frame only while it can be seen ---- */
   _go() {
-    const on = this._seen && this._movers.length && !this._reduced.matches;
+    // Reduced motion, or the motion paused (a <home-light still> around it), stops the traffic
+    const on = this._seen && this._movers.length && !this._reduced.matches && !this.closest("[still]");
     if (on && !this._raf) this._raf = requestAnimationFrame((t) => this._frame(t));
     else if (!on && this._raf) {
       cancelAnimationFrame(this._raf);

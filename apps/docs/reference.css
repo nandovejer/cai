@@ -145,6 +145,14 @@
   overflow-wrap: anywhere;
 }
 
+/* A name of a "Variants and options" table, which the generator writes in
+   pieces with a <wbr> before each __ and -- (breakClassNames() in
+   scripts/docs-site/site.js): each piece stays on one line, so the name
+   breaks only at a delimiter */
+.docs-name > span {
+  white-space: nowrap;
+}
+
 /* A link inside the sentence of a list item is underlined, as core does in a
    paragraph: colour alone never marks a link (WCAG 1.4.1). Lists that are
    only links (galleries, the A–Z index, contents) carry a class and keep
@@ -1537,6 +1545,45 @@ h2.docs-demo__title {
 
 .docs-util-margins .docs-box {
   display: block;
+}
+
+/* The sketch of the shell (documentation/shell.html): three labelled boxes,
+   side by side where the example has room for the three columns, stacked
+   where it does not. A picture for the eye; the prose says what it is */
+.docs-example:has(> .docs-shell-sketch) {
+  container-type: inline-size;
+}
+
+.docs-shell-sketch {
+  display: grid;
+  gap: var(--luz-space-xs);
+}
+
+.docs-shell-sketch__box {
+  display: grid;
+  place-items: center;
+  min-block-size: var(--luz-space-3xl);
+  padding: var(--luz-space-sm);
+  border: 1px dashed var(--luz-outline);
+  border-radius: var(--luz-radius-md);
+  color: var(--luz-text-secondary);
+  font-family: var(--luz-font-sans);
+  font-size: var(--luz-text-sm);
+}
+
+.docs-shell-sketch__box--content {
+  border-style: solid;
+  color: var(--luz-text-primary);
+}
+
+@container (min-width: 32rem) {
+  .docs-shell-sketch {
+    grid-template-columns: 1fr 2.5fr 1fr;
+  }
+
+  .docs-shell-sketch__box {
+    min-block-size: calc(var(--luz-space-4xl) * 2);
+  }
 }
 
 /* --------------------------------------------------------------------------

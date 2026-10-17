@@ -1128,6 +1128,29 @@ function renderGenerated(page, site, options) {
   }
 }
 
+/** A class name or a selector of one: letters, digits, `-`, `_` and dots (tests/docs-class-name-wrap.spec.js reads the same). */
+const TABLE_NAME = /^[.#]?[A-Za-z][\w-]*(?:\.[A-Za-z][\w-]*)*$/;
+
+/**
+ * The names in the tables of "Variants and options" break only at a BEM
+ * delimiter, never inside a word or at a single hyphen (F7): from
+ * `<h3 id="variants">` to the next `<h2`, a `<code>` of a `<td>` whose text is
+ * one name with a `-` or a `_` is written as pieces, cut before each `__` and
+ * `--`, with a `<wbr>` between them: `<code class="docs-name"><span>.luz-x</span>
+ * <wbr><span>__part</span></code>` (no spaces). apps/docs/reference.css keeps
+ * each piece on one line. The text is the same, so a copy or a search sees the
+ * name as written; the pages are never edited by hand for it.
+ */
+export function breakClassNames(html) {
+  const start = html.indexOf('<h3 id="variants"');
+  if (start === -1) return html;
+  const found = html.indexOf("<h2", start);
+  const end = found === -1 ? html.length : found;
+  const name = (whole, text) => (TABLE_NAME.test(text) && /[-_]/.test(text) ? `<code class="docs-name">${text.split(/(?=__|--)/).map((piece) => `<span>${piece}</span>`).join("<wbr>")}</code>` : whole);
+  const section = html.slice(start, end).replace(/<td\b[^>]*>[\s\S]*?<\/td>/g, (cell) => cell.replace(/<code>([^<]*)<\/code>/g, name));
+  return html.slice(0, start) + section + html.slice(end);
+}
+
 /**
  * Render a page: its layout, with the partials, the generated blocks and the
  * page fragment. `options.root` is the {{root}} value (relative in the pages
@@ -1145,7 +1168,7 @@ export function renderPage(page, site, options = {}) {
   // `<!-- luz:generated -->` in the content puts the generated block where it stands, once
   const block = renderGenerated(page, site, options);
   const marked = filled.includes(GENERATED_MARKER);
-  const content = marked ? filled.replace(GENERATED_MARKER, () => block).replaceAll(GENERATED_MARKER, "") : filled;
+  const content = breakClassNames(marked ? filled.replace(GENERATED_MARKER, () => block).replaceAll(GENERATED_MARKER, "") : filled);
   const generated = marked ? "" : block;
   const toc = renderToc(page, `${content}\n${generated}`);
   const layout = reader.layout(page.meta.layout);

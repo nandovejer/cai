@@ -1,30 +1,8 @@
 /**
- * <home-light>: the light of the visitor's sky on the home page. It draws the
- * sun and the moon where the visitor is, from the time zone of the browser's
- * clock (Intl, never the network or GPS), over one of three visuals: a globe
- * of dots, a skyline or a city map. A line under the visual opens a bar to
- * scrub the day and change the look.
- *
- *   <home-light looks="globe city map" look="random" remember bleed favicon></home-light>
- *
- * looks     the visuals offered, any of globe, city, map ("none": no visual)
- * look      the first look, or random; ?look= in the URL wins, then the
- *           visitor's last click (with remember), then this
- * remember  keep the look the visitor clicks in localStorage["luz-home-light"]
- * bleed     the visual runs to the edges of the page's frame (light.css)
- * favicon   the tab's icon follows the sky (a data: URL of an SVG)
- *
- * <luz-mode> is the only writer of data-theme and data-light: this element
- * reads them, follows luz-mode:change and, while the visitor scrubs the day,
- * asks <luz-mode> to preview that hour ("Back to now" ends it); without one
- * only the visuals follow. On <html> it writes custom properties only:
- * --sun-alt, --sun-az (degrees), --sun-x (the sun, left to right) and
- * --day-left (the share of today's daylight to come).
- *
- * Its texts are the page's: data-luz-label-light-* on the element or an
- * ancestor (the home's <body>, from apps/landing/i18n). It imports nothing
- * statically: each visual is its own file, loaded the first time it is
- * wanted. The rules are apps/landing/light/light.css.
+ * <home-light>: the visitor's sky on the home page, the sun and the moon from
+ * the browser's clock (Intl, never the network), over a globe, a city or a
+ * map, with a bar to scrub the day, change the look and pause the motion.
+ * Its attributes, its storage and how it works with <luz-mode>: README.md.
  */
 
 const KEY = "luz-home-light";
@@ -164,7 +142,7 @@ let uid = 0;
 
 class LuzLight extends HTMLElement {
   static get observedAttributes() {
-    return ["look"];
+    return ["look", "still"];
   }
 
   constructor() {
@@ -202,7 +180,12 @@ class LuzLight extends HTMLElement {
   }
 
   attributeChangedCallback(name, old, value) {
-    if (this._stage && !this._reflecting && old !== value) this._setLook(value, false);
+    if (!this._stage) return;
+    // [still]: the button follows, and _tick() hands the visuals their light again, so they stop or move
+    if (name === "still") {
+      this._pause.setAttribute("aria-pressed", String(value !== null));
+      this._tick();
+    } else if (!this._reflecting && old !== value) this._setLook(value, false);
   }
 
   /** A text of the page: data-luz-label-light-<key> here or on an ancestor. */
@@ -267,7 +250,13 @@ class LuzLight extends HTMLElement {
     });
     this._out = h("output", { for: `${id}-scrub`, "aria-live": "off" });
     day.append(this._scrub, this._live, this._out);
-    bar.append(day);
+    // Pause motion (WCAG 2.2.2): [still] is reduced motion for the visuals and light.css
+    this._pause = h("button", { type: "button", class: "home-light__still", "aria-pressed": "false" }, this._text("pause"));
+    this._pause.addEventListener("click", () => {
+      this.toggleAttribute("still");
+      this._save();
+    });
+    bar.append(day, this._pause);
     this._line = h("button", { type: "button", class: "home-light__line", "aria-expanded": "false", "aria-controls": bar.id });
     // The phrase, then the light and the hour with a mark that turns with aria-expanded (not read)
     this._q = h("span", { class: "home-light__q" });
@@ -289,16 +278,19 @@ class LuzLight extends HTMLElement {
       if (!this._favicon) document.head.append((this._favicon = h("link", { rel: "icon", type: "image/svg+xml" })));
     }
 
-    // The first look: ?look= of the URL, then the visitor's last click, then the attribute, then one at random
-    let stored = null;
+    // Remembered: the look last clicked and "still", in one value; [still] goes on before any visual is loaded
+    let stored = [];
     if (this._remember) {
       try {
-        stored = localStorage.getItem(KEY);
+        stored = (localStorage.getItem(KEY) ?? "").split(" ");
       } catch {
         // Storage refused (a sandboxed frame): nothing remembered
       }
     }
-    const asked = [new window.URLSearchParams(location.search).get("look"), stored, this.getAttribute("look")].find((k) => this._looks.includes(k));
+    this._kept = stored.find((k) => this._looks.includes(k));
+    if (stored.includes("still")) this.setAttribute("still", "");
+    // The first look: ?look= of the URL, then the visitor's last click, then the attribute, then one at random
+    const asked = [new window.URLSearchParams(location.search).get("look"), this._kept, this.getAttribute("look")].find((k) => this._looks.includes(k));
     this._setLook(asked ?? this._looks[Math.floor(Math.random() * this._looks.length)], false);
   }
 
@@ -310,13 +302,7 @@ class LuzLight extends HTMLElement {
     if (k) this.setAttribute("look", k);
     this._reflecting = false;
     for (const b of this.querySelectorAll("[data-look]")) b.setAttribute("aria-pressed", String(b.dataset.look === k));
-    if (byUser && this._remember) {
-      try {
-        localStorage.setItem(KEY, k);
-      } catch {
-        // Not remembered: the same page
-      }
-    }
+    if (byUser) this._save(k);
     for (const v in this._views) this._views[v].hidden = v !== k;
     if (k && !this._views[k]) {
       LOAD[k]().then(() => {
@@ -330,6 +316,17 @@ class LuzLight extends HTMLElement {
       });
     }
     this._tick();
+  }
+
+  /** With remember, keep the look clicked last and [still]. */
+  _save(look = this._kept) {
+    this._kept = look;
+    if (!this._remember) return;
+    try {
+      localStorage.setItem(KEY, [look, this.hasAttribute("still") && "still"].filter(Boolean).join(" "));
+    } catch {
+      // Not remembered: the same page
+    }
   }
 
   /** Scrub to an hour (0 to 24), or back to now (null), and ask <luz-mode> to follow. */

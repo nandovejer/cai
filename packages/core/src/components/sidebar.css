@@ -214,6 +214,12 @@
   .luz-sidebar__link[aria-current="page"] {
     border-inline-start-color: Highlight;
   }
+
+  /* The open drawer covers the page and its shadow is dropped: an edge in
+     CanvasText tells it from the page behind it */
+  .luz-sidebar[popover]:popover-open {
+    border-inline-end: 1px solid CanvasText;
+  }
 }
 
 /* In an .o-shell on a phone, a sidebar that is not a popover (or a browser
